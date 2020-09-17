@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <AssemblyName>PnP.PowerShell.Core</AssemblyName>
+    <AssemblyName>PnP.PowerShell</AssemblyName>
     <RootNamespace>PnP.PowerShell.Commands</RootNamespace>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <PackageId>PnP.PowerShell.Core</PackageId>
@@ -24,14 +24,6 @@
     <Compile Remove="obj\**" />
     <EmbeddedResource Remove="obj\**" />
     <None Remove="obj\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="ModuleFiles\SharePointPnP.PowerShell.2013.Commands.Format.ps1xml" />
-    <None Remove="ModuleFiles\SharePointPnP.PowerShell.2016.Commands.Format.ps1xml" />
-    <None Remove="ModuleFiles\SharePointPnP.PowerShell.2019.Commands.Format.ps1xml" />
-    <None Remove="ModuleFiles\SharePointPnP.PowerShell.Online.Commands.Format.ps1xml" />
-    <None Remove="SharePointPnP.PowerShell.Commands.csproj.DotSettings" />
   </ItemGroup>
 
   <ItemGroup>
@@ -116,7 +108,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="ModuleFiles\PnP.PowerShell.Core.Format.ps1xml">
+    <None Update="ModuleFiles\PnP.PowerShell.Format.ps1xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

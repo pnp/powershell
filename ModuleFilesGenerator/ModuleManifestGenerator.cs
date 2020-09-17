@@ -105,7 +105,7 @@ namespace PnP.PowerShell.ModuleFilesGenerator
 }}";
 #else
             var manifest = $@"@{{
-    RootModule = 'PnP.PowerShell.Core.dll'
+    RootModule = 'PnP.PowerShell.dll'
     ModuleVersion = '{_assemblyVersion.Major}.{_assemblyVersion.Minor}.{_assemblyVersion.Revision}'
     Description = 'Microsoft 365 Patterns and Practices PowerShell Cmdlets'
     GUID = '0b0430ce-d799-4f3b-a565-f0dca1f31e17'
@@ -117,11 +117,11 @@ namespace PnP.PowerShell.ModuleFilesGenerator
     CmdletsToExport = {cmdletsToExport}
     VariablesToExport = '*'
     AliasesToExport = '*'
-    FormatsToProcess = 'PnP.PowerShell.{spVersion}.Format.ps1xml' 
+    FormatsToProcess = 'PnP.PowerShell.Format.ps1xml' 
     PrivateData = @{{
         PSData = @{{
             ProjectUri = 'https://aka.ms/sppnp'
-            IconUri = 'https://raw.githubusercontent.com/pnp/media/master/optimized/pnp-projects/blue/png/pnp-powershell-300.png'
+            IconUri = 'https://github.com/pnp/media/raw/e62d267575c81bda81485111ec52714033141e62/parker/pnp/300w/parker.png'
         }}
     }}
 }}";
