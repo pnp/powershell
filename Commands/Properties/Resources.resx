@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApplicationName" xml:space="preserve">
+    <value>SharePoint PnP PowerShell Library</value>
+  </data>
+  <data name="CommandNotExecutedDueToHealthscoreValueOf0" xml:space="preserve">
+    <value>Command not executed due to healthscore value of {0}</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="CurrentSiteIsNoTenantAdminSite" xml:space="preserve">
+    <value>Current site is not a tenant administration site</value>
+  </data>
+  <data name="Delete0" xml:space="preserve">
+    <value>Delete '{0}'?</value>
+  </data>
+  <data name="DeleteField0" xml:space="preserve">
+    <value>Delete field '{0}'?</value>
+  </data>
+  <data name="EnterYourCredentials" xml:space="preserve">
+    <value>Enter your credentials</value>
+  </data>
+  <data name="File0ExistsOverwrite" xml:space="preserve">
+    <value>File {0} exists, overwrite?</value>
+  </data>
+  <data name="FileDoesNotExist" xml:space="preserve">
+    <value>File does not exist</value>
+  </data>
+  <data name="HealthScoreNotSufficient" xml:space="preserve">
+    <value>Health score not sufficient</value>
+  </data>
+  <data name="ListNotFound" xml:space="preserve">
+    <value>No list found with id, title or url '{0}'</value>
+  </data>
+  <data name="NoSharePointConnection" xml:space="preserve">
+    <value>The current connection holds no SharePoint context. Please use one of the Connect-PnPOnline commands which uses the -Url argument to connect.</value>
+  </data>
+  <data name="NoConnectionToDisconnect" xml:space="preserve">
+    <value>No connection to disconnect</value>
+  </data>
+  <data name="NoContextPresent" xml:space="preserve">
+    <value>No context present. Connect first with Connect-PnPOnline</value>
+  </data>
+  <data name="OfficeDevPnPPowerShellLibrary0" xml:space="preserve">
+    <value>SharePoint PnP PowerShell Library ({0})</value>
+  </data>
+  <data name="RemoveContentType" xml:space="preserve">
+    <value>Remove content type?</value>
+  </data>
+  <data name="RemoveCustomAction" xml:space="preserve">
+    <value>Remove custom action?</value>
+  </data>
+  <data name="RemoveEventReceiver" xml:space="preserve">
+    <value>Remove event receiver named '{0}' with id '{1}'?</value>
+  </data>
+  <data name="RemoveJavaScript0" xml:space="preserve">
+    <value>Remove JavaScript ('{0}')?</value>
+  </data>
+  <data name="RemoveKeyAndValueFromPropertyBag" xml:space="preserve">
+    <value>Remove key and value from property bag?</value>
+  </data>
+  <data name="RemoveList" xml:space="preserve">
+    <value>Remove list?</value>
+  </data>
+  <data name="RemovePropertyBagValue" xml:space="preserve">
+    <value>Remove propertybag value</value>
+  </data>
+  <data name="RemoveSiteCollection0" xml:space="preserve">
+    <value>Remove site collection '{0}'?</value>
+  </data>
+  <data name="RemoveThe0KeyAndItsValueFromThePropertyBag" xml:space="preserve">
+    <value>Remove the {0} key and its value from the property bag?</value>
+  </data>
+  <data name="RemoveView0" xml:space="preserve">
+    <value>Remove view '{0}'?</value>
+  </data>
+  <data name="Retry0ServerNotHealthyWaiting1seconds" xml:space="preserve">
+    <value>Retry {0}: Server not healthy, waiting {1} seconds (Server Health Score: {2})</value>
+  </data>
+  <data name="UninstallApp0" xml:space="preserve">
+    <value>Uninstall app {0}?</value>
+  </data>
+  <data name="Web0CreatedAt1" xml:space="preserve">
+    <value>Web '{0}' created at {1}</value>
+  </data>
+  <data name="GetTenantSite_ExecuteCmdlet_This_request_can_take_a_long_time_to_execute__Continue_" xml:space="preserve">
+    <value>This request can take a long time to execute. Continue?</value>
+  </data>
+  <data name="RemoveNavigationNode0" xml:space="preserve">
+    <value>Remove Navigation Node '{0}'</value>
+  </data>
+  <data name="RemoveGroup0" xml:space="preserve">
+    <value>Remove Group '{0}'</value>
+  </data>
+  <data name="RemoveWeb0" xml:space="preserve">
+    <value>Remove Web '{0}' ? </value>
+  </data>
+  <data name="RemoveListItemWithId0" xml:space="preserve">
+    <value>Remove list item with ID {0}?</value>
+  </data>
+  <data name="RemoveTermGroup0AndAllUnderlyingTermSetsAndTerms" xml:space="preserve">
+    <value>Remove Termgroup '{0}' and all underlying Termsets and Terms? </value>
+  </data>
+  <data name="RemoveTermSet0" xml:space="preserve">
+    <value>Remove Termset '{0}' and it's underlying Terms?</value>
+  </data>
+  <data name="RemoveTerm0AndAllUnderlyingTerms" xml:space="preserve">
+    <value>Remove Term '{0}' and all underlying Terms?</value>
+  </data>
+  <data name="MicrosoftGraphOAuthAccessTokenExpired" xml:space="preserve">
+    <value>The Azure AD OAuth 2.0 Access Token has expired. Authenticate again using the Connect-PnPMicrosoftGraph cmdlet.</value>
+  </data>
+  <data name="ForceCreationOfExistingGroup0" xml:space="preserve">
+    <value>The Unified Group with MailNickname of {0} already exists. Do you want to create another one?</value>
+  </data>
+  <data name="CopyFile0To1" xml:space="preserve">
+    <value>Copy file '{0}' to '{1}'?</value>
+  </data>
+  <data name="MoveFile0To1" xml:space="preserve">
+    <value>Move file '{0}' to '{1}'?</value>
+  </data>
+  <data name="MoveListItemWithId0ToRecycleBin" xml:space="preserve">
+    <value>Move list item with ID {0} to Recycle Bin?</value>
+  </data>
+  <data name="RenameFile0To1" xml:space="preserve">
+    <value>Rename file '{0}' to '{1}'?</value>
+  </data>
+  <data name="ClearBothRecycleBins" xml:space="preserve">
+    <value>Permanently delete all items in the first and second stage recycle bins?</value>
+  </data>
+  <data name="ClearRecycleBinItem" xml:space="preserve">
+    <value>Permanently delete file '{0}' from the recycle bin?</value>
+  </data>
+  <data name="ClearSecondStageRecycleBin" xml:space="preserve">
+    <value>Permanently delete all the items in the second stage recycle bin?</value>
+  </data>
+  <data name="ClearTenantRecycleBinItem" xml:space="preserve">
+    <value>Permanently delete the site collection previously located at '{0}' from the recycle bin?</value>
+  </data>
+  <data name="MoveFirstStageRecycleBinItemsToSecondStage" xml:space="preserve">
+    <value>Move all items from the first stage recycle bin to the second stage recycle bin?</value>
+  </data>
+  <data name="RestoreRecycleBinItem" xml:space="preserve">
+    <value>Restore the file '{0}' from the recycle bin to its original location?</value>
+  </data>
+  <data name="RestoreRecycleBinItems" xml:space="preserve">
+    <value>Restore all items from the first and second stage recycle bins to their original locations?</value>
+  </data>
+  <data name="ResetTenantRecycleBinItem" xml:space="preserve">
+    <value>Restore the site collection previously located at '{0}' from the recycle bin to its original location?</value>
+  </data>
+  <data name="MoveRecycleBinItemWithLeaf0ToSecondStage" xml:space="preserve">
+    <value>Move recycle bin item with leaf '{0}' to the second stage recycle bin?</value>
+  </data>
+  <data name="RemoveImageRenditionWithName0" xml:space="preserve">
+    <value>Remove Image Rendition with name '{0}'?</value>
+  </data>
+  <data name="CreateSiteWithUrl0" xml:space="preserve">
+    <value>Create site with url '{0}'?</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="RemoveWebhookSubscription0From1_2" xml:space="preserve">
+    <value>Remove Webhook Subscription '{0}' from {1} '{2}' ?</value>
+  </data>
+  <data name="RemoveClientSidePage" xml:space="preserve">
+    <value>Remove Client-Side Page?</value>
+  </data>
+  <data name="RemoveUser" xml:space="preserve">
+    <value>Remove User with Id {0}, LoginName '{1}', Email '{2}' from the User Information List?</value>
+  </data>
+  <data name="RemoveDefaultClassification0" xml:space="preserve">
+    <value>The classification '{0}' you are trying remove is currently set as the default classification. Do you want to remove this classification? It will also remove this as  the default classification</value>
+  </data>
+  <data name="RemoveSiteDesign" xml:space="preserve">
+    <value>Remove site design?</value>
+  </data>
+  <data name="RemoveSiteScript" xml:space="preserve">
+    <value>Remove site script?</value>
+  </data>
+  <data name="RemoveWebPartWithTitle0" xml:space="preserve">
+    <value>Remove Web Part with title '{0}'?</value>
+  </data>
+  <data name="RemoveComponentWithInstanceId0" xml:space="preserve">
+    <value>Remove component with instance id '{0}'?</value>
+  </data>
+  <data name="RemoveNavigationNodeInLocation" xml:space="preserve">
+    <value>Remove all Navigation Nodes in {0}?</value>
+  </data>
+  <data name="RemoveSiteDesignTask" xml:space="preserve">
+    <value>Remove site design task?</value>
+  </data>
+  <data name="NoTenantAdminUrlSpecified" xml:space="preserve">
+    <value>No Tenant Administration Url specified. Connect with Connect-PnPOnline and specify the TenantAdminUrl parameter.</value>
+  </data>
+  <data name="SiteNotFound" xml:space="preserve">
+    <value>The provided site could not be found</value>
+  </data>
+  <data name="SetRequestAccessEmailsOnlyOneAddressAllowed" xml:space="preserve">
+    <value>Only one e-mail address can be configured to receive the access requests</value>
+  </data>
+  <data name="NoApiAccessToken" xml:space="preserve">
+    <value>Unable to retrieve a token for {0}. Ensure you connect using one of the Connect-PnPOnline commands which uses the -ClientId argument or use Connect-PnPOnline -Scopes to connect.</value>
+  </data>
+  <data name="NoConnection" xml:space="preserve">
+    <value>There is currently no connection yet. Use Connect-PnPOnline to connect.</value>
+  </data>
+  <data name="AccessTokenConnectFailed" xml:space="preserve">
+    <value>No URL specified nor does the provided access token contain an audience</value>
+  </data>
+  <data name="CertificateWithThumbprintNotFound" xml:space="preserve">
+    <value>No certificate with the thumbprint '{0}' has been found in the Windows Certificate Store</value>
+  </data>
+  <data name="ClientCertificateInvalid" xml:space="preserve">
+    <value>The client certificate is invalid</value>
+  </data>
+  <data name="GrooveBlockOptionNotSupported" xml:space="preserve">
+    <value>The provided option for {0} being {1} is not yet supported in this cmdlet</value>
+  </data>
+  <data name="ParameterSetNotImplemented" xml:space="preserve">
+    <value>Parameter set {0} has not yet been implemented. Please create an issue for this on GitHub.</value>
+  </data>
+  <data name="WebhooksOnlySupportsLists" xml:space="preserve">
+    <value>This Cmdlet currently only supports List Webhooks</value>
+  </data>
+  <data name="CertificateAtPathHasNoPrivateKey" xml:space="preserve">
+    <value>The certificate located at '{0}' holds no private key. Ensure you provide the private key certificate, typically the .pfx file.</value>
+  </data>
+  <data name="CertificateNotFoundAtPath" xml:space="preserve">
+    <value>No private key certificate has been found at '{0}'</value>
+  </data>
+  <data name="PrivateKeyCertificateImportFailedPasswordIncorrect" xml:space="preserve">
+    <value>Reading of the private key certificate failed as the password with which it has been signed does not match the provided password. Use {0} to provide the proper password for the private key certificate file.</value>
+  </data>
+  <data name="PrivateKeyCertificateImportFailedPasswordMissing" xml:space="preserve">
+    <value>Reading of the private key certificate failed as the password with which it has been signed has not been provided. Use {0} to provide the password.</value>
+  </data>
+  <data name="CertificateWithThumbprintDoesNotHavePrivateKey" xml:space="preserve">
+    <value>The provided certificate with the thumbprint '{0}' does not have a private key which is required for a connection to be established. Ensure you have imported the certificate containing the private key, typically the .pfx file, into the Windows Certificate Store.</value>
+  </data>
+</root>

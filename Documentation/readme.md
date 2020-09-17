@@ -1,0 +1,2 @@
+# Cmdlet Documentation #
+The PnP PowerShell Documentation has moved to [docs.microsoft.com](https://docs.microsoft.com/en-us/powershell/sharepoint/sharepoint-pnp/sharepoint-pnp-cmdlets?view=sharepoint-ps)
