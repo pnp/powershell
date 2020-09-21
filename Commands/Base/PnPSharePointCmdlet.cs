@@ -42,60 +42,14 @@ namespace PnP.PowerShell.Commands
         {
             try
             {
-                if (PnPConnection.CurrentConnection.MinimalHealthScore.HasValue && PnPConnection.CurrentConnection.MinimalHealthScore.Value >= 0)
+                var tag = PnPConnection.CurrentConnection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name.Replace("SPO", "");
+                if (tag.Length > 32)
                 {
-                    int healthScore = Utility.GetHealthScore(PnPConnection.CurrentConnection.Url);
-                    if (healthScore <= PnPConnection.CurrentConnection.MinimalHealthScore.Value)
-                    {
-                        ExecuteCmdlet();
-                    }
-                    else
-                    {
-                        if (PnPConnection.CurrentConnection.RetryCount != -1)
-                        {
-                            int retry = 1;
-                            while (retry <= PnPConnection.CurrentConnection.RetryCount)
-                            {
-                                WriteWarning(string.Format(Resources.Retry0ServerNotHealthyWaiting1seconds, retry, PnPConnection.CurrentConnection.RetryWait, healthScore));
-                                Thread.Sleep(PnPConnection.CurrentConnection.RetryWait * 1000);
-                                healthScore = Utility.GetHealthScore(PnPConnection.CurrentConnection.Url);
-                                if (healthScore <= PnPConnection.CurrentConnection.MinimalHealthScore.Value)
-                                {
-                                    var tag = PnPConnection.CurrentConnection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name.Replace("SPO", "");
-                                    if (tag.Length > 32)
-                                    {
-                                        tag = tag.Substring(0, 32);
-                                    }
-                                    ClientContext.ClientTag = tag;
-
-
-                                    ExecuteCmdlet();
-                                    break;
-                                }
-                                retry++;
-                            }
-                            if (retry > PnPConnection.CurrentConnection.RetryCount)
-                            {
-                                ThrowTerminatingError(new ErrorRecord(new Exception(Resources.HealthScoreNotSufficient), "HALT", ErrorCategory.LimitsExceeded, null));
-                            }
-                        }
-                        else
-                        {
-                            ThrowTerminatingError(new ErrorRecord(new Exception(Resources.HealthScoreNotSufficient), "HALT", ErrorCategory.LimitsExceeded, null));
-                        }
-                    }
+                    tag = tag.Substring(0, 32);
                 }
-                else
-                {
-                    var tag = PnPConnection.CurrentConnection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name.Replace("SPO", "");
-                    if (tag.Length > 32)
-                    {
-                        tag = tag.Substring(0, 32);
-                    }
-                    ClientContext.ClientTag = tag;
+                ClientContext.ClientTag = tag;
 
-                    ExecuteCmdlet();
-                }
+                ExecuteCmdlet();
             }
             catch (PipelineStoppedException)
             {
@@ -109,7 +63,7 @@ namespace PnP.PowerShell.Commands
                 ex.Data.Add("CorrelationId", PnPConnection.CurrentConnection.Context.TraceCorrelationId);
                 ex.Data.Add("TimeStampUtc", DateTime.UtcNow);
                 var errorDetails = new ErrorDetails(ex.Message);
-                
+
                 errorDetails.RecommendedAction = "Use Get-PnPException for more details.";
                 var errorRecord = new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null);
                 errorRecord.ErrorDetails = errorDetails;
@@ -117,7 +71,7 @@ namespace PnP.PowerShell.Commands
                 WriteError(errorRecord);
             }
         }
-        
+
         protected override void EndProcessing()
         {
             base.EndProcessing();

@@ -75,11 +75,6 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public string[] Scopes { get; internal set; }
 
-        /// <summary>
-        /// If provided, it defines the minimal health score the SharePoint server should return back before executing requests on it. Use scale 0 - 10 where 0 is most health and 10 is least healthy. If set to NULL, no health score check will take place.
-        /// </summary>
-        public int? MinimalHealthScore { get; protected set; }
-
         public int RetryCount { get; protected set; }
         public int RetryWait { get; protected set; }
         public PSCredential PSCredential { get; protected set; }
@@ -339,7 +334,6 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="initializationType">Indicator of type <see cref="InitializationType"/> which indicates the method used to set up the connection. Used for gathering usage analytics.</param>
         /// <param name="url">Url of the SharePoint environment to connect to, if applicable. Leave NULL not to connect to a SharePoint environment.</param>
         /// <param name="clientContext">A SharePoint ClientContext to make available within this connection. Leave NULL to not connect to a SharePoint environment.</param>
-        /// <param name="minimalHealthScore">Minimum health score that the SharePoint server should report before allowing requests to be executed on it. Scale of 0 to 10 where 0 is healthiest and 10 is least healthy. Leave NULL not to perform health checks on SharePoint.</param>
         /// <param name="pnpVersionTag">Identifier set on the SharePoint ClientContext as the ClientTag to identify the source of the requests to SharePoint. Leave NULL not to set it.</param>
         /// <param name="disableTelemetry">Boolean indicating if telemetry on the commands being executed should be disabled. Telemetry is enabled by default.</param>
         private PnPConnection(PSHost host,
@@ -347,7 +341,6 @@ namespace PnP.PowerShell.Commands.Base
                               string url = null,
                               ClientContext clientContext = null,
                               Dictionary<TokenAudience, GenericToken> tokens = null,
-                              int? minimalHealthScore = null,
                               string pnpVersionTag = null,
                               bool disableTelemetry = false)
         {
@@ -389,7 +382,6 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             PnPVersionTag = pnpVersionTag;
-            MinimalHealthScore = minimalHealthScore;
             Url = url;
         }
 
@@ -407,7 +399,6 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="initializationType">Indicator of type <see cref="InitializationType"/> which indicates the method used to set up the connection. Used for gathering usage analytics.</param>
         /// <param name="url">Url of the SharePoint environment to connect to, if applicable. Leave NULL not to connect to a SharePoint environment.</param>
         /// <param name="clientContext">A SharePoint ClientContext to make available within this connection. Leave NULL to not connect to a SharePoint environment.</param>
-        /// <param name="minimalHealthScore">Minimum health score that the SharePoint server should report before allowing requests to be executed on it. Scale of 0 to 10 where 0 is healthiest and 10 is least healthy. Leave NULL not to perform health checks on SharePoint.</param>
         /// <param name="pnpVersionTag">Identifier set on the SharePoint ClientContext as the ClientTag to identify the source of the requests to SharePoint. Leave NULL not to set it.</param>
         /// <param name="disableTelemetry">Boolean indicating if telemetry on the commands being executed should be disabled. Telemetry is enabled by default.</param>
         /// <returns><see cref="PnPConnection"/ instance which can be used to communicate with one of the supported APIs</returns>
@@ -418,11 +409,10 @@ namespace PnP.PowerShell.Commands.Base
                                                                              string url = null,
                                                                              string aadDomain = null,
                                                                              ClientContext clientContext = null,
-                                                                             int? minimalHealthScore = null,
                                                                              string pnpVersionTag = null,
                                                                              bool disableTelemetry = false)
         {
-            return new PnPConnection(host, initializationType, url, clientContext, null, minimalHealthScore, pnpVersionTag, disableTelemetry)
+            return new PnPConnection(host, initializationType, url, clientContext, null, pnpVersionTag, disableTelemetry)
             {
                 ClientId = clientId,
                 ClientSecret = clientSecret,
@@ -441,7 +431,6 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="initializationType">Indicator of type <see cref="InitializationType"/> which indicates the method used to set up the connection. Used for gathering usage analytics.</param>
         /// <param name="url">Url of the SharePoint environment to connect to, if applicable. Leave NULL not to connect to a SharePoint environment.</param>
         /// <param name="clientContext">A SharePoint ClientContext to make available within this connection. Leave NULL to not connect to a SharePoint environment.</param>
-        /// <param name="minimalHealthScore">Minimum health score that the SharePoint server should report before allowing requests to be executed on it. Scale of 0 to 10 where 0 is healthiest and 10 is least healthy. Leave NULL not to perform health checks on SharePoint.</param>
         /// <param name="pnpVersionTag">Identifier set on the SharePoint ClientContext as the ClientTag to identify the source of the requests to SharePoint. Leave NULL not to set it.</param>
         /// <param name="disableTelemetry">Boolean indicating if telemetry on the commands being executed should be disabled. Telemetry is enabled by default.</param>
         /// <returns><see cref="PnPConnection"/ instance which can be used to communicate with one of the supported APIs</returns>
@@ -452,11 +441,10 @@ namespace PnP.PowerShell.Commands.Base
                                                                             string url = null,
                                                                             string aadDomain = null,
                                                                             ClientContext clientContext = null,
-                                                                            int? minimalHealthScore = null,
                                                                             string pnpVersionTag = null,
                                                                             bool disableTelemetry = false)
         {
-            return new PnPConnection(host, initializationType, url, clientContext, null, minimalHealthScore, pnpVersionTag, disableTelemetry)
+            return new PnPConnection(host, initializationType, url, clientContext, null, pnpVersionTag, disableTelemetry)
             {
                 ClientId = clientId,
                 Certificate = certificate,
@@ -473,7 +461,6 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="initializationType">Indicator of type <see cref="InitializationType"/> which indicates the method used to set up the connection. Used for gathering usage analytics.</param>
         /// <param name="url">Url of the SharePoint environment to connect to, if applicable. Leave NULL not to connect to a SharePoint environment.</param>
         /// <param name="clientContext">A SharePoint ClientContext to make available within this connection. Leave NULL to not connect to a SharePoint environment.</param>
-        /// <param name="minimalHealthScore">Minimum health score that the SharePoint server should report before allowing requests to be executed on it. Scale of 0 to 10 where 0 is healthiest and 10 is least healthy. Leave NULL not to perform health checks on SharePoint.</param>
         /// <param name="pnpVersionTag">Identifier set on the SharePoint ClientContext as the ClientTag to identify the source of the requests to SharePoint. Leave NULL not to set it.</param>
         /// <param name="disableTelemetry">Boolean indicating if telemetry on the commands being executed should be disabled. Telemetry is enabled by default.</param>
         /// <returns><see cref="PnPConnection"/ instance which can be used to communicate with one of the supported APIs</returns>
@@ -482,11 +469,10 @@ namespace PnP.PowerShell.Commands.Base
                                                                   InitializationType initializationType,
                                                                   string url = null,
                                                                   ClientContext clientContext = null,
-                                                                  int? minimalHealthScore = null,
                                                                   string pnpVersionTag = null,
                                                                   bool disableTelemetry = false)
         {
-            return new PnPConnection(host, initializationType, url, clientContext, null, minimalHealthScore, pnpVersionTag, disableTelemetry)
+            return new PnPConnection(host, initializationType, url, clientContext, null, pnpVersionTag, disableTelemetry)
             {
                 PSCredential = credential,
                 ConnectionMethod = ConnectionMethod.Credentials
@@ -502,7 +488,6 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="initializationType">Indicator of type <see cref="InitializationType"/> which indicates the method used to set up the connection. Used for gathering usage analytics.</param>
         /// <param name="url">Url of the SharePoint environment to connect to, if applicable. Leave NULL not to connect to a SharePoint environment.</param>
         /// <param name="clientContext">A SharePoint ClientContext to make available within this connection. Leave NULL to not connect to a SharePoint environment.</param>
-        /// <param name="minimalHealthScore">Minimum health score that the SharePoint server should report before allowing requests to be executed on it. Scale of 0 to 10 where 0 is healthiest and 10 is least healthy. Leave NULL not to perform health checks on SharePoint.</param>
         /// <param name="pnpVersionTag">Identifier set on the SharePoint ClientContext as the ClientTag to identify the source of the requests to SharePoint. Leave NULL not to set it.</param>
         /// <param name="disableTelemetry">Boolean indicating if telemetry on the commands being executed should be disabled. Telemetry is enabled by default.</param>
         /// <returns><see cref="PnPConnection"/ instance which can be used to communicate with one of the supported APIs</returns>
@@ -513,12 +498,11 @@ namespace PnP.PowerShell.Commands.Base
                                                            PSCredential credentials,
                                                            string url = null,
                                                            ClientContext clientContext = null,
-                                                           int? minimalHealthScore = null,
                                                            string pnpVersionTag = null,
                                                            bool disableTelemetry = false,
                                                            AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
-            var connection = new PnPConnection(host, initializationType, url, clientContext, new Dictionary<TokenAudience, GenericToken>(1) { { tokenAudience, token } }, minimalHealthScore, pnpVersionTag, disableTelemetry)
+            var connection = new PnPConnection(host, initializationType, url, clientContext, new Dictionary<TokenAudience, GenericToken>(1) { { tokenAudience, token } }, pnpVersionTag, disableTelemetry)
             {
                 ConnectionMethod = ConnectionMethod.AccessToken,
                 Tenant = token.ParsedToken.Claims.FirstOrDefault(c => c.Type.Equals("tid", StringComparison.InvariantCultureIgnoreCase))?.Value,
@@ -531,8 +515,8 @@ namespace PnP.PowerShell.Commands.Base
 
         #endregion
 
-        internal PnPConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
-        : this(context, connectionType, minimalHealthScore, retryCount, retryWait, credential, url, tenantAdminUrl, pnpVersionTag, host, disableTelemetry, initializationType)
+        internal PnPConnection(ClientContext context, ConnectionType connectionType, int retryCount, int retryWait, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
+        : this(context, connectionType, retryCount, retryWait, credential, url, tenantAdminUrl, pnpVersionTag, host, disableTelemetry, initializationType)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -540,7 +524,6 @@ namespace PnP.PowerShell.Commands.Base
 
         internal PnPConnection(ClientContext context,
                                     ConnectionType connectionType,
-                                    int minimalHealthScore,
                                     int retryCount,
                                     int retryWait,
                                     PSCredential credential,
@@ -563,7 +546,6 @@ namespace PnP.PowerShell.Commands.Base
             Context.ExecutingWebRequest += Context_ExecutingWebRequest;
 
             ConnectionType = connectionType;
-            MinimalHealthScore = minimalHealthScore;
             RetryCount = retryCount;
             RetryWait = retryWait;
             TenantAdminUrl = tenantAdminUrl;
@@ -575,7 +557,7 @@ namespace PnP.PowerShell.Commands.Base
             ConnectionMethod = ConnectionMethod.Credentials;
         }
 
-        internal PnPConnection(ClientContext context, GenericToken tokenResult, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
+        internal PnPConnection(ClientContext context, GenericToken tokenResult, ConnectionType connectionType, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
         {
             if (!disableTelemetry)
             {
@@ -588,7 +570,6 @@ namespace PnP.PowerShell.Commands.Base
             UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             Context = context;
             ConnectionType = connectionType;
-            MinimalHealthScore = minimalHealthScore;
             RetryCount = retryCount;
             RetryWait = retryWait;
             PSCredential = credential;
@@ -606,7 +587,7 @@ namespace PnP.PowerShell.Commands.Base
             };
         }
 
-        internal PnPConnection(GenericToken tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
+        internal PnPConnection(GenericToken tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, int retryCount, int retryWait, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
         {
             if (!disableTelemetry)
             {
@@ -615,14 +596,13 @@ namespace PnP.PowerShell.Commands.Base
             var coreAssembly = Assembly.GetExecutingAssembly();
             UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             ConnectionType = connectionType;
-            MinimalHealthScore = minimalHealthScore;
             RetryCount = retryCount;
             RetryWait = retryWait;
             PnPVersionTag = pnpVersionTag;
             ConnectionMethod = connectionMethod;
         }
 
-        internal PnPConnection(ConnectionMethod connectionMethod, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
+        internal PnPConnection(ConnectionMethod connectionMethod, ConnectionType connectionType, int retryCount, int retryWait, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
         {
             if (!disableTelemetry)
             {
@@ -631,7 +611,6 @@ namespace PnP.PowerShell.Commands.Base
             var coreAssembly = Assembly.GetExecutingAssembly();
             UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             ConnectionType = connectionType;
-            MinimalHealthScore = minimalHealthScore;
             RetryCount = retryCount;
             RetryWait = retryWait;
             PnPVersionTag = pnpVersionTag;

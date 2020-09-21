@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Import-PnPAppPackage has been removed. Use Instal-PnPApp instead.
 - Uninstall-AppInstance has been removed. Use Uninstall-PnPApp instead.
 - Removed Get-PnPHealthScore as the value reported is only applicable to on-premises.
+- Removed -MinimalHealthScore from Connect-PnPOnline as the value reported from the server only applies to on-premises.
 
 ## [3.25.2009.1]
 

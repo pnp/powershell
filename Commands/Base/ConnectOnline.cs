@@ -216,22 +216,6 @@ PS:> dir",
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "The name of the ADFS trusted login provider")]
         public string LoginProviderName;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Specifies a minimal server healthscore before any requests are executed")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Specifies a minimal server healthscore before any requests are executed")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Specifies a minimal server healthscore before any requests are executed")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "Specifies a minimal server healthscore before any requests are executed")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Specifies a minimal server healthscore before any requests are executed")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "Specifies a minimal server healthscore before any requests are executed")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "Specifies a minimal server healthscore before any requests are executed")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
-        public int MinimalHealthScore = -1;
-
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
@@ -666,7 +650,7 @@ PS:> dir",
         private PnPConnection ConnectToken()
         {
 #pragma warning disable CS0618 // Type or member is obsolete
-            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, AppId, AppSecret, Host, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 
@@ -687,7 +671,7 @@ PS:> dir",
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyClientIdCClientSecretUrl()
         {
-            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
         }
 
         /// <summary>
@@ -726,7 +710,7 @@ PS:> dir",
             {
                 Url += "/";
             }
-            var connection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
+            var connection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
 
             if (Host.Name == "ConsoleHost")
             {
@@ -750,7 +734,7 @@ PS:> dir",
                     Console.TreatControlCAsInput = true;
                 }
 
-                var connection = PnPConnectionHelper.InstantiateGraphDeviceLoginConnection(LaunchBrowser, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, (message) =>
+                var connection = PnPConnectionHelper.InstantiateGraphDeviceLoginConnection(LaunchBrowser,  RetryCount, RetryWait, RequestTimeout, (message) =>
                 {
                     WriteWarning(message);
                 },
@@ -806,7 +790,7 @@ PS:> dir",
             }
 #if !PNPPSCORE
             return PnPConnectionHelper.InitiateAzureADNativeApplicationConnection(
-                new Uri(Url), clientId, new Uri(redirectUrl), MinimalHealthScore, RetryCount,
+                new Uri(Url), clientId, new Uri(redirectUrl), RetryCount,
                 RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
             throw new NotImplementedException();
@@ -823,15 +807,15 @@ PS:> dir",
             if (ParameterSpecified(nameof(CertificatePath)))
             {
                 WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
-                return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+                return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
             }
             else if (ParameterSpecified(nameof(Certificate)))
             {
-                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment, Certificate);
+                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment, Certificate);
             }
             else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
             {
-                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment, CertificateBase64Encoded);
+                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment, CertificateBase64Encoded);
             }
             else
             {
@@ -849,9 +833,8 @@ PS:> dir",
         private PnPConnection ConnectAppOnlyAadPem()
         {
 #if !PNPPSCORE
-            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
-            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, CertificatePassword,  RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #endif
         }
 
@@ -861,11 +844,7 @@ PS:> dir",
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyAadThumb()
         {
-#if !PNPPSCORE
-            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
-#else
-            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
-#endif
+            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
         }
 
         /// <summary>
@@ -875,7 +854,7 @@ PS:> dir",
         private PnPConnection ConnectAppOnlyAadCer()
         {
 #if !PNPPSCORE
-            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Certificate, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Certificate, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
             throw new NotImplementedException();
 #endif
@@ -988,7 +967,6 @@ PS:> dir",
                                                                  Kerberos,
                                                                  credentials,
                                                                  Host,
-                                                                 MinimalHealthScore,
                                                                  RetryCount,
                                                                  RetryWait,
                                                                  RequestTimeout,
@@ -1031,7 +1009,7 @@ PS:> dir",
                 var serialNumber = ClientCertificate.SerialNumber;
                 try
                 {
-                    return PnPConnectionHelper.InstantiateAdfsCertificateConnection(new Uri(Url), serialNumber, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
+                    return PnPConnectionHelper.InstantiateAdfsCertificateConnection(new Uri(Url), serialNumber, Host, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
                 }
                 catch (TargetInvocationException e) when (e.InnerException != null && e.InnerException is CryptographicException)
                 {
@@ -1052,7 +1030,7 @@ PS:> dir",
         private PnPConnection ConnectWebLogin()
         {
 #if !PNPPSCORE
-            return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url.ToLower()), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, SkipTenantAdminCheck);
+            return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url.ToLower()), RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, SkipTenantAdminCheck);
 #else
             WriteWarning(@"-UseWebLogin is not implemented, due to restrictions of the .NET Standard framework. Use -PnPO365ManagementShell instead");
             return null;
@@ -1085,7 +1063,6 @@ PS:> dir",
                                                                credentials,
                                                                Host,
                                                                CurrentCredentials,
-                                                               MinimalHealthScore,
                                                                RetryCount,
                                                                RetryWait,
                                                                RequestTimeout,
