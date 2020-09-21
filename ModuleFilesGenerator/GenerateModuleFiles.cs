@@ -20,8 +20,8 @@ namespace PnP.PowerShell.ModuleFilesGenerator
 
                 var cmdlets = analyzer.Analyze();
 
-                var helpFileGenerator = new HelpFileGenerator(cmdlets, cmdletAssembly, $"{assemblyPath}-help.xml");
-                helpFileGenerator.Generate();
+                //var helpFileGenerator = new HelpFileGenerator(cmdlets, cmdletAssembly, $"{assemblyPath}-help.xml");
+                //helpFileGenerator.Generate();
 
                 var moduleManifestGenerator = new ModuleManifestGenerator(cmdlets, assemblyPath, configurationName, cmdletAssembly.GetName().Version);
                 moduleManifestGenerator.Generate();

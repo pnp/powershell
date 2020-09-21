@@ -130,7 +130,7 @@ namespace PnP.PowerShell.Commands
                 creationInformation.Description = _communicationSiteParameters.Description;
                 creationInformation.Classification = _communicationSiteParameters.Classification;
 #pragma warning disable CS0618 // Type or member is obsolete
-                creationInformation.ShareByEmailEnabled = _communicationSiteParameters.AllowFileSharingForGuestUsers || _communicationSiteParameters.ShareByEmailEnabled;
+                creationInformation.ShareByEmailEnabled = _communicationSiteParameters.ShareByEmailEnabled;
 #pragma warning restore CS0618 // Type or member is obsolete
                 creationInformation.Lcid = _communicationSiteParameters.Lcid;
                 if (ParameterSpecified(nameof(HubSiteId)))
@@ -195,11 +195,6 @@ namespace PnP.PowerShell.Commands
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
             public string Classification;
-
-            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
-            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
-            [Obsolete("Use ShareByEmailEnabled instead.")]
-            public SwitchParameter AllowFileSharingForGuestUsers;
 
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]

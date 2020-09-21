@@ -37,14 +37,6 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "By default, the OneDrives are not returned. This switch includes all OneDrives.")]
         public SwitchParameter IncludeOneDriveSites;
 
-        [Obsolete]
-        [Parameter(Mandatory = false, HelpMessage = "When the switch IncludeOneDriveSites is used, this switch ignores the question shown that the command can take a long time to execute")]
-        public SwitchParameter Force;
-
-        [Obsolete("Use Template")]
-        [Parameter(Mandatory = false, HelpMessage = "Limit results to a specific web template name")]
-        public string WebTemplate;
-
         [Parameter(Mandatory = false, HelpMessage = "Specifies the script block of the server-side filter to apply. See https://technet.microsoft.com/en-us/library/fp161380.aspx")]
         public string Filter;
 
@@ -64,7 +56,7 @@ namespace PnP.PowerShell.Commands
                     IncludePersonalSite = IncludeOneDriveSites.IsPresent ? PersonalSiteFilter.Include : PersonalSiteFilter.UseServerDefault,
                     IncludeDetail = Detailed,
 #pragma warning disable CS0618 // Type or member is obsolete
-                    Template = Template ?? WebTemplate,
+                    Template = Template,
 #pragma warning restore CS0618 // Type or member is obsolete
                     Filter = Filter,
                 };

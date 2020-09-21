@@ -68,7 +68,7 @@ namespace PnP.PowerShell.ModuleFilesGenerator
             }
 
             // Create Module Manifest
-            var psd1Path = $"{new FileInfo(_assemblyPath).Directory}\\ModuleFiles\\PnPPowerShell.psd1";
+            var psd1Path = $"{new FileInfo(_assemblyPath).Directory}\\ModuleFiles\\PnP.PowerShell.psd1";
 
             var cmdletsToExportString = string.Join(",", _cmdlets.Select(c => "'" + c.FullCommand + "'"));
             string aliasesToExportString = null;

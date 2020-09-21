@@ -75,7 +75,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 {
                     return JsonSerializer.Deserialize<T>(stringContent, options);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return default(T);
                 }

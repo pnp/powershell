@@ -316,7 +316,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                     }
                     if (accessToken == null)
                     {
-                        throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Connect-PnPOnline -Graph -LaunchBrowser");
+                        throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
                     }
                 }
             }
@@ -350,7 +350,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                 else
                 {
                     // No token...
-                    throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Connect-PnPOnline -Graph -LaunchBrowser");
+                    throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
                  }
             }))
             {

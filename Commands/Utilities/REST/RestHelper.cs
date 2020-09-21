@@ -116,7 +116,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.GetAccessToken());
-            client.DefaultRequestHeaders.Add("X-RequestDigest", context.GetRequestDigest().GetAwaiter().GetResult());
+            client.DefaultRequestHeaders.Add("X-RequestDigest", context.GetRequestDigestAsync().GetAwaiter().GetResult());
 
             if (additionalHeaders != null)
             {
@@ -182,7 +182,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.GetAccessToken());
-            client.DefaultRequestHeaders.Add("X-RequestDigest", context.GetRequestDigest().GetAwaiter().GetResult());
+            client.DefaultRequestHeaders.Add("X-RequestDigest", context.GetRequestDigestAsync().GetAwaiter().GetResult());
 
             if (additionalHeaders != null)
             {
@@ -249,7 +249,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.GetAccessToken());
             client.DefaultRequestHeaders.Add("IF-MATCH", "*");
-            client.DefaultRequestHeaders.Add("X-RequestDigest", context.GetRequestDigest().GetAwaiter().GetResult());
+            client.DefaultRequestHeaders.Add("X-RequestDigest", context.GetRequestDigestAsync().GetAwaiter().GetResult());
             client.DefaultRequestHeaders.Add("X-HTTP-Method", "MERGE");
             if (additionalHeaders != null)
             {
@@ -299,7 +299,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.GetAccessToken());
-            client.DefaultRequestHeaders.Add("X-RequestDigest", context.GetRequestDigest().GetAwaiter().GetResult());
+            client.DefaultRequestHeaders.Add("X-RequestDigest", context.GetRequestDigestAsync().GetAwaiter().GetResult());
             client.DefaultRequestHeaders.Add("X-HTTP-Method", "DELETE");
             if (additionalHeaders != null)
             {
