@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.Base
         {
         }
 
-        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, string realm, string clientId, string clientSecret, PSHost host, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, string realm, string clientId, string clientSecret, PSHost host, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             ConnectionType connectionType;
             PnPClientContext context = null;
@@ -66,17 +66,10 @@ namespace PnP.PowerShell.Commands.Base
                     context.ApplicationName = Resources.ApplicationName;
                     context.RequestTimeout = requestTimeout;
                     context.DisableReturnValueCache = true;
-                    connectionType = ConnectionType.OnPrem;
-                    if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
+                    connectionType = ConnectionType.O365;
+                    if (IsTenantAdminSite(context))
                     {
-                        connectionType = ConnectionType.O365;
-                    }
-                    if (skipAdminCheck == false)
-                    {
-                        if (IsTenantAdminSite(context))
-                        {
-                            connectionType = ConnectionType.TenantAdmin;
-                        }
+                        connectionType = ConnectionType.TenantAdmin;
                     }
                 }
             }
@@ -210,7 +203,7 @@ namespace PnP.PowerShell.Commands.Base
         }
 
 #if !PNPPSCORE
-        internal static PnPConnection InitiateAzureADNativeApplicationConnection(Uri url, string clientId, Uri redirectUri, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static PnPConnection InitiateAzureADNativeApplicationConnection(Uri url, string clientId, Uri redirectUri, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             using (var authManager = new PnP.Framework.AuthenticationManager())
             {
@@ -223,13 +216,10 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     connectionType = ConnectionType.O365;
                 }
-                if (skipAdminCheck == false)
-                {
                     if (IsTenantAdminSite(context))
                     {
                         connectionType = ConnectionType.TenantAdmin;
                     }
-                }
                 var spoConnection = new PnPConnection(context, connectionType, retryCount, retryWait, null, clientId, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADNativeApp)
                 {
                     ConnectionMethod = ConnectionMethod.AzureADNativeApplication
@@ -239,22 +229,15 @@ namespace PnP.PowerShell.Commands.Base
         }
 #endif
 
-        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, X509Certificate2 certificate, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, X509Certificate2 certificate, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             using (var authManager = new PnP.Framework.AuthenticationManager())
             {
                 var context = PnPClientContext.ConvertFrom(authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificate, azureEnvironment), retryCount, retryWait * 1000);
-                var connectionType = ConnectionType.OnPrem;
-                if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
+                var connectionType = ConnectionType.O365;
+                if (IsTenantAdminSite(context))
                 {
-                    connectionType = ConnectionType.O365;
-                }
-                if (skipAdminCheck == false)
-                {
-                    if (IsTenantAdminSite(context))
-                    {
-                        connectionType = ConnectionType.TenantAdmin;
-                    }
+                    connectionType = ConnectionType.TenantAdmin;
                 }
                 var spoConnection = new PnPConnection(context, connectionType, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
                 spoConnection.ConnectionMethod = Model.ConnectionMethod.AzureADAppOnly;
@@ -262,20 +245,19 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePath, SecureString certificatePassword, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePath, SecureString certificatePassword, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(certificatePath, certificatePassword);
 
             return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, retryCount,
-                retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment,
+                retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, azureEnvironment,
                 certificate, true);
         }
 
         internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant,
-            string thumbprint, 
+            string thumbprint,
             int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host,
-            bool disableTelemetry, bool skipAdminCheck = false,
-            AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+            bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             X509Certificate2 certificate = CertificateHelper.GetCertificatFromStore(thumbprint);
 
@@ -290,87 +272,46 @@ namespace PnP.PowerShell.Commands.Base
                 throw new PSArgumentOutOfRangeException(nameof(thumbprint), null, string.Format(Resources.CertificateWithThumbprintDoesNotHavePrivateKey, thumbprint));
             }
 
-            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate, false);
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, azureEnvironment, certificate, false);
         }
 
-        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePEM, string privateKeyPEM, SecureString certificatePassword, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePEM, string privateKeyPEM, SecureString certificatePassword, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             string password = new System.Net.NetworkCredential(string.Empty, certificatePassword).Password;
             X509Certificate2 certificate = CertificateHelper.GetCertificateFromPEMstring(certificatePEM, privateKeyPEM, password);
 
-            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate, false);
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, azureEnvironment, certificate, false);
         }
 
-        /// <summary>
-        /// Takes a certificate encoded in Base64 such as retrieved from Azure KeyVault when using Azure Functions to authenticate to SharePoint
-        /// </summary>
-        /// <remarks>See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread how to set up a certificate which you can store in Azure KeyVault</remarks>
-        /// <param name="url">Url of the SharePoint site to connect to</param>
-        /// <param name="clientId">Application/client ID of the Azure Active Directory application registration</param>
-        /// <param name="tenant">Tenant name to connect to, i.e. contoso.onmicrosoft.com</param>
-        /// <param name="retryCount">Amount of times to retry an operation that i.e. times out or runs into health issues before giving up on it</param>
-        /// <param name="retryWait">Time in seconds to wait between retry attempts</param>
-        /// <param name="requestTimeout">Time in milliseconds to allow a command to complete before considering it failed</param>
-        /// <param name="tenantAdminUrl">Url of the admin site of the tenant. If not provided, it will assume to connect automatically to https://<tenantname>-admin.sharepoint.com.</param>
-        /// <param name="host">Reference to the PowerShell session in which the commands will be executed</param>
-        /// <param name="disableTelemetry">Boolean indicating whether or not telemetry should be disabled</param>
-        /// <param name="skipAdminCheck">Boolean indicating if it should check if the connection is being made to the Tenand admin site</param>
-        /// <param name="azureEnvironment">Type of Azure environment connecting to</param>
-        /// <param name="base64EncodedCertificate">Base64 encoded string containing the certificate which grants access to SharePoint Online</param>
-        /// <returns>A connection to SharePoint</returns>
         internal static PnPConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant,
             int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry,
-            bool skipAdminCheck, AzureEnvironment azureEnvironment, string base64EncodedCertificate)
+            AzureEnvironment azureEnvironment, string base64EncodedCertificate)
         {
             X509Certificate2 certificate = CertificateHelper.GetCertificateFromBase64Encodedstring(base64EncodedCertificate);
-            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate);
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, azureEnvironment, certificate);
         }
 
-        /// <summary>
-        /// Takes a certificate encoded in Base64 such as retrieved from Azure KeyVault when using Azure Functions to authenticate to SharePoint
-        /// </summary>
-        /// <remarks>See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread how to set up a certificate which you can store in Azure KeyVault</remarks>
-        /// <param name="url">Url of the SharePoint site to connect to</param>
-        /// <param name="clientId">Application/client ID of the Azure Active Directory application registration</param>
-        /// <param name="tenant">Tenant name to connect to, i.e. contoso.onmicrosoft.com</param>
-        /// <param name="retryCount">Amount of times to retry an operation that i.e. times out or runs into health issues before giving up on it</param>
-        /// <param name="retryWait">Time in seconds to wait between retry attempts</param>
-        /// <param name="requestTimeout">Time in milliseconds to allow a command to complete before considering it failed</param>
-        /// <param name="tenantAdminUrl">Url of the admin site of the tenant. If not provided, it will assume to connect automatically to https://<tenantname>-admin.sharepoint.com.</param>
-        /// <param name="host">Reference to the PowerShell session in which the commands will be executed</param>
-        /// <param name="disableTelemetry">Boolean indicating whether or not telemetry should be disabled</param>
-        /// <param name="skipAdminCheck">Boolean indicating if it should check if the connection is being made to the Tenand admin site</param>
-        /// <param name="azureEnvironment">Type of Azure environment connecting to</param>
-        /// <param name="certificate">The X509Certificate2 which grants access to SharePoint Online</param>
-        /// <returns>A connection to SharePoint</returns>
         internal static PnPConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant,
             int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry,
-            bool skipAdminCheck, AzureEnvironment azureEnvironment, X509Certificate2 certificate)
+            AzureEnvironment azureEnvironment, X509Certificate2 certificate)
         {
-            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate, false);
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, azureEnvironment, certificate, false);
         }
 
         private static PnPConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant,
             int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry,
-            bool skipAdminCheck, AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool certificateFromFile)
+            AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool certificateFromFile)
         {
             using (var authManager = new PnP.Framework.AuthenticationManager())
             {
                 var clientContext = authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificate, azureEnvironment);
                 var context = PnPClientContext.ConvertFrom(clientContext, retryCount, retryWait * 1000);
                 context.RequestTimeout = requestTimeout;
-                var connectionType = ConnectionType.OnPrem;
-                if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
-                {
-                    connectionType = ConnectionType.O365;
-                }
+                var connectionType = ConnectionType.O365;
 
-                if (skipAdminCheck == false)
+                if (IsTenantAdminSite(context))
                 {
-                    if (IsTenantAdminSite(context))
-                    {
-                        connectionType = ConnectionType.TenantAdmin;
-                    }
+                    connectionType = ConnectionType.TenantAdmin;
                 }
 
                 var spoConnection = new PnPConnection(context, connectionType, retryCount, retryWait, null, clientId, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly)
@@ -441,18 +382,15 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection InitiateAccessTokenConnection(Uri url, string accessToken, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static PnPConnection InitiateAccessTokenConnection(Uri url, string accessToken, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             using (var authManager = new PnP.Framework.AuthenticationManager())
             {
                 var context = PnPClientContext.ConvertFrom(authManager.GetAzureADAccessTokenAuthenticatedContext(url.ToString(), accessToken), retryCount, retryWait);
                 var connectionType = ConnectionType.O365;
-                if (skipAdminCheck == false)
+                if (IsTenantAdminSite(context))
                 {
-                    if (IsTenantAdminSite(context))
-                    {
-                        connectionType = ConnectionType.TenantAdmin;
-                    }
+                    connectionType = ConnectionType.TenantAdmin;
                 }
                 var spoConnection = new PnPConnection(context, connectionType, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.Token);
                 spoConnection.ConnectionMethod = Model.ConnectionMethod.AccessToken;
@@ -461,7 +399,7 @@ namespace PnP.PowerShell.Commands.Base
         }
 
 #if !PNPPSCORE
-        internal static PnPConnection InstantiateWebloginConnection(Uri url, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static PnPConnection InstantiateWebloginConnection(Uri url, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             using (var authManager = new PnP.Framework.AuthenticationManager())
             {
@@ -488,13 +426,10 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         connectionType = ConnectionType.O365;
                     }
-                    if (skipAdminCheck == false)
-                    {
                         if (IsTenantAdminSite(context))
                         {
                             connectionType = ConnectionType.TenantAdmin;
                         }
-                    }
                     var spoConnection = new PnPConnection(context, connectionType, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.InteractiveLogin);
                     spoConnection.ConnectionMethod = Model.ConnectionMethod.WebLogin;
                     spoConnection.AzureEnvironment = azureEnvironment;
@@ -516,7 +451,6 @@ namespace PnP.PowerShell.Commands.Base
             string tenantAdminUrl, 
             bool disableTelemetry,
             AzureEnvironment azureEnvironment, 
-            bool skipAdminCheck = false, 
             ClientAuthenticationMode authenticationMode = ClientAuthenticationMode.Default)
         {
             var context = new PnPClientContext(url.AbsoluteUri);
@@ -628,13 +562,10 @@ namespace PnP.PowerShell.Commands.Base
             {
                 connectionType = ConnectionType.O365;
             }
-            if (skipAdminCheck == false)
-            {
                 if (IsTenantAdminSite(context))
                 {
                     connectionType = ConnectionType.TenantAdmin;
                 }
-            }
             var spoConnection = new PnPConnection(context, connectionType, retryCount, retryWait, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.Credentials);
             spoConnection.ConnectionMethod = Model.ConnectionMethod.Credentials;
             spoConnection.AzureEnvironment = azureEnvironment;
@@ -643,7 +574,7 @@ namespace PnP.PowerShell.Commands.Base
 #endif
 
 #if PNPPSCORE
-        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, PSHost host, bool currentCredentials, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, PSHost host, bool currentCredentials, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             var context = new PnPClientContext(url.AbsoluteUri);
 
@@ -675,12 +606,9 @@ namespace PnP.PowerShell.Commands.Base
                 connectionType = ConnectionType.O365;
             }
 
-            if (skipAdminCheck == false)
+            if (IsTenantAdminSite(context))
             {
-                if (IsTenantAdminSite(context))
-                {
-                    connectionType = ConnectionType.TenantAdmin;
-                }
+                connectionType = ConnectionType.TenantAdmin;
             }
             var spoConnection = new PnPConnection(context, connectionType, retryCount, retryWait, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.Credentials);
             spoConnection.ConnectionMethod = Model.ConnectionMethod.Credentials;
@@ -690,7 +618,7 @@ namespace PnP.PowerShell.Commands.Base
 #endif
 
 #if !PNPPSCORE
-            internal static PnPConnection InstantiateAdfsConnection(Uri url, bool useKerberos, PSCredential credentials, PSHost host, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, string loginProviderName = null)
+            internal static PnPConnection InstantiateAdfsConnection(Uri url, bool useKerberos, PSCredential credentials, PSHost host, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, string loginProviderName = null)
         {
             using (var authManager = new PnP.Framework.AuthenticationManager())
             {
@@ -738,20 +666,17 @@ namespace PnP.PowerShell.Commands.Base
 
                 var connectionType = ConnectionType.OnPrem;
 
-                if (skipAdminCheck == false)
-                {
                     if (IsTenantAdminSite(context))
                     {
                         connectionType = ConnectionType.TenantAdmin;
                     }
-                }
                 var spoConnection = new PnPConnection(context, connectionType, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.ADFS);
                 spoConnection.ConnectionMethod = ConnectionMethod.ADFS;
                 return spoConnection;
             }
         }
 
-        internal static PnPConnection InstantiateAdfsCertificateConnection(Uri url, string serialNumber, PSHost host, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, string loginProviderName = null)
+        internal static PnPConnection InstantiateAdfsCertificateConnection(Uri url, string serialNumber, PSHost host, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, string loginProviderName = null)
         {
             using (var authManager = new PnP.Framework.AuthenticationManager())
             {
@@ -770,14 +695,12 @@ namespace PnP.PowerShell.Commands.Base
                 context.RequestTimeout = requestTimeout;
                 context.DisableReturnValueCache = true;
                 var connectionType = ConnectionType.OnPrem;
-
-                if (skipAdminCheck == false)
-                {
+            
                     if (IsTenantAdminSite(context))
                     {
                         connectionType = ConnectionType.TenantAdmin;
                     }
-                }
+
                 var spoConnection = new PnPConnection(context, connectionType, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.ADFS);
                 spoConnection.ConnectionMethod = ConnectionMethod.ADFS;
                 return spoConnection;

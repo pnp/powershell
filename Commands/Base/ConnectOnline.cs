@@ -439,21 +439,6 @@ PS:> dir",
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
         public string TenantAdminUrl;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
-        public SwitchParameter SkipTenantAdminCheck;
-
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
@@ -650,7 +635,7 @@ PS:> dir",
         private PnPConnection ConnectToken()
         {
 #pragma warning disable CS0618 // Type or member is obsolete
-            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, AppId, AppSecret, Host, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, AppId, AppSecret, Host, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, false, AzureEnvironment);
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 
@@ -671,7 +656,7 @@ PS:> dir",
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyClientIdCClientSecretUrl()
         {
-            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, false, AzureEnvironment);
         }
 
         /// <summary>
@@ -807,15 +792,15 @@ PS:> dir",
             if (ParameterSpecified(nameof(CertificatePath)))
             {
                 WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
-                return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+                return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
             }
             else if (ParameterSpecified(nameof(Certificate)))
             {
-                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment, Certificate);
+                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment, Certificate);
             }
             else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
             {
-                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment, CertificateBase64Encoded);
+                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment, CertificateBase64Encoded);
             }
             else
             {
@@ -834,7 +819,7 @@ PS:> dir",
         {
 #if !PNPPSCORE
 #else
-            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, CertificatePassword,  RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, CertificatePassword,  RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
 #endif
         }
 
@@ -844,7 +829,7 @@ PS:> dir",
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyAadThumb()
         {
-            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
         }
 
         /// <summary>
@@ -854,7 +839,7 @@ PS:> dir",
         private PnPConnection ConnectAppOnlyAadCer()
         {
 #if !PNPPSCORE
-            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Certificate, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Certificate, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
 #else
             throw new NotImplementedException();
 #endif
@@ -1032,7 +1017,7 @@ PS:> dir",
 #if !PNPPSCORE
             return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url.ToLower()), RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, SkipTenantAdminCheck);
 #else
-            WriteWarning(@"-UseWebLogin is not implemented, due to restrictions of the .NET Standard framework. Use -PnPO365ManagementShell instead");
+            WriteWarning(@"-UseWebLogin is not implemented, due to restrictions of the .NET Standard framework. Use -PnPManagementShell instead");
             return null;
 #endif
         }
@@ -1068,7 +1053,6 @@ PS:> dir",
                                                                RequestTimeout,
                                                                TenantAdminUrl,
                                                                NoTelemetry,
-                                                               SkipTenantAdminCheck, 
                                                                AzureEnvironment);
         }
 

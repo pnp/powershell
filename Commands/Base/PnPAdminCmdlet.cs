@@ -44,8 +44,7 @@ namespace PnP.PowerShell.Commands.Base
             PnPConnection.CurrentConnection.CacheContext();
 
             if (PnPConnection.CurrentConnection.TenantAdminUrl != null &&
-                (PnPConnection.CurrentConnection.ConnectionType == ConnectionType.O365 ||
-                 PnPConnection.CurrentConnection.ConnectionType == ConnectionType.OnPrem))
+                (PnPConnection.CurrentConnection.ConnectionType == ConnectionType.O365))
             {
                 var uri = new Uri(PnPConnection.CurrentConnection.Url);
                 var uriParts = uri.Host.Split('.');
