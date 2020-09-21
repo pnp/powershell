@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Base
         public SwitchParameter WriteToConsole;
 
         [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "The level of events to capture. Possible values are 'Debug', 'Error', 'Warning', 'Information'. Defaults to 'Information'.")]
-        public OfficeDevPnP.Core.Diagnostics.LogLevel Level = OfficeDevPnP.Core.Diagnostics.LogLevel.Information;
+        public PnP.Framework.Diagnostics.LogLevel Level = PnP.Framework.Diagnostics.LogLevel.Information;
 
         [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "If specified the trace log entries will be delimited with this value.")]
         public string Delimiter;
@@ -66,7 +66,7 @@ namespace PnP.PowerShell.Commands.Base
                     ConsoleTraceListener consoleListener = new ConsoleTraceListener(false);
                     consoleListener.Name = ConsoleListenername;
                     Trace.Listeners.Add(consoleListener);
-                    OfficeDevPnP.Core.Diagnostics.Log.LogLevel = Level;
+                    PnP.Framework.Diagnostics.Log.LogLevel = Level;
 #else
                     WriteWarning("Console logging not supported");
 #endif
@@ -88,7 +88,7 @@ namespace PnP.PowerShell.Commands.Base
 
                     listener.Name = FileListenername;
                     Trace.Listeners.Add(listener);
-                    OfficeDevPnP.Core.Diagnostics.Log.LogLevel = Level;
+                    PnP.Framework.Diagnostics.Log.LogLevel = Level;
                 }
 
                 Trace.AutoFlush = AutoFlush;

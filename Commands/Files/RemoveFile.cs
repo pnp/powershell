@@ -2,7 +2,7 @@
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.CmdletHelpAttributes;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using OfficeDevPnP.Core.Utilities;
+using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Files
 {

@@ -31,11 +31,11 @@ namespace PnP.PowerShell.Commands.Branding
         {
             if (On)
             {
-                SelectedWeb.Features.Add(OfficeDevPnP.Core.Constants.FeatureId_Web_MinimalDownloadStrategy, Force, FeatureDefinitionScope.None);
+                SelectedWeb.Features.Add(PnP.Framework.Constants.FeatureId_Web_MinimalDownloadStrategy, Force, FeatureDefinitionScope.None);
             }
             else
             {
-                SelectedWeb.Features.Remove(OfficeDevPnP.Core.Constants.FeatureId_Web_MinimalDownloadStrategy, Force);
+                SelectedWeb.Features.Remove(PnP.Framework.Constants.FeatureId_Web_MinimalDownloadStrategy, Force);
             }
             ClientContext.ExecuteQueryRetry();
         }

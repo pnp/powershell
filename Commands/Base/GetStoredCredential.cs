@@ -1,7 +1,7 @@
 ﻿using System.Management.Automation;
 using System.Net;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Utilities;
+using PnP.Framework.Utilities;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Enums;
 

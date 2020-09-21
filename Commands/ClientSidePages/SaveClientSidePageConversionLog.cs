@@ -49,7 +49,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         {
             try
             {
-                sitesCoreAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "OfficeDevPnP.Core.dll"));
+                sitesCoreAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "PnP.Framework.dll"));
                 modernizationAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "SharePointPnP.Modernization.Framework.dll"));
                 AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_LocalAssemblyResolve;
             }
@@ -58,7 +58,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
 
         private Assembly CurrentDomain_LocalAssemblyResolve(object sender, ResolveEventArgs args)
         {
-            if (args.Name.StartsWith("OfficeDevPnP.Core"))
+            if (args.Name.StartsWith("PnP.Framework"))
             {
                 return sitesCoreAssembly;
             }

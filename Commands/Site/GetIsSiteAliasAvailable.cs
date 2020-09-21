@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            var proposedUrl = OfficeDevPnP.Core.Sites.SiteCollection.GetValidSiteUrlFromAliasAsync(ClientContext, Identity).Result;
+            var proposedUrl = PnP.Framework.Sites.SiteCollection.GetValidSiteUrlFromAliasAsync(ClientContext, Identity).Result;
 
             var record = new PSObject();
             record.Properties.Add(new PSVariableProperty(new PSVariable("IsAvailable", proposedUrl.EndsWith($"/{Identity}", StringComparison.InvariantCultureIgnoreCase))));

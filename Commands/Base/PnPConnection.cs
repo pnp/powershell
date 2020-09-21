@@ -1,7 +1,7 @@
 ﻿using Microsoft.ApplicationInsights;
 using Microsoft.Identity.Client;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Extensions;
+using PnP.Framework.Extensions;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Core.Attributes;
@@ -18,7 +18,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using TextCopy;
 using PnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.Core;
+using PnP.Framework;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -673,7 +673,7 @@ namespace PnP.PowerShell.Commands.Base
                     if ((ex is WebException || ex is NotSupportedException) && CurrentConnection.PSCredential != null)
                     {
                         // legacy auth?
-                        using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
+                        using (var authManager = new PnP.Framework.AuthenticationManager())
                         {
                             context = authManager.GetAzureADCredentialsContext(url.ToString(), CurrentConnection.PSCredential.UserName, CurrentConnection.PSCredential.Password);
                         }

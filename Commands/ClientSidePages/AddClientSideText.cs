@@ -1,4 +1,4 @@
-﻿using OfficeDevPnP.Core.Pages;
+﻿using PnP.Framework.Pages;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;

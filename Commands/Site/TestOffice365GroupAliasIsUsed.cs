@@ -1,4 +1,4 @@
-﻿using OfficeDevPnP.Core.Sites;
+﻿using PnP.Framework.Sites;
 using PnP.PowerShell.CmdletHelpAttributes;
 using System.Management.Automation;
 

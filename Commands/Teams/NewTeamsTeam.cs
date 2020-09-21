@@ -1,4 +1,4 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Model.Teams;
+﻿using PnP.Framework.Provisioning.Model.Teams;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model.Teams;

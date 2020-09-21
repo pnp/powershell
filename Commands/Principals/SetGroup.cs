@@ -135,7 +135,7 @@ namespace PnP.PowerShell.Commands.Principals
                     dirty = true;
                 }
 
-                var plainTextDescription = OfficeDevPnP.Core.Utilities.PnPHttpUtility.ConvertSimpleHtmlToText(Description, int.MaxValue);
+                var plainTextDescription = PnP.Framework.Utilities.PnPHttpUtility.ConvertSimpleHtmlToText(Description, int.MaxValue);
                 if (group.Description != plainTextDescription)
                 {
                     //If the description is more than 512 characters long a server exception will be thrown.

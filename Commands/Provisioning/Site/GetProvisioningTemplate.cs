@@ -3,19 +3,19 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
-using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers;
+using PnP.Framework.Provisioning.Connectors;
+using PnP.Framework.Provisioning.Model;
+using PnP.Framework.Provisioning.ObjectHandlers;
+using PnP.Framework.Provisioning.Providers;
 using PnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
+using PnP.Framework.Provisioning.Providers.Xml;
 using File = System.IO.File;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using System.Collections;
 using PnP.PowerShell.Commands.Utilities;
 using System.Collections.Generic;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration;
+using PnP.Framework.Provisioning.Model.Configuration;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
@@ -140,7 +140,7 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "If specified, resource files will be saved with the specified prefix instead of using the template name specified. If no template name is specified the files will be called PnP-Resources.<language>.resx. See examples for more info.")]
         public string ResourceFilePrefix;
       
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting. For possible values for this parameter visit https://docs.microsoft.com/dotnet/api/officedevpnp.core.framework.provisioning.model.handlers")]
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting. For possible values for this parameter visit https://docs.microsoft.com/dotnet/api/PnP.Framework.Provisioning.model.handlers")]
         public Handlers Handlers;
 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to run all handlers, excluding the ones specified.")]

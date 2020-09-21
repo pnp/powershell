@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Management.Automation;
 using System.Net.Http;
-using OfficeDevPnP.Core.Framework.Graph;
+using PnP.Framework.Graph;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model;

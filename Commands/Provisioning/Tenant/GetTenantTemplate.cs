@@ -2,15 +2,15 @@
 using System.IO;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
-using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
+using PnP.Framework.Provisioning.Connectors;
+using PnP.Framework.Provisioning.Model;
+using PnP.Framework.Provisioning.ObjectHandlers;
 using PnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
+using PnP.Framework.Provisioning.Providers.Xml;
 using File = System.IO.File;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration;
+using PnP.Framework.Provisioning.Model.Configuration;
 using PnP.PowerShell.Commands.Base;
 using System.Threading.Tasks;
 
@@ -59,7 +59,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 {
                     if(extractConfiguration.Tenant.Sequence == null)
                     {
-                        extractConfiguration.Tenant.Sequence = new OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration.Tenant.Sequence.ExtractSequenceConfiguration();
+                        extractConfiguration.Tenant.Sequence = new PnP.Framework.Provisioning.Model.Configuration.Tenant.Sequence.ExtractSequenceConfiguration();
                     }
                     extractConfiguration.Tenant.Sequence.SiteUrls.Add(SiteUrl);
                 }

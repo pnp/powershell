@@ -1,4 +1,4 @@
-﻿using OfficeDevPnP.Core.Utilities;
+﻿using PnP.Framework.Utilities;
 using System;
 using System.Linq;
 using System.Web;
@@ -10,7 +10,7 @@ using Microsoft.Identity.Client;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Security;
-using OfficeDevPnP.Core;
+using PnP.Framework;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Base;
 

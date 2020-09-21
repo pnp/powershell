@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Graph
         {
             try
             {
-                var existingSettings = OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken);
+                var existingSettings = PnP.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken);
                 foreach (var classification in Classifications)
                 {
                     if (existingSettings.Classifications.Contains(classification))
@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Graph
                 }
                 if (existingSettings.Classifications.Any())
                 {
-                    OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.UpdateSiteClassificationsSettings(AccessToken, existingSettings);
+                    PnP.Framework.Graph.SiteClassificationsUtility.UpdateSiteClassificationsSettings(AccessToken, existingSettings);
                 }
                 else
                 {

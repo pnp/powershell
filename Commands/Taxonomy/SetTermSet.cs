@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-using OfficeDevPnP.Core.Extensions;
+using PnP.Framework.Extensions;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 

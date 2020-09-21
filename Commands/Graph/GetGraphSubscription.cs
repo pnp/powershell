@@ -30,12 +30,12 @@ namespace PnP.PowerShell.Commands.Graph
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                OfficeDevPnP.Core.Framework.Graph.Model.Subscription subscription = OfficeDevPnP.Core.Framework.Graph.SubscriptionsUtility.GetSubscription(AccessToken, System.Guid.Parse(Identity));
+                PnP.Framework.Graph.Model.Subscription subscription = PnP.Framework.Graph.SubscriptionsUtility.GetSubscription(AccessToken, System.Guid.Parse(Identity));
                 WriteObject(subscription);
             }
             else
             {
-                List<OfficeDevPnP.Core.Framework.Graph.Model.Subscription> subscriptions = OfficeDevPnP.Core.Framework.Graph.SubscriptionsUtility.ListSubscriptions(AccessToken);
+                List<PnP.Framework.Graph.Model.Subscription> subscriptions = PnP.Framework.Graph.SubscriptionsUtility.ListSubscriptions(AccessToken);
                 WriteObject(subscriptions, true);
             }
         }

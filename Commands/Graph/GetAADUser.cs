@@ -75,25 +75,25 @@ namespace PnP.PowerShell.Commands.Graph
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                OfficeDevPnP.Core.Framework.Graph.Model.User user;
+                PnP.Framework.Graph.Model.User user;
                 if (Guid.TryParse(Identity, out Guid identityGuid))
                 {
-                    user = OfficeDevPnP.Core.Framework.Graph.UsersUtility.GetUser(AccessToken, identityGuid);
+                    user = PnP.Framework.Graph.UsersUtility.GetUser(AccessToken, identityGuid);
                 }
                 else
                 {
-                    user = OfficeDevPnP.Core.Framework.Graph.UsersUtility.GetUser(AccessToken, Identity, Select);
+                    user = PnP.Framework.Graph.UsersUtility.GetUser(AccessToken, Identity, Select);
                 }
                 WriteObject(user);
             }
             else if (ParameterSpecified(nameof(Delta)))
             {
-                OfficeDevPnP.Core.Framework.Graph.Model.UserDelta userDelta = OfficeDevPnP.Core.Framework.Graph.UsersUtility.ListUserDelta(AccessToken, DeltaToken, Filter, OrderBy, Select);
+                PnP.Framework.Graph.Model.UserDelta userDelta = PnP.Framework.Graph.UsersUtility.ListUserDelta(AccessToken, DeltaToken, Filter, OrderBy, Select);
                 WriteObject(userDelta);
             } 
             else
             {
-                List<OfficeDevPnP.Core.Framework.Graph.Model.User> users = OfficeDevPnP.Core.Framework.Graph.UsersUtility.ListUsers(AccessToken, Filter, OrderBy, Select);
+                List<PnP.Framework.Graph.Model.User> users = PnP.Framework.Graph.UsersUtility.ListUsers(AccessToken, Filter, OrderBy, Select);
                 WriteObject(users, true);
             }
         }

@@ -1,8 +1,8 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
-using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
-using OfficeDevPnP.Core.AppModelExtensions;
+﻿using PnP.Framework.Provisioning.Connectors;
+using PnP.Framework.Provisioning.Model;
+using PnP.Framework.Provisioning.Providers;
+using PnP.Framework.Provisioning.Providers.Xml;
+using PnP.Framework.AppModelExtensions;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
@@ -88,7 +88,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             ClientContext.Load(listFolder);
             ClientContext.ExecuteQueryRetry();
 
-            IList<OfficeDevPnP.Core.Framework.Provisioning.Model.Folder> folders = GetChildFolders(listFolder);
+            IList<PnP.Framework.Provisioning.Model.Folder> folders = GetChildFolders(listFolder);
 
             template.Lists.Remove(listInstance);
             listInstance.Folders.AddRange(folders);
@@ -115,9 +115,9 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
         }
 
-        private IList<OfficeDevPnP.Core.Framework.Provisioning.Model.Folder> GetChildFolders(Microsoft.SharePoint.Client.Folder listFolder)
+        private IList<PnP.Framework.Provisioning.Model.Folder> GetChildFolders(Microsoft.SharePoint.Client.Folder listFolder)
         {
-            List<OfficeDevPnP.Core.Framework.Provisioning.Model.Folder> retFolders = new List<OfficeDevPnP.Core.Framework.Provisioning.Model.Folder>();
+            List<PnP.Framework.Provisioning.Model.Folder> retFolders = new List<PnP.Framework.Provisioning.Model.Folder>();
             ClientContext.Load(listFolder, l => l.Name, l => l.Folders);
             ClientContext.ExecuteQueryRetry();
             var folders = listFolder.Folders;
@@ -134,14 +134,14 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             return retFolders;
         }
 
-        private OfficeDevPnP.Core.Framework.Provisioning.Model.Folder GetFolder(Microsoft.SharePoint.Client.Folder listFolder)
+        private PnP.Framework.Provisioning.Model.Folder GetFolder(Microsoft.SharePoint.Client.Folder listFolder)
         {
             ListItem folderItem = listFolder.ListItemAllFields;
             ClientContext.Load(folderItem, fI => fI.HasUniqueRoleAssignments);
             ClientContext.Load(listFolder, l => l.Name, l => l.Folders);
             ClientContext.ExecuteQueryRetry();
 
-            OfficeDevPnP.Core.Framework.Provisioning.Model.Folder retFolder = new OfficeDevPnP.Core.Framework.Provisioning.Model.Folder();
+            PnP.Framework.Provisioning.Model.Folder retFolder = new PnP.Framework.Provisioning.Model.Folder();
             retFolder.Name = listFolder.Name;
 
             if (Recursive)
@@ -170,7 +170,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                     var roleBindings = roleAssignment.RoleDefinitionBindings;
                     foreach (var roleBinding in roleBindings)
                     {
-                        retFolder.Security.RoleAssignments.Add(new OfficeDevPnP.Core.Framework.Provisioning.Model.RoleAssignment() { Principal = principalName, RoleDefinition = roleBinding.Name });
+                        retFolder.Security.RoleAssignments.Add(new PnP.Framework.Provisioning.Model.RoleAssignment() { Principal = principalName, RoleDefinition = roleBinding.Name });
                     }
                 }
             }

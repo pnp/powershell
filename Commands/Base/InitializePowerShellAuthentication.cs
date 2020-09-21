@@ -1,6 +1,6 @@
 ﻿#if !PNPPSCORE
-using OfficeDevPnP.Core;
-using OfficeDevPnP.Core.Utilities;
+using PnP.Framework;
+using PnP.Framework.Utilities;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;

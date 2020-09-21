@@ -1,5 +1,5 @@
-﻿using OfficeDevPnP.Core.ALM;
-using OfficeDevPnP.Core.Enums;
+﻿using PnP.Framework.ALM;
+using PnP.Framework.Enums;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Enums;
 using System.Management.Automation;

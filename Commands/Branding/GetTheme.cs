@@ -1,7 +1,7 @@
 ﻿using System.Management.Automation;
 using System.Text.Json;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Framework.Provisioning.Model;
+using PnP.Framework.Provisioning.Model;
 using PnP.PowerShell.CmdletHelpAttributes;
 
 namespace PnP.PowerShell.Commands.Branding
@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands.Branding
     [Cmdlet(VerbsCommon.Get, "PnPTheme")]
     [CmdletHelp("Returns the current theme/composed look of the current web.",
         Category = CmdletHelpCategory.Branding,
-        OutputType = typeof(OfficeDevPnP.Core.Entities.ThemeEntity))]
+        OutputType = typeof(PnP.Framework.Entities.ThemeEntity))]
     [CmdletExample(
         Code = @"PS:> Get-PnPTheme",
         Remarks = "Returns the current composed look of the current web.",

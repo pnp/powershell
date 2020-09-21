@@ -2,14 +2,14 @@
 using System.IO;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Framework.Provisioning.Model;
+using PnP.Framework.Provisioning.Model;
 using PnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
-using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
-using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
+using PnP.Framework.Provisioning.Providers.Xml;
+using PnP.Framework.Provisioning.Connectors;
+using PnP.Framework.Provisioning.ObjectHandlers;
 using System.Collections;
 using System.Linq;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers;
+using PnP.Framework.Provisioning.Providers;
 using System.Collections.Generic;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Base;
@@ -95,7 +95,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to specify parameters that can be referred to in the template by means of the {parameter:<Key>} token. See examples on how to use this parameter.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Hashtable Parameters;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying. Visit https://docs.microsoft.com/dotnet/api/officedevpnp.core.framework.provisioning.model.handlers for possible values.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying. Visit https://docs.microsoft.com/dotnet/api/PnP.Framework.Provisioning.model.handlers for possible values.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Handlers Handlers;
 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to run all handlers, excluding the ones specified.", ParameterSetName = ParameterAttribute.AllParameterSets)]

@@ -1,5 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Utilities;
+using PnP.Framework.Utilities;
 using PnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.IO;

@@ -1,4 +1,4 @@
-﻿using OfficeDevPnP.Core.Entities;
+﻿using PnP.Framework.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Identity.Client;
-using OfficeDevPnP.Core;
+using PnP.Framework;
 using System;
 using System.Linq;
 using System.Security;

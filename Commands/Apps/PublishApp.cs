@@ -1,4 +1,4 @@
-﻿using OfficeDevPnP.Core.Enums;
+﻿using PnP.Framework.Enums;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Apps
 
         protected override void ExecuteCmdlet()
         {
-            var manager = new OfficeDevPnP.Core.ALM.AppManager(ClientContext);
+            var manager = new PnP.Framework.ALM.AppManager(ClientContext);
 
             var app = Identity.GetAppMetadata(ClientContext, Scope);
             if (app != null)

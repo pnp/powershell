@@ -683,7 +683,7 @@
     <View>
       <Name>ExtensibilityHandler</Name>
       <ViewSelectedBy>
-        <TypeName>OfficeDevPnP.Core.Framework.Provisioning.Model.ExtensibilityHandler</TypeName>
+        <TypeName>PnP.Framework.Provisioning.Model.ExtensibilityHandler</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -864,7 +864,7 @@
     <View>
       <Name>UnifiedGroupEntity</Name>
       <ViewSelectedBy>
-        <TypeName>OfficeDevPnP.Core.Entities.UnifiedGroupEntity</TypeName>
+        <TypeName>PnP.Framework.Entities.UnifiedGroupEntity</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -1096,7 +1096,7 @@
     <View>
       <Name>SitePolicyEntity</Name>
       <ViewSelectedBy>
-        <TypeName>OfficeDevPnP.Core.Entities.SitePolicyEntity</TypeName>
+        <TypeName>PnP.Framework.Entities.SitePolicyEntity</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -1288,7 +1288,7 @@
     <View>
       <Name>ClientSideComponent</Name>
       <ViewSelectedBy>
-        <TypeName>OfficeDevPnP.Core.Pages.ClientSideComponent</TypeName>
+        <TypeName>PnP.Framework.Pages.ClientSideComponent</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -1325,7 +1325,7 @@
     <View>
       <Name>AppMetadata</Name>
       <ViewSelectedBy>
-        <TypeName>OfficeDevPnP.Core.ALM.AppMetadata</TypeName>
+        <TypeName>PnP.Framework.ALM.AppMetadata</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -1501,7 +1501,7 @@
     <View>
       <Name>CanvasControl</Name>
       <ViewSelectedBy>
-        <TypeName>OfficeDevPnP.Core.Pages.CanvasControl</TypeName>
+        <TypeName>PnP.Framework.Pages.CanvasControl</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>

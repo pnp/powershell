@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Utilities;
+using PnP.Framework.Utilities;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 

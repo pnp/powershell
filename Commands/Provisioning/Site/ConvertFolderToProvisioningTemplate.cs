@@ -1,5 +1,5 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML;
-using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML.Model;
+﻿using PnP.Framework.Provisioning.Connectors.OpenXML;
+using PnP.Framework.Provisioning.Connectors.OpenXML.Model;
 using PnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Collections.Generic;
@@ -86,7 +86,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                 },
                 Properties = new PnPProperties()
                 {
-                    Generator = OfficeDevPnP.Core.Utilities.PnPCoreUtilities.PnPCoreVersionTag,
+                    Generator = PnP.Framework.Utilities.PnPCoreUtilities.PnPCoreVersionTag,
                     Author = string.Empty,
                 },
                 Files = new List<PnPFileInfo>()

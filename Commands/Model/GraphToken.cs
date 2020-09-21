@@ -1,5 +1,5 @@
 ﻿using Microsoft.Identity.Client;
-using OfficeDevPnP.Core;
+using PnP.Framework;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;

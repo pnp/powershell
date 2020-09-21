@@ -1,16 +1,16 @@
 ﻿using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Utilities;
-using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
-using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
+using PnP.Framework.Provisioning.Connectors;
+using PnP.Framework.Provisioning.Model;
+using PnP.Framework.Provisioning.Providers;
+using PnP.Framework.Provisioning.Providers.Xml;
 using PnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Net;
-using PnPFileLevel = OfficeDevPnP.Core.Framework.Provisioning.Model.FileLevel;
+using PnPFileLevel = PnP.Framework.Provisioning.Model.FileLevel;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
@@ -155,7 +155,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             if (existing != null)
                 template.Files.Remove(existing);
 
-            var newFile = new OfficeDevPnP.Core.Framework.Provisioning.Model.File
+            var newFile = new PnP.Framework.Provisioning.Model.File
             {
                 Src = source,
                 Folder = folder,

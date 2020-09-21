@@ -1,7 +1,7 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
-using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
+﻿using PnP.Framework.Provisioning.Connectors;
+using PnP.Framework.Provisioning.Model;
+using PnP.Framework.Provisioning.Providers;
+using PnP.Framework.Provisioning.Providers.Xml;
 using PnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.IO;

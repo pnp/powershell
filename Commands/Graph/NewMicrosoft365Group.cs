@@ -1,4 +1,4 @@
-﻿using OfficeDevPnP.Core.Framework.Graph;
+﻿using PnP.Framework.Graph;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Properties;

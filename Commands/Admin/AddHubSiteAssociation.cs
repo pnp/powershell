@@ -3,9 +3,7 @@ using Microsoft.SharePoint.Client;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
-using OfficeDevPnP.Core.Sites;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System;
 
 namespace PnP.PowerShell.Commands.Admin
 {

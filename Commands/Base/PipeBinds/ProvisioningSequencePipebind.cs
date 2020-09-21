@@ -1,4 +1,4 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Model;
+﻿using PnP.Framework.Provisioning.Model;
 using System;
 using System.Linq;
 

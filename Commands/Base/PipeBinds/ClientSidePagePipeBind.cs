@@ -1,5 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Pages;
+using PnP.Framework.Pages;
 using PnP.PowerShell.Commands.ClientSidePages;
 using System;
 using System.Collections.Generic;

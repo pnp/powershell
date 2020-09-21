@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Identity.Client;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core;
+using PnP.Framework;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.Base
 
             if (url != null)
             {
-                using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
+                using (var authManager = new PnP.Framework.AuthenticationManager())
                 {
                     if (realm == null)
                     {
@@ -67,7 +67,7 @@ namespace PnP.PowerShell.Commands.Base
                     context.RequestTimeout = requestTimeout;
                     context.DisableReturnValueCache = true;
                     connectionType = ConnectionType.OnPrem;
-                    if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
+                    if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
                     {
                         connectionType = ConnectionType.O365;
                     }
@@ -212,14 +212,14 @@ namespace PnP.PowerShell.Commands.Base
 #if !PNPPSCORE
         internal static PnPConnection InitiateAzureADNativeApplicationConnection(Uri url, string clientId, Uri redirectUri, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
-            using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
+            using (var authManager = new PnP.Framework.AuthenticationManager())
             {
                 string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 string configFile = Path.Combine(appDataFolder, "PnP.PowerShell\\tokencache.dat");
                 FileTokenCache cache = new FileTokenCache(configFile);
                 var context = PnPClientContext.ConvertFrom(authManager.GetAzureADNativeApplicationAuthenticatedContext(url.ToString(), clientId, redirectUri, cache, azureEnvironment), retryCount, retryWait * 10000);
                 var connectionType = ConnectionType.OnPrem;
-                if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
+                if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
                 {
                     connectionType = ConnectionType.O365;
                 }
@@ -241,11 +241,11 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, X509Certificate2 certificate, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
-            using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
+            using (var authManager = new PnP.Framework.AuthenticationManager())
             {
                 var context = PnPClientContext.ConvertFrom(authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificate, azureEnvironment), retryCount, retryWait * 1000);
                 var connectionType = ConnectionType.OnPrem;
-                if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
+                if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
                 {
                     connectionType = ConnectionType.O365;
                 }
@@ -356,13 +356,13 @@ namespace PnP.PowerShell.Commands.Base
             int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry,
             bool skipAdminCheck, AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool certificateFromFile)
         {
-            using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
+            using (var authManager = new PnP.Framework.AuthenticationManager())
             {
                 var clientContext = authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificate, azureEnvironment);
                 var context = PnPClientContext.ConvertFrom(clientContext, retryCount, retryWait * 1000);
                 context.RequestTimeout = requestTimeout;
                 var connectionType = ConnectionType.OnPrem;
-                if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
+                if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
                 {
                     connectionType = ConnectionType.O365;
                 }
@@ -445,7 +445,7 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static PnPConnection InitiateAccessTokenConnection(Uri url, string accessToken, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
-            using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
+            using (var authManager = new PnP.Framework.AuthenticationManager())
             {
                 var context = PnPClientContext.ConvertFrom(authManager.GetAzureADAccessTokenAuthenticatedContext(url.ToString(), accessToken), retryCount, retryWait);
                 var connectionType = ConnectionType.O365;
@@ -465,7 +465,7 @@ namespace PnP.PowerShell.Commands.Base
 #if !PNPPSCORE
         internal static PnPConnection InstantiateWebloginConnection(Uri url, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
-            using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
+            using (var authManager = new PnP.Framework.AuthenticationManager())
             {
                 // Log in to a specific page on the tenant which is known to be performant
                 var webLoginClientContext = authManager.GetWebLoginClientContext(url.ToString(), loginRequestUri: new Uri(url, "/_layouts/15/settings.aspx"));
@@ -486,7 +486,7 @@ namespace PnP.PowerShell.Commands.Base
                     context.RequestTimeout = requestTimeout;
                     context.DisableReturnValueCache = true;
                     var connectionType = ConnectionType.OnPrem;
-                    if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
+                    if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
                     {
                         connectionType = ConnectionType.O365;
                     }
@@ -571,7 +571,7 @@ namespace PnP.PowerShell.Commands.Base
                                 throw ex;
                             }
                         }
-                        //using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
+                        //using (var authManager = new PnP.Framework.AuthenticationManager())
                         //{
                         //    context = PnPClientContext.ConvertFrom(authManager.GetAzureADCredentialsContext(url.ToString(), credentials.UserName, credentials.Password, AzureEnvironment.Production, KnownClientId.PnPManagementShell));
                         //    context.ExecuteQueryRetry();
@@ -627,7 +627,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             var connectionType = ConnectionType.O365;
 
-            if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
+            if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
             {
                 connectionType = ConnectionType.O365;
             }
@@ -658,7 +658,7 @@ namespace PnP.PowerShell.Commands.Base
 
             try
             {
-                using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
+                using (var authManager = new PnP.Framework.AuthenticationManager())
                 {
                     context = PnPClientContext.ConvertFrom(authManager.GetAzureADCredentialsContext(url.ToString(), credentials.UserName, credentials.Password));
                     context.ExecuteQueryRetry();
@@ -673,7 +673,7 @@ namespace PnP.PowerShell.Commands.Base
                 context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
             }
             var connectionType = ConnectionType.O365;
-            if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
+            if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
             {
                 connectionType = ConnectionType.O365;
             }
@@ -695,11 +695,11 @@ namespace PnP.PowerShell.Commands.Base
 #if !PNPPSCORE
             internal static PnPConnection InstantiateAdfsConnection(Uri url, bool useKerberos, PSCredential credentials, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, string loginProviderName = null)
         {
-            using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
+            using (var authManager = new PnP.Framework.AuthenticationManager())
             {
                 string adfsHost;
                 string adfsRelyingParty;
-                OfficeDevPnP.Core.AuthenticationManager.GetAdfsConfigurationFromTargetUri(url, loginProviderName, out adfsHost, out adfsRelyingParty);
+                PnP.Framework.AuthenticationManager.GetAdfsConfigurationFromTargetUri(url, loginProviderName, out adfsHost, out adfsRelyingParty);
 
                 if (string.IsNullOrEmpty(adfsHost) || string.IsNullOrEmpty(adfsRelyingParty))
                 {
@@ -756,11 +756,11 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static PnPConnection InstantiateAdfsCertificateConnection(Uri url, string serialNumber, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, string loginProviderName = null)
         {
-            using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
+            using (var authManager = new PnP.Framework.AuthenticationManager())
             {
                 string adfsHost;
                 string adfsRelyingParty;
-                OfficeDevPnP.Core.AuthenticationManager.GetAdfsConfigurationFromTargetUri(url, loginProviderName, out adfsHost, out adfsRelyingParty);
+                PnP.Framework.AuthenticationManager.GetAdfsConfigurationFromTargetUri(url, loginProviderName, out adfsHost, out adfsRelyingParty);
 
                 if (string.IsNullOrEmpty(adfsHost) || string.IsNullOrEmpty(adfsRelyingParty))
                 {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
-using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
+using PnP.Framework.Provisioning.Connectors;
+using PnP.Framework.Provisioning.Model;
+using PnP.Framework.Provisioning.Providers;
+using PnP.Framework.Provisioning.Providers.Xml;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
@@ -146,7 +146,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                                 var roleBindings = roleAssignment.RoleDefinitionBindings;
                                 foreach (var roleBinding in roleBindings)
                                 {
-                                    row.Security.RoleAssignments.Add(new OfficeDevPnP.Core.Framework.Provisioning.Model.RoleAssignment() { Principal = principalName, RoleDefinition = roleBinding.Name });
+                                    row.Security.RoleAssignments.Add(new PnP.Framework.Provisioning.Model.RoleAssignment() { Principal = principalName, RoleDefinition = roleBinding.Name });
                                 }
                             }
                         }

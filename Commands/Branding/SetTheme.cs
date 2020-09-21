@@ -2,8 +2,8 @@
 using System.Management.Automation;
 using System.Text.Json;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using OfficeDevPnP.Core.Utilities;
+using PnP.Framework.Provisioning.Model;
+using PnP.Framework.Utilities;
 using PnP.PowerShell.CmdletHelpAttributes;
 
 namespace PnP.PowerShell.Commands.Branding

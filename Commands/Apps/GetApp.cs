@@ -3,10 +3,10 @@ using System.Linq;
 using System.Management.Automation;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using OfficeDevPnP.Core.ALM;
+using PnP.Framework.ALM;
 using System;
 using PnP.PowerShell.Commands.Enums;
-using OfficeDevPnP.Core.Enums;
+using PnP.Framework.Enums;
 using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Apps

@@ -52,7 +52,7 @@ namespace PnP.PowerShell.Commands.Lists
             var list = SelectedWeb.CreateList(Template, Title, EnableVersioning, true, Url, EnableContentTypes, Hidden);
             if (Hidden)
             {
-                SelectedWeb.DeleteNavigationNode(Title, "Recent", OfficeDevPnP.Core.Enums.NavigationType.QuickLaunch);
+                SelectedWeb.DeleteNavigationNode(Title, "Recent", PnP.Framework.Enums.NavigationType.QuickLaunch);
             }
             if (OnQuickLaunch)
             {

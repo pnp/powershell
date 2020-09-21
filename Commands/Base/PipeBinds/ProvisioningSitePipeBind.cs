@@ -1,4 +1,4 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Model;
+﻿using PnP.Framework.Provisioning.Model;
 using System.Linq;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds

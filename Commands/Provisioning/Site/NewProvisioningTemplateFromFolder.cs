@@ -1,6 +1,6 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
+﻿using PnP.Framework.Provisioning.Model;
+using PnP.Framework.Provisioning.Providers;
+using PnP.Framework.Provisioning.Providers.Xml;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections;
@@ -9,8 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Xml.Linq;
-using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML;
-using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML.Model;
+using PnP.Framework.Provisioning.Connectors.OpenXML;
+using PnP.Framework.Provisioning.Connectors.OpenXML.Model;
 using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Provisioning
@@ -159,7 +159,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                 },
                 Properties = new PnPProperties()
                 {
-                    Generator = OfficeDevPnP.Core.Utilities.PnPCoreUtilities.PnPCoreVersionTag,
+                    Generator = PnP.Framework.Utilities.PnPCoreUtilities.PnPCoreVersionTag,
                     Author = string.Empty,
                 },
                 Files = new List<PnPFileInfo>()
@@ -281,9 +281,9 @@ namespace PnP.PowerShell.Commands.Provisioning
             return reader.ReadToEnd();
         }
 
-        private List<OfficeDevPnP.Core.Framework.Provisioning.Model.File> EnumerateFiles(string folder, string ctid, Hashtable properties)
+        private List<PnP.Framework.Provisioning.Model.File> EnumerateFiles(string folder, string ctid, Hashtable properties)
         {
-            var files = new List<OfficeDevPnP.Core.Framework.Provisioning.Model.File>();
+            var files = new List<PnP.Framework.Provisioning.Model.File>();
 
             DirectoryInfo dirInfo = new DirectoryInfo(folder);
 
@@ -298,7 +298,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                 var unrootedPath = file.FullName.Substring(Folder.Length + 1);
                 var targetFolder = Path.Combine(TargetFolder, unrootedPath.LastIndexOf("\\") > -1 ? unrootedPath.Substring(0, unrootedPath.LastIndexOf("\\")) : "");
                 targetFolder = targetFolder.Replace('\\', '/');
-                var modelFile = new OfficeDevPnP.Core.Framework.Provisioning.Model.File()
+                var modelFile = new PnP.Framework.Provisioning.Model.File()
                 {
                     Folder = targetFolder,
                     Overwrite = true,

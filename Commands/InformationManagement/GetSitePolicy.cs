@@ -7,7 +7,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
     [Cmdlet(VerbsCommon.Get, "PnPSitePolicy")]
     [CmdletHelp("Retrieves all or a specific site policy",
         Category = CmdletHelpCategory.InformationManagement,
-        OutputType=typeof(OfficeDevPnP.Core.Entities.SitePolicyEntity))]
+        OutputType=typeof(PnP.Framework.Entities.SitePolicyEntity))]
     [CmdletExample(
      Code = @"PS:> Get-PnPSitePolicy",
      Remarks = @"Retrieves the current applied site policy.", SortOrder = 1)]

@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Graph
         {
             try
             {
-                var settings = OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken);
+                var settings = PnP.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken);
                 foreach (var classification in Classifications)
                 {
                     if (!settings.Classifications.Contains(classification))
@@ -36,7 +36,7 @@ namespace PnP.PowerShell.Commands.Graph
                         settings.Classifications.Add(classification);
                     }
                 }
-                OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.UpdateSiteClassificationsSettings(AccessToken, settings);
+                PnP.Framework.Graph.SiteClassificationsUtility.UpdateSiteClassificationsSettings(AccessToken, settings);
             }
             catch (ApplicationException ex)
             {

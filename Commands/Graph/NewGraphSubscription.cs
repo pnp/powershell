@@ -1,4 +1,4 @@
-﻿using OfficeDevPnP.Core.Framework.Graph;
+﻿using PnP.Framework.Graph;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using System;
@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Graph
     public class NewGraphSubscription : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The event(s) the subscription should trigger on")]
-        public OfficeDevPnP.Core.Enums.GraphSubscriptionChangeType ChangeType;
+        public PnP.Framework.Enums.GraphSubscriptionChangeType ChangeType;
 
         [Parameter(Mandatory = true, HelpMessage = "The URL that should be called when an event matching this subscription occurs")]
         public String NotificationUrl;
@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Graph
         public String ClientState;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies the latest version of Transport Layer Security (TLS) that the notification endpoint, specified by NotificationUrl, supports. If not provided, TLS 1.2 will be assumed.")]
-        public OfficeDevPnP.Core.Enums.GraphSubscriptionTlsVersion LatestSupportedTlsVersion = OfficeDevPnP.Core.Enums.GraphSubscriptionTlsVersion.v1_2;
+        public PnP.Framework.Enums.GraphSubscriptionTlsVersion LatestSupportedTlsVersion = PnP.Framework.Enums.GraphSubscriptionTlsVersion.v1_2;
 
         protected override void ExecuteCmdlet()
         {

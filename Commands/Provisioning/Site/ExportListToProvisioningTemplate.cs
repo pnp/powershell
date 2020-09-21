@@ -2,12 +2,12 @@
 using System.IO;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
-using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers;
+using PnP.Framework.Provisioning.Connectors;
+using PnP.Framework.Provisioning.Model;
+using PnP.Framework.Provisioning.ObjectHandlers;
+using PnP.Framework.Provisioning.Providers;
 using PnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
+using PnP.Framework.Provisioning.Providers.Xml;
 using File = System.IO.File;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.PowerShell.Commands.Utilities;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.ALM;
-using OfficeDevPnP.Core.Enums;
+using PnP.Framework.ALM;
+using PnP.Framework.Enums;
 using System;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds

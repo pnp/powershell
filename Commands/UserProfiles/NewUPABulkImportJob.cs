@@ -7,7 +7,7 @@ using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
-using OfficeDevPnP.Core.Utilities;
+using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {

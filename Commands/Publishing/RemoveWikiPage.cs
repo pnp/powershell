@@ -1,6 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Utilities;
+using PnP.Framework.Utilities;
 using PnP.PowerShell.CmdletHelpAttributes;
 
 namespace PnP.PowerShell.Commands.Publishing

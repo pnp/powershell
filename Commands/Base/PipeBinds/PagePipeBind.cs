@@ -1,5 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Utilities;
+using PnP.Framework.Utilities;
 #if !PNPPSCORE
 using SharePointPnP.Modernization.Framework.Transform;
 #endif

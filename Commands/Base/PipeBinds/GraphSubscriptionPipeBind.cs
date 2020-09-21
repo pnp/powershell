@@ -1,4 +1,4 @@
-﻿using OfficeDevPnP.Core.Framework.Graph.Model;
+﻿using PnP.Framework.Graph.Model;
 using System;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds

@@ -51,7 +51,7 @@ namespace PnP.PowerShell.Commands
 
         public IEnumerable<Zone> AllZones()
         {
-            foreach (var zone in Enum.GetValues(typeof(OfficeDevPnP.Core.Enums.TimeZone)))
+            foreach (var zone in Enum.GetValues(typeof(PnP.Framework.Enums.TimeZone)))
             {
                 var description = zone.ToString();
                 var identifier = description.Split('_')[0];

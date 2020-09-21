@@ -32,7 +32,7 @@ PS:> Enable-PnPSiteClassification -Classifications ""HBI"",""LBI"",""Top Secret"
 
         protected override void ExecuteCmdlet()
         {
-            OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.EnableSiteClassifications(AccessToken, Classifications, DefaultClassification, UsageGuidelinesUrl);
+            PnP.Framework.Graph.SiteClassificationsUtility.EnableSiteClassifications(AccessToken, Classifications, DefaultClassification, UsageGuidelinesUrl);
         }
     }
 }

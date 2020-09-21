@@ -1,4 +1,4 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Model;
+﻿using PnP.Framework.Provisioning.Model;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;

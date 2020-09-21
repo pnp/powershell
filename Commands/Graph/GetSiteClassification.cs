@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Graph
         {
             try
             {
-                WriteObject(OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken), true);
+                WriteObject(PnP.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken), true);
             }
             catch (ApplicationException ex)
             {

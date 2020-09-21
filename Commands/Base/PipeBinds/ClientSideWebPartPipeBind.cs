@@ -1,4 +1,4 @@
-﻿using OfficeDevPnP.Core.Pages;
+﻿using PnP.Framework.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;

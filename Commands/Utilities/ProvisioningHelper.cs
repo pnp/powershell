@@ -1,5 +1,5 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Providers;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
+﻿using PnP.Framework.Provisioning.Providers;
+using PnP.Framework.Provisioning.Providers.Xml;
 using System;
 using System.Collections.Generic;
 using System.Linq;

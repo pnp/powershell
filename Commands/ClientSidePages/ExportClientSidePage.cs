@@ -1,7 +1,7 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
-using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration;
-using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
+﻿using PnP.Framework.Provisioning.Connectors;
+using PnP.Framework.Provisioning.Model;
+using PnP.Framework.Provisioning.Model.Configuration;
+using PnP.Framework.Provisioning.ObjectHandlers;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Properties;
@@ -72,7 +72,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
         {
             var outputTemplate = new ProvisioningTemplate();
             outputTemplate.Id = $"TEMPLATE-{Guid.NewGuid():N}".ToUpper();
-            var helper = new OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers.Utilities.ClientSidePageContentsHelper();
+            var helper = new PnP.Framework.Provisioning.ObjectHandlers.Utilities.ClientSidePageContentsHelper();
             ProvisioningTemplateCreationInformation ci = null;
             if (configuration != null)
             {
@@ -91,7 +91,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                 var fileSystemConnector = new FileSystemConnector(dirName, "");
                 ci.FileConnector = fileSystemConnector;
             }
-            helper.ExtractClientSidePage(SelectedWeb, outputTemplate, ci, new OfficeDevPnP.Core.Diagnostics.PnPMonitoredScope(), null, Identity.Name, false);
+            helper.ExtractClientSidePage(SelectedWeb, outputTemplate, ci, new PnP.Framework.Diagnostics.PnPMonitoredScope(), null, Identity.Name, false);
 
             if (!string.IsNullOrEmpty(fileName))
             {

@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.CmdletHelpAttributes;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using OfficeDevPnP.Core.Utilities;
+using PnP.Framework.Utilities;
 using File = Microsoft.SharePoint.Client.File;
 
 namespace PnP.PowerShell.Commands.Files

@@ -4,7 +4,7 @@ using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using System;
-using OfficeDevPnP.Core;
+using PnP.Framework;
 
 namespace PnP.PowerShell.Commands
 {

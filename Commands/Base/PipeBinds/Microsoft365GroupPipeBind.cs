@@ -1,5 +1,5 @@
-﻿using OfficeDevPnP.Core.Entities;
-using OfficeDevPnP.Core.Framework.Graph;
+﻿using PnP.Framework.Entities;
+using PnP.Framework.Graph;
 using System;
 using System.Linq;
 

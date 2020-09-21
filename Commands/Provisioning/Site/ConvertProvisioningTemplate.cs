@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Management.Automation;
 using PnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
+using PnP.Framework.Provisioning.Providers.Xml;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers;
+using PnP.Framework.Provisioning.Providers;
 using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Provisioning

@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Graph
         {
             try
             {
-                OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.DisableSiteClassifications(AccessToken);
+                PnP.Framework.Graph.SiteClassificationsUtility.DisableSiteClassifications(AccessToken);
             }
             catch (ApplicationException ex)
             {

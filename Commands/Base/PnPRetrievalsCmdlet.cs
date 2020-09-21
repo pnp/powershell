@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Management.Automation;
 using System.Threading;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Utilities;
+using PnP.Framework.Utilities;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;

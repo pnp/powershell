@@ -1,5 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core;
+using PnP.Framework;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Provider;
@@ -19,7 +19,7 @@ using System.Web.UI.WebControls;
 using PnP.PowerShell.Commands.Model;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using System.Collections.Generic;
-using OfficeDevPnP.Core.Utilities;
+using PnP.Framework.Utilities;
 #if !PNPPSCORE
 using System.Security.Cryptography;
 #endif

@@ -1,4 +1,4 @@
-﻿using OfficeDevPnP.Core.Framework.Graph.Model;
+﻿using PnP.Framework.Graph.Model;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using System;
@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Graph
             try
             {
                 var changed = false;
-                var settings = OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken);
+                var settings = PnP.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken);
                 if (ParameterSpecified(nameof(Classifications)))
                 {
                     if (settings.Classifications != Classifications)
@@ -77,7 +77,7 @@ namespace PnP.PowerShell.Commands.Graph
                 {
                     if (settings.Classifications.Contains(settings.DefaultClassification))
                     {
-                        OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.UpdateSiteClassificationsSettings(AccessToken, settings);
+                        PnP.Framework.Graph.SiteClassificationsUtility.UpdateSiteClassificationsSettings(AccessToken, settings);
                     }
                     else
                     {
