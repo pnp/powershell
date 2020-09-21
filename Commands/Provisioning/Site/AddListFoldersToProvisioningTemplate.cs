@@ -17,37 +17,22 @@ using Microsoft.SharePoint.Client;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPListFoldersToProvisioningTemplate")]
-    [CmdletHelp("Adds folders to a list in a PnP Provisioning Template",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> Add-PnPListFoldersToProvisioningTemplate -Path template.pnp -List 'PnPTestList'",
-       Remarks = "Adds top level folders from a list to an existing template and returns an in-memory PnP Site Template",
-       SortOrder = 1)]
-    [CmdletExample(
-       Code = @"PS:> Add-PnPListFoldersToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Recursive",
-       Remarks = "Adds all folders from a list to an existing template and returns an in-memory PnP Site Template",
-       SortOrder = 2)]
-    [CmdletExample(
-       Code = @"PS:> Add-PnPListFoldersToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Recursive -IncludeSecurity",
-       Remarks = "Adds all folders from a list with unique permissions to an in-memory PnP Site Template",
-       SortOrder = 3)]
-
     public class AddListFoldersToProvisioningTemplate : PnPWebCmdlet
     {
 
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML site template to read from, optionally including full path.")]
+        [Parameter(Mandatory = true, Position = 0)]
         public string Path;
 
-        [Parameter(Mandatory = true, HelpMessage = "The list to query", Position = 2)]
+        [Parameter(Mandatory = true, Position = 2)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, Position = 4, HelpMessage = "A switch parameter to include all folders in the list, or just top level folders.")]
+        [Parameter(Mandatory = false, Position = 4)]
         public SwitchParameter Recursive;
 
-        [Parameter(Mandatory = false, Position = 5, HelpMessage = "A switch to include ObjectSecurity information.")]
+        [Parameter(Mandatory = false, Position = 5)]
         public SwitchParameter IncludeSecurity;
 
-        [Parameter(Mandatory = false, Position = 6, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while loading the template.")]
+        [Parameter(Mandatory = false, Position = 6)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
 

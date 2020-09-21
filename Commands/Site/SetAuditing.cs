@@ -5,83 +5,56 @@ using PnP.PowerShell.CmdletHelpAttributes;
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Set, "PnPAuditing")]
-    [CmdletHelp("Set Auditing setting for a site",
-        Category = CmdletHelpCategory.Sites)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPAuditing -EnableAll",
-        Remarks = "Enables all auditing settings for the current site",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPAuditing -DisableAll",
-        Remarks = @"Disables all auditing settings for the current site",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPAuditing -RetentionTime 7",
-        Remarks = "Sets the audit log trimming to 7 days, this also enables the automatic trimming of the audit log",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPAuditing -TrimAuditLog",
-        Remarks = "Enables the automatic trimming of the audit log",
-        SortOrder = 4)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPAuditing -RetentionTime 7 -CheckOutCheckInItems -MoveCopyItems -SearchContent",
-        Remarks = @"Sets the audit log trimming to 7 days, this also enables the automatic trimming of the audit log.
-
-Do auditing for:
-- Checking out or checking in items
-- Moving or copying items to another location in the site
-- Searching site content",
-        SortOrder = 5)]
     public class SetAuditing : PnPSharePointCmdlet
     {
         const string ParameterSet_ENABLEALL = "Enable all";
         const string ParameterSet_DISABLEALL = "Disable All";
         const string ParameterSet_SPECIFIC = "Specific flags";
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ENABLEALL, HelpMessage = "Enable all audit flags")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ENABLEALL)]
         public SwitchParameter EnableAll;
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DISABLEALL, HelpMessage = "Disable all audit flags")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DISABLEALL)]
         public SwitchParameter DisableAll;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC, HelpMessage = "Set the retention time")]
-        [Parameter(ParameterSetName = ParameterSet_ENABLEALL, HelpMessage = "Set the retention time")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC)]
+        [Parameter(ParameterSetName = ParameterSet_ENABLEALL)]
         public int RetentionTime = -1;
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC, HelpMessage = "Trim the audit log")]
-        [Parameter(ParameterSetName = ParameterSet_ENABLEALL, HelpMessage = "Trim the audit log")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC)]
+        [Parameter(ParameterSetName = ParameterSet_ENABLEALL)]
         public SwitchParameter TrimAuditLog;
 
         //Editing items
         //AuditMaskType.Update
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC, HelpMessage = "Audit editing items")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC)]
         public SwitchParameter EditItems;
 
         //Checking out or checking in items
         //AuditMaskType.CheckOut and AuditMaskType.CheckIn
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC, HelpMessage = "Audit checking out or checking in items")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC)]
         public SwitchParameter CheckOutCheckInItems;
 
         //Moving or copying items to another location in the site
         //AuditMaskType.Copy and AuditMaskType.Move
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC, HelpMessage = "Audit moving or copying items to another location in the site.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC)]
         public SwitchParameter MoveCopyItems;
 
         //Deleting or restoring items
         //AuditMaskType.Undelete and AuditMaskType.ObjectDelete
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC, HelpMessage = "Audit deleting or restoring items")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC)]
         public SwitchParameter DeleteRestoreItems;
 
         //Editing content types and columns
         //AuditMaskType.SchemaChange and AuditMaskType.ProfileChange
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC, HelpMessage = "Audit editing content types and columns")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC)]
         public SwitchParameter EditContentTypesColumns;
 
         //Searching site content
         //AuditMaskType.Search
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC, HelpMessage = "Audit searching site content")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC)]
         public SwitchParameter SearchContent;
 
         //Editing users and permissions
         //AuditMaskType.SecurityChange
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC, HelpMessage = "Audit editing users and permissions")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC)]
         public SwitchParameter EditUsersPermissions;
 
         protected override void ExecuteCmdlet()

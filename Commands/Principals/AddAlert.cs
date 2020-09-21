@@ -9,46 +9,30 @@ using PnP.PowerShell.Commands.Enums;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Add, "PnPAlert")]
-    [CmdletHelp("Adds an alert for a user to a list",
-        Category = CmdletHelpCategory.Principals,
-        OutputType = typeof(AlertCreationInformation),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.alertcreationinformation.aspx")]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPAlert -List ""Demo List""",
-        Remarks = @"Adds a new alert to the ""Demo List"" for the current user.",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPAlert -Title ""Daily summary"" -List ""Demo List"" -Frequency Daily -ChangeType All -Time (Get-Date -Hour 11 -Minute 00 -Second 00)",
-        Remarks = @"Adds a daily alert for the current user at the given time to the ""Demo List"". Note: a timezone offset might be applied so please verify on your tenant that the alert indeed got the right time.",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPAlert -Title ""Alert for user"" -List ""Demo List"" -User ""i:0#.f|membership|Alice@contoso.onmicrosoft.com""",
-        Remarks = @"Adds a new alert for user ""Alice"" to the ""Demo List"". Note: Only site owners and admins are permitted to set alerts for other users.",
-        SortOrder = 3)]
     public class AddAlert : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, Title or Url of the list.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "Alert title")]
+        [Parameter(Mandatory = false)]
         public string Title = "Alert";
 
-        [Parameter(Mandatory = false, HelpMessage = "User to create the alert for (User ID, login name or actual User object). Skip this parameter to create an alert for the current user. Note: Only site owners can create alerts for other users.")]
+        [Parameter(Mandatory = false)]
         public UserPipeBind User;
 
-        [Parameter(Mandatory = false, HelpMessage = "Alert delivery method")]
+        [Parameter(Mandatory = false)]
         public AlertDeliveryChannel DeliveryMethod = AlertDeliveryChannel.Email;
 
-        [Parameter(Mandatory = false, HelpMessage = "Alert change type")]
+        [Parameter(Mandatory = false)]
         public AlertEventType ChangeType = AlertEventType.All;
 
-        [Parameter(Mandatory = false, HelpMessage = "Alert frequency")]
+        [Parameter(Mandatory = false)]
         public AlertFrequency Frequency = AlertFrequency.Immediate;
 
-        [Parameter(Mandatory = false, HelpMessage = @"Alert filter")]
+        [Parameter(Mandatory = false)]
         public AlertFilter Filter = AlertFilter.AnythingChanges;
 
-        [Parameter(Mandatory = false, HelpMessage = "Alert time (if frequency is not immediate)")]
+        [Parameter(Mandatory = false)]
         public DateTime Time = DateTime.MinValue;
 
         protected override void ExecuteCmdlet()

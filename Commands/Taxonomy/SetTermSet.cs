@@ -12,68 +12,60 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Set, "PnPTermSet", SupportsShouldProcess = false)]
-    [CmdletHelp(@"Updates a taxonomy term set",
-         Category = CmdletHelpCategory.Taxonomy,
-         OutputType = typeof(TermSet),
-         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.taxonomy.termset.aspx")]
-    [CmdletExample(
-         Code = @"PS:> Set-PnPTermSet -TermGroup ""Corporate"" -Identity ""Finance"" -Name ""Financial""",
-         Remarks = @"Updates the termset called ""Finance"" and renames it to ""Financial""",
-         SortOrder = 0)]
     public class SetTermSet : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "The Id or Name of a termset")]
+        [Parameter(Mandatory = false)]
         public GenericObjectNameIdPipeBind<TermSet> Identity;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "Name of the term group to check.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public TermGroupPipeBind TermGroup;
 
-        [Parameter(Mandatory = false, HelpMessage = "Term store to check; if not specified the default term store is used.")]
+        [Parameter(Mandatory = false)]
         public GenericObjectNameIdPipeBind<TermStore> TermStore;
 
-        [Parameter(Mandatory = false, HelpMessage = "Term store to check; if not specified the default term store is used.")]
+        [Parameter(Mandatory = false)]
         public string Name;
 
-        [Parameter(Mandatory = false, HelpMessage = "Term store to check; if not specified the default term store is used.")]
+        [Parameter(Mandatory = false)]
         public string Description;
 
-        [Parameter(Mandatory = false, HelpMessage = "Term store to check; if not specified the default term store is used.")]
+        [Parameter(Mandatory = false)]
         public string Owner;
 
-        [Parameter(Mandatory = false, HelpMessage = "Term store to check; if not specified the default term store is used.")]
+        [Parameter(Mandatory = false)]
         public string Contact;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets custom properties for this term set. Notice setting this will replace all existing custom properties.")]
+        [Parameter(Mandatory = false)]
         public Hashtable CustomProperties;
 
-        [Parameter(Mandatory = false, HelpMessage = "Adds a new Stakeholder for this termset")]
+        [Parameter(Mandatory = false)]
         public string StakeholderToAdd;
 
-        [Parameter(Mandatory = false, HelpMessage = "Deletes an existing Stakeholder for this termset")]
+        [Parameter(Mandatory = false)]
         public string StakeholderToDelete;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets if the term set is avialble for tagging")]
+        [Parameter(Mandatory = false)]
         public bool IsAvailableForTagging;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets if the termset is open for term creation")]
+        [Parameter(Mandatory = false)]
         public bool IsOpenForTermCreation;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets if the termset is to be used for site navigation")]
+        [Parameter(Mandatory = false)]
         public bool UseForSiteNavigation;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets if the termset is to be used for faceted navigation")]
+        [Parameter(Mandatory = false)]
         public bool UseForFacetedNavigation;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the target page for terms in this termset")]
+        [Parameter(Mandatory = false)]
         public string SetTargetPageForTerms;
 
-        [Parameter(Mandatory = false, HelpMessage = "Removes the target page for terms in this termset")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter RemoveTargetPageforTerms;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the page for categories in this termset")]
+        [Parameter(Mandatory = false)]
         public string SetCatalogItemPageForCategories;
 
-        [Parameter(Mandatory = false, HelpMessage = "Removes the page for categories in this termset")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter RemoveCatalogItemPageForCategories;
         protected override void ExecuteCmdlet()
         {

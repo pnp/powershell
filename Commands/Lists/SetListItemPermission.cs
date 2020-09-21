@@ -8,30 +8,12 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Set, "PnPListItemPermission", DefaultParameterSetName = "User")]
-    [CmdletHelp("Sets list item permissions. Use Get-PnPRoleDefinition to retrieve all available roles you can add or remove using this cmdlet.",
-        Category = CmdletHelpCategory.Lists)]
-    [CmdletExample(
-        Code = "PS:> Set-PnPListItemPermission -List 'Documents' -Identity 1 -User 'user@contoso.com' -AddRole 'Contribute'",
-        Remarks = "Adds the 'Contribute' permission to the user 'user@contoso.com' for listitem with id 1 in the list 'Documents'",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = "PS:> Set-PnPListItemPermission -List 'Documents' -Identity 1 -User 'user@contoso.com' -RemoveRole 'Contribute'",
-        Remarks = "Removes the 'Contribute' permission to the user 'user@contoso.com' for listitem with id 1 in the list 'Documents'",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = "PS:> Set-PnPListItemPermission -List 'Documents' -Identity 1 -User 'user@contoso.com' -AddRole 'Contribute' -ClearExisting",
-        Remarks = "Adds the 'Contribute' permission to the user 'user@contoso.com' for listitem with id 1 in the list 'Documents' and removes all other permissions",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = "PS:> Set-PnPListItemPermission -List 'Documents' -Identity 1 -InheritPermissions",
-        Remarks = "Resets permissions for listitem with id 1 to inherit permissions from the list 'Documents'",
-        SortOrder = 4)]
     public class SetListItemPermission : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, Title or Url of the list.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The ID of the listitem, or actual ListItem object", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ListItemPipeBind Identity;
 
         [Parameter(Mandatory = true, ParameterSetName = "Group")]
@@ -40,22 +22,22 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = true, ParameterSetName = "User")]
         public string User;
 
-        [Parameter(Mandatory = false, HelpMessage = "The role that must be assigned to the group or user", ParameterSetName = "User")]
-        [Parameter(Mandatory = false, HelpMessage = "The role that must be assigned to the group or user", ParameterSetName = "Group")]
+        [Parameter(Mandatory = false, ParameterSetName = "User")]
+        [Parameter(Mandatory = false, ParameterSetName = "Group")]
         public string AddRole = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "The role that must be removed from the group or user", ParameterSetName = "User")]
-        [Parameter(Mandatory = false, HelpMessage = "The role that must be removed from the group or user", ParameterSetName = "Group")]
+        [Parameter(Mandatory = false, ParameterSetName = "User")]
+        [Parameter(Mandatory = false, ParameterSetName = "Group")]
         public string RemoveRole = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Clear all existing permissions", ParameterSetName = "User")]
-        [Parameter(Mandatory = false, HelpMessage = "Clear all existing permissions", ParameterSetName = "Group")]
+        [Parameter(Mandatory = false, ParameterSetName = "User")]
+        [Parameter(Mandatory = false, ParameterSetName = "Group")]
         public SwitchParameter ClearExisting;
 
-        [Parameter(Mandatory = false, HelpMessage = "Inherit permissions from the list, removing unique permissions", ParameterSetName = "Inherit")]
+        [Parameter(Mandatory = false, ParameterSetName = "Inherit")]
         public SwitchParameter InheritPermissions;
 
-        [Parameter(Mandatory = false, HelpMessage = "Update the item permissions without creating a new version or triggering MS Flow.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter SystemUpdate;
 
         protected override void ExecuteCmdlet()

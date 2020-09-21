@@ -11,26 +11,15 @@ namespace PnP.PowerShell.Commands.Lists
     //TODO: Create Test
 
     [Cmdlet(VerbsCommon.Clear, "PnPDefaultColumnValues")]
-    [CmdletHelp("Clear default column values for a document library",
-        DetailedDescription = "Clear default column values for a document library, per folder, or for the root folder if the folder parameter has not been specified.",
-        Category = CmdletHelpCategory.Lists)]
-    [CmdletExample(
-        Code = "PS:> Clear-PnPDefaultColumnValues -List Documents -Field MyField",
-        SortOrder = 1,
-        Remarks = "Clears the default value for the field MyField on a library")]
-    [CmdletExample(
-        Code = "PS:> Clear-PnPDefaultColumnValues -List Documents -Field MyField -Folder A",
-        SortOrder = 2,
-        Remarks = "Clears the default value for the field MyField on the folder A on a library")]
     public class ClearDefaultColumnValues : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, Name or Url of the list.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, HelpMessage = "The internal name, id or a reference to a field")]
+        [Parameter(Mandatory = true)]
         public FieldPipeBind Field;
 
-        [Parameter(Mandatory = false, HelpMessage = "A library relative folder path, if not specified it will set the default column values on the root folder of the library ('/')")]
+        [Parameter(Mandatory = false)]
         public string Folder = "/";
 
         protected override void ExecuteCmdlet()

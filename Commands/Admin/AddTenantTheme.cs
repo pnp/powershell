@@ -13,51 +13,18 @@ using System.Text.Json;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Add, "PnPTenantTheme")]
-    [CmdletHelp("Adds or updates a theme to the tenant.",
-        DetailedDescription = @"Adds or updates a theme to the tenant.",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-        Code = @"PS:> $themepalette = @{
-  ""themePrimary"" = ""#00ffff"";
-  ""themeLighterAlt"" = ""#f3fcfc"";
-  ""themeLighter"" = ""#daffff"";
-  ""themeLight"" = ""#affefe"";
-  ""themeTertiary"" = ""#76ffff"";
-  ""themeSecondary"" = ""#39ffff"";
-  ""themeDarkAlt"" = ""#00c4c4"";
-  ""themeDark"" = ""#009090"";
-  ""themeDarker"" = ""#005252"";
-  ""neutralLighterAlt"" = ""#f8f8f8"";
-  ""neutralLighter"" = ""#f4f4f4"";
-  ""neutralLight"" = ""#eaeaea"";
-  ""neutralQuaternaryAlt"" = ""#dadada"";
-  ""neutralQuaternary"" = ""#d0d0d0"";
-  ""neutralTertiaryAlt"" = ""#c8c8c8"";
-  ""neutralTertiary"" = ""#a6a6a6"";
-  ""neutralSecondaryAlt"" = ""#767676"";
-  ""neutralSecondary"" = ""#666666"";
-  ""neutralPrimary"" = ""#333"";
-  ""neutralPrimaryAlt"" = ""#3c3c3c"";
-  ""neutralDark"" = ""#212121"";
-  ""black"" = ""#000000"";
-  ""white"" = ""#fff"";
-  ""primaryBackground"" = ""#fff"";
-  ""primaryText"" = ""#333""
- }
-PS:>Add-PnPTenantTheme -Identity ""MyCompanyTheme"" -Palette $themepalette -IsInverted $false",
-        Remarks = @"This example adds a theme to the current tenant.", SortOrder = 1)]
     public class AddTenantTheme : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = @"The name of the theme to add or update")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public ThemePipeBind Identity;
 
-        [Parameter(Mandatory = true, HelpMessage = @"The palette to add. See examples for more information.")]
+        [Parameter(Mandatory = true)]
         public ThemePalettePipeBind Palette;
 
-        [Parameter(Mandatory = true, HelpMessage = @"If the theme is inverted or not")]
+        [Parameter(Mandatory = true)]
         public bool IsInverted;
 
-        [Parameter(Mandatory = false, HelpMessage = @"If a theme is already present, specifying this will overwrite the existing theme")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Overwrite { get; set; }
 
         protected override void ExecuteCmdlet()

@@ -9,24 +9,6 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Add, "PnPField", DefaultParameterSetName = "Add field to list")]
-    [CmdletHelp("Add a field",
-        "Adds a field to a list or as a site column",
-        Category = CmdletHelpCategory.Fields,
-        OutputType = typeof(Field),
-        OutputTypeLink = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee545882(v=office.15)")]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPField -List ""Demo list"" -DisplayName ""Location"" -InternalName ""SPSLocation"" -Type Choice -Group ""Demo Group"" -AddToDefaultView -Choices ""Stockholm"",""Helsinki"",""Oslo""",
-        Remarks = @"This will add a field of type Choice to the list ""Demo List"".", SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:>Add-PnPField -List ""Demo list"" -DisplayName ""Speakers"" -InternalName ""SPSSpeakers"" -Type MultiChoice -Group ""Demo Group"" -AddToDefaultView -Choices ""Obiwan Kenobi"",""Darth Vader"", ""Anakin Skywalker""",
-        Remarks = @"This will add a field of type Multiple Choice to the list ""Demo List"". (you can pick several choices for the same item)", SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPField -Type Calculated -InternalName ""C1"" -DisplayName ""C1"" -Formula =""[Title]""",
-        Remarks = @"Adds a new calculated site column with the formula specified")]
-    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Choices", HelpMessage = "Specify choices, only valid if the field type is Choice", ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
-    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Choices", HelpMessage = "Specify choices, only valid if the field type is Choice", ParameterSetName = ParameterSet_ADDFIELDTOWEB)]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Formula", HelpMessage = "Specify the formula. Only available if the field type is Calculated", ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Formula", HelpMessage = "Specify the formula. Only available if the field type is Calculated", ParameterSetName = ParameterSet_ADDFIELDTOWEB)]
     public class AddField : PnPWebCmdlet, IDynamicParameters
     {
         const string ParameterSet_ADDFIELDTOLIST = "Add field to list";
@@ -34,47 +16,47 @@ namespace PnP.PowerShell.Commands.Fields
         const string ParameterSet_ADDFIELDTOWEB = "Add field to web";
         const string ParameterSet_ADDFIELDBYXMLTOLIST = "Add field by XML to list";
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_ADDFIELDTOLIST, HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
-        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_ADDFIELDREFERENCETOLIST, HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_ADDFIELDREFERENCETOLIST)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDREFERENCETOLIST, HelpMessage = "The name of the field, its ID or an actual field object that needs to be added")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDREFERENCETOLIST)]
         public FieldPipeBind Field;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOLIST, HelpMessage = "The display name of the field")]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOWEB, HelpMessage = "The display name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOWEB)]
         public string DisplayName;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOLIST, HelpMessage = "The internal name of the field")]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOWEB, HelpMessage = "The internal name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOWEB)]
         public string InternalName;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOLIST, HelpMessage = "The type of the field like Choice, Note, MultiChoice. For a complete list of field types visit https://docs.microsoft.com/dotnet/api/microsoft.sharepoint.client.fieldtype")]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOWEB, HelpMessage = "The type of the field like Choice, Note, MultiChoice. For a complete list of field types visit https://docs.microsoft.com/dotnet/api/microsoft.sharepoint.client.fieldtype")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOWEB)]
         public FieldType Type;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST, HelpMessage = "The ID of the field, must be unique")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOWEB, HelpMessage = "The ID of the field, must be unique")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOWEB)]
         public GuidPipeBind Id = new GuidPipeBind();
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST, HelpMessage = "Switch Parameter if this field must be added to the default view")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDBYXMLTOLIST, HelpMessage = "Switch Parameter if this field must be added to the default view")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDBYXMLTOLIST)]
         public SwitchParameter AddToDefaultView;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST, HelpMessage = "Switch Parameter if the field is a required field")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDBYXMLTOLIST, HelpMessage = "Switch Parameter if the field is a required field")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDBYXMLTOLIST)]
         public SwitchParameter Required;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST, HelpMessage = "The group name to where this field belongs to")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDBYXMLTOLIST, HelpMessage = "The group name to where this field belongs to")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDBYXMLTOLIST)]
         public string Group;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST, HelpMessage = "The Client Side Component Id to set to the field")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOWEB, HelpMessage = "The Client Side Component Id to set to the field")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOWEB)]
         public GuidPipeBind ClientSideComponentId;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST, HelpMessage = "The Client Side Component Properties to set to the field")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOWEB, HelpMessage = "The Client Side Component Properties to set to the field")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOWEB)]
         public string ClientSideComponentProperties;
 
         public object GetDynamicParameters()

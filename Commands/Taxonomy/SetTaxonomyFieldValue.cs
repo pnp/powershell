@@ -9,38 +9,24 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Set, "PnPTaxonomyFieldValue", DefaultParameterSetName = "ITEM")]
-    [CmdletHelp("Sets a taxonomy term value in a listitem field",
-        Category = CmdletHelpCategory.Taxonomy)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPTaxonomyFieldValue -ListItem $item -InternalFieldName 'Department' -TermId 863b832b-6818-4e6a-966d-2d3ee057931c",
-        Remarks = @"Sets the field called 'Department' to the value of the term with the ID specified",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPTaxonomyFieldValue -ListItem $item -InternalFieldName 'Department' -TermPath 'CORPORATE|DEPARTMENTS|HR'",
-        Remarks = @"Sets the field called 'Department' to the term called HR which is located in the DEPARTMENTS termset, which in turn is located in the CORPORATE termgroup.",
-        SortOrder = 2)]
-    [CmdletExample(
-     Code = @"PS:> Set-PnPTaxonomyFieldValue -ListItem $item -InternalFieldName 'Department' -Terms @{""TermId1""=""Label1"";""TermId2""=""Label2""}",
-     Remarks = @"Sets the field called 'Department' with multiple terms by ID and label. You can refer to those terms with the {ID:label} token.",
-        SortOrder = 3)]
     public class SetTaxonomyFieldValue : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The list item to set the field value to")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ListItem ListItem;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The internal name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string InternalFieldName;
 
-        [Parameter(Mandatory = true, ParameterSetName = "ITEM", HelpMessage = "The Id of the Term")]
+        [Parameter(Mandatory = true, ParameterSetName = "ITEM")]
         public GuidPipeBind TermId;
 
-        [Parameter(Mandatory = false, ParameterSetName = "ITEM", HelpMessage = "The Label value of the term")]
+        [Parameter(Mandatory = false, ParameterSetName = "ITEM")]
         public string Label;
 
-        [Parameter(Mandatory = true, ParameterSetName = "PATH", HelpMessage = "A path in the form of GROUPLABEL|TERMSETLABEL|TERMLABEL")]
+        [Parameter(Mandatory = true, ParameterSetName = "PATH")]
         public string TermPath;
 
-        [Parameter(Mandatory = false, ParameterSetName = "ITEMS", HelpMessage = "Allows you to specify terms with key value pairs that can be referred to in the template by means of the {id:label} token. See examples on how to use this parameter.")]
+        [Parameter(Mandatory = false, ParameterSetName = "ITEMS")]
         public Hashtable Terms;
 
         protected override void ExecuteCmdlet()

@@ -13,32 +13,18 @@ namespace PnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommunications.Read, "PnPProvisioningTemplate")]
     [Alias("Load-PnPProvisioningTemplate")]
-    [CmdletHelp("Loads/Reads a PnP file from the file system or a string",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> Read-PnPProvisioningTemplate -Path template.pnp",
-       Remarks = "Loads a PnP file from the file system",
-       SortOrder = 1)]
-    [CmdletExample(
-       Code = @"PS:> Read-PnPProvisioningTemplate -Path template.pnp -TemplateProviderExtensions $extensions",
-       Remarks = "Loads a PnP file from the file system using some custom template provider extensions while loading the file.",
-       SortOrder = 2)]
-    [CmdletExample(
-       Code = @"PS:> Read-PnPProvisioningTemplate -Xml $xml",
-       Remarks = "Reads a PnP Provisioning template from a string containing the XML of a provisioning template",
-       SortOrder = 3)]
     public class ReadProvisioningTemplate : PSCmdlet
     {
         const string ParameterSet_PATH = "By Path";
         const string ParameterSet_XML = "By XML";
 
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_PATH, HelpMessage = "Filename to read from, optionally including full path.")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_PATH)]
         public string Path;
 
-        [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_XML, HelpMessage = "Variable to read from, containing the valid XML of a provisioning template.")]
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_XML)]
         public string Xml;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while loading the template.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
         protected override void ProcessRecord()

@@ -8,32 +8,15 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Webhooks
 {
     [Cmdlet(VerbsCommon.Remove, "PnPWebhookSubscription")]
-    [CmdletHelp("Removes a Webhook subscription from the resource",
-        Category = CmdletHelpCategory.Webhooks,
-        OutputType = typeof(WebhookSubscription))]
-    [CmdletExample(
-        Code = "PS:> Remove-PnPWebhookSubscription -List MyList -Identity ea1533a8-ff03-415b-a7b6-517ee50db8b6",
-        Remarks = "Removes the Webhook subscription with the specified id from the list MyList",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> $subscriptions = Get-PnPWebhookSubscriptions -List MyList
-PS:> Remove-PnPWebhookSubscription -Identity $subscriptions[0] -List MyList",
-        Remarks = "Removes the first Webhook subscription from the list MyList",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> $subscriptions = Get-PnPWebhookSubscriptions -List MyList
-PS:> $subscriptions[0] | Remove-PnPWebhookSubscription -List MyList",
-        Remarks = "Removes the first Webhook subscription from the list MyList",
-        SortOrder = 3)]
     public class RemoveWebhookSubscription : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The identity of the Webhook subscription to remove")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public WebhookSubscriptionPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "The list object or name which the Webhook subscription will be removed from")]
+        [Parameter(Mandatory = false)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

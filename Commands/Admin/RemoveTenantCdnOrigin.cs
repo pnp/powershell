@@ -10,20 +10,12 @@ using System;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTenantCdnOrigin")]
-    [CmdletHelp("Removes an origin from the Public or Private content delivery network (CDN).",
-        DetailedDescription = @"Removes an origin from the Public or Private content delivery network (CDN).
-
-You must be a SharePoint Online global administrator to run the cmdlet.",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPTenantCdnOrigin -OriginUrl /sites/site/subfolder -CdnType Public",
-        Remarks = @"This example removes the specified origin from the public CDN", SortOrder = 1)]
     public class RemoveTenantCdnOrigin : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = @"The origin to remove.")]
+        [Parameter(Mandatory = true)]
         public string OriginUrl;
 
-        [Parameter(Mandatory = true, HelpMessage = "The cdn type to remove the origin from.")]
+        [Parameter(Mandatory = true)]
         public SPOTenantCdnType CdnType = SPOTenantCdnType.Public;
 
         protected override void ExecuteCmdlet()

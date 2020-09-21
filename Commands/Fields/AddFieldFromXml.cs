@@ -6,29 +6,12 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Add, "PnPFieldFromXml")]
-    [CmdletHelp("Adds a field to a list or as a site column based upon a CAML/XML field definition",
-        Category = CmdletHelpCategory.Fields,
-        OutputType = typeof(Field),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx")]
-    [CmdletExample(
-        Code = @"PS:> $xml = '<Field Type=""Text"" Name=""PSCmdletTest"" DisplayName=""PSCmdletTest"" ID=""{27d81055-f208-41c9-a976-61c5473eed4a}"" Group=""Test"" Required=""FALSE"" StaticName=""PSCmdletTest"" />'
-PS:> Add-PnPFieldFromXml -FieldXml $xml",
-        Remarks = "Adds a field with the specified field CAML code to the site.",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> $xml = '<Field Type=""Text"" Name=""PSCmdletTest"" DisplayName=""PSCmdletTest"" ID=""{27d81055-f208-41c9-a976-61c5473eed4a}"" Group=""Test"" Required=""FALSE"" StaticName=""PSCmdletTest"" />'
-PS:> Add-PnPFieldFromXml -List ""Demo List"" -FieldXml $xml",
-        Remarks = @"Adds a field with the specified field CAML code to the list ""Demo List"".",
-        SortOrder = 2)]
-    [CmdletRelatedLink(
-        Text = "Field CAML",
-        Url = "http://msdn.microsoft.com/en-us/library/office/ms437580(v=office.15).aspx")]
     public class AddFieldFromXml : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, HelpMessage = "CAML snippet containing the field definition. See http://msdn.microsoft.com/en-us/library/office/ms437580(v=office.15).aspx", Position = 0)]
+        [Parameter(Mandatory = true, Position = 0)]
         public string FieldXml;
 
         protected override void ExecuteCmdlet()

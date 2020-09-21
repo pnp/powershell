@@ -8,36 +8,22 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsData.Update, "PnPSiteClassification")]
-    [CmdletHelp("Updates Site Classifications for the tenant",
-        Category = CmdletHelpCategory.Graph)]
-    [CmdletExample(
-        Code = @"PS:> Update-PnPSiteClassification -Classifications ""HBI"",""Top Secret""",
-        Remarks = @"Replaces the existing values of the site classification settings",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Update-PnPSiteClassification -DefaultClassification ""LBI""",
-        Remarks = @"Sets the default classification value to ""LBI"". This value needs to be present in the list of classification values.",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/sppnp",
-        Remarks = @"sets the usage guideliness URL to the specified URL",
-        SortOrder = 3)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     public class UpdateSiteClassification : PnPGraphCmdlet
     {
         const string ParameterSet_SETTINGS = "Settings";
         const string ParameterSet_SPECIFIC = "Specific";
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SETTINGS, HelpMessage = "A settings object retrieved by Get-PnPSiteClassification")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SETTINGS)]
         public SiteClassificationsSettings Settings;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC, HelpMessage = @"A list of classifications, separated by commas. E.g. ""HBI"",""LBI"",""Top Secret""")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC)]
         public List<string> Classifications;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC, HelpMessage = @"The default classification to be used. The value needs to be present in the list of possible classifications")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC)]
         public string DefaultClassification;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC, HelpMessage = @"The UsageGuidelinesUrl. Set to """" to clear.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC)]
         public string UsageGuidelinesUrl = "";
 
         protected override void ExecuteCmdlet()

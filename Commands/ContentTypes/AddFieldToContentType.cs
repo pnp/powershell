@@ -7,24 +7,18 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.ContentTypes
 {
     [Cmdlet(VerbsCommon.Add, "PnPFieldToContentType")]
-    [CmdletHelp("Adds an existing site column to a content type", 
-        Category = CmdletHelpCategory.ContentTypes)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPFieldToContentType -Field ""Project_Name"" -ContentType ""Project Document""",
-        Remarks = @"This will add an existing site column with an internal name of ""Project_Name"" to a content type called ""Project Document""", 
-        SortOrder = 1)]
     public class AddFieldToContentType : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Specifies the field that needs to be added to the content type")]
+        [Parameter(Mandatory = true)]
         public FieldPipeBind Field;
 
-        [Parameter(Mandatory = true, HelpMessage = "Specifies which content type a field needs to be added to")]
+        [Parameter(Mandatory = true)]
         public ContentTypePipeBind ContentType;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies whether the field is required or not")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Required;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies whether the field should be hidden or not")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Hidden;
 
         protected override void ExecuteCmdlet()

@@ -9,17 +9,9 @@ using PnP.PowerShell.Commands.Extensions;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPWeb")]
-    [CmdletHelp("Returns the current web object",
-        Category = CmdletHelpCategory.Webs,
-        OutputType = typeof(Web),
-        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee537040(v=office.15)")]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPWeb",
-        Remarks = "This will return the current web",
-        SortOrder = 1)]
     public class GetWeb : PnPRetrievalsCmdlet<Web>
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The guid of the web or web object")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
         public WebPipeBind Identity;
 
         protected override void ExecuteCmdlet()

@@ -10,30 +10,6 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.RecycleBin
 {
     [Cmdlet(VerbsCommon.Get, "PnPRecycleBinItem", DefaultParameterSetName = ParameterSet_ALL)]
-    [CmdletHelp("Returns the items in the recycle bin from the context",
-        Category = CmdletHelpCategory.RecycleBin,
-        OutputType = typeof(RecycleBinItem),
-        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee541897(v=office.15)")]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPRecycleBinItem",
-        Remarks = "Returns all items in both the first and the second stage recycle bins in the current site collection",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPRecycleBinItem -Identity f3ef6195-9400-4121-9d1c-c997fb5b86c2",
-        Remarks = "Returns all a specific recycle bin item by id",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPRecycleBinItem -FirstStage",
-        Remarks = "Returns all items in only the first stage recycle bin in the current site collection",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPRecycleBinItem -SecondStage",
-        Remarks = "Returns all items in only the second stage recycle bin in the current site collection",
-        SortOrder = 4)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPRecycleBinItem -RowLimit 10000",
-        Remarks = "Returns items in recycle bin limited by number of results",
-        SortOrder = 5)]
     public class GetRecycleBinItems : PnPRetrievalsCmdlet<RecycleBinItem>
     {
         private const string ParameterSet_ALL = "All";
@@ -41,18 +17,18 @@ namespace PnP.PowerShell.Commands.RecycleBin
         private const string ParameterSet_FIRSTSTAGE = "FirstStage";
         private const string ParameterSet_SECONDSTAGE = "SecondStage";
 
-        [Parameter(Mandatory = false, HelpMessage = "Returns a recycle bin item with a specific identity", ParameterSetName = ParameterSet_IDENTITY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_IDENTITY)]
         public GuidPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "Return all items in the first stage recycle bin", ParameterSetName = ParameterSet_FIRSTSTAGE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FIRSTSTAGE)]
         public SwitchParameter FirstStage;
 
-        [Parameter(Mandatory = false, HelpMessage = "Return all items in the second stage recycle bin", ParameterSetName = ParameterSet_SECONDSTAGE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SECONDSTAGE)]
         public SwitchParameter SecondStage;
 
-        [Parameter(Mandatory = false, HelpMessage = "Limits return results to specified amount", ParameterSetName = ParameterSet_FIRSTSTAGE)]
-        [Parameter(Mandatory = false, HelpMessage = "Limits return results to specified amount", ParameterSetName = ParameterSet_SECONDSTAGE)]
-        [Parameter(Mandatory = false, HelpMessage = "Limits return results to specified amount", ParameterSetName = ParameterSet_ALL)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FIRSTSTAGE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SECONDSTAGE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
         public int RowLimit;
         protected override void ExecuteCmdlet()
         {

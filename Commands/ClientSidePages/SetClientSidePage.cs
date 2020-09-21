@@ -8,67 +8,38 @@ using Microsoft.SharePoint.Client;
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Set, "PnPClientSidePage")]
-    [CmdletHelp("Sets parameters of a Client-Side Page",
-      Category = CmdletHelpCategory.ClientSidePages)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPClientSidePage -Identity ""MyPage"" -LayoutType Home -Title ""My Page""",
-        Remarks = "Updates the properties of the Client-Side page named 'MyPage'",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPClientSidePage -Identity ""MyPage"" -CommentsEnabled",
-        Remarks = "Enables the comments on the Client-Side page named 'MyPage'",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPClientSidePage -Identity ""MyPage"" -CommentsEnabled:$false",
-        Remarks = "Disables the comments on the Client-Side page named 'MyPage'",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPClientSidePage -Identity ""MyPage"" -HeaderType Default",
-        Remarks = "Sets the header of the page to the default header",
-        SortOrder = 4)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPClientSidePage -Identity ""MyPage"" -HeaderType None",
-        Remarks = "Removes the header of the page",
-        SortOrder = 5)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPClientSidePage -Identity ""MyPage"" -HeaderType Custom -ServerRelativeImageUrl ""/sites/demo1/assets/myimage.png"" -TranslateX 10.5 -TranslateY 11.0",
-        Remarks = "Sets the header of the page to custom header, using the specified image and translates the location of the image in the header given the values specified",
-        SortOrder = 6)]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "ServerRelativeImageUrl", HelpMessage = "The URL of the image to show in the header", ParameterSetName = ParameterSet_CUSTOMHEADER)]
-    [CmdletAdditionalParameter(ParameterType = typeof(double), ParameterName = "TranslateX", HelpMessage = "A value defining how to translate the image on the x-axis", ParameterSetName = ParameterSet_CUSTOMHEADER)]
-    [CmdletAdditionalParameter(ParameterType = typeof(double), ParameterName = "TranslateY", HelpMessage = "A value defining how to translate the image on the y-axis", ParameterSetName = ParameterSet_CUSTOMHEADER)]
     public class SetClientSidePage : PnPWebCmdlet, IDynamicParameters
     {
         const string ParameterSet_CUSTOMHEADER = "Custom Header";
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name/identity of the page")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ClientSidePagePipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the name of the page.")]
+        [Parameter(Mandatory = false)]
         public string Name = null;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the title of the page.")]
+        [Parameter(Mandatory = false)]
         public string Title = null;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the layout type of the page. (Default = Article)")]
+        [Parameter(Mandatory = false)]
         public ClientSidePageLayoutType LayoutType = ClientSidePageLayoutType.Article;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows to promote the page for a specific purpose (None | HomePage | NewsArticle | Template)")]
+        [Parameter(Mandatory = false)]
         public ClientSidePagePromoteType PromoteAs = ClientSidePagePromoteType.None;
 
-        [Parameter(Mandatory = false, HelpMessage = "Enables or Disables the comments on the page")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter CommentsEnabled = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Publishes the page once it is saved.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Publish;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the page header type")]
+        [Parameter(Mandatory = false)]
         public ClientSidePageHeaderType HeaderType;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify either the name, ID or an actual content type.")]
+        [Parameter(Mandatory = false)]
         public ContentTypePipeBind ContentType;
 
-        [Parameter(Mandatory = false, HelpMessage = "Thumbnail Url")]
+        [Parameter(Mandatory = false)]
         public string ThumbnailUrl;
 
         private CustomHeaderDynamicParameters customHeaderParameters;

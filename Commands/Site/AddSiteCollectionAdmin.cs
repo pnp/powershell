@@ -7,21 +7,9 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPSiteCollectionAdmin")]
-    [CmdletHelp("Adds one or more users as site collection administrators to the site collection in the current context",
-        DetailedDescription = "This command allows adding one to many users as site collection administrators to the site collection in the current context. It does not replace or remove existing site collection administrators.",
-        Category = CmdletHelpCategory.Sites)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPSiteCollectionAdmin -Owners ""user@contoso.onmicrosoft.com""",
-        Remarks = @"This will add user@contoso.onmicrosoft.com as an additional site collection owner to the site collection in the current context", SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPSiteCollectionAdmin -Owners @(""user1@contoso.onmicrosoft.com"", ""user2@contoso.onmicrosoft.com"")",
-        Remarks = @"This will add user1@contoso.onmicrosoft.com and user2@contoso.onmicrosoft.com as additional site collection owners to the site collection in the current context", SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPUser | ? Title -Like ""*Doe"" | Add-PnPSiteCollectionAdmin",
-        Remarks = @"This will add all users with their title ending with ""Doe"" as additional site collection owners to the site collection in the current context", SortOrder = 3)]
     public class AddSiteCollectionAdmin : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Specifies owner(s) to add as site collection administrators. They will be added as additional site collection administrators to the site in the current context. Existing administrators will stay. Can be both users and groups.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public List<UserPipeBind> Owners;
 
         protected override void ExecuteCmdlet()

@@ -8,32 +8,21 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPSiteScript", SupportsShouldProcess = true)]
-    [CmdletHelp(@"Updates an existing Site Script on the current tenant.",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPSiteScript -Identity f1d55d9b-b116-4f54-bc00-164a51e7e47f -Title ""My Site Script""",
-        Remarks = "Updates an existing Site Script and changes the title.",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> $script = Get-PnPSiteScript -Identity f1d55d9b-b116-4f54-bc00-164a51e7e47f 
-PS:> Set-PnPSiteScript -Identity $script -Title ""My Site Script""",
-        Remarks = "Updates an existing Site Script and changes the title.",
-        SortOrder = 2)]
     public class SetSiteScript : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The guid or an object representing the site script")]
+        [Parameter(Mandatory = true)]
         public TenantSiteScriptPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "The title of the site script")]
+        [Parameter(Mandatory = false)]
         public string Title;
 
-        [Parameter(Mandatory = false, HelpMessage = "The description of the site script")]
+        [Parameter(Mandatory = false)]
         public string Description;
 
-        [Parameter(Mandatory = false, HelpMessage = "A JSON string containing the site script")]
+        [Parameter(Mandatory = false)]
         public string Content;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the version of the site script")]
+        [Parameter(Mandatory = false)]
         public int Version;
 
         protected override void ExecuteCmdlet()

@@ -5,13 +5,6 @@ using PnP.PowerShell.CmdletHelpAttributes;
 namespace PnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Get, "PnPSearchSettings")]
-    [CmdletHelp("Retrieves search settings for a site",
-        Category = CmdletHelpCategory.Search)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSearchSettings",
-        Remarks = "Retrieve search settings for the site",
-        SortOrder = 1)]
-
     public class GetSearchSettings : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()

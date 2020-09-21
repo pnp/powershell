@@ -16,41 +16,22 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsData.Export, "PnPTermGroupToXml", SupportsShouldProcess = true)]
-    [CmdletHelp("Exports a taxonomy TermGroup to either the output or to an XML file.",
-        Category = CmdletHelpCategory.Taxonomy)]
-    [CmdletExample(
-        Code = @"PS:> Export-PnPTermGroupToXml",
-        Remarks = "Exports all term groups in the default site collection term store to the standard output",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Export-PnPTermGroupToXml -Out output.xml",
-        Remarks = "Exports all term groups in the default site collection term store to the file 'output.xml' in the current folder",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Export-PnPTermGroupToXml -Out c:\output.xml -Identity ""Test Group""",
-        Remarks = "Exports the term group with the specified name to the file 'output.xml' located in the root folder of the C: drive.",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> $termgroup = Get-PnPTermGroup -GroupName Test
-PS:> $termgroup | Export-PnPTermGroupToXml -Out c:\output.xml",
-        Remarks = "Retrieves a termgroup and subsequently exports that term group to a the file named 'output.xml'",
-        SortOrder = 4)]
     public class ExportTermGroup : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "The ID or name of the termgroup",
+        [Parameter(Mandatory = false,
             ValueFromPipeline = true)]
         public TermGroupPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "File to export the data to.")]
+        [Parameter(Mandatory = false)]
         public string Out;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified, a full provisioning template structure will be returned")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter FullTemplate;
 
-        [Parameter(Mandatory = false, HelpMessage = "Defaults to Unicode")]
+        [Parameter(Mandatory = false)]
         public Encoding Encoding = Encoding.Unicode;
 
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
 

@@ -6,16 +6,13 @@ using PnP.PowerShell.Commands.Enums;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "PnPStorageEntity", SupportsShouldProcess = true)]
-    [CmdletHelp(@"Remove Storage Entities / Farm Properties from either the tenant scoped app catalog or the current site collection if the site has a site collection scoped app catalog",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(Code = @"PS:> Remove-PnPStorageEntity -Key MyKey ", Remarks = "Removes an existing storage entity / farm property", SortOrder = 1)]
-    [CmdletExample(Code = @"PS:> Remove-PnPStorageEntity -Key MyKey -Scope Site", Remarks = "Removes an existing storage entity from the current site collection", SortOrder = 1)]
+    
     public class RemovePnPStorageEntity : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The key of the value to remove.")]
+        [Parameter(Mandatory = true)]
         public string Key;
 
-        [Parameter(Mandatory = false, HelpMessage = "Defines the scope of the storage entity. Defaults to Tenant.")]
+        [Parameter(Mandatory = false)]
         public StorageEntityScope Scope = StorageEntityScope.Tenant;
 
         protected override void ExecuteCmdlet()

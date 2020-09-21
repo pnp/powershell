@@ -12,15 +12,12 @@ namespace PnP.PowerShell.Commands.Graph
     [CmdletHelp("Renews the Microsoft 365 Group by extending its expiration with the number of days defined in the group expiration policy set on the Azure Active Directory",
         DetailedDescription = "Renews the Microsoft 365 Group by extending its expiration with the number of days defined in the group expiration policy set on the Azure Active Directory",
         Category = CmdletHelpCategory.Graph)]
-    [CmdletExample(
-       Code = "PS:> Reset-PnPMicrosoft365GroupExpiration",
-       Remarks = "Renews the Microsoft 365 Group by extending its expiration with the number of days defined in the group expiration policy set on the Azure Active Directory",
-       SortOrder = 1)]
+    
     [CmdletRelatedLink(Text = "Documentation", Url = "https://docs.microsoft.com/graph/api/group-renew")]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All | MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class ResetMicrosoft365GroupExpiration : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Microsoft 365 Group")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public Microsoft365GroupPipeBind Identity;
 
         protected override void ExecuteCmdlet()

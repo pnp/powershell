@@ -12,27 +12,21 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsData.Export, "PnPClientSidePage", SupportsShouldProcess = true)]
-    [CmdletHelp("Exports a Client Side Page to a PnP Provisioning Template",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> Export-PnPClientSidePage -Identity Home.aspx ",
-       Remarks = "Exports the page 'Home.aspx' to a new PnP Provisioning Template",
-       SortOrder = 1)]
     public class ExportClientSidePage : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ClientSidePagePipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified referenced files will be exported to the current folder.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter PersistBrandingFiles;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified the template will be saved to the file specified with this parameter.")]
+        [Parameter(Mandatory = false)]
         public string Out;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify to override the question to overwrite a file if it already exists.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.")]
+        [Parameter(Mandatory = false)]
         public ExtractConfigurationPipeBind Configuration;
 
         protected override void ProcessRecord()

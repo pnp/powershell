@@ -7,15 +7,6 @@ using PnP.PowerShell.Commands.Base;
 namespace PnP.PowerShell.Commands.RecycleBin
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantRecycleBinItem", DefaultParameterSetName = "All")]
-    [CmdletHelp("Returns all modern and classic site collections in the tenant scoped recycle bin",
-        DetailedDescription = "This command will return all the items in the tenant recycle bin for the Office 365 tenant you are connected to. Be sure to connect to the SharePoint Online Admin endpoint (https://yourtenantname-admin.sharepoint.com) in order for this command to work.",
-        Category = CmdletHelpCategory.RecycleBin,
-        OutputType = typeof(DeletedSiteProperties),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.deletedsiteproperties.aspx")]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPTenantRecycleBinItem",
-        Remarks = "Returns all modern and classic site collections in the tenant scoped recycle bin",
-        SortOrder = 1)]
     public class GetTenantRecycleBinItems : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()

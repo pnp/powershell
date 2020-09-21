@@ -6,18 +6,12 @@ using PnP.Framework.Utilities;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Add, "PnPFolder")]
-    [CmdletHelp("Creates a folder within a parent folder",
-        Category = CmdletHelpCategory.Files)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPFolder -Name NewFolder -Folder _catalogs/masterpage",
-		Remarks = "This will create the folder NewFolder in the masterpage catalog",
-        SortOrder = 1)]
     public class AddFolder : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The folder name")]
+        [Parameter(Mandatory = true)]
         public string Name = string.Empty;
 
-        [Parameter(Mandatory = true, HelpMessage = "The parent folder in the site")]
+        [Parameter(Mandatory = true)]
         public string Folder = string.Empty;
 
         protected override void ExecuteCmdlet()

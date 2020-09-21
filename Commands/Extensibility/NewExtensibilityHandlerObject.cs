@@ -5,28 +5,18 @@ using PnP.PowerShell.CmdletHelpAttributes;
 namespace PnP.PowerShell.Commands.Extensibility
 {
     [Cmdlet(VerbsCommon.New, "PnPExtensibilityHandlerObject")]
-    [CmdletHelp("Creates an ExtensibilityHandler Object, to be used by the Get-PnPProvisioningTemplate cmdlet", 
-        Category = CmdletHelpCategory.Features,
-        OutputType=typeof(ExtensibilityHandler))]
-    [CmdletExample(
-        Code = @"
-PS:> $handler = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler
-PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $handler",
-        Remarks = @"This will create a new ExtensibilityHandler object that is run during extraction of the template", 
-        SortOrder = 1)]
-  
     public class NewExtensibilityHandlerObject : PSCmdlet
     {
-        [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true, HelpMessage = "The full assembly name of the handler")]
+        [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true)]
         public string Assembly;
 
-        [Parameter(Mandatory = true, HelpMessage = "The type of the handler")]
+        [Parameter(Mandatory = true)]
         public string Type;
 
-        [Parameter(Mandatory = false, HelpMessage = "Any configuration data you want to send to the handler")]
+        [Parameter(Mandatory = false)]
         public string Configuration;
 
-        [Parameter(Mandatory = false, HelpMessage = "If set, the handler will be disabled")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Disabled;
 
 

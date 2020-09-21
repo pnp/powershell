@@ -6,29 +6,15 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Remove, "PnPList", SupportsShouldProcess = true)]
-    [CmdletHelp("Deletes a list",
-        Category = CmdletHelpCategory.Lists)]
-    [CmdletExample(
-        Code = "PS:> Remove-PnPList -Identity Announcements",
-        SortOrder = 1,
-        Remarks = @"Removes the list named 'Announcements'. Asks for confirmation.")]
-    [CmdletExample(
-        Code = "PS:> Remove-PnPList -Identity Announcements -Force",
-        SortOrder = 2,
-        Remarks = @"Removes the list named 'Announcements' without asking for confirmation.")]
-    [CmdletExample(
-        Code = "PS:> Remove-PnPList -Title Announcements -Recycle",
-        SortOrder = 3,
-        Remarks = @"Removes the list named 'Announcements' and saves to the Recycle Bin")]
     public class RemoveList : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Title of the list.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ListPipeBind Identity = new ListPipeBind();
 
-        [Parameter(Mandatory = false, HelpMessage = "Defines if the list should be moved to recycle bin or directly deleted.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Recycle;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
         protected override void ExecuteCmdlet()
         {

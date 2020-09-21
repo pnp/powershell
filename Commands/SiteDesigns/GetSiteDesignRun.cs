@@ -9,23 +9,12 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.SiteDesigns
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteDesignRun", SupportsShouldProcess = true)]
-    [CmdletHelp(@"Retrieves a list of site designs applied to a specified site collection.",
-       Category = CmdletHelpCategory.TenantAdmin,
-        Description = @"Retrieves a list of site designs applied to a specified site collection. If the WebUrl parameter is not specified we show the list of designs applied to the current site. The returned output includes the ID of the scheduled job, the web and site IDs, and the site design ID, version, and title.")]
-    [CmdletExample(
-       Code = @"PS:> Get-PnPSiteDesignRun",
-       Remarks = "This example returns a list of the site designs applied to the current site. Providing a specific site design ID will return the details for just that applied site design.",
-       SortOrder = 1)]
-    [CmdletExample(
-       Code = @"PS:> Get-PnPSiteDesignRun -WebUrl https://mytenant.sharepoint.com/sites/project",
-       Remarks = "This example returns a list of the site designs applied to the specified site. Providing a specific site design ID will return the details for just that applied site design.",
-       SortOrder = 2)]
     public class GetSiteDesignRun : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "The ID of the site design to apply.")]
+        [Parameter(Mandatory = false)]
         public GuidPipeBind SiteDesignId;
 
-        [Parameter(Mandatory = false, HelpMessage = "The URL of the site collection where the site design will be applied. If not specified the design will be applied to the site you connected to with Connect-PnPOnline.")]
+        [Parameter(Mandatory = false)]
         public string WebUrl;
 
         protected override void ExecuteCmdlet()

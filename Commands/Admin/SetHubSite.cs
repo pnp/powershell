@@ -7,40 +7,22 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPHubSite")]
-    [CmdletHelp(@"Sets hub site properties", "Allows configuring a hub site",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPHubSite -Identity https://tenant.sharepoint.com/sites/myhubsite -Title ""My New Title""",
-        Remarks = "Sets the title of the hub site",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPHubSite -Identity https://tenant.sharepoint.com/sites/myhubsite -Description ""My updated description""",
-        Remarks = "Sets the description of the hub site",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPHubSite -Identity https://tenant.sharepoint.com/sites/myhubsite -SiteDesignId df8a3ef1-9603-44c4-abd9-541aea2fa745",
-        Remarks = "Sets the site design which should be applied to sites joining the the hub site",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPHubSite -Identity https://tenant.sharepoint.com/sites/myhubsite -LogoUrl ""https://tenant.sharepoint.com/SiteAssets/Logo.png""",
-        Remarks = "Sets the logo of the hub site",
-        SortOrder = 4)]
     public class SetHubSite : PnPAdminCmdlet
     {
-        [Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true, HelpMessage = "The Id or Url of a hub site to configure")]
+        [Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
         [Alias("HubSite")]
         public HubSitePipeBind Identity { get; set; }
 
-        [Parameter(Mandatory = false, HelpMessage = "The title to set on the hub which will be shown in the hub navigation bar")]
+        [Parameter(Mandatory = false)]
         public string Title { get; set; }
 
-        [Parameter(Mandatory = false, HelpMessage = "Full url to the image to use for the hub site logo. Can either be a logo hosted on SharePoint or outside of SharePoint and must be an absolute URL to the image.")]
+        [Parameter(Mandatory = false)]
         public string LogoUrl { get; set; }
 
-        [Parameter(Mandatory = false, HelpMessage = "The description of the hub site")]
+        [Parameter(Mandatory = false)]
         public string Description { get; set; }
 
-        [Parameter(Mandatory = false, HelpMessage = "GUID of the SharePoint Site Design which should be applied when a site joins the hub site")]
+        [Parameter(Mandatory = false)]
         public GuidPipeBind SiteDesignId;
 
         [Parameter(Mandatory = false)]

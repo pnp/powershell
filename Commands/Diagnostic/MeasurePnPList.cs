@@ -11,26 +11,15 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Commands.Diagnostic
 {
     [Cmdlet(VerbsDiagnostic.Measure, "PnPList")]
-    [CmdletHelp("Returns statistics on the list object. This may fail on lists larger than the list view threshold",
-        Category = CmdletHelpCategory.Diagnostic)]
-    [CmdletExample(
-        Code = @"PS:> Measure-PnPList ""Documents""",
-        Remarks = @"Gets statistics on Documents document library",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Measure-PnPList ""Documents"" -BrokenPermissions -ItemLevel",
-        Remarks = @"Displays items and folders with broken permissions inside Documents library",
-        SortOrder = 2)]
-    
     public class MeasurePnPList : PnPWebRetrievalsCmdlet<List>
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ListPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "Show item level statistics")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter ItemLevel;
 
-        [Parameter(Mandatory = false, HelpMessage = "Show items with broken permissions")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter BrokenPermissions;
 
         protected override void ExecuteCmdlet()

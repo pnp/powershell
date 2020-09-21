@@ -16,74 +16,36 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommon.New, "PnPProvisioningTemplateFromFolder")]
-    [CmdletHelp("Generates a provisioning template from a given folder, including only files that are present in that folder",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> New-PnPProvisioningTemplateFromFolder -Out template.xml",
-       Remarks = "Creates an empty provisioning template, and includes all files in the current folder.",
-       SortOrder = 1)]
-    [CmdletExample(
-       Code = @"PS:> New-PnPProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp",
-       Remarks = "Creates an empty provisioning template, and includes all files in the c:\\temp folder.",
-       SortOrder = 2)]
-    [CmdletExample(
-       Code = @"PS:> New-PnPProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js",
-       Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder.",
-       SortOrder = 3)]
-    [CmdletExample(
-       Code = @"PS:> New-PnPProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents""",
-       Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder and marks the files in the template to be added to the 'Shared Documents' folder",
-       SortOrder = 4)]
-    [CmdletExample(
-       Code = @"PS:> New-PnPProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents"" -ContentType ""Test Content Type""",
-       Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder and marks the files in the template to be added to the 'Shared Documents' folder. It will add a property to the item for the content type.",
-       SortOrder = 5)]
-    [CmdletExample(
-       Code = @"PS:> New-PnPProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents"" -Properties @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
-       Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder and marks the files in the template to be added to the 'Shared Documents' folder. It will add the specified properties to the file entries.",
-       SortOrder = 6)]
-    [CmdletExample(
-       Code = @"PS:> New-PnPProvisioningTemplateFromFolder -Out template.pnp",
-       Remarks = "Creates an empty provisioning template as a pnp package file, and includes all files in the current folder",
-       SortOrder = 7)]
-    [CmdletExample(
-       Code = @"PS:> New-PnPProvisioningTemplateFromFolder -Out template.pnp -Folder c:\temp",
-       Remarks = "Creates an empty provisioning template as a pnp package file, and includes all files in the c:\\temp folder",
-       SortOrder = 8)]
-    [CmdletRelatedLink(
-       Text ="Encoding", 
-       Url = "https://docs.microsoft.com/dotnet/api/system.text.encoding")]
-
     public class NewProvisioningTemplateFromFolder : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0, HelpMessage = "Filename to write to, optionally including full path.")]
+        [Parameter(Mandatory = false, Position = 0)]
         public string Out;
 
-        [Parameter(Mandatory = false, Position = 0, HelpMessage = "Folder to process. If not specified the current folder will be used.")]
+        [Parameter(Mandatory = false, Position = 0)]
         public string Folder;
 
-        [Parameter(Mandatory = false, Position = 1, HelpMessage = "Target folder to provision to files to. If not specified, the current folder name will be used.")]
+        [Parameter(Mandatory = false, Position = 1)]
         public string TargetFolder;
 
-        [Parameter(Mandatory = false, HelpMessage = "Optional wildcard pattern to match filenames against. If empty all files will be included.")]
+        [Parameter(Mandatory = false)]
         public string Match = "*.*";
 
-        [Parameter(Mandatory = false, HelpMessage = "An optional content type to use.")]
+        [Parameter(Mandatory = false)]
         public ContentTypePipeBind ContentType;
 
-        [Parameter(Mandatory = false, HelpMessage = "Additional properties to set for every file entry in the generated template.")]
+        [Parameter(Mandatory = false)]
         public Hashtable Properties;
 
-        [Parameter(Mandatory = false, Position = 1, HelpMessage = "The schema of the output to use, defaults to the latest schema")]
+        [Parameter(Mandatory = false, Position = 1)]
         public XMLPnPSchemaVersion Schema = XMLPnPSchemaVersion.LATEST;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified, the output will only contain the <pnp:Files> element. This allows the output to be included in another template.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter AsIncludeFile;
 
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false, HelpMessage = "The encoding type of the XML file, Unicode is default")]
+        [Parameter(Mandatory = false)]
         public System.Text.Encoding Encoding = System.Text.Encoding.Unicode;
 
         protected override void ExecuteCmdlet()

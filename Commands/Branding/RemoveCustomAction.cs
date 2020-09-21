@@ -10,29 +10,15 @@ using System.Linq;
 namespace PnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Remove, "PnPCustomAction", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = true)]
-    [CmdletHelp("Removes a custom action", 
-        Category = CmdletHelpCategory.Branding)]
-    [CmdletExample(Code = @"PS:> Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2", 
-                   Remarks = @"Removes the custom action with the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2'.", 
-                   SortOrder = 1)]
-    [CmdletExample(Code = @"PS:> Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 -Scope web", 
-                   Remarks = @"Removes the custom action with the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2' from the current web.", 
-                   SortOrder = 2)]
-    [CmdletExample(Code = @"PS:> Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 -Force", 
-                   Remarks = @"Removes the custom action with the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2' without asking for confirmation.", 
-                   SortOrder = 3)]
-    [CmdletExample(Code = @"PS:> Get-PnPCustomAction -Scope All | ? Location -eq ScriptLink | Remove-PnPCustomAction",
-                   Remarks = @"Removes all custom actions that are ScriptLinks",
-                   SortOrder = 4)]
     public class RemoveCustomAction : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "The id or name of the CustomAction that needs to be removed or a CustomAction instance itself")]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         public UserCustomActionPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "Define if the CustomAction is to be found at the web or site collection scope. Specify All to allow deletion from either web or site collection.")]
+        [Parameter(Mandatory = false)]
         public CustomActionScope Scope = CustomActionScope.Web;
 
-        [Parameter(Mandatory = false, HelpMessage = "Use the -Force flag to bypass the confirmation question")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

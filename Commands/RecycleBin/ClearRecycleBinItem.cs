@@ -7,43 +7,24 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 namespace PnP.PowerShell.Commands.RecycleBin
 {
     [Cmdlet(VerbsCommon.Clear, "PnPRecycleBinItem", DefaultParameterSetName = PARAMETERSET_ALL)]
-    [CmdletHelp("Permanently deletes all or a specific recycle bin item",
-        Category = CmdletHelpCategory.RecycleBin)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPRecycleBinItem | ? FileLeafName -like ""*.docx"" | Clear-PnpRecycleBinItem",
-        Remarks = "Permanently deletes all the items in the first and second stage recycle bins of which the file names have the .docx extension",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Clear-PnpRecycleBinItem -Identity 72e4d749-d750-4989-b727-523d6726e442",
-        Remarks = "Permanently deletes the recycle bin item with Id 72e4d749-d750-4989-b727-523d6726e442 from the recycle bin",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Clear-PnpRecycleBinItem -Identity $item -Force",
-        Remarks = "Permanently deletes the recycle bin item stored under variable $item from the recycle bin without asking for confirmation from the end user first",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Clear-PnPRecycleBinItem -All -RowLimit 10000",
-        Remarks = "Permanently deletes up to 10,000 items in the recycle bin",
-        SortOrder = 4)]
-
     public class ClearRecycleBinItem : PnPSharePointCmdlet
     {
         const string PARAMETERSET_ALL = "All";
         const string PARAMETERSET_IDENTITY = "Identity";
 
-        [Parameter(Mandatory = true, HelpMessage = "Id of the recycle bin item or the recycle bin item itself to permanently delete", ValueFromPipeline = true, ParameterSetName = PARAMETERSET_IDENTITY)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = PARAMETERSET_IDENTITY)]
         public RecycleBinItemPipeBind Identity;
 
-        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ALL, HelpMessage = "Clears all items")]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ALL)]
         public SwitchParameter All;
 
-        [Parameter(Mandatory = false, HelpMessage = "If provided, only all the items in the second stage recycle bin will be cleared", ParameterSetName = PARAMETERSET_ALL)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ALL)]
         public SwitchParameter SecondStageOnly = false;
-        [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be asked to restore the recycle bin item", ParameterSetName = PARAMETERSET_IDENTITY)]
-        [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be asked to restore the recycle bin item", ParameterSetName = PARAMETERSET_ALL)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_IDENTITY)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ALL)]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false, HelpMessage = "Limits deletion to specified number of items", ParameterSetName = PARAMETERSET_ALL)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ALL)]
         public int RowLimit;
 
         protected override void ExecuteCmdlet()

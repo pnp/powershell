@@ -10,19 +10,13 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsData.Update, "PnPTeamsApp")]
-    [CmdletHelp("Updates an existing app in the Teams App Catalog.",
-        Category = CmdletHelpCategory.Teams)]
-    [CmdletExample(
-       Code = "PS:> Update-PnPTeamsApp -Identity 4efdf392-8225-4763-9e7f-4edeb7f721aa -Path c:\\myapp.zip",
-       Remarks = "Updates the specified app in the teams app catalog with the contents of the referenced zip file.",
-       SortOrder = 1)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class UpdateTeamsApp : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
         public TeamsAppPipeBind Identity;
 
-        [Parameter(Mandatory = true, HelpMessage = "The path pointing to the packaged/zip file containing the app")]
+        [Parameter(Mandatory = true)]
         public string Path;
 
         protected override void ExecuteCmdlet()

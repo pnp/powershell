@@ -8,37 +8,22 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Webhooks
 {
     [Cmdlet(VerbsCommon.Add, "PnPWebhookSubscription")]
-    [CmdletHelp("Adds a new Webhook subscription",
-        Category = CmdletHelpCategory.Webhooks,
-        OutputType = typeof(WebhookSubscription))]
-    [CmdletExample(
-        Code = "PS:> Add-PnPWebhookSubscription -List MyList -NotificationUrl https://my-func.azurewebsites.net/webhook",
-        Remarks = "Add a Webhook subscription for the specified notification Url on the list MyList",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPWebhookSubscription -List MyList -NotificationUrl https://my-func.azurewebsites.net/webhook -ExpirationDate ""2017-09-01""",
-        Remarks = "Add a Webhook subscription for the specified notification Url on the list MyList with an expiration date set on September 1st, 2017",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPWebhookSubscription -List MyList -NotificationUrl https://my-func.azurewebsites.net/webhook -ExpirationDate ""2017-09-01"" -ClientState ""Hello State!""",
-        Remarks = "Add a Webhook subscription for the specified notification Url on the list MyList with an expiration date set on September 1st, 2017 with a specific client state",
-        SortOrder = 3)]
     public class AddWebhookSubscription : PnPWebCmdlet
     {
         public const int DefaultValidityInMonths = 6;
         public const int ValidityDeltaInDays = -72; // Note: Some expiration dates too close to the limit are rejected
 
 
-        [Parameter(Mandatory = false, HelpMessage = "The list object or name where the Webhook subscription will be added to")]
+        [Parameter(Mandatory = false)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, HelpMessage = "The URL of the Webhook endpoint that will be notified of the change")]
+        [Parameter(Mandatory = true)]
         public string NotificationUrl;
 
-        [Parameter(Mandatory = false, HelpMessage = "The date at which the Webhook subscription will expire. (Default: 6 months from today)")]
+        [Parameter(Mandatory = false)]
         public DateTime ExpirationDate = DateTime.Today.ToUniversalTime().AddMonths(DefaultValidityInMonths).AddHours(ValidityDeltaInDays);
 
-        [Parameter(Mandatory = false, HelpMessage = "A client state information that will be passed through notifications")]
+        [Parameter(Mandatory = false)]
         public string ClientState = string.Empty;
 
         protected override void ExecuteCmdlet()

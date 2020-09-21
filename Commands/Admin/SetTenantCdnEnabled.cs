@@ -12,18 +12,12 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPTenantCdnEnabled")]
-    [CmdletHelp("Enables or disabled the public or private Office 365 Content Delivery Network (CDN).",
-        DetailedDescription = @"Enables or disabled the public or private Office 365 Content Delivery Network (CDN).",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPTenantCdnEnabled -CdnType Public -Enable $true",
-        Remarks = @"This example sets the Public CDN enabled.", SortOrder = 1)]
     public class SetTenantCdnEnabled : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Specify to enable or disable")]
+        [Parameter(Mandatory = true)]
         public bool Enable;
 
-        [Parameter(Mandatory = true, HelpMessage = "The type of cdn to enable or disable")]
+        [Parameter(Mandatory = true)]
         public CdnType CdnType;
 
         [Parameter(Mandatory = false)]

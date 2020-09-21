@@ -7,34 +7,27 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Add, "PnPClientSideText")]
-    [CmdletHelp("Adds a text element to a client-side page.",
-        "Adds a new text element to a section on a client-side page.",
-      Category = CmdletHelpCategory.ClientSidePages)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPClientSideText -Page ""MyPage"" -Text ""Hello World!""",
-        Remarks = "Adds the text 'Hello World!' to the Client-Side Page 'MyPage'",
-        SortOrder = 1)]
     public class AddClientSideText : PnPWebCmdlet
     {
         private const string ParameterSet_DEFAULT = "Default";
         private const string ParameterSet_POSITIONED = "Positioned";
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page.", ParameterSetName = ParameterSet_DEFAULT)]
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page.", ParameterSetName = ParameterSet_POSITIONED)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_DEFAULT)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_POSITIONED)]
         public ClientSidePagePipeBind Page;
 
-        [Parameter(Mandatory = true, HelpMessage = "Specifies the text to display in the text area.", ParameterSetName = ParameterSet_DEFAULT)]
-        [Parameter(Mandatory = true, HelpMessage = "Specifies the text to display in the text area.", ParameterSetName = ParameterSet_POSITIONED)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEFAULT)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_POSITIONED)]
         public string Text;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the order of the text control. (Default = 1)", ParameterSetName = ParameterSet_DEFAULT)]
-        [Parameter(Mandatory = false, HelpMessage = "Sets the order of the text control. (Default = 1)", ParameterSetName = ParameterSet_POSITIONED)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_POSITIONED)]
         public int Order = 1;
 
-        [Parameter(Mandatory = true, HelpMessage = "Sets the section where to insert the text control.", ParameterSetName = ParameterSet_POSITIONED)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_POSITIONED)]
         public int Section;
 
-        [Parameter(Mandatory = true, HelpMessage = "Sets the column where to insert the text control.", ParameterSetName = ParameterSet_POSITIONED)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_POSITIONED)]
         public int Column;
 
         protected override void ExecuteCmdlet()

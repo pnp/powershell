@@ -6,11 +6,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPHomeSite")]
-    [CmdletHelp("Returns the home site url for your tenant",
-     Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-     Code = @"PS:> Get-PnPHomeSite",
-     Remarks = @"Returns the home site url for your tenant", SortOrder = 1)]
     public class GetHomeSite : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()

@@ -36,57 +36,27 @@ namespace PnP.PowerShell.Commands.Search
     }
 
     [Cmdlet(VerbsCommon.Get, "PnPSearchCrawlLog", DefaultParameterSetName = "Xml")]
-    [CmdletHelp("Returns entries from the SharePoint search crawl log. Make sure you are granted access to the crawl log via the SharePoint search admin center at https://<tenant>-admin.sharepoint.com/_layouts/15/searchadmin/crawllogreadpermission.aspx in order to run this cmdlet.",
-        Category = CmdletHelpCategory.Search)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSearchCrawlLog",
-        Remarks = "Returns the last 100 crawl log entries for site content.",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSearchCrawlLog -Filter ""https://<tenant>-my.sharepoint.com/personal""",
-        Remarks = "Returns the last 100 crawl log entries for OneDrive content.",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSearchCrawlLog -ContentSource UserProfiles ",
-        Remarks = "Returns the last 100 crawl log entries for user profiles.",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSearchCrawlLog -ContentSource UserProfiles -Filter ""mikael""",
-        Remarks = @"Returns the last 100 crawl log entries for user profiles with the term ""mikael"" in the user principal name.",
-        SortOrder = 4)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSearchCrawlLog -ContentSource Sites -LogLevel Error -RowLimit 10",
-        Remarks = @"Returns the last 10 crawl log entries with a state of Error for site content.",
-        SortOrder = 5)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSearchCrawlLog -EndDate (Get-Date).AddDays(-100)",
-        Remarks = @"Returns the last 100 crawl log entries up until 100 days ago.",
-        SortOrder = 6)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSearchCrawlLog -RowFilter 3 -RawFormat",
-        Remarks = @"Returns the last 3 crawl log entries showing the raw crawl log data.",
-        SortOrder = 7)]
     public class GetSearchCrawlLog : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "Filter what log entries to return (All, Success, Warning, Error). Defaults to All")]
+        [Parameter(Mandatory = false)]
         public LogLevel LogLevel = LogLevel.All;
 
-        [Parameter(Mandatory = false, HelpMessage = "Number of entries to return. Defaults to 100.")]
+        [Parameter(Mandatory = false)]
         public int RowLimit = 100;
 
-        [Parameter(Mandatory = false, HelpMessage = "Filter to limit what is being returned. Has to be a URL prefix for SharePoint content, and part of a user principal name for user profiles. Wildcard characters are not supported.")]
+        [Parameter(Mandatory = false)]
         public string Filter;
 
-        [Parameter(Mandatory = false, HelpMessage = "Content to retrieve (Sites, User Profiles). Defaults to Sites.")]
+        [Parameter(Mandatory = false)]
         public ContentSource ContentSource = ContentSource.Sites;
 
-        [Parameter(Mandatory = false, HelpMessage = "Start date to start getting entries from. Defaults to start of time.")]
+        [Parameter(Mandatory = false)]
         public DateTime StartDate = DateTime.MinValue;
 
-        [Parameter(Mandatory = false, HelpMessage = "End date to stop getting entries from. Default to current time.")]
+        [Parameter(Mandatory = false)]
         public DateTime EndDate = DateTime.UtcNow.AddDays(1);
 
-        [Parameter(Mandatory = false, HelpMessage = "Show raw crawl log data")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter RawFormat;
 
         private const int MaxRows = 100000;

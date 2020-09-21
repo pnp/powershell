@@ -10,30 +10,18 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Get, "PnPField")]
-    [CmdletHelp("Returns a field from a list or site",
-        Category = CmdletHelpCategory.Fields,
-        OutputType = typeof(Field),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx")]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPField",
-        Remarks = @"Gets all the fields from the current site",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPField -List ""Demo list"" -Identity ""Speakers""",
-        Remarks = @"Gets the speakers field from the list Demo list",
-        SortOrder = 2)]
     public class GetField : PnPWebRetrievalsCmdlet<Field>
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, HelpMessage = "The list object or name where to get the field from")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "The field object or name to get")]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         public FieldPipeBind Identity = new FieldPipeBind();
 
-        [Parameter(Mandatory = false, HelpMessage = "Filter to the specified group")]
+        [Parameter(Mandatory = false)]
         public string Group;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = false, HelpMessage = "Search site hierarchy for fields")]
+        [Parameter(Mandatory = false, ValueFromPipeline = false)]
         public SwitchParameter InSiteHierarchy;
 
         protected override void ExecuteCmdlet()

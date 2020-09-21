@@ -11,33 +11,22 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantSite", SupportsShouldProcess = true)]
-    [CmdletHelp(@"Retrieve site information.", "Use this cmdlet to retrieve site information from your tenant administration.",
-        Category = CmdletHelpCategory.TenantAdmin,
-        OutputType = typeof(Microsoft.Online.SharePoint.TenantAdministration.SiteProperties),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.siteproperties.aspx")]
-    [CmdletExample(Code = @"PS:> Get-PnPTenantSite", Remarks = "Returns all site collections", SortOrder = 1)]
-    [CmdletExample(Code = @"PS:> Get-PnPTenantSite -Url http://tenant.sharepoint.com/sites/projects", Remarks = "Returns information about the project site", SortOrder = 2)]
-    [CmdletExample(Code = @"PS:> Get-PnPTenantSite -Detailed", Remarks = "Returns all sites with the full details of these sites", SortOrder = 3)]
-    [CmdletExample(Code = @"PS:> Get-PnPTenantSite -IncludeOneDriveSites", Remarks = "Returns all sites including all OneDrive for Business sites", SortOrder = 4)]
-    [CmdletExample(Code = @"PS:> Get-PnPTenantSite -IncludeOneDriveSites -Filter ""Url -like '-my.sharepoint.com/personal/'""", Remarks = "Returns all OneDrive for Business sites", SortOrder = 5)]
-    [CmdletExample(Code = @"PS:> Get-PnPTenantSite -Template SITEPAGEPUBLISHING#0", Remarks = "Returns all Communication sites", SortOrder = 6)]
-    [CmdletExample(Code = @"PS:> Get-PnPTenantSite -Filter ""Url -like 'sales'"" ", Remarks = "Returns all sites including 'sales' in the url", SortOrder = 7)]
     public class GetTenantSite : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "The URL of the site", Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         [Alias("Identity")]
         public string Url;
 
-        [Parameter(Mandatory = false, HelpMessage = @"By default, all sites will be returned. Specify a template value alike ""STS#0"" here to filter on the template")]
+        [Parameter(Mandatory = false)]
         public string Template;
 
-        [Parameter(Mandatory = false, HelpMessage = "By default, not all returned attributes are populated. This switch populates all attributes. It can take several seconds to run. Without this, some attributes will show default values that may not be correct.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Detailed;
 
-        [Parameter(Mandatory = false, HelpMessage = "By default, the OneDrives are not returned. This switch includes all OneDrives.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IncludeOneDriveSites;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the script block of the server-side filter to apply. See https://technet.microsoft.com/en-us/library/fp161380.aspx")]
+        [Parameter(Mandatory = false)]
         public string Filter;
 
         protected override void ExecuteCmdlet()

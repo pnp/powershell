@@ -10,17 +10,6 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Diagnostic
 {
     [Cmdlet(VerbsDiagnostic.Measure, "PnPWeb")]
-    [CmdletHelp("Returns statistics on the web object",
-        Category = CmdletHelpCategory.Diagnostic)]
-    [CmdletExample(
-        Code = @"PS:> Measure-PnPWeb",
-        Remarks = @"Gets statistics on the current web",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Measure-PnPWeb $web -Recursive",
-        Remarks = @"Gets statistics on the provided web including all its subwebs",
-        SortOrder = 2)]
-
     public class MeasurePnPWeb : PnPSharePointCmdlet
     {
         private Expression<Func<Web, object>>[] _retrievalExpressions;
@@ -28,10 +17,10 @@ namespace PnP.PowerShell.Commands.Diagnostic
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
         public WebPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "Iterate all sub webs recursively")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Recursive;
 
-        [Parameter(Mandatory = false, HelpMessage = "Include hidden lists in statistics calculation")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IncludeHiddenList;
 
         public MeasurePnPWeb()

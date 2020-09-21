@@ -24,21 +24,15 @@ namespace PnP.PowerShell.Commands.Base
     [CmdletHelp(@"Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration.",
         DetailedDescription = "Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration. Have a look at https://www.youtube.com/watch?v=QWY7AJ2ZQYI for a demonstration on how this cmdlet works and can be used.",
         Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Scopes", HelpMessage = "Specify which permissions scopes to request.", ParameterSetName = ParameterSet_NEWCERT)]
-    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Scopes", HelpMessage = "Specify which permissions scopes to request.", ParameterSetName = ParameterSet_EXISTINGCERT)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Scopes", ParameterSetName = ParameterSet_NEWCERT)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Scopes", ParameterSetName = ParameterSet_EXISTINGCERT)]
 
-    [CmdletExample(
-       Code = @"PS:> Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser",
-       Remarks = "Creates a new Azure AD Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All",
-       SortOrder = 1)]
+    
     [CmdletExample(
        Code = @"PS:> Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String ""password"" -AsPlainText -Force)",
        Remarks = "Creates a new Azure AD Application registration which will use the existing private key certificate at the provided path to allow access. It will upload the provided private key certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All",
        SortOrder = 2)]
-    [CmdletExample(
-       Code = @"PS:> Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -Scopes ""MSGraph.User.Read.All"",""SPO.Sites.Read.All""",
-       Remarks = "Creates a new Azure AD Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.Read.All, User.Read.All",
-       SortOrder = 3)]
+    
     [CmdletExample(
        Code = @"PS:> Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -OutPath c:\ -CertificatePassword (ConvertTo-SecureString -String ""password"" -AsPlainText -Force)",
        Remarks = @"Creates a new Azure AD Application registration, creates a new self signed certificate, and stores the public and private key certificates in c:\. The private key certificate will be locked with the password ""password"". It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All",
@@ -49,47 +43,47 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_EXISTINGCERT = "Existing Certificate";
         private const string ParameterSet_NEWCERT = "Generate Certificate";
 
-        [Parameter(Mandatory = true, HelpMessage = "The name of the Azure AD Application to create", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string ApplicationName;
 
-        [Parameter(Mandatory = true, HelpMessage = "The identifier of your tenant, e.g. mytenant.onmicrosoft.com", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Tenant;
 
-        [Parameter(Mandatory = true, HelpMessage = "Password for the certificate being created", ParameterSetName = ParameterSet_EXISTINGCERT)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_EXISTINGCERT)]
         public string CertificatePath;
 
-        [Parameter(Mandatory = false, HelpMessage = "Common Name (e.g. server FQDN or YOUR name). defaults to 'pnp.contoso.com'", Position = 0, ParameterSetName = ParameterSet_NEWCERT)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_NEWCERT)]
         public string CommonName;
 
-        [Parameter(Mandatory = false, HelpMessage = "Country Name (2 letter code)", Position = 1, ParameterSetName = ParameterSet_NEWCERT)]
+        [Parameter(Mandatory = false, Position = 1, ParameterSetName = ParameterSet_NEWCERT)]
         public string Country = String.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "State or Province Name (full name)", Position = 2, ParameterSetName = ParameterSet_NEWCERT)]
+        [Parameter(Mandatory = false, Position = 2, ParameterSetName = ParameterSet_NEWCERT)]
         public string State = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Locality Name (eg, city)", Position = 3, ParameterSetName = ParameterSet_NEWCERT)]
+        [Parameter(Mandatory = false, Position = 3, ParameterSetName = ParameterSet_NEWCERT)]
         public string Locality = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Organization Name (eg, company)", Position = 4, ParameterSetName = ParameterSet_NEWCERT)]
+        [Parameter(Mandatory = false, Position = 4, ParameterSetName = ParameterSet_NEWCERT)]
         public string Organization = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Organizational Unit Name (eg, section)", Position = 5, ParameterSetName = ParameterSet_NEWCERT)]
+        [Parameter(Mandatory = false, Position = 5, ParameterSetName = ParameterSet_NEWCERT)]
         public string OrganizationUnit = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Number of years until expiration (default is 10, max is 30)", Position = 7, ParameterSetName = ParameterSet_NEWCERT)]
+        [Parameter(Mandatory = false, Position = 7, ParameterSetName = ParameterSet_NEWCERT)]
         public int ValidYears = 10;
 
-        [Parameter(Mandatory = false, HelpMessage = "Optional certificate password", Position = 8, ParameterSetName = ParameterSet_NEWCERT)]
-        [Parameter(Mandatory = false, HelpMessage = "Optional certificate password", Position = 8, ParameterSetName = ParameterSet_EXISTINGCERT)]
+        [Parameter(Mandatory = false, Position = 8, ParameterSetName = ParameterSet_NEWCERT)]
+        [Parameter(Mandatory = false, Position = 8, ParameterSetName = ParameterSet_EXISTINGCERT)]
         public SecureString CertificatePassword;
 
-        [Parameter(Mandatory = false, HelpMessage = "Folder to create certificate files in (.CER and .PFX)", ParameterSetName = ParameterSet_NEWCERT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NEWCERT)]
         public string OutPath;
 
-        [Parameter(Mandatory = false, HelpMessage = "Local Certificate Store to add the certificate to", ParameterSetName = ParameterSet_NEWCERT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NEWCERT)]
         public StoreLocation Store;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify the Azure environment to use to setup the Azure AD app. Defaults to 'Production'.")]
+        [Parameter(Mandatory = false)]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
         protected override void ProcessRecord()

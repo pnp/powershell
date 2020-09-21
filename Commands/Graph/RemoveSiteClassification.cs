@@ -8,16 +8,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPSiteClassification")]
-    [CmdletHelp("Removes one or more existing site classification values from the list of available values",
-        Category = CmdletHelpCategory.Graph)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPSiteClassification -Classifications ""HBI""",
-        Remarks = @"Removes the ""HBI"" site classification from the list of available values.",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPSiteClassification -Classifications ""HBI"", ""Top Secret""",
-        Remarks = @"Removes the ""HBI"" site classification from the list of available values.",
-        SortOrder = 2)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     public class RemoveSiteClassification : PnPGraphCmdlet
     {
@@ -25,7 +15,7 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = true)]
         public List<string> Classifications;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Confirm parameter will allow the confirmation question to be skipped")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Confirm;
 
         protected override void ExecuteCmdlet()

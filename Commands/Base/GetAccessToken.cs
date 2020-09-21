@@ -13,17 +13,10 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPAccessToken")]
-    [CmdletHelp("Returns the current OAuth Access token",
-        DetailedDescription = "Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API. Doesn't work with all Connect-PnPOnline options.",
-        Category = CmdletHelpCategory.Graph)]
-    [CmdletExample(
-       Code = "PS:> Get-PnPAccessToken",
-       Remarks = "Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API",
-       SortOrder = 1)]
     [Obsolete("Use Get-PnPGraphAccessToken instead")]
     public class GetPnPAccessToken : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "Returns the details from the access token in a decoded manner")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Decoded;
 
         protected override void ExecuteCmdlet()

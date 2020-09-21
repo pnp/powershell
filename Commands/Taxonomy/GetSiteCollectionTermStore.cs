@@ -6,14 +6,6 @@ using PnP.PowerShell.CmdletHelpAttributes;
 namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteCollectionTermStore", SupportsShouldProcess = true)]
-    [CmdletHelp(@"Returns the site collection term store", 
-        Category = CmdletHelpCategory.Taxonomy,
-        OutputType = typeof(TermStore),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.taxonomy.termstore.aspx")]
-    [CmdletExample
-        (Code = @"PS:> Get-PnPSiteCollectionTermStore",
-        Remarks = "Returns the site collection term store.",
-        SortOrder = 1)]
     public class GetPnPSiteCollectionTermStore : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()

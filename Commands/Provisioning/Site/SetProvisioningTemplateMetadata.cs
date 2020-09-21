@@ -13,49 +13,21 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Set, "PnPProvisioningTemplateMetadata")]
-    [CmdletHelp("Sets metadata of a provisioning template",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-     Code = @"PS:> Set-PnPProvisioningTemplateMetadata -Path template.xml -TemplateDisplayName ""DisplayNameValue""",
-     Remarks = @"Sets the DisplayName property of a site template in XML format.",
-     SortOrder = 1)]
-    [CmdletExample(
-     Code = @"PS:> Set-PnPProvisioningTemplateMetadata -Path template.pnp -TemplateDisplayName ""DisplayNameValue""",
-     Remarks = @"Sets the DisplayName property of a site template in Office Open XML format.",
-     SortOrder = 2)]
-    [CmdletExample(
-     Code = @"PS:> Set-PnPProvisioningTemplateMetadata -Path template.xml -TemplateImagePreviewUrl ""Full URL of the Image Preview""",
-     Remarks = @"Sets the Url to the preview image of a site template in XML format.",
-     SortOrder = 3)]
-    [CmdletExample(
-     Code = @"PS:> Set-PnPProvisioningTemplateMetadata -Path template.pnp -TemplateImagePreviewUrl ""Full URL of the Image Preview""",
-     Remarks = @"Sets the to the preview image of a site template in Office Open XML format.",
-     SortOrder = 4)]
-    [CmdletExample(
-     Code = @"PS:> Set-PnPProvisioningTemplateMetadata -Path template.xml -TemplateProperties @{""Property1"" = ""Test Value 1""; ""Property2""=""Test Value 2""}",
-     Remarks = @"Sets the property 'Property1' to the value 'Test Value 1' of a site template in XML format.",
-     SortOrder = 5)]
-    [CmdletExample(
-     Code = @"PS:> Set-PnPProvisioningTemplateMetadata -Path template.pnp -TemplateProperties @{""Property1"" = ""Test Value 1""; ""Property2""=""Test Value 2""}",
-     Remarks = @"Sets the property 'Property1' to the value 'Test Value 1' of a site template in Office Open XML format.",
-     SortOrder = 6)]
-
-
     public class SetProvisioningTemplateMetadata : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml or pnp file containing the site template.")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true)]
         public string Path;
 
-        [Parameter(Mandatory = false, HelpMessage = "It can be used to specify the DisplayName of the template file that will be updated.")]
+        [Parameter(Mandatory = false)]
         public string TemplateDisplayName;
 
-        [Parameter(Mandatory = false, HelpMessage = "It can be used to specify the ImagePreviewUrl of the template file that will be updated.")]
+        [Parameter(Mandatory = false)]
         public string TemplateImagePreviewUrl;
 
-        [Parameter(Mandatory = false, HelpMessage = "It can be used to specify custom Properties for the template file that will be updated.")]
+        [Parameter(Mandatory = false)]
         public Hashtable TemplateProperties;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while extracting a template.")]
+        [Parameter(Mandatory = false)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
         protected override void ExecuteCmdlet()

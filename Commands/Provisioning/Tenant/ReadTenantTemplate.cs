@@ -11,18 +11,12 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommunications.Read, "PnPTenantTemplate")]
-    [CmdletHelp("Loads/Reads a PnP tenant template from the file system and returns an in-memory instance of this template.",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> Read-PnPTenantTemplate -Path template.pnp",
-       Remarks = "Reads a PnP tenant template file from the file system and returns an in-memory instance",
-       SortOrder = 1)]
     public class ReadTenantTemplate : PSCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to read from, optionally including full path.")]
+        [Parameter(Mandatory = true, Position = 0)]
         public string Path;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while loading the template.")]
+        [Parameter(Mandatory = false)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
         protected override void ProcessRecord()

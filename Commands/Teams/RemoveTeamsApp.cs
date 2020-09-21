@@ -9,27 +9,13 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTeamsApp")]
-    [CmdletHelp("Removes an app from the Teams AppCatalog.",
-        Category = CmdletHelpCategory.Teams)]
-    [CmdletExample(
-       Code = "PS:> Remove-PnPTeamsApp -Identity ac139d8b-fa2b-4ffe-88b3-f0b30158b58b",
-       Remarks = "Adds a new channel to the specified Teams instance",
-       SortOrder = 1)]
-    [CmdletExample(
-       Code = "PS:> Remove-PnPTeamsApp -Identity \"My Teams App\"",
-       Remarks = "Adds a new channel to the specified Teams instance",
-       SortOrder = 2)]
-    [CmdletExample(
-       Code = "PS:> Add-PnPTeamsChannel -Team MyTeam -DisplayName \"My Channel\" -Private",
-       Remarks = "Adds a new private channel to the specified Teams instance",
-       SortOrder = 3)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.AppCatalog_ReadWrite_All)]
     public class RemoveTeamsApp : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The id, externalid or display name of the app.")]
+        [Parameter(Mandatory = true)]
         public TeamsAppPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

@@ -7,28 +7,13 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPRequestAccessEmails")]
-    [CmdletHelp("Sets Request Access Email on a web",
-       DetailedDescription = "Enables or disables access requests to be sent and configures which e-mail address should receive these requests. The web you apply this on must have unique rights.",
-       Category = CmdletHelpCategory.Webs)]
-    [CmdletExample(
-       Code = @"PS:> Set-PnPRequestAccessEmails -Emails someone@example.com ",
-       Remarks = "This will enable requesting access and send the requests to the provided e-mail address",
-       SortOrder = 1)]
-    [CmdletExample(
-       Code = @"PS:> Set-PnPRequestAccessEmails -Disabled",
-       Remarks = "This will disable the ability to request access to the site",
-       SortOrder = 2)]
-    [CmdletExample(
-       Code = @"PS:> Set-PnPRequestAccessEmails -Disabled:$false",
-       Remarks = "This will enable the ability to request access to the site and send the requests to the default owners of the site",
-       SortOrder = 3)]
     public class SetRequestAccessEmails : PnPWebCmdlet
     {
         // Parameter must remain a string array for backwards compatibility, even though only one e-mail address can be provided
-        [Parameter(Mandatory = false, HelpMessage = "Email address to send the access requests to")]
+        [Parameter(Mandatory = false)]
         public string[] Emails = null;
 
-        [Parameter(Mandatory = false, HelpMessage = "Enables or disables access to be requested")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Disabled;
 
         protected override void ExecuteCmdlet()

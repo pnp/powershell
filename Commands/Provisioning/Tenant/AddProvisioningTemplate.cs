@@ -8,18 +8,12 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.Add, "PnPProvisioningTemplate", SupportsShouldProcess = true)]
-    [CmdletHelp("Adds a PnP Provisioning Template object to a tenant template",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> Add-PnpProvisioningTemplate -TenantTemplate $tenanttemplate -SiteTemplate $sitetemplate",
-       Remarks = "Adds an existing site template to an existing tenant template object",
-       SortOrder = 1)]
     public class AddProvisioningTemplate : PSCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The template to add to the tenant template")]
+        [Parameter(Mandatory = true)]
         public ProvisioningTemplate SiteTemplate;
 
-        [Parameter(Mandatory = true, HelpMessage = "The tenant template to add the template to", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public ProvisioningHierarchy TenantTemplate;
 
         protected override void ProcessRecord()

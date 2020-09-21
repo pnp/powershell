@@ -6,17 +6,9 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPGroupPermissions")]
-    [CmdletHelp("Returns the permissions for a specific SharePoint group",
-        Category = CmdletHelpCategory.Principals,
-        OutputType = typeof(RoleDefinitionBindingCollection),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.roledefinitionbindingcollection.aspx")]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPGroupPermissions -Identity 'My Site Members'", 
-        Remarks = "Returns the permissions for the SharePoint group with the name 'My Site Members'",
-        SortOrder = 0)]
     public class GetGroupPermissions : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByName", HelpMessage = "Get the permissions of a specific group by name")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByName")]
         [Alias("Name")]
         public GroupPipeBind Identity = new GroupPipeBind();
 

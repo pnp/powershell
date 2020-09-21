@@ -8,64 +8,60 @@ namespace PnP.PowerShell.Commands.InformationManagement
 {
 
     [Cmdlet(VerbsCommon.Set, "PnPListInformationRightsManagement")]
-    [CmdletHelp("Get the site closure status of the site which has a site policy applied", Category = CmdletHelpCategory.InformationManagement)]
-    [CmdletExample(
-      Code = @"PS:> Set-PnPListInformationRightsManagement -List ""Documents"" -Enabled $true",
-      Remarks = @"Enables Information Rights Management (IRM) on the list.", SortOrder = 1)]
     public class SetListInformationRightsManagement : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The list to set Information Rights Management (IRM) settings for.")]
+        [Parameter(Mandatory = true)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies whether Information Rights Management (IRM) is enabled for the list.")]
+        [Parameter(Mandatory = false)]
         public bool? Enable;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies whether Information Rights Management (IRM) expiration is enabled for the list.")]
+        [Parameter(Mandatory = false)]
         public bool? EnableExpiration;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies whether Information Rights Management (IRM) rejection is enabled for the list.")]
+        [Parameter(Mandatory = false)]
         public bool? EnableRejection;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets a value indicating whether the viewer can print the downloaded document.")]
+        [Parameter(Mandatory = false)]
         public bool? AllowPrint;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets a value indicating whether the viewer can run a script on the downloaded document.")]
+        [Parameter(Mandatory = false)]
         public bool? AllowScript;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets a value indicating whether the viewer can write on a copy of the downloaded document.")]
+        [Parameter(Mandatory = false)]
         public bool? AllowWriteCopy;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets a value indicating whether to block Office Web Application Companion applications (WACs) from showing this document.")]
+        [Parameter(Mandatory = false)]
         public bool? DisableDocumentBrowserView;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the number of days after which the downloaded document will expire.")]
+        [Parameter(Mandatory = false)]
         public int? DocumentAccessExpireDays;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the date after which the Information Rights Management (IRM) protection of this document library will stop.")]
+        [Parameter(Mandatory = false)]
         public DateTime? DocumentLibraryProtectionExpireDate;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets a value indicating whether the downloaded document will expire.")]
+        [Parameter(Mandatory = false)]
         public bool? EnableDocumentAccessExpire;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets a value indicating whether to enable Office Web Application Companion applications (WACs) to publishing view.")]
+        [Parameter(Mandatory = false)]
         public bool? EnableDocumentBrowserPublishingView;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets a value indicating whether the permission of the downloaded document is applicable to a group.")]
+        [Parameter(Mandatory = false)]
         public bool? EnableGroupProtection;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets whether a user must verify their credentials after some interval.")]
+        [Parameter(Mandatory = false)]
         public bool? EnableLicenseCacheExpire;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the number of days that the application that opens the document caches the IRM license. When these elapse, the application will connect to the IRM server to validate the license.")]
+        [Parameter(Mandatory = false)]
         public int? LicenseCacheExpireDays;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the group name (email address) that the permission is also applicable to.")]
+        [Parameter(Mandatory = false)]
         public string GroupName;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the permission policy description.")]
+        [Parameter(Mandatory = false)]
         public string PolicyDescription;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the permission policy title.")]
+        [Parameter(Mandatory = false)]
         public string PolicyTitle;
 
         [Parameter(Mandatory = false)]

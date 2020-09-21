@@ -16,34 +16,24 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsData.Export, "PnPListToProvisioningTemplate", SupportsShouldProcess = true)]
-    [CmdletHelp("Exports one or more lists to provisioning template",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-        Code = @"PS:> Export-PnPListToProvisioningTemplate -Out template.xml -List ""Documents""",
-        Remarks = "Extracts a list to a new provisioning template including the list specified by title or ID.",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Export-PnPListToProvisioningTemplate -Out template.pnp -List ""Documents"",""Events""",
-        Remarks = "Extracts a list to a new provisioning template Office Open XML file, including the lists specified by title or ID.",
-        SortOrder = 2)]
     public class ExportListToProvisioningTemplate : PnPWebCmdlet
     {
         private ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");
         private ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");
 
-        [Parameter(Mandatory = true, HelpMessage = "Specify the lists to extract, either providing their ID or their Title.")]
+        [Parameter(Mandatory = true)]
         public List<string> List;
 
-        [Parameter(Mandatory = false, Position = 0, HelpMessage = "Filename to write to, optionally including full path")]
+        [Parameter(Mandatory = false, Position = 0)]
         public string Out;
 
-        [Parameter(Mandatory = false, Position = 1, HelpMessage = "The schema of the output to use, defaults to the latest schema")]
+        [Parameter(Mandatory = false, Position = 1)]
         public XMLPnPSchemaVersion Schema = XMLPnPSchemaVersion.LATEST;
         
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false, HelpMessage = "Returns the template as an in-memory object, which is an instance of the ProvisioningTemplate type of the PnP Core Component. It cannot be used together with the -Out parameter.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter OutputInstance;
 
         protected override void ExecuteCmdlet()

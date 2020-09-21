@@ -9,33 +9,15 @@ using PnP.PowerShell.Commands.Extensions;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "PnPWeb")]
-    [CmdletHelp("Removes a subweb in the current web",
-        Category = CmdletHelpCategory.Webs)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPWeb -Url projectA",
-        Remarks = "Remove a web",
-        SortOrder = 1)]
-
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPWeb -Identity 5fecaf67-6b9e-4691-a0ff-518fc9839aa0",
-        Remarks = "Remove a web specified by its ID",
-        SortOrder = 2)]
-
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSubWebs | Remove-PnPWeb -Force",
-        Remarks = "Remove all subwebs and do not ask for confirmation",
-        SortOrder = 2)]
-
-
     public class RemoveWeb : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The site relative url of the web, e.g. 'Subweb1'", ParameterSetName = "ByUrl")]
+        [Parameter(Mandatory = true, ParameterSetName = "ByUrl")]
         public string Url;
 
-        [Parameter(Mandatory = true, HelpMessage = "Identity/Id/Web object to delete", ParameterSetName = "ByIdentity", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public WebPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "Do not ask for confirmation to delete the subweb", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

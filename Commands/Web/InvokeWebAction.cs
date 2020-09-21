@@ -9,70 +9,60 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPWebAction", SupportsShouldProcess = true)]
-    [CmdletHelp("Executes operations on web, lists and list items.",
-        Category = CmdletHelpCategory.Webs)]
-    [CmdletExample(
-        Code = @"PS:> Invoke-PnPWebAction -ListAction ${function:ListAction}",
-        Remarks = "This will call the function ListAction on all the lists located on the current web.",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Invoke-PnPWebAction -ShouldProcessListAction ${function:ShouldProcessList} -ListAction ${function:ListAction}",
-        Remarks = "This will call the function ShouldProcessList, if it returns true the function ListAction will then be called. This will occur on all lists located on the current web",
-        SortOrder = 2)]
     public class InvokeWebAction : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "Webs you want to process (for example different site collections), will use Web parameter if not specified")]
+        [Parameter(Mandatory = false)]
         public web[] Webs;
 
-        [Parameter(Mandatory = false, HelpMessage = "Function to be executed on the web. There is one input parameter of type Web")]
+        [Parameter(Mandatory = false)]
         public Action<web> WebAction;
 
-        [Parameter(Mandatory = false, HelpMessage = "Function to be executed on the web that would determine if " + nameof(WebAction) + " should be invoked, There is one input parameter of type Web and the function should return a boolean value")]
+        [Parameter(Mandatory = false)]
         public Func<web, bool> ShouldProcessWebAction;
 
-        [Parameter(Mandatory = false, HelpMessage = "Function to be executed on the web, this will trigger after lists and list items have been processed. There is one input parameter of type Web")]
+        [Parameter(Mandatory = false)]
         public Action<web> PostWebAction;
 
-        [Parameter(Mandatory = false, HelpMessage = "Function to be executed on the web that would determine if " + nameof(PostWebAction) + " should be invoked, There is one input parameter of type Web and the function should return a boolean value")]
+        [Parameter(Mandatory = false)]
         public Func<web, bool> ShouldProcessPostWebAction;
 
-        [Parameter(Mandatory = false, HelpMessage = "The properties to load for web.")]
+        [Parameter(Mandatory = false)]
         public string[] WebProperties;
 
-        [Parameter(Mandatory = false, HelpMessage = "Name of list if you only want to handle one specific list and its list items")]
+        [Parameter(Mandatory = false)]
         public string ListName { get; set; }
 
-        [Parameter(Mandatory = false, HelpMessage = "Function to be executed on the list. There is one input parameter of type List")]
+        [Parameter(Mandatory = false)]
         public Action<List> ListAction;
 
-        [Parameter(Mandatory = false, HelpMessage = "Function to be executed on the web that would determine if " + nameof(ListAction) + " should be invoked, There is one input parameter of type List and the function should return a boolean value")]
+        [Parameter(Mandatory = false)]
         public Func<List, bool> ShouldProcessListAction;
 
-        [Parameter(Mandatory = false, HelpMessage = "Function to be executed on the list, this will trigger after list items have been processed. There is one input parameter of type List")]
+        [Parameter(Mandatory = false)]
         public Action<List> PostListAction;
 
-        [Parameter(Mandatory = false, HelpMessage = "Function to be executed on the web that would determine if " + nameof(PostListAction) + " should be invoked, There is one input parameter of type List and the function should return a boolean value")]
+        [Parameter(Mandatory = false)]
         public Func<List, bool> ShouldProcessPostListAction;
 
-        [Parameter(Mandatory = false, HelpMessage = "The properties to load for list.")]
+        [Parameter(Mandatory = false)]
         public string[] ListProperties;
 
-        [Parameter(Mandatory = false, HelpMessage = "Function to be executed on the list item. There is one input parameter of type ListItem")]
+        [Parameter(Mandatory = false)]
         public Action<ListItem> ListItemAction;
 
-        [Parameter(Mandatory = false, HelpMessage = "Function to be executed on the web that would determine if " + nameof(ListItemAction) + " should be invoked, There is one input parameter of type ListItem and the function should return a boolean value")]
+        [Parameter(Mandatory = false)]
         public Func<ListItem, bool> ShouldProcessListItemAction;
 
-        [Parameter(Mandatory = false, HelpMessage = "The properties to load for list items.")]
+        [Parameter(Mandatory = false)]
         public string[] ListItemProperties;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify if sub webs will be processed")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter SubWebs;
 
-        [Parameter(Mandatory = false, HelpMessage = "Will not output statistics after the operation")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter DisableStatisticsOutput;
 
-        [Parameter(Mandatory = false, HelpMessage = "Will skip the counting process; by doing this you will not get an estimated time remaining")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter SkipCounting;
 
         protected override void ExecuteCmdlet()

@@ -11,98 +11,79 @@ namespace PnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsLifecycle.Submit, "PnPSearchQuery", DefaultParameterSetName = "Limit")]
     [Alias("Invoke-PnPSearchQuery")]
-    [CmdletHelp("Executes an arbitrary search query against the SharePoint search index",
-        Category = CmdletHelpCategory.Search,
-        OutputType = typeof(List<dynamic>))]
-    [CmdletExample(
-        Code = @"PS:> Submit-PnPSearchQuery -Query ""finance""",
-        Remarks = "Returns the top 500 items with the term finance",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Submit-PnPSearchQuery -Query ""Title:Intranet*"" -MaxResults 10",
-        Remarks = "Returns the top 10 items indexed by SharePoint Search of which the title starts with the word Intranet",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Submit-PnPSearchQuery -Query ""Title:Intranet*"" -All",
-        Remarks = "Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Submit-PnPSearchQuery -Query ""Title:Intranet*"" -Refiners ""contentclass,FileType(filter=6/0/*)""",
-        Remarks = "Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet, and return refiners for contentclass and FileType managed properties",
-        SortOrder = 4)]
     public class SubmitSearchQuery : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "Search query in Keyword Query Language (KQL).", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Query = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Search result item to start returning the results from. Useful for paging. Leave at 0 to return all results.", ParameterSetName = "Limit")]
+        [Parameter(Mandatory = false, ParameterSetName = "Limit")]
         public int StartRow = 0;
 
-        [Parameter(Mandatory = false, HelpMessage = "Maximum amount of search results to return. Default and max per page is 500 search results.", ParameterSetName = "Limit")]
+        [Parameter(Mandatory = false, ParameterSetName = "Limit")]
         [ValidateRange(0, 500)]
         public int MaxResults = 500;
 
-        [Parameter(Mandatory = false, HelpMessage = "Automatically page results until the end to get more than 500. Use with caution!", ParameterSetName = "All")]
+        [Parameter(Mandatory = false, ParameterSetName = "All")]
         public SwitchParameter All;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies whether near duplicate items should be removed from the search results.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool TrimDuplicates = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Extra query properties. Can for example be used for Office Graph queries.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Hashtable Properties;
 
-        [Parameter(Mandatory = false, HelpMessage = "The list of refiners to be returned in a search result.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Refiners;
 
-        [Parameter(Mandatory = false, HelpMessage = "The locale for the query.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public int Culture;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the query template that is used at run time to transform the query based on user input.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string QueryTemplate;
 
-        [Parameter(Mandatory = false, HelpMessage = "The list of properties to return in the search results.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string[] SelectProperties;
 
-        [Parameter(Mandatory = false, HelpMessage = "The set of refinement filters used.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string[] RefinementFilters;
 
-        [Parameter(Mandatory = false, HelpMessage = "The list of properties by which the search results are ordered.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Hashtable SortList;
 
-        [Parameter(Mandatory = false, HelpMessage = "The identifier (ID) of the ranking model to use for the query.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string RankingModelId;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the name of the client which issued the query.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string ClientType = "PnP";
 
-        [Parameter(Mandatory = false, HelpMessage = "Limit the number of items per the collapse specification. See https://docs.microsoft.com/en-us/sharepoint/dev/general-development/customizing-search-results-in-sharepoint#collapse-similar-search-results-using-the-collapsespecification-property for more information.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string CollapseSpecification;
 
-        [Parameter(Mandatory = false, HelpMessage = "The keyword query’s hidden constraints.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string HiddenConstraints;
 
-        [Parameter(Mandatory = false, HelpMessage = "The identifier for the search query time zone.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public int TimeZoneId;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies whether the phonetic forms of the query terms are used to find matches.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool EnablePhonetic;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies whether stemming is enabled.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool EnableStemming;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies whether Query Rules are enabled for this query.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool EnableQueryRules;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the identifier (ID or name) of the result source to be used to run the query.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Guid SourceId;
 
-        [Parameter(Mandatory = false, HelpMessage = "Determines whether Best Bets are enabled.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool ProcessBestBets;
 
-        [Parameter(Mandatory = false, HelpMessage = "Determines whether personal favorites data is processed or not.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool ProcessPersonalFavorites;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies whether only relevant results are returned", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter RelevantResults;
 
         internal IEnumerable<object> Run()

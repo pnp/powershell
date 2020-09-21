@@ -13,24 +13,12 @@ using System.Text.Json;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantTheme")]
-    [CmdletHelp("Returns all or a specific theme",
-        DetailedDescription = @"Returns all or a specific tenant theme.",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPTenantTheme",
-        Remarks = @"Returns all themes", SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPTenantTheme -Name ""MyCompanyTheme""",
-        Remarks = @"Returns the specified theme", SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPTenantTheme -Name ""MyCompanyTheme"" -AsJson",
-        Remarks = @"Returns the specified theme formatted as JSON", SortOrder = 2)]
     public class GetTenantTheme : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "The name of the theme to retrieve")]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         public string Name;
 
-        [Parameter(Mandatory = false, Position = 1, HelpMessage = "Outputs the themes as JSON")]
+        [Parameter(Mandatory = false, Position = 1)]
         public SwitchParameter AsJson;
 
         protected override void ExecuteCmdlet()

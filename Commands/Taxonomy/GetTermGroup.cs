@@ -9,29 +9,13 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Get, "PnPTermGroup", SupportsShouldProcess = false)]
-    [CmdletHelp(@"Returns a taxonomy term group",
-        Category = CmdletHelpCategory.Taxonomy,
-        OutputType = typeof(TermGroup),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.taxonomy.termgroup.aspx")]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPTermGroup",
-        Remarks = @"Returns all Term Groups in the site collection termstore",
-        SortOrder = 0)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPTermGroup -Identity ""Departments""",
-        Remarks = @"Returns the termgroup named ""Departments"" from the site collection termstore",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPTermGroup -Identity ab2af486-e097-4b4a-9444-527b251f1f8d",
-        Remarks = @"Returns the termgroup with the given ID from the site collection termstore",
-        SortOrder = 2)]
     public class GetTermGroup : PnPRetrievalsCmdlet<TermGroup>
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "Name of the taxonomy term group to retrieve.")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
         [Alias("GroupName")]
         public TaxonomyItemPipeBind<TermGroup> Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "Term store to check; if not specified the default term store is used.")]
+        [Parameter(Mandatory = false)]
         [Alias("TermStoreName")]
         public GenericObjectNameIdPipeBind<TermStore> TermStore;
 

@@ -5,17 +5,9 @@ using PnP.PowerShell.CmdletHelpAttributes;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.New, "PnPUser")]
-    [CmdletHelp("Adds a user to the built-in Site User Info List and returns a user object",
-        Category = CmdletHelpCategory.Principals,
-        OutputType = typeof(User),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.user.aspx")]
-    [CmdletExample(
-        Code = @"PS:> New-PnPUser -LoginName user@company.com",
-        SortOrder = 1,
-        Remarks = "Adds a new user with the login user@company.com to the current site")]
     public class NewUser : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The users login name (user@company.com)")]
+        [Parameter(Mandatory = true)]
         [Alias("LogonName")]
         public string LoginName = string.Empty;
 

@@ -8,34 +8,24 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Set, "PnPDocumentSetField")]
-    [CmdletHelp("Sets a site column from the available content types to a document set", 
-        Category = CmdletHelpCategory.DocumentSets)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPDocumentSetField -Field ""Test Field"" -DocumentSet ""Test Document Set"" -SetSharedField -SetWelcomePageField",
-        Remarks = "This will set the field, available in one of the available content types, as a Shared Field and as a Welcome Page Field.",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPDocumentSetField -Field ""Test Field"" -DocumentSet ""Test Document Set"" -RemoveSharedField -RemoveWelcomePageField",
-        Remarks = "This will remove the field, available in one of the available content types, as a Shared Field and as a Welcome Page Field.",
-        SortOrder = 1)]
     public class SetFieldInDocumentSet : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The document set in which to set the field. Either specify a name, a document set template object, an id, or a content type object")]
+        [Parameter(Mandatory = true)]
         public DocumentSetPipeBind DocumentSet;
 
-        [Parameter(Mandatory = true, HelpMessage = "The field to set. The field needs to be available in one of the available content types. Either specify a name, an id or a field object")]
+        [Parameter(Mandatory = true)]
         public FieldPipeBind Field; 
 
-        [Parameter(Mandatory = false, HelpMessage = "Set the field as a Shared Field")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter SetSharedField;
 
-        [Parameter(Mandatory = false, HelpMessage = "Set the field as a Welcome Page field")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter SetWelcomePageField;
 
-        [Parameter(Mandatory = false, HelpMessage = "Removes the field as a Shared Field")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter RemoveSharedField;
 
-        [Parameter(Mandatory = false, HelpMessage = "Removes the field as a Welcome Page Field")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter RemoveWelcomePageField;
 
         protected override void ExecuteCmdlet()

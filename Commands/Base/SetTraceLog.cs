@@ -6,49 +6,30 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Set, "PnPTraceLog")]
-    [CmdletHelp("Turn log tracing on or off",
-        "Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets, uses the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off. Notice that basically only the Provisioning Engine writes to the tracelog which means that cmdlets related to the engine will produce output.",
-        Category = CmdletHelpCategory.Base)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPTraceLog -On -LogFile traceoutput.txt",
-        Remarks = @"This turns on trace logging to the file 'traceoutput.txt' and will capture events of at least 'Information' level.",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPTraceLog -On -LogFile traceoutput.txt -Level Debug",
-        Remarks = @"This turns on trace logging to the file 'traceoutput.txt' and will capture debug events.",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPTraceLog -On -LogFile traceoutput.txt -Level Debug -Delimiter "",""",
-        Remarks = @"This turns on trace logging to the file 'traceoutput.txt' and will write the entries as comma separated. Debug events are captured.",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPTraceLog -Off",
-        Remarks = @"This turns off trace logging. It will flush any remaining messages to the log file.",
-        SortOrder = 3)]
     public class SetTraceLog : PSCmdlet
     {
-        [Parameter(Mandatory = true, ParameterSetName = "On", HelpMessage = "Turn on tracing to log file")]
+        [Parameter(Mandatory = true, ParameterSetName = "On")]
         public SwitchParameter On;
 
-        [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "The path and filename of the file to write the trace log to.")]
+        [Parameter(Mandatory = false, ParameterSetName = "On")]
         public string LogFile;
 
-        [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "Turn on console trace output.")]
+        [Parameter(Mandatory = false, ParameterSetName = "On")]
         public SwitchParameter WriteToConsole;
 
-        [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "The level of events to capture. Possible values are 'Debug', 'Error', 'Warning', 'Information'. Defaults to 'Information'.")]
+        [Parameter(Mandatory = false, ParameterSetName = "On")]
         public PnP.Framework.Diagnostics.LogLevel Level = PnP.Framework.Diagnostics.LogLevel.Information;
 
-        [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "If specified the trace log entries will be delimited with this value.")]
+        [Parameter(Mandatory = false, ParameterSetName = "On")]
         public string Delimiter;
 
-        [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "Indents in the tracelog will be with this amount of characters. Defaults to 4.")]
+        [Parameter(Mandatory = false, ParameterSetName = "On")]
         public int IndentSize = 4;
 
-        [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "Auto flush the trace log. Defaults to true.")]
+        [Parameter(Mandatory = false, ParameterSetName = "On")]
         public bool AutoFlush = true;
 
-        [Parameter(Mandatory = true, ParameterSetName = "Off", HelpMessage = "Turn off tracing to log file.")]
+        [Parameter(Mandatory = true, ParameterSetName = "Off")]
         public SwitchParameter Off;
 
         private const string FileListenername = "PNPPOWERSHELLFILETRACELISTENER";

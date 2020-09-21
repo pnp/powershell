@@ -10,13 +10,9 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPHubSiteChild")]
-    [CmdletHelp(@"Retrieves all sites linked to a specific hub site",
-        "Retrieves all sites linked to a specific hub site",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(Code = @"PS:> Get-PnPHubSiteChild -Identity https://contoso.sharepoint.com/sites/myhubsite", Remarks = "Returns the sites having configured the provided hub site as their hub site", SortOrder = 1)]
     public class GetHubSiteChild : PnPAdminCmdlet
     {
-        [Parameter(ValueFromPipeline = true, Mandatory = true, HelpMessage = "The URL of the hubsite for which to receive the sites refering to it")]
+        [Parameter(ValueFromPipeline = true, Mandatory = true)]
         public HubSitePipeBind Identity;
 
         protected override void ExecuteCmdlet()

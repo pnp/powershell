@@ -8,20 +8,9 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 namespace PnP.PowerShell.Commands.Webhooks
 {
     [Cmdlet(VerbsCommon.Get, "PnPWebhookSubscriptions")]
-    [CmdletHelp("Gets all the Webhook subscriptions of the resource",
-        Category = CmdletHelpCategory.Webhooks,
-        OutputType = typeof(WebhookSubscription))]
-    [CmdletExample(
-        Code = "PS:> Get-PnPWebhookSubscriptions -List MyList",
-        Remarks = "Gets all Webhook subscriptions of the list MyList",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = "PS:> Get-PnPList | Get-PnPWebhookSubscriptions",
-        Remarks = "Gets all Webhook subscriptions of the all the lists",
-        SortOrder = 2)]
     public class GetWebhookSubscriptions : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, HelpMessage = "The list object or name to get the Webhook subscriptions from")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public ListPipeBind List;
 
         protected override void ExecuteCmdlet()

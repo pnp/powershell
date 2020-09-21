@@ -8,41 +8,19 @@ using System;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Set, "PnPGroupPermissions")]
-    [CmdletHelp("Adds and/or removes permissions of a specific SharePoint group",
-        Category = CmdletHelpCategory.Principals)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPGroupPermissions -Identity 'My Site Members' -AddRole Contribute",
-        Remarks = "Adds the 'Contribute' permission to the SharePoint group with the name 'My Site Members'",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPGroupPermissions -Identity 'My Site Members' -RemoveRole 'Full Control' -AddRole 'Read'",
-        Remarks = "Removes the 'Full Control' from and adds the 'Contribute' permissions to the SharePoint group with the name 'My Site Members'",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPGroupPermissions -Identity 'My Site Members' -AddRole @('Contribute', 'Design')",
-        Remarks = "Adds the 'Contribute' and 'Design' permissions to the SharePoint group with the name 'My Site Members'",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPGroupPermissions -Identity 'My Site Members' -RemoveRole @('Contribute', 'Design')",
-        Remarks = "Removes the 'Contribute' and 'Design' permissions from the SharePoint group with the name 'My Site Members'",
-        SortOrder = 4)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPGroupPermissions -Identity 'My Site Members' -List 'MyList' -RemoveRole @('Contribute')",
-        Remarks = "Removes the 'Contribute' permissions from the list 'MyList' for the group with the name 'My Site Members'",
-        SortOrder = 5)]
     public class SetGroupPermissions : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByName", HelpMessage = "Get the permissions of a specific group by name")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByName")]
         [Alias("Name")]
         public GroupPipeBind Identity = new GroupPipeBind();
 
-        [Parameter(Mandatory = false, HelpMessage = "The list to apply the command to.")]
+        [Parameter(Mandatory = false)]
         public ListPipeBind List = new ListPipeBind();
 
-        [Parameter(Mandatory = false, HelpMessage = "Name of the permission set to add to this SharePoint group")]
+        [Parameter(Mandatory = false)]
         public string[] AddRole = null;
 
-        [Parameter(Mandatory = false, HelpMessage = "Name of the permission set to remove from this SharePoint group")]
+        [Parameter(Mandatory = false)]
         public string[] RemoveRole = null;
 
         protected override void ExecuteCmdlet()

@@ -8,20 +8,9 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPException")]
-    [CmdletHelp("Returns the last exception that occurred",
-        @"Returns the last exception which can be used while debugging PnP Cmdlets",
-        Category = CmdletHelpCategory.Base)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPException",
-        Remarks = "Returns the last exception",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPException -All",
-        Remarks = "Returns all exceptions that occurred",
-        SortOrder = 2)]
     public class GetException : PSCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "Show all exceptions")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter All;
 
         protected override void ProcessRecord()

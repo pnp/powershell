@@ -5,8 +5,6 @@ using PnP.PowerShell.CmdletHelpAttributes;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPMasterPage")]
-    [CmdletHelp("Returns the URLs of the default Master Page and the custom Master Page.", 
-        Category = CmdletHelpCategory.Branding)]
     public class GetMasterPage : PnPWebCmdlet
     {
 

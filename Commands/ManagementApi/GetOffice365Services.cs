@@ -9,14 +9,8 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPOffice365Services")]
-    [CmdletHelp(
-        "Gets the services available in Office 365 from the Office 365 Management API",
-        Category = CmdletHelpCategory.ManagementApi,
-        OutputTypeLink = "https://docs.microsoft.com/office/office-365-management-api/office-365-service-communications-api-reference#get-services")]
-    [CmdletExample(
-       Code = "PS:> Get-PnPOffice365Services",
-       Remarks = "Retrieves the current services available in Office 365",
-       SortOrder = 1)]
+    
+    
     [CmdletOfficeManagementApiPermission(OfficeManagementApiPermission.ServiceHealth_Read)]
     public class GetOffice365Services : PnPOfficeManagementApiCmdlet
     {

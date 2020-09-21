@@ -9,51 +9,42 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Add, "PnPTaxonomyField")]
-    [CmdletHelp("Add a taxonomy field",
-        "Adds a taxonomy/managed metadata field to a list or as a site column.",
-        Category = CmdletHelpCategory.Fields,
-        OutputType = typeof(Field),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx")]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPTaxonomyField -DisplayName ""Test"" -InternalName ""Test"" -TermSetPath ""TestTermGroup|TestTermSet""",
-        Remarks = @"Adds a new taxonomy field called ""Test"" that points to the TestTermSet which is located in the TestTermGroup",
-        SortOrder = 1)]
     public class AddTaxonomyField : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The list object or name where this field needs to be added")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The display name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string DisplayName;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The internal name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string InternalName;
 
-        [Parameter(Mandatory = true, ParameterSetName = "Path", HelpMessage = "The path to the term that this needs to be bound")]
+        [Parameter(Mandatory = true, ParameterSetName = "Path")]
         public string TermSetPath;
 
-        [Parameter(Mandatory = false, ParameterSetName = "Id", HelpMessage = "The ID of the Taxonomy item")]
+        [Parameter(Mandatory = false, ParameterSetName = "Id")]
         public GuidPipeBind TaxonomyItemId;
 
-        [Parameter(Mandatory = false, ParameterSetName = "Path", HelpMessage = "The path delimiter to be used, by default this is '|'")]
+        [Parameter(Mandatory = false, ParameterSetName = "Path")]
         public string TermPathDelimiter = "|";
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The group name to where this field belongs to")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Group;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The ID for the field, must be unique")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public GuidPipeBind Id = new GuidPipeBind();
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Switch Parameter if this field must be added to the default view")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter AddToDefaultView;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Switch Parameter if this Taxonomy field can hold multiple values")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter MultiValue;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Switch Parameter if the field is a required field")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter Required;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Specifies the control settings while adding a field. See https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.addfieldoptions.aspx for details")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public AddFieldOptions FieldOptions = AddFieldOptions.DefaultValue;
 
 

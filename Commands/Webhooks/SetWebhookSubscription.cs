@@ -8,40 +8,21 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Webhooks
 {
     [Cmdlet(VerbsCommon.Set, "PnPWebhookSubscription")]
-    [CmdletHelp("Updates a Webhook subscription",
-        Category = CmdletHelpCategory.Webhooks,
-        OutputType = typeof(WebhookSubscription))]
-    [CmdletExample(
-        Code = "PS:> Set-PnPWebhookSubscription -List MyList -Subscription ea1533a8-ff03-415b-a7b6-517ee50db8b6 -NotificationUrl https://my-func.azurewebsites.net/webhook",
-        Remarks = "Updates an existing Webhook subscription with the specified id on the list MyList with a new Notification Url",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPWebhookSubscription -List MyList -Subscription ea1533a8-ff03-415b-a7b6-517ee50db8b6 -NotificationUrl https://my-func.azurewebsites.net/webhook -ExpirationDate ""2017-09-01""",
-        Remarks = "Updates an existing Webhook subscription with the specified id on the list MyList with a new Notification Url and a new expiration date",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> $subscriptions = Get-PnPWebhookSubscriptions -List MyList
-PS:> $updated = $subscriptions[0]
-PS:> $updated.ExpirationDate = ""2017-10-01""
-PS:> Set-PnPWebhookSubscription -List MyList -Subscription $updated",
-        Remarks = @"Updates the Webhook subscription from the list MyList with a modified subscription object.
-Note: The date will be converted to Universal Time",
-        SortOrder = 3)]
     public class SetWebhookSubscription : PnPWebCmdlet
     {
         public const int DefaultValidityInMonths = 6;
         public const int ValidityDeltaInDays = -72; // Note: Some expiration dates too close to the limit are rejected
         
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The identity of the Webhook subscription to update")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public WebhookSubscriptionPipeBind Subscription;
 
-        [Parameter(Mandatory = false, HelpMessage = "The list object or name from which the Webhook subscription will be modified")]
+        [Parameter(Mandatory = false)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "The URL of the Webhook endpoint that will be notified of the change")]
+        [Parameter(Mandatory = false)]
         public string NotificationUrl;
 
-        [Parameter(Mandatory = false, HelpMessage = "The date at which the Webhook subscription will expire. (Default: 6 months from today)")]
+        [Parameter(Mandatory = false)]
         public DateTime ExpirationDate = DateTime.Today.ToUniversalTime().AddMonths(DefaultValidityInMonths).AddHours(ValidityDeltaInDays);
 
         protected override void ExecuteCmdlet()

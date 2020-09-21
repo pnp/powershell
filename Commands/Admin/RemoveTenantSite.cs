@@ -9,35 +9,16 @@ using PnP.Framework;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTenantSite", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = false)]
-    [CmdletHelp("Removes a site collection",
-        "Removes a site collection which is listed in your tenant administration site.",
-         Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-         Code = @"PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso",
-         Remarks =
-             @"This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso'  and put it in the recycle bin.",
-         SortOrder = 1)]
-    [CmdletExample(
-         Code = @"PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin",
-         Remarks =
-             @"This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' with force and it will skip the recycle bin.",
-         SortOrder = 2)]
-    [CmdletExample(
-         Code = @"PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -FromRecycleBin",
-         Remarks =
-             @"This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin.",
-         SortOrder = 3)]
-
     public class RemoveSite : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "Specifies the full URL of the site collection that needs to be deleted")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public string Url;
 
-        [Parameter(Mandatory = false, HelpMessage = "Do not add to the tenant scoped recycle bin when selected.")]
+        [Parameter(Mandatory = false)]
         [Alias("SkipTrash")]
         public SwitchParameter SkipRecycleBin;
 
-        [Parameter(Mandatory = false, HelpMessage = "Do not ask for confirmation.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

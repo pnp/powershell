@@ -6,17 +6,15 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.InformationManagement
 {
     [Cmdlet(VerbsCommon.Get, "PnPLabel")]
-    [CmdletHelp("Gets the Office 365 retention label/tag of the specified list or library (if applicable)", Category = CmdletHelpCategory.InformationManagement)]
-    [CmdletExample(
-       Code = @"PS:> Get-PnPLabel -List ""Demo List"" -ValuesOnly",
-       Remarks = @"This gets the Office 365 retention label which is set to a list or a library", SortOrder = 1)]
+    
+    
 
     public class GetLabel : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The ID or Url of the list")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "If provided, the results will be returned as values instead of in written text and will include more detailed information")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter ValuesOnly;
 
         protected override void ExecuteCmdlet()

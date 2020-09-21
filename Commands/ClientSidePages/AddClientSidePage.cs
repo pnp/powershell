@@ -8,49 +8,27 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Add, "PnPClientSidePage")]
-    [CmdletHelp("Adds a Client-Side Page",
-      Category = CmdletHelpCategory.ClientSidePages)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPClientSidePage -Name ""NewPage""",
-        Remarks = "Creates a new Client-Side page named 'NewPage'",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPClientSidePage -Name ""NewPage"" -ContentType ""MyPageContentType""",
-        Remarks = "Creates a new Client-Side page named 'NewPage' and sets the content type to the content type specified",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPClientSidePage -Name ""NewPageTemplate"" -PromoteAs Template",
-        Remarks = "Creates a new Client-Side page named 'NewPage' and saves as a template to the site.",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPClientSidePage -Name ""Folder/NewPage""",
-        Remarks = "Creates a new Client-Side page named 'NewPage' under 'Folder' folder and saves as a template to the site.",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPClientSidePage -Name ""NewPage"" -HeaderLayoutType ColorBlock",
-        Remarks = "Creates a new Client-Side page named 'NewPage' using the ColorBlock header layout",
-        SortOrder = 4)]
     public class AddClientSidePage : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Specifies the name of the page.")]
+        [Parameter(Mandatory = true, Position = 0)]
         public string Name = null;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the layout type of the page.")]
+        [Parameter(Mandatory = false)]
         public ClientSidePageLayoutType LayoutType = ClientSidePageLayoutType.Article;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows to promote the page for a specific purpose (HomePage | NewsPage)")]
+        [Parameter(Mandatory = false)]
         public ClientSidePagePromoteType PromoteAs = ClientSidePagePromoteType.None;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify either the name, ID or an actual content type.")]
+        [Parameter(Mandatory = false)]
         public ContentTypePipeBind ContentType;
 
-        [Parameter(Mandatory = false, HelpMessage = "Enables or Disables the comments on the page")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter CommentsEnabled = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Publishes the page once it is saved. Applicable to libraries set to create major and minor versions.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Publish;
 
-        [Parameter(Mandatory = false, HelpMessage = "Type of layout used for the header")]
+        [Parameter(Mandatory = false)]
         public ClientSidePageHeaderLayoutType HeaderLayoutType = ClientSidePageHeaderLayoutType.FullWidthImage;
       
         protected override void ExecuteCmdlet()

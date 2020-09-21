@@ -6,14 +6,9 @@ using PnP.PowerShell.Commands.Base;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPTenantAppCatalogUrl", SupportsShouldProcess = true)]
-    [CmdletHelp(@"Sets the url of the tenant scoped app catalog",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPTenantAppCatalogUrl -Url https://yourtenant.sharepoint.com/sites/appcatalog",
-        Remarks = @"Sets the tenant scoped app catalog to the provided site collection url", SortOrder = 1)]
     public class SetTenantAppCatalogUrl : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The url of the site to set as the tenant scoped app catalog")]
+        [Parameter(Mandatory = true)]
         public string Url;
 
         protected override void ExecuteCmdlet()

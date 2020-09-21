@@ -8,36 +8,15 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Remove, "PnPUser")]
-    [CmdletHelp("Removes a specific user from the site collection User Information List",
-        Category = CmdletHelpCategory.Principals,
-        DetailedDescription = "This command will allow the removal of a specific user from the User Information List",
-        OutputType = typeof(User),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.user.aspx")]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPUser -Identity 23",
-        Remarks = "Remove the user with Id 23 from the User Information List of the current site collection",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPUser -Identity i:0#.f|membership|user@tenant.onmicrosoft.com",
-        Remarks = "Remove the user with LoginName i:0#.f|membership|user@tenant.onmicrosoft.com from the User Information List of the current site collection",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPUser | ? Email -eq ""user@tenant.onmicrosoft.com"" | Remove-PnPUser",
-        Remarks = "Remove the user with e-mail address user@tenant.onmicrosoft.com from the User Information List of the current site collection",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPUser -Identity i:0#.f|membership|user@tenant.onmicrosoft.com -Confirm:$false",
-        Remarks = "Remove the user with LoginName i:0#.f|membership|user@tenant.onmicrosoft.com from the User Information List of the current site collection without asking to confirm the removal first",
-        SortOrder = 4)]
     public class RemoveUser : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "User ID or login name")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public UserPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Confirm parameter will allow the confirmation question to be skipped")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Confirm;
 
         protected override void ExecuteCmdlet()

@@ -6,26 +6,14 @@ using PnP.Framework.Utilities;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Move, "PnPFolder")]
-    [CmdletHelp("Move a folder to another location in the current web. If you want to move a folder to a different site collection, use the Move-PnPFile cmdlet instead, which also supports moving folders and also accross site collections.",
-        Category = CmdletHelpCategory.Files,
-        OutputType = typeof(Folder),
-        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee538057(v=office.15)"
-    )]
-    [CmdletExample(
-        Code = @"PS:> Move-PnPFolder -Folder Documents/Reports -TargetFolder 'Archived Reports'",
-        Remarks = "This will move the folder Reports in the Documents library to the 'Archived Reports' library",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Move-PnPFolder -Folder 'Shared Documents/Reports/2016/Templates' -TargetFolder 'Shared Documents/Reports'",
-        Remarks = "This will move the folder Templates to the new location in 'Shared Documents/Reports'",
-        SortOrder = 2)]
+    
     public class MoveFolder : PnPWebCmdlet
     {
 
-        [Parameter(Mandatory = true, HelpMessage = "The folder to move")]
+        [Parameter(Mandatory = true)]
         public string Folder = string.Empty;
 
-        [Parameter(Mandatory = true, HelpMessage = "The new parent location to which the folder should be moved to")]
+        [Parameter(Mandatory = true)]
         public string TargetFolder = string.Empty;
 
         protected override void ExecuteCmdlet()

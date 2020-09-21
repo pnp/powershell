@@ -6,22 +6,12 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.InformationManagement
 {
     [Cmdlet(VerbsCommon.Reset, "PnPLabel")]
-    [CmdletHelp("Resets a retention label on the specified list or library to None", 
-        DetailedDescription = "Removes the retention label on a list or library and its items. Does not work for sensitivity labels.",
-        Category = CmdletHelpCategory.InformationManagement)]
-    [CmdletExample(
-       Code = @"PS:> Reset-PnPLabel -List ""Demo List""",
-       Remarks = @"This resets an O365 label on the specified list or library to None", SortOrder = 1)]
-    [CmdletExample(
-       Code = @"PS:> Reset-PnPLabel -List ""Demo List"" -SyncToItems $true",
-       Remarks = @"This resets an O365 label on the specified list or library to None and resets the label on all the items in the list and library except Folders and where the label has been manually or previously automatically assigned", SortOrder = 2)]
-
     public class ResetLabel : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Url of the list")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "Reset label on existing items in the library")]
+        [Parameter(Mandatory = false)]
         public bool SyncToItems;
 
         protected override void ExecuteCmdlet()

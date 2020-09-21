@@ -6,12 +6,6 @@ using PnP.PowerShell.CmdletHelpAttributes;
 namespace PnP.PowerShell.Commands.Publishing
 {
     [Cmdlet(VerbsCommon.Remove, "PnPWikiPage", ConfirmImpact = ConfirmImpact.High)]
-    [CmdletHelp("Removes a wiki page",
-        Category = CmdletHelpCategory.Publishing)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPWikiPage -PageUrl '/pages/wikipage.aspx'",
-        Remarks = "Removes the page '/pages/wikipage.aspx'",
-        SortOrder = 1)]
     public class RemoveWikiPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position=0,ValueFromPipeline=true, ParameterSetName = "SERVER")]

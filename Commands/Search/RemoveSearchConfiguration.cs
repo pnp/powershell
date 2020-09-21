@@ -9,31 +9,12 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 namespace PnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Remove, "PnPSearchConfiguration")]
-    [CmdletHelp("Remove the search configuration",
-        Category = CmdletHelpCategory.Search)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPSearchConfiguration -Configuration $config",
-        Remarks = "Remove the search configuration for the current web (does not remove managed property mappings)",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPSearchConfiguration -Configuration $config -Scope Site",
-        Remarks = "Remove the search configuration for the current site collection (does not remove managed property mappings)",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPSearchConfiguration -Configuration $config -Scope Subscription",
-        Remarks = "Remove the search configuration for the current tenant (does not remove managed property mappings)",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPSearchConfiguration -Path searchconfig.xml -Scope Subscription",
-        Remarks = "Reads the search configuration from the specified XML file and remove it for the current tenant (does not remove managed property mappings)",
-        SortOrder = 4)]
-
     public class RemoveSearchConfiguration : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ParameterSetName = "Config", HelpMessage = "Search configuration string")]
+        [Parameter(Mandatory = true, ParameterSetName = "Config")]
         public string Configuration;
 
-        [Parameter(Mandatory = true, ParameterSetName = "Path", HelpMessage = "Path to a search configuration")]
+        [Parameter(Mandatory = true, ParameterSetName = "Path")]
         public string Path;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]

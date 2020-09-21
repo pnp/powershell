@@ -8,30 +8,12 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Set, "PnPFolderPermission", DefaultParameterSetName = "User")]
-    [CmdletHelp("Sets folder permissions. Use Get-PnPRoleDefinition to retrieve all available roles you can add or remove using this cmdlet.",
-        Category = CmdletHelpCategory.Lists)]
-    [CmdletExample(
-        Code = "PS:> Set-PnPFolderPermission -List 'Shared Documents' -Identity 'Shared Documents\\Folder' -User 'user@contoso.com' -AddRole 'Contribute'",
-        Remarks = "Adds the 'Contribute' permission to the user 'user@contoso.com' for the folder named 'Folder' located in the root of the library 'Shared Documents'",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = "PS:> Set-PnPFolderPermission -List 'Documents' -Identity 'Shared Documents\\Folder\\Subfolder' -User 'user@contoso.com' -RemoveRole 'Contribute'",
-        Remarks = "Removes the 'Contribute' permission to the user 'user@contoso.com' for the folder named 'Subfolder' located in the folder 'Folder' which is located in the root of the library 'Shared Documents'",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = "PS:> Set-PnPFolderPermission -List 'Documents' -Identity 'Shared Documents\\Folder' -User 'user@contoso.com' -AddRole 'Contribute' -ClearExisting",
-        Remarks = "Adds the 'Contribute' permission to the user 'user@contoso.com' for the folder named 'Folder' located in the root of the library 'Shared Documents' and removes all other permissions",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = "PS:> Get-PnPFolder -Url 'Shared Documents\\Folder' | Set-PnPFolderPermission -List 'Documents' -InheritPermissions",
-        Remarks = "Resets permissions for the folder named 'Folder' located in the root of the library 'Shared Documents' to inherit permissions from the library 'Shared Documents'",
-        SortOrder = 4)]
     public class SetFolderPermission : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "The ID, Title or Url of the list the folder is part of", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The ID of the folder, the server relative URL to the folder or actual Folder object", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public FolderPipeBind Identity;
 
         [Parameter(Mandatory = true, ParameterSetName = "Group")]
@@ -40,22 +22,22 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = true, ParameterSetName = "User")]
         public string User;
 
-        [Parameter(Mandatory = false, HelpMessage = "The role that must be assigned to the group or user", ParameterSetName = "User")]
-        [Parameter(Mandatory = false, HelpMessage = "The role that must be assigned to the group or user", ParameterSetName = "Group")]
+        [Parameter(Mandatory = false, ParameterSetName = "User")]
+        [Parameter(Mandatory = false, ParameterSetName = "Group")]
         public string AddRole = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "The role that must be removed from the group or user", ParameterSetName = "User")]
-        [Parameter(Mandatory = false, HelpMessage = "The role that must be removed from the group or user", ParameterSetName = "Group")]
+        [Parameter(Mandatory = false, ParameterSetName = "User")]
+        [Parameter(Mandatory = false, ParameterSetName = "Group")]
         public string RemoveRole = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Clear all existing permissions", ParameterSetName = "User")]
-        [Parameter(Mandatory = false, HelpMessage = "Clear all existing permissions", ParameterSetName = "Group")]
+        [Parameter(Mandatory = false, ParameterSetName = "User")]
+        [Parameter(Mandatory = false, ParameterSetName = "Group")]
         public SwitchParameter ClearExisting;
 
-        [Parameter(Mandatory = false, HelpMessage = "Inherit permissions from the parent, removing unique permissions", ParameterSetName = "Inherit")]
+        [Parameter(Mandatory = false, ParameterSetName = "Inherit")]
         public SwitchParameter InheritPermissions;
 
-        [Parameter(Mandatory = false, HelpMessage = "Update the folder permissions without creating a new version or triggering MS Flow.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter SystemUpdate;
 
         protected override void ExecuteCmdlet()

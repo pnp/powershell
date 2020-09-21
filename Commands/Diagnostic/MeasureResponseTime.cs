@@ -15,14 +15,8 @@ namespace PnP.PowerShell.Commands.Diagnostic
     [Cmdlet(VerbsDiagnostic.Measure, "PnPResponseTime")]
     [CmdletHelp("Gets statistics on response time for the specified endpoint by sending probe requests",
         Category = CmdletHelpCategory.Diagnostic)]
-    [CmdletExample(
-     Code = @"PS:> Measure-PnPResponseTime -Count 100 -Timeout 20",
-     Remarks = @"Calculates statistics on sequence of 100 probe requests, sleeps 20ms between probes",
-     SortOrder = 1)]
-    [CmdletExample(
-     Code = @"PS:> Measure-PnPResponseTime ""/Pages/Test.aspx"" -Count 1000",
-     Remarks = @"Calculates statistics on response time of Test.aspx by sending 1000 requests with default sleep time between requests",
-     SortOrder = 2)]
+    
+    
     [CmdletExample(
      Code = @"PS:> Measure-PnPResponseTime $web -Count 1000 -WarmUp 10 -Histogram 20 -Timeout 50 | Select -expa Histogram | % {$_.GetEnumerator() | Export-Csv C:\Temp\responsetime.csv -NoTypeInformation}",
      Remarks = @"Builds histogram of response time for the home page of the web and exports to CSV for later processing in Excel",
@@ -34,19 +28,19 @@ namespace PnP.PowerShell.Commands.Diagnostic
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
         public DiagnosticEndpointPipeBind Url;
 
-        [Parameter(Mandatory = false, HelpMessage = "Number of probe requests to send")]
+        [Parameter(Mandatory = false)]
         public uint Count = 20;
 
-        [Parameter(Mandatory = false, HelpMessage = "Number of warm up requests to send before start calculating statistics")]
+        [Parameter(Mandatory = false)]
         public uint WarmUp = 1;
 
-        [Parameter(Mandatory = false, HelpMessage = "Idle timeout between requests to avoid request throttling")]
+        [Parameter(Mandatory = false)]
         public uint Timeout = 500;
 
-        [Parameter(Mandatory = false, HelpMessage = "Number of buckets in histogram in output statistics")]
+        [Parameter(Mandatory = false)]
         public uint Histogram = 5;
 
-        [Parameter(Mandatory = false, HelpMessage = "Response time measurement mode. RoundTrip - measures full request round trip. SPRequestDuration - measures server processing time only, based on SPRequestDuration HTTP header. Latency - difference between RoundTrip and SPRequestDuration")]
+        [Parameter(Mandatory = false)]
         public MeasureResponseTimeMode Mode = MeasureResponseTimeMode.RoundTrip;
 
         protected override void ExecuteCmdlet()

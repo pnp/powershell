@@ -18,37 +18,27 @@ using SPSite = Microsoft.SharePoint.Client.Site;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPDataRowsToProvisioningTemplate")]
-    [CmdletHelp("Adds datarows to a list inside a PnP Provisioning Template",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> Add-PnPDataRowsToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Query '<View></View>' -Fields 'Title','Choice'",
-       Remarks = "Adds datarows from the provided list to the PnP Provisioning Template at the provided location",
-       SortOrder = 1)]
-    [CmdletExample(
-       Code = @"PS:> Add-PnPDataRowsToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Query '<View></View>' -Fields 'Title','Choice' -IncludeSecurity",
-      Remarks = "Adds datarows from the provided list to the PnP Provisioning Template at the provided location",
-       SortOrder = 2)]
     public class AddDataRowsToProvisioningTemplate : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML site template to read from, optionally including full path.")]
+        [Parameter(Mandatory = true, Position = 0)]
         public string Path;
 
-        [Parameter(Mandatory = true, HelpMessage = "The list to query")]
+        [Parameter(Mandatory = true)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "The CAML query to execute against the list. Defaults to all items.")]
+        [Parameter(Mandatory = false)]
         public string Query;
 
-        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.")]
+        [Parameter(Mandatory = false)]
         public string[] Fields;
 
-        [Parameter(Mandatory = false, Position = 5, HelpMessage = "A switch to include ObjectSecurity information.")]
+        [Parameter(Mandatory = false, Position = 5)]
         public SwitchParameter IncludeSecurity;
 
-        [Parameter(Mandatory = false, Position = 4, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while loading the template.")]
+        [Parameter(Mandatory = false, Position = 4)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
-        [Parameter(Mandatory = false, HelpMessage = "If set, this switch will try to tokenize the values with web and site related tokens")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter TokenizeUrls;
 
         private readonly static FieldType[] _unsupportedFieldTypes =

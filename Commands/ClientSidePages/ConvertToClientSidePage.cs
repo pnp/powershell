@@ -22,14 +22,8 @@ namespace PnP.PowerShell.Commands.ClientSidePages
     [Cmdlet(VerbsData.ConvertTo, "PnPClientSidePage")]
     [CmdletHelp("Converts a classic page (wiki or web part page) into a Client-Side Page",
                 Category = CmdletHelpCategory.ClientSidePages)]
-    [CmdletExample(
-    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite",
-    Remarks = "Converts a wiki/web part page named 'somepage' to a client side page",
-    SortOrder = 1)]
-    [CmdletExample(
-    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -WebPartMappingFile c:\contoso\webpartmapping.xml",
-    Remarks = "Converts a wiki/web part page named 'somepage' to a client side page using a custom provided mapping file",
-    SortOrder = 2)]
+    
+    
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -AddPageAcceptBanner",
     Remarks = "Converts a wiki/web part page named 'somepage' to a client side page and adds the page accept banner web part on top of the page. This requires that the SPFX solution holding the web part (https://github.com/SharePoint/sp-dev-modernization/blob/master/Solutions/PageTransformationUI/assets/sharepointpnp-pagetransformation-client.sppkg?raw=true) has been installed to the tenant app catalog",
@@ -38,46 +32,22 @@ namespace PnP.PowerShell.Commands.ClientSidePages
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -CopyPageMetadata",
     Remarks = "Converts a wiki/web part page named 'somepage' to a client side page, including the copying of the page metadata (if any)",
     SortOrder = 4)]
-    [CmdletExample(
-    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -PublishingPage -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
-    Remarks = "Converts a publishing page named 'somepage' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
-    SortOrder = 5)]
+    
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -PublishingPage -Overwrite -TargetConnection $target",
     Remarks = "Converts a publishing page named 'somepage' to a client side page in the site specified by the TargetConnection connection. This allows to read a page in one environment (on-premises, tenant A) and create in another online location (tenant B)",
     SortOrder = 6)]
-    [CmdletExample(
-    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Library ""SiteAssets"" -Folder ""Folder1"" -Overwrite",
-    Remarks = "Converts a web part page named 'somepage' living inside the SiteAssets library in a folder named folder1 into a client side page",
-    SortOrder = 7)]
+    
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Folder ""<root>"" -Overwrite",
     Remarks = "Converts a web part page named 'somepage' living inside the root of the site collection (so outside of a library)",
     SortOrder = 8)]
-    [CmdletExample(
-    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
-    Remarks = "Converts a wiki/web part page named 'somepage' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
-    SortOrder = 9)]
-    [CmdletExample(
-    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -LogType File -LogFolder c:\temp -LogVerbose -Overwrite",
-    Remarks = "Converts a wiki/web part page named 'somepage' and creates a log file in c:\\temp using verbose logging",
-    SortOrder = 10)]
-    [CmdletExample(
-    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -LogType SharePoint -LogSkipFlush",
-    Remarks = "Converts a wiki/web part page named 'somepage' and creates a log file in SharePoint but skip the actual write. Use this option to make multiple ConvertTo-PnPClientSidePage invocations create a single log",
-    SortOrder = 11)]
-    [CmdletExample(
-    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""My post title"" -BlogPage -LogType Console -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
-    Remarks = "Converts a blog page with a title starting with 'my post title' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
-    SortOrder = 12)]
-    [CmdletExample(
-    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""My post title"" -DelveBlogPage -LogType Console -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
-    Remarks = "Converts a Delve blog page with a title starting with 'my post title' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
-    SortOrder = 13)]
-    [CmdletExample(
-    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -PublishingPage -Overwrite -TargetConnection $target -UserMappingFile c:\\temp\user_mapping_file.csv",
-    Remarks = "Converts a publishing page named 'somepage' to a client side page in the site specified by the TargetConnection connection. This allows to read a page in on-premises environment and create in another online locations including using specific user mappings between the two environments.",
-    SortOrder = 14)]
+    
+    
+    
+    
+    
+    
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
         private static string rootFolder = "<root>";
@@ -85,133 +55,133 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         private Assembly sitesCoreAssembly;
        // private Assembly newtonsoftAssembly;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page to convert")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public PagePipeBind Identity;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the library containing the page. If SitePages then please omit this parameter")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
         public string Library;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The folder to load the provided page from. If not provided all folders are searched")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
         public string Folder;
 
-        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path and name of the web part mapping file driving the transformation")]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true)]
         public string WebPartMappingFile;
 
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites page if already existing")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Overwrite = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Created client side page takes name from previous classic page. Classic page gets renamed to previous_<Page>.aspx")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter TakeSourcePageName = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Replaces a home page with a default stock modern home page")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter ReplaceHomePageWithDefault = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Adds the page accept banner web part. The actual web part is specified in webpartmapping.xml file")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter AddPageAcceptBanner = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "By default the item level permissions on a page are copied to the created client side page. Use this switch to prevent the copy")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter SkipItemLevelPermissionCopyToClientSidePage = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "If transforming cross site then by default urls in html and summarylinks are rewritten for the target site. Set this flag to prevent that")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter SkipUrlRewriting = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Set this flag to prevent the default URL rewriting while you still want to do URL rewriting using a custom URL mapping file")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter SkipDefaultUrlRewriting = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "File holding custom URL mapping definitions")]
+        [Parameter(Mandatory = false)]
         public string UrlMappingFile = "";
 
-        [Parameter(Mandatory = false, HelpMessage = "Clears the cache. Can be needed if you've installed a new web part to the site and want to use that in a custom webpartmapping file. Restarting your PS session has the same effect")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter ClearCache = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Copies the page metadata to the created modern page")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter CopyPageMetadata = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "When an image lives inside a table/list then it's also created as separate image web part underneath that table/list by default. Use this switch set to $false to change that")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter AddTableListImageAsImageWebPart = true;
 
-        [Parameter(Mandatory = false, HelpMessage = "Uses the community script editor (https://github.com/SharePoint/sp-dev-fx-webparts/tree/master/samples/react-script-editor) as replacement for the classic script editor web part")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter UseCommunityScriptEditor = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "By default summarylinks web parts are replaced by QuickLinks, but you can transform to plain html by setting this switch")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter SummaryLinksToHtml = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Url of the target web that will receive the modern page. Defaults to null which means in-place transformation")]
+        [Parameter(Mandatory = false)]
         public string TargetWebUrl;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows to generate a transformation log (File | SharePoint)")]
+        [Parameter(Mandatory = false)]
         public ClientSidePageTransformatorLogType LogType = ClientSidePageTransformatorLogType.None;
 
-        [Parameter(Mandatory = false, HelpMessage = "Folder in where the log file will be created (if LogType==File)")]
+        [Parameter(Mandatory = false)]
         public string LogFolder = "";
 
-        [Parameter(Mandatory = false, HelpMessage = "By default each cmdlet invocation will result in a log file, use the -SkipLogFlush to delay the log flushing. The first call without -SkipLogFlush will then write all log entries to a single log")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter LogSkipFlush = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Configure logging to include verbose log entries")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter LogVerbose = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Don't publish the created modern page")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter DontPublish = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Keep the author, editor, created and modified information from the source page (when source page lives in SPO)")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter KeepPageCreationModificationInformation = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Set's the author of the source page as author in the modern page header (when source page lives in SPO)")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter SetAuthorInPageHeader = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Post the created, and published, modern page as news")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter PostAsNews = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Disable comments for the created modern page")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter DisablePageComments = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "I'm transforming a publishing page")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter PublishingPage = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "I'm transforming a blog page")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter BlogPage = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "I'm transforming a Delve blog page")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter DelveBlogPage = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Transform the possible sub title as topic header on the modern page")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter DelveKeepSubTitle = false;
 
-        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path and name of the page layout mapping file driving the publishing page transformation")]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true)]
         public string PageLayoutMapping;
 
-        [Parameter(Mandatory = false, HelpMessage = "Name for the target page (only applies to publishing page transformation)")]
+        [Parameter(Mandatory = false)]
         public string PublishingTargetPageName = "";
 
-        [Parameter(Mandatory = false, HelpMessage = "Name for the target page (only applies when doing cross site page transformation)")]
+        [Parameter(Mandatory = false)]
         public string TargetPageName = "";
 
-        [Parameter(Mandatory = false, HelpMessage = "Folder to create the target page in (will be used in conjunction with auto-generated folders that ensure page name uniqueness)")]
+        [Parameter(Mandatory = false)]
         public string TargetPageFolder = "";
 
-        [Parameter(Mandatory = false, HelpMessage = "When setting a target page folder then the target page folder overrides possibly default folder path (e.g. in the source page lived in a folder) instead of being appended to it")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter TargetPageFolderOverridesDefaultFolder = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Remove empty sections and columns after transformation of the page")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter RemoveEmptySectionsAndColumns = true;
 
-        [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")] // do not remove '#!#99'
+        [Parameter(Mandatory = false)] // do not remove '#!#99'
         public PnPConnection TargetConnection = null;
 
-        [Parameter(Mandatory = false, HelpMessage = "Disables user mapping during transformation")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter SkipUserMapping = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies a user mapping file")]
+        [Parameter(Mandatory = false)]
         public string UserMappingFile = "";
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies a taxonomy term mapping file")]
+        [Parameter(Mandatory = false)]
         public string TermMappingFile = "";
 
-        [Parameter(Mandatory = false, HelpMessage = "Disables term mapping during transformation")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter SkipTermStoreMapping = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies a LDAP connection string e.g. LDAP://OU=Users,DC=Contoso,DC=local")]
+        [Parameter(Mandatory = false)]
         public string LDAPConnectionString = "";
 
         protected override void ExecuteCmdlet()

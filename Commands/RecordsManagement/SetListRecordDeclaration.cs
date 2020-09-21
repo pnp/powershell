@@ -12,32 +12,15 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.RecordsManagement
 {
     [Cmdlet(VerbsCommon.Set, "PnPListRecordDeclaration")]
-    [CmdletHelp("Sets the manual record declaration settings for a list",
-        Category = CmdletHelpCategory.RecordsManagement,
-        Description = @"The RecordDeclaration parameter supports 4 values:
-
-AlwaysAllowManualDeclaration
-NeverAllowManualDeclaration
-UseSiteCollectionDefaults
-")]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPListRecordDeclaration -List ""Documents"" -ManualRecordDeclaration NeverAllowManualDeclaration",
-        Remarks = "Sets the manual record declaration to never allow",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPListRecordDeclaration -List ""Documents"" -AutoRecordDeclaration $true",
-        Remarks = "Turns on auto record declaration for the list",
-        SortOrder = 2)]
-
     public class SetListRecordDeclaration : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = @"The List to set the manual record declaration settings for")]
+        [Parameter(Mandatory = true)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = @"Defines the manual record declaration setting for the lists")]
+        [Parameter(Mandatory = false)]
         public EcmListManualRecordDeclaration? ManualRecordDeclaration;
 
-        [Parameter(Mandatory = false, HelpMessage = @"Defines if you want to set auto record declaration on the list")]
+        [Parameter(Mandatory = false)]
         public bool? AutoRecordDeclaration;
         
         protected override void ExecuteCmdlet()

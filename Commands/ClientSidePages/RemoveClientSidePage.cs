@@ -7,26 +7,12 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Remove, "PnPClientSidePage")]
-    [CmdletHelp("Removes a Client-Side Page",
-      Category = CmdletHelpCategory.ClientSidePages)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPClientSidePage -Identity ""MyPage""",
-        Remarks = "Removes the Client-Side page named 'MyPage.aspx'",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPClientSidePage -Identity ""Templates/MyPageTemplate""",
-        Remarks = "Removes the specified Client-Side page which is located in the Templates folder of the Site Pages library.",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPClientSidePage $page",
-        Remarks = "Removes the specified Client-Side page which is contained in the $page variable.",
-        SortOrder = 3)]
     public class RemoveClientSidePage : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ClientSidePagePipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

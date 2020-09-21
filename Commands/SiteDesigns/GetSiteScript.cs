@@ -10,22 +10,12 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteScript", SupportsShouldProcess = true)]
-    [CmdletHelp(@"Retrieve Site Scripts that have been registered on the current tenant.",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSiteScript",
-        Remarks = "Returns all registered site scripts",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSiteScript -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd",
-        Remarks = "Returns a specific registered site script",
-        SortOrder = 2)]
     public class GetSiteScript : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "If specified will retrieve the specified site script")]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         public TenantSiteScriptPipeBind Identity;
 
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "If specified will retrieve the site scripts for this design")]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         public TenantSiteDesignPipeBind SiteDesign;
 
         protected override void ExecuteCmdlet()

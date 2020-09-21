@@ -12,12 +12,12 @@ namespace PnP.PowerShell.Commands
     /// Inherit from this base class if the PowerShell commandlet should allow switching the webcontext to a subsite of the current context for the duration of the execution of the command by specifying the -Web argument
     /// </summary>
     /// <typeparam name="TType">Type of object which will be returned in the output</typeparam>
-    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Includes", HelpMessage = "Specify properties to include when retrieving objects from the server.")]
+    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Includes")]
     public abstract class PnPWebRetrievalsCmdlet<TType> : PnPRetrievalsCmdlet<TType> where TType : ClientObject
     {
         private Web _selectedWeb;
 
-        [Parameter(Mandatory = false, HelpMessage = "The web to apply the command to. Omit this parameter to use the current web.")]
+        [Parameter(Mandatory = false)]
         public WebPipeBind Web = new WebPipeBind();
 
         protected Web SelectedWeb

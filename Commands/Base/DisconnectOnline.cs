@@ -9,16 +9,9 @@ using PnP.PowerShell.Commands.Model;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommunications.Disconnect, "PnPOnline")]
-    [CmdletHelp("Disconnects the context",
-        DetailedDescription = "Disconnects the current context and requires you to build up a new connection in order to use the Cmdlets again. Using Connect-PnPOnline to connect to a different site has the same effect.",
-        Category = CmdletHelpCategory.Base)]
-    [CmdletExample(
-        Code = @"PS:> Disconnect-PnPOnline",
-        Remarks = @"This will clear out all active tokens",
-        SortOrder = 1)]
     public class DisconnectOnline : PSCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "Connection to be used by cmdlet")]
+        [Parameter(Mandatory = false)]
         public PnPConnection Connection = null;
 
         protected override void ProcessRecord()

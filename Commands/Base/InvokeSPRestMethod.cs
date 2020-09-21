@@ -25,9 +25,7 @@ namespace PnP.PowerShell.Commands.Admin
        DetailedDescription = @"Invokes a REST request towards a SharePoint site",
        SupportedPlatform = CmdletSupportedPlatform.Online,
        Category = CmdletHelpCategory.Base)]
-    [CmdletExample(
-       Code = @"PS:> Invoke-PnPSPRestMethod -Url /_api/web",
-       Remarks = @"This example executes a GET request towards the current site collection and returns the properties of the current web", SortOrder = 1)]
+    
     [CmdletExample(
        Code = @"PS:> $output = Invoke-PnPSPRestMethod -Url '/_api/web/lists?$select=Id,Title'
 PS:> $output.value",
@@ -46,16 +44,16 @@ PS:> Invoke-PnPSPRestMethod -Method Post -Url ""/_api/web/lists/GetByTitle('Test
        Remarks = @"This example creates a new item in the list 'Test' and sets the title field to 'Test'", SortOrder = 5)]
     public class InvokeSPRestMethod : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0, HelpMessage = "The Http method to execute. Defaults to GET.")]
+        [Parameter(Mandatory = false, Position = 0)]
         public HttpRequestMethod Method = HttpRequestMethod.Get;
 
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "The url to execute")]
+        [Parameter(Mandatory = true, Position = 0)]
         public string Url;
 
-        [Parameter(Mandatory = false, HelpMessage = "A string or object to send")]
+        [Parameter(Mandatory = false)]
         public object Content;
 
-        [Parameter(Mandatory = false, HelpMessage = "The content type of the object to send. Defaults to 'application/json'.")]
+        [Parameter(Mandatory = false)]
         public string ContentType = "application/json";
 
         protected override void ExecuteCmdlet()

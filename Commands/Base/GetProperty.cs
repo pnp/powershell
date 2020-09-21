@@ -7,28 +7,12 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPProperty")]
-    [CmdletHelp("Returns a previously not loaded property of a ClientObject", 
-        "Will populate properties of an object and optionally, if needed, load the value from the server. If one property is specified its value will be returned to the output.",
-        Category = CmdletHelpCategory.Base,
-        OutputType = typeof(ClientObject),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.clientobject.aspx")]
-    [CmdletExample(Code = @"
-PS:> $web = Get-PnPWeb
-PS:> Get-PnPProperty -ClientObject $web -Property Id, Lists
-PS:> $web.Lists",
-        Remarks = "Will load both the Id and Lists properties of the specified Web object.",
-        SortOrder = 1)]
-    [CmdletExample(Code = @"
-PS:> $list = Get-PnPList -Identity 'Site Assets'
-PS:> Get-PnPProperty -ClientObject $list -Property Views",
-        Remarks = "Will load the views object of the specified list object and return its value to the output.",
-        SortOrder = 2)]
     public class EnsureProperty : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Specifies the object where the properties of should be retrieved")]
+        [Parameter(Mandatory = true, Position = 0)]
         public ClientObject ClientObject;
 
-        [Parameter(Mandatory = true, Position = 1, HelpMessage = "The properties to load. If one property is specified its value will be returned to the output.")]
+        [Parameter(Mandatory = true, Position = 1)]
         public string[] Property;
 
         protected override void ExecuteCmdlet()

@@ -7,22 +7,12 @@ using PnP.Framework.Utilities;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Remove, "PnPFolder")]
-    [CmdletHelp("Deletes a folder within a parent folder",
-        Category = CmdletHelpCategory.Files)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPFolder -Name NewFolder -Folder _catalogs/masterpage",
-        SortOrder = 1,
-        Remarks = @"Removes the folder 'NewFolder' from '_catalogsmasterpage'")]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPFolder -Name NewFolder -Folder _catalogs/masterpage -Recycle",
-        SortOrder = 2,
-        Remarks = @"Removes the folder 'NewFolder' from '_catalogsmasterpage' and is saved in the Recycle Bin")]
     public class RemoveFolder : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The folder name")]
+        [Parameter(Mandatory = true)]
         public string Name = string.Empty;
 
-        [Parameter(Mandatory = true, HelpMessage = "The parent folder in the site")]
+        [Parameter(Mandatory = true)]
         public string Folder = string.Empty;
 
         [Parameter(Mandatory = false)]

@@ -5,12 +5,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Set, "PnPTeamifyPromptHidden")]
-    [CmdletHelp("Hides the teamify prompt on a modern Team site.",
-        DetailedDescription = "This command allows to hide the teamify prompt which shows in the navigation of a newly created Microsoft 365 group connected team site.",
-        Category = CmdletHelpCategory.Sites)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPTeamifyPromptHidden",
-        Remarks = @"This hides the teamify prompt for the current site.", SortOrder = 1)]
     public class SetTeamifyPromptHidden : PnPSharePointCmdlet
     {
 

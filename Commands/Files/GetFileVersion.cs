@@ -7,14 +7,7 @@ using File = Microsoft.SharePoint.Client.File;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Get, "PnPFileVersion", DefaultParameterSetName = "Return as file object")]
-    [CmdletHelp("Retrieves all versions of a file.",
-        Category = CmdletHelpCategory.Files,
-        OutputType = typeof(FileVersion),
-        OutputTypeLink = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee543660(v=office.15)")]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPFileVersion -Url Documents/MyDocument.docx",
-        Remarks = "Retrieves the file version information for the specified file.",
-        SortOrder = 1)]
+ 
     public class GetFileVersion : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

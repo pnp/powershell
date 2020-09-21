@@ -20,39 +20,15 @@ namespace PnP.PowerShell.Commands.Search
     }
 
     [Cmdlet(VerbsCommon.Get, "PnPSearchConfiguration", DefaultParameterSetName = "Xml")]
-    [CmdletHelp("Returns the search configuration",
-        Category = CmdletHelpCategory.Search,
-        OutputType = typeof(string),
-        OutputTypeDescription = "Does not return a string when the -Path parameter has been specified.")]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSearchConfiguration",
-        Remarks = "Returns the search configuration for the current web",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSearchConfiguration -Scope Site",
-        Remarks = "Returns the search configuration for the current site collection",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSearchConfiguration -Scope Subscription",
-        Remarks = "Returns the search configuration for the current tenant",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSearchConfiguration -Path searchconfig.xml -Scope Subscription",
-        Remarks = "Returns the search configuration for the current tenant and saves it to the specified file",
-        SortOrder = 4)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSearchConfiguration -Scope Site -OutputFormat ManagedPropertyMappings",
-        Remarks = "Returns all custom managed properties and crawled property mapping at the current site collection",
-        SortOrder = 5)]
     public class GetSearchConfiguration : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "Scope to use. Either Web, Site, or Subscription. Defaults to Web", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SearchConfigurationScope Scope = SearchConfigurationScope.Web;
 
-        [Parameter(Mandatory = false, HelpMessage = "Local path where the search configuration will be saved", ParameterSetName = "Xml")]
+        [Parameter(Mandatory = false, ParameterSetName = "Xml")]
         public string Path;
 
-        [Parameter(Mandatory = false, HelpMessage = "Output format for of the configuration. Defaults to complete XML",
+        [Parameter(Mandatory = false,
             ParameterSetName = "OutputFormat")]
         public OutputFormat OutputFormat = OutputFormat.CompleteXml;
 

@@ -6,20 +6,14 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Remove, "PnPUserFromGroup")]
-    [CmdletHelp("Removes a user from a group",
-        Category = CmdletHelpCategory.Principals)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPUserFromGroup -LoginName user@company.com -GroupName 'Marketing Site Members'",
-        SortOrder = 1,
-        Remarks = @"Removes the user user@company.com from the Group 'Marketing Site Members'")]
     public class RemoveUserFromGroup : PnPWebCmdlet
     {
 
-        [Parameter(Mandatory = true, HelpMessage = "A valid login name of a user (user@company.com)")]
+        [Parameter(Mandatory = true)]
         [Alias("LogonName")]
         public string LoginName = string.Empty;
 
-        [Parameter(Mandatory = true, HelpMessage = "A group object, an ID or a name of a group")]
+        [Parameter(Mandatory = true)]
         [Alias("GroupName")]
         public GroupPipeBind Identity;
 

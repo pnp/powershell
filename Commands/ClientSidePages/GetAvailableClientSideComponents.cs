@@ -6,26 +6,12 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Get, "PnPAvailableClientSideComponents")]
-    [CmdletHelp("Gets the available client side components on a particular page",
-      Category = CmdletHelpCategory.ClientSidePages)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPAvailableClientSideComponents -Page ""MyPage.aspx""",
-        Remarks = "Gets the list of available client side components on the page 'MyPage.aspx'",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPAvailableClientSideComponents $page",
-        Remarks = "Gets the list of available client side components on the page contained in the $page variable",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPAvailableClientSideComponents -Page ""MyPage.aspx"" -ComponentName ""HelloWorld""",
-        Remarks = "Gets the client side component 'HelloWorld' if available on the page 'MyPage.aspx'",
-        SortOrder = 3)]
     public class GetAvailableClientSideComponents : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ClientSidePagePipeBind Page;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the component instance or Id to look for.")]
+        [Parameter(Mandatory = false)]
         public ClientSideComponentPipeBind Component;
 
         protected override void ExecuteCmdlet()

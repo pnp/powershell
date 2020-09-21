@@ -9,14 +9,6 @@ using System.Text.Json;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantId")]
-    [CmdletHelp(@"Returns the Tenant ID",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPTenantId",
-        Remarks = @"Returns the current Tenant Id. A valid connection with Connect-PnPOnline is required.", SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPTenantId -TenantUrl https://contoso.sharepoint.com",
-        Remarks = @"Returns the Tenant ID for the specified tenant. Can be executed without a connecting first with Connect-PnPOnline", SortOrder = 1)]
     public class GetTenantId : BasePSCmdlet
     {
         [Parameter(Mandatory = false)]

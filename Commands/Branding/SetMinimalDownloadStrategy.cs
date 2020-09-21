@@ -5,26 +5,15 @@ using PnP.PowerShell.CmdletHelpAttributes;
 namespace PnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Set, "PnPMinimalDownloadStrategy")]
-    [CmdletHelp("Activates or deactivates the minimal downloading strategy.",
-        "Activates or deactivates the minimal download strategy feature of a site",
-        Category = CmdletHelpCategory.Branding)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPMinimalDownloadStrategy -Off",
-        Remarks = "Will deactivate minimal download strategy (MDS) for the current web.",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPMinimalDownloadStrategy -On",
-        Remarks = "Will activate minimal download strategy (MDS) for the current web.",
-        SortOrder = 2)]
     public class SetMinimalDownloadStrategy : PnPWebCmdlet
     {
-        [Parameter(ParameterSetName = "On", Mandatory = true, HelpMessage = "Turn minimal download strategy on")]
+        [Parameter(ParameterSetName = "On", Mandatory = true)]
         public SwitchParameter On;
 
-        [Parameter(ParameterSetName = "Off", Mandatory = true, HelpMessage = "Turn minimal download strategy off")]
+        [Parameter(ParameterSetName = "Off", Mandatory = true)]
         public SwitchParameter Off;
          
-        [Parameter(Mandatory = false, HelpMessage = "Specifies whether to overwrite (when activating) or continue (when deactivating) an existing feature with the same feature identifier. This parameter is ignored if there are no errors.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

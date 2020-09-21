@@ -11,51 +11,31 @@ using File = Microsoft.SharePoint.Client.File;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Get, "PnPFolderItem")]
-    [CmdletHelp("List content in folder", Category = CmdletHelpCategory.Files)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPFolderItem -FolderSiteRelativeUrl ""SitePages""",
-        Remarks = "Returns the contents of the folder SitePages which is located in the root of the current web",
-        SortOrder = 1
-        )]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPFolderItem -FolderSiteRelativeUrl ""SitePages"" -ItemName ""Default.aspx""",
-        Remarks = "Returns the file 'Default.aspx' which is located in the folder SitePages which is located in the root of the current web",
-        SortOrder = 2
-        )]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPFolderItem -FolderSiteRelativeUrl ""SitePages"" -ItemType Folder",
-        Remarks = "Returns all folders in the folder SitePages which is located in the root of the current web",
-        SortOrder = 3
-        )]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPFolderItem -FolderSiteRelativeUrl ""SitePages"" -ItemType File",
-        Remarks = "Returns all files in the folder SitePages which is located in the root of the current web",
-        SortOrder = 4
-        )]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPFolderItem -FolderSiteRelativeUrl ""SitePages"" -Recursive",
-        Remarks = "Returns all files and folders, including contents of any subfolders, in the folder SitePages which is located in the root of the current web",
-        SortOrder = 5
-        )]
+    
+    
+    
+    
+    
+    
     public class GetFolderItem : PnPWebCmdlet
     {
         private const string ParameterSet_FOLDERSBYPIPE = "Folder via pipebind";
         private const string ParameterSet_FOLDERBYURL = "Folder via url";
 
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "The site relative URL of the folder to retrieve", ParameterSetName = ParameterSet_FOLDERBYURL)]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_FOLDERBYURL)]
         public string FolderSiteRelativeUrl;
 
-        [Parameter(Mandatory = false, Position = 0, HelpMessage = "A folder instance to the folder to retrieve", ParameterSetName = ParameterSet_FOLDERSBYPIPE)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_FOLDERSBYPIPE)]
         public FolderPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "The type of contents to retrieve, either File, Folder or All (default)")]
+        [Parameter(Mandatory = false)]
         [ValidateSet("Folder", "File", "All")]
         public string ItemType = "All";
 
-        [Parameter(Mandatory = false, HelpMessage = "Optional name of the item to retrieve")]
+        [Parameter(Mandatory = false)]
         public string ItemName = string.Empty;
 
-        [Parameter(Mandatory = false, Position = 4, HelpMessage = "A switch parameter to include contents of all subfolders in the specified folder")]
+        [Parameter(Mandatory = false, Position = 4)]
         public SwitchParameter Recursive;
 
         private IEnumerable<object> GetContents(string FolderSiteRelativeUrl)

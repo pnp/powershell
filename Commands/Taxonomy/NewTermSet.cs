@@ -12,50 +12,42 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.New, "PnPTermSet", SupportsShouldProcess = false)]
-    [CmdletHelp(@"Creates a taxonomy term set",
-        Category = CmdletHelpCategory.Taxonomy,
-        OutputType = typeof(TermSet),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.taxonomy.termset.aspx")]
-    [CmdletExample
-        (Code = @"PS:> New-PnPTermSet -Name ""Department"" -TermGroup ""Corporate""",
-        Remarks = @"Creates a new termset named ""Department"" in the group named ""Corporate""",
-        SortOrder = 1)]
     public class NewTermSet : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The name of the termset.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public string Name;
 
-        [Parameter(Mandatory = false, HelpMessage = "The Id to use for the term set; if not specified, or the empty GUID, a random GUID is generated and used.")]
+        [Parameter(Mandatory = false)]
         public Guid Id = default(Guid);
 
-        [Parameter(Mandatory = false, HelpMessage = "The locale id to use for the term set. Defaults to the current locale id.")]
+        [Parameter(Mandatory = false)]
         public int Lcid = CultureInfo.CurrentCulture.LCID;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Name, id or actually termgroup to create the termset in.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public TermGroupPipeBind TermGroup;
 
-        [Parameter(Mandatory = false, HelpMessage = "An e-mail address for term suggestion and feedback. If left blank the suggestion feature will be disabled.")]
+        [Parameter(Mandatory = false)]
         public string Contact;
 
-        [Parameter(Mandatory = false, HelpMessage = "Descriptive text to help users understand the intended use of this term set.")]
+        [Parameter(Mandatory = false)]
         public string Description;
 
-        [Parameter(Mandatory = false, HelpMessage = "When a term set is closed, only metadata managers can add terms to this term set. When it is open, users can add terms from a tagging application. Not specifying this switch will make the term set closed.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IsOpenForTermCreation;
 
-        [Parameter(Mandatory = false, HelpMessage = "By default a term set is available to be used by end users and content editors of sites consuming this term set. Specify this switch to turn this off")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IsNotAvailableForTagging;
 
-        [Parameter(Mandatory = false, HelpMessage = "The primary user or group of this term set.")]
+        [Parameter(Mandatory = false)]
         public string Owner;
 
-        [Parameter(Mandatory = false, HelpMessage = "People and groups in the organization that should be notified before major changes are made to the term set. You can enter multiple users or groups.")]
+        [Parameter(Mandatory = false)]
         public string[] StakeHolders;
 
         [Parameter(Mandatory = false)]
         public Hashtable CustomProperties;
 
-        [Parameter(Mandatory = false, HelpMessage = "Term store to check; if not specified the default term store is used.")]
+        [Parameter(Mandatory = false)]
         [Alias("TermStoreName")]
         public GenericObjectNameIdPipeBind<TermStore> TermStore;
 

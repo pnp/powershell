@@ -10,20 +10,10 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPDeletedMicrosoft365Group")]
     [Alias("Get-PnPDeletedUnifiedGroup")]
-    [CmdletHelp("Gets one deleted Microsoft 365 Group or a list of deleted Microsoft 365 Groups",
-        Category = CmdletHelpCategory.Graph)]
-    [CmdletExample(
-        Code = "PS:> Get-PnPDeletedMicrosoft365Group",
-        Remarks = "Retrieves all deleted Microsoft 365 Groups",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = "PS:> Get-PnPDeletedMicrosoft365Group -Identity 38b32e13-e900-4d95-b860-fb52bc07ca7f",
-        Remarks = "Retrieves a specific deleted Microsoft 365 Group based on its ID",
-        SortOrder = 2)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All | MicrosoftGraphApiPermission.Group_Read_All)]
     public class GetDeletedMicrosoft365Group : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "The Identity of the Microsoft 365 Group")]
+        [Parameter(Mandatory = false)]
         public Microsoft365GroupPipeBind Identity;
 
         protected override void ExecuteCmdlet()

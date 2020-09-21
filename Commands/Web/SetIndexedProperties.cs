@@ -6,8 +6,6 @@ using PnP.PowerShell.CmdletHelpAttributes;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPIndexedProperties")]
-    [CmdletHelp("Marks values of the propertybag to be indexed by search. Notice that this will overwrite the existing flags, i.e. only the properties you define with the cmdlet will be indexed.",
-        Category = CmdletHelpCategory.Webs)]
     public class SetIndexedProperties : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

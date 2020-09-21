@@ -7,18 +7,13 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.Add, "PnPTenantSequenceSubSite", SupportsShouldProcess = true)]
-    [CmdletHelp("Adds a tenant sequence sub site object to a tenant sequence site object",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> Add-PnPTenantSequenceSubSite -Site $mysite -SubSite $mysubsite",
-       Remarks = "Adds an existing subsite object to an existing sequence site object",
-       SortOrder = 1)]
+    
     public class AddTenantSequenceSubSite : PSCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The subsite to add")]
+        [Parameter(Mandatory = true)]
         public TeamNoGroupSubSite SubSite;
 
-        [Parameter(Mandatory = true, HelpMessage = "The site to add the subsite to", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public SiteCollection Site;
 
         protected override void ProcessRecord()

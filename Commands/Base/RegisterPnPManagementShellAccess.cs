@@ -11,12 +11,6 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsLifecycle.Register, "PnPManagementShellAccess")]
-    [CmdletHelp("Registers the multi-tenant app PnP Management Shell for delegate access to the required environments",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-       Code = "PS:> Register-PnPManagementShellAccess -SiteUrl https://yourtenant.sharepoint.com",
-       Remarks = "Will prompt you to authenticate and if needed will ask you to provide consent to specific required rights.",
-       SortOrder = 1)]
     public class RegisterPnPManagementShellAccess : PSCmdlet
     {
         [Parameter(Mandatory = false)]

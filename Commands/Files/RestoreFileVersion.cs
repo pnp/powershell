@@ -9,16 +9,6 @@ using File = Microsoft.SharePoint.Client.File;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsData.Restore, "PnPFileVersion", DefaultParameterSetName = "Return as file object")]
-    [CmdletHelp("Restores a specific file version.",
-        Category = CmdletHelpCategory.Files)]
-    [CmdletExample(
-        Code = @"PS:> Restore-PnPFileVersion -Url Documents/MyDocument.docx -Identity 512",
-        Remarks = "Restores the file version with Id 512",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Restore-PnPFileVersion -Url Documents/MyDocument.docx -Identity ""Version 1.0""",
-        Remarks = "Restores the file version with label \"Version 1.0\"",
-        SortOrder = 2)]
     public class RestoreFileVersion : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -27,7 +17,7 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false)]
         public FileVersionPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be requested and the action will be performed")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

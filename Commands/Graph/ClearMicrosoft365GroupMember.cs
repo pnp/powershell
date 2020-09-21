@@ -9,17 +9,10 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Clear, "PnPMicrosoft365GroupMember")]
     [Alias("Clear-PnPMicrosoft365GroupMember")]
-    [CmdletHelp("Removes all current members from a particular Microsoft 365 Group",
-        Category = CmdletHelpCategory.Graph)]
-    [CmdletExample(
-       Code = @"PS:> Clear-PnPMicrosoft365GroupMember -Identity ""Project Team""",
-       Remarks = @"Removes all the current members from the Microsoft 365 Group named ""Project Team""",
-       SortOrder = 1)]
-    [CmdletRelatedLink(Text = "Documentation", Url = "https://docs.microsoft.com/graph/api/group-delete-members")]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All | MicrosoftGraphApiPermission.Directory_ReadWrite_All | MicrosoftGraphApiPermission.GroupMember_ReadWrite_All)]
     public class ClearMicrosoft365GroupMember : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Microsoft 365 Group to remove all members from")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public Microsoft365GroupPipeBind Identity;
 
         protected override void ExecuteCmdlet()

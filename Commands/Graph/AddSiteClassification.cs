@@ -7,16 +7,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Add, "PnPSiteClassification")]
-    [CmdletHelp("Adds one ore more site classification values to the list of possible values",
-        Category = CmdletHelpCategory.Graph)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPSiteClassification -Classifications ""Top Secret""",
-        Remarks = @"Adds the ""Top Secret"" classification to the already existing classification values.",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPSiteClassification -Classifications ""Top Secret"",""HBI""",
-        Remarks = @"Adds the ""Top Secret"" and the ""For Your Eyes Only"" classification to the already existing classification values.",
-        SortOrder = 2)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     public class AddSiteClassification : PnPGraphCmdlet
     {

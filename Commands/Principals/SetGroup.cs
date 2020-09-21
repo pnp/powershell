@@ -8,52 +8,43 @@ using PnP.PowerShell.Commands.Enums;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Set, "PnPGroup")]
-    [CmdletHelp("Updates a group",
-        Category = CmdletHelpCategory.Principals)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPGroup -Identity 'My Site Members' -SetAssociatedGroup Members",
-        Remarks = "Sets the SharePoint group with the name 'My Site Members' as the associated members group",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPGroup -Identity 'My Site Members' -Owner 'site owners'",
-        Remarks = "Sets the SharePoint group with the name 'site owners' as the owner of the SharePoint group with the name 'My Site Members'",
-        SortOrder = 2)]
+    
     public class SetGroup : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "A group object, an ID or a name of a group")]
+        [Parameter(Mandatory = true)]
         public GroupPipeBind Identity = new GroupPipeBind();
 
-        [Parameter(Mandatory = false, HelpMessage = "One of the associated group types (Visitors, Members, Owners")]
+        [Parameter(Mandatory = false)]
         public AssociatedGroupType SetAssociatedGroup = AssociatedGroupType.None;
 
-        [Parameter(Mandatory = false, HelpMessage = "Name of the permission set to add to this SharePoint group")]
+        [Parameter(Mandatory = false)]
         public string AddRole = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Name of the permission set to remove from this SharePoint group")]
+        [Parameter(Mandatory = false)]
         public string RemoveRole = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "The title for the group")]
+        [Parameter(Mandatory = false)]
         public string Title = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "The owner for the group, which can be a user or another group")]
+        [Parameter(Mandatory = false)]
         public string Owner;
 
-        [Parameter(Mandatory = false, HelpMessage = "The description for the group")]
+        [Parameter(Mandatory = false)]
         public string Description;
 
-        [Parameter(Mandatory = false, HelpMessage = "A switch parameter that specifies whether to allow users to request membership in the group and to allow users to request to leave the group")]
+        [Parameter(Mandatory = false)]
         public bool AllowRequestToJoinLeave;
 
-        [Parameter(Mandatory = false, HelpMessage = "A switch parameter that specifies whether users are automatically added or removed when they make a request")]
+        [Parameter(Mandatory = false)]
         public bool AutoAcceptRequestToJoinLeave;
 
-        [Parameter(Mandatory = false, HelpMessage = "A switch parameter that specifies whether group members can modify membership in the group")]
+        [Parameter(Mandatory = false)]
         public bool AllowMembersEditMembership;
 
-        [Parameter(Mandatory = false, HelpMessage = "A switch parameter that specifies whether only group members are allowed to view the list of members in the group")]
+        [Parameter(Mandatory = false)]
         public bool OnlyAllowMembersViewMembership;
 
-        [Parameter(Mandatory = false, HelpMessage = "The e-mail address to which membership requests are sent")]
+        [Parameter(Mandatory = false)]
         public string RequestToJoinEmail;
 
         protected override void ExecuteCmdlet()

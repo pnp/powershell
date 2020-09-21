@@ -9,21 +9,15 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Set, "PnPWebTheme")]
-    [CmdletHelp("Sets the theme of the current web.", DetailedDescription = "Sets the theme of the current web. * Requires Tenant Administration Rights *", Category = CmdletHelpCategory.Branding)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPWebTheme -Theme MyTheme", 
-        Remarks = @"Sets the theme named ""MyTheme"" to the current web", 
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPTenantTheme -Name ""MyTheme"" | Set-PnPWebTheme",
-        Remarks = @"Sets the theme named ""MyTheme"" to the current web",
-        SortOrder = 2)]
+    
+    
+    
     public class SetWebTheme : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "Specifies the Color Palette Url based on the site or server relative url")]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         public ThemePipeBind Theme;
 
-        [Parameter(Mandatory = false, HelpMessage = "The URL of the web to apply the theme to. If not specified it will default to the current web based upon the URL specified with Connect-PnPOnline.")]
+        [Parameter(Mandatory = false)]
         public string WebUrl;
 
         protected override void ExecuteCmdlet()

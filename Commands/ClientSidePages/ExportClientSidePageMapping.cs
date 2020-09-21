@@ -31,28 +31,28 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         private Assembly modernizationAssembly;
         private Assembly sitesCoreAssembly;
 
-        [Parameter(Mandatory = false, HelpMessage = "Exports the builtin web part mapping file")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter BuiltInWebPartMapping = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Exports the builtin pagelayout mapping file (only needed for publishing page transformation)")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter BuiltInPageLayoutMapping = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Analyzes the pagelayouts in the current publishing portal and exports them as a pagelayout mapping file")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter CustomPageLayoutMapping = false;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the publishing page to export a page layout mapping file for")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
         public PagePipeBind PublishingPage;
 
-        [Parameter(Mandatory = false, HelpMessage = "Set this flag if you also want to analyze the OOB page layouts...typically these are covered via the default mapping, but if you've updated these page layouts you might want to analyze them again")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter AnalyzeOOBPageLayouts = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "The folder to created the mapping file(s) in")]
+        [Parameter(Mandatory = false)]
         public string Folder;
 
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites existing mapping files")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Overwrite = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Outputs analyser logging to the console")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Logging = false;
 
 

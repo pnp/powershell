@@ -9,20 +9,13 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPMicrosoft365GroupOwner")]
     [Alias("Remove-PnPUnifiedGroupOwner")]
-    [CmdletHelp("Removes owners from a particular Microsoft 365 Group",
-        Category = CmdletHelpCategory.Graph)]
-    [CmdletExample(
-       Code = @"PS:> Remove-PnPMicrosoft365GroupOwner -Identity ""Project Team"" -Users ""john@contoso.onmicrosoft.com"",""jane@contoso.onmicrosoft.com""",
-       Remarks = @"Removes the provided two users as owners from the Microsoft 365 Group named ""Project Team""",
-       SortOrder = 1)]
-    [CmdletRelatedLink(Text = "Documentation", Url = "https://docs.microsoft.com/graph/api/group-delete-owners")]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All | MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     public class RemoveMicrosoft365GroupOwner : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Microsoft 365 Group to remove owners from")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public Microsoft365GroupPipeBind Identity;
 
-        [Parameter(Mandatory = true, HelpMessage = "The UPN(s) of the user(s) to remove as owners from the Microsoft 365 Group")]
+        [Parameter(Mandatory = true)]
         public string[] Users;
 
         protected override void ExecuteCmdlet()

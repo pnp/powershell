@@ -5,8 +5,6 @@ using PnP.PowerShell.CmdletHelpAttributes;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsLifecycle.Request, "PnPReIndexWeb")]
-    [CmdletHelp("Marks the web for full indexing during the next incremental crawl",
-        Category = CmdletHelpCategory.Webs)]
     public class RequestReIndexWeb : PnPWebCmdlet
     {
 

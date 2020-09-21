@@ -10,30 +10,21 @@ using System.Linq;
 namespace PnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Remove, "PnPApplicationCustomizer", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = true)]
-    [CmdletHelp("Removes a SharePoint Framework client side extension application customizer",
-        "Removes a SharePoint Framework client side extension application customizer by removing a user custom action from a web or sitecollection",
-        Category = CmdletHelpCategory.Apps)]
-    [CmdletExample(Code = @"PS:> Remove-PnPApplicationCustomizer -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2", 
-                   Remarks = @"Removes the custom action representing the client side extension registration with the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2'.", 
-                   SortOrder = 1)]
-    [CmdletExample(Code = @"PS:> Remove-PnPApplicationCustomizer -ClientSideComponentId aa66f67e-46c0-4474-8a82-42bf467d07f2 -Scope web", 
-                   Remarks = @"Removes the custom action(s) being registered for a SharePoint Framework solution having the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2' in its manifest from the current web.", 
-                   SortOrder = 2)]
     public class RemoveApplicationCustomizer : PnPWebCmdlet
     {
         private const string ParameterSet_CUSTOMACTIONID = "Custom Action Id";
         private const string ParameterSet_CLIENTSIDECOMPONENTID = "Client Side Component Id";
 
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "The id or name of the CustomAction representing the client side extension registration that needs to be removed or a CustomAction instance itself", ParameterSetName = ParameterSet_CUSTOMACTIONID)]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_CUSTOMACTIONID)]
         public UserCustomActionPipeBind Identity;
 
-        [Parameter(Mandatory = true, HelpMessage = "The Client Side Component Id of the SharePoint Framework client side extension application customizer found in the manifest for which existing custom action(s) should be removed", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
         public GuidPipeBind ClientSideComponentId;
 
-        [Parameter(Mandatory = false, HelpMessage = "Define if the CustomAction representing the client side extension registration is to be found at the web or site collection scope. Specify All to allow deletion from either web or site collection (default).")]
+        [Parameter(Mandatory = false)]
         public CustomActionScope Scope = CustomActionScope.All;
 
-        [Parameter(Mandatory = false, HelpMessage = "Use the -Force flag to bypass the confirmation question")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

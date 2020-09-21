@@ -9,21 +9,15 @@ using PnP.Framework.Pages;
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Set, "PnPClientSideText")]
-    [CmdletHelp("Set Client-Side Text Component properties",
-        DetailedDescription = "Sets the rendered text in existing client side text component",
-        Category = CmdletHelpCategory.WebParts)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPSetClientSideText -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Text ""MyText""",
-        Remarks = @"Sets the text of the client side text component.", SortOrder = 1)]
     public class SetClientSideText : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ClientSidePagePipeBind Page;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The instance id of the text component")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public GuidPipeBind InstanceId;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Text to set")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public string Text;
 
         protected override void ExecuteCmdlet()

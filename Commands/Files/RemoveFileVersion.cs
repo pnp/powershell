@@ -9,20 +9,6 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Remove, "PnPFileVersion", DefaultParameterSetName = "Return as file object")]
-    [CmdletHelp("Removes all or a specific file version.",
-        Category = CmdletHelpCategory.Files)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPFileVersion -Url Documents/MyDocument.docx -Identity 512",
-        Remarks = "Removes the file version with Id 512",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPFileVersion -Url Documents/MyDocument.docx -Identity ""Version 1.0""",
-        Remarks = "Removes the file version with label \"Version 1.0\"",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPFileVersion -Url Documents/MyDocument.docx -All",
-        Remarks = "Removes all file versions",
-        SortOrder = 2)]
     public class RemoveFileVersion : PnPWebCmdlet
     {
         private const string ParameterSetName_BYID = "By Id";
@@ -40,7 +26,7 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter Recycle;
 
-        [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be requested and the action will be performed", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter Force;
 
 

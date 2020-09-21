@@ -20,166 +20,100 @@ using PnP.Framework.Provisioning.Model.Configuration;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPProvisioningTemplate", SupportsShouldProcess = true)]
-    [CmdletHelp("Generates a provisioning site template from a web",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp",
-       Remarks = "Extracts a provisioning template in Office Open XML from the current web.",
-       SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.xml",
-       Remarks = "Extracts a provisioning template in XML format from the current web.",
-       SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -Schema V201503",
-        Remarks = "Extracts a provisioning template in Office Open XML from the current web and saves it in the V201503 version of the schema.",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -IncludeAllTermGroups",
-        Remarks = "Extracts a provisioning template in Office Open XML from the current web and includes all term groups, term sets and terms from the Managed Metadata Service Taxonomy.",
-        SortOrder = 4)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -IncludeSiteCollectionTermGroup",
-        Remarks = "Extracts a provisioning template in Office Open XML from the current web and includes the term group currently (if set) assigned to the site collection.",
-        SortOrder = 5)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -PersistBrandingFiles",
-        Remarks = "Extracts a provisioning template in Office Open XML from the current web and saves the files that make up the composed look to the same folder as where the template is saved.",
-        SortOrder = 6)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -Handlers Lists, SiteSecurity",
-        Remarks = "Extracts a provisioning template in Office Open XML from the current web, but only processes lists and site security when generating the template.",
-        SortOrder = 7)]
-    [CmdletExample(
-        Code = @"
-PS:> $handler1 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
-PS:> $handler2 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler2
-PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $handler1,$handler2",
-        Remarks = @"This will create two new ExtensibilityHandler objects that are run during extraction of the template",
-        SortOrder = 8)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -PersistMultiLanguageResources",
-        Introduction = "Only supported on SP2016, SP2019 and SP Online",
-        Remarks = "Extracts a provisioning template in Office Open XML from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named after the value specified in the Out parameter. For instance if the Out parameter is specified as -Out 'template.xml' the generated resource file will be called 'template.en-US.resx'.",
-        SortOrder = 9)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -PersistMultiLanguageResources -ResourceFilePrefix MyResources",
-        Introduction = "Only supported on SP2016, SP2019 and SP Online",
-        Remarks = "Extracts a provisioning template in Office Open XML from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named 'MyResources.en-US.resx' etc.",
-        SortOrder = 10)]
-    [CmdletExample(
-        Code = @"PS:> $template = Get-PnPProvisioningTemplate -OutputInstance",
-        Remarks = "Extracts an instance of a provisioning template object from the current web. This syntax cannot be used together with the -Out parameter, but it can be used together with any other supported parameters.",
-        SortOrder = 11)]
-    [CmdletExample(
-        Code = "PS:> Get-PnPProvisioningTemplate -Out template.pnp -ContentTypeGroups \"Group A\",\"Group B\"",
-        Remarks = @"Extracts a provisioning template in Office Open XML from the current web, but only processes content types from the to given content type groups.",
-        SortOrder = 12)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -ExcludeContentTypesFromSyndication",
-        Remarks = "Extracts a provisioning template in Office Open XML from the current web, excluding content types provisioned through content type syndication (content type hub), in order to prevent provisioning errors if the target also provision the content type using syndication.",
-        SortOrder = 13)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -ListsToExtract ""Title of List One"",""95c4efd6-08f4-4c67-94ae-49d696ba1298"",""Title of List Three""",
-        Remarks = "Extracts a provisioning template in Office Open XML from the current web, including only the lists specified by title or ID.",
-        SortOrder = 14)]
-    [CmdletRelatedLink(
-        Text = "Encoding",
-        Url = "https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx")]
     public class GetProvisioningTemplate : PnPWebCmdlet
     {
         private ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");
         private ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");
 
-        [Parameter(Mandatory = false, Position = 0, HelpMessage = "Filename to write to, optionally including full path")]
+        [Parameter(Mandatory = false, Position = 0)]
         public string Out;
 
-        [Parameter(Mandatory = false, Position = 1, HelpMessage = "The schema of the output to use, defaults to the latest schema")]
+        [Parameter(Mandatory = false, Position = 1)]
         public XMLPnPSchemaVersion Schema = XMLPnPSchemaVersion.LATEST;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified, all term groups will be included. Overrides IncludeSiteCollectionTermGroup.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IncludeAllTermGroups;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified, all the site collection term groups will be included. Overridden by IncludeAllTermGroups.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IncludeSiteCollectionTermGroup;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified all site groups will be included.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IncludeSiteGroups;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified all the managers and contributors of term groups will be included.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IncludeTermGroupsSecurity;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified the template will contain the current search configuration of the site.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IncludeSearchConfiguration;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified the files used for masterpages, sitelogo, alternate CSS and the files that make up the composed look will be saved.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter PersistBrandingFiles;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified the files used for the publishing feature will be saved.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter PersistPublishingFiles;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified, out of the box / native publishing files will be saved.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IncludeNativePublishingFiles;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified hidden lists will be included in the template")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IncludeHiddenLists;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified all client side pages will be included")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IncludeAllClientSidePages;
 
-        [Parameter(Mandatory = false, HelpMessage = "During extraction the version of the server will be checked for certain actions. If you specify this switch, this check will be skipped.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter SkipVersionCheck;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified, resource values for applicable artifacts will be persisted to a resource file")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter PersistMultiLanguageResources;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified, resource files will be saved with the specified prefix instead of using the template name specified. If no template name is specified the files will be called PnP-Resources.<language>.resx. See examples for more info.")]
+        [Parameter(Mandatory = false)]
         public string ResourceFilePrefix;
       
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting. For possible values for this parameter visit https://docs.microsoft.com/dotnet/api/PnP.Framework.Provisioning.model.handlers")]
+        [Parameter(Mandatory = false)]
         public Handlers Handlers;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to run all handlers, excluding the ones specified.")]
+        [Parameter(Mandatory = false)]
         public Handlers ExcludeHandlers;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensibilityHandlers to execute while extracting a template.")]
+        [Parameter(Mandatory = false)]
         public ExtensibilityHandler[] ExtensibilityHandlers;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while extracting a template.")]
+        [Parameter(Mandatory = false)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify from which content type group(s) the content types should be included into the template.")]
+        [Parameter(Mandatory = false)]
         public string[] ContentTypeGroups;
 
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false, HelpMessage = "Exports the template without the use of a base template, causing all OOTB artifacts to be included. Using this switch is generally not required/recommended.")]
+        [Parameter(Mandatory = false)]
         [Obsolete("Use of this method is generally not required/recommended")]
         public SwitchParameter NoBaseTemplate;
 
-        [Parameter(Mandatory = false, HelpMessage = "The encoding type of the XML file, Unicode is default")]
+        [Parameter(Mandatory = false)]
         public System.Text.Encoding Encoding = System.Text.Encoding.Unicode;
 
-        [Parameter(Mandatory = false, HelpMessage = "It can be used to specify the DisplayName of the template file that will be extracted.")]
+        [Parameter(Mandatory = false)]
         public string TemplateDisplayName;
 
-        [Parameter(Mandatory = false, HelpMessage = "It can be used to specify the ImagePreviewUrl of the template file that will be extracted.")]
+        [Parameter(Mandatory = false)]
         public string TemplateImagePreviewUrl;
 
-        [Parameter(Mandatory = false, HelpMessage = "It can be used to specify custom Properties for the template file that will be extracted.")]
+        [Parameter(Mandatory = false)]
         public Hashtable TemplateProperties;
 
-        [Parameter(Mandatory = false, HelpMessage = "Returns the template as an in-memory object, which is an instance of the ProvisioningTemplate type of the PnP Core Component. It cannot be used together with the -Out parameter.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter OutputInstance;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify whether or not content types issued from a content hub should be exported. By default, these content types are included.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter ExcludeContentTypesFromSyndication;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify the lists to extract, either providing their ID or their Title.")]
+        [Parameter(Mandatory = false)]
         public List<string> ListsToExtract;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.")]
+        [Parameter(Mandatory = false)]
         public ExtractConfigurationPipeBind Configuration;
 
         protected override void ExecuteCmdlet()

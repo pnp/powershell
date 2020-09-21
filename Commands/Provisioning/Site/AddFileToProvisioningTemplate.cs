@@ -15,55 +15,33 @@ using PnPFileLevel = PnP.Framework.Provisioning.Model.FileLevel;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPFileToProvisioningTemplate")]
-    [CmdletHelp("Adds a file to a PnP Provisioning Template",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder",
-       Remarks = "Adds a file to a PnP Site Template",
-       SortOrder = 1)]
-    [CmdletExample(
-       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.xml -Source $sourceFilePath -Folder $targetFolder",
-       Remarks = "Adds a file reference to a PnP Site XML Template",
-       SortOrder = 2)]
-    [CmdletExample(
-       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source ""./myfile.png"" -Folder ""folderinsite"" -FileLevel Published -FileOverwrite:$false",
-       Remarks = "Adds a file to a PnP Site Template, specifies the level as Published and defines to not overwrite the file if it exists in the site.",
-       SortOrder = 3)]
-    [CmdletExample(
-       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder -Container $container",
-       Remarks = "Adds a file to a PnP Site Template with a custom container for the file",
-       SortOrder = 4)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -SourceUrl ""Shared%20Documents/ProjectStatus.docs""",
-        Remarks = "Adds a file to a PnP Provisioning Template retrieved from the currently connected site. The url can be server relative or web relative. If specifying a server relative url has to start with the current site url.",
-        SortOrder = 5)]
     public class AddFileToProvisioningTemplate : PnPWebCmdlet
     {
         const string parameterSet_LOCALFILE = "Local File";
         const string parameterSet_REMOTEFILE = "Remove File";
 
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML site template to read from, optionally including full path.")]
+        [Parameter(Mandatory = true, Position = 0)]
         public string Path;
 
-        [Parameter(Mandatory = true, Position = 1, ParameterSetName = parameterSet_LOCALFILE, HelpMessage = "The file to add to the in-memory template, optionally including full path.")]
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = parameterSet_LOCALFILE)]
         public string Source;
 
-        [Parameter(Mandatory = true, Position = 1, ParameterSetName = parameterSet_REMOTEFILE, HelpMessage = "The file to add to the in-memory template, specifying its url in the current connected Web.")]
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = parameterSet_REMOTEFILE)]
         public string SourceUrl;
 
-        [Parameter(Mandatory = true, Position = 2, ParameterSetName = parameterSet_LOCALFILE, HelpMessage = "The target Folder for the file to add to the in-memory template.")]
+        [Parameter(Mandatory = true, Position = 2, ParameterSetName = parameterSet_LOCALFILE)]
         public string Folder;
 
-        [Parameter(Mandatory = false, Position = 3, HelpMessage = "The target Container for the file to add to the in-memory template, optional argument.")]
+        [Parameter(Mandatory = false, Position = 3)]
         public string Container;
 
-        [Parameter(Mandatory = false, Position = 4, HelpMessage = "The level of the files to add. Defaults to Published")]
+        [Parameter(Mandatory = false, Position = 4)]
         public PnPFileLevel FileLevel = PnPFileLevel.Published;
 
-        [Parameter(Mandatory = false, Position = 5, HelpMessage = "Set to overwrite in site, Defaults to true")]
+        [Parameter(Mandatory = false, Position = 5)]
         public SwitchParameter FileOverwrite = true;
 
-        [Parameter(Mandatory = false, Position = 4, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while loading the template.")]
+        [Parameter(Mandatory = false, Position = 4)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
         protected override void ProcessRecord()

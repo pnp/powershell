@@ -8,22 +8,15 @@ using System.Linq;
 namespace PnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Add, "PnPDocumentSet")]
-    [CmdletHelp("Creates a new document set in a library.",
-      Category = CmdletHelpCategory.DocumentSets,
-        OutputType = typeof(string))]
-    [CmdletExample(
-      Code = @"PS:> Add-PnPDocumentSet -List ""Documents"" -ContentType ""Test Document Set"" -Name ""Test""",
-      Remarks = "This will add a new document set based upon the 'Test Document Set' content type to a list called 'Documents'. The document set will be named 'Test'",
-      SortOrder = 1)]
     public class AddDocumentSet : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The name of the list, its ID or an actual list object from where the document set needs to be added")]
+        [Parameter(Mandatory = true)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, HelpMessage = "The name of the document set")]
+        [Parameter(Mandatory = true)]
         public string Name;
 
-        [Parameter(Mandatory = true, HelpMessage = "The name of the content type, its ID or an actual content object referencing to the document set")]
+        [Parameter(Mandatory = true)]
         public ContentTypePipeBind ContentType;
 
         protected override void ExecuteCmdlet()

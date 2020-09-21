@@ -8,8 +8,6 @@ using File = System.IO.File;
 namespace PnP.PowerShell.Commands.Publishing
 {
     [Cmdlet(VerbsCommon.Set, "PnPWikiPageContent")]
-    [CmdletHelp("Sets the contents of a wikipage",
-        Category = CmdletHelpCategory.Publishing)]
     public class SetWikiPageContent : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "STRING")]
@@ -18,8 +16,8 @@ namespace PnP.PowerShell.Commands.Publishing
         [Parameter(Mandatory = true, ParameterSetName = "FILE")]
         public string Path = string.Empty;
 
-        [Parameter(Mandatory = true, ParameterSetName = "FILE", HelpMessage = "Site Relative Page Url")]
-        [Parameter(Mandatory = true, ParameterSetName = "STRING", HelpMessage = "Site Relative Page Url")]
+        [Parameter(Mandatory = true, ParameterSetName = "FILE")]
+        [Parameter(Mandatory = true, ParameterSetName = "STRING")]
         [Alias("PageUrl")]
         public string ServerRelativePageUrl = string.Empty;
 

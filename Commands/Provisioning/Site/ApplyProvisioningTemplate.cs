@@ -18,96 +18,52 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet("Apply", "PnPProvisioningTemplate")]
-    [CmdletHelp("Applies a site template to a web",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-     Code = @"PS:> Apply-PnPProvisioningTemplate -Path template.xml",
-     Remarks = @"Applies a site template in XML format to the current web.",
-     SortOrder = 1)]
-    [CmdletExample(
-     Code = @"PS:> Apply-PnPProvisioningTemplate -Path template.xml -ResourceFolder c:\provisioning\resources",
-     Remarks = @"Applies a site template in XML format to the current web. Any resources like files that are referenced in the template will be retrieved from the folder as specified with the ResourceFolder parameter.",
-     SortOrder = 2)]
-    [CmdletExample(
-     Code = @"PS:> Apply-PnPProvisioningTemplate -Path template.xml -Parameters @{""ListTitle""=""Projects"";""parameter2""=""a second value""}",
-     Remarks = @"Applies a site template in XML format to the current web. It will populate the parameter in the template the values as specified and in the template you can refer to those values with the {parameter:<key>} token.
-
-For instance with the example above, specifying {parameter:ListTitle} in your template will translate to 'Projects' when applying the template. These tokens can be used in most string values in a template.",
-     SortOrder = 3)]
-    [CmdletExample(
-     Code = @"PS:> Apply-PnPProvisioningTemplate -Path template.xml -Handlers Lists, SiteSecurity",
-     Remarks = @"Applies a site template in XML format to the current web. It will only apply the lists and site security part of the template.",
-     SortOrder = 4)]
-    [CmdletExample(
-     Code = @"PS:> Apply-PnPProvisioningTemplate -Path template.pnp",
-     Remarks = @"Applies a site template from a pnp package to the current web.",
-     SortOrder = 5)]
-    [CmdletExample(
-     Code = @"PS:> Apply-PnPProvisioningTemplate -Path https://tenant.sharepoint.com/sites/templatestorage/Documents/template.pnp",
-     Remarks = @"Applies a site template from a pnp package stored in a library to the current web.",
-     SortOrder = 6)]
-    [CmdletExample(
-        Code = @"
-PS:> $handler1 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
-PS:> $handler2 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler2
-PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers $handler1,$handler2",
-        Remarks = @"This will create two new ExtensibilityHandler objects that are run while provisioning the template",
-        SortOrder = 7)]
-    [CmdletExample(
-     Code = @"PS:> Apply-PnPProvisioningTemplate -Path .\ -InputInstance $template",
-     Remarks = @"Applies a site template from an in-memory instance of a ProvisioningTemplate type of the PnP Core Component, reading the supporting files, if any, from the current (.\) path. The syntax can be used together with any other supported parameters.",
-     SortOrder = 8)]
-    [CmdletExample(
-     Code = @"PS:> Apply-PnPProvisioningTemplate -Path .\template.xml -TemplateId ""MyTemplate""",
-     Remarks = @"Applies the ProvisioningTemplate with the ID ""MyTemplate"" located in the template definition file template.xml.",
-     SortOrder = 9)]
-
     public class ApplyProvisioningTemplate : PnPWebCmdlet
     {
         private ProgressRecord progressRecord = new ProgressRecord(0, "Activity", "Status");
         private ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");
 
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml or pnp file containing the provisioning template.", ParameterSetName = "Path")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ParameterSetName = "Path")]
         public string Path;
 
-        [Parameter(Mandatory = false, HelpMessage = "ID of the template to use from the xml file containing the provisioning template. If not specified and multiple ProvisioningTemplate elements exist, the last one will be used.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string TemplateId;
 
-        [Parameter(Mandatory = false, HelpMessage = "Root folder where resources/files that are being referenced in the template are located. If not specified the same folder as where the provisioning template is located will be used.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string ResourceFolder;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter OverwriteSystemPropertyBagValues;
 
-        [Parameter(Mandatory = false, HelpMessage = "Ignore duplicate data row errors when the data row in the template already exists.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter IgnoreDuplicateDataRowErrors;
 
-        [Parameter(Mandatory = false, HelpMessage = "If set content types will be provisioned if the target web is a subweb.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter ProvisionContentTypesToSubWebs;
 
-        [Parameter(Mandatory = false, HelpMessage = "If set fields will be provisioned if the target web is a subweb.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter ProvisionFieldsToSubWebs;
 
-        [Parameter(Mandatory = false, HelpMessage = "Override the RemoveExistingNodes attribute in the Navigation elements of the template. If you specify this value the navigation nodes will always be removed before adding the nodes in the template")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter ClearNavigation;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify parameters that can be referred to in the template by means of the {parameter:<Key>} token. See examples on how to use this parameter.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Hashtable Parameters;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying. Visit https://docs.microsoft.com/dotnet/api/PnP.Framework.Provisioning.model.handlers for possible values.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Handlers Handlers;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to run all handlers, excluding the ones specified.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Handlers ExcludeHandlers;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensbilityHandlers to execute while applying a template", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ExtensibilityHandler[] ExtensibilityHandlers;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while applying a template.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to provide an in-memory instance of the ProvisioningTemplate type of the PnP Core Component. When using this parameter, the -Path parameter refers to the path of any supporting file for the template.", ParameterSetName = "Instance")]
+        [Parameter(Mandatory = false, ParameterSetName = "Instance")]
         public ProvisioningTemplate InputInstance;
 
         protected override void ExecuteCmdlet()

@@ -19,22 +19,6 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet("Apply", "PnPTenantTemplate", SupportsShouldProcess = true)]
-    [CmdletHelp("Applies a tenant template to the current tenant. You must have the Office 365 Global Admin role to run this cmdlet successfully.",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> Apply-PnPTenantTemplate -Path myfile.pnp",
-       Remarks = "Will read the tenant template from the filesystem and will apply the sequences in the template",
-       SortOrder = 1)]
-    [CmdletExample(
-       Code = @"PS:> Apply-PnPTenantTemplate -Path myfile.pnp -SequenceId ""mysequence""",
-       Remarks = "Will read the tenant template from the filesystem and will apply the specified sequence in the template",
-       SortOrder = 1)]
-    [CmdletExample(
-     Code = @"PS:> Apply-PnPTenantTemplate -Path myfile.pnp -Parameters @{""ListTitle""=""Projects"";""parameter2""=""a second value""}",
-     Remarks = @"Applies a tenant template to the current tenant. It will populate the parameter in the template the values as specified and in the template you can refer to those values with the {parameter:<key>} token.
-
-For instance with the example above, specifying {parameter:ListTitle} in your template will translate to 'Projects' when applying the template. These tokens can be used in most string values in a template.",
-     SortOrder = 3)]
     public class ApplyTenantTemplate : PnPAdminCmdlet
     {
         private const string ParameterSet_PATH = "By Path";
@@ -43,7 +27,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
         private ProgressRecord progressRecord = new ProgressRecord(0, "Activity", "Status");
         private ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml or pnp file containing the tenant template.", ParameterSetName = ParameterSet_PATH)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_PATH)]
         public string Path;
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_OBJECT)]
@@ -52,40 +36,40 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
         [Parameter(Mandatory = false)]
         public string SequenceId;
 
-        [Parameter(Mandatory = false, HelpMessage = "Root folder where resources/files that are being referenced in the template are located. If not specified the same folder as where the tenant template is located will be used.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string ResourceFolder;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Handlers Handlers;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to run all handlers, excluding the ones specified.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Handlers ExcludeHandlers;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensbilityHandlers to execute while applying a template", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ExtensibilityHandler[] ExtensibilityHandlers;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while applying a template.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify parameters that can be referred to in the tenant template by means of the {parameter:<Key>} token. See examples on how to use this parameter.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Hashtable Parameters;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter OverwriteSystemPropertyBagValues;
 
-        [Parameter(Mandatory = false, HelpMessage = "Ignore duplicate data row errors when the data row in the template already exists.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter IgnoreDuplicateDataRowErrors;
 
-        [Parameter(Mandatory = false, HelpMessage = "If set content types will be provisioned if the target web is a subweb.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter ProvisionContentTypesToSubWebs;
 
-        [Parameter(Mandatory = false, HelpMessage = "If set fields will be provisioned if the target web is a subweb.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter ProvisionFieldsToSubWebs;
 
-        [Parameter(Mandatory = false, HelpMessage = "Override the RemoveExistingNodes attribute in the Navigation elements of the template. If you specify this value the navigation nodes will always be removed before adding the nodes in the template")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter ClearNavigation;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ApplyConfigurationPipeBind Configuration;
 
         protected override void ExecuteCmdlet()

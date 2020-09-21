@@ -7,49 +7,24 @@ using PnP.PowerShell.CmdletHelpAttributes;
 namespace PnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Add, "PnPNavigationNode")]
-    [CmdletHelp("Adds an item to a navigation element",
-        "Adds a menu item to either the quicklaunch, top navigation, search navigation or the footer",
-        OutputType = typeof(NavigationNode),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.NavigationNode.aspx",
-        Category = CmdletHelpCategory.Branding)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPNavigationNode -Title ""Contoso"" -Url ""http://contoso.sharepoint.com/sites/contoso/"" -Location ""QuickLaunch""",
-        Remarks = @"Adds a navigation node to the quicklaunch. The navigation node will have the title ""Contoso"" and will link to the url ""http://contoso.sharepoint.com/sites/contoso/""",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPNavigationNode -Title ""Contoso USA"" -Url ""http://contoso.sharepoint.com/sites/contoso/usa/"" -Location ""QuickLaunch"" -Parent 2012",
-        Remarks = @"Adds a navigation node to the quicklaunch. The navigation node will have the title ""Contoso USA"", will link to the url ""http://contoso.sharepoint.com/sites/contoso/usa/"" and will have the node with id 2012 as a parent navigation node.",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPNavigationNode -Title ""Contoso"" -Url ""http://contoso.sharepoint.com/sites/contoso/"" -Location ""QuickLaunch"" -First",
-        Remarks = @"Adds a navigation node to the quicklaunch, as the first item. The navigation node will have the title ""Contoso"" and will link to the url ""http://contoso.sharepoint.com/sites/contoso/""",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPNavigationNode -Title ""Contoso Pharmaceuticals"" -Url ""http://contoso.sharepoint.com/sites/contosopharma/"" -Location ""QuickLaunch"" -External",
-        Remarks = @"Adds a navigation node to the quicklaunch. The navigation node will have the title ""Contoso Pharmaceuticals"" and will link to the external url ""http://contoso.sharepoint.com/sites/contosopharma/""",
-        SortOrder = 4)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPNavigationNode -Title ""Wiki"" -Location ""QuickLaunch"" -Url ""wiki/""",
-        Remarks = @"Adds a navigation node to the quicklaunch. The navigation node will have the title ""Wiki"" and will link to Wiki library on the selected Web.",
-        SortOrder = 5)]
     public class AddNavigationNode : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The location where to add the navigation node to. Either TopNavigationBar, QuickLaunch, SearchNav or Footer.")]
+        [Parameter(Mandatory = true)]
         public NavigationType Location;
 
-        [Parameter(Mandatory = true, HelpMessage = "The title of the node to add")]
+        [Parameter(Mandatory = true)]
         public string Title;
 
-        [Parameter(Mandatory = false, HelpMessage = "The url to navigate to when clicking the new menu item. This can either be absolute or relative to the Web. Fragments are not supported.")]
+        [Parameter(Mandatory = false)]
         public string Url;
 
-        [Parameter(Mandatory = false, HelpMessage = "The key of the parent. Leave empty to add to the top level")]
+        [Parameter(Mandatory = false)]
         public int? Parent;
 
-        [Parameter(Mandatory = false, HelpMessage = "Add the new menu item to beginning of the collection")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter First;
 
-        [Parameter(Mandatory = false, HelpMessage = "Indicates the destination URL is outside of the site collection")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter External;
 
         protected override void ExecuteCmdlet()

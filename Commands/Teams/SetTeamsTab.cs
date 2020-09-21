@@ -7,25 +7,19 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPTeamsTab")]
-    [CmdletHelp("Updates Teams Tab settings",
-        Category = CmdletHelpCategory.Teams)]
-    [CmdletExample(
-       Code = "PS:> Set-PnPTeamsTab -Team \"MyTeam\" -Channel \"My Channel\" -Identity \"Wiki\" -DisplayName \"Channel Wiki\"",
-       Remarks = "Updates the tab named 'Wiki' and changes the display name of the tab to 'Channel Wiki'",
-       SortOrder = 1)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class SetTeamsTab : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Specify the group id of the team to retrieve.", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public TeamsTeamPipeBind Team;
 
-        [Parameter(Mandatory = true, HelpMessage = "Specify the channel id of the team to retrieve.", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public TeamsChannelPipeBind Channel;
 
-        [Parameter(Mandatory = false, HelpMessage = "Identity of the tab.")]
+        [Parameter(Mandatory = false)]
         public TeamsTabPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "The new name of the tab.")]
+        [Parameter(Mandatory = false)]
         public string DisplayName;
 
         protected override void ExecuteCmdlet()

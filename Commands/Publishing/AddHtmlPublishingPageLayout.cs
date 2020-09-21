@@ -5,27 +5,21 @@ using PnP.PowerShell.CmdletHelpAttributes;
 namespace PnP.PowerShell.Commands.Publishing
 {
     [Cmdlet(VerbsCommon.Add, "PnPHtmlPublishingPageLayout")]
-    [CmdletHelp("Adds a HTML based publishing page layout",
-       Category = CmdletHelpCategory.Publishing)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPHtmlPublishingPageLayout -Title 'Our custom page layout' -SourceFilePath 'customlayout.aspx' -Description 'A custom page layout' -AssociatedContentTypeID 0x01010901",
-        Remarks = "Uploads the pagelayout 'customlayout.aspx' from the current location to the current site as a 'web part page' pagelayout",
-        SortOrder = 1)]
     public class AddHtmlPublishingPageLayout : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Path to the file which will be uploaded")]
+        [Parameter(Mandatory = true)]
         public string SourceFilePath = string.Empty;
 
-        [Parameter(Mandatory = true, HelpMessage = "Title for the page layout")]
+        [Parameter(Mandatory = true)]
         public string Title = string.Empty;
 
-        [Parameter(Mandatory = true, HelpMessage = "Description for the page layout")]
+        [Parameter(Mandatory = true)]
         public string Description = string.Empty;
 
-        [Parameter(Mandatory = true, HelpMessage = "Associated content type ID")]
+        [Parameter(Mandatory = true)]
         public string AssociatedContentTypeID;
 
-        [Parameter(Mandatory = false, HelpMessage = "Folder hierarchy where the HTML page layouts will be deployed")]
+        [Parameter(Mandatory = false)]
         public string DestinationFolderHierarchy;
 
         protected override void ExecuteCmdlet()

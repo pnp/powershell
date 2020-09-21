@@ -12,48 +12,30 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsData.Export, "PnPTaxonomy", SupportsShouldProcess = true)]
-    [CmdletHelp("Exports a taxonomy to either the output or to a file.",
-        Category = CmdletHelpCategory.Taxonomy)]
-    [CmdletExample
-        (Code = @"PS:> Export-PnPTaxonomy",
-        Remarks = "Exports the full taxonomy to the standard output",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Export-PnPTaxonomy -Path c:\output.txt",
-        Remarks = "Exports the full taxonomy the file output.txt",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Export-PnPTaxonomy -Path c:\output.txt -TermSetId f6f43025-7242-4f7a-b739-41fa32847254",
-        Remarks = "Exports the term set with the specified id",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Export-PnPTaxonomy -Path c:\output.txt -TermSetId f6f43025-7242-4f7a-b739-41fa32847254 -Lcid 1044",
-        Remarks = "Exports the term set with the specified id using Norwegian labels",
-        SortOrder = 4)]
     public class ExportTaxonomy : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = false, ParameterSetName = "TermSet", HelpMessage = "If specified, will export the specified termset only")]
+        [Parameter(Mandatory = false, ParameterSetName = "TermSet")]
         public GuidPipeBind TermSetId = new GuidPipeBind();
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified will include the ids of the taxonomy items in the output. Format: <label>;#<guid>")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IncludeID = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "File to export the data to.")]
+        [Parameter(Mandatory = false)]
         public string Path;
 
-        [Parameter(Mandatory = false, ParameterSetName = "TermSet", HelpMessage = "Term store to export; if not specified the default term store is used.")]
+        [Parameter(Mandatory = false, ParameterSetName = "TermSet")]
         public string TermStoreName;
 
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false, HelpMessage = "The path delimiter to be used, by default this is '|'")]
+        [Parameter(Mandatory = false)]
         public string Delimiter = "|";
 
-        [Parameter(Mandatory = false, ParameterSetName = "TermSet", HelpMessage = "Specify the language code for the exported terms")]
+        [Parameter(Mandatory = false, ParameterSetName = "TermSet")]
         public int Lcid = 0;
 
-        [Parameter(Mandatory = false, HelpMessage = "Defaults to Unicode")]
+        [Parameter(Mandatory = false)]
         public Encoding Encoding = Encoding.Unicode;
 
 

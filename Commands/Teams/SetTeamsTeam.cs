@@ -11,76 +11,70 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPTeamsTeam")]
-    [CmdletHelp("Updates an existing Team.",
-        Category = CmdletHelpCategory.Teams)]
-    [CmdletExample(
-       Code = "PS:> Set-PnPTeamsChannel -Team \"MyTeam\" -DisplayName \"My Team\"",
-       Remarks = "Updates the team called 'MyTeam' to have the display name set to 'My Team'",
-       SortOrder = 1)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class SetTeamsTeam : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Specify the group id, mailNickname or display name of the team to use.", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public TeamsTeamPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "Changes the display name of the specified team.")]
+        [Parameter(Mandatory = false)]
         public string DisplayName;
 
-        [Parameter(Mandatory = false, HelpMessage = "Changes the description of the specified team.")]
+        [Parameter(Mandatory = false)]
         public string Description;
 
-        [Parameter(Mandatory = false, HelpMessage = "Changes the visibility of the specified team.")]
+        [Parameter(Mandatory = false)]
         public TeamVisibility Visibility;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Boolean value that determines whether or not members (not only owners) are allowed to add apps to the team.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowAddRemoveApps;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Boolean value that determines whether or not channels in the team can be @ mentioned so that all users who follow the channel are notified.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowChannelMentions;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Setting that determines whether or not members (and not just owners) are allowed to create channels.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowCreateUpdateChannels;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Setting that determines whether or not members (and not only owners) can manage connectors in the team.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowCreateUpdateRemoveConnectors;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Setting that determines whether or not members (and not only owners) can manage tabs in channels.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowCreateUpdateRemoveTabs;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Setting that determines whether or not members can use the custom memes functionality in teams.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowCustomMemes;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Setting that determines whether or not members (and not only owners) can delete channels in the team.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowDeleteChannels;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Setting that determines whether or not giphy can be used in the team.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowGiphy;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Setting that determines whether or not guests can create channels in the team.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowGuestCreateUpdateChannels;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Setting that determines whether or not guests can delete in the team.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowGuestDeleteChannels;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Setting that determines whether or not owners can delete messages that they or other members of the team have posted.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowOwnerDeleteMessages;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Setting that determines whether stickers and memes usage is allowed in the team.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowStickersAndMemes;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Setting that determines whether the entire team can be @ mentioned (which means that all users will be notified)")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowTeamMentions;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Setting that determines whether or not members can delete messages that they have posted.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowUserDeleteMessages;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Setting that determines whether or not users can edit messages that they have posted.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowUserEditMessages;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Setting that determines the level of sensitivity of giphy usage that is allowed in the team. Accepted values are \"Strict\" or \"Moderate\"")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Model.Teams.TeamGiphyContentRating GiphyContentRating;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Setting that determines whether or not private teams should be searchable from Teams clients for users who do not belong to that team. Set to $false to make those teams not discoverable from Teams clients.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? ShowInTeamsSearchAndSuggestions;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]

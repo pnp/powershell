@@ -11,21 +11,15 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Remove, "PnPFileFromProvisioningTemplate")]
-    [CmdletHelp("Removes a file from a PnP Provisioning Template",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> Remove-PnPFileFromProvisioningTemplate -Path template.pnp -FilePath filePath",
-       Remarks = "Removes a file from an in-memory PnP Provisioning Template",
-       SortOrder = 1)]
     public class RemoveFileFromProvisioningTemplate : PSCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to read the template from, optionally including full path.")]
+        [Parameter(Mandatory = true, Position = 0)]
         public string Path;
 
-        [Parameter(Mandatory = true, Position = 1, HelpMessage = "The relative File Path of the file to remove from the in-memory template")]
+        [Parameter(Mandatory = true, Position = 1)]
         public string FilePath;
 
-        [Parameter(Mandatory = false, Position = 2, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while saving the template.")]
+        [Parameter(Mandatory = false, Position = 2)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
         protected override void ProcessRecord()

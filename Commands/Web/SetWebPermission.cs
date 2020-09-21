@@ -9,25 +9,14 @@ using PnP.PowerShell.Commands.Extensions;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPWebPermission", DefaultParameterSetName = "User")]
-    [CmdletHelp("Set permissions",
-        "Sets web permissions",
-        Category = CmdletHelpCategory.Webs)]
-    [CmdletExample(
-        Code = "PS:> Set-PnPWebPermission -Url projectA -User 'user@contoso.com' -AddRole 'Contribute'",
-        Remarks = "Adds the 'Contribute' permission to the user 'user@contoso.com' for a web, specified by its site relative url",
-        SortOrder = 1)]        
-    [CmdletExample(
-        Code = "PS:> Set-PnPWebPermission -Identity 5fecaf67-6b9e-4691-a0ff-518fc9839aa0 -User 'user@contoso.com' -RemoveRole 'Contribute'",
-        Remarks = "Removes the 'Contribute' permission to the user 'user@contoso.com' for a web, specified by its ID",
-        SortOrder = 2)]        
     public class SetWebPermission : PnPWebCmdlet
     {
-		[Parameter(Mandatory = true, HelpMessage = "Identity/Id/Web object", ParameterSetName = "GroupByWebIdentity", ValueFromPipeline = true)]
-		[Parameter(Mandatory = true, HelpMessage = "Identity/Id/Web object", ParameterSetName = "UserByWebIdentity", ValueFromPipeline = true)]
+		[Parameter(Mandatory = true, ValueFromPipeline = true)]
+		[Parameter(Mandatory = true, ValueFromPipeline = true)]
 		public WebPipeBind Identity;
 
-		[Parameter(Mandatory = true, HelpMessage = "The site relative url of the web, e.g. 'Subweb1'", ParameterSetName = "GroupByWebUrl")]
-		[Parameter(Mandatory = true, HelpMessage = "The site relative url of the web, e.g. 'Subweb1'", ParameterSetName = "UserByWebUrl")]
+		[Parameter(Mandatory = true, ParameterSetName = "GroupByWebUrl")]
+		[Parameter(Mandatory = true, ParameterSetName = "UserByWebUrl")]
 		public string Url;
 
 		[Parameter(Mandatory = true, ParameterSetName = "Group")]
@@ -40,10 +29,10 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = true, ParameterSetName = "UserByWebUrl")]
         public string User;
 
-        [Parameter(Mandatory = false, HelpMessage = "The role that must be assigned to the group or user", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
 		public string[] AddRole = null;
 
-        [Parameter(Mandatory = false, HelpMessage = "The role that must be removed from the group or user", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string[] RemoveRole = null;
 
         protected override void ExecuteCmdlet()

@@ -6,12 +6,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantSequenceTeamNoGroupSite", SupportsShouldProcess = true)]
-    [CmdletHelp("Creates a new team site without a Microsoft 365 group in-memory object",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> $site = New-PnPTenantSequenceTeamNoGroupSite -Url ""/sites/MyTeamSite"" -Title ""My Team Site""",
-       Remarks = "Creates a new team site object with the specified variables",
-       SortOrder = 1)]
     public class NewTenantSequenceTeamNoGroupSite : PSCmdlet
     {
         [Parameter(Mandatory = true)]

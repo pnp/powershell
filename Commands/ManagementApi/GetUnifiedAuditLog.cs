@@ -10,32 +10,23 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPUnifiedAuditLog")]
-    [CmdletHelp(
-        "Gets unified audit logs from the Office 365 Management API. Requires the Azure Active Directory application permission 'ActivityFeed.Read'.",
-        Category = CmdletHelpCategory.ManagementApi)]
-    [CmdletExample(
-       Code = "PS:> Get-PnPUnifiedAuditLog -ContentType SharePoint -StartTime (Get-Date).AddDays(-1) -EndTime (Get-Date).AddDays(-2)",
-       Remarks = "Retrieves the audit logs of SharePoint happening between the current time yesterday and the current time the day before yesterday",
-       SortOrder = 1)]
     [CmdletOfficeManagementApiPermission(OfficeManagementApiPermission.ActivityFeed_Read)]
     public class GetUnifiedAuditLog : PnPOfficeManagementApiCmdlet
     {
         private const string ParameterSet_LogsByDate = "Logs by date";
 
-        [Parameter(Mandatory = false, HelpMessage = "Content type of logs to be retrieved, should be one of the following: AzureActiveDirectory, Exchange, SharePoint, General, DLP.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LogsByDate, HelpMessage = "Content type of logs to be retreived, should be one of the following: AzureActiveDirectory, Exchange, SharePoint, General, DLP.")]
+        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LogsByDate)]
         public Enums.AuditContentType ContentType = Enums.AuditContentType.SharePoint;
 
         [Parameter(
             Mandatory = false,
-            ParameterSetName = ParameterSet_LogsByDate,
-            HelpMessage = "Start time of logs to be retrieved. Start time and end time must both be specified (or both omitted) and must be less than or equal to 24 hours apart, with the start time prior to end time and start time no more than 7 days in the past.")]
+            ParameterSetName = ParameterSet_LogsByDate)]
         public DateTime StartTime = DateTime.MinValue;
 
         [Parameter(
             Mandatory = false,
-            ParameterSetName = ParameterSet_LogsByDate,
-            HelpMessage = "End time of logs to be retrieved. Start time and end time must both be specified (or both omitted) and must be less than or equal to 24 hours apart.")]
+            ParameterSetName = ParameterSet_LogsByDate)]
         public DateTime EndTime = DateTime.MaxValue;
 
         /// <summary>

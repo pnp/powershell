@@ -10,79 +10,39 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "PnPListItem", DefaultParameterSetName = ParameterSet_ALLITEMS)]
-    [CmdletHelp("Retrieves list items",
-        Category = CmdletHelpCategory.Lists,
-        OutputType = typeof(ListItem),
-        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee539951(v=office.15)")]
-    [CmdletExample(
-        Code = "PS:> Get-PnPListItem -List Tasks",
-        Remarks = "Retrieves all list items from the Tasks list",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = "PS:> Get-PnPListItem -List Tasks -Id 1",
-        Remarks = "Retrieves the list item with ID 1 from the Tasks list",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = "PS:> Get-PnPListItem -List Tasks -UniqueId bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3",
-        Remarks = "Retrieves the list item with unique id bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from the tasks lists",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = "PS:> (Get-PnPListItem -List Tasks -Fields \"Title\",\"GUID\").FieldValues",
-        Remarks = "Retrieves all list items, but only includes the values of the Title and GUID fields in the list item object",
-        SortOrder = 4)]
-    [CmdletExample(
-        Code = "PS:> Get-PnPListItem -List Tasks -Query \"<View><Query><Where><Eq><FieldRef Name='GUID'/><Value Type='Guid'>bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3</Value></Eq></Where></Query></View>\"",
-        Remarks = "Retrieves all available fields of list items based on the CAML query specified",
-        SortOrder = 5)]
-    [CmdletExample(
-        Code = "PS:> Get-PnPListItem -List Tasks -Query \"<View><ViewFields><FieldRef Name='Title'/><FieldRef Name='Modified'/></ViewFields><Query><Where><Geq><FieldRef Name='Modified'/><Value Type='DateTime'><Today/></Value></Eq></Where></Query></View>\"",
-        Remarks = "Retrieves all list items modified today, retrieving the columns 'Title' and 'Modified'. When you use -Query, you can add a <ViewFields> clause to retrieve specific columns (since you cannot use -Fields)",
-        SortOrder = 6)]
-    [CmdletExample(
-        Code = "PS:> Get-PnPListItem -List Tasks -PageSize 1000",
-        Remarks = "Retrieves all list items from the Tasks list in pages of 1000 items",
-        SortOrder = 7)]
-    [CmdletExample(
-        Code = "PS:> Get-PnPListItem -List Tasks -PageSize 1000 -ScriptBlock { Param($items) $items.Context.ExecuteQuery() } | % { $_.BreakRoleInheritance($true, $true) }",
-        Remarks = "Retrieves all list items from the Tasks list in pages of 1000 items and breaks permission inheritance on each item",
-        SortOrder = 8)]
-    [CmdletExample(
-        Code = "PS:> Get-PnPListItem -List Samples -FolderServerRelativeUrl \"/sites/contosomarketing/Lists/Samples/Demo\"",
-        Remarks = "Retrieves all list items from the Demo folder in the Samples list located in the contosomarketing site collection",
-        SortOrder = 9)]
     public class GetListItem : PnPWebCmdlet
     {
         private const string ParameterSet_BYID = "By Id";
         private const string ParameterSet_BYUNIQUEID = "By Unique Id";
         private const string ParameterSet_BYQUERY = "By Query";
         private const string ParameterSet_ALLITEMS = "All Items";
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The list to query", Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "The ID of the item to retrieve", ParameterSetName = ParameterSet_BYID)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYID)]
         public int Id = -1;
 
-        [Parameter(Mandatory = false, HelpMessage = "The unique id (GUID) of the item to retrieve", ParameterSetName = ParameterSet_BYUNIQUEID)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYUNIQUEID)]
         public GuidPipeBind UniqueId;
 
-        [Parameter(Mandatory = false, HelpMessage = "The CAML query to execute against the list", ParameterSetName = ParameterSet_BYQUERY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYQUERY)]
         public string Query;
 
-        [Parameter(Mandatory = false, HelpMessage = "The server relative URL of a list folder from which results will be returned.", ParameterSetName = ParameterSet_BYQUERY)]
-        [Parameter(Mandatory = false, HelpMessage = "The server relative URL of a list folder from which results will be returned.", ParameterSetName = ParameterSet_ALLITEMS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYQUERY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALLITEMS)]
         public string FolderServerRelativeUrl;
 
-        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = ParameterSet_ALLITEMS)]
-        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = ParameterSet_BYID)]
-        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = ParameterSet_BYUNIQUEID)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALLITEMS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYID)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYUNIQUEID)]
         public string[] Fields;
 
-        [Parameter(Mandatory = false, HelpMessage = "The number of items to retrieve per page request.", ParameterSetName = ParameterSet_ALLITEMS)]
-		[Parameter(Mandatory = false, HelpMessage = "The number of items to retrieve per page request.", ParameterSetName = ParameterSet_BYQUERY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALLITEMS)]
+		[Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYQUERY)]
         public int PageSize = -1;
 
-		[Parameter(Mandatory = false, HelpMessage = "The script block to run after every page request.", ParameterSetName = ParameterSet_ALLITEMS)]
-		[Parameter(Mandatory = false, HelpMessage = "The script block to run after every page request.", ParameterSetName = ParameterSet_BYQUERY)]
+		[Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALLITEMS)]
+		[Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYQUERY)]
 		public ScriptBlock ScriptBlock;
 
 		protected override void ExecuteCmdlet()

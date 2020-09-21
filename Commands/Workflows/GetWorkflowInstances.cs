@@ -7,22 +7,6 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsCommon.Get, "PnPWorkflowInstance", DefaultParameterSetName = ParameterSet_BYLISTITEM)]
-    [CmdletHelp("Gets SharePoint 2010/2013 workflow instances",
-        DetailedDescription = "Gets all SharePoint 2010/2013 workflow instances",
-        Category = CmdletHelpCategory.Workflows)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPWorkflowInstance -List ""My Library"" -ListItem $ListItem",
-        Remarks = @"Retrieves workflow instances running against the provided item on list ""My Library""",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPWorkflowInstance -List ""My Library"" -ListItem 2",
-        Remarks = @"Retrieves workflow instances running against the provided item with 2 in the list ""My Library""",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPWorkflowSubscription | Get-PnPWorkflowInstance",
-        Remarks = @"Retrieves workflow instances from all subscriptions",
-        SortOrder = 3)]
-
     public class GetWorkflowInstance : PnPWebCmdlet
     {
         private const string ParameterSet_BYLISTITEM = "By List and ListItem";
@@ -43,10 +27,10 @@ namespace PnP.PowerShell.Commands.Workflows
             }
         }
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYLISTITEM, HelpMessage = "The List for which workflow instances should be retrieved", Position = 0)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYLISTITEM, Position = 0)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYLISTITEM, HelpMessage = "The List Item for which workflow instances should be retrieved", Position = 1)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYLISTITEM, Position = 1)]
         public ListItemPipeBind ListItem;
 
         private void ExecuteCmdletByListItem()
@@ -88,7 +72,7 @@ namespace PnP.PowerShell.Commands.Workflows
             WriteObject(workflows, true);
         }
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYSUBSCRIPTION, HelpMessage = "The workflow subscription for which workflow instances should be retrieved", Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYSUBSCRIPTION, Position = 0, ValueFromPipeline = true)]
         public WorkflowSubscriptionPipeBind WorkflowSubscription;
 
         private void ExecuteCmdletBySubscription()

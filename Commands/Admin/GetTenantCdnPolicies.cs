@@ -12,15 +12,9 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantCdnPolicies")]
-    [CmdletHelp("Returns the CDN Policies for the specified CDN (Public | Private).",
-        DetailedDescription = @"Enables or disabled the public or private Office 365 Content Delivery Network (CDN).",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPTenantCdnPolicies -CdnType Public",
-        Remarks = @"Returns the policies for the specified CDN type", SortOrder = 1)]
     public class GetTenantCdnPolicies : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The type of cdn to retrieve the policies from")]
+        [Parameter(Mandatory = true)]
         public SPOTenantCdnType CdnType;
 
         protected override void ExecuteCmdlet()

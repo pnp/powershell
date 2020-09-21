@@ -8,42 +8,21 @@ using System.Collections;
 namespace PnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Set, "PnPView")]
-    [CmdletHelp("Change view properties",
-        DetailedDescription = "Sets one or more properties of an existing view, see here https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee543328(v=office.15) for the list of view properties.",
-        Category = CmdletHelpCategory.Fields,
-        OutputType = typeof(Field),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.view.aspx")]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPView -List ""Tasks"" -Identity ""All Tasks"" -Values @{JSLink=""hierarchytaskslist.js|customrendering.js"";Title=""My view""}",
-        Remarks = @"Updates the ""All Tasks"" view on list ""Tasks"" to use hierarchytaskslist.js and customrendering.js for the JSLink and changes the title of the view to ""My view""",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPList -Identity ""Tasks"" | Get-PnPView | Set-PnPView -Values @{JSLink=""hierarchytaskslist.js|customrendering.js""}",
-        Remarks = @"Updates all views on list ""Tasks"" to use hierarchytaskslist.js and customrendering.js for the JSLink",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPView -List ""Documents"" -Identity ""Corporate Documents"" -Fields ""Title"",""Created""",
-        Remarks = @"Updates the Corporate Documents view on the Documents library to have two fields",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPView -List ""Documents"" -Identity ""Corporate Documents"" -Fields ""Title"",""Created"" -Aggregations ""<FieldRef Name='Title' Type='COUNT'/>""",
-        Remarks = @"Updates the Corporate Documents view on the Documents library and sets the totals (aggregations) to Count on the Title field",
-        SortOrder = 4)]
     public class SetView : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0, HelpMessage = "The Id, Title or Url of the list")]
+        [Parameter(Mandatory = false, Position = 0)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Id, Title or instance of the view")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public ViewPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "Hashtable of properties to update on the view. Use the syntax @{property1=\"value\";property2=\"value\"}.")]
+        [Parameter(Mandatory = false)]
         public Hashtable Values;
 
-        [Parameter(Mandatory = false, HelpMessage = "An array of fields to use in the view. Notice that specifying this value will remove the existing fields")]
+        [Parameter(Mandatory = false)]
         public string[] Fields;
 
-        [Parameter(Mandatory = false, HelpMessage = "A valid XML fragment containing one or more Aggregations")]
+        [Parameter(Mandatory = false)]
         public string Aggregations;
 
         protected override void ExecuteCmdlet()

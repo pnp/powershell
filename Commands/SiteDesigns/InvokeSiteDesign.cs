@@ -9,26 +9,12 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPSiteDesign", SupportsShouldProcess = true)]
-    [CmdletHelp(@"Apply a Site Design to an existing site. * Requires Tenant Administration Rights *",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-        Code = @"PS:> Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd",
-        Remarks = "Applies the specified site design to the current site.",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd -WebUrl https://contoso.sharepoint.com/sites/mydemosite",
-        Remarks = "Applies the specified site design to the specified site.",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSiteDesign | ?{$_.Title -eq ""Demo""} | Invoke-PnPSiteDesign",
-        Remarks = "Applies the specified site design to the specified site.",
-        SortOrder = 2)]
     public class InvokeSiteDesign : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "The Site Design Id or an actual Site Design object to apply")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public TenantSiteDesignPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "The URL of the web to apply the site design to. If not specified it will default to the current web based upon the URL specified with Connect-PnPOnline.")]
+        [Parameter(Mandatory = false)]
         public string WebUrl;
 
         protected override void ExecuteCmdlet()

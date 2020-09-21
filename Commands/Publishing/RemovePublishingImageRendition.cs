@@ -9,16 +9,14 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 namespace PnP.PowerShell.Commands.Publishing
 {
     [Cmdlet(VerbsCommon.Remove, "PnPPublishingImageRendition")]
-    [CmdletHelp("Removes an existing image rendition", Category = CmdletHelpCategory.Publishing)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPPublishingImageRendition -Name ""MyImageRendition"" -Width 800 -Height 600",
-        SortOrder = 1)]
+    
+    
     public class RemovePublishingImageRendition : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The display name or id of the Image Rendition.", Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public ImageRenditionPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be asked to remove the Image Rendition.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

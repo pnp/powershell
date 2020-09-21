@@ -9,18 +9,12 @@ namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Add, "PnPHubSiteAssociation")]
     [Alias("Connect-PnPHubSite")]
-    [CmdletHelp("Connects a site to a hubsite.",
-        DetailedDescription = @"Connects an existing site to a hubsite",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPHubSiteAssociation -Site https://tenant.sharepoint.com/sites/mysite -HubSite https://tenant.sharepoint.com/sites/hubsite",
-        Remarks = @"This example adds the specified site to the hubsite.", SortOrder = 1)]
     public class AddHubSiteAssociation : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = @"The site to connect to the hubsite")]
+        [Parameter(Mandatory = true)]
         public SitePipeBind Site;
 
-        [Parameter(Mandatory = true, HelpMessage = "The hubsite to connect the site to")]
+        [Parameter(Mandatory = true)]
         public SitePipeBind HubSite;
 
         protected override void ExecuteCmdlet()

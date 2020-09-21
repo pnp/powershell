@@ -12,18 +12,12 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsSecurity.Grant, "PnPTenantServicePrincipalPermission")]
-    [CmdletHelp(@"Explicitly grants a specified permission to the ""SharePoint Online Client"" service principal",
-        Category = CmdletHelpCategory.Apps, 
-        OutputType = typeof(AppMetadata))]
-    [CmdletExample(
-        Code = @"PS:> Grant-PnPTenantServicePrincipalPermission -Scope ""Group.Read.All"" -Resource ""Microsoft Graph""",
-        Remarks = @"This will explicitly grant the Group.Read.All permission on the Microsoft Graph resource", SortOrder = 1)]
     public class GrantTenantServicePrincipalPermission : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The scope to grant the permission for")]
+        [Parameter(Mandatory = true)]
         public string Scope;
 
-        [Parameter(Mandatory = true, HelpMessage = "The resource to grant the permission for")]
+        [Parameter(Mandatory = true)]
         public string Resource;
 
         protected override void ExecuteCmdlet()

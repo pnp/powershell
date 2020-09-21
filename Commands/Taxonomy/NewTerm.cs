@@ -10,41 +10,33 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.New, "PnPTerm", SupportsShouldProcess = false)]
-    [CmdletHelp(@"Creates a taxonomy term",
-        Category = CmdletHelpCategory.Taxonomy,
-        OutputType = typeof(Term),
-        OutputTypeLink = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-csom/jj166573(v=office.15)")]
-    [CmdletExample
-        (Code = @"PS:> New-PnPTerm -TermSet ""Departments"" -TermGroup ""Corporate"" -Name ""Finance""",
-        Remarks = @"Creates a new taxonomy term named ""Finance"" in the termset Departments which is located in the ""Corporate"" termgroup",
-        SortOrder = 1)]
     public class NewTerm : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The name of the term.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public string Name;
 
-        [Parameter(Mandatory = false, HelpMessage = "The Id to use for the term; if not specified, or the empty GUID, a random GUID is generated and used.")]
+        [Parameter(Mandatory = false)]
         public Guid Id = Guid.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "The locale id to use for the term. Defaults to the current locale id.")]
+        [Parameter(Mandatory = false)]
         public int Lcid = CultureInfo.CurrentCulture.LCID;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The termset to add the term to.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public TaxonomyItemPipeBind<TermSet> TermSet;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The termgroup to create the term in.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public TermGroupPipeBind TermGroup;
 
-        [Parameter(Mandatory = false, HelpMessage = "Descriptive text to help users understand the intended use of this term.")]
+        [Parameter(Mandatory = false)]
         public string Description;
 
-        [Parameter(Mandatory = false, HelpMessage="Custom Properties")]
+        [Parameter(Mandatory = false)]
         public Hashtable CustomProperties;
 
-        [Parameter(Mandatory = false, HelpMessage = "Custom Properties")]
+        [Parameter(Mandatory = false)]
         public Hashtable LocalCustomProperties;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Term store to check; if not specified the default term store is used.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         [Alias("TermStoreName")]
         public GenericObjectNameIdPipeBind<TermStore> TermStore;
 

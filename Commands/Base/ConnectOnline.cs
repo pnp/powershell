@@ -28,110 +28,6 @@ using System.Reflection;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommunications.Connect, "PnPOnline", SupportsShouldProcess = false, DefaultParameterSetName = ParameterSet_MAIN)]
-    [CmdletHelp("Connect to a SharePoint site",
-        DetailedDescription = @"Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets. See https://github.com/pnp/PnP-PowerShell/wiki/Connect-options for more information on the options to connect and the APIs you can access with them.",
-        Category = CmdletHelpCategory.Base)]
-    [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com",
-        Remarks = @"Connect to SharePoint prompting for the username and password. When a generic credential is added to the Windows Credential Manager with https://contoso.sharepoint.com, PowerShell will not prompt for username and password and use those stored credentials instead.",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials (Get-Credential)",
-        Remarks = @"Connect to SharePoint prompting for the username and password to use to authenticate",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Url http://yourlocalserver -CurrentCredentials",
-        Remarks = @"Connect to SharePoint using the credentials of the current user logged in to the machine",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Url http://yourlocalserver -Credentials 'O365Creds'",
-        Remarks = @"Connect to SharePoint using credentials from the Windows Credential Manager, as defined by the label 'O365Creds'",
-        SortOrder = 4)]
-    [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Url http://yourlocalserver -Credentials (Get-Credential) -UseAdfs",
-        Remarks = @"Connect to SharePoint through ADFS prompting for the username and password to authenticate with",
-        SortOrder = 5)]
-#if !PNPPSCORE
-    [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Url http://yourlocalserver -UseAdfsCert",
-        Remarks = @"Connect to SharePoint through ADFS using client certificate allowing you to select the client certificate to use for authentication",
-        SortOrder = 6)]
-    [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Url http://yourlocalserver -UseAdfsCert -ClientCertificate (Get-ChildItem -Path Cert:\CurrentUser\My\3A16F907D2BFFF1C22F447E55429C16F8BD3AC6E)",
-        Remarks = @"Connect to SharePoint through ADFS using the client certificate with thumbprint 3A16F907D2BFFF1C22F447E55429C16F8BD3AC6E from the local machine certificate store for the current user",
-        SortOrder = 7)]
-#endif
-    [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Url https://yourserver -Credentials (Get-Credential) -CreateDrive
-PS:> cd SPO:\\
-PS:> dir",
-        Remarks = @"This will prompt you for credentials and creates a context for the other PowerShell commands to use. It will also create a SPO:\\ drive you can use to navigate around the site",
-        SortOrder = 8)]
-    [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Url https://yourserver -Credentials (Get-Credential) -AuthenticationMode FormsAuthentication",
-        Remarks = @"This will prompt you for credentials and creates a context for the other PowerShell commands to use. It assumes your server is configured for Forms Based Authentication (FBA)",
-        SortOrder = 9)]
-    [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.de -ClientId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -ClientSecret a3f3faf33f3awf3a3sfs3f3ss3f4f4a3fawfas3ffsrrffssfd -AzureEnvironment Germany",
-        Remarks = @"This will authenticate you to the German Azure environment using the German Azure endpoints for authentication",
-        SortOrder = 10)]
-    [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -SPOManagementShell",
-        Remarks = @"This will authenticate you using the SharePoint Online Management Shell application",
-        SortOrder = 11)]
-    [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -PnPManagementShell",
-        Remarks = @"This will authenticate you using the PnP O365 Management Shell Multi-Tenant application. A browser window will have to be opened where you have to enter a code that is shown in your PowerShell window.",
-        SortOrder = 12)]
-    [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -PnPManagementShell -LaunchBrowser",
-        Remarks = @"This will authenticate you using the PnP O365 Management Shell Multi-Tenant application. A browser window will automatically open and the code you need to enter will be automatically copied to your clipboard.",
-        SortOrder = 13)]
-    [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -AccessToken $myaccesstoken",
-        Remarks = @"Connects using the provided access token",
-        SortOrder = 14)]
-    [CmdletExample(
-       Code = "PS:> Connect-PnPOnline -Scopes \"Mail.Read\",\"Files.Read\",\"ActivityFeed.Read\"",
-       Remarks = "Connects to Azure Active Directory interactively and gets an OAuth 2.0 Access Token to consume the resources of the declared permission scopes. It will utilize the Azure Active Directory enterprise application named PnP Management Shell with application id 31359c7f-bd7e-475c-86db-fdb8c937548e registered by the PnP team. If you want to connect using your own Azure Active Directory application registration, use one of the Connect-PnPOnline cmdlets using a -ClientId attribute instead and pre-assign the required permissions/scopes/roles in your application registration in Azure Active Directory. The available permission scopes for Microsoft Graph are defined at the following URL: https://docs.microsoft.com/graph/permissions-reference . If the requested scope(s) have been used with this connect cmdlet before, they will not be asked for consent again. You can request scopes from different APIs in one Connect, i.e. from Microsoft Graph and the Microsoft Office Management API. It will ask you to authenticate for each of the APIs you have listed scopes for.",
-       SortOrder = 15)]
-    [CmdletExample(
-       Code = "PS:> Connect-PnPOnline -Scopes \"Mail.Read\",\"Files.Read\",\"ActivityFeed.Read\" -Credentials (New-Object System.Management.Automation.PSCredential (\"johndoe@contoso.onmicrosoft.com\", (ConvertTo-SecureString \"password\" -AsPlainText -Force)))",
-       Remarks = "Connects to Azure Active Directory using delegated permissions and gets an OAuth 2.0 Access Token to consume the resources of the declared permission scopes. It will utilize the Azure Active Directory enterprise application named PnP Management Shell with application id 31359c7f-bd7e-475c-86db-fdb8c937548e registered by the PnP team. If you want to connect using your own Azure Active Directory application registration, use one of the Connect-PnPOnline cmdlets using a -ClientId attribute instead and pre-assign the required permissions/scopes/roles in your application registration in Azure Active Directory. The available permission scopes for Microsoft Graph are defined at the following URL: https://docs.microsoft.com/graph/permissions-reference . If the requested scope(s) have been used with this connect cmdlet before, they will not be asked for consent again. You can request scopes from different APIs in one Connect, i.e. from Microsoft Graph and the Microsoft Office Management API. You must have logged on interactively with the same scopes at least once without using -Credentials to allow for the permission grant dialog to show and allow constent for the user account you would like to use. You can provide this consent by logging in once with Connect-PnPOnline -Url <tenanturl> -PnPManagementShell -LaunchBrowser, and provide consent. This is a one-time action. From that moment on you will be able to use the cmdlet as stated here.",
-       SortOrder = 16)]
-    [CmdletExample(
-       Code = "PS:> Connect-PnPOnline -ClientId '<id>' -ClientSecret '<secret>' -AADDomain 'contoso.onmicrosoft.com'",
-       Remarks = "Connects to the Microsoft Graph API using application permissions via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/Graph.ConnectUsingAppPermissions for a sample on how to get started.",
-       SortOrder = 17)]
-    [CmdletExample(
-        Code = "PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -ClientId '<id>' -Tenant 'contoso.onmicrosoft.com' -CertificatePath c:\\absolute-path\\to\\pnp.pfx -CertificatePassword <if needed>",
-        Remarks = "Connects to SharePoint using app-only tokens via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started.",
-        SortOrder = 18)]
-    [CmdletExample(
-        Code = "PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -ClientId '<id>' -Tenant 'contoso.onmicrosoft.com' -Thumbprint 34CFAA860E5FB8C44335A38A097C1E41EEA206AA",
-        Remarks = "Connects to SharePoint using app-only tokens via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started. Ensure you have imported the private key certificate, typically the .pfx file, into the Windows Certificate Store for the certificate with the provided thumbprint.",
-        SortOrder = 19)]
-    [CmdletExample(
-        Code = "PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -ClientId '<id>' -Tenant 'contoso.onmicrosoft.com' -PEMCertificate <PEM string> -PEMPrivateKey <PEM string> -CertificatePassword <if needed>",
-        Remarks = "Connects to SharePoint using app-only tokens via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started.",
-        SortOrder = 20)]
-    [CmdletExample(
-        Code = "PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -ClientId '<id>' -Tenant 'contoso.onmicrosoft.com' -Certificate <X509Certificate2>",
-        Remarks = "Connects to SharePoint using app-only auth in combination with a certificate. See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread#using-this-principal-in-your-powershell-script-using-the-pnp-sites-core-library for a sample on how to get started.",
-        SortOrder = 21)]
-    [CmdletExample(
-       Code = "PS:> Connect-PnPOnline -ClientId <id> -CertificatePath 'c:\\mycertificate.pfx' -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url https://contoso.sharepoint.com -Tenant 'contoso.onmicrosoft.com'",
-       Remarks = "Connects using an Azure Active Directory registered application using a locally available certificate containing a private key. See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.",
-       SortOrder = 18)]
-    [CmdletExample(
-       Code = "PS:> Connect-PnPOnline -ClientId <id> -CertificateBase64Encoded 'xxxx' -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url https://contoso.sharepoint.com -Tenant 'contoso.onmicrosoft.com'",
-       Remarks = "Connects using an Azure Active Directory registered application using a certificate containing a private key encoded in base 64 such as received in an Azure Function when using Azure KeyVault. See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.",
-       SortOrder = 19)]
-    [CmdletExample(
-       Code = "PS:> Connect-PnPOnline -ClientId <id> -Certificate $cert -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url https://contoso.sharepoint.com -Tenant 'contoso.onmicrosoft.com'",
-       Remarks = "Connects using an Azure Active Directory registered application using a certificate instance containing a private key. See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.",
-       SortOrder = 20)]
-
     public class ConnectOnline : BasePSCmdlet
     {
         private const string ParameterSet_MAIN = "Main";
@@ -158,226 +54,206 @@ PS:> dir",
         private static readonly Uri GraphAADLogin = new Uri("https://login.microsoftonline.com/");
         private static readonly string[] GraphDefaultScope = { "https://graph.microsoft.com/.default" };
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
         public SwitchParameter ReturnConnection;
 
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_TOKEN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ADFSCERT, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ADFSCREDENTIALS, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAAD, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADPEM, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADCER, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADThumb, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to")]
-        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_TOKEN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ADFSCERT, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ADFSCREDENTIALS, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAAD, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADPEM, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADCER, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADThumb, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
         public string Url;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Generic Credentials section of the Windows Credentials in the Windows Credential Manager for the correct credentials.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Generic Credentials section of the Windows Credentials in the Windows Credential Manager for the correct credentials.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AADWITHSCOPE, HelpMessage = "Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Generic Credentials section of the Windows Credentials in the Windows " +
-            "Credential Manager for the correct credentials.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AADWITHSCOPE)]
         public CredentialPipeBind Credentials;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "If you want to connect with the current user credentials")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
         public SwitchParameter CurrentCredentials;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "If you want to connect to SharePoint using ADFS and credentials")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
         public SwitchParameter UseAdfs;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "If you want to connect to SharePoint farm using ADFS with a client certificate")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
         public SwitchParameter UseAdfsCert;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "The client certificate which you want to use for the ADFS authentication")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
         public X509Certificate2 ClientCertificate;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "Authenticate using Kerberos to ADFS")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
         public SwitchParameter Kerberos;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "The name of the ADFS trusted login provider")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "The name of the ADFS trusted login provider")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
         public string LoginProviderName;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Authentication realm. If not specified will be resolved from the url specified.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Authentication realm. If not specified will be resolved from the url specified.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "Authentication realm. If not specified will be resolved from the url specified.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         public string Realm;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The Application Client ID to use.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOKEN)]
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "The client secret to use.")]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "The client secret to use.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
 
         public string ClientSecret;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "If you want to connect to SharePoint with browser based login. This is required when you have multi-factor authentication (MFA) enabled.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_WEBLOGIN)]
         public SwitchParameter UseWebLogin;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "If you want to create a PSDrive connected to the URL")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "If you want to create a PSDrive connected to the URL")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "If you want to create a PSDrive connected to the URL")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "If you want to create a PSDrive connected to the URL")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "If you want to create a PSDrive connected to the URL")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "If you want to create a PSDrive connected to the URL")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "If you want to create a PSDrive connected to the URL")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "If you want to create a PSDrive connected to the URL")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "If you want to create a PSDrive connected to the URL")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "If you want to create a PSDrive connected to the URL")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "If you want to create a PSDrive connected to the URL")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "If you want to create a PSDrive connected to the URL")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "If you want to create a PSDrive connected to the URL")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, HelpMessage = "If you want to create a PSDrive connected to the URL")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
         public SwitchParameter CreateDrive;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
         public string DriveName = "SPO";
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Log in using the SharePoint Online Management Shell application")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         public SwitchParameter SPOManagementShell;
 
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN, HelpMessage = @"Log in using the PnP O365 Management Shell application. You will be asked to consent to:
-
-* Read and write managed metadata
-* Have full control of all site collections
-* Read user profiles
-* Invite guest users to the organization
-* Read and write all groups
-* Read and write directory data
-* Read and write identity providers
-* Access the directory as you")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Alias("PnPO365ManagementShell")]
         public SwitchParameter PnPManagementShell;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN, HelpMessage = "Launch a browser automatically and copy the code to enter to the clipboard")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = "Launch a browser automatically and copy the code to enter to the clipboard")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN)]
         public SwitchParameter LaunchBrowser;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = @"Log in using the PnP O365 Management Shell application towards the Graph. You will be asked to consent to:
-
-* Read and write managed metadata
-* Have full control of all site collections
-* Read user profiles
-* Invite guest users to the organization
-* Read and write all groups
-* Read and write directory data
-* Read and write identity providers
-* Access the directory as you
-")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN)]
         public SwitchParameter Graph;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The Client ID of the Azure AD Application")]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The Client ID of the Azure AD Application")]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "The Client ID of the Azure AD Application")]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "The Client ID of the Azure AD Application")]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "The Client ID of the Azure AD Application")]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "The Client ID of the Azure AD Application")]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "The Client ID of the Azure AD Application")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADPEM)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADThumb)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADCER)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         public string ClientId;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The Redirect URI of the Azure AD Application")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD)]
         public string RedirectUri;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com")]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com")]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com")]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADPEM)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADThumb)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADCER)]
         public string Tenant;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Path to the certificate containing the private key (*.pfx)")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD)]
         public string CertificatePath;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Base64 Encoded X509Certificate2 certificate containing the private key to authenticate the requests to SharePoint Online such as retrieved in Azure Functions from Azure KeyVault")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD)]
         public string CertificateBase64Encoded;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "X509Certificate2 reference containing the private key to authenticate the requests to SharePoint Online")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD)]
         public System.Security.Cryptography.X509Certificates.X509Certificate2 Certificate;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Password to the certificate (*.pfx)")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "Password to the certificate (*.pfx)")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM)]
         public SecureString CertificatePassword;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "PEM encoded certificate")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADPEM)]
         public string PEMCertificate;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "PEM encoded private key for the certificate")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADPEM)]
         public string PEMPrivateKey;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "The thumbprint of the certificate containing the private key registered with the application in Azure Active Directory")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADThumb)]
         public string Thumbprint;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Clears the token cache.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Clears the token cache.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         public SwitchParameter ClearTokenCache;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AADWITHSCOPE, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AADWITHSCOPE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN)]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_AADWITHSCOPE, HelpMessage = "The array of permission scopes to request from Azure Active Directory")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_AADWITHSCOPE)]
         public string[] Scopes;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "The AAD where the O365 app is registered. Eg.: contoso.com, or contoso.onmicrosoft.com.")]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "The AAD where the O365 app is registered. Eg.: contoso.com, or contoso.onmicrosoft.com.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         public string AADDomain;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACCESSTOKEN, HelpMessage = "Connect with an existing Access Token")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACCESSTOKEN)]
         public string AccessToken;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         public string TenantAdminUrl;
 
-        [Parameter(Mandatory = false, HelpMessage = "In order to help to make PnP PowerShell better, we can track anonymous telemetry. We track the version of the cmdlets you are using, which cmdlet you are executing and which version of SharePoint you are connecting to. Use Disable-PnPPowerShellTelemetry to turn this off in general or use the -NoTelemetry switch to turn it off for that session.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter NoTelemetry;
 
 

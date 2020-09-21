@@ -14,7 +14,7 @@ namespace PnP.PowerShell.Commands.Base
     /// </summary>
     public abstract class PnPGraphCmdlet : PnPConnectedCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "Allows the check for required permissions in the access token to be bypassed when set to $true")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter ByPassPermissionCheck;
 
         /// <summary>

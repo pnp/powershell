@@ -6,19 +6,13 @@ using PnP.Framework.Utilities;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Rename, "PnPFolder")]
-    [CmdletHelp("Renames a folder",
-        Category = CmdletHelpCategory.Files)]
-    [CmdletExample(
-        Code = @"PS:> Rename-PnPFolder -Folder Documents/Reports -TargetFolderName 'Archived Reports'",
-        Remarks = "This will rename the folder Reports in the Documents library to 'Archived Reports'",
-        SortOrder = 1)]
     public class RenameFolder : PnPWebCmdlet
     {
 
-        [Parameter(Mandatory = true, HelpMessage = "The folder to rename")]
+        [Parameter(Mandatory = true)]
         public string Folder = string.Empty;
 
-        [Parameter(Mandatory = true, HelpMessage = "The new folder name")]
+        [Parameter(Mandatory = true)]
         public string TargetFolderName = string.Empty;
 
         protected override void ExecuteCmdlet()

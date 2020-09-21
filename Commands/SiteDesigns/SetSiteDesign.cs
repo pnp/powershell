@@ -11,44 +11,33 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPSiteDesign", SupportsShouldProcess = true)]
-    [CmdletHelp(@"Updates a Site Design on the current tenant.",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPSiteDesign -Identity 046e2e76-67ba-46ca-a5f6-8eb418a7821e -Title ""My Updated Company Design""",
-        Remarks = "Updates an existing Site Design and sets a new title.",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> $design = Get-PnPSiteDesign -Identity 046e2e76-67ba-46ca-a5f6-8eb418a7821e
-PS:> Set-PnPSiteDesign -Identity $design -Title ""My Updated Company Design""",
-        Remarks = "Updates an existing Site Design and sets a new title.",
-        SortOrder = 2)]
     public class SetSiteDesign : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The guid or an object representing the site design")]
+        [Parameter(Mandatory = true)]
         public TenantSiteDesignPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "The title of the site design")]
+        [Parameter(Mandatory = false)]
         public string Title;
 
-        [Parameter(Mandatory = false, HelpMessage = "An array of guids of site scripts")]
+        [Parameter(Mandatory = false)]
         public GuidPipeBind[] SiteScriptIds;
 
-        [Parameter(Mandatory = false, HelpMessage = "The description of the site design")]
+        [Parameter(Mandatory = false)]
         public string Description;     
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies if the site design is a default site design")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IsDefault;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the text for the preview image")]
+        [Parameter(Mandatory = false)]
         public string PreviewImageAltText;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the url to the preview image")]
+        [Parameter(Mandatory = false)]
         public string PreviewImageUrl;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the type of site to which this design applies")]
+        [Parameter(Mandatory = false)]
         public SiteWebTemplate WebTemplate;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the version of the design")]
+        [Parameter(Mandatory = false)]
         public int Version;
 
 

@@ -9,20 +9,13 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPTeamsTeamPicture")]
-    [CmdletHelp("Sets the picture of an existing team.",
-        DetailedDescription = "Notice that this cmdlet will immediately return but it can take a few hours before the changes are reflected in Microsoft Teams.",
-        Category = CmdletHelpCategory.Teams)]
-    [CmdletExample(
-       Code = "PS:> Set-PnPTeamsTeamPicture -Team \"MyTeam\" -Path \"c:\\myimage.jpg\"",
-       Remarks = "Updates the channel called 'MyChannel' to have the display name set to 'My Channel'",
-       SortOrder = 1)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class SetTeamsTeamPicture : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Specify the group id, mailNickname or display name of the team to use.", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public TeamsTeamPipeBind Team;
 
-        [Parameter(Mandatory = true, HelpMessage = "The path to the image file.")]
+        [Parameter(Mandatory = true)]
         public string Path;
 
         protected override void ExecuteCmdlet()

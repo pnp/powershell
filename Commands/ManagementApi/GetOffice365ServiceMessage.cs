@@ -8,18 +8,12 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPOffice365ServiceMessage")]
-    [CmdletHelp(
-        "Gets the service messages regarding services in Office 365 from the Office 365 Management API",
-        Category = CmdletHelpCategory.ManagementApi,
-        OutputTypeLink = "https://docs.microsoft.com/office/office-365-management-api/office-365-service-communications-api-reference#get-messages")]
-    [CmdletExample(
-       Code = "PS:> Get-PnPOffice365ServiceMessage",
-       Remarks = "Retrieves the service messages regarding services in Office 365",
-       SortOrder = 1)]
+    
+    
     [CmdletOfficeManagementApiPermission(OfficeManagementApiPermission.ServiceHealth_Read)]
     public class GetOffice365ServiceMessage : PnPOfficeManagementApiCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "Allows retrieval of the service messages for only one particular service. If not provided, the service messages of all services will be returned.")]
+        [Parameter(Mandatory = false)]
         public Enums.Office365Workload? Workload;
 
         protected override void ExecuteCmdlet()

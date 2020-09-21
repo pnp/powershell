@@ -16,42 +16,22 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsData.Save, "PnPProvisioningTemplate")]
-    [CmdletHelp("Saves a PnP site template to the file system",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> Save-PnPProvisioningTemplate -Template .\template.xml -Out .\template.pnp",
-       Remarks = "Saves a PnP provisioning template to the file system as a PnP file.",
-       SortOrder = 1)]
-    [CmdletExample(
-       Code = @"PS:> $template = Read-PnPProvisioningTemplate -Path template.xml
-PS:> Save-PnPProvisioningTemplate -Template $template -Out .\template.pnp",
-       Remarks = "Saves a PnP site template to the file system as a PnP file. The schema used will the latest released schema when creating the PnP file regardless of the original schema",
-       SortOrder = 2)]
-    [CmdletExample(
-       Code = @"PS:> $template = Read-PnPProvisioningTemplate -Path template.xml
-PS:> Save-PnPProvisioningTemplate -Template $template -Out .\template.pnp -Schema V202002",
-       Remarks = "Saves a PnP site template to the file system as a PnP file  and converts the template in the PnP file to the specified schema.",
-       SortOrder = 3)]
-    [CmdletExample(
-       Code = @"PS:> Read-PnPProvisioningTemplate -Path template.xml | Save-PnPProvisioningTemplate -Out .\template.pnp",
-       Remarks = "Saves a PnP site template to the file system as a PnP file.",
-       SortOrder = 4)]
     public class SaveProvisioningTemplate : PSCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Allows you to provide an in-memory instance of the ProvisioningTemplate type of the PnP Core Component. When using this parameter, the -Out parameter refers to the path for saving the template and storing any supporting file for the template.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         [Alias("InputInstance")]
         public ProvisioningTemplatePipeBind Template;
 
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to write to, optionally including full path.")]
+        [Parameter(Mandatory = true, Position = 0)]
         public string Out;
 
-        [Parameter(Mandatory = false, HelpMessage = "The optional schema to use when creating the PnP file. Always defaults to the latest schema.")]
+        [Parameter(Mandatory = false)]
         public XMLPnPSchemaVersion Schema = XMLPnPSchemaVersion.LATEST;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify the ITemplateProviderExtension to execute while saving a template.")]
+        [Parameter(Mandatory = false)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
         protected override void ProcessRecord()

@@ -8,15 +8,9 @@ using PnP.PowerShell.CmdletHelpAttributes;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPAvailableLanguage")]
-    [CmdletHelp("Returns the available languages on the current web",
-        Category = CmdletHelpCategory.Webs)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPAvailableLanguage",
-        Remarks = "This will return the available languages in the current web",
-        SortOrder = 1)]
     public class GetAvailableLanguage : PnPRetrievalsCmdlet<Web>
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The guid of the web or web object")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
         public WebPipeBind Identity;
 
         protected override void ExecuteCmdlet()

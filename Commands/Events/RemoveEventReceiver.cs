@@ -7,36 +7,15 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Commands.Events
 {
     [Cmdlet(VerbsCommon.Remove, "PnPEventReceiver", SupportsShouldProcess = true)]
-    [CmdletHelp("Remove an eventreceiver",
-        "Removes/unregisters a specific eventreceiver",
-                Category = CmdletHelpCategory.EventReceivers)]
-    [CmdletExample(Code = @"PS:> Remove-PnPEventReceiver -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22",
-                   Remarks = @"This will remove the event receiver with ReceiverId ""fb689d0e-eb99-4f13-beb3-86692fd39f22"" from the current web", 
-                   SortOrder = 1)]
-    [CmdletExample(Code = @"PS:> Remove-PnPEventReceiver -List ProjectList -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22",
-                   Remarks = @"This will remove the event receiver with ReceiverId ""fb689d0e-eb99-4f13-beb3-86692fd39f22"" from the ""ProjectList"" list", 
-                   SortOrder = 2)]
-    [CmdletExample(Code = @"PS:> Remove-PnPEventReceiver -List ProjectList -Identity MyReceiver",
-                   Remarks = @"This will remove the event receiver with ReceiverName ""MyReceiver"" from the ""ProjectList"" list",
-                   SortOrder = 3)]
-    [CmdletExample(Code = @"PS:> Remove-PnPEventReceiver -List ProjectList",
-                   Remarks = @"This will remove all event receivers from the ""ProjectList"" list",
-                   SortOrder = 4)]
-    [CmdletExample(Code = @"PS:> Remove-PnPEventReceiver",
-                   Remarks = @"This will remove all event receivers from the current site",
-                   SortOrder = 5)]
-    [CmdletExample(Code = @"PS:> Get-PnPEventReceiver | ? ReceiverUrl -Like ""*azurewebsites.net*"" | Remove-PnPEventReceiver",
-                   Remarks = @"This will remove all event receivers from the current site which are pointing to a service hosted on Azure Websites",
-                   SortOrder = 6)]
     public class RemoveEventReceiver : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Guid of the event receiver on the list")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public EventReceiverPipeBind Identity;
 
-        [Parameter(Mandatory = false, ParameterSetName="List", HelpMessage = "The list object from where to remove the event receiver object")]
+        [Parameter(Mandatory = false, ParameterSetName="List")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

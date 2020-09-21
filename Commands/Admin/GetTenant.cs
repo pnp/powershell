@@ -7,17 +7,6 @@ using PnP.PowerShell.Commands.Model;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenant")]
-    [CmdletHelp(@"Returns organization-level site collection properties",
-        DetailedDescription = @"Returns organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota,
-ResourceQuotaAllocated, and SiteCreationMode.
-
-Currently, there are no parameters for this cmdlet.
-
-You must have the SharePoint Online admin or Global admin role to run the cmdlet.",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPTenant",
-        Remarks = @"This example returns all tenant settings", SortOrder = 1)]
     public class GetTenant : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()

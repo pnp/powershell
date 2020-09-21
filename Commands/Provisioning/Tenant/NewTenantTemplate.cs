@@ -5,12 +5,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantTemplate", SupportsShouldProcess = true)]
-    [CmdletHelp("Creates a new tenant template object",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> $template = New-PnPTenantTemplate",
-       Remarks = "Creates a new instance of a tenant template object.",
-       SortOrder = 1)]
     public class NewTenantTemplate : PSCmdlet
     {
         [Parameter(Mandatory = false)]

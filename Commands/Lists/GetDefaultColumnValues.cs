@@ -8,12 +8,9 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "PnPDefaultColumnValues")]
-    [CmdletHelp("Gets the default column values for all folders in document library",
-        DetailedDescription = "Gets the default column values for a document library, per folder. Supports both text, people and taxonomy fields.",
-        Category = CmdletHelpCategory.Lists)]
     public class GetDefaultColumnValues : PnPWebCmdlet
-    {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, Name or Url of the list.")]
+    { 
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ListPipeBind List;
 
         protected override void ExecuteCmdlet()

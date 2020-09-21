@@ -7,15 +7,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPSharingForNonOwnersOfSite")]
-    [CmdletHelp("Returns $false if sharing of the site and items in the site is restricted only to owners or $true if members and owners are allowed to share",
-        DetailedDescription = "Returns $false if sharing of the site and items in the site is restricted only to owners or $true if members and owners are allowed to share. You can disable sharing by non owners by using Disable-PnPSharingForNonOwnersOfSite. At this point there is no interface available yet to enable sharing by owners and members again through script. You will have to do so through the user interface of SharePoint.",
-        Category = CmdletHelpCategory.Sites,
-        OutputType = typeof(bool))]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPSharingForNonOwnersOfSite",
-        Remarks = "Returns $false if sharing of the site and items in the site is restricted only to owners or $true if members and owners are allowed to share",
-        SortOrder = 1)]
-
     public class GetSharingForNonOwnersOfSite : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

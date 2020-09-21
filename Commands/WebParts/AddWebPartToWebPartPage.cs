@@ -9,30 +9,22 @@ using File = System.IO.File;
 namespace PnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Add, "PnPWebPartToWebPartPage")]
-    [CmdletHelp("Adds a web part to a web part page in a specified zone",
-        Category = CmdletHelpCategory.WebParts)]
-    [CmdletExample(
-   Code = @"PS:> Add-PnPWebPartToWebPartPage -ServerRelativePageUrl ""/sites/demo/sitepages/home.aspx"" -Path ""c:\myfiles\listview.webpart"" -ZoneId ""Header"" -ZoneIndex 1 ",
-   Remarks = @"This will add the web part as defined by the XML in the listview.webpart file to the specified page in the specified zone and with the order index of 1", SortOrder = 1)]
-    [CmdletExample(
-  Code = @"PS:> Add-PnPWebPartToWebPartPage -ServerRelativePageUrl ""/sites/demo/sitepages/home.aspx"" -XML $webpart -ZoneId ""Header"" -ZoneIndex 1 ",
-  Remarks = @"This will add the web part as defined by the XML in the $webpart variable to the specified page in the specified zone and with the order index of 1", SortOrder = 1)]
     public class AddWebPartToWebPartPage : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Server Relative Url of the page to add the web part to.")]
+        [Parameter(Mandatory = true)]
         [Alias("PageUrl")]
         public string ServerRelativePageUrl = string.Empty;
 
-        [Parameter(Mandatory = true, ParameterSetName = "XML", HelpMessage = "A string containing the XML for the web part.")]
+        [Parameter(Mandatory = true, ParameterSetName = "XML")]
         public string Xml = string.Empty;
 
-        [Parameter(Mandatory = true, ParameterSetName = "FILE", HelpMessage = "A path to a web part file on a the file system.")]
+        [Parameter(Mandatory = true, ParameterSetName = "FILE")]
         public string Path = string.Empty;
 
-        [Parameter(Mandatory = true, HelpMessage = "The Zone Id where the web part must be placed")]
+        [Parameter(Mandatory = true)]
         public string ZoneId;
 
-        [Parameter(Mandatory = true, HelpMessage = "The Zone Index where the web part must be placed")]
+        [Parameter(Mandatory = true)]
         public int ZoneIndex;
 
         protected override void ExecuteCmdlet()

@@ -6,94 +6,64 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Set, "PnPList")]
-    [CmdletHelp("Updates list settings",
-         Category = CmdletHelpCategory.Lists)]
-    [CmdletExample(
-         Code = @"Set-PnPList -Identity ""Demo List"" -EnableContentTypes $true",
-         Remarks = "Switches the Enable Content Type switch on the list",
-         SortOrder = 1)]
-    [CmdletExample(
-         Code = @"Set-PnPList -Identity ""Demo List"" -Hidden $true",
-         Remarks = "Hides the list from the SharePoint UI.",
-         SortOrder = 2)]
-    [CmdletExample(
-         Code = @"Set-PnPList -Identity ""Demo List"" -EnableVersioning $true",
-         Remarks = "Turns on major versions on a list",
-         SortOrder = 3)]
-    [CmdletExample(
-         Code = @"Set-PnPList -Identity ""Demo List"" -EnableVersioning $true -MajorVersions 20",
-         Remarks = "Turns on major versions on a list and sets the maximum number of Major Versions to keep to 20.",
-         SortOrder = 4)]
-    [CmdletExample(
-         Code = @"Set-PnPList -Identity ""Demo Library"" -EnableVersioning $true -EnableMinorVersions $true -MajorVersions 20 -MinorVersions 5",
-         Remarks = "Turns on major versions on a document library and sets the maximum number of Major versions to keep to 20 and sets the maximum of Minor versions to 5.",
-         SortOrder = 5)]
-    [CmdletExample(
-        Code = @"Set-PnPList -Identity ""Demo List"" -EnableAttachments $true",
-        Remarks = "Turns on attachments on a list",
-        SortOrder = 6)]
     public class SetList : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The ID, Title or Url of the list.")]
+        [Parameter(Mandatory = true)]
         public ListPipeBind Identity;
 
-        [Parameter(Mandatory = false,
-             HelpMessage = "Set to $true to enable content types, set to $false to disable content types")]
+        [Parameter(Mandatory = false)]
         public bool
             EnableContentTypes;
 
-        [Parameter(Mandatory = false, HelpMessage = "If used the security inheritance is broken for this list")]
+        [Parameter(Mandatory = false)]
         public
             SwitchParameter BreakRoleInheritance;
 
-        [Parameter(Mandatory = false, HelpMessage = "If used the security inheritance is reset for this list (inherited from parent)")]
+        [Parameter(Mandatory = false)]
         public
             SwitchParameter ResetRoleInheritance;
         
-        [Parameter(Mandatory = false, HelpMessage = "If used the roles are copied from the parent web")]
+        [Parameter(Mandatory = false)]
         public
             SwitchParameter CopyRoleAssignments;
 
-        [Parameter(Mandatory = false,
-             HelpMessage =
-                 "If used the unique permissions are cleared from child objects and they can inherit role assignments from this object"
-         )]
+        [Parameter(Mandatory = false)]
         public SwitchParameter ClearSubscopes;
 
-        [Parameter(Mandatory = false, HelpMessage = "The title of the list")]
+        [Parameter(Mandatory = false)]
         public string Title = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "The description of the list")]
+        [Parameter(Mandatory = false)]
         public string Description;
 
-        [Parameter(Mandatory = false, HelpMessage = "Hide the list from the SharePoint UI. Set to $true to hide, $false to show.")]
+        [Parameter(Mandatory = false)]
         public bool Hidden;
 
-        [Parameter(Mandatory = false, HelpMessage = "Enable or disable force checkout. Set to $true to enable, $false to disable.")]
+        [Parameter(Mandatory = false)]
         public bool ForceCheckout;
 
-        [Parameter(Mandatory = false, HelpMessage = "Set the list experience: Auto, NewExperience or ClassicExperience")]
+        [Parameter(Mandatory = false)]
         public ListExperience ListExperience;
 
-        [Parameter(Mandatory = false, HelpMessage = "Enable or disable attachments. Set to $true to enable, $false to disable.")]
+        [Parameter(Mandatory = false)]
         public bool EnableAttachments;
 
-        [Parameter(Mandatory = false, HelpMessage = "Enable or disable folder creation. Set to $true to enable, $false to disable.")]
+        [Parameter(Mandatory = false)]
         public bool EnableFolderCreation;
 
-        [Parameter(Mandatory = false, HelpMessage = "Enable or disable versioning. Set to $true to enable, $false to disable.")]
+        [Parameter(Mandatory = false)]
         public bool EnableVersioning;
 
-        [Parameter(Mandatory = false, HelpMessage = "Enable or disable minor versions versioning. Set to $true to enable, $false to disable.")]
+        [Parameter(Mandatory = false)]
         public bool EnableMinorVersions;
 
-        [Parameter(Mandatory = false, HelpMessage = "Maximum major versions to keep")]
+        [Parameter(Mandatory = false)]
         public uint MajorVersions = 10;
 
-        [Parameter(Mandatory = false, HelpMessage = "Maximum minor versions to keep")]
+        [Parameter(Mandatory = false)]
         public uint MinorVersions = 10;
 
-        [Parameter(Mandatory = false, HelpMessage = "Enable or disable whether content approval is enabled for the list. Set to $true to enable, $false to disable.")]
+        [Parameter(Mandatory = false)]
         public bool EnableModeration;
 
         protected override void ExecuteCmdlet()

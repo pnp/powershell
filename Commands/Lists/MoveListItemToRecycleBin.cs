@@ -6,21 +6,15 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Move, "PnPListItemToRecycleBin", SupportsShouldProcess = true)]
-    [CmdletHelp("Moves an item from a list to the Recycle Bin",
-        Category = CmdletHelpCategory.Lists)]
-    [CmdletExample(
-        Code = @"PS:> Move-PnPListItemToRecycleBin -List ""Demo List"" -Identity ""1"" -Force",
-        SortOrder = 1,
-        Remarks = @"Moves the listitem with id ""1"" from the ""Demo List"" list to the Recycle Bin.")]
     public class MoveListItemToRecycleBin : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, Title or Url of the list.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, HelpMessage = "The ID of the listitem, or actual ListItem object")]
+        [Parameter(Mandatory = true)]
         public ListItemPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

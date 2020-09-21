@@ -6,12 +6,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsLifecycle.Disable, "PnPSiteClassification")]
-    [CmdletHelp("Disables Site Classifications for the tenant",
-        Category = CmdletHelpCategory.Graph)]
-    [CmdletExample(
-        Code = @"PS:> Disable-PnPSiteClassification",
-       Remarks = @"Disables Site Classifications for your tenant.",
-       SortOrder = 1)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     public class DisableSiteClassification : PnPGraphCmdlet
     {

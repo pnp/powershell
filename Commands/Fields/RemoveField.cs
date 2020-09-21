@@ -7,25 +7,15 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Remove, "PnPField", SupportsShouldProcess = true)]
-    [CmdletHelp("Removes a field from a list or a site",
-        Category = CmdletHelpCategory.Fields)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPField -Identity ""Speakers""",
-        Remarks = @"Removes the speakers field from the site columns",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPField -List ""Demo list"" -Identity ""Speakers""",
-        Remarks = @"Removes the speakers field from the list Demo list",
-        SortOrder = 1)]
     public class RemoveField : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The field object or name to remove")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public FieldPipeBind Identity = new FieldPipeBind();
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 1, HelpMessage = "The list object or name where to remove the field from")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 1)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

@@ -13,26 +13,12 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPTeamsTeamArchivedState")]
-    [CmdletHelp("Sets the archived state of a team.",
-        Category = CmdletHelpCategory.Teams)]
-    [CmdletExample(
-       Code = "PS:> Set-PnPTeamsTeamArchivedState -Identity \"My Team\" -Archived $true",
-       Remarks = "Archives the team as identified.",
-       SortOrder = 1)]
-    [CmdletExample(
-       Code = "PS:> Set-PnPTeamsTeamArchivedState -Identity \"My Team\" -Archived $false",
-       Remarks = "Unarchives the team as identified.",
-       SortOrder = 2)]
-    [CmdletExample(
-       Code = "PS:> Set-PnPTeamsTeamArchivedState -Identity \"My Team\" -Archived $true -SetSiteReadOnlyForMembers $true",
-       Remarks = "Archives the team as identified and sets the underlying SharePoint Online Site Collection as read only for members",
-       SortOrder = 3)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [CmdletTokenType(TokenType = TokenType.Delegate)]
     public class SetTeamsTeamArchivedState : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Specify the name, id or external id of the app.")]
+        [Parameter(Mandatory = true)]
         public TeamsTeamPipeBind Identity;
 
         [Parameter(Mandatory = true)]

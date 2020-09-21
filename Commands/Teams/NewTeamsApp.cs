@@ -8,17 +8,11 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.New, "PnPTeamsApp")]
-    [CmdletHelp("Adds an app to the Teams App Catalog.",
-        Category = CmdletHelpCategory.Teams)]
-    [CmdletExample(
-       Code = "PS:> New-PnPTeamsApp -Path c:\\myapp.zip",
-       Remarks = "Adds the app as defined in the zip file to the Teams App Catalog",
-       SortOrder = 1)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.AppCatalog_ReadWrite_All)]
     public class NewTeamsApp : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The path pointing to the packaged/zip file containing the app")]
+        [Parameter(Mandatory = true)]
         public string Path;
 
         protected override void ExecuteCmdlet()

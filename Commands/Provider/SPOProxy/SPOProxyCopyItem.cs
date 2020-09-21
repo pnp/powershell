@@ -12,7 +12,7 @@ using File = System.IO.File;
 namespace PnP.PowerShell.Commands.Provider.SPOProxy
 {
     [Cmdlet(CmdletVerb, CmdletNoun, DefaultParameterSetName = "Path", SupportsShouldProcess = true, SupportsTransactions = true)]
-    [CmdletHelp("Proxy cmdlet for using Copy-Item between SharePoint provider and FileSystem provider", Category = CmdletHelpCategory.Files)]
+    
     public class SPOProxyCopyItem : SPOProxyCmdletBase
     {
         public const string CmdletVerb = "Copy";

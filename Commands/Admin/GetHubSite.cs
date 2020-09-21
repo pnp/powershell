@@ -7,10 +7,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPHubSite")]
-    [CmdletHelp(@"Retrieve all or a specific hubsite.",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(Code = @"PS:> Get-PnPHubSite", Remarks = "Returns all hubsite properties", SortOrder = 1)]
-    [CmdletExample(Code = @"PS:> Get-PnPHubSite -Identity https://contoso.sharepoint.com/sites/myhubsite", Remarks = "Returns the properties of the specified hubsite", SortOrder = 2)]
     public class GetHubSite : PnPAdminCmdlet
     {
         [Parameter(Position = 0, ValueFromPipeline = true)]

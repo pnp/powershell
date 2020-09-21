@@ -6,14 +6,9 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Remove, "PnPHomeSite")]
-    [CmdletHelp("Removes the currently set site as the home site",
-     Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-     Code = @"PS:> Remove-PnPHomeSite",
-     Remarks = @"Removes the currently set site as the home site", SortOrder = 1)]
     public class RemoveHomeSite : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

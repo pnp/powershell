@@ -5,20 +5,9 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsLifecycle.Enable, "PnPPowerShellTelemetry")]
-    [CmdletHelp("Enables PnP PowerShell telemetry tracking.",
-        "In order to help to make PnP PowerShell better, we can track anonymous telemetry. We track the version of the cmdlets you are using, which cmdlet you are executing and which version of SharePoint you are connecting to. Use Disable-PnPPowerShellTelemetry to turn this off, alternative, use the -NoTelemetry switch on Connect-PnPOnline to turn it off for that session.",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-       Code = "PS:> Enable-PnPPowerShellTelemetry",
-       Remarks = "Will prompt you to confirm to enable telemetry tracking.",
-       SortOrder = 1)]
-    [CmdletExample(
-       Code = "PS:> Enable-PnPPowerShellTelemetry -Force",
-       Remarks = "Will enable telemetry tracking without prompting.",
-       SortOrder = 2)]
     public class EnablePowerShellTelemetry : PSCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ProcessRecord()

@@ -7,40 +7,28 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Add, "PnPApp")]
-    [CmdletHelp("Add/uploads an available app to the app catalog",
-        Category = CmdletHelpCategory.Apps,
-        OutputType = typeof(AppMetadata))]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg",
-        Remarks = @"This will upload the specified app package to the app catalog", SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg -Publish",
-        Remarks = @"This will upload the specified app package to the app catalog and deploy/trust it at the same time.", SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg -Scope Site -Publish",
-        Remarks = @"This will upload the specified app package to the site collection app catalog and deploy/trust it at the same time.", SortOrder = 2)]
     public class AddApp : PnPSharePointCmdlet
     {
         private const string ParameterSet_ADD = "Add only";
         private const string ParameterSet_PUBLISH = "Add and Publish";
 
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ADD, ValueFromPipeline = true, HelpMessage = "Specifies the Id or an actual app metadata instance")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_PUBLISH, ValueFromPipeline = true, HelpMessage = "Specifies the Id or an actual app metadata instance")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ADD, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_PUBLISH, ValueFromPipeline = true)]
         public string Path;
 
-        [Parameter(Mandatory = false, HelpMessage = "Defines which app catalog to use. Defaults to Tenant")]
+        [Parameter(Mandatory = false)]
         public AppCatalogScope Scope = AppCatalogScope.Tenant;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = false, ParameterSetName = ParameterSet_PUBLISH, HelpMessage = "This will deploy/trust an app into the app catalog")]
+        [Parameter(Mandatory = true, ValueFromPipeline = false, ParameterSetName = ParameterSet_PUBLISH)]
         public SwitchParameter Publish;
 
         [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_PUBLISH)]
         public SwitchParameter SkipFeatureDeployment;
 
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites the existing app package if it already exists")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Overwrite;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the timeout in seconds. Defaults to 200.")]
+        [Parameter(Mandatory = false)]
         public int Timeout = 200;
 
         protected override void ExecuteCmdlet()

@@ -8,16 +8,9 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsLifecycle.Resume, "PnPWorkflowInstance")]
-    [CmdletHelp("Resume a workflow",
-        "Resumes a previously stopped workflow instance",
-        Category = CmdletHelpCategory.Workflows)]
-    [CmdletExample(
-        Code = @"PS:> Resume-PnPWorkflowInstance -identity $wfInstance", 
-        Remarks = "Resumes the workflow instance, this can be the Guid of the instance or the instance itself.",
-        SortOrder = 1)]
     public class ResumeWorkflowInstance : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The instance to resume", Position = 0)]
+        [Parameter(Mandatory = true, Position = 0)]
         public WorkflowInstancePipeBind Identity;
 
         protected override void ExecuteCmdlet()

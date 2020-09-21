@@ -6,11 +6,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPKnowledgeHubSite")]
-    [CmdletHelp("Gets the Knowledge Hub Site URL for your tenant",
-     Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-     Code = @"PS:> Get-PnPKnowledgeHubSite",
-     Remarks = @"Returns the Knowledge Hub Site Url for your tenant", SortOrder = 1)]
     public class GetKnowledgeHubSite : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()

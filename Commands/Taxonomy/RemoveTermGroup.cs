@@ -9,16 +9,12 @@ using PnP.PowerShell.CmdletHelpAttributes;
 namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTermGroup", SupportsShouldProcess = false)]
-    [CmdletHelp(@"Removes a taxonomy term group and all its containing termsets",
-        Category = CmdletHelpCategory.Taxonomy)]
     public class RemoveTermGroup : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0,
-            HelpMessage = "Name of the taxonomy term group to delete.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public string GroupName;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets,
-            HelpMessage = "Term store to use; if not specified the default term store is used.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string TermStoreName;
 
         [Parameter(Mandatory = false)]

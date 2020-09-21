@@ -7,12 +7,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantSequenceCommunicationSite", SupportsShouldProcess = true)]
-    [CmdletHelp("Creates a communication site object",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> $site = New-PnPTenantSequenceCommunicationSite -Url ""/sites/mycommunicationsite"" -Title ""My Team Site""",
-       Remarks = "Creates a new communication site object with the specified variables",
-       SortOrder = 1)]
     public class NewTenantSequenceCommunicationSite : BasePSCmdlet
     {
         [Parameter(Mandatory = true)]

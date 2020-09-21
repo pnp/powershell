@@ -13,50 +13,19 @@ using System.Text;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPUser", DefaultParameterSetName = PARAMETERSET_IDENTITY)]
-    [CmdletHelp("Returns site users of current web",
-        Category = CmdletHelpCategory.Principals,
-        DetailedDescription = "This command will return all users that exist in the current site collection's User Information List, optionally identifying their current permissions to this site")]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPUser",
-        Remarks = "Returns all users from the User Information List of the current site collection regardless if they currently have rights to access the current site",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPUser -Identity 23",
-        Remarks = "Returns the user with Id 23 from the User Information List of the current site collection",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPUser -Identity ""i:0#.f|membership|user@tenant.onmicrosoft.com""",
-        Remarks = "Returns the user with LoginName i:0#.f|membership|user@tenant.onmicrosoft.com from the User Information List of the current site collection",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPUser | ? Email -eq ""user@tenant.onmicrosoft.com""",
-        Remarks = "Returns the user with e-mail address user@tenant.onmicrosoft.com from the User Information List of the current site collection",
-        SortOrder = 4)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPUser -WithRightsAssigned",
-        Remarks = "Returns only those users from the User Information List of the current site collection who currently have any kind of access rights given either directly to the user or Active Directory Group or given to the user or Active Directory Group via membership of a SharePoint Group to the current site",
-        SortOrder = 5)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPUser -WithRightsAssigned -Web subsite1",
-        Remarks = "Returns only those users from the User Information List of the current site collection who currently have any kind of access rights given either directly to the user or Active Directory Group or given to the user or Active Directory Group via membership of a SharePoint Group to subsite 'subsite1'",
-        SortOrder = 6)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPUser -WithRightsAssignedDetailed",
-        Remarks = "Returns all users who have been granted explicit access to the current site, lists and listitems",
-        SortOrder = 7)]
     public class GetUser : PnPWebCmdlet
     {
         private const string PARAMETERSET_IDENTITY = "Identity based request";
         private const string PARAMETERSET_WITHRIGHTSASSIGNED = "With rights assigned";
         private const string PARAMETERSET_WITHRIGHTSASSIGNEDDETAILED = "With rights assigned detailed";
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = PARAMETERSET_IDENTITY, HelpMessage = "User ID or login name")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = PARAMETERSET_IDENTITY)]
         public UserPipeBind Identity;
 
-        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_WITHRIGHTSASSIGNED, HelpMessage = "If provided, only users that currently have any kinds of access rights assigned to the current site collection will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.")]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_WITHRIGHTSASSIGNED)]
         public SwitchParameter WithRightsAssigned;
 
-        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_WITHRIGHTSASSIGNEDDETAILED, HelpMessage = "If provided, only users that currently have any specific kind of access rights assigned to the current site, lists or listitems/documents will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.")]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_WITHRIGHTSASSIGNEDDETAILED)]
         public SwitchParameter WithRightsAssignedDetailed;
 
         /// <summary>

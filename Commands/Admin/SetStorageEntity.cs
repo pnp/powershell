@@ -6,27 +6,23 @@ using PnP.PowerShell.Commands.Enums;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPStorageEntity", SupportsShouldProcess = true)]
-    [CmdletHelp(@"Set Storage Entities / Farm Properties in either the tenant scoped app catalog or the site collection app catalog.",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(Code = @"PS:> Set-PnPStorageEntity -Key MyKey -Value ""MyValue"" -Comment ""My Comment"" -Description ""My Description""", Remarks = "Sets an existing or adds a new storage entity / farm property at tenant level.", SortOrder = 1)]
-    [CmdletExample(Code = @"PS:> Set-PnPStorageEntity -Scope Site -Key MyKey -Value ""MyValue"" -Comment ""My Comment"" -Description ""My Description""", Remarks = "Sets an existing or adds a new storage entity site collection level.", SortOrder = 2)]
     public class SetPnPStorageEntity : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The key of the value to set.")]
+        [Parameter(Mandatory = true)]
         public string Key;
 
-        [Parameter(Mandatory = true, HelpMessage = "The value to set.")]
+        [Parameter(Mandatory = true)]
         public string Value;
 
-        [Parameter(Mandatory = false, HelpMessage = "The comment to set.")]
+        [Parameter(Mandatory = false)]
         [AllowNull]
         public string Comment;
 
-        [Parameter(Mandatory = false, HelpMessage = "The description to set.")]
+        [Parameter(Mandatory = false)]
         [AllowNull]
         public string Description;
 
-        [Parameter(Mandatory = false, HelpMessage = "Defines the scope of the storage entity. Defaults to Tenant.")]
+        [Parameter(Mandatory = false)]
         public StorageEntityScope Scope = StorageEntityScope.Tenant;
 
         protected override void ExecuteCmdlet()

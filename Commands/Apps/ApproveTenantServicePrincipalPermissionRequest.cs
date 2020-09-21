@@ -9,21 +9,12 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsLifecycle.Approve, "PnPTenantServicePrincipalPermissionRequest")]
-    [CmdletHelp(@"Approves a permission request for the current tenant's ""SharePoint Online Client"" service principal",
-        DetailedDescription = @"Approves a permission request for the current tenant's ""SharePoint Online Client"" service principal
-
-The return value of a successful call is a permission grant object.
-
-To get the collection of permission grants for the ""SharePoint Online Client"" service principal, use the Get-PnPTenantServicePrincipalPermissionGrants command.
-
-Approving a permission request also removes that request from the list of permission requests.",
-        Category = CmdletHelpCategory.TenantAdmin)]
     public class ApproveTenantServicePrincipalPermissionRequests : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public GuidPipeBind RequestId;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

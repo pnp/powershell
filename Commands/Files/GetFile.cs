@@ -9,35 +9,6 @@ using File = Microsoft.SharePoint.Client.File;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Get, "PnPFile", DefaultParameterSetName = "Return as file object")]
-    [CmdletHelp("Downloads a file.",
-        Category = CmdletHelpCategory.Files,
-        OutputType = typeof(File),
-        OutputTypeLink = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee539248(v=office.15)")]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor",
-        Remarks = "Retrieves the file and downloads it to the current folder",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor -AsFile",
-        Remarks = "Retrieves the file and downloads it to c:\\temp\\company.spcolor",
-        SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -AsString",
-        Remarks = "Retrieves the file and outputs its contents to the console",
-        SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -AsFile",
-        Remarks = "Retrieves the file and returns it as a File object",
-        SortOrder = 4)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -AsListItem",
-        Remarks = "Retrieves the file and returns it as a ListItem object",
-        SortOrder = 5)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPFile -Url _catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor -AsFile",
-        Remarks = "Retrieves the file by site relative URL and downloads it to c:\\temp\\company.spcolor",
-        SortOrder = 6)]
-
     public class GetFile : PnPWebCmdlet
     {
         private const string URLTOPATH = "Save to local path";
@@ -45,35 +16,35 @@ namespace PnP.PowerShell.Commands.Files
         private const string URLASLISTITEM = "Return as list item";
         private const string URLASFILEOBJECT = "Return as file object";
 
-        [Parameter(Mandatory = true, ParameterSetName = URLASFILEOBJECT, HelpMessage = "The URL (server or site relative) to the file", Position = 0, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, ParameterSetName = URLASLISTITEM, HelpMessage = "The URL (server or site relative) to the file", Position = 0, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, ParameterSetName = URLTOPATH, HelpMessage = "The URL (server or site relative) to the file", Position = 0, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, ParameterSetName = URLASSTRING, HelpMessage = "The URL (server or site relative) to the file", Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = URLASFILEOBJECT, Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = URLASLISTITEM, Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = URLTOPATH, Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = URLASSTRING, Position = 0, ValueFromPipeline = true)]
         [Alias("ServerRelativeUrl", "SiteRelativeUrl")]
         public string Url;
 
-        [Parameter(Mandatory = false, ParameterSetName = URLTOPATH, HelpMessage = "Local path where the file should be saved")]
+        [Parameter(Mandatory = false, ParameterSetName = URLTOPATH)]
         public string Path = string.Empty;
 
-        [Parameter(Mandatory = false, ParameterSetName = URLTOPATH, HelpMessage = "Name for the local file")]
+        [Parameter(Mandatory = false, ParameterSetName = URLTOPATH)]
         public string Filename = string.Empty;
 
         [Parameter(Mandatory = true, ParameterSetName = URLTOPATH)]
         public SwitchParameter AsFile;
 
-        [Parameter(Mandatory = false, ParameterSetName = URLASLISTITEM, HelpMessage = "Returns the file as a listitem showing all its properties")]
+        [Parameter(Mandatory = false, ParameterSetName = URLASLISTITEM)]
         public SwitchParameter AsListItem;
 
-        [Parameter(Mandatory = false, ParameterSetName = URLASLISTITEM, HelpMessage = "If provided in combination with -AsListItem, a System.ArgumentException will be thrown if the file specified in the -Url argument does not exist. Otherwise it will return nothing instead.")]
+        [Parameter(Mandatory = false, ParameterSetName = URLASLISTITEM)]
         public SwitchParameter ThrowExceptionIfFileNotFound;
 
-        [Parameter(Mandatory = false, ParameterSetName = URLASSTRING, HelpMessage = "Retrieve the file contents as a string")]
+        [Parameter(Mandatory = false, ParameterSetName = URLASSTRING)]
         public SwitchParameter AsString;
 
-        [Parameter(Mandatory = false, ParameterSetName = URLTOPATH, HelpMessage = "Overwrites the file if it exists.")]
+        [Parameter(Mandatory = false, ParameterSetName = URLTOPATH)]
         public SwitchParameter Force;
         
-        [Parameter(Mandatory = false, ParameterSetName = URLASFILEOBJECT, HelpMessage = "Retrieve the file contents as a file object.")]
+        [Parameter(Mandatory = false, ParameterSetName = URLASFILEOBJECT)]
         public SwitchParameter AsFileObject;
 
         protected override void ExecuteCmdlet()

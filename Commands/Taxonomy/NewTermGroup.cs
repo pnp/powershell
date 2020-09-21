@@ -8,28 +8,20 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.New, "PnPTermGroup", SupportsShouldProcess = false)]
-    [CmdletHelp(@"Creates a taxonomy term group",
-        Category = CmdletHelpCategory.Taxonomy,
-        OutputType = typeof(TermGroup),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.taxonomy.termgroup.aspx")]
-    [CmdletExample
-        (Code = @"PS:> New-PnPTermGroup -GroupName ""Countries""",
-        Remarks = @"Creates a new taxonomy term group named ""Countries""",
-        SortOrder = 1)]
     public class NewTermGroup : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Name of the taxonomy term group to create.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         [Alias("GroupName")]
         public string Name;
 
-        [Parameter(Mandatory = false, HelpMessage = "GUID to use for the term group; if not specified, or the empty GUID, a random GUID is generated and used.")]
+        [Parameter(Mandatory = false)]
         [Alias("GroupId")]
         public Guid Id = Guid.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Description to use for the term group.")]
+        [Parameter(Mandatory = false)]
         public string Description;
 
-        [Parameter(Mandatory = false, HelpMessage = "Term store to add the group to; if not specified the default term store is used.")]
+        [Parameter(Mandatory = false)]
         [Alias("TermStoreName")]
         public GenericObjectNameIdPipeBind<TermStore> TermStore;
 

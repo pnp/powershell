@@ -13,7 +13,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands
 {
-    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Includes", HelpMessage = "Specify properties to include when retrieving objects from the server.")]
+    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Includes")]
     public abstract class PnPRetrievalsCmdlet<TType> : PnPSharePointCmdlet, IDynamicParameters where TType : ClientObject
     {
         public object GetDynamicParameters()

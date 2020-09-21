@@ -17,12 +17,6 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantTemplate", SupportsShouldProcess = true)]
-    [CmdletHelp("Generates a provisioning tenant template from a site. If the site is a hubsite any connected site will be included.",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> Get-PnPTenantTemplate -Out tenanttemplate.xml",
-       Remarks = "Extracts a tenant template",
-       SortOrder = 1)]
     public class GetTenantTemplate : PnPAdminCmdlet
     {
         const string PARAMETERSET_ASFILE = "Extract a template to a file";
@@ -35,17 +29,17 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ASOBJECT)]
         public string SiteUrl;
 
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to write to, optionally including full path", ParameterSetName = PARAMETERSET_ASFILE)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = PARAMETERSET_ASFILE)]
         public string Out;
 
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.", ParameterSetName = PARAMETERSET_ASFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ASFILE)]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = true, HelpMessage = "Returns the template as an in-memory object, which is an instance of the ProvisioningHierarchy type of the PnP Core Component. It cannot be used together with the -Out parameter.", ParameterSetName = PARAMETERSET_ASOBJECT)]
+        [Parameter(Mandatory = true, ParameterSetName = PARAMETERSET_ASOBJECT)]
         public SwitchParameter AsInstance;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.", ParameterSetName = PARAMETERSET_ASFILE)]
-        [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.", ParameterSetName = PARAMETERSET_ASOBJECT)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ASFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ASOBJECT)]
         public ExtractConfigurationPipeBind Configuration;
 
         protected override void ExecuteCmdlet()

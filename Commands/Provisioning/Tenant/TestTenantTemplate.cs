@@ -8,15 +8,9 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsDiagnostic.Test, "PnPTenantTemplate", SupportsShouldProcess = true)]
-    [CmdletHelp("Tests a tenant template for invalid references",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> Test-PnPTenantTemplate -Template $myTemplate",
-       Remarks = "Checks for valid template references",
-       SortOrder = 1)]
     public class TestTenantTemplate : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The in-memory template to test", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ProvisioningHierarchy Template;
 
         protected override void ExecuteCmdlet()

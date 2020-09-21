@@ -8,28 +8,12 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Get, "PnPUPABulkImportStatus")]
-    [CmdletHelp(@"Get user profile bulk import status.",
-        "Retrieve information about the status of submitted user profile bulk upload jobs.",
-        Category = CmdletHelpCategory.UserProfiles)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPUPABulkImportStatus",
-        Remarks = @"This will list the status of all submitted user profile bulk import jobs.", SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPUPABulkImportStatus -IncludeErrorDetails",
-        Remarks = @"This will list the status of all submitted user profile bulk import jobs, and if it contains an error it will include the error log messages if present.", SortOrder = 2)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPUPABulkImportStatus -JobId <guid>",
-        Remarks = @"This will list the status for the specified import job.", SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPUPABulkImportStatus -JobId <guid> -IncludeErrorDetails",
-        Remarks = @"This will list the status for the specified import job, and if it contains an error it will include the error log messages if present.", SortOrder = 4)]
-
     public class GetUPABulkImportStatus : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, HelpMessage = "The instance id of the job")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public GuidPipeBind JobId;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true, HelpMessage = "Include error log details")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public SwitchParameter IncludeErrorDetails;
 
         protected override void ExecuteCmdlet()

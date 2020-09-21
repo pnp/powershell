@@ -9,28 +9,28 @@ using PnP.PowerShell.CmdletHelpAttributes;
 namespace PnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Set, "PnPTheme")]
-    [CmdletHelp("Sets the theme of the current web.", DetailedDescription = " Sets the theme of the current web, if any of the attributes is not set, that value will be set to null", Category = CmdletHelpCategory.Branding)]
-    [CmdletExample(Code = @"PS:> Set-PnPTheme", Remarks = "Removes the current theme and resets it to the default.", SortOrder = 1)]
-    [CmdletExample(Code = @"PS:> Set-PnPTheme -ColorPaletteUrl _catalogs/theme/15/company.spcolor", SortOrder = 2)]
-    [CmdletExample(Code = @"PS:> Set-PnPTheme -ColorPaletteUrl _catalogs/theme/15/company.spcolor -BackgroundImageUrl 'style library/background.png'", SortOrder = 3)]
-    [CmdletExample(Code = @"PS:> Set-PnPTheme -ColorPaletteUrl _catalogs/theme/15/company.spcolor -BackgroundImageUrl 'style library/background.png' -ResetSubwebsToInherit", SortOrder = 4, Remarks = @"Sets the theme to the web, and updates all subwebs to inherit the theme from this web.")]
+    
+    
+    
+    
+    
     public class SetTheme : PnPWebCmdlet
     {
         private const string PROPBAGKEY = "_PnP_ProvisioningTemplateComposedLookInfo";
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the Color Palette Url based on the site or server relative url")]
+        [Parameter(Mandatory = false)]
         public string ColorPaletteUrl;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the Font Scheme Url based on the site or server relative url")]
+        [Parameter(Mandatory = false)]
         public string FontSchemeUrl = null;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the Background Image Url based on the site or server relative url")]
+        [Parameter(Mandatory = false)]
         public string BackgroundImageUrl = null;
 
-        [Parameter(Mandatory = false, HelpMessage = "Resets subwebs to inherit the theme from the rootweb")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter ResetSubwebsToInherit = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Updates only the rootweb, even if subwebs are set to inherit the theme.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter UpdateRootWebOnly = false;
 
 

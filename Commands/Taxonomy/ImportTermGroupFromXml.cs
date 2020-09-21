@@ -12,22 +12,12 @@ using File = System.IO.File;
 namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsData.Import, "PnPTermGroupFromXml", SupportsShouldProcess = true)]
-    [CmdletHelp("Imports a taxonomy TermGroup from either the input or from an XML file.",
-        Category = CmdletHelpCategory.Taxonomy)]
-    [CmdletExample(
-        Code = @"PS:> Import-PnPTermGroupFromXml -Xml $xml",
-        Remarks = "Imports the XML based termgroup information located in the $xml variable",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Import-PnPTermGroupFromXml -Path input.xml",
-        Remarks = "Imports the XML file specified by the path.",
-        SortOrder = 2)]
     public class ImportTermGroupFromXml : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "The XML to process", Position = 0, ValueFromPipeline = true, ParameterSetName = "XML")]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = "XML")]
         public string Xml;
 
-        [Parameter(Mandatory = false, HelpMessage = "The XML File to import the data from", ParameterSetName = "File")]
+        [Parameter(Mandatory = false, ParameterSetName = "File")]
         public string Path;
 
 

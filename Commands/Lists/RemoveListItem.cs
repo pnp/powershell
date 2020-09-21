@@ -7,28 +7,18 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Remove, "PnPListItem", SupportsShouldProcess = true)]
-    [CmdletHelp("Deletes an item from a list",
-        Category = CmdletHelpCategory.Lists)]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPListItem -List ""Demo List"" -Identity ""1"" -Force",
-        SortOrder = 1,
-        Remarks = @"Removes the listitem with id ""1"" from the ""Demo List"" list")]
-    [CmdletExample(
-        Code = @"PS:> Remove-PnPListItem -List ""Demo List"" -Identity ""1"" -Force -Recycle",
-        SortOrder = 2,
-        Remarks = @"Removes the listitem with id ""1"" from the ""Demo List"" list and saves it in the Recycle Bin")]
     public class RemoveListItem : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, Title or Url of the list")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, HelpMessage = "The ID of the listitem, or actual ListItem object")]
+        [Parameter(Mandatory = true)]
         public ListItemPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "When provided, items will be sent to the recycle bin. When omitted, items will permanently be deleted.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Recycle;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

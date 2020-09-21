@@ -11,64 +11,37 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPMicrosoft365Group")]
     [Alias("Set-PnPUnifiedGroup")]
-    [CmdletHelp("Sets Microsoft 365 Group properties",
-        Category = CmdletHelpCategory.Graph)]
-    [CmdletExample(
-       Code = @"PS:> Set-PnPMicrosoft365Group -Identity $group -DisplayName ""My Displayname""",
-       Remarks = "Sets the display name of the group where $group is a Group entity",
-       SortOrder = 1)]
-    [CmdletExample(
-       Code = @"PS:> Set-PnPMicrosoft365Group -Identity $groupId -Descriptions ""My Description"" -DisplayName ""My DisplayName""",
-       Remarks = "Sets the display name and description of a group based upon its ID",
-       SortOrder = 2)]
-    [CmdletExample(
-       Code = @"PS:> Set-PnPMicrosoft365Group -Identity $group -GroupLogoPath "".\MyLogo.png""",
-       Remarks = "Sets a specific Microsoft 365 Group logo",
-       SortOrder = 3)]
-    [CmdletExample(
-       Code = @"PS:> Set-PnPMicrosoft365Group -Identity $group -IsPrivate:$false",
-       Remarks = "Sets a group to be Public if previously Private",
-       SortOrder = 4)]
-    [CmdletExample(
-       Code = @"PS:> Set-PnPMicrosoft365Group -Identity $group -Owners demo@contoso.com",
-       Remarks = "Sets demo@contoso.com as owner of the group",
-       SortOrder = 5)]
-    [CmdletExample(
-       Code = @"PS:> Set-PnPMicrosoft365Group -Identity $group -HideFromOutlookClients:$false",
-       Remarks = "Ensures the provided group will be shown in Outlook clients",
-       SortOrder = 6)]
-    [CmdletRelatedLink(Text = "Documentation", Url = "https://docs.microsoft.com/graph/api/group-update")]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class SetMicrosoft365Group : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The Identity of the Microsoft 365 Group", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public Microsoft365GroupPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "The DisplayName of the group to set")]
+        [Parameter(Mandatory = false)]
         public string DisplayName;
 
-        [Parameter(Mandatory = false, HelpMessage = "The Description of the group to set")]
+        [Parameter(Mandatory = false)]
         public string Description;
 
-        [Parameter(Mandatory = false, HelpMessage = "The array UPN values of owners to set to the group. Note: Will replace owners.")]
+        [Parameter(Mandatory = false)]
         public String[] Owners;
 
-        [Parameter(Mandatory = false, HelpMessage = "The array UPN values of members to set to the group. Note: Will replace members.")]
+        [Parameter(Mandatory = false)]
         public String[] Members;
 
-        [Parameter(Mandatory = false, HelpMessage = "Makes the group private when selected")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IsPrivate;
 
-        [Parameter(Mandatory = false, HelpMessage = "The path to the logo file of to set. Logo must be at least 48 pixels wide and may be at most 4 MB in size. Requires Site.ReadWrite.All permissions.")]
+        [Parameter(Mandatory = false)]
         public string GroupLogoPath;
 
-        [Parameter(Mandatory = false, HelpMessage = "Creates a Microsoft Teams team associated with created group")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter CreateTeam;
 
-        [Parameter(Mandatory = false, HelpMessage = "Hides the group from the Global Address List")]
+        [Parameter(Mandatory = false)]
         public bool? HideFromAddressLists;
 
-        [Parameter(Mandatory = false, HelpMessage = "Hides the group from Outlook Clients")]
+        [Parameter(Mandatory = false)]
         public bool? HideFromOutlookClients;
 
         protected override void ExecuteCmdlet()

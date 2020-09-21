@@ -5,19 +5,9 @@ using PnP.PowerShell.Commands.Base;
 namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPOfficeManagementApiAccessToken")]
-    [CmdletHelp("Gets an access token for the Microsoft Office 365 Management API from the current connection",
-        Category = CmdletHelpCategory.ManagementApi)]
-    [CmdletExample(
-       Code = "PS:> Get-PnPManagementApiAccessToken",
-       Remarks = "Gets the OAuth 2.0 Access Token to consume the Microsoft Office 365 Management API",
-       SortOrder = 1)]
-    [CmdletExample(
-       Code = "PS:> Get-PnPManagementApiAccessToken -Decoded",
-       Remarks = "Gets the full OAuth 2.0 Token to consume the Microsoft Office 365 Management API",
-       SortOrder = 2)]
     public class GetOfficeManagementApiAccessToken : PnPOfficeManagementApiCmdlet
     { 
-        [Parameter(Mandatory = false, HelpMessage = "Returns the access token in a decoded manner")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Decoded;
 
         protected override void ExecuteCmdlet()

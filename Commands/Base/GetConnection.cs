@@ -6,13 +6,6 @@ using PnP.PowerShell.Commands.Properties;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPConnection")]
-    [CmdletHelp("Returns the current context",
-        "Returns a PnP PowerShell Connection for use with the -Connection parameter on other cmdlets.",
-        Category = CmdletHelpCategory.Base)]
-    [CmdletExample(
-        Code = @"PS:> $ctx = Get-PnPConnection",
-        Remarks = @"This will put the current connection for use with the -Connection parameter on other cmdlets.",
-        SortOrder = 1)]
     public class GetPnPConnection : PSCmdlet
     {
 

@@ -12,12 +12,12 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>bin\DebugCore\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;NETSTANDARD2_1 PNPPSCORE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>bin\ReleaseCore\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

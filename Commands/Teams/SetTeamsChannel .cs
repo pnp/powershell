@@ -9,25 +9,19 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPTeamsChannel")]
-    [CmdletHelp("Updates an existing Teams Channel",
-        Category = CmdletHelpCategory.Teams)]
-    [CmdletExample(
-       Code = "PS:> Set-PnPTeamsChannel -Team \"MyTeam\" -Channel \"MyChannel\" -DisplayName \"My Channel\"",
-       Remarks = "Updates the channel called 'MyChannel' to have the display name set to 'My Channel'",
-       SortOrder = 1)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class SetTeamsChannel : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Specify the group id, mailNickname or display name of the team to use.", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public TeamsTeamPipeBind Team;
 
-        [Parameter(Mandatory = true, HelpMessage = "Specify the channel id of the team to retrieve.", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public TeamsChannelPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "Changes the display name of the specified channel.")]
+        [Parameter(Mandatory = false)]
         public string DisplayName;
 
-        [Parameter(Mandatory = false, HelpMessage = "Changes the description of the specified channel.")]
+        [Parameter(Mandatory = false)]
         public string Description;
 
         protected override void ExecuteCmdlet()

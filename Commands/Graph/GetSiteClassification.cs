@@ -6,12 +6,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteClassification")]
-    [CmdletHelp("Returns the defined Site Classifications for the tenant",
-        Category = CmdletHelpCategory.Graph)]
-    [CmdletExample(
-       Code = @"PS:> Get-PnPSiteClassification",
-       Remarks = @"Returns the currently set site classifications for the tenant.",
-       SortOrder = 1)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All | MicrosoftGraphApiPermission.Directory_Read_All)]
     public class GetSiteClassification : PnPGraphCmdlet
     {

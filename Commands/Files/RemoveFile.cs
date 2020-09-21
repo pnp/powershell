@@ -7,30 +7,15 @@ using PnP.Framework.Utilities;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Remove, "PnPFile", SupportsShouldProcess = true)]
-    [CmdletHelp("Removes a file.",
-        Category = CmdletHelpCategory.Files)]
-    [CmdletExample(
-        Code = @"PS:>Remove-PnPFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor",
-        SortOrder = 1,
-        Remarks = @"Removes the file company.spcolor")]
-    [CmdletExample(
-        Code = @"PS:>Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor",
-        SortOrder = 2,
-        Remarks = @"Removes the file company.spcolor")]
-    [CmdletExample(
-        Code = @"PS:>Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor -Recycle",
-        SortOrder = 3,
-        Remarks = @"Removes the file company.spcolor and saves it to the Recycle Bin")]
-
     public class RemoveFile : PnPWebCmdlet
     {
         private const string ParameterSet_SERVER = "Server Relative";
         private const string ParameterSet_SITE = "Site Relative";
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_SERVER, HelpMessage = "Server relative URL to the file")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_SERVER)]
         public string ServerRelativeUrl = string.Empty;
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_SITE, HelpMessage = "Site relative URL to the file")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_SITE)]
         public string SiteRelativeUrl = string.Empty;
 
         [Parameter(Mandatory = false)]

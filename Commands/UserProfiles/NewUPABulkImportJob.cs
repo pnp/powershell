@@ -12,41 +12,21 @@ using PnP.Framework.Utilities;
 namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.New, "PnPUPABulkImportJob")]
-    [CmdletHelp(@"Submit up a new user profile bulk import job.", "See https://docs.microsoft.com/sharepoint/dev/solution-guidance/bulk-user-profile-update-api-for-sharepoint-online for information on the API and how the bulk import process works.",
-        Category = CmdletHelpCategory.UserProfiles)]
-    [CmdletExample(
-        Code = @"PS:> @"" 
- {
-  ""value"": [
-    {
-      ""IdName"": ""mikaels@contoso.com"",
-      ""Department"": ""PnP"",
-    },
-	{
-      ""IdName"": ""vesaj@contoso.com"",
-      ""Department"": ""PnP"",
-    }    
-  ]
-}
-""@ > profiles.json
-
-PS:> New-PnPUPABulkImportJob -Folder ""Shared Documents"" -Path profiles.json -IdProperty ""IdName"" -UserProfilePropertyMapping @{""Department""=""Department""}",
-        Remarks = @"This will submit a new user profile bulk import job to SharePoint Online.", SortOrder = 1)]
     public class NewUPABulkImportJob : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Site or server relative URL of the folder to where you want to store the import job file.")]
+        [Parameter(Mandatory = true, Position = 0)]
         public string Folder;
 
-        [Parameter(Mandatory = true, Position = 1, HelpMessage = "The local file path.")]
+        [Parameter(Mandatory = true, Position = 1)]
         public string Path = string.Empty;
 
-        [Parameter(Mandatory = true, Position = 2, HelpMessage = "Specify user profile property mapping between the import file and UPA property names.")]
+        [Parameter(Mandatory = true, Position = 2)]
         public Hashtable UserProfilePropertyMapping;
 
-        [Parameter(Mandatory = true, Position = 3, HelpMessage = "The name of the identifying property in your file.")]
+        [Parameter(Mandatory = true, Position = 3)]
         public string IdProperty;
 
-        [Parameter(Mandatory = false, Position = 4, HelpMessage = "The type of profile identifier (Email/CloudId/PrincipalName). Defaults to Email.")]
+        [Parameter(Mandatory = false, Position = 4)]
         public ImportProfilePropertiesUserIdType IdType = ImportProfilePropertiesUserIdType.Email;
 
         protected override void ExecuteCmdlet()

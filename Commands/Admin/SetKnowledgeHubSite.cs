@@ -6,11 +6,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPKnowledgeHubSite")]
-    [CmdletHelp("Sets the Knowledge Hub Site for your tenant",
-     Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-     Code = @"PS:> Set-PnPKnowledgeHubSite -KnowledgeHubSiteUrl https://yoursite.sharepoint.com/sites/knowledge",
-     Remarks = @"Sets the Knowledge Hub Site for your tenant", SortOrder = 1)]
     public class SetKnowledgeHubSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

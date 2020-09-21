@@ -9,13 +9,9 @@ using PnP.PowerShell.CmdletHelpAttributes;
 namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTaxonomyItem", SupportsShouldProcess = true)]
-    [CmdletHelp(@"Removes a taxonomy item",
-         Category = CmdletHelpCategory.Taxonomy)]
     public class RemoveTaxonomyItem : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true,
-             HelpMessage =
-                 "The path, delimited by | of the taxonomy item to remove, alike GROUPLABEL|TERMSETLABEL|TERMLABEL")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         [Alias("Term")]
         public string TermPath;
 

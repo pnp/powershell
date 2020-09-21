@@ -10,15 +10,9 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsLifecycle.Unregister, "PnPHubSite")]
-    [CmdletHelp("Unregisters a site as a hubsite",
-        DetailedDescription = @"Registers a site as a hubsite",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-        Code = @"PS:> Unregister-PnPHubSite -Site https://tenant.sharepoint.com/sites/myhubsite",
-        Remarks = @"This example unregisters the specified site as a hubsite", SortOrder = 1)]
     public class UnregisterHubSite : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = @"The site to unregister as a hubsite")]
+        [Parameter(Mandatory = true)]
         public SitePipeBind Site;
 
         protected override void ExecuteCmdlet()

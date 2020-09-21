@@ -10,12 +10,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTeamsChannel")]
-    [CmdletHelp("Removes a channel from a Microsoft Teams instance.",
-       Category = CmdletHelpCategory.Teams)]
-    [CmdletExample(
-      Code = "PS:> Remove-PnPTeamsChannel -Team 4efdf392-8225-4763-9e7f-4edeb7f721aa -DisplayName \"My Channel\"",
-      Remarks = "Removes the channel specified from the team specified",
-      SortOrder = 1)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class RemoveTeamsChannel : PnPGraphCmdlet
     {
@@ -25,7 +19,7 @@ namespace PnP.PowerShell.Commands.Teams
         [Parameter(Mandatory = true)]
         public TeamsChannelPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

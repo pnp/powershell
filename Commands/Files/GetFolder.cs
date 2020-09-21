@@ -10,25 +10,6 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Get, "PnPFolder")]
-    [CmdletHelp("Return a folder object", Category = CmdletHelpCategory.Files,
-        DetailedDescription = "Retrieves a folder if it exists or all folders inside a provided list or library. Use Resolve-PnPFolder to create the folder if it does not exist.",
-        OutputType = typeof(Folder),
-        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee538057(v=office.15)")]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPFolder -Url ""Shared Documents""",
-        Remarks = "Returns the folder called 'Shared Documents' which is located in the root of the current web",
-        SortOrder = 1
-        )]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPFolder -Url ""/sites/demo/Shared Documents""",
-        Remarks = "Returns the folder called 'Shared Documents' which is located in the root of the current web",
-        SortOrder = 2
-        )]
-    [CmdletExample(
-        Code = @"PS:> Get-PnPFolder -List ""Shared Documents""",
-        Remarks = "Returns the folder(s) residing inside a folder called 'Shared Documents'",
-        SortOrder = 3
-        )]
     [CmdletRelatedLink(
         Text = "Resolve-PnPFolder",
         Url = "https://github.com/MicrosoftDocs/office-docs-powershell/blob/master/sharepoint/sharepoint-ps/sharepoint-pnp/Resolve-PnPFolder.md")]
@@ -37,11 +18,11 @@ namespace PnP.PowerShell.Commands.Files
         private const string ParameterSet_FOLDERSINLIST = "Folders In List";
         private const string ParameterSet_FOLDERBYURL = "Folder By Url";
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "Site or server relative URL of the folder to retrieve. In the case of a server relative url, make sure that the url starts with the managed path as the current web.", ParameterSetName = ParameterSet_FOLDERBYURL)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_FOLDERBYURL)]
         [Alias("RelativeUrl")]
         public string Url;
 
-        [Parameter(Mandatory = true, Position = 1, HelpMessage = "Name, ID or instance of a list or document library to retrieve the folders residing in it for.", ParameterSetName = ParameterSet_FOLDERSINLIST)]
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_FOLDERSINLIST)]
         public ListPipeBind List;
 
         protected override void ExecuteCmdlet()

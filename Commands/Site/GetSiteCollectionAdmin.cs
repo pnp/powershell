@@ -8,12 +8,6 @@ using System.Linq;
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteCollectionAdmin")]
-    [CmdletHelp("Returns the current site collection administrators of the site collection in the current context",
-        DetailedDescription = "This command will return all current site collection administrators of the site collection in the current context",
-        Category = CmdletHelpCategory.Sites)]
-    [CmdletExample(
-      Code = @"PS:> Get-PnPSiteCollectionAdmin",
-      Remarks = @"This will return all the current site collection administrators of the site collection in the current context", SortOrder = 1)]
     public class GetSiteCollectionAdmin : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()

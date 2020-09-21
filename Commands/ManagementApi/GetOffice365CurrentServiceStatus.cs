@@ -10,22 +10,13 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPOffice365CurrentServiceStatus")]
-    [CmdletHelp(
-        "Gets current service status of the Office 365 Services from the Office 365 Management API",
-        Category = CmdletHelpCategory.ManagementApi,
-        OutputTypeLink = "https://docs.microsoft.com/office/office-365-management-api/office-365-service-communications-api-reference#get-current-status")]
-    [CmdletExample(
-       Code = "PS:> Get-PnPOffice365CurrentServiceStatus",
-       Remarks = "Retrieves the current service status of all Office 365 services",
-       SortOrder = 1)]
-    [CmdletExample(
-       Code = "PS:> Get-PnPOffice365CurrentServiceStatus -Workload SharePoint",
-       Remarks = "Retrieves the current service status of SharePoint Online",
-       SortOrder = 2)]
+    
+    
+    
     [CmdletOfficeManagementApiPermission(OfficeManagementApiPermission.ServiceHealth_Read)]
     public class GetOffice365CurrentServiceStatus : PnPOfficeManagementApiCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "Allows retrieval of the current service status of only one particular service. If not provided, the current service status of all services will be returned.")]
+        [Parameter(Mandatory = false)]
         public Enums.Office365Workload? Workload;
 
         protected override void ExecuteCmdlet()

@@ -10,25 +10,15 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsData.Convert, "PnPFolderToProvisioningTemplate")]
-    [CmdletHelp("Creates a pnp package file of an existing template xml, and includes all files in the current folder",
-        Category = CmdletHelpCategory.Provisioning)]
-    [CmdletExample(
-       Code = @"PS:> Convert-PnPFolderToProvisioningTemplate -Out template.pnp",
-       Remarks = "Creates a pnp package file of an existing template xml, and includes all files in the current folder",
-       SortOrder = 1)]
-    [CmdletExample(
-       Code = @"PS:> Convert-PnPFolderToProvisioningTemplate -Out template.pnp -Folder c:\temp",
-       Remarks = "Creates a pnp package file of an existing template xml, and includes all files in the c:\\temp folder",
-       SortOrder = 2)]
     public class ConvertFolderToProvisioningTemplate : PSCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to write to, optionally including full path.")]
+        [Parameter(Mandatory = true, Position = 0)]
         public string Out;
 
-        [Parameter(Mandatory = false, Position = 1, HelpMessage = "Folder to process. If not specified the current folder will be used.")]
+        [Parameter(Mandatory = false, Position = 1)]
         public string Folder;
 
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ProcessRecord()
