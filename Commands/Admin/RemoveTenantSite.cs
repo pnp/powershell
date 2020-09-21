@@ -37,10 +37,6 @@ namespace PnP.PowerShell.Commands
         [Alias("SkipTrash")]
         public SwitchParameter SkipRecycleBin;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified, will search for the site in the Recycle Bin and remove it from there.")]
-        [Obsolete("Use Clear-PnPTenantRecycleBinItem instead.")]
-        public SwitchParameter FromRecycleBin;
-
         [Parameter(Mandatory = false, HelpMessage = "Do not ask for confirmation.")]
         public SwitchParameter Force;
 
@@ -66,15 +62,8 @@ namespace PnP.PowerShell.Commands
 
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
-#pragma warning disable 618
-#pragma warning if (!FromRecycleBin)restore 618
-                {
-                    Tenant.DeleteSiteCollection(Url, !ParameterSpecified(nameof(SkipRecycleBin)), timeoutFunction);
-                }
-                else
-                {
-                    Tenant.DeleteSiteCollectionFromRecycleBin(Url, true, timeoutFunction);
-                }
+                Tenant.DeleteSiteCollection(Url, !ParameterSpecified(nameof(SkipRecycleBin)), timeoutFunction);
+
             }
         }
 
