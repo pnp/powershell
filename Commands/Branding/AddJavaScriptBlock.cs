@@ -28,33 +28,14 @@ namespace PnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false, HelpMessage = "A sequence number that defines the order on the page")]
         public int Sequence = 0;
 
-        [Parameter(Mandatory = false)]
-        [Obsolete("Use Scope instead")]
-        [Alias("AddToSite")]
-        public SwitchParameter SiteScoped;
-
         [Parameter(Mandatory = false, HelpMessage = "The scope of the script to add to. Either Web or Site, defaults to Web. 'All' is not valid for this command.")]
         public CustomActionScope Scope = CustomActionScope.Web;
 
         protected override void ExecuteCmdlet()
         {
-            // Following code to handle deprecated parameter
-            CustomActionScope setScope;
-
-#pragma warning disable CS0618 // Type or member is obsolete
-            if (ParameterSpecified(nameof(SiteScoped)))
-#pragma warning restore CS0618 // Type or member is obsolete
+            if (Scope != CustomActionScope.All)
             {
-                setScope = CustomActionScope.Site;
-            }
-            else
-            {
-                setScope = Scope;
-            }
-
-            if (setScope != CustomActionScope.All)
-            {
-                if (setScope == CustomActionScope.Web)
+                if (Scope == CustomActionScope.Web)
                 {
                     SelectedWeb.AddJsBlock(Name, Script, Sequence);
                 }

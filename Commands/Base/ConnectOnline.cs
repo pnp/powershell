@@ -223,15 +223,6 @@ PS:> dir",
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The Application Client ID to use.")]
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "The client id of the app which gives you access to the Microsoft Graph API.")]
-        [Obsolete("Use ClientId instead")]
-        public string AppId;
-
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The Application Client Secret to use.")]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "The app key of the app which gives you access to the Microsoft Graph API.")]
-        [Obsolete("Use ClientSecret instead")]
-        public string AppSecret;
-
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "The client secret to use.")]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "The client secret to use.")]
 
@@ -557,9 +548,7 @@ PS:> dir",
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectToken()
         {
-#pragma warning disable CS0618 // Type or member is obsolete
-            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, AppId, AppSecret, Host, TenantAdminUrl, false, AzureEnvironment);
-#pragma warning restore CS0618 // Type or member is obsolete
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, TenantAdminUrl, false, AzureEnvironment);
         }
 
         /// <summary>
@@ -568,9 +557,7 @@ PS:> dir",
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectGraphWithAad()
         {
-#pragma warning disable CS0618 // Type or member is obsolete
-            return PnPConnection.GetConnectionWithClientIdAndClientSecret(AppId, AppSecret, Host, InitializationType.AADAppOnly, Url, AADDomain, disableTelemetry: NoTelemetry);
-#pragma warning restore CS0618 // Type or member is obsolete
+            return PnPConnection.GetConnectionWithClientIdAndClientSecret(ClientId, ClientSecret, Host, InitializationType.AADAppOnly, Url, AADDomain, disableTelemetry: NoTelemetry);
         }
 
         /// <summary>

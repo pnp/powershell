@@ -28,31 +28,13 @@ namespace PnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false, HelpMessage = "Sequence of this JavaScript being injected. Use when you have a specific sequence with which to have JavaScript files being added to the page. I.e. jQuery library first and then jQueryUI.")]
         public int Sequence = 0;
 
-        [Parameter(Mandatory = false)]
-        [Obsolete("Use Scope")]
-        [Alias("AddToSite")]
-        public SwitchParameter SiteScoped;
-
         [Parameter(Mandatory = false, HelpMessage = "Defines if this JavaScript file will be injected to every page within the current site collection or web. All is not allowed in for this command. Default is web.")]
         public CustomActionScope Scope = CustomActionScope.Web;
 
         protected override void ExecuteCmdlet()
         {
-            // Following code to handle deprecated parameter
-            CustomActionScope setScope;
-
-#pragma warning disable CS0618 // Type or member is obsolete
-            if (ParameterSpecified(nameof(SiteScoped)))
-#pragma warning restore CS0618 // Type or member is obsolete
-            {
-                setScope = CustomActionScope.Site;
-            }
-            else
-            {
-                setScope = Scope;
-            }
-
-            switch (setScope)
+        
+            switch (Scope)
             {
                 case CustomActionScope.Web:
                     SelectedWeb.AddJsLink(Name, Url, Sequence);

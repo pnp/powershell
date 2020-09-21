@@ -48,10 +48,6 @@ PrivateKey contains the PEM encoded private key of the certificate.",
         [Parameter(Mandatory = false, HelpMessage = "Organizational Unit Name (eg, section)", Position = 5)]
         public string OrganizationUnit = string.Empty;
 
-        [Obsolete("Use OutPfx parameter")]
-        [Parameter(Mandatory = false, HelpMessage = "Filename to write to, optionally including full path (.pfx)", Position = 6)]
-        public string Out;
-
         [Parameter(Mandatory = false, HelpMessage = "Filename to write to, optionally including full path (.pfx)", Position = 6)]
         public string OutPfx;
 
@@ -85,12 +81,6 @@ PrivateKey contains the PEM encoded private key of the certificate.",
             byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
             var certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable);
 
-#pragma warning disable CS0618 // Type or member is obsolete
-            if (!string.IsNullOrWhiteSpace(Out))
-            {
-                OutPfx = Out;
-#pragma warning restore CS0618 // Type or member is obsolete
-            }
             if (!string.IsNullOrWhiteSpace(OutPfx))
             {
                 if (!Path.IsPathRooted(OutPfx))

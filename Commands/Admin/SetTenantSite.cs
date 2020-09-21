@@ -66,14 +66,6 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "Specifies the warning level for the storage quota in megabytes. This value must not exceed the values set for the StorageMaximumLevel parameter", ParameterSetName = ParameterSet_PROPERTIES)]
         public long StorageWarningLevel;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the quota for this site collection in Sandboxed Solutions units. This value must not exceed the company's aggregate available Sandboxed Solutions quota. The default value is 0. For more information, see Resource Usage Limits on Sandboxed Solutions in SharePoint 2010 : http://msdn.microsoft.com/en-us/library/gg615462.aspx.", ParameterSetName = ParameterSet_PROPERTIES)]
-        [Obsolete("Sandboxed solutions are obsolete")]
-        public double UserCodeMaximumLevel;
-
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the warning level for the resource quota. This value must not exceed the value set for the UserCodeMaximumLevel parameter", ParameterSetName = ParameterSet_PROPERTIES)]
-        [Obsolete("Sandboxed solutions are obsolete")]
-        public double UserCodeWarningLevel;
-
         [Parameter(Mandatory = false, HelpMessage = "Sets the lockstate of a site", ParameterSetName = ParameterSet_LOCKSTATE)]
         public SiteLockState? LockState;
 
@@ -174,18 +166,6 @@ namespace PnP.PowerShell.Commands
                 props.SharingDomainRestrictionMode = SharingDomainRestrictionMode;
                 updateRequired = true;
             }
-#pragma warning disable CS0618 // Type or member is obsolete
-                if (ParameterSpecified(nameof(UserCodeMaximumLevel)))
-                {
-                    props.UserCodeMaximumLevel = UserCodeMaximumLevel;
-                    updateRequired = true;
-                }
-                if (ParameterSpecified(nameof(UserCodeWarningLevel)))
-                {
-                    props.UserCodeWarningLevel = UserCodeWarningLevel;
-                    updateRequired = true;
-                }
-#pragma warning restore CS0618 // Type or member is obsolete
             if (ParameterSpecified(nameof(StorageMaximumLevel)))
             {
                 props.StorageMaximumLevel = StorageMaximumLevel;
