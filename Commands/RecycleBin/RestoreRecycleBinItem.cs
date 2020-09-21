@@ -7,7 +7,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.RecycleBin
 {
-    [Cmdlet(VerbsData.Restore, "PnPRecycleBinItem", DefaultParameterSetName = PARAMETERSET_ALL)]
+    [Cmdlet(VerbsData.Restore, "PnPRecycleBinItem")]
     [CmdletHelp("Restores the provided recycle bin item to its original location",
         Category = CmdletHelpCategory.RecycleBin)]
     [CmdletExample(
@@ -19,65 +19,56 @@ namespace PnP.PowerShell.Commands.RecycleBin
         Remarks = "Restores all the items in the first and second stage recycle bins to their original location of which the filename ends with the .docx extension",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Restore-PnPRecycleBinItem -All -RowLimit 10000",
+        Code = @"PS:> Restore-PnPRecycleBinItem -RowLimit 10000",
         Remarks = "Permanently restores up to 10,000 items in the recycle bin",
         SortOrder = 4)]
-    
+
     public class RestoreRecycleBinItem : PnPSharePointCmdlet
     {
-        const string PARAMETERSET_ALL = "All";
-        const string PARAMETERSET_IDENTITY = "Identity";
-
-        [Parameter(Mandatory = true, HelpMessage = "Id of the recycle bin item or the recycle bin item object itself to restore", ValueFromPipeline = true, ParameterSetName = PARAMETERSET_IDENTITY)]
+        [Parameter(Mandatory = true, HelpMessage = "Id of the recycle bin item or the recycle bin item object itself to restore", ValueFromPipeline = true)]
         public RecycleBinItemPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "If provided all items will be stored ", ValueFromPipeline = true, ParameterSetName = PARAMETERSET_ALL)]
-        [Obsolete("No need to add the -All parameter anymore")]
-        public SwitchParameter All;
-
-        [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be asked to restore the recycle bin item", ParameterSetName = PARAMETERSET_IDENTITY)]
-        [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be asked to restore the recycle bin item", ParameterSetName = PARAMETERSET_ALL)]
+        [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be asked to restore the recycle bin item")]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false, HelpMessage = "Limits restoration to specified number of items", ParameterSetName = PARAMETERSET_ALL)]
+        [Parameter(Mandatory = false, HelpMessage = "Limits restoration to specified number of items")]
         public int RowLimit;
 
         protected override void ExecuteCmdlet()
         {
-            switch (ParameterSetName)
+            if (ParameterSpecified(nameof(Identity)))
             {
-                case PARAMETERSET_IDENTITY:
-                    var recycleBinItem = Identity.GetRecycleBinItem(ClientContext.Site);
 
-                    if (Force || ShouldContinue(string.Format(Resources.RestoreRecycleBinItem, recycleBinItem.LeafName), Resources.Confirm))
+                var recycleBinItem = Identity.GetRecycleBinItem(ClientContext.Site);
+
+                if (Force || ShouldContinue(string.Format(Resources.RestoreRecycleBinItem, recycleBinItem.LeafName), Resources.Confirm))
+                {
+                    recycleBinItem.Restore();
+                    ClientContext.ExecuteQueryRetry();
+                }
+            }
+            else
+            {
+                if (ParameterSpecified(nameof(RowLimit)))
+                {
+                    if (Force || ShouldContinue(Resources.RestoreRecycleBinItems, Resources.Confirm))
                     {
-                        recycleBinItem.Restore();
+                        RecycleBinItemCollection items = ClientContext.Site.GetRecycleBinItems(null, RowLimit, false, RecycleBinOrderBy.DeletedDate, RecycleBinItemState.None);
+                        ClientContext.Load(items);
+                        ClientContext.ExecuteQueryRetry();
+
+                        items.RestoreAll();
                         ClientContext.ExecuteQueryRetry();
                     }
-                    break;
-
-                case PARAMETERSET_ALL:
-                    if (ParameterSpecified(nameof(RowLimit)))
+                }
+                else
+                {
+                    if (Force || ShouldContinue(Resources.RestoreRecycleBinItems, Resources.Confirm))
                     {
-                        if (Force || ShouldContinue(Resources.RestoreRecycleBinItems, Resources.Confirm))
-                        {
-                            RecycleBinItemCollection items = ClientContext.Site.GetRecycleBinItems(null, RowLimit, false, RecycleBinOrderBy.DeletedDate, RecycleBinItemState.None);
-                            ClientContext.Load(items);
-                            ClientContext.ExecuteQueryRetry();
-
-                            items.RestoreAll();
-                            ClientContext.ExecuteQueryRetry();
-                        }
+                        ClientContext.Site.RecycleBin.RestoreAll();
+                        ClientContext.ExecuteQueryRetry();
                     }
-                    else
-                    {
-                        if (Force || ShouldContinue(Resources.RestoreRecycleBinItems, Resources.Confirm))
-                        {
-                            ClientContext.Site.RecycleBin.RestoreAll();
-                            ClientContext.ExecuteQueryRetry();
-                        }
-                    }
-                    break;
+                }
             }
         }
     }

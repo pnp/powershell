@@ -29,11 +29,5 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             return IsTenantAdministrationUrl(new Uri(url));
         }
-
-        [Obsolete("Please use IsTenantAdministrationUrl(url)")]
-        public static bool IsTenantAdministationUrl(string url)
-        {
-            return IsTenantAdministrationUrl(new Uri(url));
-        }
     }
 }

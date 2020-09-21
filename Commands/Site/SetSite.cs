@@ -62,14 +62,6 @@ namespace PnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, HelpMessage = "Specifies the warning level for the storage quota in megabytes. This value must not exceed the values set for the StorageMaximumLevel parameter", ParameterSetName = ParameterSet_PROPERTIES)]
         public long? StorageWarningLevel = null;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the quota for this site collection in Sandboxed Solutions units. This value must not exceed the company's aggregate available Sandboxed Solutions quota. The default value is 0. For more information, see Resource Usage Limits on Sandboxed Solutions in SharePoint 2010 : http://msdn.microsoft.com/en-us/library/gg615462.aspx.", ParameterSetName = ParameterSet_PROPERTIES)]
-        [Obsolete("Sandboxed solution code has been deprecated")]
-        public double? UserCodeMaximumLevel = null;
-
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the warning level for the resource quota. This value must not exceed the value set for the UserCodeMaximumLevel parameter", ParameterSetName = ParameterSet_PROPERTIES)]
-        [Obsolete("Sandboxed solution code has been deprecated")]
-        public double? UserCodeWarningLevel = null;
-
         [Parameter(Mandatory = false, HelpMessage = "Sets the lockstate of a site", ParameterSetName = ParameterSet_LOCKSTATE)]
         public SiteLockState? LockState;
 
@@ -103,10 +95,6 @@ namespace PnP.PowerShell.Commands.Site
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the language of this site collection.", ParameterSetName = ParameterSet_PROPERTIES)]
         public uint? LocaleId;
-
-        [Obsolete("NewUrl is deprecated")]
-        [Parameter(Mandatory = false, HelpMessage = @"Specifies the new URL for this site collection.", ParameterSetName = ParameterSet_PROPERTIES)]
-        public string NewUrl;
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the Geo/Region restrictions of this site.", ParameterSetName = ParameterSet_PROPERTIES)]
         public RestrictedToRegion? RestrictedToGeo;
@@ -240,19 +228,6 @@ namespace PnP.PowerShell.Commands.Site
                     siteProperties.StorageWarningLevel = StorageWarningLevel.Value;
                     executeQueryRequired = true;
                 }
-#pragma warning disable CS0618 // Type or member is obsolete
-                if (UserCodeWarningLevel.HasValue)
-                {
-                    siteProperties.UserCodeWarningLevel = UserCodeWarningLevel.Value;
-                    executeQueryRequired = true;
-                }
-                if (UserCodeMaximumLevel.HasValue)
-                {
-                    siteProperties.UserCodeMaximumLevel = UserCodeMaximumLevel.Value;
-                    executeQueryRequired = true;
-                }
-#pragma warning restore CS0618 // Type or member is obsolete
-
                 if (AllowSelfServiceUpgrade.HasValue)
                 {
                     siteProperties.AllowSelfServiceUpgrade = AllowSelfServiceUpgrade.Value;
@@ -298,11 +273,6 @@ namespace PnP.PowerShell.Commands.Site
                     siteProperties.Lcid = LocaleId.Value;
                     executeQueryRequired = true;
                 }
-                //if (!string.IsNullOrEmpty(NewUrl))
-                //{
-                //    siteProperties.NewUrl = NewUrl;
-                //    executeQueryRequired = true;
-                //}
                 if (RestrictedToGeo.HasValue)
                 {
                     siteProperties.RestrictedToRegion = RestrictedToGeo.Value;
@@ -345,10 +315,6 @@ namespace PnP.PowerShell.Commands.Site
                 Sharing.HasValue ||
                 StorageMaximumLevel.HasValue ||
                 StorageWarningLevel.HasValue ||
-#pragma warning disable CS0618 // Type or member is obsolete
-                UserCodeMaximumLevel.HasValue ||
-                UserCodeWarningLevel.HasValue ||
-#pragma warning restore CS0618 // Type or member is obsolete
                 AllowSelfServiceUpgrade.HasValue ||
                 NoScriptSite.HasValue ||
                 CommentsOnSitePagesDisabled.HasValue ||
@@ -358,9 +324,6 @@ namespace PnP.PowerShell.Commands.Site
                 DisableFlows.HasValue ||
                 DisableSharingForNonOwners.IsPresent ||
                 LocaleId.HasValue ||
-#pragma warning disable CS0618 // Type or member is obsolete
-                !string.IsNullOrEmpty(NewUrl) ||
-#pragma warning restore CS0618 // Type or member is obsolete
                 RestrictedToGeo.HasValue ||
                 SocialBarOnSitePagesDisabled.HasValue ||
                  AnonymousLinkExpirationInDays.HasValue ||

@@ -23,43 +23,18 @@ namespace PnP.PowerShell.Commands.RecordsManagement
         SortOrder = 2)]
     public class SetInPlaceRecordsManagement : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ParameterSetName="Enable or Disable")]
+        [Parameter(Mandatory = true, ParameterSetName = "Enable or Disable")]
         public bool Enabled;
-
-        [Obsolete("Use -Enabled $true")]
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Turn records management on", ParameterSetName = "On")]
-        public SwitchParameter On;
-
-        [Obsolete("Use -Enabled $false")]
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Turn records management off", ParameterSetName = "Off")]
-        public SwitchParameter Off;
 
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSpecified(nameof(Enabled)))
+            if (Enabled)
             {
-                if (Enabled)
-                {
-                    ClientContext.Site.ActivateInPlaceRecordsManagementFeature();
-                }
-                else
-                {
-                    ClientContext.Site.DisableInPlaceRecordsManagementFeature();
-                }
+                ClientContext.Site.ActivateInPlaceRecordsManagementFeature();
             }
             else
             {
-                // obsolete
-#pragma warning disable CS0618 // Type or member is obsolete
-                if (ParameterSpecified(nameof(On)))
-#pragma warning restore CS0618 // Type or member is obsolete
-                {
-                    ClientContext.Site.ActivateInPlaceRecordsManagementFeature();
-                }
-                else
-                {
-                    ClientContext.Site.DisableInPlaceRecordsManagementFeature();
-                }
+                ClientContext.Site.DisableInPlaceRecordsManagementFeature();
             }
         }
 
