@@ -37,10 +37,6 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "Switch parameter if versioning should be enabled")]
         public SwitchParameter EnableVersioning;
 
-        [Parameter(Mandatory = false, HelpMessage = "Obsolete")]
-        [Obsolete("Not in use, use OnQuickLaunch parameter instead")]
-        public QuickLaunchOptions QuickLaunchOptions;
-
         [Parameter(Mandatory = false, HelpMessage = "Switch parameter if content types should be enabled on this list")]
         public SwitchParameter EnableContentTypes;
 

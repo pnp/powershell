@@ -71,10 +71,6 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Thumbnail Url")]
         public string ThumbnailUrl;
 
-        [Obsolete("This parameter value will be ignored")]
-        [Parameter(Mandatory = false, HelpMessage = "Sets the message for publishing the page.")]
-        public string PublishMessage = string.Empty;
-
         private CustomHeaderDynamicParameters customHeaderParameters;
 
         public object GetDynamicParameters()

@@ -27,10 +27,6 @@ namespace PnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false, HelpMessage = "Specifies the Background Image Url based on the site or server relative url")]
         public string BackgroundImageUrl = null;
 
-        [Parameter(Mandatory = false, HelpMessage = "true if the generated theme files should be placed in the root web, false to store them in this web. Default is false")]
-        [Obsolete("This parameter is obsolete and its usage has no effect. Generated theme files will be placed in the root web by default.")]
-        public SwitchParameter ShareGenerated = false;
-
         [Parameter(Mandatory = false, HelpMessage = "Resets subwebs to inherit the theme from the rootweb")]
         public SwitchParameter ResetSubwebsToInherit = false;
 

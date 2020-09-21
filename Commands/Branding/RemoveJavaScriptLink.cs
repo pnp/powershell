@@ -37,10 +37,6 @@ namespace PnP.PowerShell.Commands.Branding
         [Alias("Key", "Name")]
         public UserCustomActionPipeBind Identity;
 
-        [Parameter(Mandatory = false)]
-        [Obsolete("Use Scope parameter")]
-        public SwitchParameter FromSite;
-
         [Parameter(Mandatory = false, HelpMessage = "Use the -Force flag to bypass the confirmation question")]
         public SwitchParameter Force;
 
@@ -49,14 +45,6 @@ namespace PnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-            // Following code to handle deprecated parameter
-#pragma warning disable CS0618 // Type or member is obsolete
-            if (ParameterSpecified(nameof(FromSite)))
-#pragma warning restore CS0618 // Type or member is obsolete
-            {
-                Scope = CustomActionScope.Site;
-            }
-
             List<UserCustomAction> actions = new List<UserCustomAction>();
 
             if (Identity != null && Identity.UserCustomAction != null && Identity.UserCustomAction.Location == "ScriptLink")

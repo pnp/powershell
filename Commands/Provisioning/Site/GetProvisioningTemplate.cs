@@ -115,10 +115,6 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "If specified the files used for masterpages, sitelogo, alternate CSS and the files that make up the composed look will be saved.")]
         public SwitchParameter PersistBrandingFiles;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified the files making up the composed look (background image, font file and color file) will be saved.")]
-        [Obsolete("Use PersistBrandingFiles instead.")]
-        public SwitchParameter PersistComposedLookFiles;
-
         [Parameter(Mandatory = false, HelpMessage = "If specified the files used for the publishing feature will be saved.")]
         public SwitchParameter PersistPublishingFiles;
 
@@ -274,9 +270,9 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 creationInformation.FileConnector = fileSystemConnector;
             }
 #pragma warning disable 618
-            if (ParameterSpecified(nameof(PersistBrandingFiles)) || ParameterSpecified(nameof(PersistComposedLookFiles)))
+            if (ParameterSpecified(nameof(PersistBrandingFiles)))
             {
-                creationInformation.PersistBrandingFiles = PersistBrandingFiles || PersistComposedLookFiles;
+                creationInformation.PersistBrandingFiles = PersistBrandingFiles;
             }
 #pragma warning restore 618
             creationInformation.PersistPublishingFiles = PersistPublishingFiles;

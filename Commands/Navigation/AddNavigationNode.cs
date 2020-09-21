@@ -46,10 +46,6 @@ namespace PnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false, HelpMessage = "The key of the parent. Leave empty to add to the top level")]
         public int? Parent;
 
-        [Parameter(Mandatory = false, HelpMessage = "Optional value of a header entry to add the menu item to")]
-        [Obsolete("Use Parent instead")]
-        public string Header;
-
         [Parameter(Mandatory = false, HelpMessage = "Add the new menu item to beginning of the collection")]
         public SwitchParameter First;
 
@@ -82,45 +78,36 @@ namespace PnP.PowerShell.Commands.Branding
             }
             else
             {
-#pragma warning disable CS0618 // Type or member is obsolete
-                if (!string.IsNullOrEmpty(Header))
+                NavigationNodeCollection nodeCollection = null;
+                if (Location == NavigationType.SearchNav)
                 {
-                    var newNavNode = SelectedWeb.AddNavigationNode(Title, new Uri(Url, UriKind.RelativeOrAbsolute), Header, Location, External.IsPresent, !First.IsPresent);
-                    WriteObject(newNavNode);
+                    nodeCollection = SelectedWeb.LoadSearchNavigation();
+                }
+                else if (Location == NavigationType.Footer)
+                {
+                    nodeCollection = SelectedWeb.LoadFooterNavigation();
                 }
                 else
                 {
-                    NavigationNodeCollection nodeCollection = null;
-                    if (Location == NavigationType.SearchNav)
+                    nodeCollection = Location == NavigationType.QuickLaunch ? SelectedWeb.Navigation.QuickLaunch : SelectedWeb.Navigation.TopNavigationBar;
+                    ClientContext.Load(nodeCollection);
+                }
+                if (nodeCollection != null)
+                {
+                    var addedNode = nodeCollection.Add(new NavigationNodeCreationInformation()
                     {
-                        nodeCollection = SelectedWeb.LoadSearchNavigation();
-                    }
-                    else if (Location == NavigationType.Footer)
-                    {
-                        nodeCollection = SelectedWeb.LoadFooterNavigation();
-                    }
-                    else
-                    {
-                        nodeCollection = Location == NavigationType.QuickLaunch ? SelectedWeb.Navigation.QuickLaunch : SelectedWeb.Navigation.TopNavigationBar;
-                        ClientContext.Load(nodeCollection);
-                    }
-                    if (nodeCollection != null)
-                    {
-                        var addedNode = nodeCollection.Add(new NavigationNodeCreationInformation()
-                        {
-                            Title = Title,
-                            Url = Url,
-                            IsExternal = External.IsPresent,
-                            AsLastNode = !First.IsPresent
-                        });
-                        ClientContext.Load(addedNode);
-                        ClientContext.ExecuteQueryRetry();
-                        WriteObject(addedNode);
-                    }
-                    else
-                    {
-                        throw new Exception("Navigation Node Collection is null");
-                    }
+                        Title = Title,
+                        Url = Url,
+                        IsExternal = External.IsPresent,
+                        AsLastNode = !First.IsPresent
+                    });
+                    ClientContext.Load(addedNode);
+                    ClientContext.ExecuteQueryRetry();
+                    WriteObject(addedNode);
+                }
+                else
+                {
+                    throw new Exception("Navigation Node Collection is null");
                 }
 #pragma warning restore CS0618 // Type or member is obsolete
             }
