@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed Obsolete parameter -FromRecycleBin from Remove-PnPTenantSite. Use Clear-PnPTenantRecycleBinItem instead.
 - Removed -UserCodeMaximumLevel and -UserCodeWarningLevel from Set-PnPTenantSite: sandboxed solutions have been deprecated from SharePoint Online and these values are not applicable anymore.
 - Removed -Out parameter on New-PnPAzureCertificate. Use -OutPfx instead.
+- Removed Enable-PnPResponsiveUI and Disable-PnPResponsiveUI.
 
 ## [3.25.2009.1]
 
