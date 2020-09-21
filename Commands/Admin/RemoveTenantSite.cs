@@ -37,10 +37,6 @@ namespace PnP.PowerShell.Commands
         [Alias("SkipTrash")]
         public SwitchParameter SkipRecycleBin;
 
-        [Parameter(Mandatory = false, HelpMessage = "OBSOLETE: If true, will wait for the site to be deleted before processing continues")]
-        [Obsolete("The cmdlet will always wait for the site to be deleted first")]
-        public SwitchParameter Wait;
-
         [Parameter(Mandatory = false, HelpMessage = "If specified, will search for the site in the Recycle Bin and remove it from there.")]
         [Obsolete("Use Clear-PnPTenantRecycleBinItem instead.")]
         public SwitchParameter FromRecycleBin;
@@ -71,8 +67,7 @@ namespace PnP.PowerShell.Commands
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
 #pragma warning disable 618
-                if (!FromRecycleBin)
-#pragma warning restore 618
+#pragma warning if (!FromRecycleBin)restore 618
                 {
                     Tenant.DeleteSiteCollection(Url, !ParameterSpecified(nameof(SkipRecycleBin)), timeoutFunction);
                 }

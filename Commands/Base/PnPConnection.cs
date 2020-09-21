@@ -75,8 +75,6 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public string[] Scopes { get; internal set; }
 
-        public int RetryCount { get; protected set; }
-        public int RetryWait { get; protected set; }
         public PSCredential PSCredential { get; protected set; }
 
         /// <summary>
@@ -515,8 +513,8 @@ namespace PnP.PowerShell.Commands.Base
 
         #endregion
 
-        internal PnPConnection(ClientContext context, ConnectionType connectionType, int retryCount, int retryWait, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
-        : this(context, connectionType, retryCount, retryWait, credential, url, tenantAdminUrl, pnpVersionTag, host, disableTelemetry, initializationType)
+        internal PnPConnection(ClientContext context, ConnectionType connectionType, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
+        : this(context, connectionType, credential, url, tenantAdminUrl, pnpVersionTag, host, disableTelemetry, initializationType)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -524,8 +522,6 @@ namespace PnP.PowerShell.Commands.Base
 
         internal PnPConnection(ClientContext context,
                                     ConnectionType connectionType,
-                                    int retryCount,
-                                    int retryWait,
                                     PSCredential credential,
                                     string url,
                                     string tenantAdminUrl,
@@ -546,8 +542,6 @@ namespace PnP.PowerShell.Commands.Base
             Context.ExecutingWebRequest += Context_ExecutingWebRequest;
 
             ConnectionType = connectionType;
-            RetryCount = retryCount;
-            RetryWait = retryWait;
             TenantAdminUrl = tenantAdminUrl;
 
             PSCredential = credential;
@@ -557,7 +551,7 @@ namespace PnP.PowerShell.Commands.Base
             ConnectionMethod = ConnectionMethod.Credentials;
         }
 
-        internal PnPConnection(ClientContext context, GenericToken tokenResult, ConnectionType connectionType, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
+        internal PnPConnection(ClientContext context, GenericToken tokenResult, ConnectionType connectionType, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
         {
             if (!disableTelemetry)
             {
@@ -570,8 +564,6 @@ namespace PnP.PowerShell.Commands.Base
             UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             Context = context;
             ConnectionType = connectionType;
-            RetryCount = retryCount;
-            RetryWait = retryWait;
             PSCredential = credential;
             TenantAdminUrl = tenantAdminUrl;
             ContextCache = new List<ClientContext> { context };
@@ -587,7 +579,7 @@ namespace PnP.PowerShell.Commands.Base
             };
         }
 
-        internal PnPConnection(GenericToken tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, int retryCount, int retryWait, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
+        internal PnPConnection(GenericToken tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
         {
             if (!disableTelemetry)
             {
@@ -596,13 +588,11 @@ namespace PnP.PowerShell.Commands.Base
             var coreAssembly = Assembly.GetExecutingAssembly();
             UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             ConnectionType = connectionType;
-            RetryCount = retryCount;
-            RetryWait = retryWait;
             PnPVersionTag = pnpVersionTag;
             ConnectionMethod = connectionMethod;
         }
 
-        internal PnPConnection(ConnectionMethod connectionMethod, ConnectionType connectionType, int retryCount, int retryWait, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
+        internal PnPConnection(ConnectionMethod connectionMethod, ConnectionType connectionType, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
         {
             if (!disableTelemetry)
             {
@@ -611,8 +601,6 @@ namespace PnP.PowerShell.Commands.Base
             var coreAssembly = Assembly.GetExecutingAssembly();
             UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             ConnectionType = connectionType;
-            RetryCount = retryCount;
-            RetryWait = retryWait;
             PnPVersionTag = pnpVersionTag;
             ConnectionMethod = connectionMethod;
         }
@@ -724,21 +712,11 @@ namespace PnP.PowerShell.Commands.Base
                 TelemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
                 TelemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
                 TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
-#if !PNPPSCORE
-                TelemetryClient.Context.GlobalProperties.Add("ServerLibraryVersion", serverLibraryVersion);
-                TelemetryClient.Context.GlobalProperties.Add("ServerVersion", serverVersion);
-                TelemetryClient.Context.GlobalProperties.Add("ConnectionMethod", initializationType.ToString());
-#else
                 TelemetryClient.Context.Properties.Add("ServerLibraryVersion", serverLibraryVersion);
                 TelemetryClient.Context.Properties.Add("ServerVersion", serverVersion);
                 TelemetryClient.Context.Properties.Add("ConnectionMethod", initializationType.ToString());
-#endif
                 var coreAssembly = Assembly.GetExecutingAssembly();
-#if !PNPPSCORE
-                TelemetryClient.Context.GlobalProperties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
-#else
                 TelemetryClient.Context.Properties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
-#endif
                 TelemetryClient.Context.Properties.Add("Platform", "SPO");
                 TelemetryClient.TrackEvent("Connect-PnPOnline");
             }

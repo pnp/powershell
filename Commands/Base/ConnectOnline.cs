@@ -216,54 +216,6 @@ PS:> dir",
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "The name of the ADFS trusted login provider")]
         public string LoginProviderName;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
-        public int RetryCount = 10;
-
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
-        public int RetryWait = 1;
-
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "The request timeout. Default is 1800000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The request timeout. Default is 1800000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "The request timeout. Default is 1800000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "The request timeout. Default is 1800000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "The request timeout. Default is 1800000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "The request timeout. Default is 1800000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "The request timeout. Default is 1800000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The request timeout. Default is 1800000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The request timeout. Default is 1800000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "The request timeout. Default is 1800000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "The request timeout. Default is 1800000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "The request timeout. Default is 180000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "The request timeout. Default is 1800000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, HelpMessage = "The request timeout. Default is 1800000")]
-        public int RequestTimeout = 1800000;
-
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Authentication realm. If not specified will be resolved from the url specified.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Authentication realm. If not specified will be resolved from the url specified.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "Authentication realm. If not specified will be resolved from the url specified.")]
@@ -287,11 +239,6 @@ PS:> dir",
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "If you want to connect to SharePoint with browser based login. This is required when you have multi-factor authentication (MFA) enabled.")]
         public SwitchParameter UseWebLogin;
-
-#if !PNPPSCORE
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Specify to use for instance use forms based authentication (FBA)")]
-        public ClientAuthenticationMode AuthenticationMode = ClientAuthenticationMode.Default;
-#endif
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "If you want to create a PSDrive connected to the URL")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "If you want to create a PSDrive connected to the URL")]
@@ -439,25 +386,6 @@ PS:> dir",
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
         public string TenantAdminUrl;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting through a proxy to the Microsoft Graph API which has SSL interception enabled.")]
-#if !PNPPSCORE
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AADWITHSCOPE, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting through a proxy to the Microsoft Graph API which has SSL interception enabled.")]
-#endif
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting through a proxy to the Microsoft Graph API which has SSL interception enabled.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
-        public SwitchParameter IgnoreSslErrors;
-
         [Parameter(Mandatory = false, HelpMessage = "In order to help to make PnP PowerShell better, we can track anonymous telemetry. We track the version of the cmdlets you are using, which cmdlet you are executing and which version of SharePoint you are connecting to. Use Disable-PnPPowerShellTelemetry to turn this off in general or use the -NoTelemetry switch to turn it off for that session.")]
         public SwitchParameter NoTelemetry;
 
@@ -493,11 +421,6 @@ PS:> dir",
             if (!string.IsNullOrEmpty(latestVersion))
             {
                 WriteUpdateMessage(latestVersion);
-            }
-
-            if (IgnoreSslErrors)
-            {
-                ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             }
 
             PSCredential credentials = null;
@@ -635,7 +558,7 @@ PS:> dir",
         private PnPConnection ConnectToken()
         {
 #pragma warning disable CS0618 // Type or member is obsolete
-            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, AppId, AppSecret, Host, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, false, AzureEnvironment);
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, AppId, AppSecret, Host, TenantAdminUrl, false, AzureEnvironment);
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 
@@ -656,7 +579,7 @@ PS:> dir",
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyClientIdCClientSecretUrl()
         {
-            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, false, AzureEnvironment);
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, TenantAdminUrl, false, AzureEnvironment);
         }
 
         /// <summary>
@@ -695,7 +618,7 @@ PS:> dir",
             {
                 Url += "/";
             }
-            var connection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
+            var connection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
 
             if (Host.Name == "ConsoleHost")
             {
@@ -719,29 +642,7 @@ PS:> dir",
                     Console.TreatControlCAsInput = true;
                 }
 
-                var connection = PnPConnectionHelper.InstantiateGraphDeviceLoginConnection(LaunchBrowser,  RetryCount, RetryWait, RequestTimeout, (message) =>
-                {
-                    WriteWarning(message);
-                },
-                (progress) =>
-                {
-                    Host.UI.Write(progress);
-                },
-                () =>
-                {
-                    if (Host.Name == "ConsoleHost")
-                    {
-                        if (Console.KeyAvailable)
-                        {
-                            var cki = Console.ReadKey(true);
-                            if (cki.Key == ConsoleKey.C && cki.Modifiers == ConsoleModifiers.Control)
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                    return false;
-                }, Host, NoTelemetry, AzureEnvironment);
+                var connection = PnPConnectionHelper.InstantiateGraphDeviceLoginConnection(LaunchBrowser, Host, NoTelemetry, AzureEnvironment);
                 if (Host.Name == "ConsoleHost")
                 {
                     Console.TreatControlCAsInput = ctrlCAsInput;
@@ -775,8 +676,7 @@ PS:> dir",
             }
 #if !PNPPSCORE
             return PnPConnectionHelper.InitiateAzureADNativeApplicationConnection(
-                new Uri(Url), clientId, new Uri(redirectUrl), RetryCount,
-                RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+                new Uri(Url), clientId, new Uri(redirectUrl), RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
             throw new NotImplementedException();
 #endif
@@ -792,15 +692,15 @@ PS:> dir",
             if (ParameterSpecified(nameof(CertificatePath)))
             {
                 WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
-                return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
+                return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
             }
             else if (ParameterSpecified(nameof(Certificate)))
             {
-                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment, Certificate);
+                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment, Certificate);
             }
             else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
             {
-                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment, CertificateBase64Encoded);
+                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment, CertificateBase64Encoded);
             }
             else
             {
@@ -819,7 +719,7 @@ PS:> dir",
         {
 #if !PNPPSCORE
 #else
-            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, CertificatePassword,  RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
+            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, CertificatePassword, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
 #endif
         }
 
@@ -829,7 +729,7 @@ PS:> dir",
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyAadThumb()
         {
-            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
+            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
         }
 
         /// <summary>
@@ -839,7 +739,7 @@ PS:> dir",
         private PnPConnection ConnectAppOnlyAadCer()
         {
 #if !PNPPSCORE
-            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Certificate, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
+            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Certificate, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
 #else
             throw new NotImplementedException();
 #endif
@@ -952,8 +852,6 @@ PS:> dir",
                                                                  Kerberos,
                                                                  credentials,
                                                                  Host,
-                                                                 RetryCount,
-                                                                 RetryWait,
                                                                  RequestTimeout,
                                                                  TenantAdminUrl,
                                                                  NoTelemetry,
@@ -994,7 +892,7 @@ PS:> dir",
                 var serialNumber = ClientCertificate.SerialNumber;
                 try
                 {
-                    return PnPConnectionHelper.InstantiateAdfsCertificateConnection(new Uri(Url), serialNumber, Host, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
+                    return PnPConnectionHelper.InstantiateAdfsCertificateConnection(new Uri(Url), serialNumber, Host, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
                 }
                 catch (TargetInvocationException e) when (e.InnerException != null && e.InnerException is CryptographicException)
                 {
@@ -1015,7 +913,7 @@ PS:> dir",
         private PnPConnection ConnectWebLogin()
         {
 #if !PNPPSCORE
-            return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url.ToLower()), RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, SkipTenantAdminCheck);
+            return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url.ToLower()), RequestTimeout, TenantAdminUrl, Host, SkipTenantAdminCheck);
 #else
             WriteWarning(@"-UseWebLogin is not implemented, due to restrictions of the .NET Standard framework. Use -PnPManagementShell instead");
             return null;
@@ -1047,10 +945,6 @@ PS:> dir",
             return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url),
                                                                credentials,
                                                                Host,
-                                                               CurrentCredentials,
-                                                               RetryCount,
-                                                               RetryWait,
-                                                               RequestTimeout,
                                                                TenantAdminUrl,
                                                                NoTelemetry,
                                                                AzureEnvironment);

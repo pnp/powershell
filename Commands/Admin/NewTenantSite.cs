@@ -39,10 +39,6 @@ Online site collection fails if a deleted site with the same URL exists in the R
         [Parameter(Mandatory = true, HelpMessage = @"Specifies the full URL of the new site collection. It must be in a valid managed path in the company's site. For example, for company contoso, valid managed paths are https://contoso.sharepoint.com/sites and https://contoso.sharepoint.com/teams.")]
         public string Url;
 
-        [Obsolete("This parameter is currently ignored due to server side API issues when setting this value.")]
-        [Parameter(Mandatory = false, HelpMessage = @"Specifies the description of the new site collection. Setting a value for this parameter will override the Wait parameter as we have to set the description after the site has been created.")]
-        public string Description = string.Empty;
-
         [Parameter(Mandatory = true, HelpMessage = @"Specifies the user name of the site collection's primary owner. The owner must be a user instead of a security group or an email-enabled security group.")]
         public string Owner = string.Empty;
 
@@ -92,14 +88,6 @@ Online site collection fails if a deleted site with the same URL exists in the R
             {
 
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
-
-#pragma warning disable CS0618 // Type or member is obsolete
-                if (ParameterSpecified(nameof(Description)))
-#pragma warning restore CS0618 // Type or member is obsolete
-                {
-                    // We have to fall back to synchronous behaviour as we have to wait for the site to be present in order to set the description.
-                    Wait = true;
-                }
 
                 Tenant.CreateSiteCollection(Url, Title, Owner, Template, (int)StorageQuota,
                     (int)StorageQuotaWarningLevel, TimeZone, (int)ResourceQuota, (int)ResourceQuotaWarningLevel, Lcid,
