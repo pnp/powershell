@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommon.Add, "PnPTenantSequenceSubSite", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Add, "PnPTenantSequenceSubSite")]
     
     public class AddTenantSequenceSubSite : PSCmdlet
     {

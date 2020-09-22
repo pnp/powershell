@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPApplicationCustomizer", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPApplicationCustomizer")]
     public class RemoveApplicationCustomizer : PnPWebCmdlet
     {
         private const string ParameterSet_CUSTOMACTIONID = "Custom Action Id";

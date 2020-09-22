@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTenantSite", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Get, "PnPTenantSite")]
     public class GetTenantSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]

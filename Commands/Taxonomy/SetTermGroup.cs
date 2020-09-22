@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Set, "PnPTermGroup", SupportsShouldProcess = false)]
+    [Cmdlet(VerbsCommon.Set, "PnPTermGroup")]
     public class SetTermGroup : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

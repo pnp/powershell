@@ -12,19 +12,13 @@ namespace PnP.PowerShell.Commands.Publishing
     [Cmdlet(VerbsCommon.Set, "PnPAvailablePageLayouts")]
     public class SetAvailablePageLayouts : PnPWebCmdlet
     {
-        [Parameter(
-            Mandatory = true,
-            ParameterSetName = "SPECIFIC"]
+        [Parameter(Mandatory = true, ParameterSetName = "SPECIFIC")]
         public string[] PageLayouts;
 
-        [Parameter(
-            Mandatory = true, 
-            ParameterSetName = "ALL"]
+        [Parameter(Mandatory = true, ParameterSetName = "ALL")]
         public SwitchParameter AllowAllPageLayouts;
 
-        [Parameter(
-            Mandatory = true,
-            ParameterSetName = "INHERIT"]
+        [Parameter(Mandatory = true, ParameterSetName = "INHERIT")]
         public SwitchParameter InheritPageLayouts;
 
         protected override void ExecuteCmdlet()

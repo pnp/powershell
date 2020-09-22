@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommon.Add, "PnPProvisioningTemplate", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Add, "PnPProvisioningTemplate")]
     public class AddProvisioningTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true)]

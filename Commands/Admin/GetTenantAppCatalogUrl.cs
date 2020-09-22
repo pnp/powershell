@@ -4,7 +4,7 @@ using PnP.PowerShell.CmdletHelpAttributes;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTenantAppCatalogUrl", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Get, "PnPTenantAppCatalogUrl")]
     public class GetTenantAppCatalogUrl : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()

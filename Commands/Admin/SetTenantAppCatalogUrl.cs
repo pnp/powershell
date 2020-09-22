@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Set, "PnPTenantAppCatalogUrl", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Set, "PnPTenantAppCatalogUrl")]
     public class SetTenantAppCatalogUrl : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

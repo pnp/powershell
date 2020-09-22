@@ -11,7 +11,7 @@ using File = Microsoft.SharePoint.Client.File;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Copy, "PnPFile", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Copy, "PnPFile")]
     public class CopyFile : PnPWebCmdlet
     {
         private ProgressRecord _progressFolder = new ProgressRecord(0, "Activity", "Status") { Activity = "Copying folder" };

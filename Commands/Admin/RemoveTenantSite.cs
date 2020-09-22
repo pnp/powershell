@@ -8,7 +8,7 @@ using PnP.Framework;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPTenantSite", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = false)]
+    [Cmdlet(VerbsCommon.Remove, "PnPTenantSite")]
     public class RemoveSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]

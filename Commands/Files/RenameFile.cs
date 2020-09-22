@@ -6,7 +6,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Rename, "PnPFile", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Rename, "PnPFile")]
     public class RenameFile : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SERVER")]

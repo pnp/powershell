@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPStorageEntity", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPStorageEntity")]
     
     public class RemovePnPStorageEntity : PnPSharePointCmdlet
     {

@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTermSet", SupportsShouldProcess = false)]
+    [Cmdlet(VerbsCommon.Get, "PnPTermSet")]
     public class GetTermSet : PnPRetrievalsCmdlet<TermSet>
     {
         [Parameter(Mandatory = false)]

@@ -5,7 +5,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommon.New, "PnPTenantSequenceTeamNoGroupSubSite", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.New, "PnPTenantSequenceTeamNoGroupSubSite")]
     public class NewTenantSequenceTeamNoGroupSubSite : PSCmdlet
     {
 

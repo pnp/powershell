@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Move, "PnPListItemToRecycleBin", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Move, "PnPListItemToRecycleBin")]
     public class MoveListItemToRecycleBin : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

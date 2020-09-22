@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPSiteDesign", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPSiteDesign")]
     public class RemoveSiteDesign : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]

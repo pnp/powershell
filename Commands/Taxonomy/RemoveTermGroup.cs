@@ -8,7 +8,7 @@ using PnP.PowerShell.CmdletHelpAttributes;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPTermGroup", SupportsShouldProcess = false)]
+    [Cmdlet(VerbsCommon.Remove, "PnPTermGroup")]
     public class RemoveTermGroup : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

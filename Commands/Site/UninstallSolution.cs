@@ -8,10 +8,10 @@ namespace PnP.PowerShell.Commands.Site
     [Cmdlet(VerbsLifecycle.Uninstall, "PnPSolution")]
     public class UninstallSolution : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true]
+        [Parameter(Mandatory = true)]
         public GuidPipeBind PackageId;
 
-        [Parameter(Mandatory = true]
+        [Parameter(Mandatory = true)]
         public string PackageName;
 
         [Parameter(Mandatory = false)]

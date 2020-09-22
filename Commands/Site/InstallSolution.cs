@@ -10,16 +10,16 @@ namespace PnP.PowerShell.Commands.Site
     [Cmdlet(VerbsLifecycle.Install, "PnPSolution")]
     public class InstallSolution : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true]
+        [Parameter(Mandatory = true)]
         public GuidPipeBind PackageId;
 
-        [Parameter(Mandatory = true]
+        [Parameter(Mandatory = true)]
         public string SourceFilePath;
 
-        [Parameter(Mandatory = false]
+        [Parameter(Mandatory = false)]
         public int MajorVersion = 1;
 
-        [Parameter(Mandatory = false]
+        [Parameter(Mandatory = false)]
         public int MinorVersion = 0;
 
         protected override void ExecuteCmdlet()

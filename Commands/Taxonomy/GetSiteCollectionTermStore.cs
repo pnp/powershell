@@ -5,7 +5,7 @@ using PnP.PowerShell.CmdletHelpAttributes;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteCollectionTermStore", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteCollectionTermStore")]
     public class GetPnPSiteCollectionTermStore : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()

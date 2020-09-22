@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsDiagnostic.Test, "PnPTenantTemplate", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsDiagnostic.Test, "PnPTenantTemplate")]
     public class TestTenantTemplate : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]

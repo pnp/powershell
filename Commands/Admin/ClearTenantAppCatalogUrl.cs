@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Clear, "PnPTenantAppCatalogUrl", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Clear, "PnPTenantAppCatalogUrl")]
     public class ClearTenantAppCatalogUrl : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()

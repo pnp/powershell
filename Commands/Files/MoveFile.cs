@@ -6,7 +6,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Move, "PnPFile", SupportsShouldProcess = true, DefaultParameterSetName = ParameterSet_SITE)]
+    [Cmdlet(VerbsCommon.Move, "PnPFile", DefaultParameterSetName = ParameterSet_SITE)]
     public class MoveFile : PnPWebCmdlet
     {
         private const string ParameterSet_SERVER = "Server Relative";

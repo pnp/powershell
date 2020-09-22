@@ -19,7 +19,7 @@ using PnP.Framework.Provisioning.Model.Configuration;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Get, "PnPProvisioningTemplate", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Get, "PnPProvisioningTemplate")]
     public class GetProvisioningTemplate : PnPWebCmdlet
     {
         private ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");

@@ -195,17 +195,20 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public bool? EnableAIPIntegration;
 
+        [Parameter(Mandatory = false)]
+        public bool? DisableCustomAppAuthentication;
+
         protected override void ExecuteCmdlet()
         {
             ClientContext.Load(Tenant);
             ClientContext.ExecuteQueryRetry();
 
-            bool isDirty = false;
+            bool modified = false;
             if (MinCompatibilityLevel != 0 && MaxCompatibilityLevel != 0)
             {
                 var compatibilityRange = $"{MinCompatibilityLevel},{MaxCompatibilityLevel}";
                 Tenant.CompatibilityRange = compatibilityRange;
-                isDirty = true;
+                modified = true;
             }
             else if (MinCompatibilityLevel != 0 || MaxCompatibilityLevel != 0)
             {
@@ -214,72 +217,72 @@ namespace PnP.PowerShell.Commands.Admin
             if (NoAccessRedirectUrl != null)
             {
                 Tenant.NoAccessRedirectUrl = NoAccessRedirectUrl;
-                isDirty = true;
+                modified = true;
             }
             if (ExternalServicesEnabled.HasValue)
             {
                 Tenant.ExternalServicesEnabled = ExternalServicesEnabled.Value;
-                isDirty = true;
+                modified = true;
             }
             if (DisplayStartASiteOption.HasValue)
             {
                 Tenant.DisplayStartASiteOption = DisplayStartASiteOption.Value;
-                isDirty = true;
+                modified = true;
             }
             if (SharingCapability != null)
             {
                 Tenant.SharingCapability = SharingCapability.Value;
-                isDirty = true;
+                modified = true;
             }
             if (StartASiteFormUrl != null)
             {
                 Tenant.StartASiteFormUrl = StartASiteFormUrl;
-                isDirty = true;
+                modified = true;
             }
             if (ShowEveryoneClaim.HasValue)
             {
                 Tenant.ShowEveryoneClaim = ShowEveryoneClaim.Value;
-                isDirty = true;
+                modified = true;
             }
             if (ShowAllUsersClaim.HasValue)
             {
                 Tenant.ShowAllUsersClaim = ShowAllUsersClaim.Value;
-                isDirty = true;
+                modified = true;
             }
             if (OfficeClientADALDisabled.HasValue)
             {
                 Tenant.OfficeClientADALDisabled = OfficeClientADALDisabled.Value;
-                isDirty = true;
+                modified = true;
             }
             if (LegacyAuthProtocolsEnabled.HasValue)
             {
                 Tenant.LegacyAuthProtocolsEnabled = LegacyAuthProtocolsEnabled.Value;
-                isDirty = true;
+                modified = true;
             }
             if (ShowEveryoneExceptExternalUsersClaim.HasValue)
             {
                 Tenant.ShowEveryoneExceptExternalUsersClaim = ShowEveryoneExceptExternalUsersClaim.Value;
-                isDirty = true;
+                modified = true;
             }
             if (SearchResolveExactEmailOrUPN.HasValue)
             {
                 Tenant.SearchResolveExactEmailOrUPN = SearchResolveExactEmailOrUPN.Value;
-                isDirty = true;
+                modified = true;
             }
             if (RequireAcceptingAccountMatchInvitedAccount.HasValue)
             {
                 Tenant.RequireAcceptingAccountMatchInvitedAccount = RequireAcceptingAccountMatchInvitedAccount.Value;
-                isDirty = true;
+                modified = true;
             }
             if (ProvisionSharedWithEveryoneFolder.HasValue)
             {
                 Tenant.ProvisionSharedWithEveryoneFolder = ProvisionSharedWithEveryoneFolder.Value;
-                isDirty = true;
+                modified = true;
             }
             if (SignInAccelerationDomain != null && ShouldContinue($@"Please confirm that ""{SignInAccelerationDomain}"" is correct, and you have federated sign-in configured for that domain. Otherwise, your users will no longer be able to sign in. Do you want to continue?", "Confirm"))
             {
                 Tenant.SignInAccelerationDomain = SignInAccelerationDomain;
-                isDirty = true;
+                modified = true;
             }
             if (EnableGuestSignInAcceleration.HasValue)
             {
@@ -290,38 +293,38 @@ namespace PnP.PowerShell.Commands.Admin
                 if (ShouldContinue("Make sure that your federated sign-in supports guest users. If it doesn’t, your guest users will no longer be able to sign in after you set EnableGuestSignInAcceleration to $true.", "Confirm"))
                 {
                     Tenant.EnableGuestSignInAcceleration = EnableGuestSignInAcceleration.Value;
-                    isDirty = true;
+                    modified = true;
                 }
             }
             if (UsePersistentCookiesForExplorerView.HasValue)
             {
                 Tenant.UsePersistentCookiesForExplorerView = UsePersistentCookiesForExplorerView.Value;
-                isDirty = true;
+                modified = true;
             }
             if (BccExternalSharingInvitations.HasValue && (!BccExternalSharingInvitations.Value || (BccExternalSharingInvitations.Value && ShouldContinue("The recipients listed in BccExternalSharingInvitationsList will be blind copied on all external sharing invitations. Do you want to continue?", "Confirm"))))
             {
                 Tenant.BccExternalSharingInvitations = BccExternalSharingInvitations.Value;
-                isDirty = true;
+                modified = true;
             }
             if (!string.IsNullOrEmpty(BccExternalSharingInvitationsList))
             {
                 Tenant.BccExternalSharingInvitationsList = BccExternalSharingInvitationsList;
-                isDirty = true;
+                modified = true;
             }
             if (UserVoiceForFeedbackEnabled.HasValue)
             {
                 Tenant.UserVoiceForFeedbackEnabled = UserVoiceForFeedbackEnabled.Value;
-                isDirty = true;
+                modified = true;
             }
             if (PublicCdnEnabled != null)
             {
                 Tenant.PublicCdnEnabled = PublicCdnEnabled.Value;
-                isDirty = true;
+                modified = true;
             }
             if (!string.IsNullOrEmpty(PublicCdnAllowedFileTypes))
             {
                 Tenant.PublicCdnAllowedFileTypes = PublicCdnAllowedFileTypes;
-                isDirty = true;
+                modified = true;
             }
             if (RequireAnonymousLinksExpireInDays.HasValue)
             {
@@ -340,7 +343,7 @@ namespace PnP.PowerShell.Commands.Admin
                     if (requireAnonymousLinksExpireInDays != RequireAnonymousLinksExpireInDays.Value)
                     {
                         Tenant.RequireAnonymousLinksExpireInDays = RequireAnonymousLinksExpireInDays.Value;
-                        isDirty = true;
+                        modified = true;
                     }
                 }
                 catch (PropertyOrFieldNotInitializedException)
@@ -356,7 +359,7 @@ namespace PnP.PowerShell.Commands.Admin
                     Tenant.RequireAcceptingAccountMatchInvitedAccount = true;
                 }
                 Tenant.SharingAllowedDomainList = SharingAllowedDomainList;
-                isDirty = true;
+                modified = true;
                 if ((SharingDomainRestrictionMode == null && Tenant.SharingDomainRestrictionMode != SharingDomainRestrictionModes.AllowList) || SharingDomainRestrictionMode == SharingDomainRestrictionModes.None)
                 {
                     WriteWarning("You must set SharingDomainRestrictionMode to AllowList in order to have the list of domains you configured for SharingAllowedDomainList to take effect.");
@@ -369,37 +372,37 @@ namespace PnP.PowerShell.Commands.Admin
             if (PreventExternalUsersFromResharing.HasValue)
             {
                 Tenant.PreventExternalUsersFromResharing = PreventExternalUsersFromResharing.Value;
-                isDirty = true;
+                modified = true;
             }
             if (NotifyOwnersWhenItemsReshared.HasValue)
             {
                 Tenant.NotifyOwnersWhenItemsReshared = NotifyOwnersWhenItemsReshared.Value;
-                isDirty = true;
+                modified = true;
             }
             if (NotifyOwnersWhenInvitationsAccepted.HasValue)
             {
                 Tenant.NotifyOwnersWhenInvitationsAccepted = NotifyOwnersWhenInvitationsAccepted.Value;
-                isDirty = true;
+                modified = true;
             }
             if (NotificationsInOneDriveForBusinessEnabled.HasValue)
             {
                 Tenant.NotificationsInOneDriveForBusinessEnabled = NotificationsInOneDriveForBusinessEnabled.Value;
-                isDirty = true;
+                modified = true;
             }
             if (NotificationsInSharePointEnabled.HasValue)
             {
                 Tenant.NotificationsInSharePointEnabled = NotificationsInSharePointEnabled.Value;
-                isDirty = true;
+                modified = true;
             }
             if (SpecialCharactersStateInFileFolderNames.HasValue)
             {
                 Tenant.SpecialCharactersStateInFileFolderNames = SpecialCharactersStateInFileFolderNames.Value;
-                isDirty = true;
+                modified = true;
             }
             if (OwnerAnonymousNotification.HasValue)
             {
                 Tenant.OwnerAnonymousNotification = OwnerAnonymousNotification.Value;
-                isDirty = true;
+                modified = true;
             }
             if (OrphanedPersonalSitesRetentionPeriod.HasValue)
             {
@@ -412,7 +415,7 @@ namespace PnP.PowerShell.Commands.Admin
                     try
                     {
                         Tenant.OrphanedPersonalSitesRetentionPeriod = OrphanedPersonalSitesRetentionPeriod.Value;
-                        isDirty = true;
+                        modified = true;
                     }
                     catch (PropertyOrFieldNotInitializedException)
                     {
@@ -424,7 +427,7 @@ namespace PnP.PowerShell.Commands.Admin
             if (DisallowInfectedFileDownload.HasValue)
             {
                 Tenant.DisallowInfectedFileDownload = DisallowInfectedFileDownload.Value;
-                isDirty = true;
+                modified = true;
             }
             if (!string.IsNullOrEmpty(SharingBlockedDomainList))
             {
@@ -434,7 +437,7 @@ namespace PnP.PowerShell.Commands.Admin
                     Tenant.RequireAcceptingAccountMatchInvitedAccount = true;
                 }
                 Tenant.SharingBlockedDomainList = SharingBlockedDomainList;
-                isDirty = true;
+                modified = true;
                 if ((SharingDomainRestrictionMode == null && Tenant.SharingDomainRestrictionMode != SharingDomainRestrictionModes.BlockList) || SharingDomainRestrictionMode == SharingDomainRestrictionModes.None)
                 {
                     WriteWarning("You must set SharingDomainRestrictionMode to BlockList in order to have the list of domains you configured for SharingBlockedDomainList to take effect");
@@ -460,12 +463,12 @@ namespace PnP.PowerShell.Commands.Admin
                     Tenant.RequireAcceptingAccountMatchInvitedAccount = true;
                 }
                 Tenant.SharingDomainRestrictionMode = SharingDomainRestrictionMode.Value;
-                isDirty = true;
+                modified = true;
             }
             if (OneDriveStorageQuota.HasValue)
             {
                 Tenant.OneDriveStorageQuota = OneDriveStorageQuota.Value;
-                isDirty = true;
+                modified = true;
             }
             if (OneDriveForGuestsEnabled.HasValue)
             {
@@ -473,7 +476,7 @@ namespace PnP.PowerShell.Commands.Admin
                 if (ShouldContinue(message, "Confirm"))
                 {
                     Tenant.OneDriveForGuestsEnabled = OneDriveForGuestsEnabled.Value;
-                    isDirty = true;
+                    modified = true;
                 }
             }
             if (IPAddressEnforcement.HasValue)
@@ -483,12 +486,12 @@ namespace PnP.PowerShell.Commands.Admin
                     throw new InvalidOperationException("You are setting IPAddressEnforcement to true, but the allow list of IPAddresses is empty. Please set it using the IPAddressAllowList parameter");
                 }
                 Tenant.IPAddressEnforcement = IPAddressEnforcement.Value;
-                isDirty = true;
+                modified = true;
             }
             if (!string.IsNullOrEmpty(IPAddressAllowList))
             {
                 Tenant.IPAddressAllowList = IPAddressAllowList;
-                isDirty = true;
+                modified = true;
                 if ((IPAddressEnforcement == null && !Tenant.IPAddressEnforcement) || IPAddressEnforcement == false)
                 {
                     WriteWarning("The list of IP Addresses you provided will not be enforced until you set IPAddressEnforcement to true");
@@ -501,17 +504,17 @@ namespace PnP.PowerShell.Commands.Admin
                     throw new InvalidOperationException("The value must be in the range 15-1440 minutes");
                 }
                 Tenant.IPAddressWACTokenLifetime = IPAddressWACTokenLifetime.Value;
-                isDirty = true;
+                modified = true;
             }
             if (UseFindPeopleInPeoplePicker.HasValue)
             {
                 Tenant.UseFindPeopleInPeoplePicker = UseFindPeopleInPeoplePicker.Value;
-                isDirty = true;
+                modified = true;
             }
             if (ShowPeoplePickerSuggestionsForGuestUsers.HasValue)
             {
                 Tenant.ShowPeoplePickerSuggestionsForGuestUsers = ShowPeoplePickerSuggestionsForGuestUsers.Value;
-                isDirty = true;
+                modified = true;
             }
             if (DefaultSharingLinkType.HasValue)
             {
@@ -529,7 +532,7 @@ namespace PnP.PowerShell.Commands.Admin
                             Tenant.DefaultSharingLinkType = DefaultSharingLinkType.Value;
                         }
                     }
-                    isDirty = true;
+                    modified = true;
                 }
                 catch (PropertyOrFieldNotInitializedException)
                 {
@@ -541,12 +544,12 @@ namespace PnP.PowerShell.Commands.Admin
             if (ODBMembersCanShare.HasValue)
             {
                 Tenant.ODBMembersCanShare = ODBMembersCanShare.Value;
-                isDirty = true;
+                modified = true;
             }
             if (ODBAccessRequests.HasValue)
             {
                 Tenant.ODBAccessRequests = ODBAccessRequests.Value;
-                isDirty = true;
+                modified = true;
             }
             if (FileAnonymousLinkType.HasValue)
             {
@@ -564,7 +567,7 @@ namespace PnP.PowerShell.Commands.Admin
                             Tenant.FileAnonymousLinkType = FileAnonymousLinkType.Value;
                         }
                     }
-                    isDirty = true;
+                    modified = true;
                 }
                 catch (PropertyOrFieldNotInitializedException)
                 {
@@ -587,7 +590,7 @@ namespace PnP.PowerShell.Commands.Admin
                             Tenant.FolderAnonymousLinkType = FolderAnonymousLinkType.Value;
                         }
                     }
-                    isDirty = true;
+                    modified = true;
                 }
                 catch (PropertyOrFieldNotInitializedException)
                 {
@@ -599,7 +602,7 @@ namespace PnP.PowerShell.Commands.Admin
                 try
                 {
                     Tenant.CommentsOnSitePagesDisabled = CommentsOnSitePagesDisabled.Value;
-                    isDirty = true;
+                    modified = true;
                 }
                 catch (PropertyOrFieldNotInitializedException)
                 {
@@ -611,7 +614,7 @@ namespace PnP.PowerShell.Commands.Admin
                 try
                 {
                     Tenant.SocialBarOnSitePagesDisabled = SocialBarOnSitePagesDisabled.Value;
-                    isDirty = true;
+                    modified = true;
                 }
                 catch (PropertyOrFieldNotInitializedException)
                 {
@@ -627,7 +630,7 @@ namespace PnP.PowerShell.Commands.Admin
                     {
                         Tenant.DefaultLinkPermission = DefaultLinkPermission.Value;
                     }
-                    isDirty = true;
+                    modified = true;
                 }
                 catch (PropertyOrFieldNotInitializedException)
                 {
@@ -639,7 +642,7 @@ namespace PnP.PowerShell.Commands.Admin
                 try
                 {
                     Tenant.ConditionalAccessPolicy = ConditionalAccessPolicy.Value;
-                    isDirty = true;
+                    modified = true;
                 }
                 catch (PropertyOrFieldNotInitializedException)
                 {
@@ -654,7 +657,7 @@ namespace PnP.PowerShell.Commands.Admin
                     if (Tenant.ConditionalAccessPolicy == SPOConditionalAccessPolicyType.AllowLimitedAccess)
                     {
                         Tenant.AllowDownloadingNonWebViewableFiles = AllowDownloadingNonWebViewableFiles.Value;
-                        isDirty = true;
+                        modified = true;
                         if (!AllowDownloadingNonWebViewableFiles.Value)
                         {
                             WriteWarning("Users will not be able to download files that can't be viewed on the web. To allow download of files that can't be viewed on the web, run the cmdlet again and set AllowDownloadingNonWebViewableFiles to true.");
@@ -664,7 +667,7 @@ namespace PnP.PowerShell.Commands.Admin
                     {
                         Tenant.ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
                         Tenant.AllowDownloadingNonWebViewableFiles = AllowDownloadingNonWebViewableFiles.Value;
-                        isDirty = true;
+                        modified = true;
                         if (!AllowDownloadingNonWebViewableFiles.Value)
                         {
                             WriteWarning("Users will not be able to download files that can't be viewed on the web. To allow download of files that can't be viewed on the web, run the cmdlet again and set AllowDownloadingNonWebViewableFiles to true.");
@@ -684,13 +687,13 @@ namespace PnP.PowerShell.Commands.Admin
                     if (Tenant.ConditionalAccessPolicy == SPOConditionalAccessPolicyType.AllowLimitedAccess)
                     {
                         Tenant.AllowEditing = AllowEditing.Value;
-                        isDirty = true;
+                        modified = true;
                     }
                     else if (ShouldContinue("To set this parameter, you need to set the Set-SPOTenant -ConditionalAccessPolicy to AllowLimitedAccess. Would you like to set it now?", "Confirm"))
                     {
                         Tenant.ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
                         Tenant.AllowEditing = AllowEditing.Value;
-                        isDirty = true;
+                        modified = true;
                     }
                 }
                 catch (PropertyOrFieldNotInitializedException)
@@ -703,7 +706,7 @@ namespace PnP.PowerShell.Commands.Admin
                 try
                 {
                     Tenant.ApplyAppEnforcedRestrictionsToAdHocRecipients = ApplyAppEnforcedRestrictionsToAdHocRecipients.Value;
-                    isDirty = true;
+                    modified = true;
                 }
                 catch (PropertyOrFieldNotInitializedException)
                 {
@@ -720,7 +723,7 @@ namespace PnP.PowerShell.Commands.Admin
                 {
                     throw new InvalidOperationException("Setting the property FilePickerExternalImageSearchEnabled is not supported by your version of the service");
                 }
-                isDirty = true;
+                modified = true;
             }
             if (EmailAttestationRequired.HasValue)
             {
@@ -732,7 +735,7 @@ namespace PnP.PowerShell.Commands.Admin
                 {
                     throw new InvalidOperationException("Setting the property EmailAttestationRequired is not supported by your version of the service");
                 }
-                isDirty = true;
+                modified = true;
             }
             if (EmailAttestationReAuthDays.HasValue)
             {
@@ -744,24 +747,29 @@ namespace PnP.PowerShell.Commands.Admin
                 {
                     throw new InvalidOperationException("Setting the property EmailAttestationReAuthDays is not supported by your version of the service");
                 }
-                isDirty = true;
+                modified = true;
             }
             if(HideDefaultThemes.HasValue)
             {
                 Tenant.HideDefaultThemes = HideDefaultThemes.Value;
-                isDirty = true;
+                modified = true;
             }
             if (DisabledWebPartIds != null)
             {
                 Tenant.DisabledWebPartIds = DisabledWebPartIds;
-                isDirty = true;
+                modified = true;
             }
             if(EnableAIPIntegration.HasValue)
             {
                 Tenant.EnableAIPIntegration = EnableAIPIntegration.Value;
-                isDirty = true;
+                modified = true;
             }
-            if (isDirty)
+            if(DisableCustomAppAuthentication.HasValue)
+            {
+                Tenant.DisableCustomAppAuthentication = DisableCustomAppAuthentication.Value;
+                modified = true;
+            }
+            if (modified)
             {
                 ClientContext.ExecuteQueryRetry();
             }

@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPField", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPField")]
     public class RemoveField : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

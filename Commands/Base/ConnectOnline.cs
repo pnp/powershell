@@ -27,7 +27,7 @@ using System.Reflection;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommunications.Connect, "PnPOnline", SupportsShouldProcess = false, DefaultParameterSetName = ParameterSet_MAIN)]
+    [Cmdlet(VerbsCommunications.Connect, "PnPOnline", DefaultParameterSetName = ParameterSet_MAIN)]
     public class ConnectOnline : BasePSCmdlet
     {
         private const string ParameterSet_MAIN = "Main";
