@@ -14,7 +14,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
     [Cmdlet(VerbsCommon.Set, "PnPTermSet")]
     public class SetTermSet : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = true)]
         public GenericObjectNameIdPipeBind<TermSet> Identity;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
