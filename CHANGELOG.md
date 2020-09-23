@@ -22,6 +22,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Disable-PnPInPlaceRecordsManagementForSite`. Use `Set-PnPInPlaceRecordsManagement -Enabled $false`.
 - Removed `Enable-PnPInPlaceRecordsManagementForSite`. Use `Set-PnPInPlaceRecordsManagement -Enabled $true`.
 - Added -DisableCustomAppAuthentication to Set-PnPTenant and added support for DisableCustomAppAuthentication in Get-PnPTenant.
+- Removed `Measure-PnPResponseTime`. Use Fiddler for more detailed data instead.
+- Removed `-Identity` from Get-PnPAvailableLanguage as it does not apply to SharePoint Online.
 
 ## [3.25.2009.1]
 
