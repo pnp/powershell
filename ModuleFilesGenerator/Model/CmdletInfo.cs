@@ -21,17 +21,8 @@ namespace PnP.PowerShell.ModuleFilesGenerator.Model
 
         public List<CmdletSyntax> Syntaxes { get; set; }
 
-        public Type OutputType { get; set; }
-        public string OutputTypeDescription { get; set; }
-        public string OutputTypeLink { get; set; }
-
         public List<string> Aliases { get; set; }
 
-        public List<CmdletExampleAttribute> Examples { get; set; }
-
-        public List<CmdletRelatedLinkAttribute> RelatedLinks { get; set; }
-
-        public List<CmdletAdditionalParameter> AdditionalParameters { get; set; }
         public string FullCommand => $"{Verb}-{Noun}";
 
         public string Category { get; set; }
@@ -40,20 +31,11 @@ namespace PnP.PowerShell.ModuleFilesGenerator.Model
 
         public string Platform { get; set; }
 
-        /// <summary>
-        /// Holds a list with API permissions which are required for the current cmdlet to be able to be executed
-        /// </summary>
-        public List<CmdletApiPermissionBase> ApiPermissions { get; set; }
-
         public CmdletInfo()
         {
             Parameters = new List<CmdletParameterInfo>();
             Syntaxes = new List<CmdletSyntax>();
             Aliases = new List<string>();
-            Examples = new List<CmdletExampleAttribute>();
-            RelatedLinks = new List<CmdletRelatedLinkAttribute>();
-            AdditionalParameters = new List<CmdletAdditionalParameter>();
-            ApiPermissions = new List<CmdletApiPermissionBase>();
         }
     }
 }

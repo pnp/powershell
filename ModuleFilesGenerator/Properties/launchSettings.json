@@ -2,7 +2,7 @@
   "profiles": {
     "SharePointPnP.PowerShell.Core.ModuleFilesGenerator": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\repos\\PnP-PowerShell\\Commands\\bin\\Debug\\netstandard2.0\\SharePointPnP.PowerShell.Core.dll\" \"Debug\" \"c:\\repos\\PnP-PowerShell"
+      "commandLineArgs": "\"C:\\repos\\powershell\\Commands\\bin\\Debug\\PnP.PowerShell.dll\" \"Debug\" \"C:\\repos\\powershell\\\""
     }
   }
 }
