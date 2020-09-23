@@ -1,9 +1,9 @@
-﻿#if !PNPPSCORE
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Enums;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
@@ -14,34 +14,10 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-#if !PNPPSCORE
-using System.Web.Script.Serialization;
-#endif
 
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPSPRestMethod")]
-    [CmdletHelp("Invokes a REST request towards a SharePoint site",
-       DetailedDescription = @"Invokes a REST request towards a SharePoint site",
-       SupportedPlatform = CmdletSupportedPlatform.Online,
-       Category = CmdletHelpCategory.Base)]
-    
-    [CmdletExample(
-       Code = @"PS:> $output = Invoke-PnPSPRestMethod -Url '/_api/web/lists?$select=Id,Title'
-PS:> $output.value",
-       Remarks = @"This example executes a GET request towards the current site collection and returns the id and title of all the lists and outputs them to the console. Notice the use of single quotes. If you want to use double quotes ("") then you will have to escape the $ character with a backtick: `$", SortOrder = 2)]
-    [CmdletExample(
-       Code = @"PS:> $item = @{Title=""Test""}
-PS:> Invoke-PnPSPRestMethod -Method Post -Url ""/_api/web/lists/GetByTitle('Test')/items"" -Content $item",
-       Remarks = @"This example creates a new item in the list 'Test' and sets the title field to 'Test'", SortOrder = 3)]
-    [CmdletExample(
-       Code = @"PS:> $item = ""{'Title':'Test'}""
-PS:> Invoke-PnPSPRestMethod -Method Post -Url ""/_api/web/lists/GetByTitle('Test')/items"" -Content $item",
-       Remarks = @"This example creates a new item in the list 'Test' and sets the title field to 'Test'", SortOrder = 4)]
-    [CmdletExample(
-       Code = @"PS:> $item = ""{ '__metadata': { 'type': 'SP.Data.TestListItem' }, 'Title': 'Test'}""
-PS:> Invoke-PnPSPRestMethod -Method Post -Url ""/_api/web/lists/GetByTitle('Test')/items"" -Content $item -ContentType ""application/json;odata=verbose""",
-       Remarks = @"This example creates a new item in the list 'Test' and sets the title field to 'Test'", SortOrder = 5)]
     public class InvokeSPRestMethod : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]
@@ -105,7 +81,7 @@ PS:> Invoke-PnPSPRestMethod -Method Post -Url ""/_api/web/lists/GetByTitle('Test
                             handler.Credentials = networkCredential;
                         }
                     }
-                    request.Headers.Add("X-RequestDigest", ClientContext.GetRequestDigest().GetAwaiter().GetResult());
+                    request.Headers.Add("X-RequestDigest", ClientContext.GetRequestDigestAsync().GetAwaiter().GetResult());
 
                     if (Method == HttpRequestMethod.Post)
                     {
@@ -122,15 +98,11 @@ PS:> Invoke-PnPSPRestMethod -Method Post -Url ""/_api/web/lists/GetByTitle('Test
 
                     if (response.IsSuccessStatusCode)
                     {
-                        // If value empty, URL is taken
                         var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                         if (responseString != null)
                         {
-#if PNPPSCORE
-                            WriteObject(System.Text.Json.JsonSerializer.Deserialize<object>(responseString));
-#else
-                            WriteObject(new JavaScriptSerializer().DeserializeObject(responseString));
-#endif
+
+                            WriteObject(JsonSerializer.Deserialize<Hashtable>(responseString));
                         }
                     }
                     else
@@ -145,32 +117,32 @@ PS:> Invoke-PnPSPRestMethod -Method Post -Url ""/_api/web/lists/GetByTitle('Test
         private void SetAuthenticationCookies(HttpClientHandler handler, ClientContext context)
         {
             context.Web.EnsureProperty(w => w.Url);
-            if (context.Credentials is SharePointOnlineCredentials spCred)
+            //if (context.Credentials is SharePointOnlineCredentials spCred)
+            //{
+            //    handler.Credentials = context.Credentials;
+            //    handler.CookieContainer.SetCookies(new Uri(context.Web.Url), spCred.GetAuthenticationCookie(new Uri(context.Web.Url)));
+            //}
+            //else if (context.Credentials == null)
+            //{
+            var cookieString = CookieReader.GetCookie(context.Web.Url).Replace("; ", ",").Replace(";", ",");
+            var authCookiesContainer = new System.Net.CookieContainer();
+            // Get FedAuth and rtFa cookies issued by ADFS when accessing claims aware applications.
+            // - or get the EdgeAccessCookie issued by the Web Application Proxy (WAP) when accessing non-claims aware applications (Kerberos).
+            IEnumerable<string> authCookies = null;
+            if (Regex.IsMatch(cookieString, "FedAuth", RegexOptions.IgnoreCase))
             {
-                handler.Credentials = context.Credentials;
-                handler.CookieContainer.SetCookies(new Uri(context.Web.Url), spCred.GetAuthenticationCookie(new Uri(context.Web.Url)));
+                authCookies = cookieString.Split(',').Where(c => c.StartsWith("FedAuth", StringComparison.InvariantCultureIgnoreCase) || c.StartsWith("rtFa", StringComparison.InvariantCultureIgnoreCase));
             }
-            else if (context.Credentials == null)
+            else if (Regex.IsMatch(cookieString, "EdgeAccessCookie", RegexOptions.IgnoreCase))
             {
-                var cookieString = CookieReader.GetCookie(context.Web.Url).Replace("; ", ",").Replace(";", ",");
-                var authCookiesContainer = new System.Net.CookieContainer();
-                // Get FedAuth and rtFa cookies issued by ADFS when accessing claims aware applications.
-                // - or get the EdgeAccessCookie issued by the Web Application Proxy (WAP) when accessing non-claims aware applications (Kerberos).
-                IEnumerable<string> authCookies = null;
-                if (Regex.IsMatch(cookieString, "FedAuth", RegexOptions.IgnoreCase))
-                {
-                    authCookies = cookieString.Split(',').Where(c => c.StartsWith("FedAuth", StringComparison.InvariantCultureIgnoreCase) || c.StartsWith("rtFa", StringComparison.InvariantCultureIgnoreCase));
-                }
-                else if (Regex.IsMatch(cookieString, "EdgeAccessCookie", RegexOptions.IgnoreCase))
-                {
-                    authCookies = cookieString.Split(',').Where(c => c.StartsWith("EdgeAccessCookie", StringComparison.InvariantCultureIgnoreCase));
-                }
-                if (authCookies != null)
-                {
-                    authCookiesContainer.SetCookies(new Uri(context.Web.Url), string.Join(",", authCookies));
-                }
-                handler.CookieContainer = authCookiesContainer;
+                authCookies = cookieString.Split(',').Where(c => c.StartsWith("EdgeAccessCookie", StringComparison.InvariantCultureIgnoreCase));
             }
+            if (authCookies != null)
+            {
+                authCookiesContainer.SetCookies(new Uri(context.Web.Url), string.Join(",", authCookies));
+            }
+            handler.CookieContainer = authCookiesContainer;
+            //}
         }
     }
 
@@ -230,4 +202,3 @@ PS:> Invoke-PnPSPRestMethod -Method Post -Url ""/_api/web/lists/GetByTitle('Test
         }
     }
 }
-#endif
