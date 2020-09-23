@@ -1,5 +1,4 @@
-﻿#if !PNPPSCORE
-using PnP.Framework;
+﻿using PnP.Framework;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Model;
@@ -21,23 +20,6 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsData.Initialize, "PnPPowerShellAuthentication")]
-    [CmdletHelp(@"Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration.",
-        DetailedDescription = "Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration. Have a look at https://www.youtube.com/watch?v=QWY7AJ2ZQYI for a demonstration on how this cmdlet works and can be used.",
-        Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Scopes", ParameterSetName = ParameterSet_NEWCERT)]
-    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Scopes", ParameterSetName = ParameterSet_EXISTINGCERT)]
-
-    
-    [CmdletExample(
-       Code = @"PS:> Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String ""password"" -AsPlainText -Force)",
-       Remarks = "Creates a new Azure AD Application registration which will use the existing private key certificate at the provided path to allow access. It will upload the provided private key certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All",
-       SortOrder = 2)]
-    
-    [CmdletExample(
-       Code = @"PS:> Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -OutPath c:\ -CertificatePassword (ConvertTo-SecureString -String ""password"" -AsPlainText -Force)",
-       Remarks = @"Creates a new Azure AD Application registration, creates a new self signed certificate, and stores the public and private key certificates in c:\. The private key certificate will be locked with the password ""password"". It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All",
-       SortOrder = 4)]
-
     public class InitializePowerShellAuthentication : BasePSCmdlet, IDynamicParameters
     {
         private const string ParameterSet_EXISTINGCERT = "Existing Certificate";
@@ -86,6 +68,12 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false)]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
+        [Parameter(Mandatory = true)]
+        public string Username;
+
+        [Parameter(Mandatory = false)]
+        public SecureString Password;
+
         protected override void ProcessRecord()
         {
             var loginEndPoint = string.Empty;
@@ -94,7 +82,12 @@ namespace PnP.PowerShell.Commands.Base
             {
                 loginEndPoint = authenticationManager.GetAzureADLoginEndPoint(AzureEnvironment);
             }
-            var token = AzureAuthHelper.AuthenticateAsync(Tenant, loginEndPoint).GetAwaiter().GetResult();
+            if(!ParameterSpecified(nameof(Password)))
+            {
+                Host.UI.Write("Password: ");
+                Password = Host.UI.ReadLineAsSecureString();
+            }
+            var token = AzureAuthHelper.AuthenticateAsync(Tenant, Username, Password, loginEndPoint).GetAwaiter().GetResult();
 
             var cert = new X509Certificate2();
             if (ParameterSetName == ParameterSet_EXISTINGCERT)
@@ -242,8 +235,12 @@ namespace PnP.PowerShell.Commands.Base
                 var azureApp = GraphHelper.PostAsync<AzureApp>(new System.Net.Http.HttpClient(), "/beta/applications", requestContent, token).GetAwaiter().GetResult();
                 record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId", azureApp.AppId)));
 
+                var consentUrl = $"{loginEndPoint}/{Tenant}/v2.0/adminconsent?client_id={azureApp.AppId}&scope=https://microsoft.sharepoint-df.com/.default";
+                record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
+
+
                 var waitTime = 60;
-                Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to launch consent flow in a browser window. This wait is required to make sure that Azure AD is able to initialize all required artifacts.");
+                Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to launch consent flow in a browser window. This wait is required to make sure that Azure AD is able to initialize all required artifacts. After you provided consent you will see a blank page. This is expected. You can always navigate to the consent page manually: {consentUrl}");
 
                 Console.TreatControlCAsInput = true;
 
@@ -265,15 +262,15 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 Host.UI.WriteLine();
 
-                var consentUrl = $"{loginEndPoint}/{Tenant}/v2.0/adminconsent?client_id={azureApp.AppId}&scope=https://microsoft.sharepoint-df.com/.default";
-                record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
-
+                
                 WriteObject(record);
 
-                AzureAuthHelper.OpenConsentFlow(consentUrl, (message) =>
-                {
-                    Host.UI.WriteLine(ConsoleColor.Red, Host.UI.RawUI.BackgroundColor, message);
-                });
+                BrowserHelper.LaunchBrowser(consentUrl);
+
+                //AzureAuthHelper.OpenConsentFlow(consentUrl, (message) =>
+                //{
+                //    Host.UI.WriteLine(ConsoleColor.Red, Host.UI.RawUI.BackgroundColor, message);
+                //});
             }
         }
 
@@ -336,4 +333,3 @@ namespace PnP.PowerShell.Commands.Base
         }
     }
 }
-#endif
