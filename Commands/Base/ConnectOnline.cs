@@ -34,7 +34,6 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_TOKEN = "Token";
         private const string ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL = "App-Only using a clientId and clientSecret and an URL";
         private const string ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN = "App-Only using a clientId and clientSecret and an AAD Domain";
-        private const string ParameterSet_WEBLOGIN = "WebLogin";
         private const string ParameterSet_ADFSCERT = "ADFS with client Certificate";
         private const string ParameterSet_ADFSCREDENTIALS = "ADFS with user credentials";
         private const string ParameterSet_NATIVEAAD = "Azure Active Directory";
@@ -58,7 +57,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, ValueFromPipeline = true)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true)]
@@ -74,7 +72,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_TOKEN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ADFSCERT, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ADFSCREDENTIALS, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true)]
@@ -123,14 +120,10 @@ namespace PnP.PowerShell.Commands.Base
 
         public string ClientSecret;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_WEBLOGIN)]
-        public SwitchParameter UseWebLogin;
-
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
@@ -146,7 +139,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
@@ -242,7 +234,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
@@ -366,11 +357,6 @@ namespace PnP.PowerShell.Commands.Base
                 case ParameterSet_MAIN:
                     connection = ConnectCredentials(credentials);
                     break;
-            }
-
-            if (UseWebLogin.IsPresent)
-            {
-                connection = ConnectWebLogin();
             }
 
             // Ensure a connection instance has been created by now
@@ -766,20 +752,6 @@ namespace PnP.PowerShell.Commands.Base
             return null;
 #else
             throw new NotImplementedException();
-#endif
-        }
-
-        /// <summary>
-        /// Connect using WebLogin
-        /// </summary>
-        /// <returns>PnPConnection based on WebLogin authentication</returns>
-        private PnPConnection ConnectWebLogin()
-        {
-#if !PNPPSCORE
-            return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url.ToLower()), RequestTimeout, TenantAdminUrl, Host, SkipTenantAdminCheck);
-#else
-            WriteWarning(@"-UseWebLogin is not implemented, due to restrictions of the .NET Standard framework. Use -PnPManagementShell instead");
-            return null;
 #endif
         }
 
