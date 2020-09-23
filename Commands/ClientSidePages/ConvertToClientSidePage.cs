@@ -1,57 +1,24 @@
-﻿#if !PNPPSCORE
-using PnP.PowerShell.CmdletHelpAttributes;
-using System;
+﻿using System;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.Modernization.Framework.Transform;
-using PnP.PowerShell.Commands.Utilities;
+using PnP.Framework.Modernization;
 using System.Reflection;
-using SharePointPnP.Modernization.Framework.Cache;
+using PnP.Framework.Modernization.Cache;
 using Microsoft.SharePoint.Client;
-using System.Xml.Serialization;
-using SharePointPnP.Modernization.Framework;
 using System.IO;
-using SharePointPnP.Modernization.Framework.Telemetry.Observers;
-using SharePointPnP.Modernization.Framework.Publishing;
 using PnP.PowerShell.Commands.Base;
-using SharePointPnP.Modernization.Framework.Delve;
+using PnP.Framework.Modernization.Transform;
+using PnP.Framework.Modernization.Publishing;
+using PnP.Framework.Modernization.Delve;
+using PnP.Framework.Modernization.Telemetry.Observers;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
 
     [Cmdlet(VerbsData.ConvertTo, "PnPClientSidePage")]
-    [CmdletHelp("Converts a classic page (wiki or web part page) into a Client-Side Page",
-                Category = CmdletHelpCategory.ClientSidePages)]
-    
-    
-    [CmdletExample(
-    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -AddPageAcceptBanner",
-    Remarks = "Converts a wiki/web part page named 'somepage' to a client side page and adds the page accept banner web part on top of the page. This requires that the SPFX solution holding the web part (https://github.com/SharePoint/sp-dev-modernization/blob/master/Solutions/PageTransformationUI/assets/sharepointpnp-pagetransformation-client.sppkg?raw=true) has been installed to the tenant app catalog",
-    SortOrder = 3)]
-    [CmdletExample(
-    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -CopyPageMetadata",
-    Remarks = "Converts a wiki/web part page named 'somepage' to a client side page, including the copying of the page metadata (if any)",
-    SortOrder = 4)]
-    
-    [CmdletExample(
-    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -PublishingPage -Overwrite -TargetConnection $target",
-    Remarks = "Converts a publishing page named 'somepage' to a client side page in the site specified by the TargetConnection connection. This allows to read a page in one environment (on-premises, tenant A) and create in another online location (tenant B)",
-    SortOrder = 6)]
-    
-    [CmdletExample(
-    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Folder ""<root>"" -Overwrite",
-    Remarks = "Converts a web part page named 'somepage' living inside the root of the site collection (so outside of a library)",
-    SortOrder = 8)]
-    
-    
-    
-    
-    
-    
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
         private static string rootFolder = "<root>";
-        private Assembly modernizationAssembly;
         private Assembly sitesCoreAssembly;
        // private Assembly newtonsoftAssembly;
 
@@ -582,7 +549,6 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             try
             {
                 sitesCoreAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "PnP.Framework.dll"));
-                modernizationAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "SharePointPnP.Modernization.Framework.dll"));
                 AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_LocalAssemblyResolve;
             }
             catch { }
@@ -594,12 +560,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             {
                 return sitesCoreAssembly;
             }
-            if (args.Name.StartsWith("SharePointPnP.Modernization.Framework"))
-            {
-                return modernizationAssembly;
-            }
             return null;
         }
     }
 }
-#endif

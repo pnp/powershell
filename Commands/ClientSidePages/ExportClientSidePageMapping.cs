@@ -1,34 +1,19 @@
-﻿#if !PNPPSCORE
-using PnP.PowerShell.CmdletHelpAttributes;
-using System;
+﻿using System;
 using System.Management.Automation;
-using PnP.PowerShell.Commands.Utilities;
 using System.Reflection;
 using Microsoft.SharePoint.Client;
 using System.IO;
-using SharePointPnP.Modernization.Framework.Publishing;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.Modernization.Framework.Cache;
-using SharePointPnP.Modernization.Framework.Telemetry.Observers;
-using SharePointPnP.Modernization.Framework.Transform;
+using PnP.Framework.Modernization.Transform;
+using PnP.Framework.Modernization.Publishing;
+using PnP.Framework.Modernization.Cache;
+using PnP.Framework.Modernization.Telemetry.Observers;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsData.Export, "PnPClientSidePageMapping")]
-    [CmdletHelp("Get's the built-in maping files or a custom mapping file for your publishing portal page layouts. These mapping files are used to tailor the page transformation experience.",
-                Category = CmdletHelpCategory.ClientSidePages)]
-    [CmdletExample(Code = @"PS:> Export-PnPClientSidePageMapping -BuiltInPageLayoutMapping -CustomPageLayoutMapping -Folder c:\\temp -Overwrite",
-                   Remarks = "Exports the built in page layout mapping and analyzes the current site's page layouts and exports these to files in folder c:\\temp",
-                   SortOrder = 1)]
-    [CmdletExample(Code = @"PS:> Export-PnPClientSidePageMapping -CustomPageLayoutMapping -PublishingPage mypage.aspx -Folder c:\\temp -Overwrite",
-                   Remarks = "Analyzes the page layout of page mypage.aspx and exports this to a file in folder c:\\temp",
-                   SortOrder = 2)]
-    [CmdletExample(Code = @"PS:> Export-PnPClientSidePageMapping -BuiltInWebPartMapping -Folder c:\\temp -Overwrite",
-                   Remarks = "Exports the built in webpart mapping to a file in folder c:\\temp. Use this a starting basis if you want to tailer the web part mapping behavior.",
-                   SortOrder = 3)]
     public class ExportClientSidePageMapping : PnPWebCmdlet
     {
-        private Assembly modernizationAssembly;
         private Assembly sitesCoreAssembly;
 
         [Parameter(Mandatory = false)]
@@ -174,7 +159,6 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             try
             {
                 sitesCoreAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "PnP.Framework.dll"));
-                modernizationAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "SharePointPnP.Modernization.Framework.dll"));
                 AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_LocalAssemblyResolve;
             }
             catch { }
@@ -186,13 +170,8 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             {
                 return sitesCoreAssembly;
             }
-            if (args.Name.StartsWith("SharePointPnP.Modernization.Framework"))
-            {
-                return modernizationAssembly;
-            }
             return null;
         }
 
     }
 }
-#endif
