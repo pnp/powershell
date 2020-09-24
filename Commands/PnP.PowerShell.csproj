@@ -28,8 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.5.1" />
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.16.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.13.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Graph" Version="3.14.0" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.18.0" />
     <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.20412.12000" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
@@ -50,9 +52,11 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\HelpAttributes\PnP.PowerShell.Core.Attributes.csproj" />
+    <ProjectReference Include="..\HelpAttributes\PnP.PowerShell.Core.Attributes.csproj">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
   </ItemGroup>
-
+  
   <ItemGroup>
     <Reference Include="PnP.Framework">
       <HintPath>..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll</HintPath>

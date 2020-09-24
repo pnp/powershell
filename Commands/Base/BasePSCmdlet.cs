@@ -14,6 +14,7 @@ namespace PnP.PowerShell.Commands.Base
         private static Assembly systemBuffersAssembly;
         private static Assembly systemRuntimeCompilerServicesUnsafeAssembly;
         private static Assembly systemThreadingTasksExtensionsAssembly;
+        private static Assembly telemetry;
 
         protected override void BeginProcessing()
         {
@@ -39,18 +40,22 @@ namespace PnP.PowerShell.Commands.Base
             {
                 newtonsoftAssembly = GetAssembly("Newtonsoft.Json.dll");
             }
-            if (systemBuffersAssembly == null)
+            if(telemetry == null)
             {
-                systemBuffersAssembly = GetAssembly("System.Buffers.dll");
+                telemetry = GetAssembly("Microsoft.ApplicationInsights.dll");
             }
-            if (systemRuntimeCompilerServicesUnsafeAssembly == null)
-            {
-                systemRuntimeCompilerServicesUnsafeAssembly = GetAssembly("System.Runtime.CompilerServices.Unsafe.dll");
-            }
-            if (systemThreadingTasksExtensionsAssembly == null)
-            {
-                systemThreadingTasksExtensionsAssembly = GetAssembly("System.Threading.Tasks.Extensions.dll");
-            }
+            //if (systemBuffersAssembly == null)
+            //{
+            //    systemBuffersAssembly = GetAssembly("System.Buffers.dll");
+            //}
+            //if (systemRuntimeCompilerServicesUnsafeAssembly == null)
+            //{
+            //    systemRuntimeCompilerServicesUnsafeAssembly = GetAssembly("System.Runtime.CompilerServices.Unsafe.dll");
+            //}
+            //if (systemThreadingTasksExtensionsAssembly == null)
+            //{
+            //    systemThreadingTasksExtensionsAssembly = GetAssembly("System.Threading.Tasks.Extensions.dll");
+            //}
 
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }
@@ -98,18 +103,22 @@ namespace PnP.PowerShell.Commands.Base
             {
                 return newtonsoftAssembly;
             }
-            if (args.Name.StartsWith("System.Buffers", StringComparison.InvariantCultureIgnoreCase))
+            if(args.Name.StartsWith("Microsoft.ApplicationInsights.dll"))
             {
-                return systemBuffersAssembly;
+                return telemetry;
             }
-            if (args.Name.StartsWith("System.Runtime.CompilerServices.Unsafe", StringComparison.InvariantCultureIgnoreCase))
-            {
-                return systemRuntimeCompilerServicesUnsafeAssembly;
-            }
-            if (args.Name.StartsWith("System.Threading.Tasks.Extensions", StringComparison.InvariantCultureIgnoreCase))
-            {
-                return systemThreadingTasksExtensionsAssembly;
-            }
+            //if (args.Name.StartsWith("System.Buffers", StringComparison.InvariantCultureIgnoreCase))
+            //{
+            //    return systemBuffersAssembly;
+            //}
+            //if (args.Name.StartsWith("System.Runtime.CompilerServices.Unsafe", StringComparison.InvariantCultureIgnoreCase))
+            //{
+            //    return systemRuntimeCompilerServicesUnsafeAssembly;
+            //}
+            //if (args.Name.StartsWith("System.Threading.Tasks.Extensions", StringComparison.InvariantCultureIgnoreCase))
+            //{
+            //    return systemThreadingTasksExtensionsAssembly;
+            //}
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (assembly.FullName == args.Name)

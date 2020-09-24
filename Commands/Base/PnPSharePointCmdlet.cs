@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands
 
             if (PnPConnection.CurrentConnection != null && PnPConnection.CurrentConnection.TelemetryClient != null)
             {
-                PnPConnection.CurrentConnection.TelemetryClient.TrackEvent(MyInvocation.MyCommand.Name);
+                PnPConnection.CurrentConnection.TelemetryClient.TrackEvent(MyInvocation.MyCommand.Name, PnPConnection.CurrentConnection.TelemetryProperties);
             }
 
             if (Connection == null && ClientContext == null)
