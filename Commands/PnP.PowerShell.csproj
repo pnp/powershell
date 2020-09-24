@@ -10,6 +10,7 @@
     <PackageId>PnP.PowerShell.Core</PackageId>
     <Authors>PnP.PowerShell.Core</Authors>
     <UserSecretsId>f6e30023-1f44-422f-9aa9-364e140eabae</UserSecretsId>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -29,7 +30,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.13.1" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
     <PackageReference Include="Microsoft.Graph" Version="3.14.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.18.0" />
     <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.20412.12000" />
