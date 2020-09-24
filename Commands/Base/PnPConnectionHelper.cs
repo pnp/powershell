@@ -5,6 +5,7 @@ using Microsoft.Identity.Client;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using PnP.Framework;
+using PnP.Framework.Extensions;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
@@ -57,11 +58,11 @@ namespace PnP.PowerShell.Commands.Base
 
                     if (url.DnsSafeHost.Contains("spoppe.com"))
                     {
-                        context = PnPClientContext.ConvertFrom(authManager.GetAppOnlyAuthenticatedContext(url.ToString(), realm, clientId, clientSecret, acsHostUrl: "windows-ppe.net", globalEndPointPrefix: "login"));
+                        context = PnPClientContext.ConvertFrom(authManager.GetACSAppOnlyContext(url.ToString(), realm, clientId, clientSecret, acsHostUrl: "windows-ppe.net", globalEndPointPrefix: "login"));
                     }
                     else
                     {
-                        context = PnPClientContext.ConvertFrom(authManager.GetAppOnlyAuthenticatedContext(url.ToString(), realm, clientId, clientSecret, acsHostUrl: authManager.GetAzureADACSEndPoint(azureEnvironment), globalEndPointPrefix: authManager.GetAzureADACSEndPointPrefix(azureEnvironment)));
+                        context = PnPClientContext.ConvertFrom(authManager.GetACSAppOnlyContext(url.ToString(), realm, clientId, clientSecret, acsHostUrl: authManager.GetACSEndPoint(azureEnvironment), globalEndPointPrefix: authManager.GetACSEndPointPrefix(azureEnvironment)));
                     }
                     context.ApplicationName = Resources.ApplicationName;
                     context.DisableReturnValueCache = true;
@@ -228,29 +229,6 @@ namespace PnP.PowerShell.Commands.Base
         }
 #endif
 
-        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, X509Certificate2 certificate, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
-        {
-            using (var authManager = new PnP.Framework.AuthenticationManager())
-            {
-                var context = PnPClientContext.ConvertFrom(authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificate, azureEnvironment));
-                var connectionType = ConnectionType.O365;
-                if (IsTenantAdminSite(context))
-                {
-                    connectionType = ConnectionType.TenantAdmin;
-                }
-                var spoConnection = new PnPConnection(context, connectionType, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
-                spoConnection.ConnectionMethod = Model.ConnectionMethod.AzureADAppOnly;
-                return spoConnection;
-            }
-        }
-
-        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePath, SecureString certificatePassword,  string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
-        {
-            X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(certificatePath, certificatePassword);
-
-            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, host, disableTelemetry, azureEnvironment, certificate, true);
-        }
-
         internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant,
             string thumbprint, string tenantAdminUrl, PSHost host,
             bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
@@ -295,11 +273,11 @@ namespace PnP.PowerShell.Commands.Base
         private static PnPConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, PSHost host, bool disableTelemetry,
             AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool certificateFromFile)
         {
-            using (var authManager = new PnP.Framework.AuthenticationManager())
+            using (var authManager = new PnP.Framework.AuthenticationManager(clientId, certificate, azureEnvironment: azureEnvironment))
             {
-                var clientContext = authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificate, azureEnvironment);
+                var clientContext = authManager.GetContext(url.ToString());
                 var context = PnPClientContext.ConvertFrom(clientContext);
-                
+
                 var connectionType = ConnectionType.O365;
 
                 if (IsTenantAdminSite(context))
@@ -372,22 +350,6 @@ namespace PnP.PowerShell.Commands.Base
             catch (Exception)
             {
                 // best effort cleanup
-            }
-        }
-
-        internal static PnPConnection InitiateAccessTokenConnection(Uri url, string accessToken, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
-        {
-            using (var authManager = new PnP.Framework.AuthenticationManager())
-            {
-                var context = PnPClientContext.ConvertFrom(authManager.GetAzureADAccessTokenAuthenticatedContext(url.ToString(), accessToken));
-                var connectionType = ConnectionType.O365;
-                if (IsTenantAdminSite(context))
-                {
-                    connectionType = ConnectionType.TenantAdmin;
-                }
-                var spoConnection = new PnPConnection(context, connectionType, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.Token);
-                spoConnection.ConnectionMethod = Model.ConnectionMethod.AccessToken;
-                return spoConnection;
             }
         }
 
@@ -568,9 +530,9 @@ namespace PnP.PowerShell.Commands.Base
 
             try
             {
-                using (var authManager = new PnP.Framework.AuthenticationManager())
+                using (var authManager = new PnP.Framework.AuthenticationManager(credentials.UserName, credentials.Password))
                 {
-                    context = PnPClientContext.ConvertFrom(authManager.GetAzureADCredentialsContext(url.ToString(), credentials.UserName, credentials.Password));
+                    context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                     context.ExecuteQueryRetry();
                 }
             }
