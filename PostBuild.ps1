@@ -1,9 +1,14 @@
-param($ProjectDir, $ConfigurationName, $TargetDir, $TargetFileName, $SolutionDir)
+param($ProjectDir, $ConfigurationName, $TargetDir, $TargetFileName, $SolutionDir, $TargetFramework)
 
 if($ConfigurationName -like "Debug*")
 {
 	$documentsFolder = [environment]::getfolderpath("mydocuments");
-	$DestinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
+	if($TargetFramework -eq "netstandard20")
+	{
+		$DestinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
+	} else {
+		$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\PnP.PowerShell"
+	}
 	# Module folder there?
 	if(Test-Path $DestinationFolder)
 	{
@@ -28,7 +33,12 @@ if($ConfigurationName -like "Debug*")
 } elseif ($ConfigurationName -like "Release*")
 {
     $documentsFolder = [environment]::getfolderpath("mydocuments");
-	$DestinationFolder = "$documentsFolder\PowerShell\Modules\PnPPowerShellCore"
+	if($TargetFramework -eq "netstandard20")
+	{
+		$DestinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
+	} else {
+		$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\PnP.PowerShell"
+	}
 
 	# Module folder there?
 	if(Test-Path $DestinationFolder)
@@ -46,8 +56,8 @@ if($ConfigurationName -like "Debug*")
 	{
 		Copy-Item "$TargetDir\*.dll" -Destination "$DestinationFolder"
 		Copy-Item "$TargetDir\*help.xml" -Destination "$DestinationFolder"
-		Copy-Item "$TargetDir\ModuleFiles\PnPPowerShell.psd1" -Destination "$DestinationFolder"
-		Copy-Item "$TargetDir\ModuleFiles\PnP.PowerShell.Core.Format.ps1xml" -Destination "$DestinationFolder"
+		Copy-Item "$TargetDir\ModuleFiles\PnP.PowerShell.psd1" -Destination "$DestinationFolder"
+		Copy-Item "$TargetDir\ModuleFiles\PnP.PowerShell.Format.ps1xml" -Destination "$DestinationFolder"
 	} 
 	Catch
 	{

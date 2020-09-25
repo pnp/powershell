@@ -35,11 +35,7 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 if (ex.InnerException != null)
                 {
-#if !PNPPSCORE
-                    if (ex.InnerException is HttpException)
-#else
                     if (ex.InnerException is HttpRequestException)
-#endif
                     {
                         var message = ex.InnerException.Message;
 

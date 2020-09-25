@@ -63,11 +63,7 @@ namespace PnP.PowerShell.Commands.Provider
 
             _streamWriter.Flush();
             _stream.Position = 0;
-#if PNPPSCORE
             _file.SaveBinary(new FileSaveBinaryInformation());
-#else
-            File.SaveBinaryDirect((_file.Context as ClientContext), _file.ServerRelativeUrl, _stream, true);
-#endif
             return content;
         }
 

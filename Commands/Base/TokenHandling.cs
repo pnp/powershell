@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Base
             else if (!string.IsNullOrEmpty(PnPConnection.CurrentConnection.ClientId) && !string.IsNullOrEmpty(PnPConnection.CurrentConnection.ClientSecret))
             {
                 var clientId = PnPConnection.CurrentConnection.ClientId;
-                var clientSecret = HttpUtility.UrlEncode(PnPConnection.CurrentConnection.ClientSecret);
+                var clientSecret = System.Net.WebUtility.UrlEncode(PnPConnection.CurrentConnection.ClientSecret);
                 if (scope == null && !resource.Equals("graph.microsoft.com", System.StringComparison.OrdinalIgnoreCase))
                 {
                     // SharePoint token

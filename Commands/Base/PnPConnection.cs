@@ -640,23 +640,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 catch (Exception ex)
                 {
-#if !PNPPSCORE
-                    if ((ex is WebException || ex is NotSupportedException) && CurrentConnection.PSCredential != null)
-                    {
-                        // legacy auth?
-                        using (var authManager = new PnP.Framework.AuthenticationManager())
-                        {
-                            context = authManager.GetAzureADCredentialsContext(url.ToString(), CurrentConnection.PSCredential.UserName, CurrentConnection.PSCredential.Password);
-                        }
-                        context.ExecuteQueryRetry();
-                    }
-                    else
-                    {
-#endif
                     throw;
-#if !PNPPSCORE
-                    }
-#endif
                 }
                 ContextCache.Add(context);
             }
@@ -666,7 +650,7 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static ClientContext GetCachedContext(string url)
         {
-            return ContextCache.FirstOrDefault(c => HttpUtility.UrlEncode(c.Url) == HttpUtility.UrlEncode(url));
+            return ContextCache.FirstOrDefault(c => System.Net.WebUtility.UrlEncode(c.Url) == System.Net.WebUtility.UrlEncode(url));
         }
 
         internal static void ClearContextCache()

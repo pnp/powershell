@@ -80,9 +80,6 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
 
             if (extension == ".pnp")
             {
-#if !PNPPSCORE
-                IsolatedStorage.InitializeIsolatedStorage();
-#endif
                 var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
                 XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
                       Out, fileSystemConnector, templateFileName: templateFileName);

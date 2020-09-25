@@ -125,7 +125,7 @@ namespace PnP.PowerShell.Commands.Model
         {
             var endPoint = GetAzureADLoginEndPoint(azureEnvironment);
 
-            var body = $"grant_type=password&client_id={clientId}&username={HttpUtility.UrlEncode(username)}&password={HttpUtility.UrlEncode(password)}&resource={resource}";
+            var body = $"grant_type=password&client_id={clientId}&username={System.Net.WebUtility.UrlEncode(username)}&password={System.Net.WebUtility.UrlEncode(password)}&resource={resource}";
             var response = HttpHelper.MakePostRequestForString($"{endPoint}/{tenant}/oauth2/token", body, "application/x-www-form-urlencoded");
             using (var jdoc = JsonDocument.Parse(response))
             {
@@ -149,7 +149,7 @@ namespace PnP.PowerShell.Commands.Model
         public static GenericToken AcquireV2Token(string tenant, string clientId, string username, string password, string[] scopes, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             var endPoint = GetAzureADLoginEndPoint(azureEnvironment);
-            var body = $"grant_type=password&client_id={clientId}&username={HttpUtility.UrlEncode(username)}&password={HttpUtility.UrlEncode(password)}&scope={string.Join(" ", scopes)}";
+            var body = $"grant_type=password&client_id={clientId}&username={System.Net.WebUtility.UrlEncode(username)}&password={System.Net.WebUtility.UrlEncode(password)}&scope={string.Join(" ", scopes)}";
             var response = HttpHelper.MakePostRequestForString($"{endPoint}/{tenant}/oauth2/v2.0/token", body, "application/x-www-form-urlencoded");
 
             using (var jdoc = JsonDocument.Parse(response))

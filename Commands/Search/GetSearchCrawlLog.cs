@@ -103,7 +103,7 @@ namespace PnP.PowerShell.Commands.Search
                     var entries = new List<object>();
                     foreach (var dictionary in logEntries.Value.Rows)
                     {
-                        string url = HttpUtility.UrlDecode(dictionary["FullUrl"].ToString());
+                        string url = System.Net.WebUtility.UrlDecode(dictionary["FullUrl"].ToString());
                         if (ContentSource == ContentSource.UserProfiles && contentSourceId == -1)
                         {                            
                             if (!url.Contains(":443/person")) continue;
@@ -132,7 +132,7 @@ namespace PnP.PowerShell.Commands.Search
                         // Crawling has changed and uses one content source
                         // Need to apply post-filter to pull out profile entries only
                         entries =
-                            entries.Where(e => HttpUtility.UrlDecode(e.Url.ToString()).ToLower().Contains(":443/person"))
+                            entries.Where(e => System.Net.WebUtility.UrlDecode(e.Url.ToString()).ToLower().Contains(":443/person"))
                                 .ToList();
                     }
                     WriteObject(entries.Take(origLimit).OrderByDescending(i => i.CrawlTime).ToList());

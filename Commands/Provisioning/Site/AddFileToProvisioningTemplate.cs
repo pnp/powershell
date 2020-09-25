@@ -75,11 +75,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
                 var fileName = file.EnsureProperty(f => f.Name);
                 var folderRelativeUrl = serverRelativeUrl.Substring(0, serverRelativeUrl.Length - fileName.Length - 1);
-#if !PNPPSCORE
-                var folderWebRelativeUrl = HttpUtility.UrlKeyValueDecode(folderRelativeUrl.Substring(SelectedWeb.ServerRelativeUrl.TrimEnd('/').Length + 1));
-#else
-                var folderWebRelativeUrl = System.Web.HttpUtility.UrlDecode(folderRelativeUrl.Substring(SelectedWeb.ServerRelativeUrl.TrimEnd('/').Length + 1));
-#endif
+                var folderWebRelativeUrl = System.Net.WebUtility.UrlDecode(folderRelativeUrl.Substring(SelectedWeb.ServerRelativeUrl.TrimEnd('/').Length + 1));
                 if (ClientContext.HasPendingRequest) ClientContext.ExecuteQuery();
                 try
                 {

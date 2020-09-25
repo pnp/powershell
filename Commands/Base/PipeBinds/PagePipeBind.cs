@@ -1,11 +1,7 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
-#if !PNPPSCORE
-using SharePointPnP.Modernization.Framework.Transform;
-#endif
 using PnP.PowerShell.Commands.ClientSidePages;
 using System;
-using System.Text.Encodings.Web;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -114,18 +110,8 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             var listServerRelativeUrl = UrlUtility.Combine(web.ServerRelativeUrl, listToLoad);
 
             List libraryContainingPage = null;
-#if !PNPPSCORE
-            if (BaseTransform.GetVersion(web.Context) == SPVersion.SP2010)
-            {
-                libraryContainingPage = web.GetListByName(listToLoad);
-            }
-            else
-            {
-                libraryContainingPage = web.GetList(listServerRelativeUrl);
-            }
-#else
+
             libraryContainingPage = web.GetList(listServerRelativeUrl);
-#endif
 
             if (libraryContainingPage != null)
             {

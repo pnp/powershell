@@ -121,9 +121,7 @@ namespace PnP.PowerShell.Commands.Site
                     if (System.IO.File.Exists(LogoFilePath))
                     {
                         var bytes = System.IO.File.ReadAllBytes(LogoFilePath);
-#if !PNPPSCORE
-                        var mimeType = System.Web.MimeMapping.GetMimeMapping(LogoFilePath);
-#else
+
                         var mimeType = "";
                         if(LogoFilePath.EndsWith("gif",StringComparison.InvariantCultureIgnoreCase))
                         {
@@ -137,7 +135,6 @@ namespace PnP.PowerShell.Commands.Site
                         {
                             mimeType = "image/png";
                         }
-#endif
                         var result = PnP.Framework.Sites.SiteCollection.SetGroupImageAsync(context, bytes, mimeType).GetAwaiter().GetResult();
                     }
                     else

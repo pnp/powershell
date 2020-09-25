@@ -1,8 +1,5 @@
-﻿#if PNPPSCORE
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -47,4 +44,3 @@ namespace PnP.PowerShell.Commands.Utilities
         }
     }
 }
-#endif

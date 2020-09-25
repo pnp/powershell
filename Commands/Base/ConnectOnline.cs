@@ -13,16 +13,10 @@ using File = System.IO.File;
 using System.Security.Cryptography.X509Certificates;
 using System.IdentityModel.Tokens.Jwt;
 using PnP.PowerShell.Commands.Enums;
-#if !PNPPSCORE
-using System.Web.UI.WebControls;
-#endif
 using PnP.PowerShell.Commands.Model;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using System.Collections.Generic;
 using PnP.Framework.Utilities;
-#if !PNPPSCORE
-using System.Security.Cryptography;
-#endif
 using System.Reflection;
 
 namespace PnP.PowerShell.Commands.Base
@@ -511,24 +505,21 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectNativeAAD(string clientId, string redirectUrl)
         {
-            string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string configFolder = Path.Combine(appDataFolder, "PnP.PowerShell");
-            Directory.CreateDirectory(configFolder); // Ensure folder exists
-            if (ClearTokenCache)
-            {
-                string configFile = Path.Combine(configFolder, "tokencache.dat");
+            //string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            //string configFolder = Path.Combine(appDataFolder, "PnP.PowerShell");
+            //Directory.CreateDirectory(configFolder); // Ensure folder exists
+            //if (ClearTokenCache)
+            //{
+            //    string configFile = Path.Combine(configFolder, "tokencache.dat");
 
-                if (File.Exists(configFile))
-                {
-                    File.Delete(configFile);
-                }
-            }
-#if !PNPPSCORE
-            return PnPConnectionHelper.InitiateAzureADNativeApplicationConnection(
-                new Uri(Url), clientId, new Uri(redirectUrl), RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
-#else
+            //    if (File.Exists(configFile))
+            //    {
+            //        File.Delete(configFile);
+            //    }
+            //}
+            //return PnPConnectionHelper.InitiateAzureADNativeApplicationConnection(
+            //    new Uri(Url), clientId, new Uri(redirectUrl), RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
             throw new NotImplementedException();
-#endif
         }
 
         /// <summary>
@@ -537,27 +528,24 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyAad()
         {
-#if !PNPPSCORE
-            if (ParameterSpecified(nameof(CertificatePath)))
-            {
-                WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
-                return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
-            }
-            else if (ParameterSpecified(nameof(Certificate)))
-            {
-                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment, Certificate);
-            }
-            else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
-            {
-                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment, CertificateBase64Encoded);
-            }
-            else
-            {
-                throw new ArgumentException("You must either provide CertificatePath, Certificate or CertificateBase64Encoded when connecting using an Azure Active Directory registered application");
-            }
-#else
+            //if (ParameterSpecified(nameof(CertificatePath)))
+            //{
+            //    WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
+            //    return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
+            //}
+            //else if (ParameterSpecified(nameof(Certificate)))
+            //{
+            //    return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment, Certificate);
+            //}
+            //else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
+            //{
+            //    return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment, CertificateBase64Encoded);
+            //}
+            //else
+            //{
+            //    throw new ArgumentException("You must either provide CertificatePath, Certificate or CertificateBase64Encoded when connecting using an Azure Active Directory registered application");
+            //}
             throw new NotImplementedException();
-#endif
         }
 
         /// <summary>
@@ -566,10 +554,8 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyAadPem()
         {
-#if !PNPPSCORE
-#else
-            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, CertificatePassword, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
-#endif
+            //return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, CertificatePassword, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -587,11 +573,8 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyAadCer()
         {
-#if !PNPPSCORE
-            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Certificate, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
-#else
+            //return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Certificate, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
             throw new NotImplementedException();
-#endif
         }
 
         /// <summary>
@@ -612,31 +595,14 @@ namespace PnP.PowerShell.Commands.Base
             // If we have Office 365 scopes, get a token for those first
             if (officeManagementApiScopes.Length > 0)
             {
-#if !PNPPSCORE
-                //if (credentials == null)
-                //{
-                //    TokenManager.InitializeAsync(TokenManager.CLIENTID_PNPMANAGEMENTSHELL, officeManagementApiScopes.Select(s => $"https://manage.office.com/{s}").ToArray(), cacheIdentifierName: "OfficeManagementApi").GetAwaiter().GetResult();
-                //}
-                //else
-                //{
-                //    TokenManager.InitializeAsync(TokenManager.CLIENTID_PNPMANAGEMENTSHELL, officeManagementApiScopes.Select(s => $"https://manage.office.com/{s}").ToArray(), credentials.UserName, credentials.Password, cacheIdentifierName: "OfficeManagementApi").GetAwaiter().GetResult();
-                //}
-
-                var officeManagementApiToken = credentials == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, azureEnvironment) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, credentials.UserName, credentials.Password, azureEnvironment);
-#else
                 var officeManagementApiToken = credentials == null ? OfficeManagementApiToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, PnPConnection.DeviceLoginCallback(this.Host, true), AzureEnvironment) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, credentials.UserName, credentials.Password);
-#endif
                 connection = PnPConnection.GetConnectionWithToken(officeManagementApiToken, TokenAudience.OfficeManagementApi, Host, InitializationType.InteractiveLogin, credentials, disableTelemetry: NoTelemetry.ToBool());
             }
 
             // If we have Graph scopes, get a token for it
             if (graphScopes.Length > 0)
             {
-#if !PNPPSCORE
-                var graphToken = credentials == null ? GraphToken.AcquireApplicationTokenInteractive(PnPConnection.PnPManagementShellClientId, graphScopes, azureEnvironment) : GraphToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, graphScopes, credentials.UserName, credentials.Password, azureEnvironment);
-#else
                 var graphToken = credentials == null ? GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, graphScopes, PnPConnection.DeviceLoginCallback(this.Host, true), AzureEnvironment) : GraphToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, graphScopes, credentials.UserName, credentials.Password, AzureEnvironment);
-#endif
                 // If there's a connection already, add the AAD token to it, otherwise set up a new connection with it
                 if (connection != null)
                 {
@@ -682,33 +648,31 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on ADFS authentication</returns>
         private PnPConnection ConnectAdfsCredentials(PSCredential credentials)
         {
-            if (!Kerberos && credentials == null)
-            {
-                if ((credentials = GetCredentials()) == null)
-                {
-                    credentials = Host.UI.PromptForCredential(Resources.EnterYourCredentials, "", "", "");
+            //if (!Kerberos && credentials == null)
+            //{
+            //    if ((credentials = GetCredentials()) == null)
+            //    {
+            //        credentials = Host.UI.PromptForCredential(Resources.EnterYourCredentials, "", "", "");
 
-                    // Ensure credentials have been entered
-                    if (credentials == null)
-                    {
-                        // No credentials have been provided
-                        return null;
-                    }
-                }
-            }
-#if !PNPPSCORE
-            return PnPConnectionHelper.InstantiateAdfsConnection(new Uri(Url),
-                                                                 Kerberos,
-                                                                 credentials,
-                                                                 Host,
-                                                                 RequestTimeout,
-                                                                 TenantAdminUrl,
-                                                                 NoTelemetry,
-                                                                 SkipTenantAdminCheck,
-                                                                 LoginProviderName);
-#else
+            //        // Ensure credentials have been entered
+            //        if (credentials == null)
+            //        {
+            //            // No credentials have been provided
+            //            return null;
+            //        }
+            //    }
+            //}
+
+            //return PnPConnectionHelper.InstantiateAdfsConnection(new Uri(Url),
+            //                                                     Kerberos,
+            //                                                     credentials,
+            //                                                     Host,
+            //                                                     RequestTimeout,
+            //                                                     TenantAdminUrl,
+            //                                                     NoTelemetry,
+            //                                                     SkipTenantAdminCheck,
+            //                                                     LoginProviderName);
             throw new NotImplementedException();
-#endif
         }
 
         /// <summary>
@@ -717,42 +681,39 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on ADFS Client Certificate authentication</returns>
         private PnPConnection ConnectAdfsCertificate()
         {
-#if !PNPPSCORE
-            // Check if we already have a client certificate, if not, ask for selecting one
-            if (ClientCertificate == null)
-            {
-                // Modal Dialog to enable a user to select a certificate to use to authenticate against ADFS
-                X509Store store = new X509Store("MY", StoreLocation.CurrentUser);
-                store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
-                var certs = X509Certificate2UI.SelectFromCollection(store.Certificates, "Select ADFS User Certificate", "Selec the certificate to use to authenticate to ADFS", X509SelectionFlag.SingleSelection);
+            //// Check if we already have a client certificate, if not, ask for selecting one
+            //if (ClientCertificate == null)
+            //{
+            //    // Modal Dialog to enable a user to select a certificate to use to authenticate against ADFS
+            //    X509Store store = new X509Store("MY", StoreLocation.CurrentUser);
+            //    store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+            //    var certs = X509Certificate2UI.SelectFromCollection(store.Certificates, "Select ADFS User Certificate", "Selec the certificate to use to authenticate to ADFS", X509SelectionFlag.SingleSelection);
 
-                // Ensure a certificate has been chosen
-                if (certs == null || certs.Count == 0 || certs[0] == null)
-                {
-                    // No certificate has been chosen
-                    return null;
-                }
+            //    // Ensure a certificate has been chosen
+            //    if (certs == null || certs.Count == 0 || certs[0] == null)
+            //    {
+            //        // No certificate has been chosen
+            //        return null;
+            //    }
 
-                ClientCertificate = certs[0];
-            }
+            //    ClientCertificate = certs[0];
+            //}
 
-            if (ClientCertificate != null)
-            {
-                var serialNumber = ClientCertificate.SerialNumber;
-                try
-                {
-                    return PnPConnectionHelper.InstantiateAdfsCertificateConnection(new Uri(Url), serialNumber, Host, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
-                }
-                catch (TargetInvocationException e) when (e.InnerException != null && e.InnerException is CryptographicException)
-                {
-                    throw new PSArgumentException(Resources.ClientCertificateInvalid, e);
-                }
-            }
+            //if (ClientCertificate != null)
+            //{
+            //    var serialNumber = ClientCertificate.SerialNumber;
+            //    try
+            //    {
+            //        return PnPConnectionHelper.InstantiateAdfsCertificateConnection(new Uri(Url), serialNumber, Host, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
+            //    }
+            //    catch (TargetInvocationException e) when (e.InnerException != null && e.InnerException is CryptographicException)
+            //    {
+            //        throw new PSArgumentException(Resources.ClientCertificateInvalid, e);
+            //    }
+            //}
 
-            return null;
-#else
+            //return null;
             throw new NotImplementedException();
-#endif
         }
 
         /// <summary>

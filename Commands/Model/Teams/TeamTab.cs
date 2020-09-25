@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Model.Teams
             }
             set
             {
-                _displayName = HttpUtility.UrlDecode(value);
+                _displayName = System.Net.WebUtility.UrlDecode(value);
             }
         }
 

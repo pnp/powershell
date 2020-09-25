@@ -1,10 +1,4 @@
-﻿using PnP.PowerShell.CmdletHelpAttributes;
-using System;
-#if PNPPSCORE
-using System.IdentityModel.Tokens.Jwt;
-#else
-using System.IdentityModel.Tokens;
-#endif
+﻿using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base

@@ -9,9 +9,6 @@ using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-#if !PNPPSCORE
-using System.Web;
-#endif
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -104,24 +101,6 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             catch (ApplicationException ex)
             {
-#if !PNPPSCORE
-                if (ex.InnerException is HttpException)
-                {
-                    if (((HttpException)ex.InnerException).GetHttpCode() == 404)
-                    {
-                        // no team, swallow
-                        return null;
-                    }
-                    else
-                    {
-                        throw ex;
-                    }
-                }
-                else
-                {
-                    throw ex;
-                }
-#else
                 // untested change
                 if (ex.Message.StartsWith("404"))
                 {
@@ -132,7 +111,6 @@ namespace PnP.PowerShell.Commands.Utilities
                     throw ex;
                 }
                 return null;
-#endif
             }
         }
 

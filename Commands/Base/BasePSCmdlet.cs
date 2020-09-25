@@ -15,6 +15,7 @@ namespace PnP.PowerShell.Commands.Base
         private static Assembly systemRuntimeCompilerServicesUnsafeAssembly;
         private static Assembly systemThreadingTasksExtensionsAssembly;
         private static Assembly telemetry;
+        private static Assembly microsoftExtensionsOptions;
 
         protected override void BeginProcessing()
         {
@@ -40,9 +41,9 @@ namespace PnP.PowerShell.Commands.Base
             {
                 newtonsoftAssembly = GetAssembly("Newtonsoft.Json.dll");
             }
-            if(telemetry == null)
+            if(microsoftExtensionsOptions == null)
             {
-                telemetry = GetAssembly("Microsoft.ApplicationInsights.dll");
+                microsoftExtensionsOptions = GetAssembly("Microsoft.Extensions.Options.dll");
             }
             //if (systemBuffersAssembly == null)
             //{
@@ -103,9 +104,9 @@ namespace PnP.PowerShell.Commands.Base
             {
                 return newtonsoftAssembly;
             }
-            if(args.Name.StartsWith("Microsoft.ApplicationInsights.dll"))
+            if(args.Name.StartsWith("Microsoft.Extensions.Options"))
             {
-                return telemetry;
+                return microsoftExtensionsOptions;
             }
             //if (args.Name.StartsWith("System.Buffers", StringComparison.InvariantCultureIgnoreCase))
             //{

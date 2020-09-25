@@ -366,9 +366,6 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
                 if (extension == ".pnp")
                 {
-#if !PNPPSCORE
-                    IsolatedStorage.InitializeIsolatedStorage();
-#endif
                     XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
                           creationInformation.FileConnector as OpenXMLConnector);
                     var templateFileName = packageName.Substring(0, packageName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";

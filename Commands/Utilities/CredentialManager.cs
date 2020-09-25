@@ -11,20 +11,13 @@ namespace PnP.PowerShell.Commands.Utilities
     internal static class CredentialManager
     {
 
-#if PNPPSCORE
+
         public static bool AddCredential(string name, string username, SecureString password, bool overwrite)
-#else
-        public static bool AddCredential(string name, string username, SecureString password)
-#endif
         {
             if (!name.StartsWith("PnPPS:"))
             {
                 name = $"PnPPS:{name}";
             }
-#if !PNPPSCORE
-            WriteWindowsCredentialManagerEntry(name, username, password);
-            return true;
-#else
             if (OperatingSystem.IsWindows())
             {
                 WriteWindowsCredentialManagerEntry(name, username, password);
@@ -34,19 +27,10 @@ namespace PnP.PowerShell.Commands.Utilities
                 WriteMacOSKeyChainEntry(name, username, password, overwrite);
             }
             return true;
-#endif
         }
 
         public static PSCredential GetCredential(string name)
         {
-#if !PNPPSCORE
-            var cred = ReadWindowsCredentialManagerEntry(name);
-            if (cred == null)
-            {
-                cred = ReadWindowsCredentialManagerEntry($"PnPPS:{name}");
-            }
-            return cred;
-#else
             if (OperatingSystem.IsWindows())
             {
                 var cred = ReadWindowsCredentialManagerEntry(name);
@@ -66,19 +50,10 @@ namespace PnP.PowerShell.Commands.Utilities
                 return cred;
             }
             return null;
-#endif
         }
 
         public static bool RemoveCredential(string name)
         {
-#if !PNPPSCORE
-            var success = DeleteWindowsCredentialManagerEntry(name);
-            if(!success)
-            {
-                success = DeleteWindowsCredentialManagerEntry($"PnPPS:{name}");
-            }
-            return success;
-#else
             bool success = false;
             if (OperatingSystem.IsWindows())
             {
@@ -98,7 +73,6 @@ namespace PnP.PowerShell.Commands.Utilities
                 return success;
             }
             return success;
-#endif
         }
 
 
@@ -167,7 +141,6 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-#if PNPPSCORE
         private static PSCredential ReadMacOSKeyChainEntry(string name)
         {
             var cmd = $"/usr/bin/security find-generic-password -s '{name}'";
@@ -194,9 +167,6 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             return null;
         }
-#endif
-
-#if PNPPSCORE
         private static void WriteMacOSKeyChainEntry(string applicationName, string username, SecureString password, bool overwrite)
         {
             var pw = SecureStringToString(password);
@@ -207,9 +177,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             Shell.Bash(cmd);
         }
-#endif
 
-#if PNPPSCORE
         private static bool DeleteMacOSKeyChainEntry(string name)
         {
             var cmd = $"/usr/bin/security delete-generic-password -s '{name}'";
@@ -217,7 +185,6 @@ namespace PnP.PowerShell.Commands.Utilities
             var success = output.Count > 1 && !output[0].StartsWith("security:");
             return success;
         }
-#endif
 
         private static string SecureStringToString(SecureString value)
         {
