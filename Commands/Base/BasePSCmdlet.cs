@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
 
@@ -10,23 +12,19 @@ namespace PnP.PowerShell.Commands.Base
     /// </summary>
     public class BasePSCmdlet : PSCmdlet
     {
-        private static Assembly newtonsoftAssembly;
-        private static Assembly systemBuffersAssembly;
-        private static Assembly systemRuntimeCompilerServicesUnsafeAssembly;
-        private static Assembly systemThreadingTasksExtensionsAssembly;
-        private static Assembly telemetry;
-        private static Assembly microsoftExtensionsOptions;
+        private static bool assembliesResolved = false;
 
+        private static Dictionary<string, Assembly> assemblies = new Dictionary<string, Assembly>();
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-            FixAssemblyResolving();
-
-            // Throw warning if an old *-SPO* cmdlet is being used
-            if (MyInvocation.InvocationName.ToUpper().IndexOf("-SPO", StringComparison.Ordinal) > -1)
+            if (!assembliesResolved)
             {
-                WriteWarning($"PnP Cmdlets starting with the SPO Prefix have been deprecated since the June 2017 release. Please update your scripts and use {MyInvocation.MyCommand.Name} instead.");
+                FixAssemblyResolving();
+
+                assembliesResolved = true;
             }
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }
 
         protected override void EndProcessing()
@@ -37,44 +35,32 @@ namespace PnP.PowerShell.Commands.Base
 
         private void FixAssemblyResolving()
         {
-            if (BasePSCmdlet.newtonsoftAssembly == null)
-            {
-                newtonsoftAssembly = GetAssembly("Newtonsoft.Json.dll");
-            }
-            if(microsoftExtensionsOptions == null)
-            {
-                microsoftExtensionsOptions = GetAssembly("Microsoft.Extensions.Options.dll");
-            }
-            //if (systemBuffersAssembly == null)
-            //{
-            //    systemBuffersAssembly = GetAssembly("System.Buffers.dll");
-            //}
-            //if (systemRuntimeCompilerServicesUnsafeAssembly == null)
-            //{
-            //    systemRuntimeCompilerServicesUnsafeAssembly = GetAssembly("System.Runtime.CompilerServices.Unsafe.dll");
-            //}
-            //if (systemThreadingTasksExtensionsAssembly == null)
-            //{
-            //    systemThreadingTasksExtensionsAssembly = GetAssembly("System.Threading.Tasks.Extensions.dll");
-            //}
-
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            FixAssemblyLoading("Newtonsoft.Json.dll");
+            FixAssemblyLoading("Microsoft.Extensions.Options.dll");
+            FixAssemblyLoading("Microsoft.ApplicationInsights.dll");
+            FixAssemblyLoading("System.Buffers.dll");
+            FixAssemblyLoading("System.Runtime.CompilerServices.Unsafe.dll");
+            FixAssemblyLoading("System.Threading.Tasks.Extensions.dll");
+            FixAssemblyLoading("System.Numerics.Vectors.dll");
         }
 
-        private Assembly GetAssembly(string assemblyName)
+        private void FixAssemblyLoading(string assemblyName)
         {
-            Assembly assembly = null;
-            var assemblyPath = Path.Combine(AssemblyDirectoryFromLocation, assemblyName);
-            if (File.Exists(assemblyPath))
+            if (!assemblies.ContainsKey(assemblyName))
             {
-                assembly = Assembly.LoadFrom(assemblyPath);
+                Assembly assembly;
+                var assemblyPath = Path.Combine(AssemblyDirectoryFromLocation, assemblyName);
+                if (File.Exists(assemblyPath))
+                {
+                    assembly = Assembly.LoadFrom(assemblyPath);
+                }
+                else
+                {
+                    var codebasePath = Path.Combine(AssemblyDirectoryFromCodeBase, assemblyName);
+                    assembly = Assembly.LoadFrom(codebasePath);
+                }
+                assemblies.Add(assemblyName, assembly);
             }
-            else
-            {
-                var codebasePath = Path.Combine(AssemblyDirectoryFromCodeBase, assemblyName);
-                assembly = Assembly.LoadFrom(codebasePath);
-            }
-            return assembly;
         }
 
         private string AssemblyDirectoryFromLocation
@@ -100,26 +86,12 @@ namespace PnP.PowerShell.Commands.Base
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
-            if (args.Name.StartsWith("NewtonSoft.Json", StringComparison.InvariantCultureIgnoreCase))
+            var assemblyKP = assemblies.FirstOrDefault(a => a.Key.Equals($"{args.Name.Substring(0, args.Name.IndexOf(","))}.dll"));
+            if (assemblyKP.Value != null)
             {
-                return newtonsoftAssembly;
+                return assemblyKP.Value;
             }
-            if(args.Name.StartsWith("Microsoft.Extensions.Options"))
-            {
-                return microsoftExtensionsOptions;
-            }
-            //if (args.Name.StartsWith("System.Buffers", StringComparison.InvariantCultureIgnoreCase))
-            //{
-            //    return systemBuffersAssembly;
-            //}
-            //if (args.Name.StartsWith("System.Runtime.CompilerServices.Unsafe", StringComparison.InvariantCultureIgnoreCase))
-            //{
-            //    return systemRuntimeCompilerServicesUnsafeAssembly;
-            //}
-            //if (args.Name.StartsWith("System.Threading.Tasks.Extensions", StringComparison.InvariantCultureIgnoreCase))
-            //{
-            //    return systemThreadingTasksExtensionsAssembly;
-            //}
+      
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (assembly.FullName == args.Name)

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard20;net461</TargetFrameworks>
+    <TargetFramework>netstandard20</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <CopyRefAssembliesToPublishDirectory>true</CopyRefAssembliesToPublishDirectory>
@@ -10,24 +10,16 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <PackageId>PnP.PowerShell</PackageId>
     <Authors>PnP.PowerShell</Authors>
+    <UserSecretsId>f11553ab-e875-4ead-87b6-3204101b4fcd</UserSecretsId>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' and '$(TargetFramework)' == 'netstandard20'">
-    <OutputPath>bin\Debug\netstandard20</OutputPath>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>TRACE;</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' and '$(TargetFramework)' == 'net461'">
-    <OutputPath>bin\Debug\netframework</OutputPath>
-    <DefineConstants>TRACE;</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU' and '$(TargetFramework)' == 'netstandard20'">
-    <OutputPath>bin\Release\netstandard20</OutputPath>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU' and '$(TargetFramework)' == 'net461'">
-    <OutputPath>bin\Release\netframework</OutputPath>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>bin\Release</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,14 +31,14 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.13.1" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Graph" Version="3.14.0" />
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.18.0" />
-    <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.20412.12000" />
+    <PackageReference Include="Microsoft.Graph" Version="3.15.0" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.19.0" />
+    <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.20518.12000" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
-    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
     <PackageReference Include="System.Text.Encodings.Web" Version="4.7.1" />
     <PackageReference Include="System.Text.Json" Version="4.7.2" />
@@ -89,7 +81,7 @@
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="dotnet &quot;$(ProjectDir)..\ModuleFilesGenerator\bin\$(ConfigurationName)\netcoreapp3.1\PnP.PowerShell.ModuleFilesGenerator.dll&quot; &quot;$(TargetPath)&quot; &quot;$(ConfigurationName)&quot; &quot;$(SolutionDir)" />
-    <Exec Command="&quot;c:\program files\powershell\7\pwsh.exe&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command .'$(SolutionDir)postbuild.ps1' -ProjectDir:'$(ProjectDir)' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)' -TargetFileName:'$(TargetFileName)' -TargetName:'$(TargetName)' -TargetFramework:'$(TargetFramework)' -SolutionDir:'$(SolutionDir)'" />
+    <Exec Command="&quot;c:\program files\powershell\7\pwsh.exe&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command .'$(SolutionDir)postbuild.ps1' -ProjectDir:'$(ProjectDir)' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)' -TargetFileName:'$(TargetFileName)' -TargetName:'$(TargetName)' -SolutionDir:'$(SolutionDir)'" />
   </Target>
 
 </Project>

@@ -1,63 +1,53 @@
-param($ProjectDir, $ConfigurationName, $TargetDir, $TargetFileName, $SolutionDir, $TargetFramework)
+param($ProjectDir, $ConfigurationName, $TargetDir, $TargetFileName, $SolutionDir)
 
 if($ConfigurationName -like "Debug*")
 {
 	$documentsFolder = [environment]::getfolderpath("mydocuments");
-	if($TargetFramework -eq "netstandard20")
-	{
-		$DestinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
-	} else {
-		$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\PnP.PowerShell"
-	}
+	$destinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
+	
 	# Module folder there?
-	if(Test-Path $DestinationFolder)
+	if(Test-Path $destinationFolder)
 	{
 		# Yes, empty it
-		Remove-Item $DestinationFolder\*
+		Remove-Item $destinationFolder\*
 	} else {
 		# No, create it
-		Write-Host "Creating target folder: $DestinationFolder"
-		New-Item -Path $DestinationFolder -ItemType Directory -Force >$null # Suppress output
+		Write-Host "Creating target folder: $destinationFolder"
+		New-Item -Path $destinationFolder -ItemType Directory -Force >$null # Suppress output
 	}
 
-	Write-Host "Copying files from $TargetDir to $DestinationFolder"
+	Write-Host "Copying files from $TargetDir to $destinationFolder"
 	Try {
-		Copy-Item "$TargetDir\*.dll" -Destination "$DestinationFolder"
-		Copy-Item "$TargetDir\*help.xml" -Destination "$DestinationFolder"
-		Copy-Item "$TargetDir\ModuleFiles\*" -Destination "$DestinationFolder"
+		Copy-Item "$TargetDir\*.dll" -Destination "$destinationFolder"
+		Copy-Item "$TargetDir\ModuleFiles\*" -Destination "$destinationFolder"
 	}
 	Catch
 	{
+		Write-Host "Cannot copy files to $destinationFolder. Maybe a PowerShell session is still use the module?"
 		exit 1
 	}
 } elseif ($ConfigurationName -like "Release*")
 {
     $documentsFolder = [environment]::getfolderpath("mydocuments");
-	if($TargetFramework -eq "netstandard20")
-	{
-		$DestinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
-	} else {
-		$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\PnP.PowerShell"
-	}
+	$destinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
 
 	# Module folder there?
-	if(Test-Path $DestinationFolder)
+	if(Test-Path $destinationFolder)
 	{
 		# Yes, empty it
-		Remove-Item $DestinationFolder\*
+		Remove-Item $destinationFolder\*
 	} else {
 		# No, create it
-		Write-Host "Creating target folder: $DestinationFolder"
-		New-Item -Path $DestinationFolder -ItemType Directory -Force >$null # Suppress output
+		Write-Host "Creating target folder: $destinationFolder"
+		New-Item -Path $destinationFolder -ItemType Directory -Force >$null # Suppress output
 	}
 
-	Write-Host "Copying files from $TargetDir to $DestinationFolder"
+	Write-Host "Copying files from $TargetDir to $destinationFolder"
 	Try
 	{
-		Copy-Item "$TargetDir\*.dll" -Destination "$DestinationFolder"
-		Copy-Item "$TargetDir\*help.xml" -Destination "$DestinationFolder"
-		Copy-Item "$TargetDir\ModuleFiles\PnP.PowerShell.psd1" -Destination "$DestinationFolder"
-		Copy-Item "$TargetDir\ModuleFiles\PnP.PowerShell.Format.ps1xml" -Destination "$DestinationFolder"
+		Copy-Item "$TargetDir\*.dll" -Destination "$destinationFolder"
+		Copy-Item "$TargetDir\ModuleFiles\PnP.PowerShell.psd1" -Destination "$destinationFolder"
+		Copy-Item "$TargetDir\ModuleFiles\PnP.PowerShell.Format.ps1xml" -Destination "$destinationFolder"
 	} 
 	Catch
 	{
