@@ -3,7 +3,7 @@ using System.IO;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Provisioning.Model;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.Framework.Provisioning.Providers.Xml;
 using PnP.Framework.Provisioning.Connectors;
 using PnP.Framework.Provisioning.ObjectHandlers;
@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet("Apply", "PnPProvisioningTemplate")]
+    [Alias("Start-PnPApplySiteTemplate")]
     public class ApplyProvisioningTemplate : PnPWebCmdlet
     {
         private ProgressRecord progressRecord = new ProgressRecord(0, "Activity", "Status");

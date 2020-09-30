@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace PnP.PowerShell.CmdletHelpAttributes
+namespace PnP.PowerShell.Commands.Attributes
 {
     /// <summary>
     /// Defines the supported API permissions for the Microsoft Graph Api configurable in Azure Active Directory

@@ -1,7 +1,7 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.UserProfiles;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.UserProfiles

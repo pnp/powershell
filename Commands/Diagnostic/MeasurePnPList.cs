@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Extensions;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections.Generic;
 

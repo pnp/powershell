@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PnP.PowerShell.CmdletHelpAttributes
+namespace PnP.PowerShell.Commands.Attributes
 {
     /// <summary>
     /// Base attribute on a cmdlet class in order to provide the Api permission needed to execute the cmdlet

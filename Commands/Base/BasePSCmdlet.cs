@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Management.Automation;
 using System.Reflection;
 
@@ -18,19 +19,19 @@ namespace PnP.PowerShell.Commands.Base
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-            if (!assembliesResolved)
-            {
-                FixAssemblyResolving();
+            //if (!assembliesResolved)
+            //{
+            //    FixAssemblyResolving();
 
-                assembliesResolved = true;
-            }
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            //    assembliesResolved = true;
+            //}
+            //AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }
 
         protected override void EndProcessing()
         {
             base.EndProcessing();
-            AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
+            //AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
         }
 
         private void FixAssemblyResolving()
@@ -48,18 +49,26 @@ namespace PnP.PowerShell.Commands.Base
         {
             if (!assemblies.ContainsKey(assemblyName))
             {
-                Assembly assembly;
+                Assembly assembly = null;
                 var assemblyPath = Path.Combine(AssemblyDirectoryFromLocation, assemblyName);
                 if (File.Exists(assemblyPath))
                 {
-                    assembly = Assembly.LoadFrom(assemblyPath);
+                    try
+                    {
+                        assembly = Assembly.LoadFrom(assemblyPath);
+                    }
+                    catch { }
                 }
                 else
                 {
                     var codebasePath = Path.Combine(AssemblyDirectoryFromCodeBase, assemblyName);
-                    assembly = Assembly.LoadFrom(codebasePath);
+                    try
+                    {
+                        assembly = Assembly.LoadFrom(codebasePath);
+                    }
+                    catch { }
                 }
-                assemblies.Add(assemblyName, assembly);
+                if (assembly != null) { assemblies.Add(assemblyName, assembly); }
             }
         }
 
@@ -91,7 +100,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 return assemblyKP.Value;
             }
-      
+
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (assembly.FullName == args.Name)

@@ -1,7 +1,7 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.DocumentSet;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Linq;
 

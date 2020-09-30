@@ -1,6 +1,6 @@
 ﻿using PnP.Framework.Provisioning.Connectors.OpenXML;
 using PnP.Framework.Provisioning.Connectors.OpenXML.Model;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using System;
 using System.Collections.Generic;
 using System.IO;

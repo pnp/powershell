@@ -1,6 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 using File = Microsoft.SharePoint.Client.File;

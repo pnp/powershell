@@ -2,7 +2,7 @@ using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Enums;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 
 namespace PnP.PowerShell.Commands.Branding
 {

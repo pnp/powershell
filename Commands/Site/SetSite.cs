@@ -3,7 +3,7 @@ using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using PnP.Framework;
 using PnP.Framework.Entities;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
 using System;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Enums;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.PowerShell.Commands.Base.PipeBinds;

@@ -1,5 +1,5 @@
 ﻿using PnP.Framework.Enums;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;

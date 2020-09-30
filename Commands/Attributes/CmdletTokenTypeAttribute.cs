@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PnP.PowerShell.Core.Attributes
+namespace PnP.PowerShell.Commands.Attributes
 {
     public enum TokenType : short
     {

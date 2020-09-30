@@ -7,7 +7,7 @@ using System.Xml.Linq;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Search.Administration;
 using Microsoft.SharePoint.Client.Search.Portability;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Enums;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 

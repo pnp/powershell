@@ -1,7 +1,6 @@
-﻿using PnP.PowerShell.CmdletHelpAttributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Properties;
-using PnP.PowerShell.Core.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;

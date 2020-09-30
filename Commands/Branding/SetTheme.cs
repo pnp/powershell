@@ -4,7 +4,7 @@ using System.Text.Json;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Utilities;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 
 namespace PnP.PowerShell.Commands.Branding
 {

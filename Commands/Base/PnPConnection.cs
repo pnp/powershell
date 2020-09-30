@@ -4,7 +4,6 @@ using Microsoft.SharePoint.Client;
 using PnP.Framework.Extensions;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
-using PnP.PowerShell.Core.Attributes;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections.Generic;
@@ -17,10 +16,11 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using TextCopy;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.Framework;
 using Microsoft.ApplicationInsights.Extensibility;
-
+using PnP.PowerShell.ALC;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -91,7 +91,8 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public string ClientSecret { get; protected set; }
 
-        public TelemetryClient TelemetryClient { get; set; }
+        //public TelemetryClient TelemetryClient { get; set; }
+        public ApplicationInsights ApplicationInsights { get; set; }
 
         public string Url { get; protected set; }
 
@@ -696,21 +697,26 @@ namespace PnP.PowerShell.Commands.Base
                     catch { }
                 }
 
-                TelemetryConfiguration config = TelemetryConfiguration.CreateDefault();
-                TelemetryClient = new TelemetryClient(config);
-                config.InstrumentationKey = "a301024a-9e21-4273-aca5-18d0ef5d80fb";
-                //config..Context.Session.Id = Guid.NewGuid().ToString();
-                TelemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
-                TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
-
-                TelemetryProperties = new Dictionary<string, string>(10);
-                TelemetryProperties.Add("ServerLibraryVersion", serverLibraryVersion);
-                TelemetryProperties.Add("ServerVersion", serverVersion);
-                TelemetryProperties.Add("ConnectionMethod", initializationType.ToString());
+                ApplicationInsights = new ApplicationInsights();
                 var coreAssembly = Assembly.GetExecutingAssembly();
-                TelemetryProperties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
-                TelemetryProperties.Add("Platform", "SPO");
-                TelemetryClient.TrackEvent("Connect-PnPOnline", TelemetryProperties);
+                ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
+                ApplicationInsights.TrackEvent("Connect-PnPOnline");
+                
+                //TelemetryConfiguration config = TelemetryConfiguration.CreateDefault();
+                //TelemetryClient = new TelemetryClient(config);
+                //config.InstrumentationKey = "a301024a-9e21-4273-aca5-18d0ef5d80fb";
+                ////config..Context.Session.Id = Guid.NewGuid().ToString();
+                //TelemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
+                //TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
+
+                //TelemetryProperties = new Dictionary<string, string>(10);
+                //TelemetryProperties.Add("ServerLibraryVersion", serverLibraryVersion);
+                //TelemetryProperties.Add("ServerVersion", serverVersion);
+                //TelemetryProperties.Add("ConnectionMethod", initializationType.ToString());
+                //var coreAssembly = Assembly.GetExecutingAssembly();
+                //TelemetryProperties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
+                //TelemetryProperties.Add("Platform", "SPO");
+                //TelemetryClient.TrackEvent("Connect-PnPOnline", TelemetryProperties);
 
 
                 //TelemetryClient = new TelemetryClient(;

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using File = System.IO.File;
 
 namespace PnP.PowerShell.Commands.Publishing

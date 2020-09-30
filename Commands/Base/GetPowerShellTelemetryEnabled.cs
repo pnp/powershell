@@ -1,5 +1,4 @@
-﻿using PnP.PowerShell.CmdletHelpAttributes;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -8,7 +7,7 @@ namespace PnP.PowerShell.Commands.Base
     {
         protected override void ProcessRecord()
         {
-            WriteObject(PnPConnection.CurrentConnection.TelemetryClient != null);
+            WriteObject(PnPConnection.CurrentConnection.ApplicationInsights != null);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {

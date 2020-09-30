@@ -1,7 +1,6 @@
 ﻿using Microsoft.Identity.Client;
 using PnP.Framework;
-using PnP.PowerShell.CmdletHelpAttributes;
-using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Linq;

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Search.Query;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using System.Collections.Generic;
 using System.Linq;
 

@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Web;
 using System.Collections.Generic;
-using PnP.PowerShell.Core.Attributes;
+using PnP.PowerShell.Commands.Attributes;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using Microsoft.Identity.Client;

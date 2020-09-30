@@ -4,7 +4,7 @@ using PnP.Framework.Provisioning.Connectors;
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.Providers;
 using PnP.Framework.Provisioning.Providers.Xml;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using System;
 using System.IO;
 using System.Linq;

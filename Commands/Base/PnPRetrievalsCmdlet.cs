@@ -6,14 +6,13 @@ using System.Management.Automation;
 using System.Threading;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Base;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 
 namespace PnP.PowerShell.Commands
 {
-    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Includes")]
     public abstract class PnPRetrievalsCmdlet<TType> : PnPSharePointCmdlet, IDynamicParameters where TType : ClientObject
     {
         public object GetDynamicParameters()

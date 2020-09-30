@@ -3,7 +3,7 @@ using System.Linq;
 using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
 using System.Collections.Generic;

@@ -1,5 +1,5 @@
 ﻿using System.Management.Automation;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.ManagementApi

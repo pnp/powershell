@@ -1,7 +1,7 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Framework;
 using PnP.Framework.Entities;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Base;
 using System;
 using System.Management.Automation;

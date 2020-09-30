@@ -2,7 +2,7 @@
 using System.Net;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Base

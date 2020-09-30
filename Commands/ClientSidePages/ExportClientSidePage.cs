@@ -2,7 +2,7 @@
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.Model.Configuration;
 using PnP.Framework.Provisioning.ObjectHandlers;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Properties;
 using System;

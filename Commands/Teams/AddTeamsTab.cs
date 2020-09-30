@@ -1,9 +1,10 @@
-﻿using PnP.PowerShell.CmdletHelpAttributes;
+﻿
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Graph
 {

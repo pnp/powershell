@@ -13,12 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
-  </ItemGroup>
+    <PackageReference Include="System.Management.Automation" Version="7.0.3" />
 
-  <ItemGroup>
-    <ProjectReference Include="..\HelpAttributes\PnP.PowerShell.Attributes.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +27,10 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Commands\PnP.PowerShell.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Files

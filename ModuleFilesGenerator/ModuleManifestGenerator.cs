@@ -36,7 +36,12 @@ namespace PnP.PowerShell.ModuleFilesGenerator
             }
 
             // Create Module Manifest
-            var psd1Path = $"{new FileInfo(_assemblyPath).Directory}\\ModuleFiles\\PnP.PowerShell.psd1";
+            var manifestFolder = $"{new FileInfo(_assemblyPath).Directory}\\..\\ModuleFiles\\";
+            if (!Directory.Exists(manifestFolder))
+            {
+                Directory.CreateDirectory(manifestFolder);
+            }
+            var psd1Path = $"{manifestFolder}\\PnP.PowerShell.psd1";
 
             var cmdletsToExportString = string.Join(",", _cmdlets.Select(c => "\"" + c.FullCommand + "\""));
             string aliasesToExportString = null;
@@ -50,14 +55,22 @@ namespace PnP.PowerShell.ModuleFilesGenerator
         private void WriteModuleManifest(string path, string cmdletsToExport, string aliasesToExport)
         {
             var manifest = $@"@{{
-    NestedModules = @(""PnP.PowerShell.dll"")
+    NestedModules =  if ($PSEdition -eq 'Core')
+    {{
+        'Core/PnP.PowerShell.dll'
+    }}
+    else
+    {{
+        'Framework/PnP.PowerShell.dll'
+    }}
     ModuleVersion = '{_assemblyVersion.Major}.{_assemblyVersion.Minor}.{_assemblyVersion.Revision}'
     Description = 'Microsoft 365 Patterns and Practices PowerShell Cmdlets'
     GUID = '0b0430ce-d799-4f3b-a565-f0dca1f31e17'
     Author = 'Microsoft 365 Patterns and Practices'
     CompanyName = 'Microsoft 365 Patterns and Practices'
-    CompatiblePSEditions = @(""Core"")
-    PowerShellVersion = '3.0'
+    CompatiblePSEditions = @(""Core"",""Desktop"")
+    PowerShellVersion = '5.1'
+    DotNetFrameworkVersion = '4.6.1'
     ProcessorArchitecture = 'None'
     FunctionsToExport = '*'
     CmdletsToExport = @({cmdletsToExport})

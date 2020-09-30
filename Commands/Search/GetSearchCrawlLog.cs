@@ -5,7 +5,7 @@ using System.Management.Automation;
 using System.Web;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Search.Administration;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Search

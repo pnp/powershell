@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.ClientSidePages

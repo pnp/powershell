@@ -4,7 +4,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Extensions;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 
 namespace PnP.PowerShell.Commands
 {
@@ -13,7 +13,6 @@ namespace PnP.PowerShell.Commands
         private Web _selectedWeb;
 
         [Parameter(Mandatory = false)]
-        [PnPParameter(Order = 99)]
         public WebPipeBind Web = new WebPipeBind();
 
         protected Web SelectedWeb

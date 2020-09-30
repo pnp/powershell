@@ -6,7 +6,7 @@ using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using Microsoft.PowerShell.Commands;
 using Microsoft.SharePoint.Client;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using File = System.IO.File;
 
 namespace PnP.PowerShell.Commands.Provider.SPOProxy

@@ -8,7 +8,7 @@ using Microsoft.SharePoint.Client;
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.ObjectHandlers;
 using PnP.Framework.Provisioning.Providers.Xml;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using File = System.IO.File;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;

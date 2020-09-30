@@ -1,4 +1,4 @@
-﻿using PnP.PowerShell.CmdletHelpAttributes;
+﻿
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;

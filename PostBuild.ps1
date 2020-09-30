@@ -4,22 +4,30 @@ if($ConfigurationName -like "Debug*")
 {
 	$documentsFolder = [environment]::getfolderpath("mydocuments");
 	$destinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
-	
+	$corePath = "$destinationFolder/Core"
+	$commonPath = "$destinationFolder/Common"
+	$frameworkPath = "$destinationFolder/Framework"
 	# Module folder there?
 	if(Test-Path $destinationFolder)
 	{
 		# Yes, empty it
-		Remove-Item $destinationFolder\*
-	} else {
-		# No, create it
-		Write-Host "Creating target folder: $destinationFolder"
-		New-Item -Path $destinationFolder -ItemType Directory -Force >$null # Suppress output
+		Remove-Item $destinationFolder\* -Recurse -Force
 	}
-
-	Write-Host "Copying files from $TargetDir to $destinationFolder"
+		# No, create it
+	Write-Host "Creating target folders: $destinationFolder"
+	New-Item -Path $destinationFolder -ItemType Directory -Force | Out-Null
+	New-Item -Path "$destinationFolder\Core" -ItemType Directory -Force | Out-Null
+	New-Item -Path "$destinationFolder\Common" -ItemType Directory -Force | Out-Null
+	New-Item -Path "$destinationFolder\Framework" -ItemType Directory -Force | Out-Null
+	
+	Write-Host "Copying files to $destinationFolder"
 	Try {
-		Copy-Item "$TargetDir\*.dll" -Destination "$destinationFolder"
-		Copy-Item "$TargetDir\ModuleFiles\*" -Destination "$destinationFolder"
+		$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
+		Copy-Item -Path "$TargetDir..\ModuleFiles\*.psd1" -Destination "$destinationFolder"
+		Copy-Item -Path "$TargetDir\ModuleFiles\*.ps1xml" -Destination "$destinationFolder"
+		Get-ChildItem -Path "$PSScriptRoot/PnP.PowerShell.ALC/bin/$ConfigurationName/netstandard2.0" | Where-Object {$_.Extension -in '.dll','.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
+		Get-ChildItem -Path "$PSScriptRoot/Commands/bin/$ConfigurationName/netcoreapp3.1" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
+		Get-ChildItem -Path "$PSScriptRoot/Commands/bin/$ConfigurationName/net461" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }
 	}
 	Catch
 	{

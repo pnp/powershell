@@ -7,7 +7,7 @@ using PnP.Framework.Provisioning.Connectors;
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.ObjectHandlers;
 using PnP.Framework.Provisioning.Providers;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.Framework.Provisioning.Providers.Xml;
 using File = System.IO.File;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
@@ -16,6 +16,8 @@ using PnP.PowerShell.Commands.Utilities;
 using System.Collections.Generic;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.Framework.Provisioning.Model.Configuration;
+using PnP.PowerShell.Commands.Base;
+using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
@@ -69,7 +71,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         [Parameter(Mandatory = false)]
         public string ResourceFilePrefix;
-      
+
         [Parameter(Mandatory = false)]
         public Handlers Handlers;
 
@@ -217,7 +219,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
             creationInformation.IncludeTermGroupsSecurity = IncludeTermGroupsSecurity;
             creationInformation.IncludeSearchConfiguration = IncludeSearchConfiguration;
-            if(ParameterSpecified(nameof(IncludeHiddenLists)))
+            if (ParameterSpecified(nameof(IncludeHiddenLists)))
             {
                 creationInformation.IncludeHiddenLists = IncludeHiddenLists;
             }
@@ -354,9 +356,34 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 creationInformation.ListsToExtract.AddRange(ListsToExtract);
             }
+            ProvisioningTemplate template = null;
+            using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
+            {
+                // Get Azure AD Token
+                if (PnPConnection.CurrentConnection != null)
+                {
+                    var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                    if (graphAccessToken != null)
+                    {
+                        // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
+                        return Task.FromResult(graphAccessToken);
+                    }
+                }
 
-            var template = SelectedWeb.GetProvisioningTemplate(creationInformation);
-
+                if (PnPConnection.CurrentConnection.PSCredential != null)
+                {
+                    // Using normal credentials
+                    return Task.FromResult(TokenHandler.AcquireToken(resource, null));
+                }
+                else
+                {
+                    // No token...
+                    return null;
+                }
+            }))
+            {
+                template = SelectedWeb.GetProvisioningTemplate(creationInformation);
+            }
             // Set metadata for template, if any
             SetTemplateMetadata(template, TemplateDisplayName, TemplateImagePreviewUrl, TemplateProperties);
 

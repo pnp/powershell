@@ -1,6 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Framework;
-using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Provider;
 using System;
@@ -42,7 +42,6 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_GRAPHWITHAAD = "Microsoft Graph using Azure Active Directory";
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
         private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
-        private const string GraphRedirectUri = "urn:ietf:wg:oauth:2.0:oob";
         private const string ParameterSet_ACCESSTOKEN = "Access Token";
         private static readonly Uri GraphAADLogin = new Uri("https://login.microsoftonline.com/");
         private static readonly string[] GraphDefaultScope = { "https://graph.microsoft.com/.default" };

@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
 using Microsoft.SharePoint.Client;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.Framework.Utilities;
 using File = Microsoft.SharePoint.Client.File;

@@ -1,10 +1,8 @@
 ﻿using System;
 using Microsoft.SharePoint.Client.Taxonomy;
-using PnP.PowerShell.CmdletHelpAttributes;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
-    [CmdletPipeline(Description = "Id, Name or Object")]
     public class GenericObjectNameIdPipeBind<T>
     {
         private readonly Guid _id;

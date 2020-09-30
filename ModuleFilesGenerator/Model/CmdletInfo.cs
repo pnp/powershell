@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using PnP.PowerShell.CmdletHelpAttributes;
 
 namespace PnP.PowerShell.ModuleFilesGenerator.Model
 {

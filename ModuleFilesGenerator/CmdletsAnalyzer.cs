@@ -4,7 +4,6 @@ using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
 using System.Runtime.Serialization;
-using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.ModuleFilesGenerator.Model;
 using CmdletInfo = PnP.PowerShell.ModuleFilesGenerator.Model.CmdletInfo;
 using System.ComponentModel;
@@ -66,8 +65,8 @@ namespace PnP.PowerShell.ModuleFilesGenerator
                 }
                 if (!string.IsNullOrEmpty(cmdletInfo.Verb) && !string.IsNullOrEmpty(cmdletInfo.Noun))
                 {
-                    cmdletInfo.Syntaxes = GetCmdletSyntaxes(cmdletInfo);
-                    cmdletInfo.Parameters = GetCmdletParameters(cmdletInfo);
+                 //  cmdletInfo.Syntaxes = GetCmdletSyntaxes(cmdletInfo);
+                    //cmdletInfo.Parameters = GetCmdletParameters(cmdletInfo);
                     cmdlets.Add(cmdletInfo);
                 }
             }
@@ -75,196 +74,196 @@ namespace PnP.PowerShell.ModuleFilesGenerator
             return cmdlets;
         }
 
-        private List<CmdletSyntax> GetCmdletSyntaxes(Model.CmdletInfo cmdletInfo)
-        {
-            List<CmdletSyntax> syntaxes = new List<CmdletSyntax>();
-            var fields = GetFields(cmdletInfo.CmdletType);
-            foreach (var field in fields)
-            {
-                MemberInfo fieldInfo = field;
-                var obsolete = fieldInfo.GetCustomAttributes<ObsoleteAttribute>().Any();
+        //private List<CmdletSyntax> GetCmdletSyntaxes(Model.CmdletInfo cmdletInfo)
+        //{
+        //    List<CmdletSyntax> syntaxes = new List<CmdletSyntax>();
+        //    var fields = GetFields(cmdletInfo.CmdletType);
+        //    foreach (var field in fields)
+        //    {
+        //        MemberInfo fieldInfo = field;
+        //        var obsolete = fieldInfo.GetCustomAttributes<ObsoleteAttribute>().Any();
 
-                if (!obsolete)
-                {
-                    var parameterAttributes = fieldInfo.GetCustomAttributes<ParameterAttribute>(true).Where(a => a.ParameterSetName != ParameterAttribute.AllParameterSets);
-                    var pnpAttributes = field.GetCustomAttributes<PnPParameterAttribute>(true);
-                    foreach (var parameterAttribute in parameterAttributes)
-                    {
-                        var cmdletSyntax = syntaxes.FirstOrDefault(c => c.ParameterSetName == parameterAttribute.ParameterSetName);
-                        if (cmdletSyntax == null)
-                        {
-                            cmdletSyntax = new CmdletSyntax();
-                            cmdletSyntax.ParameterSetName = parameterAttribute.ParameterSetName;
-                            syntaxes.Add(cmdletSyntax);
-                        }
-                        var typeString = field.FieldType.Name;
-                        if (field.FieldType.IsGenericType)
-                        {
-                            typeString = field.FieldType.GenericTypeArguments[0].Name;
-                        }
-                        var fieldAttribute = field.FieldType.GetCustomAttributes<CmdletPipelineAttribute>(false).FirstOrDefault();
-                        if (fieldAttribute != null)
-                        {
-                            if (fieldAttribute.Type != null)
-                            {
-                                typeString = string.Format(fieldAttribute.Description, fieldAttribute.Type.Name);
-                            }
-                            else
-                            {
-                                typeString = fieldAttribute.Description;
-                            }
-                        }
-                        var order = 0;
-                        if (pnpAttributes != null && pnpAttributes.Any())
-                        {
-                            order = pnpAttributes.First().Order;
-                        }
-                        cmdletSyntax.Parameters.Add(new CmdletParameterInfo()
-                        {
-                            Name = field.Name,
-                            Description = parameterAttribute.HelpMessage,
-                            Position = parameterAttribute.Position,
-                            Required = parameterAttribute.Mandatory,
-                            Type = typeString,
-                            Order = order
-                        });
-                    }
-                }
-            }
+        //        if (!obsolete)
+        //        {
+        //            var parameterAttributes = fieldInfo.GetCustomAttributes<ParameterAttribute>(true).Where(a => a.ParameterSetName != ParameterAttribute.AllParameterSets);
+        //            var pnpAttributes = field.GetCustomAttributes<PnPParameterAttribute>(true);
+        //            foreach (var parameterAttribute in parameterAttributes)
+        //            {
+        //                var cmdletSyntax = syntaxes.FirstOrDefault(c => c.ParameterSetName == parameterAttribute.ParameterSetName);
+        //                if (cmdletSyntax == null)
+        //                {
+        //                    cmdletSyntax = new CmdletSyntax();
+        //                    cmdletSyntax.ParameterSetName = parameterAttribute.ParameterSetName;
+        //                    syntaxes.Add(cmdletSyntax);
+        //                }
+        //                var typeString = field.FieldType.Name;
+        //                if (field.FieldType.IsGenericType)
+        //                {
+        //                    typeString = field.FieldType.GenericTypeArguments[0].Name;
+        //                }
+        //                var fieldAttribute = field.FieldType.GetCustomAttributes<CmdletPipelineAttribute>(false).FirstOrDefault();
+        //                if (fieldAttribute != null)
+        //                {
+        //                    if (fieldAttribute.Type != null)
+        //                    {
+        //                        typeString = string.Format(fieldAttribute.Description, fieldAttribute.Type.Name);
+        //                    }
+        //                    else
+        //                    {
+        //                        typeString = fieldAttribute.Description;
+        //                    }
+        //                }
+        //                var order = 0;
+        //                if (pnpAttributes != null && pnpAttributes.Any())
+        //                {
+        //                    order = pnpAttributes.First().Order;
+        //                }
+        //                cmdletSyntax.Parameters.Add(new CmdletParameterInfo()
+        //                {
+        //                    Name = field.Name,
+        //                    Description = parameterAttribute.HelpMessage,
+        //                    Position = parameterAttribute.Position,
+        //                    Required = parameterAttribute.Mandatory,
+        //                    Type = typeString,
+        //                    Order = order
+        //                });
+        //            }
+        //        }
+        //    }
 
-            // AllParameterSets
-            foreach (var field in fields)
-            {
-                var obsolete = field.GetCustomAttributes<ObsoleteAttribute>().Any();
+        //    // AllParameterSets
+        //    foreach (var field in fields)
+        //    {
+        //        var obsolete = field.GetCustomAttributes<ObsoleteAttribute>().Any();
 
-                if (!obsolete)
-                {
-                    var parameterAttributes = field.GetCustomAttributes<ParameterAttribute>(true).Where(a => a.ParameterSetName == ParameterAttribute.AllParameterSets);
-                    var pnpAttributes = field.GetCustomAttributes<PnPParameterAttribute>(true);
-                    foreach (var parameterAttribute in parameterAttributes)
-                    {
-                        if (!syntaxes.Any())
-                        {
-                            syntaxes.Add(new CmdletSyntax { ParameterSetName = ParameterAttribute.AllParameterSets });
-                        }
+        //        if (!obsolete)
+        //        {
+        //            var parameterAttributes = field.GetCustomAttributes<ParameterAttribute>(true).Where(a => a.ParameterSetName == ParameterAttribute.AllParameterSets);
+        //            var pnpAttributes = field.GetCustomAttributes<PnPParameterAttribute>(true);
+        //            foreach (var parameterAttribute in parameterAttributes)
+        //            {
+        //                if (!syntaxes.Any())
+        //                {
+        //                    syntaxes.Add(new CmdletSyntax { ParameterSetName = ParameterAttribute.AllParameterSets });
+        //                }
 
-                        foreach (var syntax in syntaxes)
-                        {
-                            var typeString = field.FieldType.Name;
-                            if (field.FieldType.IsGenericType)
-                            {
-                                typeString = field.FieldType.GenericTypeArguments[0].Name;
-                            }
-                            var fieldAttribute = field.FieldType.GetCustomAttributes<CmdletPipelineAttribute>(false).FirstOrDefault();
-                            if (fieldAttribute != null)
-                            {
-                                if (fieldAttribute.Type != null)
-                                {
-                                    typeString = string.Format(fieldAttribute.Description, fieldAttribute.Type.Name);
-                                }
-                                else
-                                {
-                                    typeString = fieldAttribute.Description;
-                                }
-                            }
-                            var order = 0;
-                            if (pnpAttributes != null && pnpAttributes.Any())
-                            {
-                                order = pnpAttributes.First().Order;
-                            }
-                            syntax.Parameters.Add(new CmdletParameterInfo()
-                            {
-                                Name = field.Name,
-                                Description = parameterAttribute.HelpMessage,
-                                Position = parameterAttribute.Position,
-                                Required = parameterAttribute.Mandatory,
-                                Type = typeString,
-                                Order = order
-                            });
-                        }
-                    }
-                }
-            }
-            return syntaxes;
-        }
+        //                foreach (var syntax in syntaxes)
+        //                {
+        //                    var typeString = field.FieldType.Name;
+        //                    if (field.FieldType.IsGenericType)
+        //                    {
+        //                        typeString = field.FieldType.GenericTypeArguments[0].Name;
+        //                    }
+        //                    var fieldAttribute = field.FieldType.GetCustomAttributes<CmdletPipelineAttribute>(false).FirstOrDefault();
+        //                    if (fieldAttribute != null)
+        //                    {
+        //                        if (fieldAttribute.Type != null)
+        //                        {
+        //                            typeString = string.Format(fieldAttribute.Description, fieldAttribute.Type.Name);
+        //                        }
+        //                        else
+        //                        {
+        //                            typeString = fieldAttribute.Description;
+        //                        }
+        //                    }
+        //                    var order = 0;
+        //                    if (pnpAttributes != null && pnpAttributes.Any())
+        //                    {
+        //                        order = pnpAttributes.First().Order;
+        //                    }
+        //                    syntax.Parameters.Add(new CmdletParameterInfo()
+        //                    {
+        //                        Name = field.Name,
+        //                        Description = parameterAttribute.HelpMessage,
+        //                        Position = parameterAttribute.Position,
+        //                        Required = parameterAttribute.Mandatory,
+        //                        Type = typeString,
+        //                        Order = order
+        //                    });
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return syntaxes;
+        //}
 
-        private List<CmdletParameterInfo> GetCmdletParameters(Model.CmdletInfo cmdletInfo)
-        {
-            List<CmdletParameterInfo> parameters = new List<CmdletParameterInfo>();
-            var fields = GetFields(cmdletInfo.CmdletType);
-            foreach (var field in fields)
-            {
-                MemberInfo fieldInfo = field;
-                var obsolete = fieldInfo.GetCustomAttributes<ObsoleteAttribute>().Any();
+        //private List<CmdletParameterInfo> GetCmdletParameters(Model.CmdletInfo cmdletInfo)
+        //{
+        //    List<CmdletParameterInfo> parameters = new List<CmdletParameterInfo>();
+        //    var fields = GetFields(cmdletInfo.CmdletType);
+        //    foreach (var field in fields)
+        //    {
+        //        MemberInfo fieldInfo = field;
+        //        var obsolete = fieldInfo.GetCustomAttributes<ObsoleteAttribute>().Any();
 
-                if (!obsolete)
-                {
-                    var aliases = field.GetCustomAttributes<AliasAttribute>(true);
-                    var parameterAttributes = field.GetCustomAttributes<ParameterAttribute>(true);
-                    var pnpParameterAttributes = field.GetCustomAttributes<PnPParameterAttribute>(true);
-                    foreach (var parameterAttribute in parameterAttributes)
-                    {
-                        var description = parameterAttribute.HelpMessage;
-                        if (string.IsNullOrEmpty(description))
-                        {
-                            // Maybe a generic one? Find the one with only a helpmessage set
-                            var helpParameterAttribute = parameterAttributes.FirstOrDefault(p => !string.IsNullOrEmpty(p.HelpMessage));
-                            if (helpParameterAttribute != null)
-                            {
-                                description = helpParameterAttribute.HelpMessage;
-                            }
-                        }
+        //        if (!obsolete)
+        //        {
+        //            var aliases = field.GetCustomAttributes<AliasAttribute>(true);
+        //            var parameterAttributes = field.GetCustomAttributes<ParameterAttribute>(true);
+        //            var pnpParameterAttributes = field.GetCustomAttributes<PnPParameterAttribute>(true);
+        //            foreach (var parameterAttribute in parameterAttributes)
+        //            {
+        //                var description = parameterAttribute.HelpMessage;
+        //                if (string.IsNullOrEmpty(description))
+        //                {
+        //                    // Maybe a generic one? Find the one with only a helpmessage set
+        //                    var helpParameterAttribute = parameterAttributes.FirstOrDefault(p => !string.IsNullOrEmpty(p.HelpMessage));
+        //                    if (helpParameterAttribute != null)
+        //                    {
+        //                        description = helpParameterAttribute.HelpMessage;
+        //                    }
+        //                }
                         
-                        var typeString = field.FieldType.Name;
-                        if(field.FieldType.IsGenericType)
-                        {
-                            typeString = field.FieldType.GenericTypeArguments[0].Name;
-                        }
-                        var fieldAttribute = field.FieldType.GetCustomAttributes<CmdletPipelineAttribute>(false).FirstOrDefault();
-                        if (fieldAttribute != null)
-                        {
-                            if (fieldAttribute.Type != null)
-                            {
+        //                var typeString = field.FieldType.Name;
+        //                if(field.FieldType.IsGenericType)
+        //                {
+        //                    typeString = field.FieldType.GenericTypeArguments[0].Name;
+        //                }
+        //                var fieldAttribute = field.FieldType.GetCustomAttributes<CmdletPipelineAttribute>(false).FirstOrDefault();
+        //                if (fieldAttribute != null)
+        //                {
+        //                    if (fieldAttribute.Type != null)
+        //                    {
                                
-                                typeString = string.Format(fieldAttribute.Description, fieldAttribute.Type.Name);
-                            }
-                            else
-                            {
-                                typeString = fieldAttribute.Description;
-                            }
-                        }
-                        var order = 0;
-                        if (pnpParameterAttributes != null && pnpParameterAttributes.Any())
-                        {
-                            order = pnpParameterAttributes.First().Order;
-                        }
-                        var cmdletParameterInfo = new CmdletParameterInfo()
-                        {
-                            Description = description,
-                            Type = typeString,
-                            Name = field.Name,
-                            Required = parameterAttribute.Mandatory,
-                            Position = parameterAttribute.Position,
-                            ValueFromPipeline = parameterAttribute.ValueFromPipeline,
-                            ParameterSetName = parameterAttribute.ParameterSetName,
-                            Order = order
-                        };
+        //                        typeString = string.Format(fieldAttribute.Description, fieldAttribute.Type.Name);
+        //                    }
+        //                    else
+        //                    {
+        //                        typeString = fieldAttribute.Description;
+        //                    }
+        //                }
+        //                var order = 0;
+        //                if (pnpParameterAttributes != null && pnpParameterAttributes.Any())
+        //                {
+        //                    order = pnpParameterAttributes.First().Order;
+        //                }
+        //                var cmdletParameterInfo = new CmdletParameterInfo()
+        //                {
+        //                    Description = description,
+        //                    Type = typeString,
+        //                    Name = field.Name,
+        //                    Required = parameterAttribute.Mandatory,
+        //                    Position = parameterAttribute.Position,
+        //                    ValueFromPipeline = parameterAttribute.ValueFromPipeline,
+        //                    ParameterSetName = parameterAttribute.ParameterSetName,
+        //                    Order = order
+        //                };
 
-                        if (aliases != null && aliases.Any())
-                        {
-                            var customAttributesData = fieldInfo.GetCustomAttributesData();
-                            foreach (var aliasAttribute in customAttributesData.Where(c => c.AttributeType == typeof(AliasAttribute)))
-                            {
-                                cmdletParameterInfo.Aliases.AddRange(aliasAttribute.ConstructorArguments.Select(a => a.ToString()));
-                            }
-                        }
-                        parameters.Add(cmdletParameterInfo);
+        //                if (aliases != null && aliases.Any())
+        //                {
+        //                    var customAttributesData = fieldInfo.GetCustomAttributesData();
+        //                    foreach (var aliasAttribute in customAttributesData.Where(c => c.AttributeType == typeof(AliasAttribute)))
+        //                    {
+        //                        cmdletParameterInfo.Aliases.AddRange(aliasAttribute.ConstructorArguments.Select(a => a.ToString()));
+        //                    }
+        //                }
+        //                parameters.Add(cmdletParameterInfo);
 
-                    }
-                }
-            }
-            return parameters;
-        }
+        //            }
+        //        }
+        //    }
+        //    return parameters;
+        //}
 
         #region Helpers
         private static List<FieldInfo> GetFields(Type t)

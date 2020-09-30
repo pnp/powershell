@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Base
                 System.IO.File.WriteAllText(telemetryFile, "disallow");
                 if (PnPConnection.CurrentConnection != null)
                 {
-                    PnPConnection.CurrentConnection.TelemetryClient = null;
+                    PnPConnection.CurrentConnection.ApplicationInsights = null;
                 }
                 WriteObject("Telemetry disabled");
             }

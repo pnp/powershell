@@ -1,5 +1,6 @@
 ﻿using PnP.Framework.Graph;
-using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Attributes;
+
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;

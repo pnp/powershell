@@ -1,4 +1,4 @@
-﻿using PnP.PowerShell.CmdletHelpAttributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using System;
 using System.Management.Automation;

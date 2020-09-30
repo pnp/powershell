@@ -5,7 +5,7 @@ using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 
 namespace PnP.PowerShell.Commands
 {
@@ -20,16 +20,15 @@ namespace PnP.PowerShell.Commands
         public ClientContext ClientContext => Connection?.Context ?? PnPConnection.CurrentConnection.Context;
 
         [Parameter(Mandatory = false)] // do not remove '#!#99'
-        [PnPParameter(Order = 99)]
         public PnPConnection Connection = null;
 
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
 
-            if (PnPConnection.CurrentConnection != null && PnPConnection.CurrentConnection.TelemetryClient != null)
+            if (PnPConnection.CurrentConnection != null && PnPConnection.CurrentConnection.ApplicationInsights != null)
             {
-                PnPConnection.CurrentConnection.TelemetryClient.TrackEvent(MyInvocation.MyCommand.Name, PnPConnection.CurrentConnection.TelemetryProperties);
+                PnPConnection.CurrentConnection.ApplicationInsights.TrackEvent(MyInvocation.MyCommand.Name);
             }
 
             if (Connection == null && ClientContext == null)

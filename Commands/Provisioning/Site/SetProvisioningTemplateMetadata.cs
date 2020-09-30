@@ -3,7 +3,7 @@ using System.IO;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Provisioning.Model;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using PnP.Framework.Provisioning.Providers.Xml;
 using PnP.Framework.Provisioning.Connectors;
 using System.Collections;

@@ -1,5 +1,5 @@
 ﻿using System.Management.Automation;
-using PnP.PowerShell.CmdletHelpAttributes;
+
 using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Search
