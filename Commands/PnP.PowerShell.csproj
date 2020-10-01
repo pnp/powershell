@@ -83,7 +83,6 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'net461'">
-    <Exec Command="dotnet &quot;$(ProjectDir)..\ModuleFilesGenerator\bin\$(ConfigurationName)\netcoreapp3.1\PnP.PowerShell.ModuleFilesGenerator.dll&quot; &quot;$(TargetPath)&quot; &quot;$(ConfigurationName)&quot; &quot;$(SolutionDir)" />
     <Exec Command="&quot;c:\program files\powershell\7\pwsh.exe&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command .'$(SolutionDir)postbuild.ps1' -ProjectDir:'$(ProjectDir)' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)' -TargetFileName:'$(TargetFileName)' -TargetName:'$(TargetName)' -SolutionDir:'$(SolutionDir)'" />
   </Target>
 
