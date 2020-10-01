@@ -7,8 +7,10 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsTeam")]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_Read_All)]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
+    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_Read_All)]
+    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
+    [PnPManagementShellScopes("Group.ReadWrite.All")]
+
     public class GetTeamsTeam : PnPGraphCmdlet
     {
         private const string ParameterSet_GroupId = "Retrieve a specific Team";

@@ -10,7 +10,9 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsData.Update, "PnPTeamsApp")]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
+    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
+    [PnPManagementShellScopes("Group.ReadWrite.All")]
+
     public class UpdateTeamsApp : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

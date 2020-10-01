@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands
             string assemblyFileName = $"{assemblyName.Name}.dll";
 
             // Make sure we allow other common PowerShell dependencies to be loaded by PowerShell
-            // But specifically exclude Newtonsoft.Json since we want to use a different version here
+            // But specifically exclude Microsoft.ApplicationInsightssince we want to use a different version here
             if (!assemblyName.Name.Equals("Microsoft.ApplicationInsights", StringComparison.OrdinalIgnoreCase))
             {
                 string psHomeAsmPath = Path.Join(s_psHome, assemblyFileName);
@@ -55,29 +55,3 @@ namespace PnP.PowerShell.Commands
         }
     }
 }
-
-    //public class AlcModuleResolveEventHandler : IModuleAssemblyInitializer, IModuleAssemblyCleanup
-    //{
-    //    private static readonly string _dependencyDirPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Dependencies"));
-
-    //    private static readonly AlcModuleAssemblyLoadContext _dependencyAlc = new AlcModuleAssemblyLoadContext(_dependencyDirPath);
-    //    public void OnImport()
-    //    {
-    //        AssemblyLoadContext.Default.Resolving += ResolveAlc;
-    //    }
-
-    //    public void OnRemove(PSModuleInfo psModuleInfo)
-    //    {
-    //        AssemblyLoadContext.Default.Resolving -= ResolveAlc;
-    //    }
-
-    //    private static Assembly ResolveAlc(AssemblyLoadContext defaultAlc, AssemblyName assemblyToResolve)
-    //    {
-    //        if(!assemblyToResolve.Name.Equals("PnP.PowerShell.ALC"))
-    //        {
-    //            return null;
-    //        }
-
-    //        return _dependencyAlc.LoadFromAssemblyName(assemblyToResolve);
-    //    }
-    //}

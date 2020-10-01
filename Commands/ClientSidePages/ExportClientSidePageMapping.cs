@@ -6,8 +6,9 @@ using System.IO;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.Framework.Modernization.Transform;
 using PnP.Framework.Modernization.Publishing;
-using PnP.Framework.Modernization.Cache;
 using PnP.Framework.Modernization.Telemetry.Observers;
+using PnP.PowerShell.ALC;
+using PnP.Framework.Modernization.Cache;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {

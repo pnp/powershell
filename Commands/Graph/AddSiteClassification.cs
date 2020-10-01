@@ -8,7 +8,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Add, "PnPSiteClassification")]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
+    [MicrosoftGraphApiPermissionCheck(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
+    [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class AddSiteClassification : PnPGraphCmdlet
     {
 
@@ -17,6 +18,11 @@ namespace PnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
+            if (PnPConnection.CurrentConnection.ClientId == PnPConnection.PnPManagementShellClientId)
+            {
+                PnPConnection.CurrentConnection.Scopes = new[] { "Directory.ReadWrite.All" };
+            }
+
             try
             {
                 var settings = PnP.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken);

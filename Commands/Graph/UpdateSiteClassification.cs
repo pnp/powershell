@@ -8,7 +8,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsData.Update, "PnPSiteClassification")]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
+    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
+    [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class UpdateSiteClassification : PnPGraphCmdlet
     {
         const string ParameterSet_SETTINGS = "Settings";

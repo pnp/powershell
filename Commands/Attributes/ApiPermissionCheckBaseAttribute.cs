@@ -6,7 +6,7 @@ namespace PnP.PowerShell.Commands.Attributes
     /// Base attribute on a cmdlet class in order to provide the Api permission needed to execute the cmdlet
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public abstract class CmdletApiPermissionBase : Attribute
+    public abstract class ApiPermissionCheckBaseAttribute : Attribute
     {
         /// <summary>
         /// Friendly name for this API used in the generated documentation

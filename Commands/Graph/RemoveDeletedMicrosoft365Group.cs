@@ -8,7 +8,9 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPDeletedMicrosoft365Group")]
     [Alias("Remove-PnPDeletedUnifiedGroup")]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
+    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
+    [PnPManagementShellScopes("Group.ReadWrite.All")]
+
     public class RemoveDeletedMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

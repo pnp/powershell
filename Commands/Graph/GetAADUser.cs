@@ -8,7 +8,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPAADUser", DefaultParameterSetName = ParameterSet_LIST)]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.User_Read_All | MicrosoftGraphApiPermission.User_ReadWrite_All | MicrosoftGraphApiPermission.Directory_Read_All | MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
+    [MicrosoftGraphApiPermissionCheck(MicrosoftGraphApiPermission.User_Read_All | MicrosoftGraphApiPermission.User_ReadWrite_All | MicrosoftGraphApiPermission.Directory_Read_All | MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
+    [PnPManagementShellScopes("Directory.ReadWrite.All")]
     public class GetAADUser : PnPGraphCmdlet
     {
         const string ParameterSet_BYID = "Return by specific ID";
@@ -39,6 +40,10 @@ namespace PnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
+            if (PnPConnection.CurrentConnection.ClientId == PnPConnection.PnPManagementShellClientId)
+            {
+                PnPConnection.CurrentConnection.Scopes = new[] { "Directory.ReadWrite.All" };
+            }
             if (ParameterSpecified(nameof(Identity)))
             {
                 PnP.Framework.Graph.Model.User user;

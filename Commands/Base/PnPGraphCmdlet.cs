@@ -23,16 +23,17 @@ namespace PnP.PowerShell.Commands.Base
         {
             get
             {
+
                 var tokenType = TokenType.All;
 
                 // Collect, if present, the token type attribute
-                var tokenTypeAttribute = (CmdletTokenTypeAttribute)Attribute.GetCustomAttribute(GetType(), typeof(CmdletTokenTypeAttribute));
-                if(tokenTypeAttribute != null)
+                var tokenTypeAttribute = (TokenTypeAttribute)Attribute.GetCustomAttribute(GetType(), typeof(TokenTypeAttribute));
+                if (tokenTypeAttribute != null)
                 {
                     tokenType = tokenTypeAttribute.TokenType;
                 }
                 // Collect the permission attributes to discover required roles
-                var requiredRoleAttributes = (CmdletMicrosoftGraphApiPermission[])Attribute.GetCustomAttributes(GetType(), typeof(CmdletMicrosoftGraphApiPermission));
+                var requiredRoleAttributes = (MicrosoftGraphApiPermissionCheckAttribute[])Attribute.GetCustomAttributes(GetType(), typeof(MicrosoftGraphApiPermissionCheckAttribute));
                 var orRequiredRoles = new List<string>(requiredRoleAttributes.Length);
                 var andRequiredRoles = new List<string>(requiredRoleAttributes.Length);
                 foreach (var requiredRoleAttribute in requiredRoleAttributes)
@@ -57,8 +58,17 @@ namespace PnP.PowerShell.Commands.Base
                 // Ensure we have an active connection
                 if (PnPConnection.CurrentConnection != null)
                 {
+                    string[] managementShellScopes = null;
+                    if (PnPConnection.CurrentConnection.ClientId == PnPConnection.PnPManagementShellClientId)
+                    {
+                        var managementShellScopesAttribute = (PnPManagementShellScopesAttribute)Attribute.GetCustomAttribute(GetType(), typeof(PnPManagementShellScopesAttribute));
+                        if (managementShellScopesAttribute != null)
+                        {
+                            managementShellScopes = managementShellScopesAttribute.PermissionScopes;
+                        }
+                    }
                     // There is an active connection, try to get a Microsoft Graph Token on the active connection
-                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.MicrosoftGraph, PnPConnection.CurrentConnection.AzureEnvironment, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray(), tokenType) is GraphToken token)
+                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.MicrosoftGraph, PnPConnection.CurrentConnection.AzureEnvironment, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray(), tokenType, managementShellScopes) is GraphToken token)
                     {
                         // Microsoft Graph Access Token available, return it
                         return (GraphToken)token;

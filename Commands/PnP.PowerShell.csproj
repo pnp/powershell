@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.14.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
     <PackageReference Include="Microsoft.Graph" Version="3.15.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.19.0" />
     <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.20518.12000" />

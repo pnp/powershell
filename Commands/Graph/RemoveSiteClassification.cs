@@ -9,7 +9,9 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPSiteClassification")]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
+    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
+    [PnPManagementShellScopes("Directory.ReadWrite.All")]
+
     public class RemoveSiteClassification : PnPGraphCmdlet
     {
 

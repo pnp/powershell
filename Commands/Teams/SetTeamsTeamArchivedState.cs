@@ -10,9 +10,10 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPTeamsTeamArchivedState")]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
-    [CmdletTokenType(TokenType = TokenType.Delegate)]
+    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
+    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
+    [TokenType(TokenType = TokenType.Delegate)]
+    [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class SetTeamsTeamArchivedState : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

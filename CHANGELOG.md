@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added -DisableCustomAppAuthentication to Set-PnPTenant and added support for DisableCustomAppAuthentication in Get-PnPTenant.
 - Removed `Measure-PnPResponseTime`. Use Fiddler for more detailed data instead.
 - Removed `-Identity` from Get-PnPAvailableLanguage as it does not apply to SharePoint Online.
+- Removed `Get-PnPManagementApiAccessToken` and `Get-PnPOfficeManagementApiAccessToken` cmdlets. Use Connect-PnPOnline instead with either the -Scopes parameter and other optional parameters
 
 ## [3.25.2009.1]
 

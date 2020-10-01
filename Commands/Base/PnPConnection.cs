@@ -164,7 +164,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="tokenAudience">Audience to try to get a token for</param>
         /// <param name="orRoles">The specific roles to request access to (i.e. Group.ReadWrite.All). Optional, will use default groups assigned to clientId if not specified.</param>
         /// <returns><see cref="GenericToken"/> for the audience or NULL if unable to retrieve a token for the audience on the current connection</returns>
-        internal GenericToken TryGetToken(TokenAudience tokenAudience, AzureEnvironment azureEnvironment, string[] orRoles = null, string[] andRoles = null, TokenType tokenType = TokenType.All)
+        internal GenericToken TryGetToken(TokenAudience tokenAudience, AzureEnvironment azureEnvironment, string[] orRoles = null, string[] andRoles = null, TokenType tokenType = TokenType.All, string[] managementShellScopes = null)
         {
             GenericToken token = null;
 
@@ -191,11 +191,12 @@ namespace PnP.PowerShell.Commands.Base
                             {
                                 token = GraphToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret, AzureEnvironment);
                             }
-                            else if (Scopes != null)
+                            else if (Scopes != null || managementShellScopes != null)
                             {
-                                var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
+                                var scopesToParse = managementShellScopes ?? Scopes;
+                                var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopesToParse).ToArray();
                                 // Take the remaining scopes and try requesting them from the Microsoft Graph API
-                                var scopes = Scopes.Except(officeManagementApiScopes).ToArray();
+                                var scopes = scopesToParse.Except(officeManagementApiScopes).ToArray();
                                 if (scopes.Length > 0)
                                 {
                                     token = PSCredential == null ? GraphToken.AcquireApplicationTokenInteractive(PnPManagementShellClientId, scopes, azureEnvironment) : GraphToken.AcquireDelegatedTokenWithCredentials(PnPManagementShellClientId, scopes, PSCredential.UserName, PSCredential.Password, azureEnvironment);
@@ -220,9 +221,10 @@ namespace PnP.PowerShell.Commands.Base
                         {
                             token = OfficeManagementApiToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret, AzureEnvironment);
                         }
-                        else if (Scopes != null)
+                        else if (Scopes != null || managementShellScopes != null)
                         {
-                            var scopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
+                            var scopesToParse = managementShellScopes ?? Scopes;
+                            var scopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopesToParse).ToArray();
                             // Take the remaining scopes and try requesting them from the Microsoft Graph API
                             if (scopes.Length > 0)
                             {
@@ -554,6 +556,7 @@ namespace PnP.PowerShell.Commands.Base
             ContextCache = new List<ClientContext> { context };
             Url = (new Uri(url)).AbsoluteUri;
             ConnectionMethod = ConnectionMethod.Credentials;
+            ClientId = PnPManagementShellClientId;
         }
 
         internal PnPConnection(ClientContext context, GenericToken tokenResult, ConnectionType connectionType, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)

@@ -111,7 +111,9 @@ namespace PnP.PowerShell.Commands.Attributes
     /// Add this attribute on a cmdlet class in order to provide the Api permission needed to execute the cmdlet
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class CmdletMicrosoftGraphApiPermission : CmdletApiPermissionBase
+    public sealed class MicrosoftGraphApiPermissionCheckAttribute
+
+        : ApiPermissionCheckBaseAttribute
     {
         /// <summary>
         /// Friendly name for this API used in the generated documentation
@@ -129,7 +131,7 @@ namespace PnP.PowerShell.Commands.Attributes
         /// Constructs a new ApiPermissionAttribute
         /// </summary>
         /// <param name="apiPermission">One or more possible permissions of which only one is needed to be granted in the token</param>
-        public CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission orPermissions, MicrosoftGraphApiPermission andPermissions = MicrosoftGraphApiPermission.None)
+        public MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission orPermissions, MicrosoftGraphApiPermission andPermissions = MicrosoftGraphApiPermission.None)
         {
             OrApiPermissions = orPermissions;
             AndApiPermissions = andPermissions;

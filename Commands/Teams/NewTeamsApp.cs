@@ -8,8 +8,9 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.New, "PnPTeamsApp")]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.AppCatalog_ReadWrite_All)]
+    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
+    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.AppCatalog_ReadWrite_All)]
+    [PnPManagementShellScopes("Directory.ReadWrite.All")]
     public class NewTeamsApp : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

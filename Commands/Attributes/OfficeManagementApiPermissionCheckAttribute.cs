@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Attributes
     /// Add this attribute on a cmdlet class in order to provide the Api permission needed to execute the cmdlet
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class CmdletOfficeManagementApiPermissionAttribute : CmdletApiPermissionBase
+    public sealed class OfficeManagementApiPermissionCheckAttribute : ApiPermissionCheckBaseAttribute
     {
         /// <summary>
         /// Friendly name for this API used in the generated documentation
@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Attributes
         /// Constructs a new ApiPermissionAttribute
         /// </summary>
         /// <param name="apiPermission">One or more possible permissions of which only one is needed to be granted in the token</param>
-        public CmdletOfficeManagementApiPermissionAttribute(OfficeManagementApiPermission orApiPermissions, OfficeManagementApiPermission andApiPermissions = OfficeManagementApiPermission.None)
+        public OfficeManagementApiPermissionCheckAttribute(OfficeManagementApiPermission orApiPermissions, OfficeManagementApiPermission andApiPermissions = OfficeManagementApiPermission.None)
         {
             OrApiPermissions = orApiPermissions;
             AndApiPermissions = andApiPermissions;

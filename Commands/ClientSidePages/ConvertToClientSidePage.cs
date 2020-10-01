@@ -3,7 +3,6 @@ using System.Management.Automation;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.Framework.Modernization;
 using System.Reflection;
-using PnP.Framework.Modernization.Cache;
 using Microsoft.SharePoint.Client;
 using System.IO;
 using PnP.PowerShell.Commands.Base;
@@ -11,6 +10,8 @@ using PnP.Framework.Modernization.Transform;
 using PnP.Framework.Modernization.Publishing;
 using PnP.Framework.Modernization.Delve;
 using PnP.Framework.Modernization.Telemetry.Observers;
+using PnP.PowerShell.ALC;
+using PnP.Framework.Modernization.Cache;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {

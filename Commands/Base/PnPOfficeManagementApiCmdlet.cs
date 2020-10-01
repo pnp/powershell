@@ -26,14 +26,14 @@ namespace PnP.PowerShell.Commands.Base
                 var tokenType = TokenType.All;
 
                 // Collect, if present, the token type attribute
-                var tokenTypeAttribute = (CmdletTokenTypeAttribute)Attribute.GetCustomAttribute(GetType(), typeof(CmdletTokenTypeAttribute));
+                var tokenTypeAttribute = (TokenTypeAttribute)Attribute.GetCustomAttribute(GetType(), typeof(TokenTypeAttribute));
                 if (tokenTypeAttribute != null)
                 {
                     tokenType = tokenTypeAttribute.TokenType;
                 }
 
                 // Collect the permission attributes to discover required roles
-                var requiredRoleAttributes = (CmdletOfficeManagementApiPermissionAttribute[])Attribute.GetCustomAttributes(GetType(), typeof(CmdletOfficeManagementApiPermissionAttribute));
+                var requiredRoleAttributes = (OfficeManagementApiPermissionCheckAttribute[])Attribute.GetCustomAttributes(GetType(), typeof(OfficeManagementApiPermissionCheckAttribute));
                 var orRequiredRoles = new List<string>(requiredRoleAttributes.Length);
                 var andRequiredRoles = new List<string>(requiredRoleAttributes.Length);
 
@@ -58,8 +58,17 @@ namespace PnP.PowerShell.Commands.Base
                 // Ensure we have an active connection
                 if (PnPConnection.CurrentConnection != null)
                 {
+                    string[] managementShellScopes = null;
+                    if (PnPConnection.CurrentConnection.ClientId == PnPConnection.PnPManagementShellClientId)
+                    {
+                        var managementShellScopesAttribute = (PnPManagementShellScopesAttribute)Attribute.GetCustomAttribute(GetType(), typeof(PnPManagementShellScopesAttribute));
+                        if (managementShellScopesAttribute != null)
+                        {
+                            managementShellScopes = managementShellScopesAttribute.PermissionScopes;
+                        }
+                    }
                     // There is an active connection, try to get a Microsoft Office Management API Token on the active connection
-                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.OfficeManagementApi, PnPConnection.CurrentConnection.AzureEnvironment, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray(), tokenType) is OfficeManagementApiToken token)
+                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.OfficeManagementApi, PnPConnection.CurrentConnection.AzureEnvironment, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray(), tokenType, managementShellScopes) is OfficeManagementApiToken token)
                     {
                         // Microsoft Office Management API Access Token available, return it
                         return token;

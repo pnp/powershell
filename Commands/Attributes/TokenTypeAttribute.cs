@@ -12,11 +12,11 @@ namespace PnP.PowerShell.Commands.Attributes
     }
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public sealed class CmdletTokenTypeAttribute : Attribute
+    public sealed class TokenTypeAttribute : Attribute
     {
         public TokenType TokenType { get; set; }
 
-        public CmdletTokenTypeAttribute(TokenType tokenType = TokenType.All)
+        public TokenTypeAttribute(TokenType tokenType = TokenType.All)
         {
             TokenType = tokenType;
         }

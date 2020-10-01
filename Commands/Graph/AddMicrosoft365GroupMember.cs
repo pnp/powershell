@@ -9,7 +9,8 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Add, "PnPMicrosoft365GroupMember")]
     [Alias("Add-PnPUnifiedGroupMember")]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.None, MicrosoftGraphApiPermission.User_ReadWrite_All | MicrosoftGraphApiPermission.Group_ReadWrite_All)]
+    [MicrosoftGraphApiPermissionCheck(MicrosoftGraphApiPermission.None, MicrosoftGraphApiPermission.User_ReadWrite_All | MicrosoftGraphApiPermission.Group_ReadWrite_All)]
+    [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class AddMicrosoft365GroupMember : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -23,6 +24,11 @@ namespace PnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
+            if (PnPConnection.CurrentConnection.ClientId == PnPConnection.PnPManagementShellClientId)
+            {
+                PnPConnection.CurrentConnection.Scopes = new[] { "Group.ReadWrite.All" };
+            }
+
             UnifiedGroupEntity group = null;
 
             if (Identity != null)

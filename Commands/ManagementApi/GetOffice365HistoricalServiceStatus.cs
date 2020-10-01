@@ -9,10 +9,8 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPOffice365HistoricalServiceStatus")]
-    
-    
-    
-    [CmdletOfficeManagementApiPermission(OfficeManagementApiPermission.ServiceHealth_Read)]
+    [OfficeManagementApiPermissionCheck(OfficeManagementApiPermission.ServiceHealth_Read)]
+    [PnPManagementShellScopes("ServiceHealth.Read")]
     public class GetOffice365HistoricalServiceStatus : PnPOfficeManagementApiCmdlet
     {
         [Parameter(Mandatory = false)]
