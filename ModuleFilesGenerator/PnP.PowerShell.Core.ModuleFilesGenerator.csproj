@@ -29,8 +29,4 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Commands\PnP.PowerShell.csproj" />
-  </ItemGroup>
-
 </Project>
