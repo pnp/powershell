@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPStorageEntity")]
+    [Cmdlet(VerbsCommon.Get, "StorageEntity")]
     public class GetPnPStorageEntity : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false)]

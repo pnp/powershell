@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Webhooks
 {
-    [Cmdlet(VerbsCommon.Set, "PnPWebhookSubscription")]
+    [Cmdlet(VerbsCommon.Set, "WebhookSubscription")]
     public class SetWebhookSubscription : PnPWebCmdlet
     {
         public const int DefaultValidityInMonths = 6;

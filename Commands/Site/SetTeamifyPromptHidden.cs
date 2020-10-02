@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Set, "PnPTeamifyPromptHidden")]
+    [Cmdlet(VerbsCommon.Set, "TeamifyPromptHidden")]
     public class SetTeamifyPromptHidden : PnPSharePointCmdlet
     {
 

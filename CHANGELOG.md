@@ -9,9 +9,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- `Get-PnPAppInstance` has been removed. Use `Get-PnPApp` instead.
-- `Import-PnPAppPackage` has been removed. Use `Instal-PnPApp` instead.
-- `Uninstall-AppInstance` has been removed. Use `Uninstall-PnPApp` instead.
+- Renamed `Apply-PnPProvisioningTemplate` to `Invoke-PnPSiteTemplate`.
+- Renamed `Get-PnPProvisioningTemplate` to `Get-PnPSiteTemplate`.
+- Renamed `Add-PnPDataRowsToProvisioningTemplate` to `Add-PnPDataRowsToSiteTemplate`.
+- Renamed `Add-PnPFileToProvisioningTemplate` to `Add-PnPFileToSiteTemplate`.
+- Renamed `Add-PnPListFoldersToProvisioningTemplate` to `Add-PnPListFoldersToSiteTemplate`.
+- Renamed `Convert-PnPFolderToProvisioningTemplate` to `Convert-PnPFolderToSiteTemplate`.
+- Renamed `Convert-PnPProvisioningTemplate` to `Convert-PnPSiteTemplate`.
+- Renamed `Export-PnPListToProvisioningTemplate` to `Export-PnPListToSiteTemplate`.
+- Renamed `New-PnPProvisioningTemplate` to `New-PnPSiteTemplate`.
+- Renamed `New-PnPProvisioningTemplateFromFolder` to `New-PnPSiteTemplateFromFolder`.
+- Renamed `Read-PnPProvisioningTemplate` to `Read-PnPSiteTemplate`.
+- Renamed `Remove-PnPFileFromProvisioningTemplate` to `Remove-PnPFileFromSiteTemplate`.
+- Renamed `Save-PnPProvisioningTemplate` to `Save-PnPSiteTemplate`.
+- Renamed `Set-PnPProvisioningTemplateMetadata` to `Set-PnPSiteTemplateMetadata`.
+- Renamed `Add-PnPProvisioningTemplate` to `Add-PnPSiteTemplate`.
+- Removed `Get-PnPAppInstance`. Use `Get-PnPApp` instead.
+- Removed `Import-PnPAppPackage`. Use `Instal-PnPApp` instead.
+- Removed `Uninstall-AppInstance`. Use `Uninstall-PnPApp` instead.
 - Removed `Get-PnPHealthScore` as the value reported is only applicable to on-premises.
 - Removed `-MinimalHealthScore` from `Connect-PnPOnline` as the value reported from the server only applies to on-premises.
 - Removed `-SkipTenantAdminCheck` from `Connect-PnPOnline`. Check will be executed everytime where applicable.
@@ -25,3 +40,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Measure-PnPResponseTime`. Use Fiddler for more detailed data instead.
 - Removed `-Identity` from Get-PnPAvailableLanguage as it does not apply to SharePoint Online.
 - Removed `Get-PnPManagementApiAccessToken` and `Get-PnPOfficeManagementApiAccessToken` cmdlets. Use Connect-PnPOnline instead with either the -Scopes parameter and other optional parameters
+- Removed alias `Connect-PnPHubsite`. Use `Add-PnPHubSiteAssociation`.
+- Removed alias `Disconnect-PnPHubSite`. Use `Remove-PnPHubSiteAssociation`.
+- Removed alias `Add-PnPOffice365GroupToSite`. Use `Add-PnPMicrosoft365GroupToSite`.
+- Removed alias `Add-PnPUnifiedGroupMember`. Use `Add-PnPMicrosoft365GroupMember`.
+- Removed alias `Add-PnPUnifiedGroupOwner`. Use `Add-PnPMicrosoft365GroupOwner`.
+- Removed alias `Clear-PnPUnifiedGroupMember`. Use `Clear-PnPMicrosoft365GroupMember`.
+- Removed alias `Clear-PnPUnifiedGroupOwner`. Use `Clear-PnPMicrosoft365GroupOwner`.
+- Removed alias `Get-PnPDeletedUnifiedGroup`. Use `Get-PnPDeletedMicrosoft365Group`.
+- Removed alias `Get-PnPUnifiedGroup`. Use `Get-PnPMicrosoft365Group`.
+- Removed alias `Get-PnPUnifiedGroupMembers`. Use `Get-PnPMicrosoft365GroupMembers`.
+- Removed alias `Get-PnPUnifiedGroupOwners`. Use `Get-PnPMicrosoft365GroupOwners`.
+- Removed alias `New-PnPUnifiedGroup`. Use `New-PnPMicrosoft365Group`.
+- Removed alias `Remove-PnPDeletedUnifiedGroup`. Use `Remove-PnPDeletedMicrosoft365Group`.
+- Removed alias `Remove-PnPUnifiedGroup`. Use `Remove-PnPMicrosoft365Group`.
+- Removed alias `Remove-PnPUnifiedGroupMember`. Use `Remove-PnPMicrosoft365GroupMember`.
+- Removed alias `Remove-PnPUnifiedGroupOwner`. Use `Remove-PnPMicrosoft365GroupOwner`.
+- Removed alias `Restore-PnPDeletedUnifiedGroup`. Use `Restore-PnPDeletedMicrosoft365Group`.
+- Removed alias `Set-PnPUnifiedGroup`. Use `Set-PnPMicrosoft365Group`.
+- Removed alias `Execute-PnPQuery`. Use `Invoke-PnPQuery`.
+- Removed alias `Ensure-PnPFolder`. Use `Resolve-PnPFolder`.

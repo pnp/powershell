@@ -6,7 +6,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAppAuthAccessToken")]
+    [Cmdlet(VerbsCommon.Get, "AppAuthAccessToken")]
     public class GetPnPAppAuthAccessToken : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()

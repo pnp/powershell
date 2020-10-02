@@ -8,7 +8,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteDesign")]
+    [Cmdlet(VerbsCommon.Get, "SiteDesign")]
     public class GetSiteDesign : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]

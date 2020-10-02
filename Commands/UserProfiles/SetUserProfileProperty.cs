@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
-    [Cmdlet(VerbsCommon.Set, "PnPUserProfileProperty")]
+    [Cmdlet(VerbsCommon.Set, "UserProfileProperty")]
     public class SetUserProfileProperty : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]

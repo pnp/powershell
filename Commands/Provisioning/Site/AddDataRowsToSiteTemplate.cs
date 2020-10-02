@@ -17,8 +17,9 @@ using SPSite = Microsoft.SharePoint.Client.Site;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Add, "PnPDataRowsToProvisioningTemplate")]
-    public class AddDataRowsToProvisioningTemplate : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Add, "DataRowsToSiteTemplate")]
+    [Alias("Add-DataRowsToProvisioningTemplate")]
+    public class AddDataRowsToSiteTemplate : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Path;
@@ -54,8 +55,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
 
-            var template = ReadProvisioningTemplate
-                    .LoadProvisioningTemplateFromFile(Path,
+            var template = ReadSiteTemplate
+                    .LoadSiteTemplateFromFile(Path,
                     TemplateProviderExtensions, (e) =>
                     {
                         WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));

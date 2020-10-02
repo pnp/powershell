@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Add, "PnPUserToGroup")]
+    [Cmdlet(VerbsCommon.Add, "UserToGroup")]
     public class AddUserToGroup : PnPWebCmdlet
     {
 

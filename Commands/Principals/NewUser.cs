@@ -4,11 +4,10 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.New, "PnPUser")]
+    [Cmdlet(VerbsCommon.New, "User")]
     public class NewUser : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
-        [Alias("LogonName")]
         public string LoginName = string.Empty;
 
         protected override void ExecuteCmdlet()

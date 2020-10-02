@@ -15,7 +15,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsData.Export, "PnPTermGroupToXml")]
+    [Cmdlet(VerbsData.Export, "TermGroupToXml")]
     public class ExportTermGroup : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false,

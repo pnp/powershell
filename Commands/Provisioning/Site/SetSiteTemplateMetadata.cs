@@ -12,8 +12,9 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Set, "PnPProvisioningTemplateMetadata")]
-    public class SetProvisioningTemplateMetadata : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Set, "SiteTemplateMetadata")]
+    [Alias("Set-ProvisioningTemplateMetadata")]
+    public class SetSiteTemplateMetadata : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true)]
         public string Path;
@@ -88,7 +89,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
             if (provisioningTemplate == null) return;
 
-            GetProvisioningTemplate.SetTemplateMetadata(provisioningTemplate, TemplateDisplayName, TemplateImagePreviewUrl, TemplateProperties);
+            GetSiteTemplate.SetTemplateMetadata(provisioningTemplate, TemplateDisplayName, TemplateImagePreviewUrl, TemplateProperties);
 
             provider.SaveAs(provisioningTemplate, templateFileName, TemplateProviderExtensions);
         }

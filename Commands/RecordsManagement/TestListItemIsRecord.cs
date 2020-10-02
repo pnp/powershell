@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.RecordsManagement
 {
-    [Cmdlet(VerbsDiagnostic.Test, "PnPListItemIsRecord")]
+    [Cmdlet(VerbsDiagnostic.Test, "ListItemIsRecord")]
     public class TestListItemIsRecord : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

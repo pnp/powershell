@@ -17,7 +17,7 @@ using System.Text.RegularExpressions;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "PnPSPRestMethod")]
+    [Cmdlet(VerbsLifecycle.Invoke, "SPRestMethod")]
     public class InvokeSPRestMethod : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]

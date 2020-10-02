@@ -7,7 +7,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Set, "PnPClientSidePage")]
+    [Cmdlet(VerbsCommon.Set, "ClientSidePage")]
     public class SetClientSidePage : PnPWebCmdlet, IDynamicParameters
     {
         const string ParameterSet_CUSTOMHEADER = "Custom Header";

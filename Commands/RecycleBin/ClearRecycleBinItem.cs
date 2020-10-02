@@ -6,7 +6,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.RecycleBin
 {
-    [Cmdlet(VerbsCommon.Clear, "PnPRecycleBinItem", DefaultParameterSetName = PARAMETERSET_ALL)]
+    [Cmdlet(VerbsCommon.Clear, "RecycleBinItem", DefaultParameterSetName = PARAMETERSET_ALL)]
     public class ClearRecycleBinItem : PnPSharePointCmdlet
     {
         const string PARAMETERSET_ALL = "All";

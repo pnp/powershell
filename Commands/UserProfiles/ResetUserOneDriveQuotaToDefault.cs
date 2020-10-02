@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
-    [Cmdlet(VerbsCommon.Reset, "PnPUserOneDriveQuotaToDefault")]
+    [Cmdlet(VerbsCommon.Reset, "UserOneDriveQuotaToDefault")]
     public class ResetUserOneDriveQuotaMax : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

@@ -21,8 +21,9 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Get, "PnPProvisioningTemplate")]
-    public class GetProvisioningTemplate : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Get, "SiteTemplate")]
+    [Alias("Get-ProvisioningTemplate")]
+    public class GetSiteTemplate : PnPWebCmdlet
     {
         private ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");
         private ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");

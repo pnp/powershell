@@ -5,7 +5,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Rename, "PnPFolder")]
+    [Cmdlet(VerbsCommon.Rename, "Folder")]
     public class RenameFolder : PnPWebCmdlet
     {
 

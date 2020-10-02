@@ -6,11 +6,10 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Set, "PnPHubSite")]
+    [Cmdlet(VerbsCommon.Set, "HubSite")]
     public class SetHubSite : PnPAdminCmdlet
     {
         [Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
-        [Alias("HubSite")]
         public HubSitePipeBind Identity { get; set; }
 
         [Parameter(Mandatory = false)]

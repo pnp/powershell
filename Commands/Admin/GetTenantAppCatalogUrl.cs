@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTenantAppCatalogUrl")]
+    [Cmdlet(VerbsCommon.Get, "TenantAppCatalogUrl")]
     public class GetTenantAppCatalogUrl : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()

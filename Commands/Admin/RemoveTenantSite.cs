@@ -8,14 +8,13 @@ using PnP.Framework;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPTenantSite")]
+    [Cmdlet(VerbsCommon.Remove, "TenantSite")]
     public class RemoveSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public string Url;
 
         [Parameter(Mandatory = false)]
-        [Alias("SkipTrash")]
         public SwitchParameter SkipRecycleBin;
 
         [Parameter(Mandatory = false)]

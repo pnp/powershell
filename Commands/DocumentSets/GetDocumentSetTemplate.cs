@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.DocumentSets
 {
-    [Cmdlet(VerbsCommon.Get,"PnPDocumentSetTemplate")]
+    [Cmdlet(VerbsCommon.Get,"DocumentSetTemplate")]
     public class GetDocumentSetTemplate : PnPWebRetrievalsCmdlet<DocumentSetTemplate>
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]

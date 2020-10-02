@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Add, "PnPClientSidePageSection")]
+    [Cmdlet(VerbsCommon.Add, "ClientSidePageSection")]
     public class AddClientSidePageSection : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet("Apply", "PnPTenantTemplate")]
+    [Cmdlet("Apply", "TenantTemplate")]
     public class ApplyTenantTemplate : PnPAdminCmdlet
     {
         private const string ParameterSet_PATH = "By Path";

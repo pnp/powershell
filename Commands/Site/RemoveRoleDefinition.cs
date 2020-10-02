@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPRoleDefinition")]
+    [Cmdlet(VerbsCommon.Remove, "RoleDefinition")]
     public class RemoveRoleDefinition : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

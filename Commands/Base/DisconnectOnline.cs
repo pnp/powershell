@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommunications.Disconnect, "PnPOnline")]
+    [Cmdlet(VerbsCommunications.Disconnect, "Online")]
     public class DisconnectOnline : PSCmdlet
     {
         [Parameter(Mandatory = false)]

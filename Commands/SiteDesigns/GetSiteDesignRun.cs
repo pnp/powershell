@@ -8,7 +8,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.SiteDesigns
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteDesignRun")]
+    [Cmdlet(VerbsCommon.Get, "SiteDesignRun")]
     public class GetSiteDesignRun : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

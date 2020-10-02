@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteScriptFromList")]
+    [Cmdlet(VerbsCommon.Get, "SiteScriptFromList")]
     public class GetSiteScriptFromList : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

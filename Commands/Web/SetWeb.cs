@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Set, "PnPWeb")]
+    [Cmdlet(VerbsCommon.Set, "Web")]
     public class SetWeb : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

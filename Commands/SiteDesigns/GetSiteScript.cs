@@ -9,7 +9,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteScript")]
+    [Cmdlet(VerbsCommon.Get, "SiteScript")]
     public class GetSiteScript : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]

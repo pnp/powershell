@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace PnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Set, "PnPField")]
+    [Cmdlet(VerbsCommon.Set, "Field")]
     public class SetField : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

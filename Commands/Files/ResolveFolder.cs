@@ -4,8 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsDiagnostic.Resolve, "PnPFolder")]
-    [Alias("Ensure-PnPFolder")]
+    [Cmdlet(VerbsDiagnostic.Resolve, "Folder")]
     public class ResolveFolder : PnPWebRetrievalsCmdlet<Folder>
     {
         [Parameter(Mandatory = true, Position = 0)]

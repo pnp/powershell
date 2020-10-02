@@ -8,7 +8,7 @@ using File = Microsoft.SharePoint.Client.File;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Get, "PnPFile", DefaultParameterSetName = "Return as file object")]
+    [Cmdlet(VerbsCommon.Get, "File", DefaultParameterSetName = "Return as file object")]
     public class GetFile : PnPWebCmdlet
     {
         private const string URLTOPATH = "Save to local path";

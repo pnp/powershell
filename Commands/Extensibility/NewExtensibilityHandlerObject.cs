@@ -4,7 +4,7 @@ using PnP.Framework.Provisioning.Model;
 
 namespace PnP.PowerShell.Commands.Extensibility
 {
-    [Cmdlet(VerbsCommon.New, "PnPExtensibilityHandlerObject")]
+    [Cmdlet(VerbsCommon.New, "ExtensibilityHandlerObject")]
     public class NewExtensibilityHandlerObject : PSCmdlet
     {
         [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true)]

@@ -9,7 +9,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTerm")]
+    [Cmdlet(VerbsCommon.Get, "Term")]
     public class GetTerm : PnPRetrievalsCmdlet<Term>
     {
         private const string ParameterSet_TERM = "By Term Id";

@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Extensions;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSubWebs")]
+    [Cmdlet(VerbsCommon.Get, "SubWebs")]
     
     public class GetSubWebs : PnPWebRetrievalsCmdlet<Web>
     {

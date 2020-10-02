@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Extensions;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Set, "PnPWebPermission", DefaultParameterSetName = "User")]
+    [Cmdlet(VerbsCommon.Set, "WebPermission", DefaultParameterSetName = "User")]
     public class SetWebPermission : PnPWebCmdlet
     {
 		[Parameter(Mandatory = true, ValueFromPipeline = true)]

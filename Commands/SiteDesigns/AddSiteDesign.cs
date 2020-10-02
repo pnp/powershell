@@ -10,7 +10,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Add, "PnPSiteDesign")]
+    [Cmdlet(VerbsCommon.Add, "SiteDesign")]
     public class AddSiteDesign : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

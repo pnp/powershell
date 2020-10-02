@@ -10,7 +10,7 @@ using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.RecordsManagement
 {
-    [Cmdlet(VerbsCommon.Set, "PnPInPlaceRecordsManagement")]
+    [Cmdlet(VerbsCommon.Set, "InPlaceRecordsManagement")]
     public class SetInPlaceRecordsManagement : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "Enable or Disable")]

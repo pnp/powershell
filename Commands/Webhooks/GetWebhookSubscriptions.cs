@@ -7,7 +7,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Webhooks
 {
-    [Cmdlet(VerbsCommon.Get, "PnPWebhookSubscriptions")]
+    [Cmdlet(VerbsCommon.Get, "WebhookSubscriptions")]
     public class GetWebhookSubscriptions : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

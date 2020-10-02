@@ -8,7 +8,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPTaxonomyItem")]
+    [Cmdlet(VerbsCommon.Remove, "TaxonomyItem")]
     public class RemoveTaxonomyItem : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]

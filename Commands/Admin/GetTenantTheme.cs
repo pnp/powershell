@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTenantTheme")]
+    [Cmdlet(VerbsCommon.Get, "TenantTheme")]
     public class GetTenantTheme : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]

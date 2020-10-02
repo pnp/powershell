@@ -5,7 +5,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsLifecycle.Disable, "PnPSiteClassification")]
+    [Cmdlet(VerbsLifecycle.Disable, "SiteClassification")]
     [MicrosoftGraphApiPermissionCheck(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     [PnPManagementShellScopes("Directory.ReadWrite.All")]
     public class DisableSiteClassification : PnPGraphCmdlet

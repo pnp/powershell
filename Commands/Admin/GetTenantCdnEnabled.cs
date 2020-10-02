@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTenantCdnEnabled")]
+    [Cmdlet(VerbsCommon.Get, "TenantCdnEnabled")]
     public class GetTenantCdnEnabled : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

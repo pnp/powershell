@@ -8,8 +8,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365GroupOwners")]
-    [Alias("Get-PnPUnifiedGroupOwners")]
+    [Cmdlet(VerbsCommon.Get, "Microsoft365GroupOwners")]
     [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_Read_All | MicrosoftGraphApiPermission.User_Read_All | MicrosoftGraphApiPermission.Group_ReadWrite_All | MicrosoftGraphApiPermission.User_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class GetMicrosoft365GroupOwners : PnPGraphCmdlet

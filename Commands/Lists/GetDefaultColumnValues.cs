@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "PnPDefaultColumnValues")]
+    [Cmdlet(VerbsCommon.Get, "DefaultColumnValues")]
     public class GetDefaultColumnValues : PnPWebCmdlet
     { 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

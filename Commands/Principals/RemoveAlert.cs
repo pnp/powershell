@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPAlert")]
+    [Cmdlet(VerbsCommon.Remove, "Alert")]
     public class RemoveAlert : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

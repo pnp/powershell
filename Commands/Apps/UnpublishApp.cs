@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsData.Unpublish, "PnPApp")]
+    [Cmdlet(VerbsData.Unpublish, "App")]
     public class UnpublishApp : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]

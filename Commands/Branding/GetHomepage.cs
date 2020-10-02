@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Get, "PnPHomePage")]
+    [Cmdlet(VerbsCommon.Get, "HomePage")]
     public class GetHomePage : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()

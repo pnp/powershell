@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Set, "PnPTaxonomyFieldValue", DefaultParameterSetName = "ITEM")]
+    [Cmdlet(VerbsCommon.Set, "TaxonomyFieldValue", DefaultParameterSetName = "ITEM")]
     public class SetTaxonomyFieldValue : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]

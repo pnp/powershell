@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Workflows
 {
-    [Cmdlet(VerbsCommon.Get, "PnPWorkflowInstance", DefaultParameterSetName = ParameterSet_BYLISTITEM)]
+    [Cmdlet(VerbsCommon.Get, "WorkflowInstance", DefaultParameterSetName = ParameterSet_BYLISTITEM)]
     public class GetWorkflowInstance : PnPWebCmdlet
     {
         private const string ParameterSet_BYLISTITEM = "By List and ListItem";

@@ -8,7 +8,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPFileVersion", DefaultParameterSetName = "Return as file object")]
+    [Cmdlet(VerbsCommon.Remove, "FileVersion", DefaultParameterSetName = "Return as file object")]
     public class RemoveFileVersion : PnPWebCmdlet
     {
         private const string ParameterSetName_BYID = "By Id";

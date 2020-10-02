@@ -9,7 +9,7 @@ using System.Net.Http;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsLifecycle.Request, "PnPAccessToken")]
+    [Cmdlet(VerbsLifecycle.Request, "AccessToken")]
     public class RequestAccessToken : BasePSCmdlet
     {
 

@@ -8,8 +8,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Add, "PnPMicrosoft365GroupToSite")]
-    [Alias("Add-PnPOffice365GroupToSite")]
+    [Cmdlet(VerbsCommon.Add, "Microsoft365GroupToSite")]
     public class AddMicrosoft365GroupToSite: PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

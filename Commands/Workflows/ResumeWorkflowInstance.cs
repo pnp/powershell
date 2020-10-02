@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Workflows
 {
-    [Cmdlet(VerbsLifecycle.Resume, "PnPWorkflowInstance")]
+    [Cmdlet(VerbsLifecycle.Resume, "WorkflowInstance")]
     public class ResumeWorkflowInstance : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

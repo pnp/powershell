@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsLifecycle.Enable, "PnPPowerShellTelemetry")]
+    [Cmdlet(VerbsLifecycle.Enable, "PowerShellTelemetry")]
     public class EnablePowerShellTelemetry : PSCmdlet
     {
         [Parameter(Mandatory = false)]

@@ -12,7 +12,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
-    [Cmdlet(VerbsCommon.Get, "PnPWebPartXml")]
+    [Cmdlet(VerbsCommon.Get, "WebPartXml")]
     public class GetWebPartXml : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

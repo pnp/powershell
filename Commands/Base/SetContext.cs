@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Set, "PnPContext")]
+    [Cmdlet(VerbsCommon.Set, "Context")]
     public class SetContext : PSCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 1)]

@@ -8,7 +8,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.ContentTypes
 {
-    [Cmdlet(VerbsCommon.Get, "PnPContentType")]
+    [Cmdlet(VerbsCommon.Get, "ContentType")]
     public class GetContentType : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]

@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Add, "PnPAlert")]
+    [Cmdlet(VerbsCommon.Add, "Alert")]
     public class AddAlert : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

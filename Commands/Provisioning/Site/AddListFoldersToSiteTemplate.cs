@@ -16,8 +16,9 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Add, "PnPListFoldersToProvisioningTemplate")]
-    public class AddListFoldersToProvisioningTemplate : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Add, "ListFoldersToSiteTemplate")]
+    [Alias("Add-ListFoldersToProvisioningTemplate")]
+    public class AddListFoldersToSiteTemplate : PnPWebCmdlet
     {
 
         [Parameter(Mandatory = true, Position = 0)]
@@ -44,8 +45,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
             // Load the template
-            var template = ReadProvisioningTemplate
-                .LoadProvisioningTemplateFromFile(Path,
+            var template = ReadSiteTemplate
+                .LoadSiteTemplateFromFile(Path,
                 TemplateProviderExtensions, (e) =>
                 {
                     WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));

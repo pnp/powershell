@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Get, "PnPProperty")]
+    [Cmdlet(VerbsCommon.Get, "Property")]
     public class EnsureProperty : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

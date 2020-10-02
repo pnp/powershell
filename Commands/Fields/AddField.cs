@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Add, "PnPField", DefaultParameterSetName = "Add field to list")]
+    [Cmdlet(VerbsCommon.Add, "Field", DefaultParameterSetName = "Add field to list")]
     public class AddField : PnPWebCmdlet, IDynamicParameters
     {
         const string ParameterSet_ADDFIELDTOLIST = "Add field to list";

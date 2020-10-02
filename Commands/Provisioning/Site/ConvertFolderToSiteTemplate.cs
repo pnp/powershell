@@ -9,8 +9,9 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsData.Convert, "PnPFolderToProvisioningTemplate")]
-    public class ConvertFolderToProvisioningTemplate : PSCmdlet
+    [Cmdlet(VerbsData.Convert, "FolderToSiteTemplate")]
+    [Alias("Convert-FolderToProvisioningTemplate")]
+    public class ConvertFolderToSiteTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Out;

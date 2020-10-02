@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace PnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Set, "PnPView")]
+    [Cmdlet(VerbsCommon.Set, "View")]
     public class SetView : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]

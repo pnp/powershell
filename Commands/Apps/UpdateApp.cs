@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsData.Update, "PnPApp")]
+    [Cmdlet(VerbsData.Update, "App")]
   
     public class UpdateApp : PnPSharePointCmdlet
     {

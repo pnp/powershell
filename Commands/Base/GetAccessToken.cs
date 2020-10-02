@@ -3,7 +3,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAccessToken")]
+    [Cmdlet(VerbsCommon.Get, "AccessToken")]
     [Obsolete("Use Get-PnPGraphAccessToken instead")]
     public class GetPnPAccessToken : PnPGraphCmdlet
     {

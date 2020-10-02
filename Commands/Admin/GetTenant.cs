@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTenant")]
+    [Cmdlet(VerbsCommon.Get, "Tenant")]
     public class GetTenant : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()

@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsLifecycle.Uninstall, "PnPApp")]
+    [Cmdlet(VerbsLifecycle.Uninstall, "App")]
     public class UninstallApp : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]

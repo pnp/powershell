@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.RecordsManagement
 {
-    [Cmdlet(VerbsCommon.Set, "PnPListRecordDeclaration")]
+    [Cmdlet(VerbsCommon.Set, "ListRecordDeclaration")]
     public class SetListRecordDeclaration : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

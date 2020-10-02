@@ -6,7 +6,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPFile")]
+    [Cmdlet(VerbsCommon.Remove, "File")]
     public class RemoveFile : PnPWebCmdlet
     {
         private const string ParameterSet_SERVER = "Server Relative";

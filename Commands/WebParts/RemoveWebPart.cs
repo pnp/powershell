@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPWebPart")]
+    [Cmdlet(VerbsCommon.Remove, "WebPart")]
     public class RemoveWebPart : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "ID")]

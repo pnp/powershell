@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Set, "PnPTenantSite")]
+    [Cmdlet(VerbsCommon.Set, "TenantSite")]
     public class SetTenantSite : PnPAdminCmdlet
     {
         private const string ParameterSet_LOCKSTATE = "Set Lock State";
@@ -35,11 +35,9 @@ namespace PnP.PowerShell.Commands
         public List<string> Owners;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        [Alias("NoScriptSite")]
         public SwitchParameter DenyAddAndCustomizePages;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        [Alias("Sharing")]
         public SharingCapabilities SharingCapability;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]

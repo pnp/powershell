@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPSiteCollectionAdmin")]
+    [Cmdlet(VerbsCommon.Remove, "SiteCollectionAdmin")]
     public class RemoveSiteCollectionAdmin : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

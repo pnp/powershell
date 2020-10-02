@@ -5,7 +5,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Set, "PnPIndexedProperties")]
+    [Cmdlet(VerbsCommon.Set, "IndexedProperties")]
     public class SetIndexedProperties : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Workflows
 {
-    [Cmdlet(VerbsCommon.Get, "PnPWorkflowSubscription")]
+    [Cmdlet(VerbsCommon.Get, "WorkflowSubscription")]
     public class GetWorkflowSubscription : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]

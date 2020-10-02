@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
-    [Cmdlet(VerbsCommon.Get, "PnPUserProfileProperty")]
+    [Cmdlet(VerbsCommon.Get, "UserProfileProperty")]
     public class GetUserProfileProperty : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

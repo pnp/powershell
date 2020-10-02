@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Workflows
 {
-    [Cmdlet(VerbsLifecycle.Start, "PnPWorkflowInstance")]
+    [Cmdlet(VerbsLifecycle.Start, "WorkflowInstance")]
     public class StartWorkflowInstance : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

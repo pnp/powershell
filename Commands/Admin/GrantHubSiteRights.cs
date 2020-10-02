@@ -8,11 +8,10 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsSecurity.Grant, "PnPHubSiteRights")]
+    [Cmdlet(VerbsSecurity.Grant, "HubSiteRights")]
     public class GrantHubSiteRights : PnPAdminCmdlet
     {
         [Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
-        [Alias("HubSite")]
         public HubSitePipeBind Identity { get; set; }
 
         [Parameter(Mandatory = true)]

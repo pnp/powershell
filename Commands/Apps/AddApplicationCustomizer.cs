@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Add, "PnPApplicationCustomizer")]
+    [Cmdlet(VerbsCommon.Add, "ApplicationCustomizer")]
     public class AddApplicationCustomizer : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "PnPHubSite")]
+    [Cmdlet(VerbsCommon.Get, "HubSite")]
     public class GetHubSite : PnPAdminCmdlet
     {
         [Parameter(Position = 0, ValueFromPipeline = true)]

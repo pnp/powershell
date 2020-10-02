@@ -8,7 +8,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "PnPSiteDesign")]
+    [Cmdlet(VerbsLifecycle.Invoke, "SiteDesign")]
     public class InvokeSiteDesign : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]

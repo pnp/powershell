@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTenantSyncClientRestriction")]
+    [Cmdlet(VerbsCommon.Get, "TenantSyncClientRestriction")]
     public class GetPnPTenantSyncClientRestriction : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()

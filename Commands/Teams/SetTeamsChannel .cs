@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Set, "PnPTeamsChannel")]
+    [Cmdlet(VerbsCommon.Set, "TeamsChannel")]
     [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class SetTeamsChannel : PnPGraphCmdlet

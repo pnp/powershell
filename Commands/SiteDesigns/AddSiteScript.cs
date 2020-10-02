@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Add, "PnPSiteScript")]
+    [Cmdlet(VerbsCommon.Add, "SiteScript")]
     public class AddSiteScript : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

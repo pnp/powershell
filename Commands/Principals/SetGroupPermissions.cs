@@ -7,11 +7,10 @@ using System;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Set, "PnPGroupPermissions")]
+    [Cmdlet(VerbsCommon.Set, "GroupPermissions")]
     public class SetGroupPermissions : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByName")]
-        [Alias("Name")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "By Identity")]
         public GroupPipeBind Identity = new GroupPipeBind();
 
         [Parameter(Mandatory = false)]

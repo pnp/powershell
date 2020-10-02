@@ -10,11 +10,10 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPJavaScriptLink")]
+    [Cmdlet(VerbsCommon.Remove, "JavaScriptLink")]
     public class RemoveJavaScriptLink : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
-        [Alias("Key", "Name")]
         public UserCustomActionPipeBind Identity;
 
         [Parameter(Mandatory = false)]

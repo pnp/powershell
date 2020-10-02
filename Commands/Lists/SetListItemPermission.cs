@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Set, "PnPListItemPermission", DefaultParameterSetName = "User")]
+    [Cmdlet(VerbsCommon.Set, "ListItemPermission", DefaultParameterSetName = "User")]
     public class SetListItemPermission : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]

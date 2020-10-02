@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsLifecycle.Install, "PnPApp")]
+    [Cmdlet(VerbsLifecycle.Install, "App")]
     public class InstallApp : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]

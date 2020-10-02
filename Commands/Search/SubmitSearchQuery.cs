@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace PnP.PowerShell.Commands.Search
 {
-    [Cmdlet(VerbsLifecycle.Submit, "PnPSearchQuery", DefaultParameterSetName = "Limit")]
+    [Cmdlet(VerbsLifecycle.Submit, "SearchQuery", DefaultParameterSetName = "Limit")]
     [Alias("Invoke-PnPSearchQuery")]
     public class SubmitSearchQuery : PnPWebCmdlet
     {

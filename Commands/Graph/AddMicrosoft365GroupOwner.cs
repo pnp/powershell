@@ -7,8 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Add, "PnPMicrosoft365GroupOwner")]
-    [Alias("Add-PnPUnifiedGroupOwner")]
+    [Cmdlet(VerbsCommon.Add, "Microsoft365GroupOwner")]
     [MicrosoftGraphApiPermissionCheck(MicrosoftGraphApiPermission.None, MicrosoftGraphApiPermission.User_ReadWrite_All | MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class AddMicrosoft365GroupOwner : PnPGraphCmdlet

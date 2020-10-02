@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Diagnostic
 {
-    [Cmdlet(VerbsDiagnostic.Measure, "PnPList")]
+    [Cmdlet(VerbsDiagnostic.Measure, "List")]
     public class MeasurePnPList : PnPWebRetrievalsCmdlet<List>
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

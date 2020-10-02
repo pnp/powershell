@@ -11,7 +11,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsData.Export, "PnPClientSidePage")]
+    [Cmdlet(VerbsData.Export, "ClientSidePage")]
     public class ExportClientSidePage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

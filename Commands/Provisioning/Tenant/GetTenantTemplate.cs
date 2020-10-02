@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTenantTemplate")]
+    [Cmdlet(VerbsCommon.Get, "TenantTemplate")]
     public class GetTenantTemplate : PnPAdminCmdlet
     {
         const string PARAMETERSET_ASFILE = "Extract a template to a file";

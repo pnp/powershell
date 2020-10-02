@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Set, "PnPClientSideWebPart")]
+    [Cmdlet(VerbsCommon.Set, "ClientSideWebPart")]
     public class SetClientSideWebPart : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

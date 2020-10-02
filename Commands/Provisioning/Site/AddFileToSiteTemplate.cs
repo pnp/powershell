@@ -14,8 +14,9 @@ using PnPFileLevel = PnP.Framework.Provisioning.Model.FileLevel;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Add, "PnPFileToProvisioningTemplate")]
-    public class AddFileToProvisioningTemplate : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Add, "FileToSiteTemplate")]
+    [Alias("Add-FileToProvisioningTemplate")]
+    public class AddFileToSiteTemplate : PnPWebCmdlet
     {
         const string parameterSet_LOCALFILE = "Local File";
         const string parameterSet_REMOTEFILE = "Remove File";
@@ -51,8 +52,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
             // Load the template
-            var template = ReadProvisioningTemplate
-                .LoadProvisioningTemplateFromFile(Path,
+            var template = ReadSiteTemplate
+                .LoadSiteTemplateFromFile(Path,
                 TemplateProviderExtensions, (e) =>
                 {
                     WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));

@@ -6,11 +6,9 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPDeletedMicrosoft365Group")]
-    [Alias("Remove-PnPDeletedUnifiedGroup")]
+    [Cmdlet(VerbsCommon.Remove, "DeletedMicrosoft365Group")]
     [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]
-
     public class RemoveDeletedMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

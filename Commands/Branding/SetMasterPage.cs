@@ -6,18 +6,16 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "PnPMasterPage")]
+    [Cmdlet(VerbsCommon.Set, "MasterPage")]
     public class SetMasterPage : PnPWebCmdlet
     {
         private const string ParameterSet_SERVER = "Server Relative";
         private const string ParameterSet_SITE = "Site Relative";
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SERVER)]
-        [Alias("MasterPageUrl")]
         public string MasterPageServerRelativeUrl = null;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SERVER)]
-        [Alias("CustomMasterPageUrl")]
         public string CustomMasterPageServerRelativeUrl = null;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SITE)]

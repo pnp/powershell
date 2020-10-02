@@ -21,7 +21,7 @@ using System.Reflection;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommunications.Connect, "PnPOnline", DefaultParameterSetName = ParameterSet_MAIN)]
+    [Cmdlet(VerbsCommunications.Connect, "Online", DefaultParameterSetName = ParameterSet_MAIN)]
     public class ConnectOnline : BasePSCmdlet
     {
         private const string ParameterSet_MAIN = "Main";
@@ -148,7 +148,6 @@ namespace PnP.PowerShell.Commands.Base
 
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN)]
-        [Alias("PnPO365ManagementShell")]
         public SwitchParameter PnPManagementShell;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]

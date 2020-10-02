@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Lists
 {
     //TODO: Create Test
 
-    [Cmdlet(VerbsCommon.Set, "PnPDefaultColumnValues")]
+    [Cmdlet(VerbsCommon.Set, "DefaultColumnValues")]
     public class SetDefaultColumnValues : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

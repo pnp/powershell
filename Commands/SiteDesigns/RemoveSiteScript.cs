@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPSiteScript")]
+    [Cmdlet(VerbsCommon.Remove, "SiteScript")]
     public class RemoveSiteScript : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]

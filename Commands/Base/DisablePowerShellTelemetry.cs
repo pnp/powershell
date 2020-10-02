@@ -3,7 +3,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsLifecycle.Disable, "PnPPowerShellTelemetry")]
+    [Cmdlet(VerbsLifecycle.Disable, "PowerShellTelemetry")]
     public class DisablePowerShellTelemetry : PSCmdlet
     {
         [Parameter(Mandatory = false)]

@@ -11,7 +11,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsCommon.Get, "PnPApp")]
+    [Cmdlet(VerbsCommon.Get, "App")]
     public class GetApp : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]

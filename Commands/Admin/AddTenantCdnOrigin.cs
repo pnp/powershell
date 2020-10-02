@@ -9,7 +9,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Add, "PnPTenantCdnOrigin")]
+    [Cmdlet(VerbsCommon.Add, "TenantCdnOrigin")]
     public class AddTenantCdnOrigin : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsLifecycle.Request, "PnPReIndexWeb")]
+    [Cmdlet(VerbsLifecycle.Request, "ReIndexWeb")]
     public class RequestReIndexWeb : PnPWebCmdlet
     {
 

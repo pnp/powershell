@@ -5,7 +5,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsLifecycle.Enable, "PnPCommSite")]
+    [Cmdlet(VerbsLifecycle.Enable, "CommSite")]
     public class EnableCommSite: PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]

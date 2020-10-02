@@ -8,7 +8,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "PnPList")]
+    [Cmdlet(VerbsCommon.Get, "List")]
     public class GetList : PnPWebRetrievalsCmdlet<List>
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]

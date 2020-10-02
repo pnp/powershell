@@ -6,7 +6,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.ContentTypes
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPContentType")]
+    [Cmdlet(VerbsCommon.Remove, "ContentType")]
     public class RemoveContentType : PnPWebCmdlet
     {
 

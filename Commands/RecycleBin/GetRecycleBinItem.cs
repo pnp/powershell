@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.RecycleBin
 {
-    [Cmdlet(VerbsCommon.Get, "PnPRecycleBinItem", DefaultParameterSetName = ParameterSet_ALL)]
+    [Cmdlet(VerbsCommon.Get, "RecycleBinItem", DefaultParameterSetName = ParameterSet_ALL)]
     public class GetRecycleBinItems : PnPRetrievalsCmdlet<RecycleBinItem>
     {
         private const string ParameterSet_ALL = "All";

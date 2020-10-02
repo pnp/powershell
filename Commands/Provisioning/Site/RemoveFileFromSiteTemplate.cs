@@ -10,8 +10,9 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPFileFromProvisioningTemplate")]
-    public class RemoveFileFromProvisioningTemplate : PSCmdlet
+    [Cmdlet(VerbsCommon.Remove, "FileFromSiteTemplate")]
+    [Alias("Remove-FileFromProvisioningTemplate")]
+    public class RemoveFileFromSiteTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Path;
@@ -29,8 +30,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
             // Load the template
-            ProvisioningTemplate template = ReadProvisioningTemplate
-                .LoadProvisioningTemplateFromFile(Path,
+            ProvisioningTemplate template = ReadSiteTemplate
+                .LoadSiteTemplateFromFile(Path,
                 TemplateProviderExtensions, (e) =>
                 {
                     WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));

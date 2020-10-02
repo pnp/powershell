@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.InformationManagement
 {
-    [Cmdlet(VerbsCommon.Set, "PnPSiteClosure")]
+    [Cmdlet(VerbsCommon.Set, "SiteClosure")]
     
     
     

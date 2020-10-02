@@ -8,7 +8,7 @@ using File = Microsoft.SharePoint.Client.File;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsData.Restore, "PnPFileVersion", DefaultParameterSetName = "Return as file object")]
+    [Cmdlet(VerbsData.Restore, "FileVersion", DefaultParameterSetName = "Return as file object")]
     public class RestoreFileVersion : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

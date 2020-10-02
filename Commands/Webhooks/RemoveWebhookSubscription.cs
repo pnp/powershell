@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Webhooks
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPWebhookSubscription")]
+    [Cmdlet(VerbsCommon.Remove, "WebhookSubscription")]
     public class RemoveWebhookSubscription : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

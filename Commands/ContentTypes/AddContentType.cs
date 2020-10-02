@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.ContentTypes
 {
-    [Cmdlet(VerbsCommon.Add, "PnPContentType")]
+    [Cmdlet(VerbsCommon.Add, "ContentType")]
     public class AddContentType : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

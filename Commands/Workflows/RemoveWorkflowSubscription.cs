@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Workflows
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPWorkflowSubscription")]
+    [Cmdlet(VerbsCommon.Remove, "WorkflowSubscription")]
     public class RemoveWorkflowSubscription : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]

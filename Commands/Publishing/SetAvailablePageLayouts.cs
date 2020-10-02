@@ -9,7 +9,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Set, "PnPAvailablePageLayouts")]
+    [Cmdlet(VerbsCommon.Set, "AvailablePageLayouts")]
     public class SetAvailablePageLayouts : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "SPECIFIC")]

@@ -9,7 +9,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Teams
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPTeamsChannel")]
+    [Cmdlet(VerbsCommon.Remove, "TeamsChannel")]
     [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class RemoveTeamsChannel : PnPGraphCmdlet

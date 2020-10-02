@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Set, "PnPTeamsTeam")]
+    [Cmdlet(VerbsCommon.Set, "TeamsTeam")]
     [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class SetTeamsTeam : PnPGraphCmdlet

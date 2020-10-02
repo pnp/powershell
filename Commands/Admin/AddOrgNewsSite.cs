@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Add, "PnPOrgNewsSite")]
+    [Cmdlet(VerbsCommon.Add, "OrgNewsSite")]
     public class AddOrgNewsSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

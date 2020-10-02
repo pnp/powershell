@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Add, "PnPStoredCredential")]
+    [Cmdlet(VerbsCommon.Add, "StoredCredential")]
     public class AddStoredCredential : PSCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -17,16 +17,16 @@ namespace PnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = false)]
         public SecureString Password;
-        
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Overwrite;
         protected override void ProcessRecord()
         {
-            if(Password == null || Password.Length == 0)
+            if (Password == null || Password.Length == 0)
             {
                 Host.UI.Write("Enter password: ");
                 Password = Host.UI.ReadLineAsSecureString();
-            } 
+            }
             Utilities.CredentialManager.AddCredential(Name, Username, Password, Overwrite.ToBool());
         }
     }

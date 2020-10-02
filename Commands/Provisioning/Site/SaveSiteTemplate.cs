@@ -15,8 +15,9 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsData.Save, "PnPProvisioningTemplate")]
-    public class SaveProvisioningTemplate : PSCmdlet
+    [Cmdlet(VerbsData.Save, "SiteTemplate")]
+    [Alias("Save-ProvisioningTemplate")]
+    public class SaveSiteTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         [Alias("InputInstance")]
@@ -102,7 +103,7 @@ namespace PnP.PowerShell.Commands.Provisioning
 
         private void ProcessFiles(ProvisioningTemplate template, string templateFileName, FileConnectorBase fileSystemConnector, FileConnectorBase connector)
         {
-            var templateFile = ReadProvisioningTemplate.LoadProvisioningTemplateFromFile(templateFileName, null, (e) =>
+            var templateFile = ReadSiteTemplate.LoadSiteTemplateFromFile(templateFileName, null, (e) =>
             {
                 WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
             });

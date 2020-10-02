@@ -12,7 +12,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Set, "PnPSite")]
+    [Cmdlet(VerbsCommon.Set, "Site")]
     public class SetSite : PnPSharePointCmdlet
     {
 

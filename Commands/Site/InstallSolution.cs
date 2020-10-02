@@ -7,7 +7,7 @@ using File = System.IO.File;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsLifecycle.Install, "PnPSolution")]
+    [Cmdlet(VerbsLifecycle.Install, "Solution")]
     public class InstallSolution : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true)]

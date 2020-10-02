@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsLifecycle.Register, "PnPManagementShellAccess")]
+    [Cmdlet(VerbsLifecycle.Register, "ManagementShellAccess")]
     public class RegisterPnPManagementShellAccess : PSCmdlet
     {
         [Parameter(Mandatory = false)]

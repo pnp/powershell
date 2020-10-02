@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Add, "PnPPublishingImageRendition")]
+    [Cmdlet(VerbsCommon.Add, "PublishingImageRendition")]
     
     
     public class AddPublishingImageRendition : PnPWebCmdlet

@@ -10,7 +10,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "PnPView")]
+    [Cmdlet(VerbsCommon.Get, "View")]
     public class GetView : PnPWebRetrievalsCmdlet<View>
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

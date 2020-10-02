@@ -4,11 +4,10 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "PnPHomePage")]
+    [Cmdlet(VerbsCommon.Set, "HomePage")]
     public class SetHomePage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
-        [Alias("Path")]
         public string RootFolderRelativeUrl = string.Empty;
 
         protected override void ExecuteCmdlet()

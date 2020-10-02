@@ -7,7 +7,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Search
 {
-    [Cmdlet(VerbsCommon.Set, "PnPSearchSettings")]
+    [Cmdlet(VerbsCommon.Set, "SearchSettings")]
     public class SetSearchSettings : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]

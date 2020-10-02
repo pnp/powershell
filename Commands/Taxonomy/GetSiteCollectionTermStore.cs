@@ -5,7 +5,7 @@ using Microsoft.SharePoint.Client.Taxonomy;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteCollectionTermStore")]
+    [Cmdlet(VerbsCommon.Get, "SiteCollectionTermStore")]
     public class GetPnPSiteCollectionTermStore : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()

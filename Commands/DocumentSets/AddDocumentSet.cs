@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace PnP.PowerShell.Commands.DocumentSets
 {
-    [Cmdlet(VerbsCommon.Add, "PnPDocumentSet")]
+    [Cmdlet(VerbsCommon.Add, "DocumentSet")]
     public class AddDocumentSet : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

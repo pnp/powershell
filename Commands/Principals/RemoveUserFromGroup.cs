@@ -5,16 +5,14 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPUserFromGroup")]
+    [Cmdlet(VerbsCommon.Remove, "UserFromGroup")]
     public class RemoveUserFromGroup : PnPWebCmdlet
     {
 
         [Parameter(Mandatory = true)]
-        [Alias("LogonName")]
         public string LoginName = string.Empty;
 
         [Parameter(Mandatory = true)]
-        [Alias("GroupName")]
         public GroupPipeBind Identity;
 
         protected override void ExecuteCmdlet()

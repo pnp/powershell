@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommon.New, "PnPTenantSequenceCommunicationSite")]
+    [Cmdlet(VerbsCommon.New, "TenantSequenceCommunicationSite")]
     public class NewTenantSequenceCommunicationSite : BasePSCmdlet
     {
         [Parameter(Mandatory = true)]

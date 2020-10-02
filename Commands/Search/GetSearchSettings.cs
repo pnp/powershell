@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Search
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSearchSettings")]
+    [Cmdlet(VerbsCommon.Get, "SearchSettings")]
     public class GetSearchSettings : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()

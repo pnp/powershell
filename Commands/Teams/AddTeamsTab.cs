@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Add, "PnPTeamsTab")]
+    [Cmdlet(VerbsCommon.Add, "TeamsTab")]
     [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]
 

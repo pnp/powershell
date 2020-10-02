@@ -8,7 +8,7 @@ using PnP.Framework.Enums;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Get, "PnPNavigationNode", DefaultParameterSetName = ParameterSet_ALLBYLOCATION)]
+    [Cmdlet(VerbsCommon.Get, "NavigationNode", DefaultParameterSetName = ParameterSet_ALLBYLOCATION)]
     public class GetNavigationNode : PnPWebCmdlet
     {
         private const string ParameterSet_ALLBYLOCATION = "All nodes by location";

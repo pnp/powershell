@@ -6,7 +6,7 @@ using File = Microsoft.SharePoint.Client.File;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Get, "PnPFileVersion", DefaultParameterSetName = "Return as file object")]
+    [Cmdlet(VerbsCommon.Get, "FileVersion", DefaultParameterSetName = "Return as file object")]
  
     public class GetFileVersion : PnPWebCmdlet
     {

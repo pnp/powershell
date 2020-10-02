@@ -6,7 +6,7 @@ using Microsoft.SharePoint.Client.WorkflowServices;
 
 namespace PnP.PowerShell.Commands.Workflows
 {
-    [Cmdlet(VerbsCommon.Add, "PnPWorkflowDefinition")]
+    [Cmdlet(VerbsCommon.Add, "WorkflowDefinition")]
     public class AddWorkflowDefinition : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

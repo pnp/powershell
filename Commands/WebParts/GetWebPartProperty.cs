@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
-    [Cmdlet(VerbsCommon.Get, "PnPWebPartProperty")]
+    [Cmdlet(VerbsCommon.Get, "WebPartProperty")]
     public class GetWebPartProperty : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

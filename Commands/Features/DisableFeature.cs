@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Features
 {
-    [Cmdlet(VerbsLifecycle.Disable, "PnPFeature")]
+    [Cmdlet(VerbsLifecycle.Disable, "Feature")]
     public class DisableFeature : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]

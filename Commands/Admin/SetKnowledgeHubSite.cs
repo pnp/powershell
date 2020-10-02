@@ -5,7 +5,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Set, "PnPKnowledgeHubSite")]
+    [Cmdlet(VerbsCommon.Set, "KnowledgeHubSite")]
     public class SetKnowledgeHubSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

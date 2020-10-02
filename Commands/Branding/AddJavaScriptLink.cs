@@ -6,11 +6,10 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Add, "PnPJavaScriptLink")]
+    [Cmdlet(VerbsCommon.Add, "JavaScriptLink")]
     public class AddJavaScriptLink : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
-        [Alias("Key")]
         public string Name = string.Empty;
 
         [Parameter(Mandatory = true)]

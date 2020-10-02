@@ -9,7 +9,7 @@ using Microsoft.SharePoint.Client.WorkflowServices;
 
 namespace PnP.PowerShell.Commands.Workflows
 {
-    [Cmdlet(VerbsLifecycle.Stop, "PnPWorkflowInstance")]
+    [Cmdlet(VerbsLifecycle.Stop, "WorkflowInstance")]
     public class StopWorkflowInstance : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

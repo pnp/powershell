@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Features
 {
-    [Cmdlet(VerbsLifecycle.Enable, "PnPFeature")]
+    [Cmdlet(VerbsLifecycle.Enable, "Feature")]
     
     
     

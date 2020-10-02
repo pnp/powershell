@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Lists
 {
     //TODO: Create Test
 
-    [Cmdlet(VerbsCommon.Clear, "PnPDefaultColumnValues")]
+    [Cmdlet(VerbsCommon.Clear, "DefaultColumnValues")]
     public class ClearDefaultColumnValues : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

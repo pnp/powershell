@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Search
         public int ContentSourceId { get; set; }
     }
 
-    [Cmdlet(VerbsCommon.Get, "PnPSearchCrawlLog", DefaultParameterSetName = "Xml")]
+    [Cmdlet(VerbsCommon.Get, "SearchCrawlLog", DefaultParameterSetName = "Xml")]
     public class GetSearchCrawlLog : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

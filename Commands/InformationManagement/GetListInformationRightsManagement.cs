@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.InformationManagement
 {
 
-    [Cmdlet(VerbsCommon.Get, "PnPListInformationRightsManagement")]
+    [Cmdlet(VerbsCommon.Get, "ListInformationRightsManagement")]
     public class GetListInformationRightsManagement : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "PnPMinimalDownloadStrategy")]
+    [Cmdlet(VerbsCommon.Set, "MinimalDownloadStrategy")]
     public class SetMinimalDownloadStrategy : PnPWebCmdlet
     {
         [Parameter(ParameterSetName = "On", Mandatory = true)]

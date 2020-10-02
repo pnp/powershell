@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsLifecycle.Uninstall, "PnPSolution")]
+    [Cmdlet(VerbsLifecycle.Uninstall, "Solution")]
     public class UninstallSolution : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true)]

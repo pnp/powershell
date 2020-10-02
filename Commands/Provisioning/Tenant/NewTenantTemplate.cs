@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommon.New, "PnPTenantTemplate")]
+    [Cmdlet(VerbsCommon.New, "TenantTemplate")]
     public class NewTenantTemplate : PSCmdlet
     {
         [Parameter(Mandatory = false)]

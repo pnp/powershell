@@ -5,7 +5,7 @@ using Microsoft.SharePoint.Client.Taxonomy;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTaxonomySession")]
+    [Cmdlet(VerbsCommon.Get, "TaxonomySession")]
     public class GetTaxonomySession : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()

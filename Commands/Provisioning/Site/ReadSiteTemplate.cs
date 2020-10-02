@@ -11,9 +11,9 @@ using System.Text;
 
 namespace PnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsCommunications.Read, "PnPProvisioningTemplate")]
-    [Alias("Load-PnPProvisioningTemplate")]
-    public class ReadProvisioningTemplate : PSCmdlet
+    [Cmdlet(VerbsCommunications.Read, "SiteTemplate")]
+    [Alias("Read-ProvisioningTemplate")]
+    public class ReadSiteTemplate : PSCmdlet
     {
         const string ParameterSet_PATH = "By Path";
         const string ParameterSet_XML = "By XML";
@@ -29,9 +29,9 @@ namespace PnP.PowerShell.Commands.Provisioning
 
         protected override void ProcessRecord()
         {
-            if (MyInvocation.InvocationName.ToLower() == "load-pnpprovisioningtemplate")
+            if (MyInvocation.InvocationName.ToLower() == "read-pnpprovisioningtemplate")
             {
-                WriteWarning("Load-PnPProvisioningTemplate has been deprecated in favor of Read-PnPProvisioningTemplate which supports the same parameters.");
+                WriteWarning("Read-PnPProvisioningTemplate has been deprecated in favor of Read-PnPSiteTemplate which supports the same parameters.");
             }
             switch (ParameterSetName)
             {
@@ -42,7 +42,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                         {
                             Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
                         }
-                        WriteObject(LoadProvisioningTemplateFromFile(Path, TemplateProviderExtensions, (e) =>
+                        WriteObject(LoadSiteTemplateFromFile(Path, TemplateProviderExtensions, (e) =>
                         {
                             WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
                         }));
@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                     }
                 case ParameterSet_XML:
                     {
-                        WriteObject(LoadProvisioningTemplateFromString(Xml, TemplateProviderExtensions, (e) =>
+                        WriteObject(LoadSiteTemplateFromString(Xml, TemplateProviderExtensions, (e) =>
                         {
                             WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
                         }));
@@ -59,7 +59,7 @@ namespace PnP.PowerShell.Commands.Provisioning
             }
         }
 
-        internal static ProvisioningTemplate LoadProvisioningTemplateFromString(string xml, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler)
+        internal static ProvisioningTemplate LoadSiteTemplateFromString(string xml, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler)
         {
             var formatter = new XMLPnPSchemaFormatter();
 
@@ -88,7 +88,7 @@ namespace PnP.PowerShell.Commands.Provisioning
             return null;
         }
 
-        internal static ProvisioningTemplate LoadProvisioningTemplateFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler)
+        internal static ProvisioningTemplate LoadSiteTemplateFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler)
         {
             // Prepare the File Connector
             string templateFileName = System.IO.Path.GetFileName(templatePath);

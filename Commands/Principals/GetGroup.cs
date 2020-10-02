@@ -6,11 +6,10 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Get, "PnPGroup",DefaultParameterSetName="All")]
+    [Cmdlet(VerbsCommon.Get, "Group",DefaultParameterSetName="All")]
     public class GetGroup : PnPWebRetrievalsCmdlet<Group>
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByName")]
-        [Alias("Name")]
         public GroupPipeBind Identity = new GroupPipeBind();
 
         [Parameter(Mandatory = false, ParameterSetName = "Members")]

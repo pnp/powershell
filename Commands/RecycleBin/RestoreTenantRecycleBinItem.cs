@@ -7,7 +7,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.RecycleBin
 {
-    [Cmdlet(VerbsData.Restore, "PnPTenantRecycleBinItem")]
+    [Cmdlet(VerbsData.Restore, "TenantRecycleBinItem")]
     public class RestoreTenantRecycleBinItem : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = false)]

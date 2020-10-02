@@ -12,7 +12,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsData.Save, "PnPTenantTemplate")]
+    [Cmdlet(VerbsData.Save, "TenantTemplate")]
     public class SaveTenantTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

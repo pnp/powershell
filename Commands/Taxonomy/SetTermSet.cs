@@ -11,7 +11,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Set, "PnPTermSet")]
+    [Cmdlet(VerbsCommon.Set, "TermSet")]
     public class SetTermSet : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true)]

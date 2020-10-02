@@ -10,11 +10,10 @@ using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTenantSite")]
+    [Cmdlet(VerbsCommon.Get, "TenantSite")]
     public class GetTenantSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
-        [Alias("Identity")]
         public string Url;
 
         [Parameter(Mandatory = false)]

@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteScriptFromWeb")]
+    [Cmdlet(VerbsCommon.Get, "SiteScriptFromWeb")]
     public class GetSiteScriptFromWeb : PnPAdminCmdlet
     {
         private const string ParameterSet_ALLCOMPONENTS = "All components";

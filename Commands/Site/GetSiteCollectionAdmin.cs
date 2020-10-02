@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteCollectionAdmin")]
+    [Cmdlet(VerbsCommon.Get, "SiteCollectionAdmin")]
     public class GetSiteCollectionAdmin : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()

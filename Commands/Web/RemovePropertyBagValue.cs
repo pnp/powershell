@@ -5,7 +5,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPPropertyBagValue")]
+    [Cmdlet(VerbsCommon.Remove, "PropertyBagValue")]
     public class RemovePropertyBagValue : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]

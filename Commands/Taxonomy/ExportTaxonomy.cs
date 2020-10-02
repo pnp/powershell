@@ -11,7 +11,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsData.Export, "PnPTaxonomy")]
+    [Cmdlet(VerbsData.Export, "Taxonomy")]
     public class ExportTaxonomy : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ParameterSetName = "TermSet")]

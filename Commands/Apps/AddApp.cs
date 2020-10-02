@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsCommon.Add, "PnPApp")]
+    [Cmdlet(VerbsCommon.Add, "App")]
     public class AddApp : PnPSharePointCmdlet
     {
         private const string ParameterSet_ADD = "Add only";

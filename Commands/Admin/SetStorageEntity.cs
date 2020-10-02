@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Set, "PnPStorageEntity")]
+    [Cmdlet(VerbsCommon.Set, "StorageEntity")]
     public class SetPnPStorageEntity : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true)]

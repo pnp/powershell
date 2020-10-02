@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPIndexedPropertyKeys")]
+    [Cmdlet(VerbsCommon.Get, "IndexedPropertyKeys")]
     public class GetIndexedProperties : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

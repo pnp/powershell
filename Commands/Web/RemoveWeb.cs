@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Extensions;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPWeb")]
+    [Cmdlet(VerbsCommon.Remove, "Web")]
     public class RemoveWeb : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "ByUrl")]

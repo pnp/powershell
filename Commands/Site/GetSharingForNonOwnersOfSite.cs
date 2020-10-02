@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSharingForNonOwnersOfSite")]
+    [Cmdlet(VerbsCommon.Get, "SharingForNonOwnersOfSite")]
     public class GetSharingForNonOwnersOfSite : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

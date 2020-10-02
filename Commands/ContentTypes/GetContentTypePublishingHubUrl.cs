@@ -5,7 +5,7 @@ using Microsoft.SharePoint.Client.Taxonomy;
 
 namespace PnP.PowerShell.Commands.ContentTypes
 {
-    [Cmdlet(VerbsCommon.Get, "PnPContentTypePublishingHubUrl")]
+    [Cmdlet(VerbsCommon.Get, "ContentTypePublishingHubUrl")]
     public class GetContentTypePublishingHub : PnPSharePointCmdlet
     {
    

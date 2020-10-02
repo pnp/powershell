@@ -11,7 +11,7 @@ using File = System.IO.File;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsData.Import, "PnPTermGroupFromXml")]
+    [Cmdlet(VerbsData.Import, "TermGroupFromXml")]
     public class ImportTermGroupFromXml : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = "XML")]

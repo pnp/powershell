@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.New, "PnPGraphSubscription")]
+    [Cmdlet(VerbsCommon.New, "GraphSubscription")]
     
     // Deliberately omitting the CmdletMicrosoftGraphApiPermission attribute as permissions vary largely by the subscription type being used
     public class NewGraphSubscription : PnPGraphCmdlet

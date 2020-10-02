@@ -24,7 +24,7 @@ Try {
 
 	$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
 	Copy-Item -Path "$TargetDir\ModuleFiles\*.ps1xml" -Destination "$destinationFolder"
-	Get-ChildItem -Path "$PSScriptRoot/PnP.PowerShell.ALC/bin/$ConfigurationName/netstandard2.0" | Where-Object {$_.Extension -in '.dll','.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
+	Get-ChildItem -Path "$PSScriptRoot/ALC/bin/$ConfigurationName/netstandard2.0" | Where-Object {$_.Extension -in '.dll','.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
 	Get-ChildItem -Path "$PSScriptRoot/Commands/bin/$ConfigurationName/netcoreapp3.1" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
 	Get-ChildItem -Path "$PSScriptRoot/Commands/bin/$ConfigurationName/net461" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }
 }
@@ -39,6 +39,8 @@ Try {
 	Import-Module -Name "$destinationFolder\Core\PnP.PowerShell.dll" -DisableNameChecking
 	$cmdlets = get-command -Module PnP.PowerShell | %{"`"$_`""}
 	$cmdletsString = $cmdlets -Join ","
+
+	$productInfo = Get-ChildItem "$destinationFolder\Core\PnP.PowerShell.dll" | Select-Object -ExpandProperty VersionInfo
 	$manifest = "@{
 	NestedModules =  if (`$PSEdition -eq 'Core')
 	{
@@ -48,13 +50,14 @@ Try {
 	{
 		'Framework/PnP.PowerShell.dll'
 	}
-	ModuleVersion = '0.1.0'
+	ModuleVersion = '$($productInfo.ProductVersion)'
 	Description = 'Microsoft 365 Patterns and Practices PowerShell Cmdlets'
 	GUID = '0b0430ce-d799-4f3b-a565-f0dca1f31e17'
 	Author = 'Microsoft 365 Patterns and Practices'
 	CompanyName = 'Microsoft 365 Patterns and Practices'
 	CompatiblePSEditions = @(`"Core`",`"Desktop`")
 	PowerShellVersion = '5.1'
+	DefaultCommandPrefix = 'PnP'
 	DotNetFrameworkVersion = '4.6.1'
 	ProcessorArchitecture = 'None'
 	FunctionsToExport = '*'  

@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Events
 {
-    [Cmdlet(VerbsCommon.Add, "PnPEventReceiver")]
+    [Cmdlet(VerbsCommon.Add, "EventReceiver")]
     public class AddEventReceiver : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -18,11 +18,9 @@ namespace PnP.PowerShell.Commands.Events
         public string Url;
 
         [Parameter(Mandatory = true)]
-        [Alias("Type")]
         public EventReceiverType EventReceiverType;
 
         [Parameter(Mandatory = true)]
-        [Alias("Sync")]
         public EventReceiverSynchronization Synchronization;
 
         [Parameter(Mandatory = false)]

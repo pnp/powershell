@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Add, "PnPCustomAction")]
+    [Cmdlet(VerbsCommon.Add, "CustomAction")]
     public class AddCustomAction : PnPWebCmdlet
     {
         private const string ParameterSet_DEFAULT = "Default";

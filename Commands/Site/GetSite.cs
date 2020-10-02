@@ -6,7 +6,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSite")]
+    [Cmdlet(VerbsCommon.Get, "Site")]
     public class GetSite : PnPRetrievalsCmdlet<Microsoft.SharePoint.Client.Site>
     {
         protected override void ExecuteCmdlet()

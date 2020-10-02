@@ -10,7 +10,7 @@ using File = Microsoft.SharePoint.Client.File;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Get, "PnPFolderItem")]
+    [Cmdlet(VerbsCommon.Get, "FolderItem")]
     
     
     
