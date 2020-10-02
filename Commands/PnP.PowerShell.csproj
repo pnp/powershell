@@ -38,6 +38,7 @@
     <PackageReference Include="System.Text.Encodings.Web" Version="4.7.1" />
     <PackageReference Include="System.Text.Json" Version="4.7.2" />
     <PackageReference Include="TextCopy" Version="4.2.0" />
+    <ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
     <Reference Include="PnP.Framework">
       <HintPath>..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll</HintPath>
     </Reference>
@@ -62,10 +63,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <CustomToolNamespace></CustomToolNamespace>
     </EmbeddedResource>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\pnp.powershell.alc\PnP.PowerShell.ALC.csproj" />
   </ItemGroup>
   
   <ItemGroup>
