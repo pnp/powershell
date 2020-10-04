@@ -10,6 +10,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Security;
 using System.Security.Cryptography;
@@ -221,7 +222,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(certificatePath, certificatePassword);
 
-            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant,  tenantAdminUrl, host, disableTelemetry, azureEnvironment, certificate, true);
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, host, disableTelemetry, azureEnvironment, certificate, true);
         }
 
         internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string thumbprint, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
@@ -477,21 +478,25 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (!VersionChecked)
                 {
-                    using (var client = new WebClient())
+                    using (var httpClient = new HttpClient())
                     {
-                        PnPConnectionHelper.VersionChecked = true;
-                        var onlineVersion = client.DownloadString(VersionCheckUrl);
-                        onlineVersion = onlineVersion.Trim(new char[] { '\t', '\r', '\n' });
-                        var assembly = Assembly.GetExecutingAssembly();
-                        var currentVersion = ((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version;
-                        if (Version.TryParse(onlineVersion, out Version availableVersion))
+                        var response = httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, VersionCheckUrl)).GetAwaiter().GetResult();
+                        if (response.IsSuccessStatusCode)
                         {
-                            if (availableVersion > new Version(currentVersion))
+                            var onlineVersion = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                            onlineVersion = onlineVersion.Trim(new char[] { '\t', '\r', '\n' });
+                            var assembly = Assembly.GetExecutingAssembly();
+                            var currentVersion = ((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version;
+                            if (Version.TryParse(onlineVersion, out Version availableVersion))
                             {
-                                return $"\nA newer version of PnP PowerShell is available: {availableVersion}. Use `Update-Module -Name PnP.PowerShell` to update.\n";
+                                if (availableVersion > new Version(currentVersion))
+                                {
+                                    return $"\nA newer version of PnP PowerShell is available: {availableVersion}. Use `Update-Module -Name PnP.PowerShell` to update.\n";
+                                }
                             }
+                            VersionChecked = true;
                         }
-                        PnPConnectionHelper.VersionChecked = true;
+
                     }
                 }
             }
