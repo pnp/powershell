@@ -1,0 +1,239 @@
+---
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpsitescriptfromweb
+schema: 2.0.0
+title: Get-PnPSiteScriptFromWeb
+---
+
+# Get-PnPSiteScriptFromWeb
+
+## SYNOPSIS
+
+**Required Permissions**
+
+* SharePoint: Access to the SharePoint Tenant Administration site
+
+Generates a Site Script from an existing site
+
+## SYNTAX
+
+### All components
+```
+Get-PnPSiteScriptFromWeb -Url <String> [-Lists <String[]>] [-IncludeAll] [-Connection <PnPConnection>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### Specific components
+```
+Get-PnPSiteScriptFromWeb -Url <String> [-Lists <String[]>] [-IncludeBranding] [-IncludeLinksToExportedItems]
+ [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme]
+ [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+## DESCRIPTION
+This command allows a Site Script to be generated off of an existing site on your tenant. Connect to your SharePoint Online Admin site before executing this command.
+
+## EXAMPLES
+
+### EXAMPLE 1
+```powershell
+Get-PnPSiteScriptFromWeb -Url https://contoso.sharepoint.com/sites/teamsite -IncludeAll
+```
+
+Returns the generated Site Script JSON containing all supported components from the site at the provided Url
+
+### EXAMPLE 2
+```powershell
+Get-PnPSiteScriptFromWeb -Url https://contoso.sharepoint.com/sites/teamsite -IncludeAll -Lists "Shared Documents","Lists\MyList"
+```
+
+Returns the generated Site Script JSON containing all supported components from the site at the provided Url including the lists "Shared Documents" and "MyList"
+
+### EXAMPLE 3
+```powershell
+Get-PnPSiteScriptFromWeb -Url https://contoso.sharepoint.com/sites/teamsite -IncludeBranding -IncludeLinksToExportedItems
+```
+
+Returns the generated Site Script JSON containing the branding and navigation links from the site at the provided Url
+
+## PARAMETERS
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeAll
+If specified will include all supported components into the Site Script
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: All components
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeBranding
+If specified will include the branding of the site into the Site Script
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Specific components
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeLinksToExportedItems
+If specified will include navigation links into the Site Script
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Specific components
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeRegionalSettings
+If specified will include the regional settings into the Site Script
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Specific components
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeSiteExternalSharingCapability
+If specified will include the external sharing configuration into the Site Script
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Specific components
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeTheme
+If specified will include the branding of the site into the Site Script
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Specific components
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Lists
+Allows specifying one or more site relative URLs of lists that should be included into the Site Script, i.e. "Shared Documents","List\MyList"
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Url
+Specifies the URL of the site to generate a Site Script from
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
+
+## RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)

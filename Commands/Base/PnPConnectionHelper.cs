@@ -6,18 +6,14 @@ using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Net;
-using System.Net.Http;
 using System.Reflection;
 using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.Text.Json;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Base
@@ -221,9 +217,14 @@ namespace PnP.PowerShell.Commands.Base
         //    }
         //}
 
-        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant,
-            string thumbprint, string tenantAdminUrl, PSHost host,
-            bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePath, SecureString certificatePassword, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        {
+            X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(certificatePath, certificatePassword);
+
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant,  tenantAdminUrl, host, disableTelemetry, azureEnvironment, certificate, true);
+        }
+
+        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string thumbprint, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             X509Certificate2 certificate = CertificateHelper.GetCertificatFromStore(thumbprint);
 
@@ -241,31 +242,28 @@ namespace PnP.PowerShell.Commands.Base
             return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, host, disableTelemetry, azureEnvironment, certificate, false);
         }
 
-        //internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePEM, string privateKeyPEM, SecureString certificatePassword, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
-        //{
-        //    string password = new System.Net.NetworkCredential(string.Empty, certificatePassword).Password;
-        //    X509Certificate2 certificate = CertificateHelper.GetCertificateFromPEMstring(certificatePEM, privateKeyPEM, password);
-
-        //    return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, host, disableTelemetry, azureEnvironment, certificate, false);
-        //}
-
-        //internal static PnPConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, PSHost host, bool disableTelemetry,
-        //    AzureEnvironment azureEnvironment, string base64EncodedCertificate)
-        //{
-        //    X509Certificate2 certificate = CertificateHelper.GetCertificateFromBase64Encodedstring(base64EncodedCertificate);
-        //    return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, host, disableTelemetry, azureEnvironment, certificate);
-        //}
-
-        //internal static PnPConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, PSHost host, bool disableTelemetry,
-        //    AzureEnvironment azureEnvironment, X509Certificate2 certificate)
-        //{
-        //    return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, host, disableTelemetry, azureEnvironment, certificate, false);
-        //}
-
-        private static PnPConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, PSHost host, bool disableTelemetry,
-            AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool certificateFromFile)
+        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePEM, string privateKeyPEM, SecureString certificatePassword, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
-            using (var authManager = new PnP.Framework.AuthenticationManager(clientId, certificate, azureEnvironment: azureEnvironment))
+            string password = new System.Net.NetworkCredential(string.Empty, certificatePassword).Password;
+            X509Certificate2 certificate = CertificateHelper.GetCertificateFromPEMstring(certificatePEM, privateKeyPEM, password);
+
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, host, disableTelemetry, azureEnvironment, certificate, false);
+        }
+
+        internal static PnPConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment, string base64EncodedCertificate)
+        {
+            X509Certificate2 certificate = CertificateHelper.GetCertificateFromBase64Encodedstring(base64EncodedCertificate);
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, host, disableTelemetry, azureEnvironment, certificate);
+        }
+
+        internal static PnPConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment, X509Certificate2 certificate)
+        {
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, host, disableTelemetry, azureEnvironment, certificate, false);
+        }
+
+        private static PnPConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool certificateFromFile)
+        {
+            using (var authManager = new PnP.Framework.AuthenticationManager(clientId, certificate, tenant, azureEnvironment: azureEnvironment))
             {
                 var clientContext = authManager.GetContext(url.ToString());
                 var context = PnPClientContext.ConvertFrom(clientContext);

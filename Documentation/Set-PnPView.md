@@ -1,0 +1,175 @@
+---
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpview
+schema: 2.0.0
+title: Set-PnPView
+---
+
+# Set-PnPView
+
+## SYNOPSIS
+Change view properties
+
+## SYNTAX
+
+```
+Set-PnPView [[-List] <ListPipeBind>] -Identity <ViewPipeBind> [-Values <Hashtable>] [-Fields <String[]>]
+ [-Aggregations <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+```
+
+## DESCRIPTION
+Sets one or more properties of an existing view, see here https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee543328(v=office.15) for the list of view properties.
+
+## EXAMPLES
+
+### EXAMPLE 1
+```powershell
+Set-PnPView -List "Tasks" -Identity "All Tasks" -Values @{JSLink="hierarchytaskslist.js|customrendering.js";Title="My view"}
+```
+
+Updates the "All Tasks" view on list "Tasks" to use hierarchytaskslist.js and customrendering.js for the JSLink and changes the title of the view to "My view"
+
+### EXAMPLE 2
+```powershell
+Get-PnPList -Identity "Tasks" | Get-PnPView | Set-PnPView -Values @{JSLink="hierarchytaskslist.js|customrendering.js"}
+```
+
+Updates all views on list "Tasks" to use hierarchytaskslist.js and customrendering.js for the JSLink
+
+### EXAMPLE 3
+```powershell
+Set-PnPView -List "Documents" -Identity "Corporate Documents" -Fields "Title","Created"
+```
+
+Updates the Corporate Documents view on the Documents library to have two fields
+
+### EXAMPLE 4
+```powershell
+Set-PnPView -List "Documents" -Identity "Corporate Documents" -Fields "Title","Created" -Aggregations "<FieldRef Name='Title' Type='COUNT'/>"
+```
+
+Updates the Corporate Documents view on the Documents library and sets the totals (aggregations) to Count on the Title field
+
+## PARAMETERS
+
+### -Aggregations
+A valid XML fragment containing one or more Aggregations
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Fields
+An array of fields to use in the view. Notice that specifying this value will remove the existing fields
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Identity
+The Id, Title or instance of the view
+
+```yaml
+Type: ViewPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -List
+The Id, Title or Url of the list
+
+```yaml
+Type: ListPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Values
+Hashtable of properties to update on the view. Use the syntax @{property1="value";property2="value"}.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Web
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+## INPUTS
+
+## OUTPUTS
+
+### Microsoft.SharePoint.Client.Field
+
+## NOTES
+
+## RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)

@@ -1,0 +1,145 @@
+---
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpjavascriptlink
+schema: 2.0.0
+title: Add-PnPJavaScriptLink
+---
+
+# Add-PnPJavaScriptLink
+
+## SYNOPSIS
+Adds a link to a JavaScript file to a web or sitecollection, valid only for SharePoint classic site experience.
+
+## SYNTAX
+
+```
+Add-PnPJavaScriptLink -Name <String> -Url <String[]> [-Sequence <Int32>] [-Scope <CustomActionScope>]
+ [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+```
+
+## DESCRIPTION
+Creates a custom action that refers to a JavaScript file
+
+## EXAMPLES
+
+### EXAMPLE 1
+```powershell
+Add-PnPJavaScriptLink -Name jQuery -Url https://code.jquery.com/jquery.min.js -Sequence 9999 -Scope Site
+```
+
+Injects a reference to the latest v1 series jQuery library to all pages within the current site collection under the name jQuery and at order 9999
+
+### EXAMPLE 2
+```powershell
+Add-PnPJavaScriptLink -Name jQuery -Url https://code.jquery.com/jquery.min.js
+```
+
+Injects a reference to the latest v1 series jQuery library to all pages within the current web under the name jQuery
+
+## PARAMETERS
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Name under which to register the JavaScriptLink
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: Key
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Scope
+Defines if this JavaScript file will be injected to every page within the current site collection or web. All is not allowed in for this command. Default is web.
+
+```yaml
+Type: CustomActionScope
+Parameter Sets: (All)
+Aliases:
+Accepted values: Web, Site, All
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Sequence
+Sequence of this JavaScript being injected. Use when you have a specific sequence with which to have JavaScript files being added to the page. I.e. jQuery library first and then jQueryUI.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Url
+URL to the JavaScript file to inject
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Web
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
+
+## RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)

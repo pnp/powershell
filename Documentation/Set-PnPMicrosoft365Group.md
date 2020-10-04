@@ -1,0 +1,246 @@
+---
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpmicrosoft365group
+schema: 2.0.0
+title: Set-PnPMicrosoft365Group
+---
+
+# Set-PnPMicrosoft365Group
+
+## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: Group.ReadWrite.All
+
+Sets Microsoft 365 Group properties
+
+## SYNTAX
+
+```
+Set-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-DisplayName <String>] [-Description <String>]
+ [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-GroupLogoPath <String>] [-CreateTeam]
+ [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-ByPassPermissionCheck]
+ [<CommonParameters>]
+```
+
+## DESCRIPTION
+
+## EXAMPLES
+
+### EXAMPLE 1
+```powershell
+Set-PnPMicrosoft365Group -Identity $group -DisplayName "My Displayname"
+```
+
+Sets the display name of the group where $group is a Group entity
+
+### EXAMPLE 2
+```powershell
+Set-PnPMicrosoft365Group -Identity $groupId -Descriptions "My Description" -DisplayName "My DisplayName"
+```
+
+Sets the display name and description of a group based upon its ID
+
+### EXAMPLE 3
+```powershell
+Set-PnPMicrosoft365Group -Identity $group -GroupLogoPath ".\MyLogo.png"
+```
+
+Sets a specific Microsoft 365 Group logo
+
+### EXAMPLE 4
+```powershell
+Set-PnPMicrosoft365Group -Identity $group -IsPrivate:$false
+```
+
+Sets a group to be Public if previously Private
+
+### EXAMPLE 5
+```powershell
+Set-PnPMicrosoft365Group -Identity $group -Owners demo@contoso.com
+```
+
+Sets demo@contoso.com as owner of the group
+
+## PARAMETERS
+
+### -ByPassPermissionCheck
+Allows the check for required permissions in the access token to be bypassed when set to $true
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CreateTeam
+Creates a Microsoft Teams team associated with created group
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Description
+The Description of the group to set
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisplayName
+The DisplayName of the group to set
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -GroupLogoPath
+The path to the logo file of to set. Logo must be at least 48 pixels wide and may be at most 4 MB in size. Requires Site.ReadWrite.All permissions.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HideFromAddressLists
+{{ Fill HideFromAddressLists Description }}
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HideFromOutlookClients
+{{ Fill HideFromOutlookClients Description }}
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Identity
+The Identity of the Microsoft 365 Group
+
+```yaml
+Type: Microsoft365GroupPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -IsPrivate
+Makes the group private when selected
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Members
+The array UPN values of members to set to the group. Note: Will replace members.
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Owners
+The array UPN values of owners to set to the group. Note: Will replace owners.
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
+
+## RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)[Documentation](https://docs.microsoft.com/graph/api/group-update)

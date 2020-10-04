@@ -13,6 +13,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{6D788265-F91C-4E2E-AEEE-23A012871023}"
 	ProjectSection(SolutionItems) = preProject
 		CHANGELOG.md = CHANGELOG.md
+		version.txt = version.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PnP.PowerShell.ALC", "ALC\PnP.PowerShell.ALC.csproj", "{546A8F8C-AD8A-488D-98DB-5AB25CF9558B}"

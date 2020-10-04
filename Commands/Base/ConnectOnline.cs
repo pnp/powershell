@@ -43,8 +43,8 @@ namespace PnP.PowerShell.Commands.Base
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
         private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
         private const string ParameterSet_ACCESSTOKEN = "Access Token";
-        private static readonly Uri GraphAADLogin = new Uri("https://login.microsoftonline.com/");
-        private static readonly string[] GraphDefaultScope = { "https://graph.microsoft.com/.default" };
+        //private static readonly Uri GraphAADLogin = new Uri("https://login.microsoftonline.com/");
+        //private static readonly string[] GraphDefaultScope = { "https://graph.microsoft.com/.default" };
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, ValueFromPipeline = true)]
@@ -85,21 +85,21 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
         public SwitchParameter CurrentCredentials;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
-        public SwitchParameter UseAdfs;
+        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
+        //public SwitchParameter UseAdfs;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
-        public SwitchParameter UseAdfsCert;
+        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
+        //public SwitchParameter UseAdfsCert;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
-        public X509Certificate2 ClientCertificate;
+        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
+        //public X509Certificate2 ClientCertificate;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
-        public SwitchParameter Kerberos;
+        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
+        //public SwitchParameter Kerberos;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
-        public string LoginProviderName;
+        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
+        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
+        //public string LoginProviderName;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
@@ -124,7 +124,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
+        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
         public SwitchParameter CreateDrive;
 
@@ -139,12 +139,12 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
+        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
         public string DriveName = "SPO";
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
-        public SwitchParameter SPOManagementShell;
+        //[Parameter(Mandatory = true, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
+        //public SwitchParameter SPOManagementShell;
 
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN)]
@@ -198,10 +198,6 @@ namespace PnP.PowerShell.Commands.Base
         public string Thumbprint;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
-        public SwitchParameter ClearTokenCache;
-
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb)]
@@ -233,7 +229,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
+        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         public string TenantAdminUrl;
 
         [Parameter(Mandatory = false)]
@@ -288,9 +284,9 @@ namespace PnP.PowerShell.Commands.Base
                     connection = ConnectGraphWithAad();
                     break;
 
-                case ParameterSet_SPOMANAGEMENT:
-                    connection = ConnectSpoManagement();
-                    break;
+                //case ParameterSet_SPOMANAGEMENT:
+                //    connection = ConnectSpoManagement();
+                //    break;
 
                 case ParameterSet_DEVICELOGIN:
                     connection = ConnectDeviceLogin();
@@ -526,24 +522,23 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyAad()
         {
-            //if (ParameterSpecified(nameof(CertificatePath)))
-            //{
-            //    WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
-            //    return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
-            //}
-            //else if (ParameterSpecified(nameof(Certificate)))
-            //{
-            //    return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment, Certificate);
-            //}
-            //else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
-            //{
-            //    return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment, CertificateBase64Encoded);
-            //}
-            //else
-            //{
-            //    throw new ArgumentException("You must either provide CertificatePath, Certificate or CertificateBase64Encoded when connecting using an Azure Active Directory registered application");
-            //}
-            throw new NotImplementedException();
+            if (ParameterSpecified(nameof(CertificatePath)))
+            {
+                //WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
+                return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
+            }
+            else if (ParameterSpecified(nameof(Certificate)))
+            {
+                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment, Certificate);
+            }
+            else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
+            {
+                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment, CertificateBase64Encoded);
+            }
+            else
+            {
+                throw new ArgumentException("You must either provide CertificatePath, Certificate or CertificateBase64Encoded when connecting using an Azure Active Directory registered application");
+            }
         }
 
         /// <summary>

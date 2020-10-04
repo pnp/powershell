@@ -1,0 +1,193 @@
+---
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpeventreceiver
+schema: 2.0.0
+title: Add-PnPEventReceiver
+---
+
+# Add-PnPEventReceiver
+
+## SYNOPSIS
+Adds a new remote event receiver
+
+## SYNTAX
+
+```
+Add-PnPEventReceiver [-List <ListPipeBind>] -Name <String> -Url <String> -EventReceiverType <EventReceiverType>
+ -Synchronization <EventReceiverSynchronization> [-SequenceNumber <Int32>] [-Force] [-Web <WebPipeBind>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
+```
+
+## DESCRIPTION
+
+## EXAMPLES
+
+### EXAMPLE 1
+```powershell
+Add-PnPEventReceiver -List "ProjectList" -Name "TestEventReceiver" -Url https://yourserver.azurewebsites.net/eventreceiver.svc -EventReceiverType ItemAdded -Synchronization Asynchronous
+```
+
+This will add a new remote event receiver that is executed after an item has been added to the ProjectList list
+
+### EXAMPLE 2
+```powershell
+Add-PnPEventReceiver -Name "TestEventReceiver" -Url https://yourserver.azurewebsites.net/eventreceiver.svc -EventReceiverType WebAdding -Synchronization Synchronous
+```
+
+This will add a new remote event receiver that is executed while a new subsite is being created
+
+## PARAMETERS
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EventReceiverType
+The type of the event receiver like ItemAdded, ItemAdding. See https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.eventreceivertype.aspx for the full list of available types.
+
+```yaml
+Type: EventReceiverType
+Parameter Sets: (All)
+Aliases: Type
+Accepted values: ItemAdding, ItemUpdating, ItemDeleting, ItemCheckingIn, ItemCheckingOut, ItemUncheckingOut, ItemAttachmentAdding, ItemAttachmentDeleting, ItemFileMoving, ItemVersionDeleting, FieldAdding, FieldUpdating, FieldDeleting, ListAdding, ListDeleting, SiteDeleting, WebDeleting, WebMoving, WebAdding, SiteMovingFromGeoLocation, GroupAdding, GroupUpdating, GroupDeleting, GroupUserAdding, GroupUserDeleting, RoleDefinitionAdding, RoleDefinitionUpdating, RoleDefinitionDeleting, RoleAssignmentAdding, RoleAssignmentDeleting, InheritanceBreaking, InheritanceResetting, WorkflowStarting, ItemAdded, ItemUpdated, ItemDeleted, ItemCheckedIn, ItemCheckedOut, ItemUncheckedOut, ItemAttachmentAdded, ItemAttachmentDeleted, ItemFileMoved, ItemFileConverted, ItemVersionDeleted, FieldAdded, FieldUpdated, FieldDeleted, ListAdded, ListDeleted, SiteDeleted, WebDeleted, WebMoved, WebProvisioned, WebRestored, GroupAdded, GroupUpdated, GroupDeleted, GroupUserAdded, GroupUserDeleted, RoleDefinitionAdded, RoleDefinitionUpdated, RoleDefinitionDeleted, RoleAssignmentAdded, RoleAssignmentDeleted, InheritanceBroken, InheritanceReset, WorkflowStarted, WorkflowPostponed, WorkflowCompleted, EntityInstanceAdded, EntityInstanceUpdated, EntityInstanceDeleted, AppInstalled, AppUpgraded, AppUninstalling, EmailReceived, ContextEvent, InvalidReceiver
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+Overwrites the output file if it exists.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -List
+The list object or name where the remote event receiver needs to be added. If omitted, the remote event receiver will be added to the web.
+
+```yaml
+Type: ListPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+The name of the remote event receiver
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SequenceNumber
+The sequence number where this remote event receiver should be placed
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Synchronization
+The synchronization type: Asynchronous or Synchronous
+
+```yaml
+Type: EventReceiverSynchronization
+Parameter Sets: (All)
+Aliases: Sync
+Accepted values: DefaultSynchronization, Synchronous, Asynchronous
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Url
+The URL of the remote event receiver web service
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Web
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+## INPUTS
+
+## OUTPUTS
+
+### Microsoft.SharePoint.Client.EventReceiverDefinition
+
+## NOTES
+
+## RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)

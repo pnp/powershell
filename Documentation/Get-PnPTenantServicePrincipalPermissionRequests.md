@@ -1,0 +1,67 @@
+---
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnptenantserviceprincipalpermissionrequests
+schema: 2.0.0
+title: Get-PnPTenantServicePrincipalPermissionRequests
+---
+
+# Get-PnPTenantServicePrincipalPermissionRequests
+
+## SYNOPSIS
+
+**Required Permissions**
+
+* SharePoint: Access to the SharePoint Tenant Administration site
+
+Gets the collection of permission requests for the "SharePoint Online Client" service principal
+
+## SYNTAX
+
+```
+Get-PnPTenantServicePrincipalPermissionRequests [-Connection <PnPConnection>] [<CommonParameters>]
+```
+
+## DESCRIPTION
+Gets the collection of permission requests for the "SharePoint Online Client" service principal.
+
+Permission request object
+
+A permission request contains the following properties:
+
+* Id: The identifier of the request.
+* Resource: The resource that the application requires access to.
+* Scope: The value of the scope claim that the resource application should expect in the OAuth 2.0 access token.
+
+## EXAMPLES
+
+## PARAMETERS
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
+
+## RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)

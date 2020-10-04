@@ -1,0 +1,154 @@
+---
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnptenanttheme
+schema: 2.0.0
+title: Add-PnPTenantTheme
+---
+
+# Add-PnPTenantTheme
+
+## SYNOPSIS
+
+**Required Permissions**
+
+* SharePoint: Access to the SharePoint Tenant Administration site
+
+Adds or updates a theme to the tenant.
+
+## SYNTAX
+
+```
+Add-PnPTenantTheme [-Overwrite] -Identity <ThemePipeBind> -Palette <ThemePalettePipeBind> -IsInverted <Boolean>
+ [-Connection <PnPConnection>] [<CommonParameters>]
+```
+
+## DESCRIPTION
+Adds or updates a theme to the tenant.
+
+## EXAMPLES
+
+### EXAMPLE 1
+```powershell
+$themepalette = @{
+  "themePrimary" = "#00ffff";
+  "themeLighterAlt" = "#f3fcfc";
+  "themeLighter" = "#daffff";
+  "themeLight" = "#affefe";
+  "themeTertiary" = "#76ffff";
+  "themeSecondary" = "#39ffff";
+  "themeDarkAlt" = "#00c4c4";
+  "themeDark" = "#009090";
+  "themeDarker" = "#005252";
+  "neutralLighterAlt" = "#f8f8f8";
+  "neutralLighter" = "#f4f4f4";
+  "neutralLight" = "#eaeaea";
+  "neutralQuaternaryAlt" = "#dadada";
+  "neutralQuaternary" = "#d0d0d0";
+  "neutralTertiaryAlt" = "#c8c8c8";
+  "neutralTertiary" = "#a6a6a6";
+  "neutralSecondaryAlt" = "#767676";
+  "neutralSecondary" = "#666666";
+  "neutralPrimary" = "#333";
+  "neutralPrimaryAlt" = "#3c3c3c";
+  "neutralDark" = "#212121";
+  "black" = "#000000";
+  "white" = "#fff";
+  "primaryBackground" = "#fff";
+  "primaryText" = "#333"
+ }
+PS:>Add-PnPTenantTheme -Identity "MyCompanyTheme" -Palette $themepalette -IsInverted $false
+```
+
+This example adds a theme to the current tenant.
+
+## PARAMETERS
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Identity
+The name of the theme to add or update
+
+```yaml
+Type: ThemePipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -IsInverted
+If the theme is inverted or not
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Overwrite
+{{ Fill Overwrite Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Palette
+The palette to add. See examples for more information.
+
+```yaml
+Type: ThemePalettePipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
+
+## RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)

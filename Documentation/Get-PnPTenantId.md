@@ -1,0 +1,66 @@
+---
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnptenantid
+schema: 2.0.0
+title: Get-PnPTenantId
+---
+
+# Get-PnPTenantId
+
+## SYNOPSIS
+Returns the Tenant ID
+
+## SYNTAX
+
+```
+Get-PnPTenantId [-TenantUrl <String>] [<CommonParameters>]
+```
+
+## DESCRIPTION
+
+## EXAMPLES
+
+### EXAMPLE 1
+```powershell
+Get-PnPTenantId
+```
+
+Returns the current Tenant Id. A valid connection with Connect-PnPOnline is required.
+
+### EXAMPLE 2
+```powershell
+Get-PnPTenantId -TenantUrl https://contoso.sharepoint.com
+```
+
+Returns the Tenant ID for the specified tenant. Can be executed without a connecting first with Connect-PnPOnline
+
+## PARAMETERS
+
+### -TenantUrl
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
+
+## RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)

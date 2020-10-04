@@ -60,3 +60,4 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed alias `Set-PnPUnifiedGroup`. Use `Set-PnPMicrosoft365Group`.
 - Removed alias `Execute-PnPQuery`. Use `Invoke-PnPQuery`.
 - Removed alias `Ensure-PnPFolder`. Use `Resolve-PnPFolder`.
+- Removed `Install-PnPSolution`. Sandboxed solutions have been deprecated.
