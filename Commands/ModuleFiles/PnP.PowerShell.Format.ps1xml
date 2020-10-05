@@ -1437,6 +1437,10 @@
             <Alignment>left</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>
+            <Label>Description</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
             <Label>Content</Label>
             <Alignment>left</Alignment>
           </TableColumnHeader>
@@ -1452,6 +1456,9 @@
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>Version</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Description</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>Content</PropertyName>

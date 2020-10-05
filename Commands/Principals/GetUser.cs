@@ -13,7 +13,7 @@ using System.Text;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "User", DefaultParameterSetName = PARAMETERSET_IDENTITY)]
-    public class GetUser : PnPWebCmdlet
+    public class GetUser : PnPWebRetrievalsCmdlet<User>
     {
         private const string PARAMETERSET_IDENTITY = "Identity based request";
         private const string PARAMETERSET_WITHRIGHTSASSIGNED = "With rights assigned";
@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            var retrievalExpressions = new Expression<Func<User, object>>[]
+            DefaultRetrievalExpressions = new Expression<Func<User, object>>[]
             {
                 u => u.Id,
                 u => u.Title,
@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.Principals
 
             if (Identity == null)
             {
-                SelectedWeb.Context.Load(SelectedWeb.SiteUsers, u => u.Include(retrievalExpressions));
+                SelectedWeb.Context.Load(SelectedWeb.SiteUsers, u => u.Include(RetrievalExpressions));
 
                 List<DetailedUser> users = new List<DetailedUser>();
 
@@ -76,7 +76,7 @@ namespace PnP.PowerShell.Commands.Principals
                     var usersWithDirectPermissions = SelectedWeb.SiteUsers.Where(u => SelectedWeb.RoleAssignments.Any(ra => ra.Member.LoginName == u.LoginName));
 
                     // Get all the users contained in SharePoint Groups
-                    SelectedWeb.Context.Load(SelectedWeb.SiteGroups, sg => sg.Include(u => u.Users.Include(retrievalExpressions), u => u.LoginName));
+                    SelectedWeb.Context.Load(SelectedWeb.SiteGroups, sg => sg.Include(u => u.Users.Include(RetrievalExpressions), u => u.LoginName));
                     SelectedWeb.Context.ExecuteQueryRetry();
 
                     // Get all SharePoint groups that have been assigned access
@@ -294,7 +294,7 @@ namespace PnP.PowerShell.Commands.Principals
                 }
                 if (user != null)
                 {
-                    SelectedWeb.Context.Load(user, retrievalExpressions);
+                    SelectedWeb.Context.Load(user, RetrievalExpressions);
                     SelectedWeb.Context.ExecuteQueryRetry();
                 }
                 WriteObject(user);

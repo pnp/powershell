@@ -140,7 +140,7 @@ Accept wildcard characters: False
 ```
 
 ### -GrooveBlockOption
-Controls whether or not a tenant's users can sync OneDrive for Business libraries with the old OneDrive for Business sync client. The valid values are OptOut, HardOptin, and SoftOptin.
+Controls whether or not a tenant's users can sync OneDrive for Business libraries with the old OneDrive for Business sync client. The valid values are OptOut, HardOptin, and SoftOptin. GrooveBlockOption is planned to be deprecated. Please refrain from using the parameter.
 
 ```yaml
 Type: GrooveBlockOption

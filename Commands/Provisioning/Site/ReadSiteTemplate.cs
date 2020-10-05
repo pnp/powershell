@@ -97,48 +97,54 @@ namespace PnP.PowerShell.Commands.Provisioning
             var fileInfo = new FileInfo(templatePath);
             FileConnectorBase fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
 
-            // Load the provisioning template file
-            Stream stream = fileConnector.GetFileStream(templateFileName);
-            var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
-
-            XMLTemplateProvider provider;
-            if (isOpenOfficeFile)
+            // Load the site template file
+            using (var stream = fileConnector.GetFileStream(templateFileName))
             {
-                var openXmlConnector = new OpenXMLConnector(templateFileName, fileConnector);
-                provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
-                if (!String.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName))
+                if(stream == null)
                 {
-                    templateFileName = openXmlConnector.Info.Properties.TemplateFileName;
+                    throw new FileNotFoundException($"File {templatePath} does not exist.", templatePath);
+                }
+                var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
+
+                XMLTemplateProvider provider;
+                if (isOpenOfficeFile)
+                {
+                    var openXmlConnector = new OpenXMLConnector(templateFileName, fileConnector);
+                    provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
+                    if (!String.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName))
+                    {
+                        templateFileName = openXmlConnector.Info.Properties.TemplateFileName;
+                    }
+                    else
+                    {
+                        templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
+                    }
                 }
                 else
                 {
-                    templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
+                    provider = new XMLFileSystemTemplateProvider(fileConnector.Parameters[FileConnectorBase.CONNECTIONSTRING] + "", "");
                 }
-            }
-            else
-            {
-                provider = new XMLFileSystemTemplateProvider(fileConnector.Parameters[FileConnectorBase.CONNECTIONSTRING] + "", "");
-            }
-            try
-            {
-                ProvisioningTemplate provisioningTemplate = provider.GetTemplate(templateFileName, templateProviderExtensions);
-                provisioningTemplate.Connector = provider.Connector;
-                return provisioningTemplate;
-            }
-            catch (ApplicationException ex)
-            {
-                if (ex.InnerException is AggregateException)
+                try
                 {
-                    if (exceptionHandler != null)
+                    ProvisioningTemplate provisioningTemplate = provider.GetTemplate(templateFileName, templateProviderExtensions);
+                    provisioningTemplate.Connector = provider.Connector;
+                    return provisioningTemplate;
+                }
+                catch (ApplicationException ex)
+                {
+                    if (ex.InnerException is AggregateException)
                     {
-                        foreach (var exception in ((AggregateException)ex.InnerException).InnerExceptions)
+                        if (exceptionHandler != null)
                         {
-                            exceptionHandler(exception);
+                            foreach (var exception in ((AggregateException)ex.InnerException).InnerExceptions)
+                            {
+                                exceptionHandler(exception);
+                            }
                         }
                     }
                 }
+                return null;
             }
-            return null;
         }
     }
 }

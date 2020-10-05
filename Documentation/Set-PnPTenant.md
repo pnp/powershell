@@ -47,7 +47,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-AllowDownloadingNonWebViewableFiles <Boolean>] [-AllowEditing <Boolean>]
  [-ApplyAppEnforcedRestrictionsToAdHocRecipients <Boolean>] [-FilePickerExternalImageSearchEnabled <Boolean>]
  [-EmailAttestationRequired <Boolean>] [-EmailAttestationReAuthDays <Int32>] [-HideDefaultThemes <Boolean>]
- [-DisabledWebPartIds <Guid[]>] [-EnableAIPIntegration <Boolean>] [-DisableCustomAppAuthentication <Boolean>]
+ [-DisabledWebPartIds <Guid[]>] [-EnableAIPIntegration <Boolean>] [-DisableCustomAppAuthentication <Boolean>] [-EnableAutoNewsDigest <Boolean>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -1191,6 +1191,21 @@ Accept wildcard characters: False
 ```
 
 ### -UserVoiceForFeedbackEnabled
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableAutoNewsDigest
+Boolean indicating if a news digest should automatically be sent to end users to inform them about news that they may have missed. On by default. For more information see https://aka.ms/autonewsdigest
 
 ```yaml
 Type: Boolean

@@ -28,6 +28,7 @@ namespace PnP.PowerShell.Commands
         protected override void ExecuteCmdlet()
         {
             var script = Tenant.GetSiteScript(ClientContext, Identity.Id);
+            script.EnsureProperties(s => s.Content, s => s.Title, s => s.Id, s => s.Version, s => s.Description);
             if (script != null)
             {
                 var isDirty = false;

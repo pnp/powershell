@@ -774,8 +774,14 @@ namespace PnP.PowerShell.Commands.Base
 
                     if (credentials == null)
                     {
-                        // try to find the credentials by hostname
-                        credentials = Utilities.CredentialManager.GetCredential(connectionUri.Host);
+                        // Maybe added with an extra slash?
+                        credentials = Utilities.CredentialManager.GetCredential(connectionUri.Scheme + "://" + connectionUri.Host + "/");
+
+                        if (credentials == null)
+                        {
+                            // try to find the credentials by hostname
+                            credentials = Utilities.CredentialManager.GetCredential(connectionUri.Host);
+                        }
                     }
                 }
 
