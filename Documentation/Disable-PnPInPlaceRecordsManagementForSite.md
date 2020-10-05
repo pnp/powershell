@@ -1,5 +1,5 @@
 ---
-external help file:
+external help file: PnP.PowerShell.dll-Help.xml
 online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/disable-pnpinplacerecordsmanagementforsite
 applicable: SharePoint Online
 schema: 2.0.0
