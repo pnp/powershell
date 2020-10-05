@@ -24,15 +24,21 @@ Try {
 	New-Item -Path $destinationFolder -ItemType Directory -Force | Out-Null
 	New-Item -Path "$destinationFolder\Core" -ItemType Directory -Force | Out-Null
 	New-Item -Path "$destinationFolder\Common" -ItemType Directory -Force | Out-Null
-	New-Item -Path "$destinationFolder\Framework" -ItemType Directory -Force | Out-Null
-	
+	if(!$IsLinux -or !$IsMacOs)
+	{
+		New-Item -Path "$destinationFolder\Framework" -ItemType Directory -Force | Out-Null
+	}
+
 	Write-Host "Copying files to $destinationFolder" -ForegroundColor Yellow
 
 	$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
 	Copy-Item -Path "$TargetDir\ModuleFiles\*.ps1xml" -Destination "$destinationFolder"
 	Get-ChildItem -Path "$PSScriptRoot/ALC/bin/$ConfigurationName/netstandard2.0" | Where-Object {$_.Extension -in '.dll','.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
 	Get-ChildItem -Path "$PSScriptRoot/Commands/bin/$ConfigurationName/netcoreapp3.1" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
-	Get-ChildItem -Path "$PSScriptRoot/Commands/bin/$ConfigurationName/net461" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }
+	if(!$IsLinux -or !$IsMacOs)
+	{
+		Get-ChildItem -Path "$PSScriptRoot/Commands/bin/$ConfigurationName/net461" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }
+	}
 }
 Catch
 {
