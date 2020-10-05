@@ -30,10 +30,10 @@ Get-PnPTeamsChannelMessage -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeB
 
 ### EXAMPLE 1
 ```powershell
-Submit-PnPTeamsChannelMessage -Team MyTestTeam -Channel "My Channel" -Message "A new message"
+Get-PnPTeamsChannelMessage -Team MyTestTeam -Channel "My Channel"
 ```
 
-Sends "A new message" to the specified channel
+Gets all messages of the specified channel
 
 ## PARAMETERS
 
