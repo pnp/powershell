@@ -62,15 +62,6 @@ Retrieves all the Office 365 Groups and checks for each of them if it has a Micr
 
 ## PARAMETERS
 
-### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
-
-## INPUTS
-
-## OUTPUTS
-
-## NOTES
-
 ## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)

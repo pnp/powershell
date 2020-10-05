@@ -61,3 +61,4 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed alias `Execute-PnPQuery`. Use `Invoke-PnPQuery`.
 - Removed alias `Ensure-PnPFolder`. Use `Resolve-PnPFolder`.
 - Removed `Install-PnPSolution`. Sandboxed solutions have been deprecated.
+- Removed `Add-PnPWorkflowDefinition`, `Add-PnPWorkflowSubscription`, `Get-PnPWorkflowDefinition`, `Get-PnPWorkflowInstances`, `Get-PnPWorkflowSubscription`, `Remove-PnPWorkflowDefinition`, `Remove-PnPWorkflowSubscription`, `Resume-PnPWorkflowInstance`, `Start-PnPWorkflowInstance` and `Stop-PnPWorkflowInstance` due to deprecated of the Workflow Services in SharePoint Online.
