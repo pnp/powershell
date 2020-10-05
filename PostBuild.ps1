@@ -1,7 +1,13 @@
 param($ProjectDir, $ConfigurationName, $TargetDir, $TargetFileName, $SolutionDir)
 
 $documentsFolder = [environment]::getfolderpath("mydocuments");
-$destinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
+if($IsLinux -or $isMacOS)
+{
+	$destinationFolder = "$documentsFolder/.local/share/powershell/modules/PnP.PowerShell"
+} else {
+	$destinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
+}
+
 $corePath = "$destinationFolder/Core"
 $commonPath = "$destinationFolder/Common"
 $frameworkPath = "$destinationFolder/Framework"
