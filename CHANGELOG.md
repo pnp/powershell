@@ -1,4 +1,4 @@
-# SharePointPnP.PowerShell Changelog
+# PnP.PowerShell Changelog
 *Please do not commit changes to this file, it is maintained by the repo owner.*
 
 All notable changes to this project will be documented in this file.
