@@ -95,7 +95,7 @@ Retrieves all list items from the Tasks list in pages of 1000 items
 
 ### EXAMPLE 8
 ```powershell
-Get-PnPListItem -List Tasks -PageSize 1000 -ScriptBlock { Param($items) $items.Context.ExecuteQuery() } | % { $_.BreakRoleInheritance($true, $true) }
+Get-PnPListItem -List Tasks -PageSize 1000 -ScriptBlock { Param($items) $items.Context.ExecuteQuery() } | ForEach-Object { $_.BreakRoleInheritance($true, $true) }
 ```
 
 Retrieves all list items from the Tasks list in pages of 1000 items and breaks permission inheritance on each item

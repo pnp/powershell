@@ -42,7 +42,7 @@ Add-PnPField [-AddToDefaultView] [-Required] [-Group <String>] [-Web <WebPipeBin
 ```
 
 ## DESCRIPTION
-Adds a field to a list or as a site column
+Adds a field (a column) to a list or as a site column. To add a column of type Managed Metadata use the Add-PnPTaxonomyField cmdlet.
 
 ## EXAMPLES
 
