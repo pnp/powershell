@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net461</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp3.1;net461</TargetFrameworks>
     <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">netcoreapp3.1</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyName>PnP.PowerShell</AssemblyName>
@@ -80,8 +80,12 @@
     </None>
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'net461'">
-    <Exec Command="&quot;pwsh.exe&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command .'$(SolutionDir)postbuild.ps1' -ProjectDir:'$(ProjectDir)' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)' -TargetFileName:'$(TargetFileName)' -TargetName:'$(TargetName)' -SolutionDir:'$(SolutionDir)'" />
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="&quot;pwsh.exe&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command .'$(SolutionDir)postbuild.ps1' -ProjectDir:'$(ProjectDir)' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)' -TargetFileName:'$(TargetFileName)' -TargetName:'$(TargetName)' -SolutionDir:'$(SolutionDir)'" Condition="'$(TargetFramework)' == 'net461' and '$(OS)' == 'Windows_NT'" />
+    <Exec Command="&quot;pwsh.exe&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command .'$(SolutionDir)postbuild.ps1' -ProjectDir:'$(ProjectDir)' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)' -TargetFileName:'$(TargetFileName)' -TargetName:'$(TargetName)' -SolutionDir:'$(SolutionDir)'" Condition="'$(OS)' != 'Windows_NT'" />
   </Target>
 
+  <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(OS)' != 'Windows_NT'">
+    <Exec Command="&quot;pwsh.exe&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command .'$(SolutionDir)postbuild.ps1' -ProjectDir:'$(ProjectDir)' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)' -TargetFileName:'$(TargetFileName)' -TargetName:'$(TargetName)' -SolutionDir:'$(SolutionDir)'" />
+  </Target>-->
 </Project>
