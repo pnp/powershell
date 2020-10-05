@@ -80,7 +80,7 @@ Try {
 	PrivateData = @{
 		PSData = @{
 			ProjectUri = 'https://aka.ms/sppnp'
-			IconUri = 'https://github.com/pnp/media/raw/e62d267575c81bda81485111ec52714033141e62/parker/pnp/300w/parker.png'
+			IconUri = 'https://raw.githubusercontent.com/pnp/media/40e7cd8952a9347ea44e5572bb0e49622a102a12/parker/ms/300w/parker-ms-300.png'
 		}
 	}
 }"
