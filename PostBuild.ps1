@@ -24,7 +24,7 @@ Try {
 	New-Item -Path $destinationFolder -ItemType Directory -Force | Out-Null
 	New-Item -Path "$destinationFolder\Core" -ItemType Directory -Force | Out-Null
 	New-Item -Path "$destinationFolder\Common" -ItemType Directory -Force | Out-Null
-	if(!$IsLinux -or !$IsMacOs)
+	if(!$IsLinux -and !$IsMacOs)
 	{
 		New-Item -Path "$destinationFolder\Framework" -ItemType Directory -Force | Out-Null
 	}
