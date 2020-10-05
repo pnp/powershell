@@ -82,7 +82,7 @@
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="&quot;pwsh.exe&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command .'$(SolutionDir)postbuild.ps1' -ProjectDir:'$(ProjectDir)' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)' -TargetFileName:'$(TargetFileName)' -TargetName:'$(TargetName)' -SolutionDir:'$(SolutionDir)'" Condition="'$(TargetFramework)' == 'net461' and '$(OS)' == 'Windows_NT'" />
-    <Exec Command="&quot;pwsh.exe&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command .'$(SolutionDir)postbuild.ps1' -ProjectDir:'$(ProjectDir)' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)' -TargetFileName:'$(TargetFileName)' -TargetName:'$(TargetName)' -SolutionDir:'$(SolutionDir)'" Condition="'$(OS)' != 'Windows_NT'" />
+    <Exec Command="&quot;pwsh.exe&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command .'$(SolutionDir)PostBuild.ps1' -ProjectDir:'$(ProjectDir)' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)' -TargetFileName:'$(TargetFileName)' -TargetName:'$(TargetName)' -SolutionDir:'$(SolutionDir)'" Condition="'$(OS)' != 'Windows_NT'" />
   </Target>
 
   <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(OS)' != 'Windows_NT'">
