@@ -3,7 +3,7 @@ param($ConfigurationName, $TargetDir)
 $documentsFolder = [environment]::getfolderpath("mydocuments");
 if($IsLinux -or $isMacOS)
 {
-	$destinationFolder = "$documentsFolder/.local/share/powershell/modules/PnP.PowerShell"
+	$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
 } else {
 	$destinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
 }
