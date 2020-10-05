@@ -1,4 +1,4 @@
-param($ProjectDir, $ConfigurationName, $TargetDir, $TargetFileName, $SolutionDir)
+param($ConfigurationName, $TargetDir)
 
 $documentsFolder = [environment]::getfolderpath("mydocuments");
 if($IsLinux -or $isMacOS)
