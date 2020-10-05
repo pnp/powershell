@@ -52,24 +52,17 @@ New-PnPTeamsTeam -DisplayName <String> [-MailNickName <String>] [-Description <S
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPTeamsTeam
+New-PnPTeamsTeam -DisplayName "myPnPDemo1" -Visibility Private -AllowCreateUpdateRemoveTabs $false -AllowUserDeleteMessages $false
 ```
 
-Retrieves all the Microsoft Teams instances
+This will create a newTeam called "myPnPDemo1" and sets the privacy to Private, as we well as preventing users from deleting their messages or update/remove tabs. The user creating the Team will be added as Owner.
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPTeamsTeam -GroupId $groupId
+New-PnPTeamsTeam -GroupId $groupId
 ```
 
-Retrieves a specific Microsoft Teams instance
-
-### EXAMPLE 3
-```powershell
-Get-PnPTeamsTeam -Visibility Public
-```
-
-Retrieves all Microsoft Teams instances which are public visible
+This will create a new TEam from a Microsoft 365 Group using the Group ID
 
 ## PARAMETERS
 
