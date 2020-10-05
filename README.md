@@ -13,16 +13,16 @@ This solution contains a library of PowerShell commands that allows you to perfo
 
 # Installation using the [PowerShell Gallery](https://www.powershellgallery.com)
 
-If you main OS is Windows 10, or if you have [PowerShellGet](https://github.com/powershell/powershellget) installed, you can run the following commands to install the PowerShell cmdlets:
+You can run the following commands to install the PowerShell cmdlets:
 
-|**SharePoint Version**|**Command to install**|
-|------------------|------------------|
-|SharePoint Online|```Install-Module PnP.PowerShell ```|
+```PowerShell
+Install-Module PnP.PowerShell
+```
 
 ## How to Update the Cmdlets 
-Every month a new release will be made available of the PnP PowerShell Cmdlets.
+When using Connect-PnPOnline we will check if a new version is available (only one time during a single PowerShell session).
 
-If you have installed the cmdlets using PowerShellGet with ```Install-Module``` from the PowerShell Gallery then you will be able to use the following command to install the latest updated version:
+To update the current installation:
 
 ```powershell
 Update-Module PnP.PowerShell
