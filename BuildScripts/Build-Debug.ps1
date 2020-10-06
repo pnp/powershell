@@ -101,7 +101,7 @@ Try {
 		}
 	}
 }"
-	$manifest | Out-File "$destinationFolder\PnP.PowerShell.psd1"
+	$manifest | Out-File "$destinationFolder/PnP.PowerShell.psd1"
 }
 Catch 
 {
