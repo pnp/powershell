@@ -1,12 +1,12 @@
 Write-Host "Building PnP.PowerShell" -ForegroundColor Yellow
 
-$versionObject = [System.Version]::new($(Get-Content ..\version.txt -Raw))
+$versionObject = [System.Version]::new($(Get-Content ./version.txt -Raw))
 
 $buildVersion = $versionObject.Build + 1;
 
 $version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
-dotnet build ../src/Commands/PnP.PowerShell.csproj --nologo --configuration Release --no-incremental -p:VersionPrefix=$version -p:VersionSuffix=preview
+dotnet build ./src/Commands/PnP.PowerShell.csproj --nologo --configuration Release --no-incremental -p:VersionPrefix=$version -p:VersionSuffix=preview
 
 $documentsFolder = [environment]::getfolderpath("mydocuments");
 
@@ -41,7 +41,7 @@ Try {
 	Write-Host "Copying files to $destinationFolder" -ForegroundColor Yellow
 
 	$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
-	Copy-Item -Path "../src/Commands/bin/Release/netcoreapp3.1/ModuleFiles/*.ps1xml" -Destination "$destinationFolder"
+	Copy-Item -Path "$PSscriptRoot/../src/Commands/bin/Release/netcoreapp3.1/ModuleFiles/*.ps1xml" -Destination "$destinationFolder"
 	Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Release/netstandard2.0" | Where-Object {$_.Extension -in '.dll','.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
 	Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/netcoreapp3.1" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
 	if(!$IsLinux -and !$IsMacOs)
@@ -120,4 +120,4 @@ Import-Module -Name PnP.PowerShell
 Publish-Module -Name PnP.PowerShell -AllowPrerelease -AllowPrerelease -NuGetApiKey $apiKey
 
 # Write version back to version
-Set-Content ../version.txt -Value $version -Force
+Set-Content ./version.txt -Value $version -Force
