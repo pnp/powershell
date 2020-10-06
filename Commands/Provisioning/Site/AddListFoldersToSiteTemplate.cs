@@ -17,7 +17,6 @@ using Microsoft.SharePoint.Client;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Add, "ListFoldersToSiteTemplate")]
-    [Alias("Add-ListFoldersToProvisioningTemplate")]
     public class AddListFoldersToSiteTemplate : PnPWebCmdlet
     {
 
@@ -127,8 +126,10 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             ClientContext.Load(listFolder, l => l.Name, l => l.Folders);
             ClientContext.ExecuteQueryRetry();
 
-            PnP.Framework.Provisioning.Model.Folder retFolder = new PnP.Framework.Provisioning.Model.Folder();
-            retFolder.Name = listFolder.Name;
+            PnP.Framework.Provisioning.Model.Folder retFolder = new PnP.Framework.Provisioning.Model.Folder
+            {
+                Name = listFolder.Name
+            };
 
             if (Recursive)
             {

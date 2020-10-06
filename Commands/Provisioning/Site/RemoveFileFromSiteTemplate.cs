@@ -11,7 +11,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Remove, "FileFromSiteTemplate")]
-    [Alias("Remove-FileFromProvisioningTemplate")]
     public class RemoveFileFromSiteTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

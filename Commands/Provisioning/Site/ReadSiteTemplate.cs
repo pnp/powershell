@@ -12,7 +12,6 @@ using System.Text;
 namespace PnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommunications.Read, "SiteTemplate")]
-    [Alias("Read-ProvisioningTemplate")]
     public class ReadSiteTemplate : PSCmdlet
     {
         const string ParameterSet_PATH = "By Path";
@@ -61,8 +60,6 @@ namespace PnP.PowerShell.Commands.Provisioning
 
         internal static ProvisioningTemplate LoadSiteTemplateFromString(string xml, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler)
         {
-            var formatter = new XMLPnPSchemaFormatter();
-
             XMLTemplateProvider provider = new XMLStreamTemplateProvider();
 
             try

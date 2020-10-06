@@ -15,7 +15,6 @@ using PnPFileLevel = PnP.Framework.Provisioning.Model.FileLevel;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Add, "FileToSiteTemplate")]
-    [Alias("Add-FileToProvisioningTemplate")]
     public class AddFileToSiteTemplate : PnPWebCmdlet
     {
         const string parameterSet_LOCALFILE = "Local File";
@@ -118,9 +117,9 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
             template.Connector.SaveFileStream(fileName, container, fs);
 
-            if (template.Connector is ICommitableFileConnector)
+            if (template.Connector is ICommitableFileConnector connector)
             {
-                ((ICommitableFileConnector)template.Connector).Commit();
+                connector.Commit();
             }
 
             var existing = template.Files.FirstOrDefault(f =>

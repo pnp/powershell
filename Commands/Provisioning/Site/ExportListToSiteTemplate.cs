@@ -16,10 +16,9 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsData.Export, "ListToSiteTemplate")]
-    [Alias("Export-ListToProvisioningTemplate")]
     public class ExportListToSiteTemplate : PnPWebCmdlet
     {
-        private ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");
+        //private ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");
         private ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");
 
         [Parameter(Mandatory = true)]
@@ -67,9 +66,10 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         {
             SelectedWeb.EnsureProperty(w => w.Url);
 
-            var creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb);
-
-            creationInformation.HandlersToProcess = Handlers.Lists;
+            var creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb)
+            {
+                HandlersToProcess = Handlers.Lists
+            };
 
             var extension = "";
             if (packageName != null)

@@ -19,12 +19,14 @@ namespace PnP.PowerShell.ALC
             telemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
             telemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
 
-            telemetryProperties = new Dictionary<string, string>(10);
-            telemetryProperties.Add("ServerLibraryVersion", serverLibraryVersion);
-            telemetryProperties.Add("ServerVersion", serverVersion);
-            telemetryProperties.Add("ConnectionMethod", initializationType.ToString());
-            telemetryProperties.Add("Version", assemblyVersion);
-            telemetryProperties.Add("Platform", "SPO");
+            telemetryProperties = new Dictionary<string, string>(10)
+            {
+                { "ServerLibraryVersion", serverLibraryVersion },
+                { "ServerVersion", serverVersion },
+                { "ConnectionMethod", initializationType.ToString() },
+                { "Version", assemblyVersion },
+                { "Platform", "SPO" }
+            };
         }
         public void TrackEvent(string cmdletName)
         {

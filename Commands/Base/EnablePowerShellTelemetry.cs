@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Commands.Base
             var telemetryFile = System.IO.Path.Combine(userFolder, ".pnppowershelltelemetry");
             if (Force || ShouldContinue("Do you want to enable telemetry for PnP PowerShell?", "Confirm"))
             {
-                PnPConnection.CurrentConnection?.InitializeTelemetry(PnPConnection.CurrentConnection.Context, Host, PnPConnection.CurrentConnection.InitializationType);
+                PnPConnection.CurrentConnection?.InitializeTelemetry(PnPConnection.CurrentConnection.Context, PnPConnection.CurrentConnection.InitializationType);
                 System.IO.File.WriteAllText(telemetryFile, "allow");
                 WriteObject("Telemetry enabled");
             }

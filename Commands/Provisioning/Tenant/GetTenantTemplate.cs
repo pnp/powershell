@@ -22,7 +22,6 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         const string PARAMETERSET_ASFILE = "Extract a template to a file";
         const string PARAMETERSET_ASOBJECT = "Extract a template as an object";
 
-        private ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");
         private ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");
 
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ASFILE)]
@@ -45,7 +44,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         protected override void ExecuteCmdlet()
         {
             
-            ExtractConfiguration extractConfiguration = null;
+            ExtractConfiguration extractConfiguration;
+
             if (ParameterSpecified(nameof(Configuration)))
             {
                 extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);

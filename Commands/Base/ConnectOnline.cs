@@ -40,8 +40,8 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_GRAPHDEVICELOGIN = "PnP Management Shell to the Microsoft Graph";
         private const string ParameterSet_AADWITHSCOPE = "Azure Active Directory using Scopes";
         private const string ParameterSet_GRAPHWITHAAD = "Microsoft Graph using Azure Active Directory";
-        private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
-        private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
+        //private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
+        //private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
         private const string ParameterSet_ACCESSTOKEN = "Access Token";
         //private static readonly Uri GraphAADLogin = new Uri("https://login.microsoftonline.com/");
         //private static readonly string[] GraphDefaultScope = { "https://graph.microsoft.com/.default" };
@@ -398,7 +398,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectToken()
         {
-            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, TenantAdminUrl, false, AzureEnvironment);
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, TenantAdminUrl, false, AzureEnvironment);
         }
 
         /// <summary>
@@ -407,7 +407,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectGraphWithAad()
         {
-            return PnPConnection.GetConnectionWithClientIdAndClientSecret(ClientId, ClientSecret, Host, InitializationType.AADAppOnly, Url, AADDomain, disableTelemetry: NoTelemetry);
+            return PnPConnection.GetConnectionWithClientIdAndClientSecret(ClientId, ClientSecret, InitializationType.AADAppOnly, Url, AADDomain, disableTelemetry: NoTelemetry);
         }
 
         /// <summary>
@@ -416,7 +416,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyClientIdCClientSecretUrl()
         {
-            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, TenantAdminUrl, false, AzureEnvironment);
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, TenantAdminUrl, false, AzureEnvironment);
         }
 
         /// <summary>
@@ -425,17 +425,17 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyClientIdCClientSecretAadDomain()
         {
-            return PnPConnection.GetConnectionWithClientIdAndClientSecret(ClientId, ClientSecret, Host, InitializationType.AADAppOnly, Url, AADDomain, disableTelemetry: NoTelemetry);
+            return PnPConnection.GetConnectionWithClientIdAndClientSecret(ClientId, ClientSecret, InitializationType.AADAppOnly, Url, AADDomain, disableTelemetry: NoTelemetry);
         }
 
         /// <summary>
         /// Connect using the parameter set SPOMANAGEMENT
         /// </summary>
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        private PnPConnection ConnectSpoManagement()
-        {
-            return ConnectNativeAAD(SPOManagementClientId, SPOManagementRedirectUri);
-        }
+        //private PnPConnection ConnectSpoManagement()
+        //{
+        //    return ConnectNativeAAD(SPOManagementClientId, SPOManagementRedirectUri);
+        //}
 
         /// <summary>
         /// Connect using the parameter set DEVICELOGIN
@@ -489,7 +489,7 @@ namespace PnP.PowerShell.Commands.Base
             else
             {
                 // TODO KZ: GetConnectionWithToken?
-                return PnPConnectionHelper.InstantiateGraphAccessTokenConnection(accessToken, Host, NoTelemetry);
+                return PnPConnectionHelper.InstantiateGraphAccessTokenConnection(accessToken, NoTelemetry);
             }
         }
 
@@ -525,15 +525,15 @@ namespace PnP.PowerShell.Commands.Base
             if (ParameterSpecified(nameof(CertificatePath)))
             {
                 //WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
-                return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
+                return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, TenantAdminUrl, NoTelemetry, AzureEnvironment);
             }
             else if (ParameterSpecified(nameof(Certificate)))
             {
-                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment, Certificate);
+                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, NoTelemetry, AzureEnvironment, Certificate);
             }
             else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
             {
-                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment, CertificateBase64Encoded);
+                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, NoTelemetry, AzureEnvironment, CertificateBase64Encoded);
             }
             else
             {
@@ -557,7 +557,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyAadThumb()
         {
-            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, TenantAdminUrl, Host, NoTelemetry, AzureEnvironment);
+            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, TenantAdminUrl, NoTelemetry, AzureEnvironment);
         }
 
         /// <summary>
@@ -588,14 +588,14 @@ namespace PnP.PowerShell.Commands.Base
             // If we have Office 365 scopes, get a token for those first
             if (officeManagementApiScopes.Length > 0)
             {
-                var officeManagementApiToken = credentials == null ? OfficeManagementApiToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, PnPConnection.DeviceLoginCallback(this.Host, true), AzureEnvironment) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, credentials.UserName, credentials.Password);
-                connection = PnPConnection.GetConnectionWithToken(officeManagementApiToken, TokenAudience.OfficeManagementApi, Host, InitializationType.InteractiveLogin, credentials, disableTelemetry: NoTelemetry.ToBool());
+                var officeManagementApiToken = credentials == null ? OfficeManagementApiToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, PnPConnection.DeviceLoginCallback(this.Host, true), azureEnvironment) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, credentials.UserName, credentials.Password);
+                connection = PnPConnection.GetConnectionWithToken(officeManagementApiToken, TokenAudience.OfficeManagementApi, InitializationType.InteractiveLogin, credentials, disableTelemetry: NoTelemetry.ToBool());
             }
 
             // If we have Graph scopes, get a token for it
             if (graphScopes.Length > 0)
             {
-                var graphToken = credentials == null ? GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, graphScopes, PnPConnection.DeviceLoginCallback(this.Host, true), AzureEnvironment) : GraphToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, graphScopes, credentials.UserName, credentials.Password, AzureEnvironment);
+                var graphToken = credentials == null ? GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, graphScopes, PnPConnection.DeviceLoginCallback(this.Host, true), azureEnvironment) : GraphToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, graphScopes, credentials.UserName, credentials.Password, AzureEnvironment);
                 // If there's a connection already, add the AAD token to it, otherwise set up a new connection with it
                 if (connection != null)
                 {
@@ -603,7 +603,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    connection = PnPConnection.GetConnectionWithToken(graphToken, TokenAudience.MicrosoftGraph, Host, InitializationType.InteractiveLogin, credentials, disableTelemetry: NoTelemetry.ToBool());
+                    connection = PnPConnection.GetConnectionWithToken(graphToken, TokenAudience.MicrosoftGraph, InitializationType.InteractiveLogin, credentials, disableTelemetry: NoTelemetry.ToBool());
                 }
             }
             connection.Scopes = Scopes;
@@ -624,13 +624,13 @@ namespace PnP.PowerShell.Commands.Base
             switch (url.ToLower())
             {
                 case GraphToken.ResourceIdentifier:
-                    return PnPConnection.GetConnectionWithToken(new GraphToken(AccessToken), TokenAudience.MicrosoftGraph, Host, InitializationType.Token, null, disableTelemetry: NoTelemetry.ToBool());
+                    return PnPConnection.GetConnectionWithToken(new GraphToken(AccessToken), TokenAudience.MicrosoftGraph, InitializationType.Token, null, disableTelemetry: NoTelemetry.ToBool());
 
                 case OfficeManagementApiToken.ResourceIdentifier:
-                    return PnPConnection.GetConnectionWithToken(new OfficeManagementApiToken(AccessToken), TokenAudience.OfficeManagementApi, Host, InitializationType.Token, null, disableTelemetry: NoTelemetry.ToBool());
+                    return PnPConnection.GetConnectionWithToken(new OfficeManagementApiToken(AccessToken), TokenAudience.OfficeManagementApi, InitializationType.Token, null, disableTelemetry: NoTelemetry.ToBool());
 
                 default:
-                    return PnPConnection.GetConnectionWithToken(new SharePointToken(AccessToken), TokenAudience.SharePointOnline, Host, InitializationType.Token, null, Url, disableTelemetry: NoTelemetry.ToBool());
+                    return PnPConnection.GetConnectionWithToken(new SharePointToken(AccessToken), TokenAudience.SharePointOnline, InitializationType.Token, null, Url, disableTelemetry: NoTelemetry.ToBool());
             }
         }
 
@@ -733,7 +733,6 @@ namespace PnP.PowerShell.Commands.Base
 
             return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url),
                                                                credentials,
-                                                               Host,
                                                                TenantAdminUrl,
                                                                NoTelemetry,
                                                                AzureEnvironment);

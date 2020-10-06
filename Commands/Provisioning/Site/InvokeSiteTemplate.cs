@@ -18,7 +18,6 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsLifecycle.Invoke, "SiteTemplate")]
-    [Alias("Apply-ProvisioningTemplate")]
     public class InvokeSiteTemplate : PnPWebCmdlet
     {
         private ProgressRecord progressRecord = new ProgressRecord(0, "Activity", "Status");

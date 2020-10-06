@@ -246,10 +246,10 @@ namespace PnP.PowerShell.Commands.Base
 
             if (token != null)
             {
-                var validationResults = ValidateTokenForPermissions(token, tokenAudience, orRoles, andRoles, tokenType);
-                if (!validationResults.valid)
+                var (valid, message) = ValidateTokenForPermissions(token, tokenAudience, orRoles, andRoles, tokenType);
+                if (!valid)
                 {
-                    throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {validationResults.message}");
+                    throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {message}");
                 }
                 return token;
             }
@@ -341,8 +341,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="clientContext">A SharePoint ClientContext to make available within this connection. Leave NULL to not connect to a SharePoint environment.</param>
         /// <param name="pnpVersionTag">Identifier set on the SharePoint ClientContext as the ClientTag to identify the source of the requests to SharePoint. Leave NULL not to set it.</param>
         /// <param name="disableTelemetry">Boolean indicating if telemetry on the commands being executed should be disabled. Telemetry is enabled by default.</param>
-        private PnPConnection(PSHost host,
-                              InitializationType initializationType,
+        private PnPConnection(InitializationType initializationType,
                               string url = null,
                               ClientContext clientContext = null,
                               Dictionary<TokenAudience, GenericToken> tokens = null,
@@ -351,7 +350,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             if (!disableTelemetry)
             {
-                InitializeTelemetry(clientContext, host, initializationType);
+                InitializeTelemetry(clientContext, initializationType);
             }
 
             UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
@@ -409,7 +408,6 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns><see cref="PnPConnection"/ instance which can be used to communicate with one of the supported APIs</returns>
         public static PnPConnection GetConnectionWithClientIdAndClientSecret(string clientId,
                                                                              string clientSecret,
-                                                                             PSHost host,
                                                                              InitializationType initializationType,
                                                                              string url = null,
                                                                              string aadDomain = null,
@@ -417,7 +415,7 @@ namespace PnP.PowerShell.Commands.Base
                                                                              string pnpVersionTag = null,
                                                                              bool disableTelemetry = false)
         {
-            return new PnPConnection(host, initializationType, url, clientContext, null, pnpVersionTag, disableTelemetry)
+            return new PnPConnection(initializationType, url, clientContext, null, pnpVersionTag, disableTelemetry)
             {
                 ClientId = clientId,
                 ClientSecret = clientSecret,
@@ -441,7 +439,6 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns><see cref="PnPConnection"/ instance which can be used to communicate with one of the supported APIs</returns>
         public static PnPConnection GetConnectionWithClientIdAndCertificate(string clientId,
                                                                             X509Certificate2 certificate,
-                                                                            PSHost host,
                                                                             InitializationType initializationType,
                                                                             string url = null,
                                                                             string aadDomain = null,
@@ -449,7 +446,7 @@ namespace PnP.PowerShell.Commands.Base
                                                                             string pnpVersionTag = null,
                                                                             bool disableTelemetry = false)
         {
-            return new PnPConnection(host, initializationType, url, clientContext, null, pnpVersionTag, disableTelemetry)
+            return new PnPConnection(initializationType, url, clientContext, null, pnpVersionTag, disableTelemetry)
             {
                 ClientId = clientId,
                 Certificate = certificate,
@@ -469,20 +466,19 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="pnpVersionTag">Identifier set on the SharePoint ClientContext as the ClientTag to identify the source of the requests to SharePoint. Leave NULL not to set it.</param>
         /// <param name="disableTelemetry">Boolean indicating if telemetry on the commands being executed should be disabled. Telemetry is enabled by default.</param>
         /// <returns><see cref="PnPConnection"/ instance which can be used to communicate with one of the supported APIs</returns>
-        public static PnPConnection GetConnectionWithPsCredential(PSCredential credential,
-                                                                  PSHost host,
-                                                                  InitializationType initializationType,
-                                                                  string url = null,
-                                                                  ClientContext clientContext = null,
-                                                                  string pnpVersionTag = null,
-                                                                  bool disableTelemetry = false)
-        {
-            return new PnPConnection(host, initializationType, url, clientContext, null, pnpVersionTag, disableTelemetry)
-            {
-                PSCredential = credential,
-                ConnectionMethod = ConnectionMethod.Credentials
-            };
-        }
+        //public static PnPConnection GetConnectionWithPsCredential(PSCredential credential,
+        //                                                          InitializationType initializationType,
+        //                                                          string url = null,
+        //                                                          ClientContext clientContext = null,
+        //                                                          string pnpVersionTag = null,
+        //                                                          bool disableTelemetry = false)
+        //{
+        //    return new PnPConnection(initializationType, url, clientContext, null, pnpVersionTag, disableTelemetry)
+        //    {
+        //        PSCredential = credential,
+        //        ConnectionMethod = ConnectionMethod.Credentials
+        //    };
+        //}
 
         /// <summary>
         /// Returns a PnPConnection based on connecting using an existing token
@@ -498,7 +494,6 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns><see cref="PnPConnection"/ instance which can be used to communicate with one of the supported APIs</returns>
         public static PnPConnection GetConnectionWithToken(GenericToken token,
                                                            TokenAudience tokenAudience,
-                                                           PSHost host,
                                                            InitializationType initializationType,
                                                            PSCredential credentials,
                                                            string url = null,
@@ -507,7 +502,7 @@ namespace PnP.PowerShell.Commands.Base
                                                            bool disableTelemetry = false,
                                                            AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
-            var connection = new PnPConnection(host, initializationType, url, clientContext, new Dictionary<TokenAudience, GenericToken>(1) { { tokenAudience, token } }, pnpVersionTag, disableTelemetry)
+            var connection = new PnPConnection(initializationType, url, clientContext, new Dictionary<TokenAudience, GenericToken>(1) { { tokenAudience, token } }, pnpVersionTag, disableTelemetry)
             {
                 ConnectionMethod = ConnectionMethod.AccessToken,
                 Tenant = token.ParsedToken.Claims.FirstOrDefault(c => c.Type.Equals("tid", StringComparison.InvariantCultureIgnoreCase))?.Value,
@@ -520,8 +515,8 @@ namespace PnP.PowerShell.Commands.Base
 
         #endregion
 
-        internal PnPConnection(ClientContext context, ConnectionType connectionType, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
-        : this(context, connectionType, credential, url, tenantAdminUrl, pnpVersionTag, host, disableTelemetry, initializationType)
+        internal PnPConnection(ClientContext context, ConnectionType connectionType, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, bool disableTelemetry, InitializationType initializationType)
+        : this(context, connectionType, credential, url, tenantAdminUrl, pnpVersionTag, disableTelemetry, initializationType)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -533,13 +528,12 @@ namespace PnP.PowerShell.Commands.Base
                                     string url,
                                     string tenantAdminUrl,
                                     string pnpVersionTag,
-                                    PSHost host,
                                     bool disableTelemetry,
                                     InitializationType initializationType)
         {
             if (!disableTelemetry)
             {
-                InitializeTelemetry(context, host, initializationType);
+                InitializeTelemetry(context, initializationType);
             }
             var coreAssembly = Assembly.GetExecutingAssembly();
             UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
@@ -559,18 +553,16 @@ namespace PnP.PowerShell.Commands.Base
             ClientId = PnPManagementShellClientId;
         }
 
-        internal PnPConnection(ClientContext context, GenericToken tokenResult, ConnectionType connectionType, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
+        internal PnPConnection(ClientContext context, GenericToken tokenResult, ConnectionType connectionType, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, bool disableTelemetry, InitializationType initializationType)
         {
             if (!disableTelemetry)
             {
-                InitializeTelemetry(context, host, initializationType);
+                InitializeTelemetry(context, initializationType);
             }
 
-            if (context == null)
-                throw new ArgumentNullException(nameof(context));
             var coreAssembly = Assembly.GetExecutingAssembly();
             UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
-            Context = context;
+            Context = context ?? throw new ArgumentNullException(nameof(context));
             ConnectionType = connectionType;
             PSCredential = credential;
             TenantAdminUrl = tenantAdminUrl;
@@ -587,11 +579,11 @@ namespace PnP.PowerShell.Commands.Base
             };
         }
 
-        internal PnPConnection(GenericToken tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
+        internal PnPConnection(GenericToken tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, string pnpVersionTag, bool disableTelemetry, InitializationType initializationType)
         {
             if (!disableTelemetry)
             {
-                InitializeTelemetry(null, host, initializationType);
+                InitializeTelemetry(null, initializationType);
             }
             var coreAssembly = Assembly.GetExecutingAssembly();
             UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
@@ -600,18 +592,18 @@ namespace PnP.PowerShell.Commands.Base
             ConnectionMethod = connectionMethod;
         }
 
-        internal PnPConnection(ConnectionMethod connectionMethod, ConnectionType connectionType, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
-        {
-            if (!disableTelemetry)
-            {
-                InitializeTelemetry(null, host, initializationType);
-            }
-            var coreAssembly = Assembly.GetExecutingAssembly();
-            UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
-            ConnectionType = connectionType;
-            PnPVersionTag = pnpVersionTag;
-            ConnectionMethod = connectionMethod;
-        }
+        //internal PnPConnection(ConnectionMethod connectionMethod, ConnectionType connectionType, string pnpVersionTag, bool disableTelemetry, InitializationType initializationType)
+        //{
+        //    if (!disableTelemetry)
+        //    {
+        //        InitializeTelemetry(null, initializationType);
+        //    }
+        //    var coreAssembly = Assembly.GetExecutingAssembly();
+        //    UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
+        //    ConnectionType = connectionType;
+        //    PnPVersionTag = pnpVersionTag;
+        //    ConnectionMethod = connectionMethod;
+        //}
 
         private void Context_ExecutingWebRequest(object sender, WebRequestEventArgs e)
         {
@@ -638,31 +630,24 @@ namespace PnP.PowerShell.Commands.Base
             if (context == null)
             {
                 context = Context.Clone(url);
-                try
-                {
-                    context.ExecuteQueryRetry();
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
+                context.ExecuteQueryRetry();
                 ContextCache.Add(context);
             }
             Context = context;
             return context;
         }
 
-        internal static ClientContext GetCachedContext(string url)
-        {
-            return ContextCache.FirstOrDefault(c => System.Net.WebUtility.UrlEncode(c.Url) == System.Net.WebUtility.UrlEncode(url));
-        }
+        //internal static ClientContext GetCachedContext(string url)
+        //{
+        //    return ContextCache.FirstOrDefault(c => System.Net.WebUtility.UrlEncode(c.Url) == System.Net.WebUtility.UrlEncode(url));
+        //}
 
-        internal static void ClearContextCache()
-        {
-            ContextCache.Clear();
-        }
+        //internal static void ClearContextCache()
+        //{
+        //    ContextCache.Clear();
+        //}
 
-        internal void InitializeTelemetry(ClientContext context, PSHost host, InitializationType initializationType)
+        internal void InitializeTelemetry(ClientContext context, InitializationType initializationType)
         {
 
             var enableTelemetry = false;
@@ -704,7 +689,7 @@ namespace PnP.PowerShell.Commands.Base
                 var coreAssembly = Assembly.GetExecutingAssembly();
                 ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
                 ApplicationInsights.TrackEvent("Connect-PnPOnline");
-                
+
                 //TelemetryConfiguration config = TelemetryConfiguration.CreateDefault();
                 //TelemetryClient = new TelemetryClient(config);
                 //config.InstrumentationKey = "a301024a-9e21-4273-aca5-18d0ef5d80fb";

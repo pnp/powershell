@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsData.Save, "SiteTemplate")]
-    [Alias("Save-ProvisioningTemplate")]
     public class SaveSiteTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -112,7 +111,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                 foreach (var app in template.Tenant.AppCatalog.Packages)
                 {
                     WriteObject($"Processing {app.Src}");
-                    AddFile(app.Src, templateFile, fileSystemConnector, connector);
+                    AddFile(app.Src, templateFile, fileSystemConnector);
                 }
             }
             if (template.Tenant?.SiteScripts != null)
@@ -120,7 +119,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                 foreach (var siteScript in template.Tenant.SiteScripts)
                 {
                     WriteObject($"Processing {siteScript.JsonFilePath}");
-                    AddFile(siteScript.JsonFilePath, templateFile, fileSystemConnector, connector);
+                    AddFile(siteScript.JsonFilePath, templateFile, fileSystemConnector);
                 }
             }
             if (template.Localizations != null && template.Localizations.Any())
@@ -128,7 +127,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                 foreach (var location in template.Localizations)
                 {
                     WriteObject($"Processing {location.ResourceFile}");
-                    AddFile(location.ResourceFile, templateFile, fileSystemConnector, connector);
+                    AddFile(location.ResourceFile, templateFile, fileSystemConnector);
                 }
             }
 
@@ -143,7 +142,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                 if (isFile)
                 {
                     WriteObject($"Processing {template.WebSettings.SiteLogo}");
-                    AddFile(template.WebSettings.SiteLogo, templateFile, fileSystemConnector, connector);
+                    AddFile(template.WebSettings.SiteLogo, templateFile, fileSystemConnector);
                 }
             }
             if (template.Files.Any())
@@ -151,7 +150,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                 foreach (var file in template.Files)
                 {
                     WriteObject($"Processing {file.Src}");
-                    AddFile(file.Src, templateFile, fileSystemConnector, connector);
+                    AddFile(file.Src, templateFile, fileSystemConnector);
                 }
             }
 
@@ -161,7 +160,7 @@ namespace PnP.PowerShell.Commands.Provisioning
             }
         }
 
-        private void AddFile(string sourceName, ProvisioningTemplate provisioningTemplate, FileConnectorBase fileSystemConnector, FileConnectorBase connector)
+        private void AddFile(string sourceName, ProvisioningTemplate provisioningTemplate, FileConnectorBase fileSystemConnector)
         {
             using (var fs = fileSystemConnector.GetFileStream(sourceName))
             {
