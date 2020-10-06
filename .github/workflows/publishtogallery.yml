@@ -1,0 +1,27 @@
+name: Publish to PowerShell Gallery
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: dev
+    - name: Build and Publish Module
+      env:
+        POWERSHELLGALLERY_API_KEY: ${{ secrets.POWERSHELLGALLERY_API_KEY }}
+      shell: pwsh
+      run: |
+        ./build/Build-Release.ps1
+    - name: Add & Commit
+      uses: EndBug/add-and-commit@v4.2.1
+    - name: Push changes to github
+      uses: ad-m/github-push-action@v0.6.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: dev
