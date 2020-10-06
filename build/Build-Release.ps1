@@ -6,7 +6,7 @@ $buildVersion = $versionObject.Build + 1;
 
 $version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
-dotnet build ./src/Commands/PnP.PowerShell.csproj --nologo --configuration Release --no-incremental -p:VersionPrefix=$version -p:VersionSuffix=preview
+dotnet build ./src/Commands/PnP.PowerShell.csproj --nologo --configuration Release --no-incremental -p:VersionPrefix=$version -p:VersionSuffix=nightly
 
 $documentsFolder = [environment]::getfolderpath("mydocuments");
 
@@ -100,7 +100,7 @@ Try {
 	FormatsToProcess = 'PnP.PowerShell.Format.ps1xml' 
 	PrivateData = @{
 		PSData = @{
-			Prerelease = '-preview'
+			Prerelease = '-nightly'
 			ProjectUri = 'https://aka.ms/sppnp'
 			IconUri = 'https://raw.githubusercontent.com/pnp/media/40e7cd8952a9347ea44e5572bb0e49622a102a12/parker/ms/300w/parker-ms-300.png'
 		}
