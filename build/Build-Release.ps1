@@ -116,8 +116,9 @@ Catch
 
 $apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
 
+Write-Host "Publishing Module" -ForegroundColor Yellow
 Import-Module -Name PnP.PowerShell
-Publish-Module -Name PnP.PowerShell -AllowPrerelease -AllowPrerelease -NuGetApiKey $apiKey
+Publish-Module -Name PnP.PowerShell -AllowPrerelease -NuGetApiKey $apiKey
 
 # Write version back to version
 Set-Content ./version.txt -Value $version -Force
