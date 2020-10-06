@@ -1,8 +1,9 @@
-name: Publish to PowerShell Gallery
+name: Nightly Release to PowerShell Gallery
 
 on:
   workflow_dispatch:
-
+  schedule:
+  - cron: '0 1 * * *'
 jobs:
   build:
 
