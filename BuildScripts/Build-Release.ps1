@@ -1,6 +1,9 @@
-param($ConfigurationName, $TargetDir)
+Write-Host "Building PnP.PowerShell" -ForegroundColor Yellow
+
+dotnet build ..\Commands\PnP.PowerShell.csproj --nologo --configuration Release --no-incremental
 
 $documentsFolder = [environment]::getfolderpath("mydocuments");
+
 if($IsLinux -or $isMacOS)
 {
 	$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
@@ -20,7 +23,7 @@ Try {
 		Remove-Item $destinationFolder\* -Recurse -Force -ErrorAction Stop
 	}
 		# No, create it
-	Write-Host "-- Creating target folders: $destinationFolder" -ForegroundColor Yellow
+	Write-Host "Creating target folders: $destinationFolder" -ForegroundColor Yellow
 	New-Item -Path $destinationFolder -ItemType Directory -Force | Out-Null
 	New-Item -Path "$destinationFolder\Core" -ItemType Directory -Force | Out-Null
 	New-Item -Path "$destinationFolder\Common" -ItemType Directory -Force | Out-Null
@@ -32,12 +35,12 @@ Try {
 	Write-Host "Copying files to $destinationFolder" -ForegroundColor Yellow
 
 	$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
-	Copy-Item -Path "$TargetDir\ModuleFiles\*.ps1xml" -Destination "$destinationFolder"
-	Get-ChildItem -Path "$PSScriptRoot/ALC/bin/$ConfigurationName/netstandard2.0" | Where-Object {$_.Extension -in '.dll','.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
-	Get-ChildItem -Path "$PSScriptRoot/Commands/bin/$ConfigurationName/netcoreapp3.1" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
+	Copy-Item -Path "../Commands/bin/Release/netcoreapp3.1/ModuleFiles/*.ps1xml" -Destination "$destinationFolder"
+	Get-ChildItem -Path "$PSScriptRoot/../ALC/bin/Release/netstandard2.0" | Where-Object {$_.Extension -in '.dll','.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
+	Get-ChildItem -Path "$PSScriptRoot/../Commands/bin/Release/netcoreapp3.1" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
 	if(!$IsLinux -and !$IsMacOs)
 	{
-		Get-ChildItem -Path "$PSScriptRoot/Commands/bin/$ConfigurationName/net461" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }
+		Get-ChildItem -Path "$PSScriptRoot/../Commands/bin/Release/net461" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }
 	}
 }
 Catch
@@ -47,11 +50,24 @@ Catch
 }
 
 Try {
-	Write-Host "-- Generating PnP.PowerShell.psd1" -ForegroundColor Yellow
-	Import-Module -Name "$destinationFolder\Core\PnP.PowerShell.dll" -DisableNameChecking
-	$cmdlets = get-command -Module PnP.PowerShell | %{"`"$_`""}
-	$cmdletsString = $cmdlets -Join ","
+	Write-Host "Generating PnP.PowerShell.psd1" -ForegroundColor Yellow
+	# Load the Module in a new PowerShell session
+	$scriptBlock = {
+		$documentsFolder = [environment]::getfolderpath("mydocuments");
 
+		if($IsLinux -or $isMacOS)
+		{
+			$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
+		} else {
+			$destinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
+		}
+		
+		Import-Module -Name "$destinationFolder\Core\PnP.PowerShell.dll" -DisableNameChecking
+		$cmdlets = get-command -Module PnP.PowerShell | ForEach-Object{"`"$_`""}
+		$cmdlets -Join ","
+	}
+	$cmdletsString = Start-Job -ScriptBlock $scriptBlock | Receive-Job -Wait
+	$result
 	$productInfo = Get-ChildItem "$destinationFolder\Core\PnP.PowerShell.dll" | Select-Object -ExpandProperty VersionInfo
 	$manifest = "@{
 	NestedModules =  if (`$PSEdition -eq 'Core')
@@ -79,6 +95,7 @@ Try {
 	FormatsToProcess = 'PnP.PowerShell.Format.ps1xml' 
 	PrivateData = @{
 		PSData = @{
+			Prerelease = '-preview'
 			ProjectUri = 'https://aka.ms/sppnp'
 			IconUri = 'https://raw.githubusercontent.com/pnp/media/40e7cd8952a9347ea44e5572bb0e49622a102a12/parker/ms/300w/parker-ms-300.png'
 		}

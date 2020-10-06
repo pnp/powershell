@@ -5,12 +5,6 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PnP.PowerShell", "Commands\PnP.PowerShell.csproj", "{F91159F1-31F8-47CF-B546-9487F9EF8426}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{55B21B7C-D936-4411-B03C-6030A7C826A1}"
-	ProjectSection(SolutionItems) = preProject
-		GenerateHelpFile.ps1 = GenerateHelpFile.ps1
-		PostBuild.ps1 = PostBuild.ps1
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{6D788265-F91C-4E2E-AEEE-23A012871023}"
 	ProjectSection(SolutionItems) = preProject
 		CHANGELOG.md = CHANGELOG.md

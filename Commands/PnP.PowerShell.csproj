@@ -10,6 +10,7 @@
     <CopyRefAssembliesToPublishDirectory>true</CopyRefAssembliesToPublishDirectory>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <Authors>PnP.PowerShell</Authors>
+    <Configurations>Debug;Release;LocalDebug</Configurations>
   </PropertyGroup>
 
 
@@ -30,6 +31,7 @@
     <PackageReference Include="Microsoft.Identity.Client" Version="4.19.0" />
     <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.20518.12000" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="PnP.Framework" Version="0.1.1-preview" Condition="'$(ConfigurationName)' != 'LocalDebug'" />
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
@@ -40,7 +42,7 @@
     <PackageReference Include="System.Text.Json" Version="4.7.2" />
     <PackageReference Include="TextCopy" Version="4.2.0" />
     <ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
-    <Reference Include="PnP.Framework">
+    <Reference Include="PnP.Framework" Condition="'$(ConfigurationName)' != 'LocalDebug'">
       <HintPath>..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -80,12 +82,10 @@
     </None>
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="&quot;pwsh.exe&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command .'$(SolutionDir)postbuild.ps1' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)'" Condition="'$(TargetFramework)' == 'net461' and '$(OS)' == 'Windows_NT'" />
-    <Exec Command="&quot;pwsh&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command '$(SolutionDir)PostBuild.ps1' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)'" Condition="'$(OS)' != 'Windows_NT'" />
-  </Target>
-
-  <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(OS)' != 'Windows_NT'">
-    <Exec Command="&quot;pwsh.exe&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command .'$(SolutionDir)postbuild.ps1' -ProjectDir:'$(ProjectDir)' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)' -TargetFileName:'$(TargetFileName)' -TargetName:'$(TargetName)' -SolutionDir:'$(SolutionDir)'" />
-  </Target>-->
+  <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    --><!-- In the case of building the multi-targeted build on Windows we only want to run the postbuild script when it's done building both targets--><!--
+    <Exec Command="&quot;pwsh.exe&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command .'$(SolutionDir)BuildScripts\PostBuild.ps1' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)'" Condition="'$(TargetFramework)' == 'net461' and '$(OS)' == 'Windows_NT'" />
+    --><!-- In the case of building the single-targeted (dotnet core) build on Linux/MacOS we only want to run the postbuild script when it's done building the single target--><!--
+    <Exec Command="&quot;pwsh&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command '$(SolutionDir)BuildScripts\PostBuild.ps1' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)'" Condition="'$(OS)' != 'Windows_NT'" />
+  </Target-->
 </Project>
