@@ -18,12 +18,6 @@
     <DefineConstants>$(DefineConstants);NETFRAMEWORK</DefineConstants>
   </PropertyGroup>
   
-  <!--<ItemGroup>
-    <Compile Remove="obj\**" />
-    <EmbeddedResource Remove="obj\**" />
-    <None Remove="obj\**" />
-  </ItemGroup>-->
-
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.14.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
@@ -81,11 +75,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-  <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    --><!-- In the case of building the multi-targeted build on Windows we only want to run the postbuild script when it's done building both targets--><!--
-    <Exec Command="&quot;pwsh.exe&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command .'$(SolutionDir)BuildScripts\PostBuild.ps1' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)'" Condition="'$(TargetFramework)' == 'net461' and '$(OS)' == 'Windows_NT'" />
-    --><!-- In the case of building the single-targeted (dotnet core) build on Linux/MacOS we only want to run the postbuild script when it's done building the single target--><!--
-    <Exec Command="&quot;pwsh&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command '$(SolutionDir)BuildScripts\PostBuild.ps1' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)'" Condition="'$(OS)' != 'Windows_NT'" />
-  </Target-->
 </Project>
