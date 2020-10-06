@@ -114,6 +114,10 @@ Catch
 	exit 1
 }
 
+Write-Host "Generating Documentation"
+Install-Module PlatyPS
+New-ExternalHelp -Path ./Documentation -OutputPath $destinationFolder -Force
+
 $apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
 
 Write-Host "Publishing Module" -ForegroundColor Yellow

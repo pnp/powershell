@@ -492,10 +492,22 @@ namespace PnP.PowerShell.Commands.Base
                             var onlineVersion = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                             onlineVersion = onlineVersion.Trim(new char[] { '\t', '\r', '\n' });
                             var assembly = Assembly.GetExecutingAssembly();
-                            var currentVersion = ((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version;
+                            var currentVersion = new Version(((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version);
                             if (Version.TryParse(onlineVersion, out Version availableVersion))
                             {
-                                if (availableVersion > new Version(currentVersion))
+                                var newVersionAvailable = false;
+                                if (availableVersion.Major > currentVersion.Major)
+                                {
+                                    newVersionAvailable = true;
+                                }
+                                else
+                                {
+                                    if (availableVersion.Major == currentVersion.Major && availableVersion.Minor > currentVersion.Major)
+                                    {
+                                        newVersionAvailable = true;
+                                    }
+                                }
+                                if (newVersionAvailable)
                                 {
                                     return $"\nA newer version of PnP PowerShell is available: {availableVersion}. Use `Update-Module -Name PnP.PowerShell` to update.\n";
                                 }
