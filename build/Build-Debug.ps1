@@ -1,13 +1,12 @@
-$versionIncrement = Get-Content .\version.debug.increment -Raw
-$versionIncrement = $versionIncrement -as [int]
-$versionIncrement++
+$versionObject = [System.Version]::new($(Get-Content ..\version.txt -Raw))
 
-$version = Get-Content .\version.debug -Raw
-$version = $version.Replace("{incremental}", $versionIncrement)
+$buildVersion = $versionObject.Build + 1;
+
+$version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
 Write-Host "Building PnP.PowerShell version $version" -ForegroundColor Yellow
 
-dotnet build ../src/Commands/PnP.PowerShell.csproj --nologo --configuration Debug -p:Version="$version"
+dotnet build ../src/Commands/PnP.PowerShell.csproj --nologo --configuration Debug -p:VersionPrefix=$version -p:VersionSuffix=preview
 
 $documentsFolder = [environment]::getfolderpath("mydocuments");
 
@@ -74,8 +73,7 @@ Try {
 		$cmdlets -Join ","
 	}
 	$cmdletsString = Start-Job -ScriptBlock $scriptBlock | Receive-Job -Wait
-	$result
-	$productInfo = Get-ChildItem "$destinationFolder/Core/PnP.PowerShell.dll" | Select-Object -ExpandProperty VersionInfo
+
 	$manifest = "@{
 	NestedModules =  if (`$PSEdition -eq 'Core')
 	{
@@ -85,7 +83,7 @@ Try {
 	{
 		'Framework/PnP.PowerShell.dll'
 	}
-	ModuleVersion = '$($productInfo.ProductVersion)'
+	ModuleVersion = '$version'
 	Description = 'Microsoft 365 Patterns and Practices PowerShell Cmdlets'
 	GUID = '0b0430ce-d799-4f3b-a565-f0dca1f31e17'
 	Author = 'Microsoft 365 Patterns and Practices'

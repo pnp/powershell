@@ -1,6 +1,12 @@
 Write-Host "Building PnP.PowerShell" -ForegroundColor Yellow
 
-dotnet build ../src/Commands/PnP.PowerShell.csproj --nologo --configuration Release --no-incremental
+$versionObject = [System.Version]::new($(Get-Content ..\version.txt -Raw))
+
+$buildVersion = $versionObject.Build + 1;
+
+$version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
+
+dotnet build ../src/Commands/PnP.PowerShell.csproj --nologo --configuration Release --no-incremental -p:VersionPrefix=$version -p:VersionSuffix=preview
 
 $documentsFolder = [environment]::getfolderpath("mydocuments");
 
@@ -67,8 +73,7 @@ Try {
 		$cmdlets -Join ","
 	}
 	$cmdletsString = Start-Job -ScriptBlock $scriptBlock | Receive-Job -Wait
-	$result
-	$productInfo = Get-ChildItem "$destinationFolder/Core/PnP.PowerShell.dll" | Select-Object -ExpandProperty VersionInfo
+
 	$manifest = "@{
 	NestedModules =  if (`$PSEdition -eq 'Core')
 	{
@@ -78,7 +83,7 @@ Try {
 	{
 		'Framework/PnP.PowerShell.dll'
 	}
-	ModuleVersion = '$($productInfo.ProductVersion)'
+	ModuleVersion = '$version'
 	Description = 'Microsoft 365 Patterns and Practices PowerShell Cmdlets'
 	GUID = '0b0430ce-d799-4f3b-a565-f0dca1f31e17'
 	Author = 'Microsoft 365 Patterns and Practices'
@@ -108,4 +113,11 @@ Catch
 	Write-Host "Error: Cannot generate PnP.PowerShell.psd1. Maybe a PowerShell session is still using the module?"
 	exit 1
 }
-	
+
+$apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
+
+Import-Module -Name PnP.PowerShell
+Publish-Module -Name PnP.PowerShell -AllowPrerelease -AllowPrerelease -NuGetApiKey $apiKey
+
+# Write version back to version
+Set-Content ../version.txt -Value $version -Force
