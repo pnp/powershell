@@ -12,7 +12,19 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: dev
+    - name: Set required PowerShell modules
+      id: psmodulecache
+      uses: potatoqualitee/psmodulecache@v1
+      with:
+        modules-to-cache: PlatyPS
+    - name: Setup PowerShell module cache
+      id: cacher
+      uses: actions/cache@v2
+      with:
+        path: $${ steps.psmodulecache.outputs.modulepath}}
+        key: ${{ steps.psmodulecache.outputs.keygen }}
     - name: Build and Publish Module
+      if: steps.cacher.outputs.cache-hit != 'true'
       env:
         POWERSHELLGALLERY_API_KEY: ${{ secrets.POWERSHELLGALLERY_API_KEY }}
       shell: pwsh
