@@ -1,6 +1,6 @@
 Write-Host "Building PnP.PowerShell" -ForegroundColor Yellow
 
-dotnet build ..\Commands\PnP.PowerShell.csproj --nologo --configuration Debug
+dotnet build ../src/Commands/PnP.PowerShell.csproj --nologo --configuration Debug
 
 $documentsFolder = [environment]::getfolderpath("mydocuments");
 
@@ -8,7 +8,7 @@ if($IsLinux -or $isMacOS)
 {
 	$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
 } else {
-	$destinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
+	$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 }
 
 $corePath = "$destinationFolder/Core"
@@ -35,12 +35,12 @@ Try {
 	Write-Host "Copying files to $destinationFolder" -ForegroundColor Yellow
 
 	$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
-	Copy-Item -Path "../Commands/bin/Debug/netcoreapp3.1/ModuleFiles/*.ps1xml" -Destination "$destinationFolder"
-	Get-ChildItem -Path "$PSScriptRoot/../ALC/bin/Debug/netstandard2.0" | Where-Object {$_.Extension -in '.dll','.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
-	Get-ChildItem -Path "$PSScriptRoot/../Commands/bin/Debug/netcoreapp3.1" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
+	Copy-Item -Path "../src/Commands/bin/Debug/netcoreapp3.1/ModuleFiles/*.ps1xml" -Destination "$destinationFolder"
+	Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Debug/netstandard2.0" | Where-Object {$_.Extension -in '.dll','.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
+	Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/netcoreapp3.1" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
 	if(!$IsLinux -and !$IsMacOs)
 	{
-		Get-ChildItem -Path "$PSScriptRoot/../Commands/bin/Debug/net461" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }
+		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/net461" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }
 	}
 }
 Catch
@@ -59,16 +59,16 @@ Try {
 		{
 			$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
 		} else {
-			$destinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
+			$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 		}
 		
-		Import-Module -Name "$destinationFolder\Core\PnP.PowerShell.dll" -DisableNameChecking
+		Import-Module -Name "$destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
 		$cmdlets = get-command -Module PnP.PowerShell | ForEach-Object{"`"$_`""}
 		$cmdlets -Join ","
 	}
 	$cmdletsString = Start-Job -ScriptBlock $scriptBlock | Receive-Job -Wait
 	$result
-	$productInfo = Get-ChildItem "$destinationFolder\Core\PnP.PowerShell.dll" | Select-Object -ExpandProperty VersionInfo
+	$productInfo = Get-ChildItem "$destinationFolder/Core/PnP.PowerShell.dll" | Select-Object -ExpandProperty VersionInfo
 	$manifest = "@{
 	NestedModules =  if (`$PSEdition -eq 'Core')
 	{
