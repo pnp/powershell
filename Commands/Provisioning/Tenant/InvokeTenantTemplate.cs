@@ -18,8 +18,8 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet("Apply", "TenantTemplate")]
-    public class ApplyTenantTemplate : PnPAdminCmdlet
+    [Cmdlet(VerbsLifecycle.Invoke, "TenantTemplate")]
+    public class InvokeTenantTemplate : PnPAdminCmdlet
     {
         private const string ParameterSet_PATH = "By Path";
         private const string ParameterSet_OBJECT = "By Object";

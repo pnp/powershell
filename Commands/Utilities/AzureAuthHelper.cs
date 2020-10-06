@@ -20,7 +20,6 @@ namespace PnP.PowerShell.Commands.Utilities
             var app = PublicClientApplicationBuilder.Create(CLIENTID).WithAuthority(authority).Build();
 
             var result = await app.AcquireTokenByUsernamePassword(scopes, username, password).ExecuteAsync();
-            //var result = await app.AcquireTokenInteractive(scopes).ExecuteAsync();
             return result.AccessToken;
         }
     }
