@@ -7,6 +7,9 @@
     <AssemblyName>PnP.PowerShell</AssemblyName>
     <RootNamespace>PnP.PowerShell.Commands</RootNamespace>
     <PackageId>PnP.PowerShell</PackageId>
+    <Version>4.0.0</Version>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <FileVersion>4.0.0-preview</FileVersion>
     <CopyRefAssembliesToPublishDirectory>true</CopyRefAssembliesToPublishDirectory>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <Authors>PnP.PowerShell</Authors>
@@ -36,7 +39,7 @@
     <PackageReference Include="System.Text.Json" Version="4.7.2" />
     <PackageReference Include="TextCopy" Version="4.2.0" />
     <ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
-    <Reference Include="PnP.Framework" Condition="'$(ConfigurationName)' != 'LocalDebug'">
+    <Reference Include="PnP.Framework" Condition="'$(ConfigurationName)' == 'LocalDebug'">
       <HintPath>..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>

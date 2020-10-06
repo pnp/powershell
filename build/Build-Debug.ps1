@@ -1,6 +1,13 @@
-Write-Host "Building PnP.PowerShell" -ForegroundColor Yellow
+$versionIncrement = Get-Content .\version.debug.increment -Raw
+$versionIncrement = $versionIncrement -as [int]
+$versionIncrement++
 
-dotnet build ../src/Commands/PnP.PowerShell.csproj --nologo --configuration Debug
+$version = Get-Content .\version.debug -Raw
+$version = $version.Replace("{incremental}", $versionIncrement)
+
+Write-Host "Building PnP.PowerShell version $version" -ForegroundColor Yellow
+
+dotnet build ../src/Commands/PnP.PowerShell.csproj --nologo --configuration Debug -p:Version="$version"
 
 $documentsFolder = [environment]::getfolderpath("mydocuments");
 
