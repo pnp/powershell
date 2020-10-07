@@ -261,6 +261,11 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         protected void Connect()
         {
+            if(!string.IsNullOrEmpty(Url) && Url.EndsWith("/"))
+            {
+                Url = Url.Substring(0, Url.Length - 1);
+            }
+
             PnPConnection connection = null;
 
             var latestVersion = PnPConnectionHelper.GetLatestVersion();
