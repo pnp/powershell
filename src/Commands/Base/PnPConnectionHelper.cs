@@ -502,7 +502,7 @@ namespace PnP.PowerShell.Commands.Base
                                 }
                                 else
                                 {
-                                    if (availableVersion.Major == currentVersion.Major && availableVersion.Minor > currentVersion.Major)
+                                    if (availableVersion.Major == currentVersion.Major && availableVersion.Minor > currentVersion.Minor)
                                     {
                                         newVersionAvailable = true;
                                     }
