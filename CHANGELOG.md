@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Renamed `Save-PnPProvisioningTemplate` to `Save-PnPSiteTemplate`.
 - Renamed `Set-PnPProvisioningTemplateMetadata` to `Set-PnPSiteTemplateMetadata`.
 - Renamed `Add-PnPProvisioningTemplate` to `Add-PnPSiteTemplate`.
+- Renamed `Apply-PnPTenantTemplate` to `Invoke-PnPTenantTemplate`.
 - Removed `Get-PnPAppInstance`. Use `Get-PnPApp` instead.
 - Removed `Import-PnPAppPackage`. Use `Instal-PnPApp` instead.
 - Removed `Uninstall-AppInstance`. Use `Uninstall-PnPApp` instead.
