@@ -54,7 +54,8 @@ Connect-PnPOnline -Url <yoururl> -PnPManagementShell
 
 We have shipped the version now both PnP PowerShell for classic PowerShell and PnP PowerShell for PowerShell 7
 
-![PnP_PowerShell_RoadMap](PnP_PowerShell_RoadMap.png)
+![PnP PowerShell RoadMap](PnP_PowerShell_Roadmap.png)
+
 # I've found a bug, where do I need to log an issue or create a PR
 
 Between now and the end of 2020 both [PnP-PowerShell](https://github.com/pnp/pnp-powershell) and [PnP.PowerShell](https://github.com/pnp/powershell) are actively maintained. Once the new PnP PowerShell GA's we will stop mainting the old repository.
