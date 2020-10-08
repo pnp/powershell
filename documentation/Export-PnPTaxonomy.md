@@ -15,7 +15,7 @@ Exports a taxonomy to either the output or to a file.
 ## SYNTAX
 
 ```
-Export-PnPTaxonomy [-TermSetId <GuidPipeBind>] [-IncludeID] [-Path <String>] [-TermStoreName <String>] [-Force]
+Export-PnPTaxonomy [-TermSetId <Guid>] [-IncludeID] [-Path <String>] [-TermStoreName <String>] [-Force]
  [-Delimiter <String>] [-Lcid <Int32>] [-Encoding <Encoding>] [-Connection <PnPConnection>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
@@ -179,7 +179,7 @@ Accept wildcard characters: False
 If specified, will export the specified termset only
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

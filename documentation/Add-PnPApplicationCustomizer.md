@@ -16,7 +16,7 @@ Adds a SharePoint Framework client side extension application customizer
 
 ```
 Add-PnPApplicationCustomizer [-Title <String>] [-Description <String>] [-Sequence <Int32>]
- [-Scope <CustomActionScope>] -ClientSideComponentId <GuidPipeBind> [-ClientSideComponentProperties <String>]
+ [-Scope <CustomActionScope>] -ClientSideComponentId <Guid> [-ClientSideComponentProperties <String>]
  [-ClientSideHostProperties <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -40,7 +40,7 @@ The Client Side Component Id of the SharePoint Framework client side extension a
 Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

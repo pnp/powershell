@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Lists
         public int Id = -1;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYUNIQUEID)]
-        public GuidPipeBind UniqueId;
+        public Guid UniqueId;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYQUERY)]
         public string Query;
@@ -81,7 +81,7 @@ namespace PnP.PowerShell.Commands.Lists
                     }
                     viewFieldsStringBuilder.Append("</ViewFields>");
                 }
-                query.ViewXml = $"<View><Query><Where><Eq><FieldRef Name='GUID'/><Value Type='Guid'>{UniqueId.Id}</Value></Eq></Where></Query>{viewFieldsStringBuilder}</View>";
+                query.ViewXml = $"<View><Query><Where><Eq><FieldRef Name='GUID'/><Value Type='Guid'>{UniqueId}</Value></Eq></Where></Query>{viewFieldsStringBuilder}</View>";
                 var listItem = list.GetItems(query);
                 ClientContext.Load(listItem);
                 ClientContext.ExecuteQueryRetry();
@@ -162,7 +162,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         private bool HasUniqueId()
         {
-            return UniqueId != null && UniqueId.Id != Guid.Empty;
+            return UniqueId != null && UniqueId != Guid.Empty;
         }
 
         private bool HasCamlQuery()

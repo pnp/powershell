@@ -22,7 +22,7 @@ Get-PnPRecycleBinItem [-RowLimit <Int32>] [-Connection <PnPConnection>] [-Includ
 
 ### Identity
 ```
-Get-PnPRecycleBinItem [-Identity <GuidPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
+Get-PnPRecycleBinItem [-Identity <Guid>] [-Connection <PnPConnection>] [-Includes <String[]>]
  [<CommonParameters>]
 ```
 
@@ -113,7 +113,7 @@ Accept wildcard characters: False
 Returns a recycle bin item with a specific identity
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: Identity
 Aliases:
 

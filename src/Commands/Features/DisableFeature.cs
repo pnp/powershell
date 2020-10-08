@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Features
     public class DisableFeature : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
-        public GuidPipeBind Identity;
+        public Guid Identity;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter Force;
@@ -21,15 +21,13 @@ namespace PnP.PowerShell.Commands.Features
 
         protected override void ExecuteCmdlet()
         {
-            Guid featureId = Identity.Id;
-
             if (Scope == FeatureScope.Web)
             {
-                SelectedWeb.DeactivateFeature(featureId);
+                SelectedWeb.DeactivateFeature(Identity);
             }
             else
             {
-                ClientContext.Site.DeactivateFeature(featureId);
+                ClientContext.Site.DeactivateFeature(Identity);
             }
         }
     }

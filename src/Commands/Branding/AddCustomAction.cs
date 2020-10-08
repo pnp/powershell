@@ -1,9 +1,8 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Entities;
-
+using System;
 using PnP.PowerShell.Commands.Enums;
-using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Branding
 {
@@ -58,7 +57,7 @@ namespace PnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
         public CustomActionScope Scope = CustomActionScope.Web;
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
-        public GuidPipeBind ClientSideComponentId;
+        public Guid ClientSideComponentId;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
         public string ClientSideComponentProperties;
@@ -75,7 +74,7 @@ namespace PnP.PowerShell.Commands.Branding
                     permissions.Set(kind);
                 }
             }
-            CustomActionEntity ca = null;
+            CustomActionEntity ca;
             if (ParameterSetName == ParameterSet_DEFAULT)
             {
 
@@ -103,7 +102,7 @@ namespace PnP.PowerShell.Commands.Branding
                     Title = Title,
                     Location = Location,
                     Sequence = Sequence,
-                    ClientSideComponentId = ClientSideComponentId.Id,
+                    ClientSideComponentId = ClientSideComponentId,
                     ClientSideComponentProperties = ClientSideComponentProperties,
                     ClientSideHostProperties = ClientSideHostProperties
                 };

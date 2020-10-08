@@ -5,6 +5,7 @@ using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 using PnP.Framework.Sites;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 
 namespace PnP.PowerShell.Commands.Admin
 {
@@ -33,7 +34,7 @@ namespace PnP.PowerShell.Commands.Admin
         public SwitchParameter KeepOldHomePage;
 
         [Parameter(Mandatory = false)]
-        public GuidPipeBind HubSiteId;
+        public Guid HubSiteId;
 
         [Parameter(Mandatory = false)]
         public string[] Owners;
@@ -52,7 +53,7 @@ namespace PnP.PowerShell.Commands.Admin
 
             if (ParameterSpecified(nameof(HubSiteId)))
             {
-                groupifyInformation.HubSiteId = HubSiteId.Id;
+                groupifyInformation.HubSiteId = HubSiteId;
             }
 
             Tenant.GroupifySite(Url, groupifyInformation);

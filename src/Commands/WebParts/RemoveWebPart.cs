@@ -3,8 +3,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.WebParts;
 using PnP.Framework.Utilities;
-
-using PnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
@@ -12,7 +11,7 @@ namespace PnP.PowerShell.Commands.WebParts
     public class RemoveWebPart : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "ID")]
-        public GuidPipeBind Identity;
+        public Guid Identity;
 
         [Parameter(Mandatory = true, ParameterSetName = "NAME")]
         [Alias("Name")]
@@ -31,7 +30,6 @@ namespace PnP.PowerShell.Commands.WebParts
                 ServerRelativePageUrl = UrlUtility.Combine(serverRelativeWebUrl, ServerRelativePageUrl);
             }
 
-
             if (ParameterSetName == "NAME")
             {
                 SelectedWeb.DeleteWebPart(ServerRelativePageUrl, Title);
@@ -39,7 +37,7 @@ namespace PnP.PowerShell.Commands.WebParts
             else
             {
                 var wps = SelectedWeb.GetWebParts(ServerRelativePageUrl);
-                var wp = from w in wps where w.Id == Identity.Id select w;
+                var wp = from w in wps where w.Id == Identity select w;
                 var webPartDefinitions = wp as WebPartDefinition[] ?? wp.ToArray();
                 if(webPartDefinitions.Any())
                 {

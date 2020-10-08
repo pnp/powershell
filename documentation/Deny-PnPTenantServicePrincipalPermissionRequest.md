@@ -20,7 +20,7 @@ Denies a permission request for the current tenant's "SharePoint Online Client" 
 ## SYNTAX
 
 ```
-Deny-PnPTenantServicePrincipalPermissionRequest -RequestId <GuidPipeBind> [-Force]
+Deny-PnPTenantServicePrincipalPermissionRequest -RequestId <Guid> [-Force]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -66,7 +66,7 @@ Accept wildcard characters: False
 ### -RequestId
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

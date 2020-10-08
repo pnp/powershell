@@ -1,10 +1,9 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
-using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace PnP.PowerShell.Commands.Branding
 {
@@ -15,10 +14,10 @@ namespace PnP.PowerShell.Commands.Branding
         private const string ParameterSet_CLIENTSIDECOMPONENTID = "Client Side Component Id";
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CUSTOMACTIONID)]
-        public GuidPipeBind Identity;
+        public Guid Identity;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
-        public GuidPipeBind ClientSideComponentId;
+        public Guid ClientSideComponentId;
 
         [Parameter(Mandatory = false)]
         public CustomActionScope Scope = CustomActionScope.All;
@@ -41,14 +40,14 @@ namespace PnP.PowerShell.Commands.Branding
 
             if (Identity != null)
             {
-                var foundAction = actions.FirstOrDefault(x => x.Id == Identity.Id && x.Location == "ClientSideExtension.ApplicationCustomizer");
+                var foundAction = actions.FirstOrDefault(x => x.Id == Identity && x.Location == "ClientSideExtension.ApplicationCustomizer");
                 if (foundAction != null || !ThrowExceptionIfCustomActionNotFound)
                 {
                     WriteObject(foundAction, true);
                 }
                 else
                 {
-                    throw new PSArgumentException($"No SharePoint Framework client side extension application customizer found with the Identity '{Identity.Id}' within the scope '{Scope}'", "Identity");
+                    throw new PSArgumentException($"No SharePoint Framework client side extension application customizer found with the Identity '{Identity}' within the scope '{Scope}'", "Identity");
                 }
             }
             else
@@ -56,7 +55,7 @@ namespace PnP.PowerShell.Commands.Branding
                 switch (ParameterSetName)
                 {
                     case ParameterSet_CLIENTSIDECOMPONENTID:
-                        actions = actions.Where(x => x.Location == "ClientSideExtension.ApplicationCustomizer" & x.ClientSideComponentId == ClientSideComponentId.Id).ToList();
+                        actions = actions.Where(x => x.Location == "ClientSideExtension.ApplicationCustomizer" & x.ClientSideComponentId == ClientSideComponentId).ToList();
                         break;
 
                     case ParameterSet_CUSTOMACTIONID:

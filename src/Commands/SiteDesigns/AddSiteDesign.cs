@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands
         public string Title;
 
         [Parameter(Mandatory = true)]
-        public GuidPipeBind[] SiteScriptIds;
+        public Guid[] SiteScriptIds;
 
         [Parameter(Mandatory = false)]
         public string Description;     
@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands
             TenantSiteDesignCreationInfo siteDesignInfo = new TenantSiteDesignCreationInfo
             {
                 Title = Title,
-                SiteScriptIds = SiteScriptIds.Select(t => t.Id).ToArray(),
+                SiteScriptIds = SiteScriptIds,
                 Description = Description,
                 IsDefault = IsDefault,
                 PreviewImageAltText = PreviewImageAltText,

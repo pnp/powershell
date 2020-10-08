@@ -16,7 +16,7 @@ Sets a taxonomy term value in a listitem field
 
 ### ITEM (Default)
 ```
-Set-PnPTaxonomyFieldValue -ListItem <ListItem> -InternalFieldName <String> -TermId <GuidPipeBind>
+Set-PnPTaxonomyFieldValue -ListItem <ListItem> -InternalFieldName <String> -TermId <Guid>
  [-Label <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -123,7 +123,7 @@ Accept wildcard characters: False
 The Id of the Term
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: ITEM
 Aliases:
 

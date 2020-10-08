@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         public ClientSidePagePipeBind Page;
 
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
-        public GuidPipeBind InstanceId;
+        public Guid InstanceId;
 
         protected override void ExecuteCmdlet()
         {
@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                 WriteObject(clientSidePage.Controls, true);
             } else
             {
-                WriteObject(clientSidePage.Controls.FirstOrDefault(c => c.InstanceId == InstanceId.Id));
+                WriteObject(clientSidePage.Controls.FirstOrDefault(c => c.InstanceId == InstanceId));
             }
 
         }

@@ -26,7 +26,7 @@ Add-PnPCustomAction -Name <String> -Title <String> -Description <String> -Group 
 ```
 Add-PnPCustomAction -Name <String> -Title <String> -Location <String> [-Sequence <Int32>]
  [-RegistrationId <String>] [-RegistrationType <UserCustomActionRegistrationType>] [-Scope <CustomActionScope>]
- -ClientSideComponentId <GuidPipeBind> [-ClientSideComponentProperties <String>]
+ -ClientSideComponentId <Guid> [-ClientSideComponentProperties <String>]
  [-ClientSideHostProperties <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -59,7 +59,7 @@ The Client Side Component Id of the custom action
 Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: Client Side Component Id
 Aliases:
 

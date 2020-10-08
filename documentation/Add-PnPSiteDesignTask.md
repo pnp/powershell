@@ -16,7 +16,7 @@ This command is intended to replace Invoke-PnPSiteDesign and is useful when you 
 ## SYNTAX
 
 ```
-Add-PnPSiteDesignTask -SiteDesignId <GuidPipeBind> [-WebUrl <String>] [-Web <WebPipeBind>]
+Add-PnPSiteDesignTask -SiteDesignId <Guid> [-WebUrl <String>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -74,7 +74,7 @@ Accept wildcard characters: False
 The ID of the site design to apply.
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

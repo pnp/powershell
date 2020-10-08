@@ -20,7 +20,7 @@ Get user profile bulk import status.
 ## SYNTAX
 
 ```
-Get-PnPUPABulkImportStatus [-JobId <GuidPipeBind>] [-IncludeErrorDetails] [-Connection <PnPConnection>]
+Get-PnPUPABulkImportStatus [-JobId <Guid>] [-IncludeErrorDetails] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -93,7 +93,7 @@ Accept wildcard characters: False
 The instance id of the job
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

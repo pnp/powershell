@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-
-using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using File = System.IO.File;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
@@ -15,7 +13,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
     public class ExportTaxonomy : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ParameterSetName = "TermSet")]
-        public GuidPipeBind TermSetId = new GuidPipeBind();
+        public Guid TermSetId;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter IncludeID = false;
@@ -52,11 +50,11 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 {
                     var taxSession = TaxonomySession.GetTaxonomySession(ClientContext);
                     var termStore = taxSession.TermStores.GetByName(TermStoreName);
-                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId.Id, IncludeID, termStore, Delimiter, Lcid);
+                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId, IncludeID, termStore, Delimiter, Lcid);
                 }
                 else
                 {
-                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId.Id, IncludeID, Delimiter, Lcid);
+                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId, IncludeID, Delimiter, Lcid);
                 }
             }
             else

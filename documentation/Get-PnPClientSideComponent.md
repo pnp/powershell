@@ -15,7 +15,7 @@ Retrieve one or more Client-Side components from a site page
 ## SYNTAX
 
 ```
-Get-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> [-InstanceId <GuidPipeBind>] [-Web <WebPipeBind>]
+Get-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> [-InstanceId <Guid>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -63,7 +63,7 @@ The instance id of the component
 Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

@@ -29,7 +29,7 @@ Get-PnPListItem [-List] <ListPipeBind> [-Id <Int32>] [-Fields <String[]>] [-Web 
 
 ### By Unique Id
 ```
-Get-PnPListItem [-List] <ListPipeBind> [-UniqueId <GuidPipeBind>] [-Fields <String[]>] [-Web <WebPipeBind>]
+Get-PnPListItem [-List] <ListPipeBind> [-UniqueId <Guid>] [-Fields <String[]>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -233,7 +233,7 @@ Accept wildcard characters: False
 The unique id (GUID) of the item to retrieve
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: By Unique Id
 Aliases:
 

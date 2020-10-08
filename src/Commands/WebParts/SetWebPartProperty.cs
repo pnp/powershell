@@ -3,8 +3,6 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
 
-using PnP.PowerShell.Commands.Base.PipeBinds;
-
 namespace PnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Set, "WebPartProperty")]
@@ -15,7 +13,7 @@ namespace PnP.PowerShell.Commands.WebParts
         public string ServerRelativePageUrl = string.Empty;
 
         [Parameter(Mandatory = true)]
-        public GuidPipeBind Identity;
+        public Guid Identity;
 
         [Parameter(Mandatory = true)]
         public string Key = string.Empty;
@@ -34,14 +32,14 @@ namespace PnP.PowerShell.Commands.WebParts
 
             if (Value.BaseObject is string)
             {
-                SelectedWeb.SetWebPartProperty(Key, Value.ToString(), Identity.Id, ServerRelativePageUrl);
+                SelectedWeb.SetWebPartProperty(Key, Value.ToString(), Identity, ServerRelativePageUrl);
             }
             else if (Value.BaseObject is int)
             {
-                SelectedWeb.SetWebPartProperty(Key, (int)Value.BaseObject, Identity.Id, ServerRelativePageUrl);
+                SelectedWeb.SetWebPartProperty(Key, (int)Value.BaseObject, Identity, ServerRelativePageUrl);
             } else if (Value.BaseObject is bool)
             {
-                SelectedWeb.SetWebPartProperty(Key, (bool)Value.BaseObject, Identity.Id, ServerRelativePageUrl);
+                SelectedWeb.SetWebPartProperty(Key, (bool)Value.BaseObject, Identity, ServerRelativePageUrl);
             }
             else
             {

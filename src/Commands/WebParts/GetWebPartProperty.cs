@@ -1,9 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
-
-using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
@@ -15,7 +14,7 @@ namespace PnP.PowerShell.Commands.WebParts
         public string ServerRelativePageUrl = string.Empty;
 
         [Parameter(Mandatory = true)]
-        public GuidPipeBind Identity;
+        public Guid Identity;
 
         [Parameter(Mandatory = false)]
         public string Key;
@@ -30,7 +29,7 @@ namespace PnP.PowerShell.Commands.WebParts
             }
 
 
-            var properties = SelectedWeb.GetWebPartProperties(Identity.Id, ServerRelativePageUrl);
+            var properties = SelectedWeb.GetWebPartProperties(Identity, ServerRelativePageUrl);
             var values = properties.FieldValues.Select(x => new PropertyBagValue() { Key = x.Key, Value = x.Value });
             if (!string.IsNullOrEmpty(Key))
             {

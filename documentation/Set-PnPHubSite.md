@@ -21,7 +21,7 @@ Sets hub site properties
 
 ```
 Set-PnPHubSite [-Identity] <HubSitePipeBind> [-Title <String>] [-LogoUrl <String>] [-Description <String>]
- [-SiteDesignId <GuidPipeBind>] [-HideNameInNavigation] [-RequiresJoinApproval] [-Connection <PnPConnection>]
+ [-SiteDesignId <Guid>] [-HideNameInNavigation] [-RequiresJoinApproval] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -152,7 +152,7 @@ Accept wildcard characters: False
 GUID of the SharePoint Site Design which should be applied when a site joins the hub site
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

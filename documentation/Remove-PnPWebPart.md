@@ -16,7 +16,7 @@ Removes a web part from a page
 
 ### ID
 ```
-Remove-PnPWebPart -Identity <GuidPipeBind> -ServerRelativePageUrl <String> [-Web <WebPipeBind>]
+Remove-PnPWebPart -Identity <Guid> -ServerRelativePageUrl <String> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -65,7 +65,7 @@ Accept wildcard characters: False
 The Guid of the web part
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: ID
 Aliases:
 

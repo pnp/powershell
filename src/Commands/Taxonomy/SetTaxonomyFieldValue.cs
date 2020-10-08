@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
-using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -18,7 +16,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
         public string InternalFieldName;
 
         [Parameter(Mandatory = true, ParameterSetName = "ITEM")]
-        public GuidPipeBind TermId;
+        public Guid TermId;
 
         [Parameter(Mandatory = false, ParameterSetName = "ITEM")]
         public string Label;
@@ -39,7 +37,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
             {
                 case "ITEM":
                     {
-                        ListItem.SetTaxonomyFieldValue(field.Id, Label, TermId.Id);
+                        ListItem.SetTaxonomyFieldValue(field.Id, Label, TermId);
                         break;
                     }
                 case "PATH":
@@ -52,8 +50,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
                         var terms = new List<KeyValuePair<Guid, string>>();
                         foreach (string key in Terms.Keys)
                         {
-                            var termId = Guid.Empty;
-                            Guid.TryParse(key, out termId);
+                            Guid.TryParse(key, out Guid termId);
 
                             string termValue = Terms[key] as string;
 

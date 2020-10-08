@@ -15,7 +15,7 @@ Creates either a communication site or a Microsoft 365 group-connected team site
 ## SYNTAX
 
 ```
-New-PnPSite -Type <SiteType> [-HubSiteId <GuidPipeBind>] [-Wait] [-Connection <PnPConnection>]
+New-PnPSite -Type <SiteType> [-HubSiteId <Guid>] [-Wait] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -108,7 +108,7 @@ Accept wildcard characters: False
 If specified the site will be associated to the hubsite as identified by this id
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

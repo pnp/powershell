@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands
         public SiteType Type;
 
         [Parameter(Mandatory = false)]
-        public GuidPipeBind HubSiteId;
+        public Guid HubSiteId;
 
         private CommunicationSiteParameters _communicationSiteParameters;
         private TeamSiteParameters _teamSiteParameters;
@@ -65,11 +65,11 @@ namespace PnP.PowerShell.Commands
                 creationInformation.Lcid = _communicationSiteParameters.Lcid;
                 if (ParameterSpecified(nameof(HubSiteId)))
                 {
-                    creationInformation.HubSiteId = HubSiteId.Id;
+                    creationInformation.HubSiteId = HubSiteId;
                 }
                 if (ParameterSetName == ParameterSet_COMMUNICATIONCUSTOMDESIGN)
                 {
-                    creationInformation.SiteDesignId = _communicationSiteParameters.SiteDesignId.Id;
+                    creationInformation.SiteDesignId = _communicationSiteParameters.SiteDesignId;
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace PnP.PowerShell.Commands
                 creationInformation.Lcid = _teamSiteParameters.Lcid;
                 if (ParameterSpecified(nameof(HubSiteId)))
                 {
-                    creationInformation.HubSiteId = HubSiteId.Id;
+                    creationInformation.HubSiteId = HubSiteId;
                 }
                 creationInformation.Owners = _teamSiteParameters.Owners;
                 creationInformation.PreferredDataLocation = _teamSiteParameters.PreferredDataLocation;
@@ -134,7 +134,7 @@ namespace PnP.PowerShell.Commands
             public PnP.Framework.Sites.CommunicationSiteDesign SiteDesign = PnP.Framework.Sites.CommunicationSiteDesign.Topic;
 
             [Parameter(Mandatory = true, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
-            public GuidPipeBind SiteDesignId;
+            public Guid SiteDesignId;
 
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]

@@ -15,7 +15,7 @@ Removes a Client-Side component from a page
 ## SYNTAX
 
 ```
-Remove-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <GuidPipeBind> [-Force]
+Remove-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> [-Force]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -80,7 +80,7 @@ The instance id of the component
 Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

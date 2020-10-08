@@ -17,7 +17,7 @@ Add a taxonomy field
 ### Path
 ```
 Add-PnPTaxonomyField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> -TermSetPath <String>
- [-TermPathDelimiter <String>] [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView] [-MultiValue]
+ [-TermPathDelimiter <String>] [-Group <String>] [-Id <Guid>] [-AddToDefaultView] [-MultiValue]
  [-Required] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -25,7 +25,7 @@ Add-PnPTaxonomyField [-List <ListPipeBind>] -DisplayName <String> -InternalName 
 ### Id
 ```
 Add-PnPTaxonomyField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String>
- [-TaxonomyItemId <GuidPipeBind>] [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView] [-MultiValue]
+ [-TaxonomyItemId <Guid>] [-Group <String>] [-Id <Guid>] [-AddToDefaultView] [-MultiValue]
  [-Required] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -124,7 +124,7 @@ Accept wildcard characters: False
 The ID for the field, must be unique
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 
@@ -199,7 +199,7 @@ Accept wildcard characters: False
 The ID of the Taxonomy item
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: Id
 Aliases:
 
