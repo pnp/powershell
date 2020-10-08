@@ -15,7 +15,7 @@ Set Client-Side Text Component properties
 ## SYNTAX
 
 ```
-Set-PnPClientSideText [-Page] <ClientSidePagePipeBind> -InstanceId <GuidPipeBind> -Text <String>
+Set-PnPClientSideText [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> -Text <String>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -56,7 +56,7 @@ The instance id of the text component
 Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

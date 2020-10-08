@@ -1,7 +1,5 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
-using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Management.Automation;
@@ -12,7 +10,7 @@ namespace PnP.PowerShell.Commands.SiteDesigns
     public class GetSiteDesignRun : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]
-        public GuidPipeBind SiteDesignId;
+        public Guid SiteDesignId;
 
         [Parameter(Mandatory = false)]
         public string WebUrl;
@@ -37,7 +35,7 @@ namespace PnP.PowerShell.Commands.SiteDesigns
                         ThrowTerminatingError(new ErrorRecord(new System.Exception("Invalid URL"), "INVALIDURL", ErrorCategory.InvalidArgument, WebUrl));
                     }
                 }
-                var designRun = tenant.GetSiteDesignRun(webUrl, SiteDesignId != null ? SiteDesignId.Id : Guid.Empty);
+                var designRun = tenant.GetSiteDesignRun(webUrl, SiteDesignId != null ? SiteDesignId : Guid.Empty);
                 tenantContext.Load(designRun);
                 tenantContext.ExecuteQueryRetry();
                 WriteObject(designRun, true);

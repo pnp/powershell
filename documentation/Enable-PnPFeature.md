@@ -15,7 +15,7 @@ Enables a feature
 ## SYNTAX
 
 ```
-Enable-PnPFeature [-Identity] <GuidPipeBind> [-Force] [-Scope <FeatureScope>] [-Sandboxed] [-Web <WebPipeBind>]
+Enable-PnPFeature [-Identity] <Guid> [-Force] [-Scope <FeatureScope>] [-Sandboxed] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -80,7 +80,7 @@ Accept wildcard characters: False
 The id of the feature to enable.
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

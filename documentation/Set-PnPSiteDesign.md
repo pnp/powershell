@@ -156,7 +156,7 @@ Accept wildcard characters: False
 An array of guids of site scripts
 
 ```yaml
-Type: GuidPipeBind[]
+Type: Guid[]
 Parameter Sets: (All)
 Aliases:
 

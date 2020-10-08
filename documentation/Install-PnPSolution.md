@@ -15,7 +15,7 @@ Installs a sandboxed solution to a site collection. WARNING! This method can del
 ## SYNTAX
 
 ```
-Install-PnPSolution -PackageId <GuidPipeBind> -SourceFilePath <String> [-MajorVersion <Int32>]
+Install-PnPSolution -PackageId <Guid> -SourceFilePath <String> [-MajorVersion <Int32>]
  [-MinorVersion <Int32>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -81,7 +81,7 @@ Accept wildcard characters: False
 ID of the solution, from the solution manifest
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

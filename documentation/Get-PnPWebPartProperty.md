@@ -15,7 +15,7 @@ Returns a web part property
 ## SYNTAX
 
 ```
-Get-PnPWebPartProperty -ServerRelativePageUrl <String> -Identity <GuidPipeBind> [-Key <String>]
+Get-PnPWebPartProperty -ServerRelativePageUrl <String> -Identity <Guid> [-Key <String>]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -58,7 +58,7 @@ Accept wildcard characters: False
 The id of the web part
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

@@ -1,9 +1,8 @@
 ﻿using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
-
+using System;
 using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
@@ -11,7 +10,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
     public class GetUPABulkImportStatus : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
-        public GuidPipeBind JobId;
+        public Guid JobId;
 
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public SwitchParameter IncludeErrorDetails;
@@ -22,7 +21,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
             if (ParameterSpecified(nameof(JobId)))
             {
-                var job = o365.GetImportProfilePropertyJob(JobId.Id);
+                var job = o365.GetImportProfilePropertyJob(JobId);
                 ClientContext.Load(job);
                 ClientContext.ExecuteQueryRetry();
 

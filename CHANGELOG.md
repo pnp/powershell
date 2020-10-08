@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [0.9.0]
+## [0.1.x-preview]
 
 ### Changed
 
@@ -37,7 +37,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Enable-PnPResponsiveUI` and `Disable-PnPResponsiveUI`.
 - Removed `Disable-PnPInPlaceRecordsManagementForSite`. Use `Set-PnPInPlaceRecordsManagement -Enabled $false`.
 - Removed `Enable-PnPInPlaceRecordsManagementForSite`. Use `Set-PnPInPlaceRecordsManagement -Enabled $true`.
-- Added -DisableCustomAppAuthentication to Set-PnPTenant and added support for DisableCustomAppAuthentication in Get-PnPTenant.
 - Removed `Measure-PnPResponseTime`. Use Fiddler for more detailed data instead.
 - Removed `-Identity` from Get-PnPAvailableLanguage as it does not apply to SharePoint Online.
 - Removed `Get-PnPManagementApiAccessToken` and `Get-PnPOfficeManagementApiAccessToken` cmdlets. Use Connect-PnPOnline instead with either the -Scopes parameter and other optional parameters
@@ -63,3 +62,5 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed alias `Ensure-PnPFolder`. Use `Resolve-PnPFolder`.
 - Removed `Install-PnPSolution`. Sandboxed solutions have been deprecated.
 - Removed `Add-PnPWorkflowDefinition`, `Add-PnPWorkflowSubscription`, `Get-PnPWorkflowDefinition`, `Get-PnPWorkflowInstances`, `Get-PnPWorkflowSubscription`, `Remove-PnPWorkflowDefinition`, `Remove-PnPWorkflowSubscription`, `Resume-PnPWorkflowInstance`, `Start-PnPWorkflowInstance` and `Stop-PnPWorkflowInstance` due to deprecated of the Workflow Services in SharePoint Online.
+- Added -DisableCustomAppAuthentication to Set-PnPTenant and added support for DisableCustomAppAuthentication in Get-PnPTenant.
+- Added Add-PnPHubToHubAssociation cmdlet.

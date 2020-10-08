@@ -15,7 +15,7 @@ Disables a feature
 ## SYNTAX
 
 ```
-Disable-PnPFeature [-Identity] <GuidPipeBind> [-Force] [-Scope <FeatureScope>] [-Web <WebPipeBind>]
+Disable-PnPFeature [-Identity] <Guid> [-Force] [-Scope <FeatureScope>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -81,7 +81,7 @@ Accept wildcard characters: False
 The id of the feature to disable.
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

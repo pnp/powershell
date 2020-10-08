@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Fields
         public string TermSetPath;
 
         [Parameter(Mandatory = false, ParameterSetName = "Id")]
-        public GuidPipeBind TaxonomyItemId;
+        public Guid TaxonomyItemId;
 
         [Parameter(Mandatory = false, ParameterSetName = "Path")]
         public string TermPathDelimiter = "|";
@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Fields
         public string Group;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
-        public GuidPipeBind Id = new GuidPipeBind();
+        public Guid Id;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter AddToDefaultView;
@@ -62,31 +62,30 @@ namespace PnP.PowerShell.Commands.Fields
                 var termStore = taxSession.GetDefaultKeywordsTermStore();
                 try
                 {
-                    taxItem = termStore.GetTermSet(TaxonomyItemId.Id);
+                    taxItem = termStore.GetTermSet(TaxonomyItemId);
                 }
                 catch
                 {
                     try
                     {
-                        taxItem = termStore.GetTerm(TaxonomyItemId.Id);
+                        taxItem = termStore.GetTerm(TaxonomyItemId);
                     }
                     catch
                     {
-                        throw new Exception($"Taxonomy Item with Id {TaxonomyItemId.Id} not found");
+                        throw new Exception($"Taxonomy Item with Id {TaxonomyItemId} not found");
                     }
                 }
                 taxItem.EnsureProperty(t => t.Id);
             }
 
-            Guid id = Id.Id;
-            if (id == Guid.Empty)
+            if (Id == Guid.Empty)
             {
-                id = Guid.NewGuid();
+                Id = Guid.NewGuid();
             }
 
             var fieldCI = new TaxonomyFieldCreationInformation()
             {
-                Id = id,
+                Id = Id,
                 InternalName = InternalName,
                 DisplayName = DisplayName,
                 Group = Group,

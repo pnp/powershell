@@ -15,7 +15,7 @@ Retrieves a list of site designs applied to a specified site collection. If the 
 ## SYNTAX
 
 ```
-Get-PnPSiteDesignRun [-SiteDesignId <GuidPipeBind>] [-WebUrl <String>] [-Web <WebPipeBind>]
+Get-PnPSiteDesignRun [-SiteDesignId <Guid>] [-WebUrl <String>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -73,7 +73,7 @@ Accept wildcard characters: False
 The ID of the site design to apply.
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

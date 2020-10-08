@@ -1,6 +1,5 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
@@ -20,7 +19,7 @@ namespace PnP.PowerShell.Commands
         public string Title;
 
         [Parameter(Mandatory = false)]
-        public GuidPipeBind[] SiteScriptIds;
+        public Guid[] SiteScriptIds;
 
         [Parameter(Mandatory = false)]
         public string Description;     
@@ -86,7 +85,7 @@ namespace PnP.PowerShell.Commands
                 }
                 if(ParameterSpecified(nameof(SiteScriptIds)))
                 {
-                    design.SiteScriptIds = SiteScriptIds.Select(t => t.Id).ToArray();
+                    design.SiteScriptIds = SiteScriptIds.Select(t => t).ToArray();
                     isDirty = true;
                 }
                 if (isDirty)

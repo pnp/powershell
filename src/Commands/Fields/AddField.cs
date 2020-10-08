@@ -2,7 +2,6 @@
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Entities;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections.Generic;
 
@@ -37,7 +36,7 @@ namespace PnP.PowerShell.Commands.Fields
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOWEB)]
-        public GuidPipeBind Id = new GuidPipeBind();
+        public Guid Id;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDBYXMLTOLIST)]
@@ -53,7 +52,7 @@ namespace PnP.PowerShell.Commands.Fields
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOWEB)]
-        public GuidPipeBind ClientSideComponentId;
+        public Guid ClientSideComponentId;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOWEB)]
@@ -80,9 +79,9 @@ namespace PnP.PowerShell.Commands.Fields
         protected override void ExecuteCmdlet()
         {
 
-            if (Id.Id == Guid.Empty)
+            if (Id == Guid.Empty)
             {
-                Id = new GuidPipeBind(Guid.NewGuid());
+                Id = Guid.NewGuid();
             }
 
             if (List != null)
@@ -95,7 +94,7 @@ namespace PnP.PowerShell.Commands.Fields
                 {
                     var fieldCI = new FieldCreationInformation(Type)
                     {
-                        Id = Id.Id,
+                        Id = Id,
                         InternalName = InternalName,
                         DisplayName = DisplayName,
                         Group = Group,
@@ -103,7 +102,7 @@ namespace PnP.PowerShell.Commands.Fields
                     };
                     if (ClientSideComponentId != null)
                     {
-                        fieldCI.ClientSideComponentId = ClientSideComponentId.Id;
+                        fieldCI.ClientSideComponentId = ClientSideComponentId;
                     }
                     if (!string.IsNullOrEmpty(ClientSideComponentProperties))
                     {
@@ -201,7 +200,7 @@ namespace PnP.PowerShell.Commands.Fields
 
                 var fieldCI = new FieldCreationInformation(Type)
                 {
-                    Id = Id.Id,
+                    Id = Id,
                     InternalName = InternalName,
                     DisplayName = DisplayName,
                     Group = Group,
@@ -210,7 +209,7 @@ namespace PnP.PowerShell.Commands.Fields
 
                 if (ClientSideComponentId != null)
                 {
-                    fieldCI.ClientSideComponentId = ClientSideComponentId.Id;
+                    fieldCI.ClientSideComponentId = ClientSideComponentId;
                 }
                 if (!string.IsNullOrEmpty(ClientSideComponentProperties))
                 {

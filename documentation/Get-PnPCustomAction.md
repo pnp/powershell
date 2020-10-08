@@ -15,7 +15,7 @@ Return user custom actions
 ## SYNTAX
 
 ```
-Get-PnPCustomAction [-Identity <GuidPipeBind>] [-Scope <CustomActionScope>]
+Get-PnPCustomAction [-Identity <Guid>] [-Scope <CustomActionScope>]
  [-ThrowExceptionIfCustomActionNotFound] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [-Includes <String[]>] [<CommonParameters>]
 ```
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 Identity of the CustomAction to return. Omit to return all CustomActions.
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

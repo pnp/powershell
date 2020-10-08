@@ -15,7 +15,7 @@ Sets a web part property
 ## SYNTAX
 
 ```
-Set-PnPWebPartProperty -ServerRelativePageUrl <String> -Identity <GuidPipeBind> -Key <String> -Value <PSObject>
+Set-PnPWebPartProperty -ServerRelativePageUrl <String> -Identity <Guid> -Key <String> -Value <PSObject>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -51,7 +51,7 @@ Accept wildcard characters: False
 The Guid of the web part
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

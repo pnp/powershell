@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.RecycleBin
         private const string ParameterSet_SECONDSTAGE = "SecondStage";
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_IDENTITY)]
-        public GuidPipeBind Identity;
+        public Guid Identity;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FIRSTSTAGE)]
         public SwitchParameter FirstStage;
@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.RecycleBin
             DefaultRetrievalExpressions = new Expression<Func<RecycleBinItem, object>>[] {r => r.Id, r => r.Title, r => r.ItemType, r => r.LeafName, r => r.DirName};
             if (ParameterSetName == ParameterSet_IDENTITY)
             {
-                RecycleBinItem item = ClientContext.Site.RecycleBin.GetById(Identity.Id);
+                RecycleBinItem item = ClientContext.Site.RecycleBin.GetById(Identity);
                 
                 ClientContext.Load(item, RetrievalExpressions);
                 ClientContext.ExecuteQueryRetry();

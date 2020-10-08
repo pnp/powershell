@@ -2,6 +2,7 @@
 
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
@@ -22,7 +23,7 @@ namespace PnP.PowerShell.Commands.Admin
         public string Description { get; set; }
 
         [Parameter(Mandatory = false)]
-        public GuidPipeBind SiteDesignId;
+        public Guid SiteDesignId;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter HideNameInNavigation;
@@ -48,7 +49,7 @@ namespace PnP.PowerShell.Commands.Admin
             }
             if (ParameterSpecified(nameof(SiteDesignId)))
             {
-                hubSiteProperties.SiteDesignId = SiteDesignId.Id;
+                hubSiteProperties.SiteDesignId = SiteDesignId;
             }
             if (ParameterSpecified(nameof(HideNameInNavigation)))
             {

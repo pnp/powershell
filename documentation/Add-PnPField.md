@@ -17,7 +17,7 @@ Add a field
 ### Add field to list (Default)
 ```
 Add-PnPField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> -Type <FieldType>
- [-Id <GuidPipeBind>] [-AddToDefaultView] [-Required] [-Group <String>] [-ClientSideComponentId <GuidPipeBind>]
+ [-Id <Guid>] [-AddToDefaultView] [-Required] [-Group <String>] [-ClientSideComponentId <Guid>]
  [-ClientSideComponentProperties <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -30,8 +30,8 @@ Add-PnPField -List <ListPipeBind> -Field <FieldPipeBind> [-Web <WebPipeBind>] [-
 
 ### Add field to web
 ```
-Add-PnPField -DisplayName <String> -InternalName <String> -Type <FieldType> [-Id <GuidPipeBind>]
- [-ClientSideComponentId <GuidPipeBind>] [-ClientSideComponentProperties <String>] [-Web <WebPipeBind>]
+Add-PnPField -DisplayName <String> -InternalName <String> -Type <FieldType> [-Id <Guid>]
+ [-ClientSideComponentId <Guid>] [-ClientSideComponentProperties <String>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -90,7 +90,7 @@ The Client Side Component Id to set to the field
 Only applicable to: SharePoint Online
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: Add field to list, Add field to web
 Aliases:
 
@@ -182,7 +182,7 @@ Accept wildcard characters: False
 The ID of the field, must be unique
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: Add field to list, Add field to web
 Aliases:
 

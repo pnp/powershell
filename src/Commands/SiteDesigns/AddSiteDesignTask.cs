@@ -1,7 +1,6 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
-using PnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 
@@ -11,7 +10,7 @@ namespace PnP.PowerShell.Commands.SiteDesigns
     public class AddSiteDesignTask : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
-        public GuidPipeBind SiteDesignId;
+        public Guid SiteDesignId;
 
         [Parameter(Mandatory = false)]
         public string WebUrl;
@@ -37,7 +36,7 @@ namespace PnP.PowerShell.Commands.SiteDesigns
                 }
                 try
                 {
-                    var designTask = Tenant.AddSiteDesignTask(tenantContext, webUrl, SiteDesignId.Id);
+                    var designTask = Tenant.AddSiteDesignTask(tenantContext, webUrl, SiteDesignId);
                     tenantContext.Load(designTask);
                     tenantContext.ExecuteQueryRetry();
                     WriteObject(designTask);

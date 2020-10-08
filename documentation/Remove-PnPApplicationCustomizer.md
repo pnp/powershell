@@ -22,7 +22,7 @@ Remove-PnPApplicationCustomizer [[-Identity] <UserCustomActionPipeBind>] [-Scope
 
 ### Client Side Component Id
 ```
-Remove-PnPApplicationCustomizer -ClientSideComponentId <GuidPipeBind> [-Scope <CustomActionScope>] [-Force]
+Remove-PnPApplicationCustomizer -ClientSideComponentId <Guid> [-Scope <CustomActionScope>] [-Force]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -53,7 +53,7 @@ The Client Side Component Id of the SharePoint Framework client side extension a
 Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: Client Side Component Id
 Aliases:
 

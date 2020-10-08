@@ -16,25 +16,25 @@ Moves a Client-Side Component to a different section/column
 
 ### Move to other section
 ```
-Move-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <GuidPipeBind> -Section <Int32>
+Move-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> -Section <Int32>
  [-Position <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Move to other section and column
 ```
-Move-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <GuidPipeBind> -Section <Int32>
+Move-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> -Section <Int32>
  -Column <Int32> [-Position <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Move to other column
 ```
-Move-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <GuidPipeBind> -Column <Int32>
+Move-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> -Column <Int32>
  [-Position <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Move within a column
 ```
-Move-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <GuidPipeBind> -Position <Int32>
+Move-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> -Position <Int32>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -113,7 +113,7 @@ The instance id of the control. Use Get-PnPClientSideControl retrieve the instan
 Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

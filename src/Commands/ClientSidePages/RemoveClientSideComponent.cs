@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         public ClientSidePagePipeBind Page;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public GuidPipeBind InstanceId;
+        public Guid InstanceId;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             if (clientSidePage == null)
                 throw new Exception($"Page '{Page?.Name}' does not exist");
 
-            var control = clientSidePage.Controls.FirstOrDefault(c => c.InstanceId == InstanceId.Id);
+            var control = clientSidePage.Controls.FirstOrDefault(c => c.InstanceId == InstanceId);
             if(control != null)
             { 
                 if (Force || ShouldContinue(string.Format(Properties.Resources.RemoveComponentWithInstanceId0, control.InstanceId), Properties.Resources.Confirm))
@@ -36,7 +36,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             }
             else
             {
-                throw new Exception($"Component with id {InstanceId.Id} does not exist on this page");
+                throw new Exception($"Component with id {InstanceId} does not exist on this page");
             }
         }
     }

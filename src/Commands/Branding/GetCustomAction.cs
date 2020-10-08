@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
-using PnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Branding
@@ -12,7 +11,7 @@ namespace PnP.PowerShell.Commands.Branding
     public class GetCustomAction : PnPWebRetrievalsCmdlet<UserCustomAction>
     {
         [Parameter(Mandatory = false)]
-        public GuidPipeBind Identity;
+        public Guid Identity;
 
         [Parameter(Mandatory = false)]
         public CustomActionScope Scope = CustomActionScope.Web;
@@ -35,14 +34,14 @@ namespace PnP.PowerShell.Commands.Branding
 
             if (Identity != null)
             {
-                var foundAction = actions.FirstOrDefault(x => x.Id == Identity.Id);
+                var foundAction = actions.FirstOrDefault(x => x.Id == Identity);
                 if (foundAction != null || !ThrowExceptionIfCustomActionNotFound)
                 {
                     WriteObject(foundAction, true);
                 }
                 else
                 {
-                    throw new PSArgumentException($"No CustomAction found with the Identity '{Identity.Id}' within the scope '{Scope}'", "Identity");
+                    throw new PSArgumentException($"No CustomAction found with the Identity '{Identity}' within the scope '{Scope}'", "Identity");
                 }
             }
             else

@@ -4,6 +4,7 @@ using PnP.Framework.Entities;
 
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 
 namespace PnP.PowerShell.Commands.Branding
 {
@@ -23,7 +24,7 @@ namespace PnP.PowerShell.Commands.Branding
         public CustomActionScope Scope = CustomActionScope.Web;
 
         [Parameter(Mandatory = true)]
-        public GuidPipeBind ClientSideComponentId;
+        public Guid ClientSideComponentId;
 
         [Parameter(Mandatory = false)]
         public string ClientSideComponentProperties;
@@ -37,7 +38,7 @@ namespace PnP.PowerShell.Commands.Branding
             {
                 Title = Title,
                 Location = "ClientSideExtension.ApplicationCustomizer",
-                ClientSideComponentId = ClientSideComponentId.Id,
+                ClientSideComponentId = ClientSideComponentId,
                 ClientSideComponentProperties = ClientSideComponentProperties,
                 ClientSideHostProperties = ClientSideHostProperties
             };

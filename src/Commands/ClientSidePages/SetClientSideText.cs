@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.Framework.Pages;
 
@@ -15,7 +13,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         public ClientSidePagePipeBind Page;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public GuidPipeBind InstanceId;
+        public Guid InstanceId;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public string Text;
@@ -27,7 +25,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             if (clientSidePage == null)
                 throw new Exception($"Page '{Page?.Name}' does not exist");
 
-            var control = clientSidePage.Controls.FirstOrDefault(c => c.InstanceId == InstanceId.Id);
+            var control = clientSidePage.Controls.FirstOrDefault(c => c.InstanceId == InstanceId);
             if (control != null)
             {
                 var textControl = control as ClientSideText;

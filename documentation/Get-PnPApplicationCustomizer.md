@@ -16,14 +16,14 @@ Returns all SharePoint Framework client side extension application customizers
 
 ### Custom Action Id
 ```
-Get-PnPApplicationCustomizer [-Identity <GuidPipeBind>] [-Scope <CustomActionScope>]
+Get-PnPApplicationCustomizer [-Identity <Guid>] [-Scope <CustomActionScope>]
  [-ThrowExceptionIfCustomActionNotFound] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf]
  [-Confirm] [-Includes <String[]>] [<CommonParameters>]
 ```
 
 ### Client Side Component Id
 ```
-Get-PnPApplicationCustomizer -ClientSideComponentId <GuidPipeBind> [-Scope <CustomActionScope>]
+Get-PnPApplicationCustomizer -ClientSideComponentId <Guid> [-Scope <CustomActionScope>]
  [-ThrowExceptionIfCustomActionNotFound] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf]
  [-Confirm] [-Includes <String[]>] [<CommonParameters>]
 ```
@@ -62,7 +62,7 @@ The Client Side Component Id of the SharePoint Framework client side extension a
 Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: Client Side Component Id
 Aliases:
 
@@ -111,7 +111,7 @@ Identity of the SharePoint Framework client side extension application customize
 Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: Custom Action Id
 Aliases:
 

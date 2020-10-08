@@ -20,7 +20,7 @@ Approves a permission request for the current tenant's "SharePoint Online Client
 ## SYNTAX
 
 ```
-Approve-PnPTenantServicePrincipalPermissionRequest -RequestId <GuidPipeBind> [-Force]
+Approve-PnPTenantServicePrincipalPermissionRequest -RequestId <Guid> [-Force]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -70,7 +70,7 @@ Accept wildcard characters: False
 ### -RequestId
 
 ```yaml
-Type: GuidPipeBind
+Type: Guid
 Parameter Sets: (All)
 Aliases:
 

@@ -1,6 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
+using System;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Branding
         public UserCustomActionPipeBind Identity = null;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
-        public GuidPipeBind ClientSideComponentId = null;
+        public Guid ClientSideComponentId;
 
         [Parameter(Mandatory = false)]
         public CustomActionScope Scope = CustomActionScope.Web;
@@ -68,7 +68,7 @@ namespace PnP.PowerShell.Commands.Branding
             // If a ClientSideComponentId has been provided, only leave those who have a matching client side component id
             if(ParameterSetName == ParameterSet_CLIENTSIDECOMPONENTID)
             {
-                actions = actions.Where(a => a.ClientSideComponentId == ClientSideComponentId.Id && a.Location == "ClientSideExtension.ApplicationCustomizer").ToList();
+                actions = actions.Where(a => a.ClientSideComponentId == ClientSideComponentId && a.Location == "ClientSideExtension.ApplicationCustomizer").ToList();
             }
 
             if (!actions.Any())
