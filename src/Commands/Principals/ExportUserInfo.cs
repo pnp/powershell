@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Principals
             var record = new PSObject();
             foreach (var item in results.Items)
             {
-                record.Properties.Add(new PSVariableProperty(new PSVariable(item.Key.Split("|")[1], item.Value)));
+                record.Properties.Add(new PSVariableProperty(new PSVariable(item.Key.Split('|')[1], item.Value)));
             }
             WriteObject(record);
         }
