@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Utilities.REST
 {
 
-    public class GraphCollection<T>
+    public class RestResultCollection<T>
     {
         [JsonPropertyName("@odata.nextLink")]
         public string NextLink { get; set; }

@@ -86,7 +86,5 @@ namespace PnP.PowerShell.Commands.Base
         /// Returns an Access Token for Microsoft Graph, if available, otherwise NULL
         /// </summary>
         public string AccessToken => Token?.AccessToken;
-
-        public HttpClient HttpClient => PnPConnection.CurrentConnection.HttpClient;
     }
 }

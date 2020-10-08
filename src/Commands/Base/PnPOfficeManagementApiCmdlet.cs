@@ -91,7 +91,5 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         protected string ApiRootUrl => $"https://manage.office.com/api/v1.0/{Token.TenantId}/";
 
-        public HttpClient HttpClient => PnPConnection.CurrentConnection.HttpClient;
-
     }
 }

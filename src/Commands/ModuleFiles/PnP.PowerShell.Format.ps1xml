@@ -1444,6 +1444,10 @@
             <Label>Content</Label>
             <Alignment>left</Alignment>
           </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>IsSiteScriptPackage</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
           <TableRowEntry>
@@ -1462,6 +1466,9 @@
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>Content</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>IsSiteScriptPackage</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>

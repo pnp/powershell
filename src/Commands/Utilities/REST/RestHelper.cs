@@ -1,14 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Utilities.REST
 {
     internal static class RestHelper
     {
+        #region GET
         public static T ExecuteGetRequest<T>(ClientContext context, string url, string select = null, string filter = null, string expand = null, uint? top = null)
         {
             var returnValue = ExecuteGetRequest(context, url, select, filter, expand);
@@ -129,6 +133,36 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             returnValue.EnsureSuccessStatusCode();
             return returnValue;
         }
+
+        public static async Task<string> GetAsync(HttpClient httpClient, string url, string accessToken, string accept = "application/json")
+        {
+            var message = GetMessage(url, HttpMethod.Get, accessToken, accept);
+            return await SendMessageAsync(httpClient, message);
+        }
+
+        public static async Task<T> GetAsync<T>(HttpClient httpClient, string url, string accessToken, bool camlCasePolicy = true)
+        {
+            var stringContent = await GetAsync(httpClient, url, accessToken);
+            if (stringContent != null)
+            {
+                var options = new JsonSerializerOptions() { IgnoreNullValues = true };
+                if (camlCasePolicy)
+                {
+                    options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                }
+                try
+                {
+                    return JsonSerializer.Deserialize<T>(stringContent, options);
+                }
+                catch (Exception)
+                {
+                    return default(T);
+                }
+            }
+            return default(T);
+        }
+
+        #endregion
 
         #region PUT
         public static T ExecutePutRequest<T>(ClientContext context, string url, string content, string select = null, string filter = null, string expand = null, Dictionary<string, string> additionalHeaders = null, string contentType = null)
@@ -312,6 +346,67 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return returnValue;
         }
         #endregion
+
+        private static HttpRequestMessage GetMessage(string url, HttpMethod method, string accessToken, string accept = "application/json", HttpContent content = null)
+        {
+            if (url.StartsWith("/"))
+            {
+                url = url.Substring(1);
+            }
+
+            var message = new HttpRequestMessage();
+            message.Method = method;
+            message.RequestUri = new Uri(url);
+            message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+            message.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue(accept));
+            if (method == HttpMethod.Post || method == HttpMethod.Put || method.Method == "PATCH")
+            {
+                message.Content = content;
+            }
+
+            return message;
+        }
+
+        private static async Task<string> SendMessageAsync(HttpClient httpClient, HttpRequestMessage message)
+        {
+            var response = await httpClient.SendAsync(message);
+            while (response.StatusCode == (HttpStatusCode)429)
+            {
+                // throttled
+                var retryAfter = response.Headers.RetryAfter;
+                Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
+                response = await httpClient.SendAsync(CloneMessage(message));
+            }
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                throw new HttpRequestException(errorContent);
+            }
+        }
+
+        private static HttpRequestMessage CloneMessage(HttpRequestMessage req)
+        {
+            HttpRequestMessage clone = new HttpRequestMessage(req.Method, req.RequestUri);
+
+            clone.Content = req.Content;
+            clone.Version = req.Version;
+
+            foreach (KeyValuePair<string, object> prop in req.Properties)
+            {
+                clone.Properties.Add(prop);
+            }
+
+            foreach (KeyValuePair<string, IEnumerable<string>> header in req.Headers)
+            {
+                clone.Headers.TryAddWithoutValidation(header.Key, header.Value);
+            }
+
+            return clone;
+        }
     }
 
 }

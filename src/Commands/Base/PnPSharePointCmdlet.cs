@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Management.Automation;
+using System.Reflection;
 using System.Threading;
 using Microsoft.SharePoint.Client;
+using PnP.Framework;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
@@ -74,6 +76,67 @@ namespace PnP.PowerShell.Commands
         protected override void EndProcessing()
         {
             base.EndProcessing();
+        }
+
+        protected string AccessToken
+        {
+            get
+            {
+                if (PnPConnection.CurrentConnection != null)
+                {
+                    if (PnPConnection.CurrentConnection.Context != null)
+                    {
+                        var settings = GetContextSettings(PnPConnection.CurrentConnection.Context);
+                        if (settings != null)
+                        {
+                            var authManager = settings.AuthenticationManager;
+                            if (authManager != null)
+                            {
+                                return authManager.GetAccessTokenAsync(PnPConnection.CurrentConnection.Context.Url).GetAwaiter().GetResult();
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+        }
+
+        internal ClientContextSettings GetContextSettings(ClientRuntimeContext clientContext)
+        {
+            if (!clientContext.StaticObjects.TryGetValue(ClientContextSettings.PnPSettingsKey, out object settingsObject))
+            {
+                return null;
+            }
+            var settings = new ClientContextSettings();
+
+            settings.AuthenticationManager = (AuthenticationManager)GetPropertyValue(settingsObject,"AuthenticationManager");
+
+            return settings;
+        }
+
+        private object GetPropertyValue(object obj, string propertyName)
+        {
+            if (obj == null)
+                throw new ArgumentNullException("obj");
+            Type objType = obj.GetType();
+            PropertyInfo propInfo = GetPropertyInfo(objType, propertyName);
+            if (propInfo == null)
+                throw new ArgumentOutOfRangeException("propertyName",
+                  string.Format("Couldn't find property {0} in type {1}", propertyName, objType.FullName));
+            return propInfo.GetValue(obj, null);
+        }
+
+        private PropertyInfo GetPropertyInfo(Type type, string propertyName)
+        {
+            PropertyInfo propInfo = null;
+            do
+            {
+                propInfo = type.GetProperty(propertyName,
+                       BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                type = type.BaseType;
+            }
+            while (propInfo == null && type != null);
+            return propInfo;
         }
     }
 }

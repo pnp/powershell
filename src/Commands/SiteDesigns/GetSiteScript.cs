@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(Identity)))
             {
                 var script = Tenant.GetSiteScript(ClientContext, Identity.Id);
-                script.EnsureProperties(s => s.Content, s => s.Title, s => s.Id, s => s.Version, s => s.Description);
+                script.EnsureProperties(s => s.Content, s => s.Title, s => s.Id, s => s.Version, s => s.Description, s => s.IsSiteScriptPackage);
                 WriteObject(script);
             }
             else if (ParameterSpecified(nameof(SiteDesign)))
@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands
                 foreach (var scriptId in design.SiteScriptIds)
                 {
                     var script = Tenant.GetSiteScript(ClientContext, scriptId);
-                    script.EnsureProperties(s => s.Content, s => s.Title, s => s.Id, s => s.Version, s => s.Description);
+                    script.EnsureProperties(s => s.Content, s => s.Title, s => s.Id, s => s.Version, s => s.Description, s => s.IsSiteScriptPackage);
                     scripts.Add(script);
                 }
                 WriteObject(scripts, true);
@@ -42,7 +42,7 @@ namespace PnP.PowerShell.Commands
             else
             {
                 var scripts = Tenant.GetSiteScripts();
-                ClientContext.Load(scripts, s => s.Include(sc => sc.Id, sc => sc.Title, sc => sc.Version, sc => sc.Description, sc => sc.Content));
+                ClientContext.Load(scripts, s => s.Include(sc => sc.Id, sc => sc.Title, sc => sc.Version, sc => sc.Description, sc => sc.Content, sc => sc.IsSiteScriptPackage));
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(scripts.ToList(), true);
             }

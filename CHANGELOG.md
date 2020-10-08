@@ -64,3 +64,5 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Add-PnPWorkflowDefinition`, `Add-PnPWorkflowSubscription`, `Get-PnPWorkflowDefinition`, `Get-PnPWorkflowInstances`, `Get-PnPWorkflowSubscription`, `Remove-PnPWorkflowDefinition`, `Remove-PnPWorkflowSubscription`, `Resume-PnPWorkflowInstance`, `Start-PnPWorkflowInstance` and `Stop-PnPWorkflowInstance` due to deprecated of the Workflow Services in SharePoint Online.
 - Added -DisableCustomAppAuthentication to Set-PnPTenant and added support for DisableCustomAppAuthentication in Get-PnPTenant.
 - Added Add-PnPHubToHubAssociation cmdlet.
+- Added Export-PnPUserInfo cmdlet.
+- Added Add-PnPSiteScriptPackage cmdlet.
