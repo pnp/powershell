@@ -1,22 +1,15 @@
-﻿# PnP PowerShell  #
+﻿# PnP PowerShell
 
-### Summary ###
-This solution contains a library of PowerShell commands that allows you to perform complex provisioning and artifact management actions towards SharePoint. The commands use a combination of CSOM and REST behind the scenes, and can work against both SharePoint Online as SharePoint On-Premises.
+**PnP PowerShell** is a .NET Core 3.1 / .NET Framework 4.6.1 based PowerShell Module providing over 400 cmdlets that work with Microsoft 365 environments and more specifically SharePoint Online and Microsoft Teams.
 
-![Microsoft 365 Patterns and Practices](https://raw.githubusercontent.com/pnp/media/40e7cd8952a9347ea44e5572bb0e49622a102a12/parker/ms/300w/parker-ms-300.png)
-  
-### Applies to ###
--  Sharepoint Online
-
-# Commands included #
-[Navigate here for an overview of all cmdlets and their parameters](https://docs.microsoft.com/powershell/sharepoint/sharepoint-pnp/sharepoint-pnp-cmdlets?view=sharepoint-ps)
+This module is a successor of the [PnP-PowerShell](https://github.com/pnp/pnp-powershell) module. The original cmdlets only work on Windows and Windows PowerShell and supports SharePoint On-Premises (2013, 2016 and 2019) and SharePoint Online. This version of the cmdlets is cross-platform (e.g. it works on Windows, MacOS and Linux) however will only support SharePoint Online. Going forward will only be **actively maintaining the cross-platform PnP PowerShell** and once we declare this module as GA we will retired the [PnP-PowerShell](https://github.com/pnp/pnp-powershell) library.
 
 # Installation using the [PowerShell Gallery](https://www.powershellgallery.com)
 
 You can run the following commands to install the PowerShell cmdlets:
 
 ```PowerShell
-Install-Module PnP.PowerShell
+Install-Module PnP.PowerShell -AllowPrerelease
 ```
 
 ## How to Update the Cmdlets 
@@ -25,7 +18,7 @@ When using Connect-PnPOnline we will check if a new version is available (only o
 To update the current installation:
 
 ```powershell
-Update-Module PnP.PowerShell
+Update-Module PnP.PowerShell -AllowPrerelease
 ``` 
 
 You can check the installed PnP.PowerShell version with the following command:
@@ -34,44 +27,47 @@ You can check the installed PnP.PowerShell version with the following command:
 Get-Module PnP.PowerShell -ListAvailable | Select-Object Name,Version | Sort-Object Version -Descending
 ```
 
-# Getting started #
+# Important changes
+We renamed all *-PnPProvisioningTemplate cmdlets to *-PnPSiteTemplate. This means that Get-PnPProvisioningTemplate is now for instance called Get-PnPSiteTemplate. Also, we renamed both `Apply-PnPProvisioningTemplate` and `Apply-PnPTenantTemplate` to `Invoke-PnPSiteTemplate` and `Invoke-PnPTenantTemplate`.
 
-To use the library you first need to connect to your tenant:
-
-```powershell
-Connect-PnPOnline –Url https://yoursite.sharepoint.com –Credentials (Get-Credential)
-```
-
-To view all cmdlets, enter:
+## Classic credential based authentication has changed
+In order to use credentials to authenticate you will first have to grant consent to the PnP Management Shell application:
 
 ```powershell
-Get-Command -Module PnP.PowerShell
+Register-PnPManagementShellAccess
 ```
 
-## Setting up credentials ##
-See this [wiki page](https://github.com/pnp/PnP-PowerShell/wiki/How-to-use-the-Windows-Credential-Manager-to-ease-authentication-with-PnP-PowerShell) for more information on how to use the Windows Credential Manager to setup credentials that you can use in unattended scripts.
+Follow the steps on screen and after you have consented the application access you will be able to use
 
-# Contributing #
+```powershell
+Connect-PnPOnline -Url <yoururl> -Credentials <yourcredentials>
+```
 
-If you want to contribute to this SharePoint Patterns and Practices PowerShell library, please [proceed here](CONTRIBUTING.md)
+## -UseWebLogin is not available anymore
+The WebLogin functionality is not available anymore among others due to limitations of the .NET Core framework with launching browsers etc. We propose that you switch to Device Login based Auth instead:
 
-### Solution/Authors ###
-Solution | Author(s)
----------|----------
-PnP.PowerShell | Erwin van Hunen and countless community contributors
+```powershell
+Connect-PnPOnline -Url <yoururl> -PnPManagementShell
+```
 
-### Disclaimer ###
-**THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
+# PnP PowerShell roadmap status
 
+We have shipped the version now both PnP PowerShell for classic PowerShell and PnP PowerShell for PowerShell 7
 
-## Building the source code ##
+![PnP_PowerShell_RoadMap](PnP_PowerShell_RoadMap.png)
+# I've found a bug, where do I need to log an issue or create a PR
 
-If you have set up the projects and you are ready to build the source code, make sure to build the SharePointPnP.PowerShellModuleFilesGenerator project first. This project will be executed after every build and it will generate the required PSD1 and XML files with cmdlet documentation in them.
+Between now and the end of 2020 both [PnP-PowerShell](https://github.com/pnp/pnp-powershell) and [PnP.PowerShell](https://github.com/pnp/powershell) are actively maintained. Once the new PnP PowerShell GA's we will stop mainting the old repository.
 
-When you build the solution a postbuild script will copy the required files to a folder in your users folder called 
-*C:\Users\\[YourUserName]\Documents\PowerShell\Modules\PnP.PowerShell*. During build also the help and document files will be generated. If you have a session of PowerShell open in which you have used the PnP Cmdlets, make sure to close this PowerShell session first before you build. You will receive a build error otherwise because it tries to overwrite files that are in use.
+Given that the cross-platform PnP PowerShell is our future going forward we would prefer issues and PRs being created in the new https://github.com/pnp/powershell repository. If you want your PR to apply to both then it is recommend to create the PR in both repositories for the time being.
 
-To debug the cmdlets: launch PowerShell and attach Visual Studio to the `pwsh.exe` process. In case you want to debug methods in the PnP Framework project, make sure that you open the PnP Framework project instead, and then attach Visual Studio to the pwsh.exe. In case you see strange debug behavior, like it wants to debug PSReadLine.ps1, uninstall the PowerShell extension from Visual Studio.
+## Building the source code
+
+Make a clone of the repository, navigate to the build folder in the repository and run Build-Debug.ps1. This will restore all references, and copy the required files to the correct location on your computer. If you run on Windows both the .NET Framework and the .NET Core version will be build in installed. If you run on MacOS or Linux on the .NET Core version will be build and installed. Unlike the older repository you do not need to have local clone of the PnP Framework repository anymore (we changed the PnP Sites Core library used under the hood to the PnP Framework repository, see for more info about that library here: https://github.com/pnp/pnpframework).
+
+## Updating the documentation
+
+All cmdlet documentation has been moved to the https://github.com/pnp/powershell/tree/dev/documentation folder. If you want to make changes, make sure to follow the format as used in the other files present there. These files follow a specific schema which allows us to generate to correct files. You can also make changes directly to the documention at https://docs.microsoft.com/en-us/powershell/sharepoint/sharepoint-pnp/sharepoint-pnp-cmdlets?view=sharepoint-ps. Notice that the documentation there is currently NOT reflecting this library: the documentation applies to the Windows Only version of PnP PowerShell.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
