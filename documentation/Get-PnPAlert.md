@@ -14,7 +14,7 @@ Returns registered alerts for a user.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPAlert [[-List] <ListPipeBind>] [-User <UserPipeBind>] [-Title <String>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

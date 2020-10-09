@@ -14,7 +14,7 @@ Checks if a list item is a record
 
 ## SYNTAX
 
-```
+```powershell
 Test-PnPListItemIsRecord [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

@@ -14,7 +14,7 @@ Removes a content type from a document set
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPContentTypeFromDocumentSet -ContentType <ContentTypePipeBind> -DocumentSet <DocumentSetPipeBind>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

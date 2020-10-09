@@ -14,7 +14,7 @@ Retrieves the url of the tenant scoped app catalog
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTenantAppCatalogUrl [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 

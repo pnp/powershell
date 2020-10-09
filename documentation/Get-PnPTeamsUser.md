@@ -19,7 +19,7 @@ Returns owners, members or guests from a team.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTeamsUser -Team <TeamsTeamPipeBind> [-Channel <TeamsChannelPipeBind>] [-Role <String>]
  [-ByPassPermissionCheck] [<CommonParameters>]
 ```

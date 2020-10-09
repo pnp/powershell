@@ -14,7 +14,7 @@ Retrieves search settings for a site
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPSearchSettings [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

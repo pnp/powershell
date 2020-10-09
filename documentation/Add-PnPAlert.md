@@ -14,7 +14,7 @@ Adds an alert for a user to a list
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPAlert [-List] <ListPipeBind> [-Title <String>] [-User <UserPipeBind>]
  [-DeliveryMethod <AlertDeliveryChannel>] [-ChangeType <AlertEventType>] [-Frequency <AlertFrequency>]
  [-Filter <AlertFilter>] [-Time <DateTime>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]

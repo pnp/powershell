@@ -19,7 +19,7 @@ Adds a tab to an existing Channel
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -DisplayName <String>
  -Type <TeamTabType> [-ByPassPermissionCheck] -ContentUrl <String> [<CommonParameters>]
 ```

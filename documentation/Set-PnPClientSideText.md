@@ -14,7 +14,7 @@ Set Client-Side Text Component properties
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPClientSideText [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> -Text <String>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

@@ -14,7 +14,7 @@ Returns the manual record declaration settings for a list
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPListRecordDeclaration -List <ListPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

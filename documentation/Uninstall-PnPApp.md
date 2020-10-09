@@ -14,7 +14,7 @@ Uninstalls an available add-in from the site
 
 ## SYNTAX
 
-```
+```powershell
 Uninstall-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

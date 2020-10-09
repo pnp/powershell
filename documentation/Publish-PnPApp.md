@@ -14,7 +14,7 @@ Publishes/Deploys/Trusts an available app in the app catalog
 
 ## SYNTAX
 
-```
+```powershell
 Publish-PnPApp [-Identity] <AppMetadataPipeBind> [-SkipFeatureDeployment] [-Scope <AppCatalogScope>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

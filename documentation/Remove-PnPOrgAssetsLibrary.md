@@ -19,7 +19,7 @@ Removes a given document library as a organizational asset source
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPOrgAssetsLibrary -LibraryUrl <String> [-ShouldRemoveFromCdn <Boolean>] [-CdnType <SPOTenantCdnType>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

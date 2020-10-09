@@ -14,7 +14,7 @@ Used to retrieve a scheduled site design script. It takes the ID of the schedule
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPSiteDesignTask [-Identity <TenantSiteDesignTaskPipeBind>] [-WebUrl <String>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

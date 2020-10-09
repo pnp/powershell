@@ -19,7 +19,7 @@ Returns the current tenant's "SharePoint Online Client" service principal.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTenantServicePrincipal [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

@@ -15,13 +15,13 @@ Loads/Reads a PnP file from the file system or a string
 ## SYNTAX
 
 ### By Path
-```
+```powershell
 Read-PnPSiteTemplate [-Path] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
  [<CommonParameters>]
 ```
 
 ### By XML
-```
+```powershell
 Read-PnPSiteTemplate [-Xml] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
  [<CommonParameters>]
 ```

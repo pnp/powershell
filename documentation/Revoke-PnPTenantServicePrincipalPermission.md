@@ -19,7 +19,7 @@ Revokes a permission that was previously granted to the "SharePoint Online Clien
 
 ## SYNTAX
 
-```
+```powershell
 Revoke-PnPTenantServicePrincipalPermission -ObjectId <String> [-Force] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

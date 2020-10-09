@@ -19,7 +19,7 @@ Registers a site as a hubsite
 
 ## SYNTAX
 
-```
+```powershell
 Register-PnPHubSite -Site <SitePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

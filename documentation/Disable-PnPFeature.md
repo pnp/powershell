@@ -14,7 +14,7 @@ Disables a feature
 
 ## SYNTAX
 
-```
+```powershell
 Disable-PnPFeature [-Identity] <Guid> [-Force] [-Scope <FeatureScope>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

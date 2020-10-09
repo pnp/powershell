@@ -19,7 +19,7 @@ Sets the home site for your tenant
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPHomeSite -Url <String> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

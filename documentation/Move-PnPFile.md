@@ -15,19 +15,19 @@ Moves a file or folder to a different location
 ## SYNTAX
 
 ### Site Relative (Default)
-```
+```powershell
 Move-PnPFile [-SiteRelativeUrl] <String> [-TargetUrl] <String> [-OverwriteIfAlreadyExists] [-Force]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Server Relative
-```
+```powershell
 Move-PnPFile [-ServerRelativeUrl] <String> [-TargetUrl] <String> [-OverwriteIfAlreadyExists] [-Force]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Other Site Collection
-```
+```powershell
 Move-PnPFile [[-ServerRelativeUrl] <String>] [[-SiteRelativeUrl] <String>]
  [-TargetServerRelativeLibrary] <String> [-OverwriteIfAlreadyExists] [-AllowSchemaMismatch]
  [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-Force] [-Web <WebPipeBind>]

@@ -14,7 +14,7 @@ Returns statistics on the list object. This may fail on lists larger than the li
 
 ## SYNTAX
 
-```
+```powershell
 Measure-PnPList [-Identity] <ListPipeBind> [-ItemLevel] [-BrokenPermissions] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```

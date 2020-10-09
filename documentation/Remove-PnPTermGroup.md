@@ -14,7 +14,7 @@ Removes a taxonomy term group and all its containing termsets
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPTermGroup [-GroupName] <String> [-TermStoreName <String>] [-Force] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

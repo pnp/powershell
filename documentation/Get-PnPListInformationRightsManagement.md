@@ -14,7 +14,7 @@ Get the site closure status of the site which has a site policy applied
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPListInformationRightsManagement -List <ListPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

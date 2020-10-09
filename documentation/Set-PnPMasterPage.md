@@ -15,13 +15,13 @@ Set the masterpage
 ## SYNTAX
 
 ### Server Relative
-```
+```powershell
 Set-PnPMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Site Relative
-```
+```powershell
 Set-PnPMasterPage [-MasterPageSiteRelativeUrl <String>] [-CustomMasterPageSiteRelativeUrl <String>]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

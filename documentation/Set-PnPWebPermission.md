@@ -14,7 +14,7 @@ Sets a web part property
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPWebPartProperty -ServerRelativePageUrl <String> -Identity <Guid> -Key <String> -Value <PSObject>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

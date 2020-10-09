@@ -19,7 +19,7 @@ Removes a Microsoft Teams Team instance
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPTeamsTeam -Identity <TeamsTeamPipeBind> [-Force] [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 

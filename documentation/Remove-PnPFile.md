@@ -15,13 +15,13 @@ Removes a file.
 ## SYNTAX
 
 ### Server Relative
-```
+```powershell
 Remove-PnPFile [-ServerRelativeUrl] <String> [-Recycle] [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Site Relative
-```
+```powershell
 Remove-PnPFile [-SiteRelativeUrl] <String> [-Recycle] [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```

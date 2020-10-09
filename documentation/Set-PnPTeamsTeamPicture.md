@@ -19,7 +19,7 @@ Sets the picture of an existing team.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTeamsTeamPicture -Team <TeamsTeamPipeBind> -Path <String> [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 

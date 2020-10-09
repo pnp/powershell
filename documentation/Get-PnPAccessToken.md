@@ -14,7 +14,7 @@ Returns the current OAuth Access token
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPAccessToken [-Decoded] [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 

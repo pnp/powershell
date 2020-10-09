@@ -15,13 +15,13 @@ Adds a wiki page
 ## SYNTAX
 
 ### WithContent
-```
+```powershell
 Add-PnPWikiPage -ServerRelativePageUrl <String> -Content <String> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### WithLayout
-```
+```powershell
 Add-PnPWikiPage -ServerRelativePageUrl <String> -Layout <WikiPageLayout> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

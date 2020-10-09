@@ -14,7 +14,7 @@ Updates a list item
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-ContentType <ContentTypePipeBind>]
  [-Values <Hashtable>] [-SystemUpdate] [-Label <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]

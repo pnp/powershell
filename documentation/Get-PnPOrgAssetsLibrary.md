@@ -19,7 +19,7 @@ Returns the list of all the configured organizational asset libraries
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPOrgAssetsLibrary [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

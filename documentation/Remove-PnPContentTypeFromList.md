@@ -14,7 +14,7 @@ Removes a content type from a list
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPContentTypeFromList -List <ListPipeBind> -ContentType <ContentTypePipeBind> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

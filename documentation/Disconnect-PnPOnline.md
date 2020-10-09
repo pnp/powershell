@@ -14,7 +14,7 @@ Disconnects the context
 
 ## SYNTAX
 
-```
+```powershell
 Disconnect-PnPOnline [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

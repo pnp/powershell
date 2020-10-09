@@ -15,13 +15,13 @@ Adds a web part to a web part page in a specified zone
 ## SYNTAX
 
 ### XML
-```
+```powershell
 Add-PnPWebPartToWebPartPage -ServerRelativePageUrl <String> -Xml <String> -ZoneId <String> -ZoneIndex <Int32>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### FILE
-```
+```powershell
 Add-PnPWebPartToWebPartPage -ServerRelativePageUrl <String> -Path <String> -ZoneId <String> -ZoneIndex <Int32>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

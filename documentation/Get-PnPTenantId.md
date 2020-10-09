@@ -14,7 +14,7 @@ Returns the Tenant ID
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTenantId [-TenantUrl <String>] [<CommonParameters>]
 ```
 

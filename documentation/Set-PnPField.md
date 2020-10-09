@@ -14,7 +14,7 @@ Changes one or more properties of a field in a specific list or for the whole we
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPField [-List <ListPipeBind>] [-Identity] <FieldPipeBind> -Values <Hashtable> [-UpdateExistingLists]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

@@ -14,7 +14,7 @@ Returns the subwebs of the current web
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPSubWebs [[-Identity] <WebPipeBind>] [-Recurse] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [-Includes <String[]>] [<CommonParameters>]
 ```

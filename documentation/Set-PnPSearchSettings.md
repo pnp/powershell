@@ -14,7 +14,7 @@ Sets search settings for a site
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPSearchSettings [-SearchBoxInNavBar <SearchBoxInNavBarType>] [-SearchPageUrl <String>]
  [-SearchBoxPlaceholderText <String>] [-SearchScope <SearchScopeType>] [-Scope <SearchSettingsScope>] [-Force]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]

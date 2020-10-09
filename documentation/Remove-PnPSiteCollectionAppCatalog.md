@@ -19,7 +19,7 @@ Removes a Site Collection scoped App Catalog from a site
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPSiteCollectionAppCatalog -Site <SitePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

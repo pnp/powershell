@@ -15,13 +15,13 @@ Removes a web part from a page
 ## SYNTAX
 
 ### ID
-```
+```powershell
 Remove-PnPWebPart -Identity <Guid> -ServerRelativePageUrl <String> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### NAME
-```
+```powershell
 Remove-PnPWebPart -Title <String> -ServerRelativePageUrl <String> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

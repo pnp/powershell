@@ -14,7 +14,7 @@ Returns the permissions for a specific SharePoint group
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPGroupPermissions [-Identity] <GroupPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

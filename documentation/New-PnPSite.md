@@ -14,7 +14,7 @@ Creates either a communication site or a Microsoft 365 group-connected team site
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPSite -Type <SiteType> [-HubSiteId <Guid>] [-Wait] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

@@ -19,7 +19,7 @@ Removes users from a team.
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPTeamsUser -Team <TeamsTeamPipeBind> -User <String> [-Role <String>] [-Force] [-ByPassPermissionCheck]
  [<CommonParameters>]
 ```

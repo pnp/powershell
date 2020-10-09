@@ -20,13 +20,13 @@ Office365 only: Uses the tenant API to retrieve site information. You must conne
 ## SYNTAX
 
 ### Single
-```
+```powershell
 Set-PnPUserProfileProperty -Account <String> -PropertyName <String> -Value <String>
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Multi
-```
+```powershell
 Set-PnPUserProfileProperty -Account <String> -PropertyName <String> -Values <String[]>
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

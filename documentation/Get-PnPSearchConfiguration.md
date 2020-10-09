@@ -15,13 +15,13 @@ Returns the search configuration
 ## SYNTAX
 
 ### Xml (Default)
-```
+```powershell
 Get-PnPSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### OutputFormat
-```
+```powershell
 Get-PnPSearchConfiguration [-Scope <SearchConfigurationScope>] [-OutputFormat <OutputFormat>]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

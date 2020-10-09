@@ -14,7 +14,7 @@ Adds group to the Site Groups List and returns a group object
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPGroup -Title <String> [-Description <String>] [-Owner <String>] [-AllowRequestToJoinLeave]
  [-AutoAcceptRequestToJoinLeave] [-AllowMembersEditMembership] [-OnlyAllowMembersViewMembership]
  [-DisallowMembersViewMembership] [-RequestToJoinEmail <String>] [-SetAssociatedGroup <AssociatedGroupType>]

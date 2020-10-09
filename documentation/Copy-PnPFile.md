@@ -14,7 +14,7 @@ Copies a file or folder to a different location. This location can be within the
 
 ## SYNTAX
 
-```
+```powershell
 Copy-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-OverwriteIfAlreadyExists] [-Force]
  [-SkipSourceFolderName] [-IgnoreVersionHistory] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf]
  [-Confirm] [<CommonParameters>]

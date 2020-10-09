@@ -20,13 +20,13 @@ Updates Site Classifications for the tenant
 ## SYNTAX
 
 ### Settings
-```
+```powershell
 Update-PnPSiteClassification -Settings <SiteClassificationsSettings> [-ByPassPermissionCheck]
  [<CommonParameters>]
 ```
 
 ### Specific
-```
+```powershell
 Update-PnPSiteClassification [-Classifications <System.Collections.Generic.List`1[System.String]>]
  [-DefaultClassification <String>] [-UsageGuidelinesUrl <String>] [-ByPassPermissionCheck] [<CommonParameters>]
 ```

@@ -19,7 +19,7 @@ Returns organization-level OneDrive synchronization restriction settings
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTenantSyncClientRestriction [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

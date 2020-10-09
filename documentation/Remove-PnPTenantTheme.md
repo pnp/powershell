@@ -19,7 +19,7 @@ Removes a theme
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPTenantTheme [-Identity] <ThemePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

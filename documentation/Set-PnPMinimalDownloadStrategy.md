@@ -15,13 +15,13 @@ Activates or deactivates the minimal downloading strategy.
 ## SYNTAX
 
 ### On
-```
+```powershell
 Set-PnPMinimalDownloadStrategy [-On] [-Force] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Off
-```
+```powershell
 Set-PnPMinimalDownloadStrategy [-Off] [-Force] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

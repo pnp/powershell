@@ -14,7 +14,7 @@ Removes a taxonomy item
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPTaxonomyItem [-TermPath] <String> [-Force] [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```

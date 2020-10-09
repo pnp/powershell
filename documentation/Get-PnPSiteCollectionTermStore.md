@@ -14,7 +14,7 @@ Returns the site collection term store
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPSiteCollectionTermStore [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 

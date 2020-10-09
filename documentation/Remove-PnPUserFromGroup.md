@@ -14,7 +14,7 @@ Removes a user from a group
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPUserFromGroup -LoginName <String> -Identity <GroupPipeBind> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

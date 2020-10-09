@@ -14,7 +14,7 @@ Adds a publishing page layout
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPPublishingPageLayout -SourceFilePath <String> -Title <String> -Description <String>
  -AssociatedContentTypeID <String> [-DestinationFolderHierarchy <String>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]

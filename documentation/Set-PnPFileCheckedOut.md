@@ -14,7 +14,7 @@ Checks out a file
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPFileCheckedOut [-Url] <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

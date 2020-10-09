@@ -14,7 +14,7 @@ Returns the keys of the property bag values that have been marked for indexing b
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPIndexedPropertyKeys [-List <ListPipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

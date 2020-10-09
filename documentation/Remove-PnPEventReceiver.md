@@ -14,7 +14,7 @@ Remove an eventreceiver
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPEventReceiver -Identity <EventReceiverPipeBind> [-List <ListPipeBind>] [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```

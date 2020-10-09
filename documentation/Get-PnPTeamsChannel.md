@@ -19,7 +19,7 @@ Gets the channels for a specified Team.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTeamsChannel -Team <TeamsTeamPipeBind> [-Identity <TeamsChannelPipeBind>] [-ByPassPermissionCheck]
  [<CommonParameters>]
 ```

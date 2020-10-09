@@ -14,7 +14,7 @@ Clear default column values for a document library
 
 ## SYNTAX
 
-```
+```powershell
 Clear-PnPDefaultColumnValues [-List] <ListPipeBind> -Field <FieldPipeBind> [-Folder <String>]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

@@ -19,7 +19,7 @@ Creates a new (classic) site collection for the current tenant
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPTenantSite -Title <String> -Url <String> -Owner <String> [-Lcid <UInt32>] [-Template <String>]
  -TimeZone <Int32> [-ResourceQuota <Double>] [-ResourceQuotaWarningLevel <Double>] [-StorageQuota <Int64>]
  [-StorageQuotaWarningLevel <Int64>] [-RemoveDeletedSite] [-Wait] [-Force] [-Connection <PnPConnection>]

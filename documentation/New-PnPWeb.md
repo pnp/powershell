@@ -14,7 +14,7 @@ Creates a new subweb under the current web
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPWeb -Title <String> -Url <String> [-Description <String>] [-Locale <Int32>] -Template <String>
  [-BreakInheritance] [-InheritNavigation] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]

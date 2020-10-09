@@ -14,7 +14,7 @@ Returns entries from the SharePoint search crawl log. Make sure you are granted 
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPSearchCrawlLog [-LogLevel <LogLevel>] [-RowLimit <Int32>] [-Filter <String>]
  [-ContentSource <ContentSource>] [-StartDate <DateTime>] [-EndDate <DateTime>] [-RawFormat]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]

@@ -18,7 +18,7 @@ UseSiteCollectionDefaults
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPListRecordDeclaration -List <ListPipeBind> [-ManualRecordDeclaration <EcmListManualRecordDeclaration>]
  [-AutoRecordDeclaration <Boolean>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

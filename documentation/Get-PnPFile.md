@@ -15,25 +15,25 @@ Downloads a file.
 ## SYNTAX
 
 ### Return as file object (Default)
-```
+```powershell
 Get-PnPFile [-Url] <String> [-AsFileObject] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Return as list item
-```
+```powershell
 Get-PnPFile [-Url] <String> [-AsListItem] [-ThrowExceptionIfFileNotFound] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Save to local path
-```
+```powershell
 Get-PnPFile [-Url] <String> [-Path <String>] [-Filename <String>] [-AsFile] [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Return as string
-```
+```powershell
 Get-PnPFile [-Url] <String> [-AsString] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

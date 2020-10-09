@@ -14,7 +14,7 @@ Returns the access token
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPAppAuthAccessToken [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

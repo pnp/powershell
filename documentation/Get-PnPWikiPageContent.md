@@ -14,7 +14,7 @@ Gets the contents/source of a wiki page
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPWikiPageContent [-ServerRelativePageUrl] <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

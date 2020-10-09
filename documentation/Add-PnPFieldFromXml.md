@@ -14,7 +14,7 @@ Adds a field to a list or as a site column based upon a CAML/XML field definitio
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPFieldFromXml [-List <ListPipeBind>] [-FieldXml] <String> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

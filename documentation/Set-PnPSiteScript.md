@@ -19,7 +19,7 @@ Updates an existing Site Script on the current tenant.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPSiteScript -Identity <TenantSiteScriptPipeBind> [-Title <String>] [-Description <String>]
  [-Content <String>] [-Version <Int32>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```

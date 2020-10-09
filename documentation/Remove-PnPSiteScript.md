@@ -19,7 +19,7 @@ Removes a Site Script
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPSiteScript [-Identity] <TenantSiteScriptPipeBind> [-Force] [-Connection <PnPConnection>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```

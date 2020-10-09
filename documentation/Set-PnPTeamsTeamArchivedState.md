@@ -19,7 +19,7 @@ Sets the archived state of a team.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTeamsTeamArchivedState -Identity <TeamsTeamPipeBind> -Archived <Boolean>
  [-SetSiteReadOnlyForMembers <Boolean>] [-ByPassPermissionCheck] [<CommonParameters>]
 ```

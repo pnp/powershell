@@ -19,7 +19,7 @@ Gets members of a particular Microsoft 365 Group (aka Unified Group). Requires t
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPMicrosoft365GroupMembers -Identity <Microsoft365GroupPipeBind> [-ByPassPermissionCheck]
  [<CommonParameters>]
 ```

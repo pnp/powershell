@@ -19,7 +19,7 @@ Gets the historical service status of the Office 365 Services of the last 7 days
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPOffice365HistoricalServiceStatus [-Workload <Office365Workload>] [-ByPassPermissionCheck]
  [<CommonParameters>]
 ```

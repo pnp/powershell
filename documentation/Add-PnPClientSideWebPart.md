@@ -15,28 +15,28 @@ Adds a Client-Side Web Part to a client-side page
 ## SYNTAX
 
 ### Default with built-in web part
-```
+```powershell
 Add-PnPClientSideWebPart [-Page] <ClientSidePagePipeBind> -DefaultWebPartType <DefaultClientSideWebParts>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Default with 3rd party web part
-```
+```powershell
 Add-PnPClientSideWebPart [-Page] <ClientSidePagePipeBind> -Component <ClientSideComponentPipeBind>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Positioned with built-in web part
-```
+```powershell
 Add-PnPClientSideWebPart [-Page] <ClientSidePagePipeBind> -DefaultWebPartType <DefaultClientSideWebParts>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] -Section <Int32> -Column <Int32>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Positioned with 3rd party web part
-```
+```powershell
 Add-PnPClientSideWebPart [-Page] <ClientSidePagePipeBind> -Component <ClientSideComponentPipeBind>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] -Section <Int32> -Column <Int32>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]

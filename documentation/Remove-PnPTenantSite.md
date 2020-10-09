@@ -19,7 +19,7 @@ Removes a site collection
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPTenantSite [-Url] <String> [-SkipRecycleBin] [-Force] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

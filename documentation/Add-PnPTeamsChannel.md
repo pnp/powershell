@@ -20,13 +20,13 @@ Adds a channel to an existing Microsoft Teams instance.
 ## SYNTAX
 
 ### Public channel
-```
+```powershell
 Add-PnPTeamsChannel -Team <TeamsTeamPipeBind> -DisplayName <String> [-Description <String>]
  [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 
 ### Private channel
-```
+```powershell
 Add-PnPTeamsChannel -Team <TeamsTeamPipeBind> -DisplayName <String> [-Description <String>] [-Private]
  -OwnerUPN <String> [-ByPassPermissionCheck] [<CommonParameters>]
 ```

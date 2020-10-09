@@ -14,7 +14,7 @@ Returns a field from a list or site
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPField [-List <ListPipeBind>] [[-Identity] <FieldPipeBind>] [-Group <String>] [-InSiteHierarchy]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```

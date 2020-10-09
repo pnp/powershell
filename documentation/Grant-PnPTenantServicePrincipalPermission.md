@@ -19,7 +19,7 @@ Explicitly grants a specified permission to the "SharePoint Online Client" servi
 
 ## SYNTAX
 
-```
+```powershell
 Grant-PnPTenantServicePrincipalPermission -Scope <String> -Resource <String> [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

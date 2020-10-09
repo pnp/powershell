@@ -19,7 +19,7 @@ Gets one Microsoft 365 Group or a list of Microsoft 365 Groups
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPMicrosoft365Group [-Identity <Microsoft365GroupPipeBind>] [-ExcludeSiteUrl] [-IncludeClassification]
  [-IncludeHasTeam] [-ByPassPermissionCheck] [<CommonParameters>]
 ```

@@ -19,7 +19,7 @@ Gets current service status of the Office 365 Services from the Office 365 Manag
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPOffice365CurrentServiceStatus [-Workload <Office365Workload>] [-ByPassPermissionCheck]
  [<CommonParameters>]
 ```

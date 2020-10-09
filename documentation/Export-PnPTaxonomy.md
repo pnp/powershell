@@ -14,7 +14,7 @@ Exports a taxonomy to either the output or to a file.
 
 ## SYNTAX
 
-```
+```powershell
 Export-PnPTaxonomy [-TermSetId <Guid>] [-IncludeID] [-Path <String>] [-TermStoreName <String>] [-Force]
  [-Delimiter <String>] [-Lcid <Int32>] [-Encoding <Encoding>] [-Connection <PnPConnection>] [-WhatIf]
  [-Confirm] [<CommonParameters>]

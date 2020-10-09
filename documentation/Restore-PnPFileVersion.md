@@ -14,7 +14,7 @@ Restores a specific file version.
 
 ## SYNTAX
 
-```
+```powershell
 Restore-PnPFileVersion -Url <String> [-Identity <FileVersionPipeBind>] [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

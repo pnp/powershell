@@ -15,13 +15,13 @@ Sets a property bag value
 ## SYNTAX
 
 ### Web
-```
+```powershell
 Set-PnPPropertyBagValue -Key <String> -Value <String> [-Indexed] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Folder
-```
+```powershell
 Set-PnPPropertyBagValue -Key <String> -Value <String> [-Folder <String>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

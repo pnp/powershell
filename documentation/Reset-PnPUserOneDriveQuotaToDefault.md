@@ -19,7 +19,7 @@ Resets the current quota set on the OneDrive for Business site for a specific us
 
 ## SYNTAX
 
-```
+```powershell
 Reset-PnPUserOneDriveQuotaToDefault [-Account] <String> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

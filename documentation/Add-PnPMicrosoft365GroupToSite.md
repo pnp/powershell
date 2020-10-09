@@ -19,7 +19,7 @@ Groupifies a classic team site by creating a Microsoft 365 group for it and conn
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPMicrosoft365GroupToSite -Url <String> -Alias <String> [-Description <String>] -DisplayName <String>
  [-Classification <String>] [-IsPublic] [-KeepOldHomePage] [-HubSiteId <Guid>] [-Owners <String[]>]
  [-Connection <PnPConnection>] [<CommonParameters>]

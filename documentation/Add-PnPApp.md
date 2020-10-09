@@ -15,13 +15,13 @@ Add/uploads an available app to the app catalog
 ## SYNTAX
 
 ### Add only
-```
+```powershell
 Add-PnPApp [-Path] <String> [-Scope <AppCatalogScope>] [-Overwrite] [-Timeout <Int32>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Add and Publish
-```
+```powershell
 Add-PnPApp [-Path] <String> [-Scope <AppCatalogScope>] [-Publish] [-SkipFeatureDeployment] [-Overwrite]
  [-Timeout <Int32>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

@@ -15,19 +15,19 @@ Removes all or a specific file version.
 ## SYNTAX
 
 ### Return as file object (Default)
-```
+```powershell
 Remove-PnPFileVersion -Url <String> [-Recycle] [-Force] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### All
-```
+```powershell
 Remove-PnPFileVersion -Url <String> [-All] [-Recycle] [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### By Id
-```
+```powershell
 Remove-PnPFileVersion -Url <String> [-Identity <FileVersionPipeBind>] [-Recycle] [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

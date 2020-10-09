@@ -19,7 +19,7 @@ Removes the currently set site as the home site
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPHomeSite [-Force] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

@@ -14,7 +14,7 @@ Returns the current web object
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPWeb [[-Identity] <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
  [<CommonParameters>]
 ```

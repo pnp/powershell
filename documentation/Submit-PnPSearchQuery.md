@@ -15,7 +15,7 @@ Executes an arbitrary search query against the SharePoint search index
 ## SYNTAX
 
 ### Limit (Default)
-```
+```powershell
 Submit-PnPSearchQuery [-Query] <String> [-StartRow <Int32>] [-MaxResults <Int32>] [-TrimDuplicates <Boolean>]
  [-Properties <Hashtable>] [-Refiners <String>] [-Culture <Int32>] [-QueryTemplate <String>]
  [-SelectProperties <String[]>] [-RefinementFilters <String[]>] [-SortList <Hashtable>]
@@ -27,7 +27,7 @@ Submit-PnPSearchQuery [-Query] <String> [-StartRow <Int32>] [-MaxResults <Int32>
 ```
 
 ### All
-```
+```powershell
 Submit-PnPSearchQuery [-Query] <String> [-All] [-TrimDuplicates <Boolean>] [-Properties <Hashtable>]
  [-Refiners <String>] [-Culture <Int32>] [-QueryTemplate <String>] [-SelectProperties <String[]>]
  [-RefinementFilters <String[]>] [-SortList <Hashtable>] [-RankingModelId <String>] [-ClientType <String>]

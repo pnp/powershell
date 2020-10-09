@@ -15,13 +15,13 @@ Sets list permissions
 ## SYNTAX
 
 ### Group
-```
+```powershell
 Set-PnPListPermission -Identity <ListPipeBind> -Group <GroupPipeBind> [-AddRole <String>]
  [-RemoveRole <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### User
-```
+```powershell
 Set-PnPListPermission -Identity <ListPipeBind> -User <String> [-AddRole <String>] [-RemoveRole <String>]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

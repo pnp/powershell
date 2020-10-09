@@ -19,7 +19,7 @@ Removes all current owners from a particular Microsoft 365 Group (aka Unified Gr
 
 ## SYNTAX
 
-```
+```powershell
 Clear-PnPMicrosoft365GroupOwner -Identity <Microsoft365GroupPipeBind> [-ByPassPermissionCheck]
  [<CommonParameters>]
 ```

@@ -14,7 +14,7 @@ Returns the current theme/composed look of the current web.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTheme [-DetectCurrentComposedLook] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

@@ -14,7 +14,7 @@ Adds a user to the built-in Site User Info List and returns a user object
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPUser -LoginName <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

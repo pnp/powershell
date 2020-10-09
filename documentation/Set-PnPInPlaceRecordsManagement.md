@@ -14,7 +14,7 @@ Activates or deactivates in the place records management feature.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPInPlaceRecordsManagement -Enabled <Boolean> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

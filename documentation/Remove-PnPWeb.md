@@ -14,7 +14,7 @@ Removes a subweb in the current web
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPWeb -Url <String> -Identity <WebPipeBind> [-Force] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

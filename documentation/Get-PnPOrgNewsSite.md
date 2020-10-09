@@ -19,7 +19,7 @@ Returns the list of all the configured organizational news sites.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPOrgNewsSite [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

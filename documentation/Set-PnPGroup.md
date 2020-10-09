@@ -14,7 +14,7 @@ Updates a group
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPGroup -Identity <GroupPipeBind> [-SetAssociatedGroup <AssociatedGroupType>] [-AddRole <String>]
  [-RemoveRole <String>] [-Title <String>] [-Owner <String>] [-Description <String>]
  [-AllowRequestToJoinLeave <Boolean>] [-AutoAcceptRequestToJoinLeave <Boolean>]

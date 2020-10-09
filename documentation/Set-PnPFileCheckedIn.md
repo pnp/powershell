@@ -14,7 +14,7 @@ Checks in a file
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPFileCheckedIn [-Url] <String> [-CheckinType <CheckinType>] [-Comment <String>] [-Approve]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

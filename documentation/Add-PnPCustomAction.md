@@ -15,7 +15,7 @@ Adds a custom action
 ## SYNTAX
 
 ### Default
-```
+```powershell
 Add-PnPCustomAction -Name <String> -Title <String> -Description <String> -Group <String> -Location <String>
  [-Sequence <Int32>] [-Url <String>] [-ImageUrl <String>] [-CommandUIExtension <String>]
  [-RegistrationId <String>] [-Rights <PermissionKind[]>] [-RegistrationType <UserCustomActionRegistrationType>]
@@ -23,7 +23,7 @@ Add-PnPCustomAction -Name <String> -Title <String> -Description <String> -Group 
 ```
 
 ### Client Side Component Id
-```
+```powershell
 Add-PnPCustomAction -Name <String> -Title <String> -Location <String> [-Sequence <Int32>]
  [-RegistrationId <String>] [-RegistrationType <UserCustomActionRegistrationType>] [-Scope <CustomActionScope>]
  -ClientSideComponentId <Guid> [-ClientSideComponentProperties <String>]

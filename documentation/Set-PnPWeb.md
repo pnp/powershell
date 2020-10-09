@@ -14,7 +14,7 @@ Sets properties on a web
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPWeb [-SiteLogoUrl <String>] [-AlternateCssUrl <String>] [-Title <String>] [-Description <String>]
  [-MasterUrl <String>] [-CustomMasterUrl <String>] [-QuickLaunchEnabled] [-MembersCanShare] [-NoCrawl]
  [-HeaderLayout <HeaderLayoutType>] [-HeaderEmphasis <SPVariantThemeType>] [-NavAudienceTargetingEnabled]

@@ -14,7 +14,7 @@ Exports one or more lists to provisioning template
 
 ## SYNTAX
 
-```
+```powershell
 Export-PnPListToSiteTemplate -List <System.Collections.Generic.List`1[System.String]> [[-Out] <String>]
  [[-Schema] <XMLPnPSchemaVersion>] [-Force] [-OutputInstance] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]

@@ -14,7 +14,7 @@ Remove Storage Entities / Farm Properties from either the tenant scoped app cata
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPStorageEntity -Key <String> [-Scope <StorageEntityScope>] [-Connection <PnPConnection>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```

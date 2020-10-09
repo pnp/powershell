@@ -14,7 +14,7 @@ Deletes a list
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPList [-Identity] <ListPipeBind> [-Recycle] [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```

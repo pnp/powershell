@@ -14,7 +14,7 @@ Adds an item to the list and sets the creation time to the current date and time
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPListItem [-List] <ListPipeBind> [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>]
  [-Folder <String>] [-Label <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

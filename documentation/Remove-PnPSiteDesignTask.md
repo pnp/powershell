@@ -19,7 +19,7 @@ Removes a Site Design Task. If the execution of the associated site script has a
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPSiteDesignTask [-Identity] <TenantSiteDesignTaskPipeBind> [-Force] [-Connection <PnPConnection>]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```

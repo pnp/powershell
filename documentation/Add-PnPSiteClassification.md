@@ -19,7 +19,7 @@ Adds one ore more site classification values to the list of possible values
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]>
  [-ByPassPermissionCheck] [<CommonParameters>]
 ```

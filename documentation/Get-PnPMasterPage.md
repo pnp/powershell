@@ -14,7 +14,7 @@ Returns the URLs of the default Master Page and the custom Master Page.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPMasterPage [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

@@ -19,7 +19,7 @@ Connects a site to a hubsite.
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPHubSiteAssociation -Site <SitePipeBind> -HubSite <SitePipeBind> [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

@@ -14,7 +14,7 @@ Enables PnP PowerShell telemetry tracking.
 
 ## SYNTAX
 
-```
+```powershell
 Enable-PnPPowerShellTelemetry [-Force] [<CommonParameters>]
 ```
 

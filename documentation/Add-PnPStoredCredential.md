@@ -14,7 +14,7 @@ Adds a credential to the Windows Credential Manager
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPStoredCredential -Name <String> -Username <String> [-Password <SecureString>] [-Overwrite]
  [<CommonParameters>]
 ```

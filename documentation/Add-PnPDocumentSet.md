@@ -14,7 +14,7 @@ Creates a new document set in a library.
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPDocumentSet -List <ListPipeBind> -Name <String> -ContentType <ContentTypePipeBind> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

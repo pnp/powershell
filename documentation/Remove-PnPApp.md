@@ -14,7 +14,7 @@ Removes an app from the app catalog
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

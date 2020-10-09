@@ -15,13 +15,13 @@ Sets the contents of a wikipage
 ## SYNTAX
 
 ### STRING
-```
+```powershell
 Set-PnPWikiPageContent -Content <String> -ServerRelativePageUrl <String> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### FILE
-```
+```powershell
 Set-PnPWikiPageContent -Path <String> -ServerRelativePageUrl <String> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

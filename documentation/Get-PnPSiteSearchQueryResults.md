@@ -15,13 +15,13 @@ Executes a search query to retrieve indexed site collections
 ## SYNTAX
 
 ### Limit (Default)
-```
+```powershell
 Get-PnPSiteSearchQueryResults [[-Query] <String>] [-StartRow <Int32>] [-MaxResults <Int32>]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### All
-```
+```powershell
 Get-PnPSiteSearchQueryResults [[-Query] <String>] [-All] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

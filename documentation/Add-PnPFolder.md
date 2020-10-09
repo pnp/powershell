@@ -14,7 +14,7 @@ Creates a folder within a parent folder
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPFolder -Name <String> -Folder <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

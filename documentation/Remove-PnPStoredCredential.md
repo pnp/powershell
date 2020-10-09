@@ -14,7 +14,7 @@ Removes a credential
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPStoredCredential -Name <String> [-Force] [<CommonParameters>]
 ```
 

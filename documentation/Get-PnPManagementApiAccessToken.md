@@ -14,7 +14,7 @@ Gets an access token for the Office 365 Management API
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPManagementApiAccessToken -TenantId <String> -ClientId <String> -ClientSecret <String>
  [<CommonParameters>]
 ```

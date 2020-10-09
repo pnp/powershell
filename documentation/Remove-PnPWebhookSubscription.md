@@ -14,7 +14,7 @@ Removes a Webhook subscription from the resource
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPWebhookSubscription [-Identity] <WebhookSubscriptionPipeBind> [-List <ListPipeBind>] [-Force]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

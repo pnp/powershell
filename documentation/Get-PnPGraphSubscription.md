@@ -15,12 +15,12 @@ Gets subscriptions from Microsoft Graph. Requires the Azure Active Directory app
 ## SYNTAX
 
 ### Return a list (Default)
-```
+```powershell
 Get-PnPGraphSubscription [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 
 ### Return by specific ID
-```
+```powershell
 Get-PnPGraphSubscription [-Identity <String>] [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 

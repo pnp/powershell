@@ -15,13 +15,13 @@ Returns all or a specific navigation node
 ## SYNTAX
 
 ### All nodes by location (Default)
-```
+```powershell
 Get-PnPNavigationNode [-Location <NavigationType>] [-Tree] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### A single node by ID
-```
+```powershell
 Get-PnPNavigationNode [-Id <Int32>] [-Tree] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

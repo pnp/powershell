@@ -14,7 +14,7 @@ Creates a taxonomy term
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPTerm -Name <String> [-Id <Guid>] [-Lcid <Int32>]
  [-TermSet] <PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]>
  -TermGroup <TermGroupPipeBind> [-Description <String>] [-CustomProperties <Hashtable>]

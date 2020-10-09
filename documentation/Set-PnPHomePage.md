@@ -14,7 +14,7 @@ Sets the home page of the current web.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPHomePage [-RootFolderRelativeUrl] <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

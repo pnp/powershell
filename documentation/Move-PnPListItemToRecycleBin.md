@@ -14,7 +14,7 @@ Moves an item from a list to the Recycle Bin
 
 ## SYNTAX
 
-```
+```powershell
 Move-PnPListItemToRecycleBin [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```

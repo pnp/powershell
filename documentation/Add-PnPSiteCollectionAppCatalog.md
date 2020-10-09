@@ -19,7 +19,7 @@ Adds a Site Collection scoped App Catalog to a site
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPSiteCollectionAppCatalog -Site <SitePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

@@ -14,7 +14,7 @@ Return user custom actions
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPCustomAction [-Identity <Guid>] [-Scope <CustomActionScope>]
  [-ThrowExceptionIfCustomActionNotFound] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [-Includes <String[]>] [<CommonParameters>]

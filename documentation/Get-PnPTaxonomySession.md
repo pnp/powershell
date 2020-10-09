@@ -14,7 +14,7 @@ Returns a taxonomy session
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTaxonomySession [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

@@ -19,7 +19,7 @@ Sets the quota on the OneDrive for Business site for a specific user
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPUserOneDriveQuota [-Account] <String> [-Quota] <Int64> [-QuotaWarning] <Int64>
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

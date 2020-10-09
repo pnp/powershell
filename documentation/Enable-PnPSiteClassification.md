@@ -19,7 +19,7 @@ Enables Site Classifications for the tenant
 
 ## SYNTAX
 
-```
+```powershell
 Enable-PnPSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]>
  -DefaultClassification <String> [-UsageGuidelinesUrl <String>] [-ByPassPermissionCheck] [<CommonParameters>]
 ```

@@ -14,7 +14,7 @@ Creates a team site subsite with no Microsoft 365 group object
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPTenantSequenceTeamNoGroupSubSite -Url <String> -Title <String> -TimeZoneId <UInt32> [-Language <UInt32>]
  [-Description <String>] [-TemplateIds <String[]>] [-QuickLaunchDisabled]
  [-UseDifferentPermissionsFromParentSite] [-WhatIf] [-Confirm] [<CommonParameters>]

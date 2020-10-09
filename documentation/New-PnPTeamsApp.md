@@ -19,7 +19,7 @@ Adds an app to the Teams App Catalog.
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPTeamsApp -Path <String> [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 

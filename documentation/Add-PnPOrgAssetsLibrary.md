@@ -19,7 +19,7 @@ Adds a given document library as a organizational asset source
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPOrgAssetsLibrary -LibraryUrl <String> [-ThumbnailUrl <String>] [-CdnType <SPOTenantCdnType>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

@@ -14,7 +14,7 @@ Removes an existing Microsoft Graph subscription. Required Azure Active Director
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPGraphSubscription -Identity <GraphSubscriptionPipeBind> [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 

@@ -14,7 +14,7 @@ Returns lists from SharePoint
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPList [[-Identity] <ListPipeBind>] [-ThrowExceptionIfListNotFound] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```

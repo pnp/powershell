@@ -14,7 +14,7 @@ Set Client-Side Web Part properties
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPClientSideWebPart [-Page] <ClientSidePagePipeBind> -Identity <ClientSideWebPartPipeBind>
  [-Title <String>] [-PropertiesJson <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]

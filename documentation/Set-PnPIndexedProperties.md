@@ -14,7 +14,7 @@ Marks values of the propertybag to be indexed by search. Notice that this will o
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPIndexedProperties -Keys <System.Collections.Generic.List`1[System.String]> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

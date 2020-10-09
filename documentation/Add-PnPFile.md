@@ -15,14 +15,14 @@ Uploads a file to Web
 ## SYNTAX
 
 ### Upload file
-```
+```powershell
 Add-PnPFile -Path <String> -Folder <String> [-NewFileName <String>] [-Checkout] [-CheckInComment <String>]
  [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
  [-ContentType <ContentTypePipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Upload file from stream
-```
+```powershell
 Add-PnPFile -Folder <String> -FileName <String> -Stream <Stream> [-Checkout] [-CheckInComment <String>]
  [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
  [-ContentType <ContentTypePipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]

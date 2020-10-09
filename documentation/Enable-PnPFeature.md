@@ -14,7 +14,7 @@ Enables a feature
 
 ## SYNTAX
 
-```
+```powershell
 Enable-PnPFeature [-Identity] <Guid> [-Force] [-Scope <FeatureScope>] [-Sandboxed] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

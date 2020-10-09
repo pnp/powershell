@@ -14,7 +14,7 @@ Adds a publishing page
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPPublishingPage -PageName <String> [-FolderPath <String>] -PageTemplateName <String> [-Title <String>]
  [-Publish] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

@@ -15,7 +15,7 @@ Add a taxonomy field
 ## SYNTAX
 
 ### Path
-```
+```powershell
 Add-PnPTaxonomyField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> -TermSetPath <String>
  [-TermPathDelimiter <String>] [-Group <String>] [-Id <Guid>] [-AddToDefaultView] [-MultiValue]
  [-Required] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
@@ -23,7 +23,7 @@ Add-PnPTaxonomyField [-List <ListPipeBind>] -DisplayName <String> -InternalName 
 ```
 
 ### Id
-```
+```powershell
 Add-PnPTaxonomyField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String>
  [-TaxonomyItemId <Guid>] [-Group <String>] [-Id <Guid>] [-AddToDefaultView] [-MultiValue]
  [-Required] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]

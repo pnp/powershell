@@ -15,7 +15,7 @@ Adds a file to a PnP Provisioning Template
 ## SYNTAX
 
 ### Local File
-```
+```powershell
 Add-PnPFileToSiteTemplate [-Path] <String> [-Source] <String> [-Folder] <String>
  [[-Container] <String>] [[-FileLevel] <FileLevel>] [-FileOverwrite]
  [[-TemplateProviderExtensions] <ITemplateProviderExtension[]>] [-Web <WebPipeBind>]
@@ -23,7 +23,7 @@ Add-PnPFileToSiteTemplate [-Path] <String> [-Source] <String> [-Folder] <String>
 ```
 
 ### Remove File
-```
+```powershell
 Add-PnPFileToSiteTemplate [-Path] <String> [-SourceUrl] <String> [[-Container] <String>]
  [[-FileLevel] <FileLevel>] [-FileOverwrite] [[-TemplateProviderExtensions] <ITemplateProviderExtension[]>]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]

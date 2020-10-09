@@ -14,7 +14,7 @@ Adds a link to a JavaScript snippet/block to a web or site collection
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPJavaScriptBlock -Name <String> -Script <String> [-Sequence <Int32>] [-Scope <CustomActionScope>]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

@@ -14,7 +14,7 @@ Disables PnP PowerShell telemetry tracking
 
 ## SYNTAX
 
-```
+```powershell
 Disable-PnPPowerShellTelemetry [-Force] [<CommonParameters>]
 ```
 

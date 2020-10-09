@@ -19,7 +19,7 @@ Sets organization-level sync client restriction properties
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTenantSyncClientRestriction [-BlockMacSync] [-DisableReportProblemDialog]
  [-DomainGuids <System.Collections.Generic.List`1[System.Guid]>] [-Enable]
  [-ExcludedFileExtensions <System.Collections.Generic.List`1[System.String]>]

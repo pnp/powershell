@@ -14,7 +14,7 @@ Adds one or more users as site collection administrators to the site collection 
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPSiteCollectionAdmin
  -Owners <System.Collections.Generic.List`1[PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind]>
  [-Connection <PnPConnection>] [<CommonParameters>]

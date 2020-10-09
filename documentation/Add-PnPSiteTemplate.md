@@ -14,7 +14,7 @@ Adds a PnP Site Template object to a tenant template
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPSiteTemplate -SiteTemplate <SiteTemplate> -TenantTemplate <ProvisioningHierarchy>
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```

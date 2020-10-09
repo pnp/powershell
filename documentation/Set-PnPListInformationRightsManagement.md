@@ -14,7 +14,7 @@ Get the site closure status of the site which has a site policy applied
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPListInformationRightsManagement -List <ListPipeBind> [-Enable <Boolean>] [-EnableExpiration <Boolean>]
  [-EnableRejection <Boolean>] [-AllowPrint <Boolean>] [-AllowScript <Boolean>] [-AllowWriteCopy <Boolean>]
  [-DisableDocumentBrowserView <Boolean>] [-DocumentAccessExpireDays <Int32>]

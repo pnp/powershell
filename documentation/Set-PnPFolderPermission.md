@@ -15,21 +15,21 @@ Sets folder permissions. Use Get-PnPRoleDefinition to retrieve all available rol
 ## SYNTAX
 
 ### User (Default)
-```
+```powershell
 Set-PnPFolderPermission [-List] <ListPipeBind> -Identity <FolderPipeBind> -User <String> [-AddRole <String>]
  [-RemoveRole <String>] [-ClearExisting] [-SystemUpdate] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Group
-```
+```powershell
 Set-PnPFolderPermission [-List] <ListPipeBind> -Identity <FolderPipeBind> -Group <GroupPipeBind>
  [-AddRole <String>] [-RemoveRole <String>] [-ClearExisting] [-SystemUpdate] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Inherit
-```
+```powershell
 Set-PnPFolderPermission [-List] <ListPipeBind> -Identity <FolderPipeBind> [-InheritPermissions] [-SystemUpdate]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

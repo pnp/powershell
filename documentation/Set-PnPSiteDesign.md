@@ -19,7 +19,7 @@ Updates a Site Design on the current tenant.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPSiteDesign -Identity <TenantSiteDesignPipeBind> [-Title <String>] [-SiteScriptIds <GuidPipeBind[]>]
  [-Description <String>] [-IsDefault] [-PreviewImageAltText <String>] [-PreviewImageUrl <String>]
  [-WebTemplate <SiteWebTemplate>] [-Version <Int32>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm]

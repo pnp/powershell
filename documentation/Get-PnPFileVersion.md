@@ -14,7 +14,7 @@ Retrieves all versions of a file.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPFileVersion -Url <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

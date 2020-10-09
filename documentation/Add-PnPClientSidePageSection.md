@@ -14,7 +14,7 @@ Adds a new section to a Client-Side page
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPClientSidePageSection [-Page] <ClientSidePagePipeBind> -SectionTemplate <CanvasSectionTemplate>
  [-Order <Int32>] [-ZoneEmphasis <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]

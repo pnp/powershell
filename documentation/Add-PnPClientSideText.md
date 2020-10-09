@@ -15,13 +15,13 @@ Adds a text element to a client-side page.
 ## SYNTAX
 
 ### Default
-```
+```powershell
 Add-PnPClientSideText [-Page] <ClientSidePagePipeBind> -Text <String> [-Order <Int32>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Positioned
-```
+```powershell
 Add-PnPClientSideText [-Page] <ClientSidePagePipeBind> -Text <String> [-Order <Int32>] -Section <Int32>
  -Column <Int32> [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

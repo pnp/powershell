@@ -15,14 +15,14 @@ Proxy cmdlet for using Copy-Item between SharePoint provider and FileSystem prov
 ## SYNTAX
 
 ### Path (Default)
-```
+```powershell
 Copy-PnPItemProxy [-Recurse] [-Path] <String[]> [[-Destination] <String>] [-Container] [-Force]
  [-Filter <String>] [-Include <String[]>] [-Exclude <String[]>] [-PassThru] [-Credential <PSCredential>]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### LiteralPath
-```
+```powershell
 Copy-PnPItemProxy [-Recurse] [-LiteralPath] <String[]> [[-Destination] <String>] [-Container] [-Force]
  [-Filter <String>] [-Include <String[]>] [-Exclude <String[]>] [-PassThru] [-Credential <PSCredential>]
  [-WhatIf] [-Confirm] [<CommonParameters>]

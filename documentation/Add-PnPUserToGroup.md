@@ -15,13 +15,13 @@ Adds a user to a SharePoint group
 ## SYNTAX
 
 ### Internal
-```
+```powershell
 Add-PnPUserToGroup -LoginName <String> -Identity <GroupPipeBind> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### External
-```
+```powershell
 Add-PnPUserToGroup -Identity <GroupPipeBind> -EmailAddress <String> [-SendEmail] [-EmailBody <String>]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

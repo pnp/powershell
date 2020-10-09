@@ -14,7 +14,7 @@ Imports a taxonomy term set from a file in the standard format.
 
 ## SYNTAX
 
-```
+```powershell
 Import-PnPTermSet -GroupName <String> -Path <String> [-TermSetId <Guid>] [-SynchronizeDeletions]
  [-IsOpen <Boolean>] [-Contact <String>] [-Owner <String>] [-TermStoreName <String>]
  [-Connection <PnPConnection>] [<CommonParameters>]

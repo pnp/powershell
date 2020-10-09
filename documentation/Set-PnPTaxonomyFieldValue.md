@@ -15,19 +15,19 @@ Sets a taxonomy term value in a listitem field
 ## SYNTAX
 
 ### ITEM (Default)
-```
+```powershell
 Set-PnPTaxonomyFieldValue -ListItem <ListItem> -InternalFieldName <String> -TermId <Guid>
  [-Label <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### PATH
-```
+```powershell
 Set-PnPTaxonomyFieldValue -ListItem <ListItem> -InternalFieldName <String> -TermPath <String>
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### ITEMS
-```
+```powershell
 Set-PnPTaxonomyFieldValue -ListItem <ListItem> -InternalFieldName <String> [-Terms <Hashtable>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

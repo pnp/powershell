@@ -14,7 +14,7 @@ Adds a content type to a document set
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPContentTypeToDocumentSet -ContentType <ContentTypePipeBind[]> -DocumentSet <DocumentSetPipeBind>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

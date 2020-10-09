@@ -14,7 +14,7 @@ Change view properties
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPView [[-List] <ListPipeBind>] -Identity <ViewPipeBind> [-Values <Hashtable>] [-Fields <String[]>]
  [-Aggregations <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

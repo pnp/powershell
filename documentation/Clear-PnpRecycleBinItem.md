@@ -15,13 +15,13 @@ Permanently deletes all or a specific recycle bin item
 ## SYNTAX
 
 ### All (Default)
-```
+```powershell
 Clear-PnPRecycleBinItem [-All] [-SecondStageOnly] [-Force] [-RowLimit <Int32>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Identity
-```
+```powershell
 Clear-PnPRecycleBinItem -Identity <RecycleBinItemPipeBind> [-Force] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

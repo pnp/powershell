@@ -14,7 +14,7 @@ Returns the current context
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPContext [<CommonParameters>]
 ```
 

@@ -19,7 +19,7 @@ Generates a Site Script from an existing list
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPSiteScriptFromList -Url <String> [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 

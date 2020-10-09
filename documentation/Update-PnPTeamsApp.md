@@ -19,7 +19,7 @@ Updates an existing app in the Teams App Catalog.
 
 ## SYNTAX
 
-```
+```powershell
 Update-PnPTeamsApp -Identity <TeamsAppPipeBind> -Path <String> [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 

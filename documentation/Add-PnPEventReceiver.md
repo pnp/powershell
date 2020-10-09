@@ -14,7 +14,7 @@ Adds a new remote event receiver
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPEventReceiver [-List <ListPipeBind>] -Name <String> -Url <String> -EventReceiverType <EventReceiverType>
  -Synchronization <EventReceiverSynchronization> [-SequenceNumber <Int32>] [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]

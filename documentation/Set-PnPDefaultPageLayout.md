@@ -15,13 +15,13 @@ Sets a specific page layout to be the default page layout for a publishing site
 ## SYNTAX
 
 ### TITLE
-```
+```powershell
 Set-PnPDefaultPageLayout -Title <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### INHERIT
-```
+```powershell
 Set-PnPDefaultPageLayout [-InheritFromParentSite] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

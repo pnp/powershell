@@ -14,7 +14,7 @@ Retrieve one or more Client-Side components from a site page
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> [-InstanceId <Guid>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

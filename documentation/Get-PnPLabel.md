@@ -14,7 +14,7 @@ Gets the Office 365 retention label/tag of the specified list or library (if app
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPLabel -List <ListPipeBind> [-ValuesOnly] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

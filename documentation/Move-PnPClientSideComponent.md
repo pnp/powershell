@@ -15,25 +15,25 @@ Moves a Client-Side Component to a different section/column
 ## SYNTAX
 
 ### Move to other section
-```
+```powershell
 Move-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> -Section <Int32>
  [-Position <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Move to other section and column
-```
+```powershell
 Move-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> -Section <Int32>
  -Column <Int32> [-Position <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Move to other column
-```
+```powershell
 Move-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> -Column <Int32>
  [-Position <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Move within a column
-```
+```powershell
 Move-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> -Position <Int32>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

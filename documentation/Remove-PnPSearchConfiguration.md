@@ -15,13 +15,13 @@ Remove the search configuration
 ## SYNTAX
 
 ### Config
-```
+```powershell
 Remove-PnPSearchConfiguration -Configuration <String> [-Scope <SearchConfigurationScope>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Path
-```
+```powershell
 Remove-PnPSearchConfiguration -Path <String> [-Scope <SearchConfigurationScope>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

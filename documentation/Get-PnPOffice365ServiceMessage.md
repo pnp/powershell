@@ -19,7 +19,7 @@ Gets the service messages regarding services in Office 365 from the Office 365 M
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPOffice365ServiceMessage [-Workload <Office365Workload>] [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 

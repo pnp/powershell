@@ -19,7 +19,7 @@ Removes owners from a particular Microsoft 365 Group
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPMicrosoft365GroupOwner -Identity <Microsoft365GroupPipeBind> -Users <String[]>
  [-ByPassPermissionCheck] [<CommonParameters>]
 ```

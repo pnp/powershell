@@ -14,7 +14,7 @@ Removes a file from a PnP Provisioning Template
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPFileFromSiteTemplate [-Path] <String> [-FilePath] <String>
  [[-TemplateProviderExtensions] <ITemplateProviderExtension[]>] [<CommonParameters>]
 ```

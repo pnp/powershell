@@ -14,7 +14,7 @@ Installs an available app from the app catalog
 
 ## SYNTAX
 
-```
+```powershell
 Install-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-Wait]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

@@ -19,7 +19,7 @@ Retrieve site information.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTenantSite [[-Url] <String>] [-Template <String>] [-Detailed] [-IncludeOneDriveSites] [-Filter <String>]
  [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```

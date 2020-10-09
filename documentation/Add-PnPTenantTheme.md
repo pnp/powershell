@@ -19,7 +19,7 @@ Adds or updates a theme to the tenant.
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPTenantTheme [-Overwrite] -Identity <ThemePipeBind> -Palette <ThemePalettePipeBind> -IsInverted <Boolean>
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

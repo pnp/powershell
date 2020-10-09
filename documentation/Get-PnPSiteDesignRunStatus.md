@@ -19,7 +19,7 @@ Retrieves and displays a list of all site script actions executed for a specifie
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPSiteDesignRunStatus -Run <TenantSiteDesignRun> [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```

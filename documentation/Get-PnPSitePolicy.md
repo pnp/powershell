@@ -14,7 +14,7 @@ Retrieves all or a specific site policy
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPSitePolicy [-AllAvailable] [-Name <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

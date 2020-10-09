@@ -14,7 +14,7 @@ Returns a taxonomy term group
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTermGroup
  [[-Identity] <PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermGroup]>]
  [-TermStore <PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]>]

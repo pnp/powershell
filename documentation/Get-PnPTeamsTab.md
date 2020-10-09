@@ -19,7 +19,7 @@ Gets one or all tabs in a channel.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> [-Identity <TeamsTabPipeBind>]
  [-ByPassPermissionCheck] [<CommonParameters>]
 ```

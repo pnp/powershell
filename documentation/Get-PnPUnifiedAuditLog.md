@@ -19,7 +19,7 @@ Gets unified audit logs from the Office 365 Management API. Requires the Azure A
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPUnifiedAuditLog [-ContentType <AuditContentType>] [-StartTime <DateTime>] [-EndTime <DateTime>]
  [-ByPassPermissionCheck] [<CommonParameters>]
 ```

@@ -15,14 +15,14 @@ Proxy cmdlet for using Move-Item between SharePoint provider and FileSystem prov
 ## SYNTAX
 
 ### Path (Default)
-```
+```powershell
 Move-PnPItemProxy [-Path] <String[]> [[-Destination] <String>] [-Container] [-Force] [-Filter <String>]
  [-Include <String[]>] [-Exclude <String[]>] [-PassThru] [-Credential <PSCredential>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ### LiteralPath
-```
+```powershell
 Move-PnPItemProxy [-LiteralPath] <String[]> [[-Destination] <String>] [-Container] [-Force] [-Filter <String>]
  [-Include <String[]>] [-Exclude <String[]>] [-PassThru] [-Credential <PSCredential>] [-WhatIf] [-Confirm]
  [<CommonParameters>]

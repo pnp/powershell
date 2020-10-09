@@ -19,6 +19,11 @@ Removes all current members from a particular Microsoft 365 Group
 
 ## SYNTAX
 
+```powershell
+Clear-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> [-ByPassPermissionCheck]
+ [<CommonParameters>]
+```
+
 ## DESCRIPTION
 
 ## EXAMPLES
@@ -31,6 +36,36 @@ Clear-PnPMicrosoft365GroupMember -Identity "Project Team"
 Removes all the current members from the Microsoft 365 Group named "Project Team"
 
 ## PARAMETERS
+
+### -ByPassPermissionCheck
+Allows the check for required permissions in the access token to be bypassed when set to $true
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Identity
+The Identity of the Microsoft 365 Group to remove all owners from
+
+```yaml
+Type: Microsoft365GroupPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 

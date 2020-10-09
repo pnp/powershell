@@ -14,7 +14,7 @@ Removes a custom action
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPCustomAction [[-Identity] <UserCustomActionPipeBind>] [-Scope <CustomActionScope>] [-Force]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```

@@ -14,7 +14,7 @@ Adds a new content type to a list
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPContentTypeToList -List <ListPipeBind> -ContentType <ContentTypePipeBind> [-DefaultContentType]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

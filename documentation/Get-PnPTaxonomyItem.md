@@ -14,7 +14,7 @@ Returns a taxonomy item
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTaxonomyItem [-TermPath] <String> [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```

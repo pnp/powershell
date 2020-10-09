@@ -14,7 +14,7 @@ Removes a group from a web.
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPGroup [[-Identity] <GroupPipeBind>] [-Force] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

@@ -14,7 +14,7 @@ Removes a field from a list or a site
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPField [-Identity] <FieldPipeBind> [[-List] <ListPipeBind>] [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```

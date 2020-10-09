@@ -15,17 +15,17 @@ Returns site users of current web
 ## SYNTAX
 
 ### Identity based request (Default)
-```
+```powershell
 Get-PnPUser [-Identity <UserPipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### With rights assigned
-```
+```powershell
 Get-PnPUser [-WithRightsAssigned] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### With rights assigned detailed
-```
+```powershell
 Get-PnPUser [-WithRightsAssignedDetailed] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

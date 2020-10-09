@@ -14,7 +14,7 @@ Restores the provided recycle bin item to its original location
 
 ## SYNTAX
 
-```
+```powershell
 Restore-PnPRecycleBinItem -Identity <RecycleBinItemPipeBind> [-Force] [-RowLimit <Int32>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

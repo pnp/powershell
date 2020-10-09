@@ -14,7 +14,7 @@ Enables the modern communication site experience on a classic team site.
 
 ## SYNTAX
 
-```
+```powershell
 Enable-PnPCommSite [[-DesignPackageId] <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

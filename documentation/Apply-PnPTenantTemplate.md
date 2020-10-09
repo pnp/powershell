@@ -20,7 +20,7 @@ Applies a tenant template to the current tenant. You must have the Office 365 Gl
 ## SYNTAX
 
 ### By Path
-```
+```powershell
 Apply-PnPTenantTemplate [-Path] <String> [-SequenceId <String>] [-ResourceFolder <String>]
  [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Parameters <Hashtable>]
@@ -30,7 +30,7 @@ Apply-PnPTenantTemplate [-Path] <String> [-SequenceId <String>] [-ResourceFolder
 ```
 
 ### By Object
-```
+```powershell
 Apply-PnPTenantTemplate [-Template] <ProvisioningHierarchy> [-SequenceId <String>] [-ResourceFolder <String>]
  [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Parameters <Hashtable>]

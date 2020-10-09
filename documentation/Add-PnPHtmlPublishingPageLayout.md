@@ -14,7 +14,7 @@ Adds a HTML based publishing page layout
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPHtmlPublishingPageLayout -SourceFilePath <String> -Title <String> -Description <String>
  -AssociatedContentTypeID <String> [-DestinationFolderHierarchy <String>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]

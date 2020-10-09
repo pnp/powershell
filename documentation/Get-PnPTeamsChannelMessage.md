@@ -19,7 +19,7 @@ Sends a message to a Microsoft Teams Channel.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTeamsChannelMessage -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> [-IncludeDeleted]
  [-ByPassPermissionCheck] [<CommonParameters>]
 ```

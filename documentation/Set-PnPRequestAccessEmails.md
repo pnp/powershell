@@ -14,7 +14,7 @@ Sets Request Access Email on a web
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPRequestAccessEmails [-Emails <String[]>] [-Disabled] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

@@ -14,7 +14,7 @@ Synchronize an app from the tenant app catalog to the Microsoft Teams app catalo
 
 ## SYNTAX
 
-```
+```powershell
 Sync-PnPAppToTeams [-Identity] <AppMetadataPipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

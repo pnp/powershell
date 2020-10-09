@@ -20,18 +20,18 @@ Retrieves users from Azure Active Directory
 ## SYNTAX
 
 ### Return a list (Default)
-```
+```powershell
 Get-PnPAADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-ByPassPermissionCheck]
  [<CommonParameters>]
 ```
 
 ### Return by specific ID
-```
+```powershell
 Get-PnPAADUser [-Identity <String>] [-Select <String[]>] [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 
 ### Return the delta
-```
+```powershell
 Get-PnPAADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-Delta] [-DeltaToken <String>]
  [-ByPassPermissionCheck] [<CommonParameters>]
 ```

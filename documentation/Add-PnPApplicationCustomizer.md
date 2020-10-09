@@ -14,7 +14,7 @@ Adds a SharePoint Framework client side extension application customizer
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPApplicationCustomizer [-Title <String>] [-Description <String>] [-Sequence <Int32>]
  [-Scope <CustomActionScope>] -ClientSideComponentId <Guid> [-ClientSideComponentProperties <String>]
  [-ClientSideHostProperties <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]

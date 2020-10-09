@@ -14,7 +14,7 @@ Configures the site to only allow sharing of the site and items in the site by o
 
 ## SYNTAX
 
-```
+```powershell
 Disable-PnPSharingForNonOwnersOfSite [-Identity <SitePipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

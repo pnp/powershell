@@ -14,7 +14,7 @@ Gets the configuration regarding the footer of the current web
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPFooter [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

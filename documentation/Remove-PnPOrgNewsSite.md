@@ -19,7 +19,7 @@ Removes a given site from the list of organizational news sites.
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPOrgNewsSite -OrgNewsSiteUrl <SitePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

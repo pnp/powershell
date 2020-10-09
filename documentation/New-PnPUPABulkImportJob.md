@@ -19,7 +19,7 @@ Submit up a new user profile bulk import job.
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPUPABulkImportJob [-Folder] <String> [-Path] <String> [-UserProfilePropertyMapping] <Hashtable>
  [-IdProperty] <String> [[-IdType] <ImportProfilePropertiesUserIdType>] [-Connection <PnPConnection>]
  [<CommonParameters>]

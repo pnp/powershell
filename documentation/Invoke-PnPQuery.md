@@ -14,7 +14,7 @@ Executes the currently queued actions
 
 ## SYNTAX
 
-```
+```powershell
 Invoke-PnPQuery [-RetryCount <Int32>] [-RetryWait <Int32>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

@@ -15,7 +15,7 @@ Add a field
 ## SYNTAX
 
 ### Add field to list (Default)
-```
+```powershell
 Add-PnPField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> -Type <FieldType>
  [-Id <Guid>] [-AddToDefaultView] [-Required] [-Group <String>] [-ClientSideComponentId <Guid>]
  [-ClientSideComponentProperties <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
@@ -23,20 +23,20 @@ Add-PnPField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String>
 ```
 
 ### Add field reference to list
-```
+```powershell
 Add-PnPField -List <ListPipeBind> -Field <FieldPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Add field to web
-```
+```powershell
 Add-PnPField -DisplayName <String> -InternalName <String> -Type <FieldType> [-Id <Guid>]
  [-ClientSideComponentId <Guid>] [-ClientSideComponentProperties <String>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Add field by XML to list
-```
+```powershell
 Add-PnPField [-AddToDefaultView] [-Required] [-Group <String>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

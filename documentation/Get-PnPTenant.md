@@ -19,7 +19,7 @@ Returns organization-level site collection properties
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTenant [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

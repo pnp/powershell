@@ -14,7 +14,7 @@ Deletes a folder within a parent folder
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPFolder -Name <String> -Folder <String> [-Recycle] [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

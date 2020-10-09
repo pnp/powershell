@@ -14,7 +14,7 @@ Creates a taxonomy term set
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPTermSet -Name <String> [-Id <Guid>] [-Lcid <Int32>] -TermGroup <TermGroupPipeBind> [-Contact <String>]
  [-Description <String>] [-IsOpenForTermCreation] [-IsNotAvailableForTagging] [-Owner <String>]
  [-StakeHolders <String[]>] [-CustomProperties <Hashtable>]

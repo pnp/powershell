@@ -15,13 +15,13 @@ Removes a wiki page
 ## SYNTAX
 
 ### SERVER
-```
+```powershell
 Remove-PnPWikiPage [-ServerRelativePageUrl] <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### SITE
-```
+```powershell
 Remove-PnPWikiPage [-SiteRelativePageUrl] <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

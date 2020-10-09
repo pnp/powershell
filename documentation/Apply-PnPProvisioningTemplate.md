@@ -15,7 +15,7 @@ Applies a site template to a web
 ## SYNTAX
 
 ### Path
-```
+```powershell
 Apply-PnPSiteTemplate [-Path] <String> [-TemplateId <String>] [-ResourceFolder <String>]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters <Hashtable>] [-Handlers <Handlers>]
@@ -25,7 +25,7 @@ Apply-PnPSiteTemplate [-Path] <String> [-TemplateId <String>] [-ResourceFolder <
 ```
 
 ### Instance
-```
+```powershell
 Apply-PnPSiteTemplate [-TemplateId <String>] [-ResourceFolder <String>]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters <Hashtable>] [-Handlers <Handlers>]

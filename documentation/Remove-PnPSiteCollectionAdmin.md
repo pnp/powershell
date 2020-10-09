@@ -14,7 +14,7 @@ Removes one or more users as site collection administrators from the site collec
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPSiteCollectionAdmin
  -Owners <System.Collections.Generic.List`1[PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind]>
  [-Connection <PnPConnection>] [<CommonParameters>]

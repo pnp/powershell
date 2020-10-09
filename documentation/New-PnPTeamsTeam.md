@@ -20,7 +20,7 @@ Creates a new Team in Microsoft Teams. The cmdlet will create a Microsoft 365 gr
 ## SYNTAX
 
 ### For an existing group
-```
+```powershell
 New-PnPTeamsTeam -GroupId <String> [-Owner <String>] [-AllowAddRemoveApps <Boolean>]
  [-AllowChannelMentions <Boolean>] [-AllowCreateUpdateChannels <Boolean>]
  [-AllowCreateUpdateRemoveConnectors <Boolean>] [-AllowCreateUpdateRemoveTabs <Boolean>]
@@ -33,7 +33,7 @@ New-PnPTeamsTeam -GroupId <String> [-Owner <String>] [-AllowAddRemoveApps <Boole
 ```
 
 ### For a new group
-```
+```powershell
 New-PnPTeamsTeam -DisplayName <String> [-MailNickName <String>] [-Description <String>] [-Owner <String>]
  [-AllowAddRemoveApps <Boolean>] [-AllowChannelMentions <Boolean>] [-AllowCreateUpdateChannels <Boolean>]
  [-AllowCreateUpdateRemoveConnectors <Boolean>] [-AllowCreateUpdateRemoveTabs <Boolean>]

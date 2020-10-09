@@ -19,7 +19,7 @@ Retrieve all or a specific hubsite.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPHubSite [[-Identity] <HubSitePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

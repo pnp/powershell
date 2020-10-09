@@ -14,7 +14,7 @@ Gets the available client side components on a particular page
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPAvailableClientSideComponents [-Page] <ClientSidePagePipeBind>
  [-Component <ClientSideComponentPipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]

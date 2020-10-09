@@ -19,7 +19,7 @@ Sets organization-level site collection properties
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>]
  [-MinCompatibilityLevel <Int32>] [-MaxCompatibilityLevel <Int32>] [-ExternalServicesEnabled <Boolean>]
  [-NoAccessRedirectUrl <String>] [-SharingCapability <SharingCapabilities>]

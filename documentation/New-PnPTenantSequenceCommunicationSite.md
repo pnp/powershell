@@ -14,7 +14,7 @@ Creates a communication site object
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPTenantSequenceCommunicationSite -Url <String> -Title <String> [-Language <UInt32>] [-Owner <String>]
  [-Description <String>] [-Classification <String>] [-SiteDesignId <String>] [-HubSite]
  [-AllowFileSharingForGuestUsers] [-TemplateIds <String[]>] [-WhatIf] [-Confirm] [<CommonParameters>]

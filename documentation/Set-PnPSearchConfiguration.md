@@ -15,13 +15,13 @@ Sets the search configuration
 ## SYNTAX
 
 ### Config
-```
+```powershell
 Set-PnPSearchConfiguration -Configuration <String> [-Scope <SearchConfigurationScope>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Path
-```
+```powershell
 Set-PnPSearchConfiguration -Path <String> [-Scope <SearchConfigurationScope>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

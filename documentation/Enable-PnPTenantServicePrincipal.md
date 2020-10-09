@@ -19,7 +19,7 @@ Enables the current tenant's "SharePoint Online Client" service principal.
 
 ## SYNTAX
 
-```
+```powershell
 Enable-PnPTenantServicePrincipal [-Force] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

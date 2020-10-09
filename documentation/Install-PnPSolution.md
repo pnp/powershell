@@ -14,7 +14,7 @@ Installs a sandboxed solution to a site collection. WARNING! This method can del
 
 ## SYNTAX
 
-```
+```powershell
 Install-PnPSolution -PackageId <Guid> -SourceFilePath <String> [-MajorVersion <Int32>]
  [-MinorVersion <Int32>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

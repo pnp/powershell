@@ -19,7 +19,7 @@ Restores one deleted Microsoft 365 Group
 
 ## SYNTAX
 
-```
+```powershell
 Restore-PnPDeletedMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-ByPassPermissionCheck]
  [<CommonParameters>]
 ```

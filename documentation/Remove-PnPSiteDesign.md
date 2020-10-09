@@ -19,7 +19,7 @@ Removes a Site Design
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPSiteDesign [-Identity] <TenantSiteDesignPipeBind> [-Force] [-Connection <PnPConnection>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```

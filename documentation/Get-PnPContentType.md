@@ -14,7 +14,7 @@ Retrieves a content type
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPContentType [[-Identity] <ContentTypePipeBind>] [-List <ListPipeBind>] [-InSiteHierarchy]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

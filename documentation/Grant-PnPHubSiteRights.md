@@ -19,7 +19,7 @@ Grant additional permissions to the permissions already in place to associate si
 
 ## SYNTAX
 
-```
+```powershell
 Grant-PnPHubSiteRights [-Identity] <HubSitePipeBind> -Principals <String[]> [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

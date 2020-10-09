@@ -15,19 +15,19 @@ Sets the available page layouts for the current site
 ## SYNTAX
 
 ### SPECIFIC
-```
+```powershell
 Set-PnPAvailablePageLayouts -PageLayouts <String[]> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### ALL
-```
+```powershell
 Set-PnPAvailablePageLayouts [-AllowAllPageLayouts] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### INHERIT
-```
+```powershell
 Set-PnPAvailablePageLayouts [-InheritPageLayouts] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

@@ -15,13 +15,13 @@ Adds a web part to a wiki page in a specified table row and column
 ## SYNTAX
 
 ### XML
-```
+```powershell
 Add-PnPWebPartToWikiPage -ServerRelativePageUrl <String> -Xml <String> -Row <Int32> -Column <Int32> [-AddSpace]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### FILE
-```
+```powershell
 Add-PnPWebPartToWikiPage -ServerRelativePageUrl <String> -Path <String> -Row <Int32> -Column <Int32>
  [-AddSpace] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

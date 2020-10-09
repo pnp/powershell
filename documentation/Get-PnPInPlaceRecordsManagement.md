@@ -14,7 +14,7 @@ Returns if the place records management feature is enabled.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPInPlaceRecordsManagement [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

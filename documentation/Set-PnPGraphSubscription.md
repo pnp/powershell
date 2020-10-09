@@ -14,7 +14,7 @@ Updates an existing Microsoft Graph subscription. Required Azure Active Director
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPGraphSubscription -Identity <GraphSubscriptionPipeBind> -ExpirationDate <DateTime>
  [-ByPassPermissionCheck] [<CommonParameters>]
 ```

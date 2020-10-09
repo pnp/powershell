@@ -14,7 +14,7 @@ Gets a modern site page
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPClientSidePage [-Identity] <ClientSidePagePipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

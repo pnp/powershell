@@ -19,7 +19,7 @@ Removes an origin from the Public or Private content delivery network (CDN).
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPTenantCdnOrigin -OriginUrl <String> -CdnType <SPOTenantCdnType> [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

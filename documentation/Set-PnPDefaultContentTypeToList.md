@@ -14,7 +14,7 @@ Sets the default content type for a list
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPDefaultContentTypeToList -List <ListPipeBind> -ContentType <ContentTypePipeBind> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

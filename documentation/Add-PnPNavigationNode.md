@@ -14,7 +14,7 @@ Adds an item to a navigation element
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPNavigationNode -Location <NavigationType> -Title <String> [-Url <String>] [-Parent <Int32>] [-First]
  [-External] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

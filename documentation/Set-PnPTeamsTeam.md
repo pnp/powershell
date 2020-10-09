@@ -19,7 +19,7 @@ Updates an existing Team.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTeamsTeam -Identity <TeamsTeamPipeBind> [-DisplayName <String>] [-Description <String>]
  [-Visibility <TeamVisibility>] [-AllowAddRemoveApps <Boolean>] [-AllowChannelMentions <Boolean>]
  [-AllowCreateUpdateChannels <Boolean>] [-AllowCreateUpdateRemoveConnectors <Boolean>]

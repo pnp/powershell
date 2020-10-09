@@ -19,7 +19,7 @@ Updates an existing Teams Channel
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTeamsChannel -Team <TeamsTeamPipeBind> -Identity <TeamsChannelPipeBind> [-DisplayName <String>]
  [-Description <String>] [-ByPassPermissionCheck] [<CommonParameters>]
 ```

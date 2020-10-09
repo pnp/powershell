@@ -19,7 +19,7 @@ Sets hub site properties
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPHubSite [-Identity] <HubSitePipeBind> [-Title <String>] [-LogoUrl <String>] [-Description <String>]
  [-SiteDesignId <Guid>] [-HideNameInNavigation] [-RequiresJoinApproval] [-Connection <PnPConnection>]
  [<CommonParameters>]

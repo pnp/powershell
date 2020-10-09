@@ -19,7 +19,7 @@ Removes one or more existing site classification values from the list of availab
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]> [-Confirm]
  [-ByPassPermissionCheck] [<CommonParameters>]
 ```

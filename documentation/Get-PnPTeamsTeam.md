@@ -19,7 +19,7 @@ Gets one Microsoft Teams Team or a list of Teams.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTeamsTeam [-Identity <TeamsTeamPipeBind>] [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 

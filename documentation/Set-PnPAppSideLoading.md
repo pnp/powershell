@@ -15,12 +15,12 @@ Enables the App SideLoading Feature on a site
 ## SYNTAX
 
 ### On
-```
+```powershell
 Set-PnPAppSideLoading [-On] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Off
-```
+```powershell
 Set-PnPAppSideLoading [-Off] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

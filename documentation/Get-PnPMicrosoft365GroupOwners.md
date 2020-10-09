@@ -19,7 +19,7 @@ Gets owners of a particular Microsoft 365 Group
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPMicrosoft365GroupOwners -Identity <Microsoft365GroupPipeBind> [-ByPassPermissionCheck]
  [<CommonParameters>]
 ```

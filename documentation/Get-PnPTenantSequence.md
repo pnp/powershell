@@ -14,7 +14,7 @@ Returns one ore more provisioning sequence object(s) from a tenant template
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTenantSequence -Template <ProvisioningHierarchy> [-Identity <ProvisioningSequencePipeBind>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```

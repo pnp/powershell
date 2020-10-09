@@ -19,7 +19,7 @@ Removes members from a particular Microsoft 365 Group
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> -Users <String[]>
  [-ByPassPermissionCheck] [<CommonParameters>]
 ```

@@ -14,7 +14,7 @@ Adds a new content type
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPContentType -Name <String> [-ContentTypeId <String>] [-Description <String>] [-Group <String>]
  [-ParentContentType <ContentType>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

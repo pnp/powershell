@@ -22,7 +22,7 @@ PrivateKey contains the PEM encoded private key of the certificate.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPAzureCertificate -CertificatePath <String> [-CertificatePassword <SecureString>] [<CommonParameters>]
 ```
 

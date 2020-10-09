@@ -14,7 +14,7 @@ Returns a web part property
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPWebPartProperty -ServerRelativePageUrl <String> -Identity <Guid> [-Key <String>]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

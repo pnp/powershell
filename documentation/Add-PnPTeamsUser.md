@@ -19,7 +19,7 @@ Adds a channel to an existing Microsoft Teams instance.
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPTeamsUser -Team <TeamsTeamPipeBind> -User <String> -Role <String> [-ByPassPermissionCheck]
  [<CommonParameters>]
 ```

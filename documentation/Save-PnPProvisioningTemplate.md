@@ -14,7 +14,7 @@ Saves a PnP site template to the file system
 
 ## SYNTAX
 
-```
+```powershell
 Save-PnPSiteTemplate -Template <SiteTemplatePipeBind> [-Out] <String>
  [-Schema <XMLPnPSchemaVersion>] [-Force] [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
  [<CommonParameters>]

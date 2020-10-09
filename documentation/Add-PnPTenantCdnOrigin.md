@@ -19,7 +19,7 @@ Adds a new origin to the public or private content delivery network (CDN).
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPTenantCdnOrigin -OriginUrl <String> -CdnType <SPOTenantCdnType> [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

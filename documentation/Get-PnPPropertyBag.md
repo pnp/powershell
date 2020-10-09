@@ -14,7 +14,7 @@ Returns the property bag values.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPPropertyBag [[-Key] <String>] [-Folder <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

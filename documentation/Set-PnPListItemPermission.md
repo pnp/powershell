@@ -15,21 +15,21 @@ Sets list item permissions. Use Get-PnPRoleDefinition to retrieve all available 
 ## SYNTAX
 
 ### User (Default)
-```
+```powershell
 Set-PnPListItemPermission [-List] <ListPipeBind> -Identity <ListItemPipeBind> -User <String>
  [-AddRole <String>] [-RemoveRole <String>] [-ClearExisting] [-SystemUpdate] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Group
-```
+```powershell
 Set-PnPListItemPermission [-List] <ListPipeBind> -Identity <ListItemPipeBind> -Group <GroupPipeBind>
  [-AddRole <String>] [-RemoveRole <String>] [-ClearExisting] [-SystemUpdate] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Inherit
-```
+```powershell
 Set-PnPListItemPermission [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-InheritPermissions]
  [-SystemUpdate] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

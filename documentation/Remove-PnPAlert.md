@@ -14,7 +14,7 @@ Removes an alert for a user
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPAlert [-User <UserPipeBind>] -Identity <AlertPipeBind> [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

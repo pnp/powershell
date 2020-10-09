@@ -19,7 +19,7 @@ Get user profile bulk import status.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPUPABulkImportStatus [-JobId <Guid>] [-IncludeErrorDetails] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

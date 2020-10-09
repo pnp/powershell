@@ -19,7 +19,7 @@ Sets Microsoft 365 Group properties
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-DisplayName <String>] [-Description <String>]
  [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-GroupLogoPath <String>] [-CreateTeam]
  [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-ByPassPermissionCheck]

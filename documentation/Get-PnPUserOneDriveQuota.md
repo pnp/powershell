@@ -19,7 +19,7 @@ Retrieves the current quota set on the OneDrive for Business site for a specific
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPUserOneDriveQuota [-Account] <String> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

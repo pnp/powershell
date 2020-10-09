@@ -14,7 +14,7 @@ Creates a team site object
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPTenantSequenceTeamSite -Alias <String> -Title <String> [-Description <String>] [-DisplayName <String>]
  [-Classification <String>] [-Public] [-HubSite] [-TemplateIds <String[]>] [-WhatIf] [-Confirm]
  [<CommonParameters>]

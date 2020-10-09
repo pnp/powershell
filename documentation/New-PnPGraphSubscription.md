@@ -14,7 +14,7 @@ Creates a new Microsof Graph Subscription which allows your webhook API to be ca
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPGraphSubscription -ChangeType <GraphSubscriptionChangeType> -NotificationUrl <String> -Resource <String>
  [-ExpirationDateTime <DateTime>] [-ClientState <String>]
  [-LatestSupportedTlsVersion <GraphSubscriptionTlsVersion>] [-ByPassPermissionCheck] [<CommonParameters>]

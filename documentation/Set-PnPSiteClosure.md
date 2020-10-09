@@ -14,7 +14,7 @@ Opens or closes a site which has a site policy applied
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPSiteClosure -State <ClosureState> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

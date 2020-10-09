@@ -15,13 +15,13 @@ Return a folder object
 ## SYNTAX
 
 ### Folder By Url
-```
+```powershell
 Get-PnPFolder [-Url] <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
  [<CommonParameters>]
 ```
 
 ### Folders In List
-```
+```powershell
 Get-PnPFolder [-List] <ListPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
  [<CommonParameters>]
 ```

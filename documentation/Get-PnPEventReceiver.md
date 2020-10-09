@@ -14,7 +14,7 @@ Return registered eventreceivers
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPEventReceiver [-List <ListPipeBind>] [-Identity <EventReceiverPipeBind>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```

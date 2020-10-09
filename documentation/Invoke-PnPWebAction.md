@@ -14,7 +14,7 @@ Executes operations on web, lists and list items.
 
 ## SYNTAX
 
-```
+```powershell
 Invoke-PnPWebAction [-ListName <String>] [-Webs <Web[]>]
  [-WebAction <System.Action`1[Microsoft.SharePoint.Client.Web]>]
  [-ShouldProcessWebAction <System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]>]

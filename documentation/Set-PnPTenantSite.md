@@ -20,7 +20,7 @@ Updates settings of a site collection
 ## SYNTAX
 
 ### Set Properties
-```
+```powershell
 Set-PnPTenantSite [-Url] <String> [-Title <String>] [-LocaleId <UInt32>] [-AllowSelfServiceUpgrade]
  [-Owners <System.Collections.Generic.List`1[System.String]>] [-DenyAddAndCustomizePages]
  [-SharingCapability <SharingCapabilities>] [-StorageMaximumLevel <Int64>] [-StorageWarningLevel <Int64>]
@@ -33,7 +33,7 @@ Set-PnPTenantSite [-Url] <String> [-Title <String>] [-LocaleId <UInt32>] [-Allow
 ```
 
 ### Set Lock State
-```
+```powershell
 Set-PnPTenantSite [-Url] <String> [-LockState <SiteLockState>] [-Wait] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

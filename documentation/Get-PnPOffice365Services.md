@@ -19,7 +19,7 @@ Gets the services available in Office 365 from the Office 365 Management API
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPOffice365Services [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 

@@ -19,7 +19,7 @@ Sets the CDN Policies for the specified CDN (Public | Private).
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTenantCdnPolicy -CdnType <SPOTenantCdnType> -PolicyType <SPOTenantCdnPolicyType> -PolicyValue <String>
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

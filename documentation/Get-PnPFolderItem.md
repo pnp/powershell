@@ -15,13 +15,13 @@ List content in folder
 ## SYNTAX
 
 ### Folder via url
-```
+```powershell
 Get-PnPFolderItem [[-FolderSiteRelativeUrl] <String>] [-ItemType <String>] [-ItemName <String>] [-Recursive]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Folder via pipebind
-```
+```powershell
 Get-PnPFolderItem [[-Identity] <FolderPipeBind>] [-ItemType <String>] [-ItemName <String>] [-Recursive]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

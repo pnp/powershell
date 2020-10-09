@@ -15,19 +15,19 @@ Removes a menu item from either the quicklaunch or top navigation
 ## SYNTAX
 
 ### Remove a node by ID (Default)
-```
+```powershell
 Remove-PnPNavigationNode [-Identity] <NavigationNodePipeBind> [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Remove node by Title
-```
+```powershell
 Remove-PnPNavigationNode [-Location] <NavigationType> -Title <String> [-Header <String>] [-Force]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### All Nodes
-```
+```powershell
 Remove-PnPNavigationNode [-All] [-Force] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```

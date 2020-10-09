@@ -19,7 +19,7 @@ Permanently removes one deleted Microsoft 365 Group
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPDeletedMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-ByPassPermissionCheck]
  [<CommonParameters>]
 ```

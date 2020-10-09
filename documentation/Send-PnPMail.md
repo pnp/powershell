@@ -14,7 +14,7 @@ Sends an email using the Office 365 SMTP Service or SharePoint, depending on the
 
 ## SYNTAX
 
-```
+```powershell
 Send-PnPMail [-Server <String>] [-From <String>] [-Password <String>] -To <String[]> [-Cc <String[]>]
  -Subject <String> -Body <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

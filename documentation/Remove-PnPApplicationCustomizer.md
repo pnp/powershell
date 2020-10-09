@@ -15,13 +15,13 @@ Removes a SharePoint Framework client side extension application customizer
 ## SYNTAX
 
 ### Custom Action Id
-```
+```powershell
 Remove-PnPApplicationCustomizer [[-Identity] <UserCustomActionPipeBind>] [-Scope <CustomActionScope>] [-Force]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Client Side Component Id
-```
+```powershell
 Remove-PnPApplicationCustomizer -ClientSideComponentId <Guid> [-Scope <CustomActionScope>] [-Force]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```

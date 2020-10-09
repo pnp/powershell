@@ -14,7 +14,7 @@ Sets default column values for a document library
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPDefaultColumnValues [-List] <ListPipeBind> -Field <FieldPipeBind> -Value <String[]> [-Folder <String>]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

@@ -14,7 +14,7 @@ Remove a Role Definition from a site
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPRoleDefinition [-Identity] <RoleDefinitionPipeBind> [-Force] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

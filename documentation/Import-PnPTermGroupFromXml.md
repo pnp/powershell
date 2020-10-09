@@ -15,13 +15,13 @@ Imports a taxonomy TermGroup from either the input or from an XML file.
 ## SYNTAX
 
 ### XML
-```
+```powershell
 Import-PnPTermGroupFromXml [[-Xml] <String>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ### File
-```
+```powershell
 Import-PnPTermGroupFromXml [-Path <String>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```

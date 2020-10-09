@@ -19,7 +19,7 @@ Disables Site Classifications for the tenant
 
 ## SYNTAX
 
-```
+```powershell
 Disable-PnPSiteClassification [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 

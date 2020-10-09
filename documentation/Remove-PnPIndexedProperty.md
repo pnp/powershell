@@ -14,7 +14,7 @@ Removes a key from propertybag to be indexed by search. The key and it's value r
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPIndexedProperty [-Key] <String> [-List <ListPipeBind>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

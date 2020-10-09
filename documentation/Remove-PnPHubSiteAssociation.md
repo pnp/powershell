@@ -19,7 +19,7 @@ Disconnects a site from a hubsite.
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPHubSiteAssociation -Site <SitePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

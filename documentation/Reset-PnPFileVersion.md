@@ -14,7 +14,7 @@ Resets a file to its previous version
 
 ## SYNTAX
 
-```
+```powershell
 Reset-PnPFileVersion -ServerRelativeUrl <String> [-CheckinType <CheckinType>] [-CheckInComment <String>]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

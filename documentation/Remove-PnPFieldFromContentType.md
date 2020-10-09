@@ -14,7 +14,7 @@ Removes a site column from a content type
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPFieldFromContentType -Field <FieldPipeBind> -ContentType <ContentTypePipeBind> [-DoNotUpdateChildren]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

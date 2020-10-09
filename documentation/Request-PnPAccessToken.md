@@ -14,7 +14,7 @@ Requests an OAuth Access token
 
 ## SYNTAX
 
-```
+```powershell
 Request-PnPAccessToken [-ClientId <String>] [-Resource <String>]
  [-Scopes <System.Collections.Generic.List`1[System.String]>] [-Decoded] [-SetAsCurrent]
  [-Credentials <PSCredential>] [-TenantUrl <String>] [<CommonParameters>]

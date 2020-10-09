@@ -14,7 +14,7 @@ Loads/Reads a PnP tenant template from the file system and returns an in-memory 
 
 ## SYNTAX
 
-```
+```powershell
 Read-PnPTenantTemplate [-Path] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
  [<CommonParameters>]
 ```

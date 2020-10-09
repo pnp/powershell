@@ -19,7 +19,7 @@ Returns the home site url for your tenant
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPHomeSite [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

@@ -15,30 +15,30 @@ Returns a specific SharePoint group or all SharePoint groups in site.
 ## SYNTAX
 
 ### All (Default)
-```
+```powershell
 Get-PnPGroup [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```
 
 ### ByName
-```
+```powershell
 Get-PnPGroup [[-Identity] <GroupPipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [-Includes <String[]>] [<CommonParameters>]
 ```
 
 ### Members
-```
+```powershell
 Get-PnPGroup [-AssociatedMemberGroup] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
  [<CommonParameters>]
 ```
 
 ### Visitors
-```
+```powershell
 Get-PnPGroup [-AssociatedVisitorGroup] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [-Includes <String[]>] [<CommonParameters>]
 ```
 
 ### Owners
-```
+```powershell
 Get-PnPGroup [-AssociatedOwnerGroup] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
  [<CommonParameters>]
 ```

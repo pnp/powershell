@@ -19,7 +19,7 @@ Grants the specified principals rights to use the site design.
 
 ## SYNTAX
 
-```
+```powershell
 Grant-PnPSiteDesignRights [-Identity] <TenantSiteDesignPipeBind> -Principals <String[]>
  [-Rights <TenantSiteDesignPrincipalRights>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
  [<CommonParameters>]

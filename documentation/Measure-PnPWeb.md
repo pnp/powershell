@@ -14,7 +14,7 @@ Returns statistics on the web object
 
 ## SYNTAX
 
-```
+```powershell
 Measure-PnPWeb [[-Identity] <WebPipeBind>] [-Recursive] [-IncludeHiddenList] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

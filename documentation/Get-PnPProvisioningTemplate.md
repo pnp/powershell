@@ -14,7 +14,7 @@ Generates a provisioning site template from a web
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPSiteTemplate [[-Out] <String>] [[-Schema] <XMLPnPSchemaVersion>] [-IncludeAllTermGroups]
  [-IncludeSiteCollectionTermGroup] [-IncludeSiteGroups] [-IncludeTermGroupsSecurity]
  [-IncludeSearchConfiguration] [-PersistBrandingFiles] [-PersistPublishingFiles]

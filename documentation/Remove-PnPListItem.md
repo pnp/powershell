@@ -14,7 +14,7 @@ Deletes an item from a list
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-Recycle] [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```

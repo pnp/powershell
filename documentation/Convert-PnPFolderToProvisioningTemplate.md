@@ -14,7 +14,7 @@ Creates a pnp package file of an existing template xml, and includes all files i
 
 ## SYNTAX
 
-```
+```powershell
 Convert-PnPFolderToSiteTemplate [-Out] <String> [[-Folder] <String>] [-Force] [<CommonParameters>]
 ```
 

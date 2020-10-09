@@ -14,7 +14,7 @@ Creates a new tenant sequence object
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPTenantSequence [-Id <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 

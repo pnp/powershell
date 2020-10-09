@@ -14,7 +14,7 @@ Saves a PnP provisioning hierarchy to the file system
 
 ## SYNTAX
 
-```
+```powershell
 Save-PnPTenantTemplate -Template <ProvisioningHierarchyPipeBind> [-Out] <String>
  [-Schema <XMLPnPSchemaVersion>] [-Force] [<CommonParameters>]
 ```

@@ -14,7 +14,7 @@ Removes a Client-Side Page
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPClientSidePage [-Identity] <ClientSidePagePipeBind> [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

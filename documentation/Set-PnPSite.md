@@ -15,7 +15,7 @@ Sets Site Collection properties.
 ## SYNTAX
 
 ### Set Properties
-```
+```powershell
 Set-PnPSite [-Identity <String>] [-Classification <String>] [-DisableFlows] [-LogoFilePath <String>]
  [-Sharing <SharingCapabilities>] [-StorageMaximumLevel <Int64>] [-StorageWarningLevel <Int64>]
  [-AllowSelfServiceUpgrade] [-NoScriptSite] [-Owners <System.Collections.Generic.List`1[System.String]>]
@@ -28,7 +28,7 @@ Set-PnPSite [-Identity <String>] [-Classification <String>] [-DisableFlows] [-Lo
 ```
 
 ### Set Lock State
-```
+```powershell
 Set-PnPSite [-Identity <String>] [-Classification <String>] [-DisableFlows] [-LockState <SiteLockState>]
  [-Wait] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

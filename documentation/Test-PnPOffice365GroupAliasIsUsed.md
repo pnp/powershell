@@ -14,7 +14,7 @@ Tests if a given alias is already used used
 
 ## SYNTAX
 
-```
+```powershell
 Test-PnPOffice365GroupAliasIsUsed -Alias <String> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

@@ -15,18 +15,18 @@ Finds a file in the virtual file system of the web.
 ## SYNTAX
 
 ### Web (Default)
-```
+```powershell
 Find-PnPFile [-Match] <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### List
-```
+```powershell
 Find-PnPFile [-Match] <String> -List <ListPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Folder
-```
+```powershell
 Find-PnPFile [-Match] <String> -Folder <FolderPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

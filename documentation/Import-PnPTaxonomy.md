@@ -15,13 +15,13 @@ Imports a taxonomy from either a string array or a file
 ## SYNTAX
 
 ### Direct
-```
+```powershell
 Import-PnPTaxonomy [-Terms <String[]>] [-Lcid <Int32>] [-TermStoreName <String>] [-Delimiter <String>]
  [-SynchronizeDeletions] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### File
-```
+```powershell
 Import-PnPTaxonomy -Path <String> [-Lcid <Int32>] [-TermStoreName <String>] [-Delimiter <String>]
  [-SynchronizeDeletions] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```

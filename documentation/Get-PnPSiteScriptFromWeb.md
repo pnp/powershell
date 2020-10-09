@@ -20,13 +20,13 @@ Generates a Site Script from an existing site
 ## SYNTAX
 
 ### All components
-```
+```powershell
 Get-PnPSiteScriptFromWeb -Url <String> [-Lists <String[]>] [-IncludeAll] [-Connection <PnPConnection>]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Specific components
-```
+```powershell
 Get-PnPSiteScriptFromWeb -Url <String> [-Lists <String[]>] [-IncludeBranding] [-IncludeLinksToExportedItems]
  [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme]
  [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]

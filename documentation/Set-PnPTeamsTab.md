@@ -19,7 +19,7 @@ Updates Teams Tab settings
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> [-Identity <TeamsTabPipeBind>]
  [-DisplayName <String>] [-ByPassPermissionCheck] [<CommonParameters>]
 ```

@@ -14,7 +14,7 @@ Adds a Masterpage
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPMasterPage -SourceFilePath <String> -Title <String> -Description <String>
  [-DestinationFolderHierarchy <String>] [-UIVersion <String>] [-DefaultCssFile <String>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]

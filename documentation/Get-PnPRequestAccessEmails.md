@@ -14,7 +14,7 @@ Returns the request access e-mail addresses
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPRequestAccessEmails [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

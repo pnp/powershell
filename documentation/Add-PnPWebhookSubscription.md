@@ -14,7 +14,7 @@ Adds a new Webhook subscription
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPWebhookSubscription [-List <ListPipeBind>] -NotificationUrl <String> [-ExpirationDate <DateTime>]
  [-ClientState <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

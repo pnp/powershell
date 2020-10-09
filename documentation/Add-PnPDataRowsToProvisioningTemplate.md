@@ -14,7 +14,7 @@ Adds datarows to a list inside a PnP Provisioning Template
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPDataRowsToSiteTemplate [-Path] <String> -List <ListPipeBind> [-Query <String>]
  [-Fields <String[]>] [-IncludeSecurity] [[-TemplateProviderExtensions] <ITemplateProviderExtension[]>]
  [-TokenizeUrls] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]

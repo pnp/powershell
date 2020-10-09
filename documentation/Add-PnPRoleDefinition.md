@@ -14,7 +14,7 @@ Adds a Role Defintion (Permission Level) to the site collection in the current c
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPRoleDefinition -RoleName <String> [-Clone <RoleDefinitionPipeBind>] [-Include <PermissionKind[]>]
  [-Exclude <PermissionKind[]>] [-Description <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

@@ -15,7 +15,7 @@ Returns a taxonomy term
 ## SYNTAX
 
 ### By Term Id
-```
+```powershell
 Get-PnPTerm
  -Identity <PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]>
  [-TermStore <PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]>]
@@ -23,7 +23,7 @@ Get-PnPTerm
 ```
 
 ### By Termset
-```
+```powershell
 Get-PnPTerm
  [-Identity <PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]>]
  [-TermSet] <PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]>

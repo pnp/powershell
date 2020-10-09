@@ -19,7 +19,7 @@ Adds members to a particular Microsoft 365 Group
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> -Users <String[]> [-RemoveExisting]
  [-ByPassPermissionCheck] [<CommonParameters>]
 ```

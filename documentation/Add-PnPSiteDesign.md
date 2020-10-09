@@ -19,7 +19,7 @@ Creates a new Site Design on the current tenant.
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPSiteDesign -Title <String> -SiteScriptIds <Guid[]> [-Description <String>] [-IsDefault]
  [-PreviewImageAltText <String>] [-PreviewImageUrl <String>] -WebTemplate <SiteWebTemplate>
  [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]

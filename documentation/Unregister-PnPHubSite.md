@@ -19,7 +19,7 @@ Unregisters a site as a hubsite
 
 ## SYNTAX
 
-```
+```powershell
 Unregister-PnPHubSite -Site <SitePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

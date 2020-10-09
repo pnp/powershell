@@ -14,7 +14,7 @@ Undeclares a list item as a record
 
 ## SYNTAX
 
-```
+```powershell
 Clear-PnPListItemAsRecord [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

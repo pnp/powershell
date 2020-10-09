@@ -19,7 +19,7 @@ Returns the defined Site Classifications for the tenant
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPSiteClassification [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 

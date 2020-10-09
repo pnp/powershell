@@ -19,7 +19,7 @@ Defines if the default / OOTB themes should be visible to users or not.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPHideDefaultThemes -HideDefaultThemes <Boolean> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

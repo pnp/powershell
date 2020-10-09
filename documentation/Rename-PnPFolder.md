@@ -14,7 +14,7 @@ Renames a folder
 
 ## SYNTAX
 
-```
+```powershell
 Rename-PnPFolder -Folder <String> -TargetFolderName <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

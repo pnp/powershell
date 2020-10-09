@@ -19,7 +19,7 @@ Returns all modern and classic site collections in the tenant scoped recycle bin
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTenantRecycleBinItem [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

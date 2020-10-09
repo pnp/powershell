@@ -14,7 +14,7 @@ Returns one or all views from a list
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPView [-List] <ListPipeBind> [-Identity <ViewPipeBind>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```

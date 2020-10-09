@@ -14,7 +14,7 @@ Sets metadata of a provisioning template
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPSiteTemplateMetadata [-Path] <String> [-TemplateDisplayName <String>]
  [-TemplateImagePreviewUrl <String>] [-TemplateProperties <Hashtable>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Web <WebPipeBind>]

@@ -15,26 +15,26 @@ Retrieves list items
 ## SYNTAX
 
 ### All Items (Default)
-```
+```powershell
 Get-PnPListItem [-List] <ListPipeBind> [-FolderServerRelativeUrl <String>] [-Fields <String[]>]
  [-PageSize <Int32>] [-ScriptBlock <ScriptBlock>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### By Id
-```
+```powershell
 Get-PnPListItem [-List] <ListPipeBind> [-Id <Int32>] [-Fields <String[]>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### By Unique Id
-```
+```powershell
 Get-PnPListItem [-List] <ListPipeBind> [-UniqueId <Guid>] [-Fields <String[]>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### By Query
-```
+```powershell
 Get-PnPListItem [-List] <ListPipeBind> [-Query <String>] [-FolderServerRelativeUrl <String>]
  [-PageSize <Int32>] [-ScriptBlock <ScriptBlock>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]

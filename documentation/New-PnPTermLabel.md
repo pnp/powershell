@@ -14,7 +14,7 @@ Creates a localized label for a taxonomy term
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPTermLabel
  [-Term] <PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.Term]>
  -Name <String> -Lcid <Int32> [-IsDefault] [-Connection <PnPConnection>] [<CommonParameters>]

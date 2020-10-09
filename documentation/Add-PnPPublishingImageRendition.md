@@ -14,7 +14,7 @@ Adds an Image Rendition if the Name of the Image Rendition does not already exis
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPPublishingImageRendition -Name <String> -Width <Int32> -Height <Int32> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```

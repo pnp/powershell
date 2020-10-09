@@ -14,7 +14,7 @@ Adds a Client-Side Page
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPClientSidePage [-Name] <String> [-LayoutType <ClientSidePageLayoutType>]
  [-PromoteAs <ClientSidePagePromoteType>] [-ContentType <ContentTypePipeBind>] [-CommentsEnabled] [-Publish]
  [-HeaderLayoutType <ClientSidePageHeaderLayoutType>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]

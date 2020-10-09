@@ -14,7 +14,7 @@ Sets parameters of a Client-Side Page
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPClientSidePage [-Identity] <ClientSidePagePipeBind> [-Name <String>] [-Title <String>]
  [-LayoutType <ClientSidePageLayoutType>] [-PromoteAs <ClientSidePagePromoteType>] [-CommentsEnabled]
  [-Publish] [-HeaderType <ClientSidePageHeaderType>] [-ContentType <ContentTypePipeBind>]

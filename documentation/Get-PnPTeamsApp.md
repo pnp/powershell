@@ -19,7 +19,7 @@ Gets one Microsoft Teams App or a list of all apps.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTeamsApp [-Identity <TeamsAppPipeBind>] [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 

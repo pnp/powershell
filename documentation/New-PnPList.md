@@ -14,7 +14,7 @@ Creates a new list
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPList -Title <String> -Template <ListTemplateType> [-Url <String>] [-Hidden] [-EnableVersioning]
  [-EnableContentTypes] [-OnQuickLaunch] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

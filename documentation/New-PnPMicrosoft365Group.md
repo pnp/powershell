@@ -19,7 +19,7 @@ Creates a new Microsoft 365 Group
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPMicrosoft365Group -DisplayName <String> -Description <String> -MailNickname <String>
  [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-GroupLogoPath <String>] [-CreateTeam] [-Force]
  [-ByPassPermissionCheck] [<CommonParameters>]

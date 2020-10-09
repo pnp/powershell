@@ -14,7 +14,7 @@ Removes a Client-Side component from a page
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> [-Force]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```

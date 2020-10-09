@@ -14,7 +14,7 @@ Validates if a certain alias is still available to be used to create a new site 
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPIsSiteAliasAvailable [-Identity <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

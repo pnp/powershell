@@ -14,7 +14,7 @@ Retrieves all members of a group
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPGroupMembers -Identity <GroupPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```

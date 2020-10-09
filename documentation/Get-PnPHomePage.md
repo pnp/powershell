@@ -14,7 +14,7 @@ Return the homepage
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPHomePage [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

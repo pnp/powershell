@@ -14,7 +14,7 @@ Gets an access token for the Microsoft Office 365 Management API from the curren
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPOfficeManagementApiAccessToken [-Decoded] [-ByPassPermissionCheck] [<CommonParameters>]
 ```
 
