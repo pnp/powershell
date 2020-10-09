@@ -20,7 +20,7 @@ jobs:
         ref: dev
     - name: Building Help File
       env:
-        POWERSHELLGALLERY_API_KEY: ${{ secrets.POWERSHELLGALLERY_API_KEY }}
+        RUNSINACTION: 1
       shell: pwsh
       run: |
         ./build/Build-HelpFile.ps1
