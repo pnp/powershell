@@ -1,6 +1,3 @@
-
-Write-Host "Generating Documentation"
-
 $documentsFolder = [environment]::getfolderpath("mydocuments");
 if($IsLinux -or $isMacOS)
 {
@@ -33,5 +30,6 @@ if($apiKey -ne [String]::Empty)
 			exit
 		}
 	}
+	Write-Host "Generating external help"
 	New-ExternalHelp -Path ./../documentation -OutputPath $destinationFolder -Force
 }	
