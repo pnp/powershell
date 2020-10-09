@@ -16,7 +16,7 @@ Apply a Site Design to an existing site. * Requires Tenant Administration Rights
 
 ```powershell
 Invoke-PnPSiteDesign [-Identity] <TenantSiteDesignPipeBind> [-WebUrl <String>] [-Web <WebPipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

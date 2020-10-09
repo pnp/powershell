@@ -15,8 +15,8 @@ Returns one ore more sites from a tenant template
 ## SYNTAX
 
 ```powershell
-Get-PnPTenantSequenceSite -Sequence <ProvisioningSequence> [-Identity <ProvisioningSitePipeBind>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+Get-PnPTenantSequenceSite -Sequence <ProvisioningSequence> [-Identity <ProvisioningSitePipeBind>] 
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION

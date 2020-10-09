@@ -15,7 +15,7 @@ Creates a new provisioning template object
 ## SYNTAX
 
 ```powershell
-New-PnPSiteTemplate [-WhatIf] [-Confirm] [<CommonParameters>]
+New-PnPSiteTemplate   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

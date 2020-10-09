@@ -15,8 +15,8 @@ Retrieve Storage Entities / Farm Properties from either the Tenant App Catalog o
 ## SYNTAX
 
 ```powershell
-Get-PnPStorageEntity [-Key <String>] [-Scope <StorageEntityScope>] [-Connection <PnPConnection>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+Get-PnPStorageEntity [-Key <String>] [-Scope <StorageEntityScope>] [-Connection <PnPConnection>] 
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION

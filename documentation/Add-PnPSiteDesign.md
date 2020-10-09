@@ -22,7 +22,7 @@ Creates a new Site Design on the current tenant.
 ```powershell
 Add-PnPSiteDesign -Title <String> -SiteScriptIds <Guid[]> [-Description <String>] [-IsDefault]
  [-PreviewImageAltText <String>] [-PreviewImageUrl <String>] -WebTemplate <SiteWebTemplate>
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION

@@ -15,7 +15,7 @@ Adds a tenant sequence sub site object to a tenant sequence site object
 ## SYNTAX
 
 ```powershell
-Add-PnPTenantSequenceSubSite -SubSite <TeamNoGroupSubSite> -Site <SiteCollection> [-WhatIf] [-Confirm]
+Add-PnPTenantSequenceSubSite -SubSite <TeamNoGroupSubSite> -Site <SiteCollection>  
  [<CommonParameters>]
 ```
 

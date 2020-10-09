@@ -16,7 +16,7 @@ Retrieves a list of site designs applied to a specified site collection. If the 
 
 ```powershell
 Get-PnPSiteDesignRun [-SiteDesignId <Guid>] [-WebUrl <String>] [-Web <WebPipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

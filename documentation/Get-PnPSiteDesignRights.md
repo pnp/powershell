@@ -20,8 +20,8 @@ Returns the principals with design rights on a specific Site Design
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteDesignRights [-Identity] <TenantSiteDesignPipeBind> [-Connection <PnPConnection>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+Get-PnPSiteDesignRights [-Identity] <TenantSiteDesignPipeBind> [-Connection <PnPConnection>] 
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION

@@ -16,8 +16,7 @@ This command is intended to replace Invoke-PnPSiteDesign and is useful when you 
 ## SYNTAX
 
 ```powershell
-Add-PnPSiteDesignTask -SiteDesignId <Guid> [-WebUrl <String>] [-Web <WebPipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Add-PnPSiteDesignTask -SiteDesignId <Guid> [-WebUrl <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION

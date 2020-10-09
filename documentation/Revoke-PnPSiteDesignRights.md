@@ -21,7 +21,7 @@ Revokes the specified principals rights to use the site design.
 
 ```powershell
 Revoke-PnPSiteDesignRights [-Identity] <TenantSiteDesignPipeBind> -Principals <String[]>
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

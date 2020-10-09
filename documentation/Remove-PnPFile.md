@@ -17,13 +17,13 @@ Removes a file.
 ### Server Relative
 ```powershell
 Remove-PnPFile [-ServerRelativeUrl] <String> [-Recycle] [-Force] [-Web <WebPipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ### Site Relative
 ```powershell
 Remove-PnPFile [-SiteRelativeUrl] <String> [-Recycle] [-Force] [-Web <WebPipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

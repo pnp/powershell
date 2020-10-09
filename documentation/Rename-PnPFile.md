@@ -17,13 +17,13 @@ Renames a file in its current location
 ### SERVER
 ```powershell
 Rename-PnPFile [-ServerRelativeUrl] <String> [-TargetFileName] <String> [-OverwriteIfAlreadyExists] [-Force]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Web <WebPipeBind>] [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ### SITE
 ```powershell
 Rename-PnPFile [-SiteRelativeUrl] <String> [-TargetFileName] <String> [-OverwriteIfAlreadyExists] [-Force]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Web <WebPipeBind>] [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

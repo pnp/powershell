@@ -21,7 +21,7 @@ Retrieve Site Scripts that have been registered on the current tenant.
 
 ```powershell
 Get-PnPSiteScript [[-Identity] <TenantSiteScriptPipeBind>] [[-SiteDesign] <TenantSiteDesignPipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

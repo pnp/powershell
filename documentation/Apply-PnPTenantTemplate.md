@@ -26,7 +26,7 @@ Apply-PnPTenantTemplate [-Path] <String> [-SequenceId <String>] [-ResourceFolder
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Parameters <Hashtable>]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration <ApplyConfigurationPipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ### By Object
@@ -36,7 +36,7 @@ Apply-PnPTenantTemplate [-Template] <ProvisioningHierarchy> [-SequenceId <String
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Parameters <Hashtable>]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration <ApplyConfigurationPipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

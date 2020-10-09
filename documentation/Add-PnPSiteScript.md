@@ -20,8 +20,7 @@ Creates a new Site Script on the current tenant.
 ## SYNTAX
 
 ```powershell
-Add-PnPSiteScript -Title <String> [-Description <String>] -Content <String> [-Connection <PnPConnection>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Add-PnPSiteScript -Title <String> [-Description <String>] -Content <String> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION

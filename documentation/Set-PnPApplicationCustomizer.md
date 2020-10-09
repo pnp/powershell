@@ -18,14 +18,14 @@ Updates a SharePoint Framework client side extension application customizer
 ```powershell
 Set-PnPApplicationCustomizer [[-Identity] <UserCustomActionPipeBind>] [-Scope <CustomActionScope>]
  [-Title <String>] [-Description <String>] [-Sequence <Int32>] [-ClientSideComponentProperties <String>]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Web <WebPipeBind>] [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ### Client Side Component Id
 ```powershell
 Set-PnPApplicationCustomizer [-ClientSideComponentId <Guid>] [-Scope <CustomActionScope>]
  [-Title <String>] [-Description <String>] [-Sequence <Int32>] [-ClientSideComponentProperties <String>]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Web <WebPipeBind>] [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

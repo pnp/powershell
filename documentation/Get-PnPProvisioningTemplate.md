@@ -25,8 +25,8 @@ Get-PnPSiteTemplate [[-Out] <String>] [[-Schema] <XMLPnPSchemaVersion>] [-Includ
  [-NoBaseTemplate] [-Encoding <Encoding>] [-TemplateDisplayName <String>] [-TemplateImagePreviewUrl <String>]
  [-TemplateProperties <Hashtable>] [-OutputInstance] [-ExcludeContentTypesFromSyndication]
  [-ListsToExtract <System.Collections.Generic.List`1[System.String]>]
- [-Configuration <ExtractConfigurationPipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+ [-Configuration <ExtractConfigurationPipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] 
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION

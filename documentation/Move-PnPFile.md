@@ -17,13 +17,13 @@ Moves a file or folder to a different location
 ### Site Relative (Default)
 ```powershell
 Move-PnPFile [-SiteRelativeUrl] <String> [-TargetUrl] <String> [-OverwriteIfAlreadyExists] [-Force]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Web <WebPipeBind>] [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ### Server Relative
 ```powershell
 Move-PnPFile [-ServerRelativeUrl] <String> [-TargetUrl] <String> [-OverwriteIfAlreadyExists] [-Force]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Web <WebPipeBind>] [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ### Other Site Collection
@@ -31,7 +31,7 @@ Move-PnPFile [-ServerRelativeUrl] <String> [-TargetUrl] <String> [-OverwriteIfAl
 Move-PnPFile [[-ServerRelativeUrl] <String>] [[-SiteRelativeUrl] <String>]
  [-TargetServerRelativeLibrary] <String> [-OverwriteIfAlreadyExists] [-AllowSchemaMismatch]
  [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-Force] [-Web <WebPipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

@@ -16,7 +16,7 @@ Removes a value from the property bag
 
 ```powershell
 Remove-PnPPropertyBagValue [-Key] <String> [-Folder <String>] [-Force] [-Web <WebPipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

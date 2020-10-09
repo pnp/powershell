@@ -21,7 +21,7 @@ Retrieve site information.
 
 ```powershell
 Get-PnPTenantSite [[-Url] <String>] [-Template <String>] [-Detailed] [-IncludeOneDriveSites] [-Filter <String>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

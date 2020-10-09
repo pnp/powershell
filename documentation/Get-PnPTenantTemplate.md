@@ -22,14 +22,14 @@ Generates a provisioning tenant template from a site. If the site is a hubsite a
 ### Extract a template to a file
 ```powershell
 Get-PnPTenantTemplate [-SiteUrl <String>] [-Out] <String> [-Force]
- [-Configuration <ExtractConfigurationPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
+ [-Configuration <ExtractConfigurationPipeBind>] [-Connection <PnPConnection>]  
  [<CommonParameters>]
 ```
 
 ### Extract a template as an object
 ```powershell
 Get-PnPTenantTemplate [-SiteUrl <String>] [-AsInstance] [-Configuration <ExtractConfigurationPipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

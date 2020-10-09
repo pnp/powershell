@@ -16,8 +16,8 @@ Exports a Client Side Page to a PnP Provisioning Template
 
 ```powershell
 Export-PnPClientSidePage [-Identity] <ClientSidePagePipeBind> [-PersistBrandingFiles] [-Out <String>] [-Force]
- [-Configuration <ExtractConfigurationPipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+ [-Configuration <ExtractConfigurationPipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] 
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION

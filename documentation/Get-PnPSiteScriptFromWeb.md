@@ -22,14 +22,14 @@ Generates a Site Script from an existing site
 ### All components
 ```powershell
 Get-PnPSiteScriptFromWeb -Url <String> [-Lists <String[]>] [-IncludeAll] [-Connection <PnPConnection>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+   [<CommonParameters>]
 ```
 
 ### Specific components
 ```powershell
 Get-PnPSiteScriptFromWeb -Url <String> [-Lists <String[]>] [-IncludeBranding] [-IncludeLinksToExportedItems]
  [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

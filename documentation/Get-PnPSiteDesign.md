@@ -20,7 +20,7 @@ Retrieve Site Designs that have been registered on the current tenant.
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteDesign [[-Identity] <TenantSiteDesignPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
+Get-PnPSiteDesign [[-Identity] <TenantSiteDesignPipeBind>] [-Connection <PnPConnection>]  
  [<CommonParameters>]
 ```
 

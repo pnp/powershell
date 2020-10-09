@@ -27,7 +27,7 @@ Invoke-PnPWebAction [-ListName <String>] [-Webs <Web[]>]
  [-ListProperties <String[]>] [-ListItemAction <System.Action`1[Microsoft.SharePoint.Client.ListItem]>]
  [-ShouldProcessListItemAction <System.Func`2[Microsoft.SharePoint.Client.ListItem,System.Boolean]>]
  [-ListItemProperties <String[]>] [-SubWebs] [-DisableStatisticsOutput] [-SkipCounting] [-Web <WebPipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

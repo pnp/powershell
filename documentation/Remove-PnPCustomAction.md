@@ -16,7 +16,7 @@ Removes a custom action
 
 ```powershell
 Remove-PnPCustomAction [[-Identity] <UserCustomActionPipeBind>] [-Scope <CustomActionScope>] [-Force]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Web <WebPipeBind>] [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

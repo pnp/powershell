@@ -15,7 +15,7 @@ Tests a tenant template for invalid references
 ## SYNTAX
 
 ```powershell
-Test-PnPTenantTemplate -Template <ProvisioningHierarchy> [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
+Test-PnPTenantTemplate -Template <ProvisioningHierarchy> [-Connection <PnPConnection>]  
  [<CommonParameters>]
 ```
 

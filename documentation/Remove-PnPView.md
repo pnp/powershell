@@ -16,7 +16,7 @@ Deletes a view from a list
 
 ```powershell
 Remove-PnPView [-Identity] <ViewPipeBind> [-List] <ListPipeBind> [-Force] [-Web <WebPipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION

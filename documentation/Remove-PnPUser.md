@@ -15,7 +15,7 @@ Removes a specific user from the site collection User Information List
 ## SYNTAX
 
 ```powershell
-Remove-PnPUser [-Identity] <UserPipeBind> [-Force] [-Confirm] [-Web <WebPipeBind>]
+Remove-PnPUser [-Identity] <UserPipeBind> [-Force]  [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
