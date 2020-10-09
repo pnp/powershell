@@ -13,9 +13,11 @@ $apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
 if($apiKey -ne [String]::Empty)
 {
 	# We are running in a GitHub Action
+	Write-Host "Installing PlatyPS"
 	Set-PSRepository PSGallery -InstallationPolicy Trusted
 	Install-Module PlatyPS -ErrorAction Stop
-	New-ExternalHelp -Path ./Documentation -OutputPath $destinationFolder -Force
+	Write-Host "Generating external help"
+	New-ExternalHelp -Path ./documentation -OutputPath $destinationFolder -Force
 } else {
 	# We are running locally, check if platyps is installed
 	$modules = Get-Module -Name platyPS -ListAvailable
@@ -31,5 +33,5 @@ if($apiKey -ne [String]::Empty)
 			exit
 		}
 	}
-	New-ExternalHelp -Path ./../Documentation -OutputPath $destinationFolder -Force
+	New-ExternalHelp -Path ./../documentation -OutputPath $destinationFolder -Force
 }	
