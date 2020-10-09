@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPAppErrors` cmdlet (0.1.6)
 - Added `Get-PnPAppInfo` cmdlet (0.1.6)
 - Added `Get-PnPBrowserIdleSignOut` cmdlet (0.1.6)
+- Added `Set-PnPBrowserIdleSignOut` cmdlet (0.1.6)
 
 ### Changed
 
