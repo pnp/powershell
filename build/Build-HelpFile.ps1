@@ -15,6 +15,7 @@ if($apiKey -ne [String]::Empty)
 	# We are running in a GitHub Action
 	Set-PSRepository PSGallery -InstallationPolicy Trusted
 	Install-Module PlatyPS -ErrorAction Stop
+	New-ExternalHelp -Path ./Documentation -OutputPath $destinationFolder -Force
 } else {
 	# We are running locally, check if platyps is installed
 	$modules = Get-Module -Name platyPS -ListAvailable
@@ -30,6 +31,5 @@ if($apiKey -ne [String]::Empty)
 			exit
 		}
 	}
+	New-ExternalHelp -Path ./../Documentation -OutputPath $destinationFolder -Force
 }	
-
-New-ExternalHelp -Path .\..\Documentation -OutputPath $destinationFolder -Force
