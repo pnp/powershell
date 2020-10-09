@@ -42,7 +42,7 @@ Adds a daily alert for the current user at the given time to the "Demo List". No
 ### EXAMPLE 3
 ```powershell
 Add-PnPAlert -Title "Alert for user" -List "Demo List" -User "i:0#.f|membership|Alice@contoso.onmicrosoft.com"
-```
+
 
 Adds a new alert for user "Alice" to the "Demo List". Note: Only site owners and admins are permitted to set alerts for other users.
 
