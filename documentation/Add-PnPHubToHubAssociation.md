@@ -23,7 +23,7 @@ Associates a hub site to a hub site.
 
 ```powershell
 Add-PnPHubToHubAssociation -Source <Guid> -Target <Guid> [-Connection <PnPConnection>]
-```
+
 
 ### By Url
 
