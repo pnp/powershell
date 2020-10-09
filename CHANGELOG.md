@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [0.1.x-preview]
+## [0.1.x-nightly]
+
+### Added
+
+- Added -DisableCustomAppAuthentication to `Set-PnPTenant` and added support for DisableCustomAppAuthentication in `Get-PnPTenant`.
+- Added `Add-PnPHubToHubAssociation` cmdlet.
+- Added `Export-PnPUserInfo` cmdlet.
+- Added `Add-PnPSiteScriptPackage` cmdlet.
+- Added `Export-PnPUserProfile` cmdlet (0.1.6).
+- Added `Get-PnPAppErrors` cmdlet (0.1.6)
 
 ### Changed
 
@@ -62,8 +71,3 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed alias `Ensure-PnPFolder`. Use `Resolve-PnPFolder`.
 - Removed `Install-PnPSolution`. Sandboxed solutions have been deprecated.
 - Removed `Add-PnPWorkflowDefinition`, `Add-PnPWorkflowSubscription`, `Get-PnPWorkflowDefinition`, `Get-PnPWorkflowInstances`, `Get-PnPWorkflowSubscription`, `Remove-PnPWorkflowDefinition`, `Remove-PnPWorkflowSubscription`, `Resume-PnPWorkflowInstance`, `Start-PnPWorkflowInstance` and `Stop-PnPWorkflowInstance` due to deprecated of the Workflow Services in SharePoint Online.
-- Added -DisableCustomAppAuthentication to Set-PnPTenant and added support for DisableCustomAppAuthentication in Get-PnPTenant.
-- Added Add-PnPHubToHubAssociation cmdlet.
-- Added Export-PnPUserInfo cmdlet.
-- Added Add-PnPSiteScriptPackage cmdlet.
-- Added Export-PnPUserProfile cmdlet.
