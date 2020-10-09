@@ -66,3 +66,4 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added Add-PnPHubToHubAssociation cmdlet.
 - Added Export-PnPUserInfo cmdlet.
 - Added Add-PnPSiteScriptPackage cmdlet.
+- Added Export-PnPUserProfile cmdlet.
