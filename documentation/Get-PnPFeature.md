@@ -59,7 +59,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -74,7 +73,6 @@ The feature ID or name to query for, Querying by name is not supported in versio
 ```yaml
 Type: FeaturePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -89,7 +87,6 @@ The scope of the feature. Defaults to Web.
 ```yaml
 Type: FeatureScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site
 
 Required: False
@@ -105,7 +102,6 @@ The web to apply the command to. Omit this parameter to use the current web.
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

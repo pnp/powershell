@@ -57,7 +57,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: Guid
 Parameter Sets: Client Side Component Id
-Aliases:
 
 Required: False
 Position: Named
@@ -74,7 +73,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -106,7 +104,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -123,7 +120,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -140,7 +136,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: UserCustomActionPipeBind
 Parameter Sets: Custom Action Id
-Aliases:
 
 Required: False
 Position: 0
@@ -157,7 +152,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: CustomActionScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site, All
 
 Required: False
@@ -175,7 +169,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -192,7 +185,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -209,7 +201,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

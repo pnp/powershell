@@ -37,7 +37,6 @@ Creates a new instance of a tenant template object.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -66,7 +65,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -80,7 +78,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -94,7 +91,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

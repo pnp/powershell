@@ -325,7 +325,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: App-Only using a clientId and clientSecret and an AAD Domain, Microsoft Graph using Azure Active Directory
-Aliases:
 
 Required: True
 Position: Named
@@ -342,7 +341,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: Access Token
-Aliases:
 
 Required: True
 Position: Named
@@ -359,7 +357,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: AzureEnvironment
 Parameter Sets: Token, App-Only using a clientId and clientSecret and an URL, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, PnP Management Shell / DeviceLogin, Azure Active Directory using Scopes, PnP Management Shell to the Microsoft Graph
-Aliases:
 Accepted values: Production, PPE, China, Germany, USGovernment
 
 Required: False
@@ -377,7 +374,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: X509Certificate2
 Parameter Sets: App-Only with Azure Active Directory
-Aliases:
 
 Required: False
 Position: Named
@@ -394,7 +390,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: App-Only with Azure Active Directory
-Aliases:
 
 Required: False
 Position: Named
@@ -411,7 +406,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SecureString
 Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings
-Aliases:
 
 Required: False
 Position: Named
@@ -428,7 +422,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: App-Only with Azure Active Directory
-Aliases:
 
 Required: False
 Position: Named
@@ -443,7 +436,6 @@ The client certificate which you want to use for the ADFS authentication
 ```yaml
 Type: X509Certificate2
 Parameter Sets: ADFS with client Certificate
-Aliases:
 
 Required: False
 Position: Named
@@ -458,7 +450,6 @@ The Client ID of the Azure AD Application
 ```yaml
 Type: String
 Parameter Sets: App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates
-Aliases:
 
 Required: True
 Position: Named
@@ -473,7 +464,6 @@ The client secret to use.
 ```yaml
 Type: String
 Parameter Sets: Token, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain
-Aliases:
 
 Required: True
 Position: Named
@@ -488,7 +478,6 @@ If you want to create a PSDrive connected to the URL
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Main, Token, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, Access Token
-Aliases:
 
 Required: False
 Position: Named
@@ -503,7 +492,6 @@ Credentials of the user to connect with. Either specify a PSCredential object or
 ```yaml
 Type: CredentialPipeBind
 Parameter Sets: Main, ADFS with user credentials, Azure Active Directory using Scopes
-Aliases:
 
 Required: False
 Position: Named
@@ -518,7 +506,6 @@ If you want to connect with the current user credentials
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Main
-Aliases:
 
 Required: False
 Position: Named
@@ -533,7 +520,6 @@ Name of the PSDrive to create (default: SPO)
 ```yaml
 Type: String
 Parameter Sets: Main, Token, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, Access Token
-Aliases:
 
 Required: False
 Position: Named
@@ -560,7 +546,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: PnP Management Shell to the Microsoft Graph
-Aliases:
 
 Required: True
 Position: Named
@@ -575,7 +560,6 @@ Authenticate using Kerberos to ADFS
 ```yaml
 Type: SwitchParameter
 Parameter Sets: ADFS with user credentials
-Aliases:
 
 Required: False
 Position: Named
@@ -592,7 +576,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: PnP Management Shell / DeviceLogin, PnP Management Shell to the Microsoft Graph
-Aliases:
 
 Required: False
 Position: Named
@@ -607,7 +590,6 @@ The name of the ADFS trusted login provider
 ```yaml
 Type: String
 Parameter Sets: ADFS with client Certificate, ADFS with user credentials
-Aliases:
 
 Required: False
 Position: Named
@@ -622,7 +604,6 @@ In order to help to make PnP PowerShell better, we can track anonymous telemetry
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -639,7 +620,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: App-Only with Azure Active Directory using certificate as PEM strings
-Aliases:
 
 Required: True
 Position: Named
@@ -656,7 +636,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: App-Only with Azure Active Directory using certificate as PEM strings
-Aliases:
 
 Required: True
 Position: Named
@@ -697,7 +676,6 @@ Authentication realm. If not specified will be resolved from the url specified.
 ```yaml
 Type: String
 Parameter Sets: Token, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain
-Aliases:
 
 Required: False
 Position: Named
@@ -714,7 +692,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: Azure Active Directory
-Aliases:
 
 Required: True
 Position: Named
@@ -729,7 +706,6 @@ Returns the connection for use with the -Connection parameter on cmdlets.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Main, Token, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, Access Token, PnP Management Shell / DeviceLogin
-Aliases:
 
 Required: False
 Position: Named
@@ -746,7 +722,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: SPO Management Shell Credentials
-Aliases:
 
 Required: True
 Position: Named
@@ -763,7 +738,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String[]
 Parameter Sets: Azure Active Directory using Scopes
-Aliases:
 
 Required: True
 Position: Named
@@ -780,7 +754,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates
-Aliases:
 
 Required: True
 Position: Named
@@ -795,7 +768,6 @@ The url to the Tenant Admin site. If not specified, the cmdlets will assume to c
 ```yaml
 Type: String
 Parameter Sets: Main, Token, App-Only using a clientId and clientSecret and an URL, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials
-Aliases:
 
 Required: False
 Position: Named
@@ -812,7 +784,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: App-Only with Azure Active Directory using certificate from certificate store by thumbprint
-Aliases:
 
 Required: True
 Position: Named
@@ -827,7 +798,6 @@ The Url of the site collection to connect to
 ```yaml
 Type: String
 Parameter Sets: Main, Token, App-Only using a clientId and clientSecret and an URL, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin
-Aliases:
 
 Required: True
 Position: 0
@@ -839,7 +809,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: Access Token
-Aliases:
 
 Required: False
 Position: 0
@@ -854,7 +823,6 @@ If you want to connect to SharePoint using ADFS and credentials
 ```yaml
 Type: SwitchParameter
 Parameter Sets: ADFS with user credentials
-Aliases:
 
 Required: False
 Position: Named
@@ -869,7 +837,6 @@ If you want to connect to SharePoint farm using ADFS with a client certificate
 ```yaml
 Type: SwitchParameter
 Parameter Sets: ADFS with client Certificate
-Aliases:
 
 Required: False
 Position: Named
@@ -884,7 +851,6 @@ If you want to connect to SharePoint with browser based login. This is required 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: WebLogin
-Aliases:
 
 Required: True
 Position: Named

@@ -75,7 +75,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -90,7 +89,6 @@ Defaults to Unicode
 ```yaml
 Type: Encoding
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -105,7 +103,6 @@ Overwrites the output file if it exists.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -120,7 +117,6 @@ If specified, a full provisioning template structure will be returned
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -135,7 +131,6 @@ The ID or name of the termgroup
 ```yaml
 Type: TermGroupPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -150,7 +145,6 @@ File to export the data to.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

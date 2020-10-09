@@ -39,7 +39,6 @@ The full assembly name of the handler
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -54,7 +53,6 @@ Any configuration data you want to send to the handler
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -69,7 +67,6 @@ If set, the handler will be disabled
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -84,7 +81,6 @@ The type of the handler
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

@@ -56,7 +56,6 @@ The credential to set
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -71,7 +70,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -87,7 +85,6 @@ If you want to specify this value use ConvertTo-SecureString -String 'YourPasswo
 ```yaml
 Type: SecureString
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -101,7 +98,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

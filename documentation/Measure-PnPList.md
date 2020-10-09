@@ -47,7 +47,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -64,7 +63,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -80,7 +78,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -97,7 +94,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -114,7 +110,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

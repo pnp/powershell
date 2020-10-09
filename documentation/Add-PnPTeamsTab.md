@@ -43,7 +43,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -58,7 +57,6 @@ Specify the channel id of the team to retrieve.
 ```yaml
 Type: TeamsChannelPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -73,7 +71,6 @@ Specifies the title of the new site collection
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -88,7 +85,6 @@ Specify the tab type
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -103,7 +99,6 @@ Specify the group id, mailNickname or display name of the team to use.
 ```yaml
 Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -118,7 +113,6 @@ Specify the tab type
 ```yaml
 Type: TeamTabType
 Parameter Sets: (All)
-Aliases:
 Accepted values: WebSite, DocumentLibrary, Wiki, Planner, MicrosoftStream, MicrosoftForms, Word, Excel, PowerPoint, PDF, OneNote, PowerBI, SharePointPageAndList, Custom
 
 Required: True

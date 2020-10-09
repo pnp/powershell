@@ -44,7 +44,6 @@ The type of cdn to enable or disable
 ```yaml
 Type: CdnType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Public, Private, Both
 
 Required: True
@@ -60,7 +59,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -75,7 +73,6 @@ Specify to enable or disable
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -90,7 +87,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

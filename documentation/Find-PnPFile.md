@@ -64,7 +64,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -79,7 +78,6 @@ Folder object or relative url of a folder to query
 ```yaml
 Type: FolderPipeBind
 Parameter Sets: Folder
-Aliases:
 
 Required: True
 Position: Named
@@ -94,7 +92,6 @@ List title, url or an actual List object to query
 ```yaml
 Type: ListPipeBind
 Parameter Sets: List
-Aliases:
 
 Required: True
 Position: Named
@@ -109,7 +106,6 @@ Wildcard query
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -124,7 +120,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

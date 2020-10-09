@@ -74,7 +74,6 @@ The role that must be assigned to the group or user
 ```yaml
 Type: String
 Parameter Sets: User, Group
-Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +88,6 @@ Clear all existing permissions
 ```yaml
 Type: SwitchParameter
 Parameter Sets: User, Group
-Aliases:
 
 Required: False
 Position: Named
@@ -104,7 +102,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -118,7 +115,6 @@ Accept wildcard characters: False
 ```yaml
 Type: GroupPipeBind
 Parameter Sets: Group
-Aliases:
 
 Required: True
 Position: Named
@@ -133,7 +129,6 @@ The ID of the folder, the server relative URL to the folder or actual Folder obj
 ```yaml
 Type: FolderPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -148,7 +143,6 @@ Inherit permissions from the parent, removing unique permissions
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Inherit
-Aliases:
 
 Required: False
 Position: Named
@@ -163,7 +157,6 @@ The ID, Title or Url of the list the folder is part of
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -178,7 +171,6 @@ The role that must be removed from the group or user
 ```yaml
 Type: String
 Parameter Sets: User, Group
-Aliases:
 
 Required: False
 Position: Named
@@ -195,7 +187,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -209,7 +200,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: User
-Aliases:
 
 Required: True
 Position: Named
@@ -224,7 +214,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

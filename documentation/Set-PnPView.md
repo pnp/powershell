@@ -60,7 +60,6 @@ A valid XML fragment containing one or more Aggregations
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -75,7 +74,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -90,7 +88,6 @@ An array of fields to use in the view. Notice that specifying this value will re
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -105,7 +102,6 @@ The Id, Title or instance of the view
 ```yaml
 Type: ViewPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -120,7 +116,6 @@ The Id, Title or Url of the list
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -135,7 +130,6 @@ Hashtable of properties to update on the view. Use the syntax @{property1="value
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -150,7 +144,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

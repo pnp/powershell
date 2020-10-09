@@ -78,7 +78,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: Int32
 Parameter Sets: Positioned with built-in web part, Positioned with 3rd party web part
-Aliases:
 
 Required: True
 Position: Named
@@ -95,7 +94,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: ClientSideComponentPipeBind
 Parameter Sets: Default with 3rd party web part, Positioned with 3rd party web part
-Aliases:
 
 Required: True
 Position: Named
@@ -112,7 +110,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -129,7 +126,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: DefaultClientSideWebParts
 Parameter Sets: Default with built-in web part, Positioned with built-in web part
-Aliases:
 Accepted values: ThirdParty, ContentRollup, BingMap, ContentEmbed, DocumentEmbed, Image, ImageGallery, LinkPreview, NewsFeed, NewsReel, News, PowerBIReportEmbed, QuickChart, SiteActivity, VideoEmbed, YammerEmbed, Events, GroupCalendar, Hero, List, PageTitle, People, QuickLinks, CustomMessageRegion, Divider, MicrosoftForms, Spacer, ClientWebPart, PowerApps, CodeSnippet, PageFields, Weather, YouTube, MyDocuments, YammerFullFeed, CountDown, ListProperties, MarkDown, Planner, Sites, CallToAction, Button
 
 Required: True
@@ -147,7 +143,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -164,7 +159,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: ClientSidePagePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -181,7 +175,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: Int32
 Parameter Sets: Positioned with built-in web part, Positioned with 3rd party web part
-Aliases:
 
 Required: True
 Position: Named
@@ -198,7 +191,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -215,7 +207,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: PropertyBagPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

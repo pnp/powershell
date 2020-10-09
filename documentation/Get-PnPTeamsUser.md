@@ -64,7 +64,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -79,7 +78,6 @@ Accept wildcard characters: False
 ```yaml
 Type: TeamsChannelPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -94,7 +92,6 @@ Specify to filter on the role of the user
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 Accepted values: Owner, Member, Guest
 
 Required: False
@@ -110,7 +107,6 @@ Specify the group id, mailNickname or display name of the team to use.
 ```yaml
 Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

@@ -53,7 +53,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Extract a template as an object
-Aliases:
 
 Required: True
 Position: Named
@@ -70,7 +69,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: ExtractConfigurationPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -102,7 +100,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -119,7 +116,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Extract a template to a file
-Aliases:
 
 Required: False
 Position: Named
@@ -136,7 +132,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: Extract a template to a file
-Aliases:
 
 Required: True
 Position: 0
@@ -152,7 +147,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

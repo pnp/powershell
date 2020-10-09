@@ -60,7 +60,6 @@ Defines the background emphasis of the content in the footer
 ```yaml
 Type: FooterVariantThemeType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Strong, Neutral, Soft, None
 
 Required: False
@@ -76,7 +75,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -91,7 +89,6 @@ Indicates if the footer should be shown on the current web ($true) or if it shou
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -106,7 +103,6 @@ Defines how the footer should look like
 ```yaml
 Type: FooterLayoutType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Simple, Extended, Stacked
 
 Required: False
@@ -122,7 +118,6 @@ Defines the server relative URL to the logo to be displayed in the footer. Provi
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -137,7 +132,6 @@ Defines the title displayed in the footer
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -152,7 +146,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

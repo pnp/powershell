@@ -81,7 +81,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -96,7 +95,6 @@ If specified will include all supported components into the Site Script
 ```yaml
 Type: SwitchParameter
 Parameter Sets: All components
-Aliases:
 
 Required: False
 Position: Named
@@ -111,7 +109,6 @@ If specified will include the branding of the site into the Site Script
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific components
-Aliases:
 
 Required: False
 Position: Named
@@ -126,7 +123,6 @@ If specified will include navigation links into the Site Script
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific components
-Aliases:
 
 Required: False
 Position: Named
@@ -141,7 +137,6 @@ If specified will include the regional settings into the Site Script
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific components
-Aliases:
 
 Required: False
 Position: Named
@@ -156,7 +151,6 @@ If specified will include the external sharing configuration into the Site Scrip
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific components
-Aliases:
 
 Required: False
 Position: Named
@@ -171,7 +165,6 @@ If specified will include the branding of the site into the Site Script
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific components
-Aliases:
 
 Required: False
 Position: Named
@@ -186,7 +179,6 @@ Allows specifying one or more site relative URLs of lists that should be include
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -201,7 +193,6 @@ Specifies the URL of the site to generate a Site Script from
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

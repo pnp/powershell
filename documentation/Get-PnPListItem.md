@@ -115,7 +115,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -130,7 +129,6 @@ The fields to retrieve. If not specified all fields will be loaded in the return
 ```yaml
 Type: String[]
 Parameter Sets: All Items, By Id, By Unique Id
-Aliases:
 
 Required: False
 Position: Named
@@ -145,7 +143,6 @@ The server relative URL of a list folder from which results will be returned.
 ```yaml
 Type: String
 Parameter Sets: All Items, By Query
-Aliases:
 
 Required: False
 Position: Named
@@ -160,7 +157,6 @@ The ID of the item to retrieve
 ```yaml
 Type: Int32
 Parameter Sets: By Id
-Aliases:
 
 Required: False
 Position: Named
@@ -175,7 +171,6 @@ The list to query
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -190,7 +185,6 @@ The number of items to retrieve per page request.
 ```yaml
 Type: Int32
 Parameter Sets: All Items, By Query
-Aliases:
 
 Required: False
 Position: Named
@@ -205,7 +199,6 @@ The CAML query to execute against the list
 ```yaml
 Type: String
 Parameter Sets: By Query
-Aliases:
 
 Required: False
 Position: Named
@@ -220,7 +213,6 @@ The script block to run after every page request.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: All Items, By Query
-Aliases:
 
 Required: False
 Position: Named
@@ -235,7 +227,6 @@ The unique id (GUID) of the item to retrieve
 ```yaml
 Type: Guid
 Parameter Sets: By Unique Id
-Aliases:
 
 Required: False
 Position: Named
@@ -250,7 +241,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

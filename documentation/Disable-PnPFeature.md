@@ -53,7 +53,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -68,7 +67,6 @@ Specifies whether to continue if an error occurs when deactivating the feature.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -83,7 +81,6 @@ The id of the feature to disable.
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -98,7 +95,6 @@ Specify the scope of the feature to deactivate, either Web or Site. Defaults to 
 ```yaml
 Type: FeatureScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site
 
 Required: False
@@ -114,7 +110,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

@@ -41,7 +41,6 @@ The comment added to the checkin. Defaults to 'Restored to previous version'.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -56,7 +55,6 @@ The check in type to use. Defaults to Major.
 ```yaml
 Type: CheckinType
 Parameter Sets: (All)
-Aliases:
 Accepted values: MinorCheckIn, MajorCheckIn, OverwriteCheckIn
 
 Required: False
@@ -72,7 +70,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -87,7 +84,6 @@ The server relative URL of the file.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -102,7 +98,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

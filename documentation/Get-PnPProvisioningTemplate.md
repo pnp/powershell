@@ -147,7 +147,6 @@ Specify a JSON configuration file to configure the extraction progress.
 ```yaml
 Type: ExtractConfigurationPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -177,7 +176,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -192,7 +190,6 @@ Allows you to specify from which content type group(s) the content types should 
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -207,7 +204,6 @@ The encoding type of the XML file, Unicode is default
 ```yaml
 Type: Encoding
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -222,7 +218,6 @@ Specify whether or not content types issued from a content hub should be exporte
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -237,7 +232,6 @@ Allows you to run all handlers, excluding the ones specified.
 ```yaml
 Type: Handlers
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, AuditSettings, ComposedLook, CustomActions, ExtensibilityProviders, Features, Fields, Files, Lists, Pages, Publishing, RegionalSettings, SearchSettings, SitePolicy, SupportedUILanguages, TermGroups, Workflows, SiteSecurity, ContentTypes, PropertyBagEntries, PageContents, WebSettings, Navigation, ImageRenditions, ApplicationLifecycleManagement, Tenant, WebApiPermissions, SiteHeader, SiteFooter, Theme, SiteSettings, All
 
 Required: False
@@ -253,7 +247,6 @@ Allows you to specify ExtensibilityHandlers to execute while extracting a templa
 ```yaml
 Type: ExtensibilityHandler[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -268,7 +261,6 @@ Overwrites the output file if it exists.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -283,7 +275,6 @@ Allows you to only process a specific type of artifact in the site. Notice that 
 ```yaml
 Type: Handlers
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, AuditSettings, ComposedLook, CustomActions, ExtensibilityProviders, Features, Fields, Files, Lists, Pages, Publishing, RegionalSettings, SearchSettings, SitePolicy, SupportedUILanguages, TermGroups, Workflows, SiteSecurity, ContentTypes, PropertyBagEntries, PageContents, WebSettings, Navigation, ImageRenditions, ApplicationLifecycleManagement, Tenant, WebApiPermissions, SiteHeader, SiteFooter, Theme, SiteSettings, All
 
 Required: False
@@ -299,7 +290,6 @@ If specified all client side pages will be included
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -314,7 +304,6 @@ If specified, all term groups will be included. Overrides IncludeSiteCollectionT
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -329,7 +318,6 @@ If specified hidden lists will be included in the template
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -344,7 +332,6 @@ If specified, out of the box / native publishing files will be saved.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -359,7 +346,6 @@ If specified the template will contain the current search configuration of the s
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -374,7 +360,6 @@ If specified, all the site collection term groups will be included. Overridden b
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -389,7 +374,6 @@ If specified all site groups will be included.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -404,7 +388,6 @@ If specified all the managers and contributors of term groups will be included.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -419,7 +402,6 @@ Specify the lists to extract, either providing their ID or their Title.
 ```yaml
 Type: System.Collections.Generic.List`1[System.String]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -434,7 +416,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -449,7 +430,6 @@ Filename to write to, optionally including full path
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -464,7 +444,6 @@ Returns the template as an in-memory object, which is an instance of the SiteTem
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -479,7 +458,6 @@ If specified the files used for masterpages, sitelogo, alternate CSS and the fil
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -496,7 +474,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -511,7 +488,6 @@ If specified the files used for the publishing feature will be saved.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -528,7 +504,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -543,7 +518,6 @@ The schema of the output to use, defaults to the latest schema
 ```yaml
 Type: XMLPnPSchemaVersion
 Parameter Sets: (All)
-Aliases:
 Accepted values: LATEST, V201503, V201505, V201508, V201512, V201605, V201705, V201801, V201805, V201807, V201903, V201909, V202002
 
 Required: False
@@ -559,7 +533,6 @@ During extraction the version of the server will be checked for certain actions.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -574,7 +547,6 @@ It can be used to specify the DisplayName of the template file that will be extr
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -589,7 +561,6 @@ It can be used to specify the ImagePreviewUrl of the template file that will be 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -604,7 +575,6 @@ It can be used to specify custom Properties for the template file that will be e
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -619,7 +589,6 @@ Allows you to specify ITemplateProviderExtension to execute while extracting a t
 ```yaml
 Type: ITemplateProviderExtension[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -634,7 +603,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

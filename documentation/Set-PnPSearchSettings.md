@@ -81,7 +81,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -96,7 +95,6 @@ Do not ask for confirmation.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -111,7 +109,6 @@ Scope to apply the setting to. Possible values: Web (default), Site\r\n\r\nFor a
 ```yaml
 Type: SearchSettingsScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Site, Web
 
 Required: False
@@ -127,7 +124,6 @@ Set the scope of which the suite bar search box shows. Possible values: Inherit,
 ```yaml
 Type: SearchBoxInNavBarType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Inherit, AllPages, ModernOnly, Hidden
 
 Required: False
@@ -143,7 +139,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -158,7 +153,6 @@ Set the URL where the search box should redirect to.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -173,7 +167,6 @@ Set the search scope of the suite bar search box. Possible values: DefaultScope,
 ```yaml
 Type: SearchScopeType
 Parameter Sets: (All)
-Aliases:
 Accepted values: DefaultScope, Tenant, Hub, Site
 
 Required: False
@@ -189,7 +182,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

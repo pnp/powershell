@@ -50,7 +50,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -65,7 +64,6 @@ The Identity of the Microsoft 365 Group to add members to
 ```yaml
 Type: Microsoft365GroupPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -80,7 +78,6 @@ If provided, all existing members will be removed and only those provided throug
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -95,7 +92,6 @@ The UPN(s) of the user(s) to add to the Microsoft 365 Group as a member
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

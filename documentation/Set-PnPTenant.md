@@ -95,7 +95,6 @@ This example enables the use of special persisted cookie for Open with Explorer.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -109,7 +108,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -123,7 +121,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -142,7 +139,6 @@ True - All external sharing invitations that are sent will blind copy the e-mail
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -162,7 +158,6 @@ Single or Multiple e-mail addresses - joe@contoso.com or joe@contoso.com,bob@con
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -176,7 +171,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -190,7 +184,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SPOConditionalAccessPolicyType
 Parameter Sets: (All)
-Aliases:
 Accepted values: AllowFullAccess, AllowLimitedAccess, BlockAccess, ProtectionLevel
 
 Required: False
@@ -206,7 +199,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -220,7 +212,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SharingPermissionType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, View, Edit
 
 Required: False
@@ -243,7 +234,6 @@ The values are: None Direct Internal AnonymousAccess
 ```yaml
 Type: SharingLinkType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, Direct, Internal, AnonymousAccess
 
 Required: False
@@ -259,7 +249,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -274,7 +263,6 @@ Guids of out of the box modern web part id's to hide
 ```yaml
 Type: Guid[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -293,7 +281,6 @@ Accepts a value of true (enabled) to hide the Download button or false (disabled
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -312,7 +299,6 @@ False - Start a Site is hidden from the menu.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -326,7 +312,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -340,7 +325,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -355,7 +339,6 @@ Boolean indicating if Azure Information Protection (AIP) should be enabled on th
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -373,7 +356,6 @@ If enabled, your identity provider must be capable of authenticating guest users
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -393,7 +375,6 @@ False - External services that are outside of the Office 365 datacenters cannot 
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -407,7 +388,6 @@ Accept wildcard characters: False
 ```yaml
 Type: AnonymousLinkType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, View, Edit
 
 Required: False
@@ -422,7 +402,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -436,7 +415,6 @@ Accept wildcard characters: False
 ```yaml
 Type: AnonymousLinkType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, View, Edit
 
 Required: False
@@ -452,7 +430,6 @@ Defines if the default themes are visible or hidden
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -472,7 +449,6 @@ The IPAddressAllowList parameter only lets administrators set IP addresses or ra
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -491,7 +467,6 @@ Before the IPAddressEnforcement parameter is set, make sure you add a valid IPv4
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -505,7 +480,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -529,7 +503,6 @@ This may also prevent third-party apps from accessing SharePoint Online resource
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -544,7 +517,6 @@ Specifies the upper bound on the compatibility level for new sites.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -559,7 +531,6 @@ Specifies the lower bound on the compatibility level for new sites.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -578,7 +549,6 @@ Full URL - Example: https://contoso.sharepoint.com/Pages/Locked.aspx
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -592,7 +562,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -606,7 +575,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -625,7 +593,6 @@ The values are $true and $false.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -644,7 +611,6 @@ The values are $true and $false.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -667,7 +633,6 @@ Unspecified- Let each OneDrive for Business owner enable or disable access reque
 ```yaml
 Type: SharingState
 Parameter Sets: (All)
-Aliases:
 Accepted values: Unspecified, On, Off
 
 Required: False
@@ -691,7 +656,6 @@ Unspecified- Let each OneDrive for Business owner enable or disable re-sharing b
 ```yaml
 Type: SharingState
 Parameter Sets: (All)
-Aliases:
 Accepted values: Unspecified, On, Off
 
 Required: False
@@ -711,7 +675,6 @@ True - Modern Authentication via ADAL is disabled.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -732,7 +695,6 @@ $false- Administrator managed Guest users can't be given OneDrives as functional
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -753,7 +715,6 @@ If the value is set larger than the Maximum allowed OneDrive for Business quota,
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -770,7 +731,6 @@ The value range is in days, between 30 and 3650. The default value is 30.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -784,7 +744,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -798,7 +757,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -820,7 +778,6 @@ For additional information about the change, see Provision the Shared with Every
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -834,7 +791,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -848,7 +804,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -871,7 +826,6 @@ True - User must accept this invitation with bob@contoso.com.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -888,7 +842,6 @@ To remove the expiration requirement, set the value to zero (0).
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -909,7 +862,6 @@ True - Disables starts with / partial name search functionality for all SharePoi
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -926,7 +878,6 @@ For additional information about how to restrict a domain sharing, see Restricte
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -943,7 +894,6 @@ For additional information about how to restrict a domain sharing, see Restricte
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -964,7 +914,6 @@ For more information about sharing, see Manage external sharing for your SharePo
 ```yaml
 Type: SharingCapabilities
 Parameter Sets: (All)
-Aliases:
 Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
 
 Required: False
@@ -984,7 +933,6 @@ For additional information about how to restrict a domain sharing, see Restricte
 ```yaml
 Type: SharingDomainRestrictionModes
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, AllowList, BlockList
 
 Required: False
@@ -1008,7 +956,6 @@ False - The All Users claim groups are hidden in People Picker.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -1030,7 +977,6 @@ False - The Everyone claim group is hidden from the People Picker.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -1050,7 +996,6 @@ False - The Everyone except external users claim is not visible in People Picker
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -1064,7 +1009,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -1092,7 +1036,6 @@ Login Domain - For example: "contoso.com"
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -1106,7 +1049,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -1121,7 +1063,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SpecialCharactersState
 Parameter Sets: (All)
-Aliases:
 Accepted values: NoPreference, Allowed, Disallowed
 
 Required: False
@@ -1141,7 +1082,6 @@ Full URL - Example: "https://contoso.sharepoint.com/path/to/form"
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -1157,7 +1097,6 @@ When set to $true, users aren't able to share with security groups or SharePoint
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -1181,7 +1120,6 @@ True - Generates a special cookie that will allow "Open with Explorer" to functi
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -1195,7 +1133,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -1210,7 +1147,6 @@ Boolean indicating if a news digest should automatically be sent to end users to
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

@@ -73,7 +73,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -88,7 +87,6 @@ The site relative URL of the folder to retrieve
 ```yaml
 Type: String
 Parameter Sets: Folder via url
-Aliases:
 
 Required: False
 Position: 0
@@ -103,7 +101,6 @@ A folder instance to the folder to retrieve
 ```yaml
 Type: FolderPipeBind
 Parameter Sets: Folder via pipebind
-Aliases:
 
 Required: False
 Position: 0
@@ -118,7 +115,6 @@ Optional name of the item to retrieve
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -133,7 +129,6 @@ The type of contents to retrieve, either File, Folder or All (default)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 Accepted values: Folder, File, All
 
 Required: False
@@ -149,7 +144,6 @@ A switch parameter to include contents of all subfolders in the specified folder
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 4
@@ -164,7 +158,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

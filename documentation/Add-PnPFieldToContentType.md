@@ -38,7 +38,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -53,7 +52,6 @@ Specifies which content type a field needs to be added to
 ```yaml
 Type: ContentTypePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -68,7 +66,6 @@ Specifies the field that needs to be added to the content type
 ```yaml
 Type: FieldPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -83,7 +80,6 @@ Specifies whether the field should be hidden or not
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -98,7 +94,6 @@ Specifies whether the field is required or not
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -113,7 +108,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

@@ -53,7 +53,6 @@ The sequence to add the site to
 ```yaml
 Type: ProvisioningSequence
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -67,7 +66,6 @@ Accept wildcard characters: False
 ```yaml
 Type: ProvisioningSitePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

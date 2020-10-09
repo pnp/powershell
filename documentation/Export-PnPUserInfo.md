@@ -52,7 +52,6 @@ Specifies the login name of the user to export.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -67,7 +66,6 @@ Specifies the URL of the site collection to which you want to export the user.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

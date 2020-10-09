@@ -43,7 +43,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -58,7 +57,6 @@ The site to be removed from list of organization's news sites
 ```yaml
 Type: SitePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

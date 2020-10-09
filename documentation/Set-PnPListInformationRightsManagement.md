@@ -44,7 +44,6 @@ Sets a value indicating whether the viewer can print the downloaded document.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -59,7 +58,6 @@ Sets a value indicating whether the viewer can run a script on the downloaded do
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -74,7 +72,6 @@ Sets a value indicating whether the viewer can write on a copy of the downloaded
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +86,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -104,7 +100,6 @@ Sets a value indicating whether to block Office Web Application Companion applic
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -119,7 +114,6 @@ Sets the number of days after which the downloaded document will expire.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -134,7 +128,6 @@ Sets the date after which the Information Rights Management (IRM) protection of 
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -149,7 +142,6 @@ Specifies whether Information Rights Management (IRM) is enabled for the list.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -164,7 +156,6 @@ Sets a value indicating whether the downloaded document will expire.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -179,7 +170,6 @@ Sets a value indicating whether to enable Office Web Application Companion appli
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -194,7 +184,6 @@ Specifies whether Information Rights Management (IRM) expiration is enabled for 
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -209,7 +198,6 @@ Sets a value indicating whether the permission of the downloaded document is app
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -224,7 +212,6 @@ Sets whether a user must verify their credentials after some interval.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -239,7 +226,6 @@ Specifies whether Information Rights Management (IRM) rejection is enabled for t
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -254,7 +240,6 @@ Sets the group name (email address) that the permission is also applicable to.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -269,7 +254,6 @@ Sets the number of days that the application that opens the document caches the 
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -284,7 +268,6 @@ The list to set Information Rights Management (IRM) settings for.
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -299,7 +282,6 @@ Sets the permission policy description.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -314,7 +296,6 @@ Sets the permission policy title.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -328,7 +309,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -343,7 +323,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

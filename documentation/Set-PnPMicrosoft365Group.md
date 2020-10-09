@@ -73,7 +73,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -88,7 +87,6 @@ Creates a Microsoft Teams team associated with created group
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -103,7 +101,6 @@ The Description of the group to set
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -118,7 +115,6 @@ The DisplayName of the group to set
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -133,7 +129,6 @@ The path to the logo file of to set. Logo must be at least 48 pixels wide and ma
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -148,7 +143,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -163,7 +157,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -178,7 +171,6 @@ The Identity of the Microsoft 365 Group
 ```yaml
 Type: Microsoft365GroupPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -193,7 +185,6 @@ Makes the group private when selected
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -208,7 +199,6 @@ The array UPN values of members to set to the group. Note: Will replace members.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -223,7 +213,6 @@ The array UPN values of owners to set to the group. Note: Will replace owners.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

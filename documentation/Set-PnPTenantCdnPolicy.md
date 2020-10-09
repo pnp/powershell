@@ -44,7 +44,6 @@ The type of cdn to retrieve the policies from
 ```yaml
 Type: SPOTenantCdnType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Public, Private
 
 Required: True
@@ -60,7 +59,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -75,7 +73,6 @@ The type of the policy to set
 ```yaml
 Type: SPOTenantCdnPolicyType
 Parameter Sets: (All)
-Aliases:
 Accepted values: IncludeFileExtensions, ExcludeRestrictedSiteClassifications, ExcludeIfNoScriptDisabled
 
 Required: True
@@ -91,7 +88,6 @@ The value of the policy to set
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

@@ -45,7 +45,6 @@ The comment to set.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -75,7 +74,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -90,7 +88,6 @@ The description to set.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -105,7 +102,6 @@ The key of the value to set.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -120,7 +116,6 @@ Defines the scope of the storage entity. Defaults to Tenant.
 ```yaml
 Type: StorageEntityScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Site, Tenant
 
 Required: False
@@ -136,7 +131,6 @@ The value to set.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

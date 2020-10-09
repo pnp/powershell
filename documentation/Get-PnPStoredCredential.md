@@ -45,7 +45,6 @@ The credential to retrieve.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

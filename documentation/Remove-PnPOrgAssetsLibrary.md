@@ -58,7 +58,6 @@ Indicates what type of Office 365 CDN source the document library that will no l
 ```yaml
 Type: SPOTenantCdnType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Public, Private
 
 Required: False
@@ -74,7 +73,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +87,6 @@ The server relative url of the document library flagged as organizational asset 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -104,7 +101,6 @@ Boolean indicating if the document library that will no longer be flagged as an 
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

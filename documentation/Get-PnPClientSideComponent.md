@@ -48,7 +48,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -65,7 +64,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -82,7 +80,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: ClientSidePagePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -99,7 +96,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

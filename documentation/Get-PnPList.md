@@ -59,7 +59,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -74,7 +73,6 @@ The ID, name or Url (Lists/MyList) of the list
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -89,7 +87,6 @@ Switch parameter if an exception should be thrown if the requested list does not
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -104,7 +101,6 @@ The web to apply the command to. Omit this parameter to use the current web.
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

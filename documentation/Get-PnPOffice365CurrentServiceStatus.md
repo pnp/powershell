@@ -50,7 +50,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -65,7 +64,6 @@ Allows retrieval of the current service status of only one particular service. I
 ```yaml
 Type: Office365Workload
 Parameter Sets: (All)
-Aliases:
 Accepted values: Bookings, Exchange, Forms, kaizalamessagingservices, Lync, MicrosoftFlow, MicrosoftFlowM365, microsoftteams, MobileDeviceManagement, O365Client, officeonline, OneDriveForBusiness, OrgLiveID, OSDPPlatform, OSub, Planner, PowerAppsM365, PowerBIcom, SharePoint, SwayEnterprise
 
 Required: False

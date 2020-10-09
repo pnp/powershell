@@ -45,7 +45,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -60,7 +59,6 @@ The id (guid) of the design package to apply: 96c933ac-3698-44c7-9f4a-5fd17d71af
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0

@@ -38,7 +38,6 @@ The App\Client ID of the app which gives you access to the Office 365 Management
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -53,7 +52,6 @@ The Client Secret of the app which gives you access to the Office 365 Management
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -68,7 +66,6 @@ The Tenant ID to connect to the Office 365 Management API
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

@@ -62,7 +62,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: ProvisioningSequencePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -79,7 +78,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: ProvisioningHierarchy
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

@@ -57,7 +57,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -72,7 +71,6 @@ The date at which the Webhook subscription will expire. (Default: 6 months from 
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -87,7 +85,6 @@ The list object or name from which the Webhook subscription will be modified
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -102,7 +99,6 @@ The URL of the Webhook endpoint that will be notified of the change
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -117,7 +113,6 @@ The identity of the Webhook subscription to update
 ```yaml
 Type: WebhookSubscriptionPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -132,7 +127,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

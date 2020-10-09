@@ -54,7 +54,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -69,7 +68,6 @@ Specifies owner(s) to add as site collection administrators. They will be added 
 ```yaml
 Type: System.Collections.Generic.List`1[PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

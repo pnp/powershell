@@ -67,7 +67,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -82,7 +81,6 @@ The XML File to import the data from
 ```yaml
 Type: String
 Parameter Sets: File
-Aliases:
 
 Required: False
 Position: Named
@@ -112,7 +110,6 @@ The XML to process
 ```yaml
 Type: String
 Parameter Sets: XML
-Aliases:
 
 Required: False
 Position: 0

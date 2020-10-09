@@ -58,7 +58,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -73,7 +72,6 @@ HubSiteId of the Source Hub site to be associated with the Target Hub Site.
 ```yaml
 Type: Guid
 Parameter Sets: By Id
-Aliases:
 
 Required: True
 Position: Named
@@ -88,7 +86,6 @@ HubSiteId of the Target Hub to associate the source Hub to.
 ```yaml
 Type: Guid
 Parameter Sets: By Id
-Aliases:
 
 Required: True
 Position: Named
@@ -103,7 +100,6 @@ URL of the Source Hub site to be associated with the Target Hub Site.
 ```yaml
 Type: Guid
 Parameter Sets: By Url
-Aliases:
 
 Required: True
 Position: Named
@@ -118,7 +114,6 @@ URL of the Target Hub to associate the source Hub to.
 ```yaml
 Type: Guid
 Parameter Sets: By Url
-Aliases:
 
 Required: True
 Position: Named

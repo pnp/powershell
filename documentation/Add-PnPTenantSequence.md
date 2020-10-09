@@ -60,7 +60,6 @@ Optional Id of the sequence
 ```yaml
 Type: ProvisioningSequence
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -75,7 +74,6 @@ The template to add the sequence to
 ```yaml
 Type: ProvisioningHierarchy
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

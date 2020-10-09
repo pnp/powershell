@@ -89,7 +89,6 @@ Will auto approve the uploaded file
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -104,7 +103,6 @@ The comment added to the approval
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -119,7 +117,6 @@ The comment added to the checkin
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -134,7 +131,6 @@ If versioning is enabled, this will check out the file first if it exists, uploa
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -149,7 +145,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -164,7 +159,6 @@ Use to assign a ContentType to the file
 ```yaml
 Type: ContentTypePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -179,7 +173,6 @@ Name for file
 ```yaml
 Type: String
 Parameter Sets: Upload file from stream
-Aliases:
 
 Required: True
 Position: Named
@@ -194,7 +187,6 @@ The destination folder in the site
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -209,7 +201,6 @@ Filename to give the file on SharePoint
 ```yaml
 Type: String
 Parameter Sets: Upload file
-Aliases:
 
 Required: False
 Position: Named
@@ -224,7 +215,6 @@ The local file path
 ```yaml
 Type: String
 Parameter Sets: Upload file
-Aliases:
 
 Required: True
 Position: Named
@@ -239,7 +229,6 @@ Will auto publish the file
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -254,7 +243,6 @@ The comment added to the publish action
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -269,7 +257,6 @@ Stream with the file contents
 ```yaml
 Type: Stream
 Parameter Sets: Upload file from stream
-Aliases:
 
 Required: True
 Position: Named
@@ -283,7 +270,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -336,7 +322,6 @@ Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, Of
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -351,7 +336,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

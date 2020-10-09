@@ -38,7 +38,6 @@ Filename to read from, optionally including full path.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -53,7 +52,6 @@ Allows you to specify ITemplateProviderExtension to execute while loading the te
 ```yaml
 Type: ITemplateProviderExtension[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

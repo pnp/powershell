@@ -60,7 +60,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -75,7 +74,6 @@ Name, ID or instance of a list or document library to retrieve the folders resid
 ```yaml
 Type: ListPipeBind
 Parameter Sets: Folders In List
-Aliases:
 
 Required: True
 Position: 1
@@ -105,7 +103,6 @@ The web to apply the command to. Omit this parameter to use the current web.
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

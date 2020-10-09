@@ -45,7 +45,6 @@ A string to search for like 'Stockholm'
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0

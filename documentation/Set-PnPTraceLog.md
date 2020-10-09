@@ -66,7 +66,6 @@ Auto flush the trace log. Defaults to true.
 ```yaml
 Type: Boolean
 Parameter Sets: On
-Aliases:
 
 Required: False
 Position: Named
@@ -81,7 +80,6 @@ If specified the trace log entries will be delimited with this value.
 ```yaml
 Type: String
 Parameter Sets: On
-Aliases:
 
 Required: False
 Position: Named
@@ -96,7 +94,6 @@ Indents in the tracelog will be with this amount of characters. Defaults to 4.
 ```yaml
 Type: Int32
 Parameter Sets: On
-Aliases:
 
 Required: False
 Position: Named
@@ -111,7 +108,6 @@ The level of events to capture. Possible values are 'Debug', 'Error', 'Warning',
 ```yaml
 Type: LogLevel
 Parameter Sets: On
-Aliases:
 Accepted values: Debug, Error, Warning, Information
 
 Required: False
@@ -127,7 +123,6 @@ The path and filename of the file to write the trace log to.
 ```yaml
 Type: String
 Parameter Sets: On
-Aliases:
 
 Required: False
 Position: Named
@@ -142,7 +137,6 @@ Turn off tracing to log file.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Off
-Aliases:
 
 Required: True
 Position: Named
@@ -157,7 +151,6 @@ Turn on tracing to log file
 ```yaml
 Type: SwitchParameter
 Parameter Sets: On
-Aliases:
 
 Required: True
 Position: Named
@@ -172,7 +165,6 @@ Turn on console trace output.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: On
-Aliases:
 
 Required: False
 Position: Named

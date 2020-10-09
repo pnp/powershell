@@ -46,7 +46,6 @@ Specifies the CDN type. The valid values are: public or private.
 ```yaml
 Type: SPOTenantCdnType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Public, Private
 
 Required: True
@@ -62,7 +61,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -79,7 +77,6 @@ Relative-Relative path depends on the OriginScope. If the originScope is Tenant,
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

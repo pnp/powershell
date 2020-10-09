@@ -64,7 +64,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -79,7 +78,6 @@ An optional description of the channel.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -94,7 +92,6 @@ The display name of the new channel. Letters, numbers and spaces are allowed.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -109,7 +106,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: Private channel
-Aliases:
 
 Required: True
 Position: Named
@@ -124,7 +120,6 @@ Specify to mark the channel as private.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Private channel
-Aliases:
 
 Required: True
 Position: Named
@@ -139,7 +134,6 @@ Specify the group id, mailNickname or display name of the team to use.
 ```yaml
 Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

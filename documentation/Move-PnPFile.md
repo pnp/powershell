@@ -77,7 +77,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: False
 Position: Named
@@ -94,7 +93,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: False
 Position: Named
@@ -124,7 +122,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -139,7 +136,6 @@ If provided, no confirmation will be requested and the action will be performed
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -156,7 +152,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: False
 Position: Named
@@ -171,7 +166,6 @@ If provided, if a file or folder already exists at the TargetUrl, it will be ove
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -186,7 +180,6 @@ Server relative Url specifying the file to move. Must include the file name.
 ```yaml
 Type: String
 Parameter Sets: Server Relative
-Aliases:
 
 Required: True
 Position: 0
@@ -198,7 +191,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: False
 Position: 0
@@ -213,7 +205,6 @@ Site relative Url specifying the file or folder to move. Must include the file o
 ```yaml
 Type: String
 Parameter Sets: Site Relative
-Aliases:
 
 Required: True
 Position: 0
@@ -225,7 +216,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: False
 Position: 0
@@ -242,7 +232,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: True
 Position: 1
@@ -257,7 +246,6 @@ Server relative Url where to move the file or folder to. Must include the file o
 ```yaml
 Type: String
 Parameter Sets: Site Relative, Server Relative
-Aliases:
 
 Required: True
 Position: 1
@@ -272,7 +260,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

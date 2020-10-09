@@ -85,7 +85,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -100,7 +99,6 @@ Return all items in the first stage recycle bin
 ```yaml
 Type: SwitchParameter
 Parameter Sets: FirstStage
-Aliases:
 
 Required: False
 Position: Named
@@ -115,7 +113,6 @@ Returns a recycle bin item with a specific identity
 ```yaml
 Type: Guid
 Parameter Sets: Identity
-Aliases:
 
 Required: False
 Position: Named
@@ -132,7 +129,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server
 ```yaml
 Type: Int32
 Parameter Sets: All, FirstStage, SecondStage
-Aliases:
 
 Required: False
 Position: Named
@@ -147,7 +143,6 @@ Return all items in the second stage recycle bin
 ```yaml
 Type: SwitchParameter
 Parameter Sets: SecondStage
-Aliases:
 
 Required: False
 Position: Named

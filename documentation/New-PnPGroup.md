@@ -38,7 +38,6 @@ A switch parameter that specifies whether group members can modify membership in
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -53,7 +52,6 @@ A switch parameter that specifies whether to allow users to request membership i
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -68,7 +66,6 @@ A switch parameter that specifies whether users are automatically added or remov
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -83,7 +80,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -98,7 +94,6 @@ The description for the group
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -113,7 +108,6 @@ A switch parameter that disallows group members to view membership.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -128,7 +122,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -143,7 +136,6 @@ The owner for the group, which can be a user or another group
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -158,7 +150,6 @@ The e-mail address to which membership requests are sent
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -173,7 +164,6 @@ Accept wildcard characters: False
 ```yaml
 Type: AssociatedGroupType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, Visitors, Members, Owners
 
 Required: False
@@ -189,7 +179,6 @@ The Title of the group
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -204,7 +193,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

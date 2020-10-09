@@ -65,7 +65,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -80,7 +79,6 @@ The site design to use.
 ```yaml
 Type: TenantSiteDesignPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -95,7 +93,6 @@ One or more principals to revoke.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

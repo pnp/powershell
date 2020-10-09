@@ -86,7 +86,6 @@ Specifies if the site administrator can upgrade the site collection
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Set Properties
-Aliases:
 
 Required: False
 Position: Named
@@ -101,7 +100,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Int32
 Parameter Sets: Set Properties
-Aliases:
 
 Required: False
 Position: Named
@@ -118,7 +116,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Set Properties
-Aliases:
 
 Required: False
 Position: Named
@@ -135,7 +132,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Set Properties
-Aliases:
 
 Required: False
 Position: Named
@@ -150,7 +146,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -167,7 +162,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SharingPermissionType
 Parameter Sets: Set Properties
-Aliases:
 Accepted values: None, View, Edit
 
 Required: False
@@ -185,7 +179,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SharingLinkType
 Parameter Sets: Set Properties
-Aliases:
 Accepted values: None, Direct, Internal, AnonymousAccess
 
 Required: False
@@ -218,7 +211,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: AppViewsPolicy
 Parameter Sets: Set Properties
-Aliases:
 Accepted values: Unknown, Disabled, NotDisabled
 
 Required: False
@@ -236,7 +228,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: CompanyWideSharingLinksPolicy
 Parameter Sets: Set Properties
-Aliases:
 Accepted values: Unknown, Disabled, NotDisabled
 
 Required: False
@@ -254,7 +245,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: FlowsPolicy
 Parameter Sets: Set Properties
-Aliases:
 Accepted values: Unknown, Disabled, NotDisabled
 
 Required: False
@@ -270,7 +260,6 @@ Specifies the language of this site collection. For more information, see Locale
 ```yaml
 Type: UInt32
 Parameter Sets: Set Properties
-Aliases:
 
 Required: False
 Position: Named
@@ -287,7 +276,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SiteLockState
 Parameter Sets: Set Lock State
-Aliases:
 Accepted values: Unlock, NoAccess, ReadOnly
 
 Required: False
@@ -303,7 +291,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Set Properties
-Aliases:
 
 Required: False
 Position: Named
@@ -318,7 +305,6 @@ Specifies owner(s) to add as site collection administrators. They will be added 
 ```yaml
 Type: System.Collections.Generic.List`1[System.String]
 Parameter Sets: Set Properties
-Aliases:
 
 Required: False
 Position: Named
@@ -335,7 +321,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: Set Properties
-Aliases:
 
 Required: False
 Position: Named
@@ -352,7 +337,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: Set Properties
-Aliases:
 
 Required: False
 Position: Named
@@ -387,7 +371,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SharingDomainRestrictionModes
 Parameter Sets: Set Properties
-Aliases:
 Accepted values: None, AllowList, BlockList
 
 Required: False
@@ -405,7 +388,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: Int64
 Parameter Sets: Set Properties
-Aliases:
 
 Required: False
 Position: Named
@@ -422,7 +404,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: Int64
 Parameter Sets: Set Properties
-Aliases:
 
 Required: False
 Position: Named
@@ -437,7 +418,6 @@ Specifies the title of the site
 ```yaml
 Type: String
 Parameter Sets: Set Properties
-Aliases:
 
 Required: False
 Position: Named
@@ -452,7 +432,6 @@ Specifies the URL of the site
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -469,7 +448,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

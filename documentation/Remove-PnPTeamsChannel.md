@@ -43,7 +43,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -58,7 +57,6 @@ Specifying the Force parameter will skip the confirmation question.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -72,7 +70,6 @@ Accept wildcard characters: False
 ```yaml
 Type: TeamsChannelPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -86,7 +83,6 @@ Accept wildcard characters: False
 ```yaml
 Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

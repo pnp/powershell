@@ -46,7 +46,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -61,7 +60,6 @@ The fields to retrieve. If not specified all fields will be loaded in the return
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -76,7 +74,6 @@ A switch to include ObjectSecurity information.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 5
@@ -91,7 +88,6 @@ The list to query
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -106,7 +102,6 @@ Filename of the .PNP Open XML site template to read from, optionally including f
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -121,7 +116,6 @@ The CAML query to execute against the list. Defaults to all items.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -136,7 +130,6 @@ Allows you to specify ITemplateProviderExtension to execute while loading the te
 ```yaml
 Type: ITemplateProviderExtension[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 4
@@ -151,7 +144,6 @@ If set, this switch will try to tokenize the values with web and site related to
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -166,7 +158,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

@@ -52,7 +52,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -67,7 +66,6 @@ The field object, internal field name (case sensitive) or field id to update
 ```yaml
 Type: FieldPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -82,7 +80,6 @@ The list object, name or id where to update the field. If omitted the field will
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -97,7 +94,6 @@ If provided, the field will be updated on existing lists that use it as well. If
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -112,7 +108,6 @@ Hashtable of properties to update on the field. Use the syntax @{property1="valu
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -127,7 +122,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

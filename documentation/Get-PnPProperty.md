@@ -49,7 +49,6 @@ Specifies the object where the properties of should be retrieved
 ```yaml
 Type: ClientObject
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -64,7 +63,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -79,7 +77,6 @@ The properties to load. If one property is specified its value will be returned 
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 1

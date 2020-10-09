@@ -58,7 +58,6 @@ The account of the user, formatted either as a login name, or as a claims identi
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -73,7 +72,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -88,7 +86,6 @@ The property to set, for instance SPS-Skills or SPS-Location
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -103,7 +100,6 @@ The value to set in the case of a single value property
 ```yaml
 Type: String
 Parameter Sets: Single
-Aliases:
 
 Required: True
 Position: Named
@@ -118,7 +114,6 @@ The values set in the case of a multi value property, e.g. "Value 1","Value 2"
 ```yaml
 Type: String[]
 Parameter Sets: Multi
-Aliases:
 
 Required: True
 Position: Named

@@ -80,7 +80,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -95,7 +94,6 @@ The Id or Name of a Term
 ```yaml
 Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]
 Parameter Sets: By Term Id
-Aliases:
 
 Required: True
 Position: Named
@@ -107,7 +105,6 @@ Accept wildcard characters: False
 ```yaml
 Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]
 Parameter Sets: By Termset
-Aliases:
 
 Required: False
 Position: Named
@@ -122,7 +119,6 @@ Includes the hierarchy of child terms if available
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -137,7 +133,6 @@ Find the first term recursively matching the label in a term hierarchy.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: By Termset
-Aliases:
 
 Required: False
 Position: Named
@@ -152,7 +147,6 @@ Name of the termgroup to check.
 ```yaml
 Type: TermGroupPipeBind
 Parameter Sets: By Termset
-Aliases:
 
 Required: True
 Position: 0
@@ -167,7 +161,6 @@ Name of the termset to check.
 ```yaml
 Type: PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]
 Parameter Sets: By Termset
-Aliases:
 
 Required: True
 Position: 0
@@ -182,7 +175,6 @@ Term store to check; if not specified the default term store is used.
 ```yaml
 Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

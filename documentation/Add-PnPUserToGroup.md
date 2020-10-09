@@ -52,7 +52,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -69,7 +68,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: External
-Aliases:
 
 Required: True
 Position: Named
@@ -85,7 +83,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: External
-Aliases:
 
 Required: False
 Position: Named
@@ -100,7 +97,6 @@ The SharePoint group id, SharePoint group name or SharePoint group object to add
 ```yaml
 Type: GroupPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -115,7 +111,6 @@ The login name of the user
 ```yaml
 Type: String
 Parameter Sets: Internal
-Aliases:
 
 Required: True
 Position: Named
@@ -131,7 +126,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: External
-Aliases:
 
 Required: False
 Position: Named
@@ -146,7 +140,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

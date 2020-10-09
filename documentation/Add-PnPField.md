@@ -75,7 +75,6 @@ Switch Parameter if this field must be added to the default view
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Add field to list, Add field by XML to list
-Aliases:
 
 Required: False
 Position: Named
@@ -92,7 +91,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: Guid
 Parameter Sets: Add field to list, Add field to web
-Aliases:
 
 Required: False
 Position: Named
@@ -109,7 +107,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: Add field to list, Add field to web
-Aliases:
 
 Required: False
 Position: Named
@@ -124,7 +121,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -139,7 +135,6 @@ The display name of the field
 ```yaml
 Type: String
 Parameter Sets: Add field to list, Add field to web
-Aliases:
 
 Required: True
 Position: Named
@@ -154,7 +149,6 @@ The name of the field, its ID or an actual field object that needs to be added
 ```yaml
 Type: FieldPipeBind
 Parameter Sets: Add field reference to list
-Aliases:
 
 Required: True
 Position: Named
@@ -169,7 +163,6 @@ The group name to where this field belongs to
 ```yaml
 Type: String
 Parameter Sets: Add field to list, Add field by XML to list
-Aliases:
 
 Required: False
 Position: Named
@@ -184,7 +177,6 @@ The ID of the field, must be unique
 ```yaml
 Type: Guid
 Parameter Sets: Add field to list, Add field to web
-Aliases:
 
 Required: False
 Position: Named
@@ -199,7 +191,6 @@ The internal name of the field
 ```yaml
 Type: String
 Parameter Sets: Add field to list, Add field to web
-Aliases:
 
 Required: True
 Position: Named
@@ -214,7 +205,6 @@ The name of the list, its ID or an actual list object where this field needs to 
 ```yaml
 Type: ListPipeBind
 Parameter Sets: Add field to list
-Aliases:
 
 Required: False
 Position: Named
@@ -226,7 +216,6 @@ Accept wildcard characters: False
 ```yaml
 Type: ListPipeBind
 Parameter Sets: Add field reference to list
-Aliases:
 
 Required: True
 Position: Named
@@ -241,7 +230,6 @@ Switch Parameter if the field is a required field
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Add field to list, Add field by XML to list
-Aliases:
 
 Required: False
 Position: Named
@@ -256,7 +244,6 @@ The type of the field like Choice, Note, MultiChoice. For a complete list of fie
 ```yaml
 Type: FieldType
 Parameter Sets: Add field to list, Add field to web
-Aliases:
 Accepted values: Invalid, Integer, Text, Note, DateTime, Counter, Choice, Lookup, Boolean, Number, Currency, URL, Computed, Threading, Guid, MultiChoice, GridChoice, Calculated, File, Attachments, User, Recurrence, CrossProjectLink, ModStat, Error, ContentTypeId, PageSeparator, ThreadIndex, WorkflowStatus, AllDayEvent, WorkflowEventType, Geolocation, OutcomeChoice, Location, Thumbnail, MaxItems
 
 Required: True
@@ -272,7 +259,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

@@ -38,7 +38,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -53,7 +52,6 @@ Do not ask for confirmation to delete the role definition
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -68,7 +66,6 @@ The identity of the role definition, either a RoleDefinition object or a the nam
 ```yaml
 Type: RoleDefinitionPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0

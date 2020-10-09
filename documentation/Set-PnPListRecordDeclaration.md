@@ -49,7 +49,6 @@ Defines if you want to set auto record declaration on the list
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -64,7 +63,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -79,7 +77,6 @@ The List to set the manual record declaration settings for
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -94,7 +91,6 @@ Defines the manual record declaration setting for the lists
 ```yaml
 Type: EcmListManualRecordDeclaration
 Parameter Sets: (All)
-Aliases:
 Accepted values: Unknown, UseSiteCollectionDefaults, AlwaysAllowManualDeclaration, NeverAllowManualDeclaration
 
 Required: False
@@ -110,7 +106,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

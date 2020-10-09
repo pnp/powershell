@@ -71,7 +71,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -86,7 +85,6 @@ The name of the theme to add or update
 ```yaml
 Type: ThemePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -101,7 +99,6 @@ If the theme is inverted or not
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -116,7 +113,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -131,7 +127,6 @@ The palette to add. See examples for more information.
 ```yaml
 Type: ThemePalettePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

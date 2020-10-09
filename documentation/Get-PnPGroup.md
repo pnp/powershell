@@ -76,7 +76,6 @@ Retrieve the associated member group
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Members
-Aliases:
 
 Required: False
 Position: Named
@@ -91,7 +90,6 @@ Retrieve the associated owner group
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Owners
-Aliases:
 
 Required: False
 Position: Named
@@ -106,7 +104,6 @@ Retrieve the associated visitor group
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Visitors
-Aliases:
 
 Required: False
 Position: Named
@@ -121,7 +118,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -151,7 +147,6 @@ The web to apply the command to. Omit this parameter to use the current web.
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

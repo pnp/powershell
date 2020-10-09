@@ -66,7 +66,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -81,7 +80,6 @@ Specify either the name, ID or an actual content type.
 ```yaml
 Type: ContentTypePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -96,7 +94,6 @@ The list relative URL of a folder. E.g. "MyFolder" for a folder located in the r
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -113,7 +110,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -128,7 +124,6 @@ The ID, Title or Url of the list.
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -181,7 +176,6 @@ Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, Of
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -196,7 +190,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

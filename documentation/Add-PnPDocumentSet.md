@@ -38,7 +38,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -53,7 +52,6 @@ The name of the content type, its ID or an actual content object referencing to 
 ```yaml
 Type: ContentTypePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -68,7 +66,6 @@ The name of the list, its ID or an actual list object from where the document se
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -83,7 +80,6 @@ The name of the document set
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -98,7 +94,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

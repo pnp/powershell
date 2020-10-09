@@ -56,7 +56,6 @@ Sets the AlternateCssUrl of the web. Only works for classic pages.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -73,7 +72,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -88,7 +86,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -103,7 +100,6 @@ Sets the CustomMasterUrl of the web. Only works for classic pages.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -118,7 +114,6 @@ Sets the description of the web
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -135,7 +130,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -151,7 +145,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SPVariantThemeType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, Neutral, Soft, Strong
 
 Required: False
@@ -168,7 +161,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: HeaderLayoutType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, Standard, Compact, Minimal, Extended
 
 Required: False
@@ -184,7 +176,6 @@ Sets the MasterUrl of the web. Only works for classic pages.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -201,7 +192,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -216,7 +206,6 @@ Indicates if members of this site can share the site and individual sites with o
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -233,7 +222,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -248,7 +236,6 @@ Indicates if this site should not be returned in search results ($true) or if it
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -263,7 +250,6 @@ Defines if the quick launch menu on the left side of modern Team Sites should be
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -278,7 +264,6 @@ Sets the logo of the web to the current url. If you want to set the logo to a mo
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -293,7 +278,6 @@ Sets the title of the web
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -308,7 +292,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

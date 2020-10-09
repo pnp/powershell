@@ -73,7 +73,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -88,7 +87,6 @@ Output format for of the configuration. Defaults to complete XML
 ```yaml
 Type: OutputFormat
 Parameter Sets: OutputFormat
-Aliases:
 Accepted values: CompleteXml, ManagedPropertyMappings
 
 Required: False
@@ -104,7 +102,6 @@ Local path where the search configuration will be saved
 ```yaml
 Type: String
 Parameter Sets: Xml
-Aliases:
 
 Required: False
 Position: Named
@@ -119,7 +116,6 @@ Scope to use. Either Web, Site, or Subscription. Defaults to Web
 ```yaml
 Type: SearchConfigurationScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site, Subscription
 
 Required: False
@@ -135,7 +131,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

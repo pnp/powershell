@@ -52,7 +52,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -67,7 +66,6 @@ Switch parameter if content types should be enabled on this list
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -82,7 +80,6 @@ Switch parameter if versioning should be enabled
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -97,7 +94,6 @@ Switch parameter if list should be hidden from the SharePoint UI
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -112,7 +108,6 @@ Switch parameter if this list should be visible on the QuickLaunch
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -127,7 +122,6 @@ The type of list to create.
 ```yaml
 Type: ListTemplateType
 Parameter Sets: (All)
-Aliases:
 Accepted values: NoListTemplate, GenericList, DocumentLibrary, Survey, Links, Announcements, Contacts, Events, Tasks, DiscussionBoard, PictureLibrary, DataSources, WebTemplateCatalog, UserInformation, WebPartCatalog, ListTemplateCatalog, XMLForm, MasterPageCatalog, NoCodeWorkflows, WorkflowProcess, WebPageLibrary, CustomGrid, SolutionCatalog, NoCodePublic, ThemeCatalog, DesignCatalog, AppDataCatalog, AppFilesCatalog, DataConnectionLibrary, WorkflowHistory, GanttTasks, HelpLibrary, AccessRequest, PromotedLinks, TasksWithTimelineAndHierarchy, MaintenanceLogs, Meetings, Agenda, MeetingUser, Decision, MeetingObjective, TextBox, ThingsToBring, HomePageLibrary, Posts, Comments, Categories, Facility, Whereabouts, CallTrack, Circulation, Timecard, Holidays, IMEDic, ExternalList, MySiteDocumentLibrary, IssueTracking, AdminTasks, HealthRules, HealthReports, DeveloperSiteDraftApps, ContentCenterModelLibrary, ContentCenterPrimeLibrary, ContentCenterSampleLibrary, AccessApp, AlchemyMobileForm, AlchemyApprovalWorkflow, SharingLinks, HashtagStore, RecipesTable, FormulasTable, WebTemplateExtensionsList, ItemReferenceCollection, ItemReferenceReference, ItemReferenceReferenceCollection, InvalidType
 
 Required: True
@@ -143,7 +137,6 @@ The Title of the list
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -158,7 +151,6 @@ If set, will override the url of the list.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -173,7 +165,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

@@ -55,7 +55,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -70,7 +69,6 @@ The Id or Name of a termset
 ```yaml
 Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -85,7 +83,6 @@ Name of the term group to check.
 ```yaml
 Type: TermGroupPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -100,7 +97,6 @@ Term store to check; if not specified the default term store is used.
 ```yaml
 Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

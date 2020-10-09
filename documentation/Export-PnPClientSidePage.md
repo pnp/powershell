@@ -39,7 +39,6 @@ Specify a JSON configuration file to configure the extraction progress.
 ```yaml
 Type: ExtractConfigurationPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -69,7 +68,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -84,7 +82,6 @@ Specify to override the question to overwrite a file if it already exists.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -99,7 +96,6 @@ The name of the page
 ```yaml
 Type: ClientSidePagePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -114,7 +110,6 @@ If specified the template will be saved to the file specified with this paramete
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -129,7 +124,6 @@ If specified referenced files will be exported to the current folder.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -144,7 +138,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

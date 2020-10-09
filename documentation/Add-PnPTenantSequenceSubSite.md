@@ -53,7 +53,6 @@ The site to add the subsite to
 ```yaml
 Type: SiteCollection
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -68,7 +67,6 @@ The subsite to add
 ```yaml
 Type: TeamNoGroupSubSite
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

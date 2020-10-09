@@ -54,7 +54,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -69,7 +68,6 @@ Do not ask for confirmation.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -84,7 +82,6 @@ Specifies the language of this site collection. For more information, see Locale
 ```yaml
 Type: UInt32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -99,7 +96,6 @@ Specifies the user name of the site collection's primary owner. The owner must b
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -116,7 +112,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -131,7 +126,6 @@ Specifies the quota for this site collection in Sandboxed Solutions units. This 
 ```yaml
 Type: Double
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -146,7 +140,6 @@ Specifies the warning level for the resource quota. This value must not exceed t
 ```yaml
 Type: Double
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -161,7 +154,6 @@ Specifies the storage quota for this site collection in megabytes. This value mu
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -176,7 +168,6 @@ Specifies the warning level for the storage quota in megabytes. This value must 
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -191,7 +182,6 @@ Specifies the site collection template type. Use the Get-PnPWebTemplates cmdlet 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -206,7 +196,6 @@ Use Get-PnPTimeZoneId to retrieve possible timezone values
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -221,7 +210,6 @@ Specifies the title of the new site collection
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -236,7 +224,6 @@ Specifies the full URL of the new site collection. It must be in a valid managed
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -250,7 +237,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

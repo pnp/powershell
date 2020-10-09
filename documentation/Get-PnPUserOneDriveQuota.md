@@ -45,7 +45,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -62,7 +61,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

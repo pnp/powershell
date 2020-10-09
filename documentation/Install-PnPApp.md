@@ -61,7 +61,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -78,7 +77,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: AppMetadataPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -95,7 +93,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: AppCatalogScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Tenant, Site
 
 Required: False
@@ -113,7 +110,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

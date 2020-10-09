@@ -54,7 +54,6 @@ Optional certificate password
 ```yaml
 Type: SecureString
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 8
@@ -69,7 +68,6 @@ Common Name (e.g. server FQDN or YOUR name) [pnp.contoso.com]
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -84,7 +82,6 @@ Country Name (2 letter code)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 1
@@ -99,7 +96,6 @@ Locality Name (eg, city)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 3
@@ -114,7 +110,6 @@ Organization Name (eg, company)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 4
@@ -129,7 +124,6 @@ Organizational Unit Name (eg, section)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 5
@@ -144,7 +138,6 @@ Filename to write to, optionally including full path (.cer)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 6
@@ -159,7 +152,6 @@ Filename to write to, optionally including full path (.pfx)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 6
@@ -174,7 +166,6 @@ State or Province Name (full name)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 2
@@ -189,7 +180,6 @@ Number of years until expiration (default is 10, max is 30)
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 7

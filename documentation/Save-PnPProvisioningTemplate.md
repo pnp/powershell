@@ -62,7 +62,6 @@ Specifying the Force parameter will skip the confirmation question.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -77,7 +76,6 @@ Filename to write to, optionally including full path.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -92,7 +90,6 @@ The optional schema to use when creating the PnP file. Always defaults to the la
 ```yaml
 Type: XMLPnPSchemaVersion
 Parameter Sets: (All)
-Aliases:
 Accepted values: LATEST, V201503, V201505, V201508, V201512, V201605, V201705, V201801, V201805, V201807, V201903, V201909, V202002
 
 Required: False
@@ -123,7 +120,6 @@ Allows you to specify the ITemplateProviderExtension to execute while saving a t
 ```yaml
 Type: ITemplateProviderExtension[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

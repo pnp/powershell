@@ -46,7 +46,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -76,7 +75,6 @@ Defines if this JavaScript file will be injected to every page within the curren
 ```yaml
 Type: CustomActionScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site, All
 
 Required: False
@@ -92,7 +90,6 @@ Sequence of this JavaScript being injected. Use when you have a specific sequenc
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -107,7 +104,6 @@ URL to the JavaScript file to inject
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -122,7 +118,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

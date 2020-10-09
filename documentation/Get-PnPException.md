@@ -45,7 +45,6 @@ Show all exceptions
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

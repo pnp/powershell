@@ -74,7 +74,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +88,6 @@ Use the -Force flag to bypass the confirmation question
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -104,7 +102,6 @@ The id or name of the CustomAction that needs to be removed or a CustomAction in
 ```yaml
 Type: UserCustomActionPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -119,7 +116,6 @@ Define if the CustomAction is to be found at the web or site collection scope. S
 ```yaml
 Type: CustomActionScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site, All
 
 Required: False
@@ -135,7 +131,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

@@ -74,7 +74,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +88,6 @@ If provided, no confirmation will be requested and the action will be performed
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -104,7 +102,6 @@ If provided, if a file already exist with the provided TargetFileName, it will b
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -119,7 +116,6 @@ Server relative Url specifying the file to rename. Must include the file name.
 ```yaml
 Type: String
 Parameter Sets: SERVER
-Aliases:
 
 Required: True
 Position: 0
@@ -134,7 +130,6 @@ Site relative Url specifying the file to rename. Must include the file name.
 ```yaml
 Type: String
 Parameter Sets: SITE
-Aliases:
 
 Required: True
 Position: 0
@@ -149,7 +144,6 @@ File name to rename the file to. Should only be the file name and not include th
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 1
@@ -164,7 +158,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

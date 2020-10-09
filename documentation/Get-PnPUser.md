@@ -92,7 +92,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -107,7 +106,6 @@ User ID or login name
 ```yaml
 Type: UserPipeBind
 Parameter Sets: Identity based request
-Aliases:
 
 Required: False
 Position: Named
@@ -122,7 +120,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -137,7 +134,6 @@ If provided, only users that currently have any kinds of access rights assigned 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: With rights assigned
-Aliases:
 
 Required: False
 Position: Named
@@ -154,7 +150,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: With rights assigned detailed
-Aliases:
 
 Required: False
 Position: Named

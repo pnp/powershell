@@ -44,7 +44,6 @@ Folder to process. If not specified the current folder will be used.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 1
@@ -59,7 +58,6 @@ Overwrites the output file if it exists.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -74,7 +72,6 @@ Filename to write to, optionally including full path.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0

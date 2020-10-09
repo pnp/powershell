@@ -45,7 +45,6 @@ Specifying the Force parameter will skip the confirmation question.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

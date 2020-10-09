@@ -53,7 +53,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -68,7 +67,6 @@ A switch to include ObjectSecurity information.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 5
@@ -83,7 +81,6 @@ The list to query
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 2
@@ -98,7 +95,6 @@ Filename of the .PNP Open XML site template to read from, optionally including f
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -113,7 +109,6 @@ A switch parameter to include all folders in the list, or just top level folders
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 4
@@ -128,7 +123,6 @@ Allows you to specify ITemplateProviderExtension to execute while loading the te
 ```yaml
 Type: ITemplateProviderExtension[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 6
@@ -143,7 +137,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

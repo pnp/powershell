@@ -74,7 +74,6 @@ Override the RemoveExistingNodes attribute in the Navigation elements of the tem
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +88,6 @@ Specify a JSON configuration file to configure the extraction progress.
 ```yaml
 Type: ApplyConfigurationPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -119,7 +117,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -134,7 +131,6 @@ Allows you to run all handlers, excluding the ones specified.
 ```yaml
 Type: Handlers
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, AuditSettings, ComposedLook, CustomActions, ExtensibilityProviders, Features, Fields, Files, Lists, Pages, Publishing, RegionalSettings, SearchSettings, SitePolicy, SupportedUILanguages, TermGroups, Workflows, SiteSecurity, ContentTypes, PropertyBagEntries, PageContents, WebSettings, Navigation, ImageRenditions, ApplicationLifecycleManagement, Tenant, WebApiPermissions, SiteHeader, SiteFooter, Theme, SiteSettings, All
 
 Required: False
@@ -150,7 +146,6 @@ Allows you to specify ExtensbilityHandlers to execute while applying a template
 ```yaml
 Type: ExtensibilityHandler[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -165,7 +160,6 @@ Allows you to only process a specific part of the template. Notice that this mig
 ```yaml
 Type: Handlers
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, AuditSettings, ComposedLook, CustomActions, ExtensibilityProviders, Features, Fields, Files, Lists, Pages, Publishing, RegionalSettings, SearchSettings, SitePolicy, SupportedUILanguages, TermGroups, Workflows, SiteSecurity, ContentTypes, PropertyBagEntries, PageContents, WebSettings, Navigation, ImageRenditions, ApplicationLifecycleManagement, Tenant, WebApiPermissions, SiteHeader, SiteFooter, Theme, SiteSettings, All
 
 Required: False
@@ -181,7 +175,6 @@ Ignore duplicate data row errors when the data row in the template already exist
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -196,7 +189,6 @@ Specify this parameter if you want to overwrite and/or create properties that ar
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -211,7 +203,6 @@ Allows you to specify parameters that can be referred to in the tenant template 
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -226,7 +217,6 @@ Path to the xml or pnp file containing the tenant template.
 ```yaml
 Type: String
 Parameter Sets: By Path
-Aliases:
 
 Required: True
 Position: 0
@@ -241,7 +231,6 @@ If set content types will be provisioned if the target web is a subweb.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -256,7 +245,6 @@ If set fields will be provisioned if the target web is a subweb.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -271,7 +259,6 @@ Root folder where resources/files that are being referenced in the template are 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -285,7 +272,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -299,7 +285,6 @@ Accept wildcard characters: False
 ```yaml
 Type: ProvisioningHierarchy
 Parameter Sets: By Object
-Aliases:
 
 Required: True
 Position: 0
@@ -314,7 +299,6 @@ Allows you to specify ITemplateProviderExtension to execute while applying a tem
 ```yaml
 Type: ITemplateProviderExtension[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

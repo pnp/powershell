@@ -52,7 +52,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -67,7 +66,6 @@ Specifies whether to overwrite an existing feature with the same feature identif
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -82,7 +80,6 @@ The id of the feature to enable.
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -97,7 +94,6 @@ Specify this parameter if the feature you're trying to activate is part of a san
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -112,7 +108,6 @@ Specify the scope of the feature to activate, either Web or Site. Defaults to We
 ```yaml
 Type: FeatureScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site
 
 Required: False
@@ -128,7 +123,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

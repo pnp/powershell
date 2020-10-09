@@ -67,7 +67,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -82,7 +81,6 @@ The Id of the node to retrieve
 ```yaml
 Type: Int32
 Parameter Sets: A single node by ID
-Aliases:
 
 Required: False
 Position: Named
@@ -97,7 +95,6 @@ The location of the nodes to retrieve. Either TopNavigationBar, QuickLaunch, Sea
 ```yaml
 Type: NavigationType
 Parameter Sets: All nodes by location
-Aliases:
 Accepted values: TopNavigationBar, QuickLaunch, SearchNav, Footer
 
 Required: False
@@ -113,7 +110,6 @@ Show a tree view of all navigation nodes
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -128,7 +124,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

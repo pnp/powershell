@@ -43,7 +43,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -58,7 +57,6 @@ If specified, and an app catalog is already present, a new app catalog site will
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -73,7 +71,6 @@ The login account of the user designated to be the admin for the site, e.g. user
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -88,7 +85,6 @@ Use Get-PnPTimeZoneId to retrieve possible timezone values
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -103,7 +99,6 @@ The full url of the app catalog site to be created, e.g. https://yourtenant.shar
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

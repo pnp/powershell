@@ -58,7 +58,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -73,7 +72,6 @@ If specified you will not be asked to confirm removing the specified Site Script
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -88,7 +86,6 @@ The ID of the Site Script to remove
 ```yaml
 Type: TenantSiteScriptPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0

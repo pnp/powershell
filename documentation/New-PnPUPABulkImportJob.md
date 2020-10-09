@@ -60,7 +60,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -75,7 +74,6 @@ Site or server relative URL of the folder to where you want to store the import 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -90,7 +88,6 @@ The name of the identifying property in your file.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 3
@@ -105,7 +102,6 @@ The type of profile identifier (Email/CloudId/PrincipalName). Defaults to Email.
 ```yaml
 Type: ImportProfilePropertiesUserIdType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Email, CloudId, PrincipalName
 
 Required: False
@@ -121,7 +117,6 @@ The local file path.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 1
@@ -136,7 +131,6 @@ Specify user profile property mapping between the import file and UPA property n
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 2

@@ -52,7 +52,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -67,7 +66,6 @@ A path to a web part file on a the file system.
 ```yaml
 Type: String
 Parameter Sets: FILE
-Aliases:
 
 Required: True
 Position: Named
@@ -97,7 +95,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -112,7 +109,6 @@ A string containing the XML for the web part.
 ```yaml
 Type: String
 Parameter Sets: XML
-Aliases:
 
 Required: True
 Position: Named
@@ -127,7 +123,6 @@ The Zone Id where the web part must be placed
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -142,7 +137,6 @@ The Zone Index where the web part must be placed
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

@@ -44,7 +44,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -59,7 +58,6 @@ The name of a role definition to retrieve.
 ```yaml
 Type: RoleDefinitionPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0

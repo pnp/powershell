@@ -77,7 +77,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -94,7 +93,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -111,7 +109,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: ContentTypePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -128,7 +125,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: ClientSidePageHeaderType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, Default, Custom
 
 Required: False
@@ -146,7 +142,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: ClientSidePagePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -163,7 +158,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: ClientSidePageLayoutType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Article, Home, SingleWebPartAppPage, RepostPage, HeaderlessSearchResults, Spaces, Topic
 
 Required: False
@@ -181,7 +175,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -198,7 +191,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: ClientSidePagePromoteType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, HomePage, NewsArticle, Template
 
 Required: False
@@ -216,7 +208,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -233,7 +224,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -250,7 +240,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -267,7 +256,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

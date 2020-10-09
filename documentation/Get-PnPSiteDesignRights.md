@@ -58,7 +58,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -73,7 +72,6 @@ The ID of the Site Design to receive the rights for
 ```yaml
 Type: TenantSiteDesignPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0

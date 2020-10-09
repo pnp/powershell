@@ -64,7 +64,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -81,7 +80,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -98,7 +96,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: ClientSidePagePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -115,7 +112,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: CanvasSectionTemplate
 Parameter Sets: (All)
-Aliases:
 Accepted values: OneColumn, OneColumnFullWidth, TwoColumn, ThreeColumn, TwoColumnLeft, TwoColumnRight, OneColumnVerticalSection, TwoColumnVerticalSection, ThreeColumnVerticalSection, TwoColumnLeftVerticalSection, TwoColumnRightVerticalSection
 
 Required: True
@@ -133,7 +129,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -150,7 +145,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

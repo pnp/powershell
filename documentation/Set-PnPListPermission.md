@@ -52,7 +52,6 @@ The role that must be assigned to the group or user
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -67,7 +66,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -81,7 +79,6 @@ Accept wildcard characters: False
 ```yaml
 Type: GroupPipeBind
 Parameter Sets: Group
-Aliases:
 
 Required: True
 Position: Named
@@ -96,7 +93,6 @@ The ID or Title of the list.
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -111,7 +107,6 @@ The role that must be removed from the group or user
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -125,7 +120,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: User
-Aliases:
 
 Required: True
 Position: Named
@@ -140,7 +134,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

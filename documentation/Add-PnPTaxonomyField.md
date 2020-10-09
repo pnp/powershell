@@ -50,7 +50,6 @@ Switch Parameter if this field must be added to the default view
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -65,7 +64,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -80,7 +78,6 @@ The display name of the field
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -95,7 +92,6 @@ Specifies the control settings while adding a field. See https://msdn.microsoft.
 ```yaml
 Type: AddFieldOptions
 Parameter Sets: (All)
-Aliases:
 Accepted values: DefaultValue, AddToDefaultContentType, AddToNoContentType, AddToAllContentTypes, AddFieldInternalNameHint, AddFieldToDefaultView, AddFieldCheckDisplayName
 
 Required: False
@@ -111,7 +107,6 @@ The group name to where this field belongs to
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -126,7 +121,6 @@ The ID for the field, must be unique
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -141,7 +135,6 @@ The internal name of the field
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -156,7 +149,6 @@ The list object or name where this field needs to be added
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -171,7 +163,6 @@ Switch Parameter if this Taxonomy field can hold multiple values
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -186,7 +177,6 @@ Switch Parameter if the field is a required field
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -201,7 +191,6 @@ The ID of the Taxonomy item
 ```yaml
 Type: Guid
 Parameter Sets: Id
-Aliases:
 
 Required: False
 Position: Named
@@ -216,7 +205,6 @@ The path delimiter to be used, by default this is '|'
 ```yaml
 Type: String
 Parameter Sets: Path
-Aliases:
 
 Required: False
 Position: Named
@@ -231,7 +219,6 @@ The path to the term that this needs to be bound
 ```yaml
 Type: String
 Parameter Sets: Path
-Aliases:
 
 Required: True
 Position: Named
@@ -246,7 +233,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

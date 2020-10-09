@@ -95,7 +95,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -110,7 +109,6 @@ If specified the site will be associated to the hubsite as identified by this id
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -125,7 +123,6 @@ Specifies with type of site to create.
 ```yaml
 Type: SiteType
 Parameter Sets: (All)
-Aliases:
 Accepted values: CommunicationSite, TeamSite
 
 Required: True
@@ -141,7 +138,6 @@ If specified the cmdlet will wait until the site has been fully created and all 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

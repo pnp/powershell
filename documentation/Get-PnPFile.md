@@ -90,7 +90,6 @@ Retrieves the file by site relative URL and downloads it to c:\temp\company.spco
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Save to local path
-Aliases:
 
 Required: True
 Position: Named
@@ -105,7 +104,6 @@ Retrieve the file contents as a file object.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Return as file object
-Aliases:
 
 Required: False
 Position: Named
@@ -120,7 +118,6 @@ Returns the file as a listitem showing all its properties
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Return as list item
-Aliases:
 
 Required: False
 Position: Named
@@ -135,7 +132,6 @@ Retrieve the file contents as a string
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Return as string
-Aliases:
 
 Required: False
 Position: Named
@@ -150,7 +146,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -165,7 +160,6 @@ Name for the local file
 ```yaml
 Type: String
 Parameter Sets: Save to local path
-Aliases:
 
 Required: False
 Position: Named
@@ -180,7 +174,6 @@ Overwrites the file if it exists.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Save to local path
-Aliases:
 
 Required: False
 Position: Named
@@ -195,7 +188,6 @@ Local path where the file should be saved
 ```yaml
 Type: String
 Parameter Sets: Save to local path
-Aliases:
 
 Required: False
 Position: Named
@@ -210,7 +202,6 @@ If provided in combination with -AsListItem, a System.ArgumentException will be 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Return as list item
-Aliases:
 
 Required: False
 Position: Named
@@ -240,7 +231,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

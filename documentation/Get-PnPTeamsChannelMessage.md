@@ -43,7 +43,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -58,7 +57,6 @@ Specify the group id, mailNickname or display name of the team to use.
 ```yaml
 Type: TeamsChannelPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -73,7 +71,6 @@ Specify to include deleted messages
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -88,7 +85,6 @@ Specify the group id, mailNickname or display name of the team to use.
 ```yaml
 Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

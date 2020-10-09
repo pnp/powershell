@@ -61,7 +61,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -76,7 +75,6 @@ Overwrites the output file if it exists.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -91,7 +89,6 @@ Specify the lists to extract, either providing their ID or their Title.
 ```yaml
 Type: System.Collections.Generic.List`1[System.String]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -106,7 +103,6 @@ Filename to write to, optionally including full path
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -121,7 +117,6 @@ Returns the template as an in-memory object, which is an instance of the SiteTem
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -136,7 +131,6 @@ The schema of the output to use, defaults to the latest schema
 ```yaml
 Type: XMLPnPSchemaVersion
 Parameter Sets: (All)
-Aliases:
 Accepted values: LATEST, V201503, V201505, V201508, V201512, V201605, V201705, V201801, V201805, V201807, V201903, V201909, V202002
 
 Required: False
@@ -152,7 +146,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

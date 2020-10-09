@@ -76,7 +76,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -91,7 +90,6 @@ The target Container for the file to add to the in-memory template, optional arg
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 3
@@ -106,7 +104,6 @@ The level of the files to add. Defaults to Published
 ```yaml
 Type: FileLevel
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 4
@@ -121,7 +118,6 @@ Set to overwrite in site, Defaults to true
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 5
@@ -136,7 +132,6 @@ The target Folder for the file to add to the in-memory template.
 ```yaml
 Type: String
 Parameter Sets: Local File
-Aliases:
 
 Required: True
 Position: 2
@@ -151,7 +146,6 @@ Filename of the .PNP Open XML site template to read from, optionally including f
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -166,7 +160,6 @@ The file to add to the in-memory template, optionally including full path.
 ```yaml
 Type: String
 Parameter Sets: Local File
-Aliases:
 
 Required: True
 Position: 1
@@ -181,7 +174,6 @@ The file to add to the in-memory template, specifying its url in the current con
 ```yaml
 Type: String
 Parameter Sets: Remove File
-Aliases:
 
 Required: True
 Position: 1
@@ -196,7 +188,6 @@ Allows you to specify ITemplateProviderExtension to execute while loading the te
 ```yaml
 Type: ITemplateProviderExtension[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 4
@@ -211,7 +202,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

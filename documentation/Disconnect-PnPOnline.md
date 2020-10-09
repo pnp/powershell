@@ -38,7 +38,6 @@ Connection to be used by cmdlet
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

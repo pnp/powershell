@@ -41,7 +41,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -56,7 +55,6 @@ An e-mail address for term suggestion and feedback. If left blank the suggestion
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -70,7 +68,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -85,7 +82,6 @@ Descriptive text to help users understand the intended use of this term set.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -100,7 +96,6 @@ The Id to use for the term set; if not specified, or the empty GUID, a random GU
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -115,7 +110,6 @@ By default a term set is available to be used by end users and content editors o
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -130,7 +124,6 @@ When a term set is closed, only metadata managers can add terms to this term set
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -145,7 +138,6 @@ The locale id to use for the term set. Defaults to the current locale id.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -160,7 +152,6 @@ The name of the termset.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -175,7 +166,6 @@ The primary user or group of this term set.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -190,7 +180,6 @@ People and groups in the organization that should be notified before major chang
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -205,7 +194,6 @@ Name, id or actually termgroup to create the termset in.
 ```yaml
 Type: TermGroupPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

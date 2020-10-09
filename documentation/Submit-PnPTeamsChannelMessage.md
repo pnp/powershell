@@ -50,7 +50,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -65,7 +64,6 @@ Specify the group id, mailNickname or display name of the team to use.
 ```yaml
 Type: TeamsChannelPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -80,7 +78,6 @@ Specify to set the content type of the message, either Text or Html.
 ```yaml
 Type: TeamChannelMessageContentType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Text, Html
 
 Required: False
@@ -96,7 +93,6 @@ Specify to make this an important message.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -111,7 +107,6 @@ The message to send to the channel.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -126,7 +121,6 @@ Specify the group id, mailNickname or display name of the team to use.
 ```yaml
 Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

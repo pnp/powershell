@@ -59,7 +59,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -74,7 +73,6 @@ The site design run for the desired set of script action details.
 ```yaml
 Type: TenantSiteDesignRun
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

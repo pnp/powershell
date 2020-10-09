@@ -45,7 +45,6 @@ Approve file
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -60,7 +59,6 @@ The check in type to use. Defaults to Major
 ```yaml
 Type: CheckinType
 Parameter Sets: (All)
-Aliases:
 Accepted values: MinorCheckIn, MajorCheckIn, OverwriteCheckIn
 
 Required: False
@@ -76,7 +74,6 @@ The check in comment
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -91,7 +88,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -106,7 +102,6 @@ The server relative url of the file to check in
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -121,7 +116,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

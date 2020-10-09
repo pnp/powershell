@@ -104,7 +104,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -119,7 +118,6 @@ Retrieves all users and provides a SkipToken delta token to allow to query for c
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Return the delta
-Aliases:
 
 Required: True
 Position: Named
@@ -134,7 +132,6 @@ The change token provided during the previous run with -Delta to query for the c
 ```yaml
 Type: String
 Parameter Sets: Return the delta
-Aliases:
 
 Required: False
 Position: Named
@@ -149,7 +146,6 @@ Includes a filter to the retrieval of the users. Use OData instructions to const
 ```yaml
 Type: String
 Parameter Sets: Return a list, Return the delta
-Aliases:
 
 Required: False
 Position: Named
@@ -164,7 +160,6 @@ Returns the user with the provided user id
 ```yaml
 Type: String
 Parameter Sets: Return by specific ID
-Aliases:
 
 Required: False
 Position: Named
@@ -179,7 +174,6 @@ Includes a custom sorting instruction to the retrieval of the users. Use OData s
 ```yaml
 Type: String
 Parameter Sets: Return a list, Return the delta
-Aliases:
 
 Required: False
 Position: Named
@@ -194,7 +188,6 @@ Allows providing an array with the property names of specific properties to retu
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

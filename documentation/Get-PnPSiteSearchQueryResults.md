@@ -80,7 +80,6 @@ Automatically page results until the end to get more than 500 sites. Use with ca
 ```yaml
 Type: SwitchParameter
 Parameter Sets: All
-Aliases:
 
 Required: False
 Position: Named
@@ -95,7 +94,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -110,7 +108,6 @@ Maximum amount of search results to return. Default and max is 500 search result
 ```yaml
 Type: Int32
 Parameter Sets: Limit
-Aliases:
 
 Required: False
 Position: Named
@@ -125,7 +122,6 @@ Search query in Keyword Query Language (KQL) to execute to refine the returned s
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -140,7 +136,6 @@ Search result item to start returning the results from. Useful for paging. Leave
 ```yaml
 Type: Int32
 Parameter Sets: Limit
-Aliases:
 
 Required: False
 Position: Named
@@ -155,7 +150,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

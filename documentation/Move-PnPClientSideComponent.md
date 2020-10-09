@@ -81,7 +81,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: Int32
 Parameter Sets: Move to other section and column, Move to other column
-Aliases:
 
 Required: True
 Position: Named
@@ -98,7 +97,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -115,7 +113,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -132,7 +129,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: ClientSidePagePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -149,7 +145,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: Int32
 Parameter Sets: Move to other section, Move to other section and column, Move to other column
-Aliases:
 
 Required: False
 Position: Named
@@ -161,7 +156,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Int32
 Parameter Sets: Move within a column
-Aliases:
 
 Required: True
 Position: Named
@@ -178,7 +172,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: Int32
 Parameter Sets: Move to other section, Move to other section and column
-Aliases:
 
 Required: True
 Position: Named
@@ -195,7 +188,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

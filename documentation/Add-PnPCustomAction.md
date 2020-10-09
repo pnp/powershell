@@ -61,7 +61,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: Guid
 Parameter Sets: Client Side Component Id
-Aliases:
 
 Required: True
 Position: Named
@@ -78,7 +77,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: String
 Parameter Sets: Client Side Component Id
-Aliases:
 
 Required: False
 Position: Named
@@ -95,7 +93,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: String
 Parameter Sets: Client Side Component Id
-Aliases:
 
 Required: False
 Position: Named
@@ -110,7 +107,6 @@ XML fragment that determines user interface properties of the custom action
 ```yaml
 Type: String
 Parameter Sets: Default
-Aliases:
 
 Required: False
 Position: Named
@@ -125,7 +121,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -140,7 +135,6 @@ The description of the custom action
 ```yaml
 Type: String
 Parameter Sets: Default
-Aliases:
 
 Required: True
 Position: Named
@@ -155,7 +149,6 @@ The group where this custom action needs to be added like 'SiteActions'
 ```yaml
 Type: String
 Parameter Sets: Default
-Aliases:
 
 Required: True
 Position: Named
@@ -170,7 +163,6 @@ The URL of the image associated with the custom action
 ```yaml
 Type: String
 Parameter Sets: Default
-Aliases:
 
 Required: False
 Position: Named
@@ -185,7 +177,6 @@ The actual location where this custom action need to be added like 'CommandUI.Ri
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -200,7 +191,6 @@ The name of the custom action
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -215,7 +205,6 @@ The identifier of the object associated with the custom action.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -230,7 +219,6 @@ Specifies the type of object associated with the custom action
 ```yaml
 Type: UserCustomActionRegistrationType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, List, ContentType, ProgId, FileType
 
 Required: False
@@ -246,7 +234,6 @@ A string array that contain the permissions needed for the custom action
 ```yaml
 Type: PermissionKind[]
 Parameter Sets: Default
-Aliases:
 Accepted values: EmptyMask, ViewListItems, AddListItems, EditListItems, DeleteListItems, ApproveItems, OpenItems, ViewVersions, DeleteVersions, CancelCheckout, ManagePersonalViews, ManageLists, ViewFormPages, AnonymousSearchAccessList, Open, ViewPages, AddAndCustomizePages, ApplyThemeAndBorder, ApplyStyleSheets, ViewUsageData, CreateSSCSite, ManageSubwebs, CreateGroups, ManagePermissions, BrowseDirectories, BrowseUserInfo, AddDelPrivateWebParts, UpdatePersonalWebParts, ManageWeb, AnonymousSearchAccessWebLists, UseClientIntegration, UseRemoteAPIs, ManageAlerts, CreateAlerts, EditMyUserInfo, EnumeratePermissions, FullMask
 
 Required: False
@@ -262,7 +249,6 @@ The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'A
 ```yaml
 Type: CustomActionScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site, All
 
 Required: False
@@ -278,7 +264,6 @@ Sequence of this CustomAction being injected. Use when you have a specific seque
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -293,7 +278,6 @@ The title of the custom action
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -308,7 +292,6 @@ The URL, URI or ECMAScript (JScript, JavaScript) function associated with the ac
 ```yaml
 Type: String
 Parameter Sets: Default
-Aliases:
 
 Required: False
 Position: Named
@@ -323,7 +306,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

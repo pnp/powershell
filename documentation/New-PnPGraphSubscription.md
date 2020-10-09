@@ -47,7 +47,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -62,7 +61,6 @@ The event(s) the subscription should trigger on
 ```yaml
 Type: GraphSubscriptionChangeType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Created, Updated, Deleted
 
 Required: True
@@ -78,7 +76,6 @@ Specifies the value of the clientState property sent by the service in each noti
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -93,7 +90,6 @@ The datetime defining how long this subscription should stay alive before which 
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -108,7 +104,6 @@ Specifies the latest version of Transport Layer Security (TLS) that the notifica
 ```yaml
 Type: GraphSubscriptionTlsVersion
 Parameter Sets: (All)
-Aliases:
 Accepted values: v1_0, v1_1, v1_2, v1_3
 
 Required: False
@@ -124,7 +119,6 @@ The URL that should be called when an event matching this subscription occurs
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -139,7 +133,6 @@ The resource to monitor for changes. See https://docs.microsoft.com/graph/api/su
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

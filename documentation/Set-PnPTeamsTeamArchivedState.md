@@ -56,7 +56,6 @@ Archives the team as identified and sets the underlying SharePoint Online Site C
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -71,7 +70,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -86,7 +84,6 @@ Specify the name, id or external id of the app.
 ```yaml
 Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -100,7 +97,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

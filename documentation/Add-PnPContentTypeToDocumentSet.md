@@ -54,7 +54,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -69,7 +68,6 @@ The content type object, name or id to add. Either specify name, an id, or a con
 ```yaml
 Type: ContentTypePipeBind[]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -84,7 +82,6 @@ The document set object or id to add the content type to. Either specify a name,
 ```yaml
 Type: DocumentSetPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -99,7 +96,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

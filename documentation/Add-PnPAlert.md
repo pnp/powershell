@@ -56,7 +56,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: AlertEventType
 Parameter Sets: (All)
-Aliases:
 Accepted values: AddObject, ModifyObject, DeleteObject, Discussion, All
 
 Required: False
@@ -74,7 +73,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -91,7 +89,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: AlertDeliveryChannel
 Parameter Sets: (All)
-Aliases:
 Accepted values: Email, Sms
 
 Required: False
@@ -109,7 +106,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: AlertFilter
 Parameter Sets: (All)
-Aliases:
 Accepted values: AnythingChanges, SomeoneElseChangesAnItem, SomeoneElseChangesItemCreatedByMe, SomeoneElseChangesItemLastModifiedByMe
 
 Required: False
@@ -127,7 +123,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: AlertFrequency
 Parameter Sets: (All)
-Aliases:
 Accepted values: Immediate, Daily, Weekly
 
 Required: False
@@ -145,7 +140,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -162,7 +156,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -179,7 +172,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -196,7 +188,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: UserPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -213,7 +204,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

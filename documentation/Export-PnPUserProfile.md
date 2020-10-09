@@ -52,7 +52,6 @@ Specifies the login name of the user to export.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

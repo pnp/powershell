@@ -52,7 +52,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -67,7 +66,6 @@ If provided, no confirmation will be asked to move the first stage recycle bin i
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -82,7 +80,6 @@ If provided, moves the item with the specific ID to the second stage recycle bin
 ```yaml
 Type: RecycleBinItemPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

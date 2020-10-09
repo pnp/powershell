@@ -56,7 +56,6 @@ The compatibily level of SharePoint where 14 is SharePoint 2010, 15 is SharePoin
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -71,7 +70,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -86,7 +84,6 @@ The language ID. For instance: 1033 for English. For more information, see Local
 ```yaml
 Type: UInt32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

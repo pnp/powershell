@@ -77,7 +77,6 @@ If used the security inheritance is broken for this list
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -92,7 +91,6 @@ If used the unique permissions are cleared from child objects and they can inher
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -107,7 +105,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -122,7 +119,6 @@ If used the roles are copied from the parent web
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -137,7 +133,6 @@ The description of the list
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -152,7 +147,6 @@ Enable or disable attachments. Set to $true to enable, $false to disable.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -167,7 +161,6 @@ Set to $true to enable content types, set to $false to disable content types
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -182,7 +175,6 @@ Enable or disable folder creation. Set to $true to enable, $false to disable.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -197,7 +189,6 @@ Enable or disable minor versions versioning. Set to $true to enable, $false to d
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -212,7 +203,6 @@ Enable or disable whether content approval is enabled for the list. Set to $true
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -227,7 +217,6 @@ Enable or disable versioning. Set to $true to enable, $false to disable.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -242,7 +231,6 @@ Enable or disable force checkout. Set to $true to enable, $false to disable.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -257,7 +245,6 @@ Hide the list from the SharePoint UI. Set to $true to hide, $false to show.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -272,7 +259,6 @@ The ID, Title or Url of the list.
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -289,7 +275,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: ListExperience
 Parameter Sets: (All)
-Aliases:
 Accepted values: Auto, NewExperience, ClassicExperience
 
 Required: False
@@ -305,7 +290,6 @@ Maximum major versions to keep
 ```yaml
 Type: UInt32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -320,7 +304,6 @@ Maximum minor versions to keep
 ```yaml
 Type: UInt32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -335,7 +318,6 @@ If used the security inheritance is reset for this list (inherited from parent)
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -350,7 +332,6 @@ The title of the list
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -365,7 +346,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

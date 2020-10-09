@@ -78,7 +78,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -93,7 +92,6 @@ Exclude fetching the site URL for Microsoft 365 Groups. This speeds up large lis
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -108,7 +106,6 @@ The Identity of the Microsoft 365 Group
 ```yaml
 Type: Microsoft365GroupPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -123,7 +120,6 @@ Include Classification value of Microsoft 365 Groups
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -138,7 +134,6 @@ Include a flag for every Microsoft 365 Group if it has a Microsoft Team provisio
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

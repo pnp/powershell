@@ -53,7 +53,6 @@ The template to add to the tenant template
 ```yaml
 Type: SiteTemplate
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -68,7 +67,6 @@ The tenant template to add the template to
 ```yaml
 Type: ProvisioningHierarchy
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

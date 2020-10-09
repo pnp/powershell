@@ -71,7 +71,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -86,7 +85,6 @@ Will not output statistics after the operation
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -101,7 +99,6 @@ Function to be executed on the list. There is one input parameter of type List
 ```yaml
 Type: System.Action`1[Microsoft.SharePoint.Client.List]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -116,7 +113,6 @@ Function to be executed on the list item. There is one input parameter of type L
 ```yaml
 Type: System.Action`1[Microsoft.SharePoint.Client.ListItem]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -131,7 +127,6 @@ The properties to load for list items.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -146,7 +141,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -161,7 +155,6 @@ The properties to load for list.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -176,7 +169,6 @@ Function to be executed on the list, this will trigger after list items have bee
 ```yaml
 Type: System.Action`1[Microsoft.SharePoint.Client.List]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -191,7 +183,6 @@ Function to be executed on the web, this will trigger after lists and list items
 ```yaml
 Type: System.Action`1[Microsoft.SharePoint.Client.Web]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -206,7 +197,6 @@ Function to be executed on the web that would determine if ListAction should be 
 ```yaml
 Type: System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -221,7 +211,6 @@ Function to be executed on the web that would determine if ListItemAction should
 ```yaml
 Type: System.Func`2[Microsoft.SharePoint.Client.ListItem,System.Boolean]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -236,7 +225,6 @@ Function to be executed on the web that would determine if PostListAction should
 ```yaml
 Type: System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -251,7 +239,6 @@ Function to be executed on the web that would determine if PostWebAction should 
 ```yaml
 Type: System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -266,7 +253,6 @@ Function to be executed on the web that would determine if WebAction should be i
 ```yaml
 Type: System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -281,7 +267,6 @@ Will skip the counting process; by doing this you will not get an estimated time
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -296,7 +281,6 @@ Specify if sub webs will be processed
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -311,7 +295,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -326,7 +309,6 @@ Function to be executed on the web. There is one input parameter of type Web
 ```yaml
 Type: System.Action`1[Microsoft.SharePoint.Client.Web]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -341,7 +323,6 @@ The properties to load for web.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -356,7 +337,6 @@ Webs you want to process (for example different site collections), will use Web 
 ```yaml
 Type: Web[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

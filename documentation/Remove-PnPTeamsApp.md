@@ -56,7 +56,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -71,7 +70,6 @@ Specifying the Force parameter will skip the confirmation question.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -86,7 +84,6 @@ The id, externalid or display name of the app.
 ```yaml
 Type: TeamsAppPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

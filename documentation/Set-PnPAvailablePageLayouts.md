@@ -44,7 +44,6 @@ An array of page layout files to set as available page layouts for the site.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: ALL
-Aliases:
 
 Required: True
 Position: Named
@@ -59,7 +58,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -74,7 +72,6 @@ Set the available page layouts to inherit from the parent site.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: INHERIT
-Aliases:
 
 Required: True
 Position: Named
@@ -89,7 +86,6 @@ An array of page layout files to set as available page layouts for the site.
 ```yaml
 Type: String[]
 Parameter Sets: SPECIFIC
-Aliases:
 
 Required: True
 Position: Named
@@ -104,7 +100,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

@@ -53,7 +53,6 @@ A valid XML fragment containing one or more Aggregations
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -68,7 +67,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -83,7 +81,6 @@ A list of fields to add.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -98,7 +95,6 @@ The ID or Url of the list.
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -113,7 +109,6 @@ If specified, the view will have paging.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -128,7 +123,6 @@ If specified, a personal view will be created.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -143,7 +137,6 @@ A valid CAML Query.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -158,7 +151,6 @@ The row limit for the view. Defaults to 30.
 ```yaml
 Type: UInt32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -173,7 +165,6 @@ If specified, the view will be set as the default view for the list.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -188,7 +179,6 @@ The title of the view.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -203,7 +193,6 @@ The type of view to add.
 ```yaml
 Type: ViewType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, Html, Grid, Recurrence, Chart, Calendar, Gantt
 
 Required: False
@@ -219,7 +208,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

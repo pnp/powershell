@@ -81,7 +81,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -96,7 +95,6 @@ Content to retrieve (Sites, User Profiles). Defaults to Sites.
 ```yaml
 Type: ContentSource
 Parameter Sets: (All)
-Aliases:
 Accepted values: Sites, UserProfiles
 
 Required: False
@@ -112,7 +110,6 @@ End date to stop getting entries from. Default to current time.
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -127,7 +124,6 @@ Filter to limit what is being returned. Has to be a URL prefix for SharePoint co
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -142,7 +138,6 @@ Filter what log entries to return (All, Success, Warning, Error). Defaults to Al
 ```yaml
 Type: LogLevel
 Parameter Sets: (All)
-Aliases:
 Accepted values: Success, Warning, Error, All
 
 Required: False
@@ -158,7 +153,6 @@ Show raw crawl log data
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -173,7 +167,6 @@ Number of entries to return. Defaults to 100.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -188,7 +181,6 @@ Start date to start getting entries from. Defaults to start of time.
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -203,7 +195,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

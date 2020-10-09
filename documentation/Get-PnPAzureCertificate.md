@@ -59,7 +59,6 @@ Password to the certificate (*.pfx)
 ```yaml
 Type: SecureString
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -74,7 +73,6 @@ Path to the certificate (*.pfx)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

@@ -51,7 +51,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -66,7 +65,6 @@ The Identity of the deleted Microsoft 365 Group
 ```yaml
 Type: Microsoft365GroupPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

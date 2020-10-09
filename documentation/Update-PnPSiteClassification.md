@@ -64,7 +64,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -79,7 +78,6 @@ A list of classifications, separated by commas. E.g. "HBI","LBI","Top Secret"
 ```yaml
 Type: System.Collections.Generic.List`1[System.String]
 Parameter Sets: Specific
-Aliases:
 
 Required: False
 Position: Named
@@ -94,7 +92,6 @@ The default classification to be used. The value needs to be present in the list
 ```yaml
 Type: String
 Parameter Sets: Specific
-Aliases:
 
 Required: False
 Position: Named
@@ -109,7 +106,6 @@ A settings object retrieved by Get-PnPSiteClassification
 ```yaml
 Type: SiteClassificationsSettings
 Parameter Sets: Settings
-Aliases:
 
 Required: True
 Position: Named
@@ -124,7 +120,6 @@ The UsageGuidelinesUrl. Set to "" to clear.
 ```yaml
 Type: String
 Parameter Sets: Specific
-Aliases:
 
 Required: False
 Position: Named

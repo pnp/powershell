@@ -89,7 +89,6 @@ If specified, the output will only contain the &lt;pnp:Files&gt; element. This a
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -104,7 +103,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -119,7 +117,6 @@ An optional content type to use.
 ```yaml
 Type: ContentTypePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -134,7 +131,6 @@ The encoding type of the XML file, Unicode is default
 ```yaml
 Type: Encoding
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -149,7 +145,6 @@ Folder to process. If not specified the current folder will be used.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -164,7 +159,6 @@ Overwrites the output file if it exists.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -179,7 +173,6 @@ Optional wildcard pattern to match filenames against. If empty all files will be
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -194,7 +187,6 @@ Filename to write to, optionally including full path.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -209,7 +201,6 @@ Additional properties to set for every file entry in the generated template.
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -224,7 +215,6 @@ The schema of the output to use, defaults to the latest schema
 ```yaml
 Type: XMLPnPSchemaVersion
 Parameter Sets: (All)
-Aliases:
 Accepted values: LATEST, V201503, V201505, V201508, V201512, V201605, V201705, V201801, V201805, V201807, V201903, V201909, V202002
 
 Required: False
@@ -240,7 +230,6 @@ Target folder to provision to files to. If not specified, the current folder nam
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 1
@@ -255,7 +244,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

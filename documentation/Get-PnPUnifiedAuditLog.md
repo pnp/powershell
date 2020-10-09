@@ -43,7 +43,6 @@ Allows the check for required permissions in the access token to be bypassed whe
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -58,7 +57,6 @@ Content type of logs to be retrieved, should be one of the following: AzureActiv
 ```yaml
 Type: AuditContentType
 Parameter Sets: (All)
-Aliases:
 Accepted values: AzureActiveDirectory, Exchange, SharePoint, General, DLP
 
 Required: False
@@ -74,7 +72,6 @@ End time of logs to be retrieved. Start time and end time must both be specified
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +86,6 @@ Start time of logs to be retrieved. Start time and end time must both be specifi
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

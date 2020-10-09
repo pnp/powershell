@@ -67,7 +67,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -97,7 +96,6 @@ Specifies the custom Master page URL based on the site relative URL
 ```yaml
 Type: String
 Parameter Sets: Site Relative
-Aliases:
 
 Required: False
 Position: Named
@@ -127,7 +125,6 @@ Specifies the Master page URL based on the site relative URL
 ```yaml
 Type: String
 Parameter Sets: Site Relative
-Aliases:
 
 Required: False
 Position: Named
@@ -142,7 +139,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

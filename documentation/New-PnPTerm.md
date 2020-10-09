@@ -42,7 +42,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -57,7 +56,6 @@ Custom Properties
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -72,7 +70,6 @@ Descriptive text to help users understand the intended use of this term.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -87,7 +84,6 @@ The Id to use for the term; if not specified, or the empty GUID, a random GUID i
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -102,7 +98,6 @@ The locale id to use for the term. Defaults to the current locale id.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -117,7 +112,6 @@ Custom Properties
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -132,7 +126,6 @@ The name of the term.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -147,7 +140,6 @@ The termgroup to create the term in.
 ```yaml
 Type: TermGroupPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -162,7 +154,6 @@ The termset to add the term to.
 ```yaml
 Type: PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0

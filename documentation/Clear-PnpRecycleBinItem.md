@@ -66,7 +66,6 @@ Clears all items
 ```yaml
 Type: SwitchParameter
 Parameter Sets: All
-Aliases:
 
 Required: False
 Position: Named
@@ -81,7 +80,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -96,7 +94,6 @@ If provided, no confirmation will be asked to restore the recycle bin item
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -111,7 +108,6 @@ Id of the recycle bin item or the recycle bin item itself to permanently delete
 ```yaml
 Type: RecycleBinItemPipeBind
 Parameter Sets: Identity
-Aliases:
 
 Required: True
 Position: Named
@@ -128,7 +124,6 @@ Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server
 ```yaml
 Type: Int32
 Parameter Sets: All
-Aliases:
 
 Required: False
 Position: Named
@@ -145,7 +140,6 @@ Only applicable to: SharePoint Online
 ```yaml
 Type: SwitchParameter
 Parameter Sets: All
-Aliases:
 
 Required: False
 Position: Named

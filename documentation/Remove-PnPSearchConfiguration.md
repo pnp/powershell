@@ -66,7 +66,6 @@ Search configuration string
 ```yaml
 Type: String
 Parameter Sets: Config
-Aliases:
 
 Required: True
 Position: Named
@@ -81,7 +80,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -96,7 +94,6 @@ Path to a search configuration
 ```yaml
 Type: String
 Parameter Sets: Path
-Aliases:
 
 Required: True
 Position: Named
@@ -110,7 +107,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SearchConfigurationScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site, Subscription
 
 Required: False
@@ -126,7 +122,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

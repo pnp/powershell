@@ -67,7 +67,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -82,7 +81,6 @@ Indicates the destination URL is outside of the site collection
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -97,7 +95,6 @@ Add the new menu item to beginning of the collection
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -112,7 +109,6 @@ The location where to add the navigation node to. Either TopNavigationBar, Quick
 ```yaml
 Type: NavigationType
 Parameter Sets: (All)
-Aliases:
 Accepted values: TopNavigationBar, QuickLaunch, SearchNav, Footer
 
 Required: True
@@ -128,7 +124,6 @@ The key of the parent. Leave empty to add to the top level
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -143,7 +138,6 @@ The title of the node to add
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -158,7 +152,6 @@ The url to navigate to when clicking the new menu item. This can either be absol
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -173,7 +166,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named

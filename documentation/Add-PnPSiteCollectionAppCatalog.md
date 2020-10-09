@@ -42,7 +42,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -57,7 +56,6 @@ Url of the site to add the app catalog to.
 ```yaml
 Type: SitePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named

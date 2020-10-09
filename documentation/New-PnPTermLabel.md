@@ -47,7 +47,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -62,7 +61,6 @@ Makes this new label the default label
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -77,7 +75,6 @@ The locale id to use for the localized term
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -92,7 +89,6 @@ The localized name of the term
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -107,7 +103,6 @@ The term to add the localized label to
 ```yaml
 Type: PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.Term]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
