@@ -23,13 +23,13 @@ Associates a hub site to a hub site.
 
 ```powershell
 Add-PnPHubToHubAssociation -Source <Guid> -Target <Guid> [-Connection <PnPConnection>]
-
+```
 
 ### By Url
 
 ```powershell
 Add-PnPHubToHubAssociation -SourceUrl <string> -TargetUrl <string> [-Connection <PnPConnection>]
-```
+
 
 ## DESCRIPTION
 Use this cmdlet to associate a hub site to a hub site.
