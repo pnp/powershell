@@ -6,7 +6,8 @@ on:
     branches: [ dev ]
     paths: 'documentation/**'
   pull_request:
-    branches: [ dev ]
+    branches:
+      - dev
     paths: 'documentation/**'
 
 jobs:
