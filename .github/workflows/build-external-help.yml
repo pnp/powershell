@@ -18,7 +18,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: dev
-    - name: Build and Publish Module
+    - name: Building Help File
       env:
         POWERSHELLGALLERY_API_KEY: ${{ secrets.POWERSHELLGALLERY_API_KEY }}
       shell: pwsh
