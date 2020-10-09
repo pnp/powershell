@@ -10,7 +10,7 @@ if($IsLinux -or $isMacOS)
 }
 
 $apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
-if($apiKey -eq [String]::Empty)
+if($apiKey -ne [String]::Empty)
 {
 	# We are running in a GitHub Action
 	Set-PSRepository PSGallery -InstallationPolicy Trusted
