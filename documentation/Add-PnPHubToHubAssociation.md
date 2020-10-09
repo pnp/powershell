@@ -29,7 +29,7 @@ Add-PnPHubToHubAssociation -Source <Guid> -Target <Guid> [-Connection <PnPConnec
 
 ```powershell
 Add-PnPHubToHubAssociation -SourceUrl <string> -TargetUrl <string> [-Connection <PnPConnection>]
-
+```
 
 ## DESCRIPTION
 Use this cmdlet to associate a hub site to a hub site.
