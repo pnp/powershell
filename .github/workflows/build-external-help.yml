@@ -17,8 +17,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        ref: dev
     - name: Building Help File
       env:
         RUNSINACTION: 1
