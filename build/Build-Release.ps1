@@ -117,7 +117,7 @@ Catch
 Write-Host "Generating Documentation"
 Set-PSRepository PSGallery -InstallationPolicy Trusted
 Install-Module PlatyPS -ErrorAction Stop
-New-ExternalHelp -Path ./Documentation -OutputPath $destinationFolder -Force
+New-ExternalHelp -Path ./documentation -OutputPath $destinationFolder -Force
 
 $apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
 
