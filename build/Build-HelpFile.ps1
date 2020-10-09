@@ -6,8 +6,8 @@ if($IsLinux -or $isMacOS)
 	$destinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
 }
 
-$apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
-if($apiKey -ne [String]::Empty)
+$runsInAction = $("$env:RUNSINACTION")
+if($runsInAction -ne [String]::Empty)
 {
 	# We are running in a GitHub Action
 	Write-Host "Installing PlatyPS"
