@@ -2,6 +2,7 @@
 using System.Management.Automation;
 using System.Reflection;
 using System.Threading;
+using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using PnP.Framework;
 using PnP.Framework.Utilities;
@@ -138,5 +139,30 @@ namespace PnP.PowerShell.Commands
             while (propInfo == null && type != null);
             return propInfo;
         }
+
+        protected void PollOperation(SpoOperation spoOperation)
+        {
+            while (true)
+            {
+                if (!spoOperation.IsComplete)
+                {
+                    if (spoOperation.HasTimedout)
+                    {
+                        throw new TimeoutException("SharePoint Operation Timeout");
+                    }
+                    Thread.Sleep(spoOperation.PollingInterval);
+                    if (Stopping)
+                    {
+                        break;
+                    }
+                    ClientContext.Load(spoOperation);
+                    ClientContext.ExecuteQueryRetry();
+                    continue;
+                }
+                return;
+            }
+            WriteWarning("SharePoint Operation Wait Interrupted");
+        }
+
     }
 }
