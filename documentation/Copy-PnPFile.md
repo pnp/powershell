@@ -163,8 +163,6 @@ Accept wildcard characters: False
 ### -IgnoreVersionHistory
 If provided, only the latest version of the document will be copied and its history will be discared. If not provided, all historical versions will be copied along.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)

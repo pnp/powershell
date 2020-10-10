@@ -105,8 +105,6 @@ Accept wildcard characters: False
 ### -Label
 The name of the retention label.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: (All)

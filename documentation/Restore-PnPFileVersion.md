@@ -42,8 +42,6 @@ Restores the file version with label "Version 1.0"
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
@@ -58,8 +56,6 @@ Accept wildcard characters: False
 ### -Force
 If provided, no confirmation will be requested and the action will be performed
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
@@ -72,8 +68,6 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: FileVersionPipeBind
@@ -88,8 +82,6 @@ Accept wildcard characters: False
 
 ### -Url
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: (All)
@@ -103,8 +95,6 @@ Accept wildcard characters: False
 
 ### -Web
 This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: WebPipeBind

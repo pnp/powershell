@@ -42,8 +42,6 @@ Gets statistics on the provided web including all its subwebs
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
@@ -56,8 +54,6 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
 
 ```yaml
 Type: WebPipeBind
@@ -73,8 +69,6 @@ Accept wildcard characters: False
 ### -IncludeHiddenList
 Include hidden lists in statistics calculation
 
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
@@ -88,8 +82,6 @@ Accept wildcard characters: False
 
 ### -Recursive
 Iterate all sub webs recursively
-
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
 
 ```yaml
 Type: SwitchParameter

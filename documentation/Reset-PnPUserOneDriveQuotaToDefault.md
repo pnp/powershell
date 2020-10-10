@@ -40,8 +40,6 @@ Resets the quota set on the OneDrive for Business site for the specified user to
 ### -Account
 The account of the user, formatted either as a login name, or as a claims identity, e.g. i:0#.f|membership|user@domain.com
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: (All)
@@ -55,8 +53,6 @@ Accept wildcard characters: False
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: PnPConnection

@@ -56,8 +56,6 @@ This will upload the specified app package to the site collection app catalog an
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
@@ -71,8 +69,6 @@ Accept wildcard characters: False
 
 ### -Overwrite
 Overwrites the existing app package if it already exists
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: SwitchParameter
@@ -88,8 +84,6 @@ Accept wildcard characters: False
 ### -Path
 Specifies the Id or an actual app metadata instance
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: String
 Parameter Sets: (All)
@@ -103,8 +97,6 @@ Accept wildcard characters: False
 
 ### -Publish
 This will deploy/trust an app into the app catalog
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: SwitchParameter
@@ -120,8 +112,6 @@ Accept wildcard characters: False
 ### -Scope
 Defines which app catalog to use. Defaults to Tenant
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: AppCatalogScope
 Parameter Sets: (All)
@@ -136,8 +126,6 @@ Accept wildcard characters: False
 
 ### -SkipFeatureDeployment
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Add and Publish
@@ -151,8 +139,6 @@ Accept wildcard characters: False
 
 ### -Timeout
 Specifies the timeout in seconds. Defaults to 200.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: Int32

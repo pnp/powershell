@@ -52,8 +52,6 @@ Updates the custom action(s) properties being registered for a SharePoint Framew
 ### -ClientSideComponentId
 The Client Side Component Id of the SharePoint Framework client side extension application customizer found in the manifest for which existing custom action(s) should be updated
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: Guid
 Parameter Sets: Client Side Component Id
@@ -67,8 +65,6 @@ Accept wildcard characters: False
 
 ### -ClientSideComponentProperties
 The Client Side Component Properties of the application customizer to update. Specify values as a json string : "{Property1 : 'Value1', Property2: 'Value2'}". Omit to not update this property.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: String
@@ -99,8 +95,6 @@ Accept wildcard characters: False
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
@@ -114,8 +108,6 @@ Accept wildcard characters: False
 
 ### -Description
 The description of the application customizer. Omit to not update this property.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: String
@@ -131,8 +123,6 @@ Accept wildcard characters: False
 ### -Identity
 The id or name of the CustomAction representing the client side extension registration that needs to be updated or a CustomAction instance itself
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: UserCustomActionPipeBind
 Parameter Sets: Custom Action Id
@@ -146,8 +136,6 @@ Accept wildcard characters: False
 
 ### -Scope
 Define if the CustomAction representing the client side extension registration is to be found at the web or site collection scope. Specify All to update the component on both web and site collection level.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: CustomActionScope
@@ -164,8 +152,6 @@ Accept wildcard characters: False
 ### -Sequence
 Sequence of this application customizer being injected. Use when you have a specific sequence with which to have multiple application customizers being added to the page. Omit to not update this property.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: Int32
 Parameter Sets: (All)
@@ -180,8 +166,6 @@ Accept wildcard characters: False
 ### -Title
 The title of the application customizer. Omit to not update this property.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: String
 Parameter Sets: (All)
@@ -195,8 +179,6 @@ Accept wildcard characters: False
 
 ### -Web
 This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: WebPipeBind

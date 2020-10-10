@@ -50,8 +50,6 @@ Accept wildcard characters: False
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
@@ -65,8 +63,6 @@ Accept wildcard characters: False
 
 ### -Template
 The in-memory template to test
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: ProvisioningHierarchy

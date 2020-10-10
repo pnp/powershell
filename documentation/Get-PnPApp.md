@@ -49,8 +49,6 @@ This will retrieve the specific app from the app catalog.
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
@@ -65,8 +63,6 @@ Accept wildcard characters: False
 ### -Identity
 Specifies the Id of an app which is available in the app catalog
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: AppMetadataPipeBind
 Parameter Sets: (All)
@@ -80,8 +76,6 @@ Accept wildcard characters: False
 
 ### -Scope
 Defines which app catalog to use. Defaults to Tenant
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: AppCatalogScope

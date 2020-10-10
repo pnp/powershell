@@ -42,8 +42,6 @@ This will move the folder Templates to the new location in 'Shared Documents/Rep
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
@@ -57,8 +55,6 @@ Accept wildcard characters: False
 
 ### -Folder
 The folder to move
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: String
@@ -74,8 +70,6 @@ Accept wildcard characters: False
 ### -TargetFolder
 The new parent location to which the folder should be moved to
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: (All)
@@ -89,8 +83,6 @@ Accept wildcard characters: False
 
 ### -Web
 This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: WebPipeBind

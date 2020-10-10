@@ -63,8 +63,6 @@ Accept wildcard characters: False
 ### -EmailAddress
 The email address of the user
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: External
@@ -77,8 +75,6 @@ Accept wildcard characters: False
 ```
 
 ### -EmailBody
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: String
@@ -120,8 +116,6 @@ Accept wildcard characters: False
 ```
 
 ### -SendEmail
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SwitchParameter

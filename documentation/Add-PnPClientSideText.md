@@ -43,8 +43,6 @@ Adds the text 'Hello World!' to the Client-Side Page 'MyPage'
 ### -Column
 Sets the column where to insert the text control.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: Int32
 Parameter Sets: Positioned
@@ -58,8 +56,6 @@ Accept wildcard characters: False
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: PnPConnection
@@ -75,8 +71,6 @@ Accept wildcard characters: False
 ### -Order
 Sets the order of the text control. (Default = 1)
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: Int32
 Parameter Sets: (All)
@@ -90,8 +84,6 @@ Accept wildcard characters: False
 
 ### -Page
 The name of the page.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: ClientSidePagePipeBind
@@ -107,8 +99,6 @@ Accept wildcard characters: False
 ### -Section
 Sets the section where to insert the text control.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: Int32
 Parameter Sets: Positioned
@@ -123,8 +113,6 @@ Accept wildcard characters: False
 ### -Text
 Specifies the text to display in the text area.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: String
 Parameter Sets: (All)
@@ -138,8 +126,6 @@ Accept wildcard characters: False
 
 ### -Web
 This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: WebPipeBind

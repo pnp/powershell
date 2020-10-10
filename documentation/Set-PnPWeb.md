@@ -67,8 +67,6 @@ Accept wildcard characters: False
 ### -CommentsOnSitePagesDisabled
 Defines if comments on modern site pages should be enabled by default ($false) or they should be hidden ($true)
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
@@ -125,8 +123,6 @@ Accept wildcard characters: False
 ### -DisablePowerAutomate
 Defines if Power Automate should be available on lists and document libraries ($false) or if the option should be hidden ($true)
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
@@ -139,8 +135,6 @@ Accept wildcard characters: False
 ```
 
 ### -HeaderEmphasis
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SPVariantThemeType
@@ -155,8 +149,6 @@ Accept wildcard characters: False
 ```
 
 ### -HeaderLayout
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: HeaderLayoutType
@@ -187,8 +179,6 @@ Accept wildcard characters: False
 ### -MegaMenuEnabled
 Defines if the navigation menu should be shown as the mega menu ($true) or the smaller sized menu ($false)
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
@@ -216,8 +206,6 @@ Accept wildcard characters: False
 
 ### -NavAudienceTargetingEnabled
 Defines if the navigation menu on a modern site should be enabled for modern audience targeting ($true) or not ($false)
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SwitchParameter

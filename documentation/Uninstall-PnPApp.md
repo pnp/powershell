@@ -42,8 +42,6 @@ This will uninstall the specified app from the current site. Notice that the app
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
@@ -58,8 +56,6 @@ Accept wildcard characters: False
 ### -Identity
 Specifies the Id of the Addin Instance
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: AppMetadataPipeBind
 Parameter Sets: (All)
@@ -73,8 +69,6 @@ Accept wildcard characters: False
 
 ### -Scope
 Defines which app catalog to use. Defaults to Tenant
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: AppCatalogScope

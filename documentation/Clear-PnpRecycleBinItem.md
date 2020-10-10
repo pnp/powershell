@@ -119,8 +119,6 @@ Accept wildcard characters: False
 ### -RowLimit
 Limits deletion to specified number of items
 
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
-
 ```yaml
 Type: Int32
 Parameter Sets: All
@@ -134,8 +132,6 @@ Accept wildcard characters: False
 
 ### -SecondStageOnly
 If provided, only all the items in the second stage recycle bin will be cleared
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SwitchParameter

@@ -59,8 +59,6 @@ Adds a new one column section to the Client-Side page 'MyPage' and sets the back
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
@@ -74,8 +72,6 @@ Accept wildcard characters: False
 
 ### -Order
 Sets the order of the section. (Default = 1)
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: Int32
@@ -91,8 +87,6 @@ Accept wildcard characters: False
 ### -Page
 The name of the page
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: ClientSidePagePipeBind
 Parameter Sets: (All)
@@ -106,8 +100,6 @@ Accept wildcard characters: False
 
 ### -SectionTemplate
 Specifies the columns template to use for the section.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: CanvasSectionTemplate
@@ -124,8 +116,6 @@ Accept wildcard characters: False
 ### -Web
 This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
@@ -139,8 +129,6 @@ Accept wildcard characters: False
 
 ### -ZoneEmphasis
 Sets the background of the section (default = 0)
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: Int32

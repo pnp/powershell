@@ -57,8 +57,6 @@ Accept wildcard characters: False
 ### -Identity
 Optional Id of the site
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: ProvisioningSitePipeBind
 Parameter Sets: (All)
@@ -72,8 +70,6 @@ Accept wildcard characters: False
 
 ### -Sequence
 The sequence to retrieve the site from
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: ProvisioningSequence

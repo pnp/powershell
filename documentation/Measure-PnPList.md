@@ -42,8 +42,6 @@ Displays items and folders with broken permissions inside Documents library
 ### -BrokenPermissions
 Show items with broken permissions
 
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
@@ -58,8 +56,6 @@ Accept wildcard characters: False
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
@@ -72,8 +68,6 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
 
 ```yaml
 Type: ListPipeBind
@@ -89,8 +83,6 @@ Accept wildcard characters: False
 ### -ItemLevel
 Show item level statistics
 
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
@@ -104,8 +96,6 @@ Accept wildcard characters: False
 
 ### -Web
 The web to apply the command to. Omit this parameter to use the current web.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
 
 ```yaml
 Type: WebPipeBind

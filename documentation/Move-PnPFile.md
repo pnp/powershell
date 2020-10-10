@@ -72,8 +72,6 @@ Moves a folder named Archive located in the document library named "Shared Docum
 ### -AllowSchemaMismatch
 If provided and the target document library specified using TargetServerRelativeLibrary has different fields than the document library where the document is being moved from, the move will succeed. If not provided, it will fail to protect against data loss of metadata stored in fields that cannot be moved along.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Other Site Collection
@@ -87,8 +85,6 @@ Accept wildcard characters: False
 
 ### -AllowSmallerVersionLimitOnDestination
 If provided and the target document library specified using TargetServerRelativeLibrary is configured to keep less historical versions of documents than the document library where the document is being moved from, the move will succeed. If not provided, it will fail to protect against data loss of historical versions that cannot be moved along.
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SwitchParameter
@@ -146,8 +142,6 @@ Accept wildcard characters: False
 
 ### -IgnoreVersionHistory
 If provided, only the latest version of the document will be moved and its history will be discared. If not provided, all historical versions will be moved along.
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SwitchParameter
@@ -226,8 +220,6 @@ Accept wildcard characters: False
 
 ### -TargetServerRelativeLibrary
 Server relative url of a document library where to move the fileor folder to. Must not include the file or folder name.
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: String

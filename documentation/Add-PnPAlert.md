@@ -51,8 +51,6 @@ Adds a new alert for user "Alice" to the "Demo List". Note: Only site owners and
 ### -ChangeType
 Alert change type
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: AlertEventType
 Parameter Sets: (All)
@@ -68,8 +66,6 @@ Accept wildcard characters: False
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
@@ -83,8 +79,6 @@ Accept wildcard characters: False
 
 ### -DeliveryMethod
 Alert delivery method
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: AlertDeliveryChannel
@@ -101,8 +95,6 @@ Accept wildcard characters: False
 ### -Filter
 Alert filter
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: AlertFilter
 Parameter Sets: (All)
@@ -117,8 +109,6 @@ Accept wildcard characters: False
 
 ### -Frequency
 Alert frequency
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: AlertFrequency
@@ -135,8 +125,6 @@ Accept wildcard characters: False
 ### -List
 The ID, Title or Url of the list.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
@@ -150,8 +138,6 @@ Accept wildcard characters: False
 
 ### -Time
 Alert time (if frequency is not immediate)
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: DateTime
@@ -167,8 +153,6 @@ Accept wildcard characters: False
 ### -Title
 Alert title
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: String
 Parameter Sets: (All)
@@ -183,8 +167,6 @@ Accept wildcard characters: False
 ### -User
 User to create the alert for (User ID, login name or actual User object). Skip this parameter to create an alert for the current user. Note: Only site owners can create alerts for other users.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: UserPipeBind
 Parameter Sets: (All)
@@ -198,8 +180,6 @@ Accept wildcard characters: False
 
 ### -Web
 This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: WebPipeBind

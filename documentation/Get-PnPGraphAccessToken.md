@@ -42,8 +42,6 @@ Gets the full OAuth 2.0 Token to consume the Microsoft Graph API
 ### -ByPassPermissionCheck
 Allows the check for required permissions in the access token to be bypassed when set to $true
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
@@ -57,8 +55,6 @@ Accept wildcard characters: False
 
 ### -Decoded
 Returns the access token in a decoded manner
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SwitchParameter

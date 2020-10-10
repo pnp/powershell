@@ -99,8 +99,6 @@ Accept wildcard characters: False
 ### -Label
 The name of the retention label.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: (All)
@@ -128,8 +126,6 @@ Accept wildcard characters: False
 
 ### -SystemUpdate
 Update the item without creating a new version.
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SwitchParameter

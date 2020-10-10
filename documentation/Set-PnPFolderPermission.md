@@ -182,8 +182,6 @@ Accept wildcard characters: False
 ### -SystemUpdate
 Update the folder permissions without creating a new version or triggering MS Flow.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)

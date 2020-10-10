@@ -57,8 +57,6 @@ Accept wildcard characters: False
 ### -Identity
 Optional Id of the sequence
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: ProvisioningSequencePipeBind
 Parameter Sets: (All)
@@ -72,8 +70,6 @@ Accept wildcard characters: False
 
 ### -Template
 The template to retrieve the sequence from
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: ProvisioningHierarchy

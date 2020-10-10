@@ -111,8 +111,6 @@ Accept wildcard characters: False
 ### -BlockDownloadOfNonViewableFiles
 Specifies if non web viewable files can be downloaded.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Set Properties
@@ -126,8 +124,6 @@ Accept wildcard characters: False
 
 ### -CommentsOnSitePagesDisabled
 Specifies if comments on site pages are enabled
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SwitchParameter
@@ -157,8 +153,6 @@ Accept wildcard characters: False
 ### -DefaultLinkPermission
 Specifies the default link permission for the site collection. None - Respect the organization default link permission. View - Sets the default link permission for the site to "view" permissions. Edit - Sets the default link permission for the site to "edit" permissions
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SharingPermissionType
 Parameter Sets: Set Properties
@@ -173,8 +167,6 @@ Accept wildcard characters: False
 
 ### -DefaultSharingLinkType
 Specifies the default link type for the site collection. None - Respect the organization default sharing link type. AnonymousAccess - Sets the default sharing link for this site to an Anonymous Access or Anyone link. Internal - Sets the default sharing link for this site to the "organization" link or company shareable link. Direct - Sets the default sharing link for this site to the "Specific people" link
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SharingLinkType
@@ -206,8 +198,6 @@ Accept wildcard characters: False
 ### -DisableAppViews
 -
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: AppViewsPolicy
 Parameter Sets: Set Properties
@@ -223,8 +213,6 @@ Accept wildcard characters: False
 ### -DisableCompanyWideSharingLinks
 -
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: CompanyWideSharingLinksPolicy
 Parameter Sets: Set Properties
@@ -239,8 +227,6 @@ Accept wildcard characters: False
 
 ### -DisableFlows
 -
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: FlowsPolicy
@@ -270,8 +256,6 @@ Accept wildcard characters: False
 
 ### -LockState
 Sets the lockstate of a site
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SiteLockState
@@ -316,8 +300,6 @@ Accept wildcard characters: False
 ### -SharingAllowedDomainList
 Specifies a list of email domains that is allowed for sharing with the external collaborators. Use the space character as the delimiter for entering multiple values. For example, "contoso.com fabrikam.com".
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: Set Properties
@@ -332,8 +314,6 @@ Accept wildcard characters: False
 ### -SharingBlockedDomainList
 Specifies a list of email domains that is blocked for sharing with the external collaborators. Use the space character as the delimiter for entering multiple values. For example, "contoso.com fabrikam.com".
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: Set Properties
@@ -347,8 +327,6 @@ Accept wildcard characters: False
 
 ### -SharingCapability
 Specifies what the sharing capabilities are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SharingCapabilities
@@ -366,8 +344,6 @@ Accept wildcard characters: False
 ### -SharingDomainRestrictionMode
 Specifies the external sharing mode for domains.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SharingDomainRestrictionModes
 Parameter Sets: Set Properties
@@ -383,8 +359,6 @@ Accept wildcard characters: False
 ### -StorageMaximumLevel
 Specifies the storage quota for this site collection in megabytes. This value must not exceed the company's available quota.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: Int64
 Parameter Sets: Set Properties
@@ -398,8 +372,6 @@ Accept wildcard characters: False
 
 ### -StorageWarningLevel
 Specifies the warning level for the storage quota in megabytes. This value must not exceed the values set for the StorageMaximumLevel parameter
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: Int64
@@ -442,8 +414,6 @@ Accept wildcard characters: False
 
 ### -Wait
 Wait for the operation to complete
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SwitchParameter

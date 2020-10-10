@@ -83,8 +83,6 @@ Accept wildcard characters: False
 ### -SkipRecycleBin
 Do not add to the tenant scoped recycle bin when selected.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)

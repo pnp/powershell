@@ -107,8 +107,6 @@ Accept wildcard characters: False
 ### -RemoveDeletedSite
 Specifies if any existing site with the same URL should be removed from the recycle bin
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)

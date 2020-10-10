@@ -276,8 +276,6 @@ Prevents the Download button from being displayed on the Virus Found warning pag
 
 Accepts a value of true (enabled) to hide the Download button or false (disabled) to display the Download button. By default this feature is set to false.
 
-
-
 ```yaml
 Type: Boolean
 Parameter Sets: (All)

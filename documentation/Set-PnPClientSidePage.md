@@ -72,8 +72,6 @@ Sets the header of the page to custom header, using the specified image and tran
 ### -CommentsEnabled
 Enables or Disables the comments on the page
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
@@ -87,8 +85,6 @@ Accept wildcard characters: False
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: PnPConnection
@@ -104,8 +100,6 @@ Accept wildcard characters: False
 ### -ContentType
 Specify either the name, ID or an actual content type.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: ContentTypePipeBind
 Parameter Sets: (All)
@@ -119,8 +113,6 @@ Accept wildcard characters: False
 
 ### -HeaderType
 Sets the page header type
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: ClientSidePageHeaderType
@@ -137,8 +129,6 @@ Accept wildcard characters: False
 ### -Identity
 The name/identity of the page
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: ClientSidePagePipeBind
 Parameter Sets: (All)
@@ -152,8 +142,6 @@ Accept wildcard characters: False
 
 ### -LayoutType
 Sets the layout type of the page. (Default = Article)
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: ClientSidePageLayoutType
@@ -170,8 +158,6 @@ Accept wildcard characters: False
 ### -Name
 Sets the name of the page.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: String
 Parameter Sets: (All)
@@ -185,8 +171,6 @@ Accept wildcard characters: False
 
 ### -PromoteAs
 Allows to promote the page for a specific purpose (None | HomePage | NewsArticle | Template)
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: ClientSidePagePromoteType
@@ -203,8 +187,6 @@ Accept wildcard characters: False
 ### -Publish
 Publishes the page once it is saved.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
@@ -218,8 +200,6 @@ Accept wildcard characters: False
 
 ### -ThumbnailUrl
 Thumbnail Url
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: String
@@ -235,8 +215,6 @@ Accept wildcard characters: False
 ### -Title
 Sets the title of the page.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: String
 Parameter Sets: (All)
@@ -250,8 +228,6 @@ Accept wildcard characters: False
 
 ### -Web
 This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: WebPipeBind

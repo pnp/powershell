@@ -73,8 +73,6 @@ Adds a Client-Side component 'HelloWorld' to the page called 'MyPage' in section
 ### -Column
 Sets the column where to insert the web part control.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: Int32
 Parameter Sets: Positioned with built-in web part, Positioned with 3rd party web part
@@ -88,8 +86,6 @@ Accept wildcard characters: False
 
 ### -Component
 Specifies the component instance or Id to add.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: ClientSideComponentPipeBind
@@ -105,8 +101,6 @@ Accept wildcard characters: False
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
@@ -120,8 +114,6 @@ Accept wildcard characters: False
 
 ### -DefaultWebPartType
 Defines a default web part type to insert.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: DefaultClientSideWebParts
@@ -138,8 +130,6 @@ Accept wildcard characters: False
 ### -Order
 Sets the order of the web part control. (Default = 1)
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: Int32
 Parameter Sets: (All)
@@ -153,8 +143,6 @@ Accept wildcard characters: False
 
 ### -Page
 The name of the page.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: ClientSidePagePipeBind
@@ -170,8 +158,6 @@ Accept wildcard characters: False
 ### -Section
 Sets the section where to insert the web part control.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: Int32
 Parameter Sets: Positioned with built-in web part, Positioned with 3rd party web part
@@ -186,8 +172,6 @@ Accept wildcard characters: False
 ### -Web
 This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
@@ -201,8 +185,6 @@ Accept wildcard characters: False
 
 ### -WebPartProperties
 The properties of the web part
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: PropertyBagPipeBind

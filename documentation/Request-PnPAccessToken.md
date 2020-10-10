@@ -66,8 +66,6 @@ Returns the access token using the specified client id and the specified scopes 
 ### -ClientId
 The Azure Application Client Id to use to retrieve the token. Defaults to the PnP Office 365 Management Shell
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: (All)
@@ -81,8 +79,6 @@ Accept wildcard characters: False
 
 ### -Credentials
 Optional credentials to use when retrieving the access token. If not present you need to connect first with Connect-PnPOnline.
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: PSCredential
@@ -98,8 +94,6 @@ Accept wildcard characters: False
 ### -Decoded
 Returns the token in a decoded / human readible manner
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
@@ -113,8 +107,6 @@ Accept wildcard characters: False
 
 ### -Resource
 The scopes to retrieve the token for. Defaults to AllSites.FullControl
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: String
@@ -130,8 +122,6 @@ Accept wildcard characters: False
 ### -Scopes
 The scopes to retrieve the token for. Defaults to AllSites.FullControl
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: System.Collections.Generic.List`1[System.String]
 Parameter Sets: (All)
@@ -146,8 +136,6 @@ Accept wildcard characters: False
 ### -SetAsCurrent
 Set this token as the current token to use when performing Azure AD based authentication requests with PnP PowerShell
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
@@ -161,8 +149,6 @@ Accept wildcard characters: False
 
 ### -TenantUrl
 Optional tenant URL to use when retrieving the access token. The Url should be in the shape of https://yourtenant.sharepoint.com. See examples for more info.
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: String

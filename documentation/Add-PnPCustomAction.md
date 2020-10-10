@@ -56,8 +56,6 @@ Adds a new application customizer to the site. This requires that an SPFX soluti
 ### -ClientSideComponentId
 The Client Side Component Id of the custom action
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: Guid
 Parameter Sets: Client Side Component Id
@@ -72,8 +70,6 @@ Accept wildcard characters: False
 ### -ClientSideComponentProperties
 The Client Side Component Properties of the custom action. Specify values as a json string : "{Property1 : 'Value1', Property2: 'Value2'}"
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: String
 Parameter Sets: Client Side Component Id
@@ -87,8 +83,6 @@ Accept wildcard characters: False
 
 ### -ClientSideHostProperties
 The Client Side Host Properties of the custom action. Specify values as a json string : "{'preAllocatedApplicationCustomizerTopHeight': '50', 'preAllocatedApplicationCustomizerBottomHeight': '50'}"
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: String

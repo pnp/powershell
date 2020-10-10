@@ -98,8 +98,6 @@ Accept wildcard characters: False
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
@@ -113,8 +111,6 @@ Accept wildcard characters: False
 
 ### -Detailed
 By default, not all returned attributes are populated. This switch populates all attributes. It can take several seconds to run. Without this, some attributes will show default values that may not be correct.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
 
 ```yaml
 Type: SwitchParameter
@@ -130,8 +126,6 @@ Accept wildcard characters: False
 ### -Filter
 Specifies the script block of the server-side filter to apply. See https://technet.microsoft.com/en-us/library/fp161380.aspx
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: (All)
@@ -145,8 +139,6 @@ Accept wildcard characters: False
 
 ### -IncludeOneDriveSites
 By default, the OneDrives are not returned. This switch includes all OneDrives.
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SwitchParameter
@@ -162,8 +154,6 @@ Accept wildcard characters: False
 ### -Template
 By default, all sites will be returned. Specify a template value alike "STS#0" here to filter on the template
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: (All)
@@ -177,8 +167,6 @@ Accept wildcard characters: False
 
 ### -Url
 The URL of the site
-
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
 
 ```yaml
 Type: String

@@ -42,8 +42,6 @@ This will deploy/trust an app into the app catalog. Notice that the app needs to
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
@@ -57,8 +55,6 @@ Accept wildcard characters: False
 
 ### -Identity
 Specifies the Id of the app
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: AppMetadataPipeBind
@@ -74,8 +70,6 @@ Accept wildcard characters: False
 ### -Scope
 Defines which app catalog to use. Defaults to Tenant
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: AppCatalogScope
 Parameter Sets: (All)
@@ -89,8 +83,6 @@ Accept wildcard characters: False
 ```
 
 ### -SkipFeatureDeployment
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: SwitchParameter

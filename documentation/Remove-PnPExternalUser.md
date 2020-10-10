@@ -87,8 +87,6 @@ Accept wildcard characters: False
 ### -Scope
 Defines which app catalog to use. Defaults to Tenant
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: AppCatalogScope
 Parameter Sets: (All)

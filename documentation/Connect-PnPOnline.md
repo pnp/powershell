@@ -320,8 +320,6 @@ Connects to SharePoint using app-only auth in combination with a certificate. Se
 ### -AADDomain
 The AAD where the O365 app is registered. Eg.: contoso.com, or contoso.onmicrosoft.com.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: App-Only using a clientId and clientSecret and an AAD Domain, Microsoft Graph using Azure Active Directory
@@ -336,8 +334,6 @@ Accept wildcard characters: False
 ### -AccessToken
 Connect with an existing Access Token
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: Access Token
@@ -351,8 +347,6 @@ Accept wildcard characters: False
 
 ### -AzureEnvironment
 The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: AzureEnvironment
@@ -369,8 +363,6 @@ Accept wildcard characters: False
 ### -Certificate
 X509Certificate2 reference containing the private key to authenticate the requests to SharePoint Online
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: X509Certificate2
 Parameter Sets: App-Only with Azure Active Directory
@@ -384,8 +376,6 @@ Accept wildcard characters: False
 
 ### -CertificateBase64Encoded
 Base64 Encoded X509Certificate2 certificate containing the private key to authenticate the requests to SharePoint Online such as retrieved in Azure Functions from Azure KeyVault
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: String
@@ -401,8 +391,6 @@ Accept wildcard characters: False
 ### -CertificatePassword
 Password to the certificate (*.pfx)
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SecureString
 Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings
@@ -416,8 +404,6 @@ Accept wildcard characters: False
 
 ### -CertificatePath
 Path to the certificate containing the private key (*.pfx)
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: String
@@ -541,8 +527,6 @@ Log in using the PnP O365 Management Shell application towards the Graph. You wi
 * Access the directory as you
 
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: PnP Management Shell to the Microsoft Graph
@@ -570,8 +554,6 @@ Accept wildcard characters: False
 
 ### -LaunchBrowser
 Launch a browser automatically and copy the code to enter to the clipboard
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SwitchParameter
@@ -615,8 +597,6 @@ Accept wildcard characters: False
 ### -PEMCertificate
 PEM encoded certificate
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: App-Only with Azure Active Directory using certificate as PEM strings
@@ -630,8 +610,6 @@ Accept wildcard characters: False
 
 ### -PEMPrivateKey
 PEM encoded private key for the certificate
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: String
@@ -655,8 +633,6 @@ Log in using the PnP O365 Management Shell application. You will be asked to con
 * Read and write directory data
 * Read and write identity providers
 * Access the directory as you
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SwitchParameter
@@ -687,8 +663,6 @@ Accept wildcard characters: False
 ### -RedirectUri
 The Redirect URI of the Azure AD Application
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: Azure Active Directory
@@ -717,8 +691,6 @@ Accept wildcard characters: False
 ### -SPOManagementShell
 Log in using the SharePoint Online Management Shell application
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: SPO Management Shell Credentials
@@ -733,8 +705,6 @@ Accept wildcard characters: False
 ### -Scopes
 The array of permission scopes to request from Azure Active Directory
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String[]
 Parameter Sets: Azure Active Directory using Scopes
@@ -748,8 +718,6 @@ Accept wildcard characters: False
 
 ### -Tenant
 The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: String
@@ -778,8 +746,6 @@ Accept wildcard characters: False
 
 ### -Thumbprint
 The thumbprint of the certificate containing the private key registered with the application in Azure Active Directory
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: String

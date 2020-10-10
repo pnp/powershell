@@ -270,8 +270,6 @@ Accept wildcard characters: False
 ### -ListExperience
 Set the list experience: Auto, NewExperience or ClassicExperience
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: ListExperience
 Parameter Sets: (All)

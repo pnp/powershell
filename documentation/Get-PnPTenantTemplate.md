@@ -48,8 +48,6 @@ Extracts a tenant template
 ### -AsInstance
 Returns the template as an in-memory object, which is an instance of the ProvisioningHierarchy type of the PnP Core Component. It cannot be used together with the -Out parameter.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Extract a template as an object
@@ -63,8 +61,6 @@ Accept wildcard characters: False
 
 ### -Configuration
 Specify a JSON configuration file to configure the extraction progress.
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: ExtractConfigurationPipeBind
@@ -95,8 +91,6 @@ Accept wildcard characters: False
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
@@ -110,8 +104,6 @@ Accept wildcard characters: False
 
 ### -Force
 Overwrites the output file if it exists.
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SwitchParameter
@@ -127,8 +119,6 @@ Accept wildcard characters: False
 ### -Out
 Filename to write to, optionally including full path
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: Extract a template to a file
@@ -141,8 +131,6 @@ Accept wildcard characters: False
 ```
 
 ### -SiteUrl
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: String

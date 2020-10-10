@@ -59,8 +59,6 @@ Returns the custom action(s) being registered for a SharePoint Framework solutio
 ### -ClientSideComponentId
 The Client Side Component Id of the SharePoint Framework client side extension application customizer found in the manifest for which existing custom action(s) should be removed
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: Guid
 Parameter Sets: Client Side Component Id
@@ -90,8 +88,6 @@ Accept wildcard characters: False
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
@@ -106,8 +102,6 @@ Accept wildcard characters: False
 ### -Identity
 Identity of the SharePoint Framework client side extension application customizer to return. Omit to return all SharePoint Frameworkclient side extension application customizer.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: Guid
 Parameter Sets: Custom Action Id
@@ -121,8 +115,6 @@ Accept wildcard characters: False
 
 ### -Scope
 Scope of the SharePoint Framework client side extension application customizer, either Web, Site or All to return both (all is the default)
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: CustomActionScope
@@ -139,8 +131,6 @@ Accept wildcard characters: False
 ### -ThrowExceptionIfCustomActionNotFound
 Switch parameter if an exception should be thrown if the requested SharePoint Frameworkclient side extension application customizer does not exist (true) or if omitted, nothing will be returned in case the SharePoint Framework client side extension application customizer does not exist
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
@@ -154,8 +144,6 @@ Accept wildcard characters: False
 
 ### -Web
 The web to apply the command to. Omit this parameter to use the current web.
-
-Only applicable to: SharePoint Online, SharePoint Server 2019
 
 ```yaml
 Type: WebPipeBind

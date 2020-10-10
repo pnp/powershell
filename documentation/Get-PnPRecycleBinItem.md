@@ -124,8 +124,6 @@ Accept wildcard characters: False
 ### -RowLimit
 Limits return results to specified amount
 
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
-
 ```yaml
 Type: Int32
 Parameter Sets: All, FirstStage, SecondStage

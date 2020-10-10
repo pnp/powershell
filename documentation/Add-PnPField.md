@@ -86,8 +86,6 @@ Accept wildcard characters: False
 ### -ClientSideComponentId
 The Client Side Component Id to set to the field
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: Guid
 Parameter Sets: Add field to list, Add field to web
@@ -101,8 +99,6 @@ Accept wildcard characters: False
 
 ### -ClientSideComponentProperties
 The Client Side Component Properties to set to the field
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: String
