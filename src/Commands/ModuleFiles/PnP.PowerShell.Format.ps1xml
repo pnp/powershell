@@ -2147,7 +2147,7 @@
         </TableRowEntries>
       </TableControl>
     </View>
-     <View>
+    <View>
       <Name>AppInfo</Name>
       <ViewSelectedBy>
         <TypeName>Microsoft.Online.SharePoint.TenantAdministration.AppInfo</TypeName>
@@ -2175,6 +2175,58 @@
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>Source</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>ExternalUser</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.Online.SharePoint.TenantManagement.ExternalUser</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>UniqueId</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>DisplayName</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Email</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>AcceptedAs</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>WhenCreated</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>InvitedBy</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>UniqueId</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DisplayName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Email</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>AcceptedAs</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>WhenCreated</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>InvitedBy</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>

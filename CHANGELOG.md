@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPBrowserIdleSignOut` cmdlet (0.1.6)
 - Added `Get-PnPBuiltInDesignPackageVisibility` cmdlet (0.1.6)
 - Added `Set-PnPBuiltInDesignPackageVisibility` cmdlet (0.1.7)
+- Added `Get-PnPExternalUser` cmdlet (0.1.7)
 
 ### Changed
 
