@@ -1,10 +1,21 @@
 Write-Host "Building PnP.PowerShell" -ForegroundColor Yellow
+$Tags = "SharePoint","SharePoint Online","PnP","Microsoft Teams"
 
 $versionObject = [System.Version]::new($(Get-Content ./version.txt -Raw))
 
 $buildVersion = $versionObject.Build + 1;
 
 $version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
+
+# Check if version has not been published yet
+
+$availableVersions = Find-Module -Name PnP.PowerShell -AllowPrerelease | Select-Object -First 1
+$availableVersion = $availableVersions.Version.Split('-')[0]
+
+if($availableVersion -eq $version)
+{
+	exit # Do not proceed.
+}
 
 dotnet build ./src/Commands/PnP.PowerShell.csproj --nologo --configuration Release --no-incremental -p:VersionPrefix=$version -p:VersionSuffix=nightly
 
@@ -123,7 +134,7 @@ $apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
 
 Write-Host "Publishing Module" -ForegroundColor Yellow
 Import-Module -Name PnP.PowerShell
-Publish-Module -Name PnP.PowerShell -AllowPrerelease -NuGetApiKey $apiKey
+Publish-Module -Name PnP.PowerShell -AllowPrerelease -NuGetApiKey $apiKey -Tags $Tags
 
 # Write version back to version
 Set-Content ./version.txt -Value $version -Force
