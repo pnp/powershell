@@ -7,7 +7,7 @@ using System;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "BuiltInDesignPackageVisibility")]
-    public class SetBuiltInDesignPackageVisibilityt : PnPAdminCmdlet
+    public class SetBuiltInDesignPackageVisibility : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public bool IsVisible;
