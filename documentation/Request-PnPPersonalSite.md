@@ -29,7 +29,6 @@ The Request-SPOPersonalSite cmdlet requests that the users specified be enqueued
 
 ### EXAMPLE 1
 ```powershell
-```powershell
 $emails = "user1@contoso.com", "user2@contoso.com"
 Request-PnPPersonalSite -UserEmails $emails
 ```
