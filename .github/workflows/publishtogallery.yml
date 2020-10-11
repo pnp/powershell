@@ -13,6 +13,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: dev
+        token: ${{ secrets.PAT }}
     - name: Build and Publish Module
       env:
         POWERSHELLGALLERY_API_KEY: ${{ secrets.POWERSHELLGALLERY_API_KEY }}
@@ -24,5 +25,5 @@ jobs:
     - name: Push changes to github
       uses: ad-m/github-push-action@v0.6.0
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.PAT }}
         branch: dev
