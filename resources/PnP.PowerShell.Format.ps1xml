@@ -2230,5 +2230,51 @@
         </TableRowEntries>
       </TableControl>
     </View>
+      <View>
+      <Name>SPOTenantSiteUserInvitation</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.Online.SharePoint.TenantAdministration.SPOTenantSiteUserInvitation</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>SiteId</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>WebId</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>DocId</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>ShareId</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>EmailAddress</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>SiteId</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>WebId</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DocId</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ShareId</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>EmailAddress</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
   </ViewDefinitions>
 </Configuration>
