@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPSiteUserInvitations` cmdlet (0.1.8)
 - Added `Invoke-PnPSiteSwap` cmdlet (0.1.8)
 - Added `New-PnPSdnProvider` cmdlet (0.1.8)
+- Added `Remove-PnPSdnProvider` cmdlet (0.1.8)
 
 ### Changed
 
