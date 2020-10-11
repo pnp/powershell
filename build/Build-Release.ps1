@@ -52,7 +52,7 @@ Try {
 	Write-Host "Copying files to $destinationFolder" -ForegroundColor Yellow
 
 	$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
-	Copy-Item -Path "$PSscriptRoot/../src/Commands/bin/Release/netcoreapp3.1/ModuleFiles/*.ps1xml" -Destination "$destinationFolder"
+	Copy-Item -Path "$PSscriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
 	Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Release/netstandard2.0" | Where-Object {$_.Extension -in '.dll','.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
 	Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/netcoreapp3.1" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
 	if(!$IsLinux -and !$IsMacOs)

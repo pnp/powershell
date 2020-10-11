@@ -69,10 +69,4 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update="ModuleFiles\PnP.PowerShell.Format.ps1xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>

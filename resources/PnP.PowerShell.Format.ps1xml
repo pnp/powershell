@@ -328,16 +328,13 @@
       <TableControl>
         <TableHeaders>
           <TableColumnHeader>
-            <Width>5</Width>
-            <Alignment>left</Alignment>
+            <Label>Id</Label>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Width>30</Width>
-            <Alignment>left</Alignment>
+            <Label>Title</Label>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Width>36</Width>
-            <Alignment>left</Alignment>
+            <Label>LoginName</Label>
           </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
