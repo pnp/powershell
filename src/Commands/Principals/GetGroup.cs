@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Get, "Group",DefaultParameterSetName="All")]
+    [Cmdlet(VerbsCommon.Get, "Group", DefaultParameterSetName = "All")]
     public class GetGroup : PnPWebRetrievalsCmdlet<Group>
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByName")]
@@ -51,9 +51,9 @@ namespace PnP.PowerShell.Commands.Principals
             }
             else if (ParameterSetName == "All")
             {
-                var groups = ClientContext.LoadQuery(SelectedWeb.SiteGroups.IncludeWithDefaultProperties(g => g.Users));
+                var groups = ClientContext.LoadQuery(SelectedWeb.SiteGroups.IncludeWithDefaultProperties(g => g.Users, g => g.Title, g => g.OwnerTitle, g => g.Owner.LoginName, g => g.LoginName));
                 ClientContext.ExecuteQueryRetry();
-                WriteObject(groups,true);
+                WriteObject(groups, true);
             }
 
         }

@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Remove-PnPExternalUser` cmdlet (0.1.7)
 - Added `Get-PnPSiteCollectionAppCatalogs` cmdlet (0.1.7)
 - Added `Request-PnPPersonalSite` cmdlet (0.1.7)
+- Added `Get-PnPSiteGroup` cmdlet (0.1.8)
 
 ### Changed
 
