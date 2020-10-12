@@ -98,7 +98,7 @@ Accept wildcard characters: False
 URL of the Source Hub site to be associated with the Target Hub Site.
 
 ```yaml
-Type: Guid
+Type: String
 Parameter Sets: By Url
 
 Required: True
@@ -108,11 +108,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Target
+### -TargetUrl
 URL of the Target Hub to associate the source Hub to.
 
 ```yaml
-Type: Guid
+Type: String
 Parameter Sets: By Url
 
 Required: True
