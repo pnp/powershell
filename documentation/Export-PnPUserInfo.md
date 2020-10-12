@@ -20,12 +20,12 @@ Export user information from site user information list.
 ## SYNTAX
 
 ```powershell
-Export-PnPUserInfo -LoginName <String> -Site <String> [<CommonParameters>]
+Export-PnPUserInfo -LoginName <String> [-Site <String>]
 ```
 
 ## DESCRIPTION
 
-Export user information from the site user information list.
+Export user information from the site user information list. If the Site parameter has not been specified, the current connect to site will be used.
 
 
 ## EXAMPLES
@@ -53,7 +53,7 @@ Specifies the login name of the user to export.
 Type: String
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

@@ -164,6 +164,36 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         #endregion
 
+        #region POST
+
+        public static async Task<string> PostAsync(HttpClient httpClient, string url, string accessToken, string accept = "application/json")
+        {
+            var message = GetMessage(url, HttpMethod.Post, accessToken, accept);
+            return await SendMessageAsync(httpClient, message);
+        }
+        public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, string accessToken, bool camlCasePolicy = true)
+        {
+            var stringContent = await PostAsync(httpClient, url, accessToken);
+            if (stringContent != null)
+            {
+                var options = new JsonSerializerOptions() { IgnoreNullValues = true };
+                if (camlCasePolicy)
+                {
+                    options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                }
+                try
+                {
+                    return JsonSerializer.Deserialize<T>(stringContent, options);
+                }
+                catch (Exception)
+                {
+                    return default(T);
+                }
+            }
+            return default(T);
+        }
+        #endregion
+
         #region PUT
         public static T ExecutePutRequest<T>(ClientContext context, string url, string content, string select = null, string filter = null, string expand = null, Dictionary<string, string> additionalHeaders = null, string contentType = null)
         {

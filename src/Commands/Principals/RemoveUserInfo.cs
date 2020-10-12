@@ -7,8 +7,8 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsData.Export, "UserInfo")]
-    public class ExportUserInfo : PnPAdminCmdlet
+    [Cmdlet(VerbsCommon.Remove, "UserInfo")]
+    public class RemoveUserInfo : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public string LoginName;
@@ -16,10 +16,13 @@ namespace PnP.PowerShell.Commands.Principals
         [Parameter(Mandatory = false)]
         public string Site;
 
+        [Parameter(Mandatory = false)]
+        public string RedactName;
+
         protected override void ExecuteCmdlet()
         {
             var siteUrl = PnPConnection.CurrentConnection.Url;
-            if(ParameterSpecified(Site))
+            if (ParameterSpecified(Site))
             {
                 siteUrl = Site;
             }
@@ -32,7 +35,15 @@ namespace PnP.PowerShell.Commands.Principals
             ClientContext.Load(site);
             ClientContext.ExecuteQuery();
             var normalizedUserName = UrlUtilities.UrlEncode($"i:0#.f|membership|{LoginName}");
-            var results = RestHelper.GetAsync<RestResultCollection<ExportEntity>>(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/GetSPUserInformation(accountName=@a,siteId=@b)?@a='{normalizedUserName}'&@b='{site.Id}'", this.AccessToken, false).GetAwaiter().GetResult();
+            RestResultCollection<ExportEntity> results = null;
+            if (!ParameterSpecified(nameof(RedactName)))
+            {
+                results = RestHelper.PostAsync<RestResultCollection<ExportEntity>>(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/RemoveSPUserInformation(accountName=@a,siteId=@b)?@a='{normalizedUserName}'&@b='{site.Id}'", this.AccessToken, false).GetAwaiter().GetResult();
+            }
+            else
+            {
+                results = RestHelper.PostAsync<RestResultCollection<ExportEntity>>(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/RemoveSPUserInformation(accountName=@a,siteId=@b,redactName=@c)?@a='{normalizedUserName}'&@b='{site.Id}'&@c='{RedactName}'", this.AccessToken, false).GetAwaiter().GetResult();
+            }
             var record = new PSObject();
             foreach (var item in results.Items)
             {
