@@ -2,12 +2,12 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/repair-pnpsite
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/test-pnpsite
 schema: 2.0.0
-title: Repair-PnPSite
+title: Test-PnPSite
 ---
 
-# Repair-PnPSite
+# Test-PnPSite
 
 ## SYNOPSIS
 
@@ -15,28 +15,26 @@ title: Repair-PnPSite
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Checks and repairs the site collection and its contents.
+Checks the site collection and its contents.
 
 ## SYNTAX
 
 ```powershell
-Repair-PnPSite -Identity <SitePipeBind> [-RuleId <Guid>]
+Test-PnPSite -Identity <SitePipeBind> [-RuleId <Guid>]
 ```
 
 ## DESCRIPTION
-The Repair-PnPSite cmdlet runs one or all site collection health checks on the site collection and its contents. This cmdlet will make changes if issues are found and automatically repairable.
-
-The cmdlet reports the health check rules with a summary of the results. The rules might not support automatic repair. Tests without repair mode can be initiated by running the Test-PnPSite cmdlet.
+The Test-PnPOSite cmdlet runs one or all site collection health checks on the site collection and its contents. Tests are intended not to make any changes except in repair mode, which can be initiated by running the Repair-PnPSite cmdlet. This cmdlet reports the rules together with a summary of the results.
 
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Repair-PnPSite https://contoso.sharepoint.com/sites/marketing
+Test-PnPSite https://contoso.sharepoint.com/sites/marketing
 ```
 
-This example runs all the site collection health checks in repair mode on the https://contoso.sharepoint.com/sites/marketing site collection.
+This example runs all the site collection health checks on the https://contoso.sharepoint.com/sites/marketing site collection.
 
 ### EXAMPLE 2
 ```powershell
