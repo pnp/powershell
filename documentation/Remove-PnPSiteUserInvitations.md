@@ -2,12 +2,12 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpsiteuserinvitations
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnpsiteuserinvitations
 schema: 2.0.0
-title: Get-PnPSiteUserInvitations
+title: Remove-PnPSiteUserInvitations
 ---
 
-# Get-PnPSiteUserInvitations
+# Remove-PnPSiteUserInvitations
 
 ## SYNOPSIS
 
@@ -15,25 +15,26 @@ title: Get-PnPSiteUserInvitations
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Searches against all stored sharing links and retrieves the email invites
+Searches against all stored sharing links and removes an email invite.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteUserInvitations [[-Site] <SitePipeBind>] -EmailAddress <string>
+Remove-PnPSiteUserInvitations [[-Site] <SitePipeBind>] [-EmailAddress] <string>
    [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Searches against all stored sharing links on a Site and retrieves the email invites. If the site parameter is omitted the current site will be searched.
+Searches against all stored sharing links on a Site and removes an email invits. If the site parameter is omitted the current site will be searched.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPiteUserInvitations -Site https://contoso.sharepoint.com/sites/ContosoWeb1/ -EmailAddress someone@example.com
+Remove-PnPiteUserInvitations -Site https://contoso.sharepoint.com/sites/ContosoWeb1/ -EmailAddress someone@example.com
 ```
 
-This example retrieves email invites stored in the ContosoWeb1 site to the user with email address someone@example.com.
+This example removes the email invite stored in the ContosoWeb1 site for the user with email address someone@example.com.
 
 ## PARAMETERS
 

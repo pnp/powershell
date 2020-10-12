@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `New-PnPSdnProvider` cmdlet (0.1.8)
 - Added `Remove-PnPSdnProvider` cmdlet (0.1.8)
 - Added `Remove-PnPHubToHubAssocation` cmdlet (0.1.9)
+- Added `Remove-PnPSiteUserInvitations` cmdlet (0.1.9)
 
 ### Changed
 
