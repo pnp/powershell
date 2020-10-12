@@ -40,6 +40,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `New-PnPSiteGroup` cmdlet (0.1.9)
 - Added `Remove-PnPSiteGroup` cmdlet (0.1.9)
 - Added `Set-PnPSiteGroup` cmdlet (0.1.9)
+- Added `Set-PnPSiteScriptPackage` cmdlet (0.1.9)
+- Added `Update-PnPUserType` cmdlet (0.1.9)
 
 ### Changed
 
@@ -96,3 +98,4 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed alias `Ensure-PnPFolder`. Use `Resolve-PnPFolder`.
 - Removed `Install-PnPSolution`. Sandboxed solutions have been deprecated.
 - Removed `Add-PnPWorkflowDefinition`, `Add-PnPWorkflowSubscription`, `Get-PnPWorkflowDefinition`, `Get-PnPWorkflowInstances`, `Get-PnPWorkflowSubscription`, `Remove-PnPWorkflowDefinition`, `Remove-PnPWorkflowSubscription`, `Resume-PnPWorkflowInstance`, `Start-PnPWorkflowInstance` and `Stop-PnPWorkflowInstance` due to deprecated of the Workflow Services in SharePoint Online.
+- Renamed `Test-PnPOffice365AliasIsUsed` to `Test-PnPMicrosoft365AliasIsUsed`
