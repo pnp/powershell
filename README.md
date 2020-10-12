@@ -4,6 +4,10 @@
 
 This module is a successor of the [PnP-PowerShell](https://github.com/pnp/pnp-powershell) module. The original cmdlets only work on Windows and Windows PowerShell and supports SharePoint On-Premises (2013, 2016 and 2019) and SharePoint Online. This version of the cmdlets is cross-platform (e.g. it works on Windows, MacOS and Linux) however will only support SharePoint Online. Going forward will only be **actively maintaining the cross-platform PnP PowerShell** and once we declare this module as GA we will retired the [PnP-PowerShell](https://github.com/pnp/pnp-powershell) library.
 
+| GitHub Actions | PS Gallery | 
+|-----------------|----------------|
+[![GitHub Actions Status][github-actions-badge]][github-actions-build] | [![PowerShell Gallery][psgallery-badge]][psgallery]
+
 # Installation using the [PowerShell Gallery](https://www.powershellgallery.com)
 
 You can run the following commands to install the PowerShell cmdlets:
