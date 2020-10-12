@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Remove-PnPSiteUserInvitations` cmdlet (0.1.9)
 - Added `Remove-PnPTenantSyncClientRestriction` cmdlet (0.1.9)
 - Added `Remove-PnPUserInfo` cmdlet (0.1.9)
+- Added `Remove-PnPUserProfile` cmdlet (0.1.9)
 
 ### Changed
 
