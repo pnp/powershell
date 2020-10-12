@@ -68,7 +68,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false)]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = false)]
         public string Username;
 
         [Parameter(Mandatory = false)]
@@ -82,10 +82,19 @@ namespace PnP.PowerShell.Commands.Base
             {
                 loginEndPoint = authenticationManager.GetAzureADLoginEndPoint(AzureEnvironment);
             }
-            if(!ParameterSpecified(nameof(Password)))
+
+            if (PnPConnection.CurrentConnection.PSCredential != null)
             {
-                Host.UI.Write("Password: ");
-                Password = Host.UI.ReadLineAsSecureString();
+                Username = PnPConnection.CurrentConnection.PSCredential.UserName;
+                Password = PnPConnection.CurrentConnection.PSCredential.Password;
+            }
+            if (string.IsNullOrEmpty(Username))
+            {
+                throw new PSArgumentException("Username is required");
+            }
+            if (Password == null || Password.Length == 0)
+            {
+                throw new PSArgumentException("Password is required");
             }
             var token = AzureAuthHelper.AuthenticateAsync(Tenant, Username, Password, loginEndPoint).GetAwaiter().GetResult();
 
@@ -242,27 +251,20 @@ namespace PnP.PowerShell.Commands.Base
                 var waitTime = 60;
                 Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to launch consent flow in a browser window. This wait is required to make sure that Azure AD is able to initialize all required artifacts. After you provided consent you will see a blank page. This is expected. You can always navigate to the consent page manually: {consentUrl}");
 
-                Console.TreatControlCAsInput = true;
-
                 for (var i = 0; i < waitTime; i++)
                 {
                     Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, ".");
                     System.Threading.Thread.Sleep(1000);
 
                     // Check if CTRL+C has been pressed and if so, abort the wait
-                    if (Host.UI.RawUI.KeyAvailable)
+                    if (Stopping)
                     {
-                        var key = Host.UI.RawUI.ReadKey(ReadKeyOptions.AllowCtrlC | ReadKeyOptions.NoEcho | ReadKeyOptions.IncludeKeyUp);
-                        if ((key.ControlKeyState.HasFlag(ControlKeyStates.LeftCtrlPressed) || key.ControlKeyState.HasFlag(ControlKeyStates.RightCtrlPressed)) && key.VirtualKeyCode == 67)
-                        {
-
-                            break;
-                        }
+                        break;
                     }
                 }
                 Host.UI.WriteLine();
 
-                
+
                 WriteObject(record);
 
                 BrowserHelper.LaunchBrowser(consentUrl);
