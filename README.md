@@ -6,7 +6,7 @@ This module is a successor of the [PnP-PowerShell](https://github.com/pnp/pnp-po
 
 | GitHub Actions | PS Gallery | 
 |-----------------|----------------|
-[![GitHub Actions Status][github-actions-badge]][github-actions-build] | [![PowerShell Gallery][psgallery-badge]][psgallery]
+[![Actions Status](https://github.com/pnp/powershell/workflows/Build/badge.svg)](https://github.com/pnp/powershell/actions) | [![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/pnp.powershell)](https://www.powershellgallery.com/packages/PnP.PowerShell)
 
 # Installation using the [PowerShell Gallery](https://www.powershellgallery.com)
 
