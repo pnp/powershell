@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 
-namespace PnP.PowerShell.Model
+namespace PnP.PowerShell.Commands.Model
 {
     public class SiteGroup
     {

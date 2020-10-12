@@ -16,12 +16,12 @@ Returns information about installed apps.
 
 ### By Id
 ```powershell
-Get-SPOAppInfo -ProductId <Guid>
+Get-PnPAppInfo -ProductId <Guid>
 ```
 
 ### By Name
 ```powershell
-Get-SPOAppInfo -Name <String>
+Get-PnPAppInfo -Name <String>
 ```
 
 ## DESCRIPTION

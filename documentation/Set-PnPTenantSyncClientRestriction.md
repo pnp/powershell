@@ -42,7 +42,7 @@ This example blocks access to Mac sync clients for OneDrive file synchronization
 
 ### EXAMPLE 2
 ```powershell
-Set-SPOTenantSyncClientRestriction  -ExcludedFileExtensions "pptx;docx;xlsx"
+Set-PnPTenantSyncClientRestriction  -ExcludedFileExtensions "pptx;docx;xlsx"
 ```
 
 This example blocks syncing of PowerPoint, Word, and Excel file types using the new sync client (OneDrive.exe).

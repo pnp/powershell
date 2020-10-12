@@ -39,8 +39,8 @@ if($Credentials -eq $null)
 function GetWebs
 {
     $separator = ","
-    $sites = Get-SPOSite
-	Get-SPOSubWebs -Web $sites.RootWeb -Recurse | foreach { $subIds += $_.ServerRelativeUrl + $separator }
+    $sites = Get-PnPSite
+	Get-PnPSubWebs -Web $sites.RootWeb -Recurse | foreach { $subIds += $_.ServerRelativeUrl + $separator }
 	#$option = [System.StringSplitOptions]::RemoveEmptyEntries
 
 	return $subIds.Split($separator)
@@ -48,15 +48,15 @@ function GetWebs
 
 try
 {
-    Connect-SPOnline $Url -Credentials $Credentials
+    Connect-PnPOnline $Url -Credentials $Credentials
 	GetWebs | foreach {
 		Write-Host "Really working hard in site $_" -ForegroundColor Yellow
-        $cWeb = Get-SPOWeb -Identity $_
+        $cWeb = Get-PnPWeb -Identity $_
         if ($Force) {
-            Disable-SPOFeature -Identity d95c97f3-e528-4da2-ae9f-32b3535fbb59 -Scope Web -Web $cWeb -Force
+            Disable-PnPFeature -Identity d95c97f3-e528-4da2-ae9f-32b3535fbb59 -Scope Web -Web $cWeb -Force
         }
         else {
-            Disable-SPOFeature -Identity d95c97f3-e528-4da2-ae9f-32b3535fbb59 -Scope Web -Web $cWeb
+            Disable-PnPFeature -Identity d95c97f3-e528-4da2-ae9f-32b3535fbb59 -Scope Web -Web $cWeb
         }
 
 		Write-Host "Feature Deactivated." -ForegroundColor Green

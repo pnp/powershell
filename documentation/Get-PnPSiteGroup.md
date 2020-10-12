@@ -19,37 +19,14 @@ Gets all the groups in the current or specified site collection.
 
 ## SYNTAX
 
-### All (Default)
 ```powershell
-Get-PnPGroup [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
-```
-
-### ByName
-```powershell
-Get-PnPGroup [[-Identity] <GroupPipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
- [-Includes <String[]>] [<CommonParameters>]
-```
-
-### Members
-```powershell
-Get-PnPGroup [-AssociatedMemberGroup] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
- [<CommonParameters>]
-```
-
-### Visitors
-```powershell
-Get-PnPGroup [-AssociatedVisitorGroup] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
- [-Includes <String[]>] [<CommonParameters>]
-```
-
-### Owners
-```powershell
-Get-PnPGroup [-AssociatedOwnerGroup] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
- [<CommonParameters>]
+Get-PnPSiteGroup
+   [-Group <String>]
+   [-Site <SitePipeBind>]
 ```
 
 ## DESCRIPTION
-Use the Get-PnPSiteGroup cmdlet to get all the groups on the specified or currently connected to site collection.
+Use the Get-PnPSiteGroup cmdlet to get all the groups on the specified or currently connected site collection.
 
 ## EXAMPLES
 
@@ -72,7 +49,7 @@ Get-PnPSiteGroup -Group "SiteA Members"
 ```
 This will return the specified group for the current connected to site
 
-### EXAMPLE 3
+### EXAMPLE 4
 ```powershell
 Get-PnPSiteGroup -Group "SiteA Members" -Site https://contoso.sharepoint.com/sites/siteA
 ```

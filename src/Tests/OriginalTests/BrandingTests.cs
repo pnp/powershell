@@ -116,7 +116,7 @@ namespace PnP.PowerShell.Tests
                     new CommandParameter("Key", "TestJavascriptLink"),
                     new CommandParameter("Url", "https://testserver.com/testtojavascriptlink.js"));
 
-                var results = scope.ExecuteCommand("Get-SPOCustomAction");
+                var results = scope.ExecuteCommand("Get-PnPCustomAction");
 
                 Assert.IsTrue(results.Any());
 

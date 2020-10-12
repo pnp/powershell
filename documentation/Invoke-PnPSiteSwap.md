@@ -15,7 +15,7 @@ Invokes a job to swap the location of a site with another site while archiving t
 ## SYNTAX
 
 ```powershell
-Invoke-SPOSiteSwap 
+Invoke-PnPSiteSwap 
          -SourceUrl <string>
          -TargetUrl <string>
          -ArchiveUrl <string>

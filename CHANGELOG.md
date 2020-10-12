@@ -36,6 +36,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Remove-PnPUserProfile` cmdlet (0.1.9)
 - Added `Repair-PnPSite` cmdlet (0.1.9)
 - Added `Test-PnPSite` cmdlet (0.1.9)
+- Added `Revoke-PnPUserSession` cmdlet (0.1.9)
+- Added `New-PnPSiteGroup` cmdlet (0.1.9)
+- Added `Remove-PnPSiteGroup` cmdlet (0.1.9)
+- Added `Set-PnPSiteGroup` cmdlet (0.1.9)
 
 ### Changed
 

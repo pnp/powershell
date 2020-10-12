@@ -692,7 +692,7 @@ namespace PnP.PowerShell.Commands.Admin
                         Tenant.AllowEditing = AllowEditing.Value;
                         modified = true;
                     }
-                    else if (ShouldContinue("To set this parameter, you need to set the Set-SPOTenant -ConditionalAccessPolicy to AllowLimitedAccess. Would you like to set it now?", "Confirm"))
+                    else if (ShouldContinue("To set this parameter, you need to set the Set-PnPTenant -ConditionalAccessPolicy to AllowLimitedAccess. Would you like to set it now?", "Confirm"))
                     {
                         Tenant.ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
                         Tenant.AllowEditing = AllowEditing.Value;
