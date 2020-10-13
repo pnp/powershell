@@ -42,6 +42,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPSiteGroup` cmdlet (0.1.9)
 - Added `Set-PnPSiteScriptPackage` cmdlet (0.1.9)
 - Added `Update-PnPUserType` cmdlet (0.1.9)
+- Added `Get-SPOStructuralNavigationCacheSiteState` cmdlet (0.1.10)
+- Added `Get-SPOStructuralNavigationCacheWebState` cmdlet (0.1.10)
+- Added `Set-SPOStructuralNavigationCacheSiteState` cmdlet (0.1.10)
+- Added `Set-SPOStructuralNavigationCacheWebState` cmdlet (0.1.10)
 
 ### Changed
 
