@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
     public class NewTermLabel : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public TaxonomyItemPipeBind<Term> Term;
+        public TaxonomyTermPipeBind Term;
 
         [Parameter(Mandatory = true)]
         public string Name;
@@ -19,15 +19,29 @@ namespace PnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = true)]
         public int Lcid;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IsDefault = true;
+
+        [Parameter(Mandatory = false)]
+        public TaxonomyTermStorePipeBind TermStore;
 
         protected override void ExecuteCmdlet()
         {
-            if (Term.Item == null)
+            var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
+
+            TermStore termStore = null;
+            if (TermStore == null)
             {
-                throw new ArgumentException("You must pass in a Term instance to this command", nameof(Term));
+                termStore = taxonomySession.GetDefaultSiteCollectionTermStore();
             }
+            else
+            {
+                termStore = TermStore.GetTermStore(taxonomySession);
+            }
+
+            termStore.EnsureProperty(ts => ts.DefaultLanguage);
+
+            Term term = Term.GetTerm(ClientContext, termStore, null, false, null);
 
             var label = Term.Item.CreateLabel(Name, Lcid, IsDefault.IsPresent ? IsDefault.ToBool() : true);
             ClientContext.ExecuteQueryRetry();

@@ -9,9 +9,13 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.New, "Term")]
-    public class NewTerm : PnPSharePointCmdlet
+    [Cmdlet(VerbsCommon.Add, "TermToTerm")]
+    public class AddTermToTerm : PnPSharePointCmdlet
     {
+
+        [Parameter(Mandatory = true)]
+        public Guid ParentTermId;
+
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public string Name;
 
@@ -20,12 +24,6 @@ namespace PnP.PowerShell.Commands.Taxonomy
 
         [Parameter(Mandatory = false)]
         public int Lcid = CultureInfo.CurrentCulture.LCID;
-
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public TaxonomyTermSetPipeBind TermSet;
-
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public TaxonomyTermGroupPipeBind TermGroup;
 
         [Parameter(Mandatory = false)]
         public string Description;
@@ -40,11 +38,14 @@ namespace PnP.PowerShell.Commands.Taxonomy
         [Alias("TermStoreName")]
         public TaxonomyTermStorePipeBind TermStore;
 
+
         protected override void ExecuteCmdlet()
         {
             var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
             // Get Term Store
+
             TermStore termStore = null;
+
             if (TermStore == null)
             {
                 termStore = taxonomySession.GetDefaultSiteCollectionTermStore();
@@ -54,36 +55,35 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 termStore = TermStore.GetTermStore(taxonomySession);
             }
 
+            termStore.EnsureProperty(ts => ts.DefaultLanguage);
 
-            TermGroup termGroup = TermGroup.GetGroup(termStore);
-
-            TermSet termSet = TermSet.GetTermSet(termGroup);
+            var term = termStore.GetTerm(ParentTermId);
 
             if (Id == Guid.Empty)
             {
                 Id = Guid.NewGuid();
             }
             var termName = TaxonomyExtensions.NormalizeName(Name);
-            var term = termSet.CreateTerm(termName, Lcid, Id);
+            var termTerm = term.CreateTerm(termName, Lcid, Id);
             ClientContext.Load(term);
             ClientContext.ExecuteQueryRetry();
-            term.SetDescription(Description, Lcid);
+            termTerm.SetDescription(Description, Lcid);
 
             var customProperties = CustomProperties ?? new Hashtable();
             foreach (var key in customProperties.Keys)
             {
-                term.SetCustomProperty(key as string, customProperties[key] as string);
+                termTerm.SetCustomProperty(key as string, customProperties[key] as string);
             }
 
             var localCustomProperties = LocalCustomProperties ?? new Hashtable();
             foreach (var key in localCustomProperties.Keys)
             {
-                term.SetLocalCustomProperty(key as string, localCustomProperties[key] as string);
+                termTerm.SetLocalCustomProperty(key as string, localCustomProperties[key] as string);
             }
             termStore.CommitAll();
-            ClientContext.Load(term);
+            ClientContext.Load(termTerm);
             ClientContext.ExecuteQueryRetry();
-            WriteObject(term);
+            WriteObject(termTerm);
         }
     }
 }

@@ -46,6 +46,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-SPOStructuralNavigationCacheWebState` cmdlet (0.1.10)
 - Added `Set-SPOStructuralNavigationCacheSiteState` cmdlet (0.1.10)
 - Added `Set-SPOStructuralNavigationCacheWebState` cmdlet (0.1.10)
+- Added `Add-PnPTermToTerm` cmdlet (0.1.11)
+- Added `Get-PnPTermLabel` cmdlet (0.1.11)
+- Added `Remove-PnPTermLabel` cmdlet (0.1.11)
+- Added `Remove-PnPTerm` cmdlet (0.1.11)
+- Added `Set-PnPTerm` cmdlet (0.1.11)
 
 ### Changed
 
@@ -103,3 +108,4 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Install-PnPSolution`. Sandboxed solutions have been deprecated.
 - Removed `Add-PnPWorkflowDefinition`, `Add-PnPWorkflowSubscription`, `Get-PnPWorkflowDefinition`, `Get-PnPWorkflowInstances`, `Get-PnPWorkflowSubscription`, `Remove-PnPWorkflowDefinition`, `Remove-PnPWorkflowSubscription`, `Resume-PnPWorkflowInstance`, `Start-PnPWorkflowInstance` and `Stop-PnPWorkflowInstance` due to deprecated of the Workflow Services in SharePoint Online.
 - Renamed `Test-PnPOffice365AliasIsUsed` to `Test-PnPMicrosoft365AliasIsUsed`
+- Refactored some of the Taxonomy cmdlet parameters. See documentation.

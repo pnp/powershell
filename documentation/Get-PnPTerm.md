@@ -10,30 +10,32 @@ title: Get-PnPTerm
 # Get-PnPTerm
 
 ## SYNOPSIS
-Returns a taxonomy term
+Returns a Term Store Term.
 
 ## SYNTAX
 
 ### By Term Id
 ```powershell
 Get-PnPTerm
- -Identity <PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]>
- [-TermStore <PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]>]
- [-IncludeChildTerms] [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
+    -Identity <Guid>
+    [-TermStore <Guid>]
+    [-IncludeChildTerms] [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```
 
-### By Termset
+### By Term Name
 ```powershell
 Get-PnPTerm
- [-Identity <PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]>]
- [-TermSet] <PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]>
- [-TermGroup] <TermGroupPipeBind>
- [-TermStore <PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]>]
- [-Recursive] [-IncludeChildTerms] [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
+    -Identity <Name>
+    -TermSet <Guid|Name>
+    -TermGroup <Guid|Name>
+    [-TermStore <Guid>]
+    [-Recursive] 
+    [-IncludeChildTerms] [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
+Retries a Term Store Term.
 ## EXAMPLES
 
 ### EXAMPLE 1
@@ -62,7 +64,7 @@ Returns the term named with the given id, from the "Departments" termset in a te
 Get-PnPTerm -Identity "Small Finance" -TermSet "Departments" -TermGroup "Corporate" -Recursive
 ```
 
-Returns the term named "Small Finance", from the "Departments" termset in a term group called "Corporate" from the site collection termstore even if it's a subterm below "Finance"
+Returns the term named "Small Finance", from the "Departments" termset in a term group called "Corporate" from the site collection termstore even if it is a subterm below "Finance"
 
 ### EXAMPLE 5
 ```powershell
@@ -92,21 +94,10 @@ Accept wildcard characters: False
 The Id or Name of a Term
 
 ```yaml
-Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]
-Parameter Sets: By Term Id
+Type: GenericObjectNameIdPipeBind<Microsoft.SharePoint.Client.Taxonomy.Term>
+Parameter Sets: All
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-```yaml
-Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]
-Parameter Sets: By Termset
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -132,7 +123,7 @@ Find the first term recursively matching the label in a term hierarchy.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: By Termset
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -159,7 +150,7 @@ Accept wildcard characters: False
 Name of the termset to check.
 
 ```yaml
-Type: PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]
+Type: TaxonomyItemPipeBind<TermSet>
 Parameter Sets: By Termset
 
 Required: True
@@ -173,7 +164,7 @@ Accept wildcard characters: False
 Term store to check; if not specified the default term store is used.
 
 ```yaml
-Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]
+Type: GenericObjectNameIdPipeBind<TermStore>
 Parameter Sets: (All)
 
 Required: False

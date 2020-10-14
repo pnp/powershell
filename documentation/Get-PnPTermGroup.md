@@ -16,8 +16,8 @@ Returns a taxonomy term group
 
 ```powershell
 Get-PnPTermGroup
- [[-Identity] <PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermGroup]>]
- [-TermStore <PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]>]
+ [-Identity <TaxonomyTermGroupPipeBind>]
+ [-TermStore <TaxonomyTermStorePipeBind>]
  [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```
 
@@ -48,25 +48,11 @@ Returns the termgroup with the given ID from the site collection termstore
 
 ## PARAMETERS
 
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Identity
 Name of the taxonomy term group to retrieve.
 
 ```yaml
-Type: PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermGroup]
+Type: TaxonomyTermGroupPipeBind
 Parameter Sets: (All)
 Aliases: GroupName
 
@@ -81,7 +67,7 @@ Accept wildcard characters: False
 Term store to check; if not specified the default term store is used.
 
 ```yaml
-Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]
+Type: TaxonomyTermStorePipeBind
 Parameter Sets: (All)
 Aliases: TermStoreName
 

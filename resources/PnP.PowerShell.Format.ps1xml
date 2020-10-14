@@ -2230,7 +2230,7 @@
         </TableRowEntries>
       </TableControl>
     </View>
-      <View>
+    <View>
       <Name>SPOTenantSiteUserInvitation</Name>
       <ViewSelectedBy>
         <TypeName>Microsoft.Online.SharePoint.TenantAdministration.SPOTenantSiteUserInvitation</TypeName>
@@ -2270,6 +2270,40 @@
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>EmailAddress</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>Label</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.SharePoint.Client.Taxonomy.Label</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Value</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Language</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>IsDefaultForLanguage</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Value</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Language</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>IsDefaultForLanguage</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>

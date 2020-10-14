@@ -12,13 +12,13 @@ namespace PnP.PowerShell.Commands.Taxonomy
     public class GetTermSet : PnPRetrievalsCmdlet<TermSet>
     {
         [Parameter(Mandatory = false)]
-        public GenericObjectNameIdPipeBind<TermSet> Identity;
+        public TaxonomyTermSetPipeBind Identity;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public TermGroupPipeBind TermGroup;
+        public TaxonomyTermGroupPipeBind TermGroup;
 
         [Parameter(Mandatory = false)]
-        public GenericObjectNameIdPipeBind<TermStore> TermStore;
+        public TaxonomyTermStorePipeBind TermStore;
 
         protected override void ExecuteCmdlet()
         {
@@ -32,44 +32,15 @@ namespace PnP.PowerShell.Commands.Taxonomy
             }
             else
             {
-                if (TermStore.StringValue != null)
-                {
-                    termStore = taxonomySession.TermStores.GetByName(TermStore.StringValue);
-                }
-                else if (TermStore.IdValue != Guid.Empty)
-                {
-                    termStore = taxonomySession.TermStores.GetById(TermStore.IdValue);
-                }
-                else
-                {
-                    if (TermStore.Item != null)
-                    {
-                        termStore = TermStore.Item;
-                    }
-                }
+                termStore = TermStore.GetTermStore(taxonomySession);
             }
 
-            TermGroup termGroup = null;
+            var termGroup = TermGroup.GetGroup(termStore);
 
-            if (TermGroup.Id != Guid.Empty)
-            {
-                termGroup = termStore.Groups.GetById(TermGroup.Id);
-            }
-            else if (!string.IsNullOrEmpty(TermGroup.Name))
-            {
-                termGroup = termStore.Groups.GetByName(TermGroup.Name);
-            }
             if (Identity != null)
             {
-                var termSet = default(TermSet);
-                if (Identity.IdValue != Guid.Empty)
-                {
-                    termSet = termGroup.TermSets.GetById(Identity.IdValue);
-                }
-                else
-                {
-                    termSet = termGroup.TermSets.GetByName(Identity.StringValue);
-                }
+                var termSet = Identity.GetTermSet(termGroup);
+                
                 ClientContext.Load(termSet, RetrievalExpressions);
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(termSet);

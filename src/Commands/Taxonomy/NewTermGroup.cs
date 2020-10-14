@@ -23,31 +23,20 @@ namespace PnP.PowerShell.Commands.Taxonomy
 
         [Parameter(Mandatory = false)]
         [Alias("TermStoreName")]
-        public GenericObjectNameIdPipeBind<TermStore> TermStore;
+        public TaxonomyTermStorePipeBind TermStore;
 
         protected override void ExecuteCmdlet()
         {
             var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
             // Get Term Store
-            var termStore = default(TermStore);
-            if (TermStore != null)
+            TermStore termStore = null;
+            if (TermStore == null)
             {
-                if (TermStore.IdValue != Guid.Empty)
-                {
-                    termStore = taxonomySession.TermStores.GetById(TermStore.IdValue);
-                }
-                else if (!string.IsNullOrEmpty(TermStore.StringValue))
-                {
-                    termStore = taxonomySession.TermStores.GetByName(TermStore.StringValue);
-                }
-                else
-                {
-                    termStore = TermStore.Item;
-                }
+                termStore = taxonomySession.GetDefaultSiteCollectionTermStore();
             }
             else
             {
-                termStore = taxonomySession.GetDefaultSiteCollectionTermStore();
+                termStore = TermStore.GetTermStore(taxonomySession);
             }
             // Create Group
             var group = termStore.CreateTermGroup(Name, Id, Description);
