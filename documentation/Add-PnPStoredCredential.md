@@ -28,22 +28,22 @@ If you add a Credential with a name of "https://yourtenant.sharepoint.com" it wi
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPStoredCredential -Name https://tenant.sharepoint.com -Username yourname@tenant.onmicrosoft.com
+Add-PnPStoredCredential -Name "https://tenant.sharepoint.com" -Username yourname@tenant.onmicrosoft.com
 ```
 
 You will be prompted to specify the password and a new entry will be added with the specified values
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPStoredCredential -Name https://tenant.sharepoint.com -Username yourname@tenant.onmicrosoft.com -Password (ConvertTo-SecureString -String "YourPassword" -AsPlainText -Force)
+Add-PnPStoredCredential -Name "https://tenant.sharepoint.com" -Username yourname@tenant.onmicrosoft.com -Password (ConvertTo-SecureString -String "YourPassword" -AsPlainText -Force)
 ```
 
 A new entry will be added with the specified values
 
 ### EXAMPLE 3
 ```powershell
-Add-PnPStoredCredential -Name https://tenant.sharepoint.com -Username yourname@tenant.onmicrosoft.com -Password (ConvertTo-SecureString -String "YourPassword" -AsPlainText -Force)
-Connect-PnPOnline -Url https://tenant.sharepoint.com/sites/mydemosite
+Add-PnPStoredCredential -Name "https://tenant.sharepoint.com" -Username yourname@tenant.onmicrosoft.com -Password (ConvertTo-SecureString -String "YourPassword" -AsPlainText -Force)
+Connect-PnPOnline -Url "https://tenant.sharepoint.com/sites/mydemosite"
 ```
 
 A new entry will be added with the specified values, and a subsequent connection to a sitecollection starting with the entry name will be made. Notice that no password prompt will occur.

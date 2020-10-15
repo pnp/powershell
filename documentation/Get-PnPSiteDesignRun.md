@@ -32,7 +32,7 @@ This example returns a list of the site designs applied to the current site. Pro
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPSiteDesignRun -WebUrl https://mytenant.sharepoint.com/sites/project
+Get-PnPSiteDesignRun -WebUrl "https://mytenant.sharepoint.com/sites/project"
 ```
 
 This example returns a list of the site designs applied to the specified site. Providing a specific site design ID will return the details for just that applied site design.

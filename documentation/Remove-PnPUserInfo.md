@@ -32,7 +32,7 @@ Export user information from the site user information list.
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPUserInfo -LoginName user@domain.com -Site https://yoursite.sharepoint.com/sites/team
+Remove-PnPUserInfo -LoginName user@domain.com -Site "https://yoursite.sharepoint.com/sites/team"
 ```
 
 This removes a user who has the e-mail address user@domain.com from the user information list of https://contoso.sharepoint.com/sites/team site collection.

@@ -59,7 +59,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None
@@ -73,7 +72,6 @@ Overwrites the existing app package if it already exists
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None
@@ -87,7 +85,6 @@ Specifies the Id or an actual app metadata instance
 ```yaml
 Type: String
 Parameter Sets: (All)
-
 Required: True
 Position: 0
 Default value: None
@@ -101,7 +98,6 @@ This will deploy/trust an app into the app catalog
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Add and Publish
-
 Required: True
 Position: Named
 Default value: None
@@ -116,7 +112,6 @@ Defines which app catalog to use. Defaults to Tenant
 Type: AppCatalogScope
 Parameter Sets: (All)
 Accepted values: Tenant, Site
-
 Required: False
 Position: Named
 Default value: None
@@ -129,7 +124,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Add and Publish
-
 Required: False
 Position: Named
 Default value: None
@@ -143,7 +137,6 @@ Specifies the timeout in seconds. Defaults to 200.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None

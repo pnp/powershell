@@ -45,7 +45,7 @@ This example removes the hubsite with id 6638bd4c-d88d-447c-9eb2-c84f28ba8b15 fr
 
 ### EXAMPLE 2
 ```powershell
-Remove-PnPHubToHubAssociation -HubSiteUrl https://yourtenant.sharepoint.com/sites/hub
+Remove-PnPHubToHubAssociation -HubSiteUrl "https://yourtenant.sharepoint.com/sites/hub"
 ```
 This example removes the hubsite with id https://yourtenant.sharepoint.com/sites/sourcehub from its parent hub.
 

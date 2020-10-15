@@ -32,28 +32,28 @@ Allows configuring a hub site
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPHubSite -Identity https://tenant.sharepoint.com/sites/myhubsite -Title "My New Title"
+Set-PnPHubSite -Identity "https://tenant.sharepoint.com/sites/myhubsite" -Title "My New Title"
 ```
 
 Sets the title of the hub site
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPHubSite -Identity https://tenant.sharepoint.com/sites/myhubsite -Description "My updated description"
+Set-PnPHubSite -Identity "https://tenant.sharepoint.com/sites/myhubsite" -Description "My updated description"
 ```
 
 Sets the description of the hub site
 
 ### EXAMPLE 3
 ```powershell
-Set-PnPHubSite -Identity https://tenant.sharepoint.com/sites/myhubsite -SiteDesignId df8a3ef1-9603-44c4-abd9-541aea2fa745
+Set-PnPHubSite -Identity "https://tenant.sharepoint.com/sites/myhubsite" -SiteDesignId df8a3ef1-9603-44c4-abd9-541aea2fa745
 ```
 
 Sets the site design which should be applied to sites joining the the hub site
 
 ### EXAMPLE 4
 ```powershell
-Set-PnPHubSite -Identity https://tenant.sharepoint.com/sites/myhubsite -LogoUrl "https://tenant.sharepoint.com/SiteAssets/Logo.png"
+Set-PnPHubSite -Identity "https://tenant.sharepoint.com/sites/myhubsite" -LogoUrl "https://tenant.sharepoint.com/SiteAssets/Logo.png"
 ```
 
 Sets the logo of the hub site

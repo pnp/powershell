@@ -77,7 +77,7 @@ Applies a site template from a pnp package to the current web.
 
 ### EXAMPLE 6
 ```powershell
-Invoke-PnPSiteTemplate -Path https://tenant.sharepoint.com/sites/templatestorage/Documents/template.pnp
+Invoke-PnPSiteTemplate -Path "https://tenant.sharepoint.com/sites/templatestorage/Documents/template.pnp"
 ```
 
 Applies a site template from a pnp package stored in a library to the current web.

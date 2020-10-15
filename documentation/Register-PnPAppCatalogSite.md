@@ -30,7 +30,7 @@ Register-PnPAppCatalogSite -Url <String> -Owner <String> -TimeZoneId <Int32> [-F
 
 ### EXAMPLE 1
 ```powershell
-Register-PnPAppCatalogSite -Url https://yourtenant.sharepoint.com/sites/appcatalog -Owner admin@domain.com -TimeZoneId 4
+Register-PnPAppCatalogSite -Url "https://yourtenant.sharepoint.com/sites/appcatalog" -Owner admin@domain.com -TimeZoneId 4
 ```
 
 This will create a new appcatalog site if no app catalog is already present. Use -Force to create a new appcatalog site if one has already been registered. If using the same URL as an existing one and Force is present, the current/existing appcatalog site will be deleted.

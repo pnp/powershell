@@ -31,7 +31,7 @@ Searches against all stored sharing links on a Site and removes an email invits.
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPiteUserInvitations -Site https://contoso.sharepoint.com/sites/ContosoWeb1/ -EmailAddress someone@example.com
+Remove-PnPiteUserInvitations -Site "https://contoso.sharepoint.com/sites/ContosoWeb1/" -EmailAddress someone@example.com
 ```
 
 This example removes the email invite stored in the ContosoWeb1 site for the user with email address someone@example.com.

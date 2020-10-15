@@ -30,7 +30,7 @@ Set-PnPTenantAppCatalogUrl -Url <String> [-Connection <PnPConnection>]
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPTenantAppCatalogUrl -Url https://yourtenant.sharepoint.com/sites/appcatalog
+Set-PnPTenantAppCatalogUrl -Url "https://yourtenant.sharepoint.com/sites/appcatalog"
 ```
 
 Sets the tenant scoped app catalog to the provided site collection url

@@ -39,21 +39,21 @@ This command allows a Site Script to be generated off of an existing site on you
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPSiteScriptFromWeb -Url https://contoso.sharepoint.com/sites/teamsite -IncludeAll
+Get-PnPSiteScriptFromWeb -Url "https://contoso.sharepoint.com/sites/teamsite" -IncludeAll
 ```
 
 Returns the generated Site Script JSON containing all supported components from the site at the provided Url
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPSiteScriptFromWeb -Url https://contoso.sharepoint.com/sites/teamsite -IncludeAll -Lists "Shared Documents","Lists\MyList"
+Get-PnPSiteScriptFromWeb -Url "https://contoso.sharepoint.com/sites/teamsite" -IncludeAll -Lists "Shared Documents","Lists\MyList"
 ```
 
 Returns the generated Site Script JSON containing all supported components from the site at the provided Url including the lists "Shared Documents" and "MyList"
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPSiteScriptFromWeb -Url https://contoso.sharepoint.com/sites/teamsite -IncludeBranding -IncludeLinksToExportedItems
+Get-PnPSiteScriptFromWeb -Url "https://contoso.sharepoint.com/sites/teamsite" -IncludeBranding -IncludeLinksToExportedItems
 ```
 
 Returns the generated Site Script JSON containing the branding and navigation links from the site at the provided Url

@@ -30,7 +30,7 @@ Retrieves all sites linked to a specific hub site
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPHubSiteChild -Identity https://contoso.sharepoint.com/sites/myhubsite
+Get-PnPHubSiteChild -Identity "https://contoso.sharepoint.com/sites/myhubsite"
 ```
 
 Returns the sites having configured the provided hub site as their hub site

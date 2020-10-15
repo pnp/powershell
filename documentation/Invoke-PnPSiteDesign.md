@@ -32,7 +32,7 @@ Applies the specified site design to the current site.
 
 ### EXAMPLE 2
 ```powershell
-Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd -WebUrl https://contoso.sharepoint.com/sites/mydemosite
+Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd -WebUrl "https://contoso.sharepoint.com/sites/mydemosite"
 ```
 
 Applies the specified site design to the specified site.

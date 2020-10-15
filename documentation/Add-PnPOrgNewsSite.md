@@ -29,7 +29,7 @@ Add-PnPOrgNewsSite -OrgNewsSiteUrl <SitePipeBind> [-Connection <PnPConnection>] 
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPOrgNewsSite -OrgNewsSiteUrl https://yourtenant.sharepoint.com/sites/news
+Add-PnPOrgNewsSite -OrgNewsSiteUrl "https://yourtenant.sharepoint.com/sites/news"
 ```
 
 Adds the site as one of multiple possible tenant's organizational news sites

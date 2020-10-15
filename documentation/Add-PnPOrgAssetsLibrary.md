@@ -31,21 +31,21 @@ Adds a given document library as an organizational asset source in your Sharepoi
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPOrgAssetsLibrary -LibraryUrl https://yourtenant.sharepoint.com/sites/branding/logos
+Add-PnPOrgAssetsLibrary -LibraryUrl "https://yourtenant.sharepoint.com/sites/branding/logos"
 ```
 
 Adds the document library with the url "logos" located in the sitecollection at "https://yourtenant.sharepoint.com/sites/branding" as an organizational asset not specifying a thumbnail image for it and enabling the document library as a public Office 365 CDN source
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPOrgAssetsLibrary -LibraryUrl https://yourtenant.sharepoint.com/sites/branding/logos -ThumbnailUrl https://yourtenant.sharepoint.com/sites/branding/logos/thumbnail.jpg
+Add-PnPOrgAssetsLibrary -LibraryUrl "https://yourtenant.sharepoint.com/sites/branding/logos" -ThumbnailUrl "https://yourtenant.sharepoint.com/sites/branding/logos/thumbnail.jpg"
 ```
 
 Adds the document library with the url "logos" located in the sitecollection at "https://yourtenant.sharepoint.com/sites/branding" as an organizational asset specifying the thumbnail image "thumbnail.jpg" residing in the same document library for it and enabling the document library as a public Office 365 CDN source
 
 ### EXAMPLE 3
 ```powershell
-Add-PnPOrgAssetsLibrary -LibraryUrl https://yourtenant.sharepoint.com/sites/branding/logos -CdnType Private
+Add-PnPOrgAssetsLibrary -LibraryUrl "https://yourtenant.sharepoint.com/sites/branding/logos" -CdnType Private
 ```
 
 Adds the document library with the url "logos" located in the sitecollection at "https://yourtenant.sharepoint.com/sites/branding" as an organizational asset not specifying a thumbnail image for it and enabling the document library as a private Office 365 CDN source

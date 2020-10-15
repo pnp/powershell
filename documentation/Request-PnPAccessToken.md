@@ -55,7 +55,7 @@ Returns the access token using the specified client id and the specified scopes
 
 ### EXAMPLE 5
 ```powershell
-$token = Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2 -Resource https://contoso.sharepoint.com -Credentials (Get-Credential) -TenantUrl https://contoso.sharepoint.com
+$token = Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2 -Resource "https://contoso.sharepoint.com" -Credentials (Get-Credential) -TenantUrl "https://contoso.sharepoint.com"
     Connect-PnPOnline -AccessToken $token
 ```
 

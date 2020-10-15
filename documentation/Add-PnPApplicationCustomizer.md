@@ -40,7 +40,6 @@ The Client Side Component Id of the SharePoint Framework client side extension a
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-
 Required: True
 Position: Named
 Default value: None
@@ -54,7 +53,6 @@ The Client Side Component Properties of the application customizer. Specify valu
 ```yaml
 Type: String
 Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None
@@ -68,7 +66,6 @@ The Client Side Host Properties of the application customizer. Specify values as
 ```yaml
 Type: String
 Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None
@@ -82,7 +79,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None
@@ -96,7 +92,6 @@ The description of the application customizer
 ```yaml
 Type: String
 Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None
@@ -111,7 +106,6 @@ The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'A
 Type: CustomActionScope
 Parameter Sets: (All)
 Accepted values: Web, Site, All
-
 Required: False
 Position: Named
 Default value: None
@@ -125,7 +119,6 @@ Sequence of this application customizer being injected. Use when you have a spec
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None
@@ -139,7 +132,6 @@ The title of the application customizer
 ```yaml
 Type: String
 Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None
@@ -153,7 +145,6 @@ This parameter allows you to optionally apply the cmdlet action to a subweb with
 ```yaml
 Type: WebPipeBind
 Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None

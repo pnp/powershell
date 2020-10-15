@@ -33,14 +33,14 @@ The cmdlet reports the health check rules with a summary of the results. The rul
 
 ### EXAMPLE 1
 ```powershell
-Repair-PnPSite https://contoso.sharepoint.com/sites/marketing
+Repair-PnPSite "https://contoso.sharepoint.com/sites/marketing"
 ```
 
 This example runs all the site collection health checks in repair mode on the https://contoso.sharepoint.com/sites/marketing site collection.
 
 ### EXAMPLE 2
 ```powershell
-Repair-PnPSite https://contoso.sharepoint.com/sites/marketing -RuleID "ee967197-ccbe-4c00-88e4-e6fab81145e1"
+Repair-PnPSite "https://contoso.sharepoint.com/sites/marketing" -RuleID "ee967197-ccbe-4c00-88e4-e6fab81145e1"
 ```
 
 This example runs the Missing Galleries Check rule in repair mode on the https://contoso.sharepoint.com/sites/marketing site collection.

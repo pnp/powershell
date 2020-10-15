@@ -22,6 +22,7 @@ Add-PnPAlert [-List] <ListPipeBind> [-Title <String>] [-User <UserPipeBind>]
 ```
 
 ## DESCRIPTION
+This cmdlets allows to add an alert for a user to a list.
 
 ## EXAMPLES
 

@@ -45,7 +45,7 @@ This example associates the source hub site with the HubSiteId 6638bd4c-d88d-447
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPHubToHubAssociation -SourceUrl https://yourtenant.sharepoint.com/sites/sourcehub -TargetUrl https://yourtenant.sharepoint.com/sites/targethub
+Add-PnPHubToHubAssociation -SourceUrl "https://yourtenant.sharepoint.com/sites/sourcehub" -TargetUrl "https://yourtenant.sharepoint.com/sites/targethub"
 ```
 
 This example associates the source hub site with the url https://yourtenant.sharepoint.com/sites/sourcehub with the target hub site with the url https://yourtenant.sharepoint.com/sites/targethub.

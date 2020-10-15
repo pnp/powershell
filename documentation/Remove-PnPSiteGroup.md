@@ -26,7 +26,7 @@ Remove-PnPSiteGroup -Identity <String> [-Site <SitePipeBind>]
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPSiteGroup -Identity GroupToRemove -Site https://contoso.sharepoint.com/sites/marketing
+Remove-PnPSiteGroup -Identity GroupToRemove -Site "https://contoso.sharepoint.com/sites/marketing"
 ```
 
 This example removes a group named GroupToRemove from the site collection https://contoso.sharepoint.com/sites/marketing.

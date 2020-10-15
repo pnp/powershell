@@ -30,7 +30,7 @@ This command allows a Site Script to be generated off of an existing list on you
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPSiteScriptFromList -Url https://contoso.sharepoint.com/sites/teamsite/lists/MyList
+Get-PnPSiteScriptFromList -Url "https://contoso.sharepoint.com/sites/teamsite/lists/MyList"
 ```
 
 Returns the generated Site Script JSON from the list "MyList" at the provided Url

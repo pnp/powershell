@@ -32,7 +32,7 @@ This will get the authentication realm for the current connected site
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAuthenticationRealm -Url https://contoso.sharepoint.com
+Get-PnPAuthenticationRealm -Url "https://contoso.sharepoint.com"
 ```
 
 This will get the authentication realm for https://contoso.sharepoint.com

@@ -10,7 +10,7 @@ title: Remove-PnPStoredCredential
 # Remove-PnPStoredCredential
 
 ## SYNOPSIS
-Removes a credential
+Removes a credential from the Credential Manager
 
 ## SYNTAX
 
@@ -19,16 +19,16 @@ Remove-PnPStoredCredential -Name <String> [-Force] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Removes a stored credential from the Windows Credential Manager
+Removes a stored credential from the Credential Manager
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPStoredCredential -Name https://tenant.sharepoint.com
+Remove-PnPStoredCredential -Name "https://tenant.sharepoint.com"
 ```
 
-Removes the specified credential from the Windows Credential Manager
+Removes the specified credential from the Credential Manager
 
 ## PARAMETERS
 

@@ -32,14 +32,14 @@ Export user information from the site user information list. If the Site paramet
 
 ### EXAMPLE 1
 ```powershell
-Export-PnPUserInfo -LoginName user@domain.com -Site https://yoursite.sharepoint.com/sites/team
+Export-PnPUserInfo -LoginName user@domain.com -Site "https://yoursite.sharepoint.com/sites/team"
 ```
 
 This exports user data with the email address user@domain.com from the site collection specified.
 
 ### EXAMPLE 2
 ```powershell
-Export-PnPUserInfo -LoginName user@domain.com -Site https://yoursite.sharepoint.com/sites/team | ConvertTo-Csv | Out-File MyFile.csv
+Export-PnPUserInfo -LoginName user@domain.com -Site "https://yoursite.sharepoint.com/sites/team" | ConvertTo-Csv | Out-File MyFile.csv
 ```
 
 This exports user data with the email address user@domain.com from the site collection specified, converts it to a CSV format and writes the result to the file MyFile.csv.

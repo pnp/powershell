@@ -39,7 +39,7 @@ Returns all SharePoint groups in the current connected to site
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/siteA
+Get-PnPSiteGroup -Site "https://contoso.sharepoint.com/sites/siteA"
 ```
 This will return all SharePoint groups in the specified site
 
@@ -51,7 +51,7 @@ This will return the specified group for the current connected to site
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPSiteGroup -Group "SiteA Members" -Site https://contoso.sharepoint.com/sites/siteA
+Get-PnPSiteGroup -Group "SiteA Members" -Site "https://contoso.sharepoint.com/sites/siteA"
 ```
 This will return the specified group for the specified site.
 

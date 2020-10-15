@@ -29,7 +29,7 @@ Set-PnPKnowledgeHubSite -KnowledgeHubSiteUrl <String> [-Connection <PnPConnectio
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPKnowledgeHubSite -KnowledgeHubSiteUrl https://yoursite.sharepoint.com/sites/knowledge
+Set-PnPKnowledgeHubSite -KnowledgeHubSiteUrl "https://yoursite.sharepoint.com/sites/knowledge"
 ```
 
 Sets the Knowledge Hub Site for your tenant

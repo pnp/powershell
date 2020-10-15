@@ -30,7 +30,7 @@ Revoke-PnPHubSiteRights [-Identity] <HubSitePipeBind> -Principals <String[]> [-C
 
 ### EXAMPLE 1
 ```powershell
-Revoke-PnPHubSiteRights -Identity https://contoso.sharepoint.com/sites/hubsite -Principals "myuser@mydomain.com","myotheruser@mydomain.com"
+Revoke-PnPHubSiteRights -Identity "https://contoso.sharepoint.com/sites/hubsite" -Principals "myuser@mydomain.com","myotheruser@mydomain.com"
 ```
 
 This example shows how to revoke the rights of myuser and myotheruser to associate their sites with the provided Hub Site

@@ -38,7 +38,7 @@ Returns all site collections
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPTenantSite -Url http://tenant.sharepoint.com/sites/projects
+Get-PnPTenantSite -Url "http://tenant.sharepoint.com/sites/projects"
 ```
 
 Returns information about the project site

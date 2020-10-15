@@ -30,14 +30,14 @@ The Clear-PnPTenantRecycleBinItem cmdlet allows a site collection that has been 
 
 ### EXAMPLE 1
 ```powershell
-Clear-PnPTenantRecycleBinItem -Url https://tenant.sharepoint.com/sites/contoso
+Clear-PnPTenantRecycleBinItem -Url "https://tenant.sharepoint.com/sites/contoso"
 ```
 
 This will permanently delete site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the tenant recycle bin
 
 ### EXAMPLE 2
 ```powershell
-Clear-PnPTenantRecycleBinItem -Url https://tenant.sharepoint.com/sites/contoso -Wait
+Clear-PnPTenantRecycleBinItem -Url "https://tenant.sharepoint.com/sites/contoso" -Wait
 ```
 
 This will permanently delete site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the tenant recycle bin and will wait with executing further PowerShell commands until the operation has completed

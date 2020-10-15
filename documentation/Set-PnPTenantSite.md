@@ -45,35 +45,35 @@ Allows settings of a site collection to be updated
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPTenantSite -Url https://contoso.sharepoint.com -Title "Contoso Website" -Sharing Disabled
+Set-PnPTenantSite -Url "https://contoso.sharepoint.com" -Title "Contoso Website" -Sharing Disabled
 ```
 
 This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website' and disable sharing on this site collection.
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPTenantSite -Url https://contoso.sharepoint.com -Title "Contoso Website" -StorageWarningLevel 8000 -StorageMaximumLevel 10000
+Set-PnPTenantSite -Url "https://contoso.sharepoint.com" -Title "Contoso Website" -StorageWarningLevel 8000 -StorageMaximumLevel 10000
 ```
 
 This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website', set the storage warning level to 8GB and set the storage maximum level to 10GB.
 
 ### EXAMPLE 3
 ```powershell
-Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -Owners "user@contoso.onmicrosoft.com"
+Set-PnPTenantSite -Url "https://contoso.sharepoint.com/sites/sales" -Owners "user@contoso.onmicrosoft.com"
 ```
 
 This will add user@contoso.onmicrosoft.com as an additional site collection owner at 'https://contoso.sharepoint.com/sites/sales'.
 
 ### EXAMPLE 4
 ```powershell
-Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -Owners @("user1@contoso.onmicrosoft.com", "user2@contoso.onmicrosoft.com")
+Set-PnPTenantSite -Url "https://contoso.sharepoint.com/sites/sales" -Owners @("user1@contoso.onmicrosoft.com", "user2@contoso.onmicrosoft.com")
 ```
 
 This will add user1@contoso.onmicrosoft.com and user2@contoso.onmicrosoft.com as additional site collection owners at 'https://contoso.sharepoint.com/sites/sales'.
 
 ### EXAMPLE 5
 ```powershell
-Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -NoScriptSite:$false
+Set-PnPTenantSite -Url "https://contoso.sharepoint.com/sites/sales" -NoScriptSite:$false
 ```
 
 This will enable script support for the site 'https://contoso.sharepoint.com/sites/sales' if disabled.

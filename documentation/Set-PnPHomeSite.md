@@ -29,7 +29,7 @@ Set-PnPHomeSite -Url <String> [-Connection <PnPConnection>] [<CommonParameters>]
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPHomeSite -Url https://yourtenant.sharepoint.com/sites/myhome
+Set-PnPHomeSite -Url "https://yourtenant.sharepoint.com/sites/myhome"
 ```
 
 Sets the home site to the provided site collection url

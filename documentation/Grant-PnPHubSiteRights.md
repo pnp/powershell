@@ -30,7 +30,7 @@ Grant-PnPHubSiteRights [-Identity] <HubSitePipeBind> -Principals <String[]> [-Co
 
 ### EXAMPLE 1
 ```powershell
-Grant-PnPHubSiteRights -Identity https://contoso.sharepoint.com/sites/hubsite -Principals "myuser@mydomain.com","myotheruser@mydomain.com"
+Grant-PnPHubSiteRights -Identity "https://contoso.sharepoint.com/sites/hubsite" -Principals "myuser@mydomain.com","myotheruser@mydomain.com"
 ```
 
 This example shows how to grant rights to myuser and myotheruser to associate their sites with the provided Hub Site

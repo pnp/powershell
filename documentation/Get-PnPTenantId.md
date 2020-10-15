@@ -31,7 +31,7 @@ Returns the current Tenant Id. A valid connection with Connect-PnPOnline is requ
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPTenantId -TenantUrl https://contoso.sharepoint.com
+Get-PnPTenantId -TenantUrl "https://contoso.sharepoint.com"
 ```
 
 Returns the Tenant ID for the specified tenant. Can be executed without a connecting first with Connect-PnPOnline

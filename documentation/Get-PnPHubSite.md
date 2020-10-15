@@ -36,7 +36,7 @@ Returns all hubsite properties
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPHubSite -Identity https://contoso.sharepoint.com/sites/myhubsite
+Get-PnPHubSite -Identity "https://contoso.sharepoint.com/sites/myhubsite"
 ```
 
 Returns the properties of the specified hubsite

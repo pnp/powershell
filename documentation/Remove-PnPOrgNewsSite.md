@@ -30,7 +30,7 @@ Removes a given site from the list of organizational news sites based on its URL
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPOrgNewsSite -OrgNewsSiteUrl https://tenant.sharepoint.com/sites/mysite
+Remove-PnPOrgNewsSite -OrgNewsSiteUrl "https://tenant.sharepoint.com/sites/mysite"
 ```
 
 This example removes the specified site from list of organization's news sites.

@@ -30,7 +30,7 @@ Registers a site as a hubsite
 
 ### EXAMPLE 1
 ```powershell
-Unregister-PnPHubSite -Site https://tenant.sharepoint.com/sites/myhubsite
+Unregister-PnPHubSite -Site "https://tenant.sharepoint.com/sites/myhubsite"
 ```
 
 This example unregisters the specified site as a hubsite

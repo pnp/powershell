@@ -31,14 +31,14 @@ The Test-PnPOSite cmdlet runs one or all site collection health checks on the si
 
 ### EXAMPLE 1
 ```powershell
-Test-PnPSite https://contoso.sharepoint.com/sites/marketing
+Test-PnPSite "https://contoso.sharepoint.com/sites/marketing"
 ```
 
 This example runs all the site collection health checks on the https://contoso.sharepoint.com/sites/marketing site collection.
 
 ### EXAMPLE 2
 ```powershell
-Repair-PnPSite https://contoso.sharepoint.com/sites/marketing -RuleID "ee967197-ccbe-4c00-88e4-e6fab81145e1"
+Repair-PnPSite "https://contoso.sharepoint.com/sites/marketing" -RuleID "ee967197-ccbe-4c00-88e4-e6fab81145e1"
 ```
 
 This example runs the Missing Galleries Check rule in repair mode on the https://contoso.sharepoint.com/sites/marketing site collection.
