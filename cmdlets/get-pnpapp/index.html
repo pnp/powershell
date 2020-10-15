@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Get-PnPApp - PnP PowerShell</title>
+<meta name="description" content="Microsoft 365 PnP PowerShell">
+<meta name="generator" content="Hugo 0.74.3" />
+<link href="https://pnp.github.io/pnppowershell/index.xml" rel="alternate" type="application/rss+xml">
+<link rel="canonical" href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpapp/">
+<link rel="stylesheet" href="https://pnp.github.io/pnppowershell/css/theme.min.css">
+<script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<link rel="stylesheet" href="https://pnp.github.io/pnppowershell/css/chroma.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script src="https://pnp.github.io/pnppowershell/js/bundle.js"></script><style>
+:root {--custom-background-color: #2E7FBE;}
+</style>
+<meta property="og:title" content="Get-PnPApp" />
+<meta property="og:description" content="Get-PnPApp SYNOPSIS Returns the available apps from the app catalog
+SYNTAX Get-PnPApp [[-Identity] &lt;AppMetadataPipeBind&gt;] [-Scope &lt;AppCatalogScope&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Get-PnPApp This will return all available apps from the tenant app catalog. It will list the installed version in the current site.
+EXAMPLE 2 Get-PnPApp -Scope Site This will return all available apps from the site collection scoped app catalog. It will list the installed version in the current site." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pnp.github.io/pnppowershell/cmdlets/get-pnpapp/" />
+<meta property="og:image" content="https://pnp.github.io/pnppowershell/images/parker-ms-1200.png"/>
+<meta property="og:site_name" content="PnP PowerShell" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://pnp.github.io/pnppowershell/images/parker-ms-1200.png"/>
+
+<meta name="twitter:title" content="Get-PnPApp"/>
+<meta name="twitter:description" content="Get-PnPApp SYNOPSIS Returns the available apps from the app catalog
+SYNTAX Get-PnPApp [[-Identity] &lt;AppMetadataPipeBind&gt;] [-Scope &lt;AppCatalogScope&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Get-PnPApp This will return all available apps from the tenant app catalog. It will list the installed version in the current site.
+EXAMPLE 2 Get-PnPApp -Scope Site This will return all available apps from the site collection scoped app catalog. It will list the installed version in the current site."/>
+<meta itemprop="name" content="Get-PnPApp">
+<meta itemprop="description" content="Get-PnPApp SYNOPSIS Returns the available apps from the app catalog
+SYNTAX Get-PnPApp [[-Identity] &lt;AppMetadataPipeBind&gt;] [-Scope &lt;AppCatalogScope&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Get-PnPApp This will return all available apps from the tenant app catalog. It will list the installed version in the current site.
+EXAMPLE 2 Get-PnPApp -Scope Site This will return all available apps from the site collection scoped app catalog. It will list the installed version in the current site.">
+
+<meta itemprop="wordCount" content="210">
+<meta itemprop="image" content="https://pnp.github.io/pnppowershell/images/parker-ms-1200.png"/>
+
+
+
+<meta itemprop="keywords" content="" />
+</head>
+<body><div class="container"><header>
+<h1>PnP PowerShell</h1><a href="https://github.com/pnp/powershell" class="github"><i class="fab fa-github"></i></a>
+<p class="description">Microsoft 365 PnP PowerShell</p>
+
+</header>
+<div class="global-menu">
+<nav>
+<ul>
+<li><a href="/pnppowershell/">Home</a></li>
+<li><a href="https://twitter.com/pnppowershell">Twitter</a></li></ul>
+</nav>
+</div>
+<div class="content-container">
+<main><h1>Get-PnPApp</h1>
+<h1 id="get-pnpapp">Get-PnPApp</h1>
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>Returns the available apps from the app catalog</p>
+<h2 id="syntax">SYNTAX</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPApp [[-Identity] &lt;AppMetadataPipeBind&gt;] [-Scope &lt;AppCatalogScope&gt;] [-Connection &lt;PnPConnection&gt;]
+ [&lt;CommonParameters&gt;]
+</code></pre></div><h2 id="description">DESCRIPTION</h2>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPApp
+</code></pre></div><p>This will return all available apps from the tenant app catalog. It will list the installed version in the current site.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPApp -Scope Site
+</code></pre></div><p>This will return all available apps from the site collection scoped app catalog. It will list the installed version in the current site.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPApp -Identity 2646ccc3-6a2b-46ef-9273-81411cbbb60f
+</code></pre></div><p>This will retrieve the specific app from the app catalog.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: PnPConnection
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-identity">-Identity</h3>
+<p>Specifies the Id of an app which is available in the app catalog</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: AppMetadataPipeBind
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: True (ByValue)
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-scope">-Scope</h3>
+<p>Defines which app catalog to use. Defaults to Tenant</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: AppCatalogScope
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+<span style="color:#66d9ef">Accepted values</span>: Tenant, Site
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<div class="edit-meta">
+
+<br></div><nav class="pagination"><a class="nav nav-prev" href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpalert/" title="Get-PnPAlert"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Get-PnPAlert</a>
+<a class="nav nav-next" href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpappauthaccesstoken/" title="Get-PnPAppAuthAccessToken">Next - Get-PnPAppAuthAccessToken <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+</nav><footer><p class="powered">Powered by <a href="https://gohugo.io">Hugo</a>. Theme by <a href="https://themes.gohugo.io/hugo-theme-techdoc/">TechDoc</a>. Designed by <a href="https://github.com/thingsym/hugo-theme-techdoc">Thingsym</a>.</p>
+</footer>
+</main>
+<div class="sidebar">
+
+<nav class="open-menu">
+<ul>
+<li class=""><a href="https://pnp.github.io/pnppowershell">Home</a></li>
+
+<li class="parent"><a href="https://pnp.github.io/pnppowershell/cmdlets/">Cmdlets</a>
+  
+<ul class="sub-menu">
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpterm/"></a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpalert/">Add-PnPAlert</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpapp/">Add-PnPApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpapplicationcustomizer/">Add-PnPApplicationCustomizer</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpclientsidepage/">Add-PnPClientSidePage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpclientsidepagesection/">Add-PnPClientSidePageSection</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpclientsidetext/">Add-PnPClientSideText</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpclientsidewebpart/">Add-PnPClientSideWebPart</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpcontenttype/">Add-PnPContentType</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpcontenttypetodocumentset/">Add-PnPContentTypeToDocumentSet</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpcontenttypetolist/">Add-PnPContentTypeToList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpcustomaction/">Add-PnPCustomAction</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpdatarowstoprovisioningtemplate/">Add-PnPDataRowsToSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpdocumentset/">Add-PnPDocumentSet</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpeventreceiver/">Add-PnPEventReceiver</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpfield/">Add-PnPField</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpfieldfromxml/">Add-PnPFieldFromXml</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpfieldtocontenttype/">Add-PnPFieldToContentType</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpfile/">Add-PnPFile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpfiletoprovisioningtemplate/">Add-PnPFileToSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpfolder/">Add-PnPFolder</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnphtmlpublishingpagelayout/">Add-PnPHtmlPublishingPageLayout</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnphubsiteassociation/">Add-PnPHubSiteAssociation</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnphubtohubassociation/">Add-PnPHubToHubAssociation</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpindexedproperty/">Add-PnPIndexedProperty</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpjavascriptblock/">Add-PnPJavaScriptBlock</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpjavascriptlink/">Add-PnPJavaScriptLink</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnplistfolderstoprovisioningtemplate/">Add-PnPListFoldersToSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnplistitem/">Add-PnPListItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpmasterpage/">Add-PnPMasterPage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpmicrosoft365groupmember/">Add-PnPMicrosoft365GroupMember</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpmicrosoft365grouptosite/">Add-PnPMicrosoft365GroupToSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpnavigationnode/">Add-PnPNavigationNode</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnporgassetslibrary/">Add-PnPOrgAssetsLibrary</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnporgnewssite/">Add-PnPOrgNewsSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnppublishingimagerendition/">Add-PnPPublishingImageRendition</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnppublishingpage/">Add-PnPPublishingPage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnppublishingpagelayout/">Add-PnPPublishingPageLayout</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnproledefinition/">Add-PnPRoleDefinition</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpsiteclassification/">Add-PnPSiteClassification</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpsitecollectionadmin/">Add-PnPSiteCollectionAdmin</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpsitecollectionappcatalog/">Add-PnPSiteCollectionAppCatalog</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpsitedesign/">Add-PnPSiteDesign</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpsitedesigntask/">Add-PnPSiteDesignTask</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpsitescript/">Add-PnPSiteScript</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpsitetemplate/">Add-PnPSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpstoredcredential/">Add-PnPStoredCredential</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnptaxonomyfield/">Add-PnPTaxonomyField</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpteamschannel/">Add-PnPTeamsChannel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpteamstab/">Add-PnPTeamsTab</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpteamsteam/">Add-PnPTeamsTeam</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpteamsuser/">Add-PnPTeamsUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnptenantcdnorigin/">Add-PnPTenantCdnOrigin</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnptenantsequence/">Add-PnPTenantSequence</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnptenantsequencesite/">Add-PnPTenantSequenceSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnptenantsequencesubsite/">Add-PnPTenantSequenceSubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnptenanttheme/">Add-PnPTenantTheme</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnptermtoterm/">Add-PnPTermToTerm</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpusertogroup/">Add-PnPUserToGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpview/">Add-PnPView</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpwebhooksubscription/">Add-PnPWebhookSubscription</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpwebparttowebpartpage/">Add-PnPWebPartToWebPartPage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpwebparttowikipage/">Add-PnPWebPartToWikiPage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpwikipage/">Add-PnPWikiPage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/approve-pnptenantserviceprincipalpermissionrequest/">Approve-PnPTenantServicePrincipalPermissionRequest</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/clear-pnpdefaultcolumnvalues/">Clear-PnPDefaultColumnValues</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/clear-pnplistitemasrecord/">Clear-PnPListItemAsRecord</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/clear-pnpmicrosoft365groupmember/">Clear-PnPMicrosoft365GroupMember</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/clear-pnpmicrosoft365groupowner/">Clear-PnPMicrosoft365GroupOwner</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/clear-pnprecyclebinitem/">Clear-PnPRecycleBinItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/clear-pnptenantappcatalogurl/">Clear-PnPTenantAppCatalogUrl</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/clear-pnptenantrecyclebinitem/">Clear-PnPTenantRecycleBinItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/connect-pnponline/">Connect-PnPOnline</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/convert-pnpfoldertoprovisioningtemplate/">Convert-PnPFolderToSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/convert-pnpprovisioningtemplate/">Convert-PnPSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/convertto-pnpclientsidepage/">ConvertTo-PnPClientSidePage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/copy-pnpfile/">Copy-PnPFile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/copy-pnpitemproxy/">Copy-PnPItemProxy</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/deny-pnptenantserviceprincipalpermissionrequest/">Deny-PnPTenantServicePrincipalPermissionRequest</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/disable-pnpfeature/">Disable-PnPFeature</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/disable-pnpinplacerecordsmanagementforsite/">Disable-PnPInPlaceRecordsManagementForSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/disable-pnppowershelltelemetry/">Disable-PnPPowerShellTelemetry</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/disable-pnpsharingfornonownersofsite/">Disable-PnPSharingForNonOwnersOfSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/disable-pnpsiteclassification/">Disable-PnPSiteClassification</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/disable-pnptenantserviceprincipal/">Disable-PnPTenantServicePrincipal</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/disconnect-pnponline/">Disconnect-PnPOnline</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/enable-pnpcommsite/">Enable-PnPCommSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/enable-pnpfeature/">Enable-PnPFeature</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/enable-pnpinplacerecordsmanagementforsite/">Enable-PnPInPlaceRecordsManagementForSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/enable-pnppowershelltelemetry/">Enable-PnPPowerShellTelemetry</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/enable-pnpsiteclassification/">Enable-PnPSiteClassification</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/enable-pnptenantserviceprincipal/">Enable-PnPTenantServicePrincipal</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/export-pnpclientsidepage/">Export-PnPClientSidePage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/export-pnpclientsidepagemapping/">Export-PnPClientSidePageMapping</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/export-pnplisttoprovisioningtemplate/">Export-PnPListToSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/export-pnptaxonomy/">Export-PnPTaxonomy</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/export-pnptermgrouptoxml/">Export-PnPTermGroupToXml</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/export-pnpuserinfo/">Export-PnPUserInfo</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/export-pnpuserprofile/">Export-PnPUserProfile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/find-pnpfile/">Find-PnPFile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpaaduser/">Get-PnPAADUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpaccesstoken/">Get-PnPAccessToken</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpalert/">Get-PnPAlert</a></li>
+<li class="active"><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpapp/">Get-PnPApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpappauthaccesstoken/">Get-PnPAppAuthAccessToken</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpapperrors/">Get-PnPAppErrors</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpappinfo/">Get-PnPAppInfo</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpapplicationcustomizer/">Get-PnPApplicationCustomizer</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpauditing/">Get-PnPAuditing</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpauthenticationrealm/">Get-PnPAuthenticationRealm</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpavailableclientsidecomponents/">Get-PnPAvailableClientSideComponents</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpavailablelanguage/">Get-PnPAvailableLanguage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpazurecertificate/">Get-PnPAzureCertificate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpbrowseridlesignout/">Get-PnPBrowserIdleSignout</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpbuiltindesignpackagevisibility/">Get-PnPBuiltInDesignPackageVisibility</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpclientsidecomponent/">Get-PnPClientSideComponent</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpclientsidepage/">Get-PnPClientSidePage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpconnection/">Get-PnPConnection</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpcontenttype/">Get-PnPContentType</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpcontenttypepublishinghuburl/">Get-PnPContentTypePublishingHubUrl</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpcontext/">Get-PnPContext</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpcustomaction/">Get-PnPCustomAction</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpdefaultcolumnvalues/">Get-PnPDefaultColumnValues</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpdeletedmicrosoft365group/">Get-PnPDeletedMicrosoft365Group</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpdocumentsettemplate/">Get-PnPDocumentSetTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpeventreceiver/">Get-PnPEventReceiver</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpexception/">Get-PnPException</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpexternaluser/">Get-PnPExternalUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpfeature/">Get-PnPFeature</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpfield/">Get-PnPField</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpfile/">Get-PnPFile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpfileversion/">Get-PnPFileVersion</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpfolder/">Get-PnPFolder</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpfolderitem/">Get-PnPFolderItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpfooter/">Get-PnPFooter</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpgraphaccesstoken/">Get-PnPGraphAccessToken</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpgraphsubscription/">Get-PnPGraphSubscription</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpgroup/">Get-PnPGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpgroupmembers/">Get-PnPGroupMembers</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpgrouppermissions/">Get-PnPGroupPermissions</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnphidedefaultthemes/">Get-PnPHideDefaultThemes</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnphomepage/">Get-PnPHomePage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnphomesite/">Get-PnPHomeSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnphubsite/">Get-PnPHubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnphubsitechild/">Get-PnPHubSiteChild</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpindexedpropertykeys/">Get-PnPIndexedPropertyKeys</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpinplacerecordsmanagement/">Get-PnPInPlaceRecordsManagement</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpissitealiasavailable/">Get-PnPIsSiteAliasAvailable</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpjavascriptlink/">Get-PnPJavaScriptLink</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpknowledgehubsite/">Get-PnPKnowledgeHubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnplabel/">Get-PnPLabel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnplist/">Get-PnPList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnplistinformationrightsmanagement/">Get-PnPListInformationRightsManagement</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnplistitem/">Get-PnPListItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnplistrecorddeclaration/">Get-PnPListRecordDeclaration</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpmanagementapiaccesstoken/">Get-PnPManagementApiAccessToken</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpmasterpage/">Get-PnPMasterPage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpmicrosoft365group/">Get-PnPMicrosoft365Group</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpmicrosoft365groupmembers/">Get-PnPMicrosoft365GroupMembers</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpmicrosoft365groupowners/">Get-PnPMicrosoft365GroupOwners</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpnavigationnode/">Get-PnPNavigationNode</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpoffice365currentservicestatus/">Get-PnPOffice365CurrentServiceStatus</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpoffice365historicalservicestatus/">Get-PnPOffice365HistoricalServiceStatus</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpoffice365servicemessage/">Get-PnPOffice365ServiceMessage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpoffice365services/">Get-PnPOffice365Services</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpofficemanagementapiaccesstoken/">Get-PnPOfficeManagementApiAccessToken</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnporgassetslibrary/">Get-PnPOrgAssetsLibrary</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnporgnewssite/">Get-PnPOrgNewsSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/request-pnppersonalsite/">Get-PnPPersonalSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnppowershelltelemetryenabled/">Get-PnPPowerShellTelemetryEnabled</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpproperty/">Get-PnPProperty</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnppropertybag/">Get-PnPPropertyBag</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnppublishingimagerendition/">Get-PnPPublishingImageRendition</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnprecyclebinitem/">Get-PnPRecycleBinItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnprequestaccessemails/">Get-PnPRequestAccessEmails</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnproledefinition/">Get-PnPRoleDefinition</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsearchconfiguration/">Get-PnPSearchConfiguration</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsearchcrawllog/">Get-PnPSearchCrawlLog</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsearchsettings/">Get-PnPSearchSettings</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsharingfornonownersofsite/">Get-PnPSharingForNonOwnersOfSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsite/">Get-PnPSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsiteclassification/">Get-PnPSiteClassification</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsiteclosure/">Get-PnPSiteClosure</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitecollectionadmin/">Get-PnPSiteCollectionAdmin</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitecollectionappcatalogs/">Get-PnPSiteCollectionAppCatalogs</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitecollectiontermstore/">Get-PnPSiteCollectionTermStore</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitedesign/">Get-PnPSiteDesign</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitedesignrights/">Get-PnPSiteDesignRights</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitedesignrun/">Get-PnPSiteDesignRun</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitedesignrunstatus/">Get-PnPSiteDesignRunStatus</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitedesigntask/">Get-PnPSiteDesignTask</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitegroup/">Get-PnPSiteGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitepolicy/">Get-PnPSitePolicy</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitescript/">Get-PnPSiteScript</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitescriptfromlist/">Get-PnPSiteScriptFromList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitescriptfromweb/">Get-PnPSiteScriptFromWeb</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitesearchqueryresults/">Get-PnPSiteSearchQueryResults</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpprovisioningtemplate/">Get-PnPSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsiteuserinvitations/">Get-PnPSiteUserInvitations</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpstorageentity/">Get-PnPStorageEntity</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpstoredcredential/">Get-PnPStoredCredential</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpstructuralnavigationcachesitestate/">Get-PnPStructuralNavigationCacheSiteState</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpstructuralnavigationcachewebstate/">Get-PnPStructuralNavigationCacheWebState</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsubwebs/">Get-PnPSubWebs</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptaxonomyitem/">Get-PnPTaxonomyItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptaxonomysession/">Get-PnPTaxonomySession</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpteamsapp/">Get-PnPTeamsApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpteamschannel/">Get-PnPTeamsChannel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpteamschannelmessage/">Get-PnPTeamsChannelMessage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpteamstab/">Get-PnPTeamsTab</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpteamsteam/">Get-PnPTeamsTeam</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpteamsuser/">Get-PnPTeamsUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenant/">Get-PnPTenant</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantappcatalogurl/">Get-PnPTenantAppCatalogUrl</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantcdnenabled/">Get-PnPTenantCdnEnabled</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantcdnorigin/">Get-PnPTenantCdnOrigin</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantcdnpolicies/">Get-PnPTenantCdnPolicies</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantid/">Get-PnPTenantId</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantrecyclebinitem/">Get-PnPTenantRecycleBinItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantsequence/">Get-PnPTenantSequence</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantsequencesite/">Get-PnPTenantSequenceSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantserviceprincipal/">Get-PnPTenantServicePrincipal</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantserviceprincipalpermissiongrants/">Get-PnPTenantServicePrincipalPermissionGrants</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantserviceprincipalpermissionrequests/">Get-PnPTenantServicePrincipalPermissionRequests</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantsite/">Get-PnPTenantSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantsyncclientrestriction/">Get-PnPTenantSyncClientRestriction</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenanttemplate/">Get-PnPTenantTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenanttheme/">Get-PnPTenantTheme</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpterm/">Get-PnPTerm</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptermgroup/">Get-PnPTermGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptermlabel/">Get-PnPTermLabel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptermset/">Get-PnPTermSet</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptheme/">Get-PnPTheme</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptimezoneid/">Get-PnPTimeZoneId</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpunifiedauditlog/">Get-PnPUnifiedAuditLog</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpupabulkimportstatus/">Get-PnPUPABulkImportStatus</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpuser/">Get-PnPUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpuseronedrivequota/">Get-PnPUserOneDriveQuota</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpuserprofileproperty/">Get-PnPUserProfileProperty</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpview/">Get-PnPView</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpweb/">Get-PnPWeb</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpwebhooksubscriptions/">Get-PnPWebhookSubscriptions</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpwebpart/">Get-PnPWebPart</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpwebpartproperty/">Get-PnPWebPartProperty</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpwebpartxml/">Get-PnPWebPartXml</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpwebtemplates/">Get-PnPWebTemplates</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpwikipagecontent/">Get-PnPWikiPageContent</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/grant-pnphubsiterights/">Grant-PnPHubSiteRights</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/grant-pnpsitedesignrights/">Grant-PnPSiteDesignRights</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/grant-pnptenantserviceprincipalpermission/">Grant-PnPTenantServicePrincipalPermission</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/import-pnptaxonomy/">Import-PnPTaxonomy</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/import-pnptermgroupfromxml/">Import-PnPTermGroupFromXml</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/import-pnptermset/">Import-PnPTermSet</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/initialize-pnppowershellauthentication/">Initialize-PnPPowerShellAuthentication</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/install-pnpapp/">Install-PnPApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/install-pnpsolution/">Install-PnPSolution</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/invoke-pnpquery/">Invoke-PnPQuery</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/invoke-pnpsitedesign/">Invoke-PnPSiteDesign</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/invoke-pnpsiteswap/">Invoke-PnPSiteSwap</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/invoke-pnpsitetemplate/">Invoke-PnPSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/invoke-pnpsprestmethod/">Invoke-PnPSPRestMethod</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/invoke-pnptenanttemplate/">Invoke-PnPTenantTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/invoke-pnpwebaction/">Invoke-PnPWebAction</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/measure-pnplist/">Measure-PnPList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/measure-pnpweb/">Measure-PnPWeb</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/move-pnpclientsidecomponent/">Move-PnPClientSideComponent</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/move-pnpfile/">Move-PnPFile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/move-pnpfolder/">Move-PnPFolder</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/move-pnpitemproxy/">Move-PnPItemProxy</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/move-pnplistitemtorecyclebin/">Move-PnPListItemToRecycleBin</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/move-pnprecyclebinitem/">Move-PnPRecycleBinItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpazurecertificate/">New-PnPAzureCertificate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpextensibilityhandlerobject/">New-PnPExtensibilityHandlerObject</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpgraphsubscription/">New-PnPGraphSubscription</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpgroup/">New-PnPGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnplist/">New-PnPList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpmicrosoft365group/">New-PnPMicrosoft365Group</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnppersonalsite/">New-PnPPersonalSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpsdnprovider/">New-PnPSdnProvider</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpsite/">New-PnPSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpsitegroup/">New-PnPSiteGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpprovisioningtemplate/">New-PnPSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpprovisioningtemplatefromfolder/">New-PnPSiteTemplateFromFolder</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpteamsapp/">New-PnPTeamsApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpteamsteam/">New-PnPTeamsTeam</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptenantsequence/">New-PnPTenantSequence</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptenantsequencecommunicationsite/">New-PnPTenantSequenceCommunicationSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptenantsequenceteamnogroupsite/">New-PnPTenantSequenceTeamNoGroupSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptenantsequenceteamnogroupsubsite/">New-PnPTenantSequenceTeamNoGroupSubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptenantsequenceteamsite/">New-PnPTenantSequenceTeamSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptenantsite/">New-PnPTenantSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptenanttemplate/">New-PnPTenantTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptermgroup/">New-PnPTermGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptermlabel/">New-PnPTermLabel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptermset/">New-PnPTermSet</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpupabulkimportjob/">New-PnPUPABulkImportJob</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpuser/">New-PnPUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpweb/">New-PnPWeb</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/publish-pnpapp/">Publish-PnPApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/read-pnpprovisioningtemplate/">Read-PnPSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/read-pnptenanttemplate/">Read-PnPTenantTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/register-pnpappcatalogsite/">Register-PnPAppCatalogSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/register-pnphubsite/">Register-PnPHubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpalert/">Remove-PnPAlert</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpapp/">Remove-PnPApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpapplicationcustomizer/">Remove-PnPApplicationCustomizer</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpclientsidecomponent/">Remove-PnPClientSideComponent</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpclientsidepage/">Remove-PnPClientSidePage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpcontenttype/">Remove-PnPContentType</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpcontenttypefromdocumentset/">Remove-PnPContentTypeFromDocumentSet</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpcontenttypefromlist/">Remove-PnPContentTypeFromList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpcustomaction/">Remove-PnPCustomAction</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpdeletedmicrosoft365group/">Remove-PnPDeletedMicrosoft365Group</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpdeletedunifiedgroup/">Remove-PnPDeletedUnifiedGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpeventreceiver/">Remove-PnPEventReceiver</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpexternaluser/">Remove-PnPExternalUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpfield/">Remove-PnPField</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpfieldfromcontenttype/">Remove-PnPFieldFromContentType</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpfile/">Remove-PnPFile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpfilefromprovisioningtemplate/">Remove-PnPFileFromSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpfileversion/">Remove-PnPFileVersion</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpfolder/">Remove-PnPFolder</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpgraphsubscription/">Remove-PnPGraphSubscription</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpgroup/">Remove-PnPGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnphomesite/">Remove-PnPHomeSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnphubsiteassociation/">Remove-PnPHubSiteAssociation</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnphubtohubassociation/">Remove-PnPHubToHubAssociation</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpindexedproperty/">Remove-PnPIndexedProperty</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpjavascriptlink/">Remove-PnPJavaScriptLink</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpknowledgehubsite/">Remove-PnPKnowledgeHubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnplist/">Remove-PnPList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnplistitem/">Remove-PnPListItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpmicrosoft365group/">Remove-PnPMicrosoft365Group</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpmicrosoft365groupmember/">Remove-PnPMicrosoft365GroupMember</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpmicrosoft365groupowner/">Remove-PnPMicrosoft365GroupOwner</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpnavigationnode/">Remove-PnPNavigationNode</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnporgassetslibrary/">Remove-PnPOrgAssetsLibrary</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnporgnewssite/">Remove-PnPOrgNewsSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnppropertybagvalue/">Remove-PnPPropertyBagValue</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnppublishingimagerendition/">Remove-PnPPublishingImageRendition</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnproledefinition/">Remove-PnPRoleDefinition</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsdnprovider/">Remove-PnPSdnProvider</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsearchconfiguration/">Remove-PnPSearchConfiguration</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsiteclassification/">Remove-PnPSiteClassification</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsitecollectionadmin/">Remove-PnPSiteCollectionAdmin</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsitecollectionappcatalog/">Remove-PnPSiteCollectionAppCatalog</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsitedesign/">Remove-PnPSiteDesign</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsitedesigntask/">Remove-PnPSiteDesignTask</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsitegroup/">Remove-PnPSiteGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsitescript/">Remove-PnPSiteScript</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsiteuserinvitations/">Remove-PnPSiteUserInvitations</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpstorageentity/">Remove-PnPStorageEntity</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpstoredcredential/">Remove-PnPStoredCredential</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnptaxonomyitem/">Remove-PnPTaxonomyItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpteamsapp/">Remove-PnPTeamsApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpteamschannel/">Remove-PnPTeamsChannel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpteamstab/">Remove-PnPTeamsTab</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpteamsteam/">Remove-PnPTeamsTeam</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpteamsuser/">Remove-PnPTeamsUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnptenantcdnorigin/">Remove-PnPTenantCdnOrigin</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnptenantsite/">Remove-PnPTenantSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnptenantsyncclientrestriction/">Remove-PnPTenantSyncClientRestriction</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnptenanttheme/">Remove-PnPTenantTheme</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpterm/">Remove-PnPTerm</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnptermgroup/">Remove-PnPTermGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnptermlabel/">Remove-PnPTermLabel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpuser/">Remove-PnPUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpuserfromgroup/">Remove-PnPUserFromGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpuserinfo/">Remove-PnPUserInfo</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpuserprofile/">Remove-PnPUserProfile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpview/">Remove-PnPView</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpweb/">Remove-PnPWeb</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpwebhooksubscription/">Remove-PnPWebhookSubscription</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpwebpart/">Remove-PnPWebPart</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpwikipage/">Remove-PnPWikiPage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/rename-pnpfile/">Rename-PnPFile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/rename-pnpfolder/">Rename-PnPFolder</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/repair-pnpsite/">Repair-PnPSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/request-pnpaccesstoken/">Request-PnPAccessToken</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/request-pnpreindexlist/">Request-PnPReIndexList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/request-pnpreindexweb/">Request-PnPReIndexWeb</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/reset-pnpfileversion/">Reset-PnPFileVersion</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/reset-pnplabel/">Reset-PnPLabel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/reset-pnpmicrosoft365groupexpiration/">Reset-PnPMicrosoft365GroupExpiration</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/reset-pnpuseronedrivequotatodefault/">Reset-PnPUserOneDriveQuotaToDefault</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/resolve-pnpfolder/">Resolve-PnPFolder</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/restore-pnpdeletedmicrosoft365group/">Restore-PnPDeletedMicrosoft365Group</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/restore-pnpfileversion/">Restore-PnPFileVersion</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/restore-pnprecyclebinitem/">Restore-PnPRecycleBinItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/restore-pnptenantrecyclebinitem/">Restore-PnPTenantRecycleBinItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/revoke-pnphubsiterights/">Revoke-PnPHubSiteRights</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/revoke-pnpsitedesignrights/">Revoke-PnPSiteDesignRights</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/revoke-pnptenantserviceprincipalpermission/">Revoke-PnPTenantServicePrincipalPermission</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/revoke-pnpusersession/">Revoke-PnPUserSession</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/save-pnpclientsidepageconversionlog/">Save-PnPClientSidePageConversionLog</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/save-pnpprovisioningtemplate/">Save-PnPSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/save-pnptenanttemplate/">Save-PnPTenantTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/send-pnpmail/">Send-PnPMail</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpapplicationcustomizer/">Set-PnPApplicationCustomizer</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpappsideloading/">Set-PnPAppSideLoading</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpauditing/">Set-PnPAuditing</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpavailablepagelayouts/">Set-PnPAvailablePageLayouts</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpbrowseridlesignout/">Set-PnPBrowserIdleSignout</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpbuiltindesignpackagevisibility/">Set-PnPBuiltInDesignPackageVisibility</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpclientsidepage/">Set-PnPClientSidePage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpclientsidetext/">Set-PnPClientSideText</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpclientsidewebpart/">Set-PnPClientSideWebPart</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpcontext/">Set-PnPContext</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpdefaultcolumnvalues/">Set-PnPDefaultColumnValues</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpdefaultcontenttypetolist/">Set-PnPDefaultContentTypeToList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpdefaultpagelayout/">Set-PnPDefaultPageLayout</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpdocumentsetfield/">Set-PnPDocumentSetField</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpfield/">Set-PnPField</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpfilecheckedin/">Set-PnPFileCheckedIn</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpfilecheckedout/">Set-PnPFileCheckedOut</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpfolderpermission/">Set-PnPFolderPermission</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpfooter/">Set-PnPFooter</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpgraphsubscription/">Set-PnPGraphSubscription</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpgroup/">Set-PnPGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpgrouppermissions/">Set-PnPGroupPermissions</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnphidedefaultthemes/">Set-PnPHideDefaultThemes</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnphomepage/">Set-PnPHomePage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnphomesite/">Set-PnPHomeSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnphubsite/">Set-PnPHubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpindexedproperties/">Set-PnPIndexedProperties</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpinplacerecordsmanagement/">Set-PnPInPlaceRecordsManagement</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpknowledgehubsite/">Set-PnPKnowledgeHubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnplabel/">Set-PnPLabel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnplist/">Set-PnPList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnplistinformationrightsmanagement/">Set-PnPListInformationRightsManagement</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnplistitem/">Set-PnPListItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnplistitemasrecord/">Set-PnPListItemAsRecord</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnplistitempermission/">Set-PnPListItemPermission</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnplistpermission/">Set-PnPListPermission</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnplistrecorddeclaration/">Set-PnPListRecordDeclaration</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpmasterpage/">Set-PnPMasterPage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpmicrosoft365group/">Set-PnPMicrosoft365Group</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpminimaldownloadstrategy/">Set-PnPMinimalDownloadStrategy</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnppropertybagvalue/">Set-PnPPropertyBagValue</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnprequestaccessemails/">Set-PnPRequestAccessEmails</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpsearchconfiguration/">Set-PnPSearchConfiguration</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpsearchsettings/">Set-PnPSearchSettings</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpsite/">Set-PnPSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpsiteclosure/">Set-PnPSiteClosure</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpsitedesign/">Set-PnPSiteDesign</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpsitegroup/">Set-PnPSiteGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpsitepolicy/">Set-PnPSitePolicy</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpsitescript/">Set-PnPSiteScript</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpprovisioningtemplatemetadata/">Set-PnPSiteTemplateMetadata</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpstorageentity/">Set-PnPStorageEntity</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpstructuralnavigationcachesitestate/">Set-PnPStructuralNavigationCacheSiteState</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpstructuralnavigationcachewebstate/">Set-PnPStructuralNavigationCacheSiteState</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptaxonomyfieldvalue/">Set-PnPTaxonomyFieldValue</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpteamschannel/">Set-PnPTeamsChannel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpteamstab/">Set-PnPTeamsTab</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpteamsteam/">Set-PnPTeamsTeam</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpteamsteamarchivedstate/">Set-PnPTeamsTeamArchivedState</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpteamsteampicture/">Set-PnPTeamsTeamPicture</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptenant/">Set-PnPTenant</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptenantappcatalogurl/">Set-PnPTenantAppCatalogUrl</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptenantcdnenabled/">Set-PnPTenantCdnEnabled</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptenantcdnpolicy/">Set-PnPTenantCdnPolicy</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptenantsite/">Set-PnPTenantSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptenantsyncclientrestriction/">Set-PnPTenantSyncClientRestriction</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpterm/">Set-PnPTerm</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptermgroup/">Set-PnPTermGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptermset/">Set-PnPTermSet</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptheme/">Set-PnPTheme</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptracelog/">Set-PnPTraceLog</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpuseronedrivequota/">Set-PnPUserOneDriveQuota</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpuserprofileproperty/">Set-PnPUserProfileProperty</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpview/">Set-PnPView</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpweb/">Set-PnPWeb</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpwebhooksubscription/">Set-PnPWebhookSubscription</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpwebpartproperty/">Set-PnPWebPartProperty</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpwebpermission/">Set-PnPWebPermission</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpwebtheme/">Set-PnPWebTheme</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpwikipagecontent/">Set-PnPWikiPageContent</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/submit-pnpsearchquery/">Submit-PnPSearchQuery</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/submit-pnpteamschannelmessage/">Submit-PnPTeamsChannelMessage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/sync-pnpapptoteams/">Sync-PnPAppToTeams</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/test-pnplistitemisrecord/">Test-PnPListItemIsRecord</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/test-pnpoffice365groupaliasisused/">Test-PnPOffice365GroupAliasIsUsed</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/test-pnpsite/">Test-PnPSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/test-pnptenanttemplate/">Test-PnPTenantTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/uninstall-pnpapp/">Uninstall-PnPApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/unpublish-pnpapp/">Unpublish-PnPApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/unregister-pnphubsite/">Unregister-PnPHubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/update-pnpapp/">Update-PnPApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/update-pnpsiteclassification/">Update-PnPSiteClassification</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/update-pnpteamsapp/">Update-PnPTeamsApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/update-pnpusertype/">Update-PnPUserType</a></li>
+</ul>
+  
+</li>
+
+<li class=""><a href="https://pnp.github.io/pnppowershell/getting-started/">Getting Starteds</a>
+  
+<ul class="sub-menu">
+<li class=""><a href="https://pnp.github.io/pnppowershell/getting-started/installation/"></a></li>
+</ul>
+  
+</li>
+</ul>
+</nav>
+
+
+
+<div class="sidebar-footer"></div>
+</div>
+
+</div><a href="#" id="backtothetop-fixed" class="backtothetop"
+ data-backtothetop-duration="600"
+ data-backtothetop-easing="easeOutQuart"
+ data-backtothetop-fixed-fadeIn="1000"
+ data-backtothetop-fixed-fadeOut="1000"
+ data-backtothetop-fixed-bottom="10"
+ data-backtothetop-fixed-right="20">
+<span class="fa-layers fa-fw">
+<i class="fas fa-circle"></i>
+<i class="fas fa-arrow-circle-up"></i>
+</span></a>
+</div>
+</body>
+</html>

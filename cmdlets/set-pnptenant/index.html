@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Set-PnPTenant - PnP PowerShell</title>
+<meta name="description" content="Microsoft 365 PnP PowerShell">
+<meta name="generator" content="Hugo 0.74.3" />
+<link href="https://pnp.github.io/pnppowershell/index.xml" rel="alternate" type="application/rss+xml">
+<link rel="canonical" href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptenant/">
+<link rel="stylesheet" href="https://pnp.github.io/pnppowershell/css/theme.min.css">
+<script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<link rel="stylesheet" href="https://pnp.github.io/pnppowershell/css/chroma.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script src="https://pnp.github.io/pnppowershell/js/bundle.js"></script><style>
+:root {--custom-background-color: #2E7FBE;}
+</style>
+<meta property="og:title" content="Set-PnPTenant" />
+<meta property="og:description" content="Set-PnPTenant SYNOPSIS Required Permissions
+ SharePoint: Access to the SharePoint Tenant Administration site  Sets organization-level site collection properties
+SYNTAX Set-PnPTenant [-SpecialCharactersStateInFileFolderNames &lt;SpecialCharactersState&gt;] [-MinCompatibilityLevel &lt;Int32&gt;] [-MaxCompatibilityLevel &lt;Int32&gt;] [-ExternalServicesEnabled &lt;Boolean&gt;] [-NoAccessRedirectUrl &lt;String&gt;] [-SharingCapability &lt;SharingCapabilities&gt;] [-DisplayStartASiteOption &lt;Boolean&gt;] [-StartASiteFormUrl &lt;String&gt;] [-ShowEveryoneClaim &lt;Boolean&gt;] [-ShowAllUsersClaim &lt;Boolean&gt;] [-ShowEveryoneExceptExternalUsersClaim &lt;Boolean&gt;] [-SearchResolveExactEmailOrUPN &lt;Boolean&gt;] [-OfficeClientADALDisabled &lt;Boolean&gt;] [-LegacyAuthProtocolsEnabled &lt;Boolean&gt;] [-RequireAcceptingAccountMatchInvitedAccount &lt;Boolean&gt;] [-ProvisionSharedWithEveryoneFolder &lt;Boolean&gt;] [-SignInAccelerationDomain &lt;String&gt;] [-EnableGuestSignInAcceleration &lt;Boolean&gt;] [-UsePersistentCookiesForExplorerView &lt;Boolean&gt;] [-BccExternalSharingInvitations &lt;Boolean&gt;] [-BccExternalSharingInvitationsList &lt;String&gt;] [-UserVoiceForFeedbackEnabled &lt;Boolean&gt;] [-PublicCdnEnabled &lt;Boolean&gt;] [-PublicCdnAllowedFileTypes &lt;String&gt;] [-RequireAnonymousLinksExpireInDays &lt;Int32&gt;] [-SharingAllowedDomainList &lt;String&gt;] [-SharingBlockedDomainList &lt;String&gt;] [-SharingDomainRestrictionMode &lt;SharingDomainRestrictionModes&gt;] [-OneDriveStorageQuota &lt;Int64&gt;] [-OneDriveForGuestsEnabled &lt;Boolean&gt;] [-IPAddressEnforcement &lt;Boolean&gt;] [-IPAddressAllowList &lt;String&gt;] [-IPAddressWACTokenLifetime &lt;Int32&gt;] [-UseFindPeopleInPeoplePicker &lt;Boolean&gt;] [-DefaultSharingLinkType &lt;SharingLinkType&gt;] [-ODBMembersCanShare &lt;SharingState&gt;] [-ODBAccessRequests &lt;SharingState&gt;] [-PreventExternalUsersFromResharing &lt;Boolean&gt;] [-ShowPeoplePickerSuggestionsForGuestUsers &lt;Boolean&gt;] [-FileAnonymousLinkType &lt;AnonymousLinkType&gt;] [-FolderAnonymousLinkType &lt;AnonymousLinkType&gt;] [-NotifyOwnersWhenItemsReshared &lt;Boolean&gt;] [-NotifyOwnersWhenInvitationsAccepted &lt;Boolean&gt;] [-NotificationsInOneDriveForBusinessEnabled &lt;Boolean&gt;] [-NotificationsInSharePointEnabled &lt;Boolean&gt;] [-OwnerAnonymousNotification &lt;Boolean&gt;] [-CommentsOnSitePagesDisabled &lt;Boolean&gt;] [-SocialBarOnSitePagesDisabled &lt;Boolean&gt;] [-OrphanedPersonalSitesRetentionPeriod &lt;Int32&gt;] [-DisallowInfectedFileDownload &lt;Boolean&gt;] [-DefaultLinkPermission &lt;SharingPermissionType&gt;] [-ConditionalAccessPolicy &lt;SPOConditionalAccessPolicyType&gt;] [-AllowDownloadingNonWebViewableFiles &lt;Boolean&gt;] [-AllowEditing &lt;Boolean&gt;] [-ApplyAppEnforcedRestrictionsToAdHocRecipients &lt;Boolean&gt;] [-FilePickerExternalImageSearchEnabled &lt;Boolean&gt;] [-EmailAttestationRequired &lt;Boolean&gt;] [-EmailAttestationReAuthDays &lt;Int32&gt;] [-HideDefaultThemes &lt;Boolean&gt;] [-DisabledWebPartIds &lt;Guid[]&gt;] [-EnableAIPIntegration &lt;Boolean&gt;] [-DisableCustomAppAuthentication &lt;Boolean&gt;] [-EnableAutoNewsDigest &lt;Boolean&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION Sets organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota, ResourceQuotaAllocated, and SiteCreationMode." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pnp.github.io/pnppowershell/cmdlets/set-pnptenant/" />
+<meta property="og:image" content="https://pnp.github.io/pnppowershell/images/parker-ms-1200.png"/>
+<meta property="og:site_name" content="PnP PowerShell" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://pnp.github.io/pnppowershell/images/parker-ms-1200.png"/>
+
+<meta name="twitter:title" content="Set-PnPTenant"/>
+<meta name="twitter:description" content="Set-PnPTenant SYNOPSIS Required Permissions
+ SharePoint: Access to the SharePoint Tenant Administration site  Sets organization-level site collection properties
+SYNTAX Set-PnPTenant [-SpecialCharactersStateInFileFolderNames &lt;SpecialCharactersState&gt;] [-MinCompatibilityLevel &lt;Int32&gt;] [-MaxCompatibilityLevel &lt;Int32&gt;] [-ExternalServicesEnabled &lt;Boolean&gt;] [-NoAccessRedirectUrl &lt;String&gt;] [-SharingCapability &lt;SharingCapabilities&gt;] [-DisplayStartASiteOption &lt;Boolean&gt;] [-StartASiteFormUrl &lt;String&gt;] [-ShowEveryoneClaim &lt;Boolean&gt;] [-ShowAllUsersClaim &lt;Boolean&gt;] [-ShowEveryoneExceptExternalUsersClaim &lt;Boolean&gt;] [-SearchResolveExactEmailOrUPN &lt;Boolean&gt;] [-OfficeClientADALDisabled &lt;Boolean&gt;] [-LegacyAuthProtocolsEnabled &lt;Boolean&gt;] [-RequireAcceptingAccountMatchInvitedAccount &lt;Boolean&gt;] [-ProvisionSharedWithEveryoneFolder &lt;Boolean&gt;] [-SignInAccelerationDomain &lt;String&gt;] [-EnableGuestSignInAcceleration &lt;Boolean&gt;] [-UsePersistentCookiesForExplorerView &lt;Boolean&gt;] [-BccExternalSharingInvitations &lt;Boolean&gt;] [-BccExternalSharingInvitationsList &lt;String&gt;] [-UserVoiceForFeedbackEnabled &lt;Boolean&gt;] [-PublicCdnEnabled &lt;Boolean&gt;] [-PublicCdnAllowedFileTypes &lt;String&gt;] [-RequireAnonymousLinksExpireInDays &lt;Int32&gt;] [-SharingAllowedDomainList &lt;String&gt;] [-SharingBlockedDomainList &lt;String&gt;] [-SharingDomainRestrictionMode &lt;SharingDomainRestrictionModes&gt;] [-OneDriveStorageQuota &lt;Int64&gt;] [-OneDriveForGuestsEnabled &lt;Boolean&gt;] [-IPAddressEnforcement &lt;Boolean&gt;] [-IPAddressAllowList &lt;String&gt;] [-IPAddressWACTokenLifetime &lt;Int32&gt;] [-UseFindPeopleInPeoplePicker &lt;Boolean&gt;] [-DefaultSharingLinkType &lt;SharingLinkType&gt;] [-ODBMembersCanShare &lt;SharingState&gt;] [-ODBAccessRequests &lt;SharingState&gt;] [-PreventExternalUsersFromResharing &lt;Boolean&gt;] [-ShowPeoplePickerSuggestionsForGuestUsers &lt;Boolean&gt;] [-FileAnonymousLinkType &lt;AnonymousLinkType&gt;] [-FolderAnonymousLinkType &lt;AnonymousLinkType&gt;] [-NotifyOwnersWhenItemsReshared &lt;Boolean&gt;] [-NotifyOwnersWhenInvitationsAccepted &lt;Boolean&gt;] [-NotificationsInOneDriveForBusinessEnabled &lt;Boolean&gt;] [-NotificationsInSharePointEnabled &lt;Boolean&gt;] [-OwnerAnonymousNotification &lt;Boolean&gt;] [-CommentsOnSitePagesDisabled &lt;Boolean&gt;] [-SocialBarOnSitePagesDisabled &lt;Boolean&gt;] [-OrphanedPersonalSitesRetentionPeriod &lt;Int32&gt;] [-DisallowInfectedFileDownload &lt;Boolean&gt;] [-DefaultLinkPermission &lt;SharingPermissionType&gt;] [-ConditionalAccessPolicy &lt;SPOConditionalAccessPolicyType&gt;] [-AllowDownloadingNonWebViewableFiles &lt;Boolean&gt;] [-AllowEditing &lt;Boolean&gt;] [-ApplyAppEnforcedRestrictionsToAdHocRecipients &lt;Boolean&gt;] [-FilePickerExternalImageSearchEnabled &lt;Boolean&gt;] [-EmailAttestationRequired &lt;Boolean&gt;] [-EmailAttestationReAuthDays &lt;Int32&gt;] [-HideDefaultThemes &lt;Boolean&gt;] [-DisabledWebPartIds &lt;Guid[]&gt;] [-EnableAIPIntegration &lt;Boolean&gt;] [-DisableCustomAppAuthentication &lt;Boolean&gt;] [-EnableAutoNewsDigest &lt;Boolean&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION Sets organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota, ResourceQuotaAllocated, and SiteCreationMode."/>
+<meta itemprop="name" content="Set-PnPTenant">
+<meta itemprop="description" content="Set-PnPTenant SYNOPSIS Required Permissions
+ SharePoint: Access to the SharePoint Tenant Administration site  Sets organization-level site collection properties
+SYNTAX Set-PnPTenant [-SpecialCharactersStateInFileFolderNames &lt;SpecialCharactersState&gt;] [-MinCompatibilityLevel &lt;Int32&gt;] [-MaxCompatibilityLevel &lt;Int32&gt;] [-ExternalServicesEnabled &lt;Boolean&gt;] [-NoAccessRedirectUrl &lt;String&gt;] [-SharingCapability &lt;SharingCapabilities&gt;] [-DisplayStartASiteOption &lt;Boolean&gt;] [-StartASiteFormUrl &lt;String&gt;] [-ShowEveryoneClaim &lt;Boolean&gt;] [-ShowAllUsersClaim &lt;Boolean&gt;] [-ShowEveryoneExceptExternalUsersClaim &lt;Boolean&gt;] [-SearchResolveExactEmailOrUPN &lt;Boolean&gt;] [-OfficeClientADALDisabled &lt;Boolean&gt;] [-LegacyAuthProtocolsEnabled &lt;Boolean&gt;] [-RequireAcceptingAccountMatchInvitedAccount &lt;Boolean&gt;] [-ProvisionSharedWithEveryoneFolder &lt;Boolean&gt;] [-SignInAccelerationDomain &lt;String&gt;] [-EnableGuestSignInAcceleration &lt;Boolean&gt;] [-UsePersistentCookiesForExplorerView &lt;Boolean&gt;] [-BccExternalSharingInvitations &lt;Boolean&gt;] [-BccExternalSharingInvitationsList &lt;String&gt;] [-UserVoiceForFeedbackEnabled &lt;Boolean&gt;] [-PublicCdnEnabled &lt;Boolean&gt;] [-PublicCdnAllowedFileTypes &lt;String&gt;] [-RequireAnonymousLinksExpireInDays &lt;Int32&gt;] [-SharingAllowedDomainList &lt;String&gt;] [-SharingBlockedDomainList &lt;String&gt;] [-SharingDomainRestrictionMode &lt;SharingDomainRestrictionModes&gt;] [-OneDriveStorageQuota &lt;Int64&gt;] [-OneDriveForGuestsEnabled &lt;Boolean&gt;] [-IPAddressEnforcement &lt;Boolean&gt;] [-IPAddressAllowList &lt;String&gt;] [-IPAddressWACTokenLifetime &lt;Int32&gt;] [-UseFindPeopleInPeoplePicker &lt;Boolean&gt;] [-DefaultSharingLinkType &lt;SharingLinkType&gt;] [-ODBMembersCanShare &lt;SharingState&gt;] [-ODBAccessRequests &lt;SharingState&gt;] [-PreventExternalUsersFromResharing &lt;Boolean&gt;] [-ShowPeoplePickerSuggestionsForGuestUsers &lt;Boolean&gt;] [-FileAnonymousLinkType &lt;AnonymousLinkType&gt;] [-FolderAnonymousLinkType &lt;AnonymousLinkType&gt;] [-NotifyOwnersWhenItemsReshared &lt;Boolean&gt;] [-NotifyOwnersWhenInvitationsAccepted &lt;Boolean&gt;] [-NotificationsInOneDriveForBusinessEnabled &lt;Boolean&gt;] [-NotificationsInSharePointEnabled &lt;Boolean&gt;] [-OwnerAnonymousNotification &lt;Boolean&gt;] [-CommentsOnSitePagesDisabled &lt;Boolean&gt;] [-SocialBarOnSitePagesDisabled &lt;Boolean&gt;] [-OrphanedPersonalSitesRetentionPeriod &lt;Int32&gt;] [-DisallowInfectedFileDownload &lt;Boolean&gt;] [-DefaultLinkPermission &lt;SharingPermissionType&gt;] [-ConditionalAccessPolicy &lt;SPOConditionalAccessPolicyType&gt;] [-AllowDownloadingNonWebViewableFiles &lt;Boolean&gt;] [-AllowEditing &lt;Boolean&gt;] [-ApplyAppEnforcedRestrictionsToAdHocRecipients &lt;Boolean&gt;] [-FilePickerExternalImageSearchEnabled &lt;Boolean&gt;] [-EmailAttestationRequired &lt;Boolean&gt;] [-EmailAttestationReAuthDays &lt;Int32&gt;] [-HideDefaultThemes &lt;Boolean&gt;] [-DisabledWebPartIds &lt;Guid[]&gt;] [-EnableAIPIntegration &lt;Boolean&gt;] [-DisableCustomAppAuthentication &lt;Boolean&gt;] [-EnableAutoNewsDigest &lt;Boolean&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION Sets organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota, ResourceQuotaAllocated, and SiteCreationMode.">
+
+<meta itemprop="wordCount" content="4081">
+<meta itemprop="image" content="https://pnp.github.io/pnppowershell/images/parker-ms-1200.png"/>
+
+
+
+<meta itemprop="keywords" content="" />
+</head>
+<body><div class="container"><header>
+<h1>PnP PowerShell</h1><a href="https://github.com/pnp/powershell" class="github"><i class="fab fa-github"></i></a>
+<p class="description">Microsoft 365 PnP PowerShell</p>
+
+</header>
+<div class="global-menu">
+<nav>
+<ul>
+<li><a href="/pnppowershell/">Home</a></li>
+<li><a href="https://twitter.com/pnppowershell">Twitter</a></li></ul>
+</nav>
+</div>
+<div class="content-container">
+<main><h1>Set-PnPTenant</h1>
+<h1 id="set-pnptenant">Set-PnPTenant</h1>
+<h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
+</ul>
+<p>Sets organization-level site collection properties</p>
+<h2 id="syntax">SYNTAX</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Set-PnPTenant [-SpecialCharactersStateInFileFolderNames &lt;SpecialCharactersState&gt;]
+ [-MinCompatibilityLevel &lt;Int32&gt;] [-MaxCompatibilityLevel &lt;Int32&gt;] [-ExternalServicesEnabled &lt;Boolean&gt;]
+ [-NoAccessRedirectUrl &lt;String&gt;] [-SharingCapability &lt;SharingCapabilities&gt;]
+ [-DisplayStartASiteOption &lt;Boolean&gt;] [-StartASiteFormUrl &lt;String&gt;] [-ShowEveryoneClaim &lt;Boolean&gt;]
+ [-ShowAllUsersClaim &lt;Boolean&gt;] [-ShowEveryoneExceptExternalUsersClaim &lt;Boolean&gt;]
+ [-SearchResolveExactEmailOrUPN &lt;Boolean&gt;] [-OfficeClientADALDisabled &lt;Boolean&gt;]
+ [-LegacyAuthProtocolsEnabled &lt;Boolean&gt;] [-RequireAcceptingAccountMatchInvitedAccount &lt;Boolean&gt;]
+ [-ProvisionSharedWithEveryoneFolder &lt;Boolean&gt;] [-SignInAccelerationDomain &lt;String&gt;]
+ [-EnableGuestSignInAcceleration &lt;Boolean&gt;] [-UsePersistentCookiesForExplorerView &lt;Boolean&gt;]
+ [-BccExternalSharingInvitations &lt;Boolean&gt;] [-BccExternalSharingInvitationsList &lt;String&gt;]
+ [-UserVoiceForFeedbackEnabled &lt;Boolean&gt;] [-PublicCdnEnabled &lt;Boolean&gt;] [-PublicCdnAllowedFileTypes &lt;String&gt;]
+ [-RequireAnonymousLinksExpireInDays &lt;Int32&gt;] [-SharingAllowedDomainList &lt;String&gt;]
+ [-SharingBlockedDomainList &lt;String&gt;] [-SharingDomainRestrictionMode &lt;SharingDomainRestrictionModes&gt;]
+ [-OneDriveStorageQuota &lt;Int64&gt;] [-OneDriveForGuestsEnabled &lt;Boolean&gt;] [-IPAddressEnforcement &lt;Boolean&gt;]
+ [-IPAddressAllowList &lt;String&gt;] [-IPAddressWACTokenLifetime &lt;Int32&gt;] [-UseFindPeopleInPeoplePicker &lt;Boolean&gt;]
+ [-DefaultSharingLinkType &lt;SharingLinkType&gt;] [-ODBMembersCanShare &lt;SharingState&gt;]
+ [-ODBAccessRequests &lt;SharingState&gt;] [-PreventExternalUsersFromResharing &lt;Boolean&gt;]
+ [-ShowPeoplePickerSuggestionsForGuestUsers &lt;Boolean&gt;] [-FileAnonymousLinkType &lt;AnonymousLinkType&gt;]
+ [-FolderAnonymousLinkType &lt;AnonymousLinkType&gt;] [-NotifyOwnersWhenItemsReshared &lt;Boolean&gt;]
+ [-NotifyOwnersWhenInvitationsAccepted &lt;Boolean&gt;] [-NotificationsInOneDriveForBusinessEnabled &lt;Boolean&gt;]
+ [-NotificationsInSharePointEnabled &lt;Boolean&gt;] [-OwnerAnonymousNotification &lt;Boolean&gt;]
+ [-CommentsOnSitePagesDisabled &lt;Boolean&gt;] [-SocialBarOnSitePagesDisabled &lt;Boolean&gt;]
+ [-OrphanedPersonalSitesRetentionPeriod &lt;Int32&gt;] [-DisallowInfectedFileDownload &lt;Boolean&gt;]
+ [-DefaultLinkPermission &lt;SharingPermissionType&gt;] [-ConditionalAccessPolicy &lt;SPOConditionalAccessPolicyType&gt;]
+ [-AllowDownloadingNonWebViewableFiles &lt;Boolean&gt;] [-AllowEditing &lt;Boolean&gt;]
+ [-ApplyAppEnforcedRestrictionsToAdHocRecipients &lt;Boolean&gt;] [-FilePickerExternalImageSearchEnabled &lt;Boolean&gt;]
+ [-EmailAttestationRequired &lt;Boolean&gt;] [-EmailAttestationReAuthDays &lt;Int32&gt;] [-HideDefaultThemes &lt;Boolean&gt;]
+ [-DisabledWebPartIds &lt;Guid[]&gt;] [-EnableAIPIntegration &lt;Boolean&gt;] [-DisableCustomAppAuthentication &lt;Boolean&gt;] [-EnableAutoNewsDigest &lt;Boolean&gt;]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+</code></pre></div><h2 id="description">DESCRIPTION</h2>
+<p>Sets organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota,
+ResourceQuotaAllocated, and SiteCreationMode.</p>
+<p>You must have the SharePoint Online admin or Global admin role to run the cmdlet.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Set-PnPTenantSite -Identity https<span style="color:#960050;background-color:#1e0010">:</span>//contoso.sharepoint.com/sites/team1 -LockState NoAccess
+Set-PnPTenant -NoAccessRedirectUrl <span style="color:#e6db74">&#39;http://www.contoso.com&#39;</span>
+</code></pre></div><p>This example blocks access to <a href="https://contoso.sharepoint.com/sites/team1">https://contoso.sharepoint.com/sites/team1</a> and redirects traffic to <a href="http://www.contoso.com">http://www.contoso.com</a>.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Set-PnPTenant -ShowEveryoneExceptExternalUsersClaim $false
+</code></pre></div><p>This example hides the &ldquo;Everyone Except External Users&rdquo; claim in People Picker.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Set-PnPTenant -ShowAllUsersClaim $false
+</code></pre></div><p>This example hides the &ldquo;All Users&rdquo; claim group in People Picker.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Set-PnPTenant -UsePersistentCookiesForExplorerView $true
+</code></pre></div><p>This example enables the use of special persisted cookie for Open with Explorer.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-allowdownloadingnonwebviewablefiles">-AllowDownloadingNonWebViewableFiles</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-allowediting">-AllowEditing</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-applyappenforcedrestrictionstoadhocrecipients">-ApplyAppEnforcedRestrictionsToAdHocRecipients</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-bccexternalsharinginvitations">-BccExternalSharingInvitations</h3>
+<p>When the feature is enabled, all external sharing invitations that are sent will blind copy the e-mail messages listed in the BccExternalSharingInvitationsList.</p>
+<p>The valid values are:
+False (default) - BCC for external sharing is disabled.
+True - All external sharing invitations that are sent will blind copy the e-mail messages listed in the BccExternalSharingInvitationsList.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-bccexternalsharinginvitationslist">-BccExternalSharingInvitationsList</h3>
+<p>Specifies a list of e-mail addresses to be BCC&rsquo;d when the BCC for External Sharing feature is enabled.
+Multiple addresses can be specified by creating a comma separated list with no spaces.</p>
+<p>The valid values are:
+&quot;&rdquo; (default) - Blank by default, this will also clear any value that has been set.
+Single or Multiple e-mail addresses - <a href="mailto:joe@contoso.com">joe@contoso.com</a> or <a href="mailto:joe@contoso.com">joe@contoso.com</a>,bob@contoso.com</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-commentsonsitepagesdisabled">-CommentsOnSitePagesDisabled</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-conditionalaccesspolicy">-ConditionalAccessPolicy</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: SPOConditionalAccessPolicyType
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+<span style="color:#66d9ef">Accepted values</span>: AllowFullAccess, AllowLimitedAccess, BlockAccess, ProtectionLevel
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: PnPConnection
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-defaultlinkpermission">-DefaultLinkPermission</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: SharingPermissionType
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+<span style="color:#66d9ef">Accepted values</span>: None, View, Edit
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-defaultsharinglinktype">-DefaultSharingLinkType</h3>
+<p>Lets administrators choose what type of link appears is selected in the &ldquo;Get a link&rdquo; sharing dialog box in OneDrive for Business and SharePoint Online.</p>
+<p>For additional information about how to change the default link type, see Change the default link type when users get links for sharing.</p>
+<p>Note:
+Setting this value to &ldquo;none&rdquo; will default &ldquo;get a link&rdquo; to the most permissive link available (that is, if anonymous links are enabled, the default link will be anonymous access; if they are disabled then the default link will be internal.</p>
+<p>The values are: None Direct Internal AnonymousAccess</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: SharingLinkType
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+<span style="color:#66d9ef">Accepted values</span>: None, Direct, Internal, AnonymousAccess
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-disablecustomappauthentication">-DisableCustomAppAuthentication</h3>
+<p>{{ Fill DisableCustomAppAuthentication Description }}</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-disabledwebpartids">-DisabledWebPartIds</h3>
+<p>Guids of out of the box modern web part id&rsquo;s to hide</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Guid[]
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-disallowinfectedfiledownload">-DisallowInfectedFileDownload</h3>
+<p>Prevents the Download button from being displayed on the Virus Found warning page.</p>
+<p>Accepts a value of true (enabled) to hide the Download button or false (disabled) to display the Download button. By default this feature is set to false.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-displaystartasiteoption">-DisplayStartASiteOption</h3>
+<p>Determines whether tenant users see the Start a Site menu option.</p>
+<p>The valid values are:
+True (default) - Tenant users will see the Start a Site menu option.
+False - Start a Site is hidden from the menu.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-emailattestationreauthdays">-EmailAttestationReAuthDays</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Int32
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-emailattestationrequired">-EmailAttestationRequired</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-enableaipintegration">-EnableAIPIntegration</h3>
+<p>Boolean indicating if Azure Information Protection (AIP) should be enabled on the tenant. For more information, see <a href="https://docs.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-onedrive-files#use-powershell-to-enable-support-for-sensitivity-labels">https://docs.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-onedrive-files#use-powershell-to-enable-support-for-sensitivity-labels</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-enableguestsigninacceleration">-EnableGuestSignInAcceleration</h3>
+<p>Accelerates guest-enabled site collections as well as member-only site collections when the SignInAccelerationDomain parameter is set.</p>
+<p>Note:
+If enabled, your identity provider must be capable of authenticating guest users. If it is not, guest users will be unable to log in and access content that was shared with them.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-externalservicesenabled">-ExternalServicesEnabled</h3>
+<p>Enables external services for a tenant.
+External services are defined as services that are not in the Office 365 datacenters.</p>
+<p>The valid values are:
+True (default) - External services are enabled for the tenant.
+False - External services that are outside of the Office 365 datacenters cannot interact with SharePoint.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-fileanonymouslinktype">-FileAnonymousLinkType</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: AnonymousLinkType
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+<span style="color:#66d9ef">Accepted values</span>: None, View, Edit
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-filepickerexternalimagesearchenabled">-FilePickerExternalImageSearchEnabled</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-folderanonymouslinktype">-FolderAnonymousLinkType</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: AnonymousLinkType
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+<span style="color:#66d9ef">Accepted values</span>: None, View, Edit
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-hidedefaultthemes">-HideDefaultThemes</h3>
+<p>Defines if the default themes are visible or hidden</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-ipaddressallowlist">-IPAddressAllowList</h3>
+<p>Configures multiple IP addresses or IP address ranges (IPv4 or IPv6).</p>
+<p>Use commas to separate multiple IP addresses or IP address ranges. Verify there are no overlapping IP addresses and ensure IP ranges use Classless Inter-Domain Routing (CIDR) notation. For example, 172.16.0.0, 192.168.1.0/27.</p>
+<p>Note:
+The IPAddressAllowList parameter only lets administrators set IP addresses or ranges that are recognized as trusted. To only grant access from these IP addresses or ranges, set the IPAddressEnforcement parameter to $true.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-ipaddressenforcement">-IPAddressEnforcement</h3>
+<p>Allows access from network locations that are defined by an administrator.</p>
+<p>The values are $true and $false. The default value is $false which means the setting is disabled.</p>
+<p>Before the IPAddressEnforcement parameter is set, make sure you add a valid IPv4 or IPv6 address to the IPAddressAllowList parameter.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-ipaddresswactokenlifetime">-IPAddressWACTokenLifetime</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Int32
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-legacyauthprotocolsenabled">-LegacyAuthProtocolsEnabled</h3>
+<p>By default this value is set to $true.</p>
+<p>Setting this parameter prevents Office clients using non-modern authentication protocols from accessing SharePoint Online resources.</p>
+<p>A value of $true - Enables Office clients using non-modern authentication protocols(such as, Forms-Based Authentication (FBA) or Identity Client Runtime Library (IDCRL)) to access SharePoint resources.</p>
+<p>A value of $false - Prevents Office clients using non-modern authentication protocols from accessing SharePoint Online resources.</p>
+<p>Note:
+This may also prevent third-party apps from accessing SharePoint Online resources.Also, this will also block apps using the SharePointOnlineCredentials class to access SharePoint Online resources.For additional information about SharePointOnlineCredentials, see SharePointOnlineCredentials class.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-maxcompatibilitylevel">-MaxCompatibilityLevel</h3>
+<p>Specifies the upper bound on the compatibility level for new sites.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Int32
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-mincompatibilitylevel">-MinCompatibilityLevel</h3>
+<p>Specifies the lower bound on the compatibility level for new sites.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Int32
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-noaccessredirecturl">-NoAccessRedirectUrl</h3>
+<p>Specifies the URL of the redirected site for those site collections which have the locked state &ldquo;NoAccess&rdquo;</p>
+<p>The valid values are:
+&ldquo;&quot;(default) - Blank by default, this will also remove or clear any value that has been set.
+Full URL - Example: <a href="https://contoso.sharepoint.com/Pages/Locked.aspx">https://contoso.sharepoint.com/Pages/Locked.aspx</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-notificationsinonedriveforbusinessenabled">-NotificationsInOneDriveForBusinessEnabled</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-notificationsinsharepointenabled">-NotificationsInSharePointEnabled</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-notifyownerswheninvitationsaccepted">-NotifyOwnersWhenInvitationsAccepted</h3>
+<p>When this parameter is set to $true and when an external user accepts an invitation to a resource in a user&rsquo;s OneDrive for Business, the OneDrive for Business owner is notified by e-mail.</p>
+<p>For additional information about how to configure notifications for external sharing, see Configure notifications for external sharing for OneDrive for Business.</p>
+<p>The values are $true and $false.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-notifyownerswhenitemsreshared">-NotifyOwnersWhenItemsReshared</h3>
+<p>When this parameter is set to $true and another user re-shares a document from a user&rsquo;s OneDrive for Business, the OneDrive for Business owner is notified by e-mail.</p>
+<p>For additional information about how to configure notifications for external sharing, see Configure notifications for external sharing for OneDrive for Business.</p>
+<p>The values are $true and $false.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-odbaccessrequests">-ODBAccessRequests</h3>
+<p>Lets administrators set policy on access requests and requests to share in OneDrive for Business.</p>
+<p>Values:</p>
+<p>On- Users without permission to share can trigger sharing requests to the OneDrive for Business owner when they attempt to share. Also, users without permission to a file or folder can trigger access requests to the OneDrive for Business owner when they attempt to access an item they do not have permissions to.</p>
+<p>Off- Prevent access requests and requests to share on OneDrive for Business.</p>
+<p>Unspecified- Let each OneDrive for Business owner enable or disable access requests and requests to share on their OneDrive.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: SharingState
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+<span style="color:#66d9ef">Accepted values</span>: Unspecified, On, Off
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-odbmemberscanshare">-ODBMembersCanShare</h3>
+<p>Lets administrators set policy on re-sharing behavior in OneDrive for Business.</p>
+<p>Values:</p>
+<p>On- Users with edit permissions can re-share.</p>
+<p>Off- Only OneDrive for Business owner can share. The value of ODBAccessRequests defines whether a request to share gets sent to the owner.</p>
+<p>Unspecified- Let each OneDrive for Business owner enable or disable re-sharing behavior on their OneDrive.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: SharingState
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+<span style="color:#66d9ef">Accepted values</span>: Unspecified, On, Off
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-officeclientadaldisabled">-OfficeClientADALDisabled</h3>
+<p>When set to true this will disable the ability to use Modern Authentication that leverages ADAL across the tenant.</p>
+<p>The valid values are:
+False (default) - Modern Authentication is enabled/allowed.
+True - Modern Authentication via ADAL is disabled.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-onedriveforguestsenabled">-OneDriveForGuestsEnabled</h3>
+<p>Lets OneDrive for Business creation for administrator managed guest users. Administrator managed Guest users use credentials in the resource tenant to access the resources.</p>
+<p>The valid values are the following:</p>
+<p>$true-Administrator managed Guest users can be given OneDrives, provided needed licenses are assigned.</p>
+<p>$false- Administrator managed Guest users can&rsquo;t be given OneDrives as functionality is turned off.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-onedrivestoragequota">-OneDriveStorageQuota</h3>
+<p>Sets a default OneDrive for Business storage quota for the tenant. It will be used for new OneDrive for Business sites created.</p>
+<p>A typical use will be to reduce the amount of storage associated with OneDrive for Business to a level below what the License entitles the users. For example, it could be used to set the quota to 10 gigabytes (GB) by default.</p>
+<p>If value is set to 0, the parameter will have no effect.</p>
+<p>If the value is set larger than the Maximum allowed OneDrive for Business quota, it will have no effect.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Int64
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-orphanedpersonalsitesretentionperiod">-OrphanedPersonalSitesRetentionPeriod</h3>
+<p>Specifies the number of days after a user&rsquo;s Active Directory account is deleted that their OneDrive for Business content will be deleted.</p>
+<p>The value range is in days, between 30 and 3650. The default value is 30.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Int32
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-owneranonymousnotification">-OwnerAnonymousNotification</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-preventexternalusersfromresharing">-PreventExternalUsersFromResharing</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-provisionsharedwitheveryonefolder">-ProvisionSharedWithEveryoneFolder</h3>
+<p>Creates a Shared with Everyone folder in every user&rsquo;s new OneDrive for Business document library.</p>
+<p>The valid values are:
+True (default) - The Shared with Everyone folder is created.
+False - No folder is created when the site and OneDrive for Business document library is created.</p>
+<p>The default behavior of the Shared with Everyone folder changed in August 2015.
+For additional information about the change, see Provision the Shared with Everyone folder in OneDrive for Business (<a href="https://support.office.com/en-us/article/Provision-the-Shared-with-Everyone-folder-in-OneDrive-for-Business-6bb02c91-fd0b-42ba-9457-3921cb6dc5b2?ui=en-US&amp;rs=en-US&amp;ad=US">https://support.office.com/en-us/article/Provision-the-Shared-with-Everyone-folder-in-OneDrive-for-Business-6bb02c91-fd0b-42ba-9457-3921cb6dc5b2?ui=en-US&amp;rs=en-US&amp;ad=US</a>)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-publiccdnallowedfiletypes">-PublicCdnAllowedFileTypes</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-publiccdnenabled">-PublicCdnEnabled</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-requireacceptingaccountmatchinvitedaccount">-RequireAcceptingAccountMatchInvitedAccount</h3>
+<p>Ensures that an external user can only accept an external sharing invitation with an account matching the invited email address.</p>
+<p>Administrators who desire increased control over external collaborators should consider enabling this feature.</p>
+<p>Note, this only applies to new external users accepting new sharing invitations. Also, the resource owner must share with an organizational or Microsoft account or the external user will be unable to access the resource.</p>
+<p>The valid values are:
+False (default) - When a document is shared with an external user, <a href="mailto:bob@contoso.com">bob@contoso.com</a>, it can be accepted by any user with access to the invitation link in the original e-mail.
+True - User must accept this invitation with <a href="mailto:bob@contoso.com">bob@contoso.com</a>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-requireanonymouslinksexpireindays">-RequireAnonymousLinksExpireInDays</h3>
+<p>Specifies all anonymous links that have been created (or will be created) will expire after the set number of days .</p>
+<p>To remove the expiration requirement, set the value to zero (0).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Int32
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-searchresolveexactemailorupn">-SearchResolveExactEmailOrUPN</h3>
+<p>Removes the search capability from People Picker. Note, recently resolved names will still appear in the list until browser cache is cleared or expired.</p>
+<p>SharePoint Administrators will still be able to use starts with or partial name matching when enabled.</p>
+<p>The valid values are:
+False (default) - Starts with / partial name search functionality is available.
+True - Disables starts with / partial name search functionality for all SharePoint users, except SharePoint Admins.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-sharingalloweddomainlist">-SharingAllowedDomainList</h3>
+<p>Specifies a list of email domains that is allowed for sharing with the external collaborators. Use the space character as the delimiter for entering multiple values. For example, &ldquo;contoso.com fabrikam.com&rdquo;.</p>
+<p>For additional information about how to restrict a domain sharing, see Restricted Domains Sharing in Office 365 SharePoint Online and OneDrive for Business</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-sharingblockeddomainlist">-SharingBlockedDomainList</h3>
+<p>Specifies a list of email domains that is blocked or prohibited for sharing with the external collaborators. Use space character as the delimiter for entering multiple values. For example, &ldquo;contoso.com fabrikam.com&rdquo;.</p>
+<p>For additional information about how to restrict a domain sharing, see Restricted Domains Sharing in Office 365 SharePoint Online and OneDrive for Business</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-sharingcapability">-SharingCapability</h3>
+<p>Determines what level of sharing is available for the site.</p>
+<p>The valid values are:
+ExternalUserAndGuestSharing (default) - External user sharing (share by email) and guest link sharing are both enabled. Disabled - External user sharing (share by email) and guest link sharing are both disabled.
+ExternalUserSharingOnly - External user sharing (share by email) is enabled, but guest link sharing is disabled.</p>
+<p>For more information about sharing, see Manage external sharing for your SharePoint online environment (<a href="http://office.microsoft.com/en-us/office365-sharepoint-online-enterprise-help/manage-external-sharing-for-your-sharepoint-online-environment-HA102849864.aspx)">http://office.microsoft.com/en-us/office365-sharepoint-online-enterprise-help/manage-external-sharing-for-your-sharepoint-online-environment-HA102849864.aspx)</a>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: SharingCapabilities
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+<span style="color:#66d9ef">Accepted values</span>: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-sharingdomainrestrictionmode">-SharingDomainRestrictionMode</h3>
+<p>Specifies the external sharing mode for domains.</p>
+<p>The following values are: None AllowList BlockList</p>
+<p>For additional information about how to restrict a domain sharing, see Restricted Domains Sharing in Office 365 SharePoint Online and OneDrive for Business.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: SharingDomainRestrictionModes
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+<span style="color:#66d9ef">Accepted values</span>: None, AllowList, BlockList
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-showallusersclaim">-ShowAllUsersClaim</h3>
+<p>Enables the administrator to hide the All Users claim groups in People Picker.</p>
+<p>When users share an item with &ldquo;All Users (x)&rdquo;, it is accessible to all organization members in the tenant&rsquo;s Azure Active Directory who have authenticated with via this method. When users share an item with &ldquo;All Users (x)&rdquo; it is accessible to all organization members in the tenant that used NTLM to authentication with SharePoint.</p>
+<p>Note, the All Users(authenticated) group is equivalent to the Everyone claim, and shows as Everyone.To change this, see - ShowEveryoneClaim.</p>
+<p>The valid values are:
+True(default) - The All Users claim groups are displayed in People Picker.
+False - The All Users claim groups are hidden in People Picker.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-showeveryoneclaim">-ShowEveryoneClaim</h3>
+<p>Enables the administrator to hide the Everyone claim in the People Picker.
+When users share an item with Everyone, it is accessible to all authenticated users in the tenant&rsquo;s Azure Active Directory, including any active external users who have previously accepted invitations.</p>
+<p>Note, that some SharePoint system resources such as templates and pages are required to be shared to Everyone and this type of sharing does not expose any user data or metadata.</p>
+<p>The valid values are:
+True (default) - The Everyone claim group is displayed in People Picker.
+False - The Everyone claim group is hidden from the People Picker.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-showeveryoneexceptexternalusersclaim">-ShowEveryoneExceptExternalUsersClaim</h3>
+<p>Enables the administrator to hide the &ldquo;Everyone except external users&rdquo; claim in the People Picker.
+When users share an item with &ldquo;Everyone except external users&rdquo;, it is accessible to all organization members in the tenant&rsquo;s Azure Active Directory, but not to any users who have previously accepted invitations.</p>
+<p>The valid values are:
+True(default) - The Everyone except external users is displayed in People Picker.
+False - The Everyone except external users claim is not visible in People Picker.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-showpeoplepickersuggestionsforguestusers">-ShowPeoplePickerSuggestionsForGuestUsers</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-signinaccelerationdomain">-SignInAccelerationDomain</h3>
+<p>Specifies the home realm discovery value to be sent to Azure Active Directory (AAD) during the user sign-in process.</p>
+<p>When the organization uses a third-party identity provider, this prevents the user from seeing the Azure Active Directory Home Realm Discovery web page and ensures the user only sees their company&rsquo;s Identity Provider&rsquo;s portal.
+This value can also be used with Azure Active Directory Premium to customize the Azure Active Directory login page.</p>
+<p>Acceleration will not occur on site collections that are shared externally.</p>
+<p>This value should be configured with the login domain that is used by your company (that is, <a href="mailto:example@contoso.com">example@contoso.com</a>).</p>
+<p>If your company has multiple third-party identity providers, configuring the sign-in acceleration value will break sign-in for your organization.</p>
+<p>The valid values are:
+&quot;&rdquo; (default) - Blank by default, this will also remove or clear any value that has been set.
+Login Domain - For example: &ldquo;contoso.com&rdquo;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-socialbaronsitepagesdisabled">-SocialBarOnSitePagesDisabled</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-specialcharactersstateinfilefoldernames">-SpecialCharactersStateInFileFolderNames</h3>
+<p>{{ Fill SpecialCharactersStateInFileFolderNames Description }}</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: SpecialCharactersState
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+<span style="color:#66d9ef">Accepted values</span>: NoPreference, Allowed, Disallowed
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-startasiteformurl">-StartASiteFormUrl</h3>
+<p>Specifies URL of the form to load in the Start a Site dialog.</p>
+<p>The valid values are:
+&quot;&rdquo; (default) - Blank by default, this will also remove or clear any value that has been set.
+Full URL - Example: &ldquo;<a href="https://contoso.sharepoint.com/path/to/form%22">https://contoso.sharepoint.com/path/to/form&quot;</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-usefindpeopleinpeoplepicker">-UseFindPeopleInPeoplePicker</h3>
+<p>Note:
+When set to $true, users aren&rsquo;t able to share with security groups or SharePoint groups.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-usepersistentcookiesforexplorerview">-UsePersistentCookiesForExplorerView</h3>
+<p>Lets SharePoint issue a special cookie that will allow this feature to work even when &ldquo;Keep Me Signed In&rdquo; is not selected.</p>
+<p>&ldquo;Open with Explorer&rdquo; requires persisted cookies to operate correctly.
+When the user does not select &ldquo;Keep Me Signed in&rdquo; at the time of sign -in, &ldquo;Open with Explorer&rdquo; will fail.</p>
+<p>This special cookie expires after 30 minutes and cannot be cleared by closing the browser or signing out of SharePoint Online.To clear this cookie, the user must log out of their Windows session.</p>
+<p>The valid values are:
+False(default) - No special cookie is generated and the normal Office 365 sign -in length / timing applies.
+True - Generates a special cookie that will allow &ldquo;Open with Explorer&rdquo; to function if the &ldquo;Keep Me Signed In&rdquo; box is not checked at sign -in.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-uservoiceforfeedbackenabled">-UserVoiceForFeedbackEnabled</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h3 id="-enableautonewsdigest">-EnableAutoNewsDigest</h3>
+<p>Boolean indicating if a news digest should automatically be sent to end users to inform them about news that they may have missed. On by default. For more information see <a href="https://aka.ms/autonewsdigest">https://aka.ms/autonewsdigest</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Boolean
+<span style="color:#66d9ef">Parameter Sets</span>: (All)
+
+<span style="color:#66d9ef">Required</span>: False
+<span style="color:#66d9ef">Position</span>: Named
+<span style="color:#66d9ef">Default value</span>: None
+<span style="color:#66d9ef">Accept pipeline input</span>: False
+<span style="color:#66d9ef">Accept wildcard characters</span>: False
+</code></pre></div><h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<div class="edit-meta">
+
+<br></div><nav class="pagination"><a class="nav nav-prev" href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpteamsteampicture/" title="Set-PnPTeamsTeamPicture"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Set-PnPTeamsTeamPicture</a>
+<a class="nav nav-next" href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptenantappcatalogurl/" title="Set-PnPTenantAppCatalogUrl">Next - Set-PnPTenantAppCatalogUrl <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+</nav><footer><p class="powered">Powered by <a href="https://gohugo.io">Hugo</a>. Theme by <a href="https://themes.gohugo.io/hugo-theme-techdoc/">TechDoc</a>. Designed by <a href="https://github.com/thingsym/hugo-theme-techdoc">Thingsym</a>.</p>
+</footer>
+</main>
+<div class="sidebar">
+
+<nav class="open-menu">
+<ul>
+<li class=""><a href="https://pnp.github.io/pnppowershell">Home</a></li>
+
+<li class="parent"><a href="https://pnp.github.io/pnppowershell/cmdlets/">Cmdlets</a>
+  
+<ul class="sub-menu">
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpterm/"></a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpalert/">Add-PnPAlert</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpapp/">Add-PnPApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpapplicationcustomizer/">Add-PnPApplicationCustomizer</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpclientsidepage/">Add-PnPClientSidePage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpclientsidepagesection/">Add-PnPClientSidePageSection</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpclientsidetext/">Add-PnPClientSideText</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpclientsidewebpart/">Add-PnPClientSideWebPart</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpcontenttype/">Add-PnPContentType</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpcontenttypetodocumentset/">Add-PnPContentTypeToDocumentSet</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpcontenttypetolist/">Add-PnPContentTypeToList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpcustomaction/">Add-PnPCustomAction</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpdatarowstoprovisioningtemplate/">Add-PnPDataRowsToSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpdocumentset/">Add-PnPDocumentSet</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpeventreceiver/">Add-PnPEventReceiver</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpfield/">Add-PnPField</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpfieldfromxml/">Add-PnPFieldFromXml</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpfieldtocontenttype/">Add-PnPFieldToContentType</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpfile/">Add-PnPFile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpfiletoprovisioningtemplate/">Add-PnPFileToSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpfolder/">Add-PnPFolder</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnphtmlpublishingpagelayout/">Add-PnPHtmlPublishingPageLayout</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnphubsiteassociation/">Add-PnPHubSiteAssociation</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnphubtohubassociation/">Add-PnPHubToHubAssociation</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpindexedproperty/">Add-PnPIndexedProperty</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpjavascriptblock/">Add-PnPJavaScriptBlock</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpjavascriptlink/">Add-PnPJavaScriptLink</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnplistfolderstoprovisioningtemplate/">Add-PnPListFoldersToSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnplistitem/">Add-PnPListItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpmasterpage/">Add-PnPMasterPage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpmicrosoft365groupmember/">Add-PnPMicrosoft365GroupMember</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpmicrosoft365grouptosite/">Add-PnPMicrosoft365GroupToSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpnavigationnode/">Add-PnPNavigationNode</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnporgassetslibrary/">Add-PnPOrgAssetsLibrary</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnporgnewssite/">Add-PnPOrgNewsSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnppublishingimagerendition/">Add-PnPPublishingImageRendition</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnppublishingpage/">Add-PnPPublishingPage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnppublishingpagelayout/">Add-PnPPublishingPageLayout</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnproledefinition/">Add-PnPRoleDefinition</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpsiteclassification/">Add-PnPSiteClassification</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpsitecollectionadmin/">Add-PnPSiteCollectionAdmin</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpsitecollectionappcatalog/">Add-PnPSiteCollectionAppCatalog</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpsitedesign/">Add-PnPSiteDesign</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpsitedesigntask/">Add-PnPSiteDesignTask</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpsitescript/">Add-PnPSiteScript</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpsitetemplate/">Add-PnPSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpstoredcredential/">Add-PnPStoredCredential</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnptaxonomyfield/">Add-PnPTaxonomyField</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpteamschannel/">Add-PnPTeamsChannel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpteamstab/">Add-PnPTeamsTab</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpteamsteam/">Add-PnPTeamsTeam</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpteamsuser/">Add-PnPTeamsUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnptenantcdnorigin/">Add-PnPTenantCdnOrigin</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnptenantsequence/">Add-PnPTenantSequence</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnptenantsequencesite/">Add-PnPTenantSequenceSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnptenantsequencesubsite/">Add-PnPTenantSequenceSubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnptenanttheme/">Add-PnPTenantTheme</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnptermtoterm/">Add-PnPTermToTerm</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpusertogroup/">Add-PnPUserToGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpview/">Add-PnPView</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpwebhooksubscription/">Add-PnPWebhookSubscription</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpwebparttowebpartpage/">Add-PnPWebPartToWebPartPage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpwebparttowikipage/">Add-PnPWebPartToWikiPage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/add-pnpwikipage/">Add-PnPWikiPage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/approve-pnptenantserviceprincipalpermissionrequest/">Approve-PnPTenantServicePrincipalPermissionRequest</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/clear-pnpdefaultcolumnvalues/">Clear-PnPDefaultColumnValues</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/clear-pnplistitemasrecord/">Clear-PnPListItemAsRecord</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/clear-pnpmicrosoft365groupmember/">Clear-PnPMicrosoft365GroupMember</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/clear-pnpmicrosoft365groupowner/">Clear-PnPMicrosoft365GroupOwner</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/clear-pnprecyclebinitem/">Clear-PnPRecycleBinItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/clear-pnptenantappcatalogurl/">Clear-PnPTenantAppCatalogUrl</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/clear-pnptenantrecyclebinitem/">Clear-PnPTenantRecycleBinItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/connect-pnponline/">Connect-PnPOnline</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/convert-pnpfoldertoprovisioningtemplate/">Convert-PnPFolderToSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/convert-pnpprovisioningtemplate/">Convert-PnPSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/convertto-pnpclientsidepage/">ConvertTo-PnPClientSidePage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/copy-pnpfile/">Copy-PnPFile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/copy-pnpitemproxy/">Copy-PnPItemProxy</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/deny-pnptenantserviceprincipalpermissionrequest/">Deny-PnPTenantServicePrincipalPermissionRequest</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/disable-pnpfeature/">Disable-PnPFeature</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/disable-pnpinplacerecordsmanagementforsite/">Disable-PnPInPlaceRecordsManagementForSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/disable-pnppowershelltelemetry/">Disable-PnPPowerShellTelemetry</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/disable-pnpsharingfornonownersofsite/">Disable-PnPSharingForNonOwnersOfSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/disable-pnpsiteclassification/">Disable-PnPSiteClassification</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/disable-pnptenantserviceprincipal/">Disable-PnPTenantServicePrincipal</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/disconnect-pnponline/">Disconnect-PnPOnline</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/enable-pnpcommsite/">Enable-PnPCommSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/enable-pnpfeature/">Enable-PnPFeature</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/enable-pnpinplacerecordsmanagementforsite/">Enable-PnPInPlaceRecordsManagementForSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/enable-pnppowershelltelemetry/">Enable-PnPPowerShellTelemetry</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/enable-pnpsiteclassification/">Enable-PnPSiteClassification</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/enable-pnptenantserviceprincipal/">Enable-PnPTenantServicePrincipal</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/export-pnpclientsidepage/">Export-PnPClientSidePage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/export-pnpclientsidepagemapping/">Export-PnPClientSidePageMapping</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/export-pnplisttoprovisioningtemplate/">Export-PnPListToSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/export-pnptaxonomy/">Export-PnPTaxonomy</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/export-pnptermgrouptoxml/">Export-PnPTermGroupToXml</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/export-pnpuserinfo/">Export-PnPUserInfo</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/export-pnpuserprofile/">Export-PnPUserProfile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/find-pnpfile/">Find-PnPFile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpaaduser/">Get-PnPAADUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpaccesstoken/">Get-PnPAccessToken</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpalert/">Get-PnPAlert</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpapp/">Get-PnPApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpappauthaccesstoken/">Get-PnPAppAuthAccessToken</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpapperrors/">Get-PnPAppErrors</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpappinfo/">Get-PnPAppInfo</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpapplicationcustomizer/">Get-PnPApplicationCustomizer</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpauditing/">Get-PnPAuditing</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpauthenticationrealm/">Get-PnPAuthenticationRealm</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpavailableclientsidecomponents/">Get-PnPAvailableClientSideComponents</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpavailablelanguage/">Get-PnPAvailableLanguage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpazurecertificate/">Get-PnPAzureCertificate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpbrowseridlesignout/">Get-PnPBrowserIdleSignout</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpbuiltindesignpackagevisibility/">Get-PnPBuiltInDesignPackageVisibility</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpclientsidecomponent/">Get-PnPClientSideComponent</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpclientsidepage/">Get-PnPClientSidePage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpconnection/">Get-PnPConnection</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpcontenttype/">Get-PnPContentType</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpcontenttypepublishinghuburl/">Get-PnPContentTypePublishingHubUrl</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpcontext/">Get-PnPContext</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpcustomaction/">Get-PnPCustomAction</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpdefaultcolumnvalues/">Get-PnPDefaultColumnValues</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpdeletedmicrosoft365group/">Get-PnPDeletedMicrosoft365Group</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpdocumentsettemplate/">Get-PnPDocumentSetTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpeventreceiver/">Get-PnPEventReceiver</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpexception/">Get-PnPException</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpexternaluser/">Get-PnPExternalUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpfeature/">Get-PnPFeature</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpfield/">Get-PnPField</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpfile/">Get-PnPFile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpfileversion/">Get-PnPFileVersion</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpfolder/">Get-PnPFolder</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpfolderitem/">Get-PnPFolderItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpfooter/">Get-PnPFooter</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpgraphaccesstoken/">Get-PnPGraphAccessToken</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpgraphsubscription/">Get-PnPGraphSubscription</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpgroup/">Get-PnPGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpgroupmembers/">Get-PnPGroupMembers</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpgrouppermissions/">Get-PnPGroupPermissions</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnphidedefaultthemes/">Get-PnPHideDefaultThemes</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnphomepage/">Get-PnPHomePage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnphomesite/">Get-PnPHomeSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnphubsite/">Get-PnPHubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnphubsitechild/">Get-PnPHubSiteChild</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpindexedpropertykeys/">Get-PnPIndexedPropertyKeys</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpinplacerecordsmanagement/">Get-PnPInPlaceRecordsManagement</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpissitealiasavailable/">Get-PnPIsSiteAliasAvailable</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpjavascriptlink/">Get-PnPJavaScriptLink</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpknowledgehubsite/">Get-PnPKnowledgeHubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnplabel/">Get-PnPLabel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnplist/">Get-PnPList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnplistinformationrightsmanagement/">Get-PnPListInformationRightsManagement</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnplistitem/">Get-PnPListItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnplistrecorddeclaration/">Get-PnPListRecordDeclaration</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpmanagementapiaccesstoken/">Get-PnPManagementApiAccessToken</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpmasterpage/">Get-PnPMasterPage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpmicrosoft365group/">Get-PnPMicrosoft365Group</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpmicrosoft365groupmembers/">Get-PnPMicrosoft365GroupMembers</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpmicrosoft365groupowners/">Get-PnPMicrosoft365GroupOwners</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpnavigationnode/">Get-PnPNavigationNode</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpoffice365currentservicestatus/">Get-PnPOffice365CurrentServiceStatus</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpoffice365historicalservicestatus/">Get-PnPOffice365HistoricalServiceStatus</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpoffice365servicemessage/">Get-PnPOffice365ServiceMessage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpoffice365services/">Get-PnPOffice365Services</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpofficemanagementapiaccesstoken/">Get-PnPOfficeManagementApiAccessToken</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnporgassetslibrary/">Get-PnPOrgAssetsLibrary</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnporgnewssite/">Get-PnPOrgNewsSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/request-pnppersonalsite/">Get-PnPPersonalSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnppowershelltelemetryenabled/">Get-PnPPowerShellTelemetryEnabled</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpproperty/">Get-PnPProperty</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnppropertybag/">Get-PnPPropertyBag</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnppublishingimagerendition/">Get-PnPPublishingImageRendition</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnprecyclebinitem/">Get-PnPRecycleBinItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnprequestaccessemails/">Get-PnPRequestAccessEmails</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnproledefinition/">Get-PnPRoleDefinition</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsearchconfiguration/">Get-PnPSearchConfiguration</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsearchcrawllog/">Get-PnPSearchCrawlLog</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsearchsettings/">Get-PnPSearchSettings</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsharingfornonownersofsite/">Get-PnPSharingForNonOwnersOfSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsite/">Get-PnPSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsiteclassification/">Get-PnPSiteClassification</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsiteclosure/">Get-PnPSiteClosure</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitecollectionadmin/">Get-PnPSiteCollectionAdmin</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitecollectionappcatalogs/">Get-PnPSiteCollectionAppCatalogs</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitecollectiontermstore/">Get-PnPSiteCollectionTermStore</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitedesign/">Get-PnPSiteDesign</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitedesignrights/">Get-PnPSiteDesignRights</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitedesignrun/">Get-PnPSiteDesignRun</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitedesignrunstatus/">Get-PnPSiteDesignRunStatus</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitedesigntask/">Get-PnPSiteDesignTask</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitegroup/">Get-PnPSiteGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitepolicy/">Get-PnPSitePolicy</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitescript/">Get-PnPSiteScript</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitescriptfromlist/">Get-PnPSiteScriptFromList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitescriptfromweb/">Get-PnPSiteScriptFromWeb</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsitesearchqueryresults/">Get-PnPSiteSearchQueryResults</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpprovisioningtemplate/">Get-PnPSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsiteuserinvitations/">Get-PnPSiteUserInvitations</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpstorageentity/">Get-PnPStorageEntity</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpstoredcredential/">Get-PnPStoredCredential</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpstructuralnavigationcachesitestate/">Get-PnPStructuralNavigationCacheSiteState</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpstructuralnavigationcachewebstate/">Get-PnPStructuralNavigationCacheWebState</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpsubwebs/">Get-PnPSubWebs</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptaxonomyitem/">Get-PnPTaxonomyItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptaxonomysession/">Get-PnPTaxonomySession</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpteamsapp/">Get-PnPTeamsApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpteamschannel/">Get-PnPTeamsChannel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpteamschannelmessage/">Get-PnPTeamsChannelMessage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpteamstab/">Get-PnPTeamsTab</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpteamsteam/">Get-PnPTeamsTeam</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpteamsuser/">Get-PnPTeamsUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenant/">Get-PnPTenant</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantappcatalogurl/">Get-PnPTenantAppCatalogUrl</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantcdnenabled/">Get-PnPTenantCdnEnabled</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantcdnorigin/">Get-PnPTenantCdnOrigin</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantcdnpolicies/">Get-PnPTenantCdnPolicies</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantid/">Get-PnPTenantId</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantrecyclebinitem/">Get-PnPTenantRecycleBinItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantsequence/">Get-PnPTenantSequence</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantsequencesite/">Get-PnPTenantSequenceSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantserviceprincipal/">Get-PnPTenantServicePrincipal</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantserviceprincipalpermissiongrants/">Get-PnPTenantServicePrincipalPermissionGrants</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantserviceprincipalpermissionrequests/">Get-PnPTenantServicePrincipalPermissionRequests</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantsite/">Get-PnPTenantSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenantsyncclientrestriction/">Get-PnPTenantSyncClientRestriction</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenanttemplate/">Get-PnPTenantTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptenanttheme/">Get-PnPTenantTheme</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpterm/">Get-PnPTerm</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptermgroup/">Get-PnPTermGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptermlabel/">Get-PnPTermLabel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptermset/">Get-PnPTermSet</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptheme/">Get-PnPTheme</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnptimezoneid/">Get-PnPTimeZoneId</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpunifiedauditlog/">Get-PnPUnifiedAuditLog</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpupabulkimportstatus/">Get-PnPUPABulkImportStatus</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpuser/">Get-PnPUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpuseronedrivequota/">Get-PnPUserOneDriveQuota</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpuserprofileproperty/">Get-PnPUserProfileProperty</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpview/">Get-PnPView</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpweb/">Get-PnPWeb</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpwebhooksubscriptions/">Get-PnPWebhookSubscriptions</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpwebpart/">Get-PnPWebPart</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpwebpartproperty/">Get-PnPWebPartProperty</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpwebpartxml/">Get-PnPWebPartXml</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpwebtemplates/">Get-PnPWebTemplates</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/get-pnpwikipagecontent/">Get-PnPWikiPageContent</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/grant-pnphubsiterights/">Grant-PnPHubSiteRights</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/grant-pnpsitedesignrights/">Grant-PnPSiteDesignRights</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/grant-pnptenantserviceprincipalpermission/">Grant-PnPTenantServicePrincipalPermission</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/import-pnptaxonomy/">Import-PnPTaxonomy</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/import-pnptermgroupfromxml/">Import-PnPTermGroupFromXml</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/import-pnptermset/">Import-PnPTermSet</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/initialize-pnppowershellauthentication/">Initialize-PnPPowerShellAuthentication</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/install-pnpapp/">Install-PnPApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/install-pnpsolution/">Install-PnPSolution</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/invoke-pnpquery/">Invoke-PnPQuery</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/invoke-pnpsitedesign/">Invoke-PnPSiteDesign</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/invoke-pnpsiteswap/">Invoke-PnPSiteSwap</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/invoke-pnpsitetemplate/">Invoke-PnPSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/invoke-pnpsprestmethod/">Invoke-PnPSPRestMethod</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/invoke-pnptenanttemplate/">Invoke-PnPTenantTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/invoke-pnpwebaction/">Invoke-PnPWebAction</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/measure-pnplist/">Measure-PnPList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/measure-pnpweb/">Measure-PnPWeb</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/move-pnpclientsidecomponent/">Move-PnPClientSideComponent</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/move-pnpfile/">Move-PnPFile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/move-pnpfolder/">Move-PnPFolder</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/move-pnpitemproxy/">Move-PnPItemProxy</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/move-pnplistitemtorecyclebin/">Move-PnPListItemToRecycleBin</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/move-pnprecyclebinitem/">Move-PnPRecycleBinItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpazurecertificate/">New-PnPAzureCertificate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpextensibilityhandlerobject/">New-PnPExtensibilityHandlerObject</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpgraphsubscription/">New-PnPGraphSubscription</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpgroup/">New-PnPGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnplist/">New-PnPList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpmicrosoft365group/">New-PnPMicrosoft365Group</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnppersonalsite/">New-PnPPersonalSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpsdnprovider/">New-PnPSdnProvider</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpsite/">New-PnPSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpsitegroup/">New-PnPSiteGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpprovisioningtemplate/">New-PnPSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpprovisioningtemplatefromfolder/">New-PnPSiteTemplateFromFolder</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpteamsapp/">New-PnPTeamsApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpteamsteam/">New-PnPTeamsTeam</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptenantsequence/">New-PnPTenantSequence</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptenantsequencecommunicationsite/">New-PnPTenantSequenceCommunicationSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptenantsequenceteamnogroupsite/">New-PnPTenantSequenceTeamNoGroupSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptenantsequenceteamnogroupsubsite/">New-PnPTenantSequenceTeamNoGroupSubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptenantsequenceteamsite/">New-PnPTenantSequenceTeamSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptenantsite/">New-PnPTenantSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptenanttemplate/">New-PnPTenantTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptermgroup/">New-PnPTermGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptermlabel/">New-PnPTermLabel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnptermset/">New-PnPTermSet</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpupabulkimportjob/">New-PnPUPABulkImportJob</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpuser/">New-PnPUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/new-pnpweb/">New-PnPWeb</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/publish-pnpapp/">Publish-PnPApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/read-pnpprovisioningtemplate/">Read-PnPSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/read-pnptenanttemplate/">Read-PnPTenantTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/register-pnpappcatalogsite/">Register-PnPAppCatalogSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/register-pnphubsite/">Register-PnPHubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpalert/">Remove-PnPAlert</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpapp/">Remove-PnPApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpapplicationcustomizer/">Remove-PnPApplicationCustomizer</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpclientsidecomponent/">Remove-PnPClientSideComponent</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpclientsidepage/">Remove-PnPClientSidePage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpcontenttype/">Remove-PnPContentType</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpcontenttypefromdocumentset/">Remove-PnPContentTypeFromDocumentSet</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpcontenttypefromlist/">Remove-PnPContentTypeFromList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpcustomaction/">Remove-PnPCustomAction</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpdeletedmicrosoft365group/">Remove-PnPDeletedMicrosoft365Group</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpdeletedunifiedgroup/">Remove-PnPDeletedUnifiedGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpeventreceiver/">Remove-PnPEventReceiver</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpexternaluser/">Remove-PnPExternalUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpfield/">Remove-PnPField</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpfieldfromcontenttype/">Remove-PnPFieldFromContentType</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpfile/">Remove-PnPFile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpfilefromprovisioningtemplate/">Remove-PnPFileFromSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpfileversion/">Remove-PnPFileVersion</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpfolder/">Remove-PnPFolder</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpgraphsubscription/">Remove-PnPGraphSubscription</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpgroup/">Remove-PnPGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnphomesite/">Remove-PnPHomeSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnphubsiteassociation/">Remove-PnPHubSiteAssociation</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnphubtohubassociation/">Remove-PnPHubToHubAssociation</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpindexedproperty/">Remove-PnPIndexedProperty</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpjavascriptlink/">Remove-PnPJavaScriptLink</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpknowledgehubsite/">Remove-PnPKnowledgeHubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnplist/">Remove-PnPList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnplistitem/">Remove-PnPListItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpmicrosoft365group/">Remove-PnPMicrosoft365Group</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpmicrosoft365groupmember/">Remove-PnPMicrosoft365GroupMember</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpmicrosoft365groupowner/">Remove-PnPMicrosoft365GroupOwner</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpnavigationnode/">Remove-PnPNavigationNode</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnporgassetslibrary/">Remove-PnPOrgAssetsLibrary</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnporgnewssite/">Remove-PnPOrgNewsSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnppropertybagvalue/">Remove-PnPPropertyBagValue</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnppublishingimagerendition/">Remove-PnPPublishingImageRendition</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnproledefinition/">Remove-PnPRoleDefinition</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsdnprovider/">Remove-PnPSdnProvider</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsearchconfiguration/">Remove-PnPSearchConfiguration</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsiteclassification/">Remove-PnPSiteClassification</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsitecollectionadmin/">Remove-PnPSiteCollectionAdmin</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsitecollectionappcatalog/">Remove-PnPSiteCollectionAppCatalog</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsitedesign/">Remove-PnPSiteDesign</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsitedesigntask/">Remove-PnPSiteDesignTask</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsitegroup/">Remove-PnPSiteGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsitescript/">Remove-PnPSiteScript</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpsiteuserinvitations/">Remove-PnPSiteUserInvitations</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpstorageentity/">Remove-PnPStorageEntity</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpstoredcredential/">Remove-PnPStoredCredential</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnptaxonomyitem/">Remove-PnPTaxonomyItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpteamsapp/">Remove-PnPTeamsApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpteamschannel/">Remove-PnPTeamsChannel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpteamstab/">Remove-PnPTeamsTab</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpteamsteam/">Remove-PnPTeamsTeam</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpteamsuser/">Remove-PnPTeamsUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnptenantcdnorigin/">Remove-PnPTenantCdnOrigin</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnptenantsite/">Remove-PnPTenantSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnptenantsyncclientrestriction/">Remove-PnPTenantSyncClientRestriction</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnptenanttheme/">Remove-PnPTenantTheme</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpterm/">Remove-PnPTerm</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnptermgroup/">Remove-PnPTermGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnptermlabel/">Remove-PnPTermLabel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpuser/">Remove-PnPUser</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpuserfromgroup/">Remove-PnPUserFromGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpuserinfo/">Remove-PnPUserInfo</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpuserprofile/">Remove-PnPUserProfile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpview/">Remove-PnPView</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpweb/">Remove-PnPWeb</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpwebhooksubscription/">Remove-PnPWebhookSubscription</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpwebpart/">Remove-PnPWebPart</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/remove-pnpwikipage/">Remove-PnPWikiPage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/rename-pnpfile/">Rename-PnPFile</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/rename-pnpfolder/">Rename-PnPFolder</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/repair-pnpsite/">Repair-PnPSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/request-pnpaccesstoken/">Request-PnPAccessToken</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/request-pnpreindexlist/">Request-PnPReIndexList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/request-pnpreindexweb/">Request-PnPReIndexWeb</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/reset-pnpfileversion/">Reset-PnPFileVersion</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/reset-pnplabel/">Reset-PnPLabel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/reset-pnpmicrosoft365groupexpiration/">Reset-PnPMicrosoft365GroupExpiration</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/reset-pnpuseronedrivequotatodefault/">Reset-PnPUserOneDriveQuotaToDefault</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/resolve-pnpfolder/">Resolve-PnPFolder</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/restore-pnpdeletedmicrosoft365group/">Restore-PnPDeletedMicrosoft365Group</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/restore-pnpfileversion/">Restore-PnPFileVersion</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/restore-pnprecyclebinitem/">Restore-PnPRecycleBinItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/restore-pnptenantrecyclebinitem/">Restore-PnPTenantRecycleBinItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/revoke-pnphubsiterights/">Revoke-PnPHubSiteRights</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/revoke-pnpsitedesignrights/">Revoke-PnPSiteDesignRights</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/revoke-pnptenantserviceprincipalpermission/">Revoke-PnPTenantServicePrincipalPermission</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/revoke-pnpusersession/">Revoke-PnPUserSession</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/save-pnpclientsidepageconversionlog/">Save-PnPClientSidePageConversionLog</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/save-pnpprovisioningtemplate/">Save-PnPSiteTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/save-pnptenanttemplate/">Save-PnPTenantTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/send-pnpmail/">Send-PnPMail</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpapplicationcustomizer/">Set-PnPApplicationCustomizer</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpappsideloading/">Set-PnPAppSideLoading</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpauditing/">Set-PnPAuditing</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpavailablepagelayouts/">Set-PnPAvailablePageLayouts</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpbrowseridlesignout/">Set-PnPBrowserIdleSignout</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpbuiltindesignpackagevisibility/">Set-PnPBuiltInDesignPackageVisibility</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpclientsidepage/">Set-PnPClientSidePage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpclientsidetext/">Set-PnPClientSideText</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpclientsidewebpart/">Set-PnPClientSideWebPart</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpcontext/">Set-PnPContext</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpdefaultcolumnvalues/">Set-PnPDefaultColumnValues</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpdefaultcontenttypetolist/">Set-PnPDefaultContentTypeToList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpdefaultpagelayout/">Set-PnPDefaultPageLayout</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpdocumentsetfield/">Set-PnPDocumentSetField</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpfield/">Set-PnPField</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpfilecheckedin/">Set-PnPFileCheckedIn</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpfilecheckedout/">Set-PnPFileCheckedOut</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpfolderpermission/">Set-PnPFolderPermission</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpfooter/">Set-PnPFooter</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpgraphsubscription/">Set-PnPGraphSubscription</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpgroup/">Set-PnPGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpgrouppermissions/">Set-PnPGroupPermissions</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnphidedefaultthemes/">Set-PnPHideDefaultThemes</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnphomepage/">Set-PnPHomePage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnphomesite/">Set-PnPHomeSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnphubsite/">Set-PnPHubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpindexedproperties/">Set-PnPIndexedProperties</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpinplacerecordsmanagement/">Set-PnPInPlaceRecordsManagement</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpknowledgehubsite/">Set-PnPKnowledgeHubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnplabel/">Set-PnPLabel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnplist/">Set-PnPList</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnplistinformationrightsmanagement/">Set-PnPListInformationRightsManagement</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnplistitem/">Set-PnPListItem</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnplistitemasrecord/">Set-PnPListItemAsRecord</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnplistitempermission/">Set-PnPListItemPermission</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnplistpermission/">Set-PnPListPermission</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnplistrecorddeclaration/">Set-PnPListRecordDeclaration</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpmasterpage/">Set-PnPMasterPage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpmicrosoft365group/">Set-PnPMicrosoft365Group</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpminimaldownloadstrategy/">Set-PnPMinimalDownloadStrategy</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnppropertybagvalue/">Set-PnPPropertyBagValue</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnprequestaccessemails/">Set-PnPRequestAccessEmails</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpsearchconfiguration/">Set-PnPSearchConfiguration</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpsearchsettings/">Set-PnPSearchSettings</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpsite/">Set-PnPSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpsiteclosure/">Set-PnPSiteClosure</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpsitedesign/">Set-PnPSiteDesign</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpsitegroup/">Set-PnPSiteGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpsitepolicy/">Set-PnPSitePolicy</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpsitescript/">Set-PnPSiteScript</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpprovisioningtemplatemetadata/">Set-PnPSiteTemplateMetadata</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpstorageentity/">Set-PnPStorageEntity</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpstructuralnavigationcachesitestate/">Set-PnPStructuralNavigationCacheSiteState</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpstructuralnavigationcachewebstate/">Set-PnPStructuralNavigationCacheSiteState</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptaxonomyfieldvalue/">Set-PnPTaxonomyFieldValue</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpteamschannel/">Set-PnPTeamsChannel</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpteamstab/">Set-PnPTeamsTab</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpteamsteam/">Set-PnPTeamsTeam</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpteamsteamarchivedstate/">Set-PnPTeamsTeamArchivedState</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpteamsteampicture/">Set-PnPTeamsTeamPicture</a></li>
+<li class="active"><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptenant/">Set-PnPTenant</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptenantappcatalogurl/">Set-PnPTenantAppCatalogUrl</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptenantcdnenabled/">Set-PnPTenantCdnEnabled</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptenantcdnpolicy/">Set-PnPTenantCdnPolicy</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptenantsite/">Set-PnPTenantSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptenantsyncclientrestriction/">Set-PnPTenantSyncClientRestriction</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpterm/">Set-PnPTerm</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptermgroup/">Set-PnPTermGroup</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptermset/">Set-PnPTermSet</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptheme/">Set-PnPTheme</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnptracelog/">Set-PnPTraceLog</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpuseronedrivequota/">Set-PnPUserOneDriveQuota</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpuserprofileproperty/">Set-PnPUserProfileProperty</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpview/">Set-PnPView</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpweb/">Set-PnPWeb</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpwebhooksubscription/">Set-PnPWebhookSubscription</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpwebpartproperty/">Set-PnPWebPartProperty</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpwebpermission/">Set-PnPWebPermission</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpwebtheme/">Set-PnPWebTheme</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/set-pnpwikipagecontent/">Set-PnPWikiPageContent</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/submit-pnpsearchquery/">Submit-PnPSearchQuery</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/submit-pnpteamschannelmessage/">Submit-PnPTeamsChannelMessage</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/sync-pnpapptoteams/">Sync-PnPAppToTeams</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/test-pnplistitemisrecord/">Test-PnPListItemIsRecord</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/test-pnpoffice365groupaliasisused/">Test-PnPOffice365GroupAliasIsUsed</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/test-pnpsite/">Test-PnPSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/test-pnptenanttemplate/">Test-PnPTenantTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/uninstall-pnpapp/">Uninstall-PnPApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/unpublish-pnpapp/">Unpublish-PnPApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/unregister-pnphubsite/">Unregister-PnPHubSite</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/update-pnpapp/">Update-PnPApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/update-pnpsiteclassification/">Update-PnPSiteClassification</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/update-pnpteamsapp/">Update-PnPTeamsApp</a></li>
+<li class=""><a href="https://pnp.github.io/pnppowershell/cmdlets/update-pnpusertype/">Update-PnPUserType</a></li>
+</ul>
+  
+</li>
+
+<li class=""><a href="https://pnp.github.io/pnppowershell/getting-started/">Getting Starteds</a>
+  
+<ul class="sub-menu">
+<li class=""><a href="https://pnp.github.io/pnppowershell/getting-started/installation/"></a></li>
+</ul>
+  
+</li>
+</ul>
+</nav>
+
+
+
+<div class="sidebar-footer"></div>
+</div>
+
+</div><a href="#" id="backtothetop-fixed" class="backtothetop"
+ data-backtothetop-duration="600"
+ data-backtothetop-easing="easeOutQuart"
+ data-backtothetop-fixed-fadeIn="1000"
+ data-backtothetop-fixed-fadeOut="1000"
+ data-backtothetop-fixed-bottom="10"
+ data-backtothetop-fixed-right="20">
+<span class="fa-layers fa-fw">
+<i class="fas fa-circle"></i>
+<i class="fas fa-arrow-circle-up"></i>
+</span></a>
+</div>
+</body>
+</html>
