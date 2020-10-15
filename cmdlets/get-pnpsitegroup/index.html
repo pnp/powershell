@@ -22,7 +22,7 @@
  SharePoint: Access to the SharePoint Tenant Administration site  Gets all the groups in the current or specified site collection.
 SYNTAX Get-PnPSiteGroup [-Group &lt;String&gt;] [-Site &lt;SitePipeBind&gt;] DESCRIPTION Use the Get-PnPSiteGroup cmdlet to get all the groups on the specified or currently connected site collection.
 EXAMPLES EXAMPLE 1 Get-PnPSiteGroup Returns all SharePoint groups in the current connected to site
-EXAMPLE 2 Get-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/siteA This will return all SharePoint groups in the specified site" />
+EXAMPLE 2 Get-PnPSiteGroup -Site &#34;https://contoso.sharepoint.com/sites/siteA&#34; This will return all SharePoint groups in the specified site" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/get-pnpsitegroup/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -35,13 +35,13 @@ EXAMPLE 2 Get-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/siteA This
  SharePoint: Access to the SharePoint Tenant Administration site  Gets all the groups in the current or specified site collection.
 SYNTAX Get-PnPSiteGroup [-Group &lt;String&gt;] [-Site &lt;SitePipeBind&gt;] DESCRIPTION Use the Get-PnPSiteGroup cmdlet to get all the groups on the specified or currently connected site collection.
 EXAMPLES EXAMPLE 1 Get-PnPSiteGroup Returns all SharePoint groups in the current connected to site
-EXAMPLE 2 Get-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/siteA This will return all SharePoint groups in the specified site"/>
+EXAMPLE 2 Get-PnPSiteGroup -Site &#34;https://contoso.sharepoint.com/sites/siteA&#34; This will return all SharePoint groups in the specified site"/>
 <meta itemprop="name" content="Get-PnPSiteGroup">
 <meta itemprop="description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Gets all the groups in the current or specified site collection.
 SYNTAX Get-PnPSiteGroup [-Group &lt;String&gt;] [-Site &lt;SitePipeBind&gt;] DESCRIPTION Use the Get-PnPSiteGroup cmdlet to get all the groups on the specified or currently connected site collection.
 EXAMPLES EXAMPLE 1 Get-PnPSiteGroup Returns all SharePoint groups in the current connected to site
-EXAMPLE 2 Get-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/siteA This will return all SharePoint groups in the specified site">
+EXAMPLE 2 Get-PnPSiteGroup -Site &#34;https://contoso.sharepoint.com/sites/siteA&#34; This will return all SharePoint groups in the specified site">
 
 <meta itemprop="wordCount" content="170">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -81,13 +81,13 @@ EXAMPLE 2 Get-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/siteA This
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSiteGroup
 </code></pre></div><p>Returns all SharePoint groups in the current connected to site</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSiteGroup -Site https<span style="color:#960050;background-color:#1e0010">:</span>//contoso.sharepoint.com/sites/siteA
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSiteGroup -Site <span style="color:#e6db74">&#34;https://contoso.sharepoint.com/sites/siteA&#34;</span>
 </code></pre></div><p>This will return all SharePoint groups in the specified site</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSiteGroup -Group <span style="color:#e6db74">&#34;SiteA Members&#34;</span>
 </code></pre></div><p>This will return the specified group for the current connected to site</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSiteGroup -Group <span style="color:#e6db74">&#34;SiteA Members&#34;</span> -Site https<span style="color:#960050;background-color:#1e0010">:</span>//contoso.sharepoint.com/sites/siteA
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSiteGroup -Group <span style="color:#e6db74">&#34;SiteA Members&#34;</span> -Site <span style="color:#e6db74">&#34;https://contoso.sharepoint.com/sites/siteA&#34;</span>
 </code></pre></div><p>This will return the specified group for the specified site.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-site">-Site</h3>

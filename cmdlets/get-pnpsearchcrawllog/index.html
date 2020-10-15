@@ -20,7 +20,7 @@
 <meta property="og:title" content="Get-PnPSearchCrawlLog" />
 <meta property="og:description" content="SYNOPSIS Returns entries from the SharePoint search crawl log. Make sure you are granted access to the crawl log via the SharePoint search admin center at https://-admin.sharepoint.com/_layouts/15/searchadmin/crawllogreadpermission.aspx in order to run this cmdlet.
 SYNTAX Get-PnPSearchCrawlLog [-LogLevel &lt;LogLevel&gt;] [-RowLimit &lt;Int32&gt;] [-Filter &lt;String&gt;] [-ContentSource &lt;ContentSource&gt;] [-StartDate &lt;DateTime&gt;] [-EndDate &lt;DateTime&gt;] [-RawFormat] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Get-PnPSearchCrawlLog Returns the last 100 crawl log entries for site content.
-EXAMPLE 2 Get-PnPSearchCrawlLog -Filter &#34;https://&lt;tenant&gt;-my." />
+EXAMPLE 2 Get-PnPSearchCrawlLog -Filter &#34;https://contoso-my." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/get-pnpsearchcrawllog/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -31,11 +31,11 @@ EXAMPLE 2 Get-PnPSearchCrawlLog -Filter &#34;https://&lt;tenant&gt;-my." />
 <meta name="twitter:title" content="Get-PnPSearchCrawlLog"/>
 <meta name="twitter:description" content="SYNOPSIS Returns entries from the SharePoint search crawl log. Make sure you are granted access to the crawl log via the SharePoint search admin center at https://-admin.sharepoint.com/_layouts/15/searchadmin/crawllogreadpermission.aspx in order to run this cmdlet.
 SYNTAX Get-PnPSearchCrawlLog [-LogLevel &lt;LogLevel&gt;] [-RowLimit &lt;Int32&gt;] [-Filter &lt;String&gt;] [-ContentSource &lt;ContentSource&gt;] [-StartDate &lt;DateTime&gt;] [-EndDate &lt;DateTime&gt;] [-RawFormat] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Get-PnPSearchCrawlLog Returns the last 100 crawl log entries for site content.
-EXAMPLE 2 Get-PnPSearchCrawlLog -Filter &#34;https://&lt;tenant&gt;-my."/>
+EXAMPLE 2 Get-PnPSearchCrawlLog -Filter &#34;https://contoso-my."/>
 <meta itemprop="name" content="Get-PnPSearchCrawlLog">
 <meta itemprop="description" content="SYNOPSIS Returns entries from the SharePoint search crawl log. Make sure you are granted access to the crawl log via the SharePoint search admin center at https://-admin.sharepoint.com/_layouts/15/searchadmin/crawllogreadpermission.aspx in order to run this cmdlet.
 SYNTAX Get-PnPSearchCrawlLog [-LogLevel &lt;LogLevel&gt;] [-RowLimit &lt;Int32&gt;] [-Filter &lt;String&gt;] [-ContentSource &lt;ContentSource&gt;] [-StartDate &lt;DateTime&gt;] [-EndDate &lt;DateTime&gt;] [-RawFormat] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Get-PnPSearchCrawlLog Returns the last 100 crawl log entries for site content.
-EXAMPLE 2 Get-PnPSearchCrawlLog -Filter &#34;https://&lt;tenant&gt;-my.">
+EXAMPLE 2 Get-PnPSearchCrawlLog -Filter &#34;https://contoso-my.">
 
 <meta itemprop="wordCount" content="566">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -70,7 +70,7 @@ EXAMPLE 2 Get-PnPSearchCrawlLog -Filter &#34;https://&lt;tenant&gt;-my.">
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSearchCrawlLog
 </code></pre></div><p>Returns the last 100 crawl log entries for site content.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSearchCrawlLog -Filter <span style="color:#e6db74">&#34;https://&lt;tenant&gt;-my.sharepoint.com/personal&#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSearchCrawlLog -Filter <span style="color:#e6db74">&#34;https://contoso-my.sharepoint.com/personal&#34;</span>
 </code></pre></div><p>Returns the last 100 crawl log entries for OneDrive content.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSearchCrawlLog -ContentSource UserProfiles

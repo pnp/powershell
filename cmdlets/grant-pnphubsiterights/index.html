@@ -20,7 +20,7 @@
 <meta property="og:title" content="Grant-PnPHubSiteRights" />
 <meta property="og:description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Grant additional permissions to the permissions already in place to associate sites to Hub Sites for one or more specific users
-SYNTAX Grant-PnPHubSiteRights [-Identity] &lt;HubSitePipeBind&gt; -Principals &lt;String[]&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Grant-PnPHubSiteRights -Identity https://contoso.sharepoint.com/sites/hubsite -Principals &#34;myuser@mydomain.com&#34;,&#34;myotheruser@mydomain.com&#34; This example shows how to grant rights to myuser and myotheruser to associate their sites with the provided Hub Site" />
+SYNTAX Grant-PnPHubSiteRights [-Identity] &lt;HubSitePipeBind&gt; -Principals &lt;String[]&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Grant-PnPHubSiteRights -Identity &#34;https://contoso.sharepoint.com/sites/hubsite&#34; -Principals &#34;myuser@mydomain.com&#34;,&#34;myotheruser@mydomain.com&#34; This example shows how to grant rights to myuser and myotheruser to associate their sites with the provided Hub Site" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/grant-pnphubsiterights/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -31,11 +31,11 @@ SYNTAX Grant-PnPHubSiteRights [-Identity] &lt;HubSitePipeBind&gt; -Principals &l
 <meta name="twitter:title" content="Grant-PnPHubSiteRights"/>
 <meta name="twitter:description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Grant additional permissions to the permissions already in place to associate sites to Hub Sites for one or more specific users
-SYNTAX Grant-PnPHubSiteRights [-Identity] &lt;HubSitePipeBind&gt; -Principals &lt;String[]&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Grant-PnPHubSiteRights -Identity https://contoso.sharepoint.com/sites/hubsite -Principals &#34;myuser@mydomain.com&#34;,&#34;myotheruser@mydomain.com&#34; This example shows how to grant rights to myuser and myotheruser to associate their sites with the provided Hub Site"/>
+SYNTAX Grant-PnPHubSiteRights [-Identity] &lt;HubSitePipeBind&gt; -Principals &lt;String[]&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Grant-PnPHubSiteRights -Identity &#34;https://contoso.sharepoint.com/sites/hubsite&#34; -Principals &#34;myuser@mydomain.com&#34;,&#34;myotheruser@mydomain.com&#34; This example shows how to grant rights to myuser and myotheruser to associate their sites with the provided Hub Site"/>
 <meta itemprop="name" content="Grant-PnPHubSiteRights">
 <meta itemprop="description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Grant additional permissions to the permissions already in place to associate sites to Hub Sites for one or more specific users
-SYNTAX Grant-PnPHubSiteRights [-Identity] &lt;HubSitePipeBind&gt; -Principals &lt;String[]&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Grant-PnPHubSiteRights -Identity https://contoso.sharepoint.com/sites/hubsite -Principals &#34;myuser@mydomain.com&#34;,&#34;myotheruser@mydomain.com&#34; This example shows how to grant rights to myuser and myotheruser to associate their sites with the provided Hub Site">
+SYNTAX Grant-PnPHubSiteRights [-Identity] &lt;HubSitePipeBind&gt; -Principals &lt;String[]&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Grant-PnPHubSiteRights -Identity &#34;https://contoso.sharepoint.com/sites/hubsite&#34; -Principals &#34;myuser@mydomain.com&#34;,&#34;myotheruser@mydomain.com&#34; This example shows how to grant rights to myuser and myotheruser to associate their sites with the provided Hub Site">
 
 <meta itemprop="wordCount" content="178">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -70,7 +70,7 @@ SYNTAX Grant-PnPHubSiteRights [-Identity] &lt;HubSitePipeBind&gt; -Principals &l
 </code></pre></div><h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Grant-PnPHubSiteRights -Identity https<span style="color:#960050;background-color:#1e0010">:</span>//contoso.sharepoint.com/sites/hubsite -Principals <span style="color:#e6db74">&#34;myuser@mydomain.com&#34;</span>,<span style="color:#e6db74">&#34;myotheruser@mydomain.com&#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Grant-PnPHubSiteRights -Identity <span style="color:#e6db74">&#34;https://contoso.sharepoint.com/sites/hubsite&#34;</span> -Principals <span style="color:#e6db74">&#34;myuser@mydomain.com&#34;</span>,<span style="color:#e6db74">&#34;myotheruser@mydomain.com&#34;</span>
 </code></pre></div><p>This example shows how to grant rights to myuser and myotheruser to associate their sites with the provided Hub Site</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>

@@ -91,7 +91,7 @@ SYNTAX Path Invoke-PnPSiteTemplate [-Path] &lt;String&gt; [-TemplateId &lt;Strin
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Invoke-PnPSiteTemplate -Path template.pnp
 </code></pre></div><p>Applies a site template from a pnp package to the current web.</p>
 <h3 id="example-6">EXAMPLE 6</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Invoke-PnPSiteTemplate -Path https<span style="color:#960050;background-color:#1e0010">:</span>//tenant.sharepoint.com/sites/templatestorage/Documents/template.pnp
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Invoke-PnPSiteTemplate -Path <span style="color:#e6db74">&#34;https://tenant.sharepoint.com/sites/templatestorage/Documents/template.pnp&#34;</span>
 </code></pre></div><p>Applies a site template from a pnp package stored in a library to the current web.</p>
 <h3 id="example-7">EXAMPLE 7</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$handler1 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1

@@ -76,13 +76,13 @@ SYNTAX All components Get-PnPSiteScriptFromWeb -Url &lt;String&gt; [-Lists &lt;S
 <p>This command allows a Site Script to be generated off of an existing site on your tenant. Connect to your SharePoint Online Admin site before executing this command.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSiteScriptFromWeb -Url https<span style="color:#960050;background-color:#1e0010">:</span>//contoso.sharepoint.com/sites/teamsite -IncludeAll
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSiteScriptFromWeb -Url <span style="color:#e6db74">&#34;https://contoso.sharepoint.com/sites/teamsite&#34;</span> -IncludeAll
 </code></pre></div><p>Returns the generated Site Script JSON containing all supported components from the site at the provided Url</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSiteScriptFromWeb -Url https<span style="color:#960050;background-color:#1e0010">:</span>//contoso.sharepoint.com/sites/teamsite -IncludeAll -Lists <span style="color:#e6db74">&#34;Shared Documents&#34;</span>,<span style="color:#e6db74">&#34;Lists\MyList&#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSiteScriptFromWeb -Url <span style="color:#e6db74">&#34;https://contoso.sharepoint.com/sites/teamsite&#34;</span> -IncludeAll -Lists <span style="color:#e6db74">&#34;Shared Documents&#34;</span>,<span style="color:#e6db74">&#34;Lists\MyList&#34;</span>
 </code></pre></div><p>Returns the generated Site Script JSON containing all supported components from the site at the provided Url including the lists &ldquo;Shared Documents&rdquo; and &ldquo;MyList&rdquo;</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSiteScriptFromWeb -Url https<span style="color:#960050;background-color:#1e0010">:</span>//contoso.sharepoint.com/sites/teamsite -IncludeBranding -IncludeLinksToExportedItems
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSiteScriptFromWeb -Url <span style="color:#e6db74">&#34;https://contoso.sharepoint.com/sites/teamsite&#34;</span> -IncludeBranding -IncludeLinksToExportedItems
 </code></pre></div><p>Returns the generated Site Script JSON containing the branding and navigation links from the site at the provided Url</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-confirm">-Confirm</h3>

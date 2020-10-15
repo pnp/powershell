@@ -83,7 +83,6 @@ EXAMPLE 2 Add-PnPApp -Path ./myapp.sppkg -Publish This will upload the specified
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: PnPConnection
 <span style="color:#66d9ef">Parameter Sets</span>: (All)
-
 <span style="color:#66d9ef">Required</span>: False
 <span style="color:#66d9ef">Position</span>: Named
 <span style="color:#66d9ef">Default value</span>: None
@@ -93,7 +92,6 @@ EXAMPLE 2 Add-PnPApp -Path ./myapp.sppkg -Publish This will upload the specified
 <p>Overwrites the existing app package if it already exists</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: SwitchParameter
 <span style="color:#66d9ef">Parameter Sets</span>: (All)
-
 <span style="color:#66d9ef">Required</span>: False
 <span style="color:#66d9ef">Position</span>: Named
 <span style="color:#66d9ef">Default value</span>: None
@@ -103,7 +101,6 @@ EXAMPLE 2 Add-PnPApp -Path ./myapp.sppkg -Publish This will upload the specified
 <p>Specifies the Id or an actual app metadata instance</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
 <span style="color:#66d9ef">Parameter Sets</span>: (All)
-
 <span style="color:#66d9ef">Required</span>: True
 <span style="color:#66d9ef">Position</span>: <span style="color:#ae81ff">0</span>
 <span style="color:#66d9ef">Default value</span>: None
@@ -113,7 +110,6 @@ EXAMPLE 2 Add-PnPApp -Path ./myapp.sppkg -Publish This will upload the specified
 <p>This will deploy/trust an app into the app catalog</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: SwitchParameter
 <span style="color:#66d9ef">Parameter Sets</span>: Add and Publish
-
 <span style="color:#66d9ef">Required</span>: True
 <span style="color:#66d9ef">Position</span>: Named
 <span style="color:#66d9ef">Default value</span>: None
@@ -124,7 +120,6 @@ EXAMPLE 2 Add-PnPApp -Path ./myapp.sppkg -Publish This will upload the specified
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: AppCatalogScope
 <span style="color:#66d9ef">Parameter Sets</span>: (All)
 <span style="color:#66d9ef">Accepted values</span>: Tenant, Site
-
 <span style="color:#66d9ef">Required</span>: False
 <span style="color:#66d9ef">Position</span>: Named
 <span style="color:#66d9ef">Default value</span>: None
@@ -133,7 +128,6 @@ EXAMPLE 2 Add-PnPApp -Path ./myapp.sppkg -Publish This will upload the specified
 </code></pre></div><h3 id="-skipfeaturedeployment">-SkipFeatureDeployment</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: SwitchParameter
 <span style="color:#66d9ef">Parameter Sets</span>: Add and Publish
-
 <span style="color:#66d9ef">Required</span>: False
 <span style="color:#66d9ef">Position</span>: Named
 <span style="color:#66d9ef">Default value</span>: None
@@ -143,7 +137,6 @@ EXAMPLE 2 Add-PnPApp -Path ./myapp.sppkg -Publish This will upload the specified
 <p>Specifies the timeout in seconds. Defaults to 200.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Int32
 <span style="color:#66d9ef">Parameter Sets</span>: (All)
-
 <span style="color:#66d9ef">Required</span>: False
 <span style="color:#66d9ef">Position</span>: Named
 <span style="color:#66d9ef">Default value</span>: None

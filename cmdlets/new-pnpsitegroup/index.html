@@ -21,7 +21,7 @@
 <meta property="og:description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Creates a new group in a SharePoint Online site collection.
 SYNTAX New-PnPSiteGroup -Group &lt;String&gt; -PermissionLevels &lt;String[]&gt; [-Site &lt;SitePipeBind&gt;] DESCRIPTION A SharePoint group is a set of individual users. SharePoint groups enable you to manage sets of users instead of individual users.
-EXAMPLES EXAMPLE 1 New-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/siteA -Group &#34;Project Leads&#34; -PermissionLevels &#34;Full Control&#34; This example creates a group named Project Leads with the Full Control permission level on the site collection https://contoso." />
+EXAMPLES EXAMPLE 1 New-PnPSiteGroup -Site &#34;https://contoso.sharepoint.com/sites/siteA&#34; -Group &#34;Project Leads&#34; -PermissionLevels &#34;Full Control&#34; This example creates a group named Project Leads with the Full Control permission level on the site collection https://contoso." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/new-pnpsitegroup/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -33,12 +33,12 @@ EXAMPLES EXAMPLE 1 New-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/s
 <meta name="twitter:description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Creates a new group in a SharePoint Online site collection.
 SYNTAX New-PnPSiteGroup -Group &lt;String&gt; -PermissionLevels &lt;String[]&gt; [-Site &lt;SitePipeBind&gt;] DESCRIPTION A SharePoint group is a set of individual users. SharePoint groups enable you to manage sets of users instead of individual users.
-EXAMPLES EXAMPLE 1 New-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/siteA -Group &#34;Project Leads&#34; -PermissionLevels &#34;Full Control&#34; This example creates a group named Project Leads with the Full Control permission level on the site collection https://contoso."/>
+EXAMPLES EXAMPLE 1 New-PnPSiteGroup -Site &#34;https://contoso.sharepoint.com/sites/siteA&#34; -Group &#34;Project Leads&#34; -PermissionLevels &#34;Full Control&#34; This example creates a group named Project Leads with the Full Control permission level on the site collection https://contoso."/>
 <meta itemprop="name" content="New-PnPSiteGroup">
 <meta itemprop="description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Creates a new group in a SharePoint Online site collection.
 SYNTAX New-PnPSiteGroup -Group &lt;String&gt; -PermissionLevels &lt;String[]&gt; [-Site &lt;SitePipeBind&gt;] DESCRIPTION A SharePoint group is a set of individual users. SharePoint groups enable you to manage sets of users instead of individual users.
-EXAMPLES EXAMPLE 1 New-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/siteA -Group &#34;Project Leads&#34; -PermissionLevels &#34;Full Control&#34; This example creates a group named Project Leads with the Full Control permission level on the site collection https://contoso.">
+EXAMPLES EXAMPLE 1 New-PnPSiteGroup -Site &#34;https://contoso.sharepoint.com/sites/siteA&#34; -Group &#34;Project Leads&#34; -PermissionLevels &#34;Full Control&#34; This example creates a group named Project Leads with the Full Control permission level on the site collection https://contoso.">
 
 <meta itemprop="wordCount" content="265">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -76,10 +76,10 @@ EXAMPLES EXAMPLE 1 New-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/s
 <p>A SharePoint group is a set of individual users. SharePoint groups enable you to manage sets of users instead of individual users.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">New-PnPSiteGroup -Site https<span style="color:#960050;background-color:#1e0010">:</span>//contoso.sharepoint.com/sites/siteA -Group <span style="color:#e6db74">&#34;Project Leads&#34;</span> -PermissionLevels <span style="color:#e6db74">&#34;Full Control&#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">New-PnPSiteGroup -Site <span style="color:#e6db74">&#34;https://contoso.sharepoint.com/sites/siteA&#34;</span> -Group <span style="color:#e6db74">&#34;Project Leads&#34;</span> -PermissionLevels <span style="color:#e6db74">&#34;Full Control&#34;</span>
 </code></pre></div><p>This example creates a group named Project Leads with the Full Control permission level on the site collection <a href="https://contoso.sharepoint.com/sites/siteA">https://contoso.sharepoint.com/sites/siteA</a>.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">New-PnPSiteGroup -Site https<span style="color:#960050;background-color:#1e0010">:</span>//contoso.sharepoint.com/sites/marketing -Group <span style="color:#e6db74">&#34;NewGroupName&#34;</span> -PermissionLevels <span style="color:#e6db74">&#34;Design&#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">New-PnPSiteGroup -Site <span style="color:#e6db74">&#34;https://contoso.sharepoint.com/sites/marketing&#34;</span> -Group <span style="color:#e6db74">&#34;NewGroupName&#34;</span> -PermissionLevels <span style="color:#e6db74">&#34;Design&#34;</span>
 </code></pre></div><p>This example creates a group named NewGroupName with the Design permission level on the site collection <a href="https://contoso.sharepoint.com/sites/marketing">https://contoso.sharepoint.com/sites/marketing</a>.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-name">-Name</h3>

@@ -20,7 +20,7 @@
 <meta property="og:title" content="Set-PnPSiteGroup" />
 <meta property="og:description" content="SYNOPSIS Updates the SharePoint Online owner and permission levels on a group inside a site collection.
 SYNTAX Set-PnPSiteGroup -Identity &lt;String&gt; [-Name &lt;String&gt;] [-Owner &lt;String&gt;] [-PermissionLevelsToAdd &lt;String[]&gt;] [-PermissionLevelsToRemove &lt;String[]&gt;] [-Site &lt;PipeBind&gt;] DESCRIPTION For permissions and the most current information about Windows PowerShell for SharePoint Online, see the online documentation at Intro to SharePoint Online Management Shell.
-EXAMPLES EXAMPLE 1 Set-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/siteA -Identity &#34;ProjectViewers&#34; -PermissionLevelsToRemove &#34;Full Control&#34; -PermissionLevelsToAdd &#34;View Only&#34; Example 1 changes permission level of the ProjectViewers group inside site collection https://contoso." />
+EXAMPLES EXAMPLE 1 Set-PnPSiteGroup -Site &#34;https://contoso.sharepoint.com/sites/siteA&#34; -Identity &#34;ProjectViewers&#34; -PermissionLevelsToRemove &#34;Full Control&#34; -PermissionLevelsToAdd &#34;View Only&#34; Example 1 changes permission level of the ProjectViewers group inside site collection https://contoso." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/set-pnpsitegroup/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -31,11 +31,11 @@ EXAMPLES EXAMPLE 1 Set-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/s
 <meta name="twitter:title" content="Set-PnPSiteGroup"/>
 <meta name="twitter:description" content="SYNOPSIS Updates the SharePoint Online owner and permission levels on a group inside a site collection.
 SYNTAX Set-PnPSiteGroup -Identity &lt;String&gt; [-Name &lt;String&gt;] [-Owner &lt;String&gt;] [-PermissionLevelsToAdd &lt;String[]&gt;] [-PermissionLevelsToRemove &lt;String[]&gt;] [-Site &lt;PipeBind&gt;] DESCRIPTION For permissions and the most current information about Windows PowerShell for SharePoint Online, see the online documentation at Intro to SharePoint Online Management Shell.
-EXAMPLES EXAMPLE 1 Set-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/siteA -Identity &#34;ProjectViewers&#34; -PermissionLevelsToRemove &#34;Full Control&#34; -PermissionLevelsToAdd &#34;View Only&#34; Example 1 changes permission level of the ProjectViewers group inside site collection https://contoso."/>
+EXAMPLES EXAMPLE 1 Set-PnPSiteGroup -Site &#34;https://contoso.sharepoint.com/sites/siteA&#34; -Identity &#34;ProjectViewers&#34; -PermissionLevelsToRemove &#34;Full Control&#34; -PermissionLevelsToAdd &#34;View Only&#34; Example 1 changes permission level of the ProjectViewers group inside site collection https://contoso."/>
 <meta itemprop="name" content="Set-PnPSiteGroup">
 <meta itemprop="description" content="SYNOPSIS Updates the SharePoint Online owner and permission levels on a group inside a site collection.
 SYNTAX Set-PnPSiteGroup -Identity &lt;String&gt; [-Name &lt;String&gt;] [-Owner &lt;String&gt;] [-PermissionLevelsToAdd &lt;String[]&gt;] [-PermissionLevelsToRemove &lt;String[]&gt;] [-Site &lt;PipeBind&gt;] DESCRIPTION For permissions and the most current information about Windows PowerShell for SharePoint Online, see the online documentation at Intro to SharePoint Online Management Shell.
-EXAMPLES EXAMPLE 1 Set-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/siteA -Identity &#34;ProjectViewers&#34; -PermissionLevelsToRemove &#34;Full Control&#34; -PermissionLevelsToAdd &#34;View Only&#34; Example 1 changes permission level of the ProjectViewers group inside site collection https://contoso.">
+EXAMPLES EXAMPLE 1 Set-PnPSiteGroup -Site &#34;https://contoso.sharepoint.com/sites/siteA&#34; -Identity &#34;ProjectViewers&#34; -PermissionLevelsToRemove &#34;Full Control&#34; -PermissionLevelsToAdd &#34;View Only&#34; Example 1 changes permission level of the ProjectViewers group inside site collection https://contoso.">
 
 <meta itemprop="wordCount" content="342">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -67,11 +67,11 @@ EXAMPLES EXAMPLE 1 Set-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/s
 <p>For permissions and the most current information about Windows PowerShell for SharePoint Online, see the online documentation at <a href="https://docs.microsoft.com/powershell/sharepoint/sharepoint-online/introduction-sharepoint-online-management-shell?view=sharepoint-ps">Intro to SharePoint Online Management Shell</a>.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Set-PnPSiteGroup -Site https<span style="color:#960050;background-color:#1e0010">:</span>//contoso.sharepoint.com/sites/siteA -Identity <span style="color:#e6db74">&#34;ProjectViewers&#34;</span> -PermissionLevelsToRemove <span style="color:#e6db74">&#34;Full Control&#34;</span> -PermissionLevelsToAdd <span style="color:#e6db74">&#34;View Only&#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Set-PnPSiteGroup -Site <span style="color:#e6db74">&#34;https://contoso.sharepoint.com/sites/siteA&#34;</span> -Identity <span style="color:#e6db74">&#34;ProjectViewers&#34;</span> -PermissionLevelsToRemove <span style="color:#e6db74">&#34;Full Control&#34;</span> -PermissionLevelsToAdd <span style="color:#e6db74">&#34;View Only&#34;</span>
 </code></pre></div><p>Example 1 changes permission level of the ProjectViewers group inside site collection <a href="https://contoso.sharepoint.com/sites/siteA">https://contoso.sharepoint.com/sites/siteA</a> from Full Control to View Only.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Set-PnPSiteGroup -Site https<span style="color:#960050;background-color:#1e0010">:</span>//contoso.sharepoint.com -Identity <span style="color:#e6db74">&#34;ProjectViewers&#34;</span> -Owner user@domain.com
-</code></pre></div><p>Example 2 sets <a href="mailto:user@domain.com">user@domain.com</a> as the owner of the ProjectViewers group.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Set-PnPSiteGroup -Site <span style="color:#e6db74">&#34;https://contoso.sharepoint.com| -Identity &#34;</span>ProjectViewers<span style="color:#e6db74">&#34; -Owner user@domain.com
+</span></code></pre></div><p>Example 2 sets <a href="mailto:user@domain.com">user@domain.com</a> as the owner of the ProjectViewers group.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
 <p>Specifies the name of the group.</p>

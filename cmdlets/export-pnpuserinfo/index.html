@@ -21,7 +21,7 @@
 <meta property="og:description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Export user information from site user information list.
 SYNTAX Export-PnPUserInfo -LoginName &lt;String&gt; [-Site &lt;String&gt;] DESCRIPTION Export user information from the site user information list. If the Site parameter has not been specified, the current connect to site will be used.
-EXAMPLES EXAMPLE 1 Export-PnPUserInfo -LoginName user@domain.com -Site https://yoursite.sharepoint.com/sites/team This exports user data with the email address user@domain.com from the site collection specified." />
+EXAMPLES EXAMPLE 1 Export-PnPUserInfo -LoginName user@domain.com -Site &#34;https://yoursite.sharepoint.com/sites/team&#34; This exports user data with the email address user@domain.com from the site collection specified." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/export-pnpuserinfo/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -33,12 +33,12 @@ EXAMPLES EXAMPLE 1 Export-PnPUserInfo -LoginName user@domain.com -Site https://y
 <meta name="twitter:description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Export user information from site user information list.
 SYNTAX Export-PnPUserInfo -LoginName &lt;String&gt; [-Site &lt;String&gt;] DESCRIPTION Export user information from the site user information list. If the Site parameter has not been specified, the current connect to site will be used.
-EXAMPLES EXAMPLE 1 Export-PnPUserInfo -LoginName user@domain.com -Site https://yoursite.sharepoint.com/sites/team This exports user data with the email address user@domain.com from the site collection specified."/>
+EXAMPLES EXAMPLE 1 Export-PnPUserInfo -LoginName user@domain.com -Site &#34;https://yoursite.sharepoint.com/sites/team&#34; This exports user data with the email address user@domain.com from the site collection specified."/>
 <meta itemprop="name" content="Export-PnPUserInfo">
 <meta itemprop="description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Export user information from site user information list.
 SYNTAX Export-PnPUserInfo -LoginName &lt;String&gt; [-Site &lt;String&gt;] DESCRIPTION Export user information from the site user information list. If the Site parameter has not been specified, the current connect to site will be used.
-EXAMPLES EXAMPLE 1 Export-PnPUserInfo -LoginName user@domain.com -Site https://yoursite.sharepoint.com/sites/team This exports user data with the email address user@domain.com from the site collection specified.">
+EXAMPLES EXAMPLE 1 Export-PnPUserInfo -LoginName user@domain.com -Site &#34;https://yoursite.sharepoint.com/sites/team&#34; This exports user data with the email address user@domain.com from the site collection specified.">
 
 <meta itemprop="wordCount" content="187">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -73,10 +73,10 @@ EXAMPLES EXAMPLE 1 Export-PnPUserInfo -LoginName user@domain.com -Site https://y
 <p>Export user information from the site user information list. If the Site parameter has not been specified, the current connect to site will be used.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Export-PnPUserInfo -LoginName user@domain.com -Site https<span style="color:#960050;background-color:#1e0010">:</span>//yoursite.sharepoint.com/sites/team
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Export-PnPUserInfo -LoginName user@domain.com -Site <span style="color:#e6db74">&#34;https://yoursite.sharepoint.com/sites/team&#34;</span>
 </code></pre></div><p>This exports user data with the email address <a href="mailto:user@domain.com">user@domain.com</a> from the site collection specified.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Export-PnPUserInfo -LoginName user@domain.com -Site https<span style="color:#960050;background-color:#1e0010">:</span>//yoursite.sharepoint.com/sites/team | ConvertTo-Csv | Out-File MyFile.csv
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Export-PnPUserInfo -LoginName user@domain.com -Site <span style="color:#e6db74">&#34;https://yoursite.sharepoint.com/sites/team&#34;</span> | ConvertTo-Csv | Out-File MyFile.csv
 </code></pre></div><p>This exports user data with the email address <a href="mailto:user@domain.com">user@domain.com</a> from the site collection specified, converts it to a CSV format and writes the result to the file MyFile.csv.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-loginname">-LoginName</h3>

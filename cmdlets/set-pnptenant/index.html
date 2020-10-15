@@ -100,8 +100,8 @@ ResourceQuotaAllocated, and SiteCreationMode.</p>
 <p>You must have the SharePoint Online admin or Global admin role to run the cmdlet.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Set-PnPTenantSite -Identity https<span style="color:#960050;background-color:#1e0010">:</span>//contoso.sharepoint.com/sites/team1 -LockState NoAccess
-Set-PnPTenant -NoAccessRedirectUrl <span style="color:#e6db74">&#39;http://www.contoso.com&#39;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Set-PnPTenantSite -Identity <span style="color:#e6db74">&#34;https://contoso.sharepoint.com/sites/team1&#34;</span> -LockState NoAccess
+Set-PnPTenant -NoAccessRedirectUrl <span style="color:#e6db74">&#34;http://www.contoso.com&#34;</span>
 </code></pre></div><p>This example blocks access to <a href="https://contoso.sharepoint.com/sites/team1">https://contoso.sharepoint.com/sites/team1</a> and redirects traffic to <a href="http://www.contoso.com">http://www.contoso.com</a>.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Set-PnPTenant -ShowEveryoneExceptExternalUsersClaim $false

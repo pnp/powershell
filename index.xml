@@ -44,7 +44,8 @@ New-PnPTerm -TermSet &amp;#34;Departments&amp;#34; -TermGroup &amp;#34;Corporate
       
       <guid>https://pnp.github.io/powershell/cmdlets/add-pnpalert/</guid>
       <description>SYNOPSIS Adds an alert for a user to a list
-SYNTAX Add-PnPAlert [-List] &amp;lt;ListPipeBind&amp;gt; [-Title &amp;lt;String&amp;gt;] [-User &amp;lt;UserPipeBind&amp;gt;] [-DeliveryMethod &amp;lt;AlertDeliveryChannel&amp;gt;] [-ChangeType &amp;lt;AlertEventType&amp;gt;] [-Frequency &amp;lt;AlertFrequency&amp;gt;] [-Filter &amp;lt;AlertFilter&amp;gt;] [-Time &amp;lt;DateTime&amp;gt;] [-Web &amp;lt;WebPipeBind&amp;gt;] [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Add-PnPAlert -List &amp;#34;Demo List&amp;#34; Adds a new alert to the &amp;ldquo;Demo List&amp;rdquo; for the current user.
+SYNTAX Add-PnPAlert [-List] &amp;lt;ListPipeBind&amp;gt; [-Title &amp;lt;String&amp;gt;] [-User &amp;lt;UserPipeBind&amp;gt;] [-DeliveryMethod &amp;lt;AlertDeliveryChannel&amp;gt;] [-ChangeType &amp;lt;AlertEventType&amp;gt;] [-Frequency &amp;lt;AlertFrequency&amp;gt;] [-Filter &amp;lt;AlertFilter&amp;gt;] [-Time &amp;lt;DateTime&amp;gt;] [-Web &amp;lt;WebPipeBind&amp;gt;] [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION This cmdlets allows to add an alert for a user to a list.
+EXAMPLES EXAMPLE 1 Add-PnPAlert -List &amp;#34;Demo List&amp;#34; Adds a new alert to the &amp;ldquo;Demo List&amp;rdquo; for the current user.
 EXAMPLE 2 Add-PnPAlert -Title &amp;#34;Daily summary&amp;#34; -List &amp;#34;Demo List&amp;#34; -Frequency Daily -ChangeType All -Time (Get-Date -Hour 11 -Minute 00 -Second 00) Adds a daily alert for the current user at the given time to the &amp;ldquo;Demo List&amp;rdquo;.</description>
     </item>
     
@@ -277,7 +278,7 @@ Type: String Parameter Sets: (All) Required: True Position: Named Default value:
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Connects a site to a hubsite.
 SYNTAX Add-PnPHubSiteAssociation -Site &amp;lt;SitePipeBind&amp;gt; -HubSite &amp;lt;SitePipeBind&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION Connects an existing site to a hubsite
-EXAMPLES EXAMPLE 1 Add-PnPHubSiteAssociation -Site https://tenant.sharepoint.com/sites/mysite -HubSite https://tenant.sharepoint.com/sites/hubsite This example adds the specified site to the hubsite.
+EXAMPLES EXAMPLE 1 Add-PnPHubSiteAssociation -Site &amp;#34;https://tenant.sharepoint.com/sites/mysite&amp;#34; -HubSite &amp;#34;https://tenant.sharepoint.com/sites/hubsite&amp;#34; This example adds the specified site to the hubsite.
 PARAMETERS -Connection Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</description>
     </item>
     
@@ -411,7 +412,7 @@ SYNTAX Add-PnPOrgAssetsLibrary -LibraryUrl &amp;lt;String&amp;gt; [-ThumbnailUrl
       <guid>https://pnp.github.io/powershell/cmdlets/add-pnporgnewssite/</guid>
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Adds the site as an organization news source in your tenant
-SYNTAX Add-PnPOrgNewsSite -OrgNewsSiteUrl &amp;lt;SitePipeBind&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Add-PnPOrgNewsSite -OrgNewsSiteUrl https://yourtenant.sharepoint.com/sites/news Adds the site as one of multiple possible tenant&amp;rsquo;s organizational news sites
+SYNTAX Add-PnPOrgNewsSite -OrgNewsSiteUrl &amp;lt;SitePipeBind&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Add-PnPOrgNewsSite -OrgNewsSiteUrl &amp;#34;https://yourtenant.sharepoint.com/sites/news&amp;#34; Adds the site as one of multiple possible tenant&amp;rsquo;s organizational news sites
 PARAMETERS -Connection Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</description>
     </item>
     
@@ -837,7 +838,7 @@ Type: SwitchParameter Parameter Sets: (All) Aliases: cf Required: False Position
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Permanently deletes a site collection from the tenant scoped recycle bin
 SYNTAX Clear-PnPTenantRecycleBinItem -Url &amp;lt;String&amp;gt; [-Wait] [-Force] [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION The Clear-PnPTenantRecycleBinItem cmdlet allows a site collection that has been deleted and still exists in the tenant recycle bin to be permanently deleted from the recycle bin as well.
-EXAMPLES EXAMPLE 1 Clear-PnPTenantRecycleBinItem -Url https://tenant.sharepoint.com/sites/contoso This will permanently delete site collection with the url &amp;lsquo;https://tenant.</description>
+EXAMPLES EXAMPLE 1 Clear-PnPTenantRecycleBinItem -Url &amp;#34;https://tenant.sharepoint.com/sites/contoso&amp;#34; This will permanently delete site collection with the url &amp;lsquo;https://tenant.</description>
     </item>
     
     <item>
@@ -880,7 +881,7 @@ EXAMPLE 3 Convert-PnPSiteTemplate -Path template.</description>
       
       <guid>https://pnp.github.io/powershell/cmdlets/convertto-pnpclientsidepage/</guid>
       <description>SYNOPSIS Converts a classic page (wiki or web part page) into a Client-Side Page
-SYNTAX ConvertTo-PnPClientSidePage -Identity &amp;lt;PagePipeBind&amp;gt; [-Library &amp;lt;String&amp;gt;] [-Folder &amp;lt;String&amp;gt;] [-WebPartMappingFile &amp;lt;String&amp;gt;] [-Overwrite [&amp;lt;SwitchParameter&amp;gt;]] [-TakeSourcePageName [&amp;lt;SwitchParameter&amp;gt;]] [-ReplaceHomePageWithDefault [&amp;lt;SwitchParameter&amp;gt;]] [-AddPageAcceptBanner [&amp;lt;SwitchParameter&amp;gt;]] [-SkipItemLevelPermissionCopyToClientSidePage [&amp;lt;SwitchParameter&amp;gt;]] [-SkipUrlRewriting [&amp;lt;SwitchParameter&amp;gt;]] [-SkipDefaultUrlRewriting [&amp;lt;SwitchParameter&amp;gt;]] [-UrlMappingFile &amp;lt;String&amp;gt;] [-ClearCache [&amp;lt;SwitchParameter&amp;gt;]] [-CopyPageMetadata [&amp;lt;SwitchParameter&amp;gt;]] [-AddTableListImageAsImageWebPart [&amp;lt;SwitchParameter&amp;gt;]] [-UseCommunityScriptEditor [&amp;lt;SwitchParameter&amp;gt;]] [-SummaryLinksToHtml [&amp;lt;SwitchParameter&amp;gt;]] [-TargetWebUrl &amp;lt;String&amp;gt;] [-LogType &amp;lt;ClientSidePageTransformatorLogType&amp;gt;] [-LogFolder &amp;lt;String&amp;gt;] [-LogSkipFlush [&amp;lt;SwitchParameter&amp;gt;]] [-LogVerbose [&amp;lt;SwitchParameter&amp;gt;]] [-DontPublish [&amp;lt;SwitchParameter&amp;gt;]] [-KeepPageCreationModificationInformation [&amp;lt;SwitchParameter&amp;gt;]] [-SetAuthorInPageHeader [&amp;lt;SwitchParameter&amp;gt;]] [-PostAsNews [&amp;lt;SwitchParameter&amp;gt;]] [-DisablePageComments [&amp;lt;SwitchParameter&amp;gt;]] [-PublishingPage [&amp;lt;SwitchParameter&amp;gt;]] [-BlogPage [&amp;lt;SwitchParameter&amp;gt;]] [-DelveBlogPage [&amp;lt;SwitchParameter&amp;gt;]] [-DelveKeepSubTitle [&amp;lt;SwitchParameter&amp;gt;]] [-PageLayoutMapping &amp;lt;String&amp;gt;] [-PublishingTargetPageName &amp;lt;String&amp;gt;] [-TargetPageName &amp;lt;String&amp;gt;] [-TargetPageFolder &amp;lt;String&amp;gt;] [-TargetPageFolderOverridesDefaultFolder [&amp;lt;SwitchParameter&amp;gt;]] [-RemoveEmptySectionsAndColumns [&amp;lt;SwitchParameter&amp;gt;]] [-TargetConnection &amp;lt;PnPConnection&amp;gt;] [-SkipUserMapping [&amp;lt;SwitchParameter&amp;gt;]] [-UserMappingFile &amp;lt;String&amp;gt;] [-TermMappingFile &amp;lt;String&amp;gt;] [-SkipTermStoreMapping [&amp;lt;SwitchParameter&amp;gt;]] [-LDAPConnectionString &amp;lt;String&amp;gt;] [-Web &amp;lt;WebPipeBind&amp;gt;] [-Connection &amp;lt;PnPConnection&amp;gt;] EXAMPLES  </description>
+SYNTAX ConvertTo-PnPClientSidePage -Identity &amp;lt;PagePipeBind&amp;gt; [-Library &amp;lt;String&amp;gt;] [-Folder &amp;lt;String&amp;gt;] [-WebPartMappingFile &amp;lt;String&amp;gt;] [-Overwrite [&amp;lt;SwitchParameter&amp;gt;]] [-TakeSourcePageName [&amp;lt;SwitchParameter&amp;gt;]] [-ReplaceHomePageWithDefault [&amp;lt;SwitchParameter&amp;gt;]] [-AddPageAcceptBanner [&amp;lt;SwitchParameter&amp;gt;]] [-SkipItemLevelPermissionCopyToClientSidePage [&amp;lt;SwitchParameter&amp;gt;]] [-SkipUrlRewriting [&amp;lt;SwitchParameter&amp;gt;]] [-SkipDefaultUrlRewriting [&amp;lt;SwitchParameter&amp;gt;]] [-UrlMappingFile &amp;lt;String&amp;gt;] [-ClearCache [&amp;lt;SwitchParameter&amp;gt;]] [-CopyPageMetadata [&amp;lt;SwitchParameter&amp;gt;]] [-AddTableListImageAsImageWebPart [&amp;lt;SwitchParameter&amp;gt;]] [-UseCommunityScriptEditor [&amp;lt;SwitchParameter&amp;gt;]] [-SummaryLinksToHtml [&amp;lt;SwitchParameter&amp;gt;]] [-TargetWebUrl &amp;lt;String&amp;gt;] [-LogType &amp;lt;ClientSidePageTransformatorLogType&amp;gt;] [-LogFolder &amp;lt;String&amp;gt;] [-LogSkipFlush [&amp;lt;SwitchParameter&amp;gt;]] [-LogVerbose [&amp;lt;SwitchParameter&amp;gt;]] [-DontPublish [&amp;lt;SwitchParameter&amp;gt;]] [-KeepPageCreationModificationInformation [&amp;lt;SwitchParameter&amp;gt;]] [-SetAuthorInPageHeader [&amp;lt;SwitchParameter&amp;gt;]] [-PostAsNews [&amp;lt;SwitchParameter&amp;gt;]] [-DisablePageComments [&amp;lt;SwitchParameter&amp;gt;]] [-PublishingPage [&amp;lt;SwitchParameter&amp;gt;]] [-BlogPage [&amp;lt;SwitchParameter&amp;gt;]] [-DelveBlogPage [&amp;lt;SwitchParameter&amp;gt;]] [-DelveKeepSubTitle [&amp;lt;SwitchParameter&amp;gt;]] [-PageLayoutMapping &amp;lt;String&amp;gt;] [-PublishingTargetPageName &amp;lt;String&amp;gt;] [-TargetPageName &amp;lt;String&amp;gt;] [-TargetPageFolder &amp;lt;String&amp;gt;] [-TargetPageFolderOverridesDefaultFolder [&amp;lt;SwitchParameter&amp;gt;]] [-RemoveEmptySectionsAndColumns [&amp;lt;SwitchParameter&amp;gt;]] [-TargetConnection &amp;lt;PnPConnection&amp;gt;] [-SkipUserMapping [&amp;lt;SwitchParameter&amp;gt;]] [-UserMappingFile &amp;lt;String&amp;gt;] [-TermMappingFile &amp;lt;String&amp;gt;] [-SkipTermStoreMapping [&amp;lt;SwitchParameter&amp;gt;]] [-LDAPConnectionString &amp;lt;String&amp;gt;] [-Web &amp;lt;WebPipeBind&amp;gt;] [-Connection &amp;lt;PnPConnection&amp;gt;] EXAMPLES EXAMPLE 1 ConvertTo-PnPClientSidePage -Identity &amp;#34;somepage.</description>
     </item>
     
     <item>
@@ -1138,7 +1139,7 @@ EXAMPLE 2 Export-PnPTermGroupToXml -Out output.xml Exports all term groups in th
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Export user information from site user information list.
 SYNTAX Export-PnPUserInfo -LoginName &amp;lt;String&amp;gt; [-Site &amp;lt;String&amp;gt;] DESCRIPTION Export user information from the site user information list. If the Site parameter has not been specified, the current connect to site will be used.
-EXAMPLES EXAMPLE 1 Export-PnPUserInfo -LoginName user@domain.com -Site https://yoursite.sharepoint.com/sites/team This exports user data with the email address user@domain.com from the site collection specified.</description>
+EXAMPLES EXAMPLE 1 Export-PnPUserInfo -LoginName user@domain.com -Site &amp;#34;https://yoursite.sharepoint.com/sites/team&amp;#34; This exports user data with the email address user@domain.com from the site collection specified.</description>
     </item>
     
     <item>
@@ -1280,7 +1281,7 @@ Type: PnPConnection Parameter Sets: (All) Required: False Position: Named Defaul
       <description>SYNOPSIS Returns the authentication realm
 SYNTAX Get-PnPAuthenticationRealm [[-Url] &amp;lt;String&amp;gt;] [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION Gets the authentication realm for the current web
 EXAMPLES EXAMPLE 1 Get-PnPAuthenticationRealm This will get the authentication realm for the current connected site
-EXAMPLE 2 Get-PnPAuthenticationRealm -Url https://contoso.sharepoint.com This will get the authentication realm for https://contoso.sharepoint.com
+EXAMPLE 2 Get-PnPAuthenticationRealm -Url &amp;#34;https://contoso.sharepoint.com&amp;#34; This will get the authentication realm for https://contoso.sharepoint.com
 PARAMETERS -Connection Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</description>
     </item>
     
@@ -1693,7 +1694,7 @@ Type: PnPConnection Parameter Sets: (All) Required: False Position: Named Defaul
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Retrieve all or a specific hubsite.
 SYNTAX Get-PnPHubSite [[-Identity] &amp;lt;HubSitePipeBind&amp;gt;] [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Get-PnPHubSite Returns all hubsite properties
-EXAMPLE 2 Get-PnPHubSite -Identity https://contoso.sharepoint.com/sites/myhubsite Returns the properties of the specified hubsite
+EXAMPLE 2 Get-PnPHubSite -Identity &amp;#34;https://contoso.sharepoint.com/sites/myhubsite&amp;#34; Returns the properties of the specified hubsite
 PARAMETERS -Connection Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</description>
     </item>
     
@@ -1706,7 +1707,7 @@ PARAMETERS -Connection Optional connection to be used by the cmdlet. Retrieve th
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Retrieves all sites linked to a specific hub site
 SYNTAX Get-PnPHubSiteChild -Identity &amp;lt;HubSitePipeBind&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION Retrieves all sites linked to a specific hub site
-EXAMPLES EXAMPLE 1 Get-PnPHubSiteChild -Identity https://contoso.sharepoint.com/sites/myhubsite Returns the sites having configured the provided hub site as their hub site
+EXAMPLES EXAMPLE 1 Get-PnPHubSiteChild -Identity &amp;#34;https://contoso.sharepoint.com/sites/myhubsite&amp;#34; Returns the sites having configured the provided hub site as their hub site
 PARAMETERS -Connection Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</description>
     </item>
     
@@ -2101,7 +2102,7 @@ EXAMPLE 4 Get-PnPSearchConfiguration -Path searchconfig.</description>
       <guid>https://pnp.github.io/powershell/cmdlets/get-pnpsearchcrawllog/</guid>
       <description>SYNOPSIS Returns entries from the SharePoint search crawl log. Make sure you are granted access to the crawl log via the SharePoint search admin center at https://-admin.sharepoint.com/_layouts/15/searchadmin/crawllogreadpermission.aspx in order to run this cmdlet.
 SYNTAX Get-PnPSearchCrawlLog [-LogLevel &amp;lt;LogLevel&amp;gt;] [-RowLimit &amp;lt;Int32&amp;gt;] [-Filter &amp;lt;String&amp;gt;] [-ContentSource &amp;lt;ContentSource&amp;gt;] [-StartDate &amp;lt;DateTime&amp;gt;] [-EndDate &amp;lt;DateTime&amp;gt;] [-RawFormat] [-Web &amp;lt;WebPipeBind&amp;gt;] [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Get-PnPSearchCrawlLog Returns the last 100 crawl log entries for site content.
-EXAMPLE 2 Get-PnPSearchCrawlLog -Filter &amp;#34;https://&amp;lt;tenant&amp;gt;-my.</description>
+EXAMPLE 2 Get-PnPSearchCrawlLog -Filter &amp;#34;https://contoso-my.</description>
     </item>
     
     <item>
@@ -2268,7 +2269,7 @@ EXAMPLE 2 Get-PnPSiteDesignTask This example retrieves all site design tasks cur
  SharePoint: Access to the SharePoint Tenant Administration site  Gets all the groups in the current or specified site collection.
 SYNTAX Get-PnPSiteGroup [-Group &amp;lt;String&amp;gt;] [-Site &amp;lt;SitePipeBind&amp;gt;] DESCRIPTION Use the Get-PnPSiteGroup cmdlet to get all the groups on the specified or currently connected site collection.
 EXAMPLES EXAMPLE 1 Get-PnPSiteGroup Returns all SharePoint groups in the current connected to site
-EXAMPLE 2 Get-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/siteA This will return all SharePoint groups in the specified site</description>
+EXAMPLE 2 Get-PnPSiteGroup -Site &amp;#34;https://contoso.sharepoint.com/sites/siteA&amp;#34; This will return all SharePoint groups in the specified site</description>
     </item>
     
     <item>
@@ -2308,7 +2309,7 @@ Type: SwitchParameter Parameter Sets: (All) Aliases: cf Required: False Position
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Generates a Site Script from an existing list
 SYNTAX Get-PnPSiteScriptFromList -Url &amp;lt;String&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION This command allows a Site Script to be generated off of an existing list on your tenant. Connect to your SharePoint Online Admin site before executing this command.
-EXAMPLES EXAMPLE 1 Get-PnPSiteScriptFromList -Url https://contoso.sharepoint.com/sites/teamsite/lists/MyList Returns the generated Site Script JSON from the list &amp;ldquo;MyList&amp;rdquo; at the provided Url</description>
+EXAMPLES EXAMPLE 1 Get-PnPSiteScriptFromList -Url &amp;#34;https://contoso.sharepoint.com/sites/teamsite/lists/MyList&amp;#34; Returns the generated Site Script JSON from the list &amp;ldquo;MyList&amp;rdquo; at the provided Url</description>
     </item>
     
     <item>
@@ -2352,7 +2353,7 @@ SYNTAX Get-PnPSiteTemplate [[-Out] &amp;lt;String&amp;gt;] [[-Schema] &amp;lt;XM
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Searches against all stored sharing links and retrieves the email invites
 SYNTAX Get-PnPSiteUserInvitations [[-Site] &amp;lt;SitePipeBind&amp;gt;] -EmailAddress &amp;lt;string&amp;gt; [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION Searches against all stored sharing links on a Site and retrieves the email invites. If the site parameter is omitted the current site will be searched.
-EXAMPLES EXAMPLE 1 Get-PnPiteUserInvitations -Site https://contoso.sharepoint.com/sites/ContosoWeb1/ -EmailAddress someone@example.com This example retrieves email invites stored in the ContosoWeb1 site to the user with email address someone@example.</description>
+EXAMPLES EXAMPLE 1 Get-PnPiteUserInvitations -Site &amp;#34;https://contoso.sharepoint.com/sites/ContosoWeb1/&amp;#34; -EmailAddress someone@example.com This example retrieves email invites stored in the ContosoWeb1 site to the user with email address someone@example.</description>
     </item>
     
     <item>
@@ -2399,7 +2400,7 @@ EXAMPLES Example 1 Get-PnPStructuralNavigationCacheSiteState -SiteUrl &amp;#34;h
       <guid>https://pnp.github.io/powershell/cmdlets/get-pnpstructuralnavigationcachewebstate/</guid>
       <description>SYNOPSIS Get the structural navigation caching state for a web.
 SYNTAX Get-PnPStructuralNavigationCacheWebState [-WebUrl &amp;lt;String&amp;gt;]DESCRIPTION The Get-PnPStructuralNavigationCacheWebState cmdlet can be used to determine if structural navigation caching is enabled or disabled for a web in a site collection. If the WebUrl parameter has not been specified the currently connected to web will be used. Learn more.
-EXAMPLES Example 1 Get-PnPStructuralNavigationCacheWebState -WebUrl &amp;#34;https://contoso.sharepoint.com/sites/product/electroncis&amp;#34; This example checks if structural navigation caching is enabled for the web https://contoso.</description>
+EXAMPLES Example 1 Get-PnPStructuralNavigationCacheWebState -WebUrl &amp;#34;https://contoso.sharepoint.com/sites/product/electronics&amp;#34; This example checks if structural navigation caching is enabled for the web https://contoso.</description>
     </item>
     
     <item>
@@ -2586,7 +2587,7 @@ PARAMETERS -CdnType The type of cdn to retrieve the policies from</description>
       <guid>https://pnp.github.io/powershell/cmdlets/get-pnptenantid/</guid>
       <description>SYNOPSIS Returns the Tenant ID
 SYNTAX Get-PnPTenantId [-TenantUrl &amp;lt;String&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Get-PnPTenantId Returns the current Tenant Id. A valid connection with Connect-PnPOnline is required.
-EXAMPLE 2 Get-PnPTenantId -TenantUrl https://contoso.sharepoint.com Returns the Tenant ID for the specified tenant. Can be executed without a connecting first with Connect-PnPOnline
+EXAMPLE 2 Get-PnPTenantId -TenantUrl &amp;#34;https://contoso.sharepoint.com&amp;#34; Returns the Tenant ID for the specified tenant. Can be executed without a connecting first with Connect-PnPOnline
 PARAMETERS -TenantUrl Type: String Parameter Sets: (All) Required: False Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False RELATED LINKS Microsoft 365 Patterns and Practices</description>
     </item>
     
@@ -2677,7 +2678,7 @@ A permission request contains the following properties:
  SharePoint: Access to the SharePoint Tenant Administration site  Retrieve site information.
 SYNTAX Get-PnPTenantSite [[-Url] &amp;lt;String&amp;gt;] [-Template &amp;lt;String&amp;gt;] [-Detailed] [-IncludeOneDriveSites] [-Filter &amp;lt;String&amp;gt;] [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION Use this cmdlet to retrieve site information from your tenant administration.
 EXAMPLES EXAMPLE 1 Get-PnPTenantSite Returns all site collections
-EXAMPLE 2 Get-PnPTenantSite -Url http://tenant.sharepoint.com/sites/projects Returns information about the project site
+EXAMPLE 2 Get-PnPTenantSite -Url &amp;#34;http://tenant.sharepoint.com/sites/projects&amp;#34; Returns information about the project site
 EXAMPLE 3 Get-PnPTenantSite -Detailed Returns all sites with the full details of these sites</description>
     </item>
     
@@ -2956,7 +2957,7 @@ Type: PnPConnection Parameter Sets: (All) Required: False Position: Named Defaul
       <guid>https://pnp.github.io/powershell/cmdlets/grant-pnphubsiterights/</guid>
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Grant additional permissions to the permissions already in place to associate sites to Hub Sites for one or more specific users
-SYNTAX Grant-PnPHubSiteRights [-Identity] &amp;lt;HubSitePipeBind&amp;gt; -Principals &amp;lt;String[]&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Grant-PnPHubSiteRights -Identity https://contoso.sharepoint.com/sites/hubsite -Principals &amp;#34;myuser@mydomain.com&amp;#34;,&amp;#34;myotheruser@mydomain.com&amp;#34; This example shows how to grant rights to myuser and myotheruser to associate their sites with the provided Hub Site</description>
+SYNTAX Grant-PnPHubSiteRights [-Identity] &amp;lt;HubSitePipeBind&amp;gt; -Principals &amp;lt;String[]&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Grant-PnPHubSiteRights -Identity &amp;#34;https://contoso.sharepoint.com/sites/hubsite&amp;#34; -Principals &amp;#34;myuser@mydomain.com&amp;#34;,&amp;#34;myotheruser@mydomain.com&amp;#34; This example shows how to grant rights to myuser and myotheruser to associate their sites with the provided Hub Site</description>
     </item>
     
     <item>
@@ -3068,7 +3069,7 @@ EXAMPLE 2 Invoke-PnPQuery -RetryWait 10 This will execute any queued actions / c
       <guid>https://pnp.github.io/powershell/cmdlets/invoke-pnpsitedesign/</guid>
       <description>SYNOPSIS Apply a Site Design to an existing site. * Requires Tenant Administration Rights *
 SYNTAX Invoke-PnPSiteDesign [-Identity] &amp;lt;TenantSiteDesignPipeBind&amp;gt; [-WebUrl &amp;lt;String&amp;gt;] [-Web &amp;lt;WebPipeBind&amp;gt;] [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd Applies the specified site design to the current site.
-EXAMPLE 2 Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd -WebUrl https://contoso.sharepoint.com/sites/mydemosite Applies the specified site design to the specified site.
+EXAMPLE 2 Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd -WebUrl &amp;#34;https://contoso.sharepoint.com/sites/mydemosite&amp;#34; Applies the specified site design to the specified site.
 EXAMPLE 3 Get-PnPSiteDesign | ?{$_.Title -eq &amp;#34;Demo&amp;#34;} | Invoke-PnPSiteDesign Applies the specified site design to the specified site.</description>
     </item>
     
@@ -3331,7 +3332,7 @@ EXAMPLES EXAMPLE 1 New-PnPSite -Type CommunicationSite -Title Contoso -Url https
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Creates a new group in a SharePoint Online site collection.
 SYNTAX New-PnPSiteGroup -Group &amp;lt;String&amp;gt; -PermissionLevels &amp;lt;String[]&amp;gt; [-Site &amp;lt;SitePipeBind&amp;gt;] DESCRIPTION A SharePoint group is a set of individual users. SharePoint groups enable you to manage sets of users instead of individual users.
-EXAMPLES EXAMPLE 1 New-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/siteA -Group &amp;#34;Project Leads&amp;#34; -PermissionLevels &amp;#34;Full Control&amp;#34; This example creates a group named Project Leads with the Full Control permission level on the site collection https://contoso.</description>
+EXAMPLES EXAMPLE 1 New-PnPSiteGroup -Site &amp;#34;https://contoso.sharepoint.com/sites/siteA&amp;#34; -Group &amp;#34;Project Leads&amp;#34; -PermissionLevels &amp;#34;Full Control&amp;#34; This example creates a group named Project Leads with the Full Control permission level on the site collection https://contoso.</description>
     </item>
     
     <item>
@@ -3574,7 +3575,7 @@ Type: String Parameter Sets: (All) Required: True Position: 0 Default value: Non
       <guid>https://pnp.github.io/powershell/cmdlets/register-pnpappcatalogsite/</guid>
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Creates a new App Catalog Site and sets this site as the Tenant App Catalog
-SYNTAX Register-PnPAppCatalogSite -Url &amp;lt;String&amp;gt; -Owner &amp;lt;String&amp;gt; -TimeZoneId &amp;lt;Int32&amp;gt; [-Force] [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Register-PnPAppCatalogSite -Url https://yourtenant.sharepoint.com/sites/appcatalog -Owner admin@domain.com -TimeZoneId 4 This will create a new appcatalog site if no app catalog is already present. Use -Force to create a new appcatalog site if one has already been registered.</description>
+SYNTAX Register-PnPAppCatalogSite -Url &amp;lt;String&amp;gt; -Owner &amp;lt;String&amp;gt; -TimeZoneId &amp;lt;Int32&amp;gt; [-Force] [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Register-PnPAppCatalogSite -Url &amp;#34;https://yourtenant.sharepoint.com/sites/appcatalog&amp;#34; -Owner admin@domain.com -TimeZoneId 4 This will create a new appcatalog site if no app catalog is already present. Use -Force to create a new appcatalog site if one has already been registered.</description>
     </item>
     
     <item>
@@ -3586,7 +3587,7 @@ SYNTAX Register-PnPAppCatalogSite -Url &amp;lt;String&amp;gt; -Owner &amp;lt;Str
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Registers a site as a hubsite
 SYNTAX Register-PnPHubSite -Site &amp;lt;SitePipeBind&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION Registers a site as a hubsite
-EXAMPLES EXAMPLE 1 Register-PnPHubSite -Site https://tenant.sharepoint.com/sites/myhubsite This example registers the specified site as a hubsite
+EXAMPLES EXAMPLE 1 Register-PnPHubSite -Site &amp;#34;https://tenant.sharepoint.com/sites/myhubsite&amp;#34; This example registers the specified site as a hubsite
 PARAMETERS -Connection Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</description>
     </item>
     
@@ -3866,7 +3867,7 @@ Type: PnPConnection Parameter Sets: (All) Required: False Position: Named Defaul
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Disconnects a site from a hubsite.
 SYNTAX Remove-PnPHubSiteAssociation -Site &amp;lt;SitePipeBind&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION Disconnects an site from a hubsite
-EXAMPLES EXAMPLE 1 Remove-PnPHubSiteAssociation -Site https://tenant.sharepoint.com/sites/mysite This example adds the specified site to the hubsite.
+EXAMPLES EXAMPLE 1 Remove-PnPHubSiteAssociation -Site &amp;#34;https://tenant.sharepoint.com/sites/mysite&amp;#34; This example adds the specified site to the hubsite.
 PARAMETERS -Connection Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</description>
     </item>
     
@@ -3880,7 +3881,7 @@ PARAMETERS -Connection Optional connection to be used by the cmdlet. Retrieve th
  SharePoint: Access to the SharePoint Tenant Administration site  Removes the selected hub site from its parent hub.
 SYNTAX By Id Add-PnPHubToHubAssociation -HubSiteId &amp;lt;Guid&amp;gt; By Url Add-PnPHubToHubAssociation -HubSiteUrl &amp;lt;string&amp;gt; DESCRIPTION Use this cmdlet to remove the selected hub site from its parent hub.
 EXAMPLES EXAMPLE 1 Remove-PnPHubToHubAssociation -HubSiteId 6638bd4c-d88d-447c-9eb2-c84f28ba8b15 This example removes the hubsite with id 6638bd4c-d88d-447c-9eb2-c84f28ba8b15 from its parent hub.
-EXAMPLE 2 Remove-PnPHubToHubAssociation -HubSiteUrl https://yourtenant.sharepoint.com/sites/hub This example removes the hubsite with id https://yourtenant.</description>
+EXAMPLE 2 Remove-PnPHubToHubAssociation -HubSiteUrl &amp;#34;https://yourtenant.sharepoint.com/sites/hub&amp;#34; This example removes the hubsite with id https://yourtenant.</description>
     </item>
     
     <item>
@@ -4011,7 +4012,7 @@ SYNTAX Remove-PnPOrgAssetsLibrary -LibraryUrl &amp;lt;String&amp;gt; [-ShouldRem
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Removes a given site from the list of organizational news sites.
 SYNTAX Remove-PnPOrgNewsSite -OrgNewsSiteUrl &amp;lt;SitePipeBind&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION Removes a given site from the list of organizational news sites based on its URL in your Sharepoint Online Tenant.
-EXAMPLES EXAMPLE 1 Remove-PnPOrgNewsSite -OrgNewsSiteUrl https://tenant.sharepoint.com/sites/mysite This example removes the specified site from list of organization&amp;rsquo;s news sites.</description>
+EXAMPLES EXAMPLE 1 Remove-PnPOrgNewsSite -OrgNewsSiteUrl &amp;#34;https://tenant.sharepoint.com/sites/mysite&amp;#34; This example removes the specified site from list of organization&amp;rsquo;s news sites.</description>
     </item>
     
     <item>
@@ -4142,7 +4143,7 @@ Type: SwitchParameter Parameter Sets: (All) Aliases: cf Required: False Position
       
       <guid>https://pnp.github.io/powershell/cmdlets/remove-pnpsitegroup/</guid>
       <description>SYNOPSIS Removes a group from a web.
-SYNTAX Remove-PnPSiteGroup -Identity &amp;lt;String&amp;gt; [-Site &amp;lt;SitePipeBind&amp;gt;] [-WhatIf] [-Confirm] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPSiteGroup -Identity GroupToRemove -Site https://contoso.sharepoint.com/sites/marketing This example removes a group named GroupToRemove from the site collection https://contoso.sharepoint.com/sites/marketing.
+SYNTAX Remove-PnPSiteGroup -Identity &amp;lt;String&amp;gt; [-Site &amp;lt;SitePipeBind&amp;gt;] [-WhatIf] [-Confirm] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPSiteGroup -Identity GroupToRemove -Site &amp;#34;https://contoso.sharepoint.com/sites/marketing&amp;#34; This example removes a group named GroupToRemove from the site collection https://contoso.sharepoint.com/sites/marketing.
 EXAMPLE 2 Remove-PnPSiteGroup -Identity GroupToRemove This example removes a group named GroupToRemove from the current site collection that has been connected to with Connect-PnPOnline.
 PARAMETERS -Identity Specifies the name of the group to remove.</description>
     </item>
@@ -4169,7 +4170,7 @@ Type: SwitchParameter Parameter Sets: (All) Aliases: cf Required: False Position
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Searches against all stored sharing links and removes an email invite.
 SYNTAX Remove-PnPSiteUserInvitations [[-Site] &amp;lt;SitePipeBind&amp;gt;] [-EmailAddress] &amp;lt;string&amp;gt; [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION Searches against all stored sharing links on a Site and removes an email invits. If the site parameter is omitted the current site will be searched.
-EXAMPLES EXAMPLE 1 Remove-PnPiteUserInvitations -Site https://contoso.sharepoint.com/sites/ContosoWeb1/ -EmailAddress someone@example.com This example removes the email invite stored in the ContosoWeb1 site for the user with email address someone@example.</description>
+EXAMPLES EXAMPLE 1 Remove-PnPiteUserInvitations -Site &amp;#34;https://contoso.sharepoint.com/sites/ContosoWeb1/&amp;#34; -EmailAddress someone@example.com This example removes the email invite stored in the ContosoWeb1 site for the user with email address someone@example.</description>
     </item>
     
     <item>
@@ -4189,9 +4190,9 @@ EXAMPLE 2 Remove-PnPStorageEntity -Key MyKey -Scope Site Removes an existing sto
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://pnp.github.io/powershell/cmdlets/remove-pnpstoredcredential/</guid>
-      <description>SYNOPSIS Removes a credential
-SYNTAX Remove-PnPStoredCredential -Name &amp;lt;String&amp;gt; [-Force] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION Removes a stored credential from the Windows Credential Manager
-EXAMPLES EXAMPLE 1 Remove-PnPStoredCredential -Name https://tenant.sharepoint.com Removes the specified credential from the Windows Credential Manager
+      <description>SYNOPSIS Removes a credential from the Credential Manager
+SYNTAX Remove-PnPStoredCredential -Name &amp;lt;String&amp;gt; [-Force] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION Removes a stored credential from the Credential Manager
+EXAMPLES EXAMPLE 1 Remove-PnPStoredCredential -Name &amp;#34;https://tenant.sharepoint.com&amp;#34; Removes the specified credential from the Credential Manager
 PARAMETERS -Force If specified you will not be asked for confirmation
 Type: SwitchParameter Parameter Sets: (All) Required: False Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False -Name The credential to remove</description>
     </item>
@@ -4293,8 +4294,8 @@ EXAMPLES EXAMPLE 1 Remove-PnPTenantCdnOrigin -OriginUrl /sites/site/subfolder -C
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Removes a site collection
 SYNTAX Remove-PnPTenantSite [-Url] &amp;lt;String&amp;gt; [-SkipRecycleBin] [-Force] [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION Removes a site collection which is listed in your tenant administration site.
-EXAMPLES EXAMPLE 1 Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso This will remove the site collection with the url &amp;lsquo;https://tenant.sharepoint.com/sites/contoso&#39; and put it in the recycle bin.
-EXAMPLE 2 Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin This will remove the site collection with the url &amp;lsquo;https://tenant.</description>
+EXAMPLES EXAMPLE 1 Remove-PnPTenantSite -Url &amp;#34;https://tenant.sharepoint.com/sites/contoso&amp;#34; This will remove the site collection with the url &amp;lsquo;https://tenant.sharepoint.com/sites/contoso&#39; and put it in the recycle bin.
+EXAMPLE 2 Remove-PnPTenantSite -Url &amp;#34;https://tenant.sharepoint.com/sites/contoso&amp;#34; -Force -SkipRecycleBin This will remove the site collection with the url &amp;lsquo;https://tenant.</description>
     </item>
     
     <item>
@@ -4392,7 +4393,7 @@ Type: PnPConnection Parameter Sets: (All) Required: False Position: Named Defaul
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Removes a user from the user information list of a specific site collection.
 SYNTAX Remove-PnPUserInfo -LoginName &amp;lt;String&amp;gt; [-Site &amp;lt;String&amp;gt;] DESCRIPTION Export user information from the site user information list.
-EXAMPLES EXAMPLE 1 Remove-PnPUserInfo -LoginName user@domain.com -Site https://yoursite.sharepoint.com/sites/team This removes a user who has the e-mail address user@domain.com from the user information list of https://contoso.sharepoint.com/sites/team site collection.
+EXAMPLES EXAMPLE 1 Remove-PnPUserInfo -LoginName user@domain.com -Site &amp;#34;https://yoursite.sharepoint.com/sites/team&amp;#34; This removes a user who has the e-mail address user@domain.com from the user information list of https://contoso.sharepoint.com/sites/team site collection.
 PARAMETERS -LoginName Specifies the login name of the user to remove.</description>
     </item>
     
@@ -4637,7 +4638,7 @@ EXAMPLE 2 Get-PnPRecycleBinItem | ? -Property LeafName -like &amp;#34;*.docx&amp
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Restores a site collection from the tenant scoped recycle bin
 SYNTAX Restore-PnPTenantRecycleBinItem -Url &amp;lt;String&amp;gt; [-Wait] [-Force] [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION The Restore-PnPTenantRecycleBinItem cmdlet allows a site collection that has been deleted and still exists in the tenant recycle bin to be restored to its original location.
-EXAMPLES EXAMPLE 1 Restore-PnPTenantRecycleBinItem -Url https://tenant.sharepoint.com/sites/contoso This will restore the deleted site collection with the url &amp;lsquo;https://tenant.</description>
+EXAMPLES EXAMPLE 1 Restore-PnPTenantRecycleBinItem -Url &amp;#34;https://tenant.sharepoint.com/sites/contoso&amp;#34; This will restore the deleted site collection with the url &amp;lsquo;https://tenant.</description>
     </item>
     
     <item>
@@ -4648,7 +4649,7 @@ EXAMPLES EXAMPLE 1 Restore-PnPTenantRecycleBinItem -Url https://tenant.sharepoin
       <guid>https://pnp.github.io/powershell/cmdlets/revoke-pnphubsiterights/</guid>
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Revoke permissions to the permissions already in place to associate sites to Hub Sites for one or more specific users
-SYNTAX Revoke-PnPHubSiteRights [-Identity] &amp;lt;HubSitePipeBind&amp;gt; -Principals &amp;lt;String[]&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Revoke-PnPHubSiteRights -Identity https://contoso.sharepoint.com/sites/hubsite -Principals &amp;#34;myuser@mydomain.com&amp;#34;,&amp;#34;myotheruser@mydomain.com&amp;#34; This example shows how to revoke the rights of myuser and myotheruser to associate their sites with the provided Hub Site</description>
+SYNTAX Revoke-PnPHubSiteRights [-Identity] &amp;lt;HubSitePipeBind&amp;gt; -Principals &amp;lt;String[]&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Revoke-PnPHubSiteRights -Identity &amp;#34;https://contoso.sharepoint.com/sites/hubsite&amp;#34; -Principals &amp;#34;myuser@mydomain.com&amp;#34;,&amp;#34;myotheruser@mydomain.com&amp;#34; This example shows how to revoke the rights of myuser and myotheruser to associate their sites with the provided Hub Site</description>
     </item>
     
     <item>
@@ -5010,7 +5011,7 @@ Type: PnPConnection Parameter Sets: (All) Required: False Position: Named Defaul
       <guid>https://pnp.github.io/powershell/cmdlets/set-pnphomesite/</guid>
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Sets the home site for your tenant
-SYNTAX Set-PnPHomeSite -Url &amp;lt;String&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Set-PnPHomeSite -Url https://yourtenant.sharepoint.com/sites/myhome Sets the home site to the provided site collection url
+SYNTAX Set-PnPHomeSite -Url &amp;lt;String&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Set-PnPHomeSite -Url &amp;#34;https://yourtenant.sharepoint.com/sites/myhome&amp;#34; Sets the home site to the provided site collection url
 PARAMETERS -Connection Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</description>
     </item>
     
@@ -5023,8 +5024,8 @@ PARAMETERS -Connection Optional connection to be used by the cmdlet. Retrieve th
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Sets hub site properties
 SYNTAX Set-PnPHubSite [-Identity] &amp;lt;HubSitePipeBind&amp;gt; [-Title &amp;lt;String&amp;gt;] [-LogoUrl &amp;lt;String&amp;gt;] [-Description &amp;lt;String&amp;gt;] [-SiteDesignId &amp;lt;Guid&amp;gt;] [-HideNameInNavigation] [-RequiresJoinApproval] [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION Allows configuring a hub site
-EXAMPLES EXAMPLE 1 Set-PnPHubSite -Identity https://tenant.sharepoint.com/sites/myhubsite -Title &amp;#34;My New Title&amp;#34; Sets the title of the hub site
-EXAMPLE 2 Set-PnPHubSite -Identity https://tenant.sharepoint.com/sites/myhubsite -Description &amp;#34;My updated description&amp;#34; Sets the description of the hub site</description>
+EXAMPLES EXAMPLE 1 Set-PnPHubSite -Identity &amp;#34;https://tenant.sharepoint.com/sites/myhubsite&amp;#34; -Title &amp;#34;My New Title&amp;#34; Sets the title of the hub site
+EXAMPLE 2 Set-PnPHubSite -Identity &amp;#34;https://tenant.sharepoint.com/sites/myhubsite&amp;#34; -Description &amp;#34;My updated description&amp;#34; Sets the description of the hub site</description>
     </item>
     
     <item>
@@ -5059,7 +5060,7 @@ Type: PnPConnection Parameter Sets: (All) Required: False Position: Named Defaul
       <guid>https://pnp.github.io/powershell/cmdlets/set-pnpknowledgehubsite/</guid>
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Sets the Knowledge Hub Site for your tenant
-SYNTAX Set-PnPKnowledgeHubSite -KnowledgeHubSiteUrl &amp;lt;String&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Set-PnPKnowledgeHubSite -KnowledgeHubSiteUrl https://yoursite.sharepoint.com/sites/knowledge Sets the Knowledge Hub Site for your tenant
+SYNTAX Set-PnPKnowledgeHubSite -KnowledgeHubSiteUrl &amp;lt;String&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Set-PnPKnowledgeHubSite -KnowledgeHubSiteUrl &amp;#34;https://yoursite.sharepoint.com/sites/knowledge&amp;#34; Sets the Knowledge Hub Site for your tenant
 PARAMETERS -Connection Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 Type: PnPConnection Parameter Sets: (All) Required: False Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False -KnowledgeHubSiteUrl Type: String Parameter Sets: (All) Required: True Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False RELATED LINKS Microsoft 365 Patterns and Practices</description>
     </item>
@@ -5279,7 +5280,7 @@ EXAMPLE 2 $design = Get-PnPSiteDesign -Identity 046e2e76-67ba-46ca-a5f6-8eb418a7
       <guid>https://pnp.github.io/powershell/cmdlets/set-pnpsitegroup/</guid>
       <description>SYNOPSIS Updates the SharePoint Online owner and permission levels on a group inside a site collection.
 SYNTAX Set-PnPSiteGroup -Identity &amp;lt;String&amp;gt; [-Name &amp;lt;String&amp;gt;] [-Owner &amp;lt;String&amp;gt;] [-PermissionLevelsToAdd &amp;lt;String[]&amp;gt;] [-PermissionLevelsToRemove &amp;lt;String[]&amp;gt;] [-Site &amp;lt;PipeBind&amp;gt;] DESCRIPTION For permissions and the most current information about Windows PowerShell for SharePoint Online, see the online documentation at Intro to SharePoint Online Management Shell.
-EXAMPLES EXAMPLE 1 Set-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/siteA -Identity &amp;#34;ProjectViewers&amp;#34; -PermissionLevelsToRemove &amp;#34;Full Control&amp;#34; -PermissionLevelsToAdd &amp;#34;View Only&amp;#34; Example 1 changes permission level of the ProjectViewers group inside site collection https://contoso.</description>
+EXAMPLES EXAMPLE 1 Set-PnPSiteGroup -Site &amp;#34;https://contoso.sharepoint.com/sites/siteA&amp;#34; -Identity &amp;#34;ProjectViewers&amp;#34; -PermissionLevelsToRemove &amp;#34;Full Control&amp;#34; -PermissionLevelsToAdd &amp;#34;View Only&amp;#34; Example 1 changes permission level of the ProjectViewers group inside site collection https://contoso.</description>
     </item>
     
     <item>
@@ -5440,7 +5441,7 @@ SYNTAX Set-PnPTenant [-SpecialCharactersStateInFileFolderNames &amp;lt;SpecialCh
       <guid>https://pnp.github.io/powershell/cmdlets/set-pnptenantappcatalogurl/</guid>
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Sets the url of the tenant scoped app catalog
-SYNTAX Set-PnPTenantAppCatalogUrl -Url &amp;lt;String&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Set-PnPTenantAppCatalogUrl -Url https://yourtenant.sharepoint.com/sites/appcatalog Sets the tenant scoped app catalog to the provided site collection url
+SYNTAX Set-PnPTenantAppCatalogUrl -Url &amp;lt;String&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Set-PnPTenantAppCatalogUrl -Url &amp;#34;https://yourtenant.sharepoint.com/sites/appcatalog&amp;#34; Sets the tenant scoped app catalog to the provided site collection url
 PARAMETERS -Confirm Prompts you for confirmation before running the cmdlet.
 Type: SwitchParameter Parameter Sets: (All) Aliases: cf Required: False Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False -Connection Optional connection to be used by the cmdlet.</description>
     </item>
@@ -5767,7 +5768,7 @@ PARAMETERS -Connection Optional connection to be used by the cmdlet.</descriptio
       <description>SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Unregisters a site as a hubsite
 SYNTAX Unregister-PnPHubSite -Site &amp;lt;SitePipeBind&amp;gt; [-Connection &amp;lt;PnPConnection&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION Registers a site as a hubsite
-EXAMPLES EXAMPLE 1 Unregister-PnPHubSite -Site https://tenant.sharepoint.com/sites/myhubsite This example unregisters the specified site as a hubsite
+EXAMPLES EXAMPLE 1 Unregister-PnPHubSite -Site &amp;#34;https://tenant.sharepoint.com/sites/myhubsite&amp;#34; This example unregisters the specified site as a hubsite
 PARAMETERS -Connection Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</description>
     </item>
     

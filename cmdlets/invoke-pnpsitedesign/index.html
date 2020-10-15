@@ -20,7 +20,7 @@
 <meta property="og:title" content="Invoke-PnPSiteDesign" />
 <meta property="og:description" content="SYNOPSIS Apply a Site Design to an existing site. * Requires Tenant Administration Rights *
 SYNTAX Invoke-PnPSiteDesign [-Identity] &lt;TenantSiteDesignPipeBind&gt; [-WebUrl &lt;String&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd Applies the specified site design to the current site.
-EXAMPLE 2 Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd -WebUrl https://contoso.sharepoint.com/sites/mydemosite Applies the specified site design to the specified site.
+EXAMPLE 2 Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd -WebUrl &#34;https://contoso.sharepoint.com/sites/mydemosite&#34; Applies the specified site design to the specified site.
 EXAMPLE 3 Get-PnPSiteDesign | ?{$_.Title -eq &#34;Demo&#34;} | Invoke-PnPSiteDesign Applies the specified site design to the specified site." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/invoke-pnpsitedesign/" />
@@ -32,12 +32,12 @@ EXAMPLE 3 Get-PnPSiteDesign | ?{$_.Title -eq &#34;Demo&#34;} | Invoke-PnPSiteDes
 <meta name="twitter:title" content="Invoke-PnPSiteDesign"/>
 <meta name="twitter:description" content="SYNOPSIS Apply a Site Design to an existing site. * Requires Tenant Administration Rights *
 SYNTAX Invoke-PnPSiteDesign [-Identity] &lt;TenantSiteDesignPipeBind&gt; [-WebUrl &lt;String&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd Applies the specified site design to the current site.
-EXAMPLE 2 Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd -WebUrl https://contoso.sharepoint.com/sites/mydemosite Applies the specified site design to the specified site.
+EXAMPLE 2 Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd -WebUrl &#34;https://contoso.sharepoint.com/sites/mydemosite&#34; Applies the specified site design to the specified site.
 EXAMPLE 3 Get-PnPSiteDesign | ?{$_.Title -eq &#34;Demo&#34;} | Invoke-PnPSiteDesign Applies the specified site design to the specified site."/>
 <meta itemprop="name" content="Invoke-PnPSiteDesign">
 <meta itemprop="description" content="SYNOPSIS Apply a Site Design to an existing site. * Requires Tenant Administration Rights *
 SYNTAX Invoke-PnPSiteDesign [-Identity] &lt;TenantSiteDesignPipeBind&gt; [-WebUrl &lt;String&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd Applies the specified site design to the current site.
-EXAMPLE 2 Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd -WebUrl https://contoso.sharepoint.com/sites/mydemosite Applies the specified site design to the specified site.
+EXAMPLE 2 Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd -WebUrl &#34;https://contoso.sharepoint.com/sites/mydemosite&#34; Applies the specified site design to the specified site.
 EXAMPLE 3 Get-PnPSiteDesign | ?{$_.Title -eq &#34;Demo&#34;} | Invoke-PnPSiteDesign Applies the specified site design to the specified site.">
 
 <meta itemprop="wordCount" content="362">
@@ -72,7 +72,7 @@ EXAMPLE 3 Get-PnPSiteDesign | ?{$_.Title -eq &#34;Demo&#34;} | Invoke-PnPSiteDes
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd
 </code></pre></div><p>Applies the specified site design to the current site.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd -WebUrl https<span style="color:#960050;background-color:#1e0010">:</span>//contoso.sharepoint.com/sites/mydemosite
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Invoke-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd -WebUrl <span style="color:#e6db74">&#34;https://contoso.sharepoint.com/sites/mydemosite&#34;</span>
 </code></pre></div><p>Applies the specified site design to the specified site.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Get-PnPSiteDesign | ?{$_.Title <span style="color:#f92672">-eq</span> <span style="color:#e6db74">&#34;Demo&#34;</span>} | Invoke-PnPSiteDesign

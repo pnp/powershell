@@ -83,7 +83,7 @@ EXAMPLE 2 Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2 -Scopes Group.ReadWrite.All, AllSites.FullControl
 </code></pre></div><p>Returns the access token using the specified client id and the specified scopes</p>
 <h3 id="example-5">EXAMPLE 5</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$token = Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2 -Resource https<span style="color:#960050;background-color:#1e0010">:</span>//contoso.sharepoint.com -Credentials (Get-Credential) -TenantUrl https<span style="color:#960050;background-color:#1e0010">:</span>//contoso.sharepoint.com
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$token = Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2 -Resource <span style="color:#e6db74">&#34;https://contoso.sharepoint.com&#34;</span> -Credentials (Get-Credential) -TenantUrl <span style="color:#e6db74">&#34;https://contoso.sharepoint.com&#34;</span>
     Connect-PnPOnline -AccessToken $token
 </code></pre></div><p>Returns the access token using the specified client id and the specified scopes while using the credentials and tenanturl specified to authentication against Azure AD</p>
 <h2 id="parameters">PARAMETERS</h2>

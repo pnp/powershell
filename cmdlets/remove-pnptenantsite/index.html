@@ -21,8 +21,8 @@
 <meta property="og:description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Removes a site collection
 SYNTAX Remove-PnPTenantSite [-Url] &lt;String&gt; [-SkipRecycleBin] [-Force] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION Removes a site collection which is listed in your tenant administration site.
-EXAMPLES EXAMPLE 1 Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso This will remove the site collection with the url &lsquo;https://tenant.sharepoint.com/sites/contoso&#39; and put it in the recycle bin.
-EXAMPLE 2 Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin This will remove the site collection with the url &lsquo;https://tenant." />
+EXAMPLES EXAMPLE 1 Remove-PnPTenantSite -Url &#34;https://tenant.sharepoint.com/sites/contoso&#34; This will remove the site collection with the url &lsquo;https://tenant.sharepoint.com/sites/contoso&#39; and put it in the recycle bin.
+EXAMPLE 2 Remove-PnPTenantSite -Url &#34;https://tenant.sharepoint.com/sites/contoso&#34; -Force -SkipRecycleBin This will remove the site collection with the url &lsquo;https://tenant." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/remove-pnptenantsite/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -34,14 +34,14 @@ EXAMPLE 2 Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso 
 <meta name="twitter:description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Removes a site collection
 SYNTAX Remove-PnPTenantSite [-Url] &lt;String&gt; [-SkipRecycleBin] [-Force] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION Removes a site collection which is listed in your tenant administration site.
-EXAMPLES EXAMPLE 1 Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso This will remove the site collection with the url &lsquo;https://tenant.sharepoint.com/sites/contoso&#39; and put it in the recycle bin.
-EXAMPLE 2 Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin This will remove the site collection with the url &lsquo;https://tenant."/>
+EXAMPLES EXAMPLE 1 Remove-PnPTenantSite -Url &#34;https://tenant.sharepoint.com/sites/contoso&#34; This will remove the site collection with the url &lsquo;https://tenant.sharepoint.com/sites/contoso&#39; and put it in the recycle bin.
+EXAMPLE 2 Remove-PnPTenantSite -Url &#34;https://tenant.sharepoint.com/sites/contoso&#34; -Force -SkipRecycleBin This will remove the site collection with the url &lsquo;https://tenant."/>
 <meta itemprop="name" content="Remove-PnPTenantSite">
 <meta itemprop="description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Removes a site collection
 SYNTAX Remove-PnPTenantSite [-Url] &lt;String&gt; [-SkipRecycleBin] [-Force] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION Removes a site collection which is listed in your tenant administration site.
-EXAMPLES EXAMPLE 1 Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso This will remove the site collection with the url &lsquo;https://tenant.sharepoint.com/sites/contoso&#39; and put it in the recycle bin.
-EXAMPLE 2 Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin This will remove the site collection with the url &lsquo;https://tenant.">
+EXAMPLES EXAMPLE 1 Remove-PnPTenantSite -Url &#34;https://tenant.sharepoint.com/sites/contoso&#34; This will remove the site collection with the url &lsquo;https://tenant.sharepoint.com/sites/contoso&#39; and put it in the recycle bin.
+EXAMPLE 2 Remove-PnPTenantSite -Url &#34;https://tenant.sharepoint.com/sites/contoso&#34; -Force -SkipRecycleBin This will remove the site collection with the url &lsquo;https://tenant.">
 
 <meta itemprop="wordCount" content="254">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -77,13 +77,13 @@ EXAMPLE 2 Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso 
 <p>Removes a site collection which is listed in your tenant administration site.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Remove-PnPTenantSite -Url https<span style="color:#960050;background-color:#1e0010">:</span>//tenant.sharepoint.com/sites/contoso
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Remove-PnPTenantSite -Url <span style="color:#e6db74">&#34;https://tenant.sharepoint.com/sites/contoso&#34;</span>
 </code></pre></div><p>This will remove the site collection with the url &lsquo;<a href="https://tenant.sharepoint.com/sites/contoso'">https://tenant.sharepoint.com/sites/contoso'</a>  and put it in the recycle bin.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Remove-PnPTenantSite -Url https<span style="color:#960050;background-color:#1e0010">:</span>//tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Remove-PnPTenantSite -Url <span style="color:#e6db74">&#34;https://tenant.sharepoint.com/sites/contoso&#34;</span> -Force -SkipRecycleBin
 </code></pre></div><p>This will remove the site collection with the url &lsquo;<a href="https://tenant.sharepoint.com/sites/contoso'">https://tenant.sharepoint.com/sites/contoso'</a> with force and it will skip the recycle bin.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Remove-PnPTenantSite -Url https<span style="color:#960050;background-color:#1e0010">:</span>//tenant.sharepoint.com/sites/contoso -FromRecycleBin
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Remove-PnPTenantSite -Url <span style="color:#e6db74">&#34;https://tenant.sharepoint.com/sites/contoso&#34;</span> -FromRecycleBin
 </code></pre></div><p>This will remove the site collection with the url &lsquo;<a href="https://tenant.sharepoint.com/sites/contoso'">https://tenant.sharepoint.com/sites/contoso'</a> from the recycle bin.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>

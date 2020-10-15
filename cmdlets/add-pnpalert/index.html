@@ -19,7 +19,8 @@
 </style>
 <meta property="og:title" content="Add-PnPAlert" />
 <meta property="og:description" content="SYNOPSIS Adds an alert for a user to a list
-SYNTAX Add-PnPAlert [-List] &lt;ListPipeBind&gt; [-Title &lt;String&gt;] [-User &lt;UserPipeBind&gt;] [-DeliveryMethod &lt;AlertDeliveryChannel&gt;] [-ChangeType &lt;AlertEventType&gt;] [-Frequency &lt;AlertFrequency&gt;] [-Filter &lt;AlertFilter&gt;] [-Time &lt;DateTime&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Add-PnPAlert -List &#34;Demo List&#34; Adds a new alert to the &ldquo;Demo List&rdquo; for the current user.
+SYNTAX Add-PnPAlert [-List] &lt;ListPipeBind&gt; [-Title &lt;String&gt;] [-User &lt;UserPipeBind&gt;] [-DeliveryMethod &lt;AlertDeliveryChannel&gt;] [-ChangeType &lt;AlertEventType&gt;] [-Frequency &lt;AlertFrequency&gt;] [-Filter &lt;AlertFilter&gt;] [-Time &lt;DateTime&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION This cmdlets allows to add an alert for a user to a list.
+EXAMPLES EXAMPLE 1 Add-PnPAlert -List &#34;Demo List&#34; Adds a new alert to the &ldquo;Demo List&rdquo; for the current user.
 EXAMPLE 2 Add-PnPAlert -Title &#34;Daily summary&#34; -List &#34;Demo List&#34; -Frequency Daily -ChangeType All -Time (Get-Date -Hour 11 -Minute 00 -Second 00) Adds a daily alert for the current user at the given time to the &ldquo;Demo List&rdquo;." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/add-pnpalert/" />
@@ -30,14 +31,16 @@ EXAMPLE 2 Add-PnPAlert -Title &#34;Daily summary&#34; -List &#34;Demo List&#34; 
 
 <meta name="twitter:title" content="Add-PnPAlert"/>
 <meta name="twitter:description" content="SYNOPSIS Adds an alert for a user to a list
-SYNTAX Add-PnPAlert [-List] &lt;ListPipeBind&gt; [-Title &lt;String&gt;] [-User &lt;UserPipeBind&gt;] [-DeliveryMethod &lt;AlertDeliveryChannel&gt;] [-ChangeType &lt;AlertEventType&gt;] [-Frequency &lt;AlertFrequency&gt;] [-Filter &lt;AlertFilter&gt;] [-Time &lt;DateTime&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Add-PnPAlert -List &#34;Demo List&#34; Adds a new alert to the &ldquo;Demo List&rdquo; for the current user.
+SYNTAX Add-PnPAlert [-List] &lt;ListPipeBind&gt; [-Title &lt;String&gt;] [-User &lt;UserPipeBind&gt;] [-DeliveryMethod &lt;AlertDeliveryChannel&gt;] [-ChangeType &lt;AlertEventType&gt;] [-Frequency &lt;AlertFrequency&gt;] [-Filter &lt;AlertFilter&gt;] [-Time &lt;DateTime&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION This cmdlets allows to add an alert for a user to a list.
+EXAMPLES EXAMPLE 1 Add-PnPAlert -List &#34;Demo List&#34; Adds a new alert to the &ldquo;Demo List&rdquo; for the current user.
 EXAMPLE 2 Add-PnPAlert -Title &#34;Daily summary&#34; -List &#34;Demo List&#34; -Frequency Daily -ChangeType All -Time (Get-Date -Hour 11 -Minute 00 -Second 00) Adds a daily alert for the current user at the given time to the &ldquo;Demo List&rdquo;."/>
 <meta itemprop="name" content="Add-PnPAlert">
 <meta itemprop="description" content="SYNOPSIS Adds an alert for a user to a list
-SYNTAX Add-PnPAlert [-List] &lt;ListPipeBind&gt; [-Title &lt;String&gt;] [-User &lt;UserPipeBind&gt;] [-DeliveryMethod &lt;AlertDeliveryChannel&gt;] [-ChangeType &lt;AlertEventType&gt;] [-Frequency &lt;AlertFrequency&gt;] [-Filter &lt;AlertFilter&gt;] [-Time &lt;DateTime&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Add-PnPAlert -List &#34;Demo List&#34; Adds a new alert to the &ldquo;Demo List&rdquo; for the current user.
+SYNTAX Add-PnPAlert [-List] &lt;ListPipeBind&gt; [-Title &lt;String&gt;] [-User &lt;UserPipeBind&gt;] [-DeliveryMethod &lt;AlertDeliveryChannel&gt;] [-ChangeType &lt;AlertEventType&gt;] [-Frequency &lt;AlertFrequency&gt;] [-Filter &lt;AlertFilter&gt;] [-Time &lt;DateTime&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION This cmdlets allows to add an alert for a user to a list.
+EXAMPLES EXAMPLE 1 Add-PnPAlert -List &#34;Demo List&#34; Adds a new alert to the &ldquo;Demo List&rdquo; for the current user.
 EXAMPLE 2 Add-PnPAlert -Title &#34;Daily summary&#34; -List &#34;Demo List&#34; -Frequency Daily -ChangeType All -Time (Get-Date -Hour 11 -Minute 00 -Second 00) Adds a daily alert for the current user at the given time to the &ldquo;Demo List&rdquo;.">
 
-<meta itemprop="wordCount" content="537">
+<meta itemprop="wordCount" content="550">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -66,6 +69,7 @@ EXAMPLE 2 Add-PnPAlert -Title &#34;Daily summary&#34; -List &#34;Demo List&#34; 
  [-Filter &lt;AlertFilter&gt;] [-Time &lt;DateTime&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre></div><h2 id="description">DESCRIPTION</h2>
+<p>This cmdlets allows to add an alert for a user to a list.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Add-PnPAlert -List <span style="color:#e6db74">&#34;Demo List&#34;</span>
