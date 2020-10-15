@@ -15,15 +15,15 @@ namespace PnP.PowerShell.Commands.Taxonomy
         private const string ParameterSet_TERMID = "By Term Id";
         private const string ParameterSet_TERMNAME = "By Term Name";
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_TERMID)]
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_TERMNAME)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_TERMID)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_TERMNAME)]
         public TaxonomyTermPipeBind Identity;
 
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_TERMNAME)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_TERMNAME)]
         public TaxonomyTermSetPipeBind TermSet;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_TERMNAME)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_TERMNAME)]
         public TaxonomyTermGroupPipeBind TermGroup;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]

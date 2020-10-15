@@ -34,4 +34,4 @@ This will put the current connection for use with the -Connection parameter on o
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

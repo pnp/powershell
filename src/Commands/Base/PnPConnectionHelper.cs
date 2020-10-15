@@ -473,7 +473,9 @@ namespace PnP.PowerShell.Commands.Base
             () =>
             {
                 var coreAssembly = Assembly.GetExecutingAssembly();
-                var result = $"PnPPS:{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.Split('.')[2]}";
+                var version = ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.Split('.');
+                
+                var result = $"PnPPS:{version[0]}.{version[1]}";
                 return (result);
             },
             true);

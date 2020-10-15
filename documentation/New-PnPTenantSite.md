@@ -245,4 +245,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)[Locale IDs](https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint)[Resource Usage Limits on Sandboxed Solutions in SharePoint 2010](https://docs.microsoft.com/previous-versions/office/developer/sharepoint-2010/gg615462(v=office.14))[Creating on-premises site collections using CSOM](http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

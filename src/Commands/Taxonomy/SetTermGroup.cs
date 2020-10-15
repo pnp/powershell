@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
     [Cmdlet(VerbsCommon.Set, "TermGroup")]
     public class SetTermGroup : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public TaxonomyTermGroupPipeBind Identity;
 
         [Parameter(Mandatory = false)]

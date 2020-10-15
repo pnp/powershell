@@ -44,7 +44,7 @@ namespace PnP.PowerShell.Commands
         {
             try
             {
-                var tag = PnPConnection.CurrentConnection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name.Replace("SPO", "");
+                var tag = PnPConnection.CurrentConnection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name;
                 if (tag.Length > 32)
                 {
                     tag = tag.Substring(0, 32);

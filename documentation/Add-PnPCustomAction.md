@@ -310,4 +310,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)[UserCustomAction](https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee539583(v=office.15))[BasePermissions](https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee543321(v=office.15))
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[UserCustomAction](https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee539583(v=office.15))[BasePermissions](https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee543321(v=office.15))

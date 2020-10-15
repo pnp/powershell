@@ -31,4 +31,4 @@ This example retrieves the current configuration values for Idle session sign-ou
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

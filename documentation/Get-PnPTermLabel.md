@@ -33,21 +33,21 @@ This cmdlets allows to retrieve all or a specific translation label for a term
 
 ### Example 1
 ```powershell
-PS C:\> Get-PnPTermLabel -Term af8601d6-d925-46dd-af7b-4a58515ffd83
+Get-PnPTermLabel -Term af8601d6-d925-46dd-af7b-4a58515ffd83
 ```
 
 Returns all translation labels for a term
 
 ### Example 2
 ```powershell
-PS C:\> Get-PnPTermLabel -Term af8601d6-d925-46dd-af7b-4a58515ffd83 -Lcid 1033
+Get-PnPTermLabel -Term af8601d6-d925-46dd-af7b-4a58515ffd83 -Lcid 1033
 ```
 
 Returns all translation labels for a term for a specific language
 
 ### Example 3
 ```powershell
-PS C:\> Get-PnPTermLabel -Term "Marketing" -TermSet "Departments" -TermGroup "Corporate"
+Get-PnPTermLabel -Term "Marketing" -TermSet "Departments" -TermGroup "Corporate"
 ```
 
 Returns all translation labels for a term
@@ -128,7 +128,7 @@ Accept wildcard characters: False
 ```
 
 ### -TermStore
-Term store to check; if not specified the default term store is used.
+Term store to use; if not specified the default term store is used.
 
 ```yaml
 Type: TaxonomyTermStorePipeBind
@@ -147,4 +147,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

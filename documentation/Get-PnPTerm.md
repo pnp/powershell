@@ -161,7 +161,7 @@ Accept wildcard characters: False
 ```
 
 ### -TermStore
-Term store to check; if not specified the default term store is used.
+Term store to use; if not specified the default term store is used.
 
 ```yaml
 Type: GenericObjectNameIdPipeBind<TermStore>
@@ -176,4 +176,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

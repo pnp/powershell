@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false)]
         public int Lcid = CultureInfo.CurrentCulture.LCID;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public TaxonomyTermSetPipeBind TermSet;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -53,7 +53,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
             {
                 termStore = TermStore.GetTermStore(taxonomySession);
             }
-
+            termStore.EnsureProperty(ts => ts.DefaultLanguage);
 
             TermGroup termGroup = TermGroup.GetGroup(termStore);
 
@@ -64,6 +64,12 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 Id = Guid.NewGuid();
             }
             var termName = TaxonomyExtensions.NormalizeName(Name);
+
+            if(!ParameterSpecified(nameof(Lcid)))
+            {
+                Lcid = termStore.EnsureProperty(ts => ts.DefaultLanguage);
+            }
+
             var term = termSet.CreateTerm(termName, Lcid, Id);
             ClientContext.Load(term);
             ClientContext.ExecuteQueryRetry();

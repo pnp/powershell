@@ -25,7 +25,7 @@ The Get-PnPStructuralNavigationCacheWebState cmdlet can be used to determine if 
 
 ### Example 1
 ```powershell
-PS C:\> Get-PnPStructuralNavigationCacheWebState -WebUrl "https://contoso.sharepoint.com/sites/product/electroncis" 
+Get-PnPStructuralNavigationCacheWebState -WebUrl "https://contoso.sharepoint.com/sites/product/electroncis" 
 ```
 
 This example checks if structural navigation caching is enabled for the web https://contoso.sharepoint.com/sites/product/electronics. If caching is enabled, then it will return True. If caching is disabled, then it will return False. 
@@ -48,4 +48,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

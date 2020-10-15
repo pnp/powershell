@@ -25,14 +25,14 @@ The Set-PnPStructuralNavigationCacheWebtate cmdlet can be used to enable or disa
 
 ### Example 1
 ```powershell
-PS C:\> Set-PnPStructuralNavigationCacheWebState -IsEnabled $true -WebUrl "https://contoso.sharepoint.com/sites/product/electronics" 
+Set-PnPStructuralNavigationCacheWebState -IsEnabled $true -WebUrl "https://contoso.sharepoint.com/sites/product/electronics" 
 ```
 
 This example enables caching for the web https://contoso.sharepoint.com/sites/product/electronics.
 
 ### Example 1
 ```powershell
-PS C:\> Set-PnPStructuralNavigationCacheSiteState -IsEnabled $false -SiteUrl "https://contoso.sharepoint.com/sites/product/electronics" 
+Set-PnPStructuralNavigationCacheSiteState -IsEnabled $false -SiteUrl "https://contoso.sharepoint.com/sites/product/electronics" 
 ```
 
 This example disabled caching for all webs in the web https://contoso.sharepoint.com/sites/product/electronics.
@@ -69,4 +69,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

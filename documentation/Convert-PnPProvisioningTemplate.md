@@ -119,4 +119,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)[Encoding](https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[Encoding](https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx)

@@ -37,4 +37,4 @@ Permanently removes the provided deleted Office 365 Group
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

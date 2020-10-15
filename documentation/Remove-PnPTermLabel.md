@@ -49,14 +49,14 @@ This cmdlet removes a label/translation from a term.
 
 ### Example 1
 ```powershell
-PS C:\> Remove-PnPTermLabel -Label "Marknadsföring" -Lcid 1053 -Term 2d1f298b-804a-4a05-96dc-29b667adec62
+Remove-PnPTermLabel -Label "Marknadsföring" -Lcid 1053 -Term 2d1f298b-804a-4a05-96dc-29b667adec62
 ```
 
 Removes the Swedish label from the specified term
 
 ### Example 2
 ```powershell
-PS C:\> Remove-PnPTermLabel -Label "Marknadsföring" -Lcid 1053 -Term "Marketing" -TermSet "Departments" -TermGroup "Corporate"
+Remove-PnPTermLabel -Label "Marknadsföring" -Lcid 1053 -Term "Marketing" -TermSet "Departments" -TermGroup "Corporate"
 ```
 Removes the Swedish label from the specified term
 

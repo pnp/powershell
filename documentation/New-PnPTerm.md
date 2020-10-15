@@ -1,10 +1,8 @@
 ---
-applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/new-pnpterm
+online version:
 schema: 2.0.0
-title: New-PnPTerm
 ---
 
 # New-PnPTerm
@@ -14,48 +12,41 @@ Creates a taxonomy term
 
 ## SYNTAX
 
-```powershell
-New-PnPTerm -Name <String> [-Id <Guid>] [-Lcid <Int32>]
- [-TermSet] <PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]>
- -TermGroup <TermGroupPipeBind> [-Description <String>] [-CustomProperties <Hashtable>]
- [-LocalCustomProperties <Hashtable>]
- [-TermStore <PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+```
+New-PnPTerm -Name <String> [-Id <Guid>] [-Lcid <Int32>] [-TermSet] <TaxonomyTermSetPipeBind>
+ -TermGroup <TaxonomyTermGroupPipeBind> [-Description <String>] [-CustomProperties <Hashtable>]
+ [-LocalCustomProperties <Hashtable>] [-TermStore <TaxonomyTermStorePipeBind>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+This cmdlet adds a new taxonony term to a given termset.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### Example 1
 ```powershell
 New-PnPTerm -TermSet "Departments" -TermGroup "Corporate" -Name "Finance"
 ```
 
 Creates a new taxonomy term named "Finance" in the termset Departments which is located in the "Corporate" termgroup
 
-## PARAMETERS
-
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### Example 2
+```powershell
+New-PnPTerm -TermSet "Departments" -TermGroup "Corporate" -Name "Finance" -CustomProperties @{"IsCorporate"="True"}
 ```
 
+Creates a new taxonomy term named "Finance" in the termset Departments which is located in the "Corporate" termgroup and sets a custom property on the termset.
+
+## PARAMETERS
+
 ### -CustomProperties
-Custom Properties
+Sets custom properties. 
 
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -70,6 +61,7 @@ Descriptive text to help users understand the intended use of this term.
 ```yaml
 Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -79,11 +71,12 @@ Accept wildcard characters: False
 ```
 
 ### -Id
-The Id to use for the term; if not specified, or the empty GUID, a random GUID is generated and used.
+The Id to use for the term; if not specified, or provided with an empty GUID, a random GUID is generated and used.
 
 ```yaml
 Type: Guid
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -93,11 +86,11 @@ Accept wildcard characters: False
 ```
 
 ### -Lcid
-The locale id to use for the term. Defaults to the current locale id.
-
+The locale id to use for the term. Defaults to the default language of the termstore.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -107,11 +100,12 @@ Accept wildcard characters: False
 ```
 
 ### -LocalCustomProperties
-Custom Properties
+Sets local custom properties
 
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -126,6 +120,7 @@ The name of the term.
 ```yaml
 Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -138,8 +133,9 @@ Accept wildcard characters: False
 The termgroup to create the term in.
 
 ```yaml
-Type: TermGroupPipeBind
+Type: TaxonomyTermGroupPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -152,8 +148,9 @@ Accept wildcard characters: False
 The termset to add the term to.
 
 ```yaml
-Type: PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]
+Type: TaxonomyTermSetPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: 0
@@ -163,10 +160,10 @@ Accept wildcard characters: False
 ```
 
 ### -TermStore
-Term store to check; if not specified the default term store is used.
+Term store to use; if not specified the default term store is used.
 
 ```yaml
-Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]
+Type: TaxonomyTermStorePipeBind
 Parameter Sets: (All)
 Aliases: TermStoreName
 
@@ -177,6 +174,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

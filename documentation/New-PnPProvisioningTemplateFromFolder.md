@@ -254,4 +254,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)[Encoding](https://docs.microsoft.com/dotnet/api/system.text.encoding)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[Encoding](https://docs.microsoft.com/dotnet/api/system.text.encoding)

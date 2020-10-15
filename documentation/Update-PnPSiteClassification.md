@@ -51,7 +51,7 @@ Sets the default classification value to "LBI". This value needs to be present i
 
 ### EXAMPLE 3
 ```powershell
-Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/sppnp
+Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/m365pnp
 ```
 
 sets the usage guideliness URL to the specified URL
@@ -130,4 +130,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -14,10 +14,9 @@ Creates a localized label for a taxonomy term
 
 ## SYNTAX
 
+
 ```powershell
-New-PnPTermLabel
- [-Term] <PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.Term]>
- -Name <String> -Lcid <Int32> [-IsDefault] [-Connection <PnPConnection>] [<CommonParameters>]
+New-PnPTermLabel -Term <TaxonomyTermPipeBind> -Name <String> -Lcid <Int32> [-IsDefault] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -40,20 +39,6 @@ Get-PnPTerm -Identity "Finance" -TermSet "Departments" -TermGroup "Corporate" | 
 Creates a new localized taxonomy label in German (LCID 1031) named "Finanzwesen" for the term "Finance" in the termset Departments which is located in the "Corporate" termgroup
 
 ## PARAMETERS
-
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -IsDefault
 Makes this new label the default label
@@ -98,10 +83,10 @@ Accept wildcard characters: False
 ```
 
 ### -Term
-The term to add the localized label to
+The term to add the localized label to.
 
 ```yaml
-Type: PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.Term]
+Type: TaxonomyTermPipeBind
 Parameter Sets: (All)
 
 Required: True
@@ -113,4 +98,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

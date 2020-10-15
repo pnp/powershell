@@ -76,12 +76,11 @@ namespace PnP.PowerShell.Commands.Taxonomy
             }
             if (ParameterSpecified(nameof(Description)))
             {
-                var lcid = termStore.DefaultLanguage;
-                if (ParameterSpecified(nameof(Lcid)))
+                if (!ParameterSpecified(nameof(Lcid)))
                 {
-                    lcid = Lcid;
+                    Lcid = termStore.EnsureProperty(ts => ts.DefaultLanguage);
                 }
-                term.SetDescription(Description, lcid);
+                term.SetDescription(Description, Lcid);
             }
             if (ParameterSpecified(nameof(DeleteAllCustomProperties)))
             {

@@ -12,15 +12,12 @@ namespace PnP.PowerShell.Commands.Taxonomy
     [Cmdlet(VerbsCommon.Remove, "TermGroup", SupportsShouldProcess = true)]
     public class RemoveTermGroup : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         [Alias("GroupName")]
-        public TaxonomyTermGroupPipeBind Group;
+        public TaxonomyTermGroupPipeBind Identity;
 
         [Parameter(Mandatory = false)]
         public TaxonomyTermStorePipeBind TermStore;
-
-        [Parameter(Mandatory = false)]
-        public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
         {
@@ -37,7 +34,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
             }
 
             // Get Group
-            var group = Group.GetGroup(termStore);
+            var group = Identity.GetGroup(termStore);
             group.EnsureProperties(g => g.Name);
             if (group != null)
             {
