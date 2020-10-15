@@ -18,8 +18,9 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Add-PnPFileToSiteTemplate" />
-<meta property="og:description" content="Add-PnPFileToSiteTemplate SYNOPSIS Adds a file to a PnP Provisioning Template
-SYNTAX Local File Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-Source] &lt;String&gt; [-Folder] &lt;String&gt; [[-Container] &lt;String&gt;] [[-FileLevel] &lt;FileLevel&gt;] [-FileOverwrite] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Remove File Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-SourceUrl] &lt;String&gt; [[-Container] &lt;String&gt;] [[-FileLevel] &lt;FileLevel&gt;] [-FileOverwrite] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Add-PnPFileToSiteTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder Adds a file to a PnP Site Template" />
+<meta property="og:description" content="SYNOPSIS Adds a file to a PnP Provisioning Template
+SYNTAX Local File Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-Source] &lt;String&gt; [-Folder] &lt;String&gt; [[-Container] &lt;String&gt;] [[-FileLevel] &lt;FileLevel&gt;] [-FileOverwrite] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Remove File Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-SourceUrl] &lt;String&gt; [[-Container] &lt;String&gt;] [[-FileLevel] &lt;FileLevel&gt;] [-FileOverwrite] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Add-PnPFileToSiteTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder Adds a file to a PnP Site Template
+EXAMPLE 2 Add-PnPFileToSiteTemplate -Path template." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/add-pnpfiletoprovisioningtemplate/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -28,13 +29,15 @@ SYNTAX Local File Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-Source] &lt
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Add-PnPFileToSiteTemplate"/>
-<meta name="twitter:description" content="Add-PnPFileToSiteTemplate SYNOPSIS Adds a file to a PnP Provisioning Template
-SYNTAX Local File Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-Source] &lt;String&gt; [-Folder] &lt;String&gt; [[-Container] &lt;String&gt;] [[-FileLevel] &lt;FileLevel&gt;] [-FileOverwrite] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Remove File Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-SourceUrl] &lt;String&gt; [[-Container] &lt;String&gt;] [[-FileLevel] &lt;FileLevel&gt;] [-FileOverwrite] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Add-PnPFileToSiteTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder Adds a file to a PnP Site Template"/>
+<meta name="twitter:description" content="SYNOPSIS Adds a file to a PnP Provisioning Template
+SYNTAX Local File Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-Source] &lt;String&gt; [-Folder] &lt;String&gt; [[-Container] &lt;String&gt;] [[-FileLevel] &lt;FileLevel&gt;] [-FileOverwrite] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Remove File Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-SourceUrl] &lt;String&gt; [[-Container] &lt;String&gt;] [[-FileLevel] &lt;FileLevel&gt;] [-FileOverwrite] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Add-PnPFileToSiteTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder Adds a file to a PnP Site Template
+EXAMPLE 2 Add-PnPFileToSiteTemplate -Path template."/>
 <meta itemprop="name" content="Add-PnPFileToSiteTemplate">
-<meta itemprop="description" content="Add-PnPFileToSiteTemplate SYNOPSIS Adds a file to a PnP Provisioning Template
-SYNTAX Local File Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-Source] &lt;String&gt; [-Folder] &lt;String&gt; [[-Container] &lt;String&gt;] [[-FileLevel] &lt;FileLevel&gt;] [-FileOverwrite] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Remove File Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-SourceUrl] &lt;String&gt; [[-Container] &lt;String&gt;] [[-FileLevel] &lt;FileLevel&gt;] [-FileOverwrite] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Add-PnPFileToSiteTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder Adds a file to a PnP Site Template">
+<meta itemprop="description" content="SYNOPSIS Adds a file to a PnP Provisioning Template
+SYNTAX Local File Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-Source] &lt;String&gt; [-Folder] &lt;String&gt; [[-Container] &lt;String&gt;] [[-FileLevel] &lt;FileLevel&gt;] [-FileOverwrite] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Remove File Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-SourceUrl] &lt;String&gt; [[-Container] &lt;String&gt;] [[-FileLevel] &lt;FileLevel&gt;] [-FileOverwrite] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Add-PnPFileToSiteTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder Adds a file to a PnP Site Template
+EXAMPLE 2 Add-PnPFileToSiteTemplate -Path template.">
 
-<meta itemprop="wordCount" content="602">
+<meta itemprop="wordCount" content="601">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -55,7 +58,6 @@ SYNTAX Local File Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-Source] &lt
 </div>
 <div class="content-container">
 <main><h1>Add-PnPFileToSiteTemplate</h1>
-<h1 id="add-pnpfiletositetemplate">Add-PnPFileToSiteTemplate</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Adds a file to a PnP Provisioning Template</p>
 <h2 id="syntax">SYNTAX</h2>

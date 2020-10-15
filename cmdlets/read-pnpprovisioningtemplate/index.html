@@ -18,9 +18,10 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Read-PnPSiteTemplate" />
-<meta property="og:description" content="Read-PnPSiteTemplate SYNOPSIS Loads/Reads a PnP file from the file system or a string
+<meta property="og:description" content="SYNOPSIS Loads/Reads a PnP file from the file system or a string
 SYNTAX By Path Read-PnPSiteTemplate [-Path] &lt;String&gt; [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [&lt;CommonParameters&gt;] By XML Read-PnPSiteTemplate [-Xml] &lt;String&gt; [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Read-PnPSiteTemplate -Path template.pnp Loads a PnP file from the file system
-EXAMPLE 2 Read-PnPSiteTemplate -Path template.pnp -TemplateProviderExtensions $extensions Loads a PnP file from the file system using some custom template provider extensions while loading the file." />
+EXAMPLE 2 Read-PnPSiteTemplate -Path template.pnp -TemplateProviderExtensions $extensions Loads a PnP file from the file system using some custom template provider extensions while loading the file.
+EXAMPLE 3 Read-PnPSiteTemplate -Xml $xml Reads a PnP Provisioning template from a string containing the XML of a provisioning template" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/read-pnpprovisioningtemplate/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -29,15 +30,17 @@ EXAMPLE 2 Read-PnPSiteTemplate -Path template.pnp -TemplateProviderExtensions $e
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Read-PnPSiteTemplate"/>
-<meta name="twitter:description" content="Read-PnPSiteTemplate SYNOPSIS Loads/Reads a PnP file from the file system or a string
+<meta name="twitter:description" content="SYNOPSIS Loads/Reads a PnP file from the file system or a string
 SYNTAX By Path Read-PnPSiteTemplate [-Path] &lt;String&gt; [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [&lt;CommonParameters&gt;] By XML Read-PnPSiteTemplate [-Xml] &lt;String&gt; [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Read-PnPSiteTemplate -Path template.pnp Loads a PnP file from the file system
-EXAMPLE 2 Read-PnPSiteTemplate -Path template.pnp -TemplateProviderExtensions $extensions Loads a PnP file from the file system using some custom template provider extensions while loading the file."/>
+EXAMPLE 2 Read-PnPSiteTemplate -Path template.pnp -TemplateProviderExtensions $extensions Loads a PnP file from the file system using some custom template provider extensions while loading the file.
+EXAMPLE 3 Read-PnPSiteTemplate -Xml $xml Reads a PnP Provisioning template from a string containing the XML of a provisioning template"/>
 <meta itemprop="name" content="Read-PnPSiteTemplate">
-<meta itemprop="description" content="Read-PnPSiteTemplate SYNOPSIS Loads/Reads a PnP file from the file system or a string
+<meta itemprop="description" content="SYNOPSIS Loads/Reads a PnP file from the file system or a string
 SYNTAX By Path Read-PnPSiteTemplate [-Path] &lt;String&gt; [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [&lt;CommonParameters&gt;] By XML Read-PnPSiteTemplate [-Xml] &lt;String&gt; [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Read-PnPSiteTemplate -Path template.pnp Loads a PnP file from the file system
-EXAMPLE 2 Read-PnPSiteTemplate -Path template.pnp -TemplateProviderExtensions $extensions Loads a PnP file from the file system using some custom template provider extensions while loading the file.">
+EXAMPLE 2 Read-PnPSiteTemplate -Path template.pnp -TemplateProviderExtensions $extensions Loads a PnP file from the file system using some custom template provider extensions while loading the file.
+EXAMPLE 3 Read-PnPSiteTemplate -Xml $xml Reads a PnP Provisioning template from a string containing the XML of a provisioning template">
 
-<meta itemprop="wordCount" content="194">
+<meta itemprop="wordCount" content="193">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -58,7 +61,6 @@ EXAMPLE 2 Read-PnPSiteTemplate -Path template.pnp -TemplateProviderExtensions $e
 </div>
 <div class="content-container">
 <main><h1>Read-PnPSiteTemplate</h1>
-<h1 id="read-pnpsitetemplate">Read-PnPSiteTemplate</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Loads/Reads a PnP file from the file system or a string</p>
 <h2 id="syntax">SYNTAX</h2>

@@ -18,7 +18,7 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Invoke-PnPTenantTemplate" />
-<meta property="og:description" content="Invoke-PnPTenantTemplate SYNOPSIS Required Permissions
+<meta property="og:description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Applies a tenant template to the current tenant. You must have the Office 365 Global Admin role to run this cmdlet successfully.
 SYNTAX By Path Invoke-PnPTenantTemplate [-Path] &lt;String&gt; [-SequenceId &lt;String&gt;] [-ResourceFolder &lt;String&gt;] [-Handlers &lt;Handlers&gt;] [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;] [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [-Parameters &lt;Hashtable&gt;] [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs] [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration &lt;ApplyConfigurationPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] By Object Invoke-PnPTenantTemplate [-Template] &lt;ProvisioningHierarchy&gt; [-SequenceId &lt;String&gt;] [-ResourceFolder &lt;String&gt;] [-Handlers &lt;Handlers&gt;] [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;] [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [-Parameters &lt;Hashtable&gt;] [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs] [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration &lt;ApplyConfigurationPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Invoke-PnPTenantTemplate -Path myfile." />
 <meta property="og:type" content="article" />
@@ -29,15 +29,15 @@ SYNTAX By Path Invoke-PnPTenantTemplate [-Path] &lt;String&gt; [-SequenceId &lt;
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Invoke-PnPTenantTemplate"/>
-<meta name="twitter:description" content="Invoke-PnPTenantTemplate SYNOPSIS Required Permissions
+<meta name="twitter:description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Applies a tenant template to the current tenant. You must have the Office 365 Global Admin role to run this cmdlet successfully.
 SYNTAX By Path Invoke-PnPTenantTemplate [-Path] &lt;String&gt; [-SequenceId &lt;String&gt;] [-ResourceFolder &lt;String&gt;] [-Handlers &lt;Handlers&gt;] [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;] [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [-Parameters &lt;Hashtable&gt;] [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs] [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration &lt;ApplyConfigurationPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] By Object Invoke-PnPTenantTemplate [-Template] &lt;ProvisioningHierarchy&gt; [-SequenceId &lt;String&gt;] [-ResourceFolder &lt;String&gt;] [-Handlers &lt;Handlers&gt;] [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;] [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [-Parameters &lt;Hashtable&gt;] [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs] [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration &lt;ApplyConfigurationPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Invoke-PnPTenantTemplate -Path myfile."/>
 <meta itemprop="name" content="Invoke-PnPTenantTemplate">
-<meta itemprop="description" content="Invoke-PnPTenantTemplate SYNOPSIS Required Permissions
+<meta itemprop="description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Applies a tenant template to the current tenant. You must have the Office 365 Global Admin role to run this cmdlet successfully.
 SYNTAX By Path Invoke-PnPTenantTemplate [-Path] &lt;String&gt; [-SequenceId &lt;String&gt;] [-ResourceFolder &lt;String&gt;] [-Handlers &lt;Handlers&gt;] [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;] [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [-Parameters &lt;Hashtable&gt;] [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs] [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration &lt;ApplyConfigurationPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] By Object Invoke-PnPTenantTemplate [-Template] &lt;ProvisioningHierarchy&gt; [-SequenceId &lt;String&gt;] [-ResourceFolder &lt;String&gt;] [-Handlers &lt;Handlers&gt;] [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;] [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [-Parameters &lt;Hashtable&gt;] [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs] [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration &lt;ApplyConfigurationPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Invoke-PnPTenantTemplate -Path myfile.">
 
-<meta itemprop="wordCount" content="961">
+<meta itemprop="wordCount" content="960">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -58,7 +58,6 @@ SYNTAX By Path Invoke-PnPTenantTemplate [-Path] &lt;String&gt; [-SequenceId &lt;
 </div>
 <div class="content-container">
 <main><h1>Invoke-PnPTenantTemplate</h1>
-<h1 id="invoke-pnptenanttemplate">Invoke-PnPTenantTemplate</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>

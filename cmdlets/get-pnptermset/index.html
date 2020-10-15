@@ -18,10 +18,11 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Get-PnPTermSet" />
-<meta property="og:description" content="Get-PnPTermSet SYNOPSIS Returns a taxonomy term set
+<meta property="og:description" content="SYNOPSIS Returns a taxonomy term set
 SYNTAX Get-PnPTermSet [-Identity &lt;TaxonomyTermSetPipeBind&gt;] [-TermGroup] &lt;TaxonomyTermGroupPipeBind&gt;[-TermStore &lt;TaxonomyTermStorePipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;][&lt;CommonParameters&gt;]DESCRIPTION This cmdlet returns a termset from the taxonomy store.
 EXAMPLES EXAMPLE 1 Get-PnPTermSet -TermGroup &#34;Corporate&#34; Returns all termsets in the group &ldquo;Corporate&rdquo; from the site collection termstore
-EXAMPLE 2 Get-PnPTermSet -Identity &#34;Departments&#34; -TermGroup &#34;Corporate&#34; Returns the termset named &ldquo;Departments&rdquo; from the termgroup called &ldquo;Corporate&rdquo; from the site collection termstore" />
+EXAMPLE 2 Get-PnPTermSet -Identity &#34;Departments&#34; -TermGroup &#34;Corporate&#34; Returns the termset named &ldquo;Departments&rdquo; from the termgroup called &ldquo;Corporate&rdquo; from the site collection termstore
+EXAMPLE 3 Get-PnPTermSet -Identity ab2af486-e097-4b4a-9444-527b251f1f8d -TermGroup &#34;Corporate Returns the termset with the given id from the termgroup called &ldquo;Corporate&rdquo; from the site collection termstore" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/get-pnptermset/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -30,17 +31,19 @@ EXAMPLE 2 Get-PnPTermSet -Identity &#34;Departments&#34; -TermGroup &#34;Corpora
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Get-PnPTermSet"/>
-<meta name="twitter:description" content="Get-PnPTermSet SYNOPSIS Returns a taxonomy term set
+<meta name="twitter:description" content="SYNOPSIS Returns a taxonomy term set
 SYNTAX Get-PnPTermSet [-Identity &lt;TaxonomyTermSetPipeBind&gt;] [-TermGroup] &lt;TaxonomyTermGroupPipeBind&gt;[-TermStore &lt;TaxonomyTermStorePipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;][&lt;CommonParameters&gt;]DESCRIPTION This cmdlet returns a termset from the taxonomy store.
 EXAMPLES EXAMPLE 1 Get-PnPTermSet -TermGroup &#34;Corporate&#34; Returns all termsets in the group &ldquo;Corporate&rdquo; from the site collection termstore
-EXAMPLE 2 Get-PnPTermSet -Identity &#34;Departments&#34; -TermGroup &#34;Corporate&#34; Returns the termset named &ldquo;Departments&rdquo; from the termgroup called &ldquo;Corporate&rdquo; from the site collection termstore"/>
+EXAMPLE 2 Get-PnPTermSet -Identity &#34;Departments&#34; -TermGroup &#34;Corporate&#34; Returns the termset named &ldquo;Departments&rdquo; from the termgroup called &ldquo;Corporate&rdquo; from the site collection termstore
+EXAMPLE 3 Get-PnPTermSet -Identity ab2af486-e097-4b4a-9444-527b251f1f8d -TermGroup &#34;Corporate Returns the termset with the given id from the termgroup called &ldquo;Corporate&rdquo; from the site collection termstore"/>
 <meta itemprop="name" content="Get-PnPTermSet">
-<meta itemprop="description" content="Get-PnPTermSet SYNOPSIS Returns a taxonomy term set
+<meta itemprop="description" content="SYNOPSIS Returns a taxonomy term set
 SYNTAX Get-PnPTermSet [-Identity &lt;TaxonomyTermSetPipeBind&gt;] [-TermGroup] &lt;TaxonomyTermGroupPipeBind&gt;[-TermStore &lt;TaxonomyTermStorePipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;][&lt;CommonParameters&gt;]DESCRIPTION This cmdlet returns a termset from the taxonomy store.
 EXAMPLES EXAMPLE 1 Get-PnPTermSet -TermGroup &#34;Corporate&#34; Returns all termsets in the group &ldquo;Corporate&rdquo; from the site collection termstore
-EXAMPLE 2 Get-PnPTermSet -Identity &#34;Departments&#34; -TermGroup &#34;Corporate&#34; Returns the termset named &ldquo;Departments&rdquo; from the termgroup called &ldquo;Corporate&rdquo; from the site collection termstore">
+EXAMPLE 2 Get-PnPTermSet -Identity &#34;Departments&#34; -TermGroup &#34;Corporate&#34; Returns the termset named &ldquo;Departments&rdquo; from the termgroup called &ldquo;Corporate&rdquo; from the site collection termstore
+EXAMPLE 3 Get-PnPTermSet -Identity ab2af486-e097-4b4a-9444-527b251f1f8d -TermGroup &#34;Corporate Returns the termset with the given id from the termgroup called &ldquo;Corporate&rdquo; from the site collection termstore">
 
-<meta itemprop="wordCount" content="266">
+<meta itemprop="wordCount" content="265">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -61,7 +64,6 @@ EXAMPLE 2 Get-PnPTermSet -Identity &#34;Departments&#34; -TermGroup &#34;Corpora
 </div>
 <div class="content-container">
 <main><h1>Get-PnPTermSet</h1>
-<h1 id="get-pnptermset">Get-PnPTermSet</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Returns a taxonomy term set</p>
 <h2 id="syntax">SYNTAX</h2>

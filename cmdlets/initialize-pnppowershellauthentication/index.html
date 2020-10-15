@@ -18,7 +18,7 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Initialize-PnPPowerShellAuthentication" />
-<meta property="og:description" content="Initialize-PnPPowerShellAuthentication SYNOPSIS Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration.
+<meta property="og:description" content="SYNOPSIS Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration.
 SYNTAX Generate Certificate Initialize-PnPPowerShellAuthentication -ApplicationName &lt;String&gt; -Tenant &lt;String&gt; [-CommonName &lt;String&gt;] [-OutPath &lt;String&gt;] [-Store &lt;StoreLocation&gt;] [-Scopes &lt;String[]&gt;] [-Country &lt;String&gt;] [-State &lt;String&gt;] [-Locality &lt;String&gt;] [-Organization &lt;String&gt;] [-OrganizationUnit &lt;String&gt;] [-ValidYears &lt;Int&gt;] [-CertificatePassword &lt;SecureString&gt;] Existing Certificate Initialize-PnPPowerShellAuthentication -CertificatePath &lt;String&gt; -ApplicationName &lt;String&gt; -Tenant &lt;String&gt; [-Scopes &lt;String[]&gt;] [-CertificatePassword &lt;SecureString&gt;] DESCRIPTION Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/initialize-pnppowershellauthentication/" />
@@ -28,13 +28,13 @@ SYNTAX Generate Certificate Initialize-PnPPowerShellAuthentication -ApplicationN
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Initialize-PnPPowerShellAuthentication"/>
-<meta name="twitter:description" content="Initialize-PnPPowerShellAuthentication SYNOPSIS Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration.
+<meta name="twitter:description" content="SYNOPSIS Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration.
 SYNTAX Generate Certificate Initialize-PnPPowerShellAuthentication -ApplicationName &lt;String&gt; -Tenant &lt;String&gt; [-CommonName &lt;String&gt;] [-OutPath &lt;String&gt;] [-Store &lt;StoreLocation&gt;] [-Scopes &lt;String[]&gt;] [-Country &lt;String&gt;] [-State &lt;String&gt;] [-Locality &lt;String&gt;] [-Organization &lt;String&gt;] [-OrganizationUnit &lt;String&gt;] [-ValidYears &lt;Int&gt;] [-CertificatePassword &lt;SecureString&gt;] Existing Certificate Initialize-PnPPowerShellAuthentication -CertificatePath &lt;String&gt; -ApplicationName &lt;String&gt; -Tenant &lt;String&gt; [-Scopes &lt;String[]&gt;] [-CertificatePassword &lt;SecureString&gt;] DESCRIPTION Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration."/>
 <meta itemprop="name" content="Initialize-PnPPowerShellAuthentication">
-<meta itemprop="description" content="Initialize-PnPPowerShellAuthentication SYNOPSIS Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration.
+<meta itemprop="description" content="SYNOPSIS Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration.
 SYNTAX Generate Certificate Initialize-PnPPowerShellAuthentication -ApplicationName &lt;String&gt; -Tenant &lt;String&gt; [-CommonName &lt;String&gt;] [-OutPath &lt;String&gt;] [-Store &lt;StoreLocation&gt;] [-Scopes &lt;String[]&gt;] [-Country &lt;String&gt;] [-State &lt;String&gt;] [-Locality &lt;String&gt;] [-Organization &lt;String&gt;] [-OrganizationUnit &lt;String&gt;] [-ValidYears &lt;Int&gt;] [-CertificatePassword &lt;SecureString&gt;] Existing Certificate Initialize-PnPPowerShellAuthentication -CertificatePath &lt;String&gt; -ApplicationName &lt;String&gt; -Tenant &lt;String&gt; [-Scopes &lt;String[]&gt;] [-CertificatePassword &lt;SecureString&gt;] DESCRIPTION Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration.">
 
-<meta itemprop="wordCount" content="642">
+<meta itemprop="wordCount" content="99">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -55,7 +55,6 @@ SYNTAX Generate Certificate Initialize-PnPPowerShellAuthentication -ApplicationN
 </div>
 <div class="content-container">
 <main><h1>Initialize-PnPPowerShellAuthentication</h1>
-<h1 id="initialize-pnppowershellauthentication">Initialize-PnPPowerShellAuthentication</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration.</p>
 <h2 id="syntax">SYNTAX</h2>
@@ -82,133 +81,7 @@ SYNTAX Generate Certificate Initialize-PnPPowerShellAuthentication -ApplicationN
 </code></pre></div><h2 id="description">DESCRIPTION</h2>
 <p>Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration. Have a look at <a href="https://www.youtube.com/watch?v=QWY7AJ2ZQYI">https://www.youtube.com/watch?v=QWY7AJ2ZQYI</a> for a demonstration on how this cmdlet works and can be used.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="------------------example-1------------------">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 1&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser
-</code></pre></div><p>Creates a new Azure AD Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All</p>
-<h3 id="------------------example-2------------------">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 2&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String <span style="color:#e6db74">&#34;password&#34;</span> -AsPlainText -Force)
-</code></pre></div><p>Creates a new Azure AD Application registration which will use the existing private key certificate at the provided path to allow access. It will upload the provided private key certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All</p>
-<h3 id="------------------example-3------------------">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 3&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -Scopes <span style="color:#e6db74">&#34;MSGraph.User.Read.All&#34;</span>,<span style="color:#e6db74">&#34;SPO.Sites.Read.All&#34;</span>
-</code></pre></div><p>Creates a new Azure AD Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.Read.All, User.Read.All</p>
-<h3 id="------------------example-4------------------">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 4&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -OutPath c:\ -CertificatePassword (ConvertTo-SecureString -String <span style="color:#e6db74">&#34;password&#34;</span> -AsPlainText -Force)
-</code></pre></div><p>Creates a new Azure AD Application registration, creates a new self signed certificate, and stores the public and private key certificates in c:. The private key certificate will be locked with the password &ldquo;password&rdquo;. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-applicationname">-ApplicationName</h3>
-<p>The name of the Azure AD Application to create</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
-<span style="color:#66d9ef">Parameter Sets</span>: __AllParameterSets
-
-<span style="color:#66d9ef">Required</span>: True
-<span style="color:#66d9ef">Position</span>: Named
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-certificatepassword">-CertificatePassword</h3>
-<p>Optional certificate password</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: SecureString
-<span style="color:#66d9ef">Parameter Sets</span>: Generate Certificate, Existing Certificate
-
-<span style="color:#66d9ef">Required</span>: False
-<span style="color:#66d9ef">Position</span>: <span style="color:#ae81ff">8</span>
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-certificatepath">-CertificatePath</h3>
-<p>Password for the certificate being created</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
-<span style="color:#66d9ef">Parameter Sets</span>: Existing Certificate
-
-<span style="color:#66d9ef">Required</span>: True
-<span style="color:#66d9ef">Position</span>: Named
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-commonname">-CommonName</h3>
-<p>Common Name (e.g. server FQDN or YOUR name). defaults to &lsquo;pnp.contoso.com&rsquo;</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
-<span style="color:#66d9ef">Parameter Sets</span>: Generate Certificate
-
-<span style="color:#66d9ef">Required</span>: False
-<span style="color:#66d9ef">Position</span>: <span style="color:#ae81ff">0</span>
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-country">-Country</h3>
-<p>Country Name (2 letter code)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
-<span style="color:#66d9ef">Parameter Sets</span>: Generate Certificate
-
-<span style="color:#66d9ef">Required</span>: False
-<span style="color:#66d9ef">Position</span>: <span style="color:#ae81ff">1</span>
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-locality">-Locality</h3>
-<p>Locality Name (eg, city)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
-<span style="color:#66d9ef">Parameter Sets</span>: Generate Certificate
-
-<span style="color:#66d9ef">Required</span>: False
-<span style="color:#66d9ef">Position</span>: <span style="color:#ae81ff">3</span>
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-organization">-Organization</h3>
-<p>Organization Name (eg, company)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
-<span style="color:#66d9ef">Parameter Sets</span>: Generate Certificate
-
-<span style="color:#66d9ef">Required</span>: False
-<span style="color:#66d9ef">Position</span>: <span style="color:#ae81ff">4</span>
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-organizationunit">-OrganizationUnit</h3>
-<p>Organizational Unit Name (eg, section)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
-<span style="color:#66d9ef">Parameter Sets</span>: Generate Certificate
-
-<span style="color:#66d9ef">Required</span>: False
-<span style="color:#66d9ef">Position</span>: <span style="color:#ae81ff">5</span>
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-outpath">-OutPath</h3>
-<p>Folder to create certificate files in (.CER and .PFX)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
-<span style="color:#66d9ef">Parameter Sets</span>: Generate Certificate
-
-<span style="color:#66d9ef">Required</span>: False
-<span style="color:#66d9ef">Position</span>: Named
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-scopes">-Scopes</h3>
-<p>Specify which permissions scopes to request.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String[]
-<span style="color:#66d9ef">Parameter Sets</span>: Generate Certificate
-
-<span style="color:#66d9ef">Required</span>: False
-<span style="color:#66d9ef">Position</span>: <span style="color:#ae81ff">0</span>
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-state">-State</h3>
-<p>State or Province Name (full name)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
-<span style="color:#66d9ef">Parameter Sets</span>: Generate Certificate
-
-<span style="color:#66d9ef">Required</span>: False
-<span style="color:#66d9ef">Position</span>: <span style="color:#ae81ff">2</span>
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-store">-Store</h3>
-<p>Local Certificate Store to add the certificate to</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: StoreLocation
-<span style="color:#66d9ef">Parameter Sets</span>: Generate Certificate
-
-<span style="color:#66d9ef">Required</span>: False
-<span style="color:#66d9ef">Position</span>: Named
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-tenant">-Tenant</h3>
-<p>The identifier of your tenant, e.g. mytenant.onmicrosoft.com</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
-<span style="color:#66d9ef">Parameter Sets</span>: __AllParameterSets
-
-<span style="color:#66d9ef">Required</span>: True
-<span style="color:#66d9ef">Position</span>: Named
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-validyears">-ValidYears</h3>
-<p>Number of years until expiration (default is 10, max is 30)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Int
-<span style="color:#66d9ef">Parameter Sets</span>: Generate Certificate
-
-<span style="color:#66d9ef">Required</span>: False
-<span style="color:#66d9ef">Position</span>: <span style="color:#ae81ff">7</span>
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<h3 id="heading"></h3>
 <div class="edit-meta">
 
 <br></div><nav class="pagination"><a class="nav nav-prev" href="https://pnp.github.io/powershell/cmdlets/import-pnptermset/" title="Import-PnPTermSet"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Import-PnPTermSet</a>

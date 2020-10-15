@@ -18,10 +18,11 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Remove-PnPCustomAction" />
-<meta property="og:description" content="Remove-PnPCustomAction SYNOPSIS Removes a custom action
+<meta property="og:description" content="SYNOPSIS Removes a custom action
 SYNTAX Remove-PnPCustomAction [[-Identity] &lt;UserCustomActionPipeBind&gt;] [-Scope &lt;CustomActionScope&gt;] [-Force] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 Removes the custom action with the id &lsquo;aa66f67e-46c0-4474-8a82-42bf467d07f2&rsquo;.
 EXAMPLE 2 Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 -Scope web Removes the custom action with the id &lsquo;aa66f67e-46c0-4474-8a82-42bf467d07f2&rsquo; from the current web.
-EXAMPLE 3 Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 -Force Removes the custom action with the id &lsquo;aa66f67e-46c0-4474-8a82-42bf467d07f2&rsquo; without asking for confirmation." />
+EXAMPLE 3 Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 -Force Removes the custom action with the id &lsquo;aa66f67e-46c0-4474-8a82-42bf467d07f2&rsquo; without asking for confirmation.
+EXAMPLE 4 Get-PnPCustomAction -Scope All | ?" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/remove-pnpcustomaction/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -30,17 +31,19 @@ EXAMPLE 3 Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Remove-PnPCustomAction"/>
-<meta name="twitter:description" content="Remove-PnPCustomAction SYNOPSIS Removes a custom action
+<meta name="twitter:description" content="SYNOPSIS Removes a custom action
 SYNTAX Remove-PnPCustomAction [[-Identity] &lt;UserCustomActionPipeBind&gt;] [-Scope &lt;CustomActionScope&gt;] [-Force] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 Removes the custom action with the id &lsquo;aa66f67e-46c0-4474-8a82-42bf467d07f2&rsquo;.
 EXAMPLE 2 Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 -Scope web Removes the custom action with the id &lsquo;aa66f67e-46c0-4474-8a82-42bf467d07f2&rsquo; from the current web.
-EXAMPLE 3 Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 -Force Removes the custom action with the id &lsquo;aa66f67e-46c0-4474-8a82-42bf467d07f2&rsquo; without asking for confirmation."/>
+EXAMPLE 3 Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 -Force Removes the custom action with the id &lsquo;aa66f67e-46c0-4474-8a82-42bf467d07f2&rsquo; without asking for confirmation.
+EXAMPLE 4 Get-PnPCustomAction -Scope All | ?"/>
 <meta itemprop="name" content="Remove-PnPCustomAction">
-<meta itemprop="description" content="Remove-PnPCustomAction SYNOPSIS Removes a custom action
+<meta itemprop="description" content="SYNOPSIS Removes a custom action
 SYNTAX Remove-PnPCustomAction [[-Identity] &lt;UserCustomActionPipeBind&gt;] [-Scope &lt;CustomActionScope&gt;] [-Force] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 Removes the custom action with the id &lsquo;aa66f67e-46c0-4474-8a82-42bf467d07f2&rsquo;.
 EXAMPLE 2 Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 -Scope web Removes the custom action with the id &lsquo;aa66f67e-46c0-4474-8a82-42bf467d07f2&rsquo; from the current web.
-EXAMPLE 3 Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 -Force Removes the custom action with the id &lsquo;aa66f67e-46c0-4474-8a82-42bf467d07f2&rsquo; without asking for confirmation.">
+EXAMPLE 3 Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 -Force Removes the custom action with the id &lsquo;aa66f67e-46c0-4474-8a82-42bf467d07f2&rsquo; without asking for confirmation.
+EXAMPLE 4 Get-PnPCustomAction -Scope All | ?">
 
-<meta itemprop="wordCount" content="413">
+<meta itemprop="wordCount" content="412">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -61,7 +64,6 @@ EXAMPLE 3 Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 
 </div>
 <div class="content-container">
 <main><h1>Remove-PnPCustomAction</h1>
-<h1 id="remove-pnpcustomaction">Remove-PnPCustomAction</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Removes a custom action</p>
 <h2 id="syntax">SYNTAX</h2>

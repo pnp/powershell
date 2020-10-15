@@ -18,7 +18,7 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Remove-PnPClientSideComponent" />
-<meta property="og:description" content="Remove-PnPClientSideComponent SYNOPSIS Removes a Client-Side component from a page
+<meta property="og:description" content="SYNOPSIS Removes a Client-Side component from a page
 SYNTAX Remove-PnPClientSideComponent [-Page] &lt;ClientSidePagePipeBind&gt; -InstanceId &lt;Guid&gt; [-Force] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPClientSideComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 Removes the control specified from the page.
 EXAMPLE 2 $webpart = Get-PnPClientSideComponent -Page &#34;Home&#34; | Where-Object { $_.Title -eq &#34;Site activity&#34; } Remove-PnPClientSideComponent -Page &#34;Home&#34; -InstanceId $webpart.InstanceId -Force Finds a web part with the Title &ldquo;Site activity&rdquo; on the Home.aspx page, then removes it from the page" />
 <meta property="og:type" content="article" />
@@ -29,15 +29,15 @@ EXAMPLE 2 $webpart = Get-PnPClientSideComponent -Page &#34;Home&#34; | Where-Obj
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Remove-PnPClientSideComponent"/>
-<meta name="twitter:description" content="Remove-PnPClientSideComponent SYNOPSIS Removes a Client-Side component from a page
+<meta name="twitter:description" content="SYNOPSIS Removes a Client-Side component from a page
 SYNTAX Remove-PnPClientSideComponent [-Page] &lt;ClientSidePagePipeBind&gt; -InstanceId &lt;Guid&gt; [-Force] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPClientSideComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 Removes the control specified from the page.
 EXAMPLE 2 $webpart = Get-PnPClientSideComponent -Page &#34;Home&#34; | Where-Object { $_.Title -eq &#34;Site activity&#34; } Remove-PnPClientSideComponent -Page &#34;Home&#34; -InstanceId $webpart.InstanceId -Force Finds a web part with the Title &ldquo;Site activity&rdquo; on the Home.aspx page, then removes it from the page"/>
 <meta itemprop="name" content="Remove-PnPClientSideComponent">
-<meta itemprop="description" content="Remove-PnPClientSideComponent SYNOPSIS Removes a Client-Side component from a page
+<meta itemprop="description" content="SYNOPSIS Removes a Client-Side component from a page
 SYNTAX Remove-PnPClientSideComponent [-Page] &lt;ClientSidePagePipeBind&gt; -InstanceId &lt;Guid&gt; [-Force] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPClientSideComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 Removes the control specified from the page.
 EXAMPLE 2 $webpart = Get-PnPClientSideComponent -Page &#34;Home&#34; | Where-Object { $_.Title -eq &#34;Site activity&#34; } Remove-PnPClientSideComponent -Page &#34;Home&#34; -InstanceId $webpart.InstanceId -Force Finds a web part with the Title &ldquo;Site activity&rdquo; on the Home.aspx page, then removes it from the page">
 
-<meta itemprop="wordCount" content="298">
+<meta itemprop="wordCount" content="297">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -58,7 +58,6 @@ EXAMPLE 2 $webpart = Get-PnPClientSideComponent -Page &#34;Home&#34; | Where-Obj
 </div>
 <div class="content-container">
 <main><h1>Remove-PnPClientSideComponent</h1>
-<h1 id="remove-pnpclientsidecomponent">Remove-PnPClientSideComponent</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Removes a Client-Side component from a page</p>
 <h2 id="syntax">SYNTAX</h2>

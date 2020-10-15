@@ -18,10 +18,9 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Invoke-PnPSPRestMethod" />
-<meta property="og:description" content="Invoke-PnPSPRestMethod SYNOPSIS Invokes a REST request towards a SharePoint site
+<meta property="og:description" content="SYNOPSIS Invokes a REST request towards a SharePoint site
 SYNTAX Invoke-PnPSPRestMethod -Url &lt;String&gt; [-Method &lt;HttpRequestMethod&gt;] [-Content &lt;Object&gt;] [-ContentType &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] DESCRIPTION Invokes a REST request towards a SharePoint site
-EXAMPLES &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 1&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; Invoke-PnPSPRestMethod -Url /_api/web This example executes a GET request towards the current site collection and returns the properties of the current web
-&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 2&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; $output = Invoke-PnPSPRestMethod -Url &#39;/_api/web/lists?$select=Id,Title&#39; $output.value This example executes a GET request towards the current site collection and returns the id and title of all the lists and outputs them to the console." />
+EXAMPLES  " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/invoke-pnpsprestmethod/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -30,17 +29,15 @@ EXAMPLES &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 1&mdash;&mdash;&mdash
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Invoke-PnPSPRestMethod"/>
-<meta name="twitter:description" content="Invoke-PnPSPRestMethod SYNOPSIS Invokes a REST request towards a SharePoint site
+<meta name="twitter:description" content="SYNOPSIS Invokes a REST request towards a SharePoint site
 SYNTAX Invoke-PnPSPRestMethod -Url &lt;String&gt; [-Method &lt;HttpRequestMethod&gt;] [-Content &lt;Object&gt;] [-ContentType &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] DESCRIPTION Invokes a REST request towards a SharePoint site
-EXAMPLES &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 1&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; Invoke-PnPSPRestMethod -Url /_api/web This example executes a GET request towards the current site collection and returns the properties of the current web
-&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 2&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; $output = Invoke-PnPSPRestMethod -Url &#39;/_api/web/lists?$select=Id,Title&#39; $output.value This example executes a GET request towards the current site collection and returns the id and title of all the lists and outputs them to the console."/>
+EXAMPLES  "/>
 <meta itemprop="name" content="Invoke-PnPSPRestMethod">
-<meta itemprop="description" content="Invoke-PnPSPRestMethod SYNOPSIS Invokes a REST request towards a SharePoint site
+<meta itemprop="description" content="SYNOPSIS Invokes a REST request towards a SharePoint site
 SYNTAX Invoke-PnPSPRestMethod -Url &lt;String&gt; [-Method &lt;HttpRequestMethod&gt;] [-Content &lt;Object&gt;] [-ContentType &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] DESCRIPTION Invokes a REST request towards a SharePoint site
-EXAMPLES &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 1&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; Invoke-PnPSPRestMethod -Url /_api/web This example executes a GET request towards the current site collection and returns the properties of the current web
-&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 2&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; $output = Invoke-PnPSPRestMethod -Url &#39;/_api/web/lists?$select=Id,Title&#39; $output.value This example executes a GET request towards the current site collection and returns the id and title of all the lists and outputs them to the console.">
+EXAMPLES  ">
 
-<meta itemprop="wordCount" content="345">
+<meta itemprop="wordCount" content="31">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -61,7 +58,6 @@ EXAMPLES &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 1&mdash;&mdash;&mdash
 </div>
 <div class="content-container">
 <main><h1>Invoke-PnPSPRestMethod</h1>
-<h1 id="invoke-pnpsprestmethod">Invoke-PnPSPRestMethod</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Invokes a REST request towards a SharePoint site</p>
 <h2 id="syntax">SYNTAX</h2>
@@ -73,68 +69,7 @@ EXAMPLES &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 1&mdash;&mdash;&mdash
 </code></pre></div><h2 id="description">DESCRIPTION</h2>
 <p>Invokes a REST request towards a SharePoint site</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="------------------example-1------------------">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 1&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">Invoke-PnPSPRestMethod -Url /_api/web
-</code></pre></div><p>This example executes a GET request towards the current site collection and returns the properties of the current web</p>
-<h3 id="------------------example-2------------------">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 2&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$output = Invoke-PnPSPRestMethod -Url <span style="color:#e6db74">&#39;/_api/web/lists?$select=Id,Title&#39;</span>
-$output.value
-</code></pre></div><p>This example executes a GET request towards the current site collection and returns the id and title of all the lists and outputs them to the console. Notice the use of single quotes. If you want to use double quotes (&quot;) then you will have to escape the $ character with a backtick: `$</p>
-<h3 id="------------------example-3------------------">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 3&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$item = @{Title=<span style="color:#e6db74">&#34;Test&#34;</span>}
-Invoke-PnPSPRestMethod -Method Post -Url <span style="color:#e6db74">&#34;/_api/web/lists/GetByTitle(&#39;Test&#39;)/items&#34;</span> -Content $item
-</code></pre></div><p>This example creates a new item in the list &lsquo;Test&rsquo; and sets the title field to &lsquo;Test&rsquo;</p>
-<h3 id="------------------example-4------------------">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 4&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$item = <span style="color:#e6db74">&#34;{&#39;Title&#39;:&#39;Test&#39;}&#34;</span>
-Invoke-PnPSPRestMethod -Method Post -Url <span style="color:#e6db74">&#34;/_api/web/lists/GetByTitle(&#39;Test&#39;)/items&#34;</span> -Content $item
-</code></pre></div><p>This example creates a new item in the list &lsquo;Test&rsquo; and sets the title field to &lsquo;Test&rsquo;</p>
-<h3 id="------------------example-5------------------">&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;EXAMPLE 5&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$item = <span style="color:#e6db74">&#34;{ &#39;__metadata&#39;: { &#39;type&#39;: &#39;SP.Data.TestListItem&#39; }, &#39;Title&#39;: &#39;Test&#39;}&#34;</span>
-Invoke-PnPSPRestMethod -Method Post -Url <span style="color:#e6db74">&#34;/_api/web/lists/GetByTitle(&#39;Test&#39;)/items&#34;</span> -Content $item -ContentType <span style="color:#e6db74">&#34;application/json;odata=verbose&#34;</span>
-</code></pre></div><p>This example creates a new item in the list &lsquo;Test&rsquo; and sets the title field to &lsquo;Test&rsquo;</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-content">-Content</h3>
-<p>A string or object to send</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Object
-<span style="color:#66d9ef">Parameter Sets</span>: (All)
-
-<span style="color:#66d9ef">Required</span>: False
-<span style="color:#66d9ef">Position</span>: Named
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-contenttype">-ContentType</h3>
-<p>The content type of the object to send. Defaults to &lsquo;application/json&rsquo;.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
-<span style="color:#66d9ef">Parameter Sets</span>: (All)
-
-<span style="color:#66d9ef">Required</span>: False
-<span style="color:#66d9ef">Position</span>: Named
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-method">-Method</h3>
-<p>The Http method to execute. Defaults to GET.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: HttpRequestMethod
-<span style="color:#66d9ef">Parameter Sets</span>: (All)
-
-<span style="color:#66d9ef">Required</span>: False
-<span style="color:#66d9ef">Position</span>: <span style="color:#ae81ff">0</span>
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-url">-Url</h3>
-<p>The url to execute</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
-<span style="color:#66d9ef">Parameter Sets</span>: (All)
-
-<span style="color:#66d9ef">Required</span>: True
-<span style="color:#66d9ef">Position</span>: <span style="color:#ae81ff">0</span>
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: PnPConnection
-<span style="color:#66d9ef">Parameter Sets</span>: (All)
-
-<span style="color:#66d9ef">Required</span>: False
-<span style="color:#66d9ef">Position</span>: Named
-<span style="color:#66d9ef">Accept pipeline input</span>: False
-</code></pre></div><h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<h3 id="heading"></h3>
 <div class="edit-meta">
 
 <br></div><nav class="pagination"><a class="nav nav-prev" href="https://pnp.github.io/powershell/cmdlets/invoke-pnpsitetemplate/" title="Invoke-PnPSiteTemplate"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Invoke-PnPSiteTemplate</a>

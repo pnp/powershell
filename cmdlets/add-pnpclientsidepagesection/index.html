@@ -18,9 +18,10 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Add-PnPClientSidePageSection" />
-<meta property="og:description" content="Add-PnPClientSidePageSection SYNOPSIS Adds a new section to a Client-Side page
+<meta property="og:description" content="SYNOPSIS Adds a new section to a Client-Side page
 SYNTAX Add-PnPClientSidePageSection [-Page] &lt;ClientSidePagePipeBind&gt; -SectionTemplate &lt;CanvasSectionTemplate&gt; [-Order &lt;Int32&gt;] [-ZoneEmphasis &lt;Int32&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Add-PnPClientSidePageSection -Page &#34;MyPage&#34; -SectionTemplate OneColumn Adds a new one-column section to the Client-Side page &lsquo;MyPage&rsquo;
-EXAMPLE 2 Add-PnPClientSidePageSection -Page &#34;MyPage&#34; -SectionTemplate ThreeColumn -Order 10 Adds a new Three columns section to the Client-Side page &lsquo;MyPage&rsquo; with an order index of 10" />
+EXAMPLE 2 Add-PnPClientSidePageSection -Page &#34;MyPage&#34; -SectionTemplate ThreeColumn -Order 10 Adds a new Three columns section to the Client-Side page &lsquo;MyPage&rsquo; with an order index of 10
+EXAMPLE 3 $page = Add-PnPClientSidePage -Name &#34;MyPage&#34; PS&gt; Add-PnPClientSidePageSection -Page $page -SectionTemplate OneColumn Adds a new one column section to the Client-Side page &lsquo;MyPage&rsquo;" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/add-pnpclientsidepagesection/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -29,15 +30,17 @@ EXAMPLE 2 Add-PnPClientSidePageSection -Page &#34;MyPage&#34; -SectionTemplate T
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Add-PnPClientSidePageSection"/>
-<meta name="twitter:description" content="Add-PnPClientSidePageSection SYNOPSIS Adds a new section to a Client-Side page
+<meta name="twitter:description" content="SYNOPSIS Adds a new section to a Client-Side page
 SYNTAX Add-PnPClientSidePageSection [-Page] &lt;ClientSidePagePipeBind&gt; -SectionTemplate &lt;CanvasSectionTemplate&gt; [-Order &lt;Int32&gt;] [-ZoneEmphasis &lt;Int32&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Add-PnPClientSidePageSection -Page &#34;MyPage&#34; -SectionTemplate OneColumn Adds a new one-column section to the Client-Side page &lsquo;MyPage&rsquo;
-EXAMPLE 2 Add-PnPClientSidePageSection -Page &#34;MyPage&#34; -SectionTemplate ThreeColumn -Order 10 Adds a new Three columns section to the Client-Side page &lsquo;MyPage&rsquo; with an order index of 10"/>
+EXAMPLE 2 Add-PnPClientSidePageSection -Page &#34;MyPage&#34; -SectionTemplate ThreeColumn -Order 10 Adds a new Three columns section to the Client-Side page &lsquo;MyPage&rsquo; with an order index of 10
+EXAMPLE 3 $page = Add-PnPClientSidePage -Name &#34;MyPage&#34; PS&gt; Add-PnPClientSidePageSection -Page $page -SectionTemplate OneColumn Adds a new one column section to the Client-Side page &lsquo;MyPage&rsquo;"/>
 <meta itemprop="name" content="Add-PnPClientSidePageSection">
-<meta itemprop="description" content="Add-PnPClientSidePageSection SYNOPSIS Adds a new section to a Client-Side page
+<meta itemprop="description" content="SYNOPSIS Adds a new section to a Client-Side page
 SYNTAX Add-PnPClientSidePageSection [-Page] &lt;ClientSidePagePipeBind&gt; -SectionTemplate &lt;CanvasSectionTemplate&gt; [-Order &lt;Int32&gt;] [-ZoneEmphasis &lt;Int32&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Add-PnPClientSidePageSection -Page &#34;MyPage&#34; -SectionTemplate OneColumn Adds a new one-column section to the Client-Side page &lsquo;MyPage&rsquo;
-EXAMPLE 2 Add-PnPClientSidePageSection -Page &#34;MyPage&#34; -SectionTemplate ThreeColumn -Order 10 Adds a new Three columns section to the Client-Side page &lsquo;MyPage&rsquo; with an order index of 10">
+EXAMPLE 2 Add-PnPClientSidePageSection -Page &#34;MyPage&#34; -SectionTemplate ThreeColumn -Order 10 Adds a new Three columns section to the Client-Side page &lsquo;MyPage&rsquo; with an order index of 10
+EXAMPLE 3 $page = Add-PnPClientSidePage -Name &#34;MyPage&#34; PS&gt; Add-PnPClientSidePageSection -Page $page -SectionTemplate OneColumn Adds a new one column section to the Client-Side page &lsquo;MyPage&rsquo;">
 
-<meta itemprop="wordCount" content="400">
+<meta itemprop="wordCount" content="399">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -58,7 +61,6 @@ EXAMPLE 2 Add-PnPClientSidePageSection -Page &#34;MyPage&#34; -SectionTemplate T
 </div>
 <div class="content-container">
 <main><h1>Add-PnPClientSidePageSection</h1>
-<h1 id="add-pnpclientsidepagesection">Add-PnPClientSidePageSection</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Adds a new section to a Client-Side page</p>
 <h2 id="syntax">SYNTAX</h2>

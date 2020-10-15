@@ -18,7 +18,7 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Invoke-PnPWebAction" />
-<meta property="og:description" content="Invoke-PnPWebAction SYNOPSIS Executes operations on web, lists and list items.
+<meta property="og:description" content="SYNOPSIS Executes operations on web, lists and list items.
 SYNTAX Invoke-PnPWebAction [-ListName &lt;String&gt;] [-Webs &lt;Web[]&gt;] [-WebAction &lt;System.Action`1[Microsoft.SharePoint.Client.Web]&gt;] [-ShouldProcessWebAction &lt;System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]&gt;] [-PostWebAction &lt;System.Action`1[Microsoft.SharePoint.Client.Web]&gt;] [-ShouldProcessPostWebAction &lt;System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]&gt;] [-WebProperties &lt;String[]&gt;] [-ListAction &lt;System.Action`1[Microsoft.SharePoint.Client.List]&gt;] [-ShouldProcessListAction &lt;System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]&gt;] [-PostListAction &lt;System.Action`1[Microsoft.SharePoint.Client.List]&gt;] [-ShouldProcessPostListAction &lt;System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]&gt;] [-ListProperties &lt;String[]&gt;] [-ListItemAction &lt;System.Action`1[Microsoft.SharePoint.Client.ListItem]&gt;] [-ShouldProcessListItemAction &lt;System.Func`2[Microsoft.SharePoint.Client.ListItem,System.Boolean]&gt;] [-ListItemProperties &lt;String[]&gt;] [-SubWebs] [-DisableStatisticsOutput] [-SkipCounting] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Invoke-PnPWebAction -ListAction ${function:ListAction} This will call the function ListAction on all the lists located on the current web." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/invoke-pnpwebaction/" />
@@ -28,13 +28,13 @@ SYNTAX Invoke-PnPWebAction [-ListName &lt;String&gt;] [-Webs &lt;Web[]&gt;] [-We
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Invoke-PnPWebAction"/>
-<meta name="twitter:description" content="Invoke-PnPWebAction SYNOPSIS Executes operations on web, lists and list items.
+<meta name="twitter:description" content="SYNOPSIS Executes operations on web, lists and list items.
 SYNTAX Invoke-PnPWebAction [-ListName &lt;String&gt;] [-Webs &lt;Web[]&gt;] [-WebAction &lt;System.Action`1[Microsoft.SharePoint.Client.Web]&gt;] [-ShouldProcessWebAction &lt;System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]&gt;] [-PostWebAction &lt;System.Action`1[Microsoft.SharePoint.Client.Web]&gt;] [-ShouldProcessPostWebAction &lt;System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]&gt;] [-WebProperties &lt;String[]&gt;] [-ListAction &lt;System.Action`1[Microsoft.SharePoint.Client.List]&gt;] [-ShouldProcessListAction &lt;System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]&gt;] [-PostListAction &lt;System.Action`1[Microsoft.SharePoint.Client.List]&gt;] [-ShouldProcessPostListAction &lt;System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]&gt;] [-ListProperties &lt;String[]&gt;] [-ListItemAction &lt;System.Action`1[Microsoft.SharePoint.Client.ListItem]&gt;] [-ShouldProcessListItemAction &lt;System.Func`2[Microsoft.SharePoint.Client.ListItem,System.Boolean]&gt;] [-ListItemProperties &lt;String[]&gt;] [-SubWebs] [-DisableStatisticsOutput] [-SkipCounting] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Invoke-PnPWebAction -ListAction ${function:ListAction} This will call the function ListAction on all the lists located on the current web."/>
 <meta itemprop="name" content="Invoke-PnPWebAction">
-<meta itemprop="description" content="Invoke-PnPWebAction SYNOPSIS Executes operations on web, lists and list items.
+<meta itemprop="description" content="SYNOPSIS Executes operations on web, lists and list items.
 SYNTAX Invoke-PnPWebAction [-ListName &lt;String&gt;] [-Webs &lt;Web[]&gt;] [-WebAction &lt;System.Action`1[Microsoft.SharePoint.Client.Web]&gt;] [-ShouldProcessWebAction &lt;System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]&gt;] [-PostWebAction &lt;System.Action`1[Microsoft.SharePoint.Client.Web]&gt;] [-ShouldProcessPostWebAction &lt;System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]&gt;] [-WebProperties &lt;String[]&gt;] [-ListAction &lt;System.Action`1[Microsoft.SharePoint.Client.List]&gt;] [-ShouldProcessListAction &lt;System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]&gt;] [-PostListAction &lt;System.Action`1[Microsoft.SharePoint.Client.List]&gt;] [-ShouldProcessPostListAction &lt;System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]&gt;] [-ListProperties &lt;String[]&gt;] [-ListItemAction &lt;System.Action`1[Microsoft.SharePoint.Client.ListItem]&gt;] [-ShouldProcessListItemAction &lt;System.Func`2[Microsoft.SharePoint.Client.ListItem,System.Boolean]&gt;] [-ListItemProperties &lt;String[]&gt;] [-SubWebs] [-DisableStatisticsOutput] [-SkipCounting] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Invoke-PnPWebAction -ListAction ${function:ListAction} This will call the function ListAction on all the lists located on the current web.">
 
-<meta itemprop="wordCount" content="1010">
+<meta itemprop="wordCount" content="1009">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -55,7 +55,6 @@ SYNTAX Invoke-PnPWebAction [-ListName &lt;String&gt;] [-Webs &lt;Web[]&gt;] [-We
 </div>
 <div class="content-container">
 <main><h1>Invoke-PnPWebAction</h1>
-<h1 id="invoke-pnpwebaction">Invoke-PnPWebAction</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Executes operations on web, lists and list items.</p>
 <h2 id="syntax">SYNTAX</h2>

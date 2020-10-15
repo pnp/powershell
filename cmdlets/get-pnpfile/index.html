@@ -18,8 +18,8 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Get-PnPFile" />
-<meta property="og:description" content="Get-PnPFile SYNOPSIS Downloads a file.
-SYNTAX Return as file object (Default) Get-PnPFile [-Url] &lt;String&gt; [-AsFileObject] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Return as list item Get-PnPFile [-Url] &lt;String&gt; [-AsListItem] [-ThrowExceptionIfFileNotFound] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Save to local path Get-PnPFile [-Url] &lt;String&gt; [-Path &lt;String&gt;] [-Filename &lt;String&gt;] [-AsFile] [-Force] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Return as string Get-PnPFile [-Url] &lt;String&gt; [-AsString] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Get-PnPFile -Url /sites/project/_catalogs/themes/15/company." />
+<meta property="og:description" content="SYNOPSIS Downloads a file.
+SYNTAX Return as file object (Default) Get-PnPFile [-Url] &lt;String&gt; [-AsFileObject] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Return as list item Get-PnPFile [-Url] &lt;String&gt; [-AsListItem] [-ThrowExceptionIfFileNotFound] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Save to local path Get-PnPFile [-Url] &lt;String&gt; [-Path &lt;String&gt;] [-Filename &lt;String&gt;] [-AsFile] [-Force] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Return as string Get-PnPFile [-Url] &lt;String&gt; [-AsString] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor Retrieves the file and downloads it to the current folder" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/get-pnpfile/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -28,13 +28,13 @@ SYNTAX Return as file object (Default) Get-PnPFile [-Url] &lt;String&gt; [-AsFil
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Get-PnPFile"/>
-<meta name="twitter:description" content="Get-PnPFile SYNOPSIS Downloads a file.
-SYNTAX Return as file object (Default) Get-PnPFile [-Url] &lt;String&gt; [-AsFileObject] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Return as list item Get-PnPFile [-Url] &lt;String&gt; [-AsListItem] [-ThrowExceptionIfFileNotFound] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Save to local path Get-PnPFile [-Url] &lt;String&gt; [-Path &lt;String&gt;] [-Filename &lt;String&gt;] [-AsFile] [-Force] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Return as string Get-PnPFile [-Url] &lt;String&gt; [-AsString] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Get-PnPFile -Url /sites/project/_catalogs/themes/15/company."/>
+<meta name="twitter:description" content="SYNOPSIS Downloads a file.
+SYNTAX Return as file object (Default) Get-PnPFile [-Url] &lt;String&gt; [-AsFileObject] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Return as list item Get-PnPFile [-Url] &lt;String&gt; [-AsListItem] [-ThrowExceptionIfFileNotFound] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Save to local path Get-PnPFile [-Url] &lt;String&gt; [-Path &lt;String&gt;] [-Filename &lt;String&gt;] [-AsFile] [-Force] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Return as string Get-PnPFile [-Url] &lt;String&gt; [-AsString] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor Retrieves the file and downloads it to the current folder"/>
 <meta itemprop="name" content="Get-PnPFile">
-<meta itemprop="description" content="Get-PnPFile SYNOPSIS Downloads a file.
-SYNTAX Return as file object (Default) Get-PnPFile [-Url] &lt;String&gt; [-AsFileObject] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Return as list item Get-PnPFile [-Url] &lt;String&gt; [-AsListItem] [-ThrowExceptionIfFileNotFound] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Save to local path Get-PnPFile [-Url] &lt;String&gt; [-Path &lt;String&gt;] [-Filename &lt;String&gt;] [-AsFile] [-Force] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Return as string Get-PnPFile [-Url] &lt;String&gt; [-AsString] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.">
+<meta itemprop="description" content="SYNOPSIS Downloads a file.
+SYNTAX Return as file object (Default) Get-PnPFile [-Url] &lt;String&gt; [-AsFileObject] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Return as list item Get-PnPFile [-Url] &lt;String&gt; [-AsListItem] [-ThrowExceptionIfFileNotFound] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Save to local path Get-PnPFile [-Url] &lt;String&gt; [-Path &lt;String&gt;] [-Filename &lt;String&gt;] [-AsFile] [-Force] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Return as string Get-PnPFile [-Url] &lt;String&gt; [-AsString] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor Retrieves the file and downloads it to the current folder">
 
-<meta itemprop="wordCount" content="602">
+<meta itemprop="wordCount" content="601">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -55,7 +55,6 @@ SYNTAX Return as file object (Default) Get-PnPFile [-Url] &lt;String&gt; [-AsFil
 </div>
 <div class="content-container">
 <main><h1>Get-PnPFile</h1>
-<h1 id="get-pnpfile">Get-PnPFile</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Downloads a file.</p>
 <h2 id="syntax">SYNTAX</h2>

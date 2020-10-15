@@ -18,10 +18,11 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Remove-PnPTeamsTab" />
-<meta property="og:description" content="Remove-PnPTeamsTab SYNOPSIS Required Permissions
+<meta property="og:description" content="SYNOPSIS Required Permissions
  Microsoft Graph API: Group.ReadWrite.All  Removes a Microsoft Teams tab in a channel.
 SYNTAX Remove-PnPTeamsTab -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; -Identity &lt;TeamsTabPipeBind&gt; [-Force] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity Wiki Removes the tab with the display name &lsquo;Wiki&rsquo; from the channel
-EXAMPLE 2 Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity fcef815d-2e8e-47a5-b06b-9bebba5c7852 Removes a tab with the specified id from the channel" />
+EXAMPLE 2 Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity fcef815d-2e8e-47a5-b06b-9bebba5c7852 Removes a tab with the specified id from the channel
+PARAMETERS -ByPassPermissionCheck Allows the check for required permissions in the access token to be bypassed when set to $true" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/remove-pnpteamstab/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -30,17 +31,19 @@ EXAMPLE 2 Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Chan
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Remove-PnPTeamsTab"/>
-<meta name="twitter:description" content="Remove-PnPTeamsTab SYNOPSIS Required Permissions
+<meta name="twitter:description" content="SYNOPSIS Required Permissions
  Microsoft Graph API: Group.ReadWrite.All  Removes a Microsoft Teams tab in a channel.
 SYNTAX Remove-PnPTeamsTab -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; -Identity &lt;TeamsTabPipeBind&gt; [-Force] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity Wiki Removes the tab with the display name &lsquo;Wiki&rsquo; from the channel
-EXAMPLE 2 Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity fcef815d-2e8e-47a5-b06b-9bebba5c7852 Removes a tab with the specified id from the channel"/>
+EXAMPLE 2 Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity fcef815d-2e8e-47a5-b06b-9bebba5c7852 Removes a tab with the specified id from the channel
+PARAMETERS -ByPassPermissionCheck Allows the check for required permissions in the access token to be bypassed when set to $true"/>
 <meta itemprop="name" content="Remove-PnPTeamsTab">
-<meta itemprop="description" content="Remove-PnPTeamsTab SYNOPSIS Required Permissions
+<meta itemprop="description" content="SYNOPSIS Required Permissions
  Microsoft Graph API: Group.ReadWrite.All  Removes a Microsoft Teams tab in a channel.
 SYNTAX Remove-PnPTeamsTab -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; -Identity &lt;TeamsTabPipeBind&gt; [-Force] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity Wiki Removes the tab with the display name &lsquo;Wiki&rsquo; from the channel
-EXAMPLE 2 Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity fcef815d-2e8e-47a5-b06b-9bebba5c7852 Removes a tab with the specified id from the channel">
+EXAMPLE 2 Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity fcef815d-2e8e-47a5-b06b-9bebba5c7852 Removes a tab with the specified id from the channel
+PARAMETERS -ByPassPermissionCheck Allows the check for required permissions in the access token to be bypassed when set to $true">
 
-<meta itemprop="wordCount" content="238">
+<meta itemprop="wordCount" content="237">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -61,7 +64,6 @@ EXAMPLE 2 Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Chan
 </div>
 <div class="content-container">
 <main><h1>Remove-PnPTeamsTab</h1>
-<h1 id="remove-pnpteamstab">Remove-PnPTeamsTab</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>

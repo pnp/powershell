@@ -18,7 +18,7 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Set-PnPTenantSite" />
-<meta property="og:description" content="Set-PnPTenantSite SYNOPSIS Required Permissions
+<meta property="og:description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Updates settings of a site collection
 SYNTAX Set Properties Set-PnPTenantSite [-Url] &lt;String&gt; [-Title &lt;String&gt;] [-LocaleId &lt;UInt32&gt;] [-AllowSelfServiceUpgrade] [-Owners &lt;System.Collections.Generic.List`1[System.String]&gt;] [-DenyAddAndCustomizePages] [-SharingCapability &lt;SharingCapabilities&gt;] [-StorageMaximumLevel &lt;Int64&gt;] [-StorageWarningLevel &lt;Int64&gt;] [-DefaultLinkPermission &lt;SharingPermissionType&gt;] [-DefaultSharingLinkType &lt;SharingLinkType&gt;] [-SharingAllowedDomainList &lt;String&gt;] [-SharingBlockedDomainList &lt;String&gt;] [-BlockDownloadOfNonViewableFiles] [-SharingDomainRestrictionMode &lt;SharingDomainRestrictionModes&gt;] [-CommentsOnSitePagesDisabled] [-DisableAppViews &lt;AppViewsPolicy&gt;] [-DisableCompanyWideSharingLinks &lt;CompanyWideSharingLinksPolicy&gt;] [-DisableFlows &lt;FlowsPolicy&gt;] [-AnonymousLinkExpirationInDays &lt;Int32&gt;] [-OverrideTenantAnonymousLinkExpirationPolicy] [-Wait] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Set Lock State Set-PnPTenantSite [-Url] &lt;String&gt; [-LockState &lt;SiteLockState&gt;] [-Wait] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION Allows settings of a site collection to be updated" />
 <meta property="og:type" content="article" />
@@ -29,15 +29,15 @@ SYNTAX Set Properties Set-PnPTenantSite [-Url] &lt;String&gt; [-Title &lt;String
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Set-PnPTenantSite"/>
-<meta name="twitter:description" content="Set-PnPTenantSite SYNOPSIS Required Permissions
+<meta name="twitter:description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Updates settings of a site collection
 SYNTAX Set Properties Set-PnPTenantSite [-Url] &lt;String&gt; [-Title &lt;String&gt;] [-LocaleId &lt;UInt32&gt;] [-AllowSelfServiceUpgrade] [-Owners &lt;System.Collections.Generic.List`1[System.String]&gt;] [-DenyAddAndCustomizePages] [-SharingCapability &lt;SharingCapabilities&gt;] [-StorageMaximumLevel &lt;Int64&gt;] [-StorageWarningLevel &lt;Int64&gt;] [-DefaultLinkPermission &lt;SharingPermissionType&gt;] [-DefaultSharingLinkType &lt;SharingLinkType&gt;] [-SharingAllowedDomainList &lt;String&gt;] [-SharingBlockedDomainList &lt;String&gt;] [-BlockDownloadOfNonViewableFiles] [-SharingDomainRestrictionMode &lt;SharingDomainRestrictionModes&gt;] [-CommentsOnSitePagesDisabled] [-DisableAppViews &lt;AppViewsPolicy&gt;] [-DisableCompanyWideSharingLinks &lt;CompanyWideSharingLinksPolicy&gt;] [-DisableFlows &lt;FlowsPolicy&gt;] [-AnonymousLinkExpirationInDays &lt;Int32&gt;] [-OverrideTenantAnonymousLinkExpirationPolicy] [-Wait] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Set Lock State Set-PnPTenantSite [-Url] &lt;String&gt; [-LockState &lt;SiteLockState&gt;] [-Wait] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION Allows settings of a site collection to be updated"/>
 <meta itemprop="name" content="Set-PnPTenantSite">
-<meta itemprop="description" content="Set-PnPTenantSite SYNOPSIS Required Permissions
+<meta itemprop="description" content="SYNOPSIS Required Permissions
  SharePoint: Access to the SharePoint Tenant Administration site  Updates settings of a site collection
 SYNTAX Set Properties Set-PnPTenantSite [-Url] &lt;String&gt; [-Title &lt;String&gt;] [-LocaleId &lt;UInt32&gt;] [-AllowSelfServiceUpgrade] [-Owners &lt;System.Collections.Generic.List`1[System.String]&gt;] [-DenyAddAndCustomizePages] [-SharingCapability &lt;SharingCapabilities&gt;] [-StorageMaximumLevel &lt;Int64&gt;] [-StorageWarningLevel &lt;Int64&gt;] [-DefaultLinkPermission &lt;SharingPermissionType&gt;] [-DefaultSharingLinkType &lt;SharingLinkType&gt;] [-SharingAllowedDomainList &lt;String&gt;] [-SharingBlockedDomainList &lt;String&gt;] [-BlockDownloadOfNonViewableFiles] [-SharingDomainRestrictionMode &lt;SharingDomainRestrictionModes&gt;] [-CommentsOnSitePagesDisabled] [-DisableAppViews &lt;AppViewsPolicy&gt;] [-DisableCompanyWideSharingLinks &lt;CompanyWideSharingLinksPolicy&gt;] [-DisableFlows &lt;FlowsPolicy&gt;] [-AnonymousLinkExpirationInDays &lt;Int32&gt;] [-OverrideTenantAnonymousLinkExpirationPolicy] [-Wait] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Set Lock State Set-PnPTenantSite [-Url] &lt;String&gt; [-LockState &lt;SiteLockState&gt;] [-Wait] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION Allows settings of a site collection to be updated">
 
-<meta itemprop="wordCount" content="1210">
+<meta itemprop="wordCount" content="1209">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -58,7 +58,6 @@ SYNTAX Set Properties Set-PnPTenantSite [-Url] &lt;String&gt; [-Title &lt;String
 </div>
 <div class="content-container">
 <main><h1>Set-PnPTenantSite</h1>
-<h1 id="set-pnptenantsite">Set-PnPTenantSite</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>

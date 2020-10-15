@@ -18,10 +18,10 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Invoke-PnPSiteSwap" />
-<meta property="og:description" content="Invoke-PnPSiteSwap SYNOPSIS Invokes a job to swap the location of a site with another site while archiving the original site.
+<meta property="og:description" content="SYNOPSIS Invokes a job to swap the location of a site with another site while archiving the original site.
 SYNTAX Invoke-PnPSiteSwap -SourceUrl &lt;string&gt; -TargetUrl &lt;string&gt; -ArchiveUrl &lt;string&gt; [-DisableRedirection] [-NoWait] DESCRIPTION Swaps the location of a source site with a target site while archiving the original target site.
 Please note, the target site must be either:
- The root site, for example https://tenant-name.sharepoint.com; or The search center site, for example https://tenant-name." />
+ The root site, for example https://tenant-name.sharepoint.com; or The search center site, for example https://tenant-name.sharepoint.com/search.  When the swap is initiated, the target site is moved to the archive location and the source site is moved to the target location." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/invoke-pnpsiteswap/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -30,17 +30,17 @@ Please note, the target site must be either:
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Invoke-PnPSiteSwap"/>
-<meta name="twitter:description" content="Invoke-PnPSiteSwap SYNOPSIS Invokes a job to swap the location of a site with another site while archiving the original site.
+<meta name="twitter:description" content="SYNOPSIS Invokes a job to swap the location of a site with another site while archiving the original site.
 SYNTAX Invoke-PnPSiteSwap -SourceUrl &lt;string&gt; -TargetUrl &lt;string&gt; -ArchiveUrl &lt;string&gt; [-DisableRedirection] [-NoWait] DESCRIPTION Swaps the location of a source site with a target site while archiving the original target site.
 Please note, the target site must be either:
- The root site, for example https://tenant-name.sharepoint.com; or The search center site, for example https://tenant-name."/>
+ The root site, for example https://tenant-name.sharepoint.com; or The search center site, for example https://tenant-name.sharepoint.com/search.  When the swap is initiated, the target site is moved to the archive location and the source site is moved to the target location."/>
 <meta itemprop="name" content="Invoke-PnPSiteSwap">
-<meta itemprop="description" content="Invoke-PnPSiteSwap SYNOPSIS Invokes a job to swap the location of a site with another site while archiving the original site.
+<meta itemprop="description" content="SYNOPSIS Invokes a job to swap the location of a site with another site while archiving the original site.
 SYNTAX Invoke-PnPSiteSwap -SourceUrl &lt;string&gt; -TargetUrl &lt;string&gt; -ArchiveUrl &lt;string&gt; [-DisableRedirection] [-NoWait] DESCRIPTION Swaps the location of a source site with a target site while archiving the original target site.
 Please note, the target site must be either:
- The root site, for example https://tenant-name.sharepoint.com; or The search center site, for example https://tenant-name.">
+ The root site, for example https://tenant-name.sharepoint.com; or The search center site, for example https://tenant-name.sharepoint.com/search.  When the swap is initiated, the target site is moved to the archive location and the source site is moved to the target location.">
 
-<meta itemprop="wordCount" content="691">
+<meta itemprop="wordCount" content="690">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -61,7 +61,6 @@ Please note, the target site must be either:
 </div>
 <div class="content-container">
 <main><h1>Invoke-PnPSiteSwap</h1>
-<h1 id="invoke-pnpsiteswap">Invoke-PnPSiteSwap</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Invokes a job to swap the location of a site with another site while archiving the original site.</p>
 <h2 id="syntax">SYNTAX</h2>

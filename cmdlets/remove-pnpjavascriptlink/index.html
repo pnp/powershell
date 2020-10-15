@@ -18,9 +18,10 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Remove-PnPJavaScriptLink" />
-<meta property="og:description" content="Remove-PnPJavaScriptLink SYNOPSIS Removes a JavaScript link or block from a web or sitecollection
+<meta property="og:description" content="SYNOPSIS Removes a JavaScript link or block from a web or sitecollection
 SYNTAX Remove-PnPJavaScriptLink [[-Identity] &lt;UserCustomActionPipeBind&gt;] [-Force] [-Scope &lt;CustomActionScope&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPJavaScriptLink -Identity jQuery Removes the injected JavaScript file with the name jQuery from the current web after confirmation
-EXAMPLE 2 Remove-PnPJavaScriptLink -Identity jQuery -Scope Site Removes the injected JavaScript file with the name jQuery from the current site collection after confirmation" />
+EXAMPLE 2 Remove-PnPJavaScriptLink -Identity jQuery -Scope Site Removes the injected JavaScript file with the name jQuery from the current site collection after confirmation
+EXAMPLE 3 Remove-PnPJavaScriptLink -Identity jQuery -Scope Site -Confirm:$false Removes the injected JavaScript file with the name jQuery from the current site collection and will not ask for confirmation" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/remove-pnpjavascriptlink/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -29,15 +30,17 @@ EXAMPLE 2 Remove-PnPJavaScriptLink -Identity jQuery -Scope Site Removes the inje
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Remove-PnPJavaScriptLink"/>
-<meta name="twitter:description" content="Remove-PnPJavaScriptLink SYNOPSIS Removes a JavaScript link or block from a web or sitecollection
+<meta name="twitter:description" content="SYNOPSIS Removes a JavaScript link or block from a web or sitecollection
 SYNTAX Remove-PnPJavaScriptLink [[-Identity] &lt;UserCustomActionPipeBind&gt;] [-Force] [-Scope &lt;CustomActionScope&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPJavaScriptLink -Identity jQuery Removes the injected JavaScript file with the name jQuery from the current web after confirmation
-EXAMPLE 2 Remove-PnPJavaScriptLink -Identity jQuery -Scope Site Removes the injected JavaScript file with the name jQuery from the current site collection after confirmation"/>
+EXAMPLE 2 Remove-PnPJavaScriptLink -Identity jQuery -Scope Site Removes the injected JavaScript file with the name jQuery from the current site collection after confirmation
+EXAMPLE 3 Remove-PnPJavaScriptLink -Identity jQuery -Scope Site -Confirm:$false Removes the injected JavaScript file with the name jQuery from the current site collection and will not ask for confirmation"/>
 <meta itemprop="name" content="Remove-PnPJavaScriptLink">
-<meta itemprop="description" content="Remove-PnPJavaScriptLink SYNOPSIS Removes a JavaScript link or block from a web or sitecollection
+<meta itemprop="description" content="SYNOPSIS Removes a JavaScript link or block from a web or sitecollection
 SYNTAX Remove-PnPJavaScriptLink [[-Identity] &lt;UserCustomActionPipeBind&gt;] [-Force] [-Scope &lt;CustomActionScope&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPJavaScriptLink -Identity jQuery Removes the injected JavaScript file with the name jQuery from the current web after confirmation
-EXAMPLE 2 Remove-PnPJavaScriptLink -Identity jQuery -Scope Site Removes the injected JavaScript file with the name jQuery from the current site collection after confirmation">
+EXAMPLE 2 Remove-PnPJavaScriptLink -Identity jQuery -Scope Site Removes the injected JavaScript file with the name jQuery from the current site collection after confirmation
+EXAMPLE 3 Remove-PnPJavaScriptLink -Identity jQuery -Scope Site -Confirm:$false Removes the injected JavaScript file with the name jQuery from the current site collection and will not ask for confirmation">
 
-<meta itemprop="wordCount" content="502">
+<meta itemprop="wordCount" content="501">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -58,7 +61,6 @@ EXAMPLE 2 Remove-PnPJavaScriptLink -Identity jQuery -Scope Site Removes the inje
 </div>
 <div class="content-container">
 <main><h1>Remove-PnPJavaScriptLink</h1>
-<h1 id="remove-pnpjavascriptlink">Remove-PnPJavaScriptLink</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Removes a JavaScript link or block from a web or sitecollection</p>
 <h2 id="syntax">SYNTAX</h2>

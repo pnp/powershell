@@ -18,10 +18,15 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="" />
-<meta property="og:description" content="New-PnPTerm SYNOPSIS Creates a taxonomy term
-SYNTAX New-PnPTerm -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Lcid &lt;Int32&gt;] [-TermSet] &lt;TaxonomyTermSetPipeBind&gt;-TermGroup &lt;TaxonomyTermGroupPipeBind&gt; [-Description &lt;String&gt;] [-CustomProperties &lt;Hashtable&gt;][-LocalCustomProperties &lt;Hashtable&gt;] [-TermStore &lt;TaxonomyTermStorePipeBind&gt;][&lt;CommonParameters&gt;]DESCRIPTION This cmdlet adds a new taxonony term to a given termset.
-EXAMPLES Example 1 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#34; -Name &#34;Finance&#34; Creates a new taxonomy term named &ldquo;Finance&rdquo; in the termset Departments which is located in the &ldquo;Corporate&rdquo; termgroup
-Example 2 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#34; -Name &#34;Finance&#34; -CustomProperties @{&#34;IsCorporate&#34;=&#34;True&#34;} Creates a new taxonomy term named &ldquo;Finance&rdquo; in the termset Departments which is located in the &ldquo;Corporate&rdquo; termgroup and sets a custom property on the termset." />
+<meta property="og:description" content="New-PnPTerm
+#SYNOPSIS Creates a taxonomy term
+#SYNTAX
+New-PnPTerm -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Lcid &lt;Int32&gt;] [-TermSet] &lt;TaxonomyTermSetPipeBind&gt;-TermGroup &lt;TaxonomyTermGroupPipeBind&gt; [-Description &lt;String&gt;] [-CustomProperties &lt;Hashtable&gt;][-LocalCustomProperties &lt;Hashtable&gt;] [-TermStore &lt;TaxonomyTermStorePipeBind&gt;][&lt;CommonParameters&gt;]#DESCRIPTION This cmdlet adds a new taxonony term to a given termset.
+#EXAMPLES
+##Example 1
+New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#34; -Name &#34;Finance&#34; Creates a new taxonomy term named &ldquo;Finance&rdquo; in the termset Departments which is located in the &ldquo;Corporate&rdquo; termgroup
+##Example 2
+New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#34; -Name &#34;Finance&#34; -CustomProperties @{&#34;IsCorporate&#34;=&#34;True&#34;} Creates a new taxonomy term named &ldquo;Finance&rdquo; in the termset Departments which is located in the &ldquo;Corporate&rdquo; termgroup and sets a custom property on the termset." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/new-pnpterm/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -30,15 +35,25 @@ Example 2 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="New-PnPTerm SYNOPSIS Creates a taxonomy term
-SYNTAX New-PnPTerm -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Lcid &lt;Int32&gt;] [-TermSet] &lt;TaxonomyTermSetPipeBind&gt;-TermGroup &lt;TaxonomyTermGroupPipeBind&gt; [-Description &lt;String&gt;] [-CustomProperties &lt;Hashtable&gt;][-LocalCustomProperties &lt;Hashtable&gt;] [-TermStore &lt;TaxonomyTermStorePipeBind&gt;][&lt;CommonParameters&gt;]DESCRIPTION This cmdlet adds a new taxonony term to a given termset.
-EXAMPLES Example 1 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#34; -Name &#34;Finance&#34; Creates a new taxonomy term named &ldquo;Finance&rdquo; in the termset Departments which is located in the &ldquo;Corporate&rdquo; termgroup
-Example 2 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#34; -Name &#34;Finance&#34; -CustomProperties @{&#34;IsCorporate&#34;=&#34;True&#34;} Creates a new taxonomy term named &ldquo;Finance&rdquo; in the termset Departments which is located in the &ldquo;Corporate&rdquo; termgroup and sets a custom property on the termset."/>
+<meta name="twitter:description" content="New-PnPTerm
+#SYNOPSIS Creates a taxonomy term
+#SYNTAX
+New-PnPTerm -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Lcid &lt;Int32&gt;] [-TermSet] &lt;TaxonomyTermSetPipeBind&gt;-TermGroup &lt;TaxonomyTermGroupPipeBind&gt; [-Description &lt;String&gt;] [-CustomProperties &lt;Hashtable&gt;][-LocalCustomProperties &lt;Hashtable&gt;] [-TermStore &lt;TaxonomyTermStorePipeBind&gt;][&lt;CommonParameters&gt;]#DESCRIPTION This cmdlet adds a new taxonony term to a given termset.
+#EXAMPLES
+##Example 1
+New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#34; -Name &#34;Finance&#34; Creates a new taxonomy term named &ldquo;Finance&rdquo; in the termset Departments which is located in the &ldquo;Corporate&rdquo; termgroup
+##Example 2
+New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#34; -Name &#34;Finance&#34; -CustomProperties @{&#34;IsCorporate&#34;=&#34;True&#34;} Creates a new taxonomy term named &ldquo;Finance&rdquo; in the termset Departments which is located in the &ldquo;Corporate&rdquo; termgroup and sets a custom property on the termset."/>
 <meta itemprop="name" content="">
-<meta itemprop="description" content="New-PnPTerm SYNOPSIS Creates a taxonomy term
-SYNTAX New-PnPTerm -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Lcid &lt;Int32&gt;] [-TermSet] &lt;TaxonomyTermSetPipeBind&gt;-TermGroup &lt;TaxonomyTermGroupPipeBind&gt; [-Description &lt;String&gt;] [-CustomProperties &lt;Hashtable&gt;][-LocalCustomProperties &lt;Hashtable&gt;] [-TermStore &lt;TaxonomyTermStorePipeBind&gt;][&lt;CommonParameters&gt;]DESCRIPTION This cmdlet adds a new taxonony term to a given termset.
-EXAMPLES Example 1 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#34; -Name &#34;Finance&#34; Creates a new taxonomy term named &ldquo;Finance&rdquo; in the termset Departments which is located in the &ldquo;Corporate&rdquo; termgroup
-Example 2 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#34; -Name &#34;Finance&#34; -CustomProperties @{&#34;IsCorporate&#34;=&#34;True&#34;} Creates a new taxonomy term named &ldquo;Finance&rdquo; in the termset Departments which is located in the &ldquo;Corporate&rdquo; termgroup and sets a custom property on the termset.">
+<meta itemprop="description" content="New-PnPTerm
+#SYNOPSIS Creates a taxonomy term
+#SYNTAX
+New-PnPTerm -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Lcid &lt;Int32&gt;] [-TermSet] &lt;TaxonomyTermSetPipeBind&gt;-TermGroup &lt;TaxonomyTermGroupPipeBind&gt; [-Description &lt;String&gt;] [-CustomProperties &lt;Hashtable&gt;][-LocalCustomProperties &lt;Hashtable&gt;] [-TermStore &lt;TaxonomyTermStorePipeBind&gt;][&lt;CommonParameters&gt;]#DESCRIPTION This cmdlet adds a new taxonony term to a given termset.
+#EXAMPLES
+##Example 1
+New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#34; -Name &#34;Finance&#34; Creates a new taxonomy term named &ldquo;Finance&rdquo; in the termset Departments which is located in the &ldquo;Corporate&rdquo; termgroup
+##Example 2
+New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#34; -Name &#34;Finance&#34; -CustomProperties @{&#34;IsCorporate&#34;=&#34;True&#34;} Creates a new taxonomy term named &ldquo;Finance&rdquo; in the termset Departments which is located in the &ldquo;Corporate&rdquo; termgroup and sets a custom property on the termset.">
 
 <meta itemprop="wordCount" content="428">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -61,26 +76,26 @@ Example 2 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#
 </div>
 <div class="content-container">
 <main><h1></h1>
-<h1 id="new-pnpterm">New-PnPTerm</h1>
-<h2 id="synopsis">SYNOPSIS</h2>
-<p>Creates a taxonomy term</p>
-<h2 id="syntax">SYNTAX</h2>
+<p>New-PnPTerm</p>
+<p>#SYNOPSIS
+Creates a taxonomy term</p>
+<p>#SYNTAX</p>
 <pre><code>New-PnPTerm -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Lcid &lt;Int32&gt;] [-TermSet] &lt;TaxonomyTermSetPipeBind&gt;
  -TermGroup &lt;TaxonomyTermGroupPipeBind&gt; [-Description &lt;String&gt;] [-CustomProperties &lt;Hashtable&gt;]
  [-LocalCustomProperties &lt;Hashtable&gt;] [-TermStore &lt;TaxonomyTermStorePipeBind&gt;]
  [&lt;CommonParameters&gt;]
-</code></pre><h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet adds a new taxonony term to a given termset.</p>
-<h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">Example 1</h3>
+</code></pre><p>#DESCRIPTION
+This cmdlet adds a new taxonony term to a given termset.</p>
+<p>#EXAMPLES</p>
+<p>##Example 1</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">New-PnPTerm -TermSet <span style="color:#e6db74">&#34;Departments&#34;</span> -TermGroup <span style="color:#e6db74">&#34;Corporate&#34;</span> -Name <span style="color:#e6db74">&#34;Finance&#34;</span>
 </code></pre></div><p>Creates a new taxonomy term named &ldquo;Finance&rdquo; in the termset Departments which is located in the &ldquo;Corporate&rdquo; termgroup</p>
-<h3 id="example-2">Example 2</h3>
+<p>##Example 2</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">New-PnPTerm -TermSet <span style="color:#e6db74">&#34;Departments&#34;</span> -TermGroup <span style="color:#e6db74">&#34;Corporate&#34;</span> -Name <span style="color:#e6db74">&#34;Finance&#34;</span> -CustomProperties @{<span style="color:#e6db74">&#34;IsCorporate&#34;</span>=<span style="color:#e6db74">&#34;True&#34;</span>}
 </code></pre></div><p>Creates a new taxonomy term named &ldquo;Finance&rdquo; in the termset Departments which is located in the &ldquo;Corporate&rdquo; termgroup and sets a custom property on the termset.</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-customproperties">-CustomProperties</h3>
-<p>Sets custom properties.</p>
+<p>#PARAMETERS</p>
+<p>##-CustomProperties
+Sets custom properties.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Hashtable
 <span style="color:#66d9ef">Parameter Sets</span>: (All)
 <span style="color:#66d9ef">Aliases</span>:
@@ -90,8 +105,8 @@ Example 2 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#
 <span style="color:#66d9ef">Default value</span>: None
 <span style="color:#66d9ef">Accept pipeline input</span>: False
 <span style="color:#66d9ef">Accept wildcard characters</span>: False
-</code></pre></div><h3 id="-description">-Description</h3>
-<p>Descriptive text to help users understand the intended use of this term.</p>
+</code></pre></div><p>##-Description
+Descriptive text to help users understand the intended use of this term.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
 <span style="color:#66d9ef">Parameter Sets</span>: (All)
 <span style="color:#66d9ef">Aliases</span>:
@@ -101,8 +116,8 @@ Example 2 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#
 <span style="color:#66d9ef">Default value</span>: None
 <span style="color:#66d9ef">Accept pipeline input</span>: False
 <span style="color:#66d9ef">Accept wildcard characters</span>: False
-</code></pre></div><h3 id="-id">-Id</h3>
-<p>The Id to use for the term; if not specified, or provided with an empty GUID, a random GUID is generated and used.</p>
+</code></pre></div><p>##-Id
+The Id to use for the term; if not specified, or provided with an empty GUID, a random GUID is generated and used.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Guid
 <span style="color:#66d9ef">Parameter Sets</span>: (All)
 <span style="color:#66d9ef">Aliases</span>:
@@ -112,8 +127,8 @@ Example 2 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#
 <span style="color:#66d9ef">Default value</span>: None
 <span style="color:#66d9ef">Accept pipeline input</span>: False
 <span style="color:#66d9ef">Accept wildcard characters</span>: False
-</code></pre></div><h3 id="-lcid">-Lcid</h3>
-<p>The locale id to use for the term. Defaults to the default language of the termstore.</p>
+</code></pre></div><p>##-Lcid
+The locale id to use for the term. Defaults to the default language of the termstore.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Int32
 <span style="color:#66d9ef">Parameter Sets</span>: (All)
 <span style="color:#66d9ef">Aliases</span>:
@@ -123,8 +138,8 @@ Example 2 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#
 <span style="color:#66d9ef">Default value</span>: None
 <span style="color:#66d9ef">Accept pipeline input</span>: False
 <span style="color:#66d9ef">Accept wildcard characters</span>: False
-</code></pre></div><h3 id="-localcustomproperties">-LocalCustomProperties</h3>
-<p>Sets local custom properties</p>
+</code></pre></div><p>##-LocalCustomProperties
+Sets local custom properties</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: Hashtable
 <span style="color:#66d9ef">Parameter Sets</span>: (All)
 <span style="color:#66d9ef">Aliases</span>:
@@ -134,8 +149,8 @@ Example 2 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#
 <span style="color:#66d9ef">Default value</span>: None
 <span style="color:#66d9ef">Accept pipeline input</span>: False
 <span style="color:#66d9ef">Accept wildcard characters</span>: False
-</code></pre></div><h3 id="-name">-Name</h3>
-<p>The name of the term.</p>
+</code></pre></div><p>##-Name
+The name of the term.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: String
 <span style="color:#66d9ef">Parameter Sets</span>: (All)
 <span style="color:#66d9ef">Aliases</span>:
@@ -145,8 +160,8 @@ Example 2 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#
 <span style="color:#66d9ef">Default value</span>: None
 <span style="color:#66d9ef">Accept pipeline input</span>: True (ByValue)
 <span style="color:#66d9ef">Accept wildcard characters</span>: False
-</code></pre></div><h3 id="-termgroup">-TermGroup</h3>
-<p>The termgroup to create the term in.</p>
+</code></pre></div><p>##-TermGroup
+The termgroup to create the term in.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: TaxonomyTermGroupPipeBind
 <span style="color:#66d9ef">Parameter Sets</span>: (All)
 <span style="color:#66d9ef">Aliases</span>:
@@ -156,8 +171,8 @@ Example 2 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#
 <span style="color:#66d9ef">Default value</span>: None
 <span style="color:#66d9ef">Accept pipeline input</span>: True (ByValue)
 <span style="color:#66d9ef">Accept wildcard characters</span>: False
-</code></pre></div><h3 id="-termset">-TermSet</h3>
-<p>The termset to add the term to.</p>
+</code></pre></div><p>##-TermSet
+The termset to add the term to.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: TaxonomyTermSetPipeBind
 <span style="color:#66d9ef">Parameter Sets</span>: (All)
 <span style="color:#66d9ef">Aliases</span>:
@@ -167,8 +182,8 @@ Example 2 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#
 <span style="color:#66d9ef">Default value</span>: None
 <span style="color:#66d9ef">Accept pipeline input</span>: True (ByValue)
 <span style="color:#66d9ef">Accept wildcard characters</span>: False
-</code></pre></div><h3 id="-termstore">-TermStore</h3>
-<p>Term store to use; if not specified the default term store is used.</p>
+</code></pre></div><p>##-TermStore
+Term store to use; if not specified the default term store is used.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">Type</span>: TaxonomyTermStorePipeBind
 <span style="color:#66d9ef">Parameter Sets</span>: (All)
 <span style="color:#66d9ef">Aliases</span>: TermStoreName
@@ -178,9 +193,9 @@ Example 2 New-PnPTerm -TermSet &#34;Departments&#34; -TermGroup &#34;Corporate&#
 <span style="color:#66d9ef">Default value</span>: None
 <span style="color:#66d9ef">Accept pipeline input</span>: False
 <span style="color:#66d9ef">Accept wildcard characters</span>: False
-</code></pre></div><h3 id="commonparameters">CommonParameters</h3>
-<p>This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see <a href="http://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
-<h2 id="related-links">RELATED LINKS</h2>
+</code></pre></div><p>##CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see <a href="http://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
+<p>#RELATED LINKS</p>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 <div class="edit-meta">
 

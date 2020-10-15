@@ -18,8 +18,9 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Remove-PnPWebPart" />
-<meta property="og:description" content="Remove-PnPWebPart SYNOPSIS Removes a web part from a page
-SYNTAX ID Remove-PnPWebPart -Identity &lt;Guid&gt; -ServerRelativePageUrl &lt;String&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] NAME Remove-PnPWebPart -Title &lt;String&gt; -ServerRelativePageUrl &lt;String&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPWebPart -ServerRelativePageUrl &#34;/sites/demo/sitepages/home.aspx&#34; -Identity a2875399-d6ff-43a0-96da-be6ae5875f82 This will remove the web part specified by ID to the specified page in the first row and the first column of the HTML table present on the page" />
+<meta property="og:description" content="SYNOPSIS Removes a web part from a page
+SYNTAX ID Remove-PnPWebPart -Identity &lt;Guid&gt; -ServerRelativePageUrl &lt;String&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] NAME Remove-PnPWebPart -Title &lt;String&gt; -ServerRelativePageUrl &lt;String&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPWebPart -ServerRelativePageUrl &#34;/sites/demo/sitepages/home.aspx&#34; -Identity a2875399-d6ff-43a0-96da-be6ae5875f82 This will remove the web part specified by ID to the specified page in the first row and the first column of the HTML table present on the page
+EXAMPLE 2 Remove-PnPWebPart -ServerRelativePageUrl &#34;/sites/demo/sitepages/home." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/remove-pnpwebpart/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -28,13 +29,15 @@ SYNTAX ID Remove-PnPWebPart -Identity &lt;Guid&gt; -ServerRelativePageUrl &lt;St
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Remove-PnPWebPart"/>
-<meta name="twitter:description" content="Remove-PnPWebPart SYNOPSIS Removes a web part from a page
-SYNTAX ID Remove-PnPWebPart -Identity &lt;Guid&gt; -ServerRelativePageUrl &lt;String&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] NAME Remove-PnPWebPart -Title &lt;String&gt; -ServerRelativePageUrl &lt;String&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPWebPart -ServerRelativePageUrl &#34;/sites/demo/sitepages/home.aspx&#34; -Identity a2875399-d6ff-43a0-96da-be6ae5875f82 This will remove the web part specified by ID to the specified page in the first row and the first column of the HTML table present on the page"/>
+<meta name="twitter:description" content="SYNOPSIS Removes a web part from a page
+SYNTAX ID Remove-PnPWebPart -Identity &lt;Guid&gt; -ServerRelativePageUrl &lt;String&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] NAME Remove-PnPWebPart -Title &lt;String&gt; -ServerRelativePageUrl &lt;String&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPWebPart -ServerRelativePageUrl &#34;/sites/demo/sitepages/home.aspx&#34; -Identity a2875399-d6ff-43a0-96da-be6ae5875f82 This will remove the web part specified by ID to the specified page in the first row and the first column of the HTML table present on the page
+EXAMPLE 2 Remove-PnPWebPart -ServerRelativePageUrl &#34;/sites/demo/sitepages/home."/>
 <meta itemprop="name" content="Remove-PnPWebPart">
-<meta itemprop="description" content="Remove-PnPWebPart SYNOPSIS Removes a web part from a page
-SYNTAX ID Remove-PnPWebPart -Identity &lt;Guid&gt; -ServerRelativePageUrl &lt;String&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] NAME Remove-PnPWebPart -Title &lt;String&gt; -ServerRelativePageUrl &lt;String&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPWebPart -ServerRelativePageUrl &#34;/sites/demo/sitepages/home.aspx&#34; -Identity a2875399-d6ff-43a0-96da-be6ae5875f82 This will remove the web part specified by ID to the specified page in the first row and the first column of the HTML table present on the page">
+<meta itemprop="description" content="SYNOPSIS Removes a web part from a page
+SYNTAX ID Remove-PnPWebPart -Identity &lt;Guid&gt; -ServerRelativePageUrl &lt;String&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] NAME Remove-PnPWebPart -Title &lt;String&gt; -ServerRelativePageUrl &lt;String&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION EXAMPLES EXAMPLE 1 Remove-PnPWebPart -ServerRelativePageUrl &#34;/sites/demo/sitepages/home.aspx&#34; -Identity a2875399-d6ff-43a0-96da-be6ae5875f82 This will remove the web part specified by ID to the specified page in the first row and the first column of the HTML table present on the page
+EXAMPLE 2 Remove-PnPWebPart -ServerRelativePageUrl &#34;/sites/demo/sitepages/home.">
 
-<meta itemprop="wordCount" content="331">
+<meta itemprop="wordCount" content="330">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -55,7 +58,6 @@ SYNTAX ID Remove-PnPWebPart -Identity &lt;Guid&gt; -ServerRelativePageUrl &lt;St
 </div>
 <div class="content-container">
 <main><h1>Remove-PnPWebPart</h1>
-<h1 id="remove-pnpwebpart">Remove-PnPWebPart</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Removes a web part from a page</p>
 <h2 id="syntax">SYNTAX</h2>

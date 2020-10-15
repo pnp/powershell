@@ -18,7 +18,7 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Add-PnPClientSideWebPart" />
-<meta property="og:description" content="Add-PnPClientSideWebPart SYNOPSIS Adds a Client-Side Web Part to a client-side page
+<meta property="og:description" content="SYNOPSIS Adds a Client-Side Web Part to a client-side page
 SYNTAX Default with built-in web part Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -DefaultWebPartType &lt;DefaultClientSideWebParts&gt; [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Default with 3rd party web part Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -Component &lt;ClientSideComponentPipeBind&gt; [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Positioned with built-in web part Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -DefaultWebPartType &lt;DefaultClientSideWebParts&gt; [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] -Section &lt;Int32&gt; -Column &lt;Int32&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Positioned with 3rd party web part Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -Component &lt;ClientSideComponentPipeBind&gt; [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] -Section &lt;Int32&gt; -Column &lt;Int32&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION Adds a client-side web part to an existing client-side page." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/cmdlets/add-pnpclientsidewebpart/" />
@@ -28,13 +28,13 @@ SYNTAX Default with built-in web part Add-PnPClientSideWebPart [-Page] &lt;Clien
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Add-PnPClientSideWebPart"/>
-<meta name="twitter:description" content="Add-PnPClientSideWebPart SYNOPSIS Adds a Client-Side Web Part to a client-side page
+<meta name="twitter:description" content="SYNOPSIS Adds a Client-Side Web Part to a client-side page
 SYNTAX Default with built-in web part Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -DefaultWebPartType &lt;DefaultClientSideWebParts&gt; [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Default with 3rd party web part Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -Component &lt;ClientSideComponentPipeBind&gt; [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Positioned with built-in web part Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -DefaultWebPartType &lt;DefaultClientSideWebParts&gt; [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] -Section &lt;Int32&gt; -Column &lt;Int32&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Positioned with 3rd party web part Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -Component &lt;ClientSideComponentPipeBind&gt; [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] -Section &lt;Int32&gt; -Column &lt;Int32&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION Adds a client-side web part to an existing client-side page."/>
 <meta itemprop="name" content="Add-PnPClientSideWebPart">
-<meta itemprop="description" content="Add-PnPClientSideWebPart SYNOPSIS Adds a Client-Side Web Part to a client-side page
+<meta itemprop="description" content="SYNOPSIS Adds a Client-Side Web Part to a client-side page
 SYNTAX Default with built-in web part Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -DefaultWebPartType &lt;DefaultClientSideWebParts&gt; [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Default with 3rd party web part Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -Component &lt;ClientSideComponentPipeBind&gt; [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Positioned with built-in web part Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -DefaultWebPartType &lt;DefaultClientSideWebParts&gt; [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] -Section &lt;Int32&gt; -Column &lt;Int32&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] Positioned with 3rd party web part Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -Component &lt;ClientSideComponentPipeBind&gt; [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] -Section &lt;Int32&gt; -Column &lt;Int32&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION Adds a client-side web part to an existing client-side page.">
 
-<meta itemprop="wordCount" content="598">
+<meta itemprop="wordCount" content="597">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -55,7 +55,6 @@ SYNTAX Default with built-in web part Add-PnPClientSideWebPart [-Page] &lt;Clien
 </div>
 <div class="content-container">
 <main><h1>Add-PnPClientSideWebPart</h1>
-<h1 id="add-pnpclientsidewebpart">Add-PnPClientSideWebPart</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Adds a Client-Side Web Part to a client-side page</p>
 <h2 id="syntax">SYNTAX</h2>

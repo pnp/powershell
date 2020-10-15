@@ -18,7 +18,7 @@
 :root {--custom-background-color: #2E7FBE;}
 </style>
 <meta property="og:title" content="Add-PnPTermToTerm" />
-<meta property="og:description" content="Add-PnPTermToTerm SYNOPSIS Adds a new term to an existing term.
+<meta property="og:description" content="SYNOPSIS Adds a new term to an existing term.
 SYNTAX Add-PnPTermToTerm -ParentTerm &lt;Guid|Term&gt; -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Lcid &lt;Int32&gt;] [-LocalCustomProperties &lt;Hashtable&gt;] [-TermStore &lt;Guid&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION This cmdlet adds a new taxonomy term as a child term to an existing term.
 EXAMPLES EXAMPLE 1 Add-PnPTermToTerm -ParentTerm 2d1f298b-804a-4a05-96dc-29b667adec62 -Name SubTerm -CustomProperties @{&#34;Department&#34;=&#34;Marketing&#34;} Creates a new taxonomy child term named &ldquo;SubTerm&rdquo; in the specified term by id 2d1f298b-804a-4a05-96dc-29b667adec62.
 EXAMPLE 2 $parentTerm = Get-PnPTerm -Name Marketing -TermSet Departments -TermGroup Corporate Add-PnPTermToTerm -ParentTerm $parentTerm -Name &#34;Conference Team&#34; Creates a new taxonomy child term named &ldquo;Conference Team&rdquo; in the specified term called Marketing which is located in the Departments term set." />
@@ -30,17 +30,17 @@ EXAMPLE 2 $parentTerm = Get-PnPTerm -Name Marketing -TermSet Departments -TermGr
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 <meta name="twitter:title" content="Add-PnPTermToTerm"/>
-<meta name="twitter:description" content="Add-PnPTermToTerm SYNOPSIS Adds a new term to an existing term.
+<meta name="twitter:description" content="SYNOPSIS Adds a new term to an existing term.
 SYNTAX Add-PnPTermToTerm -ParentTerm &lt;Guid|Term&gt; -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Lcid &lt;Int32&gt;] [-LocalCustomProperties &lt;Hashtable&gt;] [-TermStore &lt;Guid&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION This cmdlet adds a new taxonomy term as a child term to an existing term.
 EXAMPLES EXAMPLE 1 Add-PnPTermToTerm -ParentTerm 2d1f298b-804a-4a05-96dc-29b667adec62 -Name SubTerm -CustomProperties @{&#34;Department&#34;=&#34;Marketing&#34;} Creates a new taxonomy child term named &ldquo;SubTerm&rdquo; in the specified term by id 2d1f298b-804a-4a05-96dc-29b667adec62.
 EXAMPLE 2 $parentTerm = Get-PnPTerm -Name Marketing -TermSet Departments -TermGroup Corporate Add-PnPTermToTerm -ParentTerm $parentTerm -Name &#34;Conference Team&#34; Creates a new taxonomy child term named &ldquo;Conference Team&rdquo; in the specified term called Marketing which is located in the Departments term set."/>
 <meta itemprop="name" content="Add-PnPTermToTerm">
-<meta itemprop="description" content="Add-PnPTermToTerm SYNOPSIS Adds a new term to an existing term.
+<meta itemprop="description" content="SYNOPSIS Adds a new term to an existing term.
 SYNTAX Add-PnPTermToTerm -ParentTerm &lt;Guid|Term&gt; -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Lcid &lt;Int32&gt;] [-LocalCustomProperties &lt;Hashtable&gt;] [-TermStore &lt;Guid&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;] DESCRIPTION This cmdlet adds a new taxonomy term as a child term to an existing term.
 EXAMPLES EXAMPLE 1 Add-PnPTermToTerm -ParentTerm 2d1f298b-804a-4a05-96dc-29b667adec62 -Name SubTerm -CustomProperties @{&#34;Department&#34;=&#34;Marketing&#34;} Creates a new taxonomy child term named &ldquo;SubTerm&rdquo; in the specified term by id 2d1f298b-804a-4a05-96dc-29b667adec62.
 EXAMPLE 2 $parentTerm = Get-PnPTerm -Name Marketing -TermSet Departments -TermGroup Corporate Add-PnPTermToTerm -ParentTerm $parentTerm -Name &#34;Conference Team&#34; Creates a new taxonomy child term named &ldquo;Conference Team&rdquo; in the specified term called Marketing which is located in the Departments term set.">
 
-<meta itemprop="wordCount" content="374">
+<meta itemprop="wordCount" content="373">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -61,7 +61,6 @@ EXAMPLE 2 $parentTerm = Get-PnPTerm -Name Marketing -TermSet Departments -TermGr
 </div>
 <div class="content-container">
 <main><h1>Add-PnPTermToTerm</h1>
-<h1 id="add-pnptermtoterm">Add-PnPTermToTerm</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Adds a new term to an existing term.</p>
 <h2 id="syntax">SYNTAX</h2>
