@@ -51,7 +51,7 @@ Adds a new channel to the specified Teams instance
 
 ### EXAMPLE 3
 ```powershell
-Add-PnPTeamsChannel -Team MyTeam -DisplayName "My Channel" -Private
+Add-PnPTeamsChannel -Team MyTeam -DisplayName "My Channel" -Private -OwnerUPN user1@domain.com
 ```
 
 Adds a new private channel to the specified Teams instance
