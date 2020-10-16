@@ -9,7 +9,7 @@
           "*.md"
         ]
       },
-      { 
+      {
         "files": [
           "cmdlets/**.md",
           "cmdlets/**/toc.yml",
@@ -22,17 +22,6 @@
       {
         "files": [
           "images/**"
-        ]
-      }
-    ],
-    "overwrite": [
-      {
-        "files": [
-          "apidoc/**.md"
-        ],
-        "exclude": [
-          "obj/**",
-          "_site/**"
         ]
       }
     ],
@@ -49,17 +38,26 @@
     "keepFileLink": false,
     "cleanupCacheHistory": false,
     "disableGitFeatures": false,
-    "globalMetadata" : {
+    "globalMetadata": {
       "_appTitle": "PnP PowerShell",
       "_gitContribute": {
         "repo": "https://github.com/pnp/powershell",
         "branch": "dev"
       },
       "_appFaviconPath": "https://c.s-microsoft.com/favicon.ico?v2",
-      "_description":"PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.",
+      "_description": "PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.",
       "_appLogoPath": "images/logo.svg",
       "_enableSearch": true,
       "_enableNewTab": true
+    },
+    "fileMetadata": {
+      "_gitContribute": {
+        "cmdlets/**.md": {
+          "repo": "https://github.com/pnp/powershell",
+          "branch": "dev",
+          "path":"documentation"
+        }
+      }
     }
   }
 }
