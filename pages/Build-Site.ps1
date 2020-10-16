@@ -1,4 +1,6 @@
 # copy documentation to output folder
+# make cmdlets folder
+New-Item -Path "./dev/pages/cmdlets" -ItemType Directory
 Copy-Item -Path "./dev/documentation/*.md" -Destination "./dev/pages/cmdlets" -Force
 
 # generate cmdlet toc
