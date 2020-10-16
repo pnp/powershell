@@ -1,0 +1,386 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Invoke-PnPWebAction | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Invoke-PnPWebAction | PnP PowerShell ">
+    <meta name="generator" content="docfx 2.56.3.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/cmdlets/Invoke-PnPWebAction.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+                    <h1 id="invoke-pnpwebaction">Invoke-PnPWebAction</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>Executes operations on web, lists and list items.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Invoke-PnPWebAction [-ListName &lt;String&gt;] [-Webs &lt;Web[]&gt;]
+ [-WebAction &lt;System.Action`1[Microsoft.SharePoint.Client.Web]&gt;]
+ [-ShouldProcessWebAction &lt;System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]&gt;]
+ [-PostWebAction &lt;System.Action`1[Microsoft.SharePoint.Client.Web]&gt;]
+ [-ShouldProcessPostWebAction &lt;System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]&gt;]
+ [-WebProperties &lt;String[]&gt;] [-ListAction &lt;System.Action`1[Microsoft.SharePoint.Client.List]&gt;]
+ [-ShouldProcessListAction &lt;System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]&gt;]
+ [-PostListAction &lt;System.Action`1[Microsoft.SharePoint.Client.List]&gt;]
+ [-ShouldProcessPostListAction &lt;System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]&gt;]
+ [-ListProperties &lt;String[]&gt;] [-ListItemAction &lt;System.Action`1[Microsoft.SharePoint.Client.ListItem]&gt;]
+ [-ShouldProcessListItemAction &lt;System.Func`2[Microsoft.SharePoint.Client.ListItem,System.Boolean]&gt;]
+ [-ListItemProperties &lt;String[]&gt;] [-SubWebs] [-DisableStatisticsOutput] [-SkipCounting] [-Web &lt;WebPipeBind&gt;]
+ [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Invoke-PnPWebAction -ListAction ${function:ListAction}
+</code></pre>
+<p>This will call the function ListAction on all the lists located on the current web.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Invoke-PnPWebAction -ShouldProcessListAction ${function:ShouldProcessList} -ListAction ${function:ListAction}
+</code></pre>
+<p>This will call the function ShouldProcessList, if it returns true the function ListAction will then be called. This will occur on all lists located on the current web</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-confirm">-Confirm</h3>
+<p>Prompts you for confirmation before running the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-disablestatisticsoutput">-DisableStatisticsOutput</h3>
+<p>Will not output statistics after the operation</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-listaction">-ListAction</h3>
+<p>Function to be executed on the list. There is one input parameter of type List</p>
+<pre><code class="lang-yaml">Type: System.Action`1[Microsoft.SharePoint.Client.List]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-listitemaction">-ListItemAction</h3>
+<p>Function to be executed on the list item. There is one input parameter of type ListItem</p>
+<pre><code class="lang-yaml">Type: System.Action`1[Microsoft.SharePoint.Client.ListItem]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-listitemproperties">-ListItemProperties</h3>
+<p>The properties to load for list items.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-listname">-ListName</h3>
+<p>{{ Fill ListName Description }}</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-listproperties">-ListProperties</h3>
+<p>The properties to load for list.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-postlistaction">-PostListAction</h3>
+<p>Function to be executed on the list, this will trigger after list items have been processed. There is one input parameter of type List</p>
+<pre><code class="lang-yaml">Type: System.Action`1[Microsoft.SharePoint.Client.List]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-postwebaction">-PostWebAction</h3>
+<p>Function to be executed on the web, this will trigger after lists and list items have been processed. There is one input parameter of type Web</p>
+<pre><code class="lang-yaml">Type: System.Action`1[Microsoft.SharePoint.Client.Web]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-shouldprocesslistaction">-ShouldProcessListAction</h3>
+<p>Function to be executed on the web that would determine if ListAction should be invoked, There is one input parameter of type List and the function should return a boolean value</p>
+<pre><code class="lang-yaml">Type: System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-shouldprocesslistitemaction">-ShouldProcessListItemAction</h3>
+<p>Function to be executed on the web that would determine if ListItemAction should be invoked, There is one input parameter of type ListItem and the function should return a boolean value</p>
+<pre><code class="lang-yaml">Type: System.Func`2[Microsoft.SharePoint.Client.ListItem,System.Boolean]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-shouldprocesspostlistaction">-ShouldProcessPostListAction</h3>
+<p>Function to be executed on the web that would determine if PostListAction should be invoked, There is one input parameter of type List and the function should return a boolean value</p>
+<pre><code class="lang-yaml">Type: System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-shouldprocesspostwebaction">-ShouldProcessPostWebAction</h3>
+<p>Function to be executed on the web that would determine if PostWebAction should be invoked, There is one input parameter of type Web and the function should return a boolean value</p>
+<pre><code class="lang-yaml">Type: System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-shouldprocesswebaction">-ShouldProcessWebAction</h3>
+<p>Function to be executed on the web that would determine if WebAction should be invoked, There is one input parameter of type Web and the function should return a boolean value</p>
+<pre><code class="lang-yaml">Type: System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-skipcounting">-SkipCounting</h3>
+<p>Will skip the counting process; by doing this you will not get an estimated time remaining</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-subwebs">-SubWebs</h3>
+<p>Specify if sub webs will be processed</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-web">-Web</h3>
+<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
+<pre><code class="lang-yaml">Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-webaction">-WebAction</h3>
+<p>Function to be executed on the web. There is one input parameter of type Web</p>
+<pre><code class="lang-yaml">Type: System.Action`1[Microsoft.SharePoint.Client.Web]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-webproperties">-WebProperties</h3>
+<p>The properties to load for web.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-webs">-Webs</h3>
+<p>Webs you want to process (for example different site collections), will use Web parameter if not specified</p>
+<pre><code class="lang-yaml">Type: Web[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-whatif">-WhatIf</h3>
+<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://telemetry.sharepointpnp.com/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+</html>

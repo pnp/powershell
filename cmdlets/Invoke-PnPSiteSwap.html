@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Invoke-PnPSiteSwap | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Invoke-PnPSiteSwap | PnP PowerShell ">
+    <meta name="generator" content="docfx 2.56.3.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/cmdlets/Invoke-PnPSiteSwap.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+                    <h1 id="invoke-pnpsiteswap">Invoke-PnPSiteSwap</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>Invokes a job to swap the location of a site with another site while archiving the original site.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Invoke-PnPSiteSwap 
+         -SourceUrl &lt;string&gt;
+         -TargetUrl &lt;string&gt;
+         -ArchiveUrl &lt;string&gt;
+         [-DisableRedirection]
+         [-NoWait] 
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Swaps the location of a source site with a target site while archiving the original target site.</p>
+<p>Please note, the target site must be either:</p>
+<ul>
+<li>The root site, for example https://tenant-name.sharepoint.com; or</li>
+<li>The search center site, for example <a href="https://tenant-name.sharepoint.com/search">https://tenant-name.sharepoint.com/search</a>.</li>
+</ul>
+<p>When the swap is initiated, the target site is moved to the archive location and the source site is moved to the target location. By default, a site redirect is created at the source location that will redirect traffic to the target location.</p>
+<p>If the target is the root site at <a href="https://tenant-name.sharepoint.com">https://tenant-name.sharepoint.com</a>, then the following preparation activities should be performed prior to performing the swap:</p>
+<ol>
+<li>Any Featured links defined in SharePoint Start Page at <a href="https://tenant-name.sharepoint.com/_layouts/15/sharepoint.aspx">https://tenant-name.sharepoint.com/_layouts/15/sharepoint.aspx</a> will not be displayed after performing the swap. If required, the Featured links should be documented so they can be manually recreated after the swap.</li>
+<li>Functionality such as external sharing and application interfaces are dependent on the policies and permissions defined at the root site. Review the source site to ensure that it has the required policies and permissions as per the existing root site. This includes external sharing settings as well as site permissions.</li>
+<li>Larger tenants that have more than ~10,000 licenses may also need to run the Page Diagnostic Tool against the source site. Any analysis results that have the category Attention required (Red) or Improvement opprtunities (Orange) will need to be remediated before performing the swap.</li>
+</ol>
+<p>The source and target sites can't be connected to an Office 365 group. They also can't be hub sites or associated with a hub. If a site is a hub site, unregister it as a hub site, swap the root site, and then register the site as a hub site. If a site is associated with a hub, disassociate the site, swap the root site, and then reassociate the site.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Invoke-PnPSiteSwap -SourceUrl https://contoso.sharepoint.com/sites/CommunicationSite -TargetUrl https://contoso.sharepoint.com -ArchiveUrl https://contoso.sharepoint.com/sites/Archive
+</code></pre>
+<p>Archives the existing site at <a href="https://contoso.sharepoint.com">https://contoso.sharepoint.com</a> to <a href="https://contoso.sharepoint.com/sites/Archive">https://contoso.sharepoint.com/sites/Archive</a> and moves <a href="https://contoso.sharepoint.com/sites/CommunicationSite">https://contoso.sharepoint.com/sites/CommunicationSite</a> to <a href="https://contoso.sharepoint.com">https://contoso.sharepoint.com</a>. A site redirect will be created at <a href="https://contoso.sharepoint.com/sites/CommunicationSite">https://contoso.sharepoint.com/sites/CommunicationSite</a> that will redirect any requests to <a href="https://contoso.sharepoint.com">https://contoso.sharepoint.com</a>.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Invoke-PnPSiteSwap -SourceUrl https://contoso.sharepoint.com/sites/SearchSite -TargetUrl https://contoso.sharepoint.com/search -ArchiveUrl https://contoso.sharepoint.com/sites/Archive
+</code></pre>
+<p>Archives the existing Search Center site at <a href="https://contoso.sharepoint.com/search">https://contoso.sharepoint.com/search</a> to <a href="https://contoso.sharepoint.com/sites/Archive">https://contoso.sharepoint.com/sites/Archive</a> and moves the <a href="https://contoso.sharepoint.com/sites/SearchSite">https://contoso.sharepoint.com/sites/SearchSite</a> to <a href="https://contoso.sharepoint.com/search">https://contoso.sharepoint.com/search</a>. A site redirect be created at <a href="https://contoso.sharepoint.com/sites/SearchSite">https://contoso.sharepoint.com/sites/SearchSite</a> that will redirect any requests to <a href="https://contoso.sharepoint.com/search">https://contoso.sharepoint.com/search</a>.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Invoke-PnPSiteSwap -SourceUrl https://contoso.sharepoint.com/sites/CommunicationSite -TargetUrl https://contoso.sharepoint.com -ArchiveUrl https://contoso.sharepoint.com/sites/Archive -DisableRedirection
+</code></pre>
+<p>Archives the existing site at <a href="https://contoso.sharepoint.com">https://contoso.sharepoint.com</a> to <a href="https://contoso.sharepoint.com/sites/Archive">https://contoso.sharepoint.com/sites/Archive</a> and moves <a href="https://contoso.sharepoint.com/sites/CommunicationSite">https://contoso.sharepoint.com/sites/CommunicationSite</a> to <a href="https://contoso.sharepoint.com">https://contoso.sharepoint.com</a>. A site redirect will not be created at <a href="https://contoso.sharepoint.com/sites/CommunicationSite">https://contoso.sharepoint.com/sites/CommunicationSite</a>.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-sourceurl">-SourceUrl</h3>
+<p>URL of the source site. The site at this location must exist before performing the swap.</p>
+<p>If the target is the root site at <a href="https://tenant-name.sharepoint.com">https://tenant-name.sharepoint.com</a> then the source site must be either a Modern Team Site (STS#3) or a Communication Site (SITEPAGEPUBLISHING#0).</p>
+<p>If the target is the search center site at <a href="https://tenant-name.sharepoint.com/search">https://tenant-name.sharepoint.com/search</a> then the source site must be either a Search Center Site (SRCHCEN#0) or a Basic Search Center Site (SRCHCENTERLITE#0).</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-targeturl">-TargetUrl</h3>
+<p>URL of the target site that the source site will be swapped to. The site at this location must exist before performing the swap.</p>
+<p>The target site must be either:</p>
+<ul>
+<li>The root site at https://tenant-name.sharepoint.com; or</li>
+<li>The search center site at <a href="https://tenant-name.sharepoint.com/search">https://tenant-name.sharepoint.com/search</a>.</li>
+</ul>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-archiveurl">-ArchiveUrl</h3>
+<p>URL that the target site will be archived to. There should be no existing site, including a deleted site in the Recycle Bin, at this location before performing the swap.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-disableredirection">-DisableRedirection</h3>
+<p>Disables the site redirect from being created at the Source URL location.</p>
+<pre><code class="lang-yaml">Type: Switch Parameter
+Parameter Sets: (All)
+
+Required: false
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://telemetry.sharepointpnp.com/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+</html>

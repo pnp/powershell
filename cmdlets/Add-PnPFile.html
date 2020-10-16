@@ -1,0 +1,352 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Add-PnPFile | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Add-PnPFile | PnP PowerShell ">
+    <meta name="generator" content="docfx 2.56.3.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/cmdlets/Add-PnPFile.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+                    <h1 id="add-pnpfile">Add-PnPFile</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>Uploads a file to Web</p>
+<h2 id="syntax">SYNTAX</h2>
+<h3 id="upload-file">Upload file</h3>
+<pre><code class="lang-powershell">Add-PnPFile -Path &lt;String&gt; -Folder &lt;String&gt; [-NewFileName &lt;String&gt;] [-Checkout] [-CheckInComment &lt;String&gt;]
+ [-Approve] [-ApproveComment &lt;String&gt;] [-Publish] [-PublishComment &lt;String&gt;] [-UseWebDav] [-Values &lt;Hashtable&gt;]
+ [-ContentType &lt;ContentTypePipeBind&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+</code></pre>
+<h3 id="upload-file-from-stream">Upload file from stream</h3>
+<pre><code class="lang-powershell">Add-PnPFile -Folder &lt;String&gt; -FileName &lt;String&gt; -Stream &lt;Stream&gt; [-Checkout] [-CheckInComment &lt;String&gt;]
+ [-Approve] [-ApproveComment &lt;String&gt;] [-Publish] [-PublishComment &lt;String&gt;] [-UseWebDav] [-Values &lt;Hashtable&gt;]
+ [-ContentType &lt;ContentTypePipeBind&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Add-PnPFile -Path c:\temp\company.master -Folder &quot;_catalogs/masterpage&quot;
+</code></pre>
+<p>This will upload the file company.master to the masterpage catalog</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Add-PnPFile -Path .\displaytemplate.html -Folder &quot;_catalogs/masterpage/display templates/test&quot;
+</code></pre>
+<p>This will upload the file displaytemplate.html to the test folder in the display templates folder. If the test folder does not exist it will create it.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Add-PnPFile -Path .\sample.doc -Folder &quot;Shared Documents&quot; -Values @{Modified=&quot;1/1/2016&quot;}
+</code></pre>
+<p>This will upload the file sample.doc to the Shared Documents folder. After uploading it will set the Modified date to 1/1/2016.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Add-PnPFile -FileName sample.doc -Folder &quot;Shared Documents&quot; -Stream $fileStream -Values @{Modified=&quot;1/1/2016&quot;}
+</code></pre>
+<p>This will add a file sample.doc with the contents of the stream into the Shared Documents folder. After adding it will set the Modified date to 1/1/2016.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Add-PnPFile -Path sample.doc -Folder &quot;Shared Documents&quot; -ContentType &quot;Document&quot; -Values @{Modified=&quot;1/1/2016&quot;}
+</code></pre>
+<p>This will add a file sample.doc to the Shared Documents folder, with a ContentType of 'Documents'. After adding it will set the Modified date to 1/1/2016.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Add-PnPFile -Path sample.docx -Folder &quot;Documents&quot; -Values @{Modified=&quot;1/1/2016&quot;; Created=&quot;1/1/2017&quot;; Editor=23}
+</code></pre>
+<p>This will add a file sample.docx to the Documents folder and will set the Modified date to 1/1/2016, Created date to 1/1/2017 and the Modified By field to the user with ID 23. To find out about the proper user ID to relate to a specific user, use Get-PnPUser.</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Add-PnPFile -Path sample.docx -Folder &quot;Documents&quot; -NewFileName &quot;differentname.docx&quot;
+</code></pre>
+<p>This will upload a local file sample.docx to the Documents folder giving it the filename differentname.docx on SharePoint</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-approve">-Approve</h3>
+<p>Will auto approve the uploaded file</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-approvecomment">-ApproveComment</h3>
+<p>The comment added to the approval</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-checkincomment">-CheckInComment</h3>
+<p>The comment added to the checkin</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-checkout">-Checkout</h3>
+<p>If versioning is enabled, this will check out the file first if it exists, upload the file, then check it in again</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-contenttype">-ContentType</h3>
+<p>Use to assign a ContentType to the file</p>
+<pre><code class="lang-yaml">Type: ContentTypePipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-filename">-FileName</h3>
+<p>Name for file</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Upload file from stream
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-folder">-Folder</h3>
+<p>The destination folder in the site</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-newfilename">-NewFileName</h3>
+<p>Filename to give the file on SharePoint</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Upload file
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-path">-Path</h3>
+<p>The local file path</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Upload file
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-publish">-Publish</h3>
+<p>Will auto publish the file</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-publishcomment">-PublishComment</h3>
+<p>The comment added to the publish action</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-stream">-Stream</h3>
+<p>Stream with the file contents</p>
+<pre><code class="lang-yaml">Type: Stream
+Parameter Sets: Upload file from stream
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-usewebdav">-UseWebDav</h3>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-values">-Values</h3>
+<p>Use the internal names of the fields when specifying field names.</p>
+<p>Single line of text: -Values @{&quot;Title&quot; = &quot;Title New&quot;}</p>
+<p>Multiple lines of text: -Values @{&quot;MultiText&quot; = &quot;New text\n\nMore text&quot;}</p>
+<p>Rich text: -Values @{&quot;MultiText&quot; = &quot;&lt;strong&gt;New&lt;/strong&gt; text&quot;}</p>
+<p>Choice: -Values @{&quot;Choice&quot; = &quot;Value 1&quot;}</p>
+<p>Number: -Values @{&quot;Number&quot; = &quot;10&quot;}</p>
+<p>Currency: -Values @{&quot;Number&quot; = &quot;10&quot;}</p>
+<p>Currency: -Values @{&quot;Currency&quot; = &quot;10&quot;}</p>
+<p>Date and Time: -Values @{&quot;DateAndTime&quot; = &quot;03/10/2015 14:16&quot;}</p>
+<p>Lookup (id of lookup value): -Values @{&quot;Lookup&quot; = &quot;2&quot;}</p>
+<p>Multi value lookup (id of lookup values as array 1): -Values @{&quot;MultiLookupField&quot; = &quot;1&quot;,&quot;2&quot;}</p>
+<p>Multi value lookup (id of lookup values as array 2): -Values @{&quot;MultiLookupField&quot; = 1,2}</p>
+<p>Multi value lookup (id of lookup values as string): -Values @{&quot;MultiLookupField&quot; = &quot;1,2&quot;}</p>
+<p>Yes/No: -Values @{&quot;YesNo&quot; = $false}</p>
+<p>Person/Group (id of user/group in Site User Info List or email of the user, separate multiple values with a comma): -Values @{&quot;Person&quot; = &quot;user1@domain.com&quot;,&quot;21&quot;}</p>
+<p>Managed Metadata (single value with path to term): -Values @{&quot;MetadataField&quot; = &quot;CORPORATE|DEPARTMENTS|FINANCE&quot;}</p>
+<p>Managed Metadata (single value with id of term): -Values @{&quot;MetadataField&quot; = &quot;fe40a95b-2144-4fa2-b82a-0b3d0299d818&quot;} with Id of term</p>
+<p>Managed Metadata (multiple values with paths to terms): -Values @{&quot;MetadataField&quot; = &quot;CORPORATE|DEPARTMENTS|FINANCE&quot;,&quot;CORPORATE|DEPARTMENTS|HR&quot;}</p>
+<p>Managed Metadata (multiple values with ids of terms): -Values @{&quot;MetadataField&quot; = &quot;fe40a95b-2144-4fa2-b82a-0b3d0299d818&quot;,&quot;52d88107-c2a8-4bf0-adfa-04bc2305b593&quot;}</p>
+<p>Hyperlink or Picture: -Values @{&quot;Hyperlink&quot; = &quot;https://github.com/OfficeDev/, OfficePnp&quot;}</p>
+<pre><code class="lang-yaml">Type: Hashtable
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-web">-Web</h3>
+<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
+<pre><code class="lang-yaml">Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://telemetry.sharepointpnp.com/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+</html>

@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>New-PnPGraphSubscription | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="New-PnPGraphSubscription | PnP PowerShell ">
+    <meta name="generator" content="docfx 2.56.3.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/cmdlets/New-PnPGraphSubscription.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+                    <h1 id="new-pnpgraphsubscription">New-PnPGraphSubscription</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>Creates a new Microsof Graph Subscription which allows your webhook API to be called when a change occurs in Microsoft Graph</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">New-PnPGraphSubscription -ChangeType &lt;GraphSubscriptionChangeType&gt; -NotificationUrl &lt;String&gt; -Resource &lt;String&gt;
+ [-ExpirationDateTime &lt;DateTime&gt;] [-ClientState &lt;String&gt;]
+ [-LatestSupportedTlsVersion &lt;GraphSubscriptionTlsVersion&gt;] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Creates a new Microsof Graph Subscription. The required Azure Active Directory application permission depends on the resource creating the subscription for, see <a href="https://docs.microsoft.com/graph/api/subscription-post-subscriptions#permissions">https://docs.microsoft.com/graph/api/subscription-post-subscriptions#permissions</a>. For a sample ASP.NET WebApi webhook implementation to receive the notifications from Microsoft Graph, see <a href="https://github.com/microsoftgraph/msgraph-training-changenotifications/blob/b8d21ca7aa5feeece336287c9a781e71b7ba01c6/demos/01-create-application/Controllers/NotificationsController.cs#L51">https://github.com/microsoftgraph/msgraph-training-changenotifications/blob/b8d21ca7aa5feeece336287c9a781e71b7ba01c6/demos/01-create-application/Controllers/NotificationsController.cs#L51</a>.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">New-PnPGraphSubscription -ChangeType Create -NotificationUrl https://mywebapiservice/notifications -Resource &quot;me/mailFolders('Inbox')/messages&quot; -ExpirationDateTime (Get-Date).AddDays(1) -ClientState [Guid]::NewGuid().ToString()
+</code></pre>
+<p>Creates a new Microsoft Graph subscription listening for incoming mail during the next 24 hours in the inbox of the user under which the connection has been made and will signal the URL provided through NotificationUrl when a message comes in</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">New-PnPGraphSubscription -ChangeType Updates -NotificationUrl https://mywebapiservice/notifications -Resource &quot;Users&quot; -ExpirationDateTime (Get-Date).AddHours(1) -ClientState [Guid]::NewGuid().ToString()
+</code></pre>
+<p>Creates a new Microsoft Graph subscription listening for changes to user objects during the next hour and will signal the URL provided through NotificationUrl when a change has been made</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
+<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-changetype">-ChangeType</h3>
+<p>The event(s) the subscription should trigger on</p>
+<pre><code class="lang-yaml">Type: GraphSubscriptionChangeType
+Parameter Sets: (All)
+Accepted values: Created, Updated, Deleted
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-clientstate">-ClientState</h3>
+<p>Specifies the value of the clientState property sent by the service in each notification. The maximum length is 128 characters. The client can check that the notification came from the service by comparing the value of the clientState property sent with the subscription with the value of the clientState property received with each notification.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-expirationdatetime">-ExpirationDateTime</h3>
+<p>The datetime defining how long this subscription should stay alive before which it needs to get extended to stay alive. See <a href="https://docs.microsoft.com/graph/api/resources/subscription#maximum-length-of-subscription-per-resource-type">https://docs.microsoft.com/graph/api/resources/subscription#maximum-length-of-subscription-per-resource-type</a> for the supported maximum lifetime of the subscriber endpoints.</p>
+<pre><code class="lang-yaml">Type: DateTime
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-latestsupportedtlsversion">-LatestSupportedTlsVersion</h3>
+<p>Specifies the latest version of Transport Layer Security (TLS) that the notification endpoint, specified by NotificationUrl, supports. If not provided, TLS 1.2 will be assumed.</p>
+<pre><code class="lang-yaml">Type: GraphSubscriptionTlsVersion
+Parameter Sets: (All)
+Accepted values: v1_0, v1_1, v1_2, v1_3
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-notificationurl">-NotificationUrl</h3>
+<p>The URL that should be called when an event matching this subscription occurs</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-resource">-Resource</h3>
+<p>The resource to monitor for changes. See <a href="https://docs.microsoft.com/graph/api/subscription-post-subscriptions#resources-examples">https://docs.microsoft.com/graph/api/subscription-post-subscriptions#resources-examples</a> for the list with supported options.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://telemetry.sharepointpnp.com/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+</html>
