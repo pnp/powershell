@@ -1,12 +1,11 @@
 ﻿# PnP PowerShell
 
+[![Actions Status](https://github.com/pnp/powershell/workflows/Build/badge.svg)](https://github.com/pnp/powershell/actions) ![Nightly Release to PowerShell Gallery](https://github.com/pnp/powershell/workflows/Nightly%20Release%20to%20PowerShell%20Gallery/badge.svg?branch=dev) |
+
+
 **PnP PowerShell** is a .NET Core 3.1 / .NET Framework 4.6.1 based PowerShell Module providing over 400 cmdlets that work with Microsoft 365 environments and more specifically SharePoint Online and Microsoft Teams.
 
 This module is a successor of the [PnP-PowerShell](https://github.com/pnp/pnp-powershell) module. The original cmdlets only work on Windows and Windows PowerShell and supports SharePoint On-Premises (2013, 2016 and 2019) and SharePoint Online. This version of the cmdlets is cross-platform (e.g. it works on Windows, MacOS and Linux) however will only support SharePoint Online. Going forward will only be **actively maintaining the cross-platform PnP PowerShell** and once we declare this module as GA we will retired the [PnP-PowerShell](https://github.com/pnp/pnp-powershell) library.
-
-| GitHub Actions | PS Gallery | 
-|-----------------|----------------|
-[![Actions Status](https://github.com/pnp/powershell/workflows/Build/badge.svg)](https://github.com/pnp/powershell/actions) | [![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/pnp.powershell)](https://www.powershellgallery.com/packages/PnP.PowerShell)
 
 # Installation using the [PowerShell Gallery](https://www.powershellgallery.com)
 
