@@ -15,5 +15,5 @@ $toc | Out-File "./dev/pages/cmdlets/toc.yml" -Force
 
 docfx build ./dev/pages/docfx.json
 
-Copy-Item -Path "./dev/pages/_site/*" -Destination "./gh-pages"
+Copy-Item -Path "./dev/pages/_site/*" -Destination "./gh-pages" -Force -Recurse
 
