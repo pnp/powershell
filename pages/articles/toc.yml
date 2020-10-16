@@ -1,0 +1,4 @@
+- name: Installation
+  href: installation.md
+- name: Building the Source
+  href: buildingsource.md
