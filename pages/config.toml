@@ -2,8 +2,9 @@ baseURL = "https://pnp.github.io/powershell"
 
 languageCode = "en-us"
 DefaultContentLanguage = "en"
-title = "PnP PowerShell"
-theme = "hugo-theme-techdoc"
+title = "PnP PowerShell for Microsoft 365"
+#theme = "hugo-theme-techdoc"
+theme = "ace-documentation"
 
 hasCJKLanguage = true
 metaDataFormat = "yaml"
@@ -13,20 +14,17 @@ defaultContentLanguageInSubdir= false
 enableMissingTranslationPlaceholders = false
 
 [params]
+    site_logo = "/powershell/images/pnp-powershell-white-300.png"
 
+    #SiteLogo = "images/parker-ms-1200.png"
     # Source Code repository section
-    description = "Microsoft 365 PnP PowerShell"
-    github_repository = "https://github.com/pnp/powershell"
+    description = "PnP PowerShell for Microsoft 365"
+    #github_repository = "https://github.com/pnp/powershell"
     #version = "0.9.4"
 
     # Documentation repository section
     # documentation repository (set edit link to documentation repository)
     # github_doc_repository = "https://github.com/pnp/powershell"
-
-    # Analytic section
-    #google_analytics_id = "" # Your Google Analytics tracking id
-    #tag_manager_container_id = "" # Your Google Tag Manager container id
-    #google_site_verification = "" # Your Google Site Verification for Search Console
 
     # Open Graph and Twitter Cards settings section
     # Open Graph settings for each page are set on the front matter.
@@ -43,10 +41,10 @@ enableMissingTranslationPlaceholders = false
 
     # Documentation Menu section
     # Menu style settings
-    menu_style = "open-menu" # "open-menu" or "slide-menu" or "" blank is as no sidebar
+    menu_style = "slide-menu" # "open-menu" or "slide-menu" or "" blank is as no sidebar
 
     # Date format
-    dateformat = "" # default "2 Jan 2006"
+    dateformat = "2006-01-02" # default "2 Jan 2006"
     # See the format reference https://gohugo.io/functions/format/#hugo-date-and-time-templating-reference
 
     # path name excluded from documentation menu
@@ -59,13 +57,6 @@ enableMissingTranslationPlaceholders = false
         "posts",
     ]
 
-    # Algolia site search section
-    # See https://www.algolia.com/doc/
-    algolia_search_enable = true
-    algolia_indexName = "hugo-demo-techdoc"
-    algolia_appId = "7W4SAN4PLK"
-    algolia_apiKey = "cbf12a63ff72d9c5dc0c10c195cf9128" # Search-Only API Key
-
 # Global menu section
 # See https://gohugo.io/content-management/menus/
 [menu]
@@ -73,11 +64,14 @@ enableMissingTranslationPlaceholders = false
         name = "Home"
         url = "/"
         weight = 1
-
+    [[menu.main]]
+        name = "GitHub"
+        url = "https://github.com/pnp/powershell"
+        weight = 2
     [[menu.main]]
         name = "Twitter"
         url = "https://twitter.com/pnppowershell"
-        weight = 2
+        weight = 3
 
 # Markup configure section
 # See https://gohugo.io/getting-started/configuration-markup/
@@ -91,28 +85,4 @@ enableMissingTranslationPlaceholders = false
         ordered = false
 
 [outputs]
-    home = ["HTML", "RSS", "Algolia"]
-
-# Algolia Search configure section
-[outputFormats.Algolia]
-    baseName = "algolia"
-    mediaType = "application/json"
-    isPlainText = true
-    notAlternative = true
-
-[params.algolia]
-    vars = [
-        "title",
-        "summary",
-        "content",
-        "date",
-        "publishdate",
-        "description",
-        "permalink",
-        "keywords",
-        "lastmod",
-    ]
-    params = [
-        "tags",
-        "categories",
-    ]
+    home = ["HTML", "RSS"]

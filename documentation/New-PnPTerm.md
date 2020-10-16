@@ -1,8 +1,10 @@
 ---
+applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version:
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/new-pnpterm
 schema: 2.0.0
+title: New-PnPTerm
 ---
 
 # New-PnPTerm

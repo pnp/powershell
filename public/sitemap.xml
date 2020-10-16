@@ -1,0 +1,2002 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/</loc>
+    <lastmod>2019-10-26T15:26:15+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpalert/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpapp/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpapplicationcustomizer/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpclientsidepage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpclientsidepagesection/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpclientsidetext/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpclientsidewebpart/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpcontenttype/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpcontenttypetodocumentset/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpcontenttypetolist/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpcustomaction/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpdatarowstoprovisioningtemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpdocumentset/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpeventreceiver/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpfield/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpfieldfromxml/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpfieldtocontenttype/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpfile/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpfiletoprovisioningtemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpfolder/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnphtmlpublishingpagelayout/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnphubsiteassociation/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnphubtohubassociation/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpindexedproperty/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpjavascriptblock/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpjavascriptlink/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnplistfolderstoprovisioningtemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnplistitem/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpmasterpage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpmicrosoft365groupmember/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpmicrosoft365grouptosite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpnavigationnode/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnporgassetslibrary/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnporgnewssite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnppublishingimagerendition/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnppublishingpage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnppublishingpagelayout/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnproledefinition/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpsiteclassification/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpsitecollectionadmin/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpsitecollectionappcatalog/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpsitedesign/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpsitedesigntask/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpsitescript/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpsitetemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpstoredcredential/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnptaxonomyfield/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpteamschannel/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpteamstab/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpteamsteam/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpteamsuser/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnptenantcdnorigin/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnptenantsequence/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnptenantsequencesite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnptenantsequencesubsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnptenanttheme/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnptermtoterm/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpusertogroup/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpview/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpwebhooksubscription/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpwebparttowebpartpage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpwebparttowikipage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/add-pnpwikipage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/approve-pnptenantserviceprincipalpermissionrequest/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/clear-pnpdefaultcolumnvalues/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/clear-pnplistitemasrecord/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/clear-pnpmicrosoft365groupmember/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/clear-pnpmicrosoft365groupowner/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/clear-pnprecyclebinitem/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/clear-pnptenantappcatalogurl/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/clear-pnptenantrecyclebinitem/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/connect-pnponline/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/convert-pnpfoldertoprovisioningtemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/convert-pnpprovisioningtemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/convertto-pnpclientsidepage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/copy-pnpfile/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/copy-pnpitemproxy/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/deny-pnptenantserviceprincipalpermissionrequest/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/disable-pnpfeature/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/disable-pnpinplacerecordsmanagementforsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/disable-pnppowershelltelemetry/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/disable-pnpsharingfornonownersofsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/disable-pnpsiteclassification/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/disable-pnptenantserviceprincipal/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/disconnect-pnponline/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/enable-pnpcommsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/enable-pnpfeature/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/enable-pnpinplacerecordsmanagementforsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/enable-pnppowershelltelemetry/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/enable-pnpsiteclassification/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/enable-pnptenantserviceprincipal/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/export-pnpclientsidepage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/export-pnpclientsidepagemapping/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/export-pnplisttoprovisioningtemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/export-pnptaxonomy/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/export-pnptermgrouptoxml/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/export-pnpuserinfo/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/export-pnpuserprofile/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/find-pnpfile/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpaaduser/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpaccesstoken/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpalert/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpapp/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpappauthaccesstoken/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpapperrors/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpappinfo/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpapplicationcustomizer/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpauditing/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpauthenticationrealm/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpavailableclientsidecomponents/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpavailablelanguage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpazurecertificate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpbrowseridlesignout/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpbuiltindesignpackagevisibility/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpclientsidecomponent/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpclientsidepage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpconnection/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpcontenttype/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpcontenttypepublishinghuburl/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpcontext/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpcustomaction/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpdefaultcolumnvalues/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpdeletedmicrosoft365group/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpdocumentsettemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpeventreceiver/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpexception/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpexternaluser/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpfeature/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpfield/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpfile/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpfileversion/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpfolder/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpfolderitem/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpfooter/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpgraphaccesstoken/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpgraphsubscription/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpgroup/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpgroupmembers/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpgrouppermissions/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnphidedefaultthemes/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnphomepage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnphomesite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnphubsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnphubsitechild/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpindexedpropertykeys/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpinplacerecordsmanagement/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpissitealiasavailable/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpjavascriptlink/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpknowledgehubsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnplabel/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnplist/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnplistinformationrightsmanagement/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnplistitem/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnplistrecorddeclaration/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpmanagementapiaccesstoken/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpmasterpage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpmicrosoft365group/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpmicrosoft365groupmembers/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpmicrosoft365groupowners/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpnavigationnode/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpoffice365currentservicestatus/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpoffice365historicalservicestatus/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpoffice365servicemessage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpoffice365services/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpofficemanagementapiaccesstoken/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnporgassetslibrary/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnporgnewssite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/request-pnppersonalsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnppowershelltelemetryenabled/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpproperty/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnppropertybag/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnppublishingimagerendition/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnprecyclebinitem/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnprequestaccessemails/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnproledefinition/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsearchconfiguration/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsearchcrawllog/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsearchsettings/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsharingfornonownersofsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsiteclassification/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsiteclosure/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsitecollectionadmin/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsitecollectionappcatalogs/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsitecollectiontermstore/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsitedesign/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsitedesignrights/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsitedesignrun/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsitedesignrunstatus/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsitedesigntask/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsitegroup/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsitepolicy/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsitescript/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsitescriptfromlist/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsitescriptfromweb/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsitesearchqueryresults/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpprovisioningtemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsiteuserinvitations/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpstorageentity/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpstoredcredential/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpstructuralnavigationcachesitestate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpstructuralnavigationcachewebstate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpsubwebs/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptaxonomyitem/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptaxonomysession/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpteamsapp/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpteamschannel/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpteamschannelmessage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpteamstab/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpteamsteam/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpteamsuser/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptenant/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptenantappcatalogurl/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptenantcdnenabled/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptenantcdnorigin/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptenantcdnpolicies/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptenantid/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptenantrecyclebinitem/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptenantsequence/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptenantsequencesite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptenantserviceprincipal/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptenantserviceprincipalpermissiongrants/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptenantserviceprincipalpermissionrequests/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptenantsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptenantsyncclientrestriction/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptenanttemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptenanttheme/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpterm/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptermgroup/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptermlabel/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptermset/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptheme/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnptimezoneid/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpunifiedauditlog/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpupabulkimportstatus/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpuser/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpuseronedrivequota/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpuserprofileproperty/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpview/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpweb/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpwebhooksubscriptions/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpwebpart/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpwebpartproperty/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpwebpartxml/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpwebtemplates/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/get-pnpwikipagecontent/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/getting-started/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/grant-pnphubsiterights/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/grant-pnpsitedesignrights/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/grant-pnptenantserviceprincipalpermission/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/import-pnptaxonomy/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/import-pnptermgroupfromxml/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/import-pnptermset/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/initialize-pnppowershellauthentication/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/install-pnpapp/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/install-pnpsolution/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/getting-started/updating/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/invoke-pnpquery/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/invoke-pnpsitedesign/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/invoke-pnpsiteswap/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/invoke-pnpsitetemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/invoke-pnpsprestmethod/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/invoke-pnptenanttemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/invoke-pnpwebaction/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/measure-pnplist/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/measure-pnpweb/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/move-pnpclientsidecomponent/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/move-pnpfile/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/move-pnpfolder/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/move-pnpitemproxy/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/move-pnplistitemtorecyclebin/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/move-pnprecyclebinitem/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpazurecertificate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpextensibilityhandlerobject/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpgraphsubscription/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpgroup/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnplist/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpmicrosoft365group/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnppersonalsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpsdnprovider/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpsitegroup/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpprovisioningtemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpprovisioningtemplatefromfolder/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpteamsapp/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpteamsteam/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnptenantsequence/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnptenantsequencecommunicationsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnptenantsequenceteamnogroupsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnptenantsequenceteamnogroupsubsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnptenantsequenceteamsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnptenantsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnptenanttemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpterm/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnptermgroup/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnptermlabel/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnptermset/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpupabulkimportjob/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpuser/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpweb/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/publish-pnpapp/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/read-pnpprovisioningtemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/read-pnptenanttemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/register-pnpappcatalogsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/register-pnphubsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpalert/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpapp/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpapplicationcustomizer/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpclientsidecomponent/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpclientsidepage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpcontenttype/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpcontenttypefromdocumentset/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpcontenttypefromlist/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpcustomaction/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpdeletedmicrosoft365group/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpdeletedunifiedgroup/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpeventreceiver/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpexternaluser/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpfield/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpfieldfromcontenttype/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpfile/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpfilefromprovisioningtemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpfileversion/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpfolder/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpgraphsubscription/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpgroup/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnphomesite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnphubsiteassociation/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnphubtohubassociation/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpindexedproperty/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpjavascriptlink/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpknowledgehubsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnplist/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnplistitem/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpmicrosoft365group/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpmicrosoft365groupmember/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpmicrosoft365groupowner/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpnavigationnode/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnporgassetslibrary/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnporgnewssite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnppropertybagvalue/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnppublishingimagerendition/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnproledefinition/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpsdnprovider/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpsearchconfiguration/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpsiteclassification/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpsitecollectionadmin/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpsitecollectionappcatalog/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpsitedesign/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpsitedesigntask/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpsitegroup/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpsitescript/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpsiteuserinvitations/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpstorageentity/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpstoredcredential/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnptaxonomyitem/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpteamsapp/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpteamschannel/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpteamstab/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpteamsteam/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpteamsuser/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnptenantcdnorigin/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnptenantsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnptenantsyncclientrestriction/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnptenanttheme/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpterm/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnptermgroup/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnptermlabel/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpuser/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpuserfromgroup/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpuserinfo/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpuserprofile/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpview/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpweb/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpwebhooksubscription/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpwebpart/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/remove-pnpwikipage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/rename-pnpfile/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/rename-pnpfolder/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/repair-pnpsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/request-pnpaccesstoken/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/request-pnpreindexlist/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/request-pnpreindexweb/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/reset-pnpfileversion/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/reset-pnplabel/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/reset-pnpmicrosoft365groupexpiration/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/reset-pnpuseronedrivequotatodefault/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/resolve-pnpfolder/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/restore-pnpdeletedmicrosoft365group/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/restore-pnpfileversion/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/restore-pnprecyclebinitem/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/restore-pnptenantrecyclebinitem/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/revoke-pnphubsiterights/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/revoke-pnpsitedesignrights/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/revoke-pnptenantserviceprincipalpermission/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/revoke-pnpusersession/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/save-pnpclientsidepageconversionlog/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/save-pnpprovisioningtemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/save-pnptenanttemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/send-pnpmail/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpapplicationcustomizer/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpappsideloading/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpauditing/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpavailablepagelayouts/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpbrowseridlesignout/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpbuiltindesignpackagevisibility/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpclientsidepage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpclientsidetext/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpclientsidewebpart/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpcontext/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpdefaultcolumnvalues/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpdefaultcontenttypetolist/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpdefaultpagelayout/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpdocumentsetfield/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpfield/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpfilecheckedin/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpfilecheckedout/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpfolderpermission/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpfooter/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpgraphsubscription/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpgroup/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpgrouppermissions/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnphidedefaultthemes/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnphomepage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnphomesite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnphubsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpindexedproperties/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpinplacerecordsmanagement/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpknowledgehubsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnplabel/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnplist/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnplistinformationrightsmanagement/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnplistitem/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnplistitemasrecord/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnplistitempermission/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnplistpermission/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnplistrecorddeclaration/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpmasterpage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpmicrosoft365group/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpminimaldownloadstrategy/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnppropertybagvalue/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnprequestaccessemails/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpsearchconfiguration/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpsearchsettings/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpsiteclosure/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpsitedesign/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpsitegroup/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpsitepolicy/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpsitescript/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpprovisioningtemplatemetadata/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpstorageentity/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpstructuralnavigationcachesitestate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpstructuralnavigationcachewebstate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnptaxonomyfieldvalue/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpteamschannel/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpteamstab/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpteamsteam/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpteamsteamarchivedstate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpteamsteampicture/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnptenant/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnptenantappcatalogurl/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnptenantcdnenabled/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnptenantcdnpolicy/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnptenantsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnptenantsyncclientrestriction/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpterm/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnptermgroup/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnptermset/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnptheme/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnptracelog/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpuseronedrivequota/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpuserprofileproperty/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpview/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpweb/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpwebhooksubscription/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpwebpartproperty/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpwebpermission/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpwebtheme/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/set-pnpwikipagecontent/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/submit-pnpsearchquery/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/submit-pnpteamschannelmessage/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/sync-pnpapptoteams/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/tags/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/test-pnplistitemisrecord/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/test-pnpoffice365groupaliasisused/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/test-pnpsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/test-pnptenanttemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/uninstall-pnpapp/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/unpublish-pnpapp/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/unregister-pnphubsite/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/update-pnpapp/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/update-pnpsiteclassification/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/update-pnpteamsapp/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/update-pnpusertype/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/getting-started/installation/</loc>
+  </url>
+  
+</urlset>
