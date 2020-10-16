@@ -101,7 +101,7 @@ Accept wildcard characters: False
 ```
 
 ### -OwnerUPN
-{{ Fill OwnerUPN Description }}
+The User Principal Name (email) of the owner of the channel.
 
 ```yaml
 Type: String
