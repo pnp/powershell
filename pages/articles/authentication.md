@@ -10,7 +10,7 @@ The easiest way to do this by using a built-in cmdlet:
 Register-PnPManagementShellAccess
 ```
 
-You'll notice that the cmdlet is not called `Register-PnPPowerShellAccess`. This is due that both PnP PowerShell and the CLI for Microsoft 365 make use of this Azure AD application. 
+You'll notice that the cmdlet is not called `Register-PnPPowerShellAccess`. This is because both PnP PowerShell and the CLI for Microsoft 365 make use of this Azure AD application. 
 
 > [!Important]
 > You need to run this cmdlet with an identity that has write access to the Azure AD.
