@@ -1,4 +1,6 @@
 - name: Articles
   href: articles/
-- name: Cmdlet Documentation
+- name: Cmdlets
   href: cmdlets/
+- name: GitHub
+  href: https://github.com/pnp/powershell
