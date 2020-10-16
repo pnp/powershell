@@ -10,5 +10,5 @@ If you run on Windows both the .NET Framework and the .NET Core version will be 
 
 If you run on MacOS or Linux only the .NET Core version will be build and installed. 
 
-> [!Important] 
+> [!NOTE] 
 > Unlike the older repository for the legacy version of PowerShell for Windows you do not need to have local clone of the PnP Framework repository anymore (we changed the PnP Sites Core library used under the hood to the PnP Framework repository, see for more info about that library here: https://github.com/pnp/pnpframework).

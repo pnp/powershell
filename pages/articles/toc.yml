@@ -1,4 +1,6 @@
 - name: Installation
   href: installation.md
+- name: Authentication
+  href: authentication.md
 - name: Building the Source
   href: buildingsource.md
