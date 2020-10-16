@@ -51,6 +51,10 @@
     "disableGitFeatures": false,
     "globalMetadata" : {
       "_appTitle": "PnP PowerShell",
+      "_gitContribute": {
+        "repo": "https://github.com/pnp/powershell",
+        "branch": "dev"
+      },
       "_appFaviconPath": "https://c.s-microsoft.com/favicon.ico?v2",
       "_description":"PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.",
       "_appLogoPath": "images/logo.svg",
