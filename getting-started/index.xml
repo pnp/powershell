@@ -11,12 +11,27 @@
     
     
     <item>
-      <title></title>
+      <title>Installing PnP PowerShell</title>
+      <link>https://pnp.github.io/powershell/getting-started/updating/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://pnp.github.io/powershell/getting-started/updating/</guid>
+      <description>Open PowerShell, either the legacy Windows PowerShell (the one with the blue background) or install PowerShell Core on either Windows/MacOS/Linux: https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7
+Open your preferred PowerShell and enter
+Install-Module -Name &amp;#34;PnP.PowerShell&amp;#34; -AllowPrerelease Using PnP PowerShell in the Azure Cloud Shell Open your Azure Cloud Shell select &amp;ldquo;PowerShell&amp;rdquo; as your shell. Enter:
+Install-Module -Name &amp;#34;PnP.PowerShell&amp;#34; -AllowPrerelease This is a one time action. The Azure Cloud Shell will remember your installation.</description>
+    </item>
+    
+    <item>
+      <title>Updating PnP PowerShell</title>
       <link>https://pnp.github.io/powershell/getting-started/installation/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://pnp.github.io/powershell/getting-started/installation/</guid>
-      <description>bla </description>
+      <description>When using Connect-PnPOnline we will check if a new version is available and notify you of that. Notice we will only notify you if a new major or minor version is available. We will not notify you if a new nightly build is available.
+To update the current installation:
+Update-Module -Name &amp;#34;PnP.PowerShell&amp;#34; -AllowPrerelease You can check the currently installed version of PnP PowerShell with the following command:
+Get-Module -Name &amp;#34;PnP.PowerShell&amp;#34; -ListAvailable | Select-Object Name, Version | Sort-Object Version -Descending </description>
     </item>
     
   </channel>

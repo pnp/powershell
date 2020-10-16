@@ -11,23 +11,6 @@
     
     
     <item>
-      <title></title>
-      <link>https://pnp.github.io/powershell/cmdlets/new-pnpterm/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://pnp.github.io/powershell/cmdlets/new-pnpterm/</guid>
-      <description>New-PnPTerm
-#SYNOPSIS Creates a taxonomy term
-#SYNTAX
-New-PnPTerm -Name &amp;lt;String&amp;gt; [-Id &amp;lt;Guid&amp;gt;] [-Lcid &amp;lt;Int32&amp;gt;] [-TermSet] &amp;lt;TaxonomyTermSetPipeBind&amp;gt;-TermGroup &amp;lt;TaxonomyTermGroupPipeBind&amp;gt; [-Description &amp;lt;String&amp;gt;] [-CustomProperties &amp;lt;Hashtable&amp;gt;][-LocalCustomProperties &amp;lt;Hashtable&amp;gt;] [-TermStore &amp;lt;TaxonomyTermStorePipeBind&amp;gt;][&amp;lt;CommonParameters&amp;gt;]#DESCRIPTION This cmdlet adds a new taxonony term to a given termset.
-#EXAMPLES
-##Example 1
-New-PnPTerm -TermSet &amp;#34;Departments&amp;#34; -TermGroup &amp;#34;Corporate&amp;#34; -Name &amp;#34;Finance&amp;#34; Creates a new taxonomy term named &amp;ldquo;Finance&amp;rdquo; in the termset Departments which is located in the &amp;ldquo;Corporate&amp;rdquo; termgroup
-##Example 2
-New-PnPTerm -TermSet &amp;#34;Departments&amp;#34; -TermGroup &amp;#34;Corporate&amp;#34; -Name &amp;#34;Finance&amp;#34; -CustomProperties @{&amp;#34;IsCorporate&amp;#34;=&amp;#34;True&amp;#34;} Creates a new taxonomy term named &amp;ldquo;Finance&amp;rdquo; in the termset Departments which is located in the &amp;ldquo;Corporate&amp;rdquo; termgroup and sets a custom property on the termset.</description>
-    </item>
-    
-    <item>
       <title>Add-PnPAlert</title>
       <link>https://pnp.github.io/powershell/cmdlets/add-pnpalert/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -3452,6 +3435,18 @@ SYNTAX New-PnPTenantSite -Title &amp;lt;String&amp;gt; -Url &amp;lt;String&amp;g
 SYNTAX New-PnPTenantTemplate [-Author &amp;lt;String&amp;gt;] [-Description &amp;lt;String&amp;gt;] [-DisplayName &amp;lt;String&amp;gt;] [-Generator &amp;lt;String&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 $template = New-PnPTenantTemplate Creates a new instance of a tenant template object.
 PARAMETERS -Author Type: String Parameter Sets: (All) Required: False Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False -Confirm Prompts you for confirmation before running the cmdlet.
 Type: SwitchParameter Parameter Sets: (All) Aliases: cf Required: False Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False -Description Type: String Parameter Sets: (All) Required: False Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False -DisplayName Type: String Parameter Sets: (All) Required: False Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False -Generator Type: String Parameter Sets: (All) Required: False Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False -WhatIf Shows what would happen if the cmdlet runs.</description>
+    </item>
+    
+    <item>
+      <title>New-PnPTerm</title>
+      <link>https://pnp.github.io/powershell/cmdlets/new-pnpterm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://pnp.github.io/powershell/cmdlets/new-pnpterm/</guid>
+      <description>SYNOPSIS Creates a taxonomy term
+SYNTAX New-PnPTerm -Name &amp;lt;String&amp;gt; [-Id &amp;lt;Guid&amp;gt;] [-Lcid &amp;lt;Int32&amp;gt;] [-TermSet] &amp;lt;TaxonomyTermSetPipeBind&amp;gt;-TermGroup &amp;lt;TaxonomyTermGroupPipeBind&amp;gt; [-Description &amp;lt;String&amp;gt;] [-CustomProperties &amp;lt;Hashtable&amp;gt;][-LocalCustomProperties &amp;lt;Hashtable&amp;gt;] [-TermStore &amp;lt;TaxonomyTermStorePipeBind&amp;gt;][&amp;lt;CommonParameters&amp;gt;]DESCRIPTION This cmdlet adds a new taxonony term to a given termset.
+EXAMPLES Example 1 New-PnPTerm -TermSet &amp;#34;Departments&amp;#34; -TermGroup &amp;#34;Corporate&amp;#34; -Name &amp;#34;Finance&amp;#34; Creates a new taxonomy term named &amp;ldquo;Finance&amp;rdquo; in the termset Departments which is located in the &amp;ldquo;Corporate&amp;rdquo; termgroup
+Example 2 New-PnPTerm -TermSet &amp;#34;Departments&amp;#34; -TermGroup &amp;#34;Corporate&amp;#34; -Name &amp;#34;Finance&amp;#34; -CustomProperties @{&amp;#34;IsCorporate&amp;#34;=&amp;#34;True&amp;#34;} Creates a new taxonomy term named &amp;ldquo;Finance&amp;rdquo; in the termset Departments which is located in the &amp;ldquo;Corporate&amp;rdquo; termgroup and sets a custom property on the termset.</description>
     </item>
     
     <item>

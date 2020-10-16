@@ -3,8 +3,8 @@
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>PnP PowerShell</title>
-<meta name="description" content="Microsoft 365 PnP PowerShell">
+<title>Updating PnP PowerShell - PnP PowerShell</title>
+<meta name="description" content="PnP PowerShell for Microsoft 365">
 <meta name="generator" content="Hugo 0.74.3" />
 <link href="https://pnp.github.io/powershell/index.xml" rel="alternate" type="application/rss+xml">
 <link rel="canonical" href="https://pnp.github.io/powershell/getting-started/installation/">
@@ -17,8 +17,11 @@
 <script src="https://pnp.github.io/powershell/js/bundle.js"></script><style>
 :root {--custom-background-color: #2E7FBE;}
 </style>
-<meta property="og:title" content="" />
-<meta property="og:description" content="bla " />
+<meta property="og:title" content="Updating PnP PowerShell" />
+<meta property="og:description" content="When using Connect-PnPOnline we will check if a new version is available and notify you of that. Notice we will only notify you if a new major or minor version is available. We will not notify you if a new nightly build is available.
+To update the current installation:
+Update-Module -Name &#34;PnP.PowerShell&#34; -AllowPrerelease You can check the currently installed version of PnP PowerShell with the following command:
+Get-Module -Name &#34;PnP.PowerShell&#34; -ListAvailable | Select-Object Name, Version | Sort-Object Version -Descending " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://pnp.github.io/powershell/getting-started/installation/" />
 <meta property="og:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
@@ -26,12 +29,18 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
-<meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="bla "/>
-<meta itemprop="name" content="">
-<meta itemprop="description" content="bla ">
+<meta name="twitter:title" content="Updating PnP PowerShell"/>
+<meta name="twitter:description" content="When using Connect-PnPOnline we will check if a new version is available and notify you of that. Notice we will only notify you if a new major or minor version is available. We will not notify you if a new nightly build is available.
+To update the current installation:
+Update-Module -Name &#34;PnP.PowerShell&#34; -AllowPrerelease You can check the currently installed version of PnP PowerShell with the following command:
+Get-Module -Name &#34;PnP.PowerShell&#34; -ListAvailable | Select-Object Name, Version | Sort-Object Version -Descending "/>
+<meta itemprop="name" content="Updating PnP PowerShell">
+<meta itemprop="description" content="When using Connect-PnPOnline we will check if a new version is available and notify you of that. Notice we will only notify you if a new major or minor version is available. We will not notify you if a new nightly build is available.
+To update the current installation:
+Update-Module -Name &#34;PnP.PowerShell&#34; -AllowPrerelease You can check the currently installed version of PnP PowerShell with the following command:
+Get-Module -Name &#34;PnP.PowerShell&#34; -ListAvailable | Select-Object Name, Version | Sort-Object Version -Descending ">
 
-<meta itemprop="wordCount" content="1">
+<meta itemprop="wordCount" content="79">
 <meta itemprop="image" content="https://pnp.github.io/powershell/images/parker-ms-1200.png"/>
 
 
@@ -39,37 +48,40 @@
 <meta itemprop="keywords" content="" />
 </head>
 <body><div class="container"><header>
-<h1>PnP PowerShell</h1><a href="https://github.com/pnp/powershell" class="github"><i class="fab fa-github"></i></a>
-<p class="description">Microsoft 365 PnP PowerShell</p>
+<h1>PnP PowerShell</h1>
+<p class="description">PnP PowerShell for Microsoft 365</p>
 
 </header>
 <div class="global-menu">
 <nav>
 <ul>
 <li><a href="/powershell/">Home</a></li>
+<li><a href="https://github.com/pnp/powershell">GitHub</a></li>
 <li><a href="https://twitter.com/pnppowershell">Twitter</a></li></ul>
 </nav>
 </div>
 <div class="content-container">
-<main><h1></h1>
-<h1 id="bla">bla</h1>
-<div class="edit-meta">
+<main><h1>Updating PnP PowerShell</h1>
+<p>When using <code>Connect-PnPOnline</code> we will check if a new version is available and notify you of that. Notice we will only notify you if a new major or minor version is available. We will not notify you if a new nightly build is available.</p>
+<p>To update the current installation:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell">Update-Module -Name <span style="color:#e6db74">&#34;PnP.PowerShell&#34;</span> -AllowPrerelease
+</code></pre></div><p>You can check the currently installed version of PnP PowerShell with the following command:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell">Get-Module -Name <span style="color:#e6db74">&#34;PnP.PowerShell&#34;</span> -ListAvailable | Select-Object Name, Version | Sort-Object Version -Descending
+</code></pre></div><div class="edit-meta">
 
-<br></div><nav class="pagination"><a class="nav nav-prev" href="https://pnp.github.io/powershell/getting-started/" title="Getting Starteds"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Getting Starteds</a>
-<a class="nav nav-next" href="https://pnp.github.io/powershell/cmdlets/" title="Cmdlets">Next - Cmdlets <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-</nav><footer><p class="powered">Powered by <a href="https://gohugo.io">Hugo</a>. Theme by <a href="https://themes.gohugo.io/hugo-theme-techdoc/">TechDoc</a>. Designed by <a href="https://github.com/thingsym/hugo-theme-techdoc">Thingsym</a>.</p>
-</footer>
+<br></div><nav class="pagination"><a class="nav nav-prev" href="https://pnp.github.io/powershell/getting-started/updating/" title="Installing PnP PowerShell"><i class="fas fa-arrow-left" aria-hidden="true"></i> Prev - Installing PnP PowerShell</a>
+<a class="nav nav-next" href="https://pnp.github.io/powershell/getting-started/updating/" title="Installing PnP PowerShell">Next - Installing PnP PowerShell <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+</nav><footer></footer>
 </main>
 <div class="sidebar">
 
-<nav class="open-menu">
+<nav class="slide-menu">
 <ul>
 <li class=""><a href="https://pnp.github.io/powershell">Home</a></li>
 
-<li class=""><a href="https://pnp.github.io/powershell/cmdlets/">Cmdlets</a>
+<li class=" has-sub-menu"><a href="https://pnp.github.io/powershell/cmdlets/">Cmdlets<span class="mark closed">+</span></a>
   
 <ul class="sub-menu">
-<li class=""><a href="https://pnp.github.io/powershell/cmdlets/new-pnpterm/"></a></li>
 <li class=""><a href="https://pnp.github.io/powershell/cmdlets/add-pnpalert/">Add-PnPAlert</a></li>
 <li class=""><a href="https://pnp.github.io/powershell/cmdlets/add-pnpapp/">Add-PnPApp</a></li>
 <li class=""><a href="https://pnp.github.io/powershell/cmdlets/add-pnpapplicationcustomizer/">Add-PnPApplicationCustomizer</a></li>
@@ -361,6 +373,7 @@
 <li class=""><a href="https://pnp.github.io/powershell/cmdlets/new-pnptenantsequenceteamsite/">New-PnPTenantSequenceTeamSite</a></li>
 <li class=""><a href="https://pnp.github.io/powershell/cmdlets/new-pnptenantsite/">New-PnPTenantSite</a></li>
 <li class=""><a href="https://pnp.github.io/powershell/cmdlets/new-pnptenanttemplate/">New-PnPTenantTemplate</a></li>
+<li class=""><a href="https://pnp.github.io/powershell/cmdlets/new-pnpterm/">New-PnPTerm</a></li>
 <li class=""><a href="https://pnp.github.io/powershell/cmdlets/new-pnptermgroup/">New-PnPTermGroup</a></li>
 <li class=""><a href="https://pnp.github.io/powershell/cmdlets/new-pnptermlabel/">New-PnPTermLabel</a></li>
 <li class=""><a href="https://pnp.github.io/powershell/cmdlets/new-pnptermset/">New-PnPTermSet</a></li>
@@ -565,10 +578,11 @@
   
 </li>
 
-<li class="parent"><a href="https://pnp.github.io/powershell/getting-started/">Getting Starteds</a>
+<li class="parent has-sub-menu"><a href="https://pnp.github.io/powershell/getting-started/">Getting Starteds<span class="mark opened">-</span></a>
   
 <ul class="sub-menu">
-<li class="active"><a href="https://pnp.github.io/powershell/getting-started/installation/"></a></li>
+<li class=""><a href="https://pnp.github.io/powershell/getting-started/updating/">Installing PnP PowerShell</a></li>
+<li class="active"><a href="https://pnp.github.io/powershell/getting-started/installation/">Updating PnP PowerShell</a></li>
 </ul>
   
 </li>

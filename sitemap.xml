@@ -8,14 +8,6 @@
   </url>
   
   <url>
-    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpterm/</loc>
-  </url>
-  
-  <url>
-    <loc>https://pnp.github.io/powershell/getting-started/installation/</loc>
-  </url>
-  
-  <url>
     <loc>https://pnp.github.io/powershell/cmdlets/add-pnpalert/</loc>
   </url>
   
@@ -1048,6 +1040,10 @@
   </url>
   
   <url>
+    <loc>https://pnp.github.io/powershell/getting-started/updating/</loc>
+  </url>
+  
+  <url>
     <loc>https://pnp.github.io/powershell/cmdlets/invoke-pnpquery/</loc>
   </url>
   
@@ -1189,6 +1185,10 @@
   
   <url>
     <loc>https://pnp.github.io/powershell/cmdlets/new-pnptenanttemplate/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/cmdlets/new-pnpterm/</loc>
   </url>
   
   <url>
@@ -1993,6 +1993,10 @@
   
   <url>
     <loc>https://pnp.github.io/powershell/cmdlets/update-pnpusertype/</loc>
+  </url>
+  
+  <url>
+    <loc>https://pnp.github.io/powershell/getting-started/installation/</loc>
   </url>
   
 </urlset>

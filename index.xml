@@ -12,32 +12,6 @@
     
     
     <item>
-      <title></title>
-      <link>https://pnp.github.io/powershell/cmdlets/new-pnpterm/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://pnp.github.io/powershell/cmdlets/new-pnpterm/</guid>
-      <description>New-PnPTerm
-#SYNOPSIS Creates a taxonomy term
-#SYNTAX
-New-PnPTerm -Name &amp;lt;String&amp;gt; [-Id &amp;lt;Guid&amp;gt;] [-Lcid &amp;lt;Int32&amp;gt;] [-TermSet] &amp;lt;TaxonomyTermSetPipeBind&amp;gt;-TermGroup &amp;lt;TaxonomyTermGroupPipeBind&amp;gt; [-Description &amp;lt;String&amp;gt;] [-CustomProperties &amp;lt;Hashtable&amp;gt;][-LocalCustomProperties &amp;lt;Hashtable&amp;gt;] [-TermStore &amp;lt;TaxonomyTermStorePipeBind&amp;gt;][&amp;lt;CommonParameters&amp;gt;]#DESCRIPTION This cmdlet adds a new taxonony term to a given termset.
-#EXAMPLES
-##Example 1
-New-PnPTerm -TermSet &amp;#34;Departments&amp;#34; -TermGroup &amp;#34;Corporate&amp;#34; -Name &amp;#34;Finance&amp;#34; Creates a new taxonomy term named &amp;ldquo;Finance&amp;rdquo; in the termset Departments which is located in the &amp;ldquo;Corporate&amp;rdquo; termgroup
-##Example 2
-New-PnPTerm -TermSet &amp;#34;Departments&amp;#34; -TermGroup &amp;#34;Corporate&amp;#34; -Name &amp;#34;Finance&amp;#34; -CustomProperties @{&amp;#34;IsCorporate&amp;#34;=&amp;#34;True&amp;#34;} Creates a new taxonomy term named &amp;ldquo;Finance&amp;rdquo; in the termset Departments which is located in the &amp;ldquo;Corporate&amp;rdquo; termgroup and sets a custom property on the termset.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://pnp.github.io/powershell/getting-started/installation/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://pnp.github.io/powershell/getting-started/installation/</guid>
-      <description>bla </description>
-    </item>
-    
-    <item>
       <title>Add-PnPAlert</title>
       <link>https://pnp.github.io/powershell/cmdlets/add-pnpalert/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -3050,6 +3024,18 @@ SYNTAX Install-PnPSolution -PackageId &amp;lt;Guid&amp;gt; -SourceFilePath &amp;
     </item>
     
     <item>
+      <title>Installing PnP PowerShell</title>
+      <link>https://pnp.github.io/powershell/getting-started/updating/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://pnp.github.io/powershell/getting-started/updating/</guid>
+      <description>Open PowerShell, either the legacy Windows PowerShell (the one with the blue background) or install PowerShell Core on either Windows/MacOS/Linux: https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7
+Open your preferred PowerShell and enter
+Install-Module -Name &amp;#34;PnP.PowerShell&amp;#34; -AllowPrerelease Using PnP PowerShell in the Azure Cloud Shell Open your Azure Cloud Shell select &amp;ldquo;PowerShell&amp;rdquo; as your shell. Enter:
+Install-Module -Name &amp;#34;PnP.PowerShell&amp;#34; -AllowPrerelease This is a one time action. The Azure Cloud Shell will remember your installation.</description>
+    </item>
+    
+    <item>
       <title>Invoke-PnPQuery</title>
       <link>https://pnp.github.io/powershell/cmdlets/invoke-pnpquery/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -3462,6 +3448,18 @@ SYNTAX New-PnPTenantSite -Title &amp;lt;String&amp;gt; -Url &amp;lt;String&amp;g
 SYNTAX New-PnPTenantTemplate [-Author &amp;lt;String&amp;gt;] [-Description &amp;lt;String&amp;gt;] [-DisplayName &amp;lt;String&amp;gt;] [-Generator &amp;lt;String&amp;gt;] [&amp;lt;CommonParameters&amp;gt;] DESCRIPTION EXAMPLES EXAMPLE 1 $template = New-PnPTenantTemplate Creates a new instance of a tenant template object.
 PARAMETERS -Author Type: String Parameter Sets: (All) Required: False Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False -Confirm Prompts you for confirmation before running the cmdlet.
 Type: SwitchParameter Parameter Sets: (All) Aliases: cf Required: False Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False -Description Type: String Parameter Sets: (All) Required: False Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False -DisplayName Type: String Parameter Sets: (All) Required: False Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False -Generator Type: String Parameter Sets: (All) Required: False Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False -WhatIf Shows what would happen if the cmdlet runs.</description>
+    </item>
+    
+    <item>
+      <title>New-PnPTerm</title>
+      <link>https://pnp.github.io/powershell/cmdlets/new-pnpterm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://pnp.github.io/powershell/cmdlets/new-pnpterm/</guid>
+      <description>SYNOPSIS Creates a taxonomy term
+SYNTAX New-PnPTerm -Name &amp;lt;String&amp;gt; [-Id &amp;lt;Guid&amp;gt;] [-Lcid &amp;lt;Int32&amp;gt;] [-TermSet] &amp;lt;TaxonomyTermSetPipeBind&amp;gt;-TermGroup &amp;lt;TaxonomyTermGroupPipeBind&amp;gt; [-Description &amp;lt;String&amp;gt;] [-CustomProperties &amp;lt;Hashtable&amp;gt;][-LocalCustomProperties &amp;lt;Hashtable&amp;gt;] [-TermStore &amp;lt;TaxonomyTermStorePipeBind&amp;gt;][&amp;lt;CommonParameters&amp;gt;]DESCRIPTION This cmdlet adds a new taxonony term to a given termset.
+EXAMPLES Example 1 New-PnPTerm -TermSet &amp;#34;Departments&amp;#34; -TermGroup &amp;#34;Corporate&amp;#34; -Name &amp;#34;Finance&amp;#34; Creates a new taxonomy term named &amp;ldquo;Finance&amp;rdquo; in the termset Departments which is located in the &amp;ldquo;Corporate&amp;rdquo; termgroup
+Example 2 New-PnPTerm -TermSet &amp;#34;Departments&amp;#34; -TermGroup &amp;#34;Corporate&amp;#34; -Name &amp;#34;Finance&amp;#34; -CustomProperties @{&amp;#34;IsCorporate&amp;#34;=&amp;#34;True&amp;#34;} Creates a new taxonomy term named &amp;ldquo;Finance&amp;rdquo; in the termset Departments which is located in the &amp;ldquo;Corporate&amp;rdquo; termgroup and sets a custom property on the termset.</description>
     </item>
     
     <item>
@@ -5816,6 +5814,18 @@ PARAMETERS -ByPassPermissionCheck Allows the check for required permissions in t
       <description>SYNOPSIS Updates an available app from the app catalog
 SYNTAX Update-PnPUserType -LoginName &amp;lt;String&amp;gt; DESCRIPTION This cmdlet retrieves the UserType value of the specified user and updates the UserType across all SharePoint Online sites in the SharePoint Online tenant. This can be used, for example, to convert a Guest user to a standard (Member) user if the user&amp;rsquo;s UserType was previously updated in Azure AD.
 EXAMPLES EXAMPLE 1 Update-PnPUserType -LoginName jdoe@contoso.com Updates the jdoe@contoso.</description>
+    </item>
+    
+    <item>
+      <title>Updating PnP PowerShell</title>
+      <link>https://pnp.github.io/powershell/getting-started/installation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://pnp.github.io/powershell/getting-started/installation/</guid>
+      <description>When using Connect-PnPOnline we will check if a new version is available and notify you of that. Notice we will only notify you if a new major or minor version is available. We will not notify you if a new nightly build is available.
+To update the current installation:
+Update-Module -Name &amp;#34;PnP.PowerShell&amp;#34; -AllowPrerelease You can check the currently installed version of PnP PowerShell with the following command:
+Get-Module -Name &amp;#34;PnP.PowerShell&amp;#34; -ListAvailable | Select-Object Name, Version | Sort-Object Version -Descending </description>
     </item>
     
   </channel>
