@@ -1,9 +1,3 @@
-param (
-    [switch]
-    $CleanUp,
-    [switch]
-    $Push
-)
 # copy documentation to output folder
 Copy-Item -Path "./dev/documentation/*.md" -Destination "./dev/pages/cmdlets" -Force
 
