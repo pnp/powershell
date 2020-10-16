@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPWebPartProperty | PnP PowerShell </title>
+    <title>Authentication | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPWebPartProperty | PnP PowerShell ">
+    <meta name="title" content="Authentication | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -78,85 +78,46 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/powershell/blob/dev/pages/cmdlets/Get-PnPWebPartProperty.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/authentication.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="get-pnpwebpartproperty">Get-PnPWebPartProperty</h1>
+                    <h1 id="authentication">Authentication</h1>
 
-<h2 id="synopsis">SYNOPSIS</h2>
-<p>Returns a web part property</p>
-<h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPWebPartProperty -ServerRelativePageUrl &lt;String&gt; -Identity &lt;Guid&gt; [-Key &lt;String&gt;]
- [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<h2 id="setting-up-access">Setting up Access</h2>
+<p>PnP PowerShell allows you to authenticate with credentials to your tenant. However, due to changes in the underlying SDKs we require you first to register a Azure AD Application which will allow you to authenticate.</p>
+<p>The easiest way to do this by using a built-in cmdlet:</p>
+<pre><code class="lang-powershell">Register-PnPManagementShellAccess
 </code></pre>
-<h2 id="description">DESCRIPTION</h2>
-<h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPWebPartProperty -ServerRelativePageUrl /sites/demo/sitepages/home.aspx -Identity ccd2c98a-c9ae-483b-ae72-19992d583914
+<p>You'll notice that the cmdlet is not called <code>Register-PnPPowerShellAccess</code>. This is due that both PnP PowerShell and the CLI for Microsoft 365 make use of this Azure AD application.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>You need to run this cmdlet with an identity that has write access to the Azure AD.
+You are not creating a new application in the sense of something that runs in your Azure AD tenant. You're only adding a registration to your Azure AD, a so called 'consent' for people in your tenant to use that application. The access rights the application required are delegate only, so you will always have to provide credentials or another way of identifying the user actually using that application.</p>
+</div>
+<p>During execution of the cmdlet you will be talked through the consent flow. This means that a browser window will open, you will be asked to authenticate, and you will be asked to consent to a number of permissions. After this permissions has been granted a new entry will show up if you navigate to <code>Enterprise Applications</code> in your Azure AD. If you want to revoke the consent you can simply remove the entry from the Enterprise Applications.</p>
+<h2 id="authenticating-with-credentials">Authenticating with Credentials</h2>
+<p>Enter</p>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials (Get-Credential)
 </code></pre>
-<p>Returns all properties of the web part.</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPWebPartProperty -ServerRelativePageUrl /sites/demo/sitepages/home.aspx -Identity ccd2c98a-c9ae-483b-ae72-19992d583914 -Key &quot;Title&quot;
+<p>and you will be prompted for credentials.</p>
+<h2 id="authenticating-with-pre-stored-credentials-using-the-windows-credential-manager-windows-only">Authenticating with pre-stored credentials using the Windows Credential Manager (Windows only)</h2>
+<pre><code class="lang-powershell">Add-PnPStoreCredential -Name &quot;yourlabel&quot; -Username youruser@domain.com
 </code></pre>
-<p>Returns the title property of the web part.</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+<p>You will be prompted to provide a password. After that you can login using:</p>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials &quot;yourlabel&quot;
 </code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>The id of the web part</p>
-<pre><code class="lang-yaml">Type: Guid
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+<h2 id="authenticating-with-pre-stored-credentials-using-the-secrets-management-module-from-microsoft-multi-platform">Authenticating with pre-stored credentials using the Secrets Management Module from Microsoft (Multi-Platform)</h2>
+<pre><code class="lang-powershell">Install-Module -Name Microsoft.PowerShell.SecretManagement -AllowPrerelease
+Install-Module -Name Microsoft.PowerShell.SecretStore -AllowPrelease
+Set-SecretStoreConfiguration
+Set-Secret -Name &quot;yourlabel&quot; -Secret (Get-Credential)
 </code></pre>
-<h3 id="-key">-Key</h3>
-<p>Name of a single property to be returned</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+<p>This creates a new secret vault on your computer. You will be asked to provide a password to access the vault. If you access the vault you will be prompted for that password. In case you want to want to write automated scripts you will have to turn off this password prompt as follows:</p>
+<pre><code class="lang-powershell">Set-SecretStoreConfiguration -Authentication None
 </code></pre>
-<h3 id="-serverrelativepageurl">-ServerRelativePageUrl</h3>
-<p>Full server relative URL of the web part page, e.g. /sites/mysite/sitepages/home.aspx</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-Aliases: PageUrl
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+<p>For more information about these cmdlets, check out the github repositories: <a href="https://github.com/powershell/secretmanagement">https://github.com/powershell/secretmanagement</a> and <a href="https://github.com/powershell/secretstore">https://github.com/powershell/secretstore</a>.</p>
+<p>After you set up the vault and you added a credential</p>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials (Get-Secret -Name &quot;yourlabel&quot;)
 </code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
