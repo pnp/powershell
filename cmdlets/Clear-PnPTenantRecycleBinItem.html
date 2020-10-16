@@ -8,7 +8,7 @@
     <title>Clear-PnPTenantRecycleBinItem | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Clear-PnPTenantRecycleBinItem | PnP PowerShell ">
-    <meta name="generator" content="docfx 2.56.3.0">
+    <meta name="generator" content="docfx 2.51.0.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -95,11 +95,11 @@
 <p>The Clear-PnPTenantRecycleBinItem cmdlet allows a site collection that has been deleted and still exists in the tenant recycle bin to be permanently deleted from the recycle bin as well.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Clear-PnPTenantRecycleBinItem -Url https://tenant.sharepoint.com/sites/contoso
+<pre><code class="lang-powershell">Clear-PnPTenantRecycleBinItem -Url &quot;https://tenant.sharepoint.com/sites/contoso&quot;
 </code></pre>
 <p>This will permanently delete site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the tenant recycle bin</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Clear-PnPTenantRecycleBinItem -Url https://tenant.sharepoint.com/sites/contoso -Wait
+<pre><code class="lang-powershell">Clear-PnPTenantRecycleBinItem -Url &quot;https://tenant.sharepoint.com/sites/contoso&quot; -Wait
 </code></pre>
 <p>This will permanently delete site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the tenant recycle bin and will wait with executing further PowerShell commands until the operation has completed</p>
 <h2 id="parameters">PARAMETERS</h2>

@@ -8,7 +8,7 @@
     <title>Add-PnPOrgAssetsLibrary | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Add-PnPOrgAssetsLibrary | PnP PowerShell ">
-    <meta name="generator" content="docfx 2.56.3.0">
+    <meta name="generator" content="docfx 2.51.0.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -96,15 +96,15 @@
 <p>Adds a given document library as an organizational asset source in your Sharepoint Online Tenant. All organizational asset sources you add must reside in the same site collection. Document libraries specified as organizational asset must be enabled as an Office 365 CDN source, either as private or public. It may take some time before this change will be reflected in the webinterface.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl https://yourtenant.sharepoint.com/sites/branding/logos
+<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos&quot;
 </code></pre>
 <p>Adds the document library with the url &quot;logos&quot; located in the sitecollection at &quot;https://yourtenant.sharepoint.com/sites/branding&quot; as an organizational asset not specifying a thumbnail image for it and enabling the document library as a public Office 365 CDN source</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl https://yourtenant.sharepoint.com/sites/branding/logos -ThumbnailUrl https://yourtenant.sharepoint.com/sites/branding/logos/thumbnail.jpg
+<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos&quot; -ThumbnailUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos/thumbnail.jpg&quot;
 </code></pre>
 <p>Adds the document library with the url &quot;logos&quot; located in the sitecollection at &quot;https://yourtenant.sharepoint.com/sites/branding&quot; as an organizational asset specifying the thumbnail image &quot;thumbnail.jpg&quot; residing in the same document library for it and enabling the document library as a public Office 365 CDN source</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl https://yourtenant.sharepoint.com/sites/branding/logos -CdnType Private
+<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos&quot; -CdnType Private
 </code></pre>
 <p>Adds the document library with the url &quot;logos&quot; located in the sitecollection at &quot;https://yourtenant.sharepoint.com/sites/branding&quot; as an organizational asset not specifying a thumbnail image for it and enabling the document library as a private Office 365 CDN source</p>
 <h2 id="parameters">PARAMETERS</h2>

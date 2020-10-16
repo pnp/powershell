@@ -8,7 +8,7 @@
     <title>Get-PnPSiteScriptFromWeb | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Get-PnPSiteScriptFromWeb | PnP PowerShell ">
-    <meta name="generator" content="docfx 2.56.3.0">
+    <meta name="generator" content="docfx 2.51.0.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -102,15 +102,15 @@
 <p>This command allows a Site Script to be generated off of an existing site on your tenant. Connect to your SharePoint Online Admin site before executing this command.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url https://contoso.sharepoint.com/sites/teamsite -IncludeAll
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url &quot;https://contoso.sharepoint.com/sites/teamsite&quot; -IncludeAll
 </code></pre>
 <p>Returns the generated Site Script JSON containing all supported components from the site at the provided Url</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url https://contoso.sharepoint.com/sites/teamsite -IncludeAll -Lists &quot;Shared Documents&quot;,&quot;Lists\MyList&quot;
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url &quot;https://contoso.sharepoint.com/sites/teamsite&quot; -IncludeAll -Lists &quot;Shared Documents&quot;,&quot;Lists\MyList&quot;
 </code></pre>
 <p>Returns the generated Site Script JSON containing all supported components from the site at the provided Url including the lists &quot;Shared Documents&quot; and &quot;MyList&quot;</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url https://contoso.sharepoint.com/sites/teamsite -IncludeBranding -IncludeLinksToExportedItems
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url &quot;https://contoso.sharepoint.com/sites/teamsite&quot; -IncludeBranding -IncludeLinksToExportedItems
 </code></pre>
 <p>Returns the generated Site Script JSON containing the branding and navigation links from the site at the provided Url</p>
 <h2 id="parameters">PARAMETERS</h2>

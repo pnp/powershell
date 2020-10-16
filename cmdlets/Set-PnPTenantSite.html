@@ -8,7 +8,7 @@
     <title>Set-PnPTenantSite | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Set-PnPTenantSite | PnP PowerShell ">
-    <meta name="generator" content="docfx 2.56.3.0">
+    <meta name="generator" content="docfx 2.51.0.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -108,23 +108,23 @@
 <p>Allows settings of a site collection to be updated</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPTenantSite -Url https://contoso.sharepoint.com -Title &quot;Contoso Website&quot; -Sharing Disabled
+<pre><code class="lang-powershell">Set-PnPTenantSite -Url &quot;https://contoso.sharepoint.com&quot; -Title &quot;Contoso Website&quot; -Sharing Disabled
 </code></pre>
 <p>This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website' and disable sharing on this site collection.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPTenantSite -Url https://contoso.sharepoint.com -Title &quot;Contoso Website&quot; -StorageWarningLevel 8000 -StorageMaximumLevel 10000
+<pre><code class="lang-powershell">Set-PnPTenantSite -Url &quot;https://contoso.sharepoint.com&quot; -Title &quot;Contoso Website&quot; -StorageWarningLevel 8000 -StorageMaximumLevel 10000
 </code></pre>
 <p>This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website', set the storage warning level to 8GB and set the storage maximum level to 10GB.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -Owners &quot;user@contoso.onmicrosoft.com&quot;
+<pre><code class="lang-powershell">Set-PnPTenantSite -Url &quot;https://contoso.sharepoint.com/sites/sales&quot; -Owners &quot;user@contoso.onmicrosoft.com&quot;
 </code></pre>
 <p>This will add user@contoso.onmicrosoft.com as an additional site collection owner at 'https://contoso.sharepoint.com/sites/sales'.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -Owners @(&quot;user1@contoso.onmicrosoft.com&quot;, &quot;user2@contoso.onmicrosoft.com&quot;)
+<pre><code class="lang-powershell">Set-PnPTenantSite -Url &quot;https://contoso.sharepoint.com/sites/sales&quot; -Owners @(&quot;user1@contoso.onmicrosoft.com&quot;, &quot;user2@contoso.onmicrosoft.com&quot;)
 </code></pre>
 <p>This will add user1@contoso.onmicrosoft.com and user2@contoso.onmicrosoft.com as additional site collection owners at 'https://contoso.sharepoint.com/sites/sales'.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -NoScriptSite:$false
+<pre><code class="lang-powershell">Set-PnPTenantSite -Url &quot;https://contoso.sharepoint.com/sites/sales&quot; -NoScriptSite:$false
 </code></pre>
 <p>This will enable script support for the site 'https://contoso.sharepoint.com/sites/sales' if disabled.</p>
 <h2 id="parameters">PARAMETERS</h2>

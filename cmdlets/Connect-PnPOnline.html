@@ -8,7 +8,7 @@
     <title>Connect-PnPOnline | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Connect-PnPOnline | PnP PowerShell ">
-    <meta name="generator" content="docfx 2.56.3.0">
+    <meta name="generator" content="docfx 2.51.0.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -166,106 +166,67 @@
 <p>Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets. See <a href="https://github.com/pnp/PnP-PowerShell/wiki/Connect-options">https://github.com/pnp/PnP-PowerShell/wiki/Connect-options</a> for more information on the options to connect and the APIs you can access with them.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot;
 </code></pre>
 <p>Connect to SharePoint prompting for the username and password. When a generic credential is added to the Windows Credential Manager with <a href="https://contoso.sharepoint.com">https://contoso.sharepoint.com</a>, PowerShell will not prompt for username and password and use those stored credentials instead.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials (Get-Credential)
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -Credentials (Get-Credential)
 </code></pre>
 <p>Connect to SharePoint prompting for the username and password to use to authenticate</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url http://yourlocalserver -CurrentCredentials
-</code></pre>
-<p>Connect to SharePoint using the credentials of the current user logged in to the machine</p>
-<h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url http://yourlocalserver -Credentials 'O365Creds'
-</code></pre>
-<p>Connect to SharePoint using credentials from the Windows Credential Manager, as defined by the label 'O365Creds'</p>
-<h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url http://yourlocalserver -Credentials (Get-Credential) -UseAdfs
-</code></pre>
-<p>Connect to SharePoint through ADFS prompting for the username and password to authenticate with</p>
-<h3 id="example-6">EXAMPLE 6</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url http://yourlocalserver -UseAdfsCert
-</code></pre>
-<p>Connect to SharePoint through ADFS using client certificate allowing you to select the client certificate to use for authentication</p>
-<h3 id="example-7">EXAMPLE 7</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url http://yourlocalserver -UseAdfsCert -ClientCertificate (Get-ChildItem -Path Cert:\CurrentUser\My\3A16F907D2BFFF1C22F447E55429C16F8BD3AC6E)
-</code></pre>
-<p>Connect to SharePoint through ADFS using the client certificate with thumbprint 3A16F907D2BFFF1C22F447E55429C16F8BD3AC6E from the local machine certificate store for the current user</p>
-<h3 id="example-8">EXAMPLE 8</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url https://yourserver -Credentials (Get-Credential) -CreateDrive
-cd SPO:\\
-dir
-</code></pre>
-<p>This will prompt you for credentials and creates a context for the other PowerShell commands to use. It will also create a SPO:\ drive you can use to navigate around the site</p>
-<h3 id="example-9">EXAMPLE 9</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url https://yourserver -Credentials (Get-Credential) -AuthenticationMode FormsAuthentication
-</code></pre>
-<p>This will prompt you for credentials and creates a context for the other PowerShell commands to use. It assumes your server is configured for Forms Based Authentication (FBA)</p>
-<h3 id="example-10">EXAMPLE 10</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.de -ClientId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -ClientSecret a3f3faf33f3awf3a3sfs3f3ss3f4f4a3fawfas3ffsrrffssfd -AzureEnvironment Germany
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.de&quot; -ClientId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -ClientSecret $clientSecret -AzureEnvironment Germany
 </code></pre>
 <p>This will authenticate you to the German Azure environment using the German Azure endpoints for authentication</p>
-<h3 id="example-11">EXAMPLE 11</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -PnPManagementShell
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -PnPManagementShell
 </code></pre>
 <p>This will authenticate you using the PnP O365 Management Shell Multi-Tenant application. A browser window will have to be opened where you have to enter a code that is shown in your PowerShell window.</p>
-<h3 id="example-12">EXAMPLE 12</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -PnPManagementShell -LaunchBrowser
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -PnPManagementShell -LaunchBrowser
 </code></pre>
 <p>This will authenticate you using the PnP O365 Management Shell Multi-Tenant application. A browser window will automatically open and the code you need to enter will be automatically copied to your clipboard.</p>
-<h3 id="example-13">EXAMPLE 13</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -AccessToken $myaccesstoken
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -AccessToken $myaccesstoken
 </code></pre>
 <p>Connects using the provided access token</p>
-<h3 id="example-14">EXAMPLE 14</h3>
+<h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Scopes &quot;Mail.Read&quot;,&quot;Files.Read&quot;,&quot;ActivityFeed.Read&quot;
 </code></pre>
 <p>Connects to Azure Active Directory interactively and gets an OAuth 2.0 Access Token to consume the resources of the declared permission scopes. It will utilize the Azure Active Directory enterprise application named PnP Management Shell with application id 31359c7f-bd7e-475c-86db-fdb8c937548e registered by the PnP team. If you want to connect using your own Azure Active Directory application registration, use one of the Connect-PnPOnline cmdlets using a -ClientId attribute instead and pre-assign the required permissions/scopes/roles in your application registration in Azure Active Directory. The available permission scopes for Microsoft Graph are defined at the following URL: <a href="https://docs.microsoft.com/graph/permissions-reference">https://docs.microsoft.com/graph/permissions-reference</a> . If the requested scope(s) have been used with this connect cmdlet before, they will not be asked for consent again. You can request scopes from different APIs in one Connect, i.e. from Microsoft Graph and the Microsoft Office Management API. It will ask you to authenticate for each of the APIs you have listed scopes for.</p>
-<h3 id="example-15">EXAMPLE 15</h3>
+<h3 id="example-8">EXAMPLE 8</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Scopes &quot;Mail.Read&quot;,&quot;Files.Read&quot;,&quot;ActivityFeed.Read&quot; -Credentials (New-Object System.Management.Automation.PSCredential (&quot;johndoe@contoso.onmicrosoft.com&quot;, (ConvertTo-SecureString &quot;password&quot; -AsPlainText -Force)))
 </code></pre>
 <p>Connects to Azure Active Directory using delegated permissions and gets an OAuth 2.0 Access Token to consume the resources of the declared permission scopes. It will utilize the Azure Active Directory enterprise application named PnP Management Shell with application id 31359c7f-bd7e-475c-86db-fdb8c937548e registered by the PnP team. If you want to connect using your own Azure Active Directory application registration, use one of the Connect-PnPOnline cmdlets using a -ClientId attribute instead and pre-assign the required permissions/scopes/roles in your application registration in Azure Active Directory. The available permission scopes for Microsoft Graph are defined at the following URL: <a href="https://docs.microsoft.com/graph/permissions-reference">https://docs.microsoft.com/graph/permissions-reference</a> . If the requested scope(s) have been used with this connect cmdlet before, they will not be asked for consent again. You can request scopes from different APIs in one Connect, i.e. from Microsoft Graph and the Microsoft Office Management API. You must have logged on interactively with the same scopes at least once without using -Credentials to allow for the permission grant dialog to show and allow constent for the user account you would like to use. You can provide this consent by logging in once with Connect-PnPOnline -Url <tenanturl> -PnPManagementShell -LaunchBrowser, and provide consent. This is a one-time action. From that moment on you will be able to use the cmdlet as stated here.<p>
-<h3 id="example-16">EXAMPLE 16</h3>
-<pre><code class="lang-powershell">certutil.exe -csp 'Microsoft Enhanced RSA and AES Cryptographic Provider' -v -p 'password' -importpfx -user c:\HighTrust.pfx NoRoot
-Connect-PnPOnline -Url https://yourserver -ClientId &lt;id&gt; -HighTrustCertificate (Get-Item Cert:\CurrentUser\My\&lt;thumbprint&gt;)
-</code></pre>
-<p>Connect to an on-premises SharePoint environment using a high trust certificate, stored in the Personal certificate store of the current user.</p>
-<h3 id="example-17">EXAMPLE 17</h3>
+<h3 id="example-9">EXAMPLE 9</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -ClientId '&lt;id&gt;' -ClientSecret '&lt;secret&gt;' -AADDomain 'contoso.onmicrosoft.com'
 </code></pre>
 <p>Connects to the Microsoft Graph API using application permissions via an app's declared permission scopes. See <a href="https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/Graph.ConnectUsingAppPermissions">https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/Graph.ConnectUsingAppPermissions</a> for a sample on how to get started.</p>
-<h3 id="example-18">EXAMPLE 18</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url https://yourserver -ClientId 763d5e60-b57e-426e-8e87-b7258f7f8188 -HighTrustCertificatePath c:\HighTrust.pfx -HighTrustCertificatePassword 'password' -HighTrustCertificateIssuerId 6b9534d8-c2c1-49d6-9f4b-cd415620bca8
-</code></pre>
-<p>Connect to an on-premises SharePoint environment using a high trust certificate stored in a .PFX file.</p>
-<h3 id="example-19">EXAMPLE 19</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -ClientId '&lt;id&gt;' -Tenant 'contoso.onmicrosoft.com' -CertificatePath c:\absolute-path\to\pnp.pfx -CertificatePassword &lt;if needed&gt;
+<h3 id="example-10">EXAMPLE 10</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId '&lt;id&gt;' -Tenant 'contoso.onmicrosoft.com' -CertificatePath c:\absolute-path\to\pnp.pfx -CertificatePassword &lt;if needed&gt;
 </code></pre>
 <p>Connects to SharePoint using app-only tokens via an app's declared permission scopes. See <a href="https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions">https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions</a> for a sample on how to get started.</p>
-<h3 id="example-20">EXAMPLE 20</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -ClientId &lt;id&gt; -CertificatePath 'c:\mycertificate.pfx' -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url https://contoso.sharepoint.com -Tenant 'contoso.onmicrosoft.com'
+<h3 id="example-11">EXAMPLE 11</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -ClientId &lt;id&gt; -CertificatePath 'c:\mycertificate.pfx' -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url &quot;https://contoso.sharepoint.com&quot; -Tenant 'contoso.onmicrosoft.com'
 </code></pre>
 <p>Connects using an Azure Active Directory registered application using a locally available certificate containing a private key. See <a href="https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread">https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread</a> for a sample on how to get started.</p>
-<h3 id="example-21">EXAMPLE 21</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -ClientId '&lt;id&gt;' -Tenant 'contoso.onmicrosoft.com' -Thumbprint 34CFAA860E5FB8C44335A38A097C1E41EEA206AA
+<h3 id="example-12">EXAMPLE 12</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId '&lt;id&gt;' -Tenant 'contoso.onmicrosoft.com' -Thumbprint 34CFAA860E5FB8C44335A38A097C1E41EEA206AA
 </code></pre>
 <p>Connects to SharePoint using app-only tokens via an app's declared permission scopes. See <a href="https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions">https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions</a> for a sample on how to get started. Ensure you have imported the private key certificate, typically the .pfx file, into the Windows Certificate Store for the certificate with the provided thumbprint.</p>
-<h3 id="example-22">EXAMPLE 22</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -ClientId &lt;id&gt; -CertificateBase64Encoded 'xxxx' -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url https://contoso.sharepoint.com -Tenant 'contoso.onmicrosoft.com'
+<h3 id="example-13">EXAMPLE 13</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -ClientId &lt;id&gt; -CertificateBase64Encoded 'xxxx' -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url &quot;https://contoso.sharepoint.com&quot; -Tenant 'contoso.onmicrosoft.com'
 </code></pre>
 <p>Connects using an Azure Active Directory registered application using a certificate containing a private key encoded in base 64 such as received in an Azure Function when using Azure KeyVault. See <a href="https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread">https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread</a> for a sample on how to get started.</p>
-<h3 id="example-23">EXAMPLE 23</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -ClientId '&lt;id&gt;' -Tenant 'contoso.onmicrosoft.com' -PEMCertificate &lt;PEM string&gt; -PEMPrivateKey &lt;PEM string&gt; -CertificatePassword &lt;if needed&gt;
+<h3 id="example-14">EXAMPLE 14</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId '&lt;id&gt;' -Tenant 'contoso.onmicrosoft.com' -PEMCertificate &lt;PEM string&gt; -PEMPrivateKey &lt;PEM string&gt; -CertificatePassword &lt;if needed&gt;
 </code></pre>
 <p>Connects to SharePoint using app-only tokens via an app's declared permission scopes. See <a href="https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions">https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions</a> for a sample on how to get started.</p>
-<h3 id="example-24">EXAMPLE 24</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -ClientId &lt;id&gt; -Certificate $cert -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url https://contoso.sharepoint.com -Tenant 'contoso.onmicrosoft.com'
+<h3 id="example-15">EXAMPLE 15</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -ClientId &lt;id&gt; -Certificate $cert -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url &quot;https://contoso.sharepoint.com&quot; -Tenant 'contoso.onmicrosoft.com'
 </code></pre>
 <p>Connects using an Azure Active Directory registered application using a certificate instance containing a private key. See <a href="https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread">https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread</a> for a sample on how to get started.</p>
-<h3 id="example-25">EXAMPLE 25</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -ClientId '&lt;id&gt;' -Tenant 'contoso.onmicrosoft.com' -Certificate &lt;X509Certificate2&gt;
+<h3 id="example-16">EXAMPLE 16</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId '&lt;id&gt;' -Tenant 'contoso.onmicrosoft.com' -Certificate &lt;X509Certificate2&gt;
 </code></pre>
 <p>Connects to SharePoint using app-only auth in combination with a certificate. See <a href="https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread#using-this-principal-in-your-powershell-script-using-the-pnp-sites-core-library">https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread#using-this-principal-in-your-powershell-script-using-the-pnp-sites-core-library</a> for a sample on how to get started.</p>
 <h2 id="parameters">PARAMETERS</h2>

@@ -8,7 +8,7 @@
     <title>Set-PnPSiteGroup | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Set-PnPSiteGroup | PnP PowerShell ">
-    <meta name="generator" content="docfx 2.56.3.0">
+    <meta name="generator" content="docfx 2.51.0.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -92,11 +92,11 @@
 <p>For permissions and the most current information about Windows PowerShell for SharePoint Online, see the online documentation at <a href="https://docs.microsoft.com/powershell/sharepoint/sharepoint-online/introduction-sharepoint-online-management-shell?view=sharepoint-ps">Intro to SharePoint Online Management Shell</a>.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPSiteGroup -Site https://contoso.sharepoint.com/sites/siteA -Identity &quot;ProjectViewers&quot; -PermissionLevelsToRemove &quot;Full Control&quot; -PermissionLevelsToAdd &quot;View Only&quot;
+<pre><code class="lang-powershell">Set-PnPSiteGroup -Site &quot;https://contoso.sharepoint.com/sites/siteA&quot; -Identity &quot;ProjectViewers&quot; -PermissionLevelsToRemove &quot;Full Control&quot; -PermissionLevelsToAdd &quot;View Only&quot;
 </code></pre>
 <p>Example 1 changes permission level of the ProjectViewers group inside site collection <a href="https://contoso.sharepoint.com/sites/siteA">https://contoso.sharepoint.com/sites/siteA</a> from Full Control to View Only.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPSiteGroup -Site https://contoso.sharepoint.com -Identity &quot;ProjectViewers&quot; -Owner user@domain.com
+<pre><code class="lang-powershell">Set-PnPSiteGroup -Site &quot;https://contoso.sharepoint.com| -Identity &quot;ProjectViewers&quot; -Owner user@domain.com
 </code></pre>
 <p>Example 2 sets user@domain.com as the owner of the ProjectViewers group.</p>
 <h2 id="parameters">PARAMETERS</h2>

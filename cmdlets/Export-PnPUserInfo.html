@@ -8,7 +8,7 @@
     <title>Export-PnPUserInfo | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Export-PnPUserInfo | PnP PowerShell ">
-    <meta name="generator" content="docfx 2.56.3.0">
+    <meta name="generator" content="docfx 2.51.0.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -95,11 +95,11 @@
 <p>Export user information from the site user information list. If the Site parameter has not been specified, the current connect to site will be used.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Export-PnPUserInfo -LoginName user@domain.com -Site https://yoursite.sharepoint.com/sites/team
+<pre><code class="lang-powershell">Export-PnPUserInfo -LoginName user@domain.com -Site &quot;https://yoursite.sharepoint.com/sites/team&quot;
 </code></pre>
 <p>This exports user data with the email address user@domain.com from the site collection specified.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Export-PnPUserInfo -LoginName user@domain.com -Site https://yoursite.sharepoint.com/sites/team | ConvertTo-Csv | Out-File MyFile.csv
+<pre><code class="lang-powershell">Export-PnPUserInfo -LoginName user@domain.com -Site &quot;https://yoursite.sharepoint.com/sites/team&quot; | ConvertTo-Csv | Out-File MyFile.csv
 </code></pre>
 <p>This exports user data with the email address user@domain.com from the site collection specified, converts it to a CSV format and writes the result to the file MyFile.csv.</p>
 <h2 id="parameters">PARAMETERS</h2>

@@ -8,7 +8,7 @@
     <title>Request-PnPAccessToken | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Request-PnPAccessToken | PnP PowerShell ">
-    <meta name="generator" content="docfx 2.56.3.0">
+    <meta name="generator" content="docfx 2.51.0.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -109,7 +109,7 @@
 </code></pre>
 <p>Returns the access token using the specified client id and the specified scopes</p>
 <h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">$token = Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2 -Resource https://contoso.sharepoint.com -Credentials (Get-Credential) -TenantUrl https://contoso.sharepoint.com
+<pre><code class="lang-powershell">$token = Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2 -Resource &quot;https://contoso.sharepoint.com&quot; -Credentials (Get-Credential) -TenantUrl &quot;https://contoso.sharepoint.com&quot;
     Connect-PnPOnline -AccessToken $token
 </code></pre>
 <p>Returns the access token using the specified client id and the specified scopes while using the credentials and tenanturl specified to authentication against Azure AD</p>

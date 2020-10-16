@@ -8,7 +8,7 @@
     <title>Remove-PnPTenantSite | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Remove-PnPTenantSite | PnP PowerShell ">
-    <meta name="generator" content="docfx 2.56.3.0">
+    <meta name="generator" content="docfx 2.51.0.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -96,15 +96,15 @@
 <p>Removes a site collection which is listed in your tenant administration site.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso
+<pre><code class="lang-powershell">Remove-PnPTenantSite -Url &quot;https://tenant.sharepoint.com/sites/contoso&quot;
 </code></pre>
 <p>This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso'  and put it in the recycle bin.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin
+<pre><code class="lang-powershell">Remove-PnPTenantSite -Url &quot;https://tenant.sharepoint.com/sites/contoso&quot; -Force -SkipRecycleBin
 </code></pre>
 <p>This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' with force and it will skip the recycle bin.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -FromRecycleBin
+<pre><code class="lang-powershell">Remove-PnPTenantSite -Url &quot;https://tenant.sharepoint.com/sites/contoso&quot; -FromRecycleBin
 </code></pre>
 <p>This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin.</p>
 <h2 id="parameters">PARAMETERS</h2>

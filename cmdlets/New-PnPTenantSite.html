@@ -8,7 +8,7 @@
     <title>New-PnPTenantSite | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="New-PnPTenantSite | PnP PowerShell ">
-    <meta name="generator" content="docfx 2.56.3.0">
+    <meta name="generator" content="docfx 2.51.0.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -99,7 +99,7 @@
 Online site collection fails if a deleted site with the same URL exists in the Recycle Bin. If you want to use this command for an on-premises farm, please refer to <a href="http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx">http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx</a></p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">New-PnPTenantSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Owner user@example.org -TimeZone 4 -Template STS#0
+<pre><code class="lang-powershell">New-PnPTenantSite -Title Contoso -Url &quot;https://tenant.sharepoint.com/sites/contoso&quot; -Owner user@example.org -TimeZone 4 -Template STS#0
 </code></pre>
 <p>This will add a site collection with the title 'Contoso', the url 'https://tenant.sharepoint.com/sites/contoso', the timezone 'UTC+01:00',the owner 'user@example.org' and the template used will be STS#0, a TeamSite</p>
 <h3 id="example-2">EXAMPLE 2</h3>
