@@ -1,0 +1,415 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Set-PnPTeamsTeam | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Set-PnPTeamsTeam | PnP PowerShell ">
+    <meta name="generator" content="docfx 2.51.0.0">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+                    <h1 id="set-pnpteamsteam">Set-PnPTeamsTeam</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: Group.ReadWrite.All</li>
+</ul>
+<p>Updates an existing Team.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code>Set-PnPTeamsTeam -Identity &lt;TeamsTeamPipeBind&gt; [-DisplayName &lt;String&gt;] [-Description &lt;String&gt;]
+ [-Visibility &lt;TeamVisibility&gt;] [-AllowAddRemoveApps &lt;Boolean&gt;] [-AllowChannelMentions &lt;Boolean&gt;]
+ [-AllowCreateUpdateChannels &lt;Boolean&gt;] [-AllowCreateUpdateRemoveConnectors &lt;Boolean&gt;]
+ [-AllowCreateUpdateRemoveTabs &lt;Boolean&gt;] [-AllowCustomMemes &lt;Boolean&gt;] [-AllowDeleteChannels &lt;Boolean&gt;]
+ [-AllowGiphy &lt;Boolean&gt;] [-AllowGuestCreateUpdateChannels &lt;Boolean&gt;] [-AllowGuestDeleteChannels &lt;Boolean&gt;]
+ [-AllowOwnerDeleteMessages &lt;Boolean&gt;] [-AllowStickersAndMemes &lt;Boolean&gt;] [-AllowTeamMentions &lt;Boolean&gt;]
+ [-AllowUserDeleteMessages &lt;Boolean&gt;] [-AllowUserEditMessages &lt;Boolean&gt;]
+ [-GiphyContentRating &lt;TeamGiphyContentRating&gt;] [-ShowInTeamsSearchAndSuggestions &lt;Boolean&gt;]
+ [-Classification &lt;String&gt;] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Set-PnPTeamsChannel -Team &quot;MyTeam&quot; -DisplayName &quot;My Team&quot;
+</code></pre>
+<p>Updates the team called 'MyTeam' to have the display name set to 'My Team'</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-allowaddremoveapps">-AllowAddRemoveApps</h3>
+<p>Boolean value that determines whether or not members (not only owners) are allowed to add apps to the team.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowchannelmentions">-AllowChannelMentions</h3>
+<p>Boolean value that determines whether or not channels in the team can be @ mentioned so that all users who follow the channel are notified.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowcreateupdatechannels">-AllowCreateUpdateChannels</h3>
+<p>Setting that determines whether or not members (and not just owners) are allowed to create channels.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowcreateupdateremoveconnectors">-AllowCreateUpdateRemoveConnectors</h3>
+<p>Setting that determines whether or not members (and not only owners) can manage connectors in the team.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowcreateupdateremovetabs">-AllowCreateUpdateRemoveTabs</h3>
+<p>Setting that determines whether or not members (and not only owners) can manage tabs in channels.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowcustommemes">-AllowCustomMemes</h3>
+<p>Setting that determines whether or not members can use the custom memes functionality in teams.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowdeletechannels">-AllowDeleteChannels</h3>
+<p>Setting that determines whether or not members (and not only owners) can delete channels in the team.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowgiphy">-AllowGiphy</h3>
+<p>Setting that determines whether or not giphy can be used in the team.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowguestcreateupdatechannels">-AllowGuestCreateUpdateChannels</h3>
+<p>Setting that determines whether or not guests can create channels in the team.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowguestdeletechannels">-AllowGuestDeleteChannels</h3>
+<p>Setting that determines whether or not guests can delete in the team.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowownerdeletemessages">-AllowOwnerDeleteMessages</h3>
+<p>Setting that determines whether or not owners can delete messages that they or other members of the team have posted.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowstickersandmemes">-AllowStickersAndMemes</h3>
+<p>Setting that determines whether stickers and memes usage is allowed in the team.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowteammentions">-AllowTeamMentions</h3>
+<p>Setting that determines whether the entire team can be @ mentioned (which means that all users will be notified)</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowuserdeletemessages">-AllowUserDeleteMessages</h3>
+<p>Setting that determines whether or not members can delete messages that they have posted.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowusereditmessages">-AllowUserEditMessages</h3>
+<p>Setting that determines whether or not users can edit messages that they have posted.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
+<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-classification">-Classification</h3>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-description">-Description</h3>
+<p>Changes the description of the specified team.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-displayname">-DisplayName</h3>
+<p>Changes the display name of the specified team.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-giphycontentrating">-GiphyContentRating</h3>
+<p>Setting that determines the level of sensitivity of giphy usage that is allowed in the team. Accepted values are &quot;Strict&quot; or &quot;Moderate&quot;</p>
+<pre><code class="lang-yaml">Type: TeamGiphyContentRating
+Parameter Sets: (All)
+Aliases:
+Accepted values: moderate, strict
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>Specify the group id, mailNickname or display name of the team to use.</p>
+<pre><code class="lang-yaml">Type: TeamsTeamPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-showinteamssearchandsuggestions">-ShowInTeamsSearchAndSuggestions</h3>
+<p>Setting that determines whether or not private teams should be searchable from Teams clients for users who do not belong to that team. Set to $false to make those teams not discoverable from Teams clients.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-visibility">-Visibility</h3>
+<p>Changes the visibility of the specified team.</p>
+<pre><code class="lang-yaml">Type: TeamVisibility
+Parameter Sets: (All)
+Aliases:
+Accepted values: Private, Public
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://telemetry.sharepointpnp.com/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>  </body>
+</html>

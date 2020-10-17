@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Set-PnPSiteGroup | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Set-PnPSiteGroup | PnP PowerShell ">
+    <meta name="generator" content="docfx 2.51.0.0">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+                    <h1 id="set-pnpsitegroup">Set-PnPSiteGroup</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>Updates the SharePoint Online owner and permission levels on a group inside a site collection.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Set-PnPSiteGroup -Identity &lt;String&gt; [-Name &lt;String&gt;] [-Owner &lt;String&gt;] [-PermissionLevelsToAdd &lt;String[]&gt;] 
+    [-PermissionLevelsToRemove &lt;String[]&gt;] [-Site &lt;PipeBind&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>For permissions and the most current information about Windows PowerShell for SharePoint Online, see the online documentation at <a href="https://docs.microsoft.com/powershell/sharepoint/sharepoint-online/introduction-sharepoint-online-management-shell?view=sharepoint-ps">Intro to SharePoint Online Management Shell</a>.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Set-PnPSiteGroup -Site &quot;https://contoso.sharepoint.com/sites/siteA&quot; -Identity &quot;ProjectViewers&quot; -PermissionLevelsToRemove &quot;Full Control&quot; -PermissionLevelsToAdd &quot;View Only&quot;
+</code></pre>
+<p>Example 1 changes permission level of the ProjectViewers group inside site collection <a href="https://contoso.sharepoint.com/sites/siteA">https://contoso.sharepoint.com/sites/siteA</a> from Full Control to View Only.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Set-PnPSiteGroup -Site &quot;https://contoso.sharepoint.com| -Identity &quot;ProjectViewers&quot; -Owner user@domain.com
+</code></pre>
+<p>Example 2 sets user@domain.com as the owner of the ProjectViewers group.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-identity">-Identity</h3>
+<p>Specifies the name of the group.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Aliases:
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-name">-Name</h3>
+<p>Specifies the new name of the group.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Aliases:
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-owner">-Owner</h3>
+<p>Specifies the owner (individual or a security group) of the group to be created.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Aliases:
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-permissionlevelstoadd">-PermissionLevelsToAdd</h3>
+<p>Specifies the permission levels to grant to the group.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Permission levels are defined by SharePoint Online administrators from SharePoint Online Administration Center.</p>
+</div>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+Aliases:
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-permissionlevelstoremove">-PermissionLevelsToRemove</h3>
+<p>Specifies the permission levels to remove from the group.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Permission levels are defined by SharePoint Online administrators from SharePoint Online Administration Center.</p>
+</div>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+Aliases:
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-site">-Site</h3>
+<p>Specifies the site collection the group belongs to. If not defined, the currently connected site will be used.</p>
+<pre><code class="lang-yaml">Type: SitePipeBind
+Parameter Sets: (All)
+Aliases:
+Applicable: SharePoint Online
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://telemetry.sharepointpnp.com/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>  </body>
+</html>

@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Get-PnPAADUser | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Get-PnPAADUser | PnP PowerShell ">
+    <meta name="generator" content="docfx 2.51.0.0">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+                    <h1 id="get-pnpaaduser">Get-PnPAADUser</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API : One of Directory.Read.All, Directory.ReadWrite.All, User.Read.All, User.ReadWrite.All</li>
+</ul>
+<p>Retrieves users from Azure Active Directory</p>
+<h2 id="syntax">SYNTAX</h2>
+<h3 id="return-a-list-default">Return a list (Default)</h3>
+<pre><code>Get-PnPAADUser [-Filter &lt;String&gt;] [-OrderBy &lt;String&gt;] [-Select &lt;String[]&gt;] [-ByPassPermissionCheck]
+ [&lt;CommonParameters&gt;]
+</code></pre>
+<h3 id="return-by-specific-id">Return by specific ID</h3>
+<pre><code>Get-PnPAADUser [-Identity &lt;String&gt;] [-Select &lt;String[]&gt;] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+</code></pre>
+<h3 id="return-the-delta">Return the delta</h3>
+<pre><code>Get-PnPAADUser [-Filter &lt;String&gt;] [-OrderBy &lt;String&gt;] [-Select &lt;String[]&gt;] [-Delta] [-DeltaToken &lt;String&gt;]
+ [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Get-PnPAADUser
+</code></pre>
+<p>Retrieves all users from Azure Active Directory</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPAADUser -Identity 328c7693-5524-44ac-a946-73e02d6b0f98
+</code></pre>
+<p>Retrieves the user from Azure Active Directory with the id 328c7693-5524-44ac-a946-73e02d6b0f98</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPAADUser -Identity john@contoso.com
+</code></pre>
+<p>Retrieves the user from Azure Active Directory with the user principal name john@contoso.com</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPAADUser -Identity john@contoso.com -Select &quot;DisplayName&quot;,&quot;extension_3721d05137db455ad81aa442e3c2d4f9_extensionAttribute1&quot;
+</code></pre>
+<p>Retrieves only the DisplayName and extensionAttribute1 properties of the user from Azure Active Directory which has the user principal name john@contoso.com</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Get-PnPAADUser -Filter &quot;accountEnabled eq false&quot;
+</code></pre>
+<p>Retrieves all the disabled users from Azure Active Directory</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Get-PnPAADUser -Filter &quot;startswith(DisplayName, 'John')&quot; -OrderBy &quot;DisplayName&quot;
+</code></pre>
+<p>Retrieves all the users from Azure Active Directory of which their DisplayName starts with 'John' and sort the results by the DisplayName</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Get-PnPAADUser -Delta
+</code></pre>
+<p>Retrieves all the users from Azure Active Directory and include a delta DeltaToken which can be used by providing -DeltaToken <token> to query for changes to users in Active Directory since this run<p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Get-PnPAADUser -Delta -DeltaToken abcdef
+</code></pre>
+<p>Retrieves all the users from Azure Active Directory which have had changes since the provided DeltaToken was given out</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
+<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-delta">-Delta</h3>
+<p>Retrieves all users and provides a SkipToken delta token to allow to query for changes since this run when querying again by adding -DeltaToken to the command</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Return the delta
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-deltatoken">-DeltaToken</h3>
+<p>The change token provided during the previous run with -Delta to query for the changes to user objects made in Azure Active Directory since that run</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Return the delta
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-filter">-Filter</h3>
+<p>Includes a filter to the retrieval of the users. Use OData instructions to construct the filter, i.e. &quot;startswith(DisplayName, 'John')&quot;.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Return a list, Return the delta
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>Returns the user with the provided user id</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Return by specific ID
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-orderby">-OrderBy</h3>
+<p>Includes a custom sorting instruction to the retrieval of the users. Use OData syntax to construct the orderby, i.e. &quot;DisplayName desc&quot;.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Return a list, Return the delta
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-select">-Select</h3>
+<p>Allows providing an array with the property names of specific properties to return. If not provided, the default properties will be returned.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+</token></article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://telemetry.sharepointpnp.com/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>  </body>
+</html>
