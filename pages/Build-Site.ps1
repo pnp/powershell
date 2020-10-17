@@ -27,8 +27,10 @@ foreach($item in $items)
 }
 #$toc | Out-File "./dev/pages/cmdlets/released/toc.yml" -Force
 
+$version = Get-Content "./dev/version.txt" -Raw
+
 $items = Get-ChildItem "./dev/pages/cmdlets/nightly/*.md"
-$toc = $toc + "- name: Nightly`n  items:`n"
+$toc = $toc + "- name: Nightly ($version)`n  items:`n"
 foreach($item in $items)
 {
     $toc = $toc + "    - name: $($item.Name -replace '.md','')`n      href: nightly/$($item.Name)`n"
