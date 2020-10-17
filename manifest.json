@@ -6097,15 +6097,12 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Toc",
       "source_relative_path": "cmdlets/toc.yml",
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "Pwxg7fAdvhtf38igwNqTOA=="
+          "hash": "QhpbrivqeUgxYGssuKHS7Q=="
         }
       },
       "is_incremental": false,
@@ -6146,15 +6143,12 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Toc",
       "source_relative_path": "toc.yml",
       "output": {
         ".html": {
           "relative_path": "toc.html",
-          "hash": "PZhepxaOfpLSBKqa9y21SA=="
+          "hash": "eRGjlzZGipKVyF3m4sf2NQ=="
         }
       },
       "is_incremental": false,
