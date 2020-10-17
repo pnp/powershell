@@ -23,7 +23,7 @@ $toc = "- name: Released
   items:`n"
 foreach($item in $items)
 {
-    $toc = $toc + "    - name: $($item.Name -replace '.md','')`n      href: $($item.Name)`n"
+    $toc = $toc + "    - name: $($item.Name -replace '.md','')`n      href: released/$($item.Name)`n"
 }
 #$toc | Out-File "./dev/pages/cmdlets/released/toc.yml" -Force
 
@@ -31,7 +31,7 @@ $items = Get-ChildItem "./dev/pages/cmdlets/nightly/*.md"
 $toc = $toc + "- name: Nightly`n  items:`n"
 foreach($item in $items)
 {
-    $toc = $toc + "    - name: $($item.Name -replace '.md','')`n      href: $($item.Name)`n"
+    $toc = $toc + "    - name: $($item.Name -replace '.md','')`n      href: nightly/$($item.Name)`n"
 }
 $toc | Out-File "./dev/pages/cmdlets/toc.yml" -Force
 
