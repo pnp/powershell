@@ -1,9 +1,10 @@
 - name: Articles
   href: articles/
 - name: Cmdlets
-  - name: Released
-    href: cmdlets/released/
-  - name: Nightly
-    href: cmdlets/nightly/
+  items:
+    - name: Released
+      href: cmdlets/released/
+    - name: Nightly
+      href: cmdlets/nightly/
 - name: GitHub
   href: https://github.com/pnp/powershell
