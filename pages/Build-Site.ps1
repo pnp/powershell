@@ -19,20 +19,21 @@ Copy-Item -Path "./master/documentation/*.md" -Destination "./dev/pages/cmdlets/
 # generate cmdlet toc
 
 $items = Get-ChildItem "./dev/pages/cmdlets/released/*.md"
-$toc = ""
+$toc = "- name: Released
+  items:`n"
 foreach($item in $items)
 {
-    $toc = $toc + "- name: $($item.Name -replace '.md','')`n  href: $($item.Name)`n"
+    $toc = $toc + "    - name: $($item.Name -replace '.md','')`n      href: $($item.Name)`n"
 }
-$toc | Out-File "./dev/pages/cmdlets/released/toc.yml" -Force
+#$toc | Out-File "./dev/pages/cmdlets/released/toc.yml" -Force
 
 $items = Get-ChildItem "./dev/pages/cmdlets/nightly/*.md"
-$toc = ""
+$toc = $toc + "- name: Nightly`n  items:`n"
 foreach($item in $items)
 {
-    $toc = $toc + "- name: $($item.Name -replace '.md','')`n  href: $($item.Name)`n"
+    $toc = $toc + "    - name: $($item.Name -replace '.md','')`n      href: $($item.Name)`n"
 }
-$toc | Out-File "./dev/pages/cmdlets/nightly/toc.yml" -Force
+$toc | Out-File "./dev/pages/cmdlets/toc.yml" -Force
 
 docfx build ./dev/pages/docfx.json
 
