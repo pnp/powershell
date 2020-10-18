@@ -17,7 +17,7 @@ Given that the cross-platform PnP PowerShell is our future going forward we woul
 
 ## Building the source code
 
-Make a clone of the repository, navigate to the build folder in the repository and run Build-Debug.ps1. See more details [here](xhref:buildingsourcecode).
+Make a clone of the repository, navigate to the build folder in the repository and run Build-Debug.ps1. See more details [here](articles/buildingsource.md).
 
 ## Updating the documentation
 
