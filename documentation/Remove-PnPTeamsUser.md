@@ -37,7 +37,7 @@ Removes the user specified from both owners and members of the team.
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPTeamsUser -Team MyTeam -User john@doe.com -Owner
+Remove-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Owner
 ```
 
 Removes the user john@doe.com from the owners of the team, but retains the user as a member.
