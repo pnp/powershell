@@ -1,3 +1,6 @@
+---
+uid: buildingsourcecode
+---
 # Building the source code
 
 Make a clone of the repository, navigate to the `build` folder in the repository and run `Build-Debug.ps1`. 
