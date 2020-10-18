@@ -17,7 +17,7 @@ Given that the cross-platform PnP PowerShell is our future going forward we woul
 
 ## Building the source code
 
-Make a clone of the repository, navigate to the build folder in the repository and run Build-Debug.ps1. This will restore all references, and copy the required files to the correct location on your computer. If you run on Windows both the .NET Framework and the .NET Core version will be build in installed. If you run on MacOS or Linux on the .NET Core version will be build and installed. Unlike the older repository you do not need to have local clone of the PnP Framework repository anymore (we changed the PnP Sites Core library used under the hood to the PnP Framework repository, see for more info about that library here: https://github.com/pnp/pnpframework).
+Make a clone of the repository, navigate to the build folder in the repository and run Build-Debug.ps1. See more details [here](xhref:buildingsourcecode).
 
 ## Updating the documentation
 
