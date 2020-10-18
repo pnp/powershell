@@ -1,3 +1,6 @@
 ### YamlMime:XRefMap
 sorted: true
-references: []
+references:
+- uid: buildingsourcecode
+  name: Building the source code
+  href: articles/buildingsource.html
