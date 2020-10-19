@@ -91,6 +91,34 @@
 <h5>Note</h5>
 <p>Unlike the older repository for the legacy version of PowerShell for Windows you do not need to have local clone of the PnP Framework repository anymore (we changed the PnP Sites Core library used under the hood to the PnP Framework repository, see for more info about that library here: <a href="https://github.com/pnp/pnpframework">https://github.com/pnp/pnpframework</a>).</p>
 </div>
+<h2 id="folder-structure">Folder Structure</h2>
+<p>In the repository you'll find the following folder structure</p>
+<pre><code>- build
+- documentation
+- pages
+- resources
+- samples
+- src/ALC
+     /Commands
+     /Resources
+     /Tests
+</code></pre>
+<h3 id="build-folder">Build folder</h3>
+<p>The build folder contains scripts used to build the project, build the Helpfile, etc. While debugging locally the <code>Build-Debug.ps1</code> script is the script to use to build the project and copy the correct files to the correct location on your machine. The other build scripts are used in GitHub actions to automate the nightly builds etc.</p>
+<h3 id="documentation-folder">Documentation folder</h3>
+<p>The documentation folder contains the markdown files all describing every single cmdlet available. If you create a new cmdlet we <em>require</em> you to also provide a documentation file. Notice that the documentation files <em>require</em> a front-matters yaml header as specified in the other files. Updated accordingly.</p>
+<h3 id="pages-folder">Pages folder</h3>
+<p>The pages folder contains the structure which is published to <a href="https://pnp.github.io/powershell">https://pnp.github.io/powershell</a>. We automatically copy the cmdlet documentation in there at build time, but you can create PRs on the 'articles' folder if you want.</p>
+<h3 id="resources">Resources</h3>
+<p>The resources folder contains an XML file which is copied into the output folder of the build. This file defines how PowerShell should parse and render the objects shown as output from the PnP PowerShell cmdlets</p>
+<h3 id="srcalc">src/ALC</h3>
+<p>Due to possible conflicts with already loaded assemblies in PowerShell we create an Assembly Load Context for a specific assembly. See <a href="https://docs.microsoft.com/en-us/dotnet/core/dependency-loading/understanding-assemblyloadcontext">https://docs.microsoft.com/en-us/dotnet/core/dependency-loading/understanding-assemblyloadcontext</a> for more information about ALCs.</p>
+<h3 id="srccommands">src/Commands</h3>
+<p>This is the main location of all the cmdlet code.</p>
+<h3 id="srcresources">src/Resources</h3>
+<p>Any resources used by cmdlets go into this folder</p>
+<h3 id="srctests">src/Tests</h3>
+<p>This is where there the unit tests will be.</p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
