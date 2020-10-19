@@ -1,12 +1,7 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
-namespace PnP.PowerShell.Commands.Model.Teams
+namespace PnP.PowerShell.Commands.Model.Graph
 {
     public class Group
     {
@@ -32,4 +27,12 @@ namespace PnP.PowerShell.Commands.Model.Teams
 
         public bool? SecurityEnabled { get; set; }
     }
+
+    public enum GroupVisibility
+    {
+        NotSpecified,
+        Private,
+        Public
+    }
+
 }

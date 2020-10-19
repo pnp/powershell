@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Model.Teams;
+﻿using PnP.PowerShell.Commands.Model.Graph;
+using PnP.PowerShell.Commands.Model.Teams;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -36,7 +37,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        private static HttpRequestMessage GetMessage(string url, HttpMethod method, string accessToken, HttpContent content = null)
+        private static HttpRequestMessage GetMessage(string url, HttpMethod method, string accessToken, HttpContent content = null, Dictionary<string, string> additionalHeaders = null)
         {
             if (url.StartsWith("/"))
             {
@@ -47,6 +48,14 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             message.Method = method;
             message.RequestUri = !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ? new Uri($"https://graph.microsoft.com/{url}") : new Uri(url);
             message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+            if (additionalHeaders != null)
+            {
+                foreach (var kv in additionalHeaders)
+                {
+                    message.Headers.Remove(kv.Key);
+                    message.Headers.Add(kv.Key, kv.Value);
+                }
+            }
             if (method == HttpMethod.Post || method == HttpMethod.Put || method.Method == "PATCH")
             {
                 message.Content = content;
@@ -95,17 +104,20 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return await GetResponseMessageAsync(httpClient, message);
         }
 
-
-
+        #region PATCH
         public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, T content)
         {
-            var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+            var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { IgnoreNullValues = true }));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var message = GetMessage(url, new HttpMethod("PATCH"), accessToken, requestContent);
+#if NETFRAMEWORK
+            var message = GetMessage(url,  new HttpMethod("PATCH"), accessToken, requestContent);
+#else
+            var message = GetMessage(url, HttpMethod.Patch, accessToken, requestContent);
+#endif
             var returnValue = await SendMessageAsync(httpClient, message);
             if (!string.IsNullOrEmpty(returnValue))
             {
-                return JsonSerializer.Deserialize<T>(returnValue, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                return JsonSerializer.Deserialize<T>(returnValue);
             }
             else
             {
@@ -113,6 +125,52 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
+        public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, HttpContent content, Dictionary<string, string> additionalHeaders = null)
+        {
+#if NETFRAMEWORK
+            var message = GetMessage(url, new HttpMethod("PATCH"), accessToken, content, additionalHeaders);
+#else
+            var message = GetMessage(url, HttpMethod.Patch, accessToken, content, additionalHeaders);
+#endif
+            var returnValue = await SendMessageAsync(httpClient, message);
+            if (!string.IsNullOrEmpty(returnValue))
+            {
+                return JsonSerializer.Deserialize<T>(returnValue);
+            }
+            else
+            {
+                return default;
+            }
+        }
+
+        public static async Task<HttpResponseMessage> PatchAsync(HttpClient httpClient, string accessToken, string url, HttpContent content, Dictionary<string, string> additionalHeaders = null)
+        {
+#if NETFRAMEWORK
+            var message = GetMessage(url, new HttpMethod("PATCH"), accessToken, content, additionalHeaders);
+#else
+            var message = GetMessage(url, HttpMethod.Patch, accessToken, content, additionalHeaders);
+#endif
+            return await GetResponseMessageAsync(httpClient, message);
+        }
+
+
+
+        // public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, T content,Dictionary<string, string> additionalHeaders = null)
+        // {
+        //     var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+        //     requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+        //     var message = GetMessage(url, new HttpMethod("PATCH"), accessToken, requestContent, additionalHeaders);
+        //     var returnValue = await SendMessageAsync(httpClient, message);
+        //     if (!string.IsNullOrEmpty(returnValue))
+        //     {
+        //         return JsonSerializer.Deserialize<T>(returnValue, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+        //     }
+        //     else
+        //     {
+        //         return default;
+        //     }
+        // }
+        #endregion
 
 
         public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, HttpContent content, string accessToken)

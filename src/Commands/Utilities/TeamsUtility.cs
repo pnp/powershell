@@ -1,4 +1,5 @@
 ﻿using PnP.Framework.Entities;
+using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Principals;
 using PnP.PowerShell.Commands.Utilities.REST;

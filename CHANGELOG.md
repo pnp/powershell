@@ -51,6 +51,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Remove-PnPTermLabel` cmdlet (0.1.11)
 - Added `Remove-PnPTerm` cmdlet (0.1.11)
 - Added `Set-PnPTerm` cmdlet (0.1.11)
+- Added `Add-PnPPlannerBucket` cmdlet (0.1.16)
+- Added `Add-PnPPlannerTask` cmdlet (0.1.16)
+- Added `Get-PnPPlannerBucket` cmdlet (0.1.16)
+- Added `Get-PnPPlannerPlan` cmdlet (0.1.16)
+- Added `Get-PnPPlannerTask` cmdlet (0.1.16)
+- Added `New-PnPPlannerPlan` cmdlet (0.1.16)
+- Added `Set-PnPPlannerBucket` cmdlet (0.1.16)
+- Added `Set-PnPPlannerPlan` cmdlet (0.1.16)
 
 ### Changed
 
