@@ -54,6 +54,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Removed SiteUrl parameter from `Register-PnPManagementShell` as it is not required anymore
 - Fixed documentation on Add-PnPTeamsChannel [PR#9](https://github.com/pnp/powershell/pull/9)
 - Fixed documentation on Remove-PnPTeamsUser [PR#10](https://github.com/pnp/powershell/pull/10)
 - Renamed `Apply-PnPProvisioningTemplate` to `Invoke-PnPSiteTemplate`.
