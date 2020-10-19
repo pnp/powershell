@@ -23,37 +23,9 @@ To debug the cmdlets: launch PowerShell and attach Visual Studio to the powershe
 ## Keeping your fork up to date
 Before starting on any new submissions, please ensure your fork is up to date with the upstream repository. This avoids frustration and challenges for us to validate and test your submission. Steps on how to easily keep your fork up to date can be found [on this wiki page](https://github.com/pnp/PnP-PowerShell/wiki/Update-your-fork-with-the-latest-code).
 
-## Code contributions
-In order to successfully compile the PnP PowerShell solution you will _also_ have to download *and build in Visual Studio* the [PnP-Framework](https://github.com/pnpframework) repository and make the dev branch available. **The PowerShell solution depends on it**. In order to successfully 
-compile it, make sure that PnP-Sites-Core is located at the same level as PnP-PowerShell and you open the solution file `pnpframework.sln` located in the Core subfolder of the sourcecode.
-
-So:
-```
-c:\[YOUR REPO FOLDER]\pnpframework
-c:\[YOUR REPO FOLDER]\powershell
-```
-
-The reason for this is that the PnP-PowerShell library will have references to the release and debug builds of the PnP Framework library.
-
-A few notes:
-
-### Most cmdlets will extend PnPCmdlet or PnPWebCmdlet which provides a few helper objects for you to use, like SelectedWeb and ClientContext
-As most cmdlets are 'web sensitive' (e.g. you can specify a -Web parameter to point to a different subweb), make sure that you use the correct ClientContext. When a user specifies the -Web parameter
-in a cmdlet that extends PnPWebCmdlet, the cmdlet will switch it's internal context to that web, reusing credentials. It is important to use the right context, and the easiest way to do that is to use
-
-```csharp
-var context = ClientContext
-```
-
-alternatively 
-
-```csharp
-var context = SelectedWeb.Context;
-```
-
-### Cmdlets will have to use common verbs
+## Cmdlets will have to use common verbs
  
 The verb of a cmdlet (get-, add-, etc.) should follow acceptable cmdlet standards and should be part of one of the built in verbs classes (VerbsCommon, VerbsData, etc.):
 
 ## Documentation contributions
-The PowerShell documentation is located on https://docs.microsoft.com/en-us/powershell/sharepoint/sharepoint-pnp/sharepoint-pnp-cmdlets?view=sharepoint-ps
+The PowerShell documentation is located at https://github.com/pnp/powershell/documentation
