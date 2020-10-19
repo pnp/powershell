@@ -16,32 +16,19 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false)]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
-        [Parameter(Mandatory = true)]
-        public string SiteUrl;
         protected override void ProcessRecord()
         {
             var endPoint = GenericToken.GetAzureADLoginEndPoint(AzureEnvironment);
-            var uri = new Uri(SiteUrl);
-            var scopes = new[] { $"{uri.Scheme}://{uri.Authority}//.default" };
 
             var application = PublicClientApplicationBuilder.Create(PnPConnection.PnPManagementShellClientId).WithAuthority($"{endPoint}/organizations/").WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient").Build();
 
-            application.AcquireTokenWithDeviceCode(scopes, codeResult =>
+            application.AcquireTokenWithDeviceCode(new[] { "https://graph.microsoft.com/.default" }, codeResult =>
              {
                  WriteUpdateMessage($"\n\nProvide consent for the PnP Management Shell application to access SharePoint.\n\nWe opened a browser and navigated to {codeResult.VerificationUrl}\n\nEnter code: {codeResult.UserCode}\n\n");
                  BrowserHelper.LaunchBrowser(codeResult.VerificationUrl);
                  return Task.FromResult("");
 
              }).ExecuteAsync().GetAwaiter().GetResult();
-
-
-            application.AcquireTokenWithDeviceCode(new[] { "https://graph.microsoft.com/.default" }, codeResult =>
-            {
-                WriteUpdateMessage($"\n\nProvide consent for the PnP Management Shell application to access the Microsoft Graph.\n\nWe opened a browser and navigated to {codeResult.VerificationUrl}\n\nEnter code: {codeResult.UserCode}\n\n");
-                BrowserHelper.LaunchBrowser(codeResult.VerificationUrl);
-                return Task.FromResult("");
-            }).ExecuteAsync().GetAwaiter().GetResult();
-
         }
 
         private void WriteUpdateMessage(string message)

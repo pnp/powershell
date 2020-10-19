@@ -354,7 +354,7 @@ namespace PnP.PowerShell.Commands.Utilities
             List<User> users = new List<User>();
             var selectedRole = role != null ? role.ToLower() : null;
 
-            var collection = await GraphHelper.GetAsync<RestResultCollection<TeamChannelMember>>(httpClient, $"beta/teams/{groupId}/channels/{channelId}/members", accessToken);
+            var collection = await GraphHelper.GetAsync<RestResultCollection<TeamChannelMember>>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/members", accessToken);
             if (collection != null && collection.Items.Any())
             {
                 users.AddRange(collection.Items.Select(m => new User() { DisplayName = m.DisplayName, Id = m.UserId, UserPrincipalName = m.email, UserType = m.Roles[0].ToLower() }));
@@ -404,7 +404,8 @@ namespace PnP.PowerShell.Commands.Utilities
         #region Channel
         public static async Task<IEnumerable<TeamChannel>> GetChannelsAsync(string accessToken, HttpClient httpClient, string groupId)
         {
-            var collection = await GraphHelper.GetAsync<RestResultCollection<TeamChannel>>(httpClient, $"beta/teams/{groupId}/channels", accessToken);
+            var url = $"v1.0/teams/{groupId}/channels";
+            var collection = await GraphHelper.GetAsync<RestResultCollection<TeamChannel>>(httpClient, url, accessToken);
             if (collection != null)
             {
                 return collection.Items;
@@ -436,8 +437,8 @@ namespace PnP.PowerShell.Commands.Utilities
                 channel.Type = "#Microsoft.Teams.Core.channel";
                 var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{ownerUPN}", accessToken);
                 channel.Members = new List<TeamChannelMember>();
-                channel.Members.Add(new TeamChannelMember() { Roles = new List<string> { "owner" }, UserIdentifier = $"https://graph.microsoft.com/beta/users('{user.Id}')" });
-                return await GraphHelper.PostAsync<TeamChannel>(httpClient, $"beta/teams/{groupId}/channels", channel, accessToken);
+                channel.Members.Add(new TeamChannelMember() { Roles = new List<string> { "owner" }, UserIdentifier = $"https://graph.microsoft.com/v1.0/users('{user.Id}')" });
+                return await GraphHelper.PostAsync<TeamChannel>(httpClient, $"v1.0/teams/{groupId}/channels", channel, accessToken);
             }
             else
             {
