@@ -290,6 +290,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/Register-PnPManagementShellAccess.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/Register-PnPManagementShellAccess.html",
+          "hash": "GciNg9y93kK4C1cdyjg0DQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/nightly/Remove-PnPExternalUser.md",
       "output": {
         ".html": {
@@ -6102,7 +6114,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "QhpbrivqeUgxYGssuKHS7Q=="
+          "hash": "IYsrcdZvfGgyQzK4TIc7pg=="
         }
       },
       "is_incremental": false,
@@ -6169,7 +6181,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 507,
+          "total_file_count": 508,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
