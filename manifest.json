@@ -62,6 +62,30 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/Add-PnPPlannerBucket.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/Add-PnPPlannerBucket.html",
+          "hash": "NhtK4v2T29WQekfU0+dWFA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/Add-PnPPlannerTask.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/Add-PnPPlannerTask.html",
+          "hash": "tYMA3saHRJhRVgkuw1CMVQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/nightly/Add-PnPTermToTerm.md",
       "output": {
         ".html": {
@@ -151,6 +175,42 @@
         ".html": {
           "relative_path": "cmdlets/nightly/Get-PnPExternalUser.html",
           "hash": "q7jIup3lRBTdcukkVfk6MQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/Get-PnPPlannerBucket.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/Get-PnPPlannerBucket.html",
+          "hash": "oDiFqIhtxlkyh/o4NA+D3w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/Get-PnPPlannerPlan.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/Get-PnPPlannerPlan.html",
+          "hash": "wYm4l6/zXCGII5UO+3cmxA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/Get-PnPPlannerTask.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/Get-PnPPlannerTask.html",
+          "hash": "uCK/tsGZi0U1UlKFZZ5uew=="
         }
       },
       "is_incremental": false,
@@ -259,6 +319,18 @@
         ".html": {
           "relative_path": "cmdlets/nightly/Invoke-PnPTenantTemplate.html",
           "hash": "2EPV8Wwh55zmv66bbyzMUA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/New-PnPPlannerPlan.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/New-PnPPlannerPlan.html",
+          "hash": "zjHLMLksFw0LflHDdFIhYQ=="
         }
       },
       "is_incremental": false,
@@ -475,6 +547,30 @@
         ".html": {
           "relative_path": "cmdlets/nightly/Set-PnPBuiltInDesignPackageVisibility.html",
           "hash": "1tMXRrGoLtS+iXu8ItxBTg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/Set-PnPPlannerBucket.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/Set-PnPPlannerBucket.html",
+          "hash": "PEVMNfnkRV67hBzbbyfHIw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/Set-PnPPlannerPlan.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/Set-PnPPlannerPlan.html",
+          "hash": "uXdFbdYAO27rHAvFJ1Xe/A=="
         }
       },
       "is_incremental": false,
@@ -6114,7 +6210,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "IYsrcdZvfGgyQzK4TIc7pg=="
+          "hash": "rW2bfxlUq06wQjJm6T9KXA=="
         }
       },
       "is_incremental": false,
@@ -6181,7 +6277,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 508,
+          "total_file_count": 516,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
