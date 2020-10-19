@@ -31,7 +31,7 @@ and you will be prompted for credentials.
 ## Authenticating with pre-stored credentials using the Windows Credential Manager (Windows only)
 
 ```powershell
-Add-PnPStoreCredential -Name "yourlabel" -Username youruser@domain.com
+Add-PnPStoredCredential -Name "yourlabel" -Username youruser@domain.com
 ```
 
 You will be prompted to provide a password. After that you can login using:
