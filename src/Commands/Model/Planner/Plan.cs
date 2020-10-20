@@ -4,7 +4,7 @@ using PnP.PowerShell.Commands.Model.Graph;
 
 namespace PnP.PowerShell.Commands.Model.Planner
 {
-    public class Plan
+    public class PlannerPlan
     {
         [JsonPropertyName("@odata.etag")]
         public string ETag { get; set; }

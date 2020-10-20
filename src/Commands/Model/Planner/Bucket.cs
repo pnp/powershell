@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model.Planner
 {
-    public class Bucket
+    public class PlannerBucket
     {
         [JsonPropertyName("@odata.etag")]
         public string ETag { get; set; }

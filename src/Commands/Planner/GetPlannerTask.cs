@@ -12,27 +12,32 @@ namespace PnP.PowerShell.Commands.Planner
     [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class GetPlannerTask : PnPGraphCmdlet
     {
-        private const string ParameterName_BYGROUP = "By Group";
-        private const string ParameterName_BYPLANID = "By Plan Id";
-        private const string ParameterName_BYBUCKET = "By Bucket";
-        [Parameter(Mandatory = true, HelpMessage = "Specify the group id of group owning the plan.", ParameterSetName = ParameterName_BYGROUP)]
+        private const string ParameterSetName_BYGROUP = "By Group";
+        private const string ParameterSetName_BYPLANID = "By Plan Id";
+        private const string ParameterSetName_BYBUCKET = "By Bucket";
+        private const string ParameterSetName_BYTASKID = "By Task Id";
+
+        [Parameter(Mandatory = true, HelpMessage = "Specify the group id of group owning the plan.", ParameterSetName = ParameterSetName_BYGROUP)]
         public PlannerGroupPipeBind Group;
 
-        [Parameter(Mandatory = true, HelpMessage = "Specify the id or name of the plan to retrieve the tasks for.", ParameterSetName = ParameterName_BYGROUP)]
+        [Parameter(Mandatory = true, HelpMessage = "Specify the id or name of the plan to retrieve the tasks for.", ParameterSetName = ParameterSetName_BYGROUP)]
         public PlannerPlanPipeBind Plan;
 
-        [Parameter(Mandatory = true, HelpMessage = "Specify the bucket or bucket id to retrieve the tasks for.", ParameterSetName = ParameterName_BYBUCKET)]
+        [Parameter(Mandatory = true, HelpMessage = "Specify the bucket or bucket id to retrieve the tasks for.", ParameterSetName = ParameterSetName_BYBUCKET)]
         public PlannerBucketPipeBind Bucket;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterName_BYPLANID)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSetName_BYPLANID)]
         public string PlanId;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter ResolveUserDisplayNames;
 
+        [Parameter(Mandatory = false, HelpMessage = "If specified this specific task will be retrieved", ParameterSetName = ParameterSetName_BYTASKID)]
+        public string TaskId;
+
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSetName == ParameterName_BYGROUP)
+            if (ParameterSetName == ParameterSetName_BYGROUP)
             {
                 var groupId = Group.GetGroupId(HttpClient, AccessToken);
                 if (groupId != null)
@@ -52,13 +57,17 @@ namespace PnP.PowerShell.Commands.Planner
                     throw new PSArgumentException("Group not found");
                 }
             }
-            else if (ParameterSetName == ParameterName_BYPLANID)
+            else if (ParameterSetName == ParameterSetName_BYPLANID)
             {
                 WriteObject(PlannerUtility.GetTasksAsync(HttpClient, AccessToken, PlanId, ResolveUserDisplayNames).GetAwaiter().GetResult(), true);
             }
-            else if (ParameterSetName == ParameterName_BYBUCKET)
+            else if (ParameterSetName == ParameterSetName_BYBUCKET)
             {
                 WriteObject(PlannerUtility.GetBucketTasks(HttpClient, AccessToken, Bucket.GetId(), ResolveUserDisplayNames), true);
+            }
+            else if (ParameterSetName == ParameterSetName_BYTASKID)
+            {
+                WriteObject(PlannerUtility.GetTaskAsync(HttpClient, AccessToken, TaskId, ResolveUserDisplayNames).GetAwaiter().GetResult());
             }
         }
     }

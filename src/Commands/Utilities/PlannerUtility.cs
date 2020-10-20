@@ -6,17 +6,16 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Task = PnP.PowerShell.Commands.Model.Planner.Task;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class PlannerUtility
     {
         #region Plans
-        public static async Task<IEnumerable<Plan>> GetPlansAsync(HttpClient httpClient, string accessToken, string groupId, bool resolveDisplayNames)
+        public static async Task<IEnumerable<PlannerPlan>> GetPlansAsync(HttpClient httpClient, string accessToken, string groupId, bool resolveDisplayNames)
         {
-            var returnCollection = new List<Plan>();
-            var collection = await GraphHelper.GetAsync<RestResultCollection<Plan>>(httpClient, $"v1.0/groups/{groupId}/planner/plans", accessToken);
+            var returnCollection = new List<PlannerPlan>();
+            var collection = await GraphHelper.GetAsync<RestResultCollection<PlannerPlan>>(httpClient, $"v1.0/groups/{groupId}/planner/plans", accessToken);
             if (collection != null && collection.Items.Any())
             {
                 if (resolveDisplayNames)
@@ -36,9 +35,9 @@ namespace PnP.PowerShell.Commands.Utilities
             return returnCollection;
         }
 
-        public static async Task<Plan> GetPlanAsync(HttpClient httpClient, string accessToken, string planId, bool resolveDisplayNames)
+        public static async Task<PlannerPlan> GetPlanAsync(HttpClient httpClient, string accessToken, string planId, bool resolveDisplayNames)
         {
-            var plan = await GraphHelper.GetAsync<Plan>(httpClient, $"v1.0/planner/plans/{planId}", accessToken);
+            var plan = await GraphHelper.GetAsync<PlannerPlan>(httpClient, $"v1.0/planner/plans/{planId}", accessToken);
             if (resolveDisplayNames)
             {
                 plan.CreatedBy.User = await ResolveIdentityAsync(httpClient, accessToken, plan.CreatedBy.User);
@@ -46,14 +45,14 @@ namespace PnP.PowerShell.Commands.Utilities
             return plan;
         }
 
-        public static async Task<Plan> CreatePlanAsync(HttpClient httpClient, string accessToken, string groupId, string title)
+        public static async Task<PlannerPlan> CreatePlanAsync(HttpClient httpClient, string accessToken, string groupId, string title)
         {
             var stringContent = new StringContent(JsonSerializer.Serialize(new { owner = groupId, title = title }));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            return await GraphHelper.PostAsync<Plan>(httpClient, "v1.0/planner/plans", stringContent, accessToken);
+            return await GraphHelper.PostAsync<PlannerPlan>(httpClient, "v1.0/planner/plans", stringContent, accessToken);
         }
 
-        public static async Task<Plan> UpdatePlanAsync(HttpClient httpClient, string accessToken, Plan plan, string title)
+        public static async Task<PlannerPlan> UpdatePlanAsync(HttpClient httpClient, string accessToken, PlannerPlan plan, string title)
         {
             var stringContent = new StringContent(JsonSerializer.Serialize(new { title }));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
@@ -61,24 +60,34 @@ namespace PnP.PowerShell.Commands.Utilities
             while (responseMessage.StatusCode == System.Net.HttpStatusCode.PreconditionFailed)
             {
                 // retrieve the plan again
-                plan = await GraphHelper.GetAsync<Plan>(httpClient, $"v1.0/planner/plans/{plan.Id}", accessToken);
+                plan = await GraphHelper.GetAsync<PlannerPlan>(httpClient, $"v1.0/planner/plans/{plan.Id}", accessToken);
                 responseMessage = await GraphHelper.PatchAsync(httpClient, accessToken, $"v1.0/planner/plans/{plan.Id}", stringContent, new Dictionary<string, string>() { { "IF-MATCH", plan.ETag } });
             }
             if (responseMessage.IsSuccessStatusCode)
             {
                 var responseContent = await responseMessage.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<Plan>(responseContent);
+                return JsonSerializer.Deserialize<PlannerPlan>(responseContent);
             }
             return null;
         }
+
+        public static async Task DeletePlanAsync(HttpClient httpClient, string accessToken, string planId)
+        {
+            var plan = await GetPlanAsync(httpClient, accessToken, planId, false);
+            if (plan != null)
+            {
+                await GraphHelper.DeleteAsync(httpClient, $"v1.0/planner/plans/{planId}", accessToken, new Dictionary<string, string>() { { "IF-MATCH", plan.ETag } });
+            }
+        }
+        
         #endregion
 
 
-        #region Add Tasks
-        public static async Task<IEnumerable<Task>> GetTasksAsync(HttpClient httpClient, string accessToken, string planId, bool resolveDisplayNames)
+        #region Tasks
+        public static async Task<IEnumerable<PlannerTask>> GetTasksAsync(HttpClient httpClient, string accessToken, string planId, bool resolveDisplayNames)
         {
-            var returnCollection = new List<Task>();
-            var collection = await GraphHelper.GetAsync<RestResultCollection<Task>>(httpClient, $"v1.0/planner/plans/{planId}/tasks", accessToken);
+            var returnCollection = new List<PlannerTask>();
+            var collection = await GraphHelper.GetAsync<RestResultCollection<PlannerTask>>(httpClient, $"v1.0/planner/plans/{planId}/tasks", accessToken);
             if (collection != null && collection.Items.Any())
             {
                 if (resolveDisplayNames)
@@ -105,12 +114,26 @@ namespace PnP.PowerShell.Commands.Utilities
             return returnCollection;
         }
 
-        public static async Task<Task> AddTaskAsync(HttpClient httpClient, string accessToken, string planId, string bucketId, string title)
+        public static async Task<PlannerTask> GetTaskAsync(HttpClient httpClient, string accessToken, string taskId, bool resolveDisplayNames)
+        {
+            return await GraphHelper.GetAsync<PlannerTask>(httpClient, $"v1.0/planner/tasks/{taskId}", accessToken);
+        }
+
+        public static async Task<PlannerTask> AddTaskAsync(HttpClient httpClient, string accessToken, string planId, string bucketId, string title)
         {
 
             var stringContent = new StringContent(JsonSerializer.Serialize(new { planId = planId, bucketId = bucketId, title = title }));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            return await GraphHelper.PostAsync<Task>(httpClient, "v1.0/planner/tasks", stringContent, accessToken);
+            return await GraphHelper.PostAsync<PlannerTask>(httpClient, "v1.0/planner/tasks", stringContent, accessToken);
+        }
+
+        public static async System.Threading.Tasks.Task DeleteTaskAsync(HttpClient httpClient, string accessToken, string taskId)
+        {
+            var task = GraphHelper.GetAsync<PlannerTask>(httpClient, $"v1.0/planner/tasks/{taskId}", accessToken).GetAwaiter().GetResult();
+            if (task != null)
+            {
+                await GraphHelper.DeleteAsync(httpClient, $"v1.0/planner/tasks/{taskId}", accessToken, new Dictionary<string, string>() { { "IF-MATCH", task.ETag } });
+            }
         }
         #endregion
 
@@ -133,9 +156,9 @@ namespace PnP.PowerShell.Commands.Utilities
 
         #region Buckets
 
-        public static IEnumerable<Bucket> GetBuckets(HttpClient httpClient, string accessToken, string planId)
+        public static IEnumerable<PlannerBucket> GetBuckets(HttpClient httpClient, string accessToken, string planId)
         {
-            var collection = GraphHelper.GetAsync<RestResultCollection<Bucket>>(httpClient, $"v1.0/planner/plans/{planId}/buckets", accessToken).GetAwaiter().GetResult();
+            var collection = GraphHelper.GetAsync<RestResultCollection<PlannerBucket>>(httpClient, $"v1.0/planner/plans/{planId}/buckets", accessToken).GetAwaiter().GetResult();
             if (collection.Items.Any())
             {
                 return collection.Items.OrderBy(p => p.OrderHint);
@@ -143,17 +166,27 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        public static Bucket CreateBucket(HttpClient httpClient, string accessToken, string name, string planId)
+        public static PlannerBucket CreateBucket(HttpClient httpClient, string accessToken, string name, string planId)
         {
             var stringContent = new StringContent(JsonSerializer.Serialize(new { name = name, planId = planId, orderHint = " !" }));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            return GraphHelper.PostAsync<Bucket>(httpClient, $"v1.0/planner/buckets", stringContent, accessToken).GetAwaiter().GetResult();
+            return GraphHelper.PostAsync<PlannerBucket>(httpClient, $"v1.0/planner/buckets", stringContent, accessToken).GetAwaiter().GetResult();
         }
 
-        public static IEnumerable<Task> GetBucketTasks(HttpClient httpClient, string accessToken, string bucketId, bool resolveDisplayNames)
+        public static async System.Threading.Tasks.Task RemoveBucketAsync(HttpClient httpClient, string accessToken, string bucketId)
         {
-            var returnCollection = new List<Task>();
-            var collection = GraphHelper.GetAsync<RestResultCollection<Task>>(httpClient, $"v1.0/planner/buckets/{bucketId}/tasks", accessToken).GetAwaiter().GetResult();
+            var bucket = GraphHelper.GetAsync<PlannerBucket>(httpClient, $"v1.0/planner/buckets/{bucketId}", accessToken).GetAwaiter().GetResult();
+            if (bucket != null)
+            {
+                await GraphHelper.DeleteAsync(httpClient, $"v1.0/planner/buckets/{bucketId}", accessToken, new Dictionary<string, string>() { { "IF-MATCH", bucket.ETag } });
+            }
+        }
+
+
+        public static IEnumerable<PlannerTask> GetBucketTasks(HttpClient httpClient, string accessToken, string bucketId, bool resolveDisplayNames)
+        {
+            var returnCollection = new List<PlannerTask>();
+            var collection = GraphHelper.GetAsync<RestResultCollection<PlannerTask>>(httpClient, $"v1.0/planner/buckets/{bucketId}/tasks", accessToken).GetAwaiter().GetResult();
             if (collection != null && collection.Items.Any())
             {
                 if (resolveDisplayNames)
@@ -183,14 +216,14 @@ namespace PnP.PowerShell.Commands.Utilities
             return returnCollection;
         }
 
-        public static Bucket UpdateBucket(HttpClient httpClient, string accessToken, string name, string bucketId)
+        public static PlannerBucket UpdateBucket(HttpClient httpClient, string accessToken, string name, string bucketId)
         {
-            var bucket = GraphHelper.GetAsync<Bucket>(httpClient, $"v1.0/planner/buckets/{bucketId}", accessToken).GetAwaiter().GetResult();
+            var bucket = GraphHelper.GetAsync<PlannerBucket>(httpClient, $"v1.0/planner/buckets/{bucketId}", accessToken).GetAwaiter().GetResult();
             if (bucket != null)
             {
                 var stringContent = new StringContent(JsonSerializer.Serialize(new { name = name }));
                 stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                return GraphHelper.PatchAsync<Bucket>(httpClient, accessToken, $"v1.0/planner/buckets/{bucketId}", stringContent, new Dictionary<string, string>() { { "IF-MATCH", bucket.ETag } }).GetAwaiter().GetResult();
+                return GraphHelper.PatchAsync<PlannerBucket>(httpClient, accessToken, $"v1.0/planner/buckets/{bucketId}", stringContent, new Dictionary<string, string>() { { "IF-MATCH", bucket.ETag } }).GetAwaiter().GetResult();
             }
             return null;
         }
