@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>set-pnpplannerplan | PnP PowerShell </title>
+    <title>Set-PnPSiteTemplateMetadata | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="set-pnpplannerplan | PnP PowerShell ">
+    <meta name="title" content="Set-PnPSiteTemplateMetadata | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -80,55 +80,47 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="set-pnpplannerplan">Set-PnPPlannerPlan</h1>
+                    <h1 id="set-pnpsitetemplatemetadata">Set-PnPSiteTemplateMetadata</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Updates an existing Planner plan</p>
+<p>Sets metadata of a provisioning template</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="by-group">By Group</h3>
-<pre><code class="lang-powershell">Set-PnPPlannerPlan -Group &lt;PlannerGroupPipeBind&gt; -Plan &lt;PlannerPlanPipeBind&gt; -Title &lt;String&gt;
-  [&lt;CommonParameters&gt;]
-</code></pre>
-<h3 id="by-plan-id">By Plan Id</h3>
-<pre><code class="lang-powershell">Set-PnPPlannerPlan -PlanId &lt;String&gt; -Title &lt;String&gt;  [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPSiteTemplateMetadata [-Path] &lt;String&gt; [-TemplateDisplayName &lt;String&gt;]
+ [-TemplateImagePreviewUrl &lt;String&gt;] [-TemplateProperties &lt;Hashtable&gt;]
+ [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [-Web &lt;WebPipeBind&gt;]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet updates an existing planner plan</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">Set-PnPPlannerPlan -Group &quot;Marketing&quot; -Plan &quot;Conference&quot; -Title &quot;Conference 2020&quot;
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Set-PnPSiteTemplateMetadata -Path template.xml -TemplateDisplayName &quot;DisplayNameValue&quot;
 </code></pre>
-<p>This example renames the &quot;Conference&quot; plan to &quot;Conference 2020&quot;</p>
+<p>Sets the DisplayName property of a site template in XML format.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Set-PnPSiteTemplateMetadata -Path template.pnp -TemplateDisplayName &quot;DisplayNameValue&quot;
+</code></pre>
+<p>Sets the DisplayName property of a site template in Office Open XML format.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Set-PnPSiteTemplateMetadata -Path template.xml -TemplateImagePreviewUrl &quot;Full URL of the Image Preview&quot;
+</code></pre>
+<p>Sets the Url to the preview image of a site template in XML format.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Set-PnPSiteTemplateMetadata -Path template.pnp -TemplateImagePreviewUrl &quot;Full URL of the Image Preview&quot;
+</code></pre>
+<p>Sets the to the preview image of a site template in Office Open XML format.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Set-PnPSiteTemplateMetadata -Path template.xml -TemplateProperties @{&quot;Property1&quot; = &quot;Test Value 1&quot;; &quot;Property2&quot;=&quot;Test Value 2&quot;}
+</code></pre>
+<p>Sets the property 'Property1' to the value 'Test Value 1' of a site template in XML format.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Set-PnPSiteTemplateMetadata -Path template.pnp -TemplateProperties @{&quot;Property1&quot; = &quot;Test Value 1&quot;; &quot;Property2&quot;=&quot;Test Value 2&quot;}
+</code></pre>
+<p>Sets the property 'Property1' to the value 'Test Value 1' of a site template in Office Open XML format.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-group">-Group</h3>
-<p>Specify the group id of group owning the plan.</p>
-<pre><code class="lang-yaml">Type: PlannerGroupPipeBind
-Parameter Sets: By Group
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-plan">-Plan</h3>
-<p>Specify the id or name of the plan to update.</p>
-<pre><code class="lang-yaml">Type: PlannerPlanPipeBind
-Parameter Sets: By Group
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-planid">-PlanId</h3>
-<p>Specify the id of the plan to update.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: By Plan Id
-Aliases:
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -136,20 +128,72 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-title">-Title</h3>
-<p>The new title of the plan.</p>
+<h3 id="-path">-Path</h3>
+<p>Path to the xml or pnp file containing the site template.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByPropertyName, ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-templatedisplayname">-TemplateDisplayName</h3>
+<p>It can be used to specify the DisplayName of the template file that will be updated.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="commonparameters">CommonParameters</h3>
-<p>This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see <a href="http://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
+<h3 id="-templateimagepreviewurl">-TemplateImagePreviewUrl</h3>
+<p>It can be used to specify the ImagePreviewUrl of the template file that will be updated.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-templateproperties">-TemplateProperties</h3>
+<p>It can be used to specify custom Properties for the template file that will be updated.</p>
+<pre><code class="lang-yaml">Type: Hashtable
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-templateproviderextensions">-TemplateProviderExtensions</h3>
+<p>Allows you to specify ITemplateProviderExtension to execute while extracting a template.</p>
+<pre><code class="lang-yaml">Type: ITemplateProviderExtension[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-web">-Web</h3>
+<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
+<pre><code class="lang-yaml">Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>

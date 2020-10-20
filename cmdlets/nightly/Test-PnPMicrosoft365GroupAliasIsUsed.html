@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>set-pnpplannerplan | PnP PowerShell </title>
+    <title>Test-PnPMicrosoft365GroupAliasIsUsed | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="set-pnpplannerplan | PnP PowerShell ">
+    <meta name="title" content="Test-PnPMicrosoft365GroupAliasIsUsed | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -80,55 +80,36 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="set-pnpplannerplan">Set-PnPPlannerPlan</h1>
+                    <h1 id="test-pnpmicrosoft365groupaliasisused">Test-PnPMicrosoft365GroupAliasIsUsed</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Updates an existing Planner plan</p>
+<p>Tests if a given alias is already used used</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="by-group">By Group</h3>
-<pre><code class="lang-powershell">Set-PnPPlannerPlan -Group &lt;PlannerGroupPipeBind&gt; -Plan &lt;PlannerPlanPipeBind&gt; -Title &lt;String&gt;
-  [&lt;CommonParameters&gt;]
-</code></pre>
-<h3 id="by-plan-id">By Plan Id</h3>
-<pre><code class="lang-powershell">Set-PnPPlannerPlan -PlanId &lt;String&gt; -Title &lt;String&gt;  [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Test-PnPOMicrosoft365GroupAliasIsUsed -Alias &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet updates an existing planner plan</p>
+<p>This command allows you to test if a provided alias is used or free, helps decide if it can be used as part of connecting an Microsoft 365 group to an existing classic site collection.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">Set-PnPPlannerPlan -Group &quot;Marketing&quot; -Plan &quot;Conference&quot; -Title &quot;Conference 2020&quot;
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Test-PnPMicrosoft365GroupAliasIsUsed -Alias &quot;MyGroup&quot;
 </code></pre>
-<p>This example renames the &quot;Conference&quot; plan to &quot;Conference 2020&quot;</p>
+<p>This will test if the alias MyGroup is already used</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-group">-Group</h3>
-<p>Specify the group id of group owning the plan.</p>
-<pre><code class="lang-yaml">Type: PlannerGroupPipeBind
-Parameter Sets: By Group
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-plan">-Plan</h3>
-<p>Specify the id or name of the plan to update.</p>
-<pre><code class="lang-yaml">Type: PlannerPlanPipeBind
-Parameter Sets: By Group
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-planid">-PlanId</h3>
-<p>Specify the id of the plan to update.</p>
+<h3 id="-alias">-Alias</h3>
+<p>Specifies the alias of the group. Cannot contain spaces.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: By Plan Id
-Aliases:
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -136,20 +117,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-title">-Title</h3>
-<p>The new title of the plan.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="commonparameters">CommonParameters</h3>
-<p>This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see <a href="http://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>

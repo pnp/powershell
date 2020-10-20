@@ -87,14 +87,17 @@
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-group">By Group</h3>
 <pre><code class="lang-powershell">Get-PnPPlannerTask -Group &lt;PlannerGroupPipeBind&gt; -Plan &lt;PlannerPlanPipeBind&gt; [-ResolveUserDisplayNames]
- [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="by-bucket">By Bucket</h3>
-<pre><code class="lang-powershell">Get-PnPPlannerTask -Bucket &lt;PlannerBucketPipeBind&gt; [-ResolveUserDisplayNames] [-ByPassPermissionCheck]
+<pre><code class="lang-powershell">Get-PnPPlannerTask -Bucket &lt;PlannerBucketPipeBind&gt; [-ResolveUserDisplayNames] 
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="by-plan-id">By Plan Id</h3>
-<pre><code class="lang-powershell">Get-PnPPlannerTask -PlanId &lt;String&gt; [-ResolveUserDisplayNames] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPPlannerTask -PlanId &lt;String&gt; [-ResolveUserDisplayNames]  [&lt;CommonParameters&gt;]
+</code></pre>
+<h3 id="by-task-id">By Task Id</h3>
+<pre><code class="lang-powershell">Get-PnPPlannerTask -TaskId &lt;String&gt; [-ResolveUserDisplayNames]  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet returns Planner tasks.</p>
@@ -113,6 +116,10 @@ $task.CreatedBy.DisplayName
 <pre><code class="lang-powershell">Get-PnPPlannerTask -Group &quot;Marketing&quot; -PlanId &quot;QvfkTd1mc02gwxHjHC_43JYABhAy&quot;
 </code></pre>
 <p>This returns all tasks for the specified plan.</p>
+<h3 id="example-4">Example 4</h3>
+<pre><code class="lang-powershell">Get-PnPPlannerTask -TaskId &quot;QvfkTd1mc02gwxHjHC_43JYABhAy&quot;
+</code></pre>
+<p>This returns a specific task.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-bucket">-Bucket</h3>
 <p>Specify the bucket or bucket id to retrieve the tasks for.</p>
@@ -157,6 +164,18 @@ Parameter Sets: By Plan Id
 Aliases:
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-taskid">-TaskId</h3>
+<p>Specify the id of the task to retrieve.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: By Task Id
+Aliases:
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
