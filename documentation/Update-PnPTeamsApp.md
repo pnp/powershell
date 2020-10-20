@@ -20,7 +20,7 @@ Updates an existing app in the Teams App Catalog.
 ## SYNTAX
 
 ```powershell
-Update-PnPTeamsApp -Identity <TeamsAppPipeBind> -Path <String> [-ByPassPermissionCheck] [<CommonParameters>]
+Update-PnPTeamsApp -Identity <TeamsAppPipeBind> -Path <String>  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,20 +35,6 @@ Update-PnPTeamsApp -Identity 4efdf392-8225-4763-9e7f-4edeb7f721aa -Path c:\myapp
 Updates the specified app in the teams app catalog with the contents of the referenced zip file.
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Identity
 

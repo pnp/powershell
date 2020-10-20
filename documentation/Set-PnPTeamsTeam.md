@@ -28,7 +28,7 @@ Set-PnPTeamsTeam -Identity <TeamsTeamPipeBind> [-DisplayName <String>] [-Descrip
  [-AllowOwnerDeleteMessages <Boolean>] [-AllowStickersAndMemes <Boolean>] [-AllowTeamMentions <Boolean>]
  [-AllowUserDeleteMessages <Boolean>] [-AllowUserEditMessages <Boolean>]
  [-GiphyContentRating <TeamGiphyContentRating>] [-ShowInTeamsSearchAndSuggestions <Boolean>]
- [-Classification <String>] [-ByPassPermissionCheck] [<CommonParameters>]
+ [-Classification <String>]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -245,20 +245,6 @@ Setting that determines whether or not users can edit messages that they have po
 
 ```yaml
 Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

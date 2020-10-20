@@ -21,7 +21,7 @@ Sends a message to a Microsoft Teams Channel.
 
 ```powershell
 Get-PnPTeamsChannelMessage -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> [-IncludeDeleted]
- [-ByPassPermissionCheck] [<CommonParameters>]
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,20 +36,6 @@ Get-PnPTeamsChannelMessage -Team MyTestTeam -Channel "My Channel"
 Gets all messages of the specified channel
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Channel
 Specify the group id, mailNickname or display name of the team to use.

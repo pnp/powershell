@@ -21,7 +21,7 @@ Sets the archived state of a team.
 
 ```powershell
 Set-PnPTeamsTeamArchivedState -Identity <TeamsTeamPipeBind> -Archived <Boolean>
- [-SetSiteReadOnlyForMembers <Boolean>] [-ByPassPermissionCheck] [<CommonParameters>]
+ [-SetSiteReadOnlyForMembers <Boolean>]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -58,20 +58,6 @@ Type: Boolean
 Parameter Sets: (All)
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

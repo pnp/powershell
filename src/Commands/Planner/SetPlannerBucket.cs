@@ -44,7 +44,7 @@ namespace PnP.PowerShell.Commands.Graph
                         var bucket = Bucket.GetBucket(HttpClient, AccessToken, planId);
                         if (bucket != null)
                         {
-                            WriteObject(PlannerUtility.UpdateBucket(HttpClient, AccessToken, Name, bucket.Id));
+                            WriteObject(PlannerUtility.UpdateBucketAsync(HttpClient, AccessToken, Name, bucket.Id).GetAwaiter().GetResult());
                         }
                         else
                         {
@@ -66,7 +66,7 @@ namespace PnP.PowerShell.Commands.Graph
                 var bucket = Bucket.GetBucket(HttpClient, AccessToken, PlanId);
                 if (bucket != null)
                 {
-                    WriteObject(PlannerUtility.UpdateBucket(HttpClient, AccessToken, Name, bucket.Id));
+                    WriteObject(PlannerUtility.UpdateBucketAsync(HttpClient, AccessToken, Name, bucket.Id).GetAwaiter().GetResult());
                 }
                 else
                 {

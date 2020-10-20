@@ -104,6 +104,41 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return await GetResponseMessageAsync(httpClient, message);
         }
 
+        #region DELETE
+        public static async Task<HttpResponseMessage> DeleteAsync(HttpClient httpClient, string url, string accessToken, Dictionary<string, string> additionalHeaders = null)
+        {
+            var message = GetMessage(url, HttpMethod.Delete, accessToken, null, additionalHeaders);
+            return await GetResponseMessageAsync(httpClient, message);
+        }
+
+        public static async Task<T> DeleteAsync<T>(HttpClient httpClient, string url, string accessToken, bool camlCasePolicy = true, Dictionary<string, string> additionalHeaders = null)
+        {
+            var response = await DeleteAsync(httpClient, url, accessToken, additionalHeaders);
+            if (response.IsSuccessStatusCode)
+            {
+                var stringContent = await response.Content.ReadAsStringAsync();
+
+                if (stringContent != null)
+                {
+                    var options = new JsonSerializerOptions() { IgnoreNullValues = true };
+                    if (camlCasePolicy)
+                    {
+                        options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                    }
+                    try
+                    {
+                        return JsonSerializer.Deserialize<T>(stringContent, options);
+                    }
+                    catch (Exception)
+                    {
+                        return default(T);
+                    }
+                }
+            }
+            return default(T);
+        }
+        #endregion
+
         #region PATCH
         public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, T content)
         {
@@ -173,14 +208,14 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         #endregion
 
 
-        public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, HttpContent content, string accessToken)
+        public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, HttpContent content, string accessToken, Dictionary<string, string> additionalHeaders = null)
         {
-            return await PostInternalAsync<T>(httpClient, url, accessToken, content);
+            return await PostInternalAsync<T>(httpClient, url, accessToken, content, additionalHeaders);
         }
 
-        public static async Task<T> PutAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content)
+        public static async Task<T> PutAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content, Dictionary<string, string> additionalHeaders = null)
         {
-            var message = GetMessage(url, HttpMethod.Put, accessToken, content);
+            var message = GetMessage(url, HttpMethod.Put, accessToken, content, additionalHeaders);
             var stringContent = await SendMessageAsync(httpClient, message);
             if (stringContent != null)
             {
@@ -209,9 +244,9 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return await PostInternalAsync<T>(httpClient, url, accessToken, null);
         }
 
-        private static async Task<T> PostInternalAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content)
+        private static async Task<T> PostInternalAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content, Dictionary<string, string> additionalHeaders = null)
         {
-            var message = GetMessage(url, HttpMethod.Post, accessToken, content);
+            var message = GetMessage(url, HttpMethod.Post, accessToken, content, additionalHeaders);
             var stringContent = await SendMessageAsync(httpClient, message);
             if (stringContent != null)
             {

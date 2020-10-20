@@ -2,57 +2,41 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/new-pnpplannerplan
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnpplannertask
 schema: 2.0.0
-title: new-pnpplannerplan
+title: remove-pnpplannertask
 ---
 
-# New-PnPPlannerPlan
+# Remove-PnPPlannerTask
 
 ## SYNOPSIS
-Creates a new Planner plan.
+Removes a Planner task
 
 ## SYNTAX
 
 ```powershell
-New-PnPPlannerPlan -Group <PlannerGroupPipeBind> -Title <String>  [<CommonParameters>]
+Remove-PnPPlannerTask -Task <PlannerTaskPipeBind>  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This cmdlet creates a new Planner plan.
+This cmdlet removes a specific Planner task.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-New-PnPPlannerPlan -Group "Marketing" -Title "Conference Plan"
+Remove-PnPPlannerTask -Task _LIqnL4lZUqurT71i2-iY5YALFLk
 ```
 
-This example will add a new plan called "Conference Plan" to the "Marketing" group.
+Removes the task with the specified id.
 
 ## PARAMETERS
 
-
-### -Group
-Specify the group name or id owning the plan.
-
-```yaml
-Type: PlannerGroupPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Title
-Specify the name of the new plan.
+### -Task
+Specify the id or Task object to delete.
 
 ```yaml
-Type: String
+Type: PlannerTaskPipeBind
 Parameter Sets: (All)
 Aliases:
 

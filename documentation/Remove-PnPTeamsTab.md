@@ -21,7 +21,7 @@ Removes a Microsoft Teams tab in a channel.
 
 ```powershell
 Remove-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -Identity <TeamsTabPipeBind>
- [-Force] [-ByPassPermissionCheck] [<CommonParameters>]
+ [-Force]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,20 +43,6 @@ Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:7
 Removes a tab with the specified id from the channel
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Channel
 Specify the channel id or display name of the channel to use.

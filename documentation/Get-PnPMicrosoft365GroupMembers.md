@@ -20,8 +20,7 @@ Gets members of a particular Microsoft 365 Group (aka Unified Group). Requires t
 ## SYNTAX
 
 ```powershell
-Get-PnPMicrosoft365GroupMembers -Identity <Microsoft365GroupPipeBind> [-ByPassPermissionCheck]
- [<CommonParameters>]
+Get-PnPMicrosoft365GroupMembers -Identity <Microsoft365GroupPipeBind> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,20 +42,6 @@ Get-PnPMicrosoft365GroupMembers -Identity $group
 Retrieves all the members of a specific Microsoft 365 Group based on the group's object instance
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Identity
 The Identity of the Microsoft 365 Group

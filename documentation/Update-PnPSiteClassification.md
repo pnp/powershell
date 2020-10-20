@@ -21,14 +21,14 @@ Updates Site Classifications for the tenant
 
 ### Settings
 ```powershell
-Update-PnPSiteClassification -Settings <SiteClassificationsSettings> [-ByPassPermissionCheck]
+Update-PnPSiteClassification -Settings <SiteClassificationsSettings> 
  [<CommonParameters>]
 ```
 
 ### Specific
 ```powershell
 Update-PnPSiteClassification [-Classifications <System.Collections.Generic.List`1[System.String]>]
- [-DefaultClassification <String>] [-UsageGuidelinesUrl <String>] [-ByPassPermissionCheck] [<CommonParameters>]
+ [-DefaultClassification <String>] [-UsageGuidelinesUrl <String>]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -57,20 +57,6 @@ Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/m365pnp
 sets the usage guideliness URL to the specified URL
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Classifications
 A list of classifications, separated by commas. E.g. "HBI","LBI","Top Secret"

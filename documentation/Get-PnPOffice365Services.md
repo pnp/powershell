@@ -20,7 +20,7 @@ Gets the services available in Office 365 from the Office 365 Management API
 ## SYNTAX
 
 ```powershell
-Get-PnPOffice365Services [-ByPassPermissionCheck] [<CommonParameters>]
+Get-PnPOffice365Services [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,20 +35,6 @@ Get-PnPOffice365Services
 Retrieves the current services available in Office 365
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

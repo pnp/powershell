@@ -2,12 +2,12 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/test-pnpoffice365groupaliasisused
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/test-pnpmicrosoft365groupaliasisused
 schema: 2.0.0
-title: Test-PnPOffice365GroupAliasIsUsed
+title: Test-PnPMicrosoft365GroupAliasIsUsed
 ---
 
-# Test-PnPOffice365GroupAliasIsUsed
+# Test-PnPMicrosoft365GroupAliasIsUsed
 
 ## SYNOPSIS
 Tests if a given alias is already used used
@@ -15,17 +15,17 @@ Tests if a given alias is already used used
 ## SYNTAX
 
 ```powershell
-Test-PnPOffice365GroupAliasIsUsed -Alias <String> [-Connection <PnPConnection>] [<CommonParameters>]
+Test-PnPOMicrosoft365GroupAliasIsUsed -Alias <String> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This command allows you to test if a provided alias is used or free, helps decide if it can be used as part of connecting an Office 365 Unified group to an existing classic site collection.
+This command allows you to test if a provided alias is used or free, helps decide if it can be used as part of connecting an Microsoft 365 group to an existing classic site collection.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Test-PnPOffice365GroupAliasIsUsed -Alias "MyGroup"
+Test-PnPMicrosoft365GroupAliasIsUsed -Alias "MyGroup"
 ```
 
 This will test if the alias MyGroup is already used

@@ -20,7 +20,7 @@ Adds an app to the Teams App Catalog.
 ## SYNTAX
 
 ```powershell
-New-PnPTeamsApp -Path <String> [-ByPassPermissionCheck] [<CommonParameters>]
+New-PnPTeamsApp -Path <String>  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,20 +35,6 @@ New-PnPTeamsApp -Path c:\myapp.zip
 Adds the app as defined in the zip file to the Teams App Catalog
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Path
 The path pointing to the packaged/zip file containing the app

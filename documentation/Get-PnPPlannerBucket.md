@@ -17,12 +17,12 @@ Returns all or a specific Planner bucket
 ### By Group
 ```powershell
 Get-PnPPlannerBucket -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind>
- [-Identity <PlannerBucketPipeBind>] [-ByPassPermissionCheck] [<CommonParameters>]
+ [-Identity <PlannerBucketPipeBind>] [<CommonParameters>]
 ```
 
 ### By Plan Id
 ```powershell
-Get-PnPPlannerBucket -PlanId <String> [-Identity <PlannerBucketPipeBind>] [-ByPassPermissionCheck]
+Get-PnPPlannerBucket -PlanId <String> [-Identity <PlannerBucketPipeBind>] 
  [<CommonParameters>]
 ```
 

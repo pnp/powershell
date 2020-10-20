@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Base
     /// </summary>
     public abstract class PnPGraphCmdlet : PnPConnectedCmdlet
     {
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, DontShow = true)]
         public SwitchParameter ByPassPermissionCheck;
 
         /// <summary>

@@ -2,53 +2,91 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpplannertask
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnpplannerbucket
 schema: 2.0.0
-title: add-pnpplannertask
+title: remove-pnpplannerbucket
 ---
 
-# Add-PnPPlannerTask
+# Remove-PnPPlannerBucket
 
 ## SYNOPSIS
-Adds a new task to a planner bucket
+Removes a planner bucket
 
 ## SYNTAX
 
-### By Group
+### By Name
 ```powershell
-Add-PnPPlannerTask -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Bucket <PlannerBucketPipeBind>
- -Title <String> [<CommonParameters>]
+Remove-PnPPlannerBucket -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind>
+ -Identity <PlannerBucketPipeBind>  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
-### By Plan Id
+### By Bucket Id
 ```powershell
-Add-PnPPlannerTask -Bucket <PlannerBucketPipeBind> -PlanId <String> -Title <String> [<CommonParameters>]
+Remove-PnPPlannerBucket -BucketId <String> -Identity <PlannerBucketPipeBind>  [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This cmdlet adds a new task to Planner bucket
+This cmdlet removes a Planner bucket.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-Add-PnPPlannerTask -Group "Marketing" -Plan "Conference Plan" -Bucket "Todos" -Title "Design booth layout"
+Remove-PnPPlannerBucket -Group "Marketing" -Plan "Conference" -Identity "Preconference Todos"
 ```
 
-This cmdlet adds a new task.
-
-### Example 2
-```powershell
-Add-PnPPlannerTask -PlanId "QvfkTd1mc02gwxHjHC_43JYABhAy" -Bucket "Todos" -Title "Design booth layout"
-```
-
-This cmdlet adds a new task.
-
+This removes the "Preconference Todos" bucket from the specified plan.
 
 ## PARAMETERS
 
-### -Bucket
-The bucket to add the task too
+### -BucketId
+The id of a bucket to remove
+
+```yaml
+Type: String
+Parameter Sets: By Bucket Id
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Group
+Specify the group id of group owning the plan.
+
+```yaml
+Type: PlannerGroupPipeBind
+Parameter Sets: By Name
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Identity
+Specify the id or name of the bucket.
 
 ```yaml
 Type: PlannerBucketPipeBind
@@ -62,27 +100,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Group
-Specify the group id of group owning the plan.
-
-```yaml
-Type: PlannerGroupPipeBind
-Parameter Sets: By Group
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Plan
-Specify the id or name of the plan to add the tasks to.
+Specify the id or name of the plan owning the bucket.
 
 ```yaml
 Type: PlannerPlanPipeBind
-Parameter Sets: By Group
+Parameter Sets: By Name
 Aliases:
 
 Required: True
@@ -92,30 +115,16 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PlanId
-Specify the id the plan to add the tasks to.
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
-Type: String
-Parameter Sets: By Plan Id
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Title
-Specify the title of the task
-
-```yaml
-Type: String
+Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: wi
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

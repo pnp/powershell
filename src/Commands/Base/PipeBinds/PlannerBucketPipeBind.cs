@@ -11,14 +11,14 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
     public sealed class PlannerBucketPipeBind
     {
         private readonly string _id;
-        private readonly Bucket _bucket;
+        private readonly PlannerBucket _bucket;
 
         public PlannerBucketPipeBind(string input)
         {
             _id = input;
         }
 
-        public PlannerBucketPipeBind(Bucket bucket)
+        public PlannerBucketPipeBind(PlannerBucket bucket)
         {
             _bucket = bucket;
         }
@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        public Bucket GetBucket(HttpClient httpClient, string accessToken, string planId)
+        public PlannerBucket GetBucket(HttpClient httpClient, string accessToken, string planId)
         {
             // first try to get the bucket by id
             if (_bucket != null)
@@ -46,10 +46,10 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 try
                 {
-                    var buckets = PlannerUtility.GetBuckets(httpClient, accessToken, planId);
+                    var buckets = PlannerUtility.GetBucketsAsync(httpClient, accessToken, planId).GetAwaiter().GetResult();
                     if (buckets != null)
                     {
-                        Bucket bucket = null;
+                        PlannerBucket bucket = null;
                         var bucketId = _id ?? _bucket?.Id;
                         if (bucketId != null)
                         {

@@ -15,7 +15,7 @@ Removes an existing Microsoft Graph subscription. Required Azure Active Director
 ## SYNTAX
 
 ```powershell
-Remove-PnPGraphSubscription -Identity <GraphSubscriptionPipeBind> [-ByPassPermissionCheck] [<CommonParameters>]
+Remove-PnPGraphSubscription -Identity <GraphSubscriptionPipeBind>  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,20 +30,6 @@ Remove-PnPGraphSubscription -Identity bc204397-1128-4911-9d70-1d8bceee39da
 Removes the Microsoft Graph subscription with the id 'bc204397-1128-4911-9d70-1d8bceee39da'
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Identity
 The unique id or an instance of a Microsoft Graph Subscription

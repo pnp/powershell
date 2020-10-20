@@ -20,7 +20,6 @@ Renews the Microsoft 365 Group by extending its expiration with the number of da
 
 ```powershell
 Reset-PnPMicrosoft365GroupExpiration -Identity <Microsoft365GroupPipeBind>
-                                     [-ByPassPermissionCheck [<SwitchParameter>]]
 ```
 
 ## DESCRIPTION
@@ -36,18 +35,6 @@ Reset-PnPMicrosoft365GroupExpiration
 Renews the Microsoft 365 Group by extending its expiration with the number of days defined in the group expiration policy set on the Azure Active Directory
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
 
 ### -Identity
 The Identity of the Microsoft 365 Group

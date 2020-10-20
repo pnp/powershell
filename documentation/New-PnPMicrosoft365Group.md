@@ -22,7 +22,7 @@ Creates a new Microsoft 365 Group
 ```powershell
 New-PnPMicrosoft365Group -DisplayName <String> -Description <String> -MailNickname <String>
  [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-GroupLogoPath <String>] [-CreateTeam] [-Force]
- [-ByPassPermissionCheck] [<CommonParameters>]
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -58,20 +58,6 @@ New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -Ma
 Creates a private Microsoft 365 Group with all the required properties, and with a custom list of Owners and a custom list of Members
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -CreateTeam
 Creates a Microsoft Teams team associated with created group

@@ -20,7 +20,7 @@ Sets the picture of an existing team.
 ## SYNTAX
 
 ```powershell
-Set-PnPTeamsTeamPicture -Team <TeamsTeamPipeBind> -Path <String> [-ByPassPermissionCheck] [<CommonParameters>]
+Set-PnPTeamsTeamPicture -Team <TeamsTeamPipeBind> -Path <String>  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,20 +36,6 @@ Set-PnPTeamsTeamPicture -Team "MyTeam" -Path "c:\myimage.jpg"
 Updates the channel called 'MyChannel' to have the display name set to 'My Channel'
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Path
 The path to the image file.

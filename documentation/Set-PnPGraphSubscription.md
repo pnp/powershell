@@ -16,7 +16,7 @@ Updates an existing Microsoft Graph subscription. Required Azure Active Director
 
 ```powershell
 Set-PnPGraphSubscription -Identity <GraphSubscriptionPipeBind> -ExpirationDate <DateTime>
- [-ByPassPermissionCheck] [<CommonParameters>]
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,20 +31,6 @@ Set-PnPGraphSubscription -Identity bc204397-1128-4911-9d70-1d8bceee39da -Expirat
 Updates the Microsoft Graph subscription with the id 'bc204397-1128-4911-9d70-1d8bceee39da' to expire at the mentioned date
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -ExpirationDate
 Date and time to set the expiration to. Take notice of the maximum allowed lifetime of the subscription endponts as documented at https://docs.microsoft.com/graph/api/resources/subscription#maximum-length-of-subscription-per-resource-type

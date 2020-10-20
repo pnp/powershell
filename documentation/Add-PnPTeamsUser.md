@@ -20,8 +20,7 @@ Adds a channel to an existing Microsoft Teams instance.
 ## SYNTAX
 
 ```powershell
-Add-PnPTeamsUser -Team <TeamsTeamPipeBind> -User <String> -Role <String> [-ByPassPermissionCheck]
- [<CommonParameters>]
+Add-PnPTeamsUser -Team <TeamsTeamPipeBind> -User <String> -Role <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,20 +42,6 @@ Add-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Member
 Adds a user as a member to the team
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Role
 Specify the role of the user

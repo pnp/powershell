@@ -21,14 +21,12 @@ Adds a channel to an existing Microsoft Teams instance.
 
 ### Public channel
 ```powershell
-Add-PnPTeamsChannel -Team <TeamsTeamPipeBind> -DisplayName <String> [-Description <String>]
- [-ByPassPermissionCheck] [<CommonParameters>]
+Add-PnPTeamsChannel -Team <TeamsTeamPipeBind> -DisplayName <String> [-Description <String>] [<CommonParameters>]
 ```
 
 ### Private channel
 ```powershell
-Add-PnPTeamsChannel -Team <TeamsTeamPipeBind> -DisplayName <String> [-Description <String>] [-Private]
- -OwnerUPN <String> [-ByPassPermissionCheck] [<CommonParameters>]
+Add-PnPTeamsChannel -Team <TeamsTeamPipeBind> -DisplayName <String> -OwnerUPN <String> [-Description <String>] [-Private] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -57,20 +55,6 @@ Add-PnPTeamsChannel -Team MyTeam -DisplayName "My Channel" -Private -OwnerUPN us
 Adds a new private channel to the specified Teams instance
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Description
 An optional description of the channel.

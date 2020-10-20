@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
     public sealed class PlannerPlanPipeBind
     {
         private readonly string _id;
-        private readonly Plan _plan;
+        private readonly PlannerPlan _plan;
         public PlannerPlanPipeBind()
         {
 
@@ -23,12 +23,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _id = input;
         }
 
-        public PlannerPlanPipeBind(Plan plan)
+        public PlannerPlanPipeBind(PlannerPlan plan)
         {
             _plan = plan;
         }
 
-        public async Task<Plan> GetPlanAsync(HttpClient httpClient, string accessToken, string groupId, bool resolveIdentities)
+        public async Task<PlannerPlan> GetPlanAsync(HttpClient httpClient, string accessToken, string groupId, bool resolveIdentities)
         {
             if (_plan != null)
             {

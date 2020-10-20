@@ -5,8 +5,10 @@ using PnP.PowerShell.Commands.Model.Graph;
 
 namespace PnP.PowerShell.Commands.Model.Planner
 {
-    public class Task
+    public class PlannerTask
     {
+        [JsonPropertyName("@odata.etag")]
+        public string ETag { get; set; }
         public string PlanId { get; set; }
         public string BucketId { get; set; }
         public string Title { get; set; }
