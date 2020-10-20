@@ -17,18 +17,23 @@ Returns Planner tasks
 ### By Group
 ```powershell
 Get-PnPPlannerTask -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> [-ResolveUserDisplayNames]
- [-ByPassPermissionCheck] [<CommonParameters>]
+  [<CommonParameters>]
 ```
 
 ### By Bucket
 ```powershell
-Get-PnPPlannerTask -Bucket <PlannerBucketPipeBind> [-ResolveUserDisplayNames] [-ByPassPermissionCheck]
+Get-PnPPlannerTask -Bucket <PlannerBucketPipeBind> [-ResolveUserDisplayNames] 
  [<CommonParameters>]
 ```
 
 ### By Plan Id
 ```powershell
-Get-PnPPlannerTask -PlanId <String> [-ResolveUserDisplayNames] [-ByPassPermissionCheck] [<CommonParameters>]
+Get-PnPPlannerTask -PlanId <String> [-ResolveUserDisplayNames]  [<CommonParameters>]
+```
+
+### By Task Id
+```powershell
+Get-PnPPlannerTask -TaskId <String> [-ResolveUserDisplayNames]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -58,6 +63,13 @@ Get-PnPPlannerTask -Group "Marketing" -PlanId "QvfkTd1mc02gwxHjHC_43JYABhAy"
 ```
 
 This returns all tasks for the specified plan.
+
+### Example 4
+```powershell
+Get-PnPPlannerTask -TaskId "QvfkTd1mc02gwxHjHC_43JYABhAy"
+```
+
+This returns a specific task.
 
 ## PARAMETERS
 
@@ -115,6 +127,21 @@ Parameter Sets: By Plan Id
 Aliases:
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TaskId
+Specify the id of the task to retrieve.
+
+```yaml
+Type: String
+Parameter Sets: By Task Id
+Aliases:
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

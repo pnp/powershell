@@ -21,7 +21,7 @@ Adds a tab to an existing Channel
 
 ```powershell
 Add-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -DisplayName <String>
- -Type <TeamTabType> [-ByPassPermissionCheck] -ContentUrl <String> [<CommonParameters>]
+ -Type <TeamTabType> -ContentUrl <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,20 +36,6 @@ Add-PnPTeamsTab -Team "My Team" -Channel "My Channel" -DisplayName "My Channel" 
 Adds a web site tab to the specified channel.
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Channel
 Specify the channel id of the team to retrieve.

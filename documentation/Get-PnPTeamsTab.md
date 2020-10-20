@@ -21,7 +21,7 @@ Gets one or all tabs in a channel.
 
 ```powershell
 Get-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> [-Identity <TeamsTabPipeBind>]
- [-ByPassPermissionCheck] [<CommonParameters>]
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -57,20 +57,6 @@ Get-PnPTeamsTab "My Team" -Channel "My Channel" -Identity "Wiki"
 Retrieves a tab with the display name 'Wiki' from the specified team and channel
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Channel
 Specify the channel id of the team to retrieve.

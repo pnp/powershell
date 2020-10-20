@@ -2,69 +2,57 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpplannerbucket
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnpplannerplan
 schema: 2.0.0
-title: add-pnpplannerbucket
+title: remove-pnpplannerplan
 ---
 
-# Add-PnPPlannerBucket
+# Remove-PnPPlannerPlan
 
 ## SYNOPSIS
-Adds a new bucket to a Planner plan
+Removes a planner plan
 
 ## SYNTAX
 
-### By Group
 ```powershell
-Add-PnPPlannerBucket -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Name <String> [<CommonParameters>]
-```
-
-### By Plan Id
-```powershell
-Add-PnPPlannerBucket -PlanId <String> -Name <String> [<CommonParameters>]
+Remove-PnPPlannerPlan -Group <PlannerGroupPipeBind> -Identity <PlannerPlanPipeBind> 
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This cmdlets creates a new bucket for tasks in a Planner plan.
+This cmdlet removes a planner plan
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-Add-PnPPlannerBucket -Group "My Group" -Plan "My Plan" -Name "Project Todos"
+Remove-PnPPlannerPlan -Group "Marketing" -Identity "Conferenc Planning"
 ```
 
-Adds a new bucket called "Project Todos" to the specified plans
-
-### Example 2
-```powershell
-Add-PnPPlannerBucket -PlanId "QvfkTd1mc02gwxHjHC_43JYABhAy" -Name "Project Todos"
-```
-
-Adds a new bucket called "Project Todos" to the plan with the specified id.
+This removes the plan identified.
 
 ## PARAMETERS
 
-### -Group
-Specify the group id of group owning the plan.
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
 
 ```yaml
-Type: PlannerGroupPipeBind
-Parameter Sets: By Group
-Aliases:
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
-The name of the bucket to add
+### -Group
+Specify the group owning the plan.
 
 ```yaml
-Type: String
+Type: PlannerGroupPipeBind
 Parameter Sets: (All)
 Aliases:
 
@@ -75,12 +63,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Plan
-Specify the id or name of the plan to add the bucket to.
+### -Identity
+Specify the name or id of the plan
 
 ```yaml
 Type: PlannerPlanPipeBind
-Parameter Sets: By Group
+Parameter Sets: (All)
 Aliases:
 
 Required: True
@@ -90,15 +78,16 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PlanId
-A plan id to add the bucket to.
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
 
 ```yaml
-Type: String
-Parameter Sets: By Plan Id
-Aliases:
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

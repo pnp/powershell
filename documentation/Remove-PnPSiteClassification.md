@@ -21,7 +21,7 @@ Removes one or more existing site classification values from the list of availab
 
 ```powershell
 Remove-PnPSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]> 
- [-ByPassPermissionCheck] [<CommonParameters>]
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,20 +43,6 @@ Remove-PnPSiteClassification -Classifications "HBI", "Top Secret"
 Removes the "HBI" site classification from the list of available values.
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Classifications
 

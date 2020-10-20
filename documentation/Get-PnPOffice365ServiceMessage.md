@@ -20,7 +20,7 @@ Gets the service messages regarding services in Office 365 from the Office 365 M
 ## SYNTAX
 
 ```powershell
-Get-PnPOffice365ServiceMessage [-Workload <Office365Workload>] [-ByPassPermissionCheck] [<CommonParameters>]
+Get-PnPOffice365ServiceMessage [-Workload <Office365Workload>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,20 +35,6 @@ Get-PnPOffice365ServiceMessage
 Retrieves the service messages regarding services in Office 365
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Workload
 Allows retrieval of the service messages for only one particular service. If not provided, the service messages of all services will be returned.

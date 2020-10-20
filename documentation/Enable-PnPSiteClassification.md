@@ -21,7 +21,7 @@ Enables Site Classifications for the tenant
 
 ```powershell
 Enable-PnPSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]>
- -DefaultClassification <String> [-UsageGuidelinesUrl <String>] [-ByPassPermissionCheck] [<CommonParameters>]
+ -DefaultClassification <String> [-UsageGuidelinesUrl <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -45,20 +45,6 @@ Enable-PnPSiteClassification -Classifications "HBI","LBI","Top Secret" -UsageGui
 Enables Site Classifications for your tenant and provides three classification values. The usage guideliness will be set to the specified URL.
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Classifications
 

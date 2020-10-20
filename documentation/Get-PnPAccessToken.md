@@ -15,7 +15,7 @@ Returns the current OAuth Access token
 ## SYNTAX
 
 ```powershell
-Get-PnPAccessToken [-Decoded] [-ByPassPermissionCheck] [<CommonParameters>]
+Get-PnPAccessToken [-Decoded] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,20 +31,6 @@ Get-PnPAccessToken
 Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Decoded
 Returns the details from the access token in a decoded manner

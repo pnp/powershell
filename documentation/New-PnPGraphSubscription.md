@@ -17,7 +17,7 @@ Creates a new Microsof Graph Subscription which allows your webhook API to be ca
 ```powershell
 New-PnPGraphSubscription -ChangeType <GraphSubscriptionChangeType> -NotificationUrl <String> -Resource <String>
  [-ExpirationDateTime <DateTime>] [-ClientState <String>]
- [-LatestSupportedTlsVersion <GraphSubscriptionTlsVersion>] [-ByPassPermissionCheck] [<CommonParameters>]
+ [-LatestSupportedTlsVersion <GraphSubscriptionTlsVersion>]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -40,20 +40,6 @@ New-PnPGraphSubscription -ChangeType Updates -NotificationUrl https://mywebapise
 Creates a new Microsoft Graph subscription listening for changes to user objects during the next hour and will signal the URL provided through NotificationUrl when a change has been made
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -ChangeType
 The event(s) the subscription should trigger on

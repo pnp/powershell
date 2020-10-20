@@ -2,12 +2,12 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpmicrosoft365groupmember
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpmicrosoft365groupowner
 schema: 2.0.0
-title: Add-PnPMicrosoft365GroupMember
+title: Add-PnPMicrosoft365GroupOwner
 ---
 
-# Add-PnPMicrosoft365GroupMember
+# Add-PnPMicrosoft365GroupOwner
 
 ## SYNOPSIS
 
@@ -15,12 +15,12 @@ title: Add-PnPMicrosoft365GroupMember
 
   *  Microsoft Graph API: All of Group.ReadWrite.All, User.ReadWrite.All
 
-Adds members to a particular Microsoft 365 Group
+Adds members to a owners of a Microsoft 365 Group
 
 ## SYNTAX
 
 ```powershell
-Add-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> -Users <String[]> [-RemoveExisting] [<CommonParameters>]
+Add-PnPMicrosoft365GroupOwner -Identity <Microsoft365GroupPipeBind> -Users <String[]> [-RemoveExisting] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,22 +29,22 @@ Add-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> -Users <Str
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPMicrosoft365GroupMember -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com"
+Add-PnPMicrosoft365GroupOwner -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com"
 ```
 
-Adds the provided two users as additional members to the Microsoft 365 Group named "Project Team"
+Adds the provided two users as additional owners to the Microsoft 365 Group named "Project Team"
 
 ### EXAMPLE 2
 ```powershell
 Add-PnPMicrosoft365GroupMember -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com" -RemoveExisting
 ```
 
-Sets the provided two users as the only members of the Microsoft 365 Group named "Project Team" by removing any current existing members first
+Sets the provided two users as the only owners of the Microsoft 365 Group named "Project Team" by removing any current existing members first
 
 ## PARAMETERS
 
 ### -Identity
-The Identity of the Microsoft 365 Group to add members to
+The Identity of the Microsoft 365 Group to add owners to
 
 ```yaml
 Type: Microsoft365GroupPipeBind
@@ -87,4 +87,5 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[Documentation](https://docs.microsoft.com/graph/api/group-post-members)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+[Documentation](https://docs.microsoft.com/graph/api/group-post-members)

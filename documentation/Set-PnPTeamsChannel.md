@@ -21,7 +21,7 @@ Updates an existing Teams Channel
 
 ```powershell
 Set-PnPTeamsChannel -Team <TeamsTeamPipeBind> -Identity <TeamsChannelPipeBind> [-DisplayName <String>]
- [-Description <String>] [-ByPassPermissionCheck] [<CommonParameters>]
+ [-Description <String>]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,20 +36,6 @@ Set-PnPTeamsChannel -Team "MyTeam" -Channel "MyChannel" -DisplayName "My Channel
 Updates the channel called 'MyChannel' to have the display name set to 'My Channel'
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Description
 Changes the description of the specified channel.

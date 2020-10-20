@@ -16,12 +16,12 @@ Gets subscriptions from Microsoft Graph. Requires the Azure Active Directory app
 
 ### Return a list (Default)
 ```powershell
-Get-PnPGraphSubscription [-ByPassPermissionCheck] [<CommonParameters>]
+Get-PnPGraphSubscription [<CommonParameters>]
 ```
 
 ### Return by specific ID
 ```powershell
-Get-PnPGraphSubscription [-Identity <String>] [-ByPassPermissionCheck] [<CommonParameters>]
+Get-PnPGraphSubscription [-Identity <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,20 +43,6 @@ Get-PnPGraphSubscription -Identity 328c7693-5524-44ac-a946-73e02d6b0f98
 Retrieves the subscription from Microsoft Graph with the id 328c7693-5524-44ac-a946-73e02d6b0f98
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Identity
 Returns the subscription with the provided subscription id

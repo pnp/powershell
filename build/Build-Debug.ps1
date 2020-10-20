@@ -112,4 +112,4 @@ Catch
 	Write-Host "Error: Cannot generate PnP.PowerShell.psd1. Maybe a PowerShell session is still using the module?"
 	exit 1
 }
-	
+Write-Host "`n`n Build and provisioning succeeded`n Version: $version" -ForegroundColor White -BackgroundColor Green

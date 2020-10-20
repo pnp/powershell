@@ -20,7 +20,7 @@ Gets the channels for a specified Team.
 ## SYNTAX
 
 ```powershell
-Get-PnPTeamsChannel -Team <TeamsTeamPipeBind> [-Identity <TeamsChannelPipeBind>] [-ByPassPermissionCheck]
+Get-PnPTeamsChannel -Team <TeamsTeamPipeBind> [-Identity <TeamsChannelPipeBind>] 
  [<CommonParameters>]
 ```
 
@@ -50,20 +50,6 @@ Get-PnPTeamsChannel -Team a6c1e0d7-f579-4993-81ab-4b666f8edea8 -Identity "19:796
 Retrieves the channel specified by its channel id
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Identity
 The identity of the channel to retrieve.

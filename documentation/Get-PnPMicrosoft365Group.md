@@ -21,7 +21,7 @@ Gets one Microsoft 365 Group or a list of Microsoft 365 Groups
 
 ```powershell
 Get-PnPMicrosoft365Group [-Identity <Microsoft365GroupPipeBind>] [-ExcludeSiteUrl] [-IncludeClassification]
- [-IncludeHasTeam] [-ByPassPermissionCheck] [<CommonParameters>]
+ [-IncludeHasTeam] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -71,20 +71,6 @@ Get-Microsoft365Group -IncludeIfHasTeam
 Retrieves all the Microsoft 365 Groups and checks for each of them if it has a Microsoft Team provisioned for it
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -ExcludeSiteUrl
 Exclude fetching the site URL for Microsoft 365 Groups. This speeds up large listings.

@@ -17,12 +17,12 @@ Updates an existing Planner plan
 ### By Group
 ```powershell
 Set-PnPPlannerPlan -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Title <String>
- [-ByPassPermissionCheck] [<CommonParameters>]
+  [<CommonParameters>]
 ```
 
 ### By Plan Id
 ```powershell
-Set-PnPPlannerPlan -PlanId <String> -Title <String> [-ByPassPermissionCheck] [<CommonParameters>]
+Set-PnPPlannerPlan -PlanId <String> -Title <String>  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
