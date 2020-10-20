@@ -36,7 +36,7 @@ This example sets the visibility state of Showcase built-in design package to fa
 Set-PnPBuiltInDesignPackageVisibility -DesignPackage TeamSite -IsVisible:$true
 ```
 
-This example sets the visibility of TeamSite design package to true.
+This example sets the visibility state of TeamSite design package to true.
 
 ## PARAMETERS
 
