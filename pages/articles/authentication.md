@@ -44,7 +44,7 @@ Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials "yourlabel"
 
 ```powershell
 Install-Module -Name Microsoft.PowerShell.SecretManagement -AllowPrerelease
-Install-Module -Name Microsoft.PowerShell.SecretStore -AllowPrelease
+Install-Module -Name Microsoft.PowerShell.SecretStore -AllowPrerelease
 Set-SecretStoreConfiguration
 Set-Secret -Name "yourlabel" -Secret (Get-Credential)
 ```
