@@ -31,6 +31,23 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     returnCollection = collection.Items.ToList();
                 }
+                while (!string.IsNullOrEmpty(collection.NextLink))
+                {
+                    collection = await GraphHelper.GetAsync<RestResultCollection<PlannerPlan>>(httpClient, collection.NextLink, accessToken);
+                    if (resolveDisplayNames)
+                    {
+                        foreach (var plan in collection.Items)
+                        {
+                            var fullIdentity = await ResolveIdentityAsync(httpClient, accessToken, plan.CreatedBy.User);
+
+                            returnCollection.Add(plan);
+                        }
+                    }
+                    else
+                    {
+                        returnCollection.AddRange(collection.Items);
+                    }
+                }
             }
             return returnCollection;
         }
@@ -79,7 +96,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 await GraphHelper.DeleteAsync(httpClient, $"v1.0/planner/plans/{planId}", accessToken, new Dictionary<string, string>() { { "IF-MATCH", plan.ETag } });
             }
         }
-        
+
         #endregion
 
 
@@ -110,6 +127,30 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     returnCollection = collection.Items.ToList();
                 }
+                while (!string.IsNullOrEmpty(collection.NextLink))
+                {
+                    collection = await GraphHelper.GetAsync<RestResultCollection<PlannerTask>>(httpClient, collection.NextLink, accessToken);
+                    if (resolveDisplayNames)
+                    {
+                        foreach (var task in collection.Items)
+                        {
+                            var fullIdentity = await ResolveIdentityAsync(httpClient, accessToken, task.CreatedBy.User);
+                            task.CreatedBy.User = fullIdentity;
+                            if (task.Assignments != null)
+                            {
+                                foreach (var assignment in task.Assignments)
+                                {
+                                    assignment.Value.AssignedBy.User = await ResolveIdentityAsync(httpClient, accessToken, assignment.Value.AssignedBy.User);
+                                }
+                            }
+                            returnCollection.Add(task);
+                        }
+                    }
+                    else
+                    {
+                        returnCollection.AddRange(collection.Items);
+                    }
+                }
             }
             return returnCollection;
         }
@@ -127,7 +168,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return await GraphHelper.PostAsync<PlannerTask>(httpClient, "v1.0/planner/tasks", stringContent, accessToken);
         }
 
-        public static async System.Threading.Tasks.Task DeleteTaskAsync(HttpClient httpClient, string accessToken, string taskId)
+        public static async Task DeleteTaskAsync(HttpClient httpClient, string accessToken, string taskId)
         {
             var task = GraphHelper.GetAsync<PlannerTask>(httpClient, $"v1.0/planner/tasks/{taskId}", accessToken).GetAwaiter().GetResult();
             if (task != null)
@@ -156,21 +197,27 @@ namespace PnP.PowerShell.Commands.Utilities
 
         #region Buckets
 
-        public static IEnumerable<PlannerBucket> GetBuckets(HttpClient httpClient, string accessToken, string planId)
+        public static async Task<IEnumerable<PlannerBucket>> GetBucketsAsync(HttpClient httpClient, string accessToken, string planId)
         {
-            var collection = GraphHelper.GetAsync<RestResultCollection<PlannerBucket>>(httpClient, $"v1.0/planner/plans/{planId}/buckets", accessToken).GetAwaiter().GetResult();
+            List<PlannerBucket> returnCollection = new List<PlannerBucket>();
+            var collection = await GraphHelper.GetAsync<RestResultCollection<PlannerBucket>>(httpClient, $"v1.0/planner/plans/{planId}/buckets", accessToken);
             if (collection.Items.Any())
             {
-                return collection.Items.OrderBy(p => p.OrderHint);
+                returnCollection.AddRange(collection.Items);
+                while (!string.IsNullOrEmpty(collection.NextLink))
+                {
+                    collection = await GraphHelper.GetAsync<RestResultCollection<PlannerBucket>>(httpClient, collection.NextLink, accessToken);
+                    returnCollection.AddRange(collection.Items);
+                }
             }
-            return null;
+            return returnCollection.OrderBy(p => p.OrderHint);
         }
 
-        public static PlannerBucket CreateBucket(HttpClient httpClient, string accessToken, string name, string planId)
+        public static async Task<PlannerBucket> CreateBucketAsync(HttpClient httpClient, string accessToken, string name, string planId)
         {
             var stringContent = new StringContent(JsonSerializer.Serialize(new { name = name, planId = planId, orderHint = " !" }));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            return GraphHelper.PostAsync<PlannerBucket>(httpClient, $"v1.0/planner/buckets", stringContent, accessToken).GetAwaiter().GetResult();
+            return await GraphHelper.PostAsync<PlannerBucket>(httpClient, $"v1.0/planner/buckets", stringContent, accessToken);
         }
 
         public static async System.Threading.Tasks.Task RemoveBucketAsync(HttpClient httpClient, string accessToken, string bucketId)
@@ -183,15 +230,36 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
 
-        public static IEnumerable<PlannerTask> GetBucketTasks(HttpClient httpClient, string accessToken, string bucketId, bool resolveDisplayNames)
+        public static async Task<IEnumerable<PlannerTask>> GetBucketTasksAsync(HttpClient httpClient, string accessToken, string bucketId, bool resolveDisplayNames)
         {
             var returnCollection = new List<PlannerTask>();
-            var collection = GraphHelper.GetAsync<RestResultCollection<PlannerTask>>(httpClient, $"v1.0/planner/buckets/{bucketId}/tasks", accessToken).GetAwaiter().GetResult();
+            var collection = await GraphHelper.GetAsync<RestResultCollection<PlannerTask>>(httpClient, $"v1.0/planner/buckets/{bucketId}/tasks", accessToken);
             if (collection != null && collection.Items.Any())
             {
                 if (resolveDisplayNames)
                 {
-                    System.Threading.Tasks.Task.Run(async () =>
+                    foreach (var task in collection.Items)
+                    {
+                        var fullIdentity = await ResolveIdentityAsync(httpClient, accessToken, task.CreatedBy.User);
+                        task.CreatedBy.User = fullIdentity;
+                        if (task.Assignments != null)
+                        {
+                            foreach (var assignment in task.Assignments)
+                            {
+                                assignment.Value.AssignedBy.User = await ResolveIdentityAsync(httpClient, accessToken, assignment.Value.AssignedBy.User);
+                            }
+                        }
+                        returnCollection.Add(task);
+                    }
+
+                }
+                else
+                {
+                    returnCollection = collection.Items.ToList();
+                }
+                while (!string.IsNullOrEmpty(collection.NextLink))
+                {
+                    if (resolveDisplayNames)
                     {
                         foreach (var task in collection.Items)
                         {
@@ -206,24 +274,25 @@ namespace PnP.PowerShell.Commands.Utilities
                             }
                             returnCollection.Add(task);
                         }
-                    }).GetAwaiter().GetResult();
-                }
-                else
-                {
-                    returnCollection = collection.Items.ToList();
+
+                    }
+                    else
+                    {
+                        returnCollection.AddRange(collection.Items);
+                    }
                 }
             }
             return returnCollection;
         }
 
-        public static PlannerBucket UpdateBucket(HttpClient httpClient, string accessToken, string name, string bucketId)
+        public static async Task<PlannerBucket> UpdateBucketAsync(HttpClient httpClient, string accessToken, string name, string bucketId)
         {
-            var bucket = GraphHelper.GetAsync<PlannerBucket>(httpClient, $"v1.0/planner/buckets/{bucketId}", accessToken).GetAwaiter().GetResult();
+            var bucket = await GraphHelper.GetAsync<PlannerBucket>(httpClient, $"v1.0/planner/buckets/{bucketId}", accessToken);
             if (bucket != null)
             {
                 var stringContent = new StringContent(JsonSerializer.Serialize(new { name = name }));
                 stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                return GraphHelper.PatchAsync<PlannerBucket>(httpClient, accessToken, $"v1.0/planner/buckets/{bucketId}", stringContent, new Dictionary<string, string>() { { "IF-MATCH", bucket.ETag } }).GetAwaiter().GetResult();
+                return await GraphHelper.PatchAsync<PlannerBucket>(httpClient, accessToken, $"v1.0/planner/buckets/{bucketId}", stringContent, new Dictionary<string, string>() { { "IF-MATCH", bucket.ETag } });
             }
             return null;
         }

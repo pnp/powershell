@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.Planner
             }
             else if (ParameterSetName == ParameterSetName_BYBUCKET)
             {
-                WriteObject(PlannerUtility.GetBucketTasks(HttpClient, AccessToken, Bucket.GetId(), ResolveUserDisplayNames), true);
+                WriteObject(PlannerUtility.GetBucketTasksAsync(HttpClient, AccessToken, Bucket.GetId(), ResolveUserDisplayNames).GetAwaiter().GetResult(), true);
             }
             else if (ParameterSetName == ParameterSetName_BYTASKID)
             {
