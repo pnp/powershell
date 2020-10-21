@@ -20,7 +20,7 @@ Gets one Microsoft Teams App or a list of all apps.
 ## SYNTAX
 
 ```powershell
-Get-PnPTeamsApp [-Identity <TeamsAppPipeBind>] [-ByPassPermissionCheck] [<CommonParameters>]
+Get-PnPTeamsApp [-Identity <TeamsAppPipeBind>]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -49,20 +49,6 @@ Get-PnPTeamsApp -Identity "MyTeamsApp"
 Retrieves a specific Microsoft Teams App
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Identity
 Specify the name, id or external id of the app.

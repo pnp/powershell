@@ -20,7 +20,7 @@ Removes a Microsoft Teams Team instance
 ## SYNTAX
 
 ```powershell
-Remove-PnPTeamsTeam -Identity <TeamsTeamPipeBind> [-Force] [-ByPassPermissionCheck] [<CommonParameters>]
+Remove-PnPTeamsTeam -Identity <TeamsTeamPipeBind> [-Force]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -42,20 +42,6 @@ Remove-PnPTeamsTeam -Identity testteam
 Removes the specified Team. If there are multiple teams with the same display name it will not proceed deleting the team.
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Force
 Specifying the Force parameter will skip the confirmation question.

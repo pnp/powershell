@@ -20,8 +20,7 @@ Removes all current owners from a particular Microsoft 365 Group (aka Unified Gr
 ## SYNTAX
 
 ```powershell
-Clear-PnPMicrosoft365GroupOwner -Identity <Microsoft365GroupPipeBind> [-ByPassPermissionCheck]
- [<CommonParameters>]
+Clear-PnPMicrosoft365GroupOwner -Identity <Microsoft365GroupPipeBind> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,20 +35,6 @@ Clear-PnPMicrosoft365GroupOwner -Identity "Project Team"
 Removes all the current owners from the Microsoft 365 Group named "Project Team"
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Identity
 The Identity of the Microsoft 365 Group to remove all owners from

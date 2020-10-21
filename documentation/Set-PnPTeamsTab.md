@@ -21,7 +21,7 @@ Updates Teams Tab settings
 
 ```powershell
 Set-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> [-Identity <TeamsTabPipeBind>]
- [-DisplayName <String>] [-ByPassPermissionCheck] [<CommonParameters>]
+ [-DisplayName <String>]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,20 +36,6 @@ Set-PnPTeamsTab -Team "MyTeam" -Channel "My Channel" -Identity "Wiki" -DisplayNa
 Updates the tab named 'Wiki' and changes the display name of the tab to 'Channel Wiki'
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Channel
 Specify the channel id of the team to retrieve.

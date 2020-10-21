@@ -21,19 +21,17 @@ Retrieves users from Azure Active Directory
 
 ### Return a list (Default)
 ```powershell
-Get-PnPAADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-ByPassPermissionCheck]
- [<CommonParameters>]
+Get-PnPAADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [<CommonParameters>]
 ```
 
 ### Return by specific ID
 ```powershell
-Get-PnPAADUser [-Identity <String>] [-Select <String[]>] [-ByPassPermissionCheck] [<CommonParameters>]
+Get-PnPAADUser [-Identity <String>] [-Select <String[]>] [<CommonParameters>]
 ```
 
 ### Return the delta
 ```powershell
-Get-PnPAADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-Delta] [-DeltaToken <String>]
- [-ByPassPermissionCheck] [<CommonParameters>]
+Get-PnPAADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-Delta] [-DeltaToken <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -97,20 +95,6 @@ Get-PnPAADUser -Delta -DeltaToken abcdef
 Retrieves all the users from Azure Active Directory which have had changes since the provided DeltaToken was given out
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Delta
 Retrieves all users and provides a SkipToken delta token to allow to query for changes since this run when querying again by adding -DeltaToken to the command

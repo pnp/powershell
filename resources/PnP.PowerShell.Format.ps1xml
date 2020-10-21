@@ -2310,5 +2310,130 @@
         </TableRowEntries>
       </TableControl>
     </View>
+    <View>
+      <Name>PlannerPlan</Name>
+      <ViewSelectedBy>
+        <TypeName>PnP.PowerShell.Commands.Model.Planner.PlannerPlan</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <Label>Id</Label>
+                <PropertyName>Id</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Title</Label>
+                <PropertyName>Title</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Owner (Group)</Label>
+                <PropertyName>Owner</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>CreatedDateTime</Label>
+                <PropertyName>CreatedDateTime</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Created By</Label>
+                <ScriptBlock>
+                  if($_.CreatedBy.User.DisplayName -ne $null) { $_.CreatedBy.User.DisplayName } else { $_.CreatedBy.User.Id }
+                </ScriptBlock>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+    <View>
+      <Name>PlannerBucket</Name>
+      <ViewSelectedBy>
+        <TypeName>PnP.PowerShell.Commands.Model.Planner.PlannerBucket</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>PlannerTask</Name>
+      <ViewSelectedBy>
+        <TypeName>PnP.PowerShell.Commands.Model.Planner.PlannerTask</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>Title</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Id</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>BucketId</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>AssigneePriority</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>PercentComplete</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>StartDateTime</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>CreatedDateTime</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>DueDateTime</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>CompletedDateTime</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>HasDescription</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>PreviewType</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>CreatedBy</Label>
+                <ScriptBlock>
+                  if($_.CreatedBy.User.DisplayName -ne $null) { $_.CreatedBy.User.DisplayName } else { $_.CreatedBy.User.Id }
+                </ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>AppliedCategories</Label>
+                <ScriptBlock>
+                  $categories = [System.Collections.ArrayList]::new()
+                  if($_.AppliedCategories.Category1 -ne $null ) { [void]$categories.Add("Category1") } 
+                  if($_.AppliedCategories.Category2 -ne $null ) { [void]$categories.Add("Category2") } 
+                  if($_.AppliedCategories.Category3 -ne $null ) { [void]$categories.Add("Category3") } 
+                  if($_.AppliedCategories.Category4 -ne $null ) { [void]$categories.Add("Category4") } 
+                  if($_.AppliedCategories.Category5 -ne $null ) { [void]$categories.Add("Category5") } 
+                  if($_.AppliedCategories.Category6 -ne $null ) { [void]$categories.Add("Category6") } 
+                  $categories
+                </ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Assignments</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
   </ViewDefinitions>
 </Configuration>

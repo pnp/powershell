@@ -20,8 +20,7 @@ Gets current service status of the Office 365 Services from the Office 365 Manag
 ## SYNTAX
 
 ```powershell
-Get-PnPOffice365CurrentServiceStatus [-Workload <Office365Workload>] [-ByPassPermissionCheck]
- [<CommonParameters>]
+Get-PnPOffice365CurrentServiceStatus [-Workload <Office365Workload>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,20 +42,6 @@ Get-PnPOffice365CurrentServiceStatus -Workload SharePoint
 Retrieves the current service status of SharePoint Online
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Workload
 Allows retrieval of the current service status of only one particular service. If not provided, the current service status of all services will be returned.

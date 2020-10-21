@@ -1,0 +1,91 @@
+---
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+Module Name: PnP.PowerShell
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpmicrosoft365groupowner
+schema: 2.0.0
+title: Add-PnPMicrosoft365GroupOwner
+---
+
+# Add-PnPMicrosoft365GroupOwner
+
+## SYNOPSIS
+
+**Required Permissions**
+
+  *  Microsoft Graph API: All of Group.ReadWrite.All, User.ReadWrite.All
+
+Adds members to a owners of a Microsoft 365 Group
+
+## SYNTAX
+
+```powershell
+Add-PnPMicrosoft365GroupOwner -Identity <Microsoft365GroupPipeBind> -Users <String[]> [-RemoveExisting] [<CommonParameters>]
+```
+
+## DESCRIPTION
+
+## EXAMPLES
+
+### EXAMPLE 1
+```powershell
+Add-PnPMicrosoft365GroupOwner -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com"
+```
+
+Adds the provided two users as additional owners to the Microsoft 365 Group named "Project Team"
+
+### EXAMPLE 2
+```powershell
+Add-PnPMicrosoft365GroupMember -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com" -RemoveExisting
+```
+
+Sets the provided two users as the only owners of the Microsoft 365 Group named "Project Team" by removing any current existing members first
+
+## PARAMETERS
+
+### -Identity
+The Identity of the Microsoft 365 Group to add owners to
+
+```yaml
+Type: Microsoft365GroupPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -RemoveExisting
+If provided, all existing members will be removed and only those provided through Users will become members
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Users
+The UPN(s) of the user(s) to add to the Microsoft 365 Group as a member
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+## RELATED LINKS
+
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+[Documentation](https://docs.microsoft.com/graph/api/group-post-members)

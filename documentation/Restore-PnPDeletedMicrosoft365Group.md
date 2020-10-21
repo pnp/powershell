@@ -20,7 +20,7 @@ Restores one deleted Microsoft 365 Group
 ## SYNTAX
 
 ```powershell
-Restore-PnPDeletedMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-ByPassPermissionCheck]
+Restore-PnPDeletedMicrosoft365Group -Identity <Microsoft365GroupPipeBind> 
  [<CommonParameters>]
 ```
 
@@ -44,20 +44,6 @@ Restore-PnPDeletedMicrosoft365Group -Identity $group
 Restores the provided deleted Microsoft 365 Group
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Identity
 The Identity of the deleted Microsoft 365 Group

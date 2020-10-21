@@ -22,7 +22,7 @@ Sets Microsoft 365 Group properties
 ```powershell
 Set-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-DisplayName <String>] [-Description <String>]
  [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-GroupLogoPath <String>] [-CreateTeam]
- [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-ByPassPermissionCheck]
+ [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] 
  [<CommonParameters>]
 ```
 
@@ -66,20 +66,6 @@ Set-PnPMicrosoft365Group -Identity $group -Owners demo@contoso.com
 Sets demo@contoso.com as owner of the group
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -CreateTeam
 Creates a Microsoft Teams team associated with created group

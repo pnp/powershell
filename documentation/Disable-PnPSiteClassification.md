@@ -20,7 +20,7 @@ Disables Site Classifications for the tenant
 ## SYNTAX
 
 ```powershell
-Disable-PnPSiteClassification [-ByPassPermissionCheck] [<CommonParameters>]
+Disable-PnPSiteClassification [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,20 +35,6 @@ Disable-PnPSiteClassification
 Disables Site Classifications for your tenant.
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

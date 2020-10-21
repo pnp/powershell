@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Planner
                     {
                         if (!ParameterSpecified(nameof(Identity)))
                         {
-                            WriteObject(PlannerUtility.GetBuckets(HttpClient, AccessToken, planId), true);
+                            WriteObject(PlannerUtility.GetBucketsAsync(HttpClient, AccessToken, planId).GetAwaiter().GetResult(), true);
                         }
                         else
                         {
@@ -59,7 +59,7 @@ namespace PnP.PowerShell.Commands.Planner
             }
             else
             {
-                WriteObject(PlannerUtility.GetBuckets(HttpClient, AccessToken, PlanId), true);
+                WriteObject(PlannerUtility.GetBucketsAsync(HttpClient, AccessToken, PlanId).GetAwaiter().GetResult(), true);
             }
         }
     }

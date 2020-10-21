@@ -16,7 +16,7 @@ Returns all or a specific Planner plan for a Microsoft 365 Group.
 
 ```powershell
 Get-PnPPlannerPlan -Group <PlannerGroupPipeBind> [-Identity <PlannerPlanPipeBind>] [-ResolveUserDisplayNames]
- [-ByPassPermissionCheck] [<CommonParameters>]
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION

@@ -20,7 +20,7 @@ Returns the defined Site Classifications for the tenant
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteClassification [-ByPassPermissionCheck] [<CommonParameters>]
+Get-PnPSiteClassification  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,20 +35,6 @@ Get-PnPSiteClassification
 Returns the currently set site classifications for the tenant.
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

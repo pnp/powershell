@@ -20,8 +20,7 @@ Adds members to a particular Microsoft 365 Group
 ## SYNTAX
 
 ```powershell
-Add-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> -Users <String[]> [-RemoveExisting]
- [-ByPassPermissionCheck] [<CommonParameters>]
+Add-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> -Users <String[]> [-RemoveExisting] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,20 +42,6 @@ Add-PnPMicrosoft365GroupMember -Identity "Project Team" -Users "john@contoso.onm
 Sets the provided two users as the only members of the Microsoft 365 Group named "Project Team" by removing any current existing members first
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Identity
 The Identity of the Microsoft 365 Group to add members to

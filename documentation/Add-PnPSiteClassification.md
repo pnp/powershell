@@ -20,8 +20,7 @@ Adds one ore more site classification values to the list of possible values
 ## SYNTAX
 
 ```powershell
-Add-PnPSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]>
- [-ByPassPermissionCheck] [<CommonParameters>]
+Add-PnPSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,20 +42,6 @@ Add-PnPSiteClassification -Classifications "Top Secret","HBI"
 Adds the "Top Secret" and the "For Your Eyes Only" classification to the already existing classification values.
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Classifications
 

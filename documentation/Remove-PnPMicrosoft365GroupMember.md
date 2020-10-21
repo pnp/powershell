@@ -21,7 +21,7 @@ Removes members from a particular Microsoft 365 Group
 
 ```powershell
 Remove-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> -Users <String[]>
- [-ByPassPermissionCheck] [<CommonParameters>]
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,20 +36,6 @@ Remove-PnPMicrosoft365GroupMember -Identity "Project Team" -Users "john@contoso.
 Removes the provided two users as members from the Microsoft 365 Group named "Project Team"
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Identity
 The Identity of the Microsoft 365 Group to remove members from

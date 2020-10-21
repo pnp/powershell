@@ -36,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
                     if (planId != null)
                     {
-                        WriteObject(PlannerUtility.CreateBucket(HttpClient, AccessToken, Name, planId), true);
+                        WriteObject(PlannerUtility.CreateBucketAsync(HttpClient, AccessToken, Name, planId).GetAwaiter().GetResult(), true);
                     }
                     else
                     {
@@ -50,7 +50,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
             }
             else if (ParameterSetName == ParameterName_BYPLANID)
             {
-                WriteObject(PlannerUtility.CreateBucket(HttpClient, AccessToken, Name, PlanId), true);
+                WriteObject(PlannerUtility.CreateBucketAsync(HttpClient, AccessToken, Name, PlanId).GetAwaiter().GetResult(), true);
             }
         }
     }

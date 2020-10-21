@@ -20,7 +20,7 @@ Removes one Microsoft 365 Group
 ## SYNTAX
 
 ```powershell
-Remove-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-ByPassPermissionCheck] [<CommonParameters>]
+Remove-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind>  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -49,20 +49,6 @@ Get-PnPMicrosoft365Group | ? Visibility -eq "Public" | Remove-PnPMicrosoft365Gro
 Removes all the public Microsoft 365 Groups
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Identity
 The Identity of the Microsoft 365 Group

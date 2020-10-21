@@ -17,13 +17,12 @@ Adds a new task to a planner bucket
 ### By Group
 ```powershell
 Add-PnPPlannerTask -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Bucket <PlannerBucketPipeBind>
- -Title <String> [-ByPassPermissionCheck] [<CommonParameters>]
+ -Title <String> [<CommonParameters>]
 ```
 
 ### By Plan Id
 ```powershell
-Add-PnPPlannerTask -Bucket <PlannerBucketPipeBind> -PlanId <String> -Title <String> [-ByPassPermissionCheck]
- [<CommonParameters>]
+Add-PnPPlannerTask -Bucket <PlannerBucketPipeBind> -PlanId <String> -Title <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION

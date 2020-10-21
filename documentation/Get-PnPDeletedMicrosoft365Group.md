@@ -20,8 +20,7 @@ Gets one deleted Microsoft 365 Group or a list of deleted Microsoft 365 Groups
 ## SYNTAX
 
 ```powershell
-Get-PnPDeletedMicrosoft365Group [-Identity <Microsoft365GroupPipeBind>] [-ByPassPermissionCheck]
- [<CommonParameters>]
+Get-PnPDeletedMicrosoft365Group [-Identity <Microsoft365GroupPipeBind>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,20 +42,6 @@ Get-PnPDeletedMicrosoft365Group -Identity 38b32e13-e900-4d95-b860-fb52bc07ca7f
 Retrieves a specific deleted Microsoft 365 Group based on its ID
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Identity
 The Identity of the Microsoft 365 Group

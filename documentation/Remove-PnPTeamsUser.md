@@ -20,7 +20,7 @@ Removes users from a team.
 ## SYNTAX
 
 ```powershell
-Remove-PnPTeamsUser -Team <TeamsTeamPipeBind> -User <String> [-Role <String>] [-Force] [-ByPassPermissionCheck]
+Remove-PnPTeamsUser -Team <TeamsTeamPipeBind> -User <String> [-Role <String>] [-Force] 
  [<CommonParameters>]
 ```
 
@@ -43,20 +43,6 @@ Remove-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Owner
 Removes the user john@doe.com from the owners of the team, but retains the user as a member.
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Force
 Specifying the Force parameter will skip the confirmation question.

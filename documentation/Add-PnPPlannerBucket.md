@@ -16,13 +16,12 @@ Adds a new bucket to a Planner plan
 
 ### By Group
 ```powershell
-Add-PnPPlannerBucket -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Name <String>
- [-ByPassPermissionCheck] [<CommonParameters>]
+Add-PnPPlannerBucket -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Name <String> [<CommonParameters>]
 ```
 
 ### By Plan Id
 ```powershell
-Add-PnPPlannerBucket -PlanId <String> -Name <String> [-ByPassPermissionCheck] [<CommonParameters>]
+Add-PnPPlannerBucket -PlanId <String> -Name <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
