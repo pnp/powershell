@@ -140,14 +140,19 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         #endregion
 
         #region PATCH
-        public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, T content)
+        public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, T content, Dictionary<string, string> additionalHeaders = null, bool camlCasePolicy = true)
         {
-            var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { IgnoreNullValues = true }));
+            var serializerSettings = new JsonSerializerOptions() { IgnoreNullValues = true };
+            if (camlCasePolicy)
+            {
+                serializerSettings.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            }
+            var requestContent = new StringContent(JsonSerializer.Serialize(content, serializerSettings));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 #if NETFRAMEWORK
-            var message = GetMessage(url,  new HttpMethod("PATCH"), accessToken, requestContent);
+            var message = GetMessage(url,  new HttpMethod("PATCH"), accessToken, requestContent, additionalHeaders);
 #else
-            var message = GetMessage(url, HttpMethod.Patch, accessToken, requestContent);
+            var message = GetMessage(url, HttpMethod.Patch, accessToken, requestContent, additionalHeaders);
 #endif
             var returnValue = await SendMessageAsync(httpClient, message);
             if (!string.IsNullOrEmpty(returnValue))
@@ -178,7 +183,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        public static async Task<HttpResponseMessage> PatchAsync(HttpClient httpClient, string accessToken, string url, HttpContent content, Dictionary<string, string> additionalHeaders = null)
+        public static async Task<HttpResponseMessage> PatchAsync(HttpClient httpClient, string accessToken, HttpContent content, string url, Dictionary<string, string> additionalHeaders = null)
         {
 #if NETFRAMEWORK
             var message = GetMessage(url, new HttpMethod("PATCH"), accessToken, content, additionalHeaders);

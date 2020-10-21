@@ -62,6 +62,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Remove-PnPPlannerBucket` cmdlet (0.1.17)
 - Added `Remove-PnPPlannerPlan` cmdlet (0.1.17)
 - Added `Remove-PnPPlannerTask` cmdlet (0.1.17)
+- Added `Set-PnPPlannerTask` cmdlet (0.1.18)
 
 ### Changed
 

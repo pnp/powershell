@@ -149,11 +149,26 @@ Accept wildcard characters: False
 ```
 
 ### -ResolveUserDisplayNames
-{{ Fill ResolveUserDisplayNames Description }}
+Will resolve userids to usernames
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeDetails
+Includes checklist and description details
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: By Task Id
 Aliases:
 
 Required: False

@@ -35,6 +35,9 @@ namespace PnP.PowerShell.Commands.Planner
         [Parameter(Mandatory = false, HelpMessage = "If specified this specific task will be retrieved", ParameterSetName = ParameterSetName_BYTASKID)]
         public string TaskId;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSetName_BYTASKID)]
+        public SwitchParameter IncludeDetails;
+
         protected override void ExecuteCmdlet()
         {
             if (ParameterSetName == ParameterSetName_BYGROUP)
@@ -67,7 +70,7 @@ namespace PnP.PowerShell.Commands.Planner
             }
             else if (ParameterSetName == ParameterSetName_BYTASKID)
             {
-                WriteObject(PlannerUtility.GetTaskAsync(HttpClient, AccessToken, TaskId, ResolveUserDisplayNames).GetAwaiter().GetResult());
+                WriteObject(PlannerUtility.GetTaskAsync(HttpClient, AccessToken, TaskId, ResolveUserDisplayNames, IncludeDetails).GetAwaiter().GetResult());
             }
         }
     }
