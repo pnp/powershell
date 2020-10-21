@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>get-pnpplannertask | PnP PowerShell </title>
+    <title>set-pnpplannertask | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="get-pnpplannertask | PnP PowerShell ">
+    <meta name="title" content="set-pnpplannertask | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -80,110 +80,30 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="get-pnpplannertask">Get-PnPPlannerTask</h1>
+                    <h1 id="set-pnpplannertask">Set-PnPPlannerTask</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Returns Planner tasks</p>
+<p>Updates an existing task</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="by-group">By Group</h3>
-<pre><code class="lang-powershell">Get-PnPPlannerTask -Group &lt;PlannerGroupPipeBind&gt; -Plan &lt;PlannerPlanPipeBind&gt; [-ResolveUserDisplayNames]
-  [&lt;CommonParameters&gt;]
-</code></pre>
-<h3 id="by-bucket">By Bucket</h3>
-<pre><code class="lang-powershell">Get-PnPPlannerTask -Bucket &lt;PlannerBucketPipeBind&gt; [-ResolveUserDisplayNames] 
+<pre><code>Set-PnPPlannerTask -TaskId &lt;String&gt; [-Title &lt;String&gt;] [-Bucket &lt;PlannerBucketPipeBind&gt;]
+ [-PercentComplete &lt;Int32&gt;] [-DueDateTime &lt;DateTime&gt;] [-StartDateTime &lt;DateTime&gt;] [-ByPassPermissionCheck]
  [&lt;CommonParameters&gt;]
 </code></pre>
-<h3 id="by-plan-id">By Plan Id</h3>
-<pre><code class="lang-powershell">Get-PnPPlannerTask -PlanId &lt;String&gt; [-ResolveUserDisplayNames]  [&lt;CommonParameters&gt;]
-</code></pre>
-<h3 id="by-task-id">By Task Id</h3>
-<pre><code class="lang-powershell">Get-PnPPlannerTask -TaskId &lt;String&gt; [-ResolveUserDisplayNames]  [&lt;CommonParameters&gt;]
-</code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet returns Planner tasks.</p>
+<p>This cmdlets allows you to update an existing task in a Planner plan.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">Get-PnPPlannerTask -Group &quot;Marketing&quot; -Plan &quot;Conference Plan&quot;
+<pre><code class="lang-powershell">Set-PnPPlannerTask -TaskId RSNNbc4HM0e7jt-btAKtTZYAFAf0 -Title &quot;New Title&quot; -StartDateTime 2020-10-01
 </code></pre>
-<p>This returns all tasks for the specific plan.</p>
+<p>This updates the task with the specified id and sets the title to &quot;New Title&quot; and sets the start date to the first of October 2020.</p>
 <h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">$tasks = Get-PnPPlannerTask -Group &quot;Marketing&quot; -Plan &quot;Conference Plan&quot; -ResolveUserDiplayNames
-$task = $tasks | Select-Object -First 1
-$task.CreatedBy.DisplayName 
+<pre><code class="lang-powershell">Set-PnPPlannerTask -TaskId RSNNbc4HM0e7jt-btAKtTZYAFAf0 -Title &quot;New Title&quot; -Bucket &quot;To do&quot;
 </code></pre>
-<p>This retrieves all tasks for a specific plan, takes the first task and prints the display name of the user that created the task.</p>
-<h3 id="example-3">Example 3</h3>
-<pre><code class="lang-powershell">Get-PnPPlannerTask -Group &quot;Marketing&quot; -PlanId &quot;QvfkTd1mc02gwxHjHC_43JYABhAy&quot;
-</code></pre>
-<p>This returns all tasks for the specified plan.</p>
-<h3 id="example-4">Example 4</h3>
-<pre><code class="lang-powershell">Get-PnPPlannerTask -TaskId &quot;QvfkTd1mc02gwxHjHC_43JYABhAy&quot;
-</code></pre>
-<p>This returns a specific task.</p>
+<p>This updates the task with the specified id and moves to the bucket &quot;To do&quot;</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-bucket">-Bucket</h3>
-<p>Specify the bucket or bucket id to retrieve the tasks for.</p>
+<p>Specify the bucket name or ID to move the task to.</p>
 <pre><code class="lang-yaml">Type: PlannerBucketPipeBind
-Parameter Sets: By Bucket
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-group">-Group</h3>
-<p>Specify the group id of group owning the plan.</p>
-<pre><code class="lang-yaml">Type: PlannerGroupPipeBind
-Parameter Sets: By Group
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-plan">-Plan</h3>
-<p>Specify the id or name of the plan to retrieve the tasks for.</p>
-<pre><code class="lang-yaml">Type: PlannerPlanPipeBind
-Parameter Sets: By Group
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-planid">-PlanId</h3>
-<p>Specify the id of the plan to retrieve the tasks for.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: By Plan Id
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-taskid">-TaskId</h3>
-<p>Specify the id of the task to retrieve.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: By Task Id
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-resolveuserdisplaynames">-ResolveUserDisplayNames</h3>
-<p>Will resolve userids to usernames</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
@@ -193,10 +113,58 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-includedetails">-IncludeDetails</h3>
-<p>Includes checklist and description details</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: By Task Id
+<h3 id="-duedatetime">-DueDateTime</h3>
+<p>Specify the due date.</p>
+<pre><code class="lang-yaml">Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-percentcomplete">-PercentComplete</h3>
+<p>Defines the percentage of completeness of the task.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-startdatetime">-StartDateTime</h3>
+<p>Defines the start date of the task.</p>
+<pre><code class="lang-yaml">Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-taskid">-TaskId</h3>
+<p>The Id of the task to update.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-title">-Title</h3>
+<p>Sets the new title of the task.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
 Aliases:
 
 Required: False

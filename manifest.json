@@ -306,7 +306,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/nightly/Get-PnPPlannerTask.html",
-          "hash": "ZmnEmRr/0lnEALScpJqNkg=="
+          "hash": "IpXHDgVnc3uYyLD1eQaotA=="
         }
       },
       "is_incremental": false,
@@ -787,6 +787,18 @@
         ".html": {
           "relative_path": "cmdlets/nightly/Set-PnPPlannerPlan.html",
           "hash": "JGs30R5eQWw/ittqPuecQg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/Set-PnPPlannerTask.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/Set-PnPPlannerTask.html",
+          "hash": "faPm97n0VBJGiGvix0gzaA=="
         }
       },
       "is_incremental": false,
@@ -6462,7 +6474,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "ZACayHxfY3yGL0VomSHmOw=="
+          "hash": "c+JC4vEx5HUAknQ8HWdgaw=="
         }
       },
       "is_incremental": false,
@@ -6529,7 +6541,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 537,
+          "total_file_count": 538,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
