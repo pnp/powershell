@@ -100,7 +100,7 @@ You are not creating a new application in the sense of something that runs in yo
 </code></pre>
 <p>and you will be prompted for credentials.</p>
 <h2 id="authenticating-with-pre-stored-credentials-using-the-windows-credential-manager-windows-only">Authenticating with pre-stored credentials using the Windows Credential Manager (Windows only)</h2>
-<pre><code class="lang-powershell">Add-PnPStoreCredential -Name &quot;yourlabel&quot; -Username youruser@domain.com
+<pre><code class="lang-powershell">Add-PnPStoredCredential -Name &quot;yourlabel&quot; -Username youruser@domain.com
 </code></pre>
 <p>You will be prompted to provide a password. After that you can login using:</p>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials &quot;yourlabel&quot;
