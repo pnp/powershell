@@ -107,7 +107,7 @@ You are not creating a new application in the sense of something that runs in yo
 </code></pre>
 <h2 id="authenticating-with-pre-stored-credentials-using-the-secrets-management-module-from-microsoft-multi-platform">Authenticating with pre-stored credentials using the Secrets Management Module from Microsoft (Multi-Platform)</h2>
 <pre><code class="lang-powershell">Install-Module -Name Microsoft.PowerShell.SecretManagement -AllowPrerelease
-Install-Module -Name Microsoft.PowerShell.SecretStore -AllowPrelease
+Install-Module -Name Microsoft.PowerShell.SecretStore -AllowPrerelease
 Set-SecretStoreConfiguration
 Set-Secret -Name &quot;yourlabel&quot; -Secret (Get-Credential)
 </code></pre>
