@@ -29,14 +29,14 @@ Sets the visibility of the available built-in Design Packages.
 Set-PnPBuiltInDesignPackageVisibility -DesignPackage Showcase -IsVisible:$false
 ```
 
-This example retrieves the current visibility state of Showcase built-in design package.
+This example sets the visibility state of Showcase built-in design package to false.
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPBuiltInDesignPackageVisibility
+Set-PnPBuiltInDesignPackageVisibility -DesignPackage TeamSite -IsVisible:$true
 ```
 
-This example sets the visibility of Showcase design package to false.
+This example sets the visibility state of TeamSite design package to true.
 
 ## PARAMETERS
 
