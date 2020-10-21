@@ -762,7 +762,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/nightly/Set-PnPBuiltInDesignPackageVisibility.html",
-          "hash": "1tMXRrGoLtS+iXu8ItxBTg=="
+          "hash": "OOrBfwFof6dQU5dgg772cg=="
         }
       },
       "is_incremental": false,
@@ -834,7 +834,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/nightly/Set-PnPStructuralNavigationCacheSiteState.html",
-          "hash": "Qt4hHGZhjD6hd4BGorvslw=="
+          "hash": "mcYJKAvqUNQ5/I8lkH1yeA=="
         }
       },
       "is_incremental": false,
