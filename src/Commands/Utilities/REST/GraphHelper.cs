@@ -70,6 +70,12 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return await SendMessageAsync(httpClient, message);
         }
 
+        public static async Task<HttpResponseMessage> GetResponseAsync(HttpClient httpClient, string url, string accessToken)
+        {
+            var message = GetMessage(url, HttpMethod.Get, accessToken);
+            return await GetResponseMessageAsync(httpClient, message);
+        }
+
         public static async Task<T> GetAsync<T>(HttpClient httpClient, string url, string accessToken, bool camlCasePolicy = true)
         {
             var stringContent = await GetAsync(httpClient, url, accessToken);

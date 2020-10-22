@@ -1,4 +1,3 @@
-#if !ONPREMISES
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
@@ -64,4 +63,3 @@ namespace PnP.PowerShell.Commands.Planner
         }
     }
 }
-#endif
