@@ -54,7 +54,19 @@
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "cZLFk7qYJsrOdmuwMJKFAA=="
+          "hash": "umRSr1bSuczQjyqAanJeDA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/upgrading.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/upgrading.html",
+          "hash": "wDnUiSXK7HVMoSrSiUDoKg=="
         }
       },
       "is_incremental": false,
@@ -6541,7 +6553,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 538,
+          "total_file_count": 539,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

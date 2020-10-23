@@ -1,0 +1,481 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Upgrading from the Legacy version of PnP PowerShell | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Upgrading from the Legacy version of PnP PowerShell | PnP PowerShell ">
+    <meta name="generator" content="docfx 2.51.0.0">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/upgrading.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+                    <h1 id="upgrading-from-the-legacy-version-of-pnp-powershell">Upgrading from the Legacy version of PnP PowerShell</h1>
+
+<p>First make sure to uninstall any edition of PnP PowerShell that runs on the Windows PowerShell version (the one with the blue background).</p>
+<pre><code class="lang-powershell">Uninstall-Module -Name &quot;SharePointPnPPowerShellOnline&quot; -AllVersions -Force
+</code></pre>
+<p>Now install the new module:</p>
+<pre><code class="lang-powershell">Install-Module -Name &quot;PnP.PowerShell&quot; -AllowPrerelease
+</code></pre>
+<h2 id="setup-authentication">Setup authentication.</h2>
+<p>The way PnP PowerShell authenticates you to your tenant has changed. We now use OAuth behind the scenes to authenticate you. We support username/password auth, device code auth and app-only authentication.</p>
+<p>If you where using <code>Connect-PnPOnline</code> with the <code>-Credentials</code> you will have to register first an Azure AD application on your tenant. This is very straightfoward and simple:</p>
+<pre><code class="lang-powershell">Register-PnPManagementShellAccess
+</code></pre>
+<p>This cmdlet will ask you to authenticate, and then provide consent to the PnP Management Shell application. A registration will be added to the Azure AD of your tenant. This is a one-time action per tenant. After you provided consent you will be able to authenticate using:</p>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url https://[tenant].sharepoint.com -Credentials (Get-Credential)
+</code></pre>
+<p>Read <a href="authentication.html">more information about authentication</a>.</p>
+<h2 id="changes">Changes</h2>
+<table>
+<thead>
+<tr>
+<th>Old</th>
+<th>New/Replaced with</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Apply-PnPProvisioningTemplate</code></td>
+<td><code>Invoke-PnPSiteTemplate</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Get-PnPProvisioningTemplate</code></td>
+<td><code>Get-PnPSiteTemplate</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Add-PnPDataRowsToProvisioningTemplate</code></td>
+<td><code>Add-PnPDataRowsToSiteTemplate</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Add-PnPFileToProvisioningTemplate</code></td>
+<td><code>Add-PnPFileToSiteTemplate</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Add-PnPListFoldersToProvisioningTemplate</code></td>
+<td><code>Add-PnPListFoldersToSiteTemplate</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Convert-PnPFolderToProvisioningTemplate</code></td>
+<td><code>Convert-PnPFolderToSiteTemplate</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Convert-PnPProvisioningTemplate</code></td>
+<td><code>Convert-PnPSiteTemplate</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Export-PnPListToProvisioningTemplate</code></td>
+<td><code>Export-PnPListToSiteTemplate</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>New-PnPProvisioningTemplate</code></td>
+<td><code>New-PnPSiteTemplate</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>New-PnPProvisioningTemplateFromFolder</code></td>
+<td><code>New-PnPSiteTemplateFromFolder</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Read-PnPProvisioningTemplate</code></td>
+<td><code>Read-PnPSiteTemplate</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Remove-PnPFileFromProvisioningTemplate</code></td>
+<td><code>Remove-PnPFileFromSiteTemplate</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Save-PnPProvisioningTemplate</code></td>
+<td><code>Save-PnPSiteTemplate</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Set-PnPProvisioningTemplateMetadata</code></td>
+<td><code>Set-PnPSiteTemplateMetadata</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Add-PnPProvisioningTemplate</code></td>
+<td><code>Add-PnPSiteTemplate</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Apply-PnPTenantTemplate</code></td>
+<td><code>Invoke-PnPTenantTemplate</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Get-PnPAppInstance</code></td>
+<td><code>Get-PnPApp</code></td>
+<td>Different parameters</td>
+</tr>
+<tr>
+<td><code>Import-PnPAppPackage</code></td>
+<td><code>Install-PnPApp</code></td>
+<td>Different parameters</td>
+</tr>
+<tr>
+<td><code>Uninstall-PnPAppInstance</code></td>
+<td><code>Uninstall-PnPApp</code></td>
+<td>Different parameters</td>
+</tr>
+<tr>
+<td><code>Get-PnPHealthScore</code></td>
+<td></td>
+<td>Deprecated</td>
+</tr>
+<tr>
+<td><code>Enable-PnPResponsiveUI</code></td>
+<td></td>
+<td>Deprecated</td>
+</tr>
+<tr>
+<td><code>Disabled-PnPResponsiveUI</code></td>
+<td></td>
+<td>Deprecated</td>
+</tr>
+<tr>
+<td><code>Disable-PnPInplaceRecordsManagementForSite</code></td>
+<td><code>Set-PnPInPlaceRecordsManagement -Enabled $false</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Enable-PnPInplaceRecordsManagementForSite</code></td>
+<td><code>Set-PnPInPlaceRecordsManagement -Enabled $true</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Measure-PnPResponseTime</code></td>
+<td></td>
+<td>Deprecated. Consider using Fiddler for more detailed data</td>
+</tr>
+<tr>
+<td><code>Get-PnPManagementApiAccessToken</code></td>
+<td><code>Connect-PnPOnline -Scopes [scopes]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Connect-PnPHubSite</code></td>
+<td><code>Add-PnPHubSiteAssociation</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Disconnect-PnPHubSite</code></td>
+<td><code>Remove-PnPHubSiteAssociation</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Add-PnPOffice365GroupToSite</code></td>
+<td><code>Add-PnPMicrosoft365GroupToSite</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Add-PnPUnifiedGroupMember</code></td>
+<td><code>Add-PnPMicrosoft365GroupMember</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Add-PnPUnifiedGroupOwner</code></td>
+<td><code>Add-PnPMicrosoft365GroupOwner</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Clear-PnPUnifiedGroupMember</code></td>
+<td><code>Clear-PnPMicrosoft365GroupMember</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Clear-PnPUnifiedGroupOwner</code></td>
+<td><code>Clear-PnPMicrosoft365GroupOwner</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Get-PnPDeletedUnifiedGroup</code></td>
+<td><code>Get-PnPDeletedMicrosoft365Group</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Get-PnPUnifiedGroup</code></td>
+<td><code>Get-PnPMicrosoft365Group</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Get-PnPUnifiedGroupMembers</code></td>
+<td><code>Get-PnPMicrosoft365GroupMembers</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Get-PnPUnifiedGroupOwners</code></td>
+<td><code>Get-PnPMicrosoft365GroupOwners</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>New-PnPUnifiedGroup</code></td>
+<td><code>New-PnPMicrosoft365Group</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Remove-PnPDeletedUnifiedGroup</code></td>
+<td><code>Remove-PnPDeletedMicrosoft365Group</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Remove-PnPUnifiedGroup</code></td>
+<td><code>Remove-PnPMicrosoft365Group</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Remove-PnPUnifiedGroupMember</code></td>
+<td><code>Remove-PnPMicrosoft365GroupMember</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Remove-PnPUnifiedGroupOwner</code></td>
+<td><code>Remove-PnPMicrosoft365GroupOwner</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Restore-PnPDeletedUnifiedGroup</code></td>
+<td><code>Restore-PnPDeletedMicrosoft365Group</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Set-PnPUnifiedGroup</code></td>
+<td><code>Set-PnPMicrosoft365Group</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Execute-PnPQuery</code></td>
+<td><code>Invoke-PnPQuery</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Ensure-PnPFolder</code></td>
+<td><code>Resolve-PnPFolder</code></td>
+<td>Removed alias</td>
+</tr>
+<tr>
+<td><code>Install-PnPSolution</code></td>
+<td></td>
+<td>Deprecated</td>
+</tr>
+<tr>
+<td><code>Add-PnPWorkflowDefinition</code></td>
+<td></td>
+<td>Deprecated</td>
+</tr>
+<tr>
+<td><code>Add-PnPWorkflowSubscription</code></td>
+<td></td>
+<td>Deprecated</td>
+</tr>
+<tr>
+<td><code>Get-PnPWorkflowDefinition</code></td>
+<td></td>
+<td>Deprecated</td>
+</tr>
+<tr>
+<td><code>Get-PnPWorkflowInstances</code></td>
+<td></td>
+<td>Deprecated</td>
+</tr>
+<tr>
+<td><code>Get-PnPWorkflowSubscription</code></td>
+<td></td>
+<td>Deprecated</td>
+</tr>
+<tr>
+<td><code>Remove-PnPWorkflowDefinition</code></td>
+<td></td>
+<td>Deprecated</td>
+</tr>
+<tr>
+<td><code>Remove-PnPWorkflowSubscription</code></td>
+<td></td>
+<td>Deprecated</td>
+</tr>
+<tr>
+<td><code>Resume-PnPWorkflowInstance</code></td>
+<td></td>
+<td>Deprecated</td>
+</tr>
+<tr>
+<td><code>Start-PnPWorkflowInstance</code></td>
+<td></td>
+<td>Deprecated</td>
+</tr>
+<tr>
+<td><code>Stop-PnPWorkflowInstance</code></td>
+<td></td>
+<td>Deprecated</td>
+</tr>
+<tr>
+<td><code>Test-PnPOffice365AliasIsUsed</code></td>
+<td><code>Test-PnPMicrosoft365AliasIsUsed</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="parameter-changes">Parameter Changes</h2>
+<table>
+<thead>
+<tr>
+<th>Cmdlet</th>
+<th>Parameter</th>
+<th>Changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Register-PnPManagementShell</code></td>
+<td><code>SiteUrl</code></td>
+<td>Removed. Not required anymore</td>
+</tr>
+<tr>
+<td><code>Connect-PnPOnline</code></td>
+<td><code>MinimalHealthScore</code></td>
+<td>Removed. Not applicable anymore</td>
+</tr>
+<tr>
+<td><code>Connect-PnPOnline</code></td>
+<td><code>SkipTenantAdminCheck</code></td>
+<td>Removed.</td>
+</tr>
+<tr>
+<td><code>Remove-PnPTenantSite</code></td>
+<td><code>FromRecycleBin</code></td>
+<td>Use <code>Clear-PnPTenantRecycleBinItem</code></td>
+</tr>
+<tr>
+<td><code>Set-PnPTenantSite</code></td>
+<td><code>UserCodeMaximumLevel</code></td>
+<td>Sandboxed solutions have been deprecated, no more applicable</td>
+</tr>
+<tr>
+<td><code>Set-PnPTenantSite</code></td>
+<td><code>UserCodeWarningLevel</code></td>
+<td>Sandboxed solutions have been deprecated, no more applicable</td>
+</tr>
+<tr>
+<td><code>New-PnPAzureCertificate</code></td>
+<td><code>Out</code></td>
+<td>Use <code>OutPfx</code> instead</td>
+</tr>
+<tr>
+<td><code>Get-PnPAvailableLanguage</code></td>
+<td><code>Identity</code></td>
+<td>Removed as it does not apply to SharePoint Online</td>
+</tr>
+</tbody>
+</table>
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://telemetry.sharepointpnp.com/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+</html>
