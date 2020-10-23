@@ -127,5 +127,5 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Refactored some of the Taxonomy cmdlet parameters. See documentation.
 
 ### Contributors
-Aimery Thomas [a1mery]
-Veronique Lengelle [veronicageek]
+- Aimery Thomas [a1mery]
+- Veronique Lengelle [veronicageek]
