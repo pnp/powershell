@@ -1,5 +1,7 @@
 ﻿using Microsoft.Identity.Client;
 using System;
+using System.Collections.Generic;
+using System.Management.Automation;
 using System.Security;
 using System.Threading.Tasks;
 
@@ -21,6 +23,56 @@ namespace PnP.PowerShell.Commands.Utilities
 
             var result = await app.AcquireTokenByUsernamePassword(scopes, username, password).ExecuteAsync();
             return result.AccessToken;
+        }
+
+        internal static void WriteFormattedWarning(this PSCmdlet cmdlet, string message)
+        {
+
+            if (cmdlet.Host.Name == "ConsoleHost")
+            {
+                var messageLines = new List<string>();
+                messageLines.AddRange(message.Split(new[] { '\n' }));
+                var wrappedText = new List<string>();
+                foreach (var messageLine in messageLines)
+                {
+                    wrappedText.AddRange(WordWrap(messageLine, 100));
+                }
+
+                var notificationColor = "\x1B[7m";
+                var resetColor = "\x1B[0m";
+
+                var outMessage = string.Empty;
+                foreach (var wrappedLine in wrappedText)
+                {
+                    var lineToAdd = wrappedLine.PadRight(100);
+                    outMessage += $"{notificationColor} {lineToAdd} {resetColor}\n";
+                }
+                cmdlet.Host.UI.WriteLine($"{notificationColor}\n{outMessage}{resetColor}\n");
+            }
+            else
+            {
+                cmdlet.WriteWarning(message);
+            }
+        }
+
+
+        private static List<string> WordWrap(string text, int maxLineLength)
+        {
+            var list = new List<string>();
+
+            int currentIndex;
+            var lastWrap = 0;
+            var whitespace = new[] { ' ', '\r', '\n', '\t' };
+            do
+            {
+                currentIndex = lastWrap + maxLineLength > text.Length ? text.Length : (text.LastIndexOfAny(new[] { ' ', ',', '.', '?', '!', ':', ';', '-', '\n', '\r', '\t' }, Math.Min(text.Length - 1, lastWrap + maxLineLength)) + 1);
+                if (currentIndex <= lastWrap)
+                    currentIndex = Math.Min(lastWrap + maxLineLength, text.Length);
+                list.Add(text.Substring(lastWrap, currentIndex - lastWrap).Trim(whitespace));
+                lastWrap = currentIndex;
+            } while (currentIndex < text.Length);
+
+            return list;
         }
     }
 }

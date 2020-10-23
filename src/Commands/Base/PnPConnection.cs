@@ -21,6 +21,7 @@ using PnP.Framework;
 using Microsoft.ApplicationInsights.Extensibility;
 using PnP.PowerShell.ALC;
 using PnP.PowerShell.Commands.Attributes;
+using System.Threading;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -141,7 +142,7 @@ namespace PnP.PowerShell.Commands.Base
             return TryGetToken(tokenAudience, AzureEnvironment, roles)?.AccessToken;
         }
 
-        internal static Action<DeviceCodeResult> DeviceLoginCallback(PSHost host, bool launchBrowser)
+        internal static Action<DeviceCodeResult> DeviceLoginCallback(PSCmdlet cmdlet, bool launchBrowser)
         {
             return deviceCodeResult =>
             {
@@ -149,12 +150,12 @@ namespace PnP.PowerShell.Commands.Base
                 if (launchBrowser)
                 {
                     ClipboardService.SetText(deviceCodeResult.UserCode);
-                    host?.UI.WriteLine($"Code {deviceCodeResult.UserCode} has been copied to clipboard");
+                    cmdlet.WriteFormattedWarning($"Code {deviceCodeResult.UserCode} has been copied to clipboard");
                     BrowserHelper.LaunchBrowser(deviceCodeResult.VerificationUrl);
                 }
                 else
                 {
-                    host?.UI.WriteLine(deviceCodeResult.Message);
+                    cmdlet.WriteFormattedWarning($"{deviceCodeResult.Message}");
                 }
             };
         }
@@ -177,7 +178,8 @@ namespace PnP.PowerShell.Commands.Base
                         var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
                         // Take the remaining scopes and try requesting them from the Microsoft Graph API
                         var scopes = Scopes.Except(officeManagementApiScopes).ToArray();
-                        token = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, scopes, DeviceLoginCallback(null, false), AzureEnvironment);
+                        var cancellationToken = default(CancellationToken);
+                        token = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, scopes, DeviceLoginCallback(null, false), AzureEnvironment, ref cancellationToken);
                     }
                     else
                     {

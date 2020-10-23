@@ -13,6 +13,7 @@ using System.Security;
 using PnP.Framework;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Base;
+using System.Threading;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -325,7 +326,7 @@ namespace PnP.PowerShell.Commands.Model
             return new GenericToken(tokenResult.AccessToken);
         }
 
-        public static GenericToken AcquireApplicationTokenDeviceLogin(string clientId, string[] scopes, string authority, Action<DeviceCodeResult> callBackAction)
+        public static GenericToken AcquireApplicationTokenDeviceLogin(string clientId, string[] scopes, string authority, Action<DeviceCodeResult> callBackAction, ref CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(clientId))
             {
@@ -347,7 +348,7 @@ namespace PnP.PowerShell.Commands.Model
 
             try
             {
-                tokenResult = publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync().GetAwaiter().GetResult();
+                tokenResult = publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
             }
             catch
             {
@@ -359,7 +360,7 @@ namespace PnP.PowerShell.Commands.Model
                     }
                     return Task.FromResult(0);
                 });
-                tokenResult = builder.ExecuteAsync().GetAwaiter().GetResult();
+                tokenResult = builder.ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
             }
             return new GenericToken(tokenResult.AccessToken);
         }
