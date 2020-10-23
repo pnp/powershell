@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Base
             application.AcquireTokenWithDeviceCode(new[] { "https://graph.microsoft.com/.default" }, codeResult =>
              {
                  ClipboardService.SetText(codeResult.UserCode);
-                 WriteUpdateMessage($"\n\nProvide consent for the PnP Management Shell application to access SharePoint.\n\nWe opened a browser and navigated to {codeResult.VerificationUrl}\n\nEnter code: {codeResult.UserCode} (we copied this code to your clipboard)\n\n");
+                 this.WriteFormattedWarning($"Provide consent for the PnP Management Shell application to access SharePoint.\n\nWe opened a browser and navigated to {codeResult.VerificationUrl}\n\nEnter code: {codeResult.UserCode} (we copied this code to your clipboard)");
                  BrowserHelper.LaunchBrowser(codeResult.VerificationUrl);
                  return Task.FromResult("");
 
@@ -42,38 +42,6 @@ namespace PnP.PowerShell.Commands.Base
         protected override void StopProcessing()
         {
             source.Cancel();
-        }
-
-
-        private void WriteUpdateMessage(string message)
-        {
-
-            if (Host.Name == "ConsoleHost")
-            {
-                // Use Warning Color
-                var notificationColor = "\x1B[7m";
-                var resetColor = "\x1B[0m";
-
-                var lineLength = 0;
-                foreach (var line in message.Split('\n'))
-                {
-                    if (line.Length > lineLength)
-                    {
-                        lineLength = line.Length;
-                    }
-                }
-                var outMessage = string.Empty;
-                foreach (var line in message.Split('\n'))
-                {
-                    var lineToAdd = line.PadRight(lineLength);
-                    outMessage += $"{notificationColor} {lineToAdd} {resetColor}\n";
-                }
-                Host.UI.WriteLine(outMessage);
-            }
-            else
-            {
-                WriteWarning(message);
-            }
         }
     }
 }
