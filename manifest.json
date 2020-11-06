@@ -38,6 +38,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/credentialmanagement.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/credentialmanagement.html",
+          "hash": "YWzYZ0+dZzvT7r5C4fI/qA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/installation.md",
       "output": {
         ".html": {
@@ -6553,7 +6565,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 539,
+          "total_file_count": 540,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
