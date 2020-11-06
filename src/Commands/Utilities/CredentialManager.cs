@@ -16,11 +16,14 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static bool AddCredential(string name, string username, SecureString password, bool overwrite)
         {
-            var defaultVault = GetDefaultVault();
-
-            if (!string.IsNullOrEmpty(defaultVault))
+            if (HasSecretManagement())
             {
-                AddVaultCredential(defaultVault, name, username, password);
+                var defaultVault = GetDefaultVault();
+
+                if (!string.IsNullOrEmpty(defaultVault))
+                {
+                    AddVaultCredential(defaultVault, name, username, password);
+                }
             }
             else
             {
@@ -43,11 +46,14 @@ namespace PnP.PowerShell.Commands.Utilities
         public static PSCredential GetCredential(string name)
         {
             // check if Microsoft.PowerShell.SecretManagement is available
-            var defaultVault = GetDefaultVault();
-
-            if (!string.IsNullOrEmpty(defaultVault))
+            if (HasSecretManagement())
             {
-                return GetVaultCredential(defaultVault, name);
+                var defaultVault = GetDefaultVault();
+
+                if (!string.IsNullOrEmpty(defaultVault))
+                {
+                    return GetVaultCredential(defaultVault, name);
+                }
             }
             else
             {
@@ -78,12 +84,15 @@ namespace PnP.PowerShell.Commands.Utilities
 
             bool success = false;
 
-            var defaultVault = GetDefaultVault();
-
-            if (!string.IsNullOrEmpty(defaultVault))
+            if (HasSecretManagement())
             {
-                RemoveVaultCredential(defaultVault, name);
-                return true;
+                var defaultVault = GetDefaultVault();
+
+                if (!string.IsNullOrEmpty(defaultVault))
+                {
+                    RemoveVaultCredential(defaultVault, name);
+                    return true;
+                }
             }
             else
             {
@@ -111,6 +120,28 @@ namespace PnP.PowerShell.Commands.Utilities
 
         #region PRIVATE
 
+        private static bool HasSecretManagement()
+        {
+            InitialSessionState iss = InitialSessionState.CreateDefault();
+            using (var rs = RunspaceFactory.CreateRunspace(iss))
+            {
+                rs.Open();
+                using (var ps = System.Management.Automation.PowerShell.Create())
+                {
+                    ps.Runspace = rs;
+                    ps.AddCommand("get-module")
+                    .AddParameter("Name", "Microsoft.PowerShell.SecretManagement")
+                    .AddParameter("ListAvailable");
+
+                    var results = ps.Invoke();
+                    if (results.Any())
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         private static string GetDefaultVault()
         {
             var defaultVaultName = "";
