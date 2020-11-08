@@ -10,7 +10,7 @@ We currently recommend the Microsoft provided Secret Management and Secret Store
 
 ```powershell
 Install-Module -Name "Microsoft.PowerShell.SecretManagement" -AllowPrerelease
-Install-Module -Name "Microsoft.PowerShell.SecretStore" -AllowPrelease
+Install-Module -Name "Microsoft.PowerShell.SecretStore" -AllowPrerelease
 ```
 
 ## Configuring the vault
