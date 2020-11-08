@@ -9,10 +9,10 @@ dotnet build "$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj" --nologo --co
 
 $documentsFolder = [environment]::getfolderpath("mydocuments");
 
-if($IsLinux -or $isMacOS)
-{
+if ($IsLinux -or $isMacOS) {
 	$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
-} else {
+}
+else {
 	$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 }
 
@@ -22,18 +22,16 @@ $frameworkPath = "$destinationFolder/Framework"
 
 Try {
 	# Module folder there?
-	if(Test-Path $destinationFolder)
-	{
+	if (Test-Path $destinationFolder) {
 		# Yes, empty it
 		Remove-Item $destinationFolder\* -Recurse -Force -ErrorAction Stop
 	}
-		# No, create it
+	# No, create it
 	Write-Host "Creating target folders: $destinationFolder" -ForegroundColor Yellow
 	New-Item -Path $destinationFolder -ItemType Directory -Force | Out-Null
 	New-Item -Path "$destinationFolder\Core" -ItemType Directory -Force | Out-Null
 	New-Item -Path "$destinationFolder\Common" -ItemType Directory -Force | Out-Null
-	if(!$IsLinux -and !$IsMacOs)
-	{
+	if (!$IsLinux -and !$IsMacOs) {
 		New-Item -Path "$destinationFolder\Framework" -ItemType Directory -Force | Out-Null
 	}
 
@@ -41,15 +39,13 @@ Try {
 
 	$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
 	Copy-Item -Path "$PSScriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
-	Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Debug/netstandard2.0" | Where-Object {$_.Extension -in '.dll','.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
-	Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/netcoreapp3.1" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
-	if(!$IsLinux -and !$IsMacOs)
-	{
-		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/net461" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }
+	Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Debug/netstandard2.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
+	Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/netcoreapp3.1" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
+	if (!$IsLinux -and !$IsMacOs) {
+		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/net461" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }
 	}
 }
-Catch
-{
+Catch {
 	Write-Host "Error: Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module?"
 	exit 1
 }
@@ -60,15 +56,15 @@ Try {
 	$scriptBlock = {
 		$documentsFolder = [environment]::getfolderpath("mydocuments");
 
-		if($IsLinux -or $isMacOS)
-		{
+		if ($IsLinux -or $isMacOS) {
 			$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
-		} else {
+		}
+		else {
 			$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 		}
 		
 		Import-Module -Name "$destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
-		$cmdlets = get-command -Module PnP.PowerShell | ForEach-Object{"`"$_`""}
+		$cmdlets = get-command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
 		$cmdlets -Join ","
 	}
 	$cmdletsString = Start-Job -ScriptBlock $scriptBlock | Receive-Job -Wait
@@ -99,7 +95,7 @@ Try {
 	FormatsToProcess = 'PnP.PowerShell.Format.ps1xml' 
 	PrivateData = @{
 		PSData = @{
-			Prerelease = '-preview'
+			Prerelease = 'preview'
 			ProjectUri = 'https://aka.ms/sppnp'
 			IconUri = 'https://raw.githubusercontent.com/pnp/media/40e7cd8952a9347ea44e5572bb0e49622a102a12/parker/ms/300w/parker-ms-300.png'
 		}
@@ -107,8 +103,7 @@ Try {
 }"
 	$manifest | Out-File "$destinationFolder/PnP.PowerShell.psd1"
 }
-Catch 
-{
+Catch {
 	Write-Host "Error: Cannot generate PnP.PowerShell.psd1. Maybe a PowerShell session is still using the module?"
 	exit 1
 }
