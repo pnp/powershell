@@ -1,7 +1,7 @@
 $runPublish = $false
 
 Write-Host "Getting latest commit hash" -ForegroundColor Yellow
-$hash = git rev-parse --verify HEAD
+$hash = git ls-files -s ./src | git hash-object --stdin
 
 $existingPublishHash = Get-Content ./publishhash.txt -Raw -ErrorAction SilentlyContinue
 if ($existingPublishHash -ne $hash) {
