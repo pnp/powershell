@@ -164,7 +164,14 @@ namespace PnP.PowerShell.Commands.Utilities
                         {
                             if (Convert.ToBoolean(isDefaultProp.Value))
                             {
-                                defaultVaultName = result.Properties["Name"].Value.ToString();
+                                try
+                                {
+                                    defaultVaultName = result.Properties["Name"].Value.ToString();
+                                }
+                                catch
+                                {
+                                    defaultVaultName = result.Properties["VaultName"].Value.ToString();
+                                }
                             }
                         }
                     }
