@@ -1,5 +1,4 @@
-﻿using Microsoft.ApplicationInsights;
-using Microsoft.Identity.Client;
+﻿using Microsoft.Identity.Client;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Extensions;
 using PnP.PowerShell.Commands.Enums;
@@ -9,19 +8,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using System.Management.Automation.Host;
-using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
-using System.Web;
 using TextCopy;
-
 using PnP.Framework;
-using Microsoft.ApplicationInsights.Extensibility;
 using PnP.PowerShell.ALC;
 using PnP.PowerShell.Commands.Attributes;
 using System.Threading;
+using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -116,6 +111,10 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public string Tenant { get; set; }
 
+        /// <summary>
+        /// Defines if this is a managed identity connection for use in cloud shell
+        /// </summary>
+        internal bool ManagedIdentity { get; set; }
         public AzureEnvironment AzureEnvironment { get; set; } = AzureEnvironment.Production;
 
         #endregion
@@ -165,9 +164,10 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="tokenAudience">Audience to try to get a token for</param>
         /// <param name="orRoles">The specific roles to request access to (i.e. Group.ReadWrite.All). Optional, will use default groups assigned to clientId if not specified.</param>
         /// <returns><see cref="GenericToken"/> for the audience or NULL if unable to retrieve a token for the audience on the current connection</returns>
-        internal GenericToken TryGetToken(TokenAudience tokenAudience, AzureEnvironment azureEnvironment, string[] orRoles = null, string[] andRoles = null, TokenType tokenType = TokenType.All, string[] managementShellScopes = null)
+        internal GenericToken TryGetToken(TokenAudience tokenAudience, AzureEnvironment azureEnvironment, string[] orRoles = null, string[] andRoles = null, TokenType tokenType = TokenType.All, string[] managementShellScopes = null, System.Management.Automation.PSCmdlet cmdletInstance = null)
         {
             GenericToken token = null;
+
 
             switch (tokenAudience)
             {
@@ -180,6 +180,12 @@ namespace PnP.PowerShell.Commands.Base
                         var scopes = Scopes.Except(officeManagementApiScopes).ToArray();
                         var cancellationToken = default(CancellationToken);
                         token = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, scopes, DeviceLoginCallback(null, false), AzureEnvironment, ref cancellationToken);
+                    }
+                    else if (ConnectionMethod == ConnectionMethod.ManagedIdentity)
+                    {
+
+                        cmdletInstance?.WriteVerbose("Acquiring access token from Managed Identity End Point");
+                        token = GenericToken.AcquireManagedIdentityToken(HttpClient, "https://graph.microsoft.com", cmdletInstance) as GraphToken;
                     }
                     else
                     {
@@ -248,11 +254,13 @@ namespace PnP.PowerShell.Commands.Base
 
             if (token != null)
             {
+                cmdletInstance?.WriteVerbose("Validating token for permissions");
                 var (valid, message) = ValidateTokenForPermissions(token, tokenAudience, orRoles, andRoles, tokenType);
                 if (!valid)
                 {
                     throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {message}");
                 }
+                cmdletInstance?.WriteVerbose("Token permissions are correct");
                 return token;
             }
 
@@ -648,6 +656,25 @@ namespace PnP.PowerShell.Commands.Base
         //{
         //    ContextCache.Clear();
         //}
+
+        internal PnPConnection(string pnpVersionTag,
+                                    bool disableTelemetry,
+                                    InitializationType initializationType)
+        {
+            if (!disableTelemetry)
+            {
+                InitializeTelemetry(null, initializationType);
+            }
+            var coreAssembly = Assembly.GetExecutingAssembly();
+            UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
+            //if (context == null)
+            //    throw new ArgumentNullException(nameof(context));
+            ConnectionType = ConnectionType.O365;
+            PnPVersionTag = pnpVersionTag;
+
+            ConnectionMethod = ConnectionMethod.ManagedIdentity;
+            ManagedIdentity = true;
+        }
 
         internal void InitializeTelemetry(ClientContext context, InitializationType initializationType)
         {

@@ -48,6 +48,8 @@ namespace PnP.PowerShell.Commands.Base
         //private static readonly Uri GraphAADLogin = new Uri("https://login.microsoftonline.com/");
         //private static readonly string[] GraphDefaultScope = { "https://graph.microsoft.com/.default" };
 
+        private const string ParameterSet_CLOUDSHELL = "Azure Cloud Shell";
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, ValueFromPipeline = true)]
@@ -237,6 +239,8 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false)]
         public SwitchParameter NoTelemetry;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CLOUDSHELL)]
+        public SwitchParameter CloudShell;
 
         protected override void ProcessRecord()
         {
@@ -354,6 +358,10 @@ namespace PnP.PowerShell.Commands.Base
 
                 case ParameterSet_MAIN:
                     connection = ConnectCredentials(credentials);
+                    break;
+
+                case ParameterSet_CLOUDSHELL:
+                    connection = ConnectManagedIdentity();
                     break;
             }
 
@@ -746,6 +754,13 @@ namespace PnP.PowerShell.Commands.Base
                                                                TenantAdminUrl,
                                                                NoTelemetry,
                                                                AzureEnvironment);
+        }
+
+        private PnPConnection ConnectManagedIdentity()
+        {
+            WriteVerbose("Connecting to the Graph with the current Managed Identity");
+            var connection = new PnPConnection(null, NoTelemetry, InitializationType.Graph);
+            return connection;
         }
 
         #endregion

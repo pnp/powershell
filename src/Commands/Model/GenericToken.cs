@@ -14,6 +14,7 @@ using PnP.Framework;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Base;
 using System.Threading;
+using System.Net.Http;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -209,6 +210,23 @@ namespace PnP.PowerShell.Commands.Model
             }
 
             return new GenericToken(tokenResult.AccessToken);
+        }
+
+        /// <summary>
+        /// Tries to acquire an application token from the Managed Identity Service
+        /// </summary>
+        public static GraphToken AcquireManagedIdentityToken(HttpClient httpClient, string resource, PSCmdlet cmdletInstance = null)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{Environment.GetEnvironmentVariable("MSI_ENDPOINT")}/?resource={resource}");
+            request.Headers.Add("Metadata", "true");
+            var response = httpClient.SendAsync(request).GetAwaiter().GetResult();
+            var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            var accessTokenResponse = JsonSerializer.Deserialize<Dictionary<string, string>>(responseString);
+            if (accessTokenResponse != null && accessTokenResponse["access_token"] != null)
+            {
+                cmdletInstance?.WriteVerbose("Token retrieved");
+            }
+            return new GraphToken(accessTokenResponse["access_token"]);
         }
 
         /// <summary>
