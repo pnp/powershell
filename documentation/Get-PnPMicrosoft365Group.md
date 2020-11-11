@@ -20,7 +20,7 @@ Gets one Microsoft 365 Group or a list of Microsoft 365 Groups
 ## SYNTAX
 
 ```powershell
-Get-PnPMicrosoft365Group [-Identity <Microsoft365GroupPipeBind>] [-ExcludeSiteUrl] [-IncludeClassification]
+Get-PnPMicrosoft365Group [-Identity <Microsoft365GroupPipeBind>] [-IncludeSiteUrl] [-IncludeClassification]
  [-IncludeHasTeam] [<CommonParameters>]
 ```
 
@@ -30,50 +30,57 @@ Get-PnPMicrosoft365Group [-Identity <Microsoft365GroupPipeBind>] [-ExcludeSiteUr
 
 ### EXAMPLE 1
 ```powershell
-Get-Microsoft365Group
+Get-PnPMicrosoft365Group
 ```
 
 Retrieves all the Microsoft 365 Groups
 
 ### EXAMPLE 2
 ```powershell
-Get-Microsoft365Group -Identity $groupId
+Get-PnPMicrosoft365Group -Identity $groupId
 ```
 
 Retrieves a specific Microsoft 365 Group based on its ID
 
 ### EXAMPLE 3
 ```powershell
-Get-Microsoft365Group -Identity $groupDisplayName
+Get-PnPMicrosoft365Group -Identity $groupDisplayName
 ```
 
 Retrieves a specific or list of Microsoft 365 Groups that start with the given DisplayName
 
 ### EXAMPLE 4
 ```powershell
-Get-Microsoft365Group -Identity $groupSiteMailNickName
+Get-PnPMicrosoft365Group -Identity $groupSiteMailNickName
 ```
 
 Retrieves a specific or list of Microsoft 365 Groups for which the email starts with the provided mail nickName
 
 ### EXAMPLE 5
 ```powershell
-Get-Microsoft365Group -Identity $group
+Get-PnPMicrosoft365Group -Identity $group
 ```
 
 Retrieves a specific Microsoft 365 Group based on its object instance
 
 ### EXAMPLE 6
 ```powershell
-Get-Microsoft365Group -IncludeIfHasTeam
+Get-PnPMicrosoft365Group -IncludeIfHasTeam
 ```
 
 Retrieves all the Microsoft 365 Groups and checks for each of them if it has a Microsoft Team provisioned for it
 
+### EXAMPLE 7
+```powershell
+Get-PnPMicrosoft365Group -IncludeSiteUrl
+```
+
+Retrieves all Microsoft 365 Groups in this tenant and includes the URL property for the underlying SharePoint site.
+
 ## PARAMETERS
 
-### -ExcludeSiteUrl
-Exclude fetching the site URL for Microsoft 365 Groups. This speeds up large listings.
+### -IncludeSiteUrl
+Include fetching the site URL for Microsoft 365 Groups. This slows down large listings.
 
 ```yaml
 Type: SwitchParameter
