@@ -2,12 +2,14 @@
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using Microsoft.Win32.SafeHandles;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
+[assembly:InternalsVisibleTo("PnP.PowerShell.Tests")]
 namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class CredentialManager

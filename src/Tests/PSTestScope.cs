@@ -1,10 +1,9 @@
-﻿using Microsoft.PowerShell.Commands;
-using PnP.PowerShell.Commands.Base;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
+using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Tests
 {
@@ -14,18 +13,17 @@ namespace PnP.PowerShell.Tests
 
         public string SiteUrl { get; set; }
         public string CredentialManagerEntry { get; set; }
-        public string Realm { get; set; }
-        public string AppId { get; set; }
-        public string AppSecret { get; set; }
 
         public PSTestScope(bool connect = true)
         {
-            SiteUrl = ConfigurationManager.AppSettings["SPODevSiteUrl"];
-            CredentialManagerEntry = ConfigurationManager.AppSettings["SPOCredentialManagerLabel"];
-            Realm = ConfigurationManager.AppSettings["Realm"];
-            AppId = ConfigurationManager.AppSettings["AppId"];
-            AppSecret = ConfigurationManager.AppSettings["AppSecret"];
-
+            var configuration = ConfigurationManager.OpenExeConfiguration("PnP.PowerShell.Tests.dll");
+            if (configuration.AppSettings.Settings.Count == 0)
+            {
+                throw new ConfigurationErrorsException("AppSettings is empty");
+            }
+            // Read configuration data
+            SiteUrl = configuration.AppSettings.Settings["SiteUrl"].Value;
+            CredentialManagerEntry = configuration.AppSettings.Settings["CredentialManagerLabel"].Value;
             var iss = InitialSessionState.CreateDefault();
             if (connect)
             {
@@ -37,37 +35,14 @@ namespace PnP.PowerShell.Tests
 
             _runSpace.Open();
 
-            // Sets the execution policy to unrestricted. Requires Visual Studio to run in elevated mode.
             var pipeLine = _runSpace.CreatePipeline();
-            Command cmd = new Command("Set-ExecutionPolicy");
-            cmd.Parameters.Add("ExecutionPolicy", "Unrestricted");
-            cmd.Parameters.Add("Scope", "Process");
-            pipeLine.Commands.Add(cmd);
-            pipeLine.Invoke();
 
             if (connect)
             {
-                pipeLine = _runSpace.CreatePipeline();
-                cmd = new Command("connect-pnponline");
+                var cmd = new Command("Connect-PnPOnline");
                 cmd.Parameters.Add("Url", SiteUrl);
-                if (!string.IsNullOrEmpty(CredentialManagerEntry))
-                {
-                    // Use Windows Credential Manager to authenticate
-                    cmd.Parameters.Add("Credentials", CredentialManagerEntry);
-                }
-                else
-                {
-                    if (!string.IsNullOrEmpty(AppId) && !string.IsNullOrEmpty(AppSecret))
-                    {
-                        // Use oAuth Token to authenticate
-                        if (!string.IsNullOrEmpty(Realm))
-                        {
-                            cmd.Parameters.Add("Realm", Realm);
-                        }
-                        cmd.Parameters.Add("AppId", AppId);
-                        cmd.Parameters.Add("AppSecret", AppSecret);
-                    }
-                }
+                // Use the configured Credential Manager to authenticate
+                cmd.Parameters.Add("Credentials", CredentialManagerEntry);
                 pipeLine.Commands.Add(cmd);
                 pipeLine.Invoke();
             }
@@ -76,11 +51,12 @@ namespace PnP.PowerShell.Tests
         public PSTestScope(string siteUrl, bool connect = true)
         {
             SiteUrl = siteUrl;
-            CredentialManagerEntry = ConfigurationManager.AppSettings["SPOCredentialManagerLabel"];
-            Realm = ConfigurationManager.AppSettings["Realm"];
-            AppId = ConfigurationManager.AppSettings["AppId"];
-            AppSecret = ConfigurationManager.AppSettings["AppSecret"];
-
+            var configuration = ConfigurationManager.OpenExeConfiguration("PnP.PowerShell.Tests.dll");
+            if (configuration.AppSettings.Settings.Count == 0)
+            {
+                throw new ConfigurationErrorsException("AppSettings is empty");
+            }
+            CredentialManagerEntry = configuration.AppSettings.Settings["CredentialManagerLabel"].Value;
             var iss = InitialSessionState.CreateDefault();
             if (connect)
             {
@@ -92,42 +68,17 @@ namespace PnP.PowerShell.Tests
 
             _runSpace.Open();
 
-            // Sets the execution policy to unrestricted. Requires Visual Studio to run in elevated mode.
             var pipeLine = _runSpace.CreatePipeline();
-            Command cmd = new Command("Set-ExecutionPolicy");
-            cmd.Parameters.Add("ExecutionPolicy", "Unrestricted");
-            cmd.Parameters.Add("Scope", "Process");
-            pipeLine.Commands.Add(cmd);
-            pipeLine.Invoke();
 
             if (connect)
             {
-                pipeLine = _runSpace.CreatePipeline();
-                cmd = new Command("connect-pnponline");
+                var cmd = new Command("Connect-PnPOnline");
                 cmd.Parameters.Add("Url", SiteUrl);
-                if (!string.IsNullOrEmpty(CredentialManagerEntry))
-                {
-                    // Use Windows Credential Manager to authenticate
-                    cmd.Parameters.Add("Credentials", CredentialManagerEntry);
-                }
-                else
-                {
-                    if (!string.IsNullOrEmpty(AppId) && !string.IsNullOrEmpty(AppSecret))
-                    {
-                        // Use oAuth Token to authenticate
-                        if (!string.IsNullOrEmpty(Realm))
-                        {
-                            cmd.Parameters.Add("Realm", Realm);
-                        }
-                        cmd.Parameters.Add("AppId", AppId);
-                        cmd.Parameters.Add("AppSecret", AppSecret);
-                    }
-                }
+                cmd.Parameters.Add("Credentials", CredentialManagerEntry);
                 pipeLine.Commands.Add(cmd);
                 pipeLine.Invoke();
             }
         }
-
 
         public Collection<PSObject> ExecuteCommand(string cmdletString)
         {
