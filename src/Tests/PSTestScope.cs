@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
+using System.Runtime.InteropServices;
 using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Tests
@@ -31,6 +32,14 @@ namespace PnP.PowerShell.Tests
 
             var pipeLine = _runSpace.CreatePipeline();
 
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                // This is only works / is needed on Windows
+                var executionPolicyCmd = new Command("Set-ExecutionPolicy");
+                executionPolicyCmd.Parameters.Add("ExecutionPolicy", "Unrestricted");
+                pipeLine.Commands.Add(executionPolicyCmd);
+            }
+
             if (connect)
             {
                 var cmd = new Command("Connect-PnPOnline");
@@ -57,6 +66,14 @@ namespace PnP.PowerShell.Tests
             _runSpace.Open();
 
             var pipeLine = _runSpace.CreatePipeline();
+
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                // This is only works / is needed on Windows
+                var executionPolicyCmd = new Command("Set-ExecutionPolicy");
+                executionPolicyCmd.Parameters.Add("ExecutionPolicy", "Unrestricted");
+                pipeLine.Commands.Add(executionPolicyCmd);
+            }
 
             if (connect)
             {
