@@ -1,3 +1,5 @@
+#Requires -RunAsAdministrator
+
 Param(
     [Parameter(Mandatory = $true,
         ParameterSetName = "CredManager",
