@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<configuration>
-  <appSettings>
-    <add key="SiteUrl" value="https://[yourtenant].sharepoint.com/sites/demo1" />
-    <add key="CredentialManagerLabel" value="[credlabel]"/>
-  </appSettings>
-</configuration>

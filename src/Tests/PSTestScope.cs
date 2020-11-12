@@ -16,14 +16,17 @@ namespace PnP.PowerShell.Tests
 
         public PSTestScope(bool connect = true)
         {
-            var configuration = ConfigurationManager.OpenExeConfiguration("PnP.PowerShell.Tests.dll");
-            if (configuration.AppSettings.Settings.Count == 0)
+            SiteUrl = Environment.GetEnvironmentVariable("PnPTests_SiteUrl");
+            CredentialManagerEntry = Environment.GetEnvironmentVariable("PnPTests_CredentialManagerLabel");
+
+            if(string.IsNullOrEmpty(SiteUrl))
             {
-                throw new ConfigurationErrorsException("AppSettings is empty");
+                throw new ConfigurationErrorsException("Please set PnPTests_SiteUrl environment variable, or run Run-Tests.ps1 in the build root folder");
             }
-            // Read configuration data
-            SiteUrl = configuration.AppSettings.Settings["SiteUrl"].Value;
-            CredentialManagerEntry = configuration.AppSettings.Settings["CredentialManagerLabel"].Value;
+            if(string.IsNullOrEmpty(CredentialManagerEntry))
+            {
+                throw new ConfigurationErrorsException("Please set PnPTests_CredentialManagerLabel variable, or run Run-Tests.ps1 in the build root folder");
+            }
             var iss = InitialSessionState.CreateDefault();
             if (connect)
             {
@@ -51,12 +54,12 @@ namespace PnP.PowerShell.Tests
         public PSTestScope(string siteUrl, bool connect = true)
         {
             SiteUrl = siteUrl;
-            var configuration = ConfigurationManager.OpenExeConfiguration("PnP.PowerShell.Tests.dll");
-            if (configuration.AppSettings.Settings.Count == 0)
+            CredentialManagerEntry = Environment.GetEnvironmentVariable("PnPTests_CredentialManagerLabel");
+
+            if(string.IsNullOrEmpty(CredentialManagerEntry))
             {
-                throw new ConfigurationErrorsException("AppSettings is empty");
+                throw new ConfigurationErrorsException("Please set PnPTests_CredentialManagerLabel variable, or run Run-Tests.ps1 in the build root folder");
             }
-            CredentialManagerEntry = configuration.AppSettings.Settings["CredentialManagerLabel"].Value;
             var iss = InitialSessionState.CreateDefault();
             if (connect)
             {

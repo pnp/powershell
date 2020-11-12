@@ -14,26 +14,20 @@ namespace PnP.PowerShell.Tests
         #region Constructor
         static TestCommon()
         {
-            var configuration = ConfigurationManager.OpenExeConfiguration("PnP.PowerShell.Tests.dll");
-            if (configuration.AppSettings.Settings.Count == 0)
-            {
-                throw new ConfigurationErrorsException("AppSettings is empty. Did you copy App.config.sample to App.config and changed the values?");
-            }
-            // Read configuration data
-            DevSiteUrl = configuration.AppSettings.Settings["SiteUrl"].Value;
-            if (string.IsNullOrEmpty(DevSiteUrl))
-            {
-                throw new ConfigurationErrorsException("site url in App.config are not set up.");
-            }
+            SiteUrl = Environment.GetEnvironmentVariable("PnPTests_SiteUrl");
+            var credentialManagerEntry = Environment.GetEnvironmentVariable("PnPTests_CredentialManagerLabel");
 
-            var credentialManagerEntry = configuration.AppSettings.Settings["CredentialManagerLabel"].Value;
+            if (string.IsNullOrEmpty(SiteUrl))
+            {
+                throw new ConfigurationErrorsException("Please set PnPTests_SiteUrl environment variable, or run Run-Tests.ps1 in the build root folder");
+            }
             if (string.IsNullOrEmpty(credentialManagerEntry))
             {
-                throw new ConfigurationErrorsException("CredentialmanagerLabel value is not set up in App.config");
+                throw new ConfigurationErrorsException("Please set PnPTests_CredentialManagerLabel variable, or run Run-Tests.ps1 in the build root folder");
             }
 
             // Trim trailing slashes
-            DevSiteUrl = DevSiteUrl.TrimEnd(new[] { '/' });
+            SiteUrl = SiteUrl.TrimEnd(new[] { '/' });
 
             Credentials = PnP.PowerShell.Commands.Utilities.CredentialManager.GetCredential(credentialManagerEntry);
         }
@@ -41,7 +35,7 @@ namespace PnP.PowerShell.Tests
 
         #region Properties
         public static string TenantUrl { get; set; }
-        public static string DevSiteUrl { get; set; }
+        public static string SiteUrl { get; set; }
         static PSCredential Credentials { get; set; }
 
 
@@ -50,7 +44,7 @@ namespace PnP.PowerShell.Tests
         #region Methods
         public static ClientContext CreateClientContext()
         {
-            return CreateContext(DevSiteUrl, Credentials);
+            return CreateContext(SiteUrl, Credentials);
         }
 
         public static ClientContext CreateClientContext(string siteUrl)
