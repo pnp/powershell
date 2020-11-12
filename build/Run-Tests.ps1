@@ -1,5 +1,9 @@
 Param(
     [Parameter(Mandatory = $true,
+        ParameterSetName = "CredManager",
+        ValueFromPipeline = $false)]
+    [Parameter(Mandatory = $true,
+        ParameterSetName = "Username and Password",
         ValueFromPipeline = $false)]
     [String]
     $SiteUrl,
@@ -24,7 +28,9 @@ Param(
 $env:PnPTests_CredentialManagerLabel = $CredentialManagerLabel
 $env:PnPTests_SiteUrl = $SiteUrl
 $env:PnPTests_Username = $Username
-$env:PnPTests_Password = $Password | ConvertFrom-SecureString
+if ($null -ne $Password) {
+    $env:PnPTests_Password = $Password | ConvertFrom-SecureString
+}
 
 dotnet test $PSScriptRoot/../src/Tests/PnP.PowerShell.Tests.csproj
 
