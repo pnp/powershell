@@ -6,6 +6,7 @@ using System.Net;
 using Core = PnP.Framework;
 using System.Threading;
 using System.Management.Automation;
+using System.Management.Automation.Runspaces;
 
 namespace PnP.PowerShell.Tests
 {
@@ -14,47 +15,22 @@ namespace PnP.PowerShell.Tests
         #region Constructor
         static TestCommon()
         {
-            SiteUrl = Environment.GetEnvironmentVariable("PnPTests_SiteUrl");
-            var credentialManagerEntry = Environment.GetEnvironmentVariable("PnPTests_CredentialManagerLabel");
-
-            if (string.IsNullOrEmpty(SiteUrl))
-            {
-                throw new ConfigurationErrorsException("Please set PnPTests_SiteUrl environment variable, or run Run-Tests.ps1 in the build root folder");
-            }
-            if (string.IsNullOrEmpty(credentialManagerEntry))
-            {
-                throw new ConfigurationErrorsException("Please set PnPTests_CredentialManagerLabel variable, or run Run-Tests.ps1 in the build root folder");
-            }
-
-            // Trim trailing slashes
-            SiteUrl = SiteUrl.TrimEnd(new[] { '/' });
-
-            Credentials = PnP.PowerShell.Commands.Utilities.CredentialManager.GetCredential(credentialManagerEntry);
+            Configuration = new Configuration();
         }
         #endregion
 
-        #region Properties
-        public static string TenantUrl { get; set; }
-        public static string SiteUrl { get; set; }
-        static PSCredential Credentials { get; set; }
+        public static Configuration Configuration { get; set; }
 
-
-        #endregion
 
         #region Methods
         public static ClientContext CreateClientContext()
         {
-            return CreateContext(SiteUrl, Credentials);
+            return CreateContext(Configuration.SiteUrl, Configuration.Credentials);
         }
 
         public static ClientContext CreateClientContext(string siteUrl)
         {
-            return CreateContext(siteUrl, Credentials);
-        }
-
-        public static ClientContext CreateTenantClientContext()
-        {
-            return CreateContext(TenantUrl, Credentials);
+            return CreateContext(siteUrl, Configuration.Credentials);
         }
 
         private static ClientContext CreateContext(string contextUrl, PSCredential credentials)
@@ -76,4 +52,79 @@ namespace PnP.PowerShell.Tests
         }
         #endregion
     }
+
+    internal class Configuration
+    {
+        public string SiteUrl { get; set; }
+        public PSCredential Credentials { get; set; }
+
+        public Configuration()
+        {
+            SiteUrl = Environment.GetEnvironmentVariable("PnPTests_SiteUrl");
+            if (string.IsNullOrEmpty(SiteUrl))
+            {
+                throw new ConfigurationErrorsException("Please set PnPTests_SiteUrl environment variable, or run Run-Tests.ps1 in the build root folder");
+            }
+            else
+            {
+                SiteUrl = SiteUrl.TrimEnd(new[] { '/' });
+
+            }
+            var credLabel = Environment.GetEnvironmentVariable("PnPTests_CredentialManagerLabel");
+            if (string.IsNullOrEmpty(credLabel))
+            {
+                var username = Environment.GetEnvironmentVariable("PnPTests_Username");
+                var password = Environment.GetEnvironmentVariable("PnPTests_Password");
+                if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+                {
+                    Credentials = new PSCredential(username, ConvertFromBase64String(password));
+                }
+            }
+            else
+            {
+                Credentials = PnP.PowerShell.Commands.Utilities.CredentialManager.GetCredential(credLabel);
+            }
+            if (Credentials == null)
+            {
+                throw new ConfigurationErrorsException("Please set PnPTests_CredentialManagerLabel or PnPTests_Username and PnPTests_Password, or run Run-Tests.ps1 in the build root folder");
+            }
+        }
+
+        private SecureString ConvertToSecureString(string input)
+        {
+            var secureString = new SecureString();
+
+            foreach (char c in input)
+            {
+                secureString.AppendChar(c);
+            }
+
+            secureString.MakeReadOnly();
+            return secureString;
+        }
+
+        private SecureString ConvertFromBase64String(string input)
+        {
+            var iss = InitialSessionState.CreateDefault();
+
+            using (var rs = RunspaceFactory.CreateRunspace(iss))
+            {
+
+                rs.Open();
+
+                var pipeLine = rs.CreatePipeline();
+
+                var cmd = new Command("ConvertTo-SecureString");
+                cmd.Parameters.Add("String", input);
+                pipeLine.Commands.Add(cmd);
+                var results = pipeLine.Invoke();
+                if (results.Count > 0)
+                {
+                    return results[0].BaseObject as SecureString;
+                }
+            }
+            return null;
+        }
+    }
 }
+

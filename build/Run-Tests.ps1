@@ -2,17 +2,33 @@ Param(
     [Parameter(Mandatory = $true,
         ValueFromPipeline = $false)]
     [String]
+    $SiteUrl,
+
+    [Parameter(Mandatory = $true,
+        ParameterSetName = "CredManager",
+        ValueFromPipeline = $false)]
+    [String]
     $CredentialManagerLabel,
 
     [Parameter(Mandatory = $true,
-        ValueFromPipeline = $false)]
+        ParameterSetname = "Username and Password")]
     [String]
-    $SiteUrl
+    $Username,
+
+    [Parameter(Mandatory = $true,
+        ParameterSetName = "Username and Password")]
+    [SecureString]
+    $Password
 )
 
-# Specifies a path to one or more locations. Wildcards are permitted.
-
-$env:PnPTests_CredentialManagerLabel = $CredentialManagerLabel;
+$env:PnPTests_CredentialManagerLabel = $CredentialManagerLabel
 $env:PnPTests_SiteUrl = $SiteUrl
+$env:PnPTests_Username = $Username
+$env:PnPTests_Password = $Password | ConvertFrom-SecureString
 
 dotnet test $PSScriptRoot/../src/Tests/PnP.PowerShell.Tests.csproj
+
+$env:PnPTests_CredentialManagerLabel = $null
+$env:PnPTests_SiteUrl = $null
+$env:PnPTests_Username = $null
+$env:PnPTests_Password = $null

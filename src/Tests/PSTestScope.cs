@@ -11,22 +11,13 @@ namespace PnP.PowerShell.Tests
     {
         private Runspace _runSpace;
 
-        public string SiteUrl { get; set; }
-        public string CredentialManagerEntry { get; set; }
+        private Configuration configuration;
 
         public PSTestScope(bool connect = true)
         {
-            SiteUrl = Environment.GetEnvironmentVariable("PnPTests_SiteUrl");
-            CredentialManagerEntry = Environment.GetEnvironmentVariable("PnPTests_CredentialManagerLabel");
 
-            if(string.IsNullOrEmpty(SiteUrl))
-            {
-                throw new ConfigurationErrorsException("Please set PnPTests_SiteUrl environment variable, or run Run-Tests.ps1 in the build root folder");
-            }
-            if(string.IsNullOrEmpty(CredentialManagerEntry))
-            {
-                throw new ConfigurationErrorsException("Please set PnPTests_CredentialManagerLabel variable, or run Run-Tests.ps1 in the build root folder");
-            }
+            configuration = new Configuration();
+
             var iss = InitialSessionState.CreateDefault();
             if (connect)
             {
@@ -43,9 +34,9 @@ namespace PnP.PowerShell.Tests
             if (connect)
             {
                 var cmd = new Command("Connect-PnPOnline");
-                cmd.Parameters.Add("Url", SiteUrl);
+                cmd.Parameters.Add("Url", configuration.SiteUrl);
                 // Use the configured Credential Manager to authenticate
-                cmd.Parameters.Add("Credentials", CredentialManagerEntry);
+                cmd.Parameters.Add("Credentials", configuration.Credentials);
                 pipeLine.Commands.Add(cmd);
                 pipeLine.Invoke();
             }
@@ -53,13 +44,7 @@ namespace PnP.PowerShell.Tests
 
         public PSTestScope(string siteUrl, bool connect = true)
         {
-            SiteUrl = siteUrl;
-            CredentialManagerEntry = Environment.GetEnvironmentVariable("PnPTests_CredentialManagerLabel");
-
-            if(string.IsNullOrEmpty(CredentialManagerEntry))
-            {
-                throw new ConfigurationErrorsException("Please set PnPTests_CredentialManagerLabel variable, or run Run-Tests.ps1 in the build root folder");
-            }
+            configuration = new Configuration();
             var iss = InitialSessionState.CreateDefault();
             if (connect)
             {
@@ -76,8 +61,8 @@ namespace PnP.PowerShell.Tests
             if (connect)
             {
                 var cmd = new Command("Connect-PnPOnline");
-                cmd.Parameters.Add("Url", SiteUrl);
-                cmd.Parameters.Add("Credentials", CredentialManagerEntry);
+                cmd.Parameters.Add("Url", configuration.SiteUrl);
+                cmd.Parameters.Add("Credentials", configuration.Credentials);
                 pipeLine.Commands.Add(cmd);
                 pipeLine.Invoke();
             }
@@ -115,10 +100,6 @@ namespace PnP.PowerShell.Tests
 
         public void Dispose()
         {
-            //if (_powerShell != null)
-            //{
-            //    _powerShell.Dispose();
-            //}
             if (_runSpace != null)
             {
                 _runSpace.Dispose();
