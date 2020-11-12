@@ -30,15 +30,19 @@ namespace PnP.PowerShell.Tests
 
             _runSpace.Open();
 
-            var pipeLine = _runSpace.CreatePipeline();
 
             if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
+                var executionPolicyPipeline =_runSpace.CreatePipeline();
+
                 // This is only works / is needed on Windows
                 var executionPolicyCmd = new Command("Set-ExecutionPolicy");
                 executionPolicyCmd.Parameters.Add("ExecutionPolicy", "Unrestricted");
-                pipeLine.Commands.Add(executionPolicyCmd);
+                executionPolicyPipeline.Commands.Add(executionPolicyCmd);
+                executionPolicyPipeline.Invoke();
             }
+
+            var pipeLine = _runSpace.CreatePipeline();
 
             if (connect)
             {
@@ -69,12 +73,16 @@ namespace PnP.PowerShell.Tests
 
             if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
+                var executionPolicyPipeline = _runSpace.CreatePipeline();
+
                 // This is only works / is needed on Windows
                 var executionPolicyCmd = new Command("Set-ExecutionPolicy");
                 executionPolicyCmd.Parameters.Add("ExecutionPolicy", "Unrestricted");
-                pipeLine.Commands.Add(executionPolicyCmd);
+                executionPolicyPipeline.Commands.Add(executionPolicyCmd);
+                executionPolicyPipeline.Invoke();
             }
 
+                        
             if (connect)
             {
                 var cmd = new Command("Connect-PnPOnline");
