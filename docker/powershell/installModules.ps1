@@ -15,3 +15,6 @@ foreach($module in $modules)
 
 Register-SecretVault -Name "SecretStore" -ModuleName "Microsoft.PowerShell.SecretStore" -DefaultVault
 Set-SecretStoreConfiguration -Authentation None
+
+$userProfile = "Import-Module -Name PnP.PowerShell"
+Set-Content -Path $PROFILE.AllUsersAllHosts -Value $userProfile -Force
