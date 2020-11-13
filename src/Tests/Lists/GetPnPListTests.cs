@@ -8,12 +8,12 @@ namespace PnP.PowerShell.Tests.Lists
     [TestClass]
     public class GetListTests
     {
-        private string listTitle;
-        private PSTestScope scope;
+        private static string listTitle;
+        private static PSTestScope scope;
 
         // #region Setup
-        [TestInitialize]
-        public void Initialize()
+        [ClassInitialize]
+        public static void Initialize(TestContext testContext)
         {
             using (var context = TestCommon.CreateClientContext())
             {
@@ -23,14 +23,15 @@ namespace PnP.PowerShell.Tests.Lists
 
                 listTitle = lists[0].Title;
             }
-            scope = new PSTestScope(true);
+           // scope = new PSTestScope(true);
+           scope = new PSTestScope();
         }
 
-        [TestCleanup]
-        public void Cleanup()
-        {
-            scope?.Dispose();
-        }
+        // [ClassCleanup]
+        // public static void Cleanup()
+        // {
+        //     scope?.Dispose();
+        // }
         // #endregion
 
         #region Scaffolded Cmdlet Tests

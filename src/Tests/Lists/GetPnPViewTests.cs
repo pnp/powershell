@@ -7,30 +7,30 @@ namespace PnP.PowerShell.Tests.Lists
     [TestClass]
     public class GetViewTests
     {
-        private string listTitle;
-        private string viewTitle;
-        private PSTestScope scope;
+        private static string listTitle;
+        private static string viewTitle;
+        private static PSTestScope scope;
 
-        [TestInitialize]
-        public void Initialize()
+        [ClassInitialize]
+        public static void Initialize(TestContext testContext)
         {
             using (var ctx = TestCommon.CreateClientContext())
             {
-                ctx.Load(ctx.Web.Lists);
+                 ctx.Load(ctx.Web.Lists);
                 ctx.ExecuteQueryRetry();
                 listTitle = ctx.Web.Lists[0].Title;
                 var views = ctx.Web.Lists[0].EnsureProperty(l => l.Views);
                 viewTitle = views[0].Title;
             }
-
+            // scope = new PSTestScope(true);
             scope = new PSTestScope(true);
         }
 
-        [TestCleanup]
-        public void Cleanup()
-        {
-            scope?.Dispose();
-        }
+        // [TestCleanup]
+        // public void Cleanup()
+        // {
+        //     scope?.Dispose();
+        // }
 
         #region Scaffolded Cmdlet Tests
         [TestMethod]
