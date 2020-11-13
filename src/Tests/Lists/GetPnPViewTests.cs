@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Tests.Lists
         {
             using (var ctx = TestCommon.CreateClientContext())
             {
-                 ctx.Load(ctx.Web.Lists);
+                ctx.Load(ctx.Web.Lists);
                 ctx.ExecuteQueryRetry();
                 listTitle = ctx.Web.Lists[0].Title;
                 var views = ctx.Web.Lists[0].EnsureProperty(l => l.Views);
@@ -26,11 +26,11 @@ namespace PnP.PowerShell.Tests.Lists
             scope = new PSTestScope(true);
         }
 
-        // [TestCleanup]
-        // public void Cleanup()
-        // {
-        //     scope?.Dispose();
-        // }
+        [ClassCleanup]
+        public static void Cleanup()
+        {
+            scope?.Dispose();
+        }
 
         #region Scaffolded Cmdlet Tests
         [TestMethod]
@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Tests.Lists
         {
             var results = scope.ExecuteCommand("Get-PnPView",
                 new CommandParameter("List", listTitle));
-            Assert.IsNotNull(results);
+            Assert.IsTrue(results.Count > 0);
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Tests.Lists
             var results = scope.ExecuteCommand("Get-PnPView",
                 new CommandParameter("List", listTitle),
                 new CommandParameter("Identity", viewTitle));
-            Assert.IsNotNull(results);
+            Assert.AreEqual(results.Count, 1);
         }
         #endregion
     }
