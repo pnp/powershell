@@ -235,6 +235,8 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false)]
         public SwitchParameter NoTelemetry;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter NoVersionCheck;
 
         protected override void ProcessRecord()
         {
@@ -268,10 +270,13 @@ namespace PnP.PowerShell.Commands.Base
 
             PnPConnection connection = null;
 
-            var latestVersion = PnPConnectionHelper.GetLatestVersion();
-            if (!string.IsNullOrEmpty(latestVersion))
+            if (!NoVersionCheck)
             {
-                WriteUpdateMessage(latestVersion);
+                var latestVersion = PnPConnectionHelper.GetLatestVersion();
+                if (!string.IsNullOrEmpty(latestVersion))
+                {
+                    WriteUpdateMessage(latestVersion);
+                }
             }
 
             PSCredential credentials = null;
