@@ -718,36 +718,6 @@ namespace PnP.PowerShell.Commands.Base
                 var coreAssembly = Assembly.GetExecutingAssembly();
                 ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
                 ApplicationInsights.TrackEvent("Connect-PnPOnline");
-
-                //TelemetryConfiguration config = TelemetryConfiguration.CreateDefault();
-                //TelemetryClient = new TelemetryClient(config);
-                //config.InstrumentationKey = "a301024a-9e21-4273-aca5-18d0ef5d80fb";
-                ////config..Context.Session.Id = Guid.NewGuid().ToString();
-                //TelemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
-                //TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
-
-                //TelemetryProperties = new Dictionary<string, string>(10);
-                //TelemetryProperties.Add("ServerLibraryVersion", serverLibraryVersion);
-                //TelemetryProperties.Add("ServerVersion", serverVersion);
-                //TelemetryProperties.Add("ConnectionMethod", initializationType.ToString());
-                //var coreAssembly = Assembly.GetExecutingAssembly();
-                //TelemetryProperties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
-                //TelemetryProperties.Add("Platform", "SPO");
-                //TelemetryClient.TrackEvent("Connect-PnPOnline", TelemetryProperties);
-
-
-                //TelemetryClient = new TelemetryClient(;
-                //TelemetryClient.InstrumentationKey = "a301024a-9e21-4273-aca5-18d0ef5d80fb";
-                //TelemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
-                //TelemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
-                //TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
-                //TelemetryClient.Context.Properties.Add("ServerLibraryVersion", serverLibraryVersion);
-                //TelemetryClient.Context.Properties.Add("ServerVersion", serverVersion);
-                //TelemetryClient.Context.Properties.Add("ConnectionMethod", initializationType.ToString());
-                //var coreAssembly = Assembly.GetExecutingAssembly();
-                //TelemetryClient.Context.Properties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
-                //TelemetryClient.Context.Properties.Add("Platform", "SPO");
-                //TelemetryClient.TrackEvent("Connect-PnPOnline");
             }
         }
     }
