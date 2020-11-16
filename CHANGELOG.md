@@ -62,6 +62,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Remove-PnPPlannerBucket` cmdlet (0.1.17)
 - Added `Remove-PnPPlannerPlan` cmdlet (0.1.17)
 - Added `Remove-PnPPlannerTask` cmdlet (0.1.17)
+- Added `NoVersionCheck` optional flag to `Connect-PnPOnline` [PR#28](https://github.com/pnp/powershell/pull/28)
 
 ### Changed
 
@@ -127,3 +128,4 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Contributors
 Aimery Thomas [a1mery]
 Veronique Lengelle [veronicageek]
+Koen Zomers [koenzomers]
