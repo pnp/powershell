@@ -1,7 +1,4 @@
-﻿using PnP.PowerShell.Commands.Properties;
-using System;
-using Microsoft.SharePoint.Client;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using System;
 using System.Net.Http;
 
 namespace PnP.PowerShell.Commands.Base

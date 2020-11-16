@@ -2,5 +2,9 @@
   href: installation.md
 - name: Authentication
   href: authentication.md
+- name: Credential Management
+  href: credentialmanagement.md
+- name: Upgrading from the Legacy version
+  href: upgrading.md
 - name: Building the Source
   href: buildingsource.md

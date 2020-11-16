@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PnP.PowerShell", "Commands\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PnP.PowerShell.ALC", "ALC\PnP.PowerShell.ALC.csproj", "{546A8F8C-AD8A-488D-98DB-5AB25CF9558B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PnP.PowerShell.Tests", "Tests\PnP.PowerShell.Tests.csproj", "{9F0FB096-D2D0-457E-AD00-AC76E4526119}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{546A8F8C-AD8A-488D-98DB-5AB25CF9558B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{546A8F8C-AD8A-488D-98DB-5AB25CF9558B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{546A8F8C-AD8A-488D-98DB-5AB25CF9558B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F0FB096-D2D0-457E-AD00-AC76E4526119}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F0FB096-D2D0-457E-AD00-AC76E4526119}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F0FB096-D2D0-457E-AD00-AC76E4526119}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F0FB096-D2D0-457E-AD00-AC76E4526119}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

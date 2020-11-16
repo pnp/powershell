@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "ALC"
+		},
+		{
+			"path": "Commands"
+		},
+		{
+			"path": "Tests"
+		}
+	],
+	"settings": {
+		"debug.internalConsoleOptions": "neverOpen"
+	},
+}

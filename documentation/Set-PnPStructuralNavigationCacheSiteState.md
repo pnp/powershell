@@ -30,7 +30,7 @@ Set-PnPStructuralNavigationCacheSiteState -IsEnabled $true -SiteUrl "https://con
 
 This example enables caching for all webs in the site collection https://contoso.sharepoint.com/sites/product/.
 
-### Example 1
+### Example 2
 ```powershell
 Set-PnPStructuralNavigationCacheSiteState -IsEnabled $false -SiteUrl "https://contoso.sharepoint.com/sites/product/" 
 ```
