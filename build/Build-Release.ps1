@@ -1,91 +1,98 @@
-Write-Host "Building PnP.PowerShell" -ForegroundColor Yellow
-$Tags = "SharePoint","SharePoint Online","PnP","Microsoft Teams"
+$runPublish = $false
 
-$versionObject = [System.Version]::new($(Get-Content ./version.txt -Raw))
+Write-Host "Getting latest commit hash" -ForegroundColor Yellow
+$hash = git ls-files -s ./src | git hash-object --stdin
 
-$buildVersion = $versionObject.Build + 1;
-
-$version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
-
-# Check if version has not been published yet
-
-$availableVersions = Find-Module -Name PnP.PowerShell -AllowPrerelease | Select-Object -First 1
-$availableVersion = $availableVersions.Version.Split('-')[0]
-
-if($availableVersion -eq $version)
-{
-	exit # Do not proceed.
+$existingPublishHash = Get-Content ./publishhash.txt -Raw -ErrorAction SilentlyContinue
+if ($existingPublishHash -ne $hash) {
+	Set-Content ./publishhash.txt -Value $hash -NoNewline -Force
+	$runPublish = $true
 }
 
-dotnet build ./src/Commands/PnP.PowerShell.csproj --nologo --configuration Release --no-incremental -p:VersionPrefix=$version -p:VersionSuffix=nightly
+if ($runPublish -eq $true) {
+	Write-Host "Building PnP.PowerShell" -ForegroundColor Yellow
+	$Tags = "SharePoint", "SharePoint Online", "PnP", "Microsoft Teams"
 
-$documentsFolder = [environment]::getfolderpath("mydocuments");
+	$versionObject = [System.Version]::new($(Get-Content ./version.txt -Raw))
 
-if($IsLinux -or $isMacOS)
-{
-	$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
-} else {
-	$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
-}
+	$buildVersion = $versionObject.Build + 1;
 
-$corePath = "$destinationFolder/Core"
-$commonPath = "$destinationFolder/Common"
-$frameworkPath = "$destinationFolder/Framework"
+	$version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
-Try {
-	# Module folder there?
-	if(Test-Path $destinationFolder)
-	{
-		# Yes, empty it
-		Remove-Item $destinationFolder\* -Recurse -Force -ErrorAction Stop
-	}
-		# No, create it
-	Write-Host "Creating target folders: $destinationFolder" -ForegroundColor Yellow
-	New-Item -Path $destinationFolder -ItemType Directory -Force | Out-Null
-	New-Item -Path "$destinationFolder\Core" -ItemType Directory -Force | Out-Null
-	New-Item -Path "$destinationFolder\Common" -ItemType Directory -Force | Out-Null
-	if(!$IsLinux -and !$IsMacOs)
-	{
-		New-Item -Path "$destinationFolder\Framework" -ItemType Directory -Force | Out-Null
+	# Check if version has not been published yet
+
+	$availableVersions = Find-Module -Name PnP.PowerShell -AllowPrerelease | Select-Object -First 1
+	$availableVersion = $availableVersions.Version.Split('-')[0]
+
+	if ($availableVersion -eq $version) {
+		exit # Do not proceed.
 	}
 
-	Write-Host "Copying files to $destinationFolder" -ForegroundColor Yellow
+	dotnet build ./src/Commands/PnP.PowerShell.csproj --nologo --configuration Release --no-incremental -p:VersionPrefix=$version -p:VersionSuffix=nightly
 
-	$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
-	Copy-Item -Path "$PSscriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
-	Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Release/netstandard2.0" | Where-Object {$_.Extension -in '.dll','.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
-	Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/netcoreapp3.1" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
-	if(!$IsLinux -and !$IsMacOs)
-	{
-		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net461" | Where-Object {$_.Extension -in '.dll','.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }
+	$documentsFolder = [environment]::getfolderpath("mydocuments");
+
+	if ($IsLinux -or $isMacOS) {
+		$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
 	}
-}
-Catch
-{
-	Write-Host "Error: Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module?"
-	exit 1
-}
+ else {
+		$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
+	}
 
-Try {
-	Write-Host "Generating PnP.PowerShell.psd1" -ForegroundColor Yellow
-	# Load the Module in a new PowerShell session
-	$scriptBlock = {
-		$documentsFolder = [environment]::getfolderpath("mydocuments");
+	$corePath = "$destinationFolder/Core"
+	$commonPath = "$destinationFolder/Common"
+	$frameworkPath = "$destinationFolder/Framework"
 
-		if($IsLinux -or $isMacOS)
-		{
-			$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
-		} else {
-			$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
+	Try {
+		# Module folder there?
+		if (Test-Path $destinationFolder) {
+			# Yes, empty it
+			Remove-Item $destinationFolder\* -Recurse -Force -ErrorAction Stop
 		}
-		
-		Import-Module -Name "$destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
-		$cmdlets = get-command -Module PnP.PowerShell | ForEach-Object{"`"$_`""}
-		$cmdlets -Join ","
-	}
-	$cmdletsString = Start-Job -ScriptBlock $scriptBlock | Receive-Job -Wait
+		# No, create it
+		Write-Host "Creating target folders: $destinationFolder" -ForegroundColor Yellow
+		New-Item -Path $destinationFolder -ItemType Directory -Force | Out-Null
+		New-Item -Path "$destinationFolder\Core" -ItemType Directory -Force | Out-Null
+		New-Item -Path "$destinationFolder\Common" -ItemType Directory -Force | Out-Null
+		if (!$IsLinux -and !$IsMacOs) {
+			New-Item -Path "$destinationFolder\Framework" -ItemType Directory -Force | Out-Null
+		}
 
-	$manifest = "@{
+		Write-Host "Copying files to $destinationFolder" -ForegroundColor Yellow
+
+		$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
+		Copy-Item -Path "$PSscriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
+		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Release/netstandard2.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
+		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/netcoreapp3.1" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
+		if (!$IsLinux -and !$IsMacOs) {
+			Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net461" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }
+		}
+	}
+	Catch {
+		Write-Host "Error: Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module?"
+		exit 1
+	}
+
+	Try {
+		Write-Host "Generating PnP.PowerShell.psd1" -ForegroundColor Yellow
+		# Load the Module in a new PowerShell session
+		$scriptBlock = {
+			$documentsFolder = [environment]::getfolderpath("mydocuments");
+
+			if ($IsLinux -or $isMacOS) {
+				$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
+			}
+			else {
+				$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
+			}
+		
+			Import-Module -Name "$destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
+			$cmdlets = get-command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
+			$cmdlets -Join ","
+		}
+		$cmdletsString = Start-Job -ScriptBlock $scriptBlock | Receive-Job -Wait
+
+		$manifest = "@{
 	NestedModules =  if (`$PSEdition -eq 'Core')
 	{
 		'Core/PnP.PowerShell.dll'
@@ -111,30 +118,30 @@ Try {
 	FormatsToProcess = 'PnP.PowerShell.Format.ps1xml' 
 	PrivateData = @{
 		PSData = @{
-			Prerelease = '-nightly'
+			Prerelease = 'nightly'
 			ProjectUri = 'https://aka.ms/sppnp'
 			IconUri = 'https://raw.githubusercontent.com/pnp/media/40e7cd8952a9347ea44e5572bb0e49622a102a12/parker/ms/300w/parker-ms-300.png'
 		}
 	}
 }"
-	$manifest | Out-File "$destinationFolder/PnP.PowerShell.psd1"
+		$manifest | Out-File "$destinationFolder/PnP.PowerShell.psd1"
+	}
+	Catch {
+		Write-Host "Error: Cannot generate PnP.PowerShell.psd1. Maybe a PowerShell session is still using the module?"
+		exit 1
+	}
+
+	Write-Host "Generating Documentation"
+	Set-PSRepository PSGallery -InstallationPolicy Trusted
+	Install-Module PlatyPS -ErrorAction Stop
+	New-ExternalHelp -Path ./documentation -OutputPath $destinationFolder -Force
+
+	$apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
+
+	Write-Host "Publishing Module" -ForegroundColor Yellow
+	Import-Module -Name PnP.PowerShell
+	Publish-Module -Name PnP.PowerShell -AllowPrerelease -NuGetApiKey $apiKey -Tags $Tags
+
+	# Write version back to version
+	Set-Content ./version.txt -Value $version -Force
 }
-Catch 
-{
-	Write-Host "Error: Cannot generate PnP.PowerShell.psd1. Maybe a PowerShell session is still using the module?"
-	exit 1
-}
-
-Write-Host "Generating Documentation"
-Set-PSRepository PSGallery -InstallationPolicy Trusted
-Install-Module PlatyPS -ErrorAction Stop
-New-ExternalHelp -Path ./documentation -OutputPath $destinationFolder -Force
-
-$apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
-
-Write-Host "Publishing Module" -ForegroundColor Yellow
-Import-Module -Name PnP.PowerShell
-Publish-Module -Name PnP.PowerShell -AllowPrerelease -NuGetApiKey $apiKey -Tags $Tags
-
-# Write version back to version
-Set-Content ./version.txt -Value $version -Force

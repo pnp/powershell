@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Branding
                 actions.AddRange(ClientContext.Site.GetCustomActions(RetrievalExpressions));
             }
 
-            if (Identity != null)
+            if (Identity != Guid.Empty)
             {
                 var foundAction = actions.FirstOrDefault(x => x.Id == Identity && x.Location == "ClientSideExtension.ApplicationCustomizer");
                 if (foundAction != null || !ThrowExceptionIfCustomActionNotFound)

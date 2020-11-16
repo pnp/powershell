@@ -23,7 +23,9 @@ namespace PnP.PowerShell.Commands.Utilities
                     foreach (var plan in collection.Items)
                     {
                         var fullIdentity = await ResolveIdentityAsync(httpClient, accessToken, plan.CreatedBy.User);
-
+                        plan.CreatedBy.User = fullIdentity;
+                        var owner = await ResolveGroupName(httpClient, accessToken, plan.Owner);
+                        plan.Owner = owner;
                         returnCollection.Add(plan);
                     }
                 }
@@ -39,7 +41,9 @@ namespace PnP.PowerShell.Commands.Utilities
                         foreach (var plan in collection.Items)
                         {
                             var fullIdentity = await ResolveIdentityAsync(httpClient, accessToken, plan.CreatedBy.User);
-
+                            plan.CreatedBy.User = fullIdentity;
+                            var owner = await ResolveGroupName(httpClient, accessToken, plan.Owner);
+                            plan.Owner = owner;
                             returnCollection.Add(plan);
                         }
                     }
@@ -73,12 +77,12 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             var stringContent = new StringContent(JsonSerializer.Serialize(new { title }));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var responseMessage = await GraphHelper.PatchAsync(httpClient, accessToken, $"v1.0/planner/plans/{plan.Id}", stringContent, new Dictionary<string, string>() { { "IF-MATCH", plan.ETag } });
+            var responseMessage = await GraphHelper.PatchAsync(httpClient, accessToken, stringContent, $"v1.0/planner/plans/{plan.Id}", new Dictionary<string, string>() { { "IF-MATCH", plan.ETag } });
             while (responseMessage.StatusCode == System.Net.HttpStatusCode.PreconditionFailed)
             {
                 // retrieve the plan again
                 plan = await GraphHelper.GetAsync<PlannerPlan>(httpClient, $"v1.0/planner/plans/{plan.Id}", accessToken);
-                responseMessage = await GraphHelper.PatchAsync(httpClient, accessToken, $"v1.0/planner/plans/{plan.Id}", stringContent, new Dictionary<string, string>() { { "IF-MATCH", plan.ETag } });
+                responseMessage = await GraphHelper.PatchAsync(httpClient, accessToken, stringContent, $"v1.0/planner/plans/{plan.Id}", new Dictionary<string, string>() { { "IF-MATCH", plan.ETag } });
             }
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -155,9 +159,38 @@ namespace PnP.PowerShell.Commands.Utilities
             return returnCollection;
         }
 
-        public static async Task<PlannerTask> GetTaskAsync(HttpClient httpClient, string accessToken, string taskId, bool resolveDisplayNames)
+        public static async Task<PlannerTask> GetTaskAsync(HttpClient httpClient, string accessToken, string taskId, bool resolveDisplayNames, bool includeDetails)
         {
-            return await GraphHelper.GetAsync<PlannerTask>(httpClient, $"v1.0/planner/tasks/{taskId}", accessToken);
+            var task = await GraphHelper.GetAsync<PlannerTask>(httpClient, $"v1.0/planner/tasks/{taskId}", accessToken);
+            if (resolveDisplayNames)
+            {
+                task.CreatedBy.User = await ResolveIdentityAsync(httpClient, accessToken, task.CreatedBy.User);
+            }
+            if (includeDetails)
+            {
+                var taskDetails = await GraphHelper.GetAsync<PlannerTaskDetails>(httpClient, $"v1.0/planner/tasks/{taskId}/details", accessToken);
+                if (resolveDisplayNames)
+                {
+                    Dictionary<string, PlannerTaskCheckListItem> newItems = new Dictionary<string, PlannerTaskCheckListItem>();
+                    foreach (var checklistItem in taskDetails.Checklist)
+                    {
+                        var newCheckListItem = new PlannerTaskCheckListItem();
+                        newCheckListItem.IsChecked = checklistItem.Value.IsChecked;
+                        newCheckListItem.LastModifiedDateTime = checklistItem.Value.LastModifiedDateTime;
+                        newCheckListItem.OrderHint = checklistItem.Value.OrderHint;
+                        newCheckListItem.Title = checklistItem.Value.Title;
+                        if (checklistItem.Value.LastModifiedBy != null)
+                        {
+                            newCheckListItem.LastModifiedBy = new IdentitySet();
+                            newCheckListItem.LastModifiedBy.User = await ResolveIdentityAsync(httpClient, accessToken, checklistItem.Value.LastModifiedBy.User);
+                        }
+                        newItems.Add(checklistItem.Key, newCheckListItem);
+                    }
+                    taskDetails.Checklist = newItems;
+                }
+                task.Details = taskDetails;
+            }
+            return task;
         }
 
         public static async Task<PlannerTask> AddTaskAsync(HttpClient httpClient, string accessToken, string planId, string bucketId, string title)
@@ -170,11 +203,16 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static async Task DeleteTaskAsync(HttpClient httpClient, string accessToken, string taskId)
         {
-            var task = GraphHelper.GetAsync<PlannerTask>(httpClient, $"v1.0/planner/tasks/{taskId}", accessToken).GetAwaiter().GetResult();
+            var task = await GraphHelper.GetAsync<PlannerTask>(httpClient, $"v1.0/planner/tasks/{taskId}", accessToken);
             if (task != null)
             {
                 await GraphHelper.DeleteAsync(httpClient, $"v1.0/planner/tasks/{taskId}", accessToken, new Dictionary<string, string>() { { "IF-MATCH", task.ETag } });
             }
+        }
+
+        public static async Task<PlannerTask> UpdateTaskAsync(HttpClient httpClient, string accessToken, PlannerTask taskToUpdate, PlannerTask task)
+        {
+            return await GraphHelper.PatchAsync<PlannerTask>(httpClient, accessToken, $"v1.0/planner/tasks/{taskToUpdate.Id}", task, new Dictionary<string, string>() { { "IF-MATCH", taskToUpdate.ETag } });
         }
         #endregion
 
@@ -195,6 +233,18 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
+        private static async Task<string> ResolveGroupName(HttpClient httpClient, string accessToken, string id)
+        {
+            var group = await GraphHelper.GetAsync<Group>(httpClient, $"v1.0/groups/{id}?$select=displayName", accessToken);
+            if (group != null)
+            {
+                return group.DisplayName;
+            }
+            else
+            {
+                return null;
+            }
+        }
         #region Buckets
 
         public static async Task<IEnumerable<PlannerBucket>> GetBucketsAsync(HttpClient httpClient, string accessToken, string planId)

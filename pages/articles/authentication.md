@@ -31,7 +31,7 @@ and you will be prompted for credentials.
 ## Authenticating with pre-stored credentials using the Windows Credential Manager (Windows only)
 
 ```powershell
-Add-PnPStoreCredential -Name "yourlabel" -Username youruser@domain.com
+Add-PnPStoredCredential -Name "yourlabel" -Username youruser@domain.com
 ```
 
 You will be prompted to provide a password. After that you can login using:
@@ -44,7 +44,7 @@ Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials "yourlabel"
 
 ```powershell
 Install-Module -Name Microsoft.PowerShell.SecretManagement -AllowPrerelease
-Install-Module -Name Microsoft.PowerShell.SecretStore -AllowPrelease
+Install-Module -Name Microsoft.PowerShell.SecretStore -AllowPrerelease
 Set-SecretStoreConfiguration
 Set-Secret -Name "yourlabel" -Secret (Get-Credential)
 ```

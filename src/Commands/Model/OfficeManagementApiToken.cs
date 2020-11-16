@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -63,10 +64,10 @@ namespace PnP.PowerShell.Commands.Model
             return new OfficeManagementApiToken(GenericToken.AcquireApplicationTokenInteractive(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), azureEnvironment).AccessToken);
         }
 
-        public static GraphToken AcquireApplicationTokenDeviceLogin(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction, AzureEnvironment azureEnvironment)
+        public static GraphToken AcquireApplicationTokenDeviceLogin(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction, AzureEnvironment azureEnvironment, ref CancellationToken cancellationToken)
         {
             var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
-            return new GraphToken(AcquireApplicationTokenDeviceLogin(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{endPoint}/organizations", callBackAction).AccessToken);
+            return new GraphToken(AcquireApplicationTokenDeviceLogin(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{endPoint}/organizations", callBackAction, ref cancellationToken).AccessToken);
         }
 
         /// <summary>

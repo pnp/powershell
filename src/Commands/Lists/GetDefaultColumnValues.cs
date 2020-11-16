@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "DefaultColumnValues")]
     public class GetDefaultColumnValues : PnPWebCmdlet
-    { 
+    {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ListPipeBind List;
 
@@ -26,18 +26,21 @@ namespace PnP.PowerShell.Commands.Lists
                 {
                     var defaultValues = list.GetDefaultColumnValues();
                     var dynamicList = new List<dynamic>();
-                    foreach (var dict in defaultValues)
+                    if (defaultValues != null)
                     {
-                        dynamicList.Add(
-                            new
-                            {
-                                Path = dict["Path"],
-                                Field = dict["Field"],
-                                Value = dict["Value"]
-                            });
+                        foreach (var dict in defaultValues)
+                        {
+                            dynamicList.Add(
+                                new
+                                {
+                                    Path = dict["Path"],
+                                    Field = dict["Field"],
+                                    Value = dict["Value"]
+                                });
 
+                        }
+                        WriteObject(dynamicList, true);
                     }
-                    WriteObject(dynamicList, true);
                 }
             }
             else
