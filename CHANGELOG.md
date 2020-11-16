@@ -123,7 +123,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Add-PnPWorkflowDefinition`, `Add-PnPWorkflowSubscription`, `Get-PnPWorkflowDefinition`, `Get-PnPWorkflowInstances`, `Get-PnPWorkflowSubscription`, `Remove-PnPWorkflowDefinition`, `Remove-PnPWorkflowSubscription`, `Resume-PnPWorkflowInstance`, `Start-PnPWorkflowInstance` and `Stop-PnPWorkflowInstance` due to deprecated of the Workflow Services in SharePoint Online.
 - Renamed `Test-PnPOffice365AliasIsUsed` to `Test-PnPMicrosoft365AliasIsUsed`
 - Refactored some of the Taxonomy cmdlet parameters. See documentation.
+- Change in `Copy-PnPFile` which should resolve some issues you may run into when copying files [PR #2796](https://github.com/pnp/PnP-PowerShell/pull/2796)
 
 ### Contributors
 Aimery Thomas [a1mery]
 Veronique Lengelle [veronicageek]
+Carlos Marins Jr [kadu-jr]
