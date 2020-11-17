@@ -1,10 +1,12 @@
 $runPublish = $false
 
-Write-Host "Getting latest commit hash" -ForegroundColor Yellow
 $hash = git ls-files -s ./src | git hash-object --stdin
+$existingHash = Get-Content ./publishhash.txt -Raw -ErrorAction SilentlyContinue
 
-$existingPublishHash = Get-Content ./publishhash.txt -Raw -ErrorAction SilentlyContinue
-if ($existingPublishHash -ne $hash) {
+Write-host "Latest commit hash $hash" -ForegroundColor Yellow
+Write-Host "Stored hash: $existingHash" -ForegroundColor Yellow
+
+if ($existingHash -ne $hash) {
 	Set-Content ./publishhash.txt -Value $hash -NoNewline -Force
 	$runPublish = $true
 }
