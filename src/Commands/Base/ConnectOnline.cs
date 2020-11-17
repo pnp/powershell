@@ -289,8 +289,6 @@ namespace PnP.PowerShell.Commands.Base
                 credentials = Credentials.Credential;
             }
 
-            WriteVerbose($"Using parameter set '{ParameterSetName}'");
-
             // Connect using the used set parameters
             switch (ParameterSetName)
             {
@@ -373,7 +371,7 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             // Connection has been established
-            WriteVerbose($"PnP PowerShell Cmdlets ({Assembly.GetExecutingAssembly().GetName().Version}): Connected to {Url}");
+            WriteVerbose($"PnP PowerShell Cmdlets ({new SemanticVersion(Assembly.GetExecutingAssembly().GetName().Version)}): Connected to {Url}");
             PnPConnection.CurrentConnection = connection;
             if (CreateDrive && PnPConnection.CurrentConnection.Context != null)
             {

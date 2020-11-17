@@ -500,8 +500,9 @@ namespace PnP.PowerShell.Commands.Base
                             var onlineVersion = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                             onlineVersion = onlineVersion.Trim(new char[] { '\t', '\r', '\n' });
                             var assembly = Assembly.GetExecutingAssembly();
-                            var currentVersion = new Version(((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version);
-                            if (Version.TryParse(onlineVersion, out Version availableVersion))
+                        
+                            var currentVersion = new SemanticVersion(((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version);
+                            if (SemanticVersion.TryParse(onlineVersion, out SemanticVersion availableVersion))
                             {
                                 var newVersionAvailable = false;
                                 if (availableVersion.Major > currentVersion.Major)
