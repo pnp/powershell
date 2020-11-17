@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Planner
 
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter ResolveUserDisplayNames;
+        public SwitchParameter ResolveIdentities;
         protected override void ExecuteCmdlet()
         {
             var groupId = Group.GetGroupId(HttpClient, AccessToken);
@@ -29,11 +29,11 @@ namespace PnP.PowerShell.Commands.Planner
             {
                 if (ParameterSpecified(nameof(Identity)))
                 {
-                    WriteObject(Identity.GetPlanAsync(HttpClient, AccessToken, groupId, ResolveUserDisplayNames).GetAwaiter().GetResult());
+                    WriteObject(Identity.GetPlanAsync(HttpClient, AccessToken, groupId, ResolveIdentities).GetAwaiter().GetResult());
                 }
                 else
                 {
-                    WriteObject(PlannerUtility.GetPlansAsync(HttpClient, AccessToken, groupId, ResolveUserDisplayNames).GetAwaiter().GetResult(), true);
+                    WriteObject(PlannerUtility.GetPlansAsync(HttpClient, AccessToken, groupId, ResolveIdentities).GetAwaiter().GetResult(), true);
                 }
             }
             else

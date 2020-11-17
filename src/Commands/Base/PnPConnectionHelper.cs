@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Base
@@ -77,7 +78,7 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment)
+        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, string tenantAdminUrl, PSCmdlet cmdlet, bool disableTelemetry, AzureEnvironment azureEnvironment, ref CancellationToken cancellationToken)
         {
             var connectionUri = new Uri(url);
             var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
@@ -85,13 +86,13 @@ namespace PnP.PowerShell.Commands.Base
             GenericToken tokenResult = null;
             try
             {
-                tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, scopes, PnPConnection.DeviceLoginCallback(host, launchBrowser), azureEnvironment);
+                tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, scopes, PnPConnection.DeviceLoginCallback(cmdlet, launchBrowser), azureEnvironment, ref cancellationToken);
             }
             catch (MsalUiRequiredException ex)
             {
                 if (ex.Classification == UiRequiredExceptionClassification.ConsentRequired)
                 {
-                    host.UI.WriteLine("You need to provide consent to the PnP Management Shell application for your tenant. The easiest way to do this is by issueing: 'Connect-PnPOnline -Url [yoursiteur] -PnPManagementShell -LaunchBrowser'. Make sure to authenticate as a Azure administrator allowing to provide consent to the application. Follow the steps provided.");
+                    cmdlet.WriteFormattedWarning("You need to provide consent to the PnP Management Shell application for your tenant. The easiest way to do this is by issueing: 'Connect-PnPOnline -Url [yoursiteur] -PnPManagementShell -LaunchBrowser'. Make sure to authenticate as a Azure administrator allowing to provide consent to the application. Follow the steps provided.");
                     throw ex;
                 }
             }
@@ -99,7 +100,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 //var spoConnection = new PnPConnection(context, ConnectionType.O365, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.DeviceLogin);
                 Scopes = scopes,
-                AzureEnvironment = azureEnvironment
+                AzureEnvironment = azureEnvironment,
             };
             if (spoConnection != null)
             {
@@ -118,13 +119,18 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment)
+        internal static PnPConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, PSCmdlet cmdlet, bool disableTelemetry, AzureEnvironment azureEnvironment, ref CancellationToken cancellationToken)
         {
-            var tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" }, PnPConnection.DeviceLoginCallback(host, launchBrowser), azureEnvironment);
+            var tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(
+                PnPConnection.PnPManagementShellClientId,
+                new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" },
+                PnPConnection.DeviceLoginCallback(cmdlet, launchBrowser),
+                azureEnvironment,
+                ref cancellationToken);
             var spoConnection = new PnPConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, PnPPSVersionTag, disableTelemetry, InitializationType.GraphDeviceLogin)
             {
                 Scopes = new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" },
-                AzureEnvironment = azureEnvironment
+                AzureEnvironment = azureEnvironment,
             };
             return spoConnection;
         }
@@ -474,7 +480,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 var coreAssembly = Assembly.GetExecutingAssembly();
                 var version = ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.Split('.');
-                
+
                 var result = $"PnPPS:{version[0]}.{version[1]}";
                 return (result);
             },
@@ -494,8 +500,9 @@ namespace PnP.PowerShell.Commands.Base
                             var onlineVersion = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                             onlineVersion = onlineVersion.Trim(new char[] { '\t', '\r', '\n' });
                             var assembly = Assembly.GetExecutingAssembly();
-                            var currentVersion = new Version(((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version);
-                            if (Version.TryParse(onlineVersion, out Version availableVersion))
+                        
+                            var currentVersion = new SemanticVersion(((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version);
+                            if (SemanticVersion.TryParse(onlineVersion, out SemanticVersion availableVersion))
                             {
                                 var newVersionAvailable = false;
                                 if (availableVersion.Major > currentVersion.Major)

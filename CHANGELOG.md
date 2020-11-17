@@ -8,7 +8,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [0.1.x-nightly]
 
 ### Added
-
+- Added `NoVersionCheck` optional flag to `Connect-PnPOnline` [PR#28](https://github.com/pnp/powershell/pull/28) (0.2.9)
+- Added native support for Secret Management Modules (0.1.34)
+- Marked -ExcludeSiteUrl as obselete on `Get-PnPMicrosoft365Group` for performance reasons. Use -IncludeSiteUrl instead.
+- Added -CloudShell switch to `Connect-PnPOnline` which can be used in the Azure Cloud Shell. If specified you will automatically authenticate using the current identity you're logged in with to the Azure Cloud Shell. Notice: only Graph based cmdlets (Teams, Microsoft Groups etc.) will function. For SharePoint connectivity use one of the other connection options with `Connect-PnPOnline`.
 - Added -DisableCustomAppAuthentication to `Set-PnPTenant` and added support for DisableCustomAppAuthentication in `Get-PnPTenant`.
 - Added `Add-PnPHubToHubAssociation` cmdlet.
 - Added `Export-PnPUserInfo` cmdlet.
@@ -62,10 +65,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Remove-PnPPlannerBucket` cmdlet (0.1.17)
 - Added `Remove-PnPPlannerPlan` cmdlet (0.1.17)
 - Added `Remove-PnPPlannerTask` cmdlet (0.1.17)
-- Added `NoVersionCheck` optional flag to `Connect-PnPOnline` [PR#28](https://github.com/pnp/powershell/pull/28)
+- Added `Set-PnPPlannerTask` cmdlet (0.1.18)
 
 ### Changed
 
+- Updated `Get-PnPUnifiedAuditLog` to support paged results.
 - Removed SiteUrl parameter from `Register-PnPManagementShell` as it is not required anymore
 - Fixed documentation on Add-PnPTeamsChannel [PR#9](https://github.com/pnp/powershell/pull/9)
 - Fixed documentation on Remove-PnPTeamsUser [PR#10](https://github.com/pnp/powershell/pull/10)
@@ -124,8 +128,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Add-PnPWorkflowDefinition`, `Add-PnPWorkflowSubscription`, `Get-PnPWorkflowDefinition`, `Get-PnPWorkflowInstances`, `Get-PnPWorkflowSubscription`, `Remove-PnPWorkflowDefinition`, `Remove-PnPWorkflowSubscription`, `Resume-PnPWorkflowInstance`, `Start-PnPWorkflowInstance` and `Stop-PnPWorkflowInstance` due to deprecated of the Workflow Services in SharePoint Online.
 - Renamed `Test-PnPOffice365AliasIsUsed` to `Test-PnPMicrosoft365AliasIsUsed`
 - Refactored some of the Taxonomy cmdlet parameters. See documentation.
+- Change in `Copy-PnPFile` which should resolve some issues you may run into when copying files [PR #2796](https://github.com/pnp/PnP-PowerShell/pull/2796)
 
 ### Contributors
-Aimery Thomas [a1mery]
-Veronique Lengelle [veronicageek]
-Koen Zomers [koenzomers]
+- Koen Zomers [koenzomers]
+- Carlos Marins Jr [kadu-jr]
+- Aimery Thomas [a1mery]
+- Veronique Lengelle [veronicageek]

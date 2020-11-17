@@ -1,6 +1,21 @@
-﻿# Unit tests
+﻿# Unit tests / Integration tests
 
 Unit tests for PnP Powershell are undergoing a revamp, this area may grow or change, and maybe subject to test breakages in the short term.
+
+## Running the tests
+
+Run the tests using the Run-Tests.ps1 script available in the `build` folder of the root of this project. You need to specify a site url, and either a credential manager entry (which can be located in the Windows Credential Manager, the MacOS Keychain, or the SecretManagement module), or a username/password combination.
+
+### With credential manager key
+```powershell
+./Run-Tests.ps1 -SiteUrl https://contoso.sharepoint.com/sites/tests -CredentialManagerLabel mylabel
+```
+
+### With username/password
+```powershell
+$pw = Read-Host -Prompt "Enter password" -AsSecureString
+./Run-Tests.ps1 -SiteUrl https://contoso.sharepoint.com/sites/tests -Username "youruser@name.com" -Password $pw
+```
 
 ## Tips for Writing Tests
 

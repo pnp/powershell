@@ -54,4 +54,4 @@ This is the main location of all the cmdlet code.
 Any resources used by cmdlets go into this folder
 
 ### src/Tests
-This is where there the unit tests will be.
+This is where the the unit tests reside.

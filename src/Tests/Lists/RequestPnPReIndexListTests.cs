@@ -8,71 +8,40 @@ namespace PnP.PowerShell.Tests.Lists
     public class RequestReIndexListTests
     {
         #region Test Setup/CleanUp
+        private static string listTitle;
+
+        private static PSTestScope scope;
+
+        // #region Setup
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
         {
-            // This runs on class level once before all tests run
-            //using (var ctx = TestCommon.CreateClientContext())
-            //{
-            //}
+            scope = new PSTestScope();
+            listTitle = $"TempList {Guid.NewGuid()}";
+            scope.ExecuteCommand("New-PnPList",
+                new CommandParameter("Title", listTitle),
+                new CommandParameter("Template", Microsoft.SharePoint.Client.ListTemplateType.GenericList));
         }
 
         [ClassCleanup]
-        public static void Cleanup(TestContext testContext)
+        public static void Cleanup()
         {
-            // This runs on class level once
-            //using (var ctx = TestCommon.CreateClientContext())
-            //{
-            //}
-        }
-
-        [TestInitialize]
-        public void Initialize()
-        {
-            using (var scope = new PSTestScope())
-            {
-                // Example
-                // scope.ExecuteCommand("cmdlet", new CommandParameter("param1", prop));
-            }
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            using (var scope = new PSTestScope())
-            {
-                try
-                {
-                    // Do Test Setup - Note, this runs PER test
-                }
-                catch (Exception)
-                {
-                    // Describe Exception
-                }
-            }
+            scope.ExecuteCommand("Remove-PnPList",
+                new CommandParameter("Identity", listTitle),
+                new CommandParameter("Force"));
+            scope?.Dispose();
         }
         #endregion
 
         #region Scaffolded Cmdlet Tests
-        //TODO: This is a scaffold of the cmdlet - complete the unit test
-        //[TestMethod]
+        [TestMethod]
         public void RequestPnPReIndexListTest()
         {
-            using (var scope = new PSTestScope(true))
-            {
-                // Complete writing cmd parameters
+            var results = scope.ExecuteCommand("Request-PnPReIndexList",
+                new CommandParameter("Identity", listTitle));
 
-				// This is a mandatory parameter
-				// From Cmdlet Help: The ID, Title or Url of the list.
-				var identity = "";
-
-                var results = scope.ExecuteCommand("Request-PnPReIndexList",
-					new CommandParameter("Identity", identity));
-                
-                Assert.IsNotNull(results);
-            }
+            Assert.AreEqual(results.Count, 0);
         }
         #endregion
     }
 }
-            

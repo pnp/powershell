@@ -40,5 +40,10 @@ namespace PnP.PowerShell.Commands.Base
         {
             ExecuteCmdlet();
         }
+
+        protected override void StopProcessing()
+        {
+            base.StopProcessing();
+        }
     }
 }
