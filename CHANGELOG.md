@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [0.1.x-nightly]
 
 ### Added
+- Added `NoVersionCheck` optional flag to `Connect-PnPOnline` [PR#28](https://github.com/pnp/powershell/pull/28) (0.2.9)
+- Added native support for Secret Management Modules (0.1.34)
 - Marked -ExcludeSiteUrl as obselete on `Get-PnPMicrosoft365Group` for performance reasons. Use -IncludeSiteUrl instead.
 - Added -CloudShell switch to `Connect-PnPOnline` which can be used in the Azure Cloud Shell. If specified you will automatically authenticate using the current identity you're logged in with to the Azure Cloud Shell. Notice: only Graph based cmdlets (Teams, Microsoft Groups etc.) will function. For SharePoint connectivity use one of the other connection options with `Connect-PnPOnline`.
 - Added -DisableCustomAppAuthentication to `Set-PnPTenant` and added support for DisableCustomAppAuthentication in `Get-PnPTenant`.
@@ -64,7 +66,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Remove-PnPPlannerPlan` cmdlet (0.1.17)
 - Added `Remove-PnPPlannerTask` cmdlet (0.1.17)
 - Added `Set-PnPPlannerTask` cmdlet (0.1.18)
-- Added native support for Secret Management Modules (0.1.34)
 
 ### Changed
 
@@ -130,6 +131,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Change in `Copy-PnPFile` which should resolve some issues you may run into when copying files [PR #2796](https://github.com/pnp/PnP-PowerShell/pull/2796)
 
 ### Contributors
+- Koen Zomers [koenzomers]
 - Carlos Marins Jr [kadu-jr]
 - Aimery Thomas [a1mery]
 - Veronique Lengelle [veronicageek]

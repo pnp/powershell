@@ -521,6 +521,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -NoVersionCheck
+In case you want to avoid a version check to be done to validate if there is a newer PnP PowerShell version available, you can provide this flag. This will avoid making the call to check for newer versions and will avoid showing a message if a newer version would exist. Use this i.e. if you're sure you want to target a specific version of PnP PowerShell and don't want to potentially confuse the end user by having them upgrade.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -PEMCertificate
 PEM encoded certificate
 

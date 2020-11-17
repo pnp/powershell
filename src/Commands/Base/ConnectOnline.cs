@@ -239,6 +239,9 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false)]
         public SwitchParameter NoTelemetry;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter NoVersionCheck;
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CLOUDSHELL)]
         public SwitchParameter CloudShell;
 
@@ -277,10 +280,13 @@ namespace PnP.PowerShell.Commands.Base
 
             PnPConnection connection = null;
 
-            var latestVersion = PnPConnectionHelper.GetLatestVersion();
-            if (!string.IsNullOrEmpty(latestVersion))
+            if (!NoVersionCheck)
             {
-                WriteUpdateMessage(latestVersion);
+                var latestVersion = PnPConnectionHelper.GetLatestVersion();
+                if (!string.IsNullOrEmpty(latestVersion))
+                {
+                    WriteUpdateMessage(latestVersion);
+                }
             }
 
             PSCredential credentials = null;
