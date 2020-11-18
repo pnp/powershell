@@ -40,6 +40,10 @@ namespace PnP.PowerShell.Tests.Fields
                 var results = scope.ExecuteCommand("Get-PnPField", new CommandParameter("List", list));
                 Assert.IsTrue(results.Count > 0);
             }
+            else
+            {
+                Assert.Fail();
+            }
         }
         #endregion
     }

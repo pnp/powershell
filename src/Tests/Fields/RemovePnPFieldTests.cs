@@ -7,50 +7,41 @@ namespace PnP.PowerShell.Tests.Fields
     [TestClass]
     public class RemoveFieldTests
     {
+        private static string fieldName;
+        private static Microsoft.SharePoint.Client.List list;
+        private static PSTestScope scope;
         #region Test Setup/CleanUp
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
         {
-            // This runs on class level once before all tests run
-            //using (var ctx = TestCommon.CreateClientContext())
-            //{
-            //}
+            fieldName = $"Field{Guid.NewGuid()}";
+            scope = new PSTestScope();
+
+            var listResults = scope.ExecuteCommand("Get-PnPList");
+            if (listResults.Count > 0)
+            {
+                list = listResults[0].BaseObject as Microsoft.SharePoint.Client.List;
+            }
+
+            scope.ExecuteCommand("Add-PnPField",
+               new CommandParameter("DisplayName", fieldName),
+               new CommandParameter("InternalName", fieldName),
+               new CommandParameter("Type", Microsoft.SharePoint.Client.FieldType.Text));
+
+            scope.ExecuteCommand("Add-PnPField",
+                    new CommandParameter("List", list.Title),
+                    new CommandParameter("DisplayName", $"{fieldName}2"),
+                    new CommandParameter("InternalName", $"{fieldName}2"),
+                    new CommandParameter("Type", Microsoft.SharePoint.Client.FieldType.Text));
         }
 
         [ClassCleanup]
         public static void Cleanup(TestContext testContext)
         {
-            // This runs on class level once
-            //using (var ctx = TestCommon.CreateClientContext())
-            //{
-            //}
+            scope?.Dispose();
         }
 
-        [TestInitialize]
-        public void Initialize()
-        {
-            using (var scope = new PSTestScope())
-            {
-                // Example
-                // scope.ExecuteCommand("cmdlet", new CommandParameter("param1", prop));
-            }
-        }
 
-        [TestCleanup]
-        public void Cleanup()
-        {
-            using (var scope = new PSTestScope())
-            {
-                try
-                {
-                    // Do Test Setup - Note, this runs PER test
-                }
-                catch (Exception)
-                {
-                    // Describe Exception
-                }
-            }
-        }
         #endregion
 
         #region Scaffolded Cmdlet Tests
@@ -58,27 +49,22 @@ namespace PnP.PowerShell.Tests.Fields
         //[TestMethod]
         public void RemovePnPFieldTest()
         {
-            using (var scope = new PSTestScope(true))
-            {
-                // Complete writing cmd parameters
+            var results = scope.ExecuteCommand("Remove-PnPField",
+                new CommandParameter("Identity", fieldName),
+                new CommandParameter("Force"));
 
-				// This is a mandatory parameter
-				// From Cmdlet Help: The field object or name to remove
-				var identity = "";
-				// From Cmdlet Help: The list object or name where to remove the field from
-				var list = "";
-				// From Cmdlet Help: Specifying the Force parameter will skip the confirmation question.
-				var force = "";
+            Assert.AreEqual(results.Count, 0);
+        }
 
-                var results = scope.ExecuteCommand("Remove-PnPField",
-					new CommandParameter("Identity", identity),
-					new CommandParameter("List", list),
-					new CommandParameter("Force", force));
-                
-                Assert.IsNotNull(results);
-            }
+        public void RemovePnPFieldFromListTest()
+        {
+            var results = scope.ExecuteCommand("Remove-PnPField",
+                           new CommandParameter("Identity", fieldName),
+                           new CommandParameter("List", list.Title),
+                           new CommandParameter("Force"));
+
+            Assert.AreEqual(results.Count, 0);
         }
         #endregion
     }
 }
-            
