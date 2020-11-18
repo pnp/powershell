@@ -13,7 +13,6 @@ if ($existingHash -ne $hash) {
 
 if ($runPublish -eq $true) {
 	Write-Host "Building PnP.PowerShell" -ForegroundColor Yellow
-	$Tags = "SharePoint", "SharePoint Online", "PnP", "Microsoft Teams"
 
 	$versionObject = [System.Version]::new($(Get-Content ./version.txt -Raw))
 
@@ -120,6 +119,7 @@ if ($runPublish -eq $true) {
 	FormatsToProcess = 'PnP.PowerShell.Format.ps1xml' 
 	PrivateData = @{
 		PSData = @{
+			Tags = 'SharePoint','SharePoint Online','PnP','Microsoft Teams'
 			Prerelease = 'nightly'
 			ProjectUri = 'https://aka.ms/sppnp'
 			IconUri = 'https://raw.githubusercontent.com/pnp/media/40e7cd8952a9347ea44e5572bb0e49622a102a12/parker/ms/300w/parker-ms-300.png'
@@ -142,8 +142,8 @@ if ($runPublish -eq $true) {
 
 	Write-Host "Publishing Module" -ForegroundColor Yellow
 	Import-Module -Name PnP.PowerShell
-	Publish-Module -Name PnP.PowerShell -AllowPrerelease -NuGetApiKey $apiKey -Tags $Tags
-
+	Publish-Module -Name PnP.PowerShell -AllowPrerelease -NuGetApiKey $apiKey
+	
 	# Write version back to version
 	Set-Content ./version.txt -Value $version -Force
 }
