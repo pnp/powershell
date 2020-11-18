@@ -12,13 +12,14 @@ if ($existingHash -ne $hash) {
 }
 
 if ($runPublish -eq $true) {
-	Write-Host "Building PnP.PowerShell" -ForegroundColor Yellow
 
 	$versionObject = [System.Version]::new($(Get-Content ./version.txt -Raw))
 
 	$buildVersion = $versionObject.Build + 1;
 
 	$version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
+
+	Write-Host "Building PnP.PowerShell $version" -ForegroundColor Yellow
 
 	# Check if version has not been published yet
 
@@ -141,7 +142,7 @@ if ($runPublish -eq $true) {
 
 	$apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
 
-	Write-Host "Publishing Module" -ForegroundColor Yellow
+	Write-Host "Publishing Module version $version" -ForegroundColor Yellow
 	Import-Module -Name PnP.PowerShell
 	Publish-Module -Name PnP.PowerShell -AllowPrerelease -NuGetApiKey $apiKey
 
