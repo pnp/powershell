@@ -377,7 +377,11 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             // Connection has been established
+#if !NET461
             WriteVerbose($"PnP PowerShell Cmdlets ({new SemanticVersion(Assembly.GetExecutingAssembly().GetName().Version)}): Connected to {Url}");
+#else
+            WriteVerbose($"PnP PowerShell Cmdlets ({Assembly.GetExecutingAssembly().GetName().Version}): Connected to {Url}");
+#endif
             PnPConnection.CurrentConnection = connection;
             if (CreateDrive && PnPConnection.CurrentConnection.Context != null)
             {
