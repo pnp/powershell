@@ -26,7 +26,8 @@ if ($runPublish -eq $true) {
 	$availableVersion = $availableVersions.Version.Split('-')[0]
 
 	if ($availableVersion -eq $version) {
-		exit # Do not proceed.
+		Write-Host "Build version is same as published version. Exiting."
+		exit 1# Do not proceed.
 	}
 
 	dotnet build ./src/Commands/PnP.PowerShell.csproj --nologo --configuration Release --no-incremental -p:VersionPrefix=$version -p:VersionSuffix=nightly
