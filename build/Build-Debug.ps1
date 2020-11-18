@@ -5,7 +5,7 @@ $configuration = "netcoreapp3.1"
 
 $version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
-Write-Host "Building PnP.PowerShell version $version" -ForegroundColor Yellow
+Write-Host "Building PnP.PowerShell version $version-debug" -ForegroundColor Yellow
 
 dotnet build "$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj" --nologo --configuration Debug -p:VersionPrefix=$version -p:VersionSuffix=preview
 
@@ -98,7 +98,7 @@ if ($LASTEXITCODE -eq 0) {
 	FormatsToProcess = 'PnP.PowerShell.Format.ps1xml' 
 	PrivateData = @{
 		PSData = @{
-			Prerelease = 'preview'
+			Prerelease = 'debug'
 			ProjectUri = 'https://aka.ms/sppnp'
 			IconUri = 'https://raw.githubusercontent.com/pnp/media/40e7cd8952a9347ea44e5572bb0e49622a102a12/parker/ms/300w/parker-ms-300.png'
 		}
