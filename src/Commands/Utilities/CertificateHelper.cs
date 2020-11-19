@@ -318,6 +318,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return pfxData;
         }
 
+#if !NETFRAMEWORK
         internal static X509Certificate2 CreateSelfSignedCertificate2(
             string commonName,
             string country,
@@ -372,6 +373,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return x509Certificate2;
 
         }
+#endif
 
         internal static byte[] CreateSelfSignCertificatePfx(
             string x500,
@@ -726,6 +728,7 @@ namespace PnP.PowerShell.Commands.Utilities
         #endregion
     }
 
+#if !NETFRAMEWORK
     internal class CertificateDistinguishedName
     {
         // Name of a person or an object host name
@@ -952,4 +955,5 @@ namespace PnP.PowerShell.Commands.Utilities
             return cert;
         }
     }
+#endif
 }

@@ -16,6 +16,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Threading;
+using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Base
@@ -161,10 +162,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-#if !NET461
-                if (Platform.IsWindows)
-                {
-#endif
+#if NETFRAMEWORK
                     // Generate a certificate
                     var x500Values = new List<string>();
                     if (!MyInvocation.BoundParameters.ContainsKey("CommonName"))
@@ -189,15 +187,12 @@ namespace PnP.PowerShell.Commands.Base
 
                     byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
                     cert = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
-#if !NET461
-                }
-                else
-                {
+                #else
                     DateTimeOffset validFrom = DateTimeOffset.Now;
                     DateTimeOffset validTo = validFrom.AddYears(ValidYears);
                     cert = CertificateHelper.CreateSelfSignedCertificate2(CommonName, Country, State, Locality, Organization, OrganizationUnit, 2048, null, null, validFrom, validTo, "", false, null);
-                }
-#endif
+                #endif
+
                 if (!string.IsNullOrWhiteSpace(OutPath))
                 {
                     if (!Path.IsPathRooted(OutPath))
@@ -283,7 +278,7 @@ namespace PnP.PowerShell.Commands.Base
                 record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
 
 
-                if (Platform.IsWindows)
+                if (OperatingSystem.IsWindows())
                 {
                     var waitTime = 60;
                     Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to launch consent flow in a browser window. This wait is required to make sure that Azure AD is able to initialize all required artifacts. After you provided consent you will see a blank page. This is expected. You can always navigate to the consent page manually: {consentUrl}");

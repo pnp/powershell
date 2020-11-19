@@ -38,12 +38,12 @@ namespace PnP.PowerShell.Commands.Utilities
             var app = PublicClientApplicationBuilder.Create(CLIENTID).WithAuthority(authority).Build();
             var scopes = new string[] { "https://graph.microsoft.com/.default" };
 
-            var result = app.AcquireTokenWithDeviceCode(scopes, result =>
+            var tokenResult = app.AcquireTokenWithDeviceCode(scopes, result =>
             {
                 cmdlet.Host.UI.Write(result.Message);
                 return Task.FromResult(0);
             }).ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
-            return result.AccessToken;
+            return tokenResult.AccessToken;
         }
 
         internal static void WriteFormattedWarning(this PSCmdlet cmdlet, string message)
