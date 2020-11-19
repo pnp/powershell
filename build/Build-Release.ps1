@@ -76,8 +76,8 @@ if ($runPublish -eq $true) {
 		exit 1
 	}
 
-	Write-Host "Output tree" -ForegroundColor Yellow
-	Get-ChildItem $destinationFolder -Recurse
+	#Write-Host "Output tree" -ForegroundColor Yellow
+	#Get-ChildItem $destinationFolder -Recurse
 
 	Try {
 		Write-Host "Generating PnP.PowerShell.psd1" -ForegroundColor Yellow
@@ -144,7 +144,8 @@ if ($runPublish -eq $true) {
 		$manifest | Out-File "$destinationFolder/PnP.PowerShell.psd1" -Force
 	}
 	Catch {
-		Write-Host "Error: Cannot generate PnP.PowerShell.psd1. Maybe a PowerShell session is still using the module?"
+		Write-Error $_.Exception.Message
+		Write-Error "Error: Cannot generate PnP.PowerShell.psd1. Maybe a PowerShell session is still using the module?"
 		exit 1
 	}
 
