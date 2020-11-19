@@ -19,7 +19,7 @@ if ($runPublish -eq $true) {
 
 	$version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
-	Write-Host "Building PnP.PowerShell $version" -ForegroundColor Yellow
+	Write-Host "Building PnP.PowerShell $version on PowerShell $($PSVersionTable.PSVersion.ToString())" -ForegroundColor Yellow
 
 	# Check if version has not been published yet
 
@@ -100,7 +100,7 @@ if ($runPublish -eq $true) {
 				Import-Module -Name "$destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
 			}
 			Write-Host "Getting cmdlet info" -ForegroundColor Yellow
-			$cmdlets = get-command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
+			$cmdlets = Get-Command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
 			$cmdlets -Join ","
 		}
 
