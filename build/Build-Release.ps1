@@ -76,9 +76,9 @@ if ($runPublish -eq $true) {
 		exit 1
 	}
 
-	Write-Host "Output tree" -ForegroundColor
+	Write-Host "Output tree" -ForegroundColor Yellow
 	Get-ChildItem $destinationFolder -Recurse
-	
+
 	Try {
 		Write-Host "Generating PnP.PowerShell.psd1" -ForegroundColor Yellow
 		# Load the Module in a new PowerShell session
