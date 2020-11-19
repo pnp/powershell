@@ -46,6 +46,13 @@ New-PnPAzureCertificate -CommonName "My Certificate" -ValidYears 30
 
 This will output a certificate named "My Certificate" which expires in 30 years from now.
 
+### EXAMPLE 3
+```powershell
+New-PnPAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer -CertificatePassword (ConvertTo-SecureString -String "pass@word1" -AsPlainText -Force)
+```
+
+This will generate a default self-signed certificate named "pnp.contoso.com" valid for 10 years and output a pfx and cer file. The pfx file will have the password pass@word1 set on it.
+
 ## PARAMETERS
 
 ### -CertificatePassword
