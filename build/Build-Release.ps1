@@ -91,7 +91,7 @@ if ($runPublish -eq $true) {
 			else {
 				$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 			}
-			if($IsWindows -or $PSVersionTable.PSVersion.Major -eq 5)
+			if($PSVersionTable.PSVersion.Major -eq 5)
 			{
 				Write-Host "Importing Framework version of assembly" -ForegroundColor Yellow
 				Import-Module -Name "$destinationFolder/Framework/PnP.PowerShell.dll" -DisableNameChecking
