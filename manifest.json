@@ -770,6 +770,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/Save-PnPSiteTemplate.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/Save-PnPSiteTemplate.html",
+          "hash": "MfRpds9vHnAxqI4Do0kbIA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/nightly/Set-PnPBrowserIdleSignout.md",
       "output": {
         ".html": {
@@ -6498,7 +6510,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "c+JC4vEx5HUAknQ8HWdgaw=="
+          "hash": "fAzRJ+xRXpb2+vT3jl44hw=="
         }
       },
       "is_incremental": false,
@@ -6565,7 +6577,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 540,
+          "total_file_count": 541,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
