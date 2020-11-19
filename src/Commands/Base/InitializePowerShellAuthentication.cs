@@ -303,7 +303,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Please wait approximately 60 seconds, then open the following URL in a browser window to provide consent. This consent is required in order to use this application\n\n{consentUrl}");
+                    Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Please wait approximately 60 seconds, then open the following URL in a browser window to provide consent. This consent is required in order to use this application. After you provided consent you will see a blank page, this is correct.\n\n{consentUrl}");
                     WriteObject(record);
                 }
             }
