@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Security;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Utilities
@@ -22,6 +23,26 @@ namespace PnP.PowerShell.Commands.Utilities
             var app = PublicClientApplicationBuilder.Create(CLIENTID).WithAuthority(authority).Build();
 
             var result = await app.AcquireTokenByUsernamePassword(scopes, username, password).ExecuteAsync();
+            return result.AccessToken;
+        }
+
+        internal static string AuthenticateDeviceLogin(PSCmdlet cmdlet, string tenantId, ref CancellationToken cancellationToken, string loginEndPoint = "https://login.microsoftonline.com")
+        {
+            if (string.IsNullOrEmpty(tenantId))
+            {
+                throw new ArgumentException($"{nameof(tenantId)} is required");
+            }
+            var authority = $"{loginEndPoint}/{tenantId}";
+
+
+            var app = PublicClientApplicationBuilder.Create(CLIENTID).WithAuthority(authority).Build();
+            var scopes = new string[] { "https://graph.microsoft.com/.default" };
+
+            var result = app.AcquireTokenWithDeviceCode(scopes, result =>
+            {
+                cmdlet.Host.UI.Write(result.Message);
+                return Task.FromResult(0);
+            }).ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
             return result.AccessToken;
         }
 
