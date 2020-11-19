@@ -83,7 +83,7 @@ namespace PnP.PowerShell.Commands.Base
                 loginEndPoint = authenticationManager.GetAzureADLoginEndPoint(AzureEnvironment);
             }
 
-            if (PnPConnection.CurrentConnection.PSCredential != null)
+            if (PnPConnection.CurrentConnection?.PSCredential != null)
             {
                 Username = PnPConnection.CurrentConnection.PSCredential.UserName;
                 Password = PnPConnection.CurrentConnection.PSCredential.Password;
