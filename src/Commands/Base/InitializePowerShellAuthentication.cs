@@ -91,13 +91,6 @@ namespace PnP.PowerShell.Commands.Base
 
             WriteVerbose(ParameterSetName);
 
-            // if (ParameterSetName == ParameterSet_NEWCERT)
-            // {
-            //     if (!Platform.IsWindows)
-            //     {
-            //         throw new PSNotSupportedException("Currently we cannot generate self-signed certificates on other platforms than Windows. Please provide your own certificate.");
-            //     }
-            // }
             var loginEndPoint = string.Empty;
             var record = new PSObject();
             using (var authenticationManager = new AuthenticationManager())
@@ -168,8 +161,10 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
+#if !NET461
                 if (Platform.IsWindows)
                 {
+#endif
                     // Generate a certificate
                     var x500Values = new List<string>();
                     if (!MyInvocation.BoundParameters.ContainsKey("CommonName"))
@@ -194,6 +189,7 @@ namespace PnP.PowerShell.Commands.Base
 
                     byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
                     cert = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
+#if !NET461
                 }
                 else
                 {
@@ -201,6 +197,7 @@ namespace PnP.PowerShell.Commands.Base
                     DateTimeOffset validTo = validFrom.AddYears(ValidYears);
                     cert = CertificateHelper.CreateSelfSignedCertificate2(CommonName, Country, State, Locality, Organization, OrganizationUnit, 2048, null, null, validFrom, validTo, "", false, null);
                 }
+#endif
                 if (!string.IsNullOrWhiteSpace(OutPath))
                 {
                     if (!Path.IsPathRooted(OutPath))
