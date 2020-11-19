@@ -88,8 +88,12 @@ if ($runPublish -eq $true) {
 			else {
 				$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 			}
-		
-			Import-Module -Name "$destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
+			if($IsWindows)
+			{
+				Import-Module -Name "$destinationFolder/Framework/PnP.PowerShell.dll" -DisableNameChecking
+			} else {
+				Import-Module -Name "$destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
+			}
 			$cmdlets = get-command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
 			$cmdlets -Join ","
 		}
