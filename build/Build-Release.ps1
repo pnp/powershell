@@ -88,7 +88,7 @@ if ($runPublish -eq $true) {
 			else {
 				$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 			}
-			if($IsWindows)
+			if($IsWindows -or $PSVersionTable.PSVersion.Major -eq 5)
 			{
 				Import-Module -Name "$destinationFolder/Framework/PnP.PowerShell.dll" -DisableNameChecking
 			} else {

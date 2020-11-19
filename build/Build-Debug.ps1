@@ -65,10 +65,12 @@ if ($LASTEXITCODE -eq 0) {
 			else {
 				$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 			}
-			if($IsWindows)
+			if($IsWindows -or $PSVersionTable.PSVersion.Major -eq 5)
 			{
+				Write-Host "Importing Framework version of assembly"
 				Import-Module -Name "$destinationFolder/Framework/PnP.PowerShell.dll" -DisableNameChecking
 			} else {
+				Write-Host "Importing dotnet core version of assembly"
 				Import-Module -Name "$destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
 			}
 			$cmdlets = get-command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
