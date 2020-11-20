@@ -109,6 +109,11 @@
     "title": "Get-PnPBuiltInDesignPackageVisibility | PnP PowerShell",
     "keywords": "Get-PnPBuiltInDesignPackageVisibility SYNOPSIS Gets the visibility of the available built-in Design Packages. SYNTAX Get-PnPBuiltInDesignPackageVisibility [-DesignPackage <DesignPackageType>] [<CommonParameters>] DESCRIPTION Use this cmdlet to retrieve the current visibility state of each built-in design package. EXAMPLES EXAMPLE 1 Get-PnPBuiltInDesignPackageVisibility -DesignPackage Showcase This example retrieves the current visibility state of Showcase built-in design package. EXAMPLE 2 Get-PnPBuiltInDesignPackageVisibility This example retrieves the current visibility state of each built-in design package. PARAMETERS -DesignPackage Name of the design package, available names are Topic Showcase Blank TeamSite Type: DesignPackageType Parameter Sets: (All) Required: True Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False RELATED LINKS Microsoft 365 Patterns and Practices"
   },
+  "cmdlets/nightly/Get-PnPChangeLog.html": {
+    "href": "cmdlets/nightly/Get-PnPChangeLog.html",
+    "title": "Get-PnPChangeLog | PnP PowerShell",
+    "keywords": "Get-PnPChangeLog SYNOPSIS Returns the changelog for PnP PowerShell SYNTAX Get-PnPChangeLog [-Nightly] DESCRIPTION This cmdlets returns the changelog in markdown format. It is retrieved dynamically from GitHub. EXAMPLES EXAMPLE 1 Get-PnPChangeLog Returns the changelog for the currently released version. EXAMPLE 2 Get-PnPChangeLog -Nightly Returns the changelog for the current nightly build. PARAMETERS -Nightly Return the changelog for the nightly build Type: SwitchParameter Parameter Sets: (All) Required: False Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False RELATED LINKS Microsoft 365 Patterns and Practices"
+  },
   "cmdlets/nightly/Get-PnPExternalUser.html": {
     "href": "cmdlets/nightly/Get-PnPExternalUser.html",
     "title": "Get-PnPExternalUser | PnP PowerShell",

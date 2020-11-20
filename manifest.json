@@ -290,6 +290,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/Get-PnPChangeLog.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/Get-PnPChangeLog.html",
+          "hash": "ECJSWW/as9VaLmyh0Ws2MQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/nightly/Get-PnPExternalUser.md",
       "output": {
         ".html": {
@@ -6510,7 +6522,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "fAzRJ+xRXpb2+vT3jl44hw=="
+          "hash": "/hRUKMqrLfhcRiY9WhqMjw=="
         }
       },
       "is_incremental": false,
@@ -6577,7 +6589,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 541,
+          "total_file_count": 542,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
