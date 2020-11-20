@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [0.1.x-nightly]
 
 ### Added
+- Added `Get-PnPChangeLog` cmdlet which returns this changelog. (0.2.14)
 - Added `-DeviceLogin` parameter to `Initialize-PnPPowerShellAuthentication` which allows for users with MFA to setup a custom app (0.2.12)
 - Added `NoVersionCheck` optional flag to `Connect-PnPOnline` [PR#28](https://github.com/pnp/powershell/pull/28) (0.2.9)
 - Added native support for Secret Management Modules (0.1.34)
