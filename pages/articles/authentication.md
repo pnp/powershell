@@ -18,6 +18,23 @@ You'll notice that the cmdlet is not called `Register-PnPPowerShellAccess`. This
 
 During execution of the cmdlet you will be talked through the consent flow. This means that a browser window will open, you will be asked to authenticate, and you will be asked to consent to a number of permissions. After this permissions has been granted a new entry will show up if you navigate to `Enterprise Applications` in your Azure AD. If you want to revoke the consent you can simply remove the entry from the Enterprise Applications. 
 
+## Setting up access to your own Azure AD App
+
+PnP PowerShell has a cmdlet that allows you to register a new Azure AD App, and optionally generate the certificates for you to use to login with that app. 
+
+```powershell
+Register-PnPAzureADApp -ApplicationName PnPRocks -Tenant mytenant.onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin
+```
+
+When you run the cmdlet above you will be asked to navigate to the shown url and enter the code shown. After that a new app will be registerd in the Azure AD (make sure you have the rights to do this), and a certificate will be generated and uploaded to that app. After this a URL will be shown which you have to navigate to to provide consent for this application. By default a limited set of permissions scopes is added, but you can provide the -Scopes parameter to provide your own permission scopes.
+
+The cmdlet will save both the CER and PFX files to the specified location with the -Outpath parameter. The names of the files will be matching the -ApplicationName parameter, e.g. in the example above the files will be called PnPRocks.cer and PnPRocks.pfx. The output of the cmdlet will show the clientid. After all is set up and consent has been provided you can login using:
+
+```powershell
+Connect-PnPOnline -Url "https://yourtenant.sharepoint.com" -ClientId [clientid] -Tenant [yourtenant.onmicrosoft.com] -CertificatePath certificate.pfx
+```
+
+
 ## Authenticating with Credentials
 
 Enter

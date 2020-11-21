@@ -5,7 +5,7 @@ using System.Management.Automation.Runspaces;
 namespace PnP.PowerShell.Tests.Base
 {
     [TestClass]
-    public class InitializePowerShellAuthenticationTests
+    public class RegisterPnPAzureADAppTests
     {
         #region Test Setup/CleanUp
         [ClassInitialize]
@@ -92,7 +92,7 @@ namespace PnP.PowerShell.Tests.Base
 				// From Cmdlet Help: Local Certificate Store to add the certificate to
 				var store = "";
 
-                var results = scope.ExecuteCommand("Initialize-PnPPowerShellAuthentication",
+                var results = scope.ExecuteCommand("Register-PnPAzureADApp",
 					new CommandParameter("ApplicationName", applicationName),
 					new CommandParameter("Tenant", tenant),
 					new CommandParameter("CertificatePath", certificatePath),

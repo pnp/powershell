@@ -5,11 +5,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [0.1.x-nightly]
+## [0.1.*-nightly - 0.2.*-nightly]
 
 ### Added
+- Added environment variable check (set `PNPPOWERSHELL_UPDATECHECK` to `Off`) to Connect-PnPOnline to skip version check if set. (0.2.15)
 - Added `Get-PnPChangeLog` cmdlet which returns this changelog. (0.2.14)
-- Added `-DeviceLogin` parameter to `Initialize-PnPPowerShellAuthentication` which allows for users with MFA to setup a custom app (0.2.12)
+- Added `-DeviceLogin` parameter to `Register-PnPAzureADApp` (renamed from Initialize-PnPPowerShellAuthentication in 0.2.15) which allows for users with MFA to setup a custom app (0.2.12)
 - Added `NoVersionCheck` optional flag to `Connect-PnPOnline` [PR#28](https://github.com/pnp/powershell/pull/28) (0.2.9)
 - Added native support for Secret Management Modules (0.1.34)
 - Marked -ExcludeSiteUrl as obselete on `Get-PnPMicrosoft365Group` for performance reasons. Use -IncludeSiteUrl instead.
@@ -70,6 +71,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPPlannerTask` cmdlet (0.1.18)
 
 ### Changed
+- Renamed `Initialize-PnPPowerShellAuthentication` to `Register-PnPAzureADApp` (0.2.15)
 - Updated `Get-PnPAzureCertificate` to work on Windows and Non-Windows OSes. (0.2.15)
 - Updated `Get-PnPAzureCertificate` to use `-Path` and `-Password` parameters instead of `-CertificatePath` and `-CertificatePassword` parameters (0.2.15)
 - Fixed using `New-PnPAzureCertificate` and `Get-PnPAzureCertificate` throwing an exception [PR #30](https://github.com/pnp/powershell/pull/30) (0.2.15)
