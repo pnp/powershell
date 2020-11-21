@@ -17,7 +17,7 @@
   "articles/installation.html": {
     "href": "articles/installation.html",
     "title": "Installing PnP PowerShell | PnP PowerShell",
-    "keywords": "Installing PnP PowerShell You can run the following commands to install the PowerShell cmdlets: Install-Module -Name \"PnP.PowerShell\" -AllowPrerelease This will work on Windows / Linux / MacOS. Using PnP PowerShell in the Azure Cloud Shell Open the Azure Cloud Shell at https://shell.azure.com Select PowerShell as your shell and enter Install-Module -Name \"PnP.PowerShell\" -AllowPrerelease"
+    "keywords": "Installing PnP PowerShell You can run the following commands to install the PowerShell cmdlets: Install-Module -Name \"PnP.PowerShell\" -AllowPrerelease This will work on Windows / Linux / MacOS. Using PnP PowerShell in the Azure Cloud Shell Open the Azure Cloud Shell at https://shell.azure.com Select PowerShell as your shell and enter Install-Module -Name \"PnP.PowerShell\" -AllowPrerelease As the Azure Cloud Shell retains its settings and installed modules, the next time you open the Azure Cloud Shell PnP PowerShell will be available for you to use."
   },
   "articles/updatenotifications.html": {
     "href": "articles/updatenotifications.html",
