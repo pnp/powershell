@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [0.1.x-nightly]
 
 ### Added
+- Added `Get-PnPChangeLog` cmdlet which returns this changelog. (0.2.14)
+- Added `-DeviceLogin` parameter to `Initialize-PnPPowerShellAuthentication` which allows for users with MFA to setup a custom app (0.2.12)
 - Added `NoVersionCheck` optional flag to `Connect-PnPOnline` [PR#28](https://github.com/pnp/powershell/pull/28) (0.2.9)
 - Added native support for Secret Management Modules (0.1.34)
 - Marked -ExcludeSiteUrl as obselete on `Get-PnPMicrosoft365Group` for performance reasons. Use -IncludeSiteUrl instead.
@@ -69,6 +71,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Updated `Initialize-PnPPowerShellAuthentication` so it can generate self-signed certs on other platforms than Windows.
 - Updated `Get-PnPUnifiedAuditLog` to support paged results.
 - Removed SiteUrl parameter from `Register-PnPManagementShell` as it is not required anymore
 - Fixed documentation on Add-PnPTeamsChannel [PR#9](https://github.com/pnp/powershell/pull/9)
@@ -129,6 +132,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Renamed `Test-PnPOffice365AliasIsUsed` to `Test-PnPMicrosoft365AliasIsUsed`
 - Refactored some of the Taxonomy cmdlet parameters. See documentation.
 - Change in `Copy-PnPFile` which should resolve some issues you may run into when copying files [PR #2796](https://github.com/pnp/PnP-PowerShell/pull/2796)
+- Fixed using `New-PnPAzureCertificate` and `Get-PnPAzureCertificate` throwing an exceptiuon [PR #30](https://github.com/pnp/powershell/pull/30)
 
 ### Contributors
 - Koen Zomers [koenzomers]
