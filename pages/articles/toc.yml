@@ -1,5 +1,7 @@
 - name: Installation
   href: installation.md
+- name: Update notifications
+  href: updatenotifications.md
 - name: Authentication
   href: authentication.md
 - name: Credential Management
