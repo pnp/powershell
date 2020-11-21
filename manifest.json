@@ -18,7 +18,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/authentication.html",
-          "hash": "CKLtcOLeu/laqSZ3fDuYMw=="
+          "hash": "BWdC3hNMpo0fHdoXx6264Q=="
         }
       },
       "is_incremental": false,
@@ -559,6 +559,18 @@
         ".html": {
           "relative_path": "cmdlets/nightly/Read-PnPSiteTemplate.html",
           "hash": "2eAwK0mnYJTgrLIlXpvpeQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/Register-PnPAzureADApp.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/Register-PnPAzureADApp.html",
+          "hash": "8YCPrq6tjTh3hq/drN1jJw=="
         }
       },
       "is_incremental": false,
@@ -6534,7 +6546,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "/hRUKMqrLfhcRiY9WhqMjw=="
+          "hash": "F4U/bnlmxjvNlk7HOjXbSQ=="
         }
       },
       "is_incremental": false,
@@ -6601,7 +6613,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 543,
+          "total_file_count": 544,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
