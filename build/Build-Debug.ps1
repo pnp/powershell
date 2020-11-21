@@ -1,3 +1,14 @@
+Param(
+	[Parameter(Mandatory = $false,
+		ValueFromPipeline = $false)]
+	[switch]
+	$NoIncremental,
+	[Parameter(Mandatory = $false,
+		ValueFromPipeline = $false)]
+	[switch]
+	$Force
+)
+
 $versionObject = [System.Version]::new($(Get-Content "$PSScriptRoot/../version.txt" -Raw))
 $buildVersion = $versionObject.Build + 1;
 
@@ -7,8 +18,13 @@ $version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
 Write-Host "Building PnP.PowerShell version $version-debug" -ForegroundColor Yellow
 
-dotnet build "$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj" --nologo --configuration Debug -p:VersionPrefix=$version -p:VersionSuffix=preview
-
+if ($NoIncremental) {
+	dotnet restore --no-cache "$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj"
+	dotnet build "$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj" --no-incremental --nologo --configuration Debug -p:VersionPrefix=$version -p:VersionSuffix=debug --force
+}
+else {
+	dotnet build "$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj" --nologo --configuration Debug -p:VersionPrefix=$version -p:VersionSuffix=debug
+}
 if ($LASTEXITCODE -eq 0) {
 	$documentsFolder = [environment]::getfolderpath("mydocuments");
 
@@ -65,11 +81,11 @@ if ($LASTEXITCODE -eq 0) {
 			else {
 				$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 			}
-			if($IsWindows -or $PSVersionTable.PSVersion.Major -eq 5)
-			{
+			if ($IsWindows -or $PSVersionTable.PSVersion.Major -eq 5) {
 				Write-Host "Importing Framework version of assembly"
 				Import-Module -Name "$destinationFolder/Framework/PnP.PowerShell.dll" -DisableNameChecking
-			} else {
+			}
+			else {
 				Write-Host "Importing dotnet core version of assembly"
 				Import-Module -Name "$destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
 			}
