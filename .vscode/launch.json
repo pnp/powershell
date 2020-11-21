@@ -9,6 +9,12 @@
             "type": "coreclr",
             "request": "attach",
             "processId": "${command:pickProcess}"
+        },
+        {
+            "name": ".NET Framework Attach",
+            "type": "clr",
+            "request": "attach",
+            "processId": "${command:pickProcess}"
         }
     ]
 }
