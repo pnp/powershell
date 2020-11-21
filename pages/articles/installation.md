@@ -18,3 +18,4 @@ Select PowerShell as your shell and enter
 Install-Module -Name "PnP.PowerShell" -AllowPrerelease
 ```
 
+As the Azure Cloud Shell retains its settings and installed modules, the next time you open the Azure Cloud Shell PnP PowerShell will be available for you to use.

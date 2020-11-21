@@ -15,6 +15,8 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
+using System.Threading;
+using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Base
@@ -24,6 +26,12 @@ namespace PnP.PowerShell.Commands.Base
     {
         private const string ParameterSet_EXISTINGCERT = "Existing Certificate";
         private const string ParameterSet_NEWCERT = "Generate Certificate";
+
+        private const string ParameterSet_UserName = "By UserName / Password";
+        private const string ParameterSet_DeviceLogin = "By Device Login";
+
+        private CancellationTokenSource cancellationTokenSource;
+
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string ApplicationName;
@@ -74,8 +82,16 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false)]
         public SecureString Password;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter DeviceLogin;
+
         protected override void ProcessRecord()
         {
+            cancellationTokenSource = new CancellationTokenSource();
+            CancellationToken cancellationToken = cancellationTokenSource.Token;
+
+            WriteVerbose(ParameterSetName);
+
             var loginEndPoint = string.Empty;
             var record = new PSObject();
             using (var authenticationManager = new AuthenticationManager())
@@ -83,20 +99,28 @@ namespace PnP.PowerShell.Commands.Base
                 loginEndPoint = authenticationManager.GetAzureADLoginEndPoint(AzureEnvironment);
             }
 
-            if (PnPConnection.CurrentConnection.PSCredential != null)
+            string token = string.Empty;
+            if (DeviceLogin.IsPresent)
             {
-                Username = PnPConnection.CurrentConnection.PSCredential.UserName;
-                Password = PnPConnection.CurrentConnection.PSCredential.Password;
+                token = AzureAuthHelper.AuthenticateDeviceLogin(this, Tenant, ref cancellationToken, loginEndPoint);
             }
-            if (string.IsNullOrEmpty(Username))
+            else
             {
-                throw new PSArgumentException("Username is required");
+                if (PnPConnection.CurrentConnection?.PSCredential != null)
+                {
+                    Username = PnPConnection.CurrentConnection.PSCredential.UserName;
+                    Password = PnPConnection.CurrentConnection.PSCredential.Password;
+                }
+                if (string.IsNullOrEmpty(Username))
+                {
+                    throw new PSArgumentException("Username is required or use -DeviceLogin");
+                }
+                if (Password == null || Password.Length == 0)
+                {
+                    throw new PSArgumentException("Password is required or use -DeviceLogin");
+                }
+                token = AzureAuthHelper.AuthenticateAsync(Tenant, Username, Password, loginEndPoint).GetAwaiter().GetResult();
             }
-            if (Password == null || Password.Length == 0)
-            {
-                throw new PSArgumentException("Password is required");
-            }
-            var token = AzureAuthHelper.AuthenticateAsync(Tenant, Username, Password, loginEndPoint).GetAwaiter().GetResult();
 
             var cert = new X509Certificate2();
             if (ParameterSetName == ParameterSet_EXISTINGCERT)
@@ -138,30 +162,36 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                // Generate a certificate
-                var x500Values = new List<string>();
-                if (!MyInvocation.BoundParameters.ContainsKey("CommonName"))
-                {
-                    CommonName = ApplicationName;
-                }
-                if (!string.IsNullOrWhiteSpace(CommonName)) x500Values.Add($"CN={CommonName}");
-                if (!string.IsNullOrWhiteSpace(Country)) x500Values.Add($"C={Country}");
-                if (!string.IsNullOrWhiteSpace(State)) x500Values.Add($"S={State}");
-                if (!string.IsNullOrWhiteSpace(Locality)) x500Values.Add($"L={Locality}");
-                if (!string.IsNullOrWhiteSpace(Organization)) x500Values.Add($"O={Organization}");
-                if (!string.IsNullOrWhiteSpace(OrganizationUnit)) x500Values.Add($"OU={OrganizationUnit}");
+#if NETFRAMEWORK
+                    // Generate a certificate
+                    var x500Values = new List<string>();
+                    if (!MyInvocation.BoundParameters.ContainsKey("CommonName"))
+                    {
+                        CommonName = ApplicationName;
+                    }
+                    if (!string.IsNullOrWhiteSpace(CommonName)) x500Values.Add($"CN={CommonName}");
+                    if (!string.IsNullOrWhiteSpace(Country)) x500Values.Add($"C={Country}");
+                    if (!string.IsNullOrWhiteSpace(State)) x500Values.Add($"S={State}");
+                    if (!string.IsNullOrWhiteSpace(Locality)) x500Values.Add($"L={Locality}");
+                    if (!string.IsNullOrWhiteSpace(Organization)) x500Values.Add($"O={Organization}");
+                    if (!string.IsNullOrWhiteSpace(OrganizationUnit)) x500Values.Add($"OU={OrganizationUnit}");
 
-                string x500 = string.Join("; ", x500Values);
+                    string x500 = string.Join("; ", x500Values);
 
-                if (ValidYears < 1 || ValidYears > 30)
-                {
-                    ValidYears = 10;
-                }
-                DateTime validFrom = DateTime.Today;
-                DateTime validTo = validFrom.AddYears(ValidYears);
+                    if (ValidYears < 1 || ValidYears > 30)
+                    {
+                        ValidYears = 10;
+                    }
+                    DateTime validFrom = DateTime.Today;
+                    DateTime validTo = validFrom.AddYears(ValidYears);
 
-                byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
-                cert = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
+                    byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
+                    cert = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
+                #else
+                    DateTimeOffset validFrom = DateTimeOffset.Now;
+                    DateTimeOffset validTo = validFrom.AddYears(ValidYears);
+                    cert = CertificateHelper.CreateSelfSignedCertificate2(CommonName, Country, State, Locality, Organization, OrganizationUnit, 2048, null, null, validFrom, validTo, "", false, null);
+                #endif
 
                 if (!string.IsNullOrWhiteSpace(OutPath))
                 {
@@ -248,32 +278,40 @@ namespace PnP.PowerShell.Commands.Base
                 record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
 
 
-                var waitTime = 60;
-                Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to launch consent flow in a browser window. This wait is required to make sure that Azure AD is able to initialize all required artifacts. After you provided consent you will see a blank page. This is expected. You can always navigate to the consent page manually: {consentUrl}");
-
-                for (var i = 0; i < waitTime; i++)
+                if (OperatingSystem.IsWindows())
                 {
-                    Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, ".");
-                    System.Threading.Thread.Sleep(1000);
+                    var waitTime = 60;
+                    Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to launch consent flow in a browser window. This wait is required to make sure that Azure AD is able to initialize all required artifacts. After you provided consent you will see a blank page. This is expected. You can always navigate to the consent page manually: {consentUrl}");
 
-                    // Check if CTRL+C has been pressed and if so, abort the wait
-                    if (Stopping)
+                    for (var i = 0; i < waitTime; i++)
                     {
-                        break;
+                        Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, ".");
+                        System.Threading.Thread.Sleep(1000);
+
+                        // Check if CTRL+C has been pressed and if so, abort the wait
+                        if (Stopping)
+                        {
+                            break;
+                        }
                     }
+                    Host.UI.WriteLine();
+
+
+                    WriteObject(record);
+
+                    BrowserHelper.LaunchBrowser(consentUrl);
                 }
-                Host.UI.WriteLine();
-
-
-                WriteObject(record);
-
-                BrowserHelper.LaunchBrowser(consentUrl);
-
-                //AzureAuthHelper.OpenConsentFlow(consentUrl, (message) =>
-                //{
-                //    Host.UI.WriteLine(ConsoleColor.Red, Host.UI.RawUI.BackgroundColor, message);
-                //});
+                else
+                {
+                    Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Please wait approximately 60 seconds, then open the following URL in a browser window to provide consent. This consent is required in order to use this application. After you provided consent you will see a blank page, this is correct.\n\n{consentUrl}");
+                    WriteObject(record);
+                }
             }
+        }
+
+        protected override void StopProcessing()
+        {
+            cancellationTokenSource.Cancel();
         }
 
         private static object GetScopesPayload(List<PermissionScope> scopes)
