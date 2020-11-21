@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static string PrivateKeyToBase64(X509Certificate2 certificate, bool useLineBreaks = false)
         {
-            var param = ((RSACryptoServiceProvider)certificate.PrivateKey).ExportParameters(true);
+            var param = ((RSACng)certificate.PrivateKey).ExportParameters(true);
             string base64String;
             using (var stream = new MemoryStream())
             {
