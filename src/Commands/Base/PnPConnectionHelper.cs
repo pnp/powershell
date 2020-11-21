@@ -488,6 +488,15 @@ namespace PnP.PowerShell.Commands.Base
 
         public static string GetLatestVersion()
         {
+            // do we need to check versions. Is the environment variable set?
+            var pnppowershellUpdatecheck = Environment.GetEnvironmentVariable("PNPPOWERSHELL_UPDATECHECK");
+            if (!string.IsNullOrEmpty(pnppowershellUpdatecheck))
+            {
+                if (pnppowershellUpdatecheck.ToLower() == "off")
+                {
+                    VersionChecked = true;
+                }
+            }
             try
             {
                 if (!VersionChecked)
@@ -500,8 +509,8 @@ namespace PnP.PowerShell.Commands.Base
                             var onlineVersion = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                             onlineVersion = onlineVersion.Trim(new char[] { '\t', '\r', '\n' });
                             var assembly = Assembly.GetExecutingAssembly();
-#if !NET461
-                            var currentVersion = new SemanticVersion(((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version);
+#if !NETFRAMEWORK
+                            var currentVersion = new SemanticVersion(assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);
                             if (SemanticVersion.TryParse(onlineVersion, out SemanticVersion availableVersion))
 #else
                             var currentVersion = new Version(((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version);
@@ -519,10 +528,27 @@ namespace PnP.PowerShell.Commands.Base
                                     {
                                         newVersionAvailable = true;
                                     }
+#if !NETFRAMEWORK
+                                    else
+                                    {
+                                        if (!string.IsNullOrEmpty(currentVersion.PreReleaseLabel))
+                                        {
+                                            if (availableVersion.Major == currentVersion.Major && availableVersion.Minor == currentVersion.Minor && availableVersion.Patch > currentVersion.Patch)
+                                            {
+                                                newVersionAvailable = true;
+                                            }
+                                        }
+                                    }
+#endif
                                 }
                                 if (newVersionAvailable)
                                 {
-                                    return $"\nA newer version of PnP PowerShell is available: {availableVersion}. Use `Update-Module -Name PnP.PowerShell` to update.\n";
+#if DEBUG
+                                    return $"\nA newer version of PnP PowerShell is available: {availableVersion}. Use `Update-Module -Name PnP.PowerShell -AllowPrerelease` to update.\n\nYou can turn this check off by setting the 'PNPPOWERSHELL_UPDATECHECK' environment variable to 'Off'\n";
+#else
+                                    return $"\nA newer version of PnP PowerShell is available: {availableVersion}. Use `Update-Module -Name PnP.PowerShell` to update.\n\nYou can turn this check off by setting the 'PNPPOWERSHELL_UPDATECHECK' environment variable to 'Off'\n";
+
+#endif
                                 }
                             }
                             VersionChecked = true;
@@ -531,7 +557,7 @@ namespace PnP.PowerShell.Commands.Base
                     }
                 }
             }
-            catch
+            catch (Exception)
             { }
             return null;
         }
