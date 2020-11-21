@@ -70,7 +70,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPPlannerTask` cmdlet (0.1.18)
 
 ### Changed
-
+- Updated `Get-PnPAzureCertificate` to work on Windows and Non-Windows OSes. (0.2.15)
+- Updated `Get-PnPAzureCertificate` to use `-Path` and `-Password` parameters instead of `-CertificatePath` and `-CertificatePassword` parameters (0.2.15)
+- Fixed using `New-PnPAzureCertificate` and `Get-PnPAzureCertificate` throwing an exception [PR #30](https://github.com/pnp/powershell/pull/30) (0.2.15)
 - Updated `Initialize-PnPPowerShellAuthentication` so it can generate self-signed certs on other platforms than Windows.
 - Updated `Get-PnPUnifiedAuditLog` to support paged results.
 - Removed SiteUrl parameter from `Register-PnPManagementShell` as it is not required anymore
@@ -132,7 +134,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Renamed `Test-PnPOffice365AliasIsUsed` to `Test-PnPMicrosoft365AliasIsUsed`
 - Refactored some of the Taxonomy cmdlet parameters. See documentation.
 - Change in `Copy-PnPFile` which should resolve some issues you may run into when copying files [PR #2796](https://github.com/pnp/PnP-PowerShell/pull/2796)
-- Fixed using `New-PnPAzureCertificate` and `Get-PnPAzureCertificate` throwing an exceptiuon [PR #30](https://github.com/pnp/powershell/pull/30)
 
 ### Contributors
 - Koen Zomers [koenzomers]
