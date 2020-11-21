@@ -187,11 +187,11 @@ namespace PnP.PowerShell.Commands.Base
 
                     byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
                     cert = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
-                #else
+#else
                     DateTimeOffset validFrom = DateTimeOffset.Now;
                     DateTimeOffset validTo = validFrom.AddYears(ValidYears);
                     cert = CertificateHelper.CreateSelfSignedCertificate2(CommonName, Country, State, Locality, Organization, OrganizationUnit, 2048, null, null, validFrom, validTo, "", false, null);
-                #endif
+#endif
 
                 if (!string.IsNullOrWhiteSpace(OutPath))
                 {

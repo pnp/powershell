@@ -23,7 +23,21 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static string PrivateKeyToBase64(X509Certificate2 certificate, bool useLineBreaks = false)
         {
-            var param = ((RSACng)certificate.PrivateKey).ExportParameters(true);
+            RSAParameters param = new RSAParameters();
+            switch (certificate.PrivateKey)
+            {
+                case RSACng rsaCNGKey:
+                    {
+                        param = rsaCNGKey.ExportParameters(true);
+                        break;
+                    }
+                case System.Security.Cryptography.RSAOpenSsl rsaOpenSslKey:
+                    {
+                        param = rsaOpenSslKey.ExportParameters(true);
+                        break;
+                    }
+            }
+            //var param = ((RSACng)certificate.PrivateKey).ExportParameters(true);
             string base64String;
             using (var stream = new MemoryStream())
             {
@@ -777,7 +791,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 {"C",Country}
             };
 
-            foreach (var field in new[] { "OU", "O", "L", "S", "C"})
+            foreach (var field in new[] { "OU", "O", "L", "S", "C" })
             {
                 var val = fields[field];
                 if (val != null)
