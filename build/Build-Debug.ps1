@@ -6,7 +6,11 @@ Param(
 	[Parameter(Mandatory = $false,
 		ValueFromPipeline = $false)]
 	[switch]
-	$Force
+	$Force,
+	[Parameter(Mandatory = $false,
+		ValueFromPipeline = $false)]
+	[switch]
+	$LocalPnPFramework
 )
 
 $versionObject = [System.Version]::new($(Get-Content "$PSScriptRoot/../version.txt" -Raw))
@@ -18,13 +22,21 @@ $version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
 Write-Host "Building PnP.PowerShell version $version-debug" -ForegroundColor Yellow
 
-if ($NoIncremental) {
-	dotnet restore --no-cache "$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj"
-	dotnet build "$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj" --no-incremental --nologo --configuration Debug -p:VersionPrefix=$version -p:VersionSuffix=debug --force
+$buildCmd =  "dotnet build `"$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj`"" + "--nologo --configuration Debug -p:VersionPrefix=$version -p:VersionSuffix=debug";
+if($NoIncremental) {
+	$buildCmd += " --no-incremental";
 }
-else {
-	dotnet build "$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj" --nologo --configuration Debug -p:VersionPrefix=$version -p:VersionSuffix=debug
+if ($Force) {
+	$buildCmd += " --force"
 }
+if($LocalPnPFramework)
+{
+	$buildCmd += " -p:LocalPnPFramework=true"
+}
+Write-Host "Executing $buildCmd" -ForegroundColor Yellow
+
+Invoke-Expression $buildCmd
+
 if ($LASTEXITCODE -eq 0) {
 	$documentsFolder = [environment]::getfolderpath("mydocuments");
 

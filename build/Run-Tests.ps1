@@ -29,11 +29,15 @@ Param(
     [Parameter(Mandatory = $false,
         ParameterSetName = "CredManager",
         ValueFromPipeline = $false)]
-        [Parameter(Mandatory = $false,
+    [Parameter(Mandatory = $false,
         ParameterSetName = "Username and Password",
         ValueFromPipeline = $false)]
     [switch]
-    $Blame
+    $Blame,
+    [Parameter(Mandatory = $false,
+        ValueFromPipeline = $false)]
+    [switch]
+    $LocalPnPFramework
 )
 
 $env:PnPTests_CredentialManagerLabel = $CredentialManagerLabel
@@ -43,12 +47,25 @@ if ($null -ne $Password) {
     $env:PnPTests_Password = $Password | ConvertFrom-SecureString
 }
 
-if($Blame -eq $true)
+$testCmd = "dotnet test `"$PSScriptRoot/../src/Tests/PnP.PowerShell.Tests.csproj`""
+if($Blame)
 {
-    dotnet test $PSScriptRoot/../src/Tests/PnP.PowerShell.Tests.csproj --blame
-} else {
-    dotnet test $PSScriptRoot/../src/Tests/PnP.PowerShell.Tests.csproj
+    $testCmd += " --blame" 
 }
+if($LocalPnPFramework)
+{
+    $testCmd += " -p:LocalPnPFramework=true"
+}
+Write-Host "Executing $testCmd" -ForegroundColor Yellow
+
+Invoke-Expression $testCmd
+
+# if ($Blame -eq $true) {
+#     dotnet test $PSScriptRoot/../src/Tests/PnP.PowerShell.Tests.csproj --blame
+# }
+# else {
+#     dotnet test $PSScriptRoot/../src/Tests/PnP.PowerShell.Tests.csproj
+# }
 
 $env:PnPTests_CredentialManagerLabel = $null
 $env:PnPTests_SiteUrl = $null

@@ -10,6 +10,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <Authors>PnP.PowerShell</Authors>
     <Configurations>Debug;Release</Configurations>
+    <LocalPnPFramework Condition="'$(LocalPnPFramework)' == ''">false</LocalPnPFramework>
   </PropertyGroup>
   
   <ItemGroup>
@@ -22,7 +23,7 @@
     <PackageReference Include="Microsoft.PowerShell.ConsoleHost" Version="7.0.3" />
     <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="PnP.Framework" Version="0.1.*-*" />
+    <PackageReference Include="PnP.Framework" Version="0.1.*-*" Condition="'$(LocalDebug)' != 'true'" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
@@ -36,6 +37,10 @@
     <PackageReference Include="NewtonSoft.Json" Version="12.0.3" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.1.18" />
     <PackageReference Include="MSTest.TestFramework" Version="1.1.18" />
+    <Reference Include="PnP.Framework" Condition="'$(LocalPnPFramework)' == 'true'">
+      <HintPath>..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
   </ItemGroup>
   
   <ItemGroup>
