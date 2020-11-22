@@ -26,6 +26,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/azurefunctions.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/azurefunctions.html",
+          "hash": "hxSEeomSmzZV96KLCiAXLA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/buildingsource.md",
       "output": {
         ".html": {
@@ -66,7 +78,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "QRo2vSoX8YNitKyraS1J2g=="
+          "hash": "C2lsyH0mkhDKxhOtRZAOHA=="
         }
       },
       "is_incremental": false,
@@ -6613,7 +6625,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 544,
+          "total_file_count": 545,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
