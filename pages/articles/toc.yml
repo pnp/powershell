@@ -10,3 +10,5 @@
   href: upgrading.md
 - name: Building the Source
   href: buildingsource.md
+- name: Using PnP PowerShell in Azure Functions
+  href: azurefunctions.md
