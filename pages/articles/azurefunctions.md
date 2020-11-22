@@ -38,7 +38,7 @@ Save the file.
 1. Enter `tenant_user` and enter the username you want to authenticate with as the user
 1. Enter `tenant_pwd` and enter the password you want to use for that user
 
-### Create the function
+## Create the function
 
 Create a new function and replace the function code with following example:
 
