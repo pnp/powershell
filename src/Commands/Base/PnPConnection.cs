@@ -520,6 +520,15 @@ namespace PnP.PowerShell.Commands.Base
                 AzureEnvironment = azureEnvironment
             };
             connection.PSCredential = credentials;
+            if (clientContext != null)
+            {
+                clientContext.ExecutingWebRequest += (sender, args) =>
+                {
+                    args.WebRequestExecutor.WebRequest.UserAgent = connection.UserAgent;
+                    args.WebRequestExecutor.RequestHeaders["Authorization"] = "Bearer " + token.AccessToken;
+                };
+                connection.Context = clientContext;
+            }
             return connection;
         }
 

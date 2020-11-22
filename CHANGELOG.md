@@ -72,6 +72,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPPlannerTask` cmdlet (0.1.18)
 
 ### Changed
+- Fixed issue where Connect-PnPOnline -Url [url] -AccessToken [token] is not creating an client context. (0.2.17)
 - Renamed `Initialize-PnPPowerShellAuthentication` to `Register-PnPAzureADApp` (0.2.15)
 - Updated `Get-PnPAzureCertificate` to work on Windows and Non-Windows OSes. (0.2.15)
 - Updated `Get-PnPAzureCertificate` to use `-Path` and `-Password` parameters instead of `-CertificatePath` and `-CertificatePassword` parameters (0.2.15)

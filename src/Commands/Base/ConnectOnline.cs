@@ -657,7 +657,14 @@ namespace PnP.PowerShell.Commands.Base
                     return PnPConnection.GetConnectionWithToken(new OfficeManagementApiToken(AccessToken), TokenAudience.OfficeManagementApi, InitializationType.Token, null, disableTelemetry: NoTelemetry.ToBool());
 
                 default:
-                    return PnPConnection.GetConnectionWithToken(new SharePointToken(AccessToken), TokenAudience.SharePointOnline, InitializationType.Token, null, Url, disableTelemetry: NoTelemetry.ToBool());
+                    {
+                        ClientContext clientContext = null;
+                        if (ParameterSpecified(nameof(Url)))
+                        {
+                            clientContext = new ClientContext(Url);
+                        }
+                        return PnPConnection.GetConnectionWithToken(new SharePointToken(AccessToken), TokenAudience.SharePointOnline, InitializationType.Token, null, Url, clientContext: clientContext, disableTelemetry: NoTelemetry.ToBool());
+                    }
             }
         }
 
