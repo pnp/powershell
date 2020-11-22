@@ -356,7 +356,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null)
         {
             var context = new PnPClientContext(url.AbsoluteUri)
             {
@@ -366,14 +366,28 @@ namespace PnP.PowerShell.Commands.Base
             var tenantId = string.Empty;
             try
             {
-                using (var authManager = new PnP.Framework.AuthenticationManager(credentials.UserName, credentials.Password))
+                if (!string.IsNullOrWhiteSpace(clientId))
                 {
-                    context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
-                    context.ExecuteQueryRetry();
+                    using (var authManager = new PnP.Framework.AuthenticationManager(clientId, credentials.UserName, credentials.Password))
+                    {
+                        context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
+                        context.ExecuteQueryRetry();
+                        var accesstoken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
+                        var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accesstoken);
+                        tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
+                    }
+                }
+                else
+                {
+                    using (var authManager = new PnP.Framework.AuthenticationManager(credentials.UserName, credentials.Password))
+                    {
+                        context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
+                        context.ExecuteQueryRetry();
 
-                    var accessToken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
-                    var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accessToken);
-                    tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
+                        var accessToken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
+                        var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accessToken);
+                        tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
+                    }
                 }
             }
             catch (ClientRequestException)

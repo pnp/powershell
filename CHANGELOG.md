@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [0.1.*-nightly - 0.2.*-nightly]
 
 ### Added
+- Allowed to specify -ClientId when logging in with credentials so people can use their own Azure AD apps and credentials for authentication towards SharePoint Online (0.2.17)
 - Added environment variable check (set `PNPPOWERSHELL_UPDATECHECK` to `Off`) to Connect-PnPOnline to skip version check if set. (0.2.15)
 - Added `Get-PnPChangeLog` cmdlet which returns this changelog. (0.2.14)
 - Added `-DeviceLogin` parameter to `Register-PnPAzureADApp` (renamed from Initialize-PnPPowerShellAuthentication in 0.2.15) which allows for users with MFA to setup a custom app (0.2.12)

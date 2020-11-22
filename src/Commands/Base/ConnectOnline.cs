@@ -161,6 +161,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN)]
         public SwitchParameter Graph;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADPEM)]
@@ -761,7 +762,8 @@ namespace PnP.PowerShell.Commands.Base
                                                                credentials,
                                                                TenantAdminUrl,
                                                                NoTelemetry,
-                                                               AzureEnvironment);
+                                                               AzureEnvironment,
+                                                               ClientId);
         }
 
         private PnPConnection ConnectManagedIdentity()
