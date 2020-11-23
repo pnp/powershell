@@ -326,7 +326,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                     }
                 }
 
-                if (PnPConnection.CurrentConnection.PSCredential != null)
+                if (PnPConnection.CurrentConnection.PSCredential != null || PnPConnection.CurrentConnection.ClientId != null)
                 {
                     // Using normal credentials
                     return Task.FromResult(TokenHandler.AcquireToken(resource, null));
