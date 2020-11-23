@@ -205,30 +205,19 @@ namespace PnP.PowerShell.Commands.Base
         //    }
         //}
 
-        //internal static PnPConnection InitiateAzureADNativeApplicationConnection(Uri url, string clientId, Uri redirectUri, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
-        //{
-        //    using (var authManager = new PnP.Framework.AuthenticationManager())
-        //    {
-        //        string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        //        string configFile = Path.Combine(appDataFolder, "PnP.PowerShell\\tokencache.dat");
-        //        FileTokenCache cache = new FileTokenCache(configFile);
-        //        var context = PnPClientContext.ConvertFrom(authManager.GetAzureADNativeApplicationAuthenticatedContext(url.ToString(), clientId, redirectUri, cache, azureEnvironment));
-        //        var connectionType = ConnectionType.OnPrem;
-        //        if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
-        //        {
-        //            connectionType = ConnectionType.O365;
-        //        }
-        //            if (IsTenantAdminSite(context))
-        //            {
-        //                connectionType = ConnectionType.TenantAdmin;
-        //            }
-        //        var spoConnection = new PnPConnection(context, connectionType, null, clientId, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADNativeApp)
-        //        {
-        //            ConnectionMethod = ConnectionMethod.AzureADNativeApplication
-        //        };
-        //        return spoConnection;
-        //    }
-        //}
+        // internal static PnPConnection InitiateAzureADNativeApplicationConnection(Uri url, string clientId, Uri redirectUri, string tenantAdminUrl, string tenantId, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        // {
+        //     using (var authManager = new PnP.Framework.AuthenticationManager(clientId, redirectUri.ToString(), tenantId, azureEnvironment))
+        //     {
+        //         var context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
+        //         var connectionType = ConnectionType.O365;
+        //         var spoConnection = new PnPConnection(context, connectionType, null, clientId, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, disableTelemetry, InitializationType.AADNativeApp)
+        //         {
+        //             ConnectionMethod = ConnectionMethod.AzureADNativeApplication
+        //         };
+        //         return spoConnection;
+        //     }
+        // }
 
         internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePath, SecureString certificatePassword, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
@@ -356,7 +345,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null)
+        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null)
         {
             var context = new PnPClientContext(url.AbsoluteUri)
             {
@@ -368,7 +357,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (!string.IsNullOrWhiteSpace(clientId))
                 {
-                    using (var authManager = new PnP.Framework.AuthenticationManager(clientId, credentials.UserName, credentials.Password))
+                    using (var authManager = new PnP.Framework.AuthenticationManager(clientId, credentials.UserName, credentials.Password, redirectUrl))
                     {
                         context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                         context.ExecuteQueryRetry();

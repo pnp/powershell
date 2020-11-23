@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN = "App-Only using a clientId and clientSecret and an AAD Domain";
         private const string ParameterSet_ADFSCERT = "ADFS with client Certificate";
         private const string ParameterSet_ADFSCREDENTIALS = "ADFS with user credentials";
-        private const string ParameterSet_NATIVEAAD = "Azure Active Directory";
+        // private const string ParameterSet_NATIVEAAD = "Azure Active Directory";
         private const string ParameterSet_APPONLYAAD = "App-Only with Azure Active Directory";
         private const string ParameterSet_APPONLYAADPEM = "App-Only with Azure Active Directory using certificate as PEM strings";
         private const string ParameterSet_APPONLYAADCER = "App-Only with Azure Active Directory using X502 certificates";
@@ -42,8 +42,8 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_GRAPHDEVICELOGIN = "PnP Management Shell to the Microsoft Graph";
         private const string ParameterSet_AADWITHSCOPE = "Azure Active Directory using Scopes";
         private const string ParameterSet_GRAPHWITHAAD = "Microsoft Graph using Azure Active Directory";
-        //private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
-        //private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
+        private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
+        private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
         private const string ParameterSet_ACCESSTOKEN = "Access Token";
         //private static readonly Uri GraphAADLogin = new Uri("https://login.microsoftonline.com/");
         //private static readonly string[] GraphDefaultScope = { "https://graph.microsoft.com/.default" };
@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, ValueFromPipeline = true)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, ValueFromPipeline = true)]
@@ -71,7 +71,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ADFSCERT, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ADFSCREDENTIALS, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true)]
+        // [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAAD, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADPEM, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADCER, ValueFromPipeline = true)]
@@ -123,12 +123,12 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER)]
-        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
         public SwitchParameter CreateDrive;
 
@@ -138,17 +138,17 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER)]
-        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
         public string DriveName = "SPO";
 
-        //[Parameter(Mandatory = true, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
-        //public SwitchParameter SPOManagementShell;
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
+        public SwitchParameter SPOManagementShell;
 
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN)]
@@ -162,7 +162,7 @@ namespace PnP.PowerShell.Commands.Base
         public SwitchParameter Graph;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD)]
+        // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADPEM)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADThumb)]
@@ -171,7 +171,8 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         public string ClientId;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD)]
+        //[Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
         public string RedirectUri;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADPEM)]
@@ -202,7 +203,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADThumb)]
         public string Thumbprint;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb)]
@@ -229,12 +230,12 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER)]
-        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         public string TenantAdminUrl;
 
         [Parameter(Mandatory = false)]
@@ -303,9 +304,9 @@ namespace PnP.PowerShell.Commands.Base
                     connection = ConnectGraphWithAad();
                     break;
 
-                //case ParameterSet_SPOMANAGEMENT:
-                //    connection = ConnectSpoManagement();
-                //    break;
+                case ParameterSet_SPOMANAGEMENT:
+                    connection = ConnectSpoManagement();
+                    break;
 
                 case ParameterSet_DEVICELOGIN:
                     connection = ConnectDeviceLogin(ref cancellationToken);
@@ -315,9 +316,9 @@ namespace PnP.PowerShell.Commands.Base
                     connection = ConnectGraphDeviceLogin(null, ref cancellationToken);
                     break;
 
-                case ParameterSet_NATIVEAAD:
-                    connection = ConnectNativeAAD(ClientId, RedirectUri);
-                    break;
+                // case ParameterSet_NATIVEAAD:
+                //     connection = ConnectNativeAAD(ClientId, RedirectUri);
+                //     break;
 
                 case ParameterSet_APPONLYAAD:
                     connection = ConnectAppOnlyAad();
@@ -459,10 +460,12 @@ namespace PnP.PowerShell.Commands.Base
         /// Connect using the parameter set SPOMANAGEMENT
         /// </summary>
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        //private PnPConnection ConnectSpoManagement()
-        //{
-        //    return ConnectNativeAAD(SPOManagementClientId, SPOManagementRedirectUri);
-        //}
+        private PnPConnection ConnectSpoManagement()
+        {
+            ClientId = SPOManagementClientId;
+            RedirectUri = SPOManagementRedirectUri;
+            return ConnectCredentials(Credentials?.Credential);
+        }
 
         /// <summary>
         /// Connect using the parameter set DEVICELOGIN
@@ -524,24 +527,25 @@ namespace PnP.PowerShell.Commands.Base
         /// Connect using the parameter set NativeAAD
         /// </summary>
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        private PnPConnection ConnectNativeAAD(string clientId, string redirectUrl)
-        {
-            //string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            //string configFolder = Path.Combine(appDataFolder, "PnP.PowerShell");
-            //Directory.CreateDirectory(configFolder); // Ensure folder exists
-            //if (ClearTokenCache)
-            //{
-            //    string configFile = Path.Combine(configFolder, "tokencache.dat");
+        // private PnPConnection ConnectNativeAAD(string clientId, string redirectUrl)
+        // {
+        //     //string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        //     //string configFolder = Path.Combine(appDataFolder, "PnP.PowerShell");
+        //     //Directory.CreateDirectory(configFolder); // Ensure folder exists
+        //     //if (ClearTokenCache)
+        //     //{
+        //     //    string configFile = Path.Combine(configFolder, "tokencache.dat");
 
-            //    if (File.Exists(configFile))
-            //    {
-            //        File.Delete(configFile);
-            //    }
-            //}
-            //return PnPConnectionHelper.InitiateAzureADNativeApplicationConnection(
-            //    new Uri(Url), clientId, new Uri(redirectUrl), RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
-            throw new NotImplementedException();
-        }
+        //     //    if (File.Exists(configFile))
+        //     //    {
+        //     //        File.Delete(configFile);
+        //     //    }
+        //     //}
+
+        //     return PnPConnectionHelper.InitiateAzureADNativeApplicationConnection(
+        //        new Uri(Url), clientId, new Uri(redirectUrl), TenantAdminUrl, Scopes, Host, NoTelemetry, AzureEnvironment);
+        //     throw new NotImplementedException();
+        // }
 
         /// <summary>
         /// Connect using the parameter set APPONLYAAD
@@ -770,7 +774,8 @@ namespace PnP.PowerShell.Commands.Base
                                                                TenantAdminUrl,
                                                                NoTelemetry,
                                                                AzureEnvironment,
-                                                               ClientId);
+                                                               ClientId,
+                                                               RedirectUri);
         }
 
         private PnPConnection ConnectManagedIdentity()
@@ -866,6 +871,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             cancellationTokenSource.Cancel();
         }
+
         #endregion
     }
 }
