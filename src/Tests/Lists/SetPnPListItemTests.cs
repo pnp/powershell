@@ -7,10 +7,9 @@ using System.Collections;
 namespace PnP.PowerShell.Tests.Lists
 {
     [TestClass]
-    public class SetListItemTests
+    public class SetListItemTests : PnPTest
     {
         private static string listTitle;
-        private static PSTestScope scope;
 
         private static int itemId;
 
@@ -23,12 +22,9 @@ namespace PnP.PowerShell.Tests.Lists
                 listTitle = $"TempList {Guid.NewGuid()}";
                 context.Web.CreateList(ListTemplateType.GenericList, listTitle, false);
             }
-            // scope = new PSTestScope(true);
-            scope = new PSTestScope();
-
             Hashtable values = new Hashtable();
             values.Add("Title", "Test Item");
-            var results = scope.ExecuteCommand("Add-PnPListItem",
+            var results = TestScope.ExecuteCommand("Add-PnPListItem",
              new CommandParameter("List", listTitle),
              new CommandParameter("Values", values));
 
@@ -40,13 +36,9 @@ namespace PnP.PowerShell.Tests.Lists
         [ClassCleanup]
         public static void Cleanup()
         {
-            using (var context = TestCommon.CreateClientContext())
-            {
-                var list = context.Web.Lists.GetByTitle(listTitle);
-                list.DeleteObject();
-                context.ExecuteQueryRetry();
-            }
-            scope?.Dispose();
+            TestScope.ExecuteCommand("Remove-PnPList",
+                new CommandParameter("Identity",listTitle),
+                new CommandParameter("Force"));
         }
         #endregion
 
@@ -58,7 +50,7 @@ namespace PnP.PowerShell.Tests.Lists
         {
             Hashtable values = new Hashtable();
             values.Add("Title", "Updated Item");
-            var results = scope.ExecuteCommand("Set-PnPListItem",
+            var results = TestScope.ExecuteCommand("Set-PnPListItem",
                 new CommandParameter("List", listTitle),
                 new CommandParameter("Identity", itemId),
                 new CommandParameter("Values", values));

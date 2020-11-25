@@ -5,11 +5,10 @@ using System.Management.Automation.Runspaces;
 namespace PnP.PowerShell.Tests.Lists
 {
     [TestClass]
-    public class GetViewTests
+    public class GetViewTests : PnPTest
     {
         private static string listTitle;
         private static string viewTitle;
-        private static PSTestScope scope;
 
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
@@ -22,21 +21,13 @@ namespace PnP.PowerShell.Tests.Lists
                 var views = ctx.Web.Lists[0].EnsureProperty(l => l.Views);
                 viewTitle = views[0].Title;
             }
-            // scope = new PSTestScope(true);
-            scope = new PSTestScope(true);
-        }
-
-        [ClassCleanup]
-        public static void Cleanup()
-        {
-            scope?.Dispose();
         }
 
         #region Scaffolded Cmdlet Tests
         [TestMethod]
         public void GetPnPViewTest()
         {
-            var results = scope.ExecuteCommand("Get-PnPView",
+            var results = TestScope.ExecuteCommand("Get-PnPView",
                 new CommandParameter("List", listTitle));
             Assert.IsTrue(results.Count > 0);
         }
@@ -44,7 +35,7 @@ namespace PnP.PowerShell.Tests.Lists
         [TestMethod]
         public void GetPnPSpecifiedViewTest()
         {
-            var results = scope.ExecuteCommand("Get-PnPView",
+            var results = TestScope.ExecuteCommand("Get-PnPView",
                 new CommandParameter("List", listTitle),
                 new CommandParameter("Identity", viewTitle));
             Assert.AreEqual(results.Count, 1);

@@ -8,35 +8,28 @@ using System.Collections;
 namespace PnP.PowerShell.Tests.Lists
 {
     [TestClass]
-    public class AddListItemTests
+    public class AddListItemTests : PnPTest
     {
         #region Test Setup/CleanUp
         private static string listTitle;
-        private static PSTestScope scope;
 
         // #region Setup
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
         {
-            using (var context = TestCommon.CreateClientContext())
-            {
-                listTitle = $"TempList {Guid.NewGuid()}";
-                context.Web.CreateList(ListTemplateType.GenericList, listTitle, false);
-            }
-            // scope = new PSTestScope(true);
-            scope = new PSTestScope();
+            listTitle = $"TempList {Guid.NewGuid()}";
+
+            TestScope.ExecuteCommand("New-PnPList",
+                new CommandParameter("Title", listTitle),
+                new CommandParameter("Template", ListTemplateType.GenericList));
         }
 
         [ClassCleanup]
         public static void Cleanup()
         {
-            using (var context = TestCommon.CreateClientContext())
-            {
-                var list = context.Web.Lists.GetByTitle(listTitle);
-                list.DeleteObject();
-                context.ExecuteQueryRetry();
-            }
-            scope?.Dispose();
+            TestScope.ExecuteCommand("Remove-PnPList",
+                new CommandParameter("Identity", listTitle),
+                new CommandParameter("Force"));
         }
         #endregion
 
@@ -47,7 +40,7 @@ namespace PnP.PowerShell.Tests.Lists
             Hashtable values = new Hashtable();
             values.Add("Title", "Test Item");
 
-            var results = scope.ExecuteCommand("Add-PnPListItem",
+            var results = TestScope.ExecuteCommand("Add-PnPListItem",
                 new CommandParameter("List", listTitle),
                 new CommandParameter("Values", values));
 

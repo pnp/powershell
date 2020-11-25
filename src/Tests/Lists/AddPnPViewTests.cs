@@ -7,35 +7,29 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Tests.Lists
 {
     [TestClass]
-    public class AddViewTests
+    public class AddViewTests : PnPTest
     {
         #region Test Setup/CleanUp
         private static string listTitle;
         private static string viewTitle;
 
-        private static PSTestScope scope;
-
         // #region Setup
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
         {
-            using (var context = TestCommon.CreateClientContext())
-            {
-                listTitle = $"TempList {Guid.NewGuid()}";
-                context.Web.CreateList(ListTemplateType.GenericList, listTitle, false);
-                viewTitle = "TempView";
-            }
-            scope = new PSTestScope();
+            listTitle = $"TempList {Guid.NewGuid()}";
+            viewTitle = "TestView";
+            TestScope.ExecuteCommand("New-PnPList",
+                new CommandParameter("Title", listTitle),
+                new CommandParameter("Template", ListTemplateType.GenericList));
         }
 
         [ClassCleanup]
         public static void Cleanup()
         {
-            scope.ExecuteCommand("Remove-PnPList",
+            TestScope.ExecuteCommand("Remove-PnPList",
                 new CommandParameter("Identity", listTitle),
                 new CommandParameter("Force"));
-           
-            scope?.Dispose();
         }
         #endregion
 
@@ -45,7 +39,7 @@ namespace PnP.PowerShell.Tests.Lists
         {
             var fields = new List<string>();
             fields.Add("Title");
-            var results = scope.ExecuteCommand("Add-PnPView",
+            var results = TestScope.ExecuteCommand("Add-PnPView",
                 new CommandParameter("List", listTitle),
                 new CommandParameter("Title", viewTitle),
                 new CommandParameter("Fields", fields));

@@ -5,19 +5,17 @@ using System.Management.Automation.Runspaces;
 namespace PnP.PowerShell.Tests.Fields
 {
     [TestClass]
-    public class AddFieldTests
+    public class AddFieldTests : PnPTest
     {
         private static string fieldName;
         private static Microsoft.SharePoint.Client.List list;
-        private static PSTestScope scope;
         #region Test Setup/CleanUp
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
         {
             fieldName = $"Field{Guid.NewGuid()}";
-            scope = new PSTestScope();
 
-            var listResults = scope.ExecuteCommand("Get-PnPList");
+            var listResults = TestScope.ExecuteCommand("Get-PnPList");
             if (listResults.Count > 0)
             {
                 list = listResults[0].BaseObject as Microsoft.SharePoint.Client.List;
@@ -28,16 +26,14 @@ namespace PnP.PowerShell.Tests.Fields
         [ClassCleanup]
         public static void Cleanup(TestContext testContext)
         {
-            scope.ExecuteCommand("Remove-PnPField",
+            TestScope.ExecuteCommand("Remove-PnPField",
                 new CommandParameter("Identity", fieldName),
                 new CommandParameter("Force"));
 
-            scope.ExecuteCommand("Remove-PnPField",
+            TestScope.ExecuteCommand("Remove-PnPField",
                 new CommandParameter("Identity", $"{fieldName}2"),
                 new CommandParameter("List", list.Title),
                 new CommandParameter("Force"));
-
-            scope?.Dispose();
         }
 
 
@@ -48,7 +44,7 @@ namespace PnP.PowerShell.Tests.Fields
         //[TestMethod]
         public void AddPnPFieldTest()
         {
-            var results = scope.ExecuteCommand("Add-PnPField",
+            var results = TestScope.ExecuteCommand("Add-PnPField",
                 new CommandParameter("DisplayName", fieldName),
                 new CommandParameter("InternalName", fieldName),
                 new CommandParameter("Type", Microsoft.SharePoint.Client.FieldType.Text));
@@ -59,7 +55,7 @@ namespace PnP.PowerShell.Tests.Fields
         {
             if (list != null)
             {
-                var results = scope.ExecuteCommand("Add-PnPField",
+                var results = TestScope.ExecuteCommand("Add-PnPField",
                     new CommandParameter("List", list.Title),
                     new CommandParameter("DisplayName", $"{fieldName}2"),
                     new CommandParameter("InternalName", $"{fieldName}2"),

@@ -5,35 +5,32 @@ using System.Management.Automation.Runspaces;
 namespace PnP.PowerShell.Tests.Files
 {
     [TestClass]
-    public class RemoveFileTests
+    public class RemoveFileTests : PnPTest
     {
         #region Setup
 
         private static string fileName;
-        private static PSTestScope scope;
 
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
         {
             fileName = $"{Guid.NewGuid()}.txt";
-            scope = new PSTestScope();
             var filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Resources{System.IO.Path.DirectorySeparatorChar}template.xml");
 
-            scope.ExecuteCommand("Add-PnPFile",
+            TestScope.ExecuteCommand("Add-PnPFile",
                 new CommandParameter("Path", filePath),
                 new CommandParameter("NewFileName", fileName),
-                new CommandParameter("Folder", "documents"));
+                new CommandParameter("Folder", "Shared Documents"));
 
         }
 
         [ClassCleanup]
         public static void Cleanup()
         {
-            scope.ExecuteCommand("Remove-PnPFile",
-                new CommandParameter("SiteRelativeUrl", $"shared documents/{fileName}"),
+            TestScope.ExecuteCommand("Remove-PnPFile",
+                new CommandParameter("SiteRelativeUrl", $"Shared documents/{fileName}"),
                 new CommandParameter("Force"));
 
-            scope?.Dispose();
         }
         #endregion
 
@@ -42,8 +39,8 @@ namespace PnP.PowerShell.Tests.Files
         //[TestMethod]
         public void RemovePnPFileTest()
         {
-            var results = scope.ExecuteCommand("Remove-PnPFile",
-                 new CommandParameter("SiteRelativeUrl", $"shared documents/{fileName}"),
+            var results = TestScope.ExecuteCommand("Remove-PnPFile",
+                 new CommandParameter("SiteRelativeUrl", $"Shared Documents/{fileName}"),
                  new CommandParameter("Force"));
 
             Assert.AreEqual(results.Count, 0);

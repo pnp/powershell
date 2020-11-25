@@ -5,20 +5,17 @@ using System.Management.Automation.Runspaces;
 namespace PnP.PowerShell.Tests.Lists
 {
     [TestClass]
-    public class RequestReIndexListTests
+    public class RequestReIndexListTests : PnPTest
     {
         #region Test Setup/CleanUp
         private static string listTitle;
-
-        private static PSTestScope scope;
 
         // #region Setup
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
         {
-            scope = new PSTestScope();
             listTitle = $"TempList {Guid.NewGuid()}";
-            scope.ExecuteCommand("New-PnPList",
+            TestScope.ExecuteCommand("New-PnPList",
                 new CommandParameter("Title", listTitle),
                 new CommandParameter("Template", Microsoft.SharePoint.Client.ListTemplateType.GenericList));
         }
@@ -26,10 +23,9 @@ namespace PnP.PowerShell.Tests.Lists
         [ClassCleanup]
         public static void Cleanup()
         {
-            scope.ExecuteCommand("Remove-PnPList",
+            TestScope.ExecuteCommand("Remove-PnPList",
                 new CommandParameter("Identity", listTitle),
                 new CommandParameter("Force"));
-            scope?.Dispose();
         }
         #endregion
 
@@ -37,7 +33,7 @@ namespace PnP.PowerShell.Tests.Lists
         [TestMethod]
         public void RequestPnPReIndexListTest()
         {
-            var results = scope.ExecuteCommand("Request-PnPReIndexList",
+            var results = TestScope.ExecuteCommand("Request-PnPReIndexList",
                 new CommandParameter("Identity", listTitle));
 
             Assert.AreEqual(results.Count, 0);

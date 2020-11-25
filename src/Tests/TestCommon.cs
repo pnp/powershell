@@ -21,6 +21,15 @@ namespace PnP.PowerShell.Tests
 
         public static Configuration Configuration { get; set; }
 
+        private static PSTestScope testScope;
+        public static PSTestScope GetTestScope()
+        {
+            if (testScope == null)
+            {
+                testScope = new PSTestScope();
+            }
+            return testScope;
+        }
 
         #region Methods
         public static ClientContext CreateClientContext()

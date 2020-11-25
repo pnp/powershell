@@ -5,34 +5,31 @@ using System.Management.Automation.Runspaces;
 namespace PnP.PowerShell.Tests.Files
 {
     [TestClass]
-    public class RemoveFolderTests
+    public class RemoveFolderTests : PnPTest
     {
         #region Test Setup/CleanUp
 
         private static string folderName;
-        private static PSTestScope scope;
 
         // #region Setup
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
         {
             folderName = $"Folder_{Guid.NewGuid()}";
-            scope = new PSTestScope();
 
-            scope.ExecuteCommand("Add-PnPFolder",
+            TestScope.ExecuteCommand("Add-PnPFolder",
                 new CommandParameter("Name", folderName),
-                new CommandParameter("Folder", "documents"));
+                new CommandParameter("Folder", "Shared Documents"));
         }
 
         [ClassCleanup]
         public static void Cleanup()
         {
-            scope.ExecuteCommand("Remove-PnPFolder",
+            TestScope.ExecuteCommand("Remove-PnPFolder",
                 new CommandParameter("Name", folderName),
-                new CommandParameter("Folder", "documents"),
+                new CommandParameter("Folder", "Shared Documents"),
                 new CommandParameter("Force"));
 
-            scope?.Dispose();
         }
         #endregion
 
@@ -41,15 +38,12 @@ namespace PnP.PowerShell.Tests.Files
         [TestMethod]
         public void RemovePnPFolderTest()
         {
-            using (var scope = new PSTestScope(true))
-            {
-                var results = scope.ExecuteCommand("Remove-PnPFolder",
-                    new CommandParameter("Name", folderName),
-                    new CommandParameter("Folder", "documents"),
-                    new CommandParameter("Force"));
+            var results = TestScope.ExecuteCommand("Remove-PnPFolder",
+                new CommandParameter("Name", folderName),
+                new CommandParameter("Folder", "Shared Documents"),
+                new CommandParameter("Force"));
 
-                Assert.AreEqual(results.Count, 0);
-            }
+            Assert.AreEqual(results.Count, 0);
         }
         #endregion
     }
