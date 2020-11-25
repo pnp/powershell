@@ -555,6 +555,11 @@ namespace PnP.PowerShell.Commands.Base
         {
             if (ParameterSpecified(nameof(CertificatePath)))
             {
+                if (!Path.IsPathRooted(CertificatePath))
+                {
+                    CertificatePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path,
+                               CertificatePath);
+                }
                 //WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
                 return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, TenantAdminUrl, NoTelemetry, AzureEnvironment);
             }
