@@ -31,12 +31,10 @@ namespace PnP.PowerShell.Tests.Lists
         [ClassCleanup]
         public static void Cleanup()
         {
-            using (var context = TestCommon.CreateClientContext())
-            {
-                var list = context.Web.Lists.GetByTitle(listTitle);
-                list.DeleteObject();
-                context.ExecuteQueryRetry();
-            }
+            scope.ExecuteCommand("Remove-PnPList",
+                new CommandParameter("Identity", listTitle),
+                new CommandParameter("Force"));
+           
             scope?.Dispose();
         }
         #endregion

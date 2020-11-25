@@ -60,13 +60,6 @@ Write-Host "Executing $testCmd" -ForegroundColor Yellow
 
 Invoke-Expression $testCmd
 
-# if ($Blame -eq $true) {
-#     dotnet test $PSScriptRoot/../src/Tests/PnP.PowerShell.Tests.csproj --blame
-# }
-# else {
-#     dotnet test $PSScriptRoot/../src/Tests/PnP.PowerShell.Tests.csproj
-# }
-
 $env:PnPTests_CredentialManagerLabel = $null
 $env:PnPTests_SiteUrl = $null
 $env:PnPTests_Username = $null
