@@ -140,6 +140,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Renamed `Test-PnPOffice365AliasIsUsed` to `Test-PnPMicrosoft365AliasIsUsed`
 - Refactored some of the Taxonomy cmdlet parameters. See documentation.
 - Change in `Copy-PnPFile` which should resolve some issues you may run into when copying files [PR #2796](https://github.com/pnp/PnP-PowerShell/pull/2796)
+- Fixed several issues with `Get-PnPSubwebs` and added optional parameter `-IncludeRootWeb` [PR #3011](https://github.com/pnp/PnP-PowerShell/pull/3011)
 
 ### Contributors
 - Koen Zomers [koenzomers]
