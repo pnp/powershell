@@ -72,6 +72,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPPlannerTask` cmdlet (0.1.18)
 
 ### Changed
+- Renamed `-CloudShell` to `-ManagedIdentity` on `Connect-PnPOnline` (0.2.20)
 - `-CertificatePath` on `Connect-PnPOnline` now accepts a relative path (0.2.19)
 - Reintroduced `-SPOManagementShell` as login option with `Connect-PnPOnline` (0.2.18)
 - Fixed issue where Connect-PnPOnline -Url [url] -AccessToken [token] is not creating an client context. (0.2.17)

@@ -41,14 +41,14 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_DEVICELOGIN = "PnP Management Shell / DeviceLogin";
         private const string ParameterSet_GRAPHDEVICELOGIN = "PnP Management Shell to the Microsoft Graph";
         private const string ParameterSet_AADWITHSCOPE = "Azure Active Directory using Scopes";
-        private const string ParameterSet_GRAPHWITHAAD = "Microsoft Graph using Azure Active Directory";
+        // private const string ParameterSet_GRAPHWITHAAD = "Microsoft Graph using Azure Active Directory";
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
         private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
         private const string ParameterSet_ACCESSTOKEN = "Access Token";
         //private static readonly Uri GraphAADLogin = new Uri("https://login.microsoftonline.com/");
         //private static readonly string[] GraphDefaultScope = { "https://graph.microsoft.com/.default" };
 
-        private const string ParameterSet_CLOUDSHELL = "Azure Cloud Shell";
+        private const string ParameterSet_MANAGEDIDENTITY = "Managed Identity";
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, ValueFromPipeline = true)]
@@ -114,7 +114,6 @@ namespace PnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
-
         public string ClientSecret;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
@@ -218,7 +217,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_AADWITHSCOPE)]
         public string[] Scopes;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD)]
+        //[Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         public string AADDomain;
 
@@ -244,8 +243,8 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false)]
         public SwitchParameter NoVersionCheck;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CLOUDSHELL)]
-        public SwitchParameter CloudShell;
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MANAGEDIDENTITY)]
+        public SwitchParameter ManagedIdentity;
 
         protected override void ProcessRecord()
         {
@@ -300,9 +299,9 @@ namespace PnP.PowerShell.Commands.Base
             // Connect using the used set parameters
             switch (ParameterSetName)
             {
-                case ParameterSet_GRAPHWITHAAD:
-                    connection = ConnectGraphWithAad();
-                    break;
+                // case ParameterSet_GRAPHWITHAAD:
+                //     connection = ConnectGraphWithAad();
+                //     break;
 
                 case ParameterSet_SPOMANAGEMENT:
                     connection = ConnectSpoManagement();
@@ -366,7 +365,7 @@ namespace PnP.PowerShell.Commands.Base
                     connection = ConnectCredentials(credentials);
                     break;
 
-                case ParameterSet_CLOUDSHELL:
+                case ParameterSet_MANAGEDIDENTITY:
                     connection = ConnectManagedIdentity();
                     break;
             }
@@ -433,10 +432,10 @@ namespace PnP.PowerShell.Commands.Base
         /// Connect using the parameter set GRAPHWITHAAD
         /// </summary>
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        private PnPConnection ConnectGraphWithAad()
-        {
-            return PnPConnection.GetConnectionWithClientIdAndClientSecret(ClientId, ClientSecret, InitializationType.AADAppOnly, Url, AADDomain, disableTelemetry: NoTelemetry);
-        }
+        // private PnPConnection ConnectGraphWithAad()
+        // {
+        //     return PnPConnection.GetConnectionWithClientIdAndClientSecret(ClientId, ClientSecret, InitializationType.AADAppOnly, Url, AADDomain, disableTelemetry: NoTelemetry);
+        // }
 
         /// <summary>
         /// Connect using the parameter set APPONLYCLIENTIDCLIENTSECRETURL

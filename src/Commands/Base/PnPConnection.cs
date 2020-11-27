@@ -134,11 +134,11 @@ namespace PnP.PowerShell.Commands.Base
         /// Tries to get an access token for the provided audience
         /// </summary>
         /// <param name="tokenAudience">Audience to try to get an access token for</param>
-        /// <param name="roles">The specific roles to request access to (i.e. Group.ReadWrite.All). Optional, will use default roles assigned to clientId if not specified.</param>
+        /// <param name="permissionScopes">The specific permission scopes to request access to (i.e. Group.ReadWrite.All). Optional, will use default permission scopes assigned to clientId if not specified.</param>
         /// <returns>AccessToken for the audience or NULL if unable to retrieve an access token for the audience on the current connection</returns>
-        internal string TryGetAccessToken(TokenAudience tokenAudience, string[] roles = null)
+        internal string TryGetAccessToken(TokenAudience tokenAudience, string[] permissionScopes = null)
         {
-            return TryGetToken(tokenAudience, AzureEnvironment, roles)?.AccessToken;
+            return TryGetToken(tokenAudience, AzureEnvironment, permissionScopes)?.AccessToken;
         }
 
         internal static Action<DeviceCodeResult> DeviceLoginCallback(PSCmdlet cmdlet, bool launchBrowser)
@@ -162,9 +162,9 @@ namespace PnP.PowerShell.Commands.Base
         /// Tries to get a token for the provided audience
         /// </summary>
         /// <param name="tokenAudience">Audience to try to get a token for</param>
-        /// <param name="orRoles">The specific roles to request access to (i.e. Group.ReadWrite.All). Optional, will use default groups assigned to clientId if not specified.</param>
+        /// <param name="orPermissionScopes">The specific permission scopes to request access to (i.e. Group.ReadWrite.All). Optional, will use default permission scopes assigned to clientId if not specified.</param>
         /// <returns><see cref="GenericToken"/> for the audience or NULL if unable to retrieve a token for the audience on the current connection</returns>
-        internal GenericToken TryGetToken(TokenAudience tokenAudience, AzureEnvironment azureEnvironment, string[] orRoles = null, string[] andRoles = null, TokenType tokenType = TokenType.All, string[] managementShellScopes = null, System.Management.Automation.PSCmdlet cmdletInstance = null)
+        internal GenericToken TryGetToken(TokenAudience tokenAudience, AzureEnvironment azureEnvironment, string[] orPermissionScopes = null, string[] andPermissionScopes = null, TokenType tokenType = TokenType.All, string[] managementShellScopes = null, System.Management.Automation.PSCmdlet cmdletInstance = null)
         {
             GenericToken token = null;
 
@@ -255,7 +255,7 @@ namespace PnP.PowerShell.Commands.Base
             if (token != null)
             {
                 cmdletInstance?.WriteVerbose("Validating token for permissions");
-                var (valid, message) = ValidateTokenForPermissions(token, tokenAudience, orRoles, andRoles, tokenType);
+                var (valid, message) = ValidateTokenForPermissions(token, tokenAudience, orPermissionScopes, andPermissionScopes, tokenType);
                 if (!valid)
                 {
                     throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {message}");
@@ -286,7 +286,7 @@ namespace PnP.PowerShell.Commands.Base
             AccessTokens.Clear();
         }
 
-        private (bool valid, string message) ValidateTokenForPermissions(GenericToken token, TokenAudience tokenAudience, string[] orRoles = null, string[] andRoles = null, TokenType tokenType = TokenType.All)
+        private (bool valid, string message) ValidateTokenForPermissions(GenericToken token, TokenAudience tokenAudience, string[] orPermissionScopes = null, string[] andPermissionScopes = null, TokenType tokenType = TokenType.All)
         {
             bool valid = false;
             var message = string.Empty;
@@ -294,43 +294,43 @@ namespace PnP.PowerShell.Commands.Base
             {
                 throw new PSSecurityException($"Access to {tokenAudience} failed because the API requires {(tokenType == TokenType.Application ? "an" : "a")} {tokenType} token while you currently use {(token.TokenType == TokenType.Application ? "an" : "a")} {token.TokenType} token.");
             }
-            var andRolesMatched = false;
-            if (andRoles != null && andRoles.Length != 0)
+            var andScopesMatched = false;
+            if (andPermissionScopes != null && andPermissionScopes.Length != 0)
             {
-                // we have explicitely required roles
-                andRolesMatched = andRoles.All(r => token.Roles.Contains(r));
+                // we have explicitely required permission scopes
+                andScopesMatched = andPermissionScopes.All(r => token.Roles.Contains(r));
             }
             else
             {
-                andRolesMatched = true;
+                andScopesMatched = true;
             }
 
-            var orRolesMatched = false;
-            if (orRoles != null && orRoles.Length != 0)
+            var orScopesMatched = false;
+            if (orPermissionScopes != null && orPermissionScopes.Length != 0)
             {
-                orRolesMatched = orRoles.Any(r => token.Roles.Contains(r));
+                orScopesMatched = orPermissionScopes.Any(r => token.Roles.Contains(r));
             }
             else
             {
-                orRolesMatched = true;
+                orScopesMatched = true;
             }
 
-            if (orRolesMatched && andRolesMatched)
+            if (orScopesMatched && andScopesMatched)
             {
                 valid = true;
             }
 
-            if (orRoles != null || andRoles != null)
+            if (orPermissionScopes != null || andPermissionScopes != null)
             {
                 if (!valid)
                 {                // Requested role was not part of the access token, throw an exception explaining which application registration is missing which role
-                    if (!orRolesMatched)
+                    if (!orScopesMatched)
                     {
-                        message += "for one of the following roles: " + string.Join(", ", orRoles);
+                        message += "for one of the following permission scopes: " + string.Join(", ", orPermissionScopes);
                     }
-                    if (!andRolesMatched)
+                    if (!andScopesMatched)
                     {
-                        message += (message != string.Empty ? ", and " : ", ") + "for all of the following roles: " + string.Join(", ", andRoles);
+                        message += (message != string.Empty ? ", and " : ", ") + "for all of the following permission scopes: " + string.Join(", ", andPermissionScopes);
                     }
                     throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {message}");
                 }

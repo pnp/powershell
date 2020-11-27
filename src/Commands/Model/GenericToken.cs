@@ -221,12 +221,24 @@ namespace PnP.PowerShell.Commands.Model
             request.Headers.Add("Metadata", "true");
             var response = httpClient.SendAsync(request).GetAwaiter().GetResult();
             var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            var accessTokenResponse = JsonSerializer.Deserialize<Dictionary<string, string>>(responseString);
-            if (accessTokenResponse != null && accessTokenResponse["access_token"] != null)
+
+            if (response.IsSuccessStatusCode)
             {
-                cmdletInstance?.WriteVerbose("Token retrieved");
+                var accessTokenResponse = JsonSerializer.Deserialize<Dictionary<string, string>>(responseString);
+                if (accessTokenResponse != null && accessTokenResponse["access_token"] != null)
+                {
+                    cmdletInstance?.WriteVerbose("Token retrieved");
+                }
+                return new GraphToken(accessTokenResponse["access_token"]);
             }
-            return new GraphToken(accessTokenResponse["access_token"]);
+            else
+            {
+                var message = JsonDocument.Parse(responseString);
+                var errorProp = message.RootElement.GetProperty("error");
+                var code = errorProp.GetProperty("code").GetString();
+                var errorMessage = errorProp.GetProperty("message").GetString();
+                throw new Exception(errorMessage);
+            }
         }
 
         /// <summary>
