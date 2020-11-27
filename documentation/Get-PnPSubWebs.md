@@ -49,7 +49,14 @@ Retrieves all subsites of the current context and shows the ServerRelativeUrl, W
 Get-PnPSubWebs -Identity Team1 -Recurse
 ```
 
-Retrieves all subsites of the subsite Team1 and all of its nested child subsites returning the Id, Url, Title and ServerRelativeUrl of each subsite in the output
+Retrieves all subsites of the subsite Team1 and all of its nested child subsites
+
+### EXAMPLE 5
+```powershell
+Get-PnPSubWebs -Identity Team1 -Recurse -IncludeRootWeb
+```
+
+Retrieves the rootweb, all subsites of the subsite Team1 and all of its nested child subsites
 
 ## PARAMETERS
 
@@ -90,7 +97,21 @@ Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeRootWeb
+If provided, the results will also contain the rootweb
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
