@@ -19,8 +19,8 @@ function CleanPackage {
     {
         if(!$entriesToKeep.Contains($entry))
         {
-            $entry.properties.Id
-            nuget delete "package/$($entry.property.Id)" $entry.property.Version -ApiKey $key -Source https://www.powershellgallery.com/api/v2 -NonInteractive
+            Write-Host "Removing version $($entry.properties.Version)"
+            nuget delete "package/$($entry.properties.Id)" $entry.properties.Version -ApiKey $key -Source https://www.powershellgallery.com/api/v2 -NonInteractive
         }
     }
 }
