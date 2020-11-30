@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 var wrappedText = new List<string>();
                 foreach (var messageLine in messageLines)
                 {
-                    wrappedText.AddRange(WordWrap(messageLine, 100));
+                    wrappedText.AddRange(WordWrap(messageLine, 80));
                 }
 
                 var notificationColor = "\x1B[7m";

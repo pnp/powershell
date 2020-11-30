@@ -70,7 +70,7 @@ namespace PnP.PowerShell.Commands.Base
                 connectionType = ConnectionType.O365;
             }
 
-            var spoConnection = new PnPConnection(context, connectionType, null, clientId, clientSecret, url?.ToString(), tenantAdminUrl, PnPPSVersionTag, disableTelemetry, InitializationType.SPClientSecret)
+            var spoConnection = new PnPConnection(context, connectionType, null, clientId, clientSecret, url?.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.SPClientSecret)
             {
                 Tenant = realm
             };
@@ -78,7 +78,7 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, string tenantAdminUrl, PSCmdlet cmdlet, bool disableTelemetry, AzureEnvironment azureEnvironment, ref CancellationToken cancellationToken)
+        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, string tenantAdminUrl, PSCmdlet cmdlet, AzureEnvironment azureEnvironment, ref CancellationToken cancellationToken)
         {
             var connectionUri = new Uri(url);
             var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
@@ -96,7 +96,7 @@ namespace PnP.PowerShell.Commands.Base
                     throw ex;
                 }
             }
-            var spoConnection = new PnPConnection(context, tokenResult, ConnectionType.O365, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, disableTelemetry, InitializationType.DeviceLogin)
+            var spoConnection = new PnPConnection(context, tokenResult, ConnectionType.O365, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.DeviceLogin)
             {
                 //var spoConnection = new PnPConnection(context, ConnectionType.O365, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.DeviceLogin);
                 Scopes = scopes,
@@ -109,17 +109,17 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection InstantiateGraphAccessTokenConnection(string accessToken, bool disableTelemetry)
+        internal static PnPConnection InstantiateGraphAccessTokenConnection(string accessToken)
         {
             var tokenResult = new GenericToken(accessToken);
-            var spoConnection = new PnPConnection(tokenResult, ConnectionMethod.AccessToken, ConnectionType.O365, PnPPSVersionTag, disableTelemetry, InitializationType.Graph)
+            var spoConnection = new PnPConnection(tokenResult, ConnectionMethod.AccessToken, ConnectionType.O365, PnPPSVersionTag, InitializationType.Graph)
             {
                 ConnectionMethod = ConnectionMethod.GraphDeviceLogin
             };
             return spoConnection;
         }
 
-        internal static PnPConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, PSCmdlet cmdlet, bool disableTelemetry, AzureEnvironment azureEnvironment, ref CancellationToken cancellationToken)
+        internal static PnPConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, PSCmdlet cmdlet, AzureEnvironment azureEnvironment, ref CancellationToken cancellationToken)
         {
             var tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(
                 PnPConnection.PnPManagementShellClientId,
@@ -127,7 +127,7 @@ namespace PnP.PowerShell.Commands.Base
                 PnPConnection.DeviceLoginCallback(cmdlet, launchBrowser),
                 azureEnvironment,
                 ref cancellationToken);
-            var spoConnection = new PnPConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, PnPPSVersionTag, disableTelemetry, InitializationType.GraphDeviceLogin)
+            var spoConnection = new PnPConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, PnPPSVersionTag, InitializationType.GraphDeviceLogin)
             {
                 Scopes = new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" },
                 AzureEnvironment = azureEnvironment,
@@ -219,14 +219,14 @@ namespace PnP.PowerShell.Commands.Base
         //     }
         // }
 
-        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePath, SecureString certificatePassword, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePath, SecureString certificatePassword, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(certificatePath, certificatePassword);
 
-            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, disableTelemetry, azureEnvironment, certificate, true);
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, azureEnvironment, certificate, true);
         }
 
-        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string thumbprint, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string thumbprint, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             X509Certificate2 certificate = CertificateHelper.GetCertificatFromStore(thumbprint);
 
@@ -241,29 +241,29 @@ namespace PnP.PowerShell.Commands.Base
                 throw new PSArgumentOutOfRangeException(nameof(thumbprint), null, string.Format(Resources.CertificateWithThumbprintDoesNotHavePrivateKey, thumbprint));
             }
 
-            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, disableTelemetry, azureEnvironment, certificate, false);
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, azureEnvironment, certificate, false);
         }
 
-        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePEM, string privateKeyPEM, SecureString certificatePassword, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static PnPConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePEM, string privateKeyPEM, SecureString certificatePassword, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             string password = new System.Net.NetworkCredential(string.Empty, certificatePassword).Password;
             X509Certificate2 certificate = CertificateHelper.GetCertificateFromPEMstring(certificatePEM, privateKeyPEM, password);
 
-            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, disableTelemetry, azureEnvironment, certificate, false);
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, azureEnvironment, certificate, false);
         }
 
-        internal static PnPConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment, string base64EncodedCertificate)
+        internal static PnPConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, AzureEnvironment azureEnvironment, string base64EncodedCertificate)
         {
             X509Certificate2 certificate = CertificateHelper.GetCertificateFromBase64Encodedstring(base64EncodedCertificate);
-            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, disableTelemetry, azureEnvironment, certificate);
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, azureEnvironment, certificate);
         }
 
-        internal static PnPConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment, X509Certificate2 certificate)
+        internal static PnPConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, AzureEnvironment azureEnvironment, X509Certificate2 certificate)
         {
-            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, disableTelemetry, azureEnvironment, certificate, false);
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, tenantAdminUrl, azureEnvironment, certificate, false);
         }
 
-        private static PnPConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool certificateFromFile)
+        private static PnPConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool certificateFromFile)
         {
             using (var authManager = new PnP.Framework.AuthenticationManager(clientId, certificate, tenant, azureEnvironment: azureEnvironment))
             {
@@ -277,7 +277,7 @@ namespace PnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
 
-                var spoConnection = new PnPConnection(context, connectionType, null, clientId, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, disableTelemetry, InitializationType.AADAppOnly)
+                var spoConnection = new PnPConnection(context, connectionType, null, clientId, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.AADAppOnly)
                 {
                     ConnectionMethod = ConnectionMethod.AzureADAppOnly,
                     Certificate = certificate,
@@ -345,7 +345,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null)
+        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null)
         {
             var context = new PnPClientContext(url.AbsoluteUri)
             {
@@ -397,7 +397,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 connectionType = ConnectionType.TenantAdmin;
             }
-            var spoConnection = new PnPConnection(context, connectionType, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, disableTelemetry, InitializationType.Credentials)
+            var spoConnection = new PnPConnection(context, connectionType, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.Credentials)
             {
                 ConnectionMethod = Model.ConnectionMethod.Credentials,
                 AzureEnvironment = azureEnvironment,
