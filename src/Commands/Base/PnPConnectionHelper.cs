@@ -489,7 +489,7 @@ namespace PnP.PowerShell.Commands.Base
             },
             true);
 
-        public static string GetLatestVersion()
+        public static void CheckVersion(PSCmdlet cmdlet, bool NoVersionCheck)
         {
             // do we need to check versions. Is the environment variable set?
             var pnppowershellUpdatecheck = Environment.GetEnvironmentVariable("PNPPOWERSHELL_UPDATECHECK");
@@ -499,6 +499,10 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     VersionChecked = true;
                 }
+            }
+            if (NoVersionCheck)
+            {
+                VersionChecked = true;
             }
             try
             {
@@ -547,11 +551,12 @@ namespace PnP.PowerShell.Commands.Base
                                 if (newVersionAvailable)
                                 {
 #if DEBUG
-                                    return $"\nA newer version of PnP PowerShell is available: {availableVersion}. Use `Update-Module -Name PnP.PowerShell -AllowPrerelease` to update.\n\nYou can turn this check off by setting the 'PNPPOWERSHELL_UPDATECHECK' environment variable to 'Off'\n";
+                                    var updateMessage = $"\nA newer version of PnP PowerShell is available: {availableVersion}. Use `Update-Module -Name PnP.PowerShell -AllowPrerelease` to update.\n\nYou can turn this check off by setting the 'PNPPOWERSHELL_UPDATECHECK' environment variable to 'Off'\n";
 #else
-                                    return $"\nA newer version of PnP PowerShell is available: {availableVersion}. Use `Update-Module -Name PnP.PowerShell` to update.\n\nYou can turn this check off by setting the 'PNPPOWERSHELL_UPDATECHECK' environment variable to 'Off'\n";
-
+                                    var updateMessage = $"\nA newer version of PnP PowerShell is available: {availableVersion}. Use `Update-Module -Name PnP.PowerShell` to update.\n\nYou can turn this check off by setting the 'PNPPOWERSHELL_UPDATECHECK' environment variable to 'Off'\n";
 #endif
+                                    WriteUpdateMessage(cmdlet, updateMessage);
+
                                 }
                             }
                             VersionChecked = true;
@@ -562,7 +567,37 @@ namespace PnP.PowerShell.Commands.Base
             }
             catch (Exception)
             { }
-            return null;
+        }
+
+        private static void WriteUpdateMessage(PSCmdlet cmdlet, string message)
+        {
+
+            if (cmdlet.Host.Name == "ConsoleHost")
+            {
+                // Use Warning Color
+                var notificationColor = "\x1B[7m";
+                var resetColor = "\x1B[0m";
+
+                var lineLength = 0;
+                foreach (var line in message.Split('\n'))
+                {
+                    if (line.Length > lineLength)
+                    {
+                        lineLength = line.Length;
+                    }
+                }
+                var outMessage = string.Empty;
+                foreach (var line in message.Split('\n'))
+                {
+                    var lineToAdd = line.PadRight(lineLength);
+                    outMessage += $"{notificationColor} {lineToAdd} {resetColor}\n";
+                }
+                cmdlet.Host.UI.WriteLine(outMessage);
+            }
+            else
+            {
+                cmdlet.WriteWarning(message);
+            }
         }
     }
 }

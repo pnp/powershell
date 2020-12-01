@@ -255,6 +255,9 @@ namespace PnP.PowerShell.Commands.Base
             {
                 Environment.SetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY", "true");
             }
+
+            PnPConnectionHelper.CheckVersion(this, NoVersionCheck);
+            
             try
             {
                 Connect(ref token);
@@ -285,14 +288,7 @@ namespace PnP.PowerShell.Commands.Base
 
             PnPConnection connection = null;
 
-            if (!NoVersionCheck)
-            {
-                var latestVersion = PnPConnectionHelper.GetLatestVersion();
-                if (!string.IsNullOrEmpty(latestVersion))
-                {
-                    WriteUpdateMessage(latestVersion);
-                }
-            }
+
 
             PSCredential credentials = null;
             if (Credentials != null)
@@ -843,36 +839,7 @@ namespace PnP.PowerShell.Commands.Base
             return credentials;
         }
 
-        private void WriteUpdateMessage(string message)
-        {
-
-            if (Host.Name == "ConsoleHost")
-            {
-                // Use Warning Color
-                var notificationColor = "\x1B[7m";
-                var resetColor = "\x1B[0m";
-
-                var lineLength = 0;
-                foreach (var line in message.Split('\n'))
-                {
-                    if (line.Length > lineLength)
-                    {
-                        lineLength = line.Length;
-                    }
-                }
-                var outMessage = string.Empty;
-                foreach (var line in message.Split('\n'))
-                {
-                    var lineToAdd = line.PadRight(lineLength);
-                    outMessage += $"{notificationColor} {lineToAdd} {resetColor}\n";
-                }
-                Host.UI.WriteLine(outMessage);
-            }
-            else
-            {
-                WriteWarning(message);
-            }
-        }
+        
 
         protected override void StopProcessing()
         {

@@ -12,3 +12,5 @@
   href: buildingsource.md
 - name: Using PnP PowerShell in Azure Functions
   href: azurefunctions.md
+- name: Configure PnP PowerShell
+  href: configuration.md
