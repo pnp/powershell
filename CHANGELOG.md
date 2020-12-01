@@ -72,7 +72,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPPlannerTask` cmdlet (0.1.18)
 
 ### Changed
-- Updated telemetry handling. If the environment variable `PNPPOWERSHELL_DISABLETELEMETRY` is set to `true`, no telemetry will be recorded. Using the `-NoTelemetry` switch on `Connect-PnPOnline` will set this variable accordingly for the current session. If the .pnppowershelltelemetry file is present in the home folder of the user then the the contents of this file will override the environment variable settings. See `Enable-PnPPowerShellTelemetry` and `Disable-PnPPowerShellTelemetry` to manage this file. (0.2.21)
+- Removed `Enable-PnPPowerShellTelemetry` and `Disable-PnPPowerShellTelemetry`. See [Configure PnP PowerShell](https://pnp.github.io/powershell) for more information on how to enable or disable telemetry collection (0.2.22)
+- Obsoleted `-NoTelemetry` and `-NoVersionCheck` on `Connect-PnPOnline`. You can set these as environment variables now. See [Configure PnP PowerShell](https://pnp.github.io/powershell) for more information (0.2.22)
+- Updated telemetry handling. If the environment variable `PNPPOWERSHELL_DISABLETELEMETRY` is set to `true`, no telemetry will be recorded. If the .pnppowershelltelemetry file is present in the home folder of the user then the the contents of this file will override the environment variable settings. See `Enable-PnPPowerShellTelemetry` and `Disable-PnPPowerShellTelemetry` to manage this file. (0.2.21)
 - Renamed `-CloudShell` to `-ManagedIdentity` on `Connect-PnPOnline` (0.2.20)
 - `-CertificatePath` on `Connect-PnPOnline` now accepts a relative path (0.2.19)
 - Reintroduced `-SPOManagementShell` as login option with `Connect-PnPOnline` (0.2.18)

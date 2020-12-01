@@ -17,39 +17,38 @@ Connect to a SharePoint site
 ### Main (Default)
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Credentials <CredentialPipeBind>] [-CurrentCredentials]
- [-CreateDrive] [-DriveName <String>] [-TenantAdminUrl <String>] [-NoTelemetry] [<CommonParameters>]
+ [-CreateDrive] [-DriveName <String>] [-TenantAdminUrl <String>] [<CommonParameters>]
 ```
 
 ### Token
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Realm <String>] -ClientSecret <String> [-CreateDrive]
- [-DriveName <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-NoTelemetry]
- [<CommonParameters>]
+ [-DriveName <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [<CommonParameters>]
 ```
 
 ### App-Only using a clientId and clientSecret and an URL
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Realm <String>] -ClientSecret <String> [-CreateDrive]
  [-DriveName <String>] -ClientId <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
- [-NoTelemetry] [<CommonParameters>]
+ [<CommonParameters>]
 ```
 
 ### App-Only using a clientId and clientSecret and an AAD Domain
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Realm <String>] -ClientSecret <String> [-CreateDrive]
- [-DriveName <String>] -ClientId <String> -AADDomain <String> [-NoTelemetry] [<CommonParameters>]
+ [-DriveName <String>] -ClientId <String> -AADDomain <String> [<CommonParameters>]
 ```
 
 ### WebLogin
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-UseWebLogin] [-CreateDrive] [-DriveName <String>]
- [-TenantAdminUrl <String>] [-NoTelemetry] [<CommonParameters>]
+ [-TenantAdminUrl <String>] [<CommonParameters>]
 ```
 
 ### ADFS with client Certificate
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-UseAdfsCert] [-ClientCertificate <X509Certificate2>]
- [-LoginProviderName <String>] [-CreateDrive] [-DriveName <String>] [-TenantAdminUrl <String>] [-NoTelemetry]
+ [-LoginProviderName <String>] [-CreateDrive] [-DriveName <String>] [-TenantAdminUrl <String>]
  [<CommonParameters>]
 ```
 
@@ -57,14 +56,14 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-UseAdfsCert] [-ClientCer
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Credentials <CredentialPipeBind>] [-UseAdfs]
  [-Kerberos] [-LoginProviderName <String>] [-CreateDrive] [-DriveName <String>] [-TenantAdminUrl <String>]
- [-NoTelemetry] [<CommonParameters>]
+ [<CommonParameters>]
 ```
 
 ### Azure Active Directory
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
  -RedirectUri <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
- [-NoTelemetry] [<CommonParameters>]
+ [<CommonParameters>]
 ```
 
 ### App-Only with Azure Active Directory
@@ -72,57 +71,56 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
  -Tenant <String> [-CertificatePath <String>] [-CertificateBase64Encoded <String>]
  [-Certificate <X509Certificate2>] [-CertificatePassword <SecureString>] [-AzureEnvironment <AzureEnvironment>]
- [-TenantAdminUrl <String>] [-NoTelemetry] [<CommonParameters>]
+ [-TenantAdminUrl <String>] [<CommonParameters>]
 ```
 
 ### App-Only with Azure Active Directory using certificate as PEM strings
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
  -Tenant <String> [-CertificatePassword <SecureString>] -PEMCertificate <String> -PEMPrivateKey <String>
- [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-NoTelemetry] [<CommonParameters>]
+ [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [<CommonParameters>]
 ```
 
 ### App-Only with Azure Active Directory using certificate from certificate store by thumbprint
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
  -Tenant <String> -Thumbprint <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
- [-NoTelemetry] [<CommonParameters>]
+ [<CommonParameters>]
 ```
 
 ### App-Only with Azure Active Directory using X502 certificates
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
- -Tenant <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-NoTelemetry]
- [<CommonParameters>]
+ -Tenant <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [<CommonParameters>]
 ```
 
 ### Access Token
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [[-Url] <String>] [-CreateDrive] [-DriveName <String>]
- -AccessToken <String> [-NoTelemetry] [<CommonParameters>]
+ -AccessToken <String> [<CommonParameters>]
 ```
 
 ### PnP Management Shell / DeviceLogin
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-PnPManagementShell] [-LaunchBrowser]
- [-AzureEnvironment <AzureEnvironment>] [-NoTelemetry] [<CommonParameters>]
+ [-AzureEnvironment <AzureEnvironment>] [<CommonParameters>]
 ```
 
 ### Azure Active Directory using Scopes
 ```powershell
 Connect-PnPOnline [-Credentials <CredentialPipeBind>] [-AzureEnvironment <AzureEnvironment>] -Scopes <String[]>
- [-NoTelemetry] [<CommonParameters>]
+   [<CommonParameters>]
 ```
 
 ### PnP Management Shell to the Microsoft Graph
 ```powershell
-Connect-PnPOnline [-LaunchBrowser] [-Graph] [-AzureEnvironment <AzureEnvironment>] [-NoTelemetry]
+Connect-PnPOnline [-LaunchBrowser] [-Graph] [-AzureEnvironment <AzureEnvironment>]
  [<CommonParameters>]
 ```
 
 ### Microsoft Graph using Azure Active Directory
 ```powershell
-Connect-PnPOnline -AADDomain <String> [-NoTelemetry] [<CommonParameters>]
+Connect-PnPOnline -AADDomain <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -503,34 +501,6 @@ Parameter Sets: ADFS with client Certificate, ADFS with user credentials
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -NoTelemetry
-In order to help to make PnP PowerShell better, we can track anonymous telemetry. We track the version of the cmdlets you are using, which cmdlet you are executing and which version of SharePoint you are connecting to. Use Disable-PnPPowerShellTelemetry to turn this off in general or use the -NoTelemetry switch to turn it off for that session.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -NoVersionCheck
-In case you want to avoid a version check to be done to validate if there is a newer PnP PowerShell version available, you can provide this flag. This will avoid making the call to check for newer versions and will avoid showing a message if a newer version would exist. Use this i.e. if you're sure you want to target a specific version of PnP PowerShell and don't want to potentially confuse the end user by having them upgrade.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

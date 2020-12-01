@@ -489,21 +489,18 @@ namespace PnP.PowerShell.Commands.Base
             },
             true);
 
-        public static void CheckVersion(PSCmdlet cmdlet, bool NoVersionCheck)
+        public static void CheckVersion(PSCmdlet cmdlet)
         {
             // do we need to check versions. Is the environment variable set?
             var pnppowershellUpdatecheck = Environment.GetEnvironmentVariable("PNPPOWERSHELL_UPDATECHECK");
             if (!string.IsNullOrEmpty(pnppowershellUpdatecheck))
             {
-                if (pnppowershellUpdatecheck.ToLower() == "off")
+                if (pnppowershellUpdatecheck.ToLower() == "off" || pnppowershellUpdatecheck.ToLower() == "false")
                 {
                     VersionChecked = true;
                 }
             }
-            if (NoVersionCheck)
-            {
-                VersionChecked = true;
-            }
+            
             try
             {
                 if (!VersionChecked)

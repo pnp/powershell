@@ -238,9 +238,11 @@ namespace PnP.PowerShell.Commands.Base
         public string TenantAdminUrl;
 
         [Parameter(Mandatory = false)]
+        [Obsolete("Set the environment variable 'PNPPOWERSHELL_DISABLETELEMETRY' to 'true' instead of using this switch.")]
         public SwitchParameter NoTelemetry;
 
         [Parameter(Mandatory = false)]
+        [Obsolete("Set the environment variable 'PNPPOWERSHELL_UPDATECHECK' to 'false' instead of using this switch.")]
         public SwitchParameter NoVersionCheck;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MANAGEDIDENTITY)]
@@ -251,13 +253,18 @@ namespace PnP.PowerShell.Commands.Base
             cancellationTokenSource = new CancellationTokenSource();
             CancellationToken token = cancellationTokenSource.Token;
 
+#pragma warning disable CS0618 // NoTelemetry and NoVersionCheck needs to be set through environment variables now
             if (NoTelemetry)
             {
                 Environment.SetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY", "true");
             }
+            if (NoVersionCheck)
+            {
+                Environment.SetEnvironmentVariable("PNPPOWERSHELL_UPDATECHECK", "false");
+            }
+#pragma warning restore CS6018            
 
-            PnPConnectionHelper.CheckVersion(this, NoVersionCheck);
-            
+            PnPConnectionHelper.CheckVersion(this);
             try
             {
                 Connect(ref token);
@@ -839,7 +846,7 @@ namespace PnP.PowerShell.Commands.Base
             return credentials;
         }
 
-        
+
 
         protected override void StopProcessing()
         {
