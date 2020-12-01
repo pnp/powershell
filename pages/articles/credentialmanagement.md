@@ -19,7 +19,7 @@ After installing the module you will be have create and register a vault:
 
 ```powershell
 Register-SecretVault -Name "SecretStore" -ModuleName "Microsoft.PowerShell.SecretStore" -DefaultVault
-Set-SecretStoreConfiguration -Authentation None
+Set-SecretStoreConfiguration -Authentication None
 ```
 
 The last cmdlet, where you set the authentication to `None` means that you will allow access to the secret store without requiring you to enter a password to unlock the vault. This is optional obviously. Notice that you will be asked several times to provide a password the moment you create a new vault. If you intend to you use the native out of the box functionality of PnP PowerShell with the Secret Management modules notice that the authentication is required to set to `None`.
