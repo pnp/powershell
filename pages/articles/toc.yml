@@ -14,6 +14,6 @@
   href: azurefunctions.md
 - name: For Developers
   items:
-    -name: Building the Source
-     href: buildingsource.md
+    - name: Building the Source
+      href: buildingsource.md
 
