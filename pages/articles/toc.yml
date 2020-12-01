@@ -6,11 +6,14 @@
   href: authentication.md
 - name: Credential Management
   href: credentialmanagement.md
-- name: Upgrading from the Legacy version
-  href: upgrading.md
-- name: Building the Source
-  href: buildingsource.md
-- name: Using PnP PowerShell in Azure Functions
-  href: azurefunctions.md
 - name: Configure PnP PowerShell
   href: configuration.md
+- name: Upgrading from the Legacy version
+  href: upgrading.md
+- name: Using PnP PowerShell in Azure Functions
+  href: azurefunctions.md
+- name: For Developers
+  items:
+    -name: Building the Source
+     href: href: buildingsource.md
+
