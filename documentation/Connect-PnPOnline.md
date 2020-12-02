@@ -39,26 +39,6 @@ Connect-PnPOnline [-ReturnConnection] [-Realm <String>] -ClientSecret <String> [
  [-DriveName <String>] -ClientId <String> -AADDomain <String> [<CommonParameters>]
 ```
 
-### WebLogin
-```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-UseWebLogin] [-CreateDrive] [-DriveName <String>]
- [-TenantAdminUrl <String>] [<CommonParameters>]
-```
-
-### ADFS with client Certificate
-```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-UseAdfsCert] [-ClientCertificate <X509Certificate2>]
- [-LoginProviderName <String>] [-CreateDrive] [-DriveName <String>] [-TenantAdminUrl <String>]
- [<CommonParameters>]
-```
-
-### ADFS with user credentials
-```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Credentials <CredentialPipeBind>] [-UseAdfs]
- [-Kerberos] [-LoginProviderName <String>] [-CreateDrive] [-DriveName <String>] [-TenantAdminUrl <String>]
- [<CommonParameters>]
-```
-
 ### Azure Active Directory
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
@@ -463,40 +443,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Kerberos
-Authenticate using Kerberos to ADFS
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: ADFS with user credentials
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -LaunchBrowser
 Launch a browser automatically and copy the code to enter to the clipboard
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: PnP Management Shell / DeviceLogin, PnP Management Shell to the Microsoft Graph
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -LoginProviderName
-The name of the ADFS trusted login provider
-
-```yaml
-Type: String
-Parameter Sets: ADFS with client Certificate, ADFS with user credentials
 
 Required: False
 Position: Named
@@ -680,44 +632,16 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -UseAdfs
-If you want to connect to SharePoint using ADFS and credentials
+### -TransformationOnPrem
+If you want to the use page transformation cmdlets, setting this switch will allow you to connect to an on-prem server. Notice that this -only- applies to Transformation cmdlets. 
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: ADFS with user credentials
+Parameter Sets: Main
 
 Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -UseAdfsCert
-If you want to connect to SharePoint farm using ADFS with a client certificate
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: ADFS with client Certificate
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -UseWebLogin
-If you want to connect to SharePoint with browser based login. This is required when you have multi-factor authentication (MFA) enabled.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: WebLogin
-
-Required: True
-Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
