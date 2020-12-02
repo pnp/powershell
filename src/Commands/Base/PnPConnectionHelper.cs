@@ -345,64 +345,78 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null)
+        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false)
         {
             var context = new PnPClientContext(url.AbsoluteUri)
             {
                 ApplicationName = Resources.ApplicationName,
                 DisableReturnValueCache = true
             };
-            var tenantId = string.Empty;
-            try
+            PnPConnection spoConnection = null;
+            if (!onPrem)
             {
-                if (!string.IsNullOrWhiteSpace(clientId))
+                var tenantId = string.Empty;
+                try
                 {
-                    using (var authManager = new PnP.Framework.AuthenticationManager(clientId, credentials.UserName, credentials.Password, redirectUrl))
+                    if (!string.IsNullOrWhiteSpace(clientId))
                     {
-                        context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
-                        context.ExecuteQueryRetry();
-                        var accesstoken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
-                        var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accesstoken);
-                        tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
+                        using (var authManager = new PnP.Framework.AuthenticationManager(clientId, credentials.UserName, credentials.Password, redirectUrl))
+                        {
+                            context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
+                            context.ExecuteQueryRetry();
+                            var accesstoken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
+                            var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accesstoken);
+                            tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
+                        }
+                    }
+                    else
+                    {
+                        using (var authManager = new PnP.Framework.AuthenticationManager(credentials.UserName, credentials.Password))
+                        {
+                            context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
+                            context.ExecuteQueryRetry();
+
+                            var accessToken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
+                            var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accessToken);
+                            tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
+                        }
                     }
                 }
-                else
+                catch (ClientRequestException)
                 {
-                    using (var authManager = new PnP.Framework.AuthenticationManager(credentials.UserName, credentials.Password))
-                    {
-                        context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
-                        context.ExecuteQueryRetry();
-
-                        var accessToken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
-                        var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accessToken);
-                        tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
-                    }
+                    context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
                 }
-            }
-            catch (ClientRequestException)
-            {
-                context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
-            }
-            catch (ServerException)
-            {
-                context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
-            }
-            var connectionType = ConnectionType.O365;
-            if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
-            {
-                connectionType = ConnectionType.O365;
-            }
+                catch (ServerException)
+                {
+                    context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
+                }
+                var connectionType = ConnectionType.O365;
+                if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
+                {
+                    connectionType = ConnectionType.O365;
+                }
 
-            if (IsTenantAdminSite(context))
-            {
-                connectionType = ConnectionType.TenantAdmin;
+                if (IsTenantAdminSite(context))
+                {
+                    connectionType = ConnectionType.TenantAdmin;
+                }
+
+                spoConnection = new PnPConnection(context, connectionType, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.Credentials)
+                {
+                    ConnectionMethod = Model.ConnectionMethod.Credentials,
+                    AzureEnvironment = azureEnvironment,
+                    Tenant = tenantId
+                };
             }
-            var spoConnection = new PnPConnection(context, connectionType, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.Credentials)
+            else
             {
-                ConnectionMethod = Model.ConnectionMethod.Credentials,
-                AzureEnvironment = azureEnvironment,
-                Tenant = tenantId
-            };
+                context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
+                spoConnection = new PnPConnection(context, ConnectionType.O365, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.Credentials)
+                {
+                    ConnectionMethod = Model.ConnectionMethod.Credentials,
+                    AzureEnvironment = azureEnvironment,
+                };
+            }
             return spoConnection;
         }
 
@@ -500,7 +514,7 @@ namespace PnP.PowerShell.Commands.Base
                     VersionChecked = true;
                 }
             }
-            
+
             try
             {
                 if (!VersionChecked)
@@ -548,9 +562,9 @@ namespace PnP.PowerShell.Commands.Base
                                 if (newVersionAvailable)
                                 {
 #if DEBUG
-                                    var updateMessage = $"\nA newer version of PnP PowerShell is available: {availableVersion}. Use `Update-Module -Name PnP.PowerShell -AllowPrerelease` to update.\n\nYou can turn this check off by setting the 'PNPPOWERSHELL_UPDATECHECK' environment variable to 'Off'\n";
+                                    var updateMessage = $"\nA newer version of PnP PowerShell is available: {availableVersion}.\n\nUse 'Update-Module -Name PnP.PowerShell -AllowPrerelease' to update.\n\nYou can turn this check off by setting the 'PNPPOWERSHELL_UPDATECHECK' environment variable to 'Off'\n";
 #else
-                                    var updateMessage = $"\nA newer version of PnP PowerShell is available: {availableVersion}. Use `Update-Module -Name PnP.PowerShell` to update.\n\nYou can turn this check off by setting the 'PNPPOWERSHELL_UPDATECHECK' environment variable to 'Off'\n";
+                                    var updateMessage = $"\nA newer version of PnP PowerShell is available: {availableVersion}.\n\nUse 'Update-Module -Name PnP.PowerShell' to update.\n\nYou can turn this check off by setting the 'PNPPOWERSHELL_UPDATECHECK' environment variable to 'Off'\n";
 #endif
                                     WriteUpdateMessage(cmdlet, updateMessage);
 

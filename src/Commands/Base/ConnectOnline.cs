@@ -248,6 +248,9 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MANAGEDIDENTITY)]
         public SwitchParameter ManagedIdentity;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
+        public SwitchParameter TransformationOnPrem;
+
         protected override void ProcessRecord()
         {
             cancellationTokenSource = new CancellationTokenSource();
@@ -785,7 +788,7 @@ namespace PnP.PowerShell.Commands.Base
                                                                TenantAdminUrl,
                                                                AzureEnvironment,
                                                                ClientId,
-                                                               RedirectUri);
+                                                               RedirectUri, TransformationOnPrem);
         }
 
         private PnPConnection ConnectManagedIdentity()
