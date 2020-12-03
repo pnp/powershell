@@ -439,22 +439,22 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="clientContext">A SharePoint ClientContext to make available within this connection. Leave NULL to not connect to a SharePoint environment.</param>
         /// <param name="pnpVersionTag">Identifier set on the SharePoint ClientContext as the ClientTag to identify the source of the requests to SharePoint. Leave NULL not to set it.</param>
         /// <returns><see cref="PnPConnection"/ instance which can be used to communicate with one of the supported APIs</returns>
-        public static PnPConnection GetConnectionWithClientIdAndCertificate(string clientId,
-                                                                            X509Certificate2 certificate,
-                                                                            InitializationType initializationType,
-                                                                            string url = null,
-                                                                            string aadDomain = null,
-                                                                            ClientContext clientContext = null,
-                                                                            string pnpVersionTag = null)
-        {
-            return new PnPConnection(initializationType, url, clientContext, null, pnpVersionTag)
-            {
-                ClientId = clientId,
-                Certificate = certificate,
-                ConnectionMethod = ConnectionMethod.AzureADAppOnly,
-                Tenant = aadDomain
-            };
-        }
+        // public static PnPConnection GetConnectionWithClientIdAndCertificate(string clientId,
+        //                                                                     X509Certificate2 certificate,
+        //                                                                     InitializationType initializationType,
+        //                                                                     string url = null,
+        //                                                                     string aadDomain = null,
+        //                                                                     ClientContext clientContext = null,
+        //                                                                     string pnpVersionTag = null)
+        // {
+        //     return new PnPConnection(initializationType, url, clientContext, null, pnpVersionTag)
+        //     {
+        //         ClientId = clientId,
+        //         Certificate = certificate,
+        //         ConnectionMethod = ConnectionMethod.AzureADAppOnly,
+        //         Tenant = aadDomain
+        //     };
+        // }
 
         /// <summary>
         /// Returns a PnPConnection based on connecting using an username and password

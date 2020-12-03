@@ -438,7 +438,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyClientIdCClientSecretAadDomain()
         {
-            return PnPConnection.GetConnectionWithClientIdAndClientSecret(ClientId, ClientSecret, InitializationType.AADAppOnly, Url, AADDomain);
+            return PnPConnection.GetConnectionWithClientIdAndClientSecret(ClientId, ClientSecret, InitializationType.ClientIDSecret, Url, AADDomain);
         }
 
         /// <summary>
@@ -513,15 +513,15 @@ namespace PnP.PowerShell.Commands.Base
                                CertificatePath);
                 }
                 //WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
-                return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, TenantAdminUrl, AzureEnvironment);
+                return PnPConnectionHelper.InstantiateConnectionWithCertPath(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, TenantAdminUrl, AzureEnvironment);
             }
             else if (ParameterSpecified(nameof(Certificate)))
             {
-                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, Certificate);
+                return PnPConnectionHelper.InstantiateConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, Certificate);
             }
             else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
             {
-                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, CertificateBase64Encoded);
+                return PnPConnectionHelper.InstantiateConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, CertificateBase64Encoded);
             }
             else
             {
@@ -545,7 +545,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyAadThumb()
         {
-            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, TenantAdminUrl, AzureEnvironment);
+            return PnPConnectionHelper.InstantiateConnectionWithCertThumbprint(new Uri(Url), ClientId, Tenant, Thumbprint, TenantAdminUrl, AzureEnvironment);
         }
 
         /// <summary>
@@ -577,7 +577,7 @@ namespace PnP.PowerShell.Commands.Base
             if (officeManagementApiScopes.Length > 0)
             {
                 var officeManagementApiToken = credentials == null ? OfficeManagementApiToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, PnPConnection.DeviceLoginCallback(this, true), azureEnvironment, ref cancellationToken) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, credentials.UserName, credentials.Password);
-                connection = PnPConnection.GetConnectionWithToken(officeManagementApiToken, TokenAudience.OfficeManagementApi, InitializationType.InteractiveLogin, credentials);
+                connection = PnPConnection.GetConnectionWithToken(officeManagementApiToken, TokenAudience.OfficeManagementApi, InitializationType.DeviceLogin, credentials);
             }
 
             // If we have Graph scopes, get a token for it
@@ -591,7 +591,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    connection = PnPConnection.GetConnectionWithToken(graphToken, TokenAudience.MicrosoftGraph, InitializationType.InteractiveLogin, credentials);
+                    connection = PnPConnection.GetConnectionWithToken(graphToken, TokenAudience.MicrosoftGraph, InitializationType.GraphDeviceLogin, credentials);
                 }
             }
             connection.Scopes = Scopes;
@@ -651,7 +651,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
 
-            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url),
+            return PnPConnectionHelper.InstantiateConnectionWithCredentials(new Uri(Url),
                                                                credentials,
                                                                TenantAdminUrl,
                                                                AzureEnvironment,
