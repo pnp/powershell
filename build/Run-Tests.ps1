@@ -43,6 +43,8 @@ Param(
 $env:PnPTests_CredentialManagerLabel = $CredentialManagerLabel
 $env:PnPTests_SiteUrl = $SiteUrl
 $env:PnPTests_Username = $Username
+$currentTelemetrySetting = $env:PNPPOWERSHELL_DISABLETELEMETRY
+$env:PNPPOWERSHELL_DISABLETELEMETRY = $true
 if ($null -ne $Password) {
     $env:PnPTests_Password = $Password | ConvertFrom-SecureString
 }
@@ -64,3 +66,4 @@ $env:PnPTests_CredentialManagerLabel = $null
 $env:PnPTests_SiteUrl = $null
 $env:PnPTests_Username = $null
 $env:PnPTests_Password = $null
+$env:PNPPOWERSHELL_DISABLETELEMETRY = $currentTelemetrySetting
