@@ -16,4 +16,6 @@
   items:
     - name: Building the Source
       href: buildingsource.md
+    - name: Running the tests
+      href: runningtests.md
 

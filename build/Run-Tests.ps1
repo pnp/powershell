@@ -21,7 +21,7 @@ Param(
     [String]
     $Username,
 
-    [Parameter(Mandatory = $true,
+    [Parameter(Mandatory = $false,
         ParameterSetName = "Username and Password")]
     [SecureString]
     $Password,
@@ -45,6 +45,12 @@ $env:PnPTests_SiteUrl = $SiteUrl
 $env:PnPTests_Username = $Username
 $currentTelemetrySetting = $env:PNPPOWERSHELL_DISABLETELEMETRY
 $env:PNPPOWERSHELL_DISABLETELEMETRY = $true
+
+if ($null -eq $Password)
+{
+    $Password = Read-Host -AsSecureString -Prompt "Enter password"
+}
+
 if ($null -ne $Password) {
     $env:PnPTests_Password = $Password | ConvertFrom-SecureString
 }
