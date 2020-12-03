@@ -14,7 +14,7 @@
   href: azurefunctions.md
 - name: For Developers
   items:
-    - name: Building the Source
+    - name: Building the project
       href: buildingsource.md
     - name: Running the tests
       href: runningtests.md

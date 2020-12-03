@@ -1,11 +1,11 @@
 ---
 uid: buildingsourcecode
 ---
-# Building the source code
+# Building the project
 
 Make a clone of the repository, navigate to the `build` folder in the repository and run `Build-Debug.ps1`. 
 
-This will restore all references, and copy the required files to the correct location on your computer. 
+This will restore all references and copy the required files to the correct location on your computer. 
 
 Notice that we refer to the nuget package of the PnP.Framework project. As this is rebuilt every night you will receive a new version of the PnP.Framework package every day.
 
@@ -54,7 +54,7 @@ This is the main location of all the cmdlet code.
 Any resources used by cmdlets go into this folder
 
 ### src/Tests
-This is where the the unit tests reside.
+This is where the the unit/integration tests reside. See [Running test](runningtests.md) for more information.
 
 # Running against a local copy of the PnP Framework
 If your code changes require changes to the PnP Framework you might want to use a local version of the PnP Framework which you modified. In order to do this you will need to have both the PnP.PowerShell repository (https://github.com/pnp/powershell) and the PnP.Framework repository (https://github.com/pnp/pnpframework) locally on your computer. Make sure that both repositories are located at the same folder level. E.g.:
