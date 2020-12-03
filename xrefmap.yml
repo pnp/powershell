@@ -2,5 +2,5 @@
 sorted: true
 references:
 - uid: buildingsourcecode
-  name: Building the source code
+  name: Building the project
   href: articles/buildingsource.html
