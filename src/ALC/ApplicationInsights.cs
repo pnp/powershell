@@ -2,6 +2,7 @@
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.ApplicationInsights;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PnP.PowerShell.ALC
 {
@@ -28,9 +29,17 @@ namespace PnP.PowerShell.ALC
                 { "Platform", "SPO" }
             };
         }
-        public void TrackEvent(string cmdletName)
+        public void TrackEvent(string cmdletName, Dictionary<string, string> properties = null)
         {
-            telemetryClient.TrackEvent(cmdletName, telemetryProperties);
+            var localProps = telemetryProperties;
+            if (properties != null)
+            {
+                foreach (var prop in properties)
+                {
+                    localProps.Add(prop.Key, prop.Value);
+                }
+            }
+            telemetryClient.TrackEvent(cmdletName, localProps);
         }
     }
 }
