@@ -158,7 +158,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
             };
         }
-        /// <summary>
+        /// <summary>O
         /// Tries to get a token for the provided audience
         /// </summary>
         /// <param name="tokenAudience">Audience to try to get a token for</param>

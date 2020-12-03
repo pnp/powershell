@@ -309,10 +309,6 @@ namespace PnP.PowerShell.Commands.Base
             // Connect using the used set parameters
             switch (ParameterSetName)
             {
-                // case ParameterSet_GRAPHWITHAAD:
-                //     connection = ConnectGraphWithAad();
-                //     break;
-
                 case ParameterSet_SPOMANAGEMENT:
                     connection = ConnectSpoManagement();
                     break;
@@ -324,11 +320,6 @@ namespace PnP.PowerShell.Commands.Base
                 case ParameterSet_GRAPHDEVICELOGIN:
                     connection = ConnectGraphDeviceLogin(null, ref cancellationToken);
                     break;
-
-                // case ParameterSet_NATIVEAAD:
-                //     connection = ConnectNativeAAD(ClientId, RedirectUri);
-                //     break;
-
                 case ParameterSet_APPONLYAAD:
                     connection = ConnectAppOnlyAad();
                     break;
@@ -361,14 +352,6 @@ namespace PnP.PowerShell.Commands.Base
 
                 case ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN:
                     connection = ConnectAppOnlyClientIdCClientSecretAadDomain();
-                    break;
-
-                case ParameterSet_ADFSCERT:
-                    connection = ConnectAdfsCertificate();
-                    break;
-
-                case ParameterSet_ADFSCREDENTIALS:
-                    connection = ConnectAdfsCredentials(credentials);
                     break;
 
                 case ParameterSet_MAIN:
@@ -425,6 +408,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 WriteObject(connection);
             }
+
         }
 
         #region Connect Types
@@ -437,15 +421,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, TenantAdminUrl, false, AzureEnvironment);
         }
-
-        /// <summary>
-        /// Connect using the parameter set GRAPHWITHAAD
-        /// </summary>
-        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        // private PnPConnection ConnectGraphWithAad()
-        // {
-        //     return PnPConnection.GetConnectionWithClientIdAndClientSecret(ClientId, ClientSecret, InitializationType.AADAppOnly, Url, AADDomain, disableTelemetry: NoTelemetry);
-        // }
+       
 
         /// <summary>
         /// Connect using the parameter set APPONLYCLIENTIDCLIENTSECRETURL
@@ -473,7 +449,8 @@ namespace PnP.PowerShell.Commands.Base
         {
             ClientId = SPOManagementClientId;
             RedirectUri = SPOManagementRedirectUri;
-            return ConnectCredentials(Credentials?.Credential);
+
+            return ConnectCredentials(Credentials?.Credential, InitializationType.SPOManagementShell);
         }
 
         /// <summary>
@@ -482,24 +459,14 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectDeviceLogin(ref CancellationToken cancellationToken)
         {
-            //bool ctrlCAsInput = false;
-            // if (Host.Name == "ConsoleHost")
-            // {
-            //     ctrlCAsInput = Console.TreatControlCAsInput;
-            //     Console.TreatControlCAsInput = true;
-            // }
-
+           
             var uri = new Uri(Url);
             if ($"https://{uri.Host}".Equals(Url.ToLower()))
             {
                 Url += "/";
             }
             var connection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, TenantAdminUrl, this, AzureEnvironment, ref cancellationToken);
-
-            // if (Host.Name == "ConsoleHost")
-            // {
-            //     Console.TreatControlCAsInput = ctrlCAsInput;
-            // }
+           
             return connection;
         }
 
@@ -531,30 +498,6 @@ namespace PnP.PowerShell.Commands.Base
                 return PnPConnectionHelper.InstantiateGraphAccessTokenConnection(accessToken);
             }
         }
-
-        /// <summary>
-        /// Connect using the parameter set NativeAAD
-        /// </summary>
-        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        // private PnPConnection ConnectNativeAAD(string clientId, string redirectUrl)
-        // {
-        //     //string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        //     //string configFolder = Path.Combine(appDataFolder, "PnP.PowerShell");
-        //     //Directory.CreateDirectory(configFolder); // Ensure folder exists
-        //     //if (ClearTokenCache)
-        //     //{
-        //     //    string configFile = Path.Combine(configFolder, "tokencache.dat");
-
-        //     //    if (File.Exists(configFile))
-        //     //    {
-        //     //        File.Delete(configFile);
-        //     //    }
-        //     //}
-
-        //     return PnPConnectionHelper.InitiateAzureADNativeApplicationConnection(
-        //        new Uri(Url), clientId, new Uri(redirectUrl), TenantAdminUrl, Scopes, Host, NoTelemetry, AzureEnvironment);
-        //     throw new NotImplementedException();
-        // }
 
         /// <summary>
         /// Connect using the parameter set APPONLYAAD
@@ -687,85 +630,10 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         /// <summary>
-        /// Connect using ADFS using client credentials
-        /// </summary>
-        /// <param name="credentials">Credentials to use to authenticate to ADFS</param>
-        /// <returns>PnPConnection based on ADFS authentication</returns>
-        private PnPConnection ConnectAdfsCredentials(PSCredential credentials)
-        {
-            //if (!Kerberos && credentials == null)
-            //{
-            //    if ((credentials = GetCredentials()) == null)
-            //    {
-            //        credentials = Host.UI.PromptForCredential(Resources.EnterYourCredentials, "", "", "");
-
-            //        // Ensure credentials have been entered
-            //        if (credentials == null)
-            //        {
-            //            // No credentials have been provided
-            //            return null;
-            //        }
-            //    }
-            //}
-
-            //return PnPConnectionHelper.InstantiateAdfsConnection(new Uri(Url),
-            //                                                     Kerberos,
-            //                                                     credentials,
-            //                                                     Host,
-            //                                                     RequestTimeout,
-            //                                                     TenantAdminUrl,
-            //                                                     NoTelemetry,
-            //                                                     SkipTenantAdminCheck,
-            //                                                     LoginProviderName);
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Connect using ADFS Client Certificate
-        /// </summary>
-        /// <returns>PnPConnection based on ADFS Client Certificate authentication</returns>
-        private PnPConnection ConnectAdfsCertificate()
-        {
-            //// Check if we already have a client certificate, if not, ask for selecting one
-            //if (ClientCertificate == null)
-            //{
-            //    // Modal Dialog to enable a user to select a certificate to use to authenticate against ADFS
-            //    X509Store store = new X509Store("MY", StoreLocation.CurrentUser);
-            //    store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
-            //    var certs = X509Certificate2UI.SelectFromCollection(store.Certificates, "Select ADFS User Certificate", "Selec the certificate to use to authenticate to ADFS", X509SelectionFlag.SingleSelection);
-
-            //    // Ensure a certificate has been chosen
-            //    if (certs == null || certs.Count == 0 || certs[0] == null)
-            //    {
-            //        // No certificate has been chosen
-            //        return null;
-            //    }
-
-            //    ClientCertificate = certs[0];
-            //}
-
-            //if (ClientCertificate != null)
-            //{
-            //    var serialNumber = ClientCertificate.SerialNumber;
-            //    try
-            //    {
-            //        return PnPConnectionHelper.InstantiateAdfsCertificateConnection(new Uri(Url), serialNumber, Host, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
-            //    }
-            //    catch (TargetInvocationException e) when (e.InnerException != null && e.InnerException is CryptographicException)
-            //    {
-            //        throw new PSArgumentException(Resources.ClientCertificateInvalid, e);
-            //    }
-            //}
-
-            //return null;
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Connect using provided credentials or the current credentials
         /// </summary>
         /// <returns>PnPConnection based on credentials authentication</returns>
-        private PnPConnection ConnectCredentials(PSCredential credentials)
+        private PnPConnection ConnectCredentials(PSCredential credentials, InitializationType initializationType = InitializationType.Credentials)
         {
             if (!CurrentCredentials && credentials == null)
             {
@@ -788,7 +656,7 @@ namespace PnP.PowerShell.Commands.Base
                                                                TenantAdminUrl,
                                                                AzureEnvironment,
                                                                ClientId,
-                                                               RedirectUri, TransformationOnPrem);
+                                                               RedirectUri, TransformationOnPrem, initializationType);
         }
 
         private PnPConnection ConnectManagedIdentity()

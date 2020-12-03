@@ -345,7 +345,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false)
+        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials)
         {
             var context = new PnPClientContext(url.AbsoluteUri)
             {
@@ -411,7 +411,7 @@ namespace PnP.PowerShell.Commands.Base
             else
             {
                 context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
-                spoConnection = new PnPConnection(context, ConnectionType.O365, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.Credentials)
+                spoConnection = new PnPConnection(context, ConnectionType.O365, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, initializationType)
                 {
                     ConnectionMethod = Model.ConnectionMethod.Credentials,
                     AzureEnvironment = azureEnvironment,
