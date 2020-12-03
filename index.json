@@ -29,6 +29,11 @@
     "title": "Installing PnP PowerShell | PnP PowerShell",
     "keywords": "Installing PnP PowerShell You can run the following commands to install the PowerShell cmdlets: Install-Module -Name \"PnP.PowerShell\" -AllowPrerelease This will work on Windows / Linux / MacOS. Using PnP PowerShell in the Azure Cloud Shell Open the Azure Cloud Shell at https://shell.azure.com Select PowerShell as your shell and enter Install-Module -Name \"PnP.PowerShell\" -AllowPrerelease As the Azure Cloud Shell retains its settings and installed modules, the next time you open the Azure Cloud Shell PnP PowerShell will be available for you to use."
   },
+  "articles/runningtests.html": {
+    "href": "articles/runningtests.html",
+    "title": "Running the Unit Tests | PnP PowerShell",
+    "keywords": "Running the Unit Tests Effectively the unit tests are not unit tests but should be more thought of as an integration test as we run the cmdlets against an actual site. Setting up your environment Create a (modern) site collection at any location in your tenant. This site collection will be used for testing. Running the test script In the build folder of this project you'll find a Run-Tests.ps1 file. This script allows you to run the tests With a Stored Credential (Recommended) You can use a stored credential to authenticate to your site. We recommend using the Microsoft.PowerShell.SecretsManagement module. For more information about setting that one up see Authentication ./Run-Tests.ps1 -SiteUrl \"https://yourtenant.sharepoint.com/sites/yoursite\" -CredentialManagerLabel \"yourlabel\" With credentials $password = ConvertTo-SecureString \"P@ssW0rD!\" -AsPlainText -Force $username = \"yourname@domain.com\" ./Run-Tests.ps1 -SiteUrl \"https://yourtenant.sharepoint.com/sites/yoursite\" -Username $username -Password $password If you do not specify the password parameter you will be prompted to enter the password: $username = \"yourname@domain.com\" ./Run-Tests.ps1 -SiteUrl \"https://yourtenant.sharepoint.com/sites/yoursite\" -Username $username Enter password:"
+  },
   "articles/updatenotifications.html": {
     "href": "articles/updatenotifications.html",
     "title": "Update notifications | PnP PowerShell",
