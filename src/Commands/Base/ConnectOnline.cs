@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using PnP.Framework.Utilities;
 using System.Reflection;
 using System.Threading;
-using System.Windows.Forms;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -296,38 +295,6 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 throw ex;
             }
-            //LaunchForm();
-
-        }
-
-        private void LaunchForm()
-        {
-            var form = new System.Windows.Forms.Form();
-            var browser = new System.Windows.Forms.WebBrowser
-            {
-                ScriptErrorsSuppressed = true,
-                Dock = DockStyle.Fill
-            };
-
-            form.SuspendLayout();
-            form.Width = 568;
-            form.Height = 1012;
-            form.Text = $"Authenticate";
-            form.Controls.Add(browser);
-            form.ResumeLayout(false);
-            browser.Navigated += (sender, args) =>
-            {
-                if (browser.Url.AbsoluteUri.Equals("https://login.microsoftonline.com/common/login", StringComparison.InvariantCultureIgnoreCase) || browser.Url.AbsoluteUri.StartsWith("https://login.microsoftonline.com/common/Consent/Set", StringComparison.InvariantCultureIgnoreCase))
-                //    ||browser.Url.AbsoluteUri.StartsWith("https://login.microsoftonline.com/common/reprocess", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    form.Close();
-                }
-            };
-            browser.Navigate("https://nu.nl");
-
-            form.Focus();
-            form.ShowDialog();
-            browser.Dispose();
         }
 
         /// <summary>
@@ -715,6 +682,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private PnPConnection ConnectWebLogin()
         {
+#if NETFRAMEWORK
             if (Utilities.OperatingSystem.IsWindows())
             {
                 return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication);
@@ -723,6 +691,9 @@ namespace PnP.PowerShell.Commands.Base
             {
                 throw new PSArgumentException("-UseWebLogin only works when running on Microsoft Windows due to the requirement to show a login window.");
             }
+#else
+            throw new PSArgumentException("-UseWebLogin only works when running on Microsoft Windows due to the requirement to show a login window.");
+#endif
         }
         #endregion
 

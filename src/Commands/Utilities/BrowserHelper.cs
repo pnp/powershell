@@ -10,7 +10,9 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+#if NETFRAMEWORK
 using System.Windows.Forms;
+#endif
 using Microsoft.SharePoint.Client;
 using PnP.Framework;
 
@@ -18,7 +20,11 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class BrowserHelper
     {
+        
+#if NETFRAMEWORK
         private static DateTime expiresOn;
+#endif
+
         internal static void LaunchBrowser(string url)
         {
             if (OperatingSystem.IsWindows())
@@ -35,8 +41,10 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
+#if NETFRAMEWORK
         internal static ClientContext GetWebLoginClientContext(string siteUrl, bool clearCookies, System.Drawing.Icon icon = null, bool scriptErrorsSuppressed = true, Uri loginRequestUri = null, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
+            
             var authCookiesContainer = new CookieContainer();
             var siteUri = new Uri(siteUrl);
 
@@ -247,5 +255,6 @@ namespace PnP.PowerShell.Commands.Utilities
 
             }
         }
+#endif
     }
 }

@@ -1,9 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-
+﻿<Project>
+  <Import Project="WindowsSdk.targets" Condition="'$(OS)' == 'Windows_NT'" />
+  <Import Project="Sdk.targets" Condition="'$(OS)' != 'Windows_NT'" />
+  
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp3.1;net461</TargetFrameworks>
-    <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">netcoreapp3.1</TargetFrameworks>
-    <UseWindowsForms>true</UseWindowsForms>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <AssemblyName>PnP.PowerShell</AssemblyName>
     <RootNamespace>PnP.PowerShell.Commands</RootNamespace>

@@ -336,6 +336,7 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
+#if NETFRAMEWORK
         internal static PnPConnection InstantiateWebloginConnection(Uri url, string tenantAdminUrl, bool clearCookies, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             // Log in to a specific page on the tenant which is known to be performant
@@ -361,6 +362,7 @@ namespace PnP.PowerShell.Commands.Base
 
             throw new Exception("Error establishing a connection, context is null");
         }
+#endif
 
         public static string GetRealmFromTargetUrl(Uri targetApplicationUri)
         {
