@@ -103,6 +103,11 @@ Connect-PnPOnline [-LaunchBrowser] [-Graph] [-AzureEnvironment <AzureEnvironment
 Connect-PnPOnline -AADDomain <String> [<CommonParameters>]
 ```
 
+### WebLogin for Multi-Factor authentication
+```powershell
+Connect-PnPOnlue -Url <String> -UseWebLogin [-ForceAuthentication]
+```
+
 ## DESCRIPTION
 Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets. See https://github.com/pnp/PnP-PowerShell/wiki/Connect-options for more information on the options to connect and the APIs you can access with them.
 
@@ -219,6 +224,13 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId '<id>' -Tenant
 ```
 
 Connects to SharePoint using app-only auth in combination with a certificate. See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread#using-this-principal-in-your-powershell-script-using-the-pnp-sites-core-library for a sample on how to get started.
+
+### EXAMPLE 17
+```powershell
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -UseWebLogin
+```
+
+Connects to SharePoint using legacy cookie based authentication. Notice this type of authentication is limited in its functionality. We will for instance not be able to acquire an access token for the Graph, and as a result none of the Graph related cmdlets will work. Also some of the functionality of the provisioning engine (Get-PnPSiteTemplate, Get-PnPTenantTemplate, Invoke-PnPSiteTemplate, Invoke-PnPTenantTemplate) will not work because of this reason. The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will dissappear immediately, this is expected. Use -ForceAuthentication to reset the authentication cookies and force a new login.
 
 ## PARAMETERS
 
@@ -638,6 +650,34 @@ If you want to the use page transformation cmdlets, setting this switch will all
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Main
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UseWebLogin
+Windows only: Connects to SharePoint using legacy cookie based authentication. Notice this type of authentication is limited in its functionality. We will for instance not be able to acquire an access token for the Graph, and as a result none of the Graph related cmdlets will work. Also some of the functionality of the provisioning engine (Get-PnPSiteTemplate, Get-PnPTenantTemplate, Invoke-PnPSiteTemplate, Invoke-PnPTenantTemplate) will not work because of this reason. The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will dissappear immediately, this is expected. Use -ForceAuthentication to reset the authentication cookies and force a new login.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: WebLogin
+
+Required: True
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ForceAuthentication
+Windows only: will clear the stored authentication cookies when using -UseWebLogin and allows you to authenticate again towards a site with different credentials bypassing the existing stored cookies.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: WebLogin
 
 Required: False
 Position: Named

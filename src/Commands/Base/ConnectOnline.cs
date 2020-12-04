@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using PnP.Framework.Utilities;
 using System.Reflection;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -41,10 +42,14 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_DEVICELOGIN = "PnP Management Shell / DeviceLogin";
         private const string ParameterSet_GRAPHDEVICELOGIN = "PnP Management Shell to the Microsoft Graph";
         private const string ParameterSet_AADWITHSCOPE = "Azure Active Directory using Scopes";
+        private const string ParameterSet_ACCESSTOKEN = "Access Token";
+        private const string ParameterSet_WEBLOGIN = "Web Login";
         // private const string ParameterSet_GRAPHWITHAAD = "Microsoft Graph using Azure Active Directory";
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
         private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
-        private const string ParameterSet_ACCESSTOKEN = "Access Token";
+
+
+
         //private static readonly Uri GraphAADLogin = new Uri("https://login.microsoftonline.com/");
         //private static readonly string[] GraphDefaultScope = { "https://graph.microsoft.com/.default" };
 
@@ -79,6 +84,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         public string Url;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
@@ -251,6 +257,12 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
         public SwitchParameter TransformationOnPrem;
 
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_WEBLOGIN)]
+        public SwitchParameter UseWebLogin;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
+        public SwitchParameter ForceAuthentication;
+
         protected override void ProcessRecord()
         {
             cancellationTokenSource = new CancellationTokenSource();
@@ -284,6 +296,38 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 throw ex;
             }
+            //LaunchForm();
+
+        }
+
+        private void LaunchForm()
+        {
+            var form = new System.Windows.Forms.Form();
+            var browser = new System.Windows.Forms.WebBrowser
+            {
+                ScriptErrorsSuppressed = true,
+                Dock = DockStyle.Fill
+            };
+
+            form.SuspendLayout();
+            form.Width = 568;
+            form.Height = 1012;
+            form.Text = $"Authenticate";
+            form.Controls.Add(browser);
+            form.ResumeLayout(false);
+            browser.Navigated += (sender, args) =>
+            {
+                if (browser.Url.AbsoluteUri.Equals("https://login.microsoftonline.com/common/login", StringComparison.InvariantCultureIgnoreCase) || browser.Url.AbsoluteUri.StartsWith("https://login.microsoftonline.com/common/Consent/Set", StringComparison.InvariantCultureIgnoreCase))
+                //    ||browser.Url.AbsoluteUri.StartsWith("https://login.microsoftonline.com/common/reprocess", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    form.Close();
+                }
+            };
+            browser.Navigate("https://nu.nl");
+
+            form.Focus();
+            form.ShowDialog();
+            browser.Dispose();
         }
 
         /// <summary>
@@ -361,6 +405,9 @@ namespace PnP.PowerShell.Commands.Base
                 case ParameterSet_MANAGEDIDENTITY:
                     connection = ConnectManagedIdentity();
                     break;
+                case ParameterSet_WEBLOGIN:
+                    connection = ConnectWebLogin();
+                    break;
             }
 
             // Ensure a connection instance has been created by now
@@ -421,7 +468,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, TenantAdminUrl, false, AzureEnvironment);
         }
-       
+
 
         /// <summary>
         /// Connect using the parameter set APPONLYCLIENTIDCLIENTSECRETURL
@@ -459,14 +506,14 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectDeviceLogin(ref CancellationToken cancellationToken)
         {
-           
+
             var uri = new Uri(Url);
             if ($"https://{uri.Host}".Equals(Url.ToLower()))
             {
                 Url += "/";
             }
             var connection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, TenantAdminUrl, this, AzureEnvironment, ref cancellationToken);
-           
+
             return connection;
         }
 
@@ -666,6 +713,17 @@ namespace PnP.PowerShell.Commands.Base
             return connection;
         }
 
+        private PnPConnection ConnectWebLogin()
+        {
+            if (Utilities.OperatingSystem.IsWindows())
+            {
+                return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication);
+            }
+            else
+            {
+                throw new PSArgumentException("-UseWebLogin only works when running on Microsoft Windows due to the requirement to show a login window.");
+            }
+        }
         #endregion
 
         #region Helper methods
