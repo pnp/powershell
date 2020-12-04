@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands
         public ClientContext ClientContext => Connection?.Context ?? PnPConnection.CurrentConnection.Context;
 
         // do not remove '#!#99'
-        [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")] 
+        [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")]
         public PnPConnection Connection = null;
         // do not remove '#!#99'
 
@@ -89,7 +89,7 @@ namespace PnP.PowerShell.Commands
                 {
                     if (PnPConnection.CurrentConnection.Context != null)
                     {
-                        var settings = GetContextSettings(PnPConnection.CurrentConnection.Context);
+                        var settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(PnPConnection.CurrentConnection.Context);
                         if (settings != null)
                         {
                             var authManager = settings.AuthenticationManager;
@@ -102,44 +102,6 @@ namespace PnP.PowerShell.Commands
                 }
                 return null;
             }
-        }
-
-        internal ClientContextSettings GetContextSettings(ClientRuntimeContext clientContext)
-        {
-            if (!clientContext.StaticObjects.TryGetValue(ClientContextSettings.PnPSettingsKey, out object settingsObject))
-            {
-                return null;
-            }
-            var settings = new ClientContextSettings();
-
-            settings.AuthenticationManager = (AuthenticationManager)GetPropertyValue(settingsObject,"AuthenticationManager");
-
-            return settings;
-        }
-
-        private object GetPropertyValue(object obj, string propertyName)
-        {
-            if (obj == null)
-                throw new ArgumentNullException("obj");
-            Type objType = obj.GetType();
-            PropertyInfo propInfo = GetPropertyInfo(objType, propertyName);
-            if (propInfo == null)
-                throw new ArgumentOutOfRangeException("propertyName",
-                  string.Format("Couldn't find property {0} in type {1}", propertyName, objType.FullName));
-            return propInfo.GetValue(obj, null);
-        }
-
-        private PropertyInfo GetPropertyInfo(Type type, string propertyName)
-        {
-            PropertyInfo propInfo = null;
-            do
-            {
-                propInfo = type.GetProperty(propertyName,
-                       BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                type = type.BaseType;
-            }
-            while (propInfo == null && type != null);
-            return propInfo;
         }
 
         protected void PollOperation(SpoOperation spoOperation)
