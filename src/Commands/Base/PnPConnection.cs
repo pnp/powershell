@@ -698,7 +698,9 @@ namespace PnP.PowerShell.Commands.Base
 
                 ApplicationInsights = new ApplicationInsights();
                 var coreAssembly = Assembly.GetExecutingAssembly();
-                ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
+                var operatingSystem = Utilities.OperatingSystem.GetOSString();
+                
+                ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString(), operatingSystem);
                 ApplicationInsights.TrackEvent("Connect-PnPOnline");
             }
         }
