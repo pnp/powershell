@@ -168,5 +168,5 @@ if ($runPublish -eq $true) {
 	Publish-Module -Name PnP.PowerShell -AllowPrerelease -NuGetApiKey $apiKey
 
 	# Write version back to version
-	Set-Content ./version.txt -Value $version -Force
+	Set-Content ./version.txt -Value $version -Force -NoNewline
 }

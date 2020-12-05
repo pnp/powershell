@@ -18,8 +18,10 @@ namespace PnP.PowerShell.Commands.Utilities
     internal static class BrowserHelper
     {
 
+#pragma warning disable CS0169
+        // not required when compiling for .NET Framework
         private static DateTime expiresOn;
-
+#pragma warning restore CS0169
         internal static void LaunchBrowser(string url)
         {
             if (OperatingSystem.IsWindows())
@@ -36,7 +38,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        internal static ClientContext GetWebLoginClientContext(string siteUrl, bool clearCookies, System.Drawing.Icon icon = null, bool scriptErrorsSuppressed = true, Uri loginRequestUri = null, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static ClientContext GetWebLoginClientContext(string siteUrl, bool clearCookies, bool scriptErrorsSuppressed = true, Uri loginRequestUri = null, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             if (OperatingSystem.IsWindows())
             {
@@ -52,10 +54,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         CookieReader.SetCookie(siteUrl, "EdgeAccessCookie", "ignore;expires=Mon, 01 Jan 0001 00:00:00 GMT");
                     }
                     var form = new System.Windows.Forms.Form();
-                    if (icon != null)
-                    {
-                        form.Icon = icon;
-                    }
+                    
                     var browser = new System.Windows.Forms.WebBrowser
                     {
                         ScriptErrorsSuppressed = scriptErrorsSuppressed,
@@ -63,8 +62,11 @@ namespace PnP.PowerShell.Commands.Utilities
                     };
 
                     form.SuspendLayout();
-                    form.Width = 900;
-                    form.Height = 500;
+                    form.Icon = null;
+                    form.Width = 1024;
+                    form.Height = 768;
+                    form.MinimizeBox = false;
+                    form.MaximizeBox = false;
                     form.Text = $"Log in to {siteUrl}";
                     form.Controls.Add(browser);
                     form.ResumeLayout(false);
