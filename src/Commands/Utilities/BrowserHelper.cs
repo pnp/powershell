@@ -78,9 +78,9 @@ namespace PnP.PowerShell.Commands.Utilities
 
                             var cookieString = CookieReader.GetCookie(siteUrl).Replace("; ", ",").Replace(";", ",");
 
-                        // Get FedAuth and rtFa cookies issued by ADFS when accessing claims aware applications.
-                        // - or get the EdgeAccessCookie issued by the Web Application Proxy (WAP) when accessing non-claims aware applications (Kerberos).
-                        IEnumerable<string> authCookies = null;
+                            // Get FedAuth and rtFa cookies issued by ADFS when accessing claims aware applications.
+                            // - or get the EdgeAccessCookie issued by the Web Application Proxy (WAP) when accessing non-claims aware applications (Kerberos).
+                            IEnumerable<string> authCookies = null;
                             if (Regex.IsMatch(cookieString, "FedAuth", RegexOptions.IgnoreCase))
                             {
                                 authCookies = cookieString.Split(',').Where(c => c.StartsWith("FedAuth", StringComparison.InvariantCultureIgnoreCase) || c.StartsWith("rtFa", StringComparison.InvariantCultureIgnoreCase));
@@ -91,8 +91,8 @@ namespace PnP.PowerShell.Commands.Utilities
                             }
                             if (authCookies != null)
                             {
-                            // Set the authentication cookies both on the SharePoint Online Admin as well as on the SharePoint Online domains to allow for APIs on both domains to be used
-                            var authCookiesString = string.Join(",", authCookies);
+                                // Set the authentication cookies both on the SharePoint Online Admin as well as on the SharePoint Online domains to allow for APIs on both domains to be used
+                                var authCookiesString = string.Join(",", authCookies);
                                 authCookiesContainer.SetCookies(siteUri, authCookiesString);
                                 var extension = Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment);
                                 authCookiesContainer.SetCookies(new Uri(siteUri.Scheme + "://" + siteUri.Authority.Replace($".sharepoint.{azureEnvironment}", $"-admin.sharepoint.{azureEnvironment}")), authCookiesString);
@@ -114,19 +114,23 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     var ctx = new ClientContext(siteUrl);
                     ctx.DisableReturnValueCache = true;
-
+#if !NETFRAMEWORK
+                    // We only have to add a request digest when running in dotnet core
                     var requestDigestInfo = GetRequestDigestAsync(siteUrl, authCookiesContainer).GetAwaiter().GetResult();
                     expiresOn = requestDigestInfo.expiresOn;
-
+#endif
                     ctx.ExecutingWebRequest += (sender, e) =>
                     {
                         e.WebRequestExecutor.WebRequest.CookieContainer = authCookiesContainer;
+#if !NETFRAMEWORK
+                        // We only have to add a request digest when running in dotnet core
                         if (DateTime.Now > expiresOn)
                         {
                             requestDigestInfo = GetRequestDigestAsync(siteUrl, authCookiesContainer).GetAwaiter().GetResult();
                             expiresOn = requestDigestInfo.expiresOn;
                         }
                         e.WebRequestExecutor.WebRequest.Headers.Add("X-RequestDigest", requestDigestInfo.digestToken);
+#endif
                     };
 
                     var settings = new PnP.Framework.Utilities.Context.ClientContextSettings();
