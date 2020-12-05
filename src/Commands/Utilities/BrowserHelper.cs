@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace PnP.PowerShell.Commands.Utilities
 #pragma warning disable CS0169
         // not required when compiling for .NET Framework
         private static DateTime expiresOn;
+        private static ConcurrentDictionary<string, (string requestDigest, DateTime expiresOn)> requestDigestInfos = new ConcurrentDictionary<string, (string requestDigest, DateTime expiresOn)>();
 #pragma warning restore CS0169
         internal static void LaunchBrowser(string url)
         {
@@ -54,7 +56,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         CookieReader.SetCookie(siteUrl, "EdgeAccessCookie", "ignore;expires=Mon, 01 Jan 0001 00:00:00 GMT");
                     }
                     var form = new System.Windows.Forms.Form();
-                    
+
                     var browser = new System.Windows.Forms.WebBrowser
                     {
                         ScriptErrorsSuppressed = scriptErrorsSuppressed,
@@ -95,9 +97,18 @@ namespace PnP.PowerShell.Commands.Utilities
                             {
                                 // Set the authentication cookies both on the SharePoint Online Admin as well as on the SharePoint Online domains to allow for APIs on both domains to be used
                                 var authCookiesString = string.Join(",", authCookies);
-                                authCookiesContainer.SetCookies(siteUri, authCookiesString);
+                                //authCookiesContainer.SetCookies(siteUri, authCookiesString);
                                 var extension = Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment);
-                                authCookiesContainer.SetCookies(new Uri(siteUri.Scheme + "://" + siteUri.Authority.Replace($".sharepoint.{azureEnvironment}", $"-admin.sharepoint.{azureEnvironment}")), authCookiesString);
+                                var cookieCollection = new CookieCollection();
+                                foreach (var cookie in authCookies)
+                                {
+                                    var cookieName = cookie.Substring(0, cookie.IndexOf("=")); // cannot use split as there might '=' in the value
+                                    var cookieValue = cookie.Substring(cookieName.Length + 1);
+                                    cookieCollection.Add(new Cookie(cookieName, cookieValue));
+                                }
+                                authCookiesContainer.Add(siteUri, cookieCollection);
+                                var adminSiteUri = new Uri(siteUri.Scheme + "://" + siteUri.Authority.Replace($".sharepoint.{extension}", $"-admin.sharepoint.{extension}"));
+                                authCookiesContainer.Add(adminSiteUri, cookieCollection);
                                 form.Close();
                             }
                         }
@@ -119,19 +130,32 @@ namespace PnP.PowerShell.Commands.Utilities
 #if !NETFRAMEWORK
                     // We only have to add a request digest when running in dotnet core
                     var requestDigestInfo = GetRequestDigestAsync(siteUrl, authCookiesContainer).GetAwaiter().GetResult();
-                    expiresOn = requestDigestInfo.expiresOn;
+                    requestDigestInfos.AddOrUpdate(siteUrl, requestDigestInfo, (key, oldValue) => requestDigestInfo);
+
+                    //expiresOn = requestDigestInfo.expiresOn;
 #endif
                     ctx.ExecutingWebRequest += (sender, e) =>
                     {
                         e.WebRequestExecutor.WebRequest.CookieContainer = authCookiesContainer;
 #if !NETFRAMEWORK
-                        // We only have to add a request digest when running in dotnet core
-                        if (DateTime.Now > expiresOn)
+                        var hostUrl = $"https://{e.WebRequestExecutor.WebRequest.Host}";
+                        if (requestDigestInfos.TryGetValue(hostUrl, out requestDigestInfo))
                         {
-                            requestDigestInfo = GetRequestDigestAsync(siteUrl, authCookiesContainer).GetAwaiter().GetResult();
-                            expiresOn = requestDigestInfo.expiresOn;
+                            // We only have to add a request digest when running in dotnet core
+                            if (DateTime.Now > requestDigestInfo.expiresOn)
+                            {
+                                requestDigestInfo = GetRequestDigestAsync(hostUrl, authCookiesContainer).GetAwaiter().GetResult();
+                                requestDigestInfos.AddOrUpdate(hostUrl, requestDigestInfo, (key, oldValue) => requestDigestInfo);
+                            }
+                            e.WebRequestExecutor.WebRequest.Headers.Add("X-RequestDigest", requestDigestInfo.digestToken);
                         }
-                        e.WebRequestExecutor.WebRequest.Headers.Add("X-RequestDigest", requestDigestInfo.digestToken);
+                        else
+                        {
+                            // admin url maybe?
+                            requestDigestInfo = GetRequestDigestAsync(hostUrl, authCookiesContainer).GetAwaiter().GetResult();
+                            requestDigestInfos.AddOrUpdate(hostUrl, requestDigestInfo, (key, oldValue) => requestDigestInfo);
+                            e.WebRequestExecutor.WebRequest.Headers.Add("X-RequestDigest", requestDigestInfo.digestToken);
+                        }
 #endif
                     };
 

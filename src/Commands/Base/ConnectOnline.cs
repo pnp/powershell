@@ -240,6 +240,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
         public string TenantAdminUrl;
 
         [Parameter(Mandatory = false)]
