@@ -13,9 +13,16 @@ if ($existingHash -ne $hash) {
 
 if ($runPublish -eq $true) {
 
-	$versionObject = [System.Version]::new($(Get-Content ./version.txt -Raw))
-
-	$buildVersion = $versionObject.Build + 1;
+	$versionFileContents = Get-Content "$PSScriptRoot/../version.txt" -Raw
+	if ($versionFileContents.Contains("%")) {
+		$versionString = $versionFileContents.Replace("%", "0");
+		$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionString)
+		$buildVersion = $versionObject.Patch;
+	}
+	else {	
+		$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionFileContents)
+		$buildVersion = $versionObject.Patch + 1;
+	}
 
 	$version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 

@@ -336,33 +336,38 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-#if NETFRAMEWORK
         internal static PnPConnection InstantiateWebloginConnection(Uri url, string tenantAdminUrl, bool clearCookies, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
-            // Log in to a specific page on the tenant which is known to be performant
-            var webLoginClientContext = BrowserHelper.GetWebLoginClientContext(url.ToString(), clearCookies, loginRequestUri: new Uri(url, "/_layouts/15/settings.aspx"));
+            if (Utilities.OperatingSystem.IsWindows())
+            {
+                // Log in to a specific page on the tenant which is known to be performant
+                var webLoginClientContext = BrowserHelper.GetWebLoginClientContext(url.ToString(), clearCookies, loginRequestUri: new Uri(url, "/_layouts/15/settings.aspx"));
 
-            // Ensure the login process has been completed
-            if (webLoginClientContext == null)
+                // Ensure the login process has been completed
+                if (webLoginClientContext == null)
+                {
+                    return null;
+                }
+
+                var context = PnPClientContext.ConvertFrom(webLoginClientContext);
+
+                if (context != null)
+                {
+                    context.ApplicationName = Resources.ApplicationName;
+                    context.DisableReturnValueCache = true;
+                    var spoConnection = new PnPConnection(context, ConnectionType.O365, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.InteractiveLogin);
+                    spoConnection.ConnectionMethod = Model.ConnectionMethod.WebLogin;
+                    spoConnection.AzureEnvironment = azureEnvironment;
+                    return spoConnection;
+                }
+
+                throw new Exception("Error establishing a connection, context is null");
+            }
+            else
             {
                 return null;
             }
-
-            var context = PnPClientContext.ConvertFrom(webLoginClientContext);
-
-            if (context != null)
-            {
-                context.ApplicationName = Resources.ApplicationName;
-                context.DisableReturnValueCache = true;
-                var spoConnection = new PnPConnection(context, ConnectionType.O365, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.InteractiveLogin);
-                spoConnection.ConnectionMethod = Model.ConnectionMethod.WebLogin;
-                spoConnection.AzureEnvironment = azureEnvironment;
-                return spoConnection;
-            }
-
-            throw new Exception("Error establishing a connection, context is null");
         }
-#endif
 
         public static string GetRealmFromTargetUrl(Uri targetApplicationUri)
         {

@@ -13,8 +13,16 @@ Param(
 	$LocalPnPFramework
 )
 
-$versionObject = [System.Version]::new($(Get-Content "$PSScriptRoot/../version.txt" -Raw))
-$buildVersion = $versionObject.Build + 1;
+$versionFileContents = Get-Content "$PSScriptRoot/../version.txt" -Raw
+if ($versionFileContents.Contains("%")) {
+	$versionString = $versionFileContents.Replace("%", "0");
+	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionString)
+	$buildVersion = $versionObject.Patch;
+}
+else {	
+	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionFileContents)
+	$buildVersion = $versionObject.Patch + 1;
+}
 
 $configuration = "netcoreapp3.1"
 
@@ -22,15 +30,14 @@ $version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
 Write-Host "Building PnP.PowerShell version $version-debug" -ForegroundColor Yellow
 
-$buildCmd =  "dotnet build `"$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj`"" + "--nologo --configuration Debug -p:VersionPrefix=$version -p:VersionSuffix=debug";
-if($NoIncremental) {
+$buildCmd = "dotnet build `"$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj`"" + "--nologo --configuration Debug -p:VersionPrefix=$version -p:VersionSuffix=debug";
+if ($NoIncremental) {
 	$buildCmd += " --no-incremental";
 }
 if ($Force) {
 	$buildCmd += " --force"
 }
-if($LocalPnPFramework)
-{
+if ($LocalPnPFramework) {
 	$buildCmd += " -p:LocalPnPFramework=true"
 }
 Write-Host "Executing $buildCmd" -ForegroundColor Yellow

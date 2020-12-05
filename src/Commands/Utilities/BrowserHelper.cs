@@ -10,9 +10,6 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-#if NETFRAMEWORK
-using System.Windows.Forms;
-#endif
 using Microsoft.SharePoint.Client;
 using PnP.Framework;
 
@@ -20,10 +17,8 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class BrowserHelper
     {
-        
-#if NETFRAMEWORK
+
         private static DateTime expiresOn;
-#endif
 
         internal static void LaunchBrowser(string url)
         {
@@ -41,107 +36,107 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-#if NETFRAMEWORK
         internal static ClientContext GetWebLoginClientContext(string siteUrl, bool clearCookies, System.Drawing.Icon icon = null, bool scriptErrorsSuppressed = true, Uri loginRequestUri = null, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
-            
-            var authCookiesContainer = new CookieContainer();
-            var siteUri = new Uri(siteUrl);
-
-            var thread = new Thread(() =>
+            if (OperatingSystem.IsWindows())
             {
-                if (clearCookies)
-                {
-                    CookieReader.SetCookie(siteUrl, "FedAuth", "ignore;expires=Mon, 01 Jan 0001 00:00:00 GMT");
-                    CookieReader.SetCookie(siteUrl, "rtFa", "ignore;expires=Mon, 01 Jan 0001 00:00:00 GMT");
-                    CookieReader.SetCookie(siteUrl, "EdgeAccessCookie", "ignore;expires=Mon, 01 Jan 0001 00:00:00 GMT");
-                }
-                var form = new System.Windows.Forms.Form();
-                if (icon != null)
-                {
-                    form.Icon = icon;
-                }
-                var browser = new System.Windows.Forms.WebBrowser
-                {
-                    ScriptErrorsSuppressed = scriptErrorsSuppressed,
-                    Dock = DockStyle.Fill
-                };
+                var authCookiesContainer = new CookieContainer();
+                var siteUri = new Uri(siteUrl);
 
-                form.SuspendLayout();
-                form.Width = 900;
-                form.Height = 500;
-                form.Text = $"Log in to {siteUrl}";
-                form.Controls.Add(browser);
-                form.ResumeLayout(false);
-
-                browser.Navigate(loginRequestUri ?? siteUri);
-
-                browser.Navigated += (sender, args) =>
+                var thread = new Thread(() =>
                 {
-                    if ((loginRequestUri ?? siteUri).Host.Equals(args.Url.Host))
+                    if (clearCookies)
                     {
+                        CookieReader.SetCookie(siteUrl, "FedAuth", "ignore;expires=Mon, 01 Jan 0001 00:00:00 GMT");
+                        CookieReader.SetCookie(siteUrl, "rtFa", "ignore;expires=Mon, 01 Jan 0001 00:00:00 GMT");
+                        CookieReader.SetCookie(siteUrl, "EdgeAccessCookie", "ignore;expires=Mon, 01 Jan 0001 00:00:00 GMT");
+                    }
+                    var form = new System.Windows.Forms.Form();
+                    if (icon != null)
+                    {
+                        form.Icon = icon;
+                    }
+                    var browser = new System.Windows.Forms.WebBrowser
+                    {
+                        ScriptErrorsSuppressed = scriptErrorsSuppressed,
+                        Dock = System.Windows.Forms.DockStyle.Fill
+                    };
 
-                        var cookieString = CookieReader.GetCookie(siteUrl).Replace("; ", ",").Replace(";", ",");
+                    form.SuspendLayout();
+                    form.Width = 900;
+                    form.Height = 500;
+                    form.Text = $"Log in to {siteUrl}";
+                    form.Controls.Add(browser);
+                    form.ResumeLayout(false);
+
+                    browser.Navigate(loginRequestUri ?? siteUri);
+
+                    browser.Navigated += (sender, args) =>
+                    {
+                        if ((loginRequestUri ?? siteUri).Host.Equals(args.Url.Host))
+                        {
+
+                            var cookieString = CookieReader.GetCookie(siteUrl).Replace("; ", ",").Replace(";", ",");
 
                         // Get FedAuth and rtFa cookies issued by ADFS when accessing claims aware applications.
                         // - or get the EdgeAccessCookie issued by the Web Application Proxy (WAP) when accessing non-claims aware applications (Kerberos).
                         IEnumerable<string> authCookies = null;
-                        if (Regex.IsMatch(cookieString, "FedAuth", RegexOptions.IgnoreCase))
-                        {
-                            authCookies = cookieString.Split(',').Where(c => c.StartsWith("FedAuth", StringComparison.InvariantCultureIgnoreCase) || c.StartsWith("rtFa", StringComparison.InvariantCultureIgnoreCase));
-                        }
-                        else if (Regex.IsMatch(cookieString, "EdgeAccessCookie", RegexOptions.IgnoreCase))
-                        {
-                            authCookies = cookieString.Split(',').Where(c => c.StartsWith("EdgeAccessCookie", StringComparison.InvariantCultureIgnoreCase));
-                        }
-                        if (authCookies != null)
-                        {
+                            if (Regex.IsMatch(cookieString, "FedAuth", RegexOptions.IgnoreCase))
+                            {
+                                authCookies = cookieString.Split(',').Where(c => c.StartsWith("FedAuth", StringComparison.InvariantCultureIgnoreCase) || c.StartsWith("rtFa", StringComparison.InvariantCultureIgnoreCase));
+                            }
+                            else if (Regex.IsMatch(cookieString, "EdgeAccessCookie", RegexOptions.IgnoreCase))
+                            {
+                                authCookies = cookieString.Split(',').Where(c => c.StartsWith("EdgeAccessCookie", StringComparison.InvariantCultureIgnoreCase));
+                            }
+                            if (authCookies != null)
+                            {
                             // Set the authentication cookies both on the SharePoint Online Admin as well as on the SharePoint Online domains to allow for APIs on both domains to be used
                             var authCookiesString = string.Join(",", authCookies);
-                            authCookiesContainer.SetCookies(siteUri, authCookiesString);
-                            var extension = Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment);
-                            authCookiesContainer.SetCookies(new Uri(siteUri.Scheme + "://" + siteUri.Authority.Replace($".sharepoint.{azureEnvironment}", $"-admin.sharepoint.{azureEnvironment}")), authCookiesString);
-                            form.Close();
+                                authCookiesContainer.SetCookies(siteUri, authCookiesString);
+                                var extension = Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment);
+                                authCookiesContainer.SetCookies(new Uri(siteUri.Scheme + "://" + siteUri.Authority.Replace($".sharepoint.{azureEnvironment}", $"-admin.sharepoint.{azureEnvironment}")), authCookiesString);
+                                form.Close();
+                            }
                         }
-                    }
-                };
+                    };
 
-                form.Focus();
-                form.ShowDialog();
-                browser.Dispose();
-            });
+                    form.Focus();
+                    form.ShowDialog();
+                    browser.Dispose();
+                });
 
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            thread.Join();
+                thread.SetApartmentState(ApartmentState.STA);
+                thread.Start();
+                thread.Join();
 
-            if (authCookiesContainer.Count > 0)
-            {
-                var ctx = new ClientContext(siteUrl);
-                ctx.DisableReturnValueCache = true;
-
-                var requestDigestInfo = GetRequestDigestAsync(siteUrl, authCookiesContainer).GetAwaiter().GetResult();
-                expiresOn = requestDigestInfo.expiresOn;
-
-                ctx.ExecutingWebRequest += (sender, e) =>
+                if (authCookiesContainer.Count > 0)
                 {
-                    e.WebRequestExecutor.WebRequest.CookieContainer = authCookiesContainer;
-                    if (DateTime.Now > expiresOn)
+                    var ctx = new ClientContext(siteUrl);
+                    ctx.DisableReturnValueCache = true;
+
+                    var requestDigestInfo = GetRequestDigestAsync(siteUrl, authCookiesContainer).GetAwaiter().GetResult();
+                    expiresOn = requestDigestInfo.expiresOn;
+
+                    ctx.ExecutingWebRequest += (sender, e) =>
                     {
-                        requestDigestInfo = GetRequestDigestAsync(siteUrl, authCookiesContainer).GetAwaiter().GetResult();
-                        expiresOn = requestDigestInfo.expiresOn;
-                    }
-                    e.WebRequestExecutor.WebRequest.Headers.Add("X-RequestDigest", requestDigestInfo.digestToken);
-                };
+                        e.WebRequestExecutor.WebRequest.CookieContainer = authCookiesContainer;
+                        if (DateTime.Now > expiresOn)
+                        {
+                            requestDigestInfo = GetRequestDigestAsync(siteUrl, authCookiesContainer).GetAwaiter().GetResult();
+                            expiresOn = requestDigestInfo.expiresOn;
+                        }
+                        e.WebRequestExecutor.WebRequest.Headers.Add("X-RequestDigest", requestDigestInfo.digestToken);
+                    };
 
-                var settings = new PnP.Framework.Utilities.Context.ClientContextSettings();
-                settings.Type = PnP.Framework.Utilities.Context.ClientContextType.Cookie;
-                settings.SiteUrl = siteUrl;
+                    var settings = new PnP.Framework.Utilities.Context.ClientContextSettings();
+                    settings.Type = PnP.Framework.Utilities.Context.ClientContextType.Cookie;
+                    settings.SiteUrl = siteUrl;
 
-                ctx.AddContextSettings(settings);
-                return ctx;
+                    ctx.AddContextSettings(settings);
+                    return ctx;
+                }
             }
-
             return null;
         }
 
@@ -255,6 +250,5 @@ namespace PnP.PowerShell.Commands.Utilities
 
             }
         }
-#endif
     }
 }
