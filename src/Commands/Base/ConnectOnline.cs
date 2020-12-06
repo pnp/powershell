@@ -386,7 +386,7 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             // Connection has been established
-#if !NET461
+#if !NETFRAMEWORK
             WriteVerbose($"PnP PowerShell Cmdlets ({new SemanticVersion(Assembly.GetExecutingAssembly().GetName().Version)}): Connected to {Url}");
 #else
             WriteVerbose($"PnP PowerShell Cmdlets ({Assembly.GetExecutingAssembly().GetName().Version}): Connected to {Url}");
