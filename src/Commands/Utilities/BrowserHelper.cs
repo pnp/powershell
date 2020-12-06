@@ -40,8 +40,10 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
+
         internal static ClientContext GetWebLoginClientContext(string siteUrl, bool clearCookies, bool scriptErrorsSuppressed = true, Uri loginRequestUri = null, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
+#if Windows
             if (OperatingSystem.IsWindows())
             {
                 var authCookiesContainer = new CookieContainer();
@@ -167,6 +169,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     return ctx;
                 }
             }
+#endif
             return null;
         }
 
