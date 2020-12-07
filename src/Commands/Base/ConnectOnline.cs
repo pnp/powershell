@@ -685,7 +685,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             if (Utilities.OperatingSystem.IsWindows())
             {
-                WriteWarning("Due to the way of authentication we are not able to retrieve on demand access tokens which is required for some cmdlets to work. None of the cmdlets that require the Microsoft Graph (Teams and Planner cmdlets) will work and some of the handlers in the PnP Provisioning Engine (Get-PnPSiteTemplate, Invoke-PnPSiteTemplate) will fail too. Consider moving to other types of authentication.");
+                WriteWarning("THIS IS AN EXPERIMENTAL FEATURE:\n\nDue to the way of authentication we are not able to retrieve on demand access tokens which are required for some cmdlets to work. None of the cmdlets that require the Microsoft Graph (Teams and Planner cmdlets) will work and some of the handlers in the PnP Provisioning Engine (Get-PnPSiteTemplate, Invoke-PnPSiteTemplate, etc.) will fail too. Consider moving to other types of authentication.");
                 return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication);
             }
             else

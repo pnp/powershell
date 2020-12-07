@@ -44,18 +44,19 @@ namespace PnP.PowerShell.Commands.Utilities
         internal static ClientContext GetWebLoginClientContext(string siteUrl, bool clearCookies, bool scriptErrorsSuppressed = true, Uri loginRequestUri = null, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
 #if Windows
+
             if (OperatingSystem.IsWindows())
             {
                 var authCookiesContainer = new CookieContainer();
                 var siteUri = new Uri(siteUrl);
-
+                var cookieUrl = $"{siteUri.Scheme}://{siteUri.Host}";
                 var thread = new Thread(() =>
                 {
                     if (clearCookies)
                     {
-                        CookieReader.SetCookie(siteUrl, "FedAuth", "ignore;expires=Mon, 01 Jan 0001 00:00:00 GMT");
-                        CookieReader.SetCookie(siteUrl, "rtFa", "ignore;expires=Mon, 01 Jan 0001 00:00:00 GMT");
-                        CookieReader.SetCookie(siteUrl, "EdgeAccessCookie", "ignore;expires=Mon, 01 Jan 0001 00:00:00 GMT");
+                        CookieReader.SetCookie(cookieUrl, "FedAuth", "ignore;expires=Mon, 01 Jan 0001 00:00:00 GMT");
+                        CookieReader.SetCookie(cookieUrl, "rtFa", "ignore;expires=Mon, 01 Jan 0001 00:00:00 GMT");
+                        CookieReader.SetCookie(cookieUrl, "EdgeAccessCookie", "ignore;expires=Mon, 01 Jan 0001 00:00:00 GMT");
                     }
                     var form = new System.Windows.Forms.Form();
 
@@ -81,7 +82,6 @@ namespace PnP.PowerShell.Commands.Utilities
                     {
                         if ((loginRequestUri ?? siteUri).Host.Equals(args.Url.Host))
                         {
-
                             var cookieString = CookieReader.GetCookie(siteUrl).Replace("; ", ",").Replace(";", ",");
 
                             // Get FedAuth and rtFa cookies issued by ADFS when accessing claims aware applications.
@@ -98,7 +98,7 @@ namespace PnP.PowerShell.Commands.Utilities
                             if (authCookies != null)
                             {
                                 // Set the authentication cookies both on the SharePoint Online Admin as well as on the SharePoint Online domains to allow for APIs on both domains to be used
-                                var authCookiesString = string.Join(",", authCookies);
+                                //var authCookiesString = string.Join(",", authCookies);
                                 //authCookiesContainer.SetCookies(siteUri, authCookiesString);
                                 var extension = Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment);
                                 var cookieCollection = new CookieCollection();
@@ -108,7 +108,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                     var cookieValue = cookie.Substring(cookieName.Length + 1);
                                     cookieCollection.Add(new Cookie(cookieName, cookieValue));
                                 }
-                                authCookiesContainer.Add(siteUri, cookieCollection);
+                                authCookiesContainer.Add(new Uri(cookieUrl), cookieCollection);
                                 var adminSiteUri = new Uri(siteUri.Scheme + "://" + siteUri.Authority.Replace($".sharepoint.{extension}", $"-admin.sharepoint.{extension}"));
                                 authCookiesContainer.Add(adminSiteUri, cookieCollection);
                                 form.Close();
@@ -141,6 +141,13 @@ namespace PnP.PowerShell.Commands.Utilities
                         e.WebRequestExecutor.WebRequest.CookieContainer = authCookiesContainer;
 #if !NETFRAMEWORK
                         var hostUrl = $"https://{e.WebRequestExecutor.WebRequest.Host}";
+                        var requestUri = e.WebRequestExecutor.WebRequest.RequestUri;
+                        if (requestUri.LocalPath.Contains("/sites/") || requestUri.LocalPath.Contains("/teams/"))
+                        {
+                            var managedPath = requestUri.LocalPath.Substring(0, requestUri.LocalPath.IndexOf('/', 2));
+                            var siteName = requestUri.LocalPath.Substring(managedPath.Length + 1, requestUri.LocalPath.IndexOf('/', managedPath.Length) - 1);
+                            hostUrl = $"{hostUrl}{managedPath}/{siteName}";
+                        }
                         if (requestDigestInfos.TryGetValue(hostUrl, out requestDigestInfo))
                         {
                             // We only have to add a request digest when running in dotnet core
