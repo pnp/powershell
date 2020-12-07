@@ -290,22 +290,22 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             {
                 // try to retrieve an access token for the Microsoft Graph:
 
-                var accessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                var accessToken = PnPConnection.CurrentConnection.TryGetAccessTokenAsync(Enums.TokenAudience.MicrosoftGraph).GetAwaiter().GetResult();
                 if (accessToken == null)
                 {
                     if (PnPConnection.CurrentConnection.PSCredential != null)
                     {
                         // Using normal credentials
-                        accessToken = TokenHandler.AcquireToken("graph.microsoft.com", null);
+                        accessToken = TokenHandler.AcquireTokenAsync("graph.microsoft.com", null).GetAwaiter().GetResult();
                     }
                     if (accessToken == null)
                     {
-                        throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
+                        throw new PSInvalidOperationException("Your template contains artifacts that require an access token for https://graph.microsoft.com. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
                     }
                 }
             }
 
-            using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
+            using (var provisioningContext = new PnPProvisioningContext(async (resource, scope) =>
             {
                 if(resource.ToLower().StartsWith("https://"))
                 {
@@ -317,11 +317,11 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                 {
                     if (resource.Equals("graph.microsoft.com", StringComparison.OrdinalIgnoreCase))
                     {
-                        var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                        var graphAccessToken = await PnPConnection.CurrentConnection.TryGetAccessTokenAsync(Enums.TokenAudience.MicrosoftGraph);
                         if (graphAccessToken != null)
                         {
                             // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                            return Task.FromResult(graphAccessToken);
+                            return graphAccessToken;
                         }
                     }
                 }
@@ -329,7 +329,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                 if (PnPConnection.CurrentConnection.PSCredential != null || PnPConnection.CurrentConnection.ClientId != null)
                 {
                     // Using normal credentials
-                    return Task.FromResult(TokenHandler.AcquireToken(resource, null));
+                    return await TokenHandler.AcquireTokenAsync(resource, null);
                 }
                 else
                 {

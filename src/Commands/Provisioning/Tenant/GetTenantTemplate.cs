@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         protected override void ExecuteCmdlet()
         {
-            
+
             ExtractConfiguration extractConfiguration;
 
             if (ParameterSpecified(nameof(Configuration)))
@@ -72,7 +72,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 {
                     Out = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Out);
                 }
-                if(Out.ToLower().EndsWith(".pnp"))
+                if (Out.ToLower().EndsWith(".pnp"))
                 {
                     WriteWarning("This cmdlet does not save a tenant template as a PnP file.");
                 }
@@ -168,23 +168,23 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                         }
                 }
             };
-            using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
+            using (var provisioningContext = new PnPProvisioningContext(async (resource, scope) =>
             {
                 // Get Azure AD Token
                 if (PnPConnection.CurrentConnection != null)
                 {
-                    var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                    var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessTokenAsync(Enums.TokenAudience.MicrosoftGraph).GetAwaiter().GetResult();
                     if (graphAccessToken != null)
                     {
                         // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                        return Task.FromResult(graphAccessToken);
+                        return graphAccessToken;
                     }
                 }
 
                 if (PnPConnection.CurrentConnection.PSCredential != null)
                 {
                     // Using normal credentials
-                    return Task.FromResult(TokenHandler.AcquireToken(resource, null));
+                    return await TokenHandler.AcquireTokenAsync(resource, null);
                 }
                 else
                 {

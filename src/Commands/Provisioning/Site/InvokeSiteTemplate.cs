@@ -332,11 +332,11 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 // Get Azure AD Token
                 if (PnPConnection.CurrentConnection != null)
                 {
-                    var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                    var graphAccessToken = await PnPConnection.CurrentConnection.TryGetAccessTokenAsync(Enums.TokenAudience.MicrosoftGraph);
                     if (graphAccessToken != null)
                     {
                         // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                        return await Task.FromResult(graphAccessToken);
+                        return graphAccessToken;
 
                     }
                 }
@@ -344,12 +344,19 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 if (PnPConnection.CurrentConnection.PSCredential != null)
                 {
                     // Using normal credentials
-                    return await Task.FromResult(TokenHandler.AcquireToken(resource, null));
+                    return await TokenHandler.AcquireTokenAsync(resource, null);
                 }
                 else
                 {
                     // No token...
-                    throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
+                    if (resource.ToLower().Contains(".sharepoint."))
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        throw new PSInvalidOperationException($"Your template contains artifacts that require an access token for {resource}. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
+                    }
                 }
             }))
             {

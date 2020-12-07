@@ -17,6 +17,7 @@ using PnP.PowerShell.ALC;
 using PnP.PowerShell.Commands.Attributes;
 using System.Threading;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -136,9 +137,10 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="tokenAudience">Audience to try to get an access token for</param>
         /// <param name="permissionScopes">The specific permission scopes to request access to (i.e. Group.ReadWrite.All). Optional, will use default permission scopes assigned to clientId if not specified.</param>
         /// <returns>AccessToken for the audience or NULL if unable to retrieve an access token for the audience on the current connection</returns>
-        internal string TryGetAccessToken(TokenAudience tokenAudience, string[] permissionScopes = null)
+        internal async Task<string> TryGetAccessTokenAsync(TokenAudience tokenAudience, string[] permissionScopes = null)
         {
-            return TryGetToken(tokenAudience, AzureEnvironment, permissionScopes)?.AccessToken;
+            var token = await TryGetTokenAsync(tokenAudience, AzureEnvironment, permissionScopes);
+            return token?.AccessToken;
         }
 
         internal static Action<DeviceCodeResult> DeviceLoginCallback(PSCmdlet cmdlet, bool launchBrowser)
@@ -164,7 +166,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="tokenAudience">Audience to try to get a token for</param>
         /// <param name="orPermissionScopes">The specific permission scopes to request access to (i.e. Group.ReadWrite.All). Optional, will use default permission scopes assigned to clientId if not specified.</param>
         /// <returns><see cref="GenericToken"/> for the audience or NULL if unable to retrieve a token for the audience on the current connection</returns>
-        internal GenericToken TryGetToken(TokenAudience tokenAudience, AzureEnvironment azureEnvironment, string[] orPermissionScopes = null, string[] andPermissionScopes = null, TokenType tokenType = TokenType.All, string[] managementShellScopes = null, System.Management.Automation.PSCmdlet cmdletInstance = null)
+        internal async Task<GenericToken> TryGetTokenAsync(TokenAudience tokenAudience, AzureEnvironment azureEnvironment, string[] orPermissionScopes = null, string[] andPermissionScopes = null, TokenType tokenType = TokenType.All, string[] managementShellScopes = null, System.Management.Automation.PSCmdlet cmdletInstance = null)
         {
             GenericToken token = null;
 
@@ -179,13 +181,13 @@ namespace PnP.PowerShell.Commands.Base
                         // Take the remaining scopes and try requesting them from the Microsoft Graph API
                         var scopes = Scopes.Except(officeManagementApiScopes).ToArray();
                         var cancellationToken = default(CancellationToken);
-                        token = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, scopes, DeviceLoginCallback(null, false), AzureEnvironment, ref cancellationToken);
+                        token = await GraphToken.AcquireApplicationTokenDeviceLoginAsync(PnPConnection.PnPManagementShellClientId, scopes, DeviceLoginCallback(null, false), AzureEnvironment, cancellationToken);
                     }
                     else if (ConnectionMethod == ConnectionMethod.ManagedIdentity)
                     {
 
                         cmdletInstance?.WriteVerbose("Acquiring access token from Managed Identity End Point");
-                        token = GenericToken.AcquireManagedIdentityToken(HttpClient, "https://graph.microsoft.com", cmdletInstance) as GraphToken;
+                        token = GenericToken.AcquireManagedIdentityTokenAsync(HttpClient, "https://graph.microsoft.com", cmdletInstance).GetAwaiter().GetResult() as GraphToken;
                     }
                     else
                     {
@@ -193,11 +195,11 @@ namespace PnP.PowerShell.Commands.Base
                         {
                             if (Certificate != null)
                             {
-                                token = GraphToken.AcquireApplicationToken(Tenant, ClientId, Certificate, AzureEnvironment);
+                                token = await GraphToken.AcquireApplicationTokenAsync(Tenant, ClientId, Certificate, AzureEnvironment);
                             }
                             else if (ClientSecret != null)
                             {
-                                token = GraphToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret, AzureEnvironment);
+                                token = await GraphToken.AcquireApplicationTokenAsync(Tenant, ClientId, ClientSecret, AzureEnvironment);
                             }
                             else if (Scopes != null || managementShellScopes != null)
                             {
@@ -207,7 +209,7 @@ namespace PnP.PowerShell.Commands.Base
                                 var scopes = scopesToParse.Except(officeManagementApiScopes).ToArray();
                                 if (scopes.Length > 0)
                                 {
-                                    token = PSCredential == null ? GraphToken.AcquireApplicationTokenInteractive(PnPManagementShellClientId, scopes, azureEnvironment) : GraphToken.AcquireDelegatedTokenWithCredentials(PnPManagementShellClientId, scopes, PSCredential.UserName, PSCredential.Password, azureEnvironment);
+                                    token = PSCredential == null ? await GraphToken.AcquireApplicationTokenInteractiveAsync(PnPManagementShellClientId, scopes, azureEnvironment) : await GraphToken.AcquireDelegatedTokenWithCredentialsAsync(PnPManagementShellClientId, scopes, PSCredential.UserName, PSCredential.Password, azureEnvironment);
                                 }
                                 else
                                 {
@@ -223,11 +225,11 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         if (Certificate != null)
                         {
-                            token = OfficeManagementApiToken.AcquireApplicationToken(Tenant, ClientId, Certificate, AzureEnvironment);
+                            token = await OfficeManagementApiToken.AcquireApplicationTokenAsync(Tenant, ClientId, Certificate, AzureEnvironment);
                         }
                         else if (ClientSecret != null)
                         {
-                            token = OfficeManagementApiToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret, AzureEnvironment);
+                            token = await OfficeManagementApiToken.AcquireApplicationTokenAsync(Tenant, ClientId, ClientSecret, AzureEnvironment);
                         }
                         else if (Scopes != null || managementShellScopes != null)
                         {
@@ -236,7 +238,7 @@ namespace PnP.PowerShell.Commands.Base
                             // Take the remaining scopes and try requesting them from the Microsoft Graph API
                             if (scopes.Length > 0)
                             {
-                                token = PSCredential == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(PnPManagementShellClientId, scopes, azureEnvironment) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPManagementShellClientId, scopes, PSCredential.UserName, PSCredential.Password, azureEnvironment);
+                                token = PSCredential == null ? await OfficeManagementApiToken.AcquireApplicationTokenInteractiveAsync(PnPManagementShellClientId, scopes, azureEnvironment) : await OfficeManagementApiToken.AcquireDelegatedTokenWithCredentialsAsync(PnPManagementShellClientId, scopes, PSCredential.UserName, PSCredential.Password, azureEnvironment);
                             }
                             else
                             {
@@ -374,7 +376,7 @@ namespace PnP.PowerShell.Commands.Base
                 ContextCache = new List<ClientContext> { Context };
 
                 // If we have a SharePoint or a Graph Access Token, use it for the SharePoint connection
-                var accessToken = AccessTokens.ContainsKey(TokenAudience.SharePointOnline) ? TryGetAccessToken(TokenAudience.SharePointOnline) : TryGetAccessToken(TokenAudience.MicrosoftGraph);
+                var accessToken = AccessTokens.ContainsKey(TokenAudience.SharePointOnline) ? TryGetAccessTokenAsync(TokenAudience.SharePointOnline).GetAwaiter().GetResult() : TryGetAccessTokenAsync(TokenAudience.MicrosoftGraph).GetAwaiter().GetResult();
                 if (accessToken != null)
                 {
                     Context.ExecutingWebRequest += (sender, args) =>
@@ -699,7 +701,7 @@ namespace PnP.PowerShell.Commands.Base
                 ApplicationInsights = new ApplicationInsights();
                 var coreAssembly = Assembly.GetExecutingAssembly();
                 var operatingSystem = Utilities.OperatingSystem.GetOSString();
-                
+
                 ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString(), operatingSystem);
                 ApplicationInsights.TrackEvent("Connect-PnPOnline");
             }

@@ -86,7 +86,7 @@ namespace PnP.PowerShell.Commands.Base
             GenericToken tokenResult = null;
             try
             {
-                tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, scopes, PnPConnection.DeviceLoginCallback(cmdlet, launchBrowser), azureEnvironment, ref cancellationToken);
+                tokenResult = GraphToken.AcquireApplicationTokenDeviceLoginAsync(PnPConnection.PnPManagementShellClientId, scopes, PnPConnection.DeviceLoginCallback(cmdlet, launchBrowser), azureEnvironment, cancellationToken).GetAwaiter().GetResult();
             }
             catch (MsalUiRequiredException ex)
             {
@@ -120,12 +120,12 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static PnPConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, PSCmdlet cmdlet, AzureEnvironment azureEnvironment, ref CancellationToken cancellationToken)
         {
-            var tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(
+            var tokenResult = GraphToken.AcquireApplicationTokenDeviceLoginAsync(
                 PnPConnection.PnPManagementShellClientId,
                 new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" },
                 PnPConnection.DeviceLoginCallback(cmdlet, launchBrowser),
                 azureEnvironment,
-                ref cancellationToken);
+                cancellationToken).GetAwaiter().GetResult();
             var spoConnection = new PnPConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, PnPPSVersionTag, InitializationType.GraphDeviceLogin)
             {
                 Scopes = new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" },

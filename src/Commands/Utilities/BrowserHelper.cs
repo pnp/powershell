@@ -21,7 +21,6 @@ namespace PnP.PowerShell.Commands.Utilities
 
 #pragma warning disable CS0169
         // not required when compiling for .NET Framework
-        private static DateTime expiresOn;
         private static ConcurrentDictionary<string, (string requestDigest, DateTime expiresOn)> requestDigestInfos = new ConcurrentDictionary<string, (string requestDigest, DateTime expiresOn)>();
 #pragma warning restore CS0169
         internal static void LaunchBrowser(string url)

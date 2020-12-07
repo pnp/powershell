@@ -591,14 +591,16 @@ namespace PnP.PowerShell.Commands.Base
             // If we have Office 365 scopes, get a token for those first
             if (officeManagementApiScopes.Length > 0)
             {
-                var officeManagementApiToken = credentials == null ? OfficeManagementApiToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, PnPConnection.DeviceLoginCallback(this, true), azureEnvironment, ref cancellationToken) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, credentials.UserName, credentials.Password);
+                var officeManagementApiToken = credentials == null ?
+                    OfficeManagementApiToken.AcquireApplicationTokenDeviceLoginAsync(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, PnPConnection.DeviceLoginCallback(this, true), azureEnvironment, cancellationToken).GetAwaiter().GetResult() :
+                    OfficeManagementApiToken.AcquireDelegatedTokenWithCredentialsAsync(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, credentials.UserName, credentials.Password).GetAwaiter().GetResult();
                 connection = PnPConnection.GetConnectionWithToken(officeManagementApiToken, TokenAudience.OfficeManagementApi, InitializationType.DeviceLogin, credentials);
             }
 
             // If we have Graph scopes, get a token for it
             if (graphScopes.Length > 0)
             {
-                var graphToken = credentials == null ? GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, graphScopes, PnPConnection.DeviceLoginCallback(this, true), azureEnvironment, ref cancellationToken) : GraphToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, graphScopes, credentials.UserName, credentials.Password, AzureEnvironment);
+                var graphToken = credentials == null ? GraphToken.AcquireApplicationTokenDeviceLoginAsync(PnPConnection.PnPManagementShellClientId, graphScopes, PnPConnection.DeviceLoginCallback(this, true), azureEnvironment, cancellationToken).GetAwaiter().GetResult() : GraphToken.AcquireDelegatedTokenWithCredentialsAsync(PnPConnection.PnPManagementShellClientId, graphScopes, credentials.UserName, credentials.Password, AzureEnvironment).GetAwaiter().GetResult();
                 // If there's a connection already, add the AAD token to it, otherwise set up a new connection with it
                 if (connection != null)
                 {

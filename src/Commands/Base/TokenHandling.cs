@@ -1,12 +1,13 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Model;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace PnP.PowerShell.Commands.Base
 {
     internal static class TokenHandler
     {
-        internal static string AcquireToken(string resource, string scope = null)
+        internal static async Task<string> AcquireTokenAsync(string resource, string scope = null)
         {
             GenericToken token = null;
             if (PnPConnection.CurrentConnection == null)
@@ -21,11 +22,11 @@ namespace PnP.PowerShell.Commands.Base
                     if (scope == null)
                     {
                         var scopes = new[] { $"https://{resource.Replace("https://", "").TrimEnd('/')}/.default" };
-                        token = GenericToken.AcquireDelegatedTokenWithCredentials(PnPConnection.CurrentConnection.ClientId, scopes, "https://login.microsoftonline.com/organizations/", PnPConnection.CurrentConnection.PSCredential.UserName, PnPConnection.CurrentConnection.PSCredential.Password);
+                        token = await GenericToken.AcquireDelegatedTokenWithCredentialsAsync(PnPConnection.CurrentConnection.ClientId, scopes, "https://login.microsoftonline.com/organizations/", PnPConnection.CurrentConnection.PSCredential.UserName, PnPConnection.CurrentConnection.PSCredential.Password);
                     }
                     else
                     {
-                        token = GenericToken.AcquireDelegatedTokenWithCredentials(PnPConnection.CurrentConnection.ClientId, new[] { scope }, "https://login.microsoftonline.com/organizations/", PnPConnection.CurrentConnection.PSCredential.UserName, PnPConnection.CurrentConnection.PSCredential.Password);
+                        token = await GenericToken.AcquireDelegatedTokenWithCredentialsAsync(PnPConnection.CurrentConnection.ClientId, new[] { scope }, "https://login.microsoftonline.com/organizations/", PnPConnection.CurrentConnection.PSCredential.UserName, PnPConnection.CurrentConnection.PSCredential.Password);
                     }
                 }
                 else
@@ -34,11 +35,11 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         // SharePoint or Graph V1 resource
                         var scopes = new[] { $"https://{resource.Replace("https://", "").TrimEnd('/')}/.default" };
-                        token = GenericToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, scopes, "https://login.microsoftonline.com/organizations/", PnPConnection.CurrentConnection.PSCredential.UserName, PnPConnection.CurrentConnection.PSCredential.Password);
+                        token = await GenericToken.AcquireDelegatedTokenWithCredentialsAsync(PnPConnection.PnPManagementShellClientId, scopes, "https://login.microsoftonline.com/organizations/", PnPConnection.CurrentConnection.PSCredential.UserName, PnPConnection.CurrentConnection.PSCredential.Password);
                     }
                     else
                     {
-                        token = GenericToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, new[] { scope }, "https://login.microsoftonline.com/organizations/", PnPConnection.CurrentConnection.PSCredential.UserName, PnPConnection.CurrentConnection.PSCredential.Password);
+                        token = await GenericToken.AcquireDelegatedTokenWithCredentialsAsync(PnPConnection.PnPManagementShellClientId, new[] { scope }, "https://login.microsoftonline.com/organizations/", PnPConnection.CurrentConnection.PSCredential.UserName, PnPConnection.CurrentConnection.PSCredential.Password);
                     }
                 }
             }
@@ -50,11 +51,11 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     // SharePoint token
                     var scopes = new[] { $"https://{resource}//.default" };
-                    token = GenericToken.AcquireApplicationToken(tenantId, clientId, "https://login.microsoftonline/organizations/", scopes, clientSecret);
+                    token = await GenericToken.AcquireApplicationTokenAsync(tenantId, clientId, "https://login.microsoftonline/organizations/", scopes, clientSecret);
                 }
                 else
                 {
-                    token = GenericToken.AcquireApplicationToken(tenantId, clientId, "https://login.microsoftonline.com/organizations/", new[] { scope }, clientSecret);
+                    token = await GenericToken.AcquireApplicationTokenAsync(tenantId, clientId, "https://login.microsoftonline.com/organizations/", new[] { scope }, clientSecret);
                 }
             }
             else if (!string.IsNullOrEmpty(PnPConnection.CurrentConnection.ClientId) && PnPConnection.CurrentConnection.Certificate != null)
@@ -65,11 +66,11 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     // SharePoint token
                     var scopes = new[] { $"https://{resource}//.default" };
-                    token = GenericToken.AcquireApplicationToken(tenantId, clientId, "https://login.microsoftonline/organizations/", scopes, certificate);
+                    token = await GenericToken.AcquireApplicationTokenAsync(tenantId, clientId, "https://login.microsoftonline/organizations/", scopes, certificate);
                 }
                 else
                 {
-                    token = GenericToken.AcquireApplicationToken(tenantId, clientId, "https://login.microsoftonline/organizations/", new[] { scope }, certificate);
+                    token = await GenericToken.AcquireApplicationTokenAsync(tenantId, clientId, "https://login.microsoftonline/organizations/", new[] { scope }, certificate);
                 }
             }
             if (token != null)

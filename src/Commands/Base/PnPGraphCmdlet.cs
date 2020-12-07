@@ -72,7 +72,7 @@ namespace PnP.PowerShell.Commands.Base
                         }
                     }
                     // There is an active connection, try to get a Microsoft Graph Token on the active connection
-                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.MicrosoftGraph, PnPConnection.CurrentConnection.AzureEnvironment, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray(), tokenType, managementShellScopes, this) is GraphToken token)
+                    if (PnPConnection.CurrentConnection.TryGetTokenAsync(Enums.TokenAudience.MicrosoftGraph, PnPConnection.CurrentConnection.AzureEnvironment, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray(), tokenType, managementShellScopes, this).GetAwaiter().GetResult() is GraphToken token)
                     {
                         WriteVerbose("Token returned to Graph Cmdlet");
                         // Microsoft Graph Access Token available, return it

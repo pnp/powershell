@@ -68,7 +68,7 @@ namespace PnP.PowerShell.Commands.Base
                         }
                     }
                     // There is an active connection, try to get a Microsoft Office Management API Token on the active connection
-                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.OfficeManagementApi, PnPConnection.CurrentConnection.AzureEnvironment, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray(), tokenType, managementShellScopes) is OfficeManagementApiToken token)
+                    if (PnPConnection.CurrentConnection.TryGetTokenAsync(Enums.TokenAudience.OfficeManagementApi, PnPConnection.CurrentConnection.AzureEnvironment, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray(), tokenType, managementShellScopes).GetAwaiter().GetResult() is OfficeManagementApiToken token)
                     {
                         // Microsoft Office Management API Access Token available, return it
                         return token;
