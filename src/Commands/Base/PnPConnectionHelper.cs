@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Base
                     }
                     else
                     {
-                        context = PnPClientContext.ConvertFrom(authManager.GetACSAppOnlyContext(url.ToString(), realm, clientId, clientSecret, acsHostUrl: authManager.GetACSEndPoint(azureEnvironment), globalEndPointPrefix: authManager.GetACSEndPointPrefix(azureEnvironment)));
+                        context = PnPClientContext.ConvertFrom(authManager.GetACSAppOnlyContext(url.ToString(), realm, clientId, clientSecret, acsHostUrl: Framework.AuthenticationManager.GetACSEndPoint(azureEnvironment), globalEndPointPrefix: Framework.AuthenticationManager.GetACSEndPointPrefix(azureEnvironment)));
                     }
                     context.ApplicationName = Resources.ApplicationName;
                     context.DisableReturnValueCache = true;
