@@ -1,0 +1,23 @@
+# This is a basic workflow to help you get started with Actions
+
+name: PRCheck
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+    - name: Install dependencies
+      run: dotnet restore
+      working-directory: src
+    - name: Build
+      shell: pwsh
+      run: |
+        ./build/Build-PRCheck.ps1
