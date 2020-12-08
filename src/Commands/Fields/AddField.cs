@@ -58,6 +58,10 @@ namespace PnP.PowerShell.Commands.Fields
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOWEB)]
         public string ClientSideComponentProperties;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDBYXMLTOLIST)]
+        public SwitchParameter AddToAllContentTypes;
+
         public object GetDynamicParameters()
         {
             if (Type == FieldType.Choice || Type == FieldType.MultiChoice)
@@ -100,6 +104,12 @@ namespace PnP.PowerShell.Commands.Fields
                         Group = Group,
                         AddToDefaultView = AddToDefaultView
                     };
+
+                    if (AddToAllContentTypes)
+                    {
+                        fieldCI.FieldOptions |= AddFieldOptions.AddToAllContentTypes;
+                    }
+
                     if (ClientSideComponentId != null)
                     {
                         fieldCI.ClientSideComponentId = ClientSideComponentId;
