@@ -25,7 +25,7 @@ jobs:
       run: dotnet restore
       working-directory: pnpframework/src/lib
     - name: Build PnP.Framework
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore -p:WarningLevel=0
       working-directory: pnpframework/src/lib/PnP.Framework
     - name: Install PnP.PowerShell dependencies
       run: dotnet restore
