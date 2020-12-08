@@ -7,17 +7,29 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout PnP.Framework
+      uses: actions/checkout@v2
+      with:
+        repository: pnp/pnpframework
+        path: pnpframework
+    - name: Checkout PnP.PowerShell
+      uses: actions/checkout@v2
+      with:
+        path: powershell
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
-    - name: Install dependencies
+    - name: Install PnP.Framework dependencies
       run: dotnet restore
-      working-directory: src
-    - name: Build
-      shell: pwsh
-      run: |
-        ./build/Build-PRCheck.ps1
+      working-directory: pnpframework/src/lib
+    - name: Build PnP.Framework
+      run: dotnet build --configuration Release --no-restore
+      working-directory: pnpframework/src/lib
+    - name: Install PnP.PowerShell dependencies
+      run: dotnet restore
+      working-directory: powershell/src
+    - name: Build PnP.PowerShell
+      run: dotnet build --configuration Release --no-restore -p:LocalPnPFramework=true
