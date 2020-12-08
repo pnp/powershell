@@ -20,7 +20,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0
+        dotnet-version: '5.0.100'
     - name: Install PnP.Framework dependencies
       run: dotnet restore
       working-directory: pnpframework/src/lib
