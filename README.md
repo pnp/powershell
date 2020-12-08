@@ -2,6 +2,7 @@
 
 ![Nightly Release to PowerShell Gallery](https://github.com/pnp/powershell/workflows/Nightly%20Release%20to%20PowerShell%20Gallery/badge.svg?branch=dev) ![Build External Help](https://github.com/pnp/powershell/workflows/Build%20External%20Help/badge.svg?branch=dev)
 
+**You can find the documentation at https://pnp.github.io/powershell**
 
 **PnP PowerShell** is a .NET Core 3.1 / .NET Framework 4.6.1 based PowerShell Module providing over 400 cmdlets that work with Microsoft 365 environments and more specifically SharePoint Online and Microsoft Teams.
 
