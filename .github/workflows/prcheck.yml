@@ -1,10 +1,13 @@
-# This is a basic workflow to help you get started with Actions
-
 name: PRCheck
 
 on:
   workflow_dispatch:
-
+  push:
+    branches: [ dev ]
+    paths: 'src/**'
+  pull_request:
+    branches: [ dev ]
+    paths: 'src/**'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,6 +17,7 @@ jobs:
       with:
         repository: pnp/pnpframework
         path: pnpframework
+        ref: 'dev'
     - name: Checkout PnP.PowerShell
       uses: actions/checkout@v2
       with:
@@ -21,15 +25,16 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.301
+        dotnet-version: '5.0.100'
     - name: Install PnP.Framework dependencies
       run: dotnet restore
       working-directory: pnpframework/src/lib
     - name: Build PnP.Framework
-      run: dotnet build --configuration Release --no-restore
-      working-directory: pnpframework/src/lib
+      run: dotnet build --configuration Release --no-restore -p:WarningLevel=0
+      working-directory: pnpframework/src/lib/PnP.Framework
     - name: Install PnP.PowerShell dependencies
       run: dotnet restore
       working-directory: powershell/src
     - name: Build PnP.PowerShell
       run: dotnet build --configuration Release --no-restore -p:LocalPnPFramework=true
+      working-directory: powershell/src
