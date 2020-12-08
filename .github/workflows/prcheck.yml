@@ -36,5 +36,5 @@ jobs:
       run: dotnet restore
       working-directory: powershell/src
     - name: Build PnP.PowerShell
-      run: dotnet build --configuration Release --no-restore -p:LocalPnPFramework=true
+      run: dotnet build --configuration Release --no-restore -p:PnPFrameworkPath="..\..\..\pnpframework\src\lib\PnP.Framework\bin\Release\netstandard2.0\PnP.Framework.dll"
       working-directory: powershell/src
