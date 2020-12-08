@@ -51,7 +51,7 @@
     <PackageReference Include="TextCopy" Version="4.2.0" />
     <ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
     <Reference Include="PnP.Framework" Condition="'$(LocalPnPFramework)' == 'true'">
-      <HintPath>..\..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll</HintPath>
+      <HintPath>..\..\..\pnpframework\src\lib\PnP.Framework\bin\$(Configuration)\netstandard2.0\PnP.Framework.dll</HintPath>
       <Private>true</Private>
     </Reference>
   </ItemGroup>
