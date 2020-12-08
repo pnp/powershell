@@ -32,3 +32,4 @@ jobs:
       working-directory: powershell/src
     - name: Build PnP.PowerShell
       run: dotnet build --configuration Release --no-restore -p:LocalPnPFramework=true
+      working-directory: powershell/src
