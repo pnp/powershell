@@ -38,7 +38,8 @@ if ($Force) {
 	$buildCmd += " --force"
 }
 if ($LocalPnPFramework) {
-	$buildCmd += " -p:LocalPnPFramework=true"
+	$buildCmd += " -p:PnPFrameworkPath=`"..\..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll`""
+	#$buildCmd += " -p:LocalPnPFramework=true"
 }
 Write-Host "Executing $buildCmd" -ForegroundColor Yellow
 
