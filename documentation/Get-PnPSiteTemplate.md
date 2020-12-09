@@ -47,42 +47,49 @@ Get-PnPSiteTemplate -Out template.xml
 
 Extracts a provisioning template in XML format from the current web.
 
-### EXAMPLE 3
+## EXAMPLE 3
+```powershell
+Get-PnPSiteTemplate -Out template.md
+```
+
+Extracts a provisioning template in readible markdown format.
+
+### EXAMPLE 4
 ```powershell
 Get-PnPSiteTemplate -Out template.pnp -Schema V201503
 ```
 
 Extracts a provisioning template in Office Open XML from the current web and saves it in the V201503 version of the schema.
 
-### EXAMPLE 4
+### EXAMPLE 5
 ```powershell
 Get-PnPSiteTemplate -Out template.pnp -IncludeAllTermGroups
 ```
 
 Extracts a provisioning template in Office Open XML from the current web and includes all term groups, term sets and terms from the Managed Metadata Service Taxonomy.
 
-### EXAMPLE 5
+### EXAMPLE 6
 ```powershell
 Get-PnPSiteTemplate -Out template.pnp -IncludeSiteCollectionTermGroup
 ```
 
 Extracts a provisioning template in Office Open XML from the current web and includes the term group currently (if set) assigned to the site collection.
 
-### EXAMPLE 6
+### EXAMPLE 7
 ```powershell
 Get-PnPSiteTemplate -Out template.pnp -PersistBrandingFiles
 ```
 
 Extracts a provisioning template in Office Open XML from the current web and saves the files that make up the composed look to the same folder as where the template is saved.
 
-### EXAMPLE 7
+### EXAMPLE 8
 ```powershell
 Get-PnPSiteTemplate -Out template.pnp -Handlers Lists, SiteSecurity
 ```
 
 Extracts a provisioning template in Office Open XML from the current web, but only processes lists and site security when generating the template.
 
-### EXAMPLE 8
+### EXAMPLE 9
 ```powershell
 $handler1 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
 $handler2 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler2
@@ -91,7 +98,7 @@ Get-PnPSiteTemplate -Out NewTemplate.xml -ExtensibilityHandlers $handler1,$handl
 
 This will create two new ExtensibilityHandler objects that are run during extraction of the template
 
-### EXAMPLE 9
+### EXAMPLE 10
 Only supported on SP2016, SP2019 and SP Online
 
 
@@ -101,7 +108,7 @@ Get-PnPSiteTemplate -Out template.pnp -PersistMultiLanguageResources
 
 Extracts a provisioning template in Office Open XML from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named after the value specified in the Out parameter. For instance if the Out parameter is specified as -Out 'template.xml' the generated resource file will be called 'template.en-US.resx'.
 
-### EXAMPLE 10
+### EXAMPLE 11
 Only supported on SP2016, SP2019 and SP Online
 
 
@@ -111,28 +118,28 @@ Get-PnPSiteTemplate -Out template.pnp -PersistMultiLanguageResources -ResourceFi
 
 Extracts a provisioning template in Office Open XML from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named 'MyResources.en-US.resx' etc.
 
-### EXAMPLE 11
+### EXAMPLE 12
 ```powershell
 $template = Get-PnPSiteTemplate -OutputInstance
 ```
 
 Extracts an instance of a provisioning template object from the current web. This syntax cannot be used together with the -Out parameter, but it can be used together with any other supported parameters.
 
-### EXAMPLE 12
+### EXAMPLE 13
 ```powershell
 Get-PnPSiteTemplate -Out template.pnp -ContentTypeGroups "Group A","Group B"
 ```
 
 Extracts a provisioning template in Office Open XML from the current web, but only processes content types from the to given content type groups.
 
-### EXAMPLE 13
+### EXAMPLE 14
 ```powershell
 Get-PnPSiteTemplate -Out template.pnp -ExcludeContentTypesFromSyndication
 ```
 
 Extracts a provisioning template in Office Open XML from the current web, excluding content types provisioned through content type syndication (content type hub), in order to prevent provisioning errors if the target also provision the content type using syndication.
 
-### EXAMPLE 14
+### EXAMPLE 15
 ```powershell
 Get-PnPSiteTemplate -Out template.pnp -ListsToExtract "Title of List One","95c4efd6-08f4-4c67-94ae-49d696ba1298","Title of List Three"
 ```
@@ -425,7 +432,10 @@ Accept wildcard characters: False
 ```
 
 ### -Out
-Filename to write to, optionally including full path
+Filename to write to, optionally including full path. The format of the file is based upon the extension you specify. 
+- .xml will generate an XML file
+- .pnp will generate a PnP Provisioning Package, which is a file that contains all artifacts in a single archive (files, images, etc.)
+- .md will generate a user readible markdown report. This is work in progress and will be extended in the future.
 
 ```yaml
 Type: String

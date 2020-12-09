@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [0.1.*-nightly - 0.2.*-nightly]
 
 ### Added
+- Added `Convert-PnPSiteTemplateToMarkdown` to convert an existing XML based template to a markdown report. Notice that this is work in progress and the functionality will increase. See also the 'Changed' section below for information about `Get-PnPSiteTemplate` (0.3.5)
 - Added `-UseWeblogin` and `-ForceAuthentication` to `Connect-PnPOnline` to allow using Multi-Factor Authentication. Notice this uses cookie based authentication, which is limited in its functionality. Using -UseWebLogin we will for instance not be able to acquire an access token for the Graph, and as a result none of the Graph related cmdlets will work. Also some of the functionality of the provisioning engine (`Get-PnPSiteTemplate`, `Get-PnPTenantTemplate`, `Invoke-PnPSiteTemplate`, `Invoke-PnPTenantTemplate`) will not work because of this reason. The cookies will in general expire within a few days and if you use `-UseWebLogin` within that time popup window will appear that will dissappear immediately, this is expected. Use `-ForceAuthentication` to reset the authentication cookies and force a new login. (0.2.25)
 - Allowed to specify -ClientId when logging in with credentials so people can use their own Azure AD apps and credentials for authentication towards SharePoint Online (0.2.17)
 - Added environment variable check (set `PNPPOWERSHELL_UPDATECHECK` to `Off`) to Connect-PnPOnline to skip version check if set. (0.2.15)
@@ -73,6 +74,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPPlannerTask` cmdlet (0.1.18)
 
 ### Changed
+- Added filename support for .md file with `Get-PnPSiteTemplate` to generate a markdown file. e.g. you can now execute for instance `Get-PnPSiteTemplate -Out .\myreport.md -Handlers Lists,ContentTypes,Features,WebSettings` to generate an markdown report of those artifacts. This is work in progress.
 - Fixed issue with `-UseWebLogin` throws a 403 error when connecting to a different site collection than the root site collection.
 - Removed `Enable-PnPPowerShellTelemetry` and `Disable-PnPPowerShellTelemetry`. See [Configure PnP PowerShell](https://pnp.github.io/powershell) for more information on how to enable or disable telemetry collection (0.2.22)
 - Obsoleted `-NoTelemetry` and `-NoVersionCheck` on `Connect-PnPOnline`. You can set these as environment variables now. See [Configure PnP PowerShell](https://pnp.github.io/powershell) for more information (0.2.22)

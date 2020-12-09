@@ -7,7 +7,6 @@ using PnP.Framework.Provisioning.Connectors;
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.ObjectHandlers;
 using PnP.Framework.Provisioning.Providers;
-
 using PnP.Framework.Provisioning.Providers.Xml;
 using File = System.IO.File;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
@@ -18,6 +17,8 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.Framework.Provisioning.Model.Configuration;
 using PnP.PowerShell.Commands.Base;
 using System.Threading.Tasks;
+using PnP.Framework.Provisioning.Providers.Markdown;
+
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
@@ -201,6 +202,10 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 creationInformation.FileConnector = new OpenXMLConnector(packageName, fileSystemConnector);
             }
+            else if (extension == ".md")
+            {
+                creationInformation.FileConnector = fileSystemConnector;
+            }
             else
             {
                 creationInformation.FileConnector = fileSystemConnector;
@@ -359,21 +364,21 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             ProvisioningTemplate template = null;
             using (var provisioningContext = new PnPProvisioningContext(async (resource, scope) =>
             {
-                // Get Azure AD Token
-                if (PnPConnection.CurrentConnection != null && PnPConnection.CurrentConnection.ConnectionMethod != Model.ConnectionMethod.WebLogin)
+                    // Get Azure AD Token
+                    if (PnPConnection.CurrentConnection != null && PnPConnection.CurrentConnection.ConnectionMethod != Model.ConnectionMethod.WebLogin)
                 {
                     var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessTokenAsync(Enums.TokenAudience.MicrosoftGraph).GetAwaiter().GetResult();
                     if (graphAccessToken != null)
                     {
-                        // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                        return graphAccessToken;
+                            // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
+                            return graphAccessToken;
                     }
                 }
 
                 if (PnPConnection.CurrentConnection.PSCredential != null)
                 {
-                    // Using normal credentials
-                    return await TokenHandler.AcquireTokenAsync(resource, null);
+                        // Using normal credentials
+                        return await TokenHandler.AcquireTokenAsync(resource, null);
                 }
                 else
                 {
@@ -404,6 +409,20 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                     var templateFileName = packageName.Substring(0, packageName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
 
                     provider.SaveAs(template, templateFileName, formatter, TemplateProviderExtensions);
+                }
+                else if (extension == ".md")
+                {
+                    WriteWarning("The generation of a markdown report is work in progress, it will improve/grow with later releases.");
+                    ITemplateFormatter mdFormatter = new MarkdownPnPFormatter();
+                    using (var outputStream = mdFormatter.ToFormattedTemplate(template))
+                    {
+                        using (var fileStream = File.Create(Path.Combine(path, packageName)))
+                        {
+                            outputStream.Seek(0, SeekOrigin.Begin);
+                            outputStream.CopyTo(fileStream);
+                            fileStream.Close();
+                        }
+                    }
                 }
                 else
                 {

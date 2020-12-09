@@ -286,14 +286,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             catch (Exception ex)
             {
-                if (!ex.Data.Contains("TimeStampUtc"))
-                {
-                    ex.Data.Add("TimeStampUtc", DateTime.UtcNow);
-                }
-                else
-                {
-                    ex.Data["TimeStampUtc"] = DateTime.UtcNow;
-                }
+                ex.Data["TimeStampUtc"] = DateTime.UtcNow;
                 throw ex;
             }
         }
