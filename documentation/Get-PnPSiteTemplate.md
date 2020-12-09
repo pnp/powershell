@@ -47,7 +47,7 @@ Get-PnPSiteTemplate -Out template.xml
 
 Extracts a provisioning template in XML format from the current web.
 
-## EXAMPLE 3
+### EXAMPLE 3
 ```powershell
 Get-PnPSiteTemplate -Out template.md
 ```
