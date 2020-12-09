@@ -1,9 +1,15 @@
 # Update notifications
 One time per PowerShell session PnP PowerShell will check for new versions when you execute Connect-PnPOnline.
 
-You can turn this behavior off in 2 ways:
+To turn off this update check set the `PNPPOWERSHELL_UPDATECHECK` environment variable to `false`. Any other value will still continue to check for versions. 
 
-Set the `PNPPOWERSHELL_UPDATECHECK` environment variable to `false`. Any other value will still continue to check for versions. 
+If you have a script and want to turn of the update check, simply set the following as the first line of your script:
+
+```powershell
+$env:PNPPOWERSHELL_UPDATECHECK="false"
+```
+
+
 
 See [Configure PnP PowerShell](configuration.md) for more information on the environment variables you can set.
 
