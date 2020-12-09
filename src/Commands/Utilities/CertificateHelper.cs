@@ -966,7 +966,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             var cert = certRequest.CreateSelfSigned(NotBefore, NotAfter);
 
-            if (!Platform.IsLinux)
+            if (!Platform.IsLinux && !Platform.IsMacOS)
             {
                 cert.FriendlyName = FriendlyName;
             }
