@@ -254,6 +254,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/Convert-PnPSiteTemplateToMarkdown.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/Convert-PnPSiteTemplateToMarkdown.html",
+          "hash": "P7CBiX89hT7+eaPn/0wPFg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/nightly/Export-PnPListToSiteTemplate.md",
       "output": {
         ".html": {
@@ -426,7 +438,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/nightly/Get-PnPSiteTemplate.html",
-          "hash": "O8ZmJWdU1krV0S29yuqb6w=="
+          "hash": "5KMK3aMvH0D/T+6VUxAf1Q=="
         }
       },
       "is_incremental": false,
@@ -6582,7 +6594,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "F4U/bnlmxjvNlk7HOjXbSQ=="
+          "hash": "8+yK7IQiLni4Sn1oeXGnuw=="
         }
       },
       "is_incremental": false,
@@ -6649,7 +6661,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 547,
+          "total_file_count": 548,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

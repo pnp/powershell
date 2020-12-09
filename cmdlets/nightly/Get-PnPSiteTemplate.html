@@ -108,55 +108,59 @@
 <pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.xml
 </code></pre>
 <p>Extracts a provisioning template in XML format from the current web.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
+<h2 id="example-3">EXAMPLE 3</h2>
+<pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.md
+</code></pre>
+<p>Extracts a provisioning template in readible markdown format.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.pnp -Schema V201503
 </code></pre>
 <p>Extracts a provisioning template in Office Open XML from the current web and saves it in the V201503 version of the schema.</p>
-<h3 id="example-4">EXAMPLE 4</h3>
+<h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.pnp -IncludeAllTermGroups
 </code></pre>
 <p>Extracts a provisioning template in Office Open XML from the current web and includes all term groups, term sets and terms from the Managed Metadata Service Taxonomy.</p>
-<h3 id="example-5">EXAMPLE 5</h3>
+<h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.pnp -IncludeSiteCollectionTermGroup
 </code></pre>
 <p>Extracts a provisioning template in Office Open XML from the current web and includes the term group currently (if set) assigned to the site collection.</p>
-<h3 id="example-6">EXAMPLE 6</h3>
+<h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.pnp -PersistBrandingFiles
 </code></pre>
 <p>Extracts a provisioning template in Office Open XML from the current web and saves the files that make up the composed look to the same folder as where the template is saved.</p>
-<h3 id="example-7">EXAMPLE 7</h3>
+<h3 id="example-8">EXAMPLE 8</h3>
 <pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.pnp -Handlers Lists, SiteSecurity
 </code></pre>
 <p>Extracts a provisioning template in Office Open XML from the current web, but only processes lists and site security when generating the template.</p>
-<h3 id="example-8">EXAMPLE 8</h3>
+<h3 id="example-9">EXAMPLE 9</h3>
 <pre><code class="lang-powershell">$handler1 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
 $handler2 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler2
 Get-PnPSiteTemplate -Out NewTemplate.xml -ExtensibilityHandlers $handler1,$handler2
 </code></pre>
 <p>This will create two new ExtensibilityHandler objects that are run during extraction of the template</p>
-<h3 id="example-9">EXAMPLE 9</h3>
+<h3 id="example-10">EXAMPLE 10</h3>
 <p>Only supported on SP2016, SP2019 and SP Online</p>
 <pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.pnp -PersistMultiLanguageResources
 </code></pre>
 <p>Extracts a provisioning template in Office Open XML from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named after the value specified in the Out parameter. For instance if the Out parameter is specified as -Out 'template.xml' the generated resource file will be called 'template.en-US.resx'.</p>
-<h3 id="example-10">EXAMPLE 10</h3>
+<h3 id="example-11">EXAMPLE 11</h3>
 <p>Only supported on SP2016, SP2019 and SP Online</p>
 <pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.pnp -PersistMultiLanguageResources -ResourceFilePrefix MyResources
 </code></pre>
 <p>Extracts a provisioning template in Office Open XML from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named 'MyResources.en-US.resx' etc.</p>
-<h3 id="example-11">EXAMPLE 11</h3>
+<h3 id="example-12">EXAMPLE 12</h3>
 <pre><code class="lang-powershell">$template = Get-PnPSiteTemplate -OutputInstance
 </code></pre>
 <p>Extracts an instance of a provisioning template object from the current web. This syntax cannot be used together with the -Out parameter, but it can be used together with any other supported parameters.</p>
-<h3 id="example-12">EXAMPLE 12</h3>
+<h3 id="example-13">EXAMPLE 13</h3>
 <pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.pnp -ContentTypeGroups &quot;Group A&quot;,&quot;Group B&quot;
 </code></pre>
 <p>Extracts a provisioning template in Office Open XML from the current web, but only processes content types from the to given content type groups.</p>
-<h3 id="example-13">EXAMPLE 13</h3>
+<h3 id="example-14">EXAMPLE 14</h3>
 <pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.pnp -ExcludeContentTypesFromSyndication
 </code></pre>
 <p>Extracts a provisioning template in Office Open XML from the current web, excluding content types provisioned through content type syndication (content type hub), in order to prevent provisioning errors if the target also provision the content type using syndication.</p>
-<h3 id="example-14">EXAMPLE 14</h3>
+<h3 id="example-15">EXAMPLE 15</h3>
 <pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.pnp -ListsToExtract &quot;Title of List One&quot;,&quot;95c4efd6-08f4-4c67-94ae-49d696ba1298&quot;,&quot;Title of List Three&quot;
 </code></pre>
 <p>Extracts a provisioning template in Office Open XML from the current web, including only the lists specified by title or ID.</p>
@@ -385,7 +389,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-out">-Out</h3>
-<p>Filename to write to, optionally including full path</p>
+<p>Filename to write to, optionally including full path. The format of the file is based upon the extension you specify.</p>
+<ul>
+<li>.xml will generate an XML file</li>
+<li>.pnp will generate a PnP Provisioning Package, which is a file that contains all artifacts in a single archive (files, images, etc.)</li>
+<li>.md will generate a user readible markdown report. This is work in progress and will be extended in the future.</li>
+</ul>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
