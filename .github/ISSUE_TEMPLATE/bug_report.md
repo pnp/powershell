@@ -21,10 +21,18 @@ Please confirm what it is that your reporting
 Please describe what output you expect to see from the PnP PowerShell Cmdlets
 
 ### Actual behavior 
-Please describe what you see instead. Please provide samples of HTML output or screenshots
+Please describe what you see instead. Please provide samples of output or screenshots.
 
 ### Steps to reproduce behavior
-Please include complete code samples in-line or linked from [gists](https://gist.github.com/)
+Please include complete script or code samples in-line or linked from [gists](https://gist.github.com/)
 
 ### What is the version of the Cmdlet module you are running?
-(you can retrieve this by executing ```Get-Module -Name sharepointpnppowershell* -ListAvailable```)
+(you can retrieve this by executing ```Get-Module -Name "PnP.PowerShell" -ListAvailable```)
+
+### Which operating system/environment are you running PnP PowerShell on?
+- [ ] Windows
+- [ ] Linux
+- [ ] MacOS
+- [ ] Azure Cloud Shell
+- [ ] Azure Functions
+- [ ] Other : please specify
