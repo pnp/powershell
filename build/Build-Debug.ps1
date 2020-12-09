@@ -38,7 +38,17 @@ if ($Force) {
 	$buildCmd += " --force"
 }
 if ($LocalPnPFramework) {
-	$buildCmd += " -p:PnPFrameworkPath=`"..\..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll`""
+	# Check if available
+	$pnpFrameworkAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll"
+	$pnpFrameworkAssembly = [System.IO.Path]::GetFullPath($pnpFrameworkAssembly)
+	if(Test-Path $pnpFrameworkAssembly -PathType Leaf)
+	{
+		$buildCmd += " -p:PnPFrameworkPath=`"..\..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll`""
+	} else {
+		$localFolder = Join-Path $PSScriptRoot -ChildPath "..\..\pnpframework"
+		$localFolder = [System.IO.Path]::GetFullPath($localFolder)
+		Write-Error -Message "Please make sure you have a local copy of the PnP.Framework repository installed at $localFolder"
+	}
 	#$buildCmd += " -p:LocalPnPFramework=true"
 }
 Write-Host "Executing $buildCmd" -ForegroundColor Yellow
@@ -101,7 +111,7 @@ if ($LASTEXITCODE -eq 0) {
 			else {
 				$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 			}
-			if ($IsWindows -or $PSVersionTable.PSVersion.Major -eq 5) {
+			if ($PSVersionTable.PSVersion.Major -eq 5) {
 				Write-Host "Importing Framework version of assembly"
 				Import-Module -Name "$destinationFolder/Framework/PnP.PowerShell.dll" -DisableNameChecking
 			}

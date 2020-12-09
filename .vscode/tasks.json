@@ -17,9 +17,23 @@
     },
     "tasks": [
         {
-            "label":"Build",
-            "type":"shell",
-            "command":"${cwd}/build/Build-Debug.ps1",
+            "label": "Build",
+            "type": "shell",
+            "command": "${cwd}/build/Build-Debug.ps1",
+            "problemMatcher":"$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Build with local copy of PnP Framework",
+            "type": "shell",
+            "command": "${cwd}/build/Build-Debug.ps1",
+            "problemMatcher": "$msCompile",
+            "args": [
+                "-LocalPnPFramework"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
