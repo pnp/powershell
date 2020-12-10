@@ -2,7 +2,7 @@
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.Providers;
 using PnP.Framework.Provisioning.Providers.Xml;
-
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.IO;
 using System.Linq;
@@ -29,9 +29,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
             // Load the template
-            ProvisioningTemplate template = ReadSiteTemplate
-                .LoadSiteTemplateFromFile(Path,
-                TemplateProviderExtensions, (e) =>
+            ProvisioningTemplate template = ProvisioningHelper.LoadSiteTemplateFromFile(Path, TemplateProviderExtensions, (e) =>
                 {
                     WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
                 });

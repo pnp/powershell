@@ -2,16 +2,12 @@
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.Providers;
 using PnP.Framework.Provisioning.Providers.Xml;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Provisioning
 {
@@ -102,7 +98,7 @@ namespace PnP.PowerShell.Commands.Provisioning
 
         private void ProcessFiles(ProvisioningTemplate template, string templateFileName, FileConnectorBase fileSystemConnector, FileConnectorBase connector)
         {
-            var templateFile = ReadSiteTemplate.LoadSiteTemplateFromFile(templateFileName, null, (e) =>
+            var templateFile = ProvisioningHelper.LoadSiteTemplateFromFile(templateFileName, null, (e) =>
             {
                 WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
             });

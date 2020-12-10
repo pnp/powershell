@@ -5,6 +5,7 @@ using PnP.Framework.Provisioning.Providers.Xml;
 using PnP.Framework.Provisioning.Providers.Markdown;
 using PnP.PowerShell.Commands.Properties;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
@@ -38,7 +39,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             if (ShouldProcess($"Converts a PnP Site Template to markdown format"))
             {
                 var process = false;
-                var template = ReadSiteTemplate.LoadSiteTemplateFromFile(TemplatePath, null, (exception) =>
+                var template = ProvisioningHelper.LoadSiteTemplateFromFile(TemplatePath, null, (exception) =>
                      {
                          throw new PSInvalidOperationException("Invalid template", exception);
                      });

@@ -54,9 +54,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
 
-            var template = ReadSiteTemplate
-                    .LoadSiteTemplateFromFile(Path,
-                    TemplateProviderExtensions, (e) =>
+            var template = ProvisioningHelper.LoadSiteTemplateFromFile(Path, TemplateProviderExtensions, (e) =>
                     {
                         WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
                     });
