@@ -10,10 +10,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
-- Added `-HeaderLayoutType` parameter to `Set-PnPClientSidePage`
+- Added `-HeaderLayoutType` parameter to `Set-PnPClientSidePage` (0.3.6)
+- Fixed documentation for `Clear-PnPRecycleBinItem` (0.3.6)
 
 ### Contributors
 - Gautam Sheth [gautamdsheth]
+- Todd Klindt [toddklindt]
+
 ## [0.1.*-nightly - 0.2.*-nightly]
 
 ### Added
