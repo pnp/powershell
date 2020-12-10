@@ -12,10 +12,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Added `-HeaderLayoutType` parameter to `Set-PnPClientSidePage` (0.3.6)
 - Fixed documentation for `Clear-PnPRecycleBinItem` (0.3.6)
+- Fixed issue with `Invoke-PnPTenantTemplate` not being able to acquire correct access token (0.3.6)
 
 ### Contributors
 - Gautam Sheth [gautamdsheth]
 - Todd Klindt [toddklindt]
+- Michael Jensen [michael-jensen]
 
 ## [0.1.*-nightly - 0.2.*-nightly]
 

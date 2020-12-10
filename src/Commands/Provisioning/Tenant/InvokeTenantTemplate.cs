@@ -282,7 +282,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             {
                 consentRequired = true;
             }
-            if(hierarchyToApply.AzureActiveDirectory != null)
+            if (hierarchyToApply.AzureActiveDirectory != null)
             {
                 consentRequired = true;
             }
@@ -307,7 +307,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
 
             using (var provisioningContext = new PnPProvisioningContext(async (resource, scope) =>
             {
-                if(resource.ToLower().StartsWith("https://"))
+                if (resource.ToLower().StartsWith("https://"))
                 {
                     var uri = new Uri(resource);
                     resource = uri.Authority;
@@ -324,6 +324,32 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                             return graphAccessToken;
                         }
                     }
+#if NETFRAMEWORK
+                    else if (resource.ToLower().Contains(".sharepoint."))
+#else
+                    else if (resource.Contains(".sharepoint.", StringComparison.OrdinalIgnoreCase))
+#endif
+                    {
+                        using (var clientContext = PnPConnection.CurrentConnection.CloneContext($"https://{resource}"))
+                        {
+                            string accessToken = null;
+                            EventHandler<WebRequestEventArgs> handler = (s, e) =>
+                            {
+                                string authorization = e.WebRequestExecutor.RequestHeaders["Authorization"];
+                                if (!string.IsNullOrEmpty(authorization))
+                                {
+                                    accessToken = authorization.Replace("Bearer ", string.Empty);
+                                }
+                            };
+
+                            // Issue a dummy request to get it from the Authorization header
+                            clientContext.ExecutingWebRequest += handler;
+                            clientContext.ExecuteQueryRetry();
+                            clientContext.ExecutingWebRequest -= handler;
+
+                            return accessToken;
+                        }
+                    }
                 }
 
                 if (PnPConnection.CurrentConnection.PSCredential != null || PnPConnection.CurrentConnection.ClientId != null)
@@ -335,7 +361,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                 {
                     // No token...
                     throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
-                 }
+                }
             }))
             {
                 if (!string.IsNullOrEmpty(SequenceId))
