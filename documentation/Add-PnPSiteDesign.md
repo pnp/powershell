@@ -157,7 +157,7 @@ Specifies the type of site to which this design applies
 ```yaml
 Type: SiteWebTemplate
 Parameter Sets: (All)
-Accepted values: TeamSite, CommunicationSite
+Accepted values: TeamSite, CommunicationSite, GrouplessTeamSite
 
 Required: True
 Position: Named
