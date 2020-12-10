@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [0.3.*-nightly]
+
+### Added
+
+### Changed
+- Added `-HeaderLayoutType` parameter to `Set-PnPClientSidePage`
+
+### Contributors
+- Gautam Sheth [gautamdsheth]
 ## [0.1.*-nightly - 0.2.*-nightly]
 
 ### Added

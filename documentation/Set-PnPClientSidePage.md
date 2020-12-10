@@ -17,7 +17,7 @@ Sets parameters of a Client-Side Page
 ```powershell
 Set-PnPClientSidePage [-Identity] <ClientSidePagePipeBind> [-Name <String>] [-Title <String>]
  [-LayoutType <ClientSidePageLayoutType>] [-PromoteAs <ClientSidePagePromoteType>] [-CommentsEnabled]
- [-Publish] [-HeaderType <ClientSidePageHeaderType>] [-ContentType <ContentTypePipeBind>]
+ [-Publish] [-HeaderType <ClientSidePageHeaderType>] [-HeaderLayoutType <ClientSidePageHeaderLayoutType>] [-ContentType <ContentTypePipeBind>]
  [-ThumbnailUrl <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -116,6 +116,21 @@ Sets the page header type
 
 ```yaml
 Type: ClientSidePageHeaderType
+Parameter Sets: (All)
+Accepted values: None, Default, Custom
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HeaderLayoutType
+Sets the page header layout type
+
+```yaml
+Type: ClientSidePageHeaderLayoutType
 Parameter Sets: (All)
 Accepted values: None, Default, Custom
 

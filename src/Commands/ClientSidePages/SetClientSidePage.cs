@@ -42,6 +42,9 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false)]
         public string ThumbnailUrl;
 
+        [Parameter(Mandatory = false)]
+        public ClientSidePageHeaderLayoutType HeaderLayoutType = ClientSidePageHeaderLayoutType.FullWidthImage;
+
         private CustomHeaderDynamicParameters customHeaderParameters;
 
         public object GetDynamicParameters()
@@ -75,7 +78,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                 clientSidePage.PageTitle = Title;
             }
 
-            if(ThumbnailUrl != null)
+            if (ThumbnailUrl != null)
             {
                 clientSidePage.ThumbnailUrl = ThumbnailUrl;
             }
@@ -102,10 +105,16 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                 }
             }
 
+            if (ParameterSpecified(nameof(HeaderLayoutType)))
+            {
+                clientSidePage.PageHeader.LayoutType = HeaderLayoutType;
+            }
+
             if (PromoteAs == ClientSidePagePromoteType.Template)
             {
                 clientSidePage.SaveAsTemplate(name);
-            } else
+            }
+            else
             {
                 clientSidePage.Save(name);
             }
@@ -136,7 +145,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                 }
             }
 
-            if(ParameterSpecified(nameof(ContentType)))
+            if (ParameterSpecified(nameof(ContentType)))
             {
                 ContentType ct = null;
                 if (ContentType.ContentType == null)
