@@ -26,6 +26,8 @@ jobs:
         ./build/Build-Release.ps1
     - name: Add & Commit
       uses: EndBug/add-and-commit@v4.2.1
+      with:
+        message: 'Nightly publish to PowerShell Gallery'
     - name: Push changes to github
       uses: ad-m/github-push-action@v0.6.0
       with:
