@@ -14,7 +14,7 @@ using PnPFileLevel = PnP.Framework.Provisioning.Model.FileLevel;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Add, "FileToSiteTemplate")]
+    [Cmdlet(VerbsCommon.Add, "PnPFileToSiteTemplate")]
     public class AddFileToSiteTemplate : PnPWebCmdlet
     {
         const string parameterSet_LOCALFILE = "Local File";

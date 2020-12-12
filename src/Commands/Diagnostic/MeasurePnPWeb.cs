@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Diagnostic
 {
-    [Cmdlet(VerbsDiagnostic.Measure, "Web")]
+    [Cmdlet(VerbsDiagnostic.Measure, "PnPWeb")]
     public class MeasurePnPWeb : PnPSharePointCmdlet
     {
         private Expression<Func<Web, object>>[] _retrievalExpressions;

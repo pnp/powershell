@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "SiteCollectionAppCatalogs")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteCollectionAppCatalogs")]
     public class GetSiteCollectionAppCatalogs : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()

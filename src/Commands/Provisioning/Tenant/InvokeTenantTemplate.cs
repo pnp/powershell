@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "TenantTemplate")]
+    [Cmdlet(VerbsLifecycle.Invoke, "PnPTenantTemplate")]
     public class InvokeTenantTemplate : PnPAdminCmdlet
     {
         private const string ParameterSet_PATH = "By Path";

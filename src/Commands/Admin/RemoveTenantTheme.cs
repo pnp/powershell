@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Remove, "TenantTheme")]
+    [Cmdlet(VerbsCommon.Remove, "PnPTenantTheme")]
     public class RemoveTenantTheme : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]

@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.New, "User")]
+    [Cmdlet(VerbsCommon.New, "PnPUser")]
     public class NewUser : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

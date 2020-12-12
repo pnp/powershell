@@ -6,7 +6,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "MasterPage")]
+    [Cmdlet(VerbsCommon.Set, "PnPMasterPage")]
     public class SetMasterPage : PnPWebCmdlet
     {
         private const string ParameterSet_SERVER = "Server Relative";

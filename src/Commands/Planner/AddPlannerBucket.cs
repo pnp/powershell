@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Add, "PlannerBucket")]
+    [Cmdlet(VerbsCommon.Add, "PnPPlannerBucket")]
     [MicrosoftGraphApiPermissionCheck(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class AddPlannerBucket : PnPGraphCmdlet

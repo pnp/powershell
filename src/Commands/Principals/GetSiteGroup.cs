@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Get, "SiteGroup", DefaultParameterSetName = "All")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteGroup", DefaultParameterSetName = "All")]
     public class GetSiteGroup : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false)]

@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Set, "SiteGroup")]
+    [Cmdlet(VerbsCommon.Set, "PnPSiteGroup")]
 
     public class SetSiteGroup : PnPAdminCmdlet
     {

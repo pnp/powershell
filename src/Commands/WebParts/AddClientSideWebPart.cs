@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
-    [Cmdlet(VerbsCommon.Add, "ClientSideWebPart")]
+    [Cmdlet(VerbsCommon.Add, "PnPClientSideWebPart")]
     public class AddClientSideWebPart : PnPWebCmdlet
     {
         private const string ParameterSet_DEFAULTBUILTIN = "Default with built-in web part";

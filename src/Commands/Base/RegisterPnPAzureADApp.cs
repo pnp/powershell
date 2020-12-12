@@ -21,7 +21,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsLifecycle.Register, "AzureADApp")]
+    [Cmdlet(VerbsLifecycle.Register, "PnPAzureADApp")]
     [Alias("Initialize-PowerShellAuthentication")]
     public class InitializePowerShellAuthentication : BasePSCmdlet, IDynamicParameters
     {

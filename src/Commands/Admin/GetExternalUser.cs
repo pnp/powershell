@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "ExternalUser")]
+    [Cmdlet(VerbsCommon.Get, "PnPExternalUser")]
     public class GetExternalUser : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false)]

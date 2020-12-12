@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Find, "File", DefaultParameterSetName = "Web")]
+    [Cmdlet(VerbsCommon.Find, "PnPFile", DefaultParameterSetName = "Web")]
     public class FindFile : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "Web", Position = 0)]

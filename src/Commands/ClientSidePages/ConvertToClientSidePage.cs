@@ -16,7 +16,7 @@ using PnP.Framework.Modernization.Cache;
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
 
-    [Cmdlet(VerbsData.ConvertTo, "ClientSidePage")]
+    [Cmdlet(VerbsData.ConvertTo, "PnPClientSidePage")]
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
         private static string rootFolder = "<root>";

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsData.Import, "Taxonomy")]
+    [Cmdlet(VerbsData.Import, "PnPTaxonomy")]
     public class ImportTaxonomy : PnPSharePointCmdlet
     {
 

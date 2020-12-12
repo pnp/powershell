@@ -10,7 +10,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Set, "TeamsTeamArchivedState")]
+    [Cmdlet(VerbsCommon.Set, "PnPTeamsTeamArchivedState")]
     [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [TokenType(TokenType = TokenType.Delegate)]

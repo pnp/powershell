@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsLifecycle.Deny, "TenantServicePrincipalPermissionRequest")]
+    [Cmdlet(VerbsLifecycle.Deny, "PnPTenantServicePrincipalPermissionRequest")]
     public class DenyTenantServicePrincipalPermissionRequests : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

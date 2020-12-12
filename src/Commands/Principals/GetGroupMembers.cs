@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Get, "GroupMembers")]
+    [Cmdlet(VerbsCommon.Get, "PnPGroupMembers")]
     public class GetGroupMembers : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

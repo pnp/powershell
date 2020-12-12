@@ -5,7 +5,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Move, "Folder")]
+    [Cmdlet(VerbsCommon.Move, "PnPFolder")]
     
     public class MoveFolder : PnPWebCmdlet
     {

@@ -6,7 +6,7 @@ using PnP.Framework.Pages;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Set, "ClientSideText")]
+    [Cmdlet(VerbsCommon.Set, "PnPClientSideText")]
     public class SetClientSideText : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

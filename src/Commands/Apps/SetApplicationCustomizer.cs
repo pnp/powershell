@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "ApplicationCustomizer")]
+    [Cmdlet(VerbsCommon.Set, "PnPApplicationCustomizer")]
     public class SetApplicationCustomizer : PnPWebCmdlet
     {
         private const string ParameterSet_CUSTOMACTIONID = "Custom Action Id";

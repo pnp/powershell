@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsData.Sync, "AppToTeams")]
+    [Cmdlet(VerbsData.Sync, "PnPAppToTeams")]
     public class SyncAppToTeams : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]

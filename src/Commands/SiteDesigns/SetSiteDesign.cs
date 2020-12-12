@@ -9,7 +9,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Set, "SiteDesign")]
+    [Cmdlet(VerbsCommon.Set, "PnPSiteDesign")]
     public class SetSiteDesign : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

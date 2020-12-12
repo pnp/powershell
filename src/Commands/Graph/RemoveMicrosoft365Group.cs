@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Remove, "Microsoft365Group")]
+    [Cmdlet(VerbsCommon.Remove, "PnPMicrosoft365Group")]
     [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class RemoveMicrosoft365Group : PnPGraphCmdlet

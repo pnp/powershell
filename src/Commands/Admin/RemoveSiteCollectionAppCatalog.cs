@@ -9,7 +9,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Remove, "SiteCollectionAppCatalog")]
+    [Cmdlet(VerbsCommon.Remove, "PnPSiteCollectionAppCatalog")]
     public class RemoveSiteCollectionAppCatalog: PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

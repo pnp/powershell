@@ -8,7 +8,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsSecurity.Grant, "HubSiteRights")]
+    [Cmdlet(VerbsSecurity.Grant, "PnPHubSiteRights")]
     public class GrantHubSiteRights : PnPAdminCmdlet
     {
         [Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]

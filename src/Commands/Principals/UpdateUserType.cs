@@ -3,7 +3,7 @@ using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsData.Update, "UserType")]
+    [Cmdlet(VerbsData.Update, "PnPUserType")]
     public class UpdateUserType : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

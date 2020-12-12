@@ -9,7 +9,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Remove, "TermGroup", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPTermGroup", SupportsShouldProcess = true)]
     public class RemoveTermGroup : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "MasterPage")]
+    [Cmdlet(VerbsCommon.Get, "PnPMasterPage")]
     public class GetMasterPage : PnPWebCmdlet
     {
 

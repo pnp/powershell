@@ -6,7 +6,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.New, "Group")]
+    [Cmdlet(VerbsCommon.New, "PnPGroup")]
     public class NewGroup : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

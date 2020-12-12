@@ -8,7 +8,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Add, "ApplicationCustomizer")]
+    [Cmdlet(VerbsCommon.Add, "PnPApplicationCustomizer")]
     public class AddApplicationCustomizer : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

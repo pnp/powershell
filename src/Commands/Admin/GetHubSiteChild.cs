@@ -9,7 +9,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "HubSiteChild")]
+    [Cmdlet(VerbsCommon.Get, "PnPHubSiteChild")]
     public class GetHubSiteChild : PnPAdminCmdlet
     {
         [Parameter(ValueFromPipeline = true, Mandatory = true)]

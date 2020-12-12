@@ -5,7 +5,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Add, "Folder")]
+    [Cmdlet(VerbsCommon.Add, "PnPFolder")]
     public class AddFolder : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

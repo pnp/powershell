@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Get, "Folder")]
+    [Cmdlet(VerbsCommon.Get, "PnPFolder")]
     public class GetFolder : PnPWebRetrievalsCmdlet<Folder>
     {
         private const string ParameterSet_FOLDERSINLIST = "Folders In List";

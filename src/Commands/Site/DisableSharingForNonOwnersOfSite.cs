@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsLifecycle.Disable, "SharingForNonOwnersOfSite")]
+    [Cmdlet(VerbsLifecycle.Disable, "PnPSharingForNonOwnersOfSite")]
     public class DisableSharingForNonOwnersOfSite : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

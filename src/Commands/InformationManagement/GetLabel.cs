@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.InformationManagement
 {
-    [Cmdlet(VerbsCommon.Get, "Label")]
+    [Cmdlet(VerbsCommon.Get, "PnPLabel")]
     
     
 

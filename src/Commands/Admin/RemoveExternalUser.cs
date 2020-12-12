@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Remove, "ExternalUser", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
+    [Cmdlet(VerbsCommon.Remove, "PnPExternalUser", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
     public class RemoveExternalUser : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

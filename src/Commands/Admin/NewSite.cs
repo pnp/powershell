@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.New, "Site")]
+    [Cmdlet(VerbsCommon.New, "PnPSite")]
     public class NewSite : PnPSharePointCmdlet, IDynamicParameters
     {
         private const string ParameterSet_COMMUNICATIONBUILTINDESIGN = "Communication Site with Built-In Site Design";

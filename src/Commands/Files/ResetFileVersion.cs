@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Reset, "FileVersion")]
+    [Cmdlet(VerbsCommon.Reset, "PnPFileVersion")]
     
     
     

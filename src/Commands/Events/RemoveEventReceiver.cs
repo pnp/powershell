@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Events
 {
-    [Cmdlet(VerbsCommon.Remove, "EventReceiver")]
+    [Cmdlet(VerbsCommon.Remove, "PnPEventReceiver")]
     public class RemoveEventReceiver : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

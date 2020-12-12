@@ -12,7 +12,7 @@ using System.Text;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Get, "User", DefaultParameterSetName = PARAMETERSET_IDENTITY)]
+    [Cmdlet(VerbsCommon.Get, "PnPUser", DefaultParameterSetName = PARAMETERSET_IDENTITY)]
     public class GetUser : PnPWebRetrievalsCmdlet<User>
     {
         private const string PARAMETERSET_IDENTITY = "Identity based request";

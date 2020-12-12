@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Get, "CustomAction")]
+    [Cmdlet(VerbsCommon.Get, "PnPCustomAction")]
     public class GetCustomAction : PnPWebRetrievalsCmdlet<UserCustomAction>
     {
         [Parameter(Mandatory = false)]

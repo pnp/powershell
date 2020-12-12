@@ -8,7 +8,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Add, "HubToHubAssociation")]
+    [Cmdlet(VerbsCommon.Add, "PnPHubToHubAssociation")]
     public class AddHubToHubAssociation : PnPAdminCmdlet
     {
         const string ParamSet_ById = "By Id";

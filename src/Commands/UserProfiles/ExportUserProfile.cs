@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
-    [Cmdlet(VerbsData.Export, "UserProfile")]
+    [Cmdlet(VerbsData.Export, "PnPUserProfile")]
     public class ExportUserProfile : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

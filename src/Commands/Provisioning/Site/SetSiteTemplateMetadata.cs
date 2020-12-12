@@ -12,7 +12,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Set, "SiteTemplateMetadata")]
+    [Cmdlet(VerbsCommon.Set, "PnPSiteTemplateMetadata")]
     public class SetSiteTemplateMetadata : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true)]

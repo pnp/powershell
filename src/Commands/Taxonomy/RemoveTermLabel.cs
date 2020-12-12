@@ -10,7 +10,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Remove, "TermLabel", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPTermLabel", SupportsShouldProcess = true)]
     public class RemoveTermLabel : PnPSharePointCmdlet
     {
         private const string ParameterSet_BYID = "By Term Id";

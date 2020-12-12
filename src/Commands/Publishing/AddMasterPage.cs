@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Add, "MasterPage")]
+    [Cmdlet(VerbsCommon.Add, "PnPMasterPage")]
     public class AddMasterPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

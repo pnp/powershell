@@ -12,7 +12,7 @@ using PnP.Framework.Modernization.Cache;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsData.Export, "ClientSidePageMapping")]
+    [Cmdlet(VerbsData.Export, "PnPClientSidePageMapping")]
     public class ExportClientSidePageMapping : PnPWebCmdlet
     {
         private Assembly sitesCoreAssembly;

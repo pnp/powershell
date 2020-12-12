@@ -6,7 +6,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.RecordsManagement
 {
-    [Cmdlet(VerbsCommon.Set, "ListItemAsRecord")]
+    [Cmdlet(VerbsCommon.Set, "PnPListItemAsRecord")]
     public class SetListItemAsRecord : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

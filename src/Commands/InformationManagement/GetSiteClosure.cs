@@ -5,7 +5,7 @@ using Microsoft.SharePoint.Client;
 namespace PnP.PowerShell.Commands.InformationManagement
 {
 
-    [Cmdlet(VerbsCommon.Get, "SiteClosure")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteClosure")]
     
     
     public class GetSiteClosure : PnPWebCmdlet

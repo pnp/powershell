@@ -3,7 +3,7 @@ using System.Net.Http;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "ChangeLog")]
+    [Cmdlet(VerbsCommon.Get, "PnPChangeLog")]
     public class GetChangeLog : PSCmdlet
     {
         [Parameter(Mandatory = false)]

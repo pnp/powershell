@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "TimeZoneId")]
+    [Cmdlet(VerbsCommon.Get, "PnPTimeZoneId")]
     public class GetTimeZoneId : PSCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]

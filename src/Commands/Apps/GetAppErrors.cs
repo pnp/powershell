@@ -4,7 +4,7 @@ using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsCommon.Get, "AppErrors")]
+    [Cmdlet(VerbsCommon.Get, "PnPAppErrors")]
     public class GetAppErrors : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

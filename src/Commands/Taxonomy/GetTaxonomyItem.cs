@@ -6,7 +6,7 @@ using Microsoft.SharePoint.Client.Taxonomy;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Get, "TaxonomyItem")]
+    [Cmdlet(VerbsCommon.Get, "PnPTaxonomyItem")]
     public class GetTaxonomyItem : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

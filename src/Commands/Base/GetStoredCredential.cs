@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Get, "StoredCredential")]
+    [Cmdlet(VerbsCommon.Get, "PnPStoredCredential")]
     public class GetStoredCredential : PSCmdlet
     {
         [Parameter(Mandatory = true)]

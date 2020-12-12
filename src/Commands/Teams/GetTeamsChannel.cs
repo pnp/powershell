@@ -10,7 +10,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Teams
 {
-    [Cmdlet(VerbsCommon.Get, "TeamsChannel")]
+    [Cmdlet(VerbsCommon.Get, "PnPTeamsChannel")]
     [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_Read_All)]
     [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]

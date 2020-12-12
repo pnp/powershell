@@ -131,7 +131,6 @@ if ($runPublish -eq $true) {
 	CompanyName = 'Microsoft 365 Patterns and Practices'
 	CompatiblePSEditions = @(`"Core`",`"Desktop`")
 	PowerShellVersion = '5.1'
-	DefaultCommandPrefix = 'PnP'
 	DotNetFrameworkVersion = '4.6.1'
 	ProcessorArchitecture = 'None'
 	FunctionsToExport = '*'  

@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Set, "PlannerPlan")]
+    [Cmdlet(VerbsCommon.Set, "PnPPlannerPlan")]
     [MicrosoftGraphApiPermissionCheck(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class SetPlannerPlan : PnPGraphCmdlet

@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Set, "PlannerTask")]
+    [Cmdlet(VerbsCommon.Set, "PnPPlannerTask")]
     [MicrosoftGraphApiPermissionCheck(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class SetPlannerTask : PnPGraphCmdlet

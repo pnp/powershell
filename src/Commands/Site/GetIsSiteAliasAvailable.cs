@@ -4,7 +4,7 @@ using System;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "IsSiteAliasAvailable")]
+    [Cmdlet(VerbsCommon.Get, "PnPIsSiteAliasAvailable")]
     public class GetIsSiteAliasAvailable : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

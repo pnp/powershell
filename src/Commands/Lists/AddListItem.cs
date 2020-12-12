@@ -13,7 +13,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Add, "ListItem")]
+    [Cmdlet(VerbsCommon.Add, "PnPListItem")]
     public class AddListItem : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

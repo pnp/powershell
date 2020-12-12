@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Planner
 {
-    [Cmdlet(VerbsCommon.Remove, "PlannerPlan", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPPlannerPlan", SupportsShouldProcess = true)]
     [MicrosoftGraphApiPermissionCheck(MicrosoftGraphApiPermission.Group_Read_All)]
     [MicrosoftGraphApiPermissionCheck(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]

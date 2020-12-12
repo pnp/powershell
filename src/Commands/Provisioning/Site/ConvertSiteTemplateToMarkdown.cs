@@ -10,7 +10,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
 
-    [Cmdlet(VerbsData.Convert, "SiteTemplateToMarkdown", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsData.Convert, "PnPSiteTemplateToMarkdown", SupportsShouldProcess = true)]
 
     public class ConvertSiteTemplateToMarkdown : BasePSCmdlet
     {

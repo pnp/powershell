@@ -5,7 +5,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "HomeSite")]
+    [Cmdlet(VerbsCommon.Get, "PnPHomeSite")]
     public class GetHomeSite : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()

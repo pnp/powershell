@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.DocumentSets
 {
-    [Cmdlet(VerbsCommon.Set, "DocumentSetField")]
+    [Cmdlet(VerbsCommon.Set, "PnPDocumentSetField")]
     public class SetFieldInDocumentSet : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Remove, "User")]
+    [Cmdlet(VerbsCommon.Remove, "PnPUser")]
     public class RemoveUser : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

@@ -8,7 +8,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsSecurity.Revoke, "SiteDesignRights")]
+    [Cmdlet(VerbsSecurity.Revoke, "PnPSiteDesignRights")]
     public class RevokeSiteDesignRights : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline =true)]

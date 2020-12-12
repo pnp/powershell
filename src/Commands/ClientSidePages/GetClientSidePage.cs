@@ -5,7 +5,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Get, "ClientSidePage")]
+    [Cmdlet(VerbsCommon.Get, "PnPClientSidePage")]
     public class GetClientSidePage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

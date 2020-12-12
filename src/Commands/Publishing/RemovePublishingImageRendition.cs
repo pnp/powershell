@@ -8,7 +8,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Remove, "PublishingImageRendition")]
+    [Cmdlet(VerbsCommon.Remove, "PnPPublishingImageRendition")]
     
     
     public class RemovePublishingImageRendition : PnPWebCmdlet

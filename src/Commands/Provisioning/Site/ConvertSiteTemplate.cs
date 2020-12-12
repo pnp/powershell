@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsData.Convert, "SiteTemplate")]
+    [Cmdlet(VerbsData.Convert, "PnPSiteTemplate")]
     public class ConvertSiteTemplate : BasePSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true)]

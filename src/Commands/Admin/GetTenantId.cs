@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "TenantId")]
+    [Cmdlet(VerbsCommon.Get, "PnPTenantId")]
     public class GetTenantId : BasePSCmdlet
     {
         [Parameter(Mandatory = false)]

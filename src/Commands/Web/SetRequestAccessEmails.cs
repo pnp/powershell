@@ -6,7 +6,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Set, "RequestAccessEmails")]
+    [Cmdlet(VerbsCommon.Set, "PnPRequestAccessEmails")]
     public class SetRequestAccessEmails : PnPWebCmdlet
     {
         // Parameter must remain a string array for backwards compatibility, even though only one e-mail address can be provided

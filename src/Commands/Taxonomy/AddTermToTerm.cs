@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Add, "TermToTerm")]
+    [Cmdlet(VerbsCommon.Add, "PnPTermToTerm")]
     public class AddTermToTerm : PnPSharePointCmdlet
     {
 

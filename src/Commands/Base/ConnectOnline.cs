@@ -22,7 +22,7 @@ using System.Threading;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommunications.Connect, "Online", DefaultParameterSetName = ParameterSet_MAIN)]
+    [Cmdlet(VerbsCommunications.Connect, "PnPOnline", DefaultParameterSetName = ParameterSet_MAIN)]
     public class ConnectOnline : BasePSCmdlet
     {
         private CancellationTokenSource cancellationTokenSource;
@@ -296,6 +296,7 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         protected void Connect(ref CancellationToken cancellationToken)
         {
+
             if (!string.IsNullOrEmpty(Url) && Url.EndsWith("/"))
             {
                 Url = Url.Substring(0, Url.Length - 1);

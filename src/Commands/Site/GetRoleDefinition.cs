@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Get, "RoleDefinition")]
+    [Cmdlet(VerbsCommon.Get, "PnPRoleDefinition")]
     public class GetRoleDefinition : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]

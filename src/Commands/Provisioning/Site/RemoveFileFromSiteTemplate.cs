@@ -10,7 +10,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Remove, "FileFromSiteTemplate")]
+    [Cmdlet(VerbsCommon.Remove, "PnPFileFromSiteTemplate")]
     public class RemoveFileFromSiteTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

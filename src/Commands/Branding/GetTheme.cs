@@ -6,7 +6,7 @@ using PnP.Framework.Provisioning.Model;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Get, "Theme")]
+    [Cmdlet(VerbsCommon.Get, "PnPTheme")]
     public class GetTheme : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

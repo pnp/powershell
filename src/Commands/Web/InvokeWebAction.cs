@@ -8,7 +8,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "WebAction", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsLifecycle.Invoke, "PnPWebAction", SupportsShouldProcess = true)]
     public class InvokeWebAction : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

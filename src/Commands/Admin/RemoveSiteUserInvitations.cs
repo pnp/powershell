@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Remove, "SiteUserInvitations")]
+    [Cmdlet(VerbsCommon.Remove, "PnPSiteUserInvitations")]
     public class RemoveSiteUserInvitations : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false)]

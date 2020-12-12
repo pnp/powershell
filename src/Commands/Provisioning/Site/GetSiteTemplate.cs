@@ -22,7 +22,7 @@ using PnP.Framework.Provisioning.Providers.Markdown;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Get, "SiteTemplate")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteTemplate")]
     public class GetSiteTemplate : PnPWebCmdlet
     {
         //private readonly ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");

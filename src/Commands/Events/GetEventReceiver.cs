@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Events
 {
-    [Cmdlet(VerbsCommon.Get, "EventReceiver")]
+    [Cmdlet(VerbsCommon.Get, "PnPEventReceiver")]
   
     public class GetEventReceiver : PnPWebRetrievalsCmdlet<EventReceiverDefinition>
     {

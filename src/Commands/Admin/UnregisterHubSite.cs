@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsLifecycle.Unregister, "HubSite")]
+    [Cmdlet(VerbsLifecycle.Unregister, "PnPHubSite")]
     public class UnregisterHubSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

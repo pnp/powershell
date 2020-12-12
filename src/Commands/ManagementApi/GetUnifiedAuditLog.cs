@@ -10,7 +10,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.ManagementApi
 {
-    [Cmdlet(VerbsCommon.Get, "UnifiedAuditLog")]
+    [Cmdlet(VerbsCommon.Get, "PnPUnifiedAuditLog")]
     [OfficeManagementApiPermissionCheck(OfficeManagementApiPermission.ActivityFeed_Read)]
     [PnPManagementShellScopes("ActivityFeed.Read")]
     public class GetUnifiedAuditLog : PnPOfficeManagementApiCmdlet

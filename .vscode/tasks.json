@@ -17,7 +17,7 @@
     },
     "tasks": [
         {
-            "label": "Build",
+            "label": "Build with PnP Framework Nuget",
             "type": "shell",
             "command": "${cwd}/build/Build-Debug.ps1",
             "problemMatcher":"$msCompile",

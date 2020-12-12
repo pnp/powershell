@@ -5,7 +5,7 @@ using PnP.Framework;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Add, "WikiPage")]
+    [Cmdlet(VerbsCommon.Add, "PnPWikiPage")]
     public class AddWikiPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Get, "GroupPermissions")]
+    [Cmdlet(VerbsCommon.Get, "PnPGroupPermissions")]
     public class GetGroupPermissions : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByName")]

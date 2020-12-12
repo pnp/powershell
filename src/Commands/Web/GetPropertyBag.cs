@@ -6,7 +6,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PropertyBag")]
+    [Cmdlet(VerbsCommon.Get, "PnPPropertyBag")]
     public class GetPropertyBag : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]

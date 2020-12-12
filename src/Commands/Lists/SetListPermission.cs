@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Lists
 {
     //TODO: Create Test
-    [Cmdlet(VerbsCommon.Set, "ListPermission")]
+    [Cmdlet(VerbsCommon.Set, "PnPListPermission")]
     public class SetListPermission : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]

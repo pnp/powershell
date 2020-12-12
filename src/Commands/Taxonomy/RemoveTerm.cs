@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Remove, "Term", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPTerm", SupportsShouldProcess = true)]
     public class RemoveTerm : PnPSharePointCmdlet
     {
         private const string ParameterSet_TERMID = "By Term Id";

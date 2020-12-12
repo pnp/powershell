@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Get, "JavaScriptLink")]
+    [Cmdlet(VerbsCommon.Get, "PnPJavaScriptLink")]
     public class GetJavaScriptLink : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]

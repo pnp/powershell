@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Remove, "UserFromGroup")]
+    [Cmdlet(VerbsCommon.Remove, "PnPUserFromGroup")]
     public class RemoveUserFromGroup : PnPWebCmdlet
     {
 

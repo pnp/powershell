@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.InformationManagement
 {
-    [Cmdlet(VerbsCommon.Get, "SitePolicy")]
+    [Cmdlet(VerbsCommon.Get, "PnPSitePolicy")]
     public class GetSitePolicy : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

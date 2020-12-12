@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Remove, "SiteGroup", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPSiteGroup", SupportsShouldProcess = true)]
     public class RemoveSiteGroup : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false)]

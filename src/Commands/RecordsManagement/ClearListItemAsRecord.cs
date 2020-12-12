@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.RecordsManagement
 {
-    [Cmdlet(VerbsCommon.Clear, "ListItemAsRecord")]
+    [Cmdlet(VerbsCommon.Clear, "PnPListItemAsRecord")]
     public class ClearListItemAsRecord : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

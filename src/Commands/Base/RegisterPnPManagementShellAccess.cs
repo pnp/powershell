@@ -12,7 +12,7 @@ using TextCopy;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsLifecycle.Register, "ManagementShellAccess")]
+    [Cmdlet(VerbsLifecycle.Register, "PnPManagementShellAccess")]
     public class RegisterPnPManagementShellAccess : PSCmdlet
     {
         CancellationTokenSource source;

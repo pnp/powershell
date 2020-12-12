@@ -17,7 +17,7 @@ using SPSite = Microsoft.SharePoint.Client.Site;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Add, "DataRowsToSiteTemplate")]
+    [Cmdlet(VerbsCommon.Add, "PnPDataRowsToSiteTemplate")]
     public class AddDataRowsToSiteTemplate : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

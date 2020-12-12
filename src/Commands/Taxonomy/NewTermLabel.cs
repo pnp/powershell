@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.New, "TermLabel")]
+    [Cmdlet(VerbsCommon.New, "PnPTermLabel")]
     public class NewTermLabel : PnPSharePointCmdlet
     {
         private const string ParameterSet_BYID = "By Term Id";

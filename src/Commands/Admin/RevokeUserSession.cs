@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsSecurity.Revoke, "UserSession", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsSecurity.Revoke, "PnPUserSession", SupportsShouldProcess = true)]
     public class RevokeUserSession : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsLifecycle.Request, "PersonalSite")]
+    [Cmdlet(VerbsLifecycle.Request, "PnPPersonalSite")]
     public class RequestPersonalSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

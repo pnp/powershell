@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Get, "Field")]
+    [Cmdlet(VerbsCommon.Get, "PnPField")]
     public class GetField : PnPWebRetrievalsCmdlet<Field>
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

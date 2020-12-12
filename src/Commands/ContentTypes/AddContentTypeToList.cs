@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.ContentTypes
 {
-    [Cmdlet(VerbsCommon.Add, "ContentTypeToList")]
+    [Cmdlet(VerbsCommon.Add, "PnPContentTypeToList")]
     public class AddContentTypeToList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

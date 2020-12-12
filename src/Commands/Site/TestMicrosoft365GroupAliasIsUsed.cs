@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsDiagnostic.Test, "Microsoft365GroupAliasIsUsed")]
+    [Cmdlet(VerbsDiagnostic.Test, "PnPMicrosoft365GroupAliasIsUsed")]
     public class TestMicrosoft365GroupAliasIsUsed : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true)]

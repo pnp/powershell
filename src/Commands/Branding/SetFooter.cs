@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "Footer")]
+    [Cmdlet(VerbsCommon.Set, "PnPFooter")]
     public class SetFooter : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

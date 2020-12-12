@@ -11,7 +11,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsSecurity.Grant, "TenantServicePrincipalPermission")]
+    [Cmdlet(VerbsSecurity.Grant, "PnPTenantServicePrincipalPermission")]
     public class GrantTenantServicePrincipalPermission : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

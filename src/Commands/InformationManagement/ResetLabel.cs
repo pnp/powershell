@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.InformationManagement
 {
-    [Cmdlet(VerbsCommon.Reset, "Label")]
+    [Cmdlet(VerbsCommon.Reset, "PnPLabel")]
     public class ResetLabel : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

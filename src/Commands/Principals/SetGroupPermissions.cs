@@ -7,7 +7,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Set, "GroupPermissions")]
+    [Cmdlet(VerbsCommon.Set, "PnPGroupPermissions")]
     public class SetGroupPermissions : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "By Identity")]

@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
-    [Cmdlet(VerbsCommon.Get, "UPABulkImportStatus")]
+    [Cmdlet(VerbsCommon.Get, "PnPUPABulkImportStatus")]
     public class GetUPABulkImportStatus : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

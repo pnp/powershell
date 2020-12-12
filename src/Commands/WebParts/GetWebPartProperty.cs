@@ -6,7 +6,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
-    [Cmdlet(VerbsCommon.Get, "WebPartProperty")]
+    [Cmdlet(VerbsCommon.Get, "PnPWebPartProperty")]
     public class GetWebPartProperty : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

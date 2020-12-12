@@ -10,7 +10,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Get, "TermLabel")]
+    [Cmdlet(VerbsCommon.Get, "PnPTermLabel")]
     public class GetTermLabel : PnPSharePointCmdlet
     {
         private const string ParameterSet_BYID = "By Term Id";

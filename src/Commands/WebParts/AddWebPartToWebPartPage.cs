@@ -8,7 +8,7 @@ using File = System.IO.File;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
-    [Cmdlet(VerbsCommon.Add, "WebPartToWebPartPage")]
+    [Cmdlet(VerbsCommon.Add, "PnPWebPartToWebPartPage")]
     public class AddWebPartToWebPartPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

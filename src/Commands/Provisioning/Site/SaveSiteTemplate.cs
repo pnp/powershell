@@ -11,7 +11,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsData.Save, "SiteTemplate")]
+    [Cmdlet(VerbsData.Save, "PnPSiteTemplate")]
     public class SaveSiteTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

@@ -8,7 +8,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "BrowserIdleSignout")]
+    [Cmdlet(VerbsCommon.Get, "PnPBrowserIdleSignout")]
     public class GetBrowserIdleSignout : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()

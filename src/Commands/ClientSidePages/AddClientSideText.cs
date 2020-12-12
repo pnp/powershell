@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Add, "ClientSideText")]
+    [Cmdlet(VerbsCommon.Add, "PnPClientSideText")]
     public class AddClientSideText : PnPWebCmdlet
     {
         private const string ParameterSet_DEFAULT = "Default";

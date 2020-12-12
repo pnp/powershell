@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.ContentTypes
 {
-    [Cmdlet(VerbsCommon.Set, "DefaultContentTypeToList")]
+    [Cmdlet(VerbsCommon.Set, "PnPDefaultContentTypeToList")]
     public class SetDefaultContentTypeToList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

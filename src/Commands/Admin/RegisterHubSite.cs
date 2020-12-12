@@ -9,7 +9,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsLifecycle.Register, "HubSite")]
+    [Cmdlet(VerbsLifecycle.Register, "PnPHubSite")]
     public class RegisterHubSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

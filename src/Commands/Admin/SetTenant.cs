@@ -8,7 +8,7 @@ using Microsoft.Online.SharePoint.TenantManagement;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Set, "Tenant", DefaultParameterSetName = ParameterAttribute.AllParameterSets)]
+    [Cmdlet(VerbsCommon.Set, "PnPTenant", DefaultParameterSetName = ParameterAttribute.AllParameterSets)]
    
     public class SetTenant : PnPAdminCmdlet
     {

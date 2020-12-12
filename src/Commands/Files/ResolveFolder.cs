@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsDiagnostic.Resolve, "Folder")]
+    [Cmdlet(VerbsDiagnostic.Resolve, "PnPFolder")]
     public class ResolveFolder : PnPWebRetrievalsCmdlet<Folder>
     {
         [Parameter(Mandatory = true, Position = 0)]

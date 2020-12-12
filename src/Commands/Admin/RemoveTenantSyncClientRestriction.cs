@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Remove, "TenantSyncClientRestriction")]
+    [Cmdlet(VerbsCommon.Remove, "PnPTenantSyncClientRestriction")]
     public class RemovePnPTenantSyncClientRestriction : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()

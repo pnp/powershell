@@ -7,7 +7,7 @@ using File = System.IO.File;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Set, "WikiPageContent")]
+    [Cmdlet(VerbsCommon.Set, "PnPWikiPageContent")]
     public class SetWikiPageContent : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "STRING")]

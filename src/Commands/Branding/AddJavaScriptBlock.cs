@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Add, "JavaScriptBlock")]
+    [Cmdlet(VerbsCommon.Add, "PnPJavaScriptBlock")]
     public class AddJavaScriptBlock : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

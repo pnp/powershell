@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Set, "TenantCdnPolicy")]
+    [Cmdlet(VerbsCommon.Set, "PnPTenantCdnPolicy")]
     public class SetTenantCdnPolicy : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

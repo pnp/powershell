@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Events
 {
-    [Cmdlet(VerbsCommon.Add, "EventReceiver")]
+    [Cmdlet(VerbsCommon.Add, "PnPEventReceiver")]
     public class AddEventReceiver : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

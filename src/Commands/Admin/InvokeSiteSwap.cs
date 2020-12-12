@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "SiteSwap")]
+    [Cmdlet(VerbsLifecycle.Invoke, "PnPSiteSwap")]
     public class InvokeSiteSwap : PnPAdminCmdlet
     {
         [Parameter(Mandatory =true)]

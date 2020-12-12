@@ -15,7 +15,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsCommon.New, "SiteTemplateFromFolder")]
+    [Cmdlet(VerbsCommon.New, "PnPSiteTemplateFromFolder")]
     public class NewSiteTemplateFromFolder : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]

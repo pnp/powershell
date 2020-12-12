@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Remove, "SdnProvider", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPSdnProvider", SupportsShouldProcess = true)]
     public class RemoveSdnProvider : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()

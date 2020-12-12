@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.ContentTypes
 {
-    [Cmdlet(VerbsCommon.Remove, "FieldFromContentType")]
+    [Cmdlet(VerbsCommon.Remove, "PnPFieldFromContentType")]
     public class RemoveFieldFromContentType : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

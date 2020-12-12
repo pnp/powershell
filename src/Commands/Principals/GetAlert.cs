@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Get, "Alert")]
+    [Cmdlet(VerbsCommon.Get, "PnPAlert")]
     public class GetAlert : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]

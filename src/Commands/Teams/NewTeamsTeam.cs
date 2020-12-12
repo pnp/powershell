@@ -9,7 +9,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.New, "TeamsTeam")]
+    [Cmdlet(VerbsCommon.New, "PnPTeamsTeam")]
     [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class NewTeamsTeam : PnPGraphCmdlet

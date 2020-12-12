@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.IO;
 using System.Management.Automation;
 
-[Cmdlet(VerbsCommon.Set, "SiteScriptPackage")]
+[Cmdlet(VerbsCommon.Set, "PnPSiteScriptPackage")]
 public class SetSiteScriptPackage : PnPAdminCmdlet
 {
     [Parameter(Mandatory = true)]

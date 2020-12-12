@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "ListItem", DefaultParameterSetName = ParameterSet_ALLITEMS)]
+    [Cmdlet(VerbsCommon.Get, "PnPListItem", DefaultParameterSetName = ParameterSet_ALLITEMS)]
     public class GetListItem : PnPWebCmdlet
     {
         private const string ParameterSet_BYID = "By Id";

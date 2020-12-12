@@ -8,7 +8,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.New, "TeamsApp")]
+    [Cmdlet(VerbsCommon.New, "PnPTeamsApp")]
     [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.AppCatalog_ReadWrite_All)]
     [PnPManagementShellScopes("Directory.ReadWrite.All")]

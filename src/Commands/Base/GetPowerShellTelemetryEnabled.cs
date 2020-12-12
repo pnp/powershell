@@ -2,7 +2,7 @@
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Get, "PowerShellTelemetryEnabled")]
+    [Cmdlet(VerbsCommon.Get, "PnPPowerShellTelemetryEnabled")]
     public class GetPowerShellTelemetryEnabled : PnPSharePointCmdlet
     {
         protected override void ProcessRecord()

@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Remove, "PlannerBucket", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPPlannerBucket", SupportsShouldProcess = true)]
     [MicrosoftGraphApiPermissionCheck(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class RemovePlannerBucket : PnPGraphCmdlet

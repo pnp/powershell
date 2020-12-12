@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsSecurity.Revoke, "TenantServicePrincipalPermission")]
+    [Cmdlet(VerbsSecurity.Revoke, "PnPTenantServicePrincipalPermission")]
     public class RevokeTenantServicePrincipal : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

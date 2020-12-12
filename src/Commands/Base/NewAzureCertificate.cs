@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.New, "AzureCertificate")]
+    [Cmdlet(VerbsCommon.New, "PnPAzureCertificate")]
     public class NewPnPAdalCertificate : PSCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]

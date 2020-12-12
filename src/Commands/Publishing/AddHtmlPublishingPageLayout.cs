@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Add, "HtmlPublishingPageLayout")]
+    [Cmdlet(VerbsCommon.Add, "PnPHtmlPublishingPageLayout")]
     public class AddHtmlPublishingPageLayout : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

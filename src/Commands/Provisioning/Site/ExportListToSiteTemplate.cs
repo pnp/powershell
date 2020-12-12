@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsData.Export, "ListToSiteTemplate")]
+    [Cmdlet(VerbsData.Export, "PnPListToSiteTemplate")]
     public class ExportListToSiteTemplate : PnPWebCmdlet
     {
         //private ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");

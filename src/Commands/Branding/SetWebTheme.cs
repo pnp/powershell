@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "WebTheme")]
+    [Cmdlet(VerbsCommon.Set, "PnPWebTheme")]
     
     
     

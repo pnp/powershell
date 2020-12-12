@@ -8,7 +8,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Remove, "NavigationNode", DefaultParameterSetName = ParameterSet_BYID)]
+    [Cmdlet(VerbsCommon.Remove, "PnPNavigationNode", DefaultParameterSetName = ParameterSet_BYID)]
     public class RemoveNavigationNode : PnPWebCmdlet
     {
         private const string ParameterSet_BYNAME = "Remove node by Title";

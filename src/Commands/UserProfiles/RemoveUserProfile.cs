@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
-    [Cmdlet(VerbsCommon.Remove, "UserProfile")]
+    [Cmdlet(VerbsCommon.Remove, "PnPUserProfile")]
     public class RemoveUserProfile : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

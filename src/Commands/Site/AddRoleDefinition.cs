@@ -7,7 +7,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Add, "RoleDefinition")]
+    [Cmdlet(VerbsCommon.Add, "PnPRoleDefinition")]
     public class AddRoleDefinition : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

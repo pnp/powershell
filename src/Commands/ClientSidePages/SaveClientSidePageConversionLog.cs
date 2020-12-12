@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsData.Save, "ClientSidePageConversionLog")]
+    [Cmdlet(VerbsData.Save, "PnPClientSidePageConversionLog")]
     public class SaveClientSidePageConversionLog : PnPWebCmdlet
     {
         private Assembly sitesCoreAssembly;

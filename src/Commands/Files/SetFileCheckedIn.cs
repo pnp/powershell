@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Set, "FileCheckedIn")]
+    [Cmdlet(VerbsCommon.Set, "PnPFileCheckedIn")]
     public class SetFileCheckedIn : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true)]

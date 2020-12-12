@@ -11,7 +11,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Add, "File")]
+    [Cmdlet(VerbsCommon.Add, "PnPFile")]
     public class AddFile : PnPWebCmdlet
     {
         private const string ParameterSet_ASFILE = "Upload file";

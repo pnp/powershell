@@ -10,7 +10,7 @@ using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Set, "TenantSyncClientRestriction", DefaultParameterSetName = ParameterAttribute.AllParameterSets)]
+    [Cmdlet(VerbsCommon.Set, "PnPTenantSyncClientRestriction", DefaultParameterSetName = ParameterAttribute.AllParameterSets)]
     public class SetTenantSyncClientRestriction : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false)]

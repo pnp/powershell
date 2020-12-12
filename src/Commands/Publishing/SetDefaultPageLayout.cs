@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Set, "DefaultPageLayout")]
+    [Cmdlet(VerbsCommon.Set, "PnPDefaultPageLayout")]
     public class SetDefaultPageLayout : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "TITLE")]

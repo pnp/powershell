@@ -5,7 +5,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommon.Add, "TenantSequenceSite")]
+    [Cmdlet(VerbsCommon.Add, "PnPTenantSequenceSite")]
     public class AddTenantSequenceSite : PSCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Set, "List")]
+    [Cmdlet(VerbsCommon.Set, "PnPList")]
     public class SetList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

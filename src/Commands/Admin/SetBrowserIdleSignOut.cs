@@ -5,7 +5,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Set, "BrowserIdleSignout")]
+    [Cmdlet(VerbsCommon.Set, "PnPBrowserIdleSignout")]
     public class SetBrowserIdleSignout : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

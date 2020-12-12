@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Move, "ClientSideComponent")]
+    [Cmdlet(VerbsCommon.Move, "PnPClientSideComponent")]
     
     public class MoveClientSideWebPart : PnPWebCmdlet
     {

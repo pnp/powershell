@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Remove, "OrgNewsSite")]    
+    [Cmdlet(VerbsCommon.Remove, "PnPOrgNewsSite")]    
     public class RemoveOrgNewsSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

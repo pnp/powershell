@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Set, "FolderPermission", DefaultParameterSetName = "User")]
+    [Cmdlet(VerbsCommon.Set, "PnPFolderPermission", DefaultParameterSetName = "User")]
     public class SetFolderPermission : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]

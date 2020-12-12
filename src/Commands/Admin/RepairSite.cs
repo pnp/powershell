@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsDiagnostic.Repair, "Site", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsDiagnostic.Repair, "PnPSite", SupportsShouldProcess = true)]
     public class RepairSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

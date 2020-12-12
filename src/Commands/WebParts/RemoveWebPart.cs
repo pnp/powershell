@@ -7,7 +7,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
-    [Cmdlet(VerbsCommon.Remove, "WebPart")]
+    [Cmdlet(VerbsCommon.Remove, "PnPWebPart")]
     public class RemoveWebPart : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "ID")]

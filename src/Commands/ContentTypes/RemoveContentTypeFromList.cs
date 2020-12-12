@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.ContentTypes
 {
 
-    [Cmdlet(VerbsCommon.Remove, "ContentTypeFromList")]
+    [Cmdlet(VerbsCommon.Remove, "PnPContentTypeFromList")]
     public class RemoveContentTypeFromList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

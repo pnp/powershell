@@ -5,7 +5,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Remove, "WikiPage", ConfirmImpact = ConfirmImpact.High)]
+    [Cmdlet(VerbsCommon.Remove, "PnPWikiPage", ConfirmImpact = ConfirmImpact.High)]
     public class RemoveWikiPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position=0,ValueFromPipeline=true, ParameterSetName = "SERVER")]

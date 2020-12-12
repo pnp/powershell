@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Refactored internal code to use hardcoded PnP prefixes for cmdlets, which allows $PSDefaultParameterValues in PowerShell to work as expected. (0.3.7)
 - Added `-HeaderLayoutType` parameter to `Set-PnPClientSidePage` (0.3.6)
 - Fixed documentation for `Clear-PnPRecycleBinItem` (0.3.6)
 - Fixed issue with `Invoke-PnPTenantTemplate` not being able to acquire correct access token (0.3.6)

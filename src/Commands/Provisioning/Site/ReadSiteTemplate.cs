@@ -11,7 +11,7 @@ using System.Text;
 
 namespace PnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsCommunications.Read, "SiteTemplate")]
+    [Cmdlet(VerbsCommunications.Read, "PnPSiteTemplate")]
     public class ReadSiteTemplate : PSCmdlet
     {
         const string ParameterSet_PATH = "By Path";

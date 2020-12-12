@@ -6,7 +6,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Remove, "Folder")]
+    [Cmdlet(VerbsCommon.Remove, "PnPFolder")]
     public class RemoveFolder : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

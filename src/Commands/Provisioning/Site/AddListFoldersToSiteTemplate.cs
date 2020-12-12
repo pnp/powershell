@@ -17,7 +17,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Add, "ListFoldersToSiteTemplate")]
+    [Cmdlet(VerbsCommon.Add, "PnPListFoldersToSiteTemplate")]
     public class AddListFoldersToSiteTemplate : PnPWebCmdlet
     {
 

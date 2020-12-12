@@ -7,7 +7,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Get, "ApplicationCustomizer")]
+    [Cmdlet(VerbsCommon.Get, "PnPApplicationCustomizer")]
     public class GetApplicationCustomizer : PnPWebRetrievalsCmdlet<UserCustomAction>
     {
         private const string ParameterSet_CUSTOMACTIONID = "Custom Action Id";

@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "SiteUserInvitations")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteUserInvitations")]
     public class GetSiteUserInvitations : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false)]

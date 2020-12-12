@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.New, "SdnProvider", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.New, "PnPSdnProvider", SupportsShouldProcess = true)]
     public class NewSdnProvider : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

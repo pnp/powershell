@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Remove, "ClientSidePage")]
+    [Cmdlet(VerbsCommon.Remove, "PnPClientSidePage")]
     public class RemoveClientSidePage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

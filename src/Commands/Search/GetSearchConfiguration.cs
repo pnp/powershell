@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Search
         ManagedPropertyMappings = 1
     }
 
-    [Cmdlet(VerbsCommon.Get, "SearchConfiguration", DefaultParameterSetName = "Xml")]
+    [Cmdlet(VerbsCommon.Get, "PnPSearchConfiguration", DefaultParameterSetName = "Xml")]
     public class GetSearchConfiguration : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]

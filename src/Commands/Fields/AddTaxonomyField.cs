@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Add, "TaxonomyField")]
+    [Cmdlet(VerbsCommon.Add, "PnPTaxonomyField")]
     public class AddTaxonomyField : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]

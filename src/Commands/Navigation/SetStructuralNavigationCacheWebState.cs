@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Set, "StructuralNavigationCacheWebState")]
+    [Cmdlet(VerbsCommon.Set, "PnPStructuralNavigationCacheWebState")]
     public class SetStructuralNavigationCacheWebState : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

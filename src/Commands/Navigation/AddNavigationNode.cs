@@ -6,7 +6,7 @@ using PnP.Framework.Enums;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Add, "NavigationNode")]
+    [Cmdlet(VerbsCommon.Add, "PnPNavigationNode")]
     public class AddNavigationNode : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

@@ -8,7 +8,7 @@ using Microsoft.Online.SharePoint.TenantAdministration;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsCommon.Get, "AppInfo")]
+    [Cmdlet(VerbsCommon.Get, "PnPAppInfo")]
     public class GetAppInfo : PnPAdminCmdlet
     {
         private const string ParameterSet_BYID = "By Product Id";

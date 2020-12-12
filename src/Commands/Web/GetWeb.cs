@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Extensions;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "Web")]
+    [Cmdlet(VerbsCommon.Get, "PnPWeb")]
     public class GetWeb : PnPRetrievalsCmdlet<Web>
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
