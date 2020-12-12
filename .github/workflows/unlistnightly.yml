@@ -1,4 +1,4 @@
-name: Cleanup old preview PowerShell Releases
+name: Cleanup old nightly PowerShell Releases
 
 on:
   workflow_dispatch:
