@@ -185,8 +185,6 @@ namespace PnP.PowerShell.Commands.Base
                     }
                     else if (ConnectionMethod == ConnectionMethod.ManagedIdentity)
                     {
-
-                        cmdletInstance?.WriteVerbose("Acquiring access token from Managed Identity End Point");
                         token = GenericToken.AcquireManagedIdentityTokenAsync(HttpClient, "https://graph.microsoft.com", cmdletInstance).GetAwaiter().GetResult() as GraphToken;
                     }
                     else
@@ -256,13 +254,11 @@ namespace PnP.PowerShell.Commands.Base
 
             if (token != null)
             {
-                cmdletInstance?.WriteVerbose("Validating token for permissions");
                 var (valid, message) = ValidateTokenForPermissions(token, tokenAudience, orPermissionScopes, andPermissionScopes, tokenType);
                 if (!valid)
                 {
                     throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {message}");
                 }
-                cmdletInstance?.WriteVerbose("Token permissions are correct");
                 return token;
             }
 
