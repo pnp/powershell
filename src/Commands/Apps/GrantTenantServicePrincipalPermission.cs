@@ -2,60 +2,52 @@
 using Microsoft.SharePoint.Client;
 using PnP.Framework.ALM;
 using PnP.Framework.Enums;
-
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.REST;
 using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsSecurity.Grant, "PnPTenantServicePrincipalPermission")]
-    public class GrantTenantServicePrincipalPermission : PnPAdminCmdlet
+    // [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
+    [PnPManagementShellScopes("Directory.ReadWrite.All")]
+    public class GrantTenantServicePrincipalPermission : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Scope;
 
-        [Parameter(Mandatory = true)]
-        public string Resource;
-
+        [Parameter(Mandatory = false)]
+        public string Resource = "Microsoft Graph";
         protected override void ExecuteCmdlet()
         {
-            var packageName = $"pnp-temporary-request-{System.Guid.NewGuid()}";
-            var appCatalog = Tenant.GetAppCatalog();
-            if (appCatalog != null)
+            var tenantUrl = UrlUtilities.GetTenantAdministrationUrl(ClientContext.Url);
+            using (var tenantContext = ClientContext.Clone(tenantUrl))
             {
-                using (var appCatalogContext = ClientContext.Clone(appCatalog))
+                var spoWebAppServicePrincipal = new SPOWebAppServicePrincipal(tenantContext);
+                var appId = spoWebAppServicePrincipal.EnsureProperty(a => a.AppId);
+                var results = GraphHelper.GetAsync<RestResultCollection<ServicePrincipal>>(this.HttpClient, $"/v1.0/servicePrincipals?$filter=appId eq '{appId}'&$select=id", AccessToken).GetAwaiter().GetResult();
+                if (results.Items.Any())
                 {
-                    var list = appCatalogContext.Web.GetListByUrl("Lists/WebApiPermissionRequests");
-                    var itemCI = new ListItemCreationInformation();
-                    var item = list.AddItem(itemCI);
-                    item["_ows_PackageName"] = packageName;
-                    item["_ows_PackageVersion"] = "0.0.0.0";
-                    item["_ows_Scope"] = Scope;
-                    item["_ows_ResourceId"] = Resource;
-                    item.Update();
-                    appCatalogContext.ExecuteQueryRetry();
+                    var servicePrincipal = results.Items.First();
+                    spoWebAppServicePrincipal.GrantManager.Add(servicePrincipal.Id, Resource, Scope);
+                    tenantContext.ExecuteQueryRetry();
                 }
+                else
+                {
+                    throw new PSInvalidOperationException("Cannot find the 'SharePoint Online Client Extensibility Web Application Principal' in your Azure AD Enterprise applications. Did you enable it using `Enable-PnPTenantServicePrincipal'?");
+                }
+            }
 
-                var servicePrincipal = new SPOWebAppServicePrincipal(ClientContext);
-                var requests = ClientContext.LoadQuery(servicePrincipal.PermissionRequests.Where(r => r.PackageName == packageName));
-                ClientContext.ExecuteQueryRetry();
-                if (requests.Any())
-                {
-                    var newRequest = requests.First();
-                    var request = servicePrincipal.PermissionRequests.GetById(newRequest.Id);
-                    var grant = request.Approve();
-                    ClientContext.Load(grant);
-                    ClientContext.ExecuteQueryRetry();
-                    WriteObject(new TenantServicePrincipalPermissionGrant(grant));
-                }
-            }
-            else
-            {
-                WriteWarning("Tenant app catalog is not available. You must create the tenant app catalog before executing this command");
-            }
+        }
+
+        private class ServicePrincipal
+        {
+            public string Id { get; set; }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Graph;
+using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Properties;
@@ -15,6 +16,16 @@ namespace PnP.PowerShell.Commands.Base
     /// </summary>
     public abstract class PnPGraphCmdlet : PnPConnectedCmdlet
     {
+        /// <summary>
+        /// Reference the the SharePoint context on the current connection. If NULL it means there is no SharePoint context available on the current connection.
+        /// </summary>
+        public ClientContext ClientContext => Connection?.Context ?? PnPConnection.CurrentConnection.Context;
+
+        // do not remove '#!#99'
+        [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")]
+        public PnPConnection Connection = null;
+        // do not remove '#!#99'
+
         private GraphServiceClient serviceClient;
 
         [Parameter(Mandatory = false, DontShow = true)]
@@ -81,7 +92,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 // No valid Microsoft Graph Access Token available, throw an error
-                ThrowTerminatingError(new ErrorRecord(new InvalidOperationException(string.Format(Resources.NoApiAccessToken, Enums.TokenAudience.MicrosoftGraph)), "NO_OAUTH_TOKEN", ErrorCategory.ConnectionError, null));
+                ThrowTerminatingError(new ErrorRecord(new InvalidOperationException(string.Format(Properties.Resources.NoApiAccessToken, Enums.TokenAudience.MicrosoftGraph)), "NO_OAUTH_TOKEN", ErrorCategory.ConnectionError, null));
                 return null;
 
             }
@@ -92,7 +103,7 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public string AccessToken => Token?.AccessToken;
 
-        internal  GraphServiceClient ServiceClient
+        internal GraphServiceClient ServiceClient
         {
             get
             {
@@ -105,8 +116,8 @@ namespace PnP.PowerShell.Commands.Base
                                 {
                                     if (!string.IsNullOrEmpty(AccessToken))
                                     {
-                                    // Configure the HTTP bearer Authorization Header
-                                    requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", AccessToken);
+                                        // Configure the HTTP bearer Authorization Header
+                                        requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", AccessToken);
                                     }
                                 });
                             }), new HttpProvider());
