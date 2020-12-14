@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
-- Breaking change: we changed Grant-PnPTenantServicePrincipalPermission and Revoke-PnPTenantServicePrincipalPermission to use the Graph behind the scenes. This is a breaking change when it comes to the required permissions, but the current approach is more 
+- Breaking change: we changed Grant-PnPTenantServicePrincipalPermission and Revoke-PnPTenantServicePrincipalPermission to use the Graph behind the scenes. This is a breaking change when it comes to the required permissions, but the new approach is more future proof. (0.3.8)
 - Refactored internal code to use hardcoded PnP prefixes for cmdlets, which allows $PSDefaultParameterValues in PowerShell to work as expected. (0.3.7)
 - Added `-HeaderLayoutType` parameter to `Set-PnPClientSidePage` (0.3.6)
 - Fixed documentation for `Clear-PnPRecycleBinItem` (0.3.6)
