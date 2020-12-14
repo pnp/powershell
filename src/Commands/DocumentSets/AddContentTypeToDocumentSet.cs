@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.DocumentSets
 {
-    [Cmdlet(VerbsCommon.Add,"ContentTypeToDocumentSet")]
+    [Cmdlet(VerbsCommon.Add,"PnPContentTypeToDocumentSet")]
     public class AddContentTypeToDocumentSet : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
