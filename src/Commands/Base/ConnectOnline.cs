@@ -19,6 +19,8 @@ using System.Collections.Generic;
 using PnP.Framework.Utilities;
 using System.Reflection;
 using System.Threading;
+using PnP.PowerShell.Commands.Utilities;
+using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -320,11 +322,11 @@ namespace PnP.PowerShell.Commands.Base
                     break;
 
                 case ParameterSet_DEVICELOGIN:
-                    connection = ConnectDeviceLogin(ref cancellationToken);
+                    connection = ConnectDeviceLogin(cancellationToken);
                     break;
 
                 case ParameterSet_GRAPHDEVICELOGIN:
-                    connection = ConnectGraphDeviceLogin(null, ref cancellationToken);
+                    connection = ConnectGraphDeviceLogin(null, cancellationToken);
                     break;
                 case ParameterSet_APPONLYAAD:
                     connection = ConnectAppOnlyAad();
@@ -343,7 +345,7 @@ namespace PnP.PowerShell.Commands.Base
                     break;
 
                 case ParameterSet_AADWITHSCOPE:
-                    connection = ConnectAadWithScope(credentials, AzureEnvironment, ref cancellationToken);
+                    connection = ConnectAadWithScope(credentials, AzureEnvironment, cancellationToken);
                     break;
                 case ParameterSet_ACCESSTOKEN:
                     connection = ConnectAccessToken();
@@ -466,16 +468,22 @@ namespace PnP.PowerShell.Commands.Base
         /// Connect using the parameter set DEVICELOGIN
         /// </summary>
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        private PnPConnection ConnectDeviceLogin(ref CancellationToken cancellationToken)
+        private PnPConnection ConnectDeviceLogin(CancellationToken cancellationToken)
         {
-
+            var messageWriter = new CmdletMessageWriter(this);
+            PnPConnection connection = null;
             var uri = new Uri(Url);
             if ($"https://{uri.Host}".Equals(Url.ToLower()))
             {
                 Url += "/";
             }
-            var connection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, TenantAdminUrl, this, AzureEnvironment, ref cancellationToken);
-
+            var task = Task.Factory.StartNew(() =>
+            {
+                var returnedConnection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, TenantAdminUrl, messageWriter, AzureEnvironment, cancellationToken);
+                connection = returnedConnection;
+                messageWriter.Finished = true;
+            }, cancellationToken);
+            messageWriter.Start();
             return connection;
         }
 
@@ -483,22 +491,18 @@ namespace PnP.PowerShell.Commands.Base
         /// Connect using the parameter set GRAPHDEVICELOGIN
         /// </summary>
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        private PnPConnection ConnectGraphDeviceLogin(string accessToken, ref CancellationToken cancellationToken)
+        private PnPConnection ConnectGraphDeviceLogin(string accessToken, CancellationToken cancellationToken)
         {
+            PnPConnection connection = null;
+            var messageWriter = new CmdletMessageWriter(this);
             if (string.IsNullOrEmpty(accessToken))
             {
-                bool ctrlCAsInput = false;
-                if (Host.Name == "ConsoleHost")
+                Task.Factory.StartNew(() =>
                 {
-                    ctrlCAsInput = Console.TreatControlCAsInput;
-                    Console.TreatControlCAsInput = true;
-                }
-
-                var connection = PnPConnectionHelper.InstantiateGraphDeviceLoginConnection(LaunchBrowser, this, AzureEnvironment, ref cancellationToken);
-                if (Host.Name == "ConsoleHost")
-                {
-                    Console.TreatControlCAsInput = ctrlCAsInput;
-                }
+                    connection = PnPConnectionHelper.InstantiateGraphDeviceLoginConnection(LaunchBrowser, this, messageWriter, AzureEnvironment, cancellationToken);
+                    messageWriter.Stop();
+                });
+                messageWriter.Start();
                 return connection;
             }
             else
@@ -572,8 +576,9 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         /// <param name="credentials">Credentials to authenticate with for delegated access or NULL for application permissions</param>
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        private PnPConnection ConnectAadWithScope(PSCredential credentials, AzureEnvironment azureEnvironment, ref CancellationToken cancellationToken)
+        private PnPConnection ConnectAadWithScope(PSCredential credentials, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
         {
+            var messageWriter = new CmdletMessageWriter(this);
             // Filter out the scopes for the Microsoft Office 365 Management API
             var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
 
@@ -582,29 +587,34 @@ namespace PnP.PowerShell.Commands.Base
 
             PnPConnection connection = null;
 
-            // If we have Office 365 scopes, get a token for those first
-            if (officeManagementApiScopes.Length > 0)
+            Task.Factory.StartNew(() =>
             {
-                var officeManagementApiToken = credentials == null ?
-                    OfficeManagementApiToken.AcquireApplicationTokenDeviceLoginAsync(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, PnPConnection.DeviceLoginCallback(this, true), azureEnvironment, cancellationToken).GetAwaiter().GetResult() :
-                    OfficeManagementApiToken.AcquireDelegatedTokenWithCredentialsAsync(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, credentials.UserName, credentials.Password).GetAwaiter().GetResult();
-                connection = PnPConnection.GetConnectionWithToken(officeManagementApiToken, TokenAudience.OfficeManagementApi, InitializationType.DeviceLogin, credentials);
-            }
+                // If we have Office 365 scopes, get a token for those first
+                if (officeManagementApiScopes.Length > 0)
+                {
+                    var officeManagementApiToken = credentials == null ?
+                        OfficeManagementApiToken.AcquireApplicationTokenDeviceLoginAsync(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, PnPConnection.DeviceLoginCallback(messageWriter, true), azureEnvironment, cancellationToken).GetAwaiter().GetResult() :
+                        OfficeManagementApiToken.AcquireDelegatedTokenWithCredentialsAsync(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, credentials.UserName, credentials.Password).GetAwaiter().GetResult();
+                    connection = PnPConnection.GetConnectionWithToken(officeManagementApiToken, TokenAudience.OfficeManagementApi, InitializationType.DeviceLogin, credentials);
+                }
 
-            // If we have Graph scopes, get a token for it
-            if (graphScopes.Length > 0)
-            {
-                var graphToken = credentials == null ? GraphToken.AcquireApplicationTokenDeviceLoginAsync(PnPConnection.PnPManagementShellClientId, graphScopes, PnPConnection.DeviceLoginCallback(this, true), azureEnvironment, cancellationToken).GetAwaiter().GetResult() : GraphToken.AcquireDelegatedTokenWithCredentialsAsync(PnPConnection.PnPManagementShellClientId, graphScopes, credentials.UserName, credentials.Password, AzureEnvironment).GetAwaiter().GetResult();
-                // If there's a connection already, add the AAD token to it, otherwise set up a new connection with it
-                if (connection != null)
+                // If we have Graph scopes, get a token for it
+                if (graphScopes.Length > 0)
                 {
-                    //connection.AddToken(TokenAudience.MicrosoftGraph, graphToken);
+                    var graphToken = credentials == null ? GraphToken.AcquireApplicationTokenDeviceLoginAsync(PnPConnection.PnPManagementShellClientId, graphScopes, PnPConnection.DeviceLoginCallback(messageWriter, true), azureEnvironment, cancellationToken).GetAwaiter().GetResult() : GraphToken.AcquireDelegatedTokenWithCredentialsAsync(PnPConnection.PnPManagementShellClientId, graphScopes, credentials.UserName, credentials.Password, AzureEnvironment).GetAwaiter().GetResult();
+                    // If there's a connection already, add the AAD token to it, otherwise set up a new connection with it
+                    if (connection != null)
+                    {
+                        //connection.AddToken(TokenAudience.MicrosoftGraph, graphToken);
+                    }
+                    else
+                    {
+                        connection = PnPConnection.GetConnectionWithToken(graphToken, TokenAudience.MicrosoftGraph, InitializationType.GraphDeviceLogin, credentials);
+                    }
                 }
-                else
-                {
-                    connection = PnPConnection.GetConnectionWithToken(graphToken, TokenAudience.MicrosoftGraph, InitializationType.GraphDeviceLogin, credentials);
-                }
-            }
+                messageWriter.Stop();
+            }, cancellationToken);
+            messageWriter.Start();
             connection.Scopes = Scopes;
             return connection;
         }

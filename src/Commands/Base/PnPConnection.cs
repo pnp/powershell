@@ -143,7 +143,7 @@ namespace PnP.PowerShell.Commands.Base
             return token?.AccessToken;
         }
 
-        internal static Action<DeviceCodeResult> DeviceLoginCallback(PSCmdlet cmdlet, bool launchBrowser)
+        internal static Action<DeviceCodeResult> DeviceLoginCallback(CmdletMessageWriter adapter, bool launchBrowser)
         {
             return deviceCodeResult =>
             {
@@ -151,12 +151,13 @@ namespace PnP.PowerShell.Commands.Base
                 if (launchBrowser)
                 {
                     ClipboardService.SetText(deviceCodeResult.UserCode);
-                    cmdlet.WriteFormattedWarning($"Code {deviceCodeResult.UserCode} has been copied to clipboard");
+                    adapter.WriteMessage($"Code {deviceCodeResult.UserCode} has been copied to clipboard");
+                    //cmdlet.WriteFormattedWarning($"Code {deviceCodeResult.UserCode} has been copied to clipboard");
                     BrowserHelper.LaunchBrowser(deviceCodeResult.VerificationUrl);
                 }
                 else
                 {
-                    cmdlet.WriteFormattedWarning($"{deviceCodeResult.Message}");
+                    adapter.WriteMessage(deviceCodeResult.Message);
                 }
             };
         }

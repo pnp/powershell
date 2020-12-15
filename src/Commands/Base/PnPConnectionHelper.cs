@@ -78,7 +78,7 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, string tenantAdminUrl, PSCmdlet cmdlet, AzureEnvironment azureEnvironment, ref CancellationToken cancellationToken)
+        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, string tenantAdminUrl, CmdletMessageWriter adapter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
         {
             var connectionUri = new Uri(url);
             var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
@@ -86,13 +86,13 @@ namespace PnP.PowerShell.Commands.Base
             GenericToken tokenResult = null;
             try
             {
-                tokenResult = GraphToken.AcquireApplicationTokenDeviceLoginAsync(PnPConnection.PnPManagementShellClientId, scopes, PnPConnection.DeviceLoginCallback(cmdlet, launchBrowser), azureEnvironment, cancellationToken).GetAwaiter().GetResult();
+                tokenResult = GraphToken.AcquireApplicationTokenDeviceLoginAsync(PnPConnection.PnPManagementShellClientId, scopes, PnPConnection.DeviceLoginCallback(adapter, launchBrowser), azureEnvironment, cancellationToken).GetAwaiter().GetResult();
             }
             catch (MsalUiRequiredException ex)
             {
                 if (ex.Classification == UiRequiredExceptionClassification.ConsentRequired)
                 {
-                    cmdlet.WriteFormattedWarning("You need to provide consent to the PnP Management Shell application for your tenant. The easiest way to do this is by issueing: 'Connect-PnPOnline -Url [yoursiteur] -PnPManagementShell -LaunchBrowser'. Make sure to authenticate as a Azure administrator allowing to provide consent to the application. Follow the steps provided.");
+                    adapter.WriteMessage("You need to provide consent to the PnP Management Shell application for your tenant. The easiest way to do this is by issueing: 'Connect-PnPOnline -Url [yoursiteur] -PnPManagementShell -LaunchBrowser'. Make sure to authenticate as a Azure administrator allowing to provide consent to the application. Follow the steps provided.");
                     throw ex;
                 }
             }
@@ -118,12 +118,13 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, PSCmdlet cmdlet, AzureEnvironment azureEnvironment, ref CancellationToken cancellationToken)
+        internal static PnPConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, PSCmdlet cmdlet, CmdletMessageWriter adapter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
         {
+
             var tokenResult = GraphToken.AcquireApplicationTokenDeviceLoginAsync(
                 PnPConnection.PnPManagementShellClientId,
                 new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" },
-                PnPConnection.DeviceLoginCallback(cmdlet, launchBrowser),
+                PnPConnection.DeviceLoginCallback(adapter, launchBrowser),
                 azureEnvironment,
                 cancellationToken).GetAwaiter().GetResult();
             var spoConnection = new PnPConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, PnPPSVersionTag, InitializationType.GraphDeviceLogin)

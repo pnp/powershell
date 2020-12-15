@@ -16,6 +16,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
@@ -88,6 +89,7 @@ namespace PnP.PowerShell.Commands.Base
 
         protected override void ProcessRecord()
         {
+            var messageWriter = new CmdletMessageWriter(this);
             cancellationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = cancellationTokenSource.Token;
 
@@ -103,7 +105,12 @@ namespace PnP.PowerShell.Commands.Base
             string token = string.Empty;
             if (DeviceLogin.IsPresent)
             {
-                token = AzureAuthHelper.AuthenticateDeviceLogin(this, Tenant, ref cancellationToken, loginEndPoint);
+                Task.Factory.StartNew(() =>
+                {
+                    token = AzureAuthHelper.AuthenticateDeviceLogin(Tenant, ref cancellationToken, messageWriter, loginEndPoint);
+                    messageWriter.Stop();
+                });
+                messageWriter.Start();
             }
             else
             {
@@ -189,9 +196,9 @@ namespace PnP.PowerShell.Commands.Base
                     byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
                     cert = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
 #else
-                    DateTimeOffset validFrom = DateTimeOffset.Now;
-                    DateTimeOffset validTo = validFrom.AddYears(ValidYears);
-                    cert = CertificateHelper.CreateSelfSignedCertificate2(CommonName, Country, State, Locality, Organization, OrganizationUnit, 2048, null, null, validFrom, validTo, "", false, null);
+                DateTimeOffset validFrom = DateTimeOffset.Now;
+                DateTimeOffset validTo = validFrom.AddYears(ValidYears);
+                cert = CertificateHelper.CreateSelfSignedCertificate2(CommonName, Country, State, Locality, Organization, OrganizationUnit, 2048, null, null, validFrom, validTo, "", false, null);
 #endif
 
                 if (!string.IsNullOrWhiteSpace(OutPath))
