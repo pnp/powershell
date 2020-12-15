@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Todd Klindt [toddklindt]
 - Michael Jensen [michael-jensen]
 - Frank Potrafky [FPotrafky]
+- Veronique Lengelle [veronicageek]
 
 ## [0.2.*-nightly]
 
