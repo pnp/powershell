@@ -143,7 +143,7 @@ namespace PnP.PowerShell.Commands.Base
             return token?.AccessToken;
         }
 
-        internal static Action<DeviceCodeResult> DeviceLoginCallback(PowerShellMessageWriter adapter, bool launchBrowser)
+        internal static Action<DeviceCodeResult> DeviceLoginCallback(CmdletMessageWriter adapter, bool launchBrowser)
         {
             return deviceCodeResult =>
             {

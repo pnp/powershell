@@ -89,7 +89,7 @@ namespace PnP.PowerShell.Commands.Base
 
         protected override void ProcessRecord()
         {
-            var messageWriter = new PowerShellMessageWriter(this);
+            var messageWriter = new CmdletMessageWriter(this);
             cancellationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = cancellationTokenSource.Token;
 
@@ -110,7 +110,7 @@ namespace PnP.PowerShell.Commands.Base
                     token = AzureAuthHelper.AuthenticateDeviceLogin(Tenant, ref cancellationToken, messageWriter, loginEndPoint);
                     messageWriter.Stop();
                 });
-                messageWriter.Listen();
+                messageWriter.Start();
             }
             else
             {

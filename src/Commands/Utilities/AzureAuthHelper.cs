@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return result.AccessToken;
         }
 
-        internal static string AuthenticateDeviceLogin(string tenantId, ref CancellationToken cancellationToken, PowerShellMessageWriter messageWriter ,string loginEndPoint = "https://login.microsoftonline.com")
+        internal static string AuthenticateDeviceLogin(string tenantId, ref CancellationToken cancellationToken, CmdletMessageWriter messageWriter ,string loginEndPoint = "https://login.microsoftonline.com")
         {
             if (string.IsNullOrEmpty(tenantId))
             {

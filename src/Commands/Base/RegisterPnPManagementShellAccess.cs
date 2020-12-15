@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Base
         protected override void ProcessRecord()
         {
             source = new CancellationTokenSource();
-            var messageWriter = new PowerShellMessageWriter(this);
+            var messageWriter = new CmdletMessageWriter(this);
             CancellationToken cancellationToken = source.Token;
 
             var endPoint = GenericToken.GetAzureADLoginEndPoint(AzureEnvironment);
@@ -42,7 +42,7 @@ namespace PnP.PowerShell.Commands.Base
                 }).ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
                 messageWriter.Finished = true;
             }, cancellationToken);
-            messageWriter.Listen();
+            messageWriter.Start();
 
         }
 

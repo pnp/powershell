@@ -5,13 +5,13 @@ using System.Threading;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
-    public class PowerShellMessageWriter
+    public class CmdletMessageWriter
     {
         private PSCmdlet Cmdlet { get; set; }
         private Queue<Message> Queue { get; set; }
         private object LockToken { get; set; }
         public bool Finished { get; set; }
-        public PowerShellMessageWriter(PSCmdlet cmdlet)
+        public CmdletMessageWriter(PSCmdlet cmdlet)
         {
             this.Cmdlet = cmdlet;
             this.LockToken = new object();
@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Utilities
             this.Finished = true;
         }
 
-        public void Listen()
+        public void Start()
         {
             while (!Finished || Queue.Count > 0)
             {

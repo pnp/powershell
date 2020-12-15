@@ -78,7 +78,7 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, string tenantAdminUrl, PowerShellMessageWriter adapter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
+        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, string tenantAdminUrl, CmdletMessageWriter adapter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
         {
             var connectionUri = new Uri(url);
             var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
@@ -118,7 +118,7 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, PSCmdlet cmdlet, PowerShellMessageWriter adapter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
+        internal static PnPConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, PSCmdlet cmdlet, CmdletMessageWriter adapter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
         {
 
             var tokenResult = GraphToken.AcquireApplicationTokenDeviceLoginAsync(

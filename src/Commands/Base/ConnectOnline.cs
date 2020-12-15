@@ -470,7 +470,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectDeviceLogin(CancellationToken cancellationToken)
         {
-            var messageWriter = new PowerShellMessageWriter(this);
+            var messageWriter = new CmdletMessageWriter(this);
             PnPConnection connection = null;
             var uri = new Uri(Url);
             if ($"https://{uri.Host}".Equals(Url.ToLower()))
@@ -483,7 +483,7 @@ namespace PnP.PowerShell.Commands.Base
                 connection = returnedConnection;
                 messageWriter.Finished = true;
             }, cancellationToken);
-            messageWriter.Listen();
+            messageWriter.Start();
             return connection;
         }
 
@@ -494,7 +494,7 @@ namespace PnP.PowerShell.Commands.Base
         private PnPConnection ConnectGraphDeviceLogin(string accessToken, CancellationToken cancellationToken)
         {
             PnPConnection connection = null;
-            var messageWriter = new PowerShellMessageWriter(this);
+            var messageWriter = new CmdletMessageWriter(this);
             if (string.IsNullOrEmpty(accessToken))
             {
                 Task.Factory.StartNew(() =>
@@ -502,7 +502,7 @@ namespace PnP.PowerShell.Commands.Base
                     connection = PnPConnectionHelper.InstantiateGraphDeviceLoginConnection(LaunchBrowser, this, messageWriter, AzureEnvironment, cancellationToken);
                     messageWriter.Stop();
                 });
-                messageWriter.Listen();
+                messageWriter.Start();
                 return connection;
             }
             else
@@ -578,7 +578,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAadWithScope(PSCredential credentials, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
         {
-            var messageWriter = new PowerShellMessageWriter(this);
+            var messageWriter = new CmdletMessageWriter(this);
             // Filter out the scopes for the Microsoft Office 365 Management API
             var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
 
@@ -614,7 +614,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 messageWriter.Stop();
             }, cancellationToken);
-            messageWriter.Listen();
+            messageWriter.Start();
             connection.Scopes = Scopes;
             return connection;
         }
