@@ -1,4 +1,4 @@
-name: PRCheck
+name: Build Pull Request or Commit
 
 on:
   workflow_dispatch:
