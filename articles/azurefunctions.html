@@ -97,11 +97,19 @@
 </li>
 <li><p>Add a new entry or replace the whole contents of the file with:</p>
 <pre><code class="lang-powershell">@{
-    'PnP.PowerShell' = '0.*'
+    'PnP.PowerShell' = '0.3.9-nightly'
 }
 </code></pre>
 </li>
-<li><p>The version that will be installed will be the latest available current nightly build.</p>
+<li><p>The version that will be installed will be the specified nightly build.</p>
+</li>
+<li><p>The moment we release a full 1.0 release you can use wildcards too:</p>
+<pre><code class="lang-powershell">@{
+    'PnP.PowerShell' = '1.*'
+ }
+</code></pre>
+</li>
+<li><p>This will then automatically download any minor version of the major 1 release when available. Notice that you cannot use wildcards to specify a nightly build.</p>
 </li>
 </ol>
 <p>If you decide to remove the Az cmdlets, save the <code>requirements.psd1</code> file and edit the <code>profile.psd</code> file. Mark out the following block in the file as follows:</p>
