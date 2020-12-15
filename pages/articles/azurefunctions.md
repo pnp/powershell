@@ -17,10 +17,18 @@ As the UI in https://portal.azure.com changes every now and then, but the princi
  
    ```powershell
    @{
-       'PnP.PowerShell' = '0.*'
+       'PnP.PowerShell' = '0.3.9-nightly'
    }
    ```
-1. The version that will be installed will be the latest available current nightly build.
+1. The version that will be installed will be the specified nightly build.
+1. The moment we release a full 1.0 release you can use wildcards too:
+
+    ```powershell
+    @{
+        'PnP.PowerShell' = '1.*'
+     }
+    ```
+1. This will then automatically download any minor version of the major 1 release when available. Notice that you cannot use wildcards to specify a nightly build.
 
 If you decide to remove the Az cmdlets, save the `requirements.psd1` file and edit the `profile.psd` file. Mark out the following block in the file as follows:
 
