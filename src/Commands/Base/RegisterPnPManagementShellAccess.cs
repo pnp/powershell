@@ -23,20 +23,27 @@ namespace PnP.PowerShell.Commands.Base
         protected override void ProcessRecord()
         {
             source = new CancellationTokenSource();
-            CancellationToken token = source.Token;
+            var messageWriter = new PowerShellMessageWriter(this);
+            CancellationToken cancellationToken = source.Token;
 
             var endPoint = GenericToken.GetAzureADLoginEndPoint(AzureEnvironment);
 
             var application = PublicClientApplicationBuilder.Create(PnPConnection.PnPManagementShellClientId).WithAuthority($"{endPoint}/organizations/").WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient").Build();
 
-            application.AcquireTokenWithDeviceCode(new[] { "https://graph.microsoft.com/.default" }, codeResult =>
-             {
-                 ClipboardService.SetText(codeResult.UserCode);
-                 this.WriteFormattedWarning($"Provide consent for the PnP Management Shell application to access SharePoint.\n\nWe opened a browser and navigated to {codeResult.VerificationUrl}\n\nEnter code: {codeResult.UserCode} (we copied this code to your clipboard)");
-                 BrowserHelper.LaunchBrowser(codeResult.VerificationUrl);
-                 return Task.FromResult("");
+            Task.Factory.StartNew(() =>
+            {
+                application.AcquireTokenWithDeviceCode(new[] { "https://graph.microsoft.com/.default" }, codeResult =>
+                {
+                    ClipboardService.SetText(codeResult.UserCode);
+                    messageWriter.WriteMessage($"Provide consent for the PnP Management Shell application to access SharePoint.\n\nWe opened a browser and navigated to {codeResult.VerificationUrl}\n\nEnter code: {codeResult.UserCode} (we copied this code to your clipboard)");
+                    //this.WriteFormattedWarning($"Provide consent for the PnP Management Shell application to access SharePoint.\n\nWe opened a browser and navigated to {codeResult.VerificationUrl}\n\nEnter code: {codeResult.UserCode} (we copied this code to your clipboard)");
+                    BrowserHelper.LaunchBrowser(codeResult.VerificationUrl);
+                    return Task.FromResult("");
+                }).ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
+                messageWriter.Finished = true;
+            }, cancellationToken);
+            messageWriter.Listen();
 
-             }).ExecuteAsync(token).GetAwaiter().GetResult();
         }
 
         protected override void StopProcessing()

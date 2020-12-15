@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return result.AccessToken;
         }
 
-        internal static string AuthenticateDeviceLogin(PSCmdlet cmdlet, string tenantId, ref CancellationToken cancellationToken, string loginEndPoint = "https://login.microsoftonline.com")
+        internal static string AuthenticateDeviceLogin(string tenantId, ref CancellationToken cancellationToken, PowerShellMessageWriter messageWriter ,string loginEndPoint = "https://login.microsoftonline.com")
         {
             if (string.IsNullOrEmpty(tenantId))
             {
@@ -40,60 +40,10 @@ namespace PnP.PowerShell.Commands.Utilities
 
             var tokenResult = app.AcquireTokenWithDeviceCode(scopes, result =>
             {
-                cmdlet.Host.UI.Write(result.Message);
+                messageWriter.WriteMessage(result.Message);
                 return Task.FromResult(0);
             }).ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
             return tokenResult.AccessToken;
-        }
-
-        internal static void WriteFormattedWarning(this PSCmdlet cmdlet, string message)
-        {
-
-            if (cmdlet.Host.Name == "ConsoleHost")
-            {
-                var messageLines = new List<string>();
-                messageLines.AddRange(message.Split(new[] { '\n' }));
-                var wrappedText = new List<string>();
-                foreach (var messageLine in messageLines)
-                {
-                    wrappedText.AddRange(WordWrap(messageLine, 80));
-                }
-
-                var notificationColor = "\x1B[7m";
-                var resetColor = "\x1B[0m";
-
-                var outMessage = string.Empty;
-                foreach (var wrappedLine in wrappedText)
-                {
-                    var lineToAdd = wrappedLine.PadRight(100);
-                    outMessage += $"{notificationColor} {lineToAdd} {resetColor}\n";
-                }
-                cmdlet.Host.UI.WriteLine($"{notificationColor}\n{outMessage}{resetColor}\n");
-            }
-            else
-            {
-                cmdlet.WriteWarning(message);
-            }
-        }
-
-
-        private static List<string> WordWrap(string text, int maxLineLength)
-        {
-            var list = new List<string>();
-
-            int currentIndex;
-            var lastWrap = 0;
-            var whitespace = new[] { ' ', '\r', '\n', '\t' };
-            do
-            {
-                currentIndex = lastWrap + maxLineLength > text.Length ? text.Length : (text.LastIndexOfAny(new[] { ' ', ',', '.', '?', '!', ':', ';', '-', '\n', '\r', '\t' }, Math.Min(text.Length - 1, lastWrap + maxLineLength)) + 1);
-                if (currentIndex <= lastWrap)
-                    currentIndex = Math.Min(lastWrap + maxLineLength, text.Length);
-                list.Add(text.Substring(lastWrap, currentIndex - lastWrap).Trim(whitespace));
-                lastWrap = currentIndex;
-            } while (currentIndex < text.Length);
-
-            return list;
         }
     }
 }
