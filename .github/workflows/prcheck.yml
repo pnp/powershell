@@ -9,7 +9,7 @@ on:
     branches: [ dev ]
     paths: 'src/**'
 jobs:
-  build:
+  build_dev_branch:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout PnP.Framework
@@ -25,7 +25,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '5.0.100'
+        dotnet-version: '5.0.101'
     - name: Install PnP.Framework dependencies
       run: dotnet restore
       working-directory: pnpframework/src/lib
