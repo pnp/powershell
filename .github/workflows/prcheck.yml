@@ -9,7 +9,7 @@ on:
     branches: [ dev ]
     paths: 'src/**'
 jobs:
-  prcheck:
+  build_dev_branch:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout PnP.Framework
