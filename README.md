@@ -47,11 +47,11 @@ Follow the steps on screen and after you have consented the application access y
 Connect-PnPOnline -Url <yoururl> -Credentials <yourcredentials>
 ```
 
-## -UseWebLogin is not available anymore
-The WebLogin functionality is not available anymore among others due to limitations of the .NET Core framework with launching browsers etc. We propose that you switch to Device Login based Auth instead:
+## -UseWebLogin is available only on Windows
+The WebLogin functionality is available but only on Windows:
 
 ```powershell
-Connect-PnPOnline -Url <yoururl> -PnPManagementShell
+Connect-PnPOnline -Url <your_url> -UseWebLogin
 ```
 
 # PnP PowerShell roadmap status
