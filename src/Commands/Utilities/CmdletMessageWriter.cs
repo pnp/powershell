@@ -31,13 +31,20 @@ namespace PnP.PowerShell.Commands.Utilities
                 while (Queue.Count > 0)
                 {
                     var message = Queue.Dequeue();
-                    if (message.Formatted)
+                    if (!message.IsError)
                     {
-                        WriteFormattedWarning(Cmdlet, message.Text);
+                        if (message.Formatted)
+                        {
+                            WriteFormattedWarning(Cmdlet, message.Text);
+                        }
+                        else
+                        {
+                            Cmdlet.Host.UI.WriteLine(message.Text);
+                        }
                     }
                     else
                     {
-                        Cmdlet.Host.UI.WriteLine(message.Text);
+                        Cmdlet.Host.UI.WriteErrorLine(message.Text);
                     }
                 }
 
@@ -53,10 +60,19 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
+        public void WriteError(string message)
+        {
+            lock (LockToken)
+            {
+                Queue.Enqueue(new Message() { Formatted = false, Text = message, IsError = true });
+            }
+        }
+
         private class Message
         {
             public string Text { get; set; }
             public bool Formatted { get; set; }
+            public bool IsError { get; set; }
         }
 
         private static List<string> WordWrap(string text, int maxLineLength)
@@ -87,7 +103,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 var wrappedText = new List<string>();
                 foreach (var messageLine in messageLines)
                 {
-                    wrappedText.AddRange(WordWrap(messageLine, cmdlet.Host.UI.RawUI.MaxWindowSize.Width-2));
+                    wrappedText.AddRange(WordWrap(messageLine, cmdlet.Host.UI.RawUI.MaxWindowSize.Width - 2));
                 }
 
                 var notificationColor = "\x1B[7m";
@@ -96,7 +112,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 var outMessage = string.Empty;
                 foreach (var wrappedLine in wrappedText)
                 {
-                    var lineToAdd = wrappedLine.PadRight(cmdlet.Host.UI.RawUI.MaxWindowSize.Width-2);
+                    var lineToAdd = wrappedLine.PadRight(cmdlet.Host.UI.RawUI.MaxWindowSize.Width - 2);
                     outMessage += $"{notificationColor} {lineToAdd} {resetColor}\n";
                 }
                 cmdlet.Host.UI.WriteLine($"{notificationColor}\n{outMessage}{resetColor}\n");

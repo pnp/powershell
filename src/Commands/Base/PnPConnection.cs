@@ -143,21 +143,27 @@ namespace PnP.PowerShell.Commands.Base
             return token?.AccessToken;
         }
 
-        internal static Action<DeviceCodeResult> DeviceLoginCallback(CmdletMessageWriter adapter, bool launchBrowser)
+        internal static Action<DeviceCodeResult> DeviceLoginCallback(CmdletMessageWriter messageWriter, bool launchBrowser)
         {
             return deviceCodeResult =>
             {
 
                 if (launchBrowser)
                 {
-                    ClipboardService.SetText(deviceCodeResult.UserCode);
-                    adapter.WriteMessage($"Code {deviceCodeResult.UserCode} has been copied to clipboard");
-                    //cmdlet.WriteFormattedWarning($"Code {deviceCodeResult.UserCode} has been copied to clipboard");
-                    BrowserHelper.LaunchBrowser(deviceCodeResult.VerificationUrl);
+                    if (Utilities.OperatingSystem.IsWindows())
+                    {
+                        ClipboardService.SetText(deviceCodeResult.UserCode);
+                        messageWriter.WriteMessage($"Code {deviceCodeResult.UserCode} has been copied to clipboard");
+                        BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in", new[] { ("/common/Consent/Set", BrowserHelper.UrlMatchType.EndsWith), ("/common/resporocess?ctx=", BrowserHelper.UrlMatchType.Contains), ("https://login.microsoftonline.com/common/login", BrowserHelper.UrlMatchType.FullMatch) });
+                    }
+                    else
+                    {
+                        messageWriter.WriteMessage($"\n\n{deviceCodeResult.Message}\n\n");
+                    }
                 }
                 else
                 {
-                    adapter.WriteMessage(deviceCodeResult.Message);
+                    messageWriter.WriteMessage($"\n\n{deviceCodeResult.Message}\n\n");
                 }
             };
         }
