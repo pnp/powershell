@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         ClipboardService.SetText(codeResult.UserCode);
                         messageWriter.WriteMessage($"Provide consent for the PnP Management Shell application to access SharePoint.\n\nWe opened a browser and navigated to {codeResult.VerificationUrl}\n\nEnter code: {codeResult.UserCode} (we copied this code to your clipboard)");
-                        BrowserHelper.GetWebBrowserPopup(codeResult.VerificationUrl, "Provide consent for the PnP Management Shell application", new[] { ("/common/Consent/Set", BrowserHelper.UrlMatchType.EndsWith), ("/common/resporocess?ctx=", BrowserHelper.UrlMatchType.Contains), ("https://login.microsoftonline.com/common/login", BrowserHelper.UrlMatchType.FullMatch) });
+                        BrowserHelper.GetWebBrowserPopup(codeResult.VerificationUrl, "Provide consent for the PnP Management Shell application", new[] { ("/common/Consent/Set", BrowserHelper.UrlMatchType.EndsWith), ("/common/reprocess?ctx=", BrowserHelper.UrlMatchType.Contains), ("https://login.microsoftonline.com/common/login", BrowserHelper.UrlMatchType.FullMatch) });
                     }
                     else
                     {

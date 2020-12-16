@@ -153,8 +153,8 @@ namespace PnP.PowerShell.Commands.Base
                     if (Utilities.OperatingSystem.IsWindows())
                     {
                         ClipboardService.SetText(deviceCodeResult.UserCode);
-                        messageWriter.WriteMessage($"Code {deviceCodeResult.UserCode} has been copied to clipboard");
-                        BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in", new[] { ("/common/Consent/Set", BrowserHelper.UrlMatchType.EndsWith), ("/common/resporocess?ctx=", BrowserHelper.UrlMatchType.Contains), ("https://login.microsoftonline.com/common/login", BrowserHelper.UrlMatchType.FullMatch) });
+                        messageWriter.WriteMessage($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard\n\n");
+                        BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in", new[] { ("/common/Consent/Set", BrowserHelper.UrlMatchType.EndsWith), ("/common/reprocess?ctx=", BrowserHelper.UrlMatchType.Contains), ("https://login.microsoftonline.com/common/login", BrowserHelper.UrlMatchType.FullMatch) });
                     }
                     else
                     {
