@@ -6,12 +6,12 @@
 #    Set-ExecutionPolicy RemoteSigned
 #}
 
-if (-not (Get-Module -ListAvailable -Name SharePointPnPPowerShellOnline)) 
+if (-not (Get-Module -ListAvailable -Name "PnP.PowerShell")) 
 {
-    Install-Module SharePointPnPPowerShellOnline
+    Install-Module -Name "PnP.PowerShell"
 }
 
-Import-Module SharePointPnPPowerShellOnline
+Import-Module PnP.PowerShell
 
 # Gets or Sets the csv data.
 $csvConfig = $null
@@ -36,7 +36,7 @@ catch
 
 # Gets stored credentials from the Windows Credential Manager or show prompt.
 # How to use windows credential manager:
-# https://github.com/SharePoint/PnP-PowerShell/wiki/How-to-use-the-Windows-Credential-Manager-to-ease-authentication-with-PnP-PowerShell
+# https://pnp.github.io/powershell/articles/credentialmanagement.html
 if((Get-PnPStoredCredential -Name $winCredentialsManagerLabel) -ne $null)
 {
     $credentials = $winCredentialsManagerLabel
