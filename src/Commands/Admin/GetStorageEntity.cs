@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands
             if (Scope == StorageEntityScope.Tenant)
             {
                 var appCatalogUri = ClientContext.Web.GetAppCatalog();
-                if(appCatalogUri != null)
+                if (appCatalogUri != null)
                 {
                     using (var clonedContext = ClientContext.Clone(appCatalogUri))
                     {
@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands
                 else
                 {
                     WriteWarning("Tenant app catalog is not available on this tenant.");
-                }                
+                }
             }
             else
             {
@@ -45,7 +45,8 @@ namespace PnP.PowerShell.Commands
                 if (appcatalog.ServerObjectIsNull == false)
                 {
                     storageEntitiesIndex = ClientContext.Site.RootWeb.GetPropertyBagValueString("storageentitiesindex", "");
-                } else
+                }
+                else
                 {
                     WriteWarning("Site Collection App Catalog is not available on this site.");
                 }

@@ -80,8 +80,6 @@ namespace PnP.PowerShell.Commands
                 creationInformation.SensitivityLabel = _communicationSiteParameters.SensitivityLabel;
 
                 var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
-                //var results = ClientContext.CreateSiteAsync(creationInformation);
-                //var returnedContext = results.GetAwaiter().GetResult();
                 WriteObject(returnedContext.Url);
             }
             else

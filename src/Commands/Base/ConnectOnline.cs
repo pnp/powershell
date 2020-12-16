@@ -301,7 +301,7 @@ namespace PnP.PowerShell.Commands.Base
 
             if (!string.IsNullOrEmpty(Url) && Url.EndsWith("/"))
             {
-                Url = Url.Substring(0, Url.Length - 1);
+                Url = Url.TrimEnd(new [] {'/'});
             }
 
             PnPConnection connection = null;
@@ -326,7 +326,7 @@ namespace PnP.PowerShell.Commands.Base
                     break;
 
                 case ParameterSet_GRAPHDEVICELOGIN:
-                    connection = ConnectGraphDeviceLogin(null, cancellationToken);
+                    connection = ConnectGraphDeviceLogin(cancellationToken);
                     break;
                 case ParameterSet_APPONLYAAD:
                     connection = ConnectAppOnlyAad();
@@ -491,25 +491,17 @@ namespace PnP.PowerShell.Commands.Base
         /// Connect using the parameter set GRAPHDEVICELOGIN
         /// </summary>
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        private PnPConnection ConnectGraphDeviceLogin(string accessToken, CancellationToken cancellationToken)
+        private PnPConnection ConnectGraphDeviceLogin(CancellationToken cancellationToken)
         {
             PnPConnection connection = null;
             var messageWriter = new CmdletMessageWriter(this);
-            if (string.IsNullOrEmpty(accessToken))
+            Task.Factory.StartNew(() =>
             {
-                Task.Factory.StartNew(() =>
-                {
-                    connection = PnPConnectionHelper.InstantiateGraphDeviceLoginConnection(LaunchBrowser, this, messageWriter, AzureEnvironment, cancellationToken);
-                    messageWriter.Stop();
-                });
-                messageWriter.Start();
-                return connection;
-            }
-            else
-            {
-                // TODO KZ: GetConnectionWithToken?
-                return PnPConnectionHelper.InstantiateGraphAccessTokenConnection(accessToken);
-            }
+                connection = PnPConnectionHelper.InstantiateGraphDeviceLoginConnection(LaunchBrowser, this, messageWriter, AzureEnvironment, cancellationToken);
+                messageWriter.Stop();
+            });
+            messageWriter.Start();
+            return connection;
         }
 
         /// <summary>

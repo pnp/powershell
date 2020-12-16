@@ -179,6 +179,93 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
+        internal enum UrlMatchType
+        {
+            FullMatch,
+            EndsWith,
+            StartsWith,
+            Contains
+        }
+
+        internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls)
+        {
+            bool success = false;
+#if Windows
+
+            if (OperatingSystem.IsWindows())
+            {
+                var thread = new Thread(() =>
+                {
+                    var form = new System.Windows.Forms.Form();
+
+                    var browser = new System.Windows.Forms.WebBrowser
+                    {
+                        ScriptErrorsSuppressed = true,
+                        Dock = System.Windows.Forms.DockStyle.Fill
+                    };
+                    var assembly = typeof(BrowserHelper).Assembly;
+                    form.Icon = null;
+                    form.SuspendLayout();
+                    form.Width = 1024;
+                    form.Height = 768;
+                    form.MinimizeBox = false;
+                    form.MaximizeBox = false;
+                    form.Text = title;
+                    form.Controls.Add(browser);
+                    form.ResumeLayout(false);
+
+                    browser.Navigate(siteUrl);
+
+                    browser.Navigated += (sender, args) =>
+                    {
+                        var navigatedUrl = args.Url.ToString();
+                        var matched = false;
+                        foreach (var closeUrl in closeUrls)
+                        {
+                            switch (closeUrl.matchType)
+                            {
+                                case UrlMatchType.FullMatch:
+                                    matched = navigatedUrl.Equals(closeUrl.url, StringComparison.OrdinalIgnoreCase);
+                                    break;
+                                case UrlMatchType.StartsWith:
+                                    matched = navigatedUrl.StartsWith(closeUrl.url, StringComparison.OrdinalIgnoreCase);
+                                    break;
+                                case UrlMatchType.EndsWith:
+                                    matched = navigatedUrl.EndsWith(closeUrl.url, StringComparison.OrdinalIgnoreCase);
+                                    break;
+                                case UrlMatchType.Contains:
+#if NETFRAMEWORK
+                                    matched = navigatedUrl.Contains(closeUrl.url);
+#else
+                                    matched = navigatedUrl.Contains(closeUrl.url, StringComparison.OrdinalIgnoreCase);
+#endif
+                                    break;
+                            }
+                            if (matched)
+                            {
+                                break;
+                            }
+                        }
+                        if (matched)
+                        {
+                            form.Close();
+                            success = true;
+                        }
+                    };
+
+                    form.Focus();
+                    form.ShowDialog();
+                    browser.Dispose();
+                });
+
+                thread.SetApartmentState(ApartmentState.STA);
+                thread.Start();
+                thread.Join();
+            }
+#endif
+            return success;
+        }
+
         private static async Task<(string digestToken, DateTime expiresOn)> GetRequestDigestAsync(string siteUrl, CookieContainer cookieContainer)
         {
             using (var handler = new HttpClientHandler())

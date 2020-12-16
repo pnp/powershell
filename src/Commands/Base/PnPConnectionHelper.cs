@@ -516,7 +516,7 @@ namespace PnP.PowerShell.Commands.Base
 #else
                                     var updateMessage = $"\nA newer version of PnP PowerShell is available: {availableVersion}.\n\nUse 'Update-Module -Name PnP.PowerShell' to update.\n\nYou can turn this check off by setting the 'PNPPOWERSHELL_UPDATECHECK' environment variable to 'Off'\n";
 #endif
-                                    WriteUpdateMessage(cmdlet, updateMessage);
+                                    CmdletMessageWriter.WriteFormattedWarning(cmdlet, updateMessage);
 
                                 }
                             }

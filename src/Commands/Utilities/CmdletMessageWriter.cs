@@ -78,7 +78,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return list;
         }
 
-        private static void WriteFormattedWarning(PSCmdlet cmdlet, string message)
+        internal static void WriteFormattedWarning(PSCmdlet cmdlet, string message)
         {
             if (cmdlet.Host.Name == "ConsoleHost")
             {
@@ -87,7 +87,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 var wrappedText = new List<string>();
                 foreach (var messageLine in messageLines)
                 {
-                    wrappedText.AddRange(WordWrap(messageLine, 80));
+                    wrappedText.AddRange(WordWrap(messageLine, cmdlet.Host.UI.RawUI.MaxWindowSize.Width-2));
                 }
 
                 var notificationColor = "\x1B[7m";
@@ -96,7 +96,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 var outMessage = string.Empty;
                 foreach (var wrappedLine in wrappedText)
                 {
-                    var lineToAdd = wrappedLine.PadRight(100);
+                    var lineToAdd = wrappedLine.PadRight(cmdlet.Host.UI.RawUI.MaxWindowSize.Width-2);
                     outMessage += $"{notificationColor} {lineToAdd} {resetColor}\n";
                 }
                 cmdlet.Host.UI.WriteLine($"{notificationColor}\n{outMessage}{resetColor}\n");
