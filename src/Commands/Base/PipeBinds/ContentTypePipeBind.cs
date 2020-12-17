@@ -61,14 +61,32 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             ContentType ct;
             if (!string.IsNullOrEmpty(Id))
             {
-                ct = web.GetContentTypeById(Id,true);
+                ct = web.GetContentTypeById(Id, true);
 
             }
             else
             {
-                ct = web.GetContentTypeByName(Name,true);
+                ct = web.GetContentTypeByName(Name, true);
             }
 
+            return ct;
+        }
+
+        public ContentType GetContentType(List list)
+        {
+            if (ContentType != null)
+            {
+                return ContentType;
+            }
+            ContentType ct;
+            if (!string.IsNullOrEmpty(Id))
+            {
+                ct = list.GetContentTypeById(Id);
+            }
+            else
+            {
+                ct = list.GetContentTypeByName(Name);
+            }
             return ct;
         }
     }

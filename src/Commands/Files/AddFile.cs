@@ -3,7 +3,6 @@ using System.IO;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using PnP.PowerShell.Commands.Utilities;
@@ -84,30 +83,22 @@ namespace PnP.PowerShell.Commands.Files
             // Check to see if the Content Type exists. If it doesn't we are going to throw an exception and block this transaction right here.
             if (ContentType != null)
             {
+                List list;
                 try
                 {
-                    var list = SelectedWeb.GetListByUrl(Folder);
-
-                    if (!string.IsNullOrEmpty(ContentType.Id))
-                    {
-                        targetContentType = list.GetContentTypeById(ContentType.Id);
-                    }
-                    else if (!string.IsNullOrEmpty(ContentType.Name))
-                    {
-                        targetContentType = list.GetContentTypeByName(ContentType.Name);
-                    }
-                    else if (ContentType.ContentType != null)
-                    {
-                        targetContentType = ContentType.ContentType;
-                    }
-                    if (targetContentType == null)
-                    {
-                        ThrowTerminatingError(new ErrorRecord(new ArgumentException($"Content Type Argument: {ContentType} does not exist in the list: {list.Title}"), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
-                    }
+                    list = SelectedWeb.GetListByUrl(Folder);
                 }
                 catch
                 {
-                    ThrowTerminatingError(new ErrorRecord(new ArgumentException($"The Folder specified ({folder.ServerRelativeUrl}) does not have a corresponding List, the -ContentType parameter is not valid."), "RELATIVEPATHNOTINLIBRARY", ErrorCategory.InvalidArgument, this));
+                    throw new PSArgumentException("The Folder specified ({folder.ServerRelativeUrl}) does not have a corresponding List", nameof(Folder));
+                }
+                if (list != null)
+                {
+                    targetContentType = ContentType.GetContentType(list);
+                }
+                if (targetContentType == null)
+                {
+                    throw new PSArgumentException("Content Type does not exist in list", nameof(ContentType));
                 }
             }
 
@@ -131,7 +122,6 @@ namespace PnP.PowerShell.Commands.Files
             Microsoft.SharePoint.Client.File file;
             if (ParameterSetName == ParameterSet_ASFILE)
             {
-
                 file = folder.UploadFile(FileName, Path, true);
             }
             else
@@ -139,37 +129,39 @@ namespace PnP.PowerShell.Commands.Files
                 file = folder.UploadFile(FileName, Stream, true);
             }
 
+            bool updateRequired = false;
+            var item = file.ListItemAllFields;
             if (Values != null)
             {
-                var item = file.ListItemAllFields;
-
-                ListItemHelper.UpdateListItem(item, Values, ListItemUpdateType.UpdateOverwriteVersion,
-                    (warning) =>
-                    {
-                        WriteWarning(warning);
-                    },
-                    (terminatingErrorMessage, terminatingErrorCode) =>
-                    {
-                        ThrowTerminatingError(new ErrorRecord(new Exception(terminatingErrorMessage), terminatingErrorCode, ErrorCategory.InvalidData, this));
-                    });
+                ListItemHelper.SetFieldValues(item, Values, this);
+                updateRequired = true;
             }
+
             if (ContentType != null)
             {
-                var item = file.ListItemAllFields;
                 item["ContentTypeId"] = targetContentType.Id.StringValue;
-                item.UpdateOverwriteVersion();
-                ClientContext.ExecuteQueryRetry();
+                updateRequired = true;
             }
 
+            if (updateRequired)
+            {
+                item.SystemUpdate();
+            }
             if (Checkout)
+            {
                 SelectedWeb.CheckInFile(fileUrl, CheckinType.MajorCheckIn, CheckInComment);
-
+            }
 
             if (Publish)
+            {
                 SelectedWeb.PublishFile(fileUrl, PublishComment);
+            }
 
             if (Approve)
+            {
                 SelectedWeb.ApproveFile(fileUrl, ApproveComment);
+            }
+
             ClientContext.Load(file);
             ClientContext.ExecuteQueryRetry();
             WriteObject(file);

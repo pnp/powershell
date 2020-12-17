@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Utilities;
@@ -52,45 +51,24 @@ namespace PnP.PowerShell.Commands.Lists
                 }
                 var item = list.AddItem(liCI);
 
+                bool systemUpdate = false;
                 if (ContentType != null)
                 {
-                    ContentType ct = null;
-                    if (ContentType.ContentType == null)
-                    {
-                        if (ContentType.Id != null)
-                        {
-                            ct = SelectedWeb.GetContentTypeById(ContentType.Id, true);
-                        }
-                        else if (ContentType.Name != null)
-                        {
-                            ct = SelectedWeb.GetContentTypeByName(ContentType.Name, true);
-                        }
-                    }
-                    else
-                    {
-                        ct = ContentType.ContentType;
-                    }
+                    var ct = ContentType.GetContentType(list);
+
                     if (ct != null)
                     {
-                        ct.EnsureProperty(w => w.StringId);
 
-                        item["ContentTypeId"] = ct.StringId;
+                        item["ContentTypeId"] = ct.EnsureProperty(w => w.StringId);
                         item.Update();
+                        systemUpdate = true;
                         ClientContext.ExecuteQueryRetry();
                     }
                 }
 
-                if (Values != null)
+                if (Values?.Count > 0)
                 {
-                    item = ListItemHelper.UpdateListItem(item, Values, ListItemUpdateType.Update,
-                        (warning) =>
-                        {
-                            WriteWarning(warning);
-                        },
-                        (terminatingErrorMessage, terminatingErrorCode) =>
-                        {
-                            ThrowTerminatingError(new ErrorRecord(new Exception(terminatingErrorMessage), terminatingErrorCode, ErrorCategory.InvalidData, this));
-                        });
+                    ListItemHelper.SetFieldValues(item, Values, this);
                 }
 
                 if (!String.IsNullOrEmpty(Label))
@@ -110,7 +88,14 @@ namespace PnP.PowerShell.Commands.Lists
                     }
                 }
 
-                item.Update();
+                if (systemUpdate)
+                {
+                    item.SystemUpdate();
+                }
+                else
+                {
+                    item.Update();
+                }
                 ClientContext.Load(item);
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(item);

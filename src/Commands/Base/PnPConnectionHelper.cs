@@ -23,17 +23,6 @@ namespace PnP.PowerShell.Commands.Base
     internal class PnPConnectionHelper
     {
 
-#if DEBUG
-        private static readonly Uri VersionCheckUrl = new Uri("https://raw.githubusercontent.com/pnp/powershell/dev/version.txt");
-#else
-        private static readonly Uri VersionCheckUrl = new Uri("https://raw.githubusercontent.com/pnp/powershell/master/version.txt");
-#endif
-        private static bool VersionChecked;
-
-        static PnPConnectionHelper()
-        {
-        }
-
         internal static PnPConnection InstantiateSPOnlineConnection(Uri url, string realm, string clientId, string clientSecret, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             ConnectionType connectionType;
@@ -204,28 +193,6 @@ namespace PnP.PowerShell.Commands.Base
                 return spoConnection;
             }
         }
-
-        /// <summary>
-        /// Sets up a connection to Microsoft Graph using a Client Id and Client Secret
-        /// </summary>
-        /// <param name="clientId">Client ID to use to authenticate</param>
-        /// <param name="clientSecret">Client Secret to use to authenticate</param>
-        /// <param name="aadDomain">The Azure Active Directory domain to authenticate to, i.e. contoso.onmicrosoft.com</param>
-        /// <param name="host">The PowerShell host environment reference</param>
-        /// <param name="disableTelemetry">Boolean indicating if telemetry should be disabled</param>
-        /// <returns></returns>
-        //internal static PnPConnection InitiateAzureAdAppOnlyConnectionWithClientIdClientSecret(string clientId, string clientSecret, string aadDomain, PSHost host, bool disableTelemetry)
-        //{
-        //    var app = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority($"https://login.microsoftonline.com/{aadDomain}").WithClientSecret(clientSecret).Build();
-        //    var result = app.AcquireTokenForClient(new[] { "https://graph.microsoft.com/.default" }).ExecuteAsync().GetAwaiter().GetResult();
-        //    if (result == null)
-        //    {
-        //        return null;
-        //    }
-
-        //    var spoConnection = InstantiateGraphAccessTokenConnection(result.AccessToken, host, disableTelemetry);
-        //    return spoConnection;
-        //}
 
         /// <summary>
         /// Tries to remove the local cached machine copy of the private key

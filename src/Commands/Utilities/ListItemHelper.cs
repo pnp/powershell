@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,8 +32,10 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static ListItem UpdateListItem(ListItem item, Hashtable valuesToSet, ListItemUpdateType updateType, Action<string> warningCallback, Action<string, string> terminatingError)
+        public static void SetFieldValues(this ListItem item, Hashtable valuesToSet, Cmdlet cmdlet)
         {
+            // xxx: return early if hashtable is empty to save getting fields?
+
             var itemValues = new List<FieldUpdateValue>();
 
             var context = item.Context as ClientContext;
@@ -63,7 +66,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
                                 var value = values[key];
                                 if (value == null) goto default;
-                                if (value is string && string.IsNullOrWhiteSpace(value+"")) goto default;
+                                if (value is string && string.IsNullOrWhiteSpace(value + "")) goto default;
                                 if (value.GetType().IsArray)
                                 {
                                     foreach (var arrayItem in (value as IEnumerable))
@@ -143,7 +146,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                     }
                                     else
                                     {
-                                        warningCallback?.Invoke($@"You are trying to set multiple values in a single value field. Skipping values for field ""{field.InternalName}""");
+                                        cmdlet.WriteWarning(@"You are trying to set multiple values in a single value field. Skipping values for field ""{field.InternalName}""");
                                     }
                                 }
                                 else
@@ -223,7 +226,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 else
                 {
-                    terminatingError?.Invoke($"Field {key} not present in list.", "FIELDNOTINLIST");
+                    throw new PSInvalidOperationException($"Field {key} not present in list.");
                 }
             }
             foreach (var itemValue in itemValues)
@@ -243,7 +246,8 @@ namespace PnP.PowerShell.Commands.Utilities
                                 if (itemValue.Value is TaxonomyFieldValueCollection)
                                 {
                                     taxField.SetFieldValueByValueCollection(item, itemValue.Value as TaxonomyFieldValueCollection);
-                                } else
+                                }
+                                else
                                 {
                                     taxField.SetFieldValueByValue(item, itemValue.Value as TaxonomyFieldValue);
                                 }
@@ -259,8 +263,13 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                 }
             }
-            switch(updateType)
+        }
+
+        public static void UpdateListItem(this ListItem item, ListItemUpdateType updateType)
+        {
+            switch (updateType)
             {
+                default:
                 case ListItemUpdateType.Update:
                     {
                         item.Update();
@@ -277,9 +286,6 @@ namespace PnP.PowerShell.Commands.Utilities
                         break;
                     }
             }
-            context.Load(item);
-            context.ExecuteQueryRetry();
-            return item;
         }
     }
 }

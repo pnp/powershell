@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.Client.Taxonomy;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Utilities;
+
 // IMPORTANT: If you make changes to this cmdlet, also make the similar/same changes to the Add-PnPListItem Cmdlet
 
 namespace PnP.PowerShell.Commands.Lists
@@ -36,69 +35,34 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            List list = null;
-            if (List != null)
-            {
-                list = List.GetList(SelectedWeb);
-            }
+            List list = List.GetList(SelectedWeb);
+
             if (list != null)
             {
                 var item = Identity.GetListItem(list);
 
+                bool updateRequired = false;
+
                 if (ContentType != null)
                 {
-                    ContentType ct = null;
-                    if (ContentType.ContentType == null)
-                    {
-                        if (ContentType.Id != null)
-                        {
-                            ct = SelectedWeb.GetContentTypeById(ContentType.Id, true);
-                        }
-                        else if (ContentType.Name != null)
-                        {
-                            ct = SelectedWeb.GetContentTypeByName(ContentType.Name, true);
-                        }
-                    }
-                    else
-                    {
-                        ct = ContentType.ContentType;
-                    }
+                    ContentType ct = ContentType.GetContentType(list);
+
                     if (ct != null)
                     {
-                        ct.EnsureProperty(w => w.StringId);
-                        item["ContentTypeId"] = ct.StringId;
-                        if (SystemUpdate.IsPresent)
-                        {
-                            item.SystemUpdate();
-                        }
-                        else
-                        {
-                            item.Update();
-                        }
-                        ClientContext.ExecuteQueryRetry();
+
+                        item["ContentTypeId"] = ct.EnsureProperty(w => w.StringId); ;
+                        updateRequired = true;
                     }
                 }
                 if (Values != null)
                 {
-                    var updateType = ListItemUpdateType.Update;
-                    if (SystemUpdate.IsPresent)
-                    {
-                        updateType = ListItemUpdateType.SystemUpdate;
-                    }
-                    item = ListItemHelper.UpdateListItem(item, Values, updateType, (warning) =>
-                      {
-                          WriteWarning(warning);
-                      },
-                      (terminatingErrorMessage, terminatingErrorCode) =>
-                      {
-                          ThrowTerminatingError(new ErrorRecord(new Exception(terminatingErrorMessage), terminatingErrorCode, ErrorCategory.InvalidData, this));
-                      }
-                      );
+                    ListItemHelper.SetFieldValues(item, Values, this);
+                    updateRequired = true;
                 }
 
                 if (!string.IsNullOrEmpty(Label))
                 {
-                    IList<Microsoft.SharePoint.Client.CompliancePolicy.ComplianceTag> tags = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAvailableTagsForSite(ClientContext, ClientContext.Url);
+                    var tags = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAvailableTagsForSite(ClientContext, ClientContext.Url);
                     ClientContext.ExecuteQueryRetry();
 
                     var tag = tags.Where(t => t.TagName == Label).FirstOrDefault();
@@ -120,6 +84,18 @@ namespace PnP.PowerShell.Commands.Lists
                         WriteWarning("Can not find compliance tag with value: " + Label);
                     }
                 }
+
+                if (updateRequired)
+                {
+                    var updateType = ListItemUpdateType.Update;
+                    if (SystemUpdate.IsPresent)
+                    {
+                        updateType = ListItemUpdateType.SystemUpdate;
+                    }
+                    ListItemHelper.UpdateListItem(item, updateType);
+                }
+                ClientContext.ExecuteQuery();
+                ClientContext.Load(item);
                 WriteObject(item);
             }
         }
