@@ -27,10 +27,14 @@
     <DefineConstants>Linux</DefineConstants>
   </PropertyGroup>
 
+
   <PropertyGroup Condition="'$(TargetFramework)' == 'net461'">
     <DefineConstants>$(DefineConstants);NETFRAMEWORK</DefineConstants>
   </PropertyGroup>
-  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.14.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />

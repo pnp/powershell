@@ -281,7 +281,7 @@ namespace PnP.PowerShell.Commands.Base
             }
 #pragma warning restore CS6018            
 
-            PnPConnectionHelper.CheckVersion(this);
+            VersionChecker.CheckVersion(this);
             try
             {
                 Connect(ref token);

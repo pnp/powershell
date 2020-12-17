@@ -18,6 +18,7 @@ using PnP.PowerShell.Commands.Attributes;
 using System.Threading;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -131,6 +132,11 @@ namespace PnP.PowerShell.Commands.Base
 
         #region Methods
 
+        internal ReadOnlyDictionary<TokenAudience, GenericToken> GetAllStoredTokens()
+        {
+            return new ReadOnlyDictionary<TokenAudience, GenericToken>(AccessTokens);
+        }
+        
         /// <summary>
         /// Tries to get an access token for the provided audience
         /// </summary>
