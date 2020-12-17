@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(SelectedWeb);
+            var list = List.GetList(CurrentWeb);
             if (list != null)
             {
                 var listUrl = list.RootFolder.ServerRelativeUrl;

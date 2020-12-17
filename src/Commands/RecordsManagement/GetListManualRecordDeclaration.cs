@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.RecordsManagement
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(SelectedWeb);
+            var list = List.GetList(CurrentWeb);
 
             var d = new
             {

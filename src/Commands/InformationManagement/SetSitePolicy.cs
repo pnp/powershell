@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
        
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.ApplySitePolicy(Name);
+            CurrentWeb.ApplySitePolicy(Name);
         }
     }
 }

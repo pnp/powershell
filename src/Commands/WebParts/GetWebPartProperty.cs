@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.WebParts
 
         protected override void ExecuteCmdlet()
         {
-            var serverRelativeWebUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var serverRelativeWebUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             if (!ServerRelativePageUrl.ToLowerInvariant().StartsWith(serverRelativeWebUrl.ToLowerInvariant()))
             {
@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.WebParts
             }
 
 
-            var properties = SelectedWeb.GetWebPartProperties(Identity, ServerRelativePageUrl);
+            var properties = CurrentWeb.GetWebPartProperties(Identity, ServerRelativePageUrl);
             var values = properties.FieldValues.Select(x => new PropertyBagValue() { Key = x.Key, Value = x.Value });
             if (!string.IsNullOrEmpty(Key))
             {

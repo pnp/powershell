@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Site
                     g => g.LoginName)
            };
 
-            var siteCollectionAdminUsersQuery = SelectedWeb.SiteUsers.Where(u => u.IsSiteAdmin);
+            var siteCollectionAdminUsersQuery = CurrentWeb.SiteUsers.Where(u => u.IsSiteAdmin);
             var siteCollectionAdminUsers = ClientContext.LoadQuery(siteCollectionAdminUsersQuery.Include(retrievalExpressions));
             ClientContext.ExecuteQueryRetry();
 

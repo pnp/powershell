@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands
     {
         protected override void ExecuteCmdlet()
         {
-            var emails = SelectedWeb.GetRequestAccessEmails();
+            var emails = CurrentWeb.GetRequestAccessEmails();
             WriteObject(emails, true);
         }
     }

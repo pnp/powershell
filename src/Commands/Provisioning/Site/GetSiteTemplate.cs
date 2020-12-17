@@ -156,15 +156,15 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         private void ExtractTemplate(XMLPnPSchemaVersion schema, string path, string packageName, ExtractConfiguration configuration)
         {
-            SelectedWeb.EnsureProperty(w => w.Url);
+            CurrentWeb.EnsureProperty(w => w.Url);
             ProvisioningTemplateCreationInformation creationInformation = null;
             if (configuration != null)
             {
-                creationInformation = configuration.ToCreationInformation(SelectedWeb);
+                creationInformation = configuration.ToCreationInformation(CurrentWeb);
             }
             else
             {
-                creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb);
+                creationInformation = new ProvisioningTemplateCreationInformation(CurrentWeb);
             }
 
             if (ParameterSpecified(nameof(Handlers)))
@@ -277,7 +277,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
             else
             {
-                creationInformation.BaseTemplate = SelectedWeb.GetBaseTemplate();
+                creationInformation.BaseTemplate = CurrentWeb.GetBaseTemplate();
             }
 #pragma warning restore CS0618 // Type or member is obsolete
 
@@ -285,7 +285,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 var percentage = Convert.ToInt32((100 / Convert.ToDouble(total)) * Convert.ToDouble(step));
 
-                WriteProgress(new ProgressRecord(0, $"Extracting Template from {SelectedWeb.Url}", message) { PercentComplete = percentage });
+                WriteProgress(new ProgressRecord(0, $"Extracting Template from {CurrentWeb.Url}", message) { PercentComplete = percentage });
                 WriteProgress(new ProgressRecord(1, " ", " ") { RecordType = ProgressRecordType.Completed });
             };
             creationInformation.MessagesDelegate = (message, type) =>
@@ -393,7 +393,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 }
             }))
             {
-                template = SelectedWeb.GetProvisioningTemplate(creationInformation);
+                template = CurrentWeb.GetProvisioningTemplate(creationInformation);
             }
             // Set metadata for template, if any
             SetTemplateMetadata(template, TemplateDisplayName, TemplateImagePreviewUrl, TemplateProperties);

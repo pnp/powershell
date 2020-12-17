@@ -24,18 +24,18 @@ namespace PnP.PowerShell.Commands.Publishing
             {
                 case "WithContent":
                     {
-                        SelectedWeb.AddWikiPageByUrl(ServerRelativePageUrl, Content);
+                        CurrentWeb.AddWikiPageByUrl(ServerRelativePageUrl, Content);
                         break;
                     }
                 case "WithLayout":
                     {
-                        SelectedWeb.AddWikiPageByUrl(ServerRelativePageUrl);
-                        SelectedWeb.AddLayoutToWikiPage(Layout, ServerRelativePageUrl);
+                        CurrentWeb.AddWikiPageByUrl(ServerRelativePageUrl);
+                        CurrentWeb.AddLayoutToWikiPage(Layout, ServerRelativePageUrl);
                         break;
                     }
                 default:
                     {
-                        SelectedWeb.AddWikiPageByUrl(ServerRelativePageUrl);
+                        CurrentWeb.AddWikiPageByUrl(ServerRelativePageUrl);
                         break;
                     }
             }

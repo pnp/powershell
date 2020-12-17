@@ -23,6 +23,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         public ContentTypePipeBind ContentType;
 
         [Parameter(Mandatory = false)]
+        [ValidateNotNullOrEmpty]
         public SwitchParameter CommentsEnabled = false;
 
         [Parameter(Mandatory = false)]
@@ -30,7 +31,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
 
         [Parameter(Mandatory = false)]
         public ClientSidePageHeaderLayoutType HeaderLayoutType = ClientSidePageHeaderLayoutType.FullWidthImage;
-      
+
         protected override void ExecuteCmdlet()
         {
             ClientSidePage clientSidePage = null;
@@ -46,13 +47,13 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             }
             catch { }
 
-            if(pageExists)
+            if (pageExists)
             {
                 throw new Exception($"Page {name} already exists");
             }
 
             // Create a page that persists immediately
-            clientSidePage = SelectedWeb.AddClientSidePage(name);
+            clientSidePage = CurrentWeb.AddClientSidePage(name);
             clientSidePage.LayoutType = LayoutType;
             clientSidePage.PageHeader.LayoutType = HeaderLayoutType;
 
@@ -65,32 +66,12 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                 clientSidePage.Save(name);
             }
 
-            if (ParameterSpecified(nameof(ContentType)))
+            if (ContentType != null)
             {
-                ContentType ct = null;
-                if (ContentType.ContentType == null)
-                {
-                    if (ContentType.Id != null)
-                    {
-                        ct = SelectedWeb.GetContentTypeById(ContentType.Id, true);
-                    }
-                    else if (ContentType.Name != null)
-                    {
-                        ct = SelectedWeb.GetContentTypeByName(ContentType.Name, true);
-                    }
-                }
-                else
-                {
-                    ct = ContentType.ContentType;
-                }
-                if (ct != null)
-                {
-                    ct.EnsureProperty(w => w.StringId);
-
-                    clientSidePage.PageListItem["ContentTypeId"] = ct.StringId;
-                    clientSidePage.PageListItem.SystemUpdate();
-                    ClientContext.ExecuteQueryRetry();
-                }
+                string ctId = ContentType.GetIdOrThrow(nameof(ContentType), CurrentWeb);
+                clientSidePage.PageListItem["ContentTypeId"] = ctId;
+                clientSidePage.PageListItem.SystemUpdate();
+                ClientContext.ExecuteQueryRetry();
             }
 
             // If a specific promote type is specified, promote the page as Home or Article or ...

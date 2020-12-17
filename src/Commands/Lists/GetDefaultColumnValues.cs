@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Lists
             List list = null;
             if (List != null)
             {
-                list = List.GetList(SelectedWeb);
+                list = List.GetList(CurrentWeb);
             }
             if (list != null)
             {

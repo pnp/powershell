@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Search
             {
                 case SearchConfigurationScope.Web:
                     {
-                        configOutput = SelectedWeb.GetSearchConfiguration();
+                        configOutput = CurrentWeb.GetSearchConfiguration();
                         break;
                     }
                 case SearchConfigurationScope.Site:

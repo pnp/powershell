@@ -27,14 +27,14 @@ namespace PnP.PowerShell.Commands.Principals
      
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(SelectedWeb);
+            var group = Identity.GetGroup(CurrentWeb);
             if (ParameterSetName == "External")
             {
                 group.InviteExternalUser(EmailAddress, SendEmail, EmailBody);
             }
             else
             {
-                SelectedWeb.AddUserToGroup(group, LoginName);
+                CurrentWeb.AddUserToGroup(group, LoginName);
             }
         }
     }

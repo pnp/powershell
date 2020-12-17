@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Publishing
 
         protected override void ExecuteCmdlet()
         {
-            WriteObject(SelectedWeb.GetWikiPageContent(ServerRelativePageUrl));
+            WriteObject(CurrentWeb.GetWikiPageContent(ServerRelativePageUrl));
         }
     }
 }

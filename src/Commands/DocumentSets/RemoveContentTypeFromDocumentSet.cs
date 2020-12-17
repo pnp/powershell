@@ -15,8 +15,8 @@ namespace PnP.PowerShell.Commands.DocumentSets
         public DocumentSetPipeBind DocumentSet;
         protected override void ExecuteCmdlet()
         {
-            var ct = ContentType.GetContentType(SelectedWeb);
-            var docSetTemplate = DocumentSet.GetDocumentSetTemplate(SelectedWeb);
+            var ct = ContentType.GetContentType(CurrentWeb);
+            var docSetTemplate = DocumentSet.GetDocumentSetTemplate(CurrentWeb);
 
             docSetTemplate.AllowedContentTypes.Remove(ct.Id);
 

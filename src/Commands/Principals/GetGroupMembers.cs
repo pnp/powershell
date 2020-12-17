@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(SelectedWeb);
+            var group = Identity.GetGroup(CurrentWeb);
             WriteObject(group.Users, true);
         }
     }

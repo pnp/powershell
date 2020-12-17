@@ -12,8 +12,8 @@ namespace PnP.PowerShell.Commands.Principals
         public GroupPipeBind Identity = new GroupPipeBind();
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(SelectedWeb);
-            var roleAssignment = SelectedWeb.RoleAssignments.GetByPrincipal(group);
+            var group = Identity.GetGroup(CurrentWeb);
+            var roleAssignment = CurrentWeb.RoleAssignments.GetByPrincipal(group);
             var roleDefinitionBindings = roleAssignment.RoleDefinitionBindings;
             ClientContext.Load(roleDefinitionBindings);
             ClientContext.ExecuteQueryRetry();

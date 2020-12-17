@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands
     {
         protected override void ExecuteCmdlet()
         {
-            var allowedSites = this.SelectedWeb.TenantAppCatalog.SiteCollectionAppCatalogsSites;
+            var allowedSites = this.CurrentWeb.TenantAppCatalog.SiteCollectionAppCatalogsSites;
             ClientContext.Load(allowedSites);
             ClientContext.ExecuteQueryRetry();
 

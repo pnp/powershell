@@ -16,11 +16,11 @@ namespace PnP.PowerShell.Commands.DocumentSets
 
         protected override void ExecuteCmdlet()
         {
-            var docSetTemplate = DocumentSet.GetDocumentSetTemplate(SelectedWeb);
+            var docSetTemplate = DocumentSet.GetDocumentSetTemplate(CurrentWeb);
 
             foreach (var ct in ContentType)
             {
-                var contentType = ct.GetContentType(SelectedWeb);
+                var contentType = ct.GetContentType(CurrentWeb);
 
                 docSetTemplate.AllowedContentTypes.Add(contentType.Id);
             }

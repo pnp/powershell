@@ -20,13 +20,13 @@ namespace PnP.PowerShell.Commands.Fields
 
             if (List != null)
             {
-                List list = List.GetList(SelectedWeb);
+                List list = List.GetList(CurrentWeb);
 
                 f = list.CreateField(FieldXml);
             }
             else
             {
-                f = SelectedWeb.CreateField(FieldXml);
+                f = CurrentWeb.CreateField(FieldXml);
             }
             ClientContext.Load(f);
             ClientContext.ExecuteQueryRetry();

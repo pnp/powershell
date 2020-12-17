@@ -61,76 +61,76 @@ namespace PnP.PowerShell.Commands
                 switch (key)
                 {
                     case nameof(SiteLogoUrl):
-                        SelectedWeb.SiteLogoUrl = SiteLogoUrl;
+                        CurrentWeb.SiteLogoUrl = SiteLogoUrl;
                         dirty = true;
                         break;
 
                     case nameof(AlternateCssUrl):
-                        SelectedWeb.AlternateCssUrl = AlternateCssUrl;
+                        CurrentWeb.AlternateCssUrl = AlternateCssUrl;
                         dirty = true;
                         break;
 
                     case nameof(Title):
-                        SelectedWeb.Title = Title;
+                        CurrentWeb.Title = Title;
                         dirty = true;
                         break;
 
                     case nameof(Description):
-                        SelectedWeb.Description = Description;
+                        CurrentWeb.Description = Description;
                         dirty = true;
                         break;
 
                     case nameof(MasterUrl):
-                        SelectedWeb.MasterUrl = MasterUrl;
+                        CurrentWeb.MasterUrl = MasterUrl;
                         dirty = true;
                         break;
 
                     case nameof(CustomMasterUrl):
-                        SelectedWeb.CustomMasterUrl = CustomMasterUrl;
+                        CurrentWeb.CustomMasterUrl = CustomMasterUrl;
                         dirty = true;
                         break;
 
                     case nameof(QuickLaunchEnabled):
-                        SelectedWeb.QuickLaunchEnabled = QuickLaunchEnabled.ToBool();
+                        CurrentWeb.QuickLaunchEnabled = QuickLaunchEnabled.ToBool();
                         dirty = true;
                         break;
                     case nameof(MembersCanShare):
-                        SelectedWeb.MembersCanShare = MembersCanShare.ToBool();
+                        CurrentWeb.MembersCanShare = MembersCanShare.ToBool();
                         dirty = true;
                         break;
 
                     case nameof(NoCrawl):
-                        SelectedWeb.NoCrawl = NoCrawl.ToBool();
+                        CurrentWeb.NoCrawl = NoCrawl.ToBool();
                         dirty = true;
                         break;
 
                     case nameof(HeaderLayout):
-                        SelectedWeb.HeaderLayout = HeaderLayout;
+                        CurrentWeb.HeaderLayout = HeaderLayout;
                         dirty = true;
                         break;
 
                     case nameof(HeaderEmphasis):
-                        SelectedWeb.HeaderEmphasis = HeaderEmphasis;
+                        CurrentWeb.HeaderEmphasis = HeaderEmphasis;
                         dirty = true;
                         break;
 
                     case nameof(NavAudienceTargetingEnabled):
-                        SelectedWeb.NavAudienceTargetingEnabled = NavAudienceTargetingEnabled.ToBool();
+                        CurrentWeb.NavAudienceTargetingEnabled = NavAudienceTargetingEnabled.ToBool();
                         dirty = true;
                         break;
 
                     case nameof(MegaMenuEnabled):
-                        SelectedWeb.MegaMenuEnabled = MegaMenuEnabled.ToBool();
+                        CurrentWeb.MegaMenuEnabled = MegaMenuEnabled.ToBool();
                         dirty = true;
                         break;
 
                     case nameof(DisablePowerAutomate):
-                        SelectedWeb.DisableFlows = DisablePowerAutomate.ToBool();
+                        CurrentWeb.DisableFlows = DisablePowerAutomate.ToBool();
                         dirty = true;
                         break;
 
                     case nameof(CommentsOnSitePagesDisabled):
-                        SelectedWeb.CommentsOnSitePagesDisabled = CommentsOnSitePagesDisabled.ToBool();
+                        CurrentWeb.CommentsOnSitePagesDisabled = CommentsOnSitePagesDisabled.ToBool();
                         dirty = true;
                         break;
                 }
@@ -138,7 +138,7 @@ namespace PnP.PowerShell.Commands
 
             if (dirty)
             {
-                SelectedWeb.Update();
+                CurrentWeb.Update();
                 ClientContext.ExecuteQueryRetry();
             }
         }

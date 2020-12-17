@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Lists
             List list = null;
             if (List != null)
             {
-                list = List.GetList(SelectedWeb);
+                list = List.GetList(CurrentWeb);
             }
             if (list != null)
             {
@@ -89,11 +89,11 @@ namespace PnP.PowerShell.Commands.Lists
                     {
                         if (Group.Id != -1)
                         {
-                            principal = SelectedWeb.SiteGroups.GetById(Group.Id);
+                            principal = CurrentWeb.SiteGroups.GetById(Group.Id);
                         }
                         else if (!string.IsNullOrEmpty(Group.Name))
                         {
-                            principal = SelectedWeb.SiteGroups.GetByName(Group.Name);
+                            principal = CurrentWeb.SiteGroups.GetByName(Group.Name);
                         }
                         else if (Group.Group != null)
                         {
@@ -102,14 +102,14 @@ namespace PnP.PowerShell.Commands.Lists
                     }
                     else
                     {
-                        principal = SelectedWeb.EnsureUser(User);
+                        principal = CurrentWeb.EnsureUser(User);
                         ClientContext.ExecuteQueryRetry();
                     }
                     if (principal != null)
                     {
                         if (!string.IsNullOrEmpty(AddRole))
                         {
-                            var roleDefinition = SelectedWeb.RoleDefinitions.GetByName(AddRole);
+                            var roleDefinition = CurrentWeb.RoleDefinitions.GetByName(AddRole);
                             var roleDefinitionBindings = new RoleDefinitionBindingCollection(ClientContext)
                             {
                                 roleDefinition

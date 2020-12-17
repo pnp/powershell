@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Branding
 #pragma warning disable CS0618 // Type or member is obsolete
                 if (Force || ShouldContinue(string.Format(Resources.RemoveNavigationNodeInLocation, Location), Resources.Confirm))
                 {
-                    SelectedWeb.DeleteAllNavigationNodes(Location);
+                    CurrentWeb.DeleteAllNavigationNodes(Location);
                 }
 #pragma warning restore CS0618 // Type or member is obsolete
             }
@@ -53,14 +53,14 @@ namespace PnP.PowerShell.Commands.Branding
                 {
                     if (ParameterSetName == ParameterSet_BYID)
                     {
-                        var node = SelectedWeb.Navigation.GetNodeById(Identity.Id);
+                        var node = CurrentWeb.Navigation.GetNodeById(Identity.Id);
                         node.DeleteObject();
                         ClientContext.ExecuteQueryRetry();
                     }
                     else
                     {
 #pragma warning disable CS0618 // Type or member is obsolete
-                        SelectedWeb.DeleteNavigationNode(Title, Header, Location);
+                        CurrentWeb.DeleteNavigationNode(Title, Header, Location);
 #pragma warning restore CS0618 // Type or member is obsolete
                     }
                 }

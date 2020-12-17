@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Fields
             Field field = null;
             if (List != null)
             {
-                var list = List.GetList(SelectedWeb);
+                var list = List.GetList(CurrentWeb);
 
                 if (list == null)
                 {

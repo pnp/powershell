@@ -16,9 +16,9 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
                         
-            Folder folder = SelectedWeb.GetFolderByServerRelativeUrl(UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder));
+            Folder folder = CurrentWeb.GetFolderByServerRelativeUrl(UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, Folder));
             ClientContext.Load(folder, f => f.ServerRelativeUrl);
             ClientContext.ExecuteQueryRetry();
 

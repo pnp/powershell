@@ -28,25 +28,25 @@ namespace PnP.PowerShell.Commands.Branding
 
             if (ParameterSpecified(nameof(Enabled)))
             {
-                SelectedWeb.FooterEnabled = Enabled.ToBool();
+                CurrentWeb.FooterEnabled = Enabled.ToBool();
                 isDirty = true;
             }
 
             if (ParameterSpecified(nameof(Layout)))
             {
-                SelectedWeb.FooterLayout = Layout;
+                CurrentWeb.FooterLayout = Layout;
                 isDirty = true;
             }
 
             if (ParameterSpecified(nameof(BackgroundTheme)))
             {
-                SelectedWeb.FooterEmphasis = BackgroundTheme;
+                CurrentWeb.FooterEmphasis = BackgroundTheme;
                 isDirty = true;
             }
 
             if (ParameterSpecified(nameof(Title)))
             {
-                SelectedWeb.SetFooterTitle(Title);
+                CurrentWeb.SetFooterTitle(Title);
                 // No isDirty is needed here as the above request will directly perform the update
             }
 
@@ -54,18 +54,18 @@ namespace PnP.PowerShell.Commands.Branding
             {
                 if (LogoUrl == string.Empty)
                 {
-                    SelectedWeb.RemoveFooterLogoUrl();
+                    CurrentWeb.RemoveFooterLogoUrl();
                 }
                 else
                 {
-                    SelectedWeb.SetFooterLogoUrl(LogoUrl);
+                    CurrentWeb.SetFooterLogoUrl(LogoUrl);
                 }
                 // No isDirty is needed here as the above request will directly perform the update
             }
 
             if (isDirty)
             {
-                SelectedWeb.Update();
+                CurrentWeb.Update();
                 ClientContext.ExecuteQueryRetry();
             }
         }

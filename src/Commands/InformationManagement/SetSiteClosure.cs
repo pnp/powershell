@@ -17,12 +17,12 @@ namespace PnP.PowerShell.Commands.InformationManagement
         {
             if (State == ClosureState.Open)
             {
-                SelectedWeb.SetOpenBySitePolicy();
+                CurrentWeb.SetOpenBySitePolicy();
             } else if (State == ClosureState.Closed)
             {
-                if (this.SelectedWeb.GetAppliedSitePolicy() != null)
+                if (this.CurrentWeb.GetAppliedSitePolicy() != null)
                 {
-                    SelectedWeb.SetClosedBySitePolicy();
+                    CurrentWeb.SetClosedBySitePolicy();
                 }
                 else
                 {

@@ -1,9 +1,7 @@
 ﻿using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System;
 
 namespace PnP.PowerShell.Commands.Principals
 {
@@ -14,7 +12,8 @@ namespace PnP.PowerShell.Commands.Principals
         public GroupPipeBind Identity = new GroupPipeBind();
 
         [Parameter(Mandatory = false)]
-        public ListPipeBind List = new ListPipeBind();
+        [ValidateNotNullOrEmpty]
+        public ListPipeBind List;
 
         [Parameter(Mandatory = false)]
         public string[] AddRole = null;
@@ -24,23 +23,15 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(SelectedWeb);
-            
-            List list = List.GetList(SelectedWeb);
-            if (list == null && !string.IsNullOrEmpty(List.Title))
-            {
-                throw new Exception($"List with Title {List.Title} not found");
-            }
-            else if (list == null && List.Id != Guid.Empty )
-            {
-                throw new Exception($"List with Id {List.Id} not found");
-            }
+            var group = Identity.GetGroup(CurrentWeb);
+
+            List list = List.GetListOrThrow(nameof(List), CurrentWeb);
 
             if (AddRole != null)
             {
                 foreach (var role in AddRole)
                 {
-                    var roleDefinition = SelectedWeb.RoleDefinitions.GetByName(role);
+                    var roleDefinition = CurrentWeb.RoleDefinitions.GetByName(role);
                     var roleDefinitionBindings = new RoleDefinitionBindingCollection(ClientContext) { roleDefinition };
 
                     RoleAssignmentCollection roleAssignments;
@@ -50,7 +41,7 @@ namespace PnP.PowerShell.Commands.Principals
                     }
                     else
                     {
-                        roleAssignments = SelectedWeb.RoleAssignments;
+                        roleAssignments = CurrentWeb.RoleAssignments;
                     }
 
                     roleAssignments.Add(group, roleDefinitionBindings);
@@ -69,7 +60,7 @@ namespace PnP.PowerShell.Commands.Principals
                     }
                     else
                     {
-                        roleAssignment = SelectedWeb.RoleAssignments.GetByPrincipal(group);
+                        roleAssignment = CurrentWeb.RoleAssignments.GetByPrincipal(group);
                     }
                     var roleDefinitionBindings = roleAssignment.RoleDefinitionBindings;
                     ClientContext.Load(roleDefinitionBindings);

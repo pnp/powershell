@@ -19,18 +19,18 @@ namespace PnP.PowerShell.Commands.InformationManagement
             if (!ParameterSpecified(nameof(AllAvailable)) && !ParameterSpecified(nameof(Name)))
             {
                 // Return the current applied site policy
-                WriteObject(this.SelectedWeb.GetAppliedSitePolicy());
+                WriteObject(this.CurrentWeb.GetAppliedSitePolicy());
             }
             else
             {
                 if (ParameterSpecified(nameof(AllAvailable)))
                 {
-                    WriteObject(SelectedWeb.GetSitePolicies(),true);
+                    WriteObject(CurrentWeb.GetSitePolicies(),true);
                     return;
                 }
                 if (ParameterSpecified(nameof(Name)))
                 {
-                    WriteObject(SelectedWeb.GetSitePolicyByName(Name));
+                    WriteObject(CurrentWeb.GetSitePolicyByName(Name));
                 }
                 
             }

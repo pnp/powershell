@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Publishing
             {
                 SourceFilePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, SourceFilePath);
             }
-            SelectedWeb.DeployHtmlPageLayout(SourceFilePath, Title, Description, AssociatedContentTypeID, DestinationFolderHierarchy);
+            CurrentWeb.DeployHtmlPageLayout(SourceFilePath, Title, Description, AssociatedContentTypeID, DestinationFolderHierarchy);
         }
     }
 }

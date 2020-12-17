@@ -10,20 +10,20 @@ namespace PnP.PowerShell.Commands
 {
     public abstract class PnPWebCmdlet : PnPSharePointCmdlet
     {
-        private Web _selectedWeb;
+        private Web _currentWeb;
 
         [Parameter(Mandatory = false)]
         public WebPipeBind Web = new WebPipeBind();
 
-        protected Web SelectedWeb
+        protected Web CurrentWeb
         {
             get
             {
-                if (_selectedWeb == null)
+                if (_currentWeb == null)
                 {
-                    _selectedWeb = GetWeb();
+                    _currentWeb = GetWeb();
                 }
-                return _selectedWeb;
+                return _currentWeb;
             }
         }
 

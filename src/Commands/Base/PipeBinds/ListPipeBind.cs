@@ -1,5 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using System;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -9,16 +10,9 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         private readonly Guid _id;
         private readonly string _name;
 
-        public ListPipeBind()
-        {
-            _list = null;
-            _id = Guid.Empty;
-            _name = string.Empty;
-        }
-
         public ListPipeBind(List list)
         {
-            _list = list;
+            _list = list ?? throw new ArgumentNullException(nameof(list));
         }
 
         public ListPipeBind(Guid guid)
@@ -28,46 +22,36 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public ListPipeBind(string id)
         {
+            if (string.IsNullOrEmpty(id))
+                throw new ArgumentNullException(nameof(id));
+
             if (!Guid.TryParse(id, out _id))
-            {
                 _name = id;
-            }
         }
 
-        public Guid Id => _id;
-
-        public List List => _list;
-
-        public string Title => _name;
-
-        public override string ToString()
-        {
-            return Title ?? Id.ToString();
-        }
-
-        internal List GetList(Web web, params System.Linq.Expressions.Expression<Func<List,object>>[] retrievals)
+        internal List GetList(Web web, params System.Linq.Expressions.Expression<Func<List, object>>[] retrievals)
         {
             List list = null;
-            if (List != null)
+            if (_list != null)
             {
-                list = List;
+                list = _list;
             }
-            else if (Id != Guid.Empty)
+            else if (_id != Guid.Empty)
             {
-                list = web.Lists.GetById(Id);
+                list = web.Lists.GetById(_id);
             }
-            else if (!string.IsNullOrEmpty(Title))
+            else if (!string.IsNullOrEmpty(_name))
             {
-                list = web.GetListByTitle(Title);
+                list = web.GetListByTitle(_name);
                 if (list == null)
                 {
-                    list = web.GetListByUrl(Title);
+                    list = web.GetListByUrl(_name);
                 }
             }
             if (list != null)
             {
                 web.Context.Load(list, l => l.Id, l => l.BaseTemplate, l => l.OnQuickLaunch, l => l.DefaultViewUrl, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder.ServerRelativeUrl);
-                if(retrievals != null)
+                if (retrievals != null)
                 {
                     web.Context.Load(list, retrievals);
                 }
@@ -75,5 +59,28 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             return list;
         }
+
+        internal List GetListOrThrow(string paramName, Web selectedWeb, params System.Linq.Expressions.Expression<Func<List, object>>[] retrievals)
+            => GetList(selectedWeb, retrievals)
+            ?? throw new PSArgumentException(NoListMessage, paramName);
+
+        internal List GetListOrWarn(Cmdlet cmdlet, Web web, params System.Linq.Expressions.Expression<Func<List, object>>[] retrievals)
+        {
+            var list = GetList(web, retrievals);
+            if (list is null)
+                cmdlet.WriteWarning(NoListMessage);
+
+            return list;
+        }
+
+        private string NoListMessage
+            => $"No list found with id, title or url '{this}' (title is case-sensitive)";
+
+        public override string ToString()
+            => _name
+            ?? (_id != Guid.Empty ? _id.ToString() : null)
+            ?? (_list.IsPropertyAvailable(l => l.Title) ? _list.Title : null)
+            ?? (_list.IsPropertyAvailable(l => l.Id) ? _list.Id.ToString() : null)
+            ?? "[List object with no Title or Id]";
     }
 }

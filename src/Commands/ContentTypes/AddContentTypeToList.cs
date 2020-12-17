@@ -12,6 +12,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
         public ListPipeBind List;
 
         [Parameter(Mandatory = true)]
+        [ValidateNotNullOrEmpty]
         public ContentTypePipeBind ContentType;
 
         [Parameter(Mandatory = false)]
@@ -19,29 +20,11 @@ namespace PnP.PowerShell.Commands.ContentTypes
 
         protected override void ExecuteCmdlet()
         {
-            ContentType ct = null;
-            List list = List.GetList(SelectedWeb);
-            if (list == null)
-                throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
-
-            if (ContentType.ContentType == null)
-            {
-                if (ContentType.Id != null)
-                {
-                    ct = SelectedWeb.GetContentTypeById(ContentType.Id, true);
-                }
-                else if (ContentType.Name != null)
-                {
-                    ct = SelectedWeb.GetContentTypeByName(ContentType.Name, true);
-                }
-            }
-            else
-            {
-                ct = ContentType.ContentType;
-            }
+            List list = List.GetList(CurrentWeb);
+            var ct = ContentType?.GetContentTypeOrWarn(this, CurrentWeb);
             if (ct != null)
             {
-                SelectedWeb.AddContentTypeToList(list.Title, ct, DefaultContentType);
+                CurrentWeb.AddContentTypeToList(list.Title, ct, DefaultContentType);
             }
         }
 

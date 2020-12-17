@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Webhooks
                 }
 
                 // Get the list from the currently selected web
-                List list = List.GetList(SelectedWeb);
+                List list = List.GetList(CurrentWeb);
                 if (list != null)
                 {
                     // Get all the webhook subscriptions for the specified list

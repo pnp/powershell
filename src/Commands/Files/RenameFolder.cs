@@ -17,10 +17,10 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
-            var sourceFolderUrl = UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder);
-            Folder sourceFolder = SelectedWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(sourceFolderUrl));
+            var sourceFolderUrl = UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, Folder);
+            Folder sourceFolder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(sourceFolderUrl));
             ClientContext.Load(sourceFolder, f => f.Name, f => f.ServerRelativePath);
             ClientContext.ExecuteQueryRetry();
 

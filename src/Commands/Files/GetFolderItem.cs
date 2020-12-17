@@ -43,18 +43,18 @@ namespace PnP.PowerShell.Commands.Files
             Folder targetFolder = null;
             if (ParameterSetName == ParameterSet_FOLDERSBYPIPE && Identity != null)
             {
-                targetFolder = Identity.GetFolder(SelectedWeb);
+                targetFolder = Identity.GetFolder(CurrentWeb);
             }
             else
             {
                 string serverRelativeUrl = null;
                 if (!string.IsNullOrEmpty(FolderSiteRelativeUrl))
                 {
-                    var webUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                    var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
                     serverRelativeUrl = UrlUtility.Combine(webUrl, FolderSiteRelativeUrl);
                 }
 
-                targetFolder = (string.IsNullOrEmpty(FolderSiteRelativeUrl)) ? SelectedWeb.RootFolder : SelectedWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+                targetFolder = (string.IsNullOrEmpty(FolderSiteRelativeUrl)) ? CurrentWeb.RootFolder : CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
             }
 
             IEnumerable<File> files = null;
@@ -96,7 +96,7 @@ namespace PnP.PowerShell.Commands.Files
             {
                 foreach(var folder in folders)
                 {
-                    var relativeUrl = folder.ServerRelativeUrl.Replace(SelectedWeb.ServerRelativeUrl, "");
+                    var relativeUrl = folder.ServerRelativeUrl.Replace(CurrentWeb.ServerRelativeUrl, "");
                     var subFolderContents = GetContents(relativeUrl);
                     folderContent = folderContent.Concat<object>(subFolderContents);
                 }                

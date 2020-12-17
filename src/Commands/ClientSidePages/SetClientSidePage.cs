@@ -37,6 +37,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         public ClientSidePageHeaderType HeaderType;
 
         [Parameter(Mandatory = false)]
+        [ValidateNotNullOrEmpty]
         public ContentTypePipeBind ContentType;
 
         [Parameter(Mandatory = false)]
@@ -145,29 +146,12 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                 }
             }
 
-            if (ParameterSpecified(nameof(ContentType)))
+            if (ContentType != null)
             {
-                ContentType ct = null;
-                if (ContentType.ContentType == null)
+                string ctId = ContentType.GetIdOrWarn(this, CurrentWeb);
+                if (ctId != null)
                 {
-                    if (ContentType.Id != null)
-                    {
-                        ct = SelectedWeb.GetContentTypeById(ContentType.Id, true);
-                    }
-                    else if (ContentType.Name != null)
-                    {
-                        ct = SelectedWeb.GetContentTypeByName(ContentType.Name, true);
-                    }
-                }
-                else
-                {
-                    ct = ContentType.ContentType;
-                }
-                if (ct != null)
-                {
-                    ct.EnsureProperty(w => w.StringId);
-
-                    clientSidePage.PageListItem["ContentTypeId"] = ct.StringId;
+                    clientSidePage.PageListItem["ContentTypeId"] = ctId;
                     clientSidePage.PageListItem.SystemUpdate();
                     ClientContext.ExecuteQueryRetry();
                 }

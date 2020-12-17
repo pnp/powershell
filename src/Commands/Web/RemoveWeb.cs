@@ -57,11 +57,11 @@ namespace PnP.PowerShell.Commands
 
             }
             else {
-                var web = SelectedWeb.GetWeb(Url);
+                var web = CurrentWeb.GetWeb(Url);
                 web.EnsureProperty(w => w.Title);
                 if (Force || ShouldContinue(string.Format(Properties.Resources.RemoveWeb0, web.Title), Properties.Resources.Confirm))
                 {
-                    SelectedWeb.DeleteWeb(Url);
+                    CurrentWeb.DeleteWeb(Url);
                     ClientContext.ExecuteQueryRetry();
                 }
             }

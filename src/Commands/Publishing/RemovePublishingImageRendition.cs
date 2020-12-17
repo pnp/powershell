@@ -21,14 +21,14 @@ namespace PnP.PowerShell.Commands.Publishing
 
         protected override void ExecuteCmdlet()
         {
-            var rendition = Identity.GetImageRendition(SelectedWeb);
+            var rendition = Identity.GetImageRendition(CurrentWeb);
 
             if (rendition != null)
             {
                 if (Force ||
                     ShouldContinue(string.Format(Resources.RemoveImageRenditionWithName0, rendition.Name), Resources.Confirm))
                 {
-                    SelectedWeb.RemovePublishingImageRendition(rendition.Name);
+                    CurrentWeb.RemovePublishingImageRendition(rendition.Name);
                 }
             }
         }

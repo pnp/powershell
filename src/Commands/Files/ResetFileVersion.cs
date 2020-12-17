@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.ResetFileToPreviousVersion(ServerRelativeUrl,CheckinType,CheckInComment);
+            CurrentWeb.ResetFileToPreviousVersion(ServerRelativeUrl,CheckinType,CheckInComment);
         }
     }
 }

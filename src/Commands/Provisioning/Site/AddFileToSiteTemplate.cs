@@ -62,22 +62,22 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
             if (this.ParameterSetName == parameterSet_REMOTEFILE)
             {
-                SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
                 var sourceUri = new Uri(SourceUrl, UriKind.RelativeOrAbsolute);
                 var serverRelativeUrl =
                     sourceUri.IsAbsoluteUri ? sourceUri.AbsolutePath :
                     SourceUrl.StartsWith("/", StringComparison.Ordinal) ? SourceUrl :
-                    SelectedWeb.ServerRelativeUrl.TrimEnd('/') + "/" + SourceUrl;
+                    CurrentWeb.ServerRelativeUrl.TrimEnd('/') + "/" + SourceUrl;
 
-                var file = SelectedWeb.GetFileByServerRelativeUrl(serverRelativeUrl);
+                var file = CurrentWeb.GetFileByServerRelativeUrl(serverRelativeUrl);
 
                 var fileName = file.EnsureProperty(f => f.Name);
                 var folderRelativeUrl = serverRelativeUrl.Substring(0, serverRelativeUrl.Length - fileName.Length - 1);
-                var folderWebRelativeUrl = System.Net.WebUtility.UrlDecode(folderRelativeUrl.Substring(SelectedWeb.ServerRelativeUrl.TrimEnd('/').Length + 1));
+                var folderWebRelativeUrl = System.Net.WebUtility.UrlDecode(folderRelativeUrl.Substring(CurrentWeb.ServerRelativeUrl.TrimEnd('/').Length + 1));
                 if (ClientContext.HasPendingRequest) ClientContext.ExecuteQuery();
                 try
                 {
-                    var fi = SelectedWeb.GetFileByServerRelativeUrl(serverRelativeUrl);
+                    var fi = CurrentWeb.GetFileByServerRelativeUrl(serverRelativeUrl);
                     var fileStream = fi.OpenBinaryStream();
                     ClientContext.ExecuteQueryRetry();
                     using (var ms = fileStream.Value)

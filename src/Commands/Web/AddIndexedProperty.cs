@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands
             {
                 if (List != null)
                 {
-                    var list = List.GetList(SelectedWeb);
+                    var list = List.GetList(CurrentWeb);
                     if (list != null)
                     {
                         list.AddIndexedPropertyBagKey(Key);
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands
                 }
                 else
                 {
-                    SelectedWeb.AddIndexedPropertyBagKey(Key);
+                    CurrentWeb.AddIndexedPropertyBagKey(Key);
                 }
             }
         }

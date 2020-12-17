@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            var url = SelectedWeb.EnsureProperty(w => w.Url);
+            var url = CurrentWeb.EnsureProperty(w => w.Url);
             var tenantUrl = UrlUtilities.GetTenantAdministrationUrl(ClientContext.Url);
             using (var tenantContext = ClientContext.Clone(tenantUrl))
             {

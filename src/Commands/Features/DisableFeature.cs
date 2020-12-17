@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Features
         {
             if (Scope == FeatureScope.Web)
             {
-                SelectedWeb.DeactivateFeature(Identity);
+                CurrentWeb.DeactivateFeature(Identity);
             }
             else
             {

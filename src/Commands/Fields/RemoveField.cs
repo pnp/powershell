@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Fields
         {
             if (List != null)
             {
-                var list = List.GetList(SelectedWeb);
+                var list = List.GetList(CurrentWeb);
 
                 var f = Identity.Field;
                 if (list != null)
@@ -58,11 +58,11 @@ namespace PnP.PowerShell.Commands.Fields
                 {
                     if (Identity.Id != Guid.Empty)
                     {
-                        f = SelectedWeb.Fields.GetById(Identity.Id);
+                        f = CurrentWeb.Fields.GetById(Identity.Id);
                     }
                     else if (!string.IsNullOrEmpty(Identity.Name))
                     {
-                        f = SelectedWeb.Fields.GetByInternalNameOrTitle(Identity.Name);
+                        f = CurrentWeb.Fields.GetByInternalNameOrTitle(Identity.Name);
                     }
                 }
                 ClientContext.Load(f);

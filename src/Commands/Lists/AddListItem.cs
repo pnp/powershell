@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Lists
             List list = null;
             if (List != null)
             {
-                list = List.GetList(SelectedWeb);
+                list = List.GetList(CurrentWeb);
             }
             if (list != null)
             {
@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Lists
                     // Create the folder if it doesn't exist
                     var rootFolder = list.EnsureProperty(l => l.RootFolder);
                     var targetFolder =
-                        SelectedWeb.EnsureFolder(rootFolder, Folder);
+                        CurrentWeb.EnsureFolder(rootFolder, Folder);
 
                     liCI.FolderUrl = targetFolder.ServerRelativeUrl;
                 }

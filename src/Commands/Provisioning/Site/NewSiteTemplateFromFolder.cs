@@ -65,7 +65,7 @@ namespace PnP.PowerShell.Commands.Provisioning
             }
             if (ContentType != null)
             {
-                ct = ContentType.GetContentType(SelectedWeb);
+                ct = ContentType.GetContentType(CurrentWeb);
             }
             if (TargetFolder == null)
             {

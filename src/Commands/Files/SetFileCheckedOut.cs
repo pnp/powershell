@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.CheckOutFile(Url);
+            CurrentWeb.CheckOutFile(Url);
         }
     }
 }

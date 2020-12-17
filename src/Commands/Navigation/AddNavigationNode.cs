@@ -31,13 +31,13 @@ namespace PnP.PowerShell.Commands.Branding
         {
             if (Url == null)
             {
-                ClientContext.Load(SelectedWeb, w => w.Url);
+                ClientContext.Load(CurrentWeb, w => w.Url);
                 ClientContext.ExecuteQueryRetry();
-                Url = SelectedWeb.Url;
+                Url = CurrentWeb.Url;
             }
             if (Parent.HasValue)
             {
-                var parentNode = SelectedWeb.Navigation.GetNodeById(Parent.Value);
+                var parentNode = CurrentWeb.Navigation.GetNodeById(Parent.Value);
                 ClientContext.Load(parentNode);
                 ClientContext.ExecuteQueryRetry();
                 var addedNode = parentNode.Children.Add(new NavigationNodeCreationInformation()
@@ -56,15 +56,15 @@ namespace PnP.PowerShell.Commands.Branding
                 NavigationNodeCollection nodeCollection = null;
                 if (Location == NavigationType.SearchNav)
                 {
-                    nodeCollection = SelectedWeb.LoadSearchNavigation();
+                    nodeCollection = CurrentWeb.LoadSearchNavigation();
                 }
                 else if (Location == NavigationType.Footer)
                 {
-                    nodeCollection = SelectedWeb.LoadFooterNavigation();
+                    nodeCollection = CurrentWeb.LoadFooterNavigation();
                 }
                 else
                 {
-                    nodeCollection = Location == NavigationType.QuickLaunch ? SelectedWeb.Navigation.QuickLaunch : SelectedWeb.Navigation.TopNavigationBar;
+                    nodeCollection = Location == NavigationType.QuickLaunch ? CurrentWeb.Navigation.QuickLaunch : CurrentWeb.Navigation.TopNavigationBar;
                     ClientContext.Load(nodeCollection);
                 }
                 if (nodeCollection != null)

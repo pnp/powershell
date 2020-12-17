@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
     public class RemoveContentType : PnPWebCmdlet
     {
 
-        [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public ContentTypePipeBind Identity;
 
         [Parameter(Mandatory = false)]
@@ -18,30 +18,11 @@ namespace PnP.PowerShell.Commands.ContentTypes
 
         protected override void ExecuteCmdlet()
         {
-            if (Force || ShouldContinue(Resources.RemoveContentType, Resources.Confirm))
+            var ct = Identity?.GetContentTypeOrThrow(nameof(Identity), CurrentWeb);
+            if (Force || ShouldContinue($"Remove Content Type '{ct.EnsureProperty(c => c.Name)}'?", Resources.Confirm))
             {
-                ContentType ct = null;
-                if (Identity.ContentType != null)
-                {
-                    ct = Identity.ContentType;
-                }
-                else
-                {
-                    if (!string.IsNullOrEmpty(Identity.Id))
-                    {
-                        ct = SelectedWeb.GetContentTypeById(Identity.Id);
-                    }
-                    else if (!string.IsNullOrEmpty(Identity.Name))
-                    {
-                        ct = SelectedWeb.GetContentTypeByName(Identity.Name);
-                    }
-                }
-                if(ct != null)
-                {
-                    ct.DeleteObject();
-                    ClientContext.ExecuteQueryRetry();
-                }
-
+                ct.DeleteObject();
+                ClientContext.ExecuteQueryRetry();
             }
         }
     }

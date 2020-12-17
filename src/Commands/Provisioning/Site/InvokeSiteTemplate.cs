@@ -68,7 +68,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.EnsureProperty(w => w.Url);
+            CurrentWeb.EnsureProperty(w => w.Url);
             ProvisioningTemplate provisioningTemplate;
 
             FileConnectorBase fileConnector;
@@ -246,7 +246,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 if (message != null)
                 {
                     var percentage = Convert.ToInt32((100 / Convert.ToDouble(total)) * Convert.ToDouble(step));
-                    progressRecord.Activity = $"Applying template to {SelectedWeb.Url}";
+                    progressRecord.Activity = $"Applying template to {CurrentWeb.Url}";
                     progressRecord.StatusDescription = message;
                     progressRecord.PercentComplete = percentage;
                     progressRecord.RecordType = ProgressRecordType.Processing;
@@ -360,10 +360,10 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 }
             }))
             {
-                SelectedWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
+                CurrentWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
             }
 
-            WriteProgress(new ProgressRecord(0, $"Applying template to {SelectedWeb.Url}", " ") { RecordType = ProgressRecordType.Completed });
+            WriteProgress(new ProgressRecord(0, $"Applying template to {CurrentWeb.Url}", " ") { RecordType = ProgressRecordType.Completed });
         }
     }
 }

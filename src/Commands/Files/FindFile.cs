@@ -25,19 +25,19 @@ namespace PnP.PowerShell.Commands.Files
             {
                 case "List":
                 {
-                    var list = List.GetList(SelectedWeb);
+                    var list = List.GetList(CurrentWeb);
                     WriteObject(list.FindFiles(Match));
                     break;
                 }
                 case "Folder":
                 {
-                    var folder = Folder.GetFolder(SelectedWeb);
+                    var folder = Folder.GetFolder(CurrentWeb);
                     WriteObject(folder.FindFiles(Match));
                     break;
                 }
                 default:
                 {
-                    WriteObject(SelectedWeb.FindFiles(Match));
+                    WriteObject(CurrentWeb.FindFiles(Match));
                     break;
                 }
             }

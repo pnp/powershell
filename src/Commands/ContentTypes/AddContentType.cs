@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
 
         protected override void ExecuteCmdlet()
         {
-            var ct = SelectedWeb.CreateContentType(Name, Description, ContentTypeId, Group, ParentContentType);
+            var ct = CurrentWeb.CreateContentType(Name, Description, ContentTypeId, Group, ParentContentType);
             ClientContext.Load(ct);
             ClientContext.ExecuteQueryRetry();
             WriteObject(ct);

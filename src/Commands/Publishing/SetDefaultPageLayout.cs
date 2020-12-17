@@ -17,12 +17,12 @@ namespace PnP.PowerShell.Commands.Publishing
         {
             if (InheritFromParentSite.IsPresent)
             {
-                SelectedWeb.SetSiteToInheritPageLayouts();
+                CurrentWeb.SetSiteToInheritPageLayouts();
             }
             else
             {
                 var rootWeb = ClientContext.Site.RootWeb;
-                SelectedWeb.SetDefaultPageLayoutForSite(rootWeb, Title);
+                CurrentWeb.SetDefaultPageLayoutForSite(rootWeb, Title);
             }
         }
     }

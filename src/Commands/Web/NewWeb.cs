@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands
         public SwitchParameter InheritNavigation = true;
         protected override void ExecuteCmdlet()
         {
-            var web = SelectedWeb.CreateWeb(Title, Url, Description, Template, Locale, !BreakInheritance,InheritNavigation);
+            var web = CurrentWeb.CreateWeb(Title, Url, Description, Template, Locale, !BreakInheritance,InheritNavigation);
             ClientContext.Load(web, w => w.Id, w => w.Url, w => w.ServerRelativeUrl);
             ClientContext.ExecuteQueryRetry();
             WriteObject(web);

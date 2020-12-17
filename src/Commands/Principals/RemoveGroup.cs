@@ -16,10 +16,10 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            Group group = Identity.GetGroup(SelectedWeb);
+            Group group = Identity.GetGroup(CurrentWeb);
             if (Force || ShouldContinue(string.Format(Properties.Resources.RemoveGroup0, group.Title), Properties.Resources.Confirm))
             {
-                SelectedWeb.SiteGroups.Remove(group);
+                CurrentWeb.SiteGroups.Remove(group);
 
                 ClientContext.ExecuteQueryRetry();
             }

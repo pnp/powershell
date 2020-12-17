@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands
         protected override void ExecuteCmdlet()
 		{
 			// Get Web
-			Web web = SelectedWeb;
+			Web web = CurrentWeb;
 			if (ParameterSetName == "GroupByWebIdentity" || ParameterSetName == "UserByWebIdentity")
 			{
 				if (Identity.Id != Guid.Empty)
@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands
 			}
 			else if (ParameterSetName == "GroupByWebUrl" || ParameterSetName == "UserByWebUrl")
 			{
-				web = SelectedWeb.GetWeb(Url);
+				web = CurrentWeb.GetWeb(Url);
 			}
 
 			// Set permissions

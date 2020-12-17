@@ -62,7 +62,7 @@ namespace PnP.PowerShell.Commands.Files
                 }
             }
 
-            var webUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             if (!Url.ToLower().StartsWith(webUrl.ToLower()))
             {
@@ -79,7 +79,7 @@ namespace PnP.PowerShell.Commands.Files
             {
                 case URLTOPATH:
 
-                    SaveFileToLocal(SelectedWeb, serverRelativeUrl, Path, Filename, (fileToSave) =>
+                    SaveFileToLocal(CurrentWeb, serverRelativeUrl, Path, Filename, (fileToSave) =>
                     {
                         if (!Force)
                         {
@@ -89,7 +89,7 @@ namespace PnP.PowerShell.Commands.Files
                     });
                     break;
                 case URLASFILEOBJECT:
-                    file = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+                    file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
                     try
                     {
                         ClientContext.Load(file, f => f.Author, f => f.Length, f => f.ModifiedBy, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
@@ -106,7 +106,7 @@ namespace PnP.PowerShell.Commands.Files
                     WriteObject(file);
                     break;
                 case URLASLISTITEM:
-                    file = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+                    file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
 
                     ClientContext.Load(file, f => f.Exists, f => f.ListItemAllFields);
 
@@ -124,7 +124,7 @@ namespace PnP.PowerShell.Commands.Files
                     }
                     break;
                 case URLASSTRING:
-                    WriteObject(SelectedWeb.GetFileAsString(serverRelativeUrl));
+                    WriteObject(CurrentWeb.GetFileAsString(serverRelativeUrl));
                     break;
             }
         }

@@ -54,11 +54,11 @@ namespace PnP.PowerShell.Commands.Files
 
             if (ParameterSpecified(nameof(SiteRelativeUrl)))
             {
-                var webUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
                 ServerRelativeUrl = UrlUtility.Combine(webUrl, SiteRelativeUrl);
             }
 
-            var file = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(ServerRelativeUrl));
+            var file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(ServerRelativeUrl));
 
             ClientContext.Load(file, f => f.Name, f => f.ServerRelativeUrl);
             ClientContext.ExecuteQueryRetry();
@@ -73,11 +73,11 @@ namespace PnP.PowerShell.Commands.Files
                         break;
 
                     case ParameterSet_OTHERSITE:
-                        SelectedWeb.EnsureProperties(w => w.Url, w => w.ServerRelativeUrl);
+                        CurrentWeb.EnsureProperties(w => w.Url, w => w.ServerRelativeUrl);
 
                         // Create full URLs including the SharePoint domain to the source and destination
-                        var source = UrlUtility.Combine(SelectedWeb.Url.Remove(SelectedWeb.Url.Length - SelectedWeb.ServerRelativeUrl.Length + 1, SelectedWeb.ServerRelativeUrl.Length - 1), file.ServerRelativeUrl);
-                        var destination = UrlUtility.Combine(SelectedWeb.Url.Remove(SelectedWeb.Url.Length - SelectedWeb.ServerRelativeUrl.Length + 1, SelectedWeb.ServerRelativeUrl.Length - 1), TargetServerRelativeLibrary);
+                        var source = UrlUtility.Combine(CurrentWeb.Url.Remove(CurrentWeb.Url.Length - CurrentWeb.ServerRelativeUrl.Length + 1, CurrentWeb.ServerRelativeUrl.Length - 1), file.ServerRelativeUrl);
+                        var destination = UrlUtility.Combine(CurrentWeb.Url.Remove(CurrentWeb.Url.Length - CurrentWeb.ServerRelativeUrl.Length + 1, CurrentWeb.ServerRelativeUrl.Length - 1), TargetServerRelativeLibrary);
 
                         ClientContext.Site.CreateCopyJobs(new[] { source }, destination, new CopyMigrationOptions { IsMoveMode = true, 
                                                                                                                     AllowSchemaMismatch = AllowSchemaMismatch.ToBool(), 

@@ -17,20 +17,20 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(SelectedWeb);
+            var group = Identity.GetGroup(CurrentWeb);
             try
             {
-                User user = SelectedWeb.SiteUsers.GetByEmail(LoginName);
+                User user = CurrentWeb.SiteUsers.GetByEmail(LoginName);
                 ClientContext.Load(user);
                 ClientContext.ExecuteQueryRetry();
-                SelectedWeb.RemoveUserFromGroup(group, user);
+                CurrentWeb.RemoveUserFromGroup(group, user);
             }
             catch
             {
-                User user = SelectedWeb.SiteUsers.GetByLoginName(LoginName);
+                User user = CurrentWeb.SiteUsers.GetByLoginName(LoginName);
                 ClientContext.Load(user);
                 ClientContext.ExecuteQueryRetry();
-                SelectedWeb.RemoveUserFromGroup(group, user);
+                CurrentWeb.RemoveUserFromGroup(group, user);
             }
         }
     }

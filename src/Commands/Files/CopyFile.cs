@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            var webServerRelativeUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var webServerRelativeUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             if (!SourceUrl.StartsWith("/"))
             {

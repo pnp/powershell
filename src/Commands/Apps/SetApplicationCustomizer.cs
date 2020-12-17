@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Branding
             {
                 if (Scope == CustomActionScope.All || Scope == CustomActionScope.Web)
                 {
-                    actions.AddRange(SelectedWeb.GetCustomActions());
+                    actions.AddRange(CurrentWeb.GetCustomActions());
                 }
                 if (Scope == CustomActionScope.All || Scope == CustomActionScope.Site)
                 {

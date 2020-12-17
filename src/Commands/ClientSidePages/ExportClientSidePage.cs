@@ -70,11 +70,11 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             ProvisioningTemplateCreationInformation ci = null;
             if (configuration != null)
             {
-                ci = configuration.ToCreationInformation(SelectedWeb);
+                ci = configuration.ToCreationInformation(CurrentWeb);
             }
             else
             {
-                ci = new ProvisioningTemplateCreationInformation(SelectedWeb);
+                ci = new ProvisioningTemplateCreationInformation(CurrentWeb);
             }
             if (ParameterSpecified(nameof(PersistBrandingFiles)))
             {
@@ -85,7 +85,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                 var fileSystemConnector = new FileSystemConnector(dirName, "");
                 ci.FileConnector = fileSystemConnector;
             }
-            helper.ExtractClientSidePage(SelectedWeb, outputTemplate, ci, new PnP.Framework.Diagnostics.PnPMonitoredScope(), null, Identity.Name, false);
+            helper.ExtractClientSidePage(CurrentWeb, outputTemplate, ci, new PnP.Framework.Diagnostics.PnPMonitoredScope(), null, Identity.Name, false);
 
             if (!string.IsNullOrEmpty(fileName))
             {

@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Publishing
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.CreatePublishingImageRendition(Name, Width, Height);
+            CurrentWeb.CreatePublishingImageRendition(Name, Width, Height);
         }
     }
 }

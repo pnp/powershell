@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Branding
             {
                 if (Scope == CustomActionScope.Web)
                 {
-                    SelectedWeb.AddJsBlock(Name, Script, Sequence);
+                    CurrentWeb.AddJsBlock(Name, Script, Sequence);
                 }
                 else
                 {

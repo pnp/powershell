@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Events
 
             if (ParameterSetName == "List")
             {
-                var list = List.GetList(SelectedWeb);
+                var list = List.GetList(CurrentWeb);
                 if (list == null)
                     throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 
@@ -43,8 +43,8 @@ namespace PnP.PowerShell.Commands.Events
                 else
                 {
                     var eventReceivers = list.EventReceivers;
-                    SelectedWeb.Context.Load(eventReceivers);
-                    SelectedWeb.Context.ExecuteQueryRetry();
+                    CurrentWeb.Context.Load(eventReceivers);
+                    CurrentWeb.Context.ExecuteQueryRetry();
 
                     foreach (var eventReceiver in eventReceivers)
                     {
@@ -60,7 +60,7 @@ namespace PnP.PowerShell.Commands.Events
             {
                 if (ParameterSpecified(nameof(Identity)))
                 {
-                    var eventReceiver = Identity.GetEventReceiverOnWeb(SelectedWeb);
+                    var eventReceiver = Identity.GetEventReceiverOnWeb(CurrentWeb);
                     if (eventReceiver != null)
                     {
                         if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
@@ -71,9 +71,9 @@ namespace PnP.PowerShell.Commands.Events
                 }
                 else
                 {
-                    var eventReceivers = SelectedWeb.EventReceivers;
-                    SelectedWeb.Context.Load(eventReceivers);
-                    SelectedWeb.Context.ExecuteQueryRetry();
+                    var eventReceivers = CurrentWeb.EventReceivers;
+                    CurrentWeb.Context.Load(eventReceivers);
+                    CurrentWeb.Context.ExecuteQueryRetry();
 
                     foreach (var eventReceiver in eventReceivers)
                     {
@@ -96,7 +96,7 @@ namespace PnP.PowerShell.Commands.Events
                 WriteVerbose($"Removing Event Receiver with Id {eventReceiversToDelete[x].ReceiverId} named {eventReceiversToDelete[x].ReceiverName}");
                 eventReceiversToDelete[x].DeleteObject();
             }
-            SelectedWeb.Context.ExecuteQueryRetry();
+            CurrentWeb.Context.ExecuteQueryRetry();
         }
     }
 }

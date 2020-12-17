@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.ReIndexWeb();
+            CurrentWeb.ReIndexWeb();
         }
     }
 }

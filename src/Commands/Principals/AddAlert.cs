@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Principals
             List list = null;
             if (List != null)
             {
-                list = List.GetList(SelectedWeb);
+                list = List.GetList(CurrentWeb);
             }
             if (list != null)
             {
@@ -57,7 +57,7 @@ namespace PnP.PowerShell.Commands.Principals
                 }
                 else
                 {
-                    user = SelectedWeb.CurrentUser;
+                    user = CurrentWeb.CurrentUser;
                 }
 
                 alert.AlertFrequency = Frequency;

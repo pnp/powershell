@@ -21,9 +21,9 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.CheckInFile(Url, CheckinType, Comment);
+            CurrentWeb.CheckInFile(Url, CheckinType, Comment);
             if (Approve)
-                SelectedWeb.ApproveFile(Url, Comment);
+                CurrentWeb.ApproveFile(Url, Comment);
         }
     }
 }

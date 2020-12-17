@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Lists
 
 		protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(SelectedWeb);
+            var list = List.GetList(CurrentWeb);
             if (list == null)
                 throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 

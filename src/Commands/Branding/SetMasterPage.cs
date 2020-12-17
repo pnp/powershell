@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-            if (SelectedWeb.IsNoScriptSite())
+            if (CurrentWeb.IsNoScriptSite())
             {
                 ThrowTerminatingError(new ErrorRecord(new Exception("Site has NoScript enabled, and setting custom master pages is not supported."), "NoScriptEnabled", ErrorCategory.InvalidOperation, this));
                 return;
@@ -35,27 +35,27 @@ namespace PnP.PowerShell.Commands.Branding
             if (ParameterSetName == ParameterSet_SERVER)
             {
                 if (!string.IsNullOrEmpty(MasterPageServerRelativeUrl))
-                    SelectedWeb.SetMasterPageByUrl(MasterPageServerRelativeUrl);
+                    CurrentWeb.SetMasterPageByUrl(MasterPageServerRelativeUrl);
 
                 if (!string.IsNullOrEmpty(CustomMasterPageServerRelativeUrl))
-                    SelectedWeb.SetCustomMasterPageByUrl(CustomMasterPageServerRelativeUrl);
+                    CurrentWeb.SetCustomMasterPageByUrl(CustomMasterPageServerRelativeUrl);
             }
             else
             {
                 if (!string.IsNullOrEmpty(MasterPageSiteRelativeUrl))
                 {
-                    SelectedWeb.SetMasterPageByUrl(GetServerRelativeUrl(MasterPageSiteRelativeUrl));
+                    CurrentWeb.SetMasterPageByUrl(GetServerRelativeUrl(MasterPageSiteRelativeUrl));
                 }
                 if (!string.IsNullOrEmpty(CustomMasterPageSiteRelativeUrl))
                 {
-                    SelectedWeb.SetCustomMasterPageByUrl(GetServerRelativeUrl(CustomMasterPageSiteRelativeUrl));
+                    CurrentWeb.SetCustomMasterPageByUrl(GetServerRelativeUrl(CustomMasterPageSiteRelativeUrl));
                 }
             }
         }
 
         private string GetServerRelativeUrl(string url)
         {
-            var serverRelativeUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var serverRelativeUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
             return UrlUtility.Combine(serverRelativeUrl, url);
         }
     }

@@ -21,12 +21,15 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
     public class AddDataRowsToSiteTemplate : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
+        [ValidateNotNullOrEmpty]
         public string Path;
 
         [Parameter(Mandatory = true)]
+        [ValidateNotNullOrEmpty]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false)]
+        [ValidateNotNullOrEmpty]
         public string Query;
 
         [Parameter(Mandatory = false)]
@@ -65,21 +68,19 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
             //We will remove a list if it's found so we can get the list
 
-            ListInstance listInstance = template.Lists.Find(l => l.Title == List.Title);
+            List spList = List.GetListOrThrow(nameof(List), CurrentWeb,
+                           l => l.RootFolder, l => l.HasUniqueRoleAssignments);
+            ListInstance listInstance = template.Lists.Find(l => l.Title == spList.Title);
             if (listInstance == null)
             {
                 throw new ApplicationException("List does not exist in the template file!");
             }
 
-            List spList = List.GetList(SelectedWeb);
-            ClientContext.Load(spList, l => l.RootFolder, l => l.HasUniqueRoleAssignments);
-            ClientContext.ExecuteQueryRetry();
-
             if (TokenizeUrls.IsPresent)
             {
                 ClientContext.Load(ClientContext.Web, w => w.Url, w => w.ServerRelativeUrl, w => w.Id);
                 ClientContext.Load(ClientContext.Site, s => s.Url, s => s.ServerRelativeUrl, s => s.Id);
-                ClientContext.Load(ClientContext.Web.Lists, lists => lists.Include(l=>l.Title, l => l.RootFolder.ServerRelativeUrl));
+                ClientContext.Load(ClientContext.Web.Lists, lists => lists.Include(l => l.Title, l => l.RootFolder.ServerRelativeUrl));
             }
 
             CamlQuery query = new CamlQuery();
@@ -219,7 +220,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                     return $"{urlValue.Url},{urlValue.Description}";
                 case FieldType.Lookup:
                     var strVal = rawValue as string;
-                    if(strVal != null)
+                    if (strVal != null)
                     {
                         return strVal;
                     }
@@ -243,7 +244,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                     var multipleUserValue = rawValue as FieldUserValue[];
                     if (multipleUserValue != null)
                     {
-                        return string.Join(",", multipleUserValue.Select(lv => GetLoginName(web,lv.LookupId)));
+                        return string.Join(",", multipleUserValue.Select(lv => GetLoginName(web, lv.LookupId)));
                     }
                     throw new Exception("Invalid data in field");
                 case FieldType.MultiChoice:

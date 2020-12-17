@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            var web = SelectedWeb;
+            var web = CurrentWeb;
 
             var groupCI = new GroupCreationInformation { Title = Title, Description = Description };
 

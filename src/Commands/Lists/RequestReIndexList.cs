@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            var list = Identity.GetList(SelectedWeb);
+            var list = Identity.GetList(CurrentWeb);
 
             if (list != null)
             {

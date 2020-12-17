@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Branding
             {
                 if (Scope == CustomActionScope.All || Scope == CustomActionScope.Web)
                 {
-                    actions.AddRange(SelectedWeb.GetCustomActions().Where(c => c.Location == "ScriptLink"));
+                    actions.AddRange(CurrentWeb.GetCustomActions().Where(c => c.Location == "ScriptLink"));
                 }
                 if (Scope == CustomActionScope.All || Scope == CustomActionScope.Site)
                 {
@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.Branding
                 switch (action.Scope)
                 {
                     case UserCustomActionScope.Web:
-                        SelectedWeb.DeleteJsLink(action.Name);
+                        CurrentWeb.DeleteJsLink(action.Name);
                         break;
 
                     case UserCustomActionScope.Site:

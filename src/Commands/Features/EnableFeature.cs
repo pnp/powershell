@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Features
         {
             if(Scope == FeatureScope.Web)
             {
-                SelectedWeb.ActivateFeature(Identity);
+                CurrentWeb.ActivateFeature(Identity);
             }
             else
             {

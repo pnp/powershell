@@ -28,15 +28,15 @@ namespace PnP.PowerShell.Commands.Publishing
                 if (PageLayouts.Length < 1) throw new ArgumentException("You must provide at least 1 page layout.");
 
                 var rootWeb = ClientContext.Site.RootWeb;
-                SelectedWeb.SetAvailablePageLayouts(rootWeb, PageLayouts);
+                CurrentWeb.SetAvailablePageLayouts(rootWeb, PageLayouts);
             }
             else if (ParameterSetName == "INHERIT")
             {
-                SelectedWeb.SetSiteToInheritPageLayouts();
+                CurrentWeb.SetSiteToInheritPageLayouts();
             }
             else
             {
-                SelectedWeb.AllowAllPageLayouts();
+                CurrentWeb.AllowAllPageLayouts();
             }
         }
     }

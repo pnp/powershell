@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            List list = List.GetList(SelectedWeb);
+            List list = List.GetList(CurrentWeb);
 
             if (list != null)
             {

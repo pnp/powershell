@@ -17,18 +17,23 @@ namespace PnP.PowerShell.Commands.Files
         private const string ParameterSet_ASSTREAM = "Upload file from stream";
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASFILE)]
+        [ValidateNotNullOrEmpty]
         public string Path = string.Empty;
 
         [Parameter(Mandatory = true)]
+        [ValidateNotNullOrEmpty]
         public string Folder = string.Empty;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM)]
+        [ValidateNotNullOrEmpty]
         public string FileName = string.Empty;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ASFILE)]
+        [ValidateNotNullOrEmpty]
         public string NewFileName = string.Empty;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM)]
+        [ValidateNotNullOrEmpty]
         public Stream Stream;
 
         [Parameter(Mandatory = false)]
@@ -79,27 +84,16 @@ namespace PnP.PowerShell.Commands.Files
             var folder = EnsureFolder();
             var fileUrl = UrlUtility.Combine(folder.ServerRelativeUrl, FileName);
 
-            ContentType targetContentType = null;
+            string targetContentTypeId = null;
             // Check to see if the Content Type exists. If it doesn't we are going to throw an exception and block this transaction right here.
             if (ContentType != null)
             {
-                List list;
-                try
+                var list = CurrentWeb.GetListByUrl(Folder);
+                if (list is null)
                 {
-                    list = SelectedWeb.GetListByUrl(Folder);
+                    throw new PSArgumentException("The folder specified does not have a corresponding list", nameof(Folder));
                 }
-                catch
-                {
-                    throw new PSArgumentException("The Folder specified ({folder.ServerRelativeUrl}) does not have a corresponding List", nameof(Folder));
-                }
-                if (list != null)
-                {
-                    targetContentType = ContentType.GetContentType(list);
-                }
-                if (targetContentType == null)
-                {
-                    throw new PSArgumentException("Content Type does not exist in list", nameof(ContentType));
-                }
+                targetContentTypeId = ContentType?.GetIdOrThrow(nameof(ContentType), list);
             }
 
             // Check if the file exists
@@ -107,12 +101,12 @@ namespace PnP.PowerShell.Commands.Files
             {
                 try
                 {
-                    var existingFile = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(fileUrl));
+                    var existingFile = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(fileUrl));
 
                     existingFile.EnsureProperty(f => f.Exists);
                     if (existingFile.Exists)
                     {
-                        SelectedWeb.CheckOutFile(fileUrl);
+                        CurrentWeb.CheckOutFile(fileUrl);
                     }
                 }
                 catch
@@ -139,7 +133,7 @@ namespace PnP.PowerShell.Commands.Files
 
             if (ContentType != null)
             {
-                item["ContentTypeId"] = targetContentType.Id.StringValue;
+                item["ContentTypeId"] = targetContentTypeId;
                 updateRequired = true;
             }
 
@@ -149,17 +143,17 @@ namespace PnP.PowerShell.Commands.Files
             }
             if (Checkout)
             {
-                SelectedWeb.CheckInFile(fileUrl, CheckinType.MajorCheckIn, CheckInComment);
+                CurrentWeb.CheckInFile(fileUrl, CheckinType.MajorCheckIn, CheckInComment);
             }
 
             if (Publish)
             {
-                SelectedWeb.PublishFile(fileUrl, PublishComment);
+                CurrentWeb.PublishFile(fileUrl, PublishComment);
             }
 
             if (Approve)
             {
-                SelectedWeb.ApproveFile(fileUrl, ApproveComment);
+                CurrentWeb.ApproveFile(fileUrl, ApproveComment);
             }
 
             ClientContext.Load(file);
@@ -168,19 +162,19 @@ namespace PnP.PowerShell.Commands.Files
         }
 
         /// <summary>
-        /// Ensures the folder to which the file is to be uploaded exists. Changed from using the EnsureFolder implementation in PnP Sites Core as that requires at least member rights to the entire site to work.
+        /// Ensures the folder to which the file is to be uploaded exists. Changed from using the EnsureFolder implementation in PnP Framework as that requires at least member rights to the entire site to work.
         /// </summary>
         /// <returns>The folder to which the file needs to be uploaded</returns>
         private Folder EnsureFolder()
         {
             // First try to get the folder if it exists already. This avoids an Access Denied exception if the current user doesn't have Full Control access at Web level
-            SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
-            var Url = UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder);
+            CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var Url = UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, Folder);
 
             Folder folder = null;
             try
             {
-                folder = SelectedWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(Url));
+                folder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(Url));
                 folder.EnsureProperties(f => f.ServerRelativeUrl);
                 return folder;
             }
@@ -188,7 +182,7 @@ namespace PnP.PowerShell.Commands.Files
             catch (ServerException serverEx) when (serverEx.ServerErrorCode == -2147024894)
             {
                 // Try to create the folder
-                folder = SelectedWeb.EnsureFolder(SelectedWeb.RootFolder, Folder);
+                folder = CurrentWeb.EnsureFolder(CurrentWeb.RootFolder, Folder);
                 folder.EnsureProperties(f => f.ServerRelativeUrl);
                 return folder;
             }

@@ -121,7 +121,7 @@ namespace PnP.PowerShell.Commands.Branding
             switch (Scope)
             {
                 case CustomActionScope.Web:
-                    SelectedWeb.AddCustomAction(ca);
+                    CurrentWeb.AddCustomAction(ca);
                     break;
 
                 case CustomActionScope.Site:

@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.EnsureProperty(w => w.Url);
+            CurrentWeb.EnsureProperty(w => w.Url);
             bool templateFromFileSystem = !Path.ToLower().StartsWith("http");
             FileConnectorBase fileConnector;
             string templateFileName = System.IO.Path.GetFileName(Path);

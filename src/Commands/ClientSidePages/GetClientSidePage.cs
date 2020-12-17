@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
 
         protected override void ExecuteCmdlet()
         {
-            var clientSidePage = Identity.GetPage((Microsoft.SharePoint.Client.ClientContext)SelectedWeb.Context);
+            var clientSidePage = Identity.GetPage((Microsoft.SharePoint.Client.ClientContext)CurrentWeb.Context);
 
             if (clientSidePage == null)
                 throw new Exception($"Page '{Identity?.Name}' does not exist");

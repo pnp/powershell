@@ -19,10 +19,10 @@ namespace PnP.PowerShell.Commands.Publishing
         {
             if (ParameterSetName == "SITE")
             {
-                var serverUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                var serverUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
                 ServerRelativePageUrl = UrlUtility.Combine(serverUrl, SiteRelativePageUrl);
             }
-            var file = SelectedWeb.GetFileByServerRelativeUrl(ServerRelativePageUrl);
+            var file = CurrentWeb.GetFileByServerRelativeUrl(ServerRelativePageUrl);
             file.DeleteObject();
 
             ClientContext.ExecuteQueryRetry();

@@ -16,11 +16,11 @@ namespace PnP.PowerShell.Commands.Publishing
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(Identity.GetImageRendition(SelectedWeb));
+                WriteObject(Identity.GetImageRendition(CurrentWeb));
             }
             else
             {
-                WriteObject(SelectedWeb.GetPublishingImageRenditions(), true);
+                WriteObject(CurrentWeb.GetPublishingImageRenditions(), true);
             }
         }
     }

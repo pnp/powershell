@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.SetHomePage(RootFolderRelativeUrl);
+            CurrentWeb.SetHomePage(RootFolderRelativeUrl);
         }
     }
 

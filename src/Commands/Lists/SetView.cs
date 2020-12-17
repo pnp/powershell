@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Fields
             View view = null;
             if (List != null)
             {
-                list = List.GetList(SelectedWeb);
+                list = List.GetList(CurrentWeb);
                 if (list == null)
                 {
                     throw new PSArgumentException("List provided in the List argument could not be found", "List");

@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands.Branding
     {
         protected override void ExecuteCmdlet()
         {
-            var folder = SelectedWeb.RootFolder;
+            var folder = CurrentWeb.RootFolder;
 
             ClientContext.Load(folder, f => f.WelcomePage);
 

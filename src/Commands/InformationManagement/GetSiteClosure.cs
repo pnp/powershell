@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
     {
         protected override void ExecuteCmdlet()
         {
-            var isClosed = SelectedWeb.IsClosedBySitePolicy();
+            var isClosed = CurrentWeb.IsClosedBySitePolicy();
 
             WriteObject(isClosed ? ClosureState.Closed : ClosureState.Open, false);
         }

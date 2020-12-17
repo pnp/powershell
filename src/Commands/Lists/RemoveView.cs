@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Lists
         {
             if (List != null)
             {
-                var list = List.GetList(SelectedWeb);
+                var list = List.GetList(CurrentWeb);
 
                 if (list != null)
                 {

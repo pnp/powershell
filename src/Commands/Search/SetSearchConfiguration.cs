@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Search
             {
                 case SearchConfigurationScope.Web:
                     {
-                        SelectedWeb.SetSearchConfiguration(Configuration);
+                        CurrentWeb.SetSearchConfiguration(Configuration);
                         break;
                     }
                 case SearchConfigurationScope.Site:

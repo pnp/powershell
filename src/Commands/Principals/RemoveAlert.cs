@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Principals
             }
             else
             {
-                user = SelectedWeb.CurrentUser;
+                user = CurrentWeb.CurrentUser;
             }
             if (!Force)
             {

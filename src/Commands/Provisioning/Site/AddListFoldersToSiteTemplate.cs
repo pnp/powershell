@@ -55,7 +55,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
 
 
-            List spList = List.GetList(SelectedWeb);
+            List spList = List.GetList(CurrentWeb);
             ClientContext.Load(spList, l => l.RootFolder, l => l.HasUniqueRoleAssignments);
             ClientContext.ExecuteQueryRetry();
 
