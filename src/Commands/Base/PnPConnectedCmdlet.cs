@@ -19,8 +19,6 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-    
-        
         public HttpClient HttpClient => PnPConnection.CurrentConnection.HttpClient;
     }
 

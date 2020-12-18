@@ -8,8 +8,9 @@ using PnP.PowerShell.Commands.Extensions;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSubWebs")]
-    
+    [Cmdlet(VerbsCommon.Get, "PnPSubWeb")]
+    [Alias("Get-PnPSubWebs")]
+
     public class GetSubWebs : PnPWebRetrievalsCmdlet<Web>
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
@@ -35,26 +36,8 @@ namespace PnP.PowerShell.Commands
 
             if (Identity != null)
             {
-                try
-                {
-                    if (Identity.Id != Guid.Empty)
-                    {
-                        parentWeb = parentWeb.GetWebById(Identity.Id);
-                    }
-                    else if (Identity.Web != null)
-                    {
-                        parentWeb = Identity.Web;
-                    }
-                    else if (Identity.Url != null)
-                    {
-                        parentWeb = parentWeb.GetWebByUrl(Identity.Url);
-                    }
-                }
-                catch(ServerException e) when (e.ServerErrorTypeName.Equals("System.IO.FileNotFoundException"))
-                {
-                    throw new PSArgumentException($"No subweb found with the provided id or url", nameof(Identity));
-                }
-
+                parentWeb = Identity.GetWeb(ClientContext, RetrievalExpressions);
+                
                 if (parentWeb != null)
                 {
                     if (Recurse)

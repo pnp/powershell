@@ -24,18 +24,7 @@ namespace PnP.PowerShell.Commands
             }
             else
             {
-                if (Identity.Id != Guid.Empty)
-                {
-                    WriteObject(ClientContext.Web.GetWebById(Identity.Id, RetrievalExpressions));
-                }
-                else if (Identity.Web != null)
-                {
-                    WriteObject(ClientContext.Web.GetWebById(Identity.Web.Id, RetrievalExpressions));
-                }
-                else if (Identity.Url != null)
-                {
-                    WriteObject(ClientContext.Web.GetWebByUrl(Identity.Url, RetrievalExpressions));
-                }
+                WriteObject(Identity.GetWeb(ClientContext, RetrievalExpressions));
             }
         }
     }
