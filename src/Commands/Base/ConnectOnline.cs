@@ -265,6 +265,9 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
         public SwitchParameter ForceAuthentication;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, DontShow = true)]
+        public SwitchParameter UseRetryAfterHeader;
+
         protected override void ProcessRecord()
         {
             cancellationTokenSource = new CancellationTokenSource();
@@ -305,8 +308,6 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             PnPConnection connection = null;
-
-
 
             PSCredential credentials = null;
             if (Credentials != null)
@@ -414,7 +415,12 @@ namespace PnP.PowerShell.Commands.Base
                 Environment.SetEnvironmentVariable("PNPPSHOST", "GRAPH");
                 Environment.SetEnvironmentVariable("PNPPSSITE", "GRAPH");
             }
-
+            if (connection.Context != null)
+            {
+                var settings = connection.Context.GetContextSettings();
+                settings.UseRetryAfterHeader = UseRetryAfterHeader.IsPresent;
+                connection.Context.AddContextSettings(settings);
+            }
             if (ReturnConnection)
             {
                 WriteObject(connection);

@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Files
             if (List != null)
             {
                 // Gets the provided list
-                var list = List.GetList(SelectedWeb);
+                var list = List.GetList(CurrentWeb);
 
                 // Query for all folders in the list
                 CamlQuery query = CamlQuery.CreateAllFoldersQuery();
@@ -54,12 +54,12 @@ namespace PnP.PowerShell.Commands.Files
             }
             else
             {
-                var webServerRelativeUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                var webServerRelativeUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
                 if (!Url.StartsWith(webServerRelativeUrl, StringComparison.OrdinalIgnoreCase))
                 {
                     Url = UrlUtility.Combine(webServerRelativeUrl, Url);
                 }
-                var folder = SelectedWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(Url));
+                var folder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(Url));
                 folder.EnsureProperties(RetrievalExpressions);
 
                 WriteObject(folder);

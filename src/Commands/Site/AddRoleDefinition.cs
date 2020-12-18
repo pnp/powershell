@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Site
             {
                 roleDefinition = ClientContext.Site.RootWeb.RoleDefinitions.GetByName(RoleName);
                 ClientContext.Load(roleDefinition);
-                ClientContext.ExecuteQuery();
+                ClientContext.ExecuteQueryRetry();
             }
             catch { }
             if (roleDefinition.ServerObjectIsNull == null)

@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands
         {
             DefaultRetrievalExpressions = new Expression<Func<Web, object>>[] { w => w.Id, w => w.Url, w => w.Title, w => w.ServerRelativeUrl };
 
-            Web parentWeb = SelectedWeb;
+            Web parentWeb = CurrentWeb;
             List<Web> results = new List<Web>();
             if(IncludeRootWeb)
             {

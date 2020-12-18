@@ -14,20 +14,20 @@ namespace PnP.PowerShell.Commands
     /// <typeparam name="TType">Type of object which will be returned in the output</typeparam>
     public abstract class PnPWebRetrievalsCmdlet<TType> : PnPRetrievalsCmdlet<TType> where TType : ClientObject
     {
-        private Web _selectedWeb;
+        private Web _currentWeb;
 
         [Parameter(Mandatory = false)]
         public WebPipeBind Web = new WebPipeBind();
 
-        protected Web SelectedWeb
+        protected Web CurrentWeb
         {
             get
             {
-                if (_selectedWeb == null)
+                if (_currentWeb == null)
                 {
-                    _selectedWeb = GetWeb();
+                    _currentWeb = GetWeb();
                 }
-                return _selectedWeb;
+                return _currentWeb;
             }
         }
 

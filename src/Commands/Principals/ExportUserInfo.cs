@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Principals
             }
             var site = this.Tenant.GetSiteByUrl(siteUrl);
             ClientContext.Load(site);
-            ClientContext.ExecuteQuery();
+            ClientContext.ExecuteQueryRetry();
             var normalizedUserName = UrlUtilities.UrlEncode($"i:0#.f|membership|{LoginName}");
             var results = RestHelper.GetAsync<RestResultCollection<ExportEntity>>(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/GetSPUserInformation(accountName=@a,siteId=@b)?@a='{normalizedUserName}'&@b='{site.Id}'", this.AccessToken, false).GetAwaiter().GetResult();
             var record = new PSObject();

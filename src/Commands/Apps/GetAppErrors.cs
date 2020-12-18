@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Base;
+using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Apps
 {
@@ -31,7 +32,7 @@ namespace PnP.PowerShell.Commands.Apps
                 throw new PSArgumentException("Invalid Date Range");
             }
             var errorEntries = ClientContext.LoadQuery(this.Tenant.GetAppErrors(ProductId, StartTimeInUtc, EndTimeInUtc));
-            ClientContext.ExecuteQuery();
+            ClientContext.ExecuteQueryRetry();
             WriteObject(errorEntries);
         }
 
