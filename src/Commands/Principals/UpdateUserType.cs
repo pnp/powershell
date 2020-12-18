@@ -1,5 +1,6 @@
 ﻿using System.Management.Automation;
 using PnP.PowerShell.Commands.Base;
+using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Principals
 {
@@ -14,7 +15,7 @@ namespace PnP.PowerShell.Commands.Principals
             var sitePropertiesEnumerable = this.Tenant.UpdateUserTypeFromAzureADForAllSites(LoginName);
             ClientContext.Load(sitePropertiesEnumerable);
             ClientContext.Load(sitePropertiesEnumerable, sp => sp.NextStartIndexFromSharePoint);
-            ClientContext.ExecuteQuery();
+            ClientContext.ExecuteQueryRetry();
             if(sitePropertiesEnumerable.Count == 0)
             {
                 WriteWarning("User Type is already up to date.");

@@ -304,12 +304,10 @@ namespace PnP.PowerShell.Commands.Base
 
             if (!string.IsNullOrEmpty(Url) && Url.EndsWith("/"))
             {
-                Url = Url.TrimEnd(new[] { '/' });
+                Url = Url.TrimEnd('/');
             }
 
             PnPConnection connection = null;
-
-
 
             PSCredential credentials = null;
             if (Credentials != null)

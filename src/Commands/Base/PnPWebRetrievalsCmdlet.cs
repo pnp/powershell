@@ -14,47 +14,32 @@ namespace PnP.PowerShell.Commands
     /// <typeparam name="TType">Type of object which will be returned in the output</typeparam>
     public abstract class PnPWebRetrievalsCmdlet<TType> : PnPRetrievalsCmdlet<TType> where TType : ClientObject
     {
-        private Web _selectedWeb;
+        private Web _currentWeb;
 
         [Parameter(Mandatory = false)]
         public WebPipeBind Web = new WebPipeBind();
 
-        protected Web SelectedWeb
+        protected Web CurrentWeb
         {
             get
             {
-                if (_selectedWeb == null)
+                if (_currentWeb == null)
                 {
-                    _selectedWeb = GetWeb();
+                    _currentWeb = GetWeb();
                 }
-                return _selectedWeb;
+                return _currentWeb;
             }
         }
 
-        private Web GetWeb()
+         private Web GetWeb()
         {
             Web web = ClientContext.Web;
 
-            if (Web.Id != Guid.Empty)
+            if (ParameterSpecified(nameof(Web)))
             {
-                web = web.GetWebById(Web.Id);
-                PnPConnection.CurrentConnection.CloneContext(web.Url);
-
-                web = PnPConnection.CurrentConnection.Context.Web;
-            }
-            else if (!string.IsNullOrEmpty(Web.Url))
-            {
-                web = web.GetWebByUrl(Web.Url);
-                PnPConnection.CurrentConnection.CloneContext(web.Url);
-                web = PnPConnection.CurrentConnection.Context.Web;
-            }
-            else if (Web.Web != null)
-            {
-                web = Web.Web;
-
-                web.EnsureProperty(w => w.Url);
-
-                PnPConnection.CurrentConnection.CloneContext(web.Url);
+                var subWeb = Web.GetWeb(ClientContext);
+                subWeb.EnsureProperty(w => w.Url);
+                PnPConnection.CurrentConnection.CloneContext(subWeb.Url);
                 web = PnPConnection.CurrentConnection.Context.Web;
             }
             else

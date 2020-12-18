@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Commands.Files
             {
                 WriteWarning("Ensure-PnPFolder has been deprecated. Use Resolve-PnPFolder with the same parameters instead.");
             }
-            WriteObject(SelectedWeb.EnsureFolderPath(SiteRelativePath, RetrievalExpressions));
+            WriteObject(CurrentWeb.EnsureFolderPath(SiteRelativePath, RetrievalExpressions));
         }
     }
 }

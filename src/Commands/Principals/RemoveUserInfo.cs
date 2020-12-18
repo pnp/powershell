@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Principals
             }
             var site = this.Tenant.GetSiteByUrl(siteUrl);
             ClientContext.Load(site);
-            ClientContext.ExecuteQuery();
+            ClientContext.ExecuteQueryRetry();
             var normalizedUserName = UrlUtilities.UrlEncode($"i:0#.f|membership|{LoginName}");
             RestResultCollection<ExportEntity> results = null;
             if (!ParameterSpecified(nameof(RedactName)))

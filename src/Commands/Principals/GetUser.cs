@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.Principals
 
             if (Identity == null)
             {
-                SelectedWeb.Context.Load(SelectedWeb.SiteUsers, u => u.Include(RetrievalExpressions));
+                CurrentWeb.Context.Load(CurrentWeb.SiteUsers, u => u.Include(RetrievalExpressions));
 
                 List<DetailedUser> users = new List<DetailedUser>();
 
@@ -72,16 +72,16 @@ namespace PnP.PowerShell.Commands.Principals
                     )
                 {
                     // Get all the role assignments and role definition bindings to be able to see which users have been given rights directly on the site level
-                    SelectedWeb.Context.Load(SelectedWeb.RoleAssignments, ac => ac.Include(a => a.RoleDefinitionBindings, a => a.Member));
-                    var usersWithDirectPermissions = SelectedWeb.SiteUsers.Where(u => SelectedWeb.RoleAssignments.Any(ra => ra.Member.LoginName == u.LoginName));
+                    CurrentWeb.Context.Load(CurrentWeb.RoleAssignments, ac => ac.Include(a => a.RoleDefinitionBindings, a => a.Member));
+                    var usersWithDirectPermissions = CurrentWeb.SiteUsers.Where(u => CurrentWeb.RoleAssignments.Any(ra => ra.Member.LoginName == u.LoginName));
 
                     // Get all the users contained in SharePoint Groups
-                    SelectedWeb.Context.Load(SelectedWeb.SiteGroups, sg => sg.Include(u => u.Users.Include(RetrievalExpressions), u => u.LoginName));
-                    SelectedWeb.Context.ExecuteQueryRetry();
+                    CurrentWeb.Context.Load(CurrentWeb.SiteGroups, sg => sg.Include(u => u.Users.Include(RetrievalExpressions), u => u.LoginName));
+                    CurrentWeb.Context.ExecuteQueryRetry();
 
                     // Get all SharePoint groups that have been assigned access
                     var usersWithGroupPermissions = new List<User>();
-                    foreach (var group in SelectedWeb.SiteGroups.Where(g => SelectedWeb.RoleAssignments.Any(ra => ra.Member.LoginName == g.LoginName)))
+                    foreach (var group in CurrentWeb.SiteGroups.Where(g => CurrentWeb.RoleAssignments.Any(ra => ra.Member.LoginName == g.LoginName)))
                     {
                         usersWithGroupPermissions.AddRange(group.Users);
                     }
@@ -94,18 +94,18 @@ namespace PnP.PowerShell.Commands.Principals
                     // Add the found users and add them to the custom object
                     if (WithRightsAssignedDetailed)
                     {
-                        SelectedWeb.Context.Load(SelectedWeb, s => s.ServerRelativeUrl);
-                        SelectedWeb.Context.ExecuteQueryRetry();
+                        CurrentWeb.Context.Load(CurrentWeb, s => s.ServerRelativeUrl);
+                        CurrentWeb.Context.ExecuteQueryRetry();
 
                         WriteWarning("Using the -WithRightsAssignedDetailed parameter will cause the script to take longer than normal because of the all enumerations that take place");
-                        users.AddRange(GetPermissions(SelectedWeb.RoleAssignments, SelectedWeb.ServerRelativeUrl));
+                        users.AddRange(GetPermissions(CurrentWeb.RoleAssignments, CurrentWeb.ServerRelativeUrl));
                         foreach (var user in allUsersWithPermissions)
                         {
                             users.Add(new DetailedUser()
                             {
                                 Groups = user.Groups,
                                 User = user,
-                                Url = SelectedWeb.ServerRelativeUrl
+                                Url = CurrentWeb.ServerRelativeUrl
                             });
                         }
                     }
@@ -117,21 +117,21 @@ namespace PnP.PowerShell.Commands.Principals
                 }
                 else
                 {
-                    SelectedWeb.Context.ExecuteQueryRetry();
-                    WriteObject(SelectedWeb.SiteUsers, true);
+                    CurrentWeb.Context.ExecuteQueryRetry();
+                    WriteObject(CurrentWeb.SiteUsers, true);
                 }
 
                 if (WithRightsAssignedDetailed)
                 {
-                    SelectedWeb.Context.Load(SelectedWeb.Lists, l => l.Include(li => li.ItemCount, li => li.IsSystemList, li=>li.IsCatalog, li => li.RootFolder.ServerRelativeUrl, li => li.RoleAssignments, li => li.Title, li => li.HasUniqueRoleAssignments));
-                    SelectedWeb.Context.ExecuteQueryRetry();
+                    CurrentWeb.Context.Load(CurrentWeb.Lists, l => l.Include(li => li.ItemCount, li => li.IsSystemList, li=>li.IsCatalog, li => li.RootFolder.ServerRelativeUrl, li => li.RoleAssignments, li => li.Title, li => li.HasUniqueRoleAssignments));
+                    CurrentWeb.Context.ExecuteQueryRetry();
 
-                    var progress = new ProgressRecord(0, $"Getting lists for {SelectedWeb.ServerRelativeUrl}", "Enumerating through lists");
+                    var progress = new ProgressRecord(0, $"Getting lists for {CurrentWeb.ServerRelativeUrl}", "Enumerating through lists");
                     var progressCounter = 0;
 
-                    foreach (var list in SelectedWeb.Lists)
+                    foreach (var list in CurrentWeb.Lists)
                     {
-                        WriteProgress(progress, $"Getting list {list.RootFolder.ServerRelativeUrl}", progressCounter++, SelectedWeb.Lists.Count);
+                        WriteProgress(progress, $"Getting list {list.RootFolder.ServerRelativeUrl}", progressCounter++, CurrentWeb.Lists.Count);
 
                         // ignoring the system lists
                         if (list.IsSystemList || list.IsCatalog)
@@ -145,12 +145,12 @@ namespace PnP.PowerShell.Commands.Principals
                             WriteVerbose(string.Format("List found with HasUniqueRoleAssignments {0}", list.RootFolder.ServerRelativeUrl));
                             string url = list.RootFolder.ServerRelativeUrl;
 
-                            SelectedWeb.Context.Load(list.RoleAssignments, r => r.Include(
+                            CurrentWeb.Context.Load(list.RoleAssignments, r => r.Include(
                                 ra => ra.RoleDefinitionBindings,
                                 ra => ra.Member.LoginName,
                                 ra => ra.Member.Title,
                                 ra => ra.Member.PrincipalType));
-                            SelectedWeb.Context.ExecuteQueryRetry();
+                            CurrentWeb.Context.ExecuteQueryRetry();
 
                             users.AddRange(GetPermissions(list.RoleAssignments, url));
 
@@ -183,8 +183,8 @@ namespace PnP.PowerShell.Commands.Principals
                                 do
                                 {
                                     var listItems = list.GetItems(query);
-                                    SelectedWeb.Context.Load(listItems);
-                                    SelectedWeb.Context.ExecuteQueryRetry();
+                                    CurrentWeb.Context.Load(listItems);
+                                    CurrentWeb.Context.ExecuteQueryRetry();
                                     query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
 
                                     items.Add(listItems);
@@ -210,12 +210,12 @@ namespace PnP.PowerShell.Commands.Principals
                                             string listItemUrl = listItem["FileRef"].ToString();
                                             WriteVerbose(string.Format("List item {0} HasUniqueRoleAssignments", listItemUrl));
 
-                                            SelectedWeb.Context.Load(listItem.RoleAssignments, r => r.Include(
+                                            CurrentWeb.Context.Load(listItem.RoleAssignments, r => r.Include(
                                                 ra => ra.RoleDefinitionBindings,
                                                 ra => ra.Member.LoginName,
                                                 ra => ra.Member.Title,
                                                 ra => ra.Member.PrincipalType));
-                                            SelectedWeb.Context.ExecuteQueryRetry();
+                                            CurrentWeb.Context.ExecuteQueryRetry();
 
                                             users.AddRange(GetPermissions(listItem.RoleAssignments, listItemUrl));
                                         }
@@ -282,20 +282,20 @@ namespace PnP.PowerShell.Commands.Principals
                 User user = null;
                 if (Identity.Id > 0)
                 {
-                    user = SelectedWeb.GetUserById(Identity.Id);
+                    user = CurrentWeb.GetUserById(Identity.Id);
                 }
                 else if (Identity.User != null && Identity.User.Id > 0)
                 {
-                    user = SelectedWeb.GetUserById(Identity.User.Id);
+                    user = CurrentWeb.GetUserById(Identity.User.Id);
                 }
                 else if (!string.IsNullOrWhiteSpace(Identity.Login))
                 {
-                    user = SelectedWeb.SiteUsers.GetByLoginName(Identity.Login);
+                    user = CurrentWeb.SiteUsers.GetByLoginName(Identity.Login);
                 }
                 if (user != null)
                 {
-                    SelectedWeb.Context.Load(user, RetrievalExpressions);
-                    SelectedWeb.Context.ExecuteQueryRetry();
+                    CurrentWeb.Context.Load(user, RetrievalExpressions);
+                    CurrentWeb.Context.ExecuteQueryRetry();
                 }
                 WriteObject(user);
             }

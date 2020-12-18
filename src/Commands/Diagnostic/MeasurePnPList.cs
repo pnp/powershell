@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Diagnostic
 
         protected override void ExecuteCmdlet()
         {
-            var list = Identity.GetList(SelectedWeb);
+            var list = Identity.GetList(CurrentWeb);
             if (list == null)
                 throw new PSArgumentException($"No list found with id, title or url '{Identity}'", "Identity");
             var retrievalExpressions = new Expression<Func<List, object>>[] {

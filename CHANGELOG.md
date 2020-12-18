@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Removed '-Url' parameter from `Set-PnPWebPermission`. Use `-Identity` instead. (0.3.13)
+- Renamed `Get-PnPSubWebs` to `Get-PnPSubWeb` which is in line with PowerShell naming standards which state that cmdlets should use a singalar noun. Alias for `Get-PnPSubWebs` is available. (0.3.13)
 - `Register-PnPManagementShellAccess` now uses a popup window to authenticate you when your run the cmdlet on Windows (0.3.10)
 - Breaking change: we changed `Grant-PnPTenantServicePrincipalPermission` and `Revoke-PnPTenantServicePrincipalPermission` to use the Graph behind the scenes. This is a breaking change when it comes to the required permissions, but the new approach is more future proof. (0.3.8)
 - Refactored internal code to use hardcoded PnP prefixes for cmdlets, which allows $PSDefaultParameterValues in PowerShell to work as expected. (0.3.7)

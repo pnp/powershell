@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Events
         {
             if (ParameterSetName == "List")
             {
-                var list = List.GetList(SelectedWeb);
+                var list = List.GetList(CurrentWeb);
 
                 if (list != null)
                 {
@@ -40,13 +40,13 @@ namespace PnP.PowerShell.Commands.Events
             {
                 if (!ParameterSpecified(nameof(Identity)))
                 {
-                    var query = ClientContext.LoadQuery(SelectedWeb.EventReceivers);
+                    var query = ClientContext.LoadQuery(CurrentWeb.EventReceivers);
                     ClientContext.ExecuteQueryRetry();
                     WriteObject(query, true);
                 }
                 else
                 {
-                    WriteObject(Identity.GetEventReceiverOnWeb(SelectedWeb));
+                    WriteObject(Identity.GetEventReceiverOnWeb(CurrentWeb));
                 }
             }
         }

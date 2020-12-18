@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Branding
 
             if (Scope == CustomActionScope.All || Scope == CustomActionScope.Web)
             {
-                actions.AddRange(SelectedWeb.GetCustomActions(RetrievalExpressions));
+                actions.AddRange(CurrentWeb.GetCustomActions(RetrievalExpressions));
             }
             if (Scope == CustomActionScope.All || Scope == CustomActionScope.Site)
             {

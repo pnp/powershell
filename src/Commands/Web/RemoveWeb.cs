@@ -11,58 +11,22 @@ namespace PnP.PowerShell.Commands
     [Cmdlet(VerbsCommon.Remove, "PnPWeb")]
     public class RemoveWeb : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ParameterSetName = "ByUrl")]
-        public string Url;
-
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public WebPipeBind Identity;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSetName == "ByIdentity")
+            if (ParameterSpecified(nameof(Identity)))
             {
-                web web;
-                if (Identity.Id != Guid.Empty)
+                var web = Identity.GetWeb(ClientContext);
+                web.EnsureProperties(w => w.Title, w => w.Url);
+                if (Force || ShouldContinue(string.Format($"Remove web '{web.Title}' ({web.Url})"), Properties.Resources.Confirm))
                 {
-                    web = ClientContext.Web.GetWebById(Identity.Id);
-                    web.EnsureProperty(w => w.Title);
-                    if (Force || ShouldContinue(string.Format(Properties.Resources.RemoveWeb0, web.Title), Properties.Resources.Confirm))
-                    {
-                        web.DeleteObject();
-                        web.Context.ExecuteQueryRetry();
-                    }
-                }
-                else if (Identity.Web != null)
-                {
-                    Identity.Web.EnsureProperty(w => w.Title);
-                    if (Force || ShouldContinue(string.Format(Properties.Resources.RemoveWeb0, Identity.Web.Title), Properties.Resources.Confirm))
-                    {
-                        Identity.Web.DeleteObject();
-                        Identity.Web.Context.ExecuteQueryRetry();
-                    }
-                }
-                else if (Identity.Url != null)
-                {
-                    web = ClientContext.Web.GetWebByUrl(Identity.Url);
-                    web.EnsureProperty(w => w.Title);
-                    if (Force || ShouldContinue(string.Format(Properties.Resources.RemoveWeb0, Identity.Web.Title), Properties.Resources.Confirm))
-                    {
-                        web.DeleteObject();
-                        web.Context.ExecuteQueryRetry();
-                    }
-                }
-
-            }
-            else {
-                var web = CurrentWeb.GetWeb(Url);
-                web.EnsureProperty(w => w.Title);
-                if (Force || ShouldContinue(string.Format(Properties.Resources.RemoveWeb0, web.Title), Properties.Resources.Confirm))
-                {
-                    CurrentWeb.DeleteWeb(Url);
-                    ClientContext.ExecuteQueryRetry();
+                    web.DeleteObject();
+                    web.Context.ExecuteQueryRetry();
                 }
             }
         }

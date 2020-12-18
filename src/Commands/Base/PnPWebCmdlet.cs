@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands
         private Web _currentWeb;
 
         [Parameter(Mandatory = false)]
-        public WebPipeBind Web = new WebPipeBind();
+        public WebPipeBind Web;
 
         protected Web CurrentWeb
         {
@@ -31,26 +31,11 @@ namespace PnP.PowerShell.Commands
         {
             Web web = ClientContext.Web;
 
-            if (Web.Id != Guid.Empty)
+            if (ParameterSpecified(nameof(Web)))
             {
-                web = web.GetWebById(Web.Id);
-                PnPConnection.CurrentConnection.CloneContext(web.Url);
-
-                web = PnPConnection.CurrentConnection.Context.Web;
-            }
-            else if (!string.IsNullOrEmpty(Web.Url))
-            {
-                web = web.GetWebByUrl(Web.Url);
-                PnPConnection.CurrentConnection.CloneContext(web.Url);
-                web = PnPConnection.CurrentConnection.Context.Web;
-            }
-            else if (Web.Web != null)
-            {
-                web = Web.Web;
-
-                web.EnsureProperty(w => w.Url);
-
-                PnPConnection.CurrentConnection.CloneContext(web.Url);
+                var subWeb = Web.GetWeb(ClientContext);
+                subWeb.EnsureProperty(w => w.Url);
+                PnPConnection.CurrentConnection.CloneContext(subWeb.Url);
                 web = PnPConnection.CurrentConnection.Context.Web;
             }
             else

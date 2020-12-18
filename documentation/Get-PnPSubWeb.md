@@ -2,12 +2,12 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpsubwebs
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpsubweb
 schema: 2.0.0
-title: Get-PnPSubWebs
+title: Get-PnPSubWeb
 ---
 
-# Get-PnPSubWebs
+# Get-PnPSubWeb
 
 ## SYNOPSIS
 Returns the subwebs of the current web
@@ -15,7 +15,7 @@ Returns the subwebs of the current web
 ## SYNTAX
 
 ```powershell
-Get-PnPSubWebs [[-Identity] <WebPipeBind>] [-Recurse] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Get-PnPSubWeb [[-Identity] <WebPipeBind>] [-Recurse] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [-Includes <String[]>] [<CommonParameters>]
 ```
 
@@ -25,35 +25,35 @@ Get-PnPSubWebs [[-Identity] <WebPipeBind>] [-Recurse] [-Web <WebPipeBind>] [-Con
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPSubWebs
+Get-PnPSubWeb
 ```
 
 Retrieves all subsites of the current context returning the Id, Url, Title and ServerRelativeUrl of each subsite in the output
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPSubWebs -Recurse
+Get-PnPSubWeb -Recurse
 ```
 
 Retrieves all subsites of the current context and all of their nested child subsites returning the Id, Url, Title and ServerRelativeUrl of each subsite in the output
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPSubWebs -Recurse -Includes "WebTemplate","Description" | Select ServerRelativeUrl, WebTemplate, Description
+Get-PnPSubWeb -Recurse -Includes "WebTemplate","Description" | Select ServerRelativeUrl, WebTemplate, Description
 ```
 
 Retrieves all subsites of the current context and shows the ServerRelativeUrl, WebTemplate and Description properties in the resulting output
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPSubWebs -Identity Team1 -Recurse
+Get-PnPSubWeb -Identity Team1 -Recurse
 ```
 
 Retrieves all subsites of the subsite Team1 and all of its nested child subsites
 
 ### EXAMPLE 5
 ```powershell
-Get-PnPSubWebs -Identity Team1 -Recurse -IncludeRootWeb
+Get-PnPSubWeb -Identity Team1 -Recurse -IncludeRootWeb
 ```
 
 Retrieves the rootweb, all subsites of the subsite Team1 and all of its nested child subsites

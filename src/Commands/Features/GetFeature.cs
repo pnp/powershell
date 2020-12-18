@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Features
             }
             else
             {
-                featureCollection = SelectedWeb.Features;
+                featureCollection = CurrentWeb.Features;
             }
             IEnumerable<Feature> query = ClientContext.LoadQuery(featureCollection.IncludeWithDefaultProperties(RetrievalExpressions));
             ClientContext.ExecuteQueryRetry();

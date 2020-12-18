@@ -129,21 +129,13 @@ namespace PnP.PowerShell.Commands.Diagnostic
             Web web = null;
             if (Identity == null)
             {
-                ClientContext.Web.EnsureProperties(expressions);
                 web = ClientContext.Web;
             }
-            else if (Identity.Id != Guid.Empty)
+            else
             {
-                web = ClientContext.Web.GetWebById(Identity.Id, expressions);
+                web = Identity.GetWeb(ClientContext);
             }
-            else if (Identity.Web != null)
-            {
-                web = ClientContext.Web.GetWebById(Identity.Web.Id, expressions);
-            }
-            else if (Identity.Url != null)
-            {
-                web = ClientContext.Web.GetWebByUrl(Identity.Url, expressions);
-            }
+            web.EnsureProperties(expressions);
             return web;
         }
     }
