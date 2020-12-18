@@ -57,7 +57,7 @@ namespace PnP.PowerShell.Commands.Utilities
             if (SemanticVersion.TryParse(availableVersionString, out SemanticVersion availableVersion))
 #else
             var currentVersion = new Version(((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version);
-            if (Version.TryParse(onlineVersion, out Version availableVersion))
+            if (Version.TryParse(availableVersionString, out Version availableVersion))
 #endif
             {
                 if (availableVersion.Major > currentVersion.Major)
