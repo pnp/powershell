@@ -74,7 +74,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 var fileName = file.EnsureProperty(f => f.Name);
                 var folderRelativeUrl = serverRelativeUrl.Substring(0, serverRelativeUrl.Length - fileName.Length - 1);
                 var folderWebRelativeUrl = System.Net.WebUtility.UrlDecode(folderRelativeUrl.Substring(CurrentWeb.ServerRelativeUrl.TrimEnd('/').Length + 1));
-                if (ClientContext.HasPendingRequest) ClientContext.ExecuteQuery();
+                if (ClientContext.HasPendingRequest) ClientContext.ExecuteQueryRetry();
                 try
                 {
                     var fi = CurrentWeb.GetFileByServerRelativeUrl(serverRelativeUrl);

@@ -60,7 +60,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
                     if (updateRequired)
                     {
                         termStore.CommitAll();
-                        ClientContext.ExecuteQuery();
+                        ClientContext.ExecuteQueryRetry();
                     }
                     WriteObject(group);
                 }

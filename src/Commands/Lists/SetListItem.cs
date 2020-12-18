@@ -94,7 +94,7 @@ namespace PnP.PowerShell.Commands.Lists
                     }
                     ListItemHelper.UpdateListItem(item, updateType);
                 }
-                ClientContext.ExecuteQuery();
+                ClientContext.ExecuteQueryRetry();
                 ClientContext.Load(item);
                 WriteObject(item);
             }

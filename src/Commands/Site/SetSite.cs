@@ -270,7 +270,7 @@ namespace PnP.PowerShell.Commands.Site
                     context.Load(office365Tenant);
                     context.ExecuteQueryRetry();
                     office365Tenant.DisableSharingForNonOwnersOfSite(siteUrl);
-                    context.ExecuteQuery();
+                    context.ExecuteQueryRetry();
                 }
             }
         }
