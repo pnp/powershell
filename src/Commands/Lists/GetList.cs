@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (Identity != null)
             {
-                var list = Identity.GetList(SelectedWeb);
+                var list = Identity.GetList(CurrentWeb);
 
                 if (ThrowExceptionIfListNotFound && list == null)
                 { 
@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Lists
             }
             else
             {
-                var query = SelectedWeb.Lists.IncludeWithDefaultProperties(RetrievalExpressions);
+                var query = CurrentWeb.Lists.IncludeWithDefaultProperties(RetrievalExpressions);
                 var lists = ClientContext.LoadQuery(query);
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(lists, true);
