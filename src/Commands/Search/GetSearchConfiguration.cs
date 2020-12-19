@@ -58,7 +58,7 @@ namespace PnP.PowerShell.Commands.Search
                         SearchObjectOwner owningScope = new SearchObjectOwner(ClientContext, SearchObjectLevel.SPSiteSubscription);
                         var config = new SearchConfigurationPortability(ClientContext);
                         ClientResult<string> configuration = config.ExportSearchConfiguration(owningScope);
-                        ClientContext.ExecuteQueryRetry(10, 60 * 5 * 1000);
+                        ClientContext.ExecuteQueryRetry();
 
                         configOutput = configuration.Value;
                     }
