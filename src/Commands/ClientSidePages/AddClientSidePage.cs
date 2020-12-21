@@ -1,5 +1,5 @@
 ﻿using PnP.Core.Model.SharePoint;
-
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Linq;
@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         protected override void ExecuteCmdlet()
         {
             IPage clientSidePage = null;
-
+            
             // Check if the page exists
             string name = ClientSidePageUtilities.EnsureCorrectPageName(Name);
 
@@ -68,7 +68,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             if (ContentType != null)
             {
                 string ctId = ContentType.GetIdOrThrow(nameof(ContentType), CurrentWeb);
-                var pageFile = clientSidePage.GetPageFile();
+                var pageFile = clientSidePage.GetPageFile(p=>p.ListItemAllFields);
                 pageFile.ListItemAllFields["ContentTypeId"] = ctId;
                 pageFile.ListItemAllFields.SystemUpdate();
             }

@@ -39,11 +39,15 @@
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.14.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Graph" Version="3.19.0" />
+	<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+	<PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
+	<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+	<PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
+	<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
+	<PackageReference Include="Microsoft.Graph" Version="3.19.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.21.0" />
     <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="PnP.Framework" Version="0.1.*-*" Condition="'$(PnPFrameworkPath)' == ''" />
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
@@ -54,11 +58,7 @@
     <PackageReference Include="System.Text.Encodings.Web" Version="4.7.1" />
     <PackageReference Include="System.Text.Json" Version="4.7.2" />
     <PackageReference Include="TextCopy" Version="4.2.0" />
-    <PackageReference Include="PnP.Core" Version="0.4.*-*" Condition="'$(PnPCoreSdkPath)' == ''" />
     <ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
-    <Reference Include="PnP.Core">
-      <HintPath>..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll</HintPath>
-    </Reference>
     <!--<Reference Include="PnP.Framework" Condition="'$(PnPFrameworkPath)' != ''">
       <HintPath>$(PnPFrameworkPath)</HintPath>
       <Private>true</Private>
@@ -69,9 +69,6 @@
       <Private>true</Private>
       <SpecificVersion>false</SpecificVersion>
     </Reference>-->
-    <Reference Include="PnP.Framework">
-      <HintPath>..\..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
@@ -85,6 +82,15 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <Compile Remove="Base\DependencyAssemblyLoadContext.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PnP.Core">
+      <HintPath>..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PnP.Framework">
+      <HintPath>..\..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
   
   <ItemGroup>

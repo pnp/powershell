@@ -8,9 +8,7 @@ using System.IO;
 using PnP.PowerShell.Commands.Base;
 using PnP.Framework.Modernization.Transform;
 using PnP.Framework.Modernization.Publishing;
-using PnP.Framework.Modernization.Delve;
 using PnP.Framework.Modernization.Telemetry.Observers;
-using PnP.PowerShell.ALC;
 using PnP.Framework.Modernization.Cache;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
@@ -256,7 +254,6 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             // Create transformator instance
             PageTransformator pageTransformator = null;
             PublishingPageTransformator publishingPageTransformator = null;
-            DelvePageTransformator delvePageTransformator = null;
 
             if (!string.IsNullOrEmpty(this.WebPartMappingFile))
             {
@@ -273,10 +270,6 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                         // Using default page layout mapping file
                         publishingPageTransformator = new PublishingPageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile, null);
                     }
-                }
-                else if (this.DelveBlogPage)
-                {
-                    delvePageTransformator = new DelvePageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile);
                 }
                 else
                 {
@@ -304,10 +297,6 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                         publishingPageTransformator = new PublishingPageTransformator(this.ClientContext, targetContext, webPartMappingModel, null);
                     }
                 }
-                else if (this.DelveBlogPage)
-                {
-                    delvePageTransformator = new DelvePageTransformator(this.ClientContext, targetContext, webPartMappingModel);
-                }
                 else
                 {
                     // Use web part mapping model loaded from embedded mapping file
@@ -322,10 +311,6 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                 {
                     publishingPageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeVerbose:this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
-                else if (this.DelveBlogPage)
-                {
-                    delvePageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
-                }
                 else
                 {
                     pageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
@@ -337,10 +322,6 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                 {
                     publishingPageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
-                else if (this.DelveBlogPage)
-                {
-                    delvePageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
-                }
                 else
                 {
                     pageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
@@ -351,10 +332,6 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                 if (this.PublishingPage)
                 {
                     publishingPageTransformator.RegisterObserver(new ConsoleObserver(includeDebugEntries: this.LogVerbose));
-                }
-                else if (this.DelveBlogPage)
-                {
-                    delvePageTransformator.RegisterObserver(new ConsoleObserver(includeDebugEntries: this.LogVerbose));
                 }
                 else
                 {
@@ -409,48 +386,6 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                     if (this.LogType != ClientSidePageTransformatorLogType.None && this.LogType != ClientSidePageTransformatorLogType.Console && !this.LogSkipFlush)
                     {
                         publishingPageTransformator.FlushObservers();
-                    }
-                }
-            }
-            else if (this.DelveBlogPage)
-            {
-                // Setup Transformation information
-                DelvePageTransformationInformation pti = new DelvePageTransformationInformation(page)
-                {
-                    Overwrite = this.Overwrite,
-                    KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
-                    PublishCreatedPage = !this.DontPublish,
-                    KeepPageCreationModificationInformation = this.KeepPageCreationModificationInformation,
-                    SetAuthorInPageHeader = this.SetAuthorInPageHeader,
-                    PostAsNews = this.PostAsNews,
-                    DisablePageComments = this.DisablePageComments,
-                    TargetPageName = crossSiteTransformation ? this.TargetPageName : "",
-                    SkipUrlRewrite = this.SkipUrlRewriting,
-                    SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
-                    UrlMappingFile = this.UrlMappingFile,
-                    AddTableListImageAsImageWebPart = this.AddTableListImageAsImageWebPart,
-                    SkipUserMapping = this.SkipUserMapping,
-                    UserMappingFile = this.UserMappingFile,
-                    LDAPConnectionString = this.LDAPConnectionString,
-                    TargetPageFolder = this.TargetPageFolder,
-                    TargetPageFolderOverridesDefaultFolder = this.TargetPageFolderOverridesDefaultFolder,
-                    RemoveEmptySectionsAndColumns = this.RemoveEmptySectionsAndColumns
-                };
-
-                // Set mapping properties
-                pti.MappingProperties["SummaryLinksToQuickLinks"] = (!SummaryLinksToHtml).ToString().ToLower();
-                pti.MappingProperties["UseCommunityScriptEditor"] = UseCommunityScriptEditor.ToString().ToLower();
-
-                try
-                {
-                    serverRelativeClientPageUrl = delvePageTransformator.Transform(pti);
-                }
-                finally
-                {
-                    // Flush log
-                    if (this.LogType != ClientSidePageTransformatorLogType.None && this.LogType != ClientSidePageTransformatorLogType.Console && !this.LogSkipFlush)
-                    {
-                        pageTransformator.FlushObservers();
                     }
                 }
             }

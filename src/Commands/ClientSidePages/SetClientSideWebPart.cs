@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-
+using PnP.Core.Model.SharePoint;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
@@ -41,12 +41,12 @@ namespace PnP.PowerShell.Commands.ClientSidePages
 
                 if (ParameterSpecified(nameof(PropertiesJson)))
                 {
-                    webpart.PropertiesJson = PropertiesJson;
+                    (webpart as IPageWebPart).PropertiesJson = PropertiesJson;
                     updated = true;
                 }
                 if (ParameterSpecified(nameof(Title)))
                 {
-                    webpart.Title = Title;
+                    (webpart as IPageWebPart).Title = Title;
                     updated = true;
                 }
 

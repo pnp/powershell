@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.WebParts
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEFAULTBUILTIN)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_POSITIONEDBUILTIN)]
-        public PnP.Framework.Pages.DefaultClientSideWebParts DefaultWebPartType;
+        public DefaultWebPart DefaultWebPartType;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEFAULT3RDPARTY)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_POSITIONED3RDPARTY)]
@@ -78,11 +78,13 @@ namespace PnP.PowerShell.Commands.WebParts
 
             if (WebPartProperties != null)
             {
-                if (WebPartProperties.Properties != null)
-                {
-                    webpart.Properties.Merge(WebPartProperties.JsonObject);
-                }
-                else if (!string.IsNullOrEmpty(WebPartProperties.Json))
+                // TODO: do we still need this?
+                //if (WebPartProperties.Properties != null)
+                //{
+                //    webpart.Properties.Merge(WebPartProperties.JsonObject);
+                //}
+                //else 
+                if (!string.IsNullOrEmpty(WebPartProperties.Json))
                 {
                     webpart.PropertiesJson = WebPartProperties.Json;
                 }

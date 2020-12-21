@@ -55,10 +55,11 @@ namespace PnP.PowerShell.Commands.Base
 
         internal PnPContext PnPContext
         {
-            get {
+            get 
+            {
                 if(pnpContext == null && Context != null)
                 {
-                    pnpContext = PnP.Framework.PnPCoreSdk.Instance.GetContext(Context);
+                    pnpContext = PnP.Framework.PnPCoreSdk.Instance.GetPnPContext(Context);
                 }
                 return pnpContext;
             }

@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands
         /// </summary>
         public ClientContext ClientContext => Connection?.Context ?? PnPConnection.CurrentConnection.Context;
 
-        public PnPContext PnPContext => Connection?.PnPContext ?? null;
+        public PnPContext PnPContext => Connection?.PnPContext ?? PnPConnection.CurrentConnection.PnPContext;
 
         // do not remove '#!#99'
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")]

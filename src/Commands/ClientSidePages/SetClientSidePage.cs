@@ -60,7 +60,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         protected override void ExecuteCmdlet()
         {
 
-            ClientSidePage clientSidePage = Identity?.GetPage();
+            var clientSidePage = Identity?.GetPage();
 
             if (clientSidePage == null)
                 // If the client side page object cannot be found
@@ -87,17 +87,17 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             {
                 switch (HeaderType)
                 {
-                    case ClientSidePageHeaderType.Default:
+                    case PageHeaderType.Default:
                         {
                             clientSidePage.SetDefaultPageHeader();
                             break;
                         }
-                    case ClientSidePageHeaderType.Custom:
+                    case PageHeaderType.Custom:
                         {
                             clientSidePage.SetCustomPageHeader(customHeaderParameters.ServerRelativeImageUrl, customHeaderParameters.TranslateX, customHeaderParameters.TranslateY);
                             break;
                         }
-                    case ClientSidePageHeaderType.None:
+                    case PageHeaderType.None:
                         {
                             clientSidePage.RemovePageHeader();
                             break;
@@ -150,9 +150,9 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                 string ctId = ContentType.GetIdOrWarn(this, CurrentWeb);
                 if (ctId != null)
                 {
-                    clientSidePage.PageListItem["ContentTypeId"] = ctId;
-                    clientSidePage.PageListItem.SystemUpdate();
-                    ClientContext.ExecuteQueryRetry();
+                    var pageFile = clientSidePage.GetPageFile(p => p.ListItemAllFields);
+                    pageFile.ListItemAllFields["ContentTypeId"] = ctId;
+                    pageFile.ListItemAllFields.SystemUpdate();
                 }
             }
 
