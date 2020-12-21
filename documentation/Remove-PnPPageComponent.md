@@ -2,22 +2,21 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpavailableclientsidecomponents
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnppagecomponent
 schema: 2.0.0
-title: Get-PnPAvailableClientSideComponents
+title: Remove-PnPPageComponent
 ---
 
-# Get-PnPAvailableClientSideComponents
+# Remove-PnPPageComponent
 
 ## SYNOPSIS
-Gets the available client side components on a particular page
+Removes a page component from a page
 
 ## SYNTAX
 
 ```powershell
-Get-PnPAvailableClientSideComponents [-Page] <ClientSidePagePipeBind>
- [-Component <ClientSideComponentPipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+Remove-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> [-Force]
+ [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,40 +25,20 @@ Get-PnPAvailableClientSideComponents [-Page] <ClientSidePagePipeBind>
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPAvailableClientSideComponents -Page "MyPage.aspx"
+Remove-PnPPageComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82
 ```
 
-Gets the list of available client side components on the page 'MyPage.aspx'
+Removes the control specified from the page.
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAvailableClientSideComponents $page
+$webpart = Get-PnPPageComponent -Page "Home" | Where-Object { $_.Title -eq "Site activity" }
+Remove-PnPPageComponent -Page "Home" -InstanceId $webpart.InstanceId -Force
 ```
 
-Gets the list of available client side components on the page contained in the $page variable
-
-### EXAMPLE 3
-```powershell
-Get-PnPAvailableClientSideComponents -Page "MyPage.aspx" -ComponentName "HelloWorld"
-```
-
-Gets the client side component 'HelloWorld' if available on the page 'MyPage.aspx'
+Finds a web part with the Title "Site activity" on the Home.aspx page, then removes it from the page
 
 ## PARAMETERS
-
-### -Component
-Specifies the component instance or Id to look for.
-
-```yaml
-Type: ClientSideComponentPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
@@ -75,11 +54,39 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Page
-The name of the page.
+### -Force
+If specified you will not receive the confirmation question
 
 ```yaml
-Type: ClientSidePagePipeBind
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -InstanceId
+The instance id of the component
+
+```yaml
+Type: Guid
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Page
+The name of the page
+
+```yaml
+Type: PagePipeBind
 Parameter Sets: (All)
 
 Required: True

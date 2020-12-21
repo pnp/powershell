@@ -62,7 +62,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         public SwitchParameter IncludeHiddenLists;
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter IncludeAllClientSidePages;
+        [Alias("IncludeAllClientSidePages")]
+        public SwitchParameter IncludeAllPages;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter SkipVersionCheck;
@@ -228,9 +229,9 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 creationInformation.IncludeHiddenLists = IncludeHiddenLists;
             }
-            if (ParameterSpecified(nameof(IncludeAllClientSidePages)))
+            if (ParameterSpecified(nameof(IncludeAllPages)))
             {
-                creationInformation.IncludeAllClientSidePages = IncludeAllClientSidePages;
+                creationInformation.IncludeAllClientSidePages = IncludeAllPages;
             }
             creationInformation.SkipVersionCheck = SkipVersionCheck;
             if (ParameterSpecified(nameof(ContentTypeGroups)) && ContentTypeGroups != null)

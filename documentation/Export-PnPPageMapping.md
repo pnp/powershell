@@ -1,12 +1,12 @@
 ---
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/export-pnpclientsidepagemapping
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/export-pnppagemapping
 applicable: SharePoint Online
 schema: 2.0.0
-title: Export-PnPClientSidePageMapping
+title: Export-PnPPageMapping
 ---
 
-# Export-PnPClientSidePageMapping
+# Export-PnPPageMapping
 
 ## SYNOPSIS
 Get's the built-in maping files or a custom mapping file for your publishing portal page layouts. These mapping files are used to tailor the page transformation experience.
@@ -14,7 +14,7 @@ Get's the built-in maping files or a custom mapping file for your publishing por
 ## SYNTAX 
 
 ```powershell
-Export-PnPClientSidePageMapping [-BuiltInWebPartMapping [<SwitchParameter>]]
+Export-PnPPageMapping [-BuiltInWebPartMapping [<SwitchParameter>]]
                                 [-BuiltInPageLayoutMapping [<SwitchParameter>]]
                                 [-CustomPageLayoutMapping [<SwitchParameter>]]
                                 [-PublishingPage <PagePipeBind>]
@@ -30,21 +30,21 @@ Export-PnPClientSidePageMapping [-BuiltInWebPartMapping [<SwitchParameter>]]
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-Export-PnPClientSidePageMapping -BuiltInPageLayoutMapping -CustomPageLayoutMapping -Folder c:\\temp -Overwrite
+Export-PnPPageMapping -BuiltInPageLayoutMapping -CustomPageLayoutMapping -Folder c:\\temp -Overwrite
 ```
 
 Exports the built in page layout mapping and analyzes the current site's page layouts and exports these to files in folder c:\temp
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-Export-PnPClientSidePageMapping -CustomPageLayoutMapping -PublishingPage mypage.aspx -Folder c:\\temp -Overwrite
+Export-PnPPageMapping -CustomPageLayoutMapping -PublishingPage mypage.aspx -Folder c:\\temp -Overwrite
 ```
 
 Analyzes the page layout of page mypage.aspx and exports this to a file in folder c:\temp
 
 ### ------------------EXAMPLE 3------------------
 ```powershell
-Export-PnPClientSidePageMapping -BuiltInWebPartMapping -Folder c:\\temp -Overwrite
+Export-PnPPageMapping -BuiltInWebPartMapping -Folder c:\\temp -Overwrite
 ```
 
 Exports the built in webpart mapping to a file in folder c:\temp. Use this a starting basis if you want to tailer the web part mapping behavior.

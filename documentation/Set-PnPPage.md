@@ -2,12 +2,12 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpclientsidepage
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnppage
 schema: 2.0.0
-title: Set-PnPClientSidePage
+title: Set-PnPPage
 ---
 
-# Set-PnPClientSidePage
+# Set-PnPPage
 
 ## SYNOPSIS
 Sets parameters of a Client-Side Page
@@ -15,9 +15,9 @@ Sets parameters of a Client-Side Page
 ## SYNTAX
 
 ```powershell
-Set-PnPClientSidePage [-Identity] <ClientSidePagePipeBind> [-Name <String>] [-Title <String>]
- [-LayoutType <ClientSidePageLayoutType>] [-PromoteAs <ClientSidePagePromoteType>] [-CommentsEnabled]
- [-Publish] [-HeaderType <ClientSidePageHeaderType>] [-HeaderLayoutType <ClientSidePageHeaderLayoutType>] [-ContentType <ContentTypePipeBind>]
+Set-PnPPage [-Identity] <PagePipeBind> [-Name <String>] [-Title <String>]
+ [-LayoutType <PageLayoutType>] [-PromoteAs <PagePromoteType>] [-CommentsEnabled]
+ [-Publish] [-HeaderType <PageHeaderType>] [-HeaderLayoutType <PageHeaderLayoutType>] [-ContentType <ContentTypePipeBind>]
  [-ThumbnailUrl <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -27,42 +27,42 @@ Set-PnPClientSidePage [-Identity] <ClientSidePagePipeBind> [-Name <String>] [-Ti
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPClientSidePage -Identity "MyPage" -LayoutType Home -Title "My Page"
+Set-PnPPage -Identity "MyPage" -LayoutType Home -Title "My Page"
 ```
 
 Updates the properties of the Client-Side page named 'MyPage'
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPClientSidePage -Identity "MyPage" -CommentsEnabled
+Set-PnPPage -Identity "MyPage" -CommentsEnabled
 ```
 
 Enables the comments on the Client-Side page named 'MyPage'
 
 ### EXAMPLE 3
 ```powershell
-Set-PnPClientSidePage -Identity "MyPage" -CommentsEnabled:$false
+Set-PnPPage -Identity "MyPage" -CommentsEnabled:$false
 ```
 
 Disables the comments on the Client-Side page named 'MyPage'
 
 ### EXAMPLE 4
 ```powershell
-Set-PnPClientSidePage -Identity "MyPage" -HeaderType Default
+Set-PnPPage -Identity "MyPage" -HeaderType Default
 ```
 
 Sets the header of the page to the default header
 
 ### EXAMPLE 5
 ```powershell
-Set-PnPClientSidePage -Identity "MyPage" -HeaderType None
+Set-PnPPage -Identity "MyPage" -HeaderType None
 ```
 
 Removes the header of the page
 
 ### EXAMPLE 6
 ```powershell
-Set-PnPClientSidePage -Identity "MyPage" -HeaderType Custom -ServerRelativeImageUrl "/sites/demo1/assets/myimage.png" -TranslateX 10.5 -TranslateY 11.0
+Set-PnPPage -Identity "MyPage" -HeaderType Custom -ServerRelativeImageUrl "/sites/demo1/assets/myimage.png" -TranslateX 10.5 -TranslateY 11.0
 ```
 
 Sets the header of the page to custom header, using the specified image and translates the location of the image in the header given the values specified
@@ -115,7 +115,7 @@ Accept wildcard characters: False
 Sets the page header type
 
 ```yaml
-Type: ClientSidePageHeaderType
+Type: PageHeaderType
 Parameter Sets: (All)
 Accepted values: None, Default, Custom
 
@@ -130,7 +130,7 @@ Accept wildcard characters: False
 Sets the page header layout type
 
 ```yaml
-Type: ClientSidePageHeaderLayoutType
+Type: PageHeaderLayoutType
 Parameter Sets: (All)
 Accepted values: None, Default, Custom
 
@@ -145,7 +145,7 @@ Accept wildcard characters: False
 The name/identity of the page
 
 ```yaml
-Type: ClientSidePagePipeBind
+Type: PagePipeBind
 Parameter Sets: (All)
 
 Required: True
@@ -159,7 +159,7 @@ Accept wildcard characters: False
 Sets the layout type of the page. (Default = Article)
 
 ```yaml
-Type: ClientSidePageLayoutType
+Type: PageLayoutType
 Parameter Sets: (All)
 Accepted values: Article, Home, SingleWebPartAppPage, RepostPage, HeaderlessSearchResults, Spaces, Topic
 
@@ -188,7 +188,7 @@ Accept wildcard characters: False
 Allows to promote the page for a specific purpose (None | HomePage | NewsArticle | Template)
 
 ```yaml
-Type: ClientSidePagePromoteType
+Type: PagePromoteType
 Parameter Sets: (All)
 Accepted values: None, HomePage, NewsArticle, Template
 

@@ -1,20 +1,20 @@
 ---
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/save-pnpclientsidepageconversionlog
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/save-pnppageconversionlog
 applicable: SharePoint Online
 schema: 2.0.0
-title: Save-PnPClientSidePageConversionLog
+title: Save-PnPPageConversionLog
 ---
 
-# Save-PnPClientSidePageConversionLog
+# Save-PnPPageConversionLog
 
 ## SYNOPSIS
-Persists the current client side page conversion log data to the loggers linked to the last used page transformation run. Needs to be used in conjunction with the -LogSkipFlush flag on the ConvertTo-PnPClientSidePage cmdlet
+Persists the current client side page conversion log data to the loggers linked to the last used page transformation run. Needs to be used in conjunction with the -LogSkipFlush flag on the ConvertTo-PnPPage cmdlet
 
 ## SYNTAX 
 
 ```powershell
-Save-PnPClientSidePageConversionLog [-Web <WebPipeBind>]
+Save-PnPPageConversionLog [-Web <WebPipeBind>]
                                     [-Connection <PnPConnection>]
 ```
 
@@ -22,10 +22,10 @@ Save-PnPClientSidePageConversionLog [-Web <WebPipeBind>]
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-Save-PnPClientSidePageConversionLog
+Save-PnPPageConversionLog
 ```
 
-Persists the current client side page conversion log data to the loggers linked to the last used page transformation run. Needs to be used in conjunction with the -LogSkipFlush flag on the ConvertTo-PnPClientSidePage cmdlet
+Persists the current client side page conversion log data to the loggers linked to the last used page transformation run. Needs to be used in conjunction with the -LogSkipFlush flag on the ConvertTo-PnPPage cmdlet
 
 ## PARAMETERS
 

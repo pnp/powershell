@@ -2,39 +2,39 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/move-pnpclientsidecomponent
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/move-pnppagecomponent
 schema: 2.0.0
-title: Move-PnPClientSideComponent
+title: Move-PnPPageComponent
 ---
 
-# Move-PnPClientSideComponent
+# Move-PnPPageComponent
 
 ## SYNOPSIS
-Moves a Client-Side Component to a different section/column
+Moves a page component to a different section/column
 
 ## SYNTAX
 
 ### Move to other section
 ```powershell
-Move-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> -Section <Int32>
+Move-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> -Section <Int32>
  [-Position <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Move to other section and column
 ```powershell
-Move-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> -Section <Int32>
+Move-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> -Section <Int32>
  -Column <Int32> [-Position <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Move to other column
 ```powershell
-Move-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> -Column <Int32>
+Move-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> -Column <Int32>
  [-Position <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Move within a column
 ```powershell
-Move-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> -Position <Int32>
+Move-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> -Position <Int32>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -45,28 +45,28 @@ Moves a Client-Side Component to a different location on the page. Notice that t
 
 ### EXAMPLE 1
 ```powershell
-Move-PnPClientSideComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Section 1
+Move-PnPPageComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Section 1
 ```
 
 Moves the specified component to the first section of the page.
 
 ### EXAMPLE 2
 ```powershell
-Move-PnPClientSideComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Column 2
+Move-PnPPageComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Column 2
 ```
 
 Moves the specified component to the second column of the current section.
 
 ### EXAMPLE 3
 ```powershell
-Move-PnPClientSideComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Section 1 -Column 2
+Move-PnPPageComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Section 1 -Column 2
 ```
 
 Moves the specified component to the first section of the page into the second column.
 
 ### EXAMPLE 4
 ```powershell
-Move-PnPClientSideComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Section 1 -Column 2 -Position 2
+Move-PnPPageComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Section 1 -Column 2 -Position 2
 ```
 
 Moves the specified component to the first section of the page into the second column and sets the column to position 2 in the list of webparts.
@@ -102,7 +102,7 @@ Accept wildcard characters: False
 ```
 
 ### -InstanceId
-The instance id of the control. Use Get-PnPClientSideControl retrieve the instance ids.
+The instance id of the control. Use Get-PnPPageComponent to retrieve the instance ids.
 
 ```yaml
 Type: Guid
@@ -119,7 +119,7 @@ Accept wildcard characters: False
 The name of the page
 
 ```yaml
-Type: ClientSidePagePipeBind
+Type: PagePipeBind
 Parameter Sets: (All)
 
 Required: True

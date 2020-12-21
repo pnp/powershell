@@ -1,12 +1,12 @@
 ---
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/convertto-pnpclientsidepage
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/convertto-pnppage
 applicable: SharePoint Online
 schema: 2.0.0
-title: ConvertTo-PnPClientSidePage
+title: ConvertTo-PnPPage
 ---
 
-# ConvertTo-PnPClientSidePage
+# ConvertTo-PnPPage
 
 ## SYNOPSIS
 Converts a classic page (wiki or web part page) into a Client-Side Page
@@ -14,7 +14,7 @@ Converts a classic page (wiki or web part page) into a Client-Side Page
 ## SYNTAX 
 
 ```powershell
-ConvertTo-PnPClientSidePage -Identity <PagePipeBind>
+ConvertTo-PnPPage -Identity <PagePipeBind>
                             [-Library <String>]
                             [-Folder <String>]
                             [-WebPartMappingFile <String>]
@@ -32,7 +32,7 @@ ConvertTo-PnPClientSidePage -Identity <PagePipeBind>
                             [-UseCommunityScriptEditor [<SwitchParameter>]]
                             [-SummaryLinksToHtml [<SwitchParameter>]]
                             [-TargetWebUrl <String>]
-                            [-LogType <ClientSidePageTransformatorLogType>]
+                            [-LogType <PageTransformatorLogType>]
                             [-LogFolder <String>]
                             [-LogSkipFlush [<SwitchParameter>]]
                             [-LogVerbose [<SwitchParameter>]]
@@ -65,98 +65,98 @@ ConvertTo-PnPClientSidePage -Identity <PagePipeBind>
 
 ### EXAMPLE 1
 ```powershell
-ConvertTo-PnPClientSidePage -Identity "somepage.aspx" -Overwrite
+ConvertTo-PnPPage -Identity "somepage.aspx" -Overwrite
 ```
 
 Converts a wiki/web part page named 'somepage' to a client side page
 
 ### EXAMPLE 2
 ```powershell
-ConvertTo-PnPClientSidePage -Identity "somepage.aspx" -Overwrite -WebPartMappingFile c:\contoso\webpartmapping.xml
+ConvertTo-PnPPage -Identity "somepage.aspx" -Overwrite -WebPartMappingFile c:\contoso\webpartmapping.xml
 ```
 
 Converts a wiki/web part page named 'somepage' to a client side page using a custom provided mapping file
 
 ### EXAMPLE 3
 ```powershell
-ConvertTo-PnPClientSidePage -Identity "somepage.aspx" -Overwrite -AddPageAcceptBanner
+ConvertTo-PnPPage -Identity "somepage.aspx" -Overwrite -AddPageAcceptBanner
 ```
 
 Converts a wiki/web part page named 'somepage' to a client side page and adds the page accept banner web part on top of the page. This requires that the SPFX solution holding the web part (https://github.com/SharePoint/sp-dev-modernization/blob/master/Solutions/PageTransformationUI/assets/sharepointpnp-pagetransformation-client.sppkg?raw=true) has been installed to the tenant app catalog
 
 ### EXAMPLE 4
 ```powershell
-ConvertTo-PnPClientSidePage -Identity "somepage.aspx" -Overwrite -CopyPageMetadata
+ConvertTo-PnPPage -Identity "somepage.aspx" -Overwrite -CopyPageMetadata
 ```
 
 Converts a wiki/web part page named 'somepage' to a client side page, including the copying of the page metadata (if any)
 
 ### EXAMPLE 5
 ```powershell
-ConvertTo-PnPClientSidePage -Identity "somepage.aspx" -PublishingPage -Overwrite -TargetWebUrl "https://contoso.sharepoint.com/sites/targetmodernsite"
+ConvertTo-PnPPage -Identity "somepage.aspx" -PublishingPage -Overwrite -TargetWebUrl "https://contoso.sharepoint.com/sites/targetmodernsite"
 ```
 
 Converts a publishing page named 'somepage' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site
 
 ### EXAMPLE 6
 ```powershell
-ConvertTo-PnPClientSidePage -Identity "somepage.aspx" -PublishingPage -Overwrite -TargetConnection $target
+ConvertTo-PnPPage -Identity "somepage.aspx" -PublishingPage -Overwrite -TargetConnection $target
 ```
 
 Converts a publishing page named 'somepage' to a client side page in the site specified by the TargetConnection connection. This allows to read a page in one environment (on-premises, tenant A) and create in another online location (tenant B)
 
 ### EXAMPLE 7
 ```powershell
-ConvertTo-PnPClientSidePage -Identity "somepage.aspx" -Library "SiteAssets" -Folder "Folder1" -Overwrite
+ConvertTo-PnPPage -Identity "somepage.aspx" -Library "SiteAssets" -Folder "Folder1" -Overwrite
 ```
 
 Converts a web part page named 'somepage' living inside the SiteAssets library in a folder named folder1 into a client side page
 
 ### EXAMPLE 8
 ```powershell
-ConvertTo-PnPClientSidePage -Identity "somepage.aspx" -Folder "<root>" -Overwrite
+ConvertTo-PnPPage -Identity "somepage.aspx" -Folder "<root>" -Overwrite
 ```
 
 Converts a web part page named 'somepage' living inside the root of the site collection (so outside of a library)
 
 ### EXAMPLE 9
 ```powershell
-ConvertTo-PnPClientSidePage -Identity "somepage.aspx" -Overwrite -TargetWebUrl "https://contoso.sharepoint.com/sites/targetmodernsite"
+ConvertTo-PnPPage -Identity "somepage.aspx" -Overwrite -TargetWebUrl "https://contoso.sharepoint.com/sites/targetmodernsite"
 ```
 
 Converts a wiki/web part page named 'somepage' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site
 
 ### EXAMPLE 10
 ```powershell
-ConvertTo-PnPClientSidePage -Identity "somepage.aspx" -LogType File -LogFolder c:\temp -LogVerbose -Overwrite
+ConvertTo-PnPPage -Identity "somepage.aspx" -LogType File -LogFolder c:\temp -LogVerbose -Overwrite
 ```
 
 Converts a wiki/web part page named 'somepage' and creates a log file in c:\temp using verbose logging
 
 ### EXAMPLE 11
 ```powershell
-ConvertTo-PnPClientSidePage -Identity "somepage.aspx" -LogType SharePoint -LogSkipFlush
+ConvertTo-PnPPage -Identity "somepage.aspx" -LogType SharePoint -LogSkipFlush
 ```
 
-Converts a wiki/web part page named 'somepage' and creates a log file in SharePoint but skip the actual write. Use this option to make multiple ConvertTo-PnPClientSidePage invocations create a single log
+Converts a wiki/web part page named 'somepage' and creates a log file in SharePoint but skip the actual write. Use this option to make multiple ConvertTo-PnPPage invocations create a single log
 
 ### EXAMPLE 12
 ```powershell
-ConvertTo-PnPClientSidePage -Identity "My post title" -BlogPage -LogType Console -Overwrite -TargetWebUrl "https://contoso.sharepoint.com/sites/targetmodernsite"
+ConvertTo-PnPPage -Identity "My post title" -BlogPage -LogType Console -Overwrite -TargetWebUrl "https://contoso.sharepoint.com/sites/targetmodernsite"
 ```
 
 Converts a blog page with a title starting with 'my post title' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site
 
 ### EXAMPLE 13
 ```powershell
-ConvertTo-PnPClientSidePage -Identity "My post title" -DelveBlogPage -LogType Console -Overwrite -TargetWebUrl "https://contoso.sharepoint.com/sites/targetmodernsite"
+ConvertTo-PnPPage -Identity "My post title" -DelveBlogPage -LogType Console -Overwrite -TargetWebUrl "https://contoso.sharepoint.com/sites/targetmodernsite"
 ```
 
 Converts a Delve blog page with a title starting with 'my post title' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site
 
 ### EXAMPLE 14
 ```powershell
-ConvertTo-PnPClientSidePage -Identity "somepage.aspx" -PublishingPage -Overwrite -TargetConnection $target -UserMappingFile c:\\temp\user_mapping_file.csv
+ConvertTo-PnPPage -Identity "somepage.aspx" -PublishingPage -Overwrite -TargetConnection $target -UserMappingFile c:\\temp\user_mapping_file.csv
 ```
 
 Converts a publishing page named 'somepage' to a client side page in the site specified by the TargetConnection connection. This allows to read a page in on-premises environment and create in another online locations including using specific user mappings between the two environments.
@@ -359,7 +359,7 @@ Accept pipeline input: False
 Allows to generate a transformation log (File | SharePoint)
 
 ```yaml
-Type: ClientSidePageTransformatorLogType
+Type: PageTransformatorLogType
 Parameter Sets: (All)
 
 Required: False

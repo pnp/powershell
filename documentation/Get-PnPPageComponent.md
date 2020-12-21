@@ -2,47 +2,53 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnpclientsidepage
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnppagecomponent
 schema: 2.0.0
-title: Remove-PnPClientSidePage
+title: Get-PnPPageComponent
 ---
 
-# Remove-PnPClientSidePage
+# Get-PnPPageComponent
 
 ## SYNOPSIS
-Removes a Client-Side Page
+Retrieve one or more page components from a page
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPClientSidePage [-Identity] <ClientSidePagePipeBind> [-Force] [-Web <WebPipeBind>]
+Get-PnPPageComponent [-Page] <PagePipeBind> [-InstanceId <Guid>] [-Web <WebPipeBind>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
+```
+
+```powershell
+Get-PnPPageComponent [-Page] <PagePipeBind> [-ListAvailable] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+This command allows the retrieval of the components placed on a modern sitepage along with its properties. Note that for a newly created modern site, the Home.aspx page will not be returning any components. This is because the underlying CanvasContent1 will not be populated until the homepage has been edited and published. The reason for this behavior is to allow for the default homepage to be able to be updated by Microsoft as long as it hasn't been modified. For any other site page or after editing and publishing the homepage, this command will return the correct components as they are positioned on the site page.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPClientSidePage -Identity "MyPage"
+Get-PnPPageComponent -Page Home
 ```
 
-Removes the Client-Side page named 'MyPage.aspx'
+Returns all controls defined on the given page.
 
 ### EXAMPLE 2
 ```powershell
-Remove-PnPClientSidePage -Identity "Templates/MyPageTemplate"
+Get-PnPPageComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82
 ```
 
-Removes the specified Client-Side page which is located in the Templates folder of the Site Pages library.
+Returns a specific control defined on the given page.
 
 ### EXAMPLE 3
 ```powershell
-Remove-PnPClientSidePage $page
+Get-PnPPageComponent -Page Home -ListAvailable
 ```
 
-Removes the specified Client-Side page which is contained in the $page variable.
+Returns all available components that can be added to the page.
 
 ## PARAMETERS
 
@@ -60,25 +66,25 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Force
-Specifying the Force parameter will skip the confirmation question.
+### -InstanceId
+The instance id of the component
 
 ```yaml
-Type: SwitchParameter
+Type: Guid
 Parameter Sets: (All)
 
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Identity
+### -Page
 The name of the page
 
 ```yaml
-Type: ClientSidePagePipeBind
+Type: PagePipeBind
 Parameter Sets: (All)
 
 Required: True

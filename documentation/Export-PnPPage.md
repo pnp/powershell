@@ -2,12 +2,12 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/export-pnpclientsidepage
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/export-pnppage
 schema: 2.0.0
-title: Export-PnPClientSidePage
+title: Export-PnPPage
 ---
 
-# Export-PnPClientSidePage
+# Export-PnPPage
 
 ## SYNOPSIS
 Exports a Client Side Page to a PnP Provisioning Template
@@ -15,7 +15,7 @@ Exports a Client Side Page to a PnP Provisioning Template
 ## SYNTAX
 
 ```powershell
-Export-PnPClientSidePage [-Identity] <ClientSidePagePipeBind> [-PersistBrandingFiles] [-Out <String>] [-Force]
+Export-PnPPage [-Identity] <PagePipeBind> [-PersistBrandingFiles] [-Out <String>] [-Force]
  [-Configuration <ExtractConfigurationPipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] 
   [<CommonParameters>]
 ```
@@ -26,7 +26,7 @@ Export-PnPClientSidePage [-Identity] <ClientSidePagePipeBind> [-PersistBrandingF
 
 ### EXAMPLE 1
 ```powershell
-Export-PnPClientSidePage -Identity Home.aspx
+Export-PnPPage -Identity Home.aspx
 ```
 
 Exports the page 'Home.aspx' to a new PnP Provisioning Template

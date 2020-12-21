@@ -2,22 +2,22 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpclientsidepage
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnppage
 schema: 2.0.0
-title: Add-PnPClientSidePage
+title: Add-PnPPage
 ---
 
-# Add-PnPClientSidePage
+# Add-PnPPage
 
 ## SYNOPSIS
-Adds a Client-Side Page
+Adds a Page
 
 ## SYNTAX
 
 ```powershell
-Add-PnPClientSidePage [-Name] <String> [-LayoutType <ClientSidePageLayoutType>]
- [-PromoteAs <ClientSidePagePromoteType>] [-ContentType <ContentTypePipeBind>] [-CommentsEnabled] [-Publish]
- [-HeaderLayoutType <ClientSidePageHeaderLayoutType>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Add-PnPPage [-Name] <String> [-LayoutType <PageLayoutType>]
+ [-PromoteAs <PagePromoteType>] [-ContentType <ContentTypePipeBind>] [-CommentsEnabled] [-Publish]
+ [-HeaderLayoutType <PageHeaderLayoutType>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -27,35 +27,35 @@ Add-PnPClientSidePage [-Name] <String> [-LayoutType <ClientSidePageLayoutType>]
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPClientSidePage -Name "NewPage"
+Add-PnPPage -Name "NewPage"
 ```
 
 Creates a new Client-Side page named 'NewPage'
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPClientSidePage -Name "NewPage" -ContentType "MyPageContentType"
+Add-PnPPage -Name "NewPage" -ContentType "MyPageContentType"
 ```
 
 Creates a new Client-Side page named 'NewPage' and sets the content type to the content type specified
 
 ### EXAMPLE 3
 ```powershell
-Add-PnPClientSidePage -Name "NewPageTemplate" -PromoteAs Template
+Add-PnPPage -Name "NewPageTemplate" -PromoteAs Template
 ```
 
 Creates a new Client-Side page named 'NewPage' and saves as a template to the site.
 
 ### EXAMPLE 4
 ```powershell
-Add-PnPClientSidePage -Name "Folder/NewPage"
+Add-PnPPage -Name "Folder/NewPage"
 ```
 
 Creates a new Client-Side page named 'NewPage' under 'Folder' folder and saves as a template to the site.
 
 ### EXAMPLE 5
 ```powershell
-Add-PnPClientSidePage -Name "NewPage" -HeaderLayoutType ColorBlock
+Add-PnPPage -Name "NewPage" -HeaderLayoutType ColorBlock
 ```
 
 Creates a new Client-Side page named 'NewPage' using the ColorBlock header layout
@@ -108,7 +108,7 @@ Accept wildcard characters: False
 Type of layout used for the header
 
 ```yaml
-Type: ClientSidePageHeaderLayoutType
+Type: PageHeaderLayoutType
 Parameter Sets: (All)
 Accepted values: FullWidthImage, NoImage, ColorBlock, CutInShape
 
@@ -123,7 +123,7 @@ Accept wildcard characters: False
 Specifies the layout type of the page.
 
 ```yaml
-Type: ClientSidePageLayoutType
+Type: PageLayoutType
 Parameter Sets: (All)
 Accepted values: Article, Home, SingleWebPartAppPage, RepostPage, HeaderlessSearchResults, Spaces, Topic
 
@@ -152,7 +152,7 @@ Accept wildcard characters: False
 Allows to promote the page for a specific purpose (HomePage | NewsPage)
 
 ```yaml
-Type: ClientSidePagePromoteType
+Type: PagePromoteType
 Parameter Sets: (All)
 Accepted values: None, HomePage, NewsArticle, Template
 

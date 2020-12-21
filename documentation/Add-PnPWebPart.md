@@ -2,12 +2,12 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpclientsidewebpart
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpwebpart
 schema: 2.0.0
-title: Add-PnPClientSideWebPart
+title: Add-PnPWebPart
 ---
 
-# Add-PnPClientSideWebPart
+# Add-PnPWebPart
 
 ## SYNOPSIS
 Adds a Client-Side Web Part to a client-side page
@@ -16,28 +16,28 @@ Adds a Client-Side Web Part to a client-side page
 
 ### Default with built-in web part
 ```powershell
-Add-PnPClientSideWebPart [-Page] <ClientSidePagePipeBind> -DefaultWebPartType <DefaultClientSideWebParts>
+Add-PnPWebPart [-Page] <PagePipeBind> -DefaultWebPartType <DefaultClientSideWebParts>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Default with 3rd party web part
 ```powershell
-Add-PnPClientSideWebPart [-Page] <ClientSidePagePipeBind> -Component <ClientSideComponentPipeBind>
+Add-PnPWebPart [-Page] <PagePipeBind> -Component <PageComponentPipeBind>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Positioned with built-in web part
 ```powershell
-Add-PnPClientSideWebPart [-Page] <ClientSidePagePipeBind> -DefaultWebPartType <DefaultClientSideWebParts>
+Add-PnPWebPart [-Page] <PagePipeBind> -DefaultWebPartType <DefaultClientSideWebParts>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] -Section <Int32> -Column <Int32>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Positioned with 3rd party web part
 ```powershell
-Add-PnPClientSideWebPart [-Page] <ClientSidePagePipeBind> -Component <ClientSideComponentPipeBind>
+Add-PnPWebPart [-Page] <PagePipeBind> -Component <PageComponentPipeBind>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] -Section <Int32> -Column <Int32>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
@@ -49,21 +49,21 @@ Adds a client-side web part to an existing client-side page.
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPClientSideWebPart -Page "MyPage" -DefaultWebPartType BingMap
+Add-PnPWebPart -Page "MyPage" -DefaultWebPartType BingMap
 ```
 
 Adds a built-in Client-Side component 'BingMap' to the page called 'MyPage'
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPClientSideWebPart -Page "MyPage" -Component "HelloWorld"
+Add-PnPWebPart -Page "MyPage" -Component "HelloWorld"
 ```
 
 Adds a Client-Side component 'HelloWorld' to the page called 'MyPage'
 
 ### EXAMPLE 3
 ```powershell
-Add-PnPClientSideWebPart  -Page "MyPage" -Component "HelloWorld" -Section 1 -Column 2
+Add-PnPWebPart  -Page "MyPage" -Component "HelloWorld" -Section 1 -Column 2
 ```
 
 Adds a Client-Side component 'HelloWorld' to the page called 'MyPage' in section 1 and column 2
@@ -88,7 +88,7 @@ Accept wildcard characters: False
 Specifies the component instance or Id to add.
 
 ```yaml
-Type: ClientSideComponentPipeBind
+Type: PageComponentPipeBind
 Parameter Sets: Default with 3rd party web part, Positioned with 3rd party web part
 
 Required: True
@@ -145,7 +145,7 @@ Accept wildcard characters: False
 The name of the page.
 
 ```yaml
-Type: ClientSidePagePipeBind
+Type: PagePipeBind
 Parameter Sets: (All)
 
 Required: True

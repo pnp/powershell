@@ -2,43 +2,57 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnpclientsidecomponent
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnptextpart
 schema: 2.0.0
-title: Remove-PnPClientSideComponent
+title: Add-PnPTextPart
 ---
 
-# Remove-PnPClientSideComponent
+# Add-PnPTextPart
 
 ## SYNOPSIS
-Removes a Client-Side component from a page
+Adds a text element to a client-side page.
 
 ## SYNTAX
 
+### Default
 ```powershell
-Remove-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> -InstanceId <Guid> [-Force]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Add-PnPTextPart [-Page] <PagePipeBind> -Text <String> [-Order <Int32>] [-Web <WebPipeBind>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
+```
+
+### Positioned
+```powershell
+Add-PnPTextPart [-Page] <PagePipeBind> -Text <String> [-Order <Int32>] -Section <Int32>
+ -Column <Int32> [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+Adds a new text element to a section on a client-side page.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPClientSideComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82
+Add-PnPTextPart -Page "MyPage" -Text "Hello World!"
 ```
 
-Removes the control specified from the page.
-
-### EXAMPLE 2
-```powershell
-$webpart = Get-PnPClientSideComponent -Page "Home" | Where-Object { $_.Title -eq "Site activity" }
-Remove-PnPClientSideComponent -Page "Home" -InstanceId $webpart.InstanceId -Force
-```
-
-Finds a web part with the Title "Site activity" on the Home.aspx page, then removes it from the page
+Adds the text 'Hello World!' to the Client-Side Page 'MyPage'
 
 ## PARAMETERS
+
+### -Column
+Sets the column where to insert the text control.
+
+```yaml
+Type: Int32
+Parameter Sets: Positioned
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
@@ -54,11 +68,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Force
-If specified you will not receive the confirmation question
+### -Order
+Sets the order of the text control. (Default = 1)
 
 ```yaml
-Type: SwitchParameter
+Type: Int32
 Parameter Sets: (All)
 
 Required: False
@@ -68,31 +82,45 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InstanceId
-The instance id of the component
-
-```yaml
-Type: Guid
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -Page
-The name of the page
+The name of the page.
 
 ```yaml
-Type: ClientSidePagePipeBind
+Type: PagePipeBind
 Parameter Sets: (All)
 
 Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Section
+Sets the section where to insert the text control.
+
+```yaml
+Type: Int32
+Parameter Sets: Positioned
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Text
+Specifies the text to display in the text area.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

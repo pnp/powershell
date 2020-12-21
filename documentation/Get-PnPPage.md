@@ -2,20 +2,20 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpclientsidepage
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnppage
 schema: 2.0.0
-title: Get-PnPClientSidePage
+title: Get-PnPPage
 ---
 
-# Get-PnPClientSidePage
+# Get-PnPPage
 
 ## SYNOPSIS
-Gets a modern site page
+Returns a page
 
 ## SYNTAX
 
 ```powershell
-Get-PnPClientSidePage [-Identity] <ClientSidePagePipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Get-PnPPage [-Identity] <PagePipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -26,28 +26,28 @@ This command allows the retrieval of a modern sitepage along with its properties
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPClientSidePage -Identity "MyPage.aspx"
+Get-PnPPage -Identity "MyPage.aspx"
 ```
 
 Gets the Modern Page (Client-Side) named 'MyPage.aspx' in the current SharePoint site
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPClientSidePage "MyPage"
+Get-PnPPage "MyPage"
 ```
 
 Gets the Modern Page (Client-Side) named 'MyPage.aspx' in the current SharePoint site
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPClientSidePage "Templates/MyPageTemplate"
+Get-PnPPage "Templates/MyPageTemplate"
 ```
 
 Gets the Modern Page (Client-Side) named 'MyPageTemplate.aspx' from the templates folder of the Page Library in the current SharePoint site
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPClientSidePage -Identity "MyPage.aspx" -Web (Get-PnPWeb -Identity "Subsite1")
+Get-PnPPage -Identity "MyPage.aspx" -Web (Get-PnPWeb -Identity "Subsite1")
 ```
 
 Gets the Modern Page (Client-Side) named 'MyPage.aspx' from the subsite named 'Subsite1'
@@ -72,7 +72,7 @@ Accept wildcard characters: False
 The name of the page
 
 ```yaml
-Type: ClientSidePagePipeBind
+Type: PagePipeBind
 Parameter Sets: (All)
 
 Required: True

@@ -2,57 +2,36 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpclientsidetext
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnptextpart
 schema: 2.0.0
-title: Add-PnPClientSideText
+title: Set-PnPTextPart
 ---
 
-# Add-PnPClientSideText
+# Set-PnPTextPart
 
 ## SYNOPSIS
-Adds a text element to a client-side page.
+Set text part properties
 
 ## SYNTAX
 
-### Default
 ```powershell
-Add-PnPClientSideText [-Page] <ClientSidePagePipeBind> -Text <String> [-Order <Int32>] [-Web <WebPipeBind>]
- [-Connection <PnPConnection>] [<CommonParameters>]
-```
-
-### Positioned
-```powershell
-Add-PnPClientSideText [-Page] <ClientSidePagePipeBind> -Text <String> [-Order <Int32>] -Section <Int32>
- -Column <Int32> [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPTextPart [-Page] <PagePipeBind> -InstanceId <Guid> -Text <String>
+ [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Adds a new text element to a section on a client-side page.
+Sets the rendered text in existing client side text component
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPClientSideText -Page "MyPage" -Text "Hello World!"
+Set-PnPTextPart -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Text "MyText"
 ```
 
-Adds the text 'Hello World!' to the Client-Side Page 'MyPage'
+Sets the text of the client side text component.
 
 ## PARAMETERS
-
-### -Column
-Sets the column where to insert the text control.
-
-```yaml
-Type: Int32
-Parameter Sets: Positioned
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
@@ -68,25 +47,25 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Order
-Sets the order of the text control. (Default = 1)
+### -InstanceId
+The instance id of the text component
 
 ```yaml
-Type: Int32
+Type: Guid
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
 ### -Page
-The name of the page.
+The name of the page
 
 ```yaml
-Type: ClientSidePagePipeBind
+Type: PagePipeBind
 Parameter Sets: (All)
 
 Required: True
@@ -96,22 +75,8 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Section
-Sets the section where to insert the text control.
-
-```yaml
-Type: Int32
-Parameter Sets: Positioned
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Text
-Specifies the text to display in the text area.
+Text to set
 
 ```yaml
 Type: String
@@ -120,7 +85,7 @@ Parameter Sets: (All)
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 

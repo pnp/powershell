@@ -2,32 +2,32 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpclientsidewebpart
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpwebpart
 schema: 2.0.0
-title: Set-PnPClientSideWebPart
+title: Set-PnPWebPart
 ---
 
-# Set-PnPClientSideWebPart
+# Set-PnPeWebPart
 
 ## SYNOPSIS
-Set Client-Side Web Part properties
+Set Web Part properties
 
 ## SYNTAX
 
 ```powershell
-Set-PnPClientSideWebPart [-Page] <ClientSidePagePipeBind> -Identity <ClientSideWebPartPipeBind>
+Set-PnPWebPart [-Page] <PagePipeBind> -Identity <WebPartPipeBind>
  [-Title <String>] [-PropertiesJson <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Sets specific client side web part properties. Notice that the title parameter will only set the -internal- title of web part. The title which is shown in the UI will, if possible, have to be set using the PropertiesJson parameter. Use Get-PnPClientSideComponent to retrieve the instance id and properties of a web part.
+Sets specific client side web part properties. Notice that the title parameter will only set the -internal- title of web part. The title which is shown in the UI will, if possible, have to be set using the PropertiesJson parameter. Use Get-PnPPageComponent to retrieve the instance id and properties of a web part.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPClientSideWebPart -Page Home -Identity a2875399-d6ff-43a0-96da-be6ae5875f82 -PropertiesJson $myproperties
+Set-PnPWebPart -Page Home -Identity a2875399-d6ff-43a0-96da-be6ae5875f82 -PropertiesJson $myproperties
 ```
 
 Sets the properties of the client side web part given in the $myproperties variable.
@@ -52,7 +52,7 @@ Accept wildcard characters: False
 The identity of the web part. This can be the web part instance id or the title of a web part
 
 ```yaml
-Type: ClientSideWebPartPipeBind
+Type: WebPartPipeBind
 Parameter Sets: (All)
 
 Required: True
@@ -66,7 +66,7 @@ Accept wildcard characters: False
 The name of the page
 
 ```yaml
-Type: ClientSidePagePipeBind
+Type: PagePipeBind
 Parameter Sets: (All)
 
 Required: True

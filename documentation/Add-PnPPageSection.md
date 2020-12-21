@@ -2,20 +2,20 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpclientsidepagesection
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnppagesection
 schema: 2.0.0
-title: Add-PnPClientSidePageSection
+title: Add-PnPPageSection
 ---
 
-# Add-PnPClientSidePageSection
+# Add-PnPPageSection
 
 ## SYNOPSIS
-Adds a new section to a Client-Side page
+Adds a new section to a page
 
 ## SYNTAX
 
 ```powershell
-Add-PnPClientSidePageSection [-Page] <ClientSidePagePipeBind> -SectionTemplate <CanvasSectionTemplate>
+Add-PnPPageSection [-Page] <PagePipeBind> -SectionTemplate <CanvasSectionTemplate>
  [-Order <Int32>] [-ZoneEmphasis <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -26,30 +26,30 @@ Add-PnPClientSidePageSection [-Page] <ClientSidePagePipeBind> -SectionTemplate <
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPClientSidePageSection -Page "MyPage" -SectionTemplate OneColumn
+Add-PnPPageSection -Page "MyPage" -SectionTemplate OneColumn
 ```
 
 Adds a new one-column section to the Client-Side page 'MyPage'
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPClientSidePageSection -Page "MyPage" -SectionTemplate ThreeColumn -Order 10
+Add-PnPPageSection -Page "MyPage" -SectionTemplate ThreeColumn -Order 10
 ```
 
 Adds a new Three columns section to the Client-Side page 'MyPage' with an order index of 10
 
 ### EXAMPLE 3
 ```powershell
-$page = Add-PnPClientSidePage -Name "MyPage"
-PS> Add-PnPClientSidePageSection -Page $page -SectionTemplate OneColumn
+$page = Add-PnPPage -Name "MyPage"
+PS> Add-PnPPageSection -Page $page -SectionTemplate OneColumn
 ```
 
 Adds a new one column section to the Client-Side page 'MyPage'
 
 ### EXAMPLE 4
 ```powershell
-$page = Add-PnPClientSidePage -Name "MyPage"
-PS> Add-PnPClientSidePageSection -Page $page -SectionTemplate OneColumn -ZoneEmphasis 2
+$page = Add-PnPPage -Name "MyPage"
+PS> Add-PnPPageSection -Page $page -SectionTemplate OneColumn -ZoneEmphasis 2
 ```
 
 Adds a new one column section to the Client-Side page 'MyPage' and sets the background to 2 (0 is no background, 3 is highest emphasis)
@@ -88,7 +88,7 @@ Accept wildcard characters: False
 The name of the page
 
 ```yaml
-Type: ClientSidePagePipeBind
+Type: PagePipeBind
 Parameter Sets: (All)
 
 Required: True

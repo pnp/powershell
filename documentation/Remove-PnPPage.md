@@ -2,41 +2,47 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpclientsidecomponent
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnppage
 schema: 2.0.0
-title: Get-PnPClientSideComponent
+title: Remove-PnPPage
 ---
 
-# Get-PnPClientSideComponent
+# Remove-PnPPage
 
 ## SYNOPSIS
-Retrieve one or more Client-Side components from a site page
+Removes a page
 
 ## SYNTAX
 
 ```powershell
-Get-PnPClientSideComponent [-Page] <ClientSidePagePipeBind> [-InstanceId <Guid>] [-Web <WebPipeBind>]
+Remove-PnPPage [-Identity] <PagePipeBind> [-Force] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This command allows the retrieval of the components placed on a modern sitepage along with its properties. Note that for a newly created modern site, the Home.aspx page will not be returning any components. This is because the underlying CanvasContent1 will not be populated until the homepage has been edited and published. The reason for this behavior is to allow for the default homepage to be able to be updated by Microsoft as long as it hasn't been modified. For any other site page or after editing and publishing the homepage, this command will return the correct components as they are positioned on the site page.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPClientSideComponent -Page Home
+Remove-PnPPage -Identity "MyPage"
 ```
 
-Returns all controls defined on the given page.
+Removes the page named 'MyPage.aspx'
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPClientSideComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82
+Remove-PnPPage -Identity "Templates/MyPageTemplate"
 ```
 
-Returns a specific control defined on the given page.
+Removes the specified page which is located in the Templates folder of the Site Pages library.
+
+### EXAMPLE 3
+```powershell
+Remove-PnPPage $page
+```
+
+Removes the specified page which is contained in the $page variable.
 
 ## PARAMETERS
 
@@ -54,25 +60,25 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InstanceId
-The instance id of the component
+### -Force
+Specifying the Force parameter will skip the confirmation question.
 
 ```yaml
-Type: Guid
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Page
+### -Identity
 The name of the page
 
 ```yaml
-Type: ClientSidePagePipeBind
+Type: PagePipeBind
 Parameter Sets: (All)
 
 Required: True
