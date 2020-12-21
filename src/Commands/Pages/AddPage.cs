@@ -69,7 +69,7 @@ namespace PnP.PowerShell.Commands.Pages
             if (ContentType != null)
             {
                 string ctId = ContentType.GetIdOrThrow(nameof(ContentType), CurrentWeb);
-                var pageFile = clientSidePage.GetPageFile(p=>p.ListItemAllFields);
+                var pageFile = clientSidePage.GetPageFile(p => p.UniqueId, p => p.ListId, p => p.ListItemAllFields);
                 pageFile.ListItemAllFields["ContentTypeId"] = ctId;
                 pageFile.ListItemAllFields.SystemUpdate();
             }
