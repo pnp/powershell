@@ -5,11 +5,12 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Get, "PnPClientSidePage")]
-    public class GetClientSidePage : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPPage")]
+    [Alias("Get-PnPClientSidePage")]
+    public class GetPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public ClientSidePagePipeBind Identity;
+        public PagePipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {

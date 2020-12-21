@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.WebParts
         public string ServerRelativePageUrl = string.Empty;
 
         [Parameter(Mandatory = true)]
-        public WebPartPipeBind Identity;
+        public ClassicWebPartPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {

@@ -7,14 +7,15 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Set, "PnPClientSideWebPart")]
+    [Cmdlet(VerbsCommon.Set, "PnPWebPart")]
+    [Alias("Set-PnPClientSideWebPart")]
     public class SetClientSideWebPart : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public ClientSidePagePipeBind Page;
+        public PagePipeBind Page;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public ClientSideWebPartPipeBind Identity;
+        public WebPartPipeBind Identity;
 
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public string Title;

@@ -1283,9 +1283,9 @@
       </TableControl>
     </View>
     <View>
-      <Name>ClientSideComponent</Name>
+      <Name>PageComponent</Name>
       <ViewSelectedBy>
-        <TypeName>PnP.Framework.Pages.ClientSideComponent</TypeName>
+        <TypeName>PnP.Core.Model.SharePoint.PageComponent</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -1512,7 +1512,7 @@
     <View>
       <Name>CanvasControl</Name>
       <ViewSelectedBy>
-        <TypeName>PnP.Framework.Pages.CanvasControl</TypeName>
+        <TypeName>PnP.Core.Model.SharePoint.CanvasControl</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>

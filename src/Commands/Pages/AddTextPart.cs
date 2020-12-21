@@ -6,15 +6,16 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Add, "PnPClientSideText")]
-    public class AddClientSideText : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Add, "PnPTextPart")]
+    [Alias("Add-PnPClientSideText")]
+    public class AddTextPart : PnPWebCmdlet
     {
         private const string ParameterSet_DEFAULT = "Default";
         private const string ParameterSet_POSITIONED = "Positioned";
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_DEFAULT)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_POSITIONED)]
-        public ClientSidePagePipeBind Page;
+        public PagePipeBind Page;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEFAULT)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_POSITIONED)]

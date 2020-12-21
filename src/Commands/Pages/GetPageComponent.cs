@@ -6,14 +6,18 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Get, "PnPClientSideComponent")]
-    public class GetClientSideControl : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPPageComponent")]
+    [Alias("Get-PnPClientSideComponent")]
+    public class GetPageComponent : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public ClientSidePagePipeBind Page;
+        public PagePipeBind Page;
 
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public Guid InstanceId;
+
+        [Parameter(Mandatory = false, ValueFromPipeline = false)]
+        public SwitchParameter ListAvailable;
 
         protected override void ExecuteCmdlet()
         {
@@ -24,7 +28,13 @@ namespace PnP.PowerShell.Commands.ClientSidePages
 
             if(!ParameterSpecified(nameof(InstanceId)))
             {
+                if(ParameterSpecified(nameof(ListAvailable)))
+                {
+                    var allComponents = clientSidePage.AvailablePageComponents().Where(c => c.ComponentType == 1);
+                    WriteObject(allComponents, true);
+                } else {
                 WriteObject(clientSidePage.Controls, true);
+                }
             } else
             {
                 WriteObject(clientSidePage.Controls.FirstOrDefault(c => c.InstanceId == InstanceId));

@@ -14,7 +14,8 @@ using PnP.Framework.Modernization.Cache;
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
 
-    [Cmdlet(VerbsData.ConvertTo, "PnPClientSidePage")]
+    [Cmdlet(VerbsData.ConvertTo, "PnPPage")]
+    [Alias("ConvertTo-PnPClientSidePage")]
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
         private static string rootFolder = "<root>";
@@ -22,7 +23,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
        // private Assembly newtonsoftAssembly;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public PagePipeBind Identity;
+        public ClassicPagePipeBind Identity;
 
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
         public string Library;
@@ -76,7 +77,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         public string TargetWebUrl;
 
         [Parameter(Mandatory = false)]
-        public ClientSidePageTransformatorLogType LogType = ClientSidePageTransformatorLogType.None;
+        public PageTransformatorLogType LogType = PageTransformatorLogType.None;
 
         [Parameter(Mandatory = false)]
         public string LogFolder = "";
@@ -305,7 +306,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             }
 
             // Setup logging
-            if (this.LogType == ClientSidePageTransformatorLogType.File)
+            if (this.LogType == PageTransformatorLogType.File)
             {
                 if (this.PublishingPage)
                 {
@@ -316,7 +317,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                     pageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
             }
-            else if (this.LogType == ClientSidePageTransformatorLogType.SharePoint)
+            else if (this.LogType == PageTransformatorLogType.SharePoint)
             {
                 if (this.PublishingPage)
                 {
@@ -327,7 +328,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                     pageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
             }
-            else if (this.LogType == ClientSidePageTransformatorLogType.Console)
+            else if (this.LogType == PageTransformatorLogType.Console)
             {
                 if (this.PublishingPage)
                 {
@@ -383,7 +384,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                 finally
                 {
                     // Flush log
-                    if (this.LogType != ClientSidePageTransformatorLogType.None && this.LogType != ClientSidePageTransformatorLogType.Console && !this.LogSkipFlush)
+                    if (this.LogType != PageTransformatorLogType.None && this.LogType != PageTransformatorLogType.Console && !this.LogSkipFlush)
                     {
                         publishingPageTransformator.FlushObservers();
                     }
@@ -445,7 +446,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                 finally
                 {
                     // Flush log
-                    if (this.LogType != ClientSidePageTransformatorLogType.None && this.LogType != ClientSidePageTransformatorLogType.Console && !this.LogSkipFlush)
+                    if (this.LogType != PageTransformatorLogType.None && this.LogType != PageTransformatorLogType.Console && !this.LogSkipFlush)
                     {
                         pageTransformator.FlushObservers();
                     }

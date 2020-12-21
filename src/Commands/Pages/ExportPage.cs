@@ -11,11 +11,12 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsData.Export, "PnPClientSidePage")]
-    public class ExportClientSidePage : PnPWebCmdlet
+    [Cmdlet(VerbsData.Export, "PnPPage")]
+    [Alias("Export-PnPClientSidePage")]
+    public class ExportPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public ClientSidePagePipeBind Identity;
+        public PagePipeBind Identity;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter PersistBrandingFiles;

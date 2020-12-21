@@ -12,8 +12,9 @@ using PnP.Framework.Modernization.Cache;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsData.Export, "PnPClientSidePageMapping")]
-    public class ExportClientSidePageMapping : PnPWebCmdlet
+    [Cmdlet(VerbsData.Export, "PnPPageMapping")]
+    [Alias("Export-PnPClientSidePageMapping")]
+    public class ExportPageMapping : PnPWebCmdlet
     {
         private Assembly sitesCoreAssembly;
 
@@ -27,7 +28,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         public SwitchParameter CustomPageLayoutMapping = false;
 
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
-        public PagePipeBind PublishingPage;
+        public ClassicPagePipeBind PublishingPage;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter AnalyzeOOBPageLayouts = false;

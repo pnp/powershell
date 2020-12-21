@@ -6,11 +6,12 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPClientSideComponent")]
-    public class RemoveClientSideComponent : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Remove, "PnPPageComponent")]
+    [Alias("Remove-PnPClientSideComponent")]
+    public class RemovePageComponent : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public ClientSidePagePipeBind Page;
+        public PagePipeBind Page;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public Guid InstanceId;

@@ -1,6 +1,6 @@
 ﻿namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    public enum ClientSidePageTransformatorLogType
+    public enum PageTransformatorLogType
     {
         None = 0,
         File = 1,

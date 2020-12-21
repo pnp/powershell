@@ -1,15 +1,18 @@
 ﻿
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAvailableClientSideComponents")]
-    public class GetAvailableClientSideComponents : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPAvailablePageComponents")]
+    [Alias("Get-PnPAvailableClientSideComponents")]
+    [Obsolete("Use Get-PnPPageComponent -Page -ListAvailable")]
+    public class GetAvailablePageComponents : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public ClientSidePagePipeBind Page;
+        public PagePipeBind Page;
 
         [Parameter(Mandatory = false)]
         public PageComponentPipeBind Component;

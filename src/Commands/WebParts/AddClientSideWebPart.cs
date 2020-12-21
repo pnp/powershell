@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Commands.WebParts
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_DEFAULT3RDPARTY)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_POSITIONEDBUILTIN)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_POSITIONED3RDPARTY)]
-        public ClientSidePagePipeBind Page;
+        public PagePipeBind Page;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEFAULTBUILTIN)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_POSITIONEDBUILTIN)]

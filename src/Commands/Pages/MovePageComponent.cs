@@ -6,9 +6,9 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Move, "PnPClientSideComponent")]
-    
-    public class MoveClientSideWebPart : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Move, "PnPPageComponent")]
+    [Alias("Move-PnPClientSideComponent")]
+    public class MovePageComponent : PnPWebCmdlet
     {
         const string ParameterSet_SECTION = "Move to other section";
         const string ParameterSet_COLUMN = "Move to other column";
@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         const string ParameterSet_POSITION = "Move within a column";
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public ClientSidePagePipeBind Page;
+        public PagePipeBind Page;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public Guid InstanceId;

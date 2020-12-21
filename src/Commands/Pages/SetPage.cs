@@ -6,13 +6,14 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Set, "PnPClientSidePage")]
-    public class SetClientSidePage : PnPWebCmdlet, IDynamicParameters
+    [Cmdlet(VerbsCommon.Set, "PnPPage")]
+    [Alias("Set-PnPClientSidePage")]
+    public class SetPage : PnPWebCmdlet, IDynamicParameters
     {
         const string ParameterSet_CUSTOMHEADER = "Custom Header";
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public ClientSidePagePipeBind Identity;
+        public PagePipeBind Identity;
 
         [Parameter(Mandatory = false)]
         public string Name = null;
@@ -67,7 +68,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                 throw new Exception($"Page {Identity?.Name} cannot be found.");
 
             // We need to have the page name, if not found, raise an error
-            string name = ClientSidePageUtilities.EnsureCorrectPageName(Name ?? Identity?.Name);
+            string name = PageUtilities.EnsureCorrectPageName(Name ?? Identity?.Name);
             if (name == null)
                 throw new Exception("Insufficient arguments to update a client side page");
 

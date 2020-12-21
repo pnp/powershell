@@ -6,11 +6,12 @@ using PnP.Core.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Set, "PnPClientSideText")]
+    [Cmdlet(VerbsCommon.Set, "PnPTextPart")]
+    [Alias("Set-PnPClientSideText")]
     public class SetClientSideText : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public ClientSidePagePipeBind Page;
+        public PagePipeBind Page;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public Guid InstanceId;

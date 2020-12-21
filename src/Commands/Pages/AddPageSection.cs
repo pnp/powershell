@@ -5,11 +5,12 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Add, "PnPClientSidePageSection")]
-    public class AddClientSidePageSection : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Add, "PnPPageSection")]
+    [Alias("Add-PnPClientSidePageSection")]
+    public class AddPageSection : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public ClientSidePagePipeBind Page;
+        public PagePipeBind Page;
 
         [Parameter(Mandatory = true)]
         public CanvasSectionTemplate SectionTemplate;

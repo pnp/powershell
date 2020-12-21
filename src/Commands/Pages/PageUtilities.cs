@@ -1,6 +1,6 @@
 ﻿namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    internal static class ClientSidePageUtilities
+    internal static class PageUtilities
     {
         public static string EnsureCorrectPageName(string pageName)
         {

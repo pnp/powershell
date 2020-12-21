@@ -7,8 +7,9 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    [Cmdlet(VerbsCommon.Add, "PnPClientSidePage")]
-    public class AddClientSidePage : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Add, "PnPPage")]
+    [Alias("Add-PnPClientSidePage")]
+    public class AddPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Name = null;
@@ -37,7 +38,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             IPage clientSidePage = null;
             
             // Check if the page exists
-            string name = ClientSidePageUtilities.EnsureCorrectPageName(Name);
+            string name = PageUtilities.EnsureCorrectPageName(Name);
 
             bool pageExists = false;
             try
