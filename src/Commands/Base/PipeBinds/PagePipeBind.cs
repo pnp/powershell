@@ -1,7 +1,7 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Core.Model.SharePoint;
 using PnP.Core.Services;
-using PnP.PowerShell.Commands.ClientSidePages;
+using PnP.PowerShell.Commands.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -4,7 +4,7 @@ using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 
-namespace PnP.PowerShell.Commands.ClientSidePages
+namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Set, "PnPPage")]
     [Alias("Set-PnPClientSidePage")]

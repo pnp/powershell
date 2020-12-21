@@ -5,7 +5,7 @@ using System.Management.Automation;
 using PnP.Core.Model.SharePoint;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace PnP.PowerShell.Commands.ClientSidePages
+namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Set, "PnPWebPart")]
     [Alias("Set-PnPClientSideWebPart")]

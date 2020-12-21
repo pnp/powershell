@@ -4,7 +4,7 @@ using System.IO;
 using System.Management.Automation;
 using System.Reflection;
 
-namespace PnP.PowerShell.Commands.ClientSidePages
+namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsData.Save, "PnPPageConversionLog")]
     [Alias("Save-PnPClientSidePageConversionLog")]

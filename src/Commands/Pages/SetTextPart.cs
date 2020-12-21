@@ -4,7 +4,7 @@ using System.Management.Automation;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.Core.Model.SharePoint;
 
-namespace PnP.PowerShell.Commands.ClientSidePages
+namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Set, "PnPTextPart")]
     [Alias("Set-PnPClientSideText")]

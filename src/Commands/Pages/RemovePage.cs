@@ -4,7 +4,7 @@ using PnP.PowerShell.Commands.Properties;
 using System;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.ClientSidePages
+namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Remove, "PnPPage")]
     [Alias("Remove-PnPClientSidePage")]

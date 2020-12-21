@@ -11,7 +11,7 @@ using PnP.Framework.Modernization.Publishing;
 using PnP.Framework.Modernization.Telemetry.Observers;
 using PnP.Framework.Modernization.Cache;
 
-namespace PnP.PowerShell.Commands.ClientSidePages
+namespace PnP.PowerShell.Commands.Pages
 {
 
     [Cmdlet(VerbsData.ConvertTo, "PnPPage")]

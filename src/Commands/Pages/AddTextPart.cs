@@ -4,7 +4,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.ClientSidePages
+namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Add, "PnPTextPart")]
     [Alias("Add-PnPClientSideText")]

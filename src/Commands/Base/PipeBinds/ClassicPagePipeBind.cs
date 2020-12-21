@@ -1,6 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
-using PnP.PowerShell.Commands.ClientSidePages;
+using PnP.PowerShell.Commands.Pages;
 using System;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds

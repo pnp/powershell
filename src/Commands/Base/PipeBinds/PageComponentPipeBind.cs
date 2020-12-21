@@ -1,6 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnPCore = PnP.Core.Model.SharePoint;
-using PnP.PowerShell.Commands.ClientSidePages;
+using PnP.PowerShell.Commands.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;

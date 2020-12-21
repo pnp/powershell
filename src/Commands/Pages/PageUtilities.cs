@@ -1,4 +1,4 @@
-﻿namespace PnP.PowerShell.Commands.ClientSidePages
+﻿namespace PnP.PowerShell.Commands.Pages
 {
     internal static class PageUtilities
     {

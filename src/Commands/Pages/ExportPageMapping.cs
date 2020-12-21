@@ -10,7 +10,7 @@ using PnP.Framework.Modernization.Telemetry.Observers;
 using PnP.PowerShell.ALC;
 using PnP.Framework.Modernization.Cache;
 
-namespace PnP.PowerShell.Commands.ClientSidePages
+namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsData.Export, "PnPPageMapping")]
     [Alias("Export-PnPClientSidePageMapping")]
