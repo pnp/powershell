@@ -12,17 +12,17 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         public ClientSidePagePipeBind Page;
 
         [Parameter(Mandatory = false)]
-        public ClientSideComponentPipeBind Component;
+        public PageComponentPipeBind Component;
 
         protected override void ExecuteCmdlet()
         {
-            var clientSidePage = Page.GetPage(ClientContext);
+            var clientSidePage = Page.GetPage();
             if (clientSidePage == null)
                 throw new PSArgumentException($"Page '{Page}' does not exist", "List");
 
             if (Component == null)
             {
-                var allComponents = clientSidePage.AvailableClientSideComponents().Where(c => c.ComponentType == 1);
+                var allComponents = clientSidePage.AvailablePageComponents().Where(c => c.ComponentType == 1);
                 WriteObject(allComponents, true);
             }
             else

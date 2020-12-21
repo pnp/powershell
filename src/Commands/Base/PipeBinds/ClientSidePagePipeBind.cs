@@ -1,5 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
-using PnP.Framework.Pages;
+using PnP.Core.Model.SharePoint;
+using PnP.Core.Services;
 using PnP.PowerShell.Commands.ClientSidePages;
 using System;
 using System.Collections.Generic;
@@ -11,21 +12,13 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public sealed class ClientSidePagePipeBind
     {
-        private readonly ClientSidePage _page;
+        private readonly IPage _page;
         private string _name;
 
-        public ClientSidePagePipeBind(ClientSidePage page)
+        public ClientSidePagePipeBind(IPage page)
         {
             _page = page;
-            if (page.PageListItem != null)
-            {
-                File file = page.PageListItem.EnsureProperty(li => li.File);
-                _name = file.EnsureProperty(f => f.Name);
-            }
-            else
-            {
-                _name = page.PageTitle;
-            }
+            _name = page.PageTitle;
         }
 
         public ClientSidePagePipeBind(string name)
@@ -34,14 +27,15 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _name = name;
         }
 
-        public ClientSidePage Page => _page;
+        public IPage Page => _page;
 
         public string Name => ClientSidePageUtilities.EnsureCorrectPageName(_name);
 
         public override string ToString() => Name;
 
-        internal ClientSidePage GetPage(ClientContext ctx)
+        internal IPage GetPage()
         {
+            var ctx = PnPConnection.CurrentConnection.PnPContext;
             if (_page != null)
             {
                 return _page;
@@ -50,7 +44,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 try
                 {
-                    return ClientSidePage.Load(ctx, Name);
+                    var pages = ctx.Web.GetPages(Name);
+                    if (pages != null && pages.Any())
+                    {
+                        return pages.First();
+                    }
+                    return null;
                 }
                 catch (ArgumentException)
                 {

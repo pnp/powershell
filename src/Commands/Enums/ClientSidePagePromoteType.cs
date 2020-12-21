@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
-    public enum ClientSidePagePromoteType
+    public enum PagePromoteType
     {
         None = 0,
         HomePage = 1,

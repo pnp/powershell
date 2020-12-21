@@ -1,7 +1,7 @@
-﻿using PnP.Framework.Pages;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PnP.Core.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _title = string.Empty;
         }
 
-        public List<ClientSideWebPart> GetWebPart(ClientSidePage page)
+        public List<IPageComponent> GetWebPart(IPage page)
         {
             if (page == null)
             {
@@ -41,9 +41,9 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             if (!string.IsNullOrEmpty(_title))
             {
-                return page.Controls.Where(c => c.GetType() == typeof(ClientSideWebPart) && ((ClientSideWebPart)c).Title.Equals(_title, StringComparison.InvariantCultureIgnoreCase)).Cast<ClientSideWebPart>().ToList();
+                return page.Controls.Where(c => c.GetType() == typeof(IPageComponent) && ((IPageComponent)c).Name.Equals(_title, StringComparison.InvariantCultureIgnoreCase)).Cast<IPageComponent>().ToList();
             }
-            return page.Controls.Where(c => c.GetType() == typeof(ClientSideWebPart) && c.InstanceId == _instanceId).Cast<ClientSideWebPart>().ToList();
+            return page.Controls.Where(c => c.InstanceId == _instanceId).Cast<IPageComponent>().ToList();
         }
     }
 }

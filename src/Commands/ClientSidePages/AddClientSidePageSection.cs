@@ -1,5 +1,4 @@
-﻿using PnP.Framework.Pages;
-
+﻿using PnP.Core.Model.SharePoint;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
@@ -24,12 +23,12 @@ namespace PnP.PowerShell.Commands.ClientSidePages
 
         protected override void ExecuteCmdlet()
         {
-            var clientSidePage = Page?.GetPage(ClientContext);
+            var page = Page?.GetPage();
 
-            if (clientSidePage != null)
+            if (page != null)
             {
-                clientSidePage.AddSection(new CanvasSection(clientSidePage, SectionTemplate, Order) { ZoneEmphasis = ZoneEmphasis });
-                clientSidePage.Save();
+                page.AddSection(new CanvasSection(page, SectionTemplate, Order) { ZoneEmphasis = ZoneEmphasis });
+                page.Save();
             }
             else
             {

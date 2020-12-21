@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
 
         protected override void ExecuteCmdlet()
         {
-            var clientSidePage = Page.GetPage(ClientContext);
+            var clientSidePage = Page.GetPage();
 
             if (clientSidePage == null)
                 throw new Exception($"Page '{Page?.Name}' does not exist");

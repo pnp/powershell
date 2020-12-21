@@ -12,6 +12,7 @@
     <Authors>PnP.PowerShell</Authors>
     <Configurations>Debug;Release</Configurations>
     <PnPFrameworkPath Condition="'$(PnPFrameworkPath)' == ''"></PnPFrameworkPath>
+    <PnPCoreSdkPath Condition="'${PnPCoreSdkPath)' == ''"></PnPCoreSdkPath>
     <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows> 
     <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX> 
     <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux> 
@@ -53,10 +54,23 @@
     <PackageReference Include="System.Text.Encodings.Web" Version="4.7.1" />
     <PackageReference Include="System.Text.Json" Version="4.7.2" />
     <PackageReference Include="TextCopy" Version="4.2.0" />
+    <PackageReference Include="PnP.Core" Version="0.4.*-*" Condition="'$(PnPCoreSdkPath)' == ''" />
     <ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
-    <Reference Include="PnP.Framework" Condition="'$(PnPFrameworkPath)' != ''">
+    <Reference Include="PnP.Core">
+      <HintPath>..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll</HintPath>
+    </Reference>
+    <!--<Reference Include="PnP.Framework" Condition="'$(PnPFrameworkPath)' != ''">
       <HintPath>$(PnPFrameworkPath)</HintPath>
       <Private>true</Private>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>-->
+    <!--<Reference Include="PnP.Core" Condition="'$(PnPCoreSdkPath)' != ''">
+      <HintPath>$(PnPCoreSdkPath)</HintPath>
+      <Private>true</Private>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>-->
+    <Reference Include="PnP.Framework">
+      <HintPath>..\..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
 

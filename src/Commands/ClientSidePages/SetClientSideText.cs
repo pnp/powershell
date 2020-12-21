@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.Framework.Pages;
+using PnP.Core.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
 {
@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
 
         protected override void ExecuteCmdlet()
         {
-            var clientSidePage = Page.GetPage(ClientContext);
+            var clientSidePage = Page.GetPage();
 
             if (clientSidePage == null)
                 throw new Exception($"Page '{Page?.Name}' does not exist");
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             var control = clientSidePage.Controls.FirstOrDefault(c => c.InstanceId == InstanceId);
             if (control != null)
             {
-                var textControl = control as ClientSideText;
+                var textControl = control as IPageText;
                 textControl.Text = Text;
                 clientSidePage.Save();
             }

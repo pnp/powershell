@@ -1,5 +1,4 @@
-﻿using PnP.Framework.Pages;
-
+﻿using PnP.Core.Model.SharePoint;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
@@ -21,11 +20,11 @@ namespace PnP.PowerShell.Commands.WebParts
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEFAULTBUILTIN)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_POSITIONEDBUILTIN)]
-        public DefaultClientSideWebParts DefaultWebPartType;
+        public PnP.Framework.Pages.DefaultClientSideWebParts DefaultWebPartType;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEFAULT3RDPARTY)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_POSITIONED3RDPARTY)]
-        public ClientSideComponentPipeBind Component;
+        public PageComponentPipeBind Component;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULTBUILTIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT3RDPARTY)]
@@ -59,21 +58,22 @@ namespace PnP.PowerShell.Commands.WebParts
                 throw new Exception("Column value should be at least 1 or higher");
             }
 
-            var clientSidePage = Page.GetPage(ClientContext);
+            var clientSidePage = Page.GetPage();
             // If the client side page object cannot be found
             if (clientSidePage == null)
             {
                 throw new Exception($"Page {Page} cannot be found.");
             }
 
-            ClientSideWebPart webpart = null;
+            IPageWebPart webpart = null;
             if (ParameterSpecified(nameof(DefaultWebPartType)))
             {
+
                 webpart = clientSidePage.InstantiateDefaultWebPart(DefaultWebPartType);
             }
             else
             {
-                webpart = new ClientSideWebPart(Component.GetComponent(clientSidePage));
+                webpart = new PnP.Core.Model.SharePoint.PageWebPart(Component.GetComponent(clientSidePage));
             }
 
             if (WebPartProperties != null)

@@ -1,8 +1,8 @@
-﻿using Microsoft.SharePoint.Client;
-using PnP.Framework.Pages;
+﻿using PnP.Core.Model.SharePoint;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
+using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ClientSidePages
@@ -14,10 +14,10 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         public string Name = null;
 
         [Parameter(Mandatory = false)]
-        public ClientSidePageLayoutType LayoutType = ClientSidePageLayoutType.Article;
+        public PageLayoutType LayoutType = PageLayoutType.Article;
 
         [Parameter(Mandatory = false)]
-        public ClientSidePagePromoteType PromoteAs = ClientSidePagePromoteType.None;
+        public PagePromoteType PromoteAs = PagePromoteType.None;
 
         [Parameter(Mandatory = false)]
         public ContentTypePipeBind ContentType;
@@ -30,11 +30,11 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         public SwitchParameter Publish;
 
         [Parameter(Mandatory = false)]
-        public ClientSidePageHeaderLayoutType HeaderLayoutType = ClientSidePageHeaderLayoutType.FullWidthImage;
+        public PageHeaderLayoutType HeaderLayoutType = PageHeaderLayoutType.FullWidthImage;
 
         protected override void ExecuteCmdlet()
         {
-            ClientSidePage clientSidePage = null;
+            IPage clientSidePage = null;
 
             // Check if the page exists
             string name = ClientSidePageUtilities.EnsureCorrectPageName(Name);
@@ -42,8 +42,8 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             bool pageExists = false;
             try
             {
-                ClientSidePage.Load(ClientContext, name);
-                pageExists = true;
+                var pages = PnPContext.Web.GetPages(name);
+                pageExists = pages != null && pages.Any();
             }
             catch { }
 
@@ -53,11 +53,10 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             }
 
             // Create a page that persists immediately
-            clientSidePage = CurrentWeb.AddClientSidePage(name);
-            clientSidePage.LayoutType = LayoutType;
+            clientSidePage = PnPContext.Web.NewPage(LayoutType);
             clientSidePage.PageHeader.LayoutType = HeaderLayoutType;
 
-            if (PromoteAs == ClientSidePagePromoteType.Template)
+            if (PromoteAs == PagePromoteType.Template)
             {
                 clientSidePage.SaveAsTemplate(name);
             }
@@ -69,21 +68,21 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             if (ContentType != null)
             {
                 string ctId = ContentType.GetIdOrThrow(nameof(ContentType), CurrentWeb);
-                clientSidePage.PageListItem["ContentTypeId"] = ctId;
-                clientSidePage.PageListItem.SystemUpdate();
-                ClientContext.ExecuteQueryRetry();
+                var pageFile = clientSidePage.GetPageFile();
+                pageFile.ListItemAllFields["ContentTypeId"] = ctId;
+                pageFile.ListItemAllFields.SystemUpdate();
             }
 
             // If a specific promote type is specified, promote the page as Home or Article or ...
             switch (PromoteAs)
             {
-                case ClientSidePagePromoteType.HomePage:
+                case PagePromoteType.HomePage:
                     clientSidePage.PromoteAsHomePage();
                     break;
-                case ClientSidePagePromoteType.NewsArticle:
+                case PagePromoteType.NewsArticle:
                     clientSidePage.PromoteAsNewsArticle();
                     break;
-                case ClientSidePagePromoteType.None:
+                case PagePromoteType.None:
                 default:
                     break;
             }

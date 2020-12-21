@@ -1,5 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
-using PnP.Framework.Pages;
+using PnPCore = PnP.Core.Model.SharePoint;
 using PnP.PowerShell.Commands.ClientSidePages;
 using System;
 using System.Collections.Generic;
@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
-    public sealed class ClientSideComponentPipeBind
+    public sealed class PageComponentPipeBind
     {
-        private readonly ClientSideComponent _component;
+        private readonly PnPCore.IPageComponent _component;
         private string _name;
         private Guid _id;
 
-        public ClientSideComponentPipeBind(ClientSideComponent component)
+        public PageComponentPipeBind(PnPCore.IPageComponent component)
         {
             _component = component;
             _id = Guid.Parse(_component.Id);
             _name = _component.Name;
         }
 
-        public ClientSideComponentPipeBind(string nameOrId)
+        public PageComponentPipeBind(string nameOrId)
         {
             _component = null;
             if (!Guid.TryParse(nameOrId, out _id))
@@ -31,14 +31,14 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        public ClientSideComponentPipeBind(Guid id)
+        public PageComponentPipeBind(Guid id)
         {
             _id = id;
             _name = null;
             _component = null;
         }
 
-        public ClientSideComponent Component => _component;
+        public PnPCore.IPageComponent Component => _component;
 
         public string Name => _component?.Name;
 
@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public override string ToString() => Name;
 
-        internal ClientSideComponent GetComponent(ClientSidePage page)
+        internal PnPCore.IPageComponent GetComponent(PnPCore.IPage page)
         {
             if (_component != null)
             {
@@ -54,13 +54,13 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (!string.IsNullOrEmpty(_name))
             {
-                ClientSideComponent com = page.AvailableClientSideComponents(_name).FirstOrDefault();
+                PnPCore.IPageComponent com = page.AvailablePageComponents(_name).FirstOrDefault();
                 return com;
             }
             else if (_id != Guid.Empty)
             {
                 string idAsString = _id.ToString();
-                var comQuery = from c in page.AvailableClientSideComponents(_name)
+                var comQuery = from c in page.AvailablePageComponents(_name)
                                where c.Id == idAsString
                                select c;
                 return comQuery.FirstOrDefault();

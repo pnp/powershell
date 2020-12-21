@@ -1,4 +1,4 @@
-﻿using PnP.Framework.Pages;
+﻿using PnP.Core.Model.SharePoint;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
@@ -42,13 +42,14 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                 throw new Exception("Column value should be at least 1 or higher");
             }
 
-            var clientSidePage = Page.GetPage(ClientContext);
+            var clientSidePage = Page.GetPage();
 
             if (clientSidePage == null)
                 // If the client side page object cannot be found
                 throw new Exception($"Page {Page} cannot be found.");
 
-            var textControl = new ClientSideText() { Text = Text };
+            var textControl = clientSidePage.NewTextPart(Text);
+            
             if (ParameterSpecified(nameof(Section)))
             {
                 if (ParameterSpecified(nameof(Section)))

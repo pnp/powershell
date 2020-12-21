@@ -1,5 +1,4 @@
-﻿using PnP.Framework.Pages;
-
+﻿using PnP.Core.Model.SharePoint;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
@@ -22,10 +21,10 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         public string Title = null;
 
         [Parameter(Mandatory = false)]
-        public ClientSidePageLayoutType LayoutType = ClientSidePageLayoutType.Article;
+        public PageLayoutType LayoutType = PageLayoutType.Article;
 
         [Parameter(Mandatory = false)]
-        public ClientSidePagePromoteType PromoteAs = ClientSidePagePromoteType.None;
+        public PagePromoteType PromoteAs = PagePromoteType.None;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter CommentsEnabled = false;
@@ -34,7 +33,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         public SwitchParameter Publish;
 
         [Parameter(Mandatory = false)]
-        public ClientSidePageHeaderType HeaderType;
+        public PageHeaderType HeaderType;
 
         [Parameter(Mandatory = false)]
         [ValidateNotNullOrEmpty]
@@ -44,13 +43,13 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         public string ThumbnailUrl;
 
         [Parameter(Mandatory = false)]
-        public ClientSidePageHeaderLayoutType HeaderLayoutType = ClientSidePageHeaderLayoutType.FullWidthImage;
+        public PageHeaderLayoutType HeaderLayoutType = PageHeaderLayoutType.FullWidthImage;
 
         private CustomHeaderDynamicParameters customHeaderParameters;
 
         public object GetDynamicParameters()
         {
-            if (HeaderType == ClientSidePageHeaderType.Custom)
+            if (HeaderType == PageHeaderType.Custom)
             {
                 customHeaderParameters = new CustomHeaderDynamicParameters();
                 return customHeaderParameters;
@@ -61,7 +60,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         protected override void ExecuteCmdlet()
         {
 
-            ClientSidePage clientSidePage = Identity?.GetPage(ClientContext);
+            ClientSidePage clientSidePage = Identity?.GetPage();
 
             if (clientSidePage == null)
                 // If the client side page object cannot be found
@@ -111,7 +110,7 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                 clientSidePage.PageHeader.LayoutType = HeaderLayoutType;
             }
 
-            if (PromoteAs == ClientSidePagePromoteType.Template)
+            if (PromoteAs == PagePromoteType.Template)
             {
                 clientSidePage.SaveAsTemplate(name);
             }
@@ -123,13 +122,13 @@ namespace PnP.PowerShell.Commands.ClientSidePages
             // If a specific promote type is specified, promote the page as Home or Article or ...
             switch (PromoteAs)
             {
-                case ClientSidePagePromoteType.HomePage:
+                case PagePromoteType.HomePage:
                     clientSidePage.PromoteAsHomePage();
                     break;
-                case ClientSidePagePromoteType.NewsArticle:
+                case PagePromoteType.NewsArticle:
                     clientSidePage.PromoteAsNewsArticle();
                     break;
-                case ClientSidePagePromoteType.None:
+                case PagePromoteType.None:
                 default:
                     break;
             }
