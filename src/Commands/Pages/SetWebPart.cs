@@ -42,12 +42,12 @@ namespace PnP.PowerShell.Commands.Pages
 
                 if (ParameterSpecified(nameof(PropertiesJson)))
                 {
-                    (webpart as IPageWebPart).PropertiesJson = PropertiesJson;
+                    (webpart as PageWebPart).PropertiesJson = PropertiesJson;
                     updated = true;
                 }
                 if (ParameterSpecified(nameof(Title)))
                 {
-                    (webpart as IPageWebPart).Title = Title;
+                    (webpart as PageWebPart).Title = Title;
                     updated = true;
                 }
 
