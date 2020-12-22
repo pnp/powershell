@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _title = string.Empty;
         }
 
-        public List<IPageComponent> GetWebPart(IPage page)
+        public List<ICanvasControl> GetWebPart(IPage page)
         {
             if (page == null)
             {
@@ -41,9 +41,9 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             if (!string.IsNullOrEmpty(_title))
             {
-                return page.Controls.Where(c => c.GetType() == typeof(IPageComponent) && ((IPageComponent)c).Name.Equals(_title, StringComparison.InvariantCultureIgnoreCase)).Cast<IPageComponent>().ToList();
+                return page.Controls.Where(c => c.GetType() == typeof(IPageComponent) && ((IPageComponent)c).Name.Equals(_title, StringComparison.InvariantCultureIgnoreCase)).ToList();
             }
-            return page.Controls.Where(c => c.InstanceId == _instanceId).Cast<IPageComponent>().ToList();
+            return page.Controls.Where(c => c.InstanceId == _instanceId).ToList();
         }
     }
 }
