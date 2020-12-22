@@ -5,8 +5,9 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
-    [Cmdlet(VerbsCommon.Add, "PnPClientSideWebPart")]
-    public class AddClientSideWebPart : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Add, "PnPWebPart")]
+    [Alias("Add-PnPClientWebPart")]
+    public class AddWebPart : PnPWebCmdlet
     {
         private const string ParameterSet_DEFAULTBUILTIN = "Default with built-in web part";
         private const string ParameterSet_DEFAULT3RDPARTY = "Default with 3rd party web part";
@@ -73,7 +74,7 @@ namespace PnP.PowerShell.Commands.WebParts
             }
             else
             {
-                webpart = new PnP.Core.Model.SharePoint.PageWebPart(Component.GetComponent(clientSidePage));
+                webpart = new PageWebPart(Component.GetComponent(clientSidePage));
             }
 
             if (WebPartProperties != null)
