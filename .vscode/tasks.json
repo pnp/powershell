@@ -33,7 +33,7 @@
             "problemMatcher": "$msCompile",
             "args": [
                 "-LocalPnPFramework",
-                "-LocalPnPCoreSdk",
+                "-LocalPnPCore",
                 "-NoIncremental"
             ],
             "group": {

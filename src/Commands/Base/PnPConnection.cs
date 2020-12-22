@@ -39,7 +39,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private HttpClient httpClient;
 
-        private PnPContext pnpContext {get;set;}
+        private PnPContext pnpContext { get; set; }
 
         public HttpClient HttpClient
         {
@@ -55,9 +55,9 @@ namespace PnP.PowerShell.Commands.Base
 
         internal PnPContext PnPContext
         {
-            get 
+            get
             {
-                if(pnpContext == null && Context != null)
+                if (pnpContext == null && Context != null)
                 {
                     pnpContext = PnP.Framework.PnPCoreSdk.Instance.GetPnPContext(Context);
                 }
@@ -151,7 +151,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             return new ReadOnlyDictionary<TokenAudience, GenericToken>(AccessTokens);
         }
-        
+
         /// <summary>
         /// Tries to get an access token for the provided audience
         /// </summary>
@@ -631,6 +631,7 @@ namespace PnP.PowerShell.Commands.Base
         internal void RestoreCachedContext(string url)
         {
             Context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
+            pnpContext = null;
         }
 
         internal void CacheContext()
@@ -651,7 +652,7 @@ namespace PnP.PowerShell.Commands.Base
                 context.ExecuteQueryRetry();
                 ContextCache.Add(context);
             }
-            Context = context;
+            pnpContext = null;
             return context;
         }
 

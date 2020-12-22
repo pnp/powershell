@@ -56,7 +56,7 @@ if ($LocalPnPFramework) {
 }
 if ($LocalPnPCore) {
 	# Check if available
-	$pnpCoreAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Framework.dll"
+	$pnpCoreAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll"
 	$pnpCoreAssembly = [System.IO.Path]::GetFullPath($pnpCoreAssembly)
 	if(Test-Path $pnpCoreAssembly -PathType Leaf)
 	{
