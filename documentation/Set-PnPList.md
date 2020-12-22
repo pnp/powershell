@@ -20,7 +20,8 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
  [-Hidden <Boolean>] [-ForceCheckout <Boolean>] [-ListExperience <ListExperience>]
  [-EnableAttachments <Boolean>] [-EnableFolderCreation <Boolean>] [-EnableVersioning <Boolean>]
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
- [-EnableModeration <Boolean>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-EnableModeration <Boolean>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
+ [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -317,6 +318,35 @@ If used the security inheritance is reset for this list (inherited from parent)
 Type: SwitchParameter
 Parameter Sets: (All)
 
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+
+### -ReadSecurity
+Sets the read security for the list
+
+```yaml
+Type: ListReadSecurity
+Parameter Sets: (All)
+Accepted values: AllUsersReadAccess, AllUsersReadAccessOnItemsTheyCreate
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WriteSecurity
+Sets the write security for the list
+
+```yaml
+Type: ListWriteSecurity
+Parameter Sets: (All)
+Accepted values: WriteAllItems, WriteOnlyMyItems, WriteNoItems
 Required: False
 Position: Named
 Default value: None
