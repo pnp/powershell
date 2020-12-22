@@ -10,7 +10,7 @@ title: Set-PnPPage
 # Set-PnPPage
 
 ## SYNOPSIS
-Sets parameters of a Client-Side Page
+Sets parameters of a page
 
 ## SYNTAX
 
@@ -30,21 +30,21 @@ Set-PnPPage [-Identity] <PagePipeBind> [-Name <String>] [-Title <String>]
 Set-PnPPage -Identity "MyPage" -LayoutType Home -Title "My Page"
 ```
 
-Updates the properties of the Client-Side page named 'MyPage'
+Updates the properties of the page named 'MyPage'
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPPage -Identity "MyPage" -CommentsEnabled
 ```
 
-Enables the comments on the Client-Side page named 'MyPage'
+Enables the comments on the page named 'MyPage'
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPPage -Identity "MyPage" -CommentsEnabled:$false
 ```
 
-Disables the comments on the Client-Side page named 'MyPage'
+Disables the comments on the page named 'MyPage'
 
 ### EXAMPLE 4
 ```powershell

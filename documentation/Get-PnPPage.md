@@ -29,28 +29,28 @@ This command allows the retrieval of a modern sitepage along with its properties
 Get-PnPPage -Identity "MyPage.aspx"
 ```
 
-Gets the Modern Page (Client-Side) named 'MyPage.aspx' in the current SharePoint site
+Gets the page named 'MyPage.aspx' in the current SharePoint site
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPPage "MyPage"
 ```
 
-Gets the Modern Page (Client-Side) named 'MyPage.aspx' in the current SharePoint site
+Gets the page named 'MyPage.aspx' in the current SharePoint site
 
 ### EXAMPLE 3
 ```powershell
 Get-PnPPage "Templates/MyPageTemplate"
 ```
 
-Gets the Modern Page (Client-Side) named 'MyPageTemplate.aspx' from the templates folder of the Page Library in the current SharePoint site
+Gets the page named 'MyPageTemplate.aspx' from the templates folder of the Page Library in the current SharePoint site
 
 ### EXAMPLE 4
 ```powershell
 Get-PnPPage -Identity "MyPage.aspx" -Web (Get-PnPWeb -Identity "Subsite1")
 ```
 
-Gets the Modern Page (Client-Side) named 'MyPage.aspx' from the subsite named 'Subsite1'
+Gets the page named 'MyPage.aspx' from the subsite named 'Subsite1'
 
 ## PARAMETERS
 

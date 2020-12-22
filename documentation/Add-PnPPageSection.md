@@ -29,14 +29,14 @@ Add-PnPPageSection [-Page] <PagePipeBind> -SectionTemplate <CanvasSectionTemplat
 Add-PnPPageSection -Page "MyPage" -SectionTemplate OneColumn
 ```
 
-Adds a new one-column section to the Client-Side page 'MyPage'
+Adds a new one-column section to the page 'MyPage'
 
 ### EXAMPLE 2
 ```powershell
 Add-PnPPageSection -Page "MyPage" -SectionTemplate ThreeColumn -Order 10
 ```
 
-Adds a new Three columns section to the Client-Side page 'MyPage' with an order index of 10
+Adds a new Three columns section to the page 'MyPage' with an order index of 10
 
 ### EXAMPLE 3
 ```powershell
@@ -44,7 +44,7 @@ $page = Add-PnPPage -Name "MyPage"
 PS> Add-PnPPageSection -Page $page -SectionTemplate OneColumn
 ```
 
-Adds a new one column section to the Client-Side page 'MyPage'
+Adds a new one column section to the page 'MyPage'
 
 ### EXAMPLE 4
 ```powershell
@@ -52,7 +52,7 @@ $page = Add-PnPPage -Name "MyPage"
 PS> Add-PnPPageSection -Page $page -SectionTemplate OneColumn -ZoneEmphasis 2
 ```
 
-Adds a new one column section to the Client-Side page 'MyPage' and sets the background to 2 (0 is no background, 3 is highest emphasis)
+Adds a new one column section to the page 'MyPage' and sets the background to 2 (0 is no background, 3 is highest emphasis)
 
 ## PARAMETERS
 

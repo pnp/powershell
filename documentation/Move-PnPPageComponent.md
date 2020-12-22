@@ -39,7 +39,7 @@ Move-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> -Position <Int32
 ```
 
 ## DESCRIPTION
-Moves a Client-Side Component to a different location on the page. Notice that the sections and or columns need to be present before moving the component.
+Moves a component to a different location on the page. Notice that the sections and or columns need to be present before moving the component.
 
 ## EXAMPLES
 

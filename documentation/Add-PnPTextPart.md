@@ -36,7 +36,7 @@ Adds a new text element to a section on a client-side page.
 Add-PnPTextPart -Page "MyPage" -Text "Hello World!"
 ```
 
-Adds the text 'Hello World!' to the Client-Side Page 'MyPage'
+Adds the text 'Hello World!' to the Page 'MyPage'
 
 ## PARAMETERS
 

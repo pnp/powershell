@@ -9,7 +9,7 @@ title: ConvertTo-PnPPage
 # ConvertTo-PnPPage
 
 ## SYNOPSIS
-Converts a classic page (wiki or web part page) into a Client-Side Page
+Converts a classic page (wiki or web part page) into a modern page
 
 ## SYNTAX 
 

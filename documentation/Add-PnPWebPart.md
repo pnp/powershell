@@ -10,7 +10,7 @@ title: Add-PnPWebPart
 # Add-PnPWebPart
 
 ## SYNOPSIS
-Adds a Client-Side Web Part to a client-side page
+Adds a web part to a page
 
 ## SYNTAX
 
@@ -52,21 +52,21 @@ Adds a client-side web part to an existing client-side page.
 Add-PnPWebPart -Page "MyPage" -DefaultWebPartType BingMap
 ```
 
-Adds a built-in Client-Side component 'BingMap' to the page called 'MyPage'
+Adds a built-in component 'BingMap' to the page called 'MyPage'
 
 ### EXAMPLE 2
 ```powershell
 Add-PnPWebPart -Page "MyPage" -Component "HelloWorld"
 ```
 
-Adds a Client-Side component 'HelloWorld' to the page called 'MyPage'
+Adds a component 'HelloWorld' to the page called 'MyPage'
 
 ### EXAMPLE 3
 ```powershell
 Add-PnPWebPart  -Page "MyPage" -Component "HelloWorld" -Section 1 -Column 2
 ```
 
-Adds a Client-Side component 'HelloWorld' to the page called 'MyPage' in section 1 and column 2
+Adds a component 'HelloWorld' to the page called 'MyPage' in section 1 and column 2
 
 ## PARAMETERS
 

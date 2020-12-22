@@ -30,35 +30,35 @@ Add-PnPPage [-Name] <String> [-LayoutType <PageLayoutType>]
 Add-PnPPage -Name "NewPage"
 ```
 
-Creates a new Client-Side page named 'NewPage'
+Creates a new page named 'NewPage'
 
 ### EXAMPLE 2
 ```powershell
 Add-PnPPage -Name "NewPage" -ContentType "MyPageContentType"
 ```
 
-Creates a new Client-Side page named 'NewPage' and sets the content type to the content type specified
+Creates a new page named 'NewPage' and sets the content type to the content type specified
 
 ### EXAMPLE 3
 ```powershell
 Add-PnPPage -Name "NewPageTemplate" -PromoteAs Template
 ```
 
-Creates a new Client-Side page named 'NewPage' and saves as a template to the site.
+Creates a new page named 'NewPage' and saves as a template to the site.
 
 ### EXAMPLE 4
 ```powershell
 Add-PnPPage -Name "Folder/NewPage"
 ```
 
-Creates a new Client-Side page named 'NewPage' under 'Folder' folder and saves as a template to the site.
+Creates a new page named 'NewPage' under 'Folder' folder and saves as a template to the site.
 
 ### EXAMPLE 5
 ```powershell
 Add-PnPPage -Name "NewPage" -HeaderLayoutType ColorBlock
 ```
 
-Creates a new Client-Side page named 'NewPage' using the ColorBlock header layout
+Creates a new page named 'NewPage' using the ColorBlock header layout
 
 ## PARAMETERS
 
