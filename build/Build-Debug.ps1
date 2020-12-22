@@ -10,7 +10,11 @@ Param(
 	[Parameter(Mandatory = $false,
 		ValueFromPipeline = $false)]
 	[switch]
-	$LocalPnPFramework
+	$LocalPnPFramework,
+	[Parameter(Mandatory = $false,
+		ValueFromPipeline = $false)]
+	[switch]
+	$LocalPnPCore
 )
 
 $versionFileContents = Get-Content "$PSScriptRoot/../version.txt" -Raw
@@ -49,8 +53,21 @@ if ($LocalPnPFramework) {
 		$localFolder = [System.IO.Path]::GetFullPath($localFolder)
 		Write-Error -Message "Please make sure you have a local copy of the PnP.Framework repository installed at $localFolder"
 	}
-	#$buildCmd += " -p:LocalPnPFramework=true"
 }
+if ($LocalPnPCore) {
+	# Check if available
+	$pnpCoreAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Framework.dll"
+	$pnpCoreAssembly = [System.IO.Path]::GetFullPath($pnpCoreAssembly)
+	if(Test-Path $pnpCoreAssembly -PathType Leaf)
+	{
+		$buildCmd += " -p:PnPCoreSdkPath=`"..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll`""
+	} else {
+		$localFolder = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore"
+		$localFolder = [System.IO.Path]::GetFullPath($localFolder)
+		Write-Error -Message "Please make sure you have a local copy of the PnP.Core repository installed at $localFolder"
+	}
+}
+
 Write-Host "Executing $buildCmd" -ForegroundColor Yellow
 
 Invoke-Expression $buildCmd
