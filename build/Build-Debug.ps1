@@ -14,7 +14,7 @@ Param(
 	[Parameter(Mandatory = $false,
 		ValueFromPipeline = $false)]
 	[switch]
-	$LocalPnPCoreSdk
+	$LocalPnPCore
 )
 
 $versionFileContents = Get-Content "$PSScriptRoot/../version.txt" -Raw
@@ -45,35 +45,27 @@ if ($LocalPnPFramework) {
 	# Check if available
 	$pnpFrameworkAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll"
 	$pnpFrameworkAssembly = [System.IO.Path]::GetFullPath($pnpFrameworkAssembly)
-	if (Test-Path $pnpFrameworkAssembly -PathType Leaf) {
+	if(Test-Path $pnpFrameworkAssembly -PathType Leaf)
+	{
 		$buildCmd += " -p:PnPFrameworkPath=`"..\..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll`""
-	}
- else {
+	} else {
 		$localFolder = Join-Path $PSScriptRoot -ChildPath "..\..\pnpframework"
 		$localFolder = [System.IO.Path]::GetFullPath($localFolder)
 		Write-Error -Message "Please make sure you have a local copy of the PnP.Framework repository installed at $localFolder"
 	}
 }
-
-if ($LocalPnPCoreSdk) {
-	$pnpCoreSdkAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll"
-	$pnpCoreSdkAssembly = [System.IO.Path]::GetFullPath($pnpCoreSdkAssembly)
-	if (Test-Path $pnpCoreSdkAssembly -PathType Leaf) {
+if ($LocalPnPCore) {
+	# Check if available
+	$pnpCoreAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Framework.dll"
+	$pnpCoreAssembly = [System.IO.Path]::GetFullPath($pnpCoreAssembly)
+	if(Test-Path $pnpCoreAssembly -PathType Leaf)
+	{
 		$buildCmd += " -p:PnPCoreSdkPath=`"..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll`""
-	}
-	else {
+	} else {
 		$localFolder = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore"
 		$localFolder = [System.IO.Path]::GetFullPath($localFolder)
-		Write-Error -Message "Please make sure you have a local copy of the PnP.Framework repository installed at $localFolder"
+		Write-Error -Message "Please make sure you have a local copy of the PnP.Core repository installed at $localFolder"
 	}
-}
-
-if($NoIncremental)
-{
-	Write-Host "Cleaning bin folder"
-	Remove-item -Path "$PSScriptRoot/../src/Commands/bin" -Recurse
-	Write-Host "Cleaning obj folder"
-	Remove-Item -Path "$PSScriptRoot/../src/Commands/obj" -Recurse
 }
 
 Write-Host "Executing $buildCmd" -ForegroundColor Yellow

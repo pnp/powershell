@@ -1,7 +1,7 @@
 ﻿<Project>
   <Import Project="WindowsSdk.targets" Condition="'$(OS)' == 'Windows_NT'" />
   <Import Project="Sdk.targets" Condition="'$(OS)' != 'Windows_NT'" />
-  
+
   <PropertyGroup>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <AssemblyName>PnP.PowerShell</AssemblyName>
@@ -12,21 +12,21 @@
     <Authors>PnP.PowerShell</Authors>
     <Configurations>Debug;Release</Configurations>
     <PnPFrameworkPath Condition="'$(PnPFrameworkPath)' == ''"></PnPFrameworkPath>
-    <PnPCoreSdkPath Condition="'${PnPCoreSdkPath)' == ''"></PnPCoreSdkPath>
-    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows> 
-    <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX> 
-    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux> 
+    <PnPCoreSdkPath Condition="'$(PnPCoreSdkPath)' == ''"></PnPCoreSdkPath>
+    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
+    <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
+    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(IsWindows)'=='true'">
-    <DefineConstants>Windows</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(IsOSX)'=='true'">
-    <DefineConstants>OSX</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(IsLinux)'=='true'">
-    <DefineConstants>Linux</DefineConstants>
-  </PropertyGroup>
+    <DefineConstants>Windows</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IsOSX)'=='true'">
+    <DefineConstants>OSX</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IsLinux)'=='true'">
+    <DefineConstants>Linux</DefineConstants>
+  </PropertyGroup>
 
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net461'">
@@ -39,15 +39,12 @@
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.14.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
-	<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
-	<PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
-	<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
-	<PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
-	<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
-	<PackageReference Include="Microsoft.Graph" Version="3.19.0" />
+    <PackageReference Include="Microsoft.Graph" Version="3.19.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.21.0" />
     <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="PnP.Framework" Version="0.1.*-*" Condition="'$(PnPFrameworkPath)' == ''" />
+    <PackageReference Include="PnP.Core" Version="0.4.*-*" Condition="'$(PnPCoreSdkPath)' == ''" />
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
@@ -59,16 +56,23 @@
     <PackageReference Include="System.Text.Json" Version="4.7.2" />
     <PackageReference Include="TextCopy" Version="4.2.0" />
     <ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
-    <!--<Reference Include="PnP.Framework" Condition="'$(PnPFrameworkPath)' != ''">
-      <HintPath>$(PnPFrameworkPath)</HintPath>
-      <Private>true</Private>
-      <SpecificVersion>false</SpecificVersion>
-    </Reference>-->
-    <!--<Reference Include="PnP.Core" Condition="'$(PnPCoreSdkPath)' != ''">
+
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(PnPCoreSdkPath)' != ''">
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
+    <Reference Include="PnP.Core">
       <HintPath>$(PnPCoreSdkPath)</HintPath>
       <Private>true</Private>
       <SpecificVersion>false</SpecificVersion>
-    </Reference>-->
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(PnPFrameworkPath)' != ''">
+    <Reference Include="PnP.Framework" Condition="'$(PnPFrameworkPath)' != ''">
+      <HintPath>$(PnPFrameworkPath)</HintPath>
+      <Private>true</Private>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
@@ -85,22 +89,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="PnP.Core">
-      <HintPath>..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="PnP.Framework">
-      <HintPath>..\..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  
-  <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <CustomToolNamespace></CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
