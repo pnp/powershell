@@ -2,9 +2,9 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpwebpart
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnppagewebpart
 schema: 2.0.0
-title: Add-PnPWebPart
+title: Add-PnPPageWebPart
 ---
 
 # Add-PnPWebPart
@@ -16,28 +16,28 @@ Adds a web part to a page
 
 ### Default with built-in web part
 ```powershell
-Add-PnPWebPart [-Page] <PagePipeBind> -DefaultWebPartType <DefaultClientSideWebParts>
+Add-PnPPageWebPart [-Page] <PagePipeBind> -DefaultWebPartType <DefaultClientSideWebParts>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Default with 3rd party web part
 ```powershell
-Add-PnPWebPart [-Page] <PagePipeBind> -Component <PageComponentPipeBind>
+Add-PnPPageWebPart [-Page] <PagePipeBind> -Component <PageComponentPipeBind>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Positioned with built-in web part
 ```powershell
-Add-PnPWebPart [-Page] <PagePipeBind> -DefaultWebPartType <DefaultClientSideWebParts>
+Add-PnPPageWebPart [-Page] <PagePipeBind> -DefaultWebPartType <DefaultClientSideWebParts>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] -Section <Int32> -Column <Int32>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Positioned with 3rd party web part
 ```powershell
-Add-PnPWebPart [-Page] <PagePipeBind> -Component <PageComponentPipeBind>
+Add-PnPPageWebPart [-Page] <PagePipeBind> -Component <PageComponentPipeBind>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] -Section <Int32> -Column <Int32>
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
@@ -49,21 +49,21 @@ Adds a client-side web part to an existing client-side page.
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPWebPart -Page "MyPage" -DefaultWebPartType BingMap
+Add-PnPPageWebPart -Page "MyPage" -DefaultWebPartType BingMap
 ```
 
 Adds a built-in component 'BingMap' to the page called 'MyPage'
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPWebPart -Page "MyPage" -Component "HelloWorld"
+Add-PnPPageWebPart -Page "MyPage" -Component "HelloWorld"
 ```
 
 Adds a component 'HelloWorld' to the page called 'MyPage'
 
 ### EXAMPLE 3
 ```powershell
-Add-PnPWebPart  -Page "MyPage" -Component "HelloWorld" -Section 1 -Column 2
+Add-PnPPageWebPart -Page "MyPage" -Component "HelloWorld" -Section 1 -Column 2
 ```
 
 Adds a component 'HelloWorld' to the page called 'MyPage' in section 1 and column 2

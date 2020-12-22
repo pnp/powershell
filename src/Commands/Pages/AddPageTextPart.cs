@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Pages
 {
-    [Cmdlet(VerbsCommon.Add, "PnPTextPart")]
+    [Cmdlet(VerbsCommon.Add, "PnPPageTextPart")]
     [Alias("Add-PnPClientSideText")]
     public class AddTextPart : PnPWebCmdlet
     {

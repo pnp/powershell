@@ -2,35 +2,34 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpwebpart
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnppagetextpart
 schema: 2.0.0
-title: Set-PnPWebPart
+title: Set-PnPPageTextPart
 ---
 
-# Set-PnPeWebPart
+# Set-PnPPageTextPart
 
 ## SYNOPSIS
-Set Web Part properties
+Set text part properties
 
 ## SYNTAX
 
 ```powershell
-Set-PnPWebPart [-Page] <PagePipeBind> -Identity <WebPartPipeBind>
- [-Title <String>] [-PropertiesJson <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+Set-PnPPageTextPart [-Page] <PagePipeBind> -InstanceId <Guid> -Text <String>
+ [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Sets specific client side web part properties. Notice that the title parameter will only set the -internal- title of web part. The title which is shown in the UI will, if possible, have to be set using the PropertiesJson parameter. Use Get-PnPPageComponent to retrieve the instance id and properties of a web part.
+Sets the rendered text in existing client side text component
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPWebPart -Page Home -Identity a2875399-d6ff-43a0-96da-be6ae5875f82 -PropertiesJson $myproperties
+Set-PnPPageTextPart -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Text "MyText"
 ```
 
-Sets the properties of the client side web part given in the $myproperties variable.
+Sets the text of the client side text component.
 
 ## PARAMETERS
 
@@ -48,11 +47,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Identity
-The identity of the web part. This can be the web part instance id or the title of a web part
+### -InstanceId
+The instance id of the text component
 
 ```yaml
-Type: WebPartPipeBind
+Type: Guid
 Parameter Sets: (All)
 
 Required: True
@@ -76,28 +75,14 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -PropertiesJson
-Sets the properties as a JSON string.
+### -Text
+Text to set
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Title
-Sets the internal title of the web part. Notice that this will NOT set a visible title.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)

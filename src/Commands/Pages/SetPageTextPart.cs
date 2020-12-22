@@ -6,7 +6,7 @@ using PnP.Core.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Pages
 {
-    [Cmdlet(VerbsCommon.Set, "PnPTextPart")]
+    [Cmdlet(VerbsCommon.Set, "PnPPageTextPart")]
     [Alias("Set-PnPClientSideText")]
     public class SetClientSideText : PnPWebCmdlet
     {

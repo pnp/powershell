@@ -5,8 +5,8 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
-    [Cmdlet(VerbsCommon.Add, "PnPWebPart")]
-    [Alias("Add-PnPClientWebPart")]
+    [Cmdlet(VerbsCommon.Add, "PnPPageWebPart")]
+    [Alias("Add-PnPClientSideWebPart")]
     public class AddWebPart : PnPWebCmdlet
     {
         private const string ParameterSet_DEFAULTBUILTIN = "Default with built-in web part";
@@ -80,14 +80,16 @@ namespace PnP.PowerShell.Commands.WebParts
             if (WebPartProperties != null)
             {
                 // TODO: do we still need this?
-                //if (WebPartProperties.Properties != null)
-                //{
-                //    webpart.Properties.Merge(WebPartProperties.JsonObject);
-                //}
-                //else 
-                if (!string.IsNullOrEmpty(WebPartProperties.Json))
+                if (WebPartProperties.Properties != null)
                 {
-                    webpart.PropertiesJson = WebPartProperties.Json;
+                    webpart.PropertiesJson = Utilities.JSON.Merger.Merge(webpart.PropertiesJson, WebPartProperties.ToString());
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(WebPartProperties.Json))
+                    {
+                        webpart.PropertiesJson = WebPartProperties.Json;
+                    }
                 }
             }
 

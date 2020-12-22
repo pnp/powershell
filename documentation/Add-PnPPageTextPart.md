@@ -2,12 +2,12 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnptextpart
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnppagetextpart
 schema: 2.0.0
-title: Add-PnPTextPart
+title: Add-PnPPageTextPart
 ---
 
-# Add-PnPTextPart
+# Add-PnPPageTextPart
 
 ## SYNOPSIS
 Adds a text element to a client-side page.
@@ -16,13 +16,13 @@ Adds a text element to a client-side page.
 
 ### Default
 ```powershell
-Add-PnPTextPart [-Page] <PagePipeBind> -Text <String> [-Order <Int32>] [-Web <WebPipeBind>]
+Add-PnPPageTextPart [-Page] <PagePipeBind> -Text <String> [-Order <Int32>] [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Positioned
 ```powershell
-Add-PnPTextPart [-Page] <PagePipeBind> -Text <String> [-Order <Int32>] -Section <Int32>
+Add-PnPPageTextPart [-Page] <PagePipeBind> -Text <String> [-Order <Int32>] -Section <Int32>
  -Column <Int32> [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -33,7 +33,7 @@ Adds a new text element to a section on a client-side page.
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPTextPart -Page "MyPage" -Text "Hello World!"
+Add-PnPPageTextPart -Page "MyPage" -Text "Hello World!"
 ```
 
 Adds the text 'Hello World!' to the Page 'MyPage'

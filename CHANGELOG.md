@@ -12,7 +12,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Renamed `Add-PnPClientSidePage` to `Add-PnPPage`
 - Renamed `Add-PnPClientSidePageSection` to `Add-PnPPageSection`
-- Renamed `Add-PnPClientSideText` to `Add-PnPTextPart`
+- Renamed `Add-PnPClientSideText` to `Add-PnPPageTextPart`
+- Renamed `Add-PnPClientSideWeb` to `Add-PnPPageWebPart`
 - Renamed `Export-PnPClientSidePage` to `Export-PnPPage`
 - Renamed `Export-PnPClientSidePageMapping` to `Export-PnPPageMapping`
 - Deprecated `Get-AvailableClientSidePageComponents`. Use `Get-PnPPageComponents -Page <yourpage> -ListAvailable`
@@ -23,8 +24,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Renamed `Remove-PnPClientSideComponent` to `Remove-PnPPageComponent`
 - Renamed `Save-PnPClientSidePageConversionLog` to `Save-PnPPageConversionLog`
 - Renamed `Set-PnPClientSidePage` to `Set-PnPPage`
-- Renamed `Set-PnPClientSideText` to `Set-PnPTextPart`
-- Renamed `Set-PnPClientSideWebPart` to `Set-PnPWebPart`
+- Renamed `Set-PnPClientSideText` to `Set-PnPPageTextPart`
+- Renamed `Set-PnPClientSideWebPart` to `Set-PnPPageWebPart`
 - Removed '-Url' parameter from `Set-PnPWebPermission`. Use `-Identity` instead. (0.3.13)
 - Renamed `Get-PnPSubWebs` to `Get-PnPSubWeb` which is in line with PowerShell naming standards which state that cmdlets should use a singalar noun. Alias for `Get-PnPSubWebs` is available. (0.3.13)
 - `Register-PnPManagementShellAccess` now uses a popup window to authenticate you when your run the cmdlet on Windows (0.3.10)
