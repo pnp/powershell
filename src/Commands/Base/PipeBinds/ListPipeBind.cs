@@ -60,6 +60,8 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                     list = context.Web.Lists.GetByServerRelativeUrl(_name, retrievals);
                 }
             }
+            list.EnsurePropertiesAsync(l => l.RootFolder);
+            list.RootFolder.EnsurePropertiesAsync(f => f.ServerRelativeUrl);
             return list;
         }
 

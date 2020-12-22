@@ -26,6 +26,7 @@ namespace PnP.PowerShell.Commands.Lists
                 if (Identity != null)
                 {
                     var list = Identity.GetList(PnPContext);
+                  
                     WriteObject(list);
 
                 }

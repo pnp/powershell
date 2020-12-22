@@ -213,7 +213,7 @@
      <View>
       <Name>List</Name>
       <ViewSelectedBy>
-        <TypeName>PnP.Core.Model.SharePoint.IList</TypeName>
+        <TypeName>PnP.Core.Model.SharePoint.List</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
