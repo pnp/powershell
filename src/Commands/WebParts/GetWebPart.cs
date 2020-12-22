@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.WebParts
         public string ServerRelativePageUrl = string.Empty;
 
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
-        public WebPartPipeBind Identity;
+        public ClassicWebPartPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {

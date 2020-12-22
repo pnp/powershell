@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Threading;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
+using PnP.Core.Services;
 using PnP.Framework;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base;
@@ -21,6 +22,8 @@ namespace PnP.PowerShell.Commands
         /// Reference the the SharePoint context on the current connection. If NULL it means there is no SharePoint context available on the current connection.
         /// </summary>
         public ClientContext ClientContext => Connection?.Context ?? PnPConnection.CurrentConnection.Context;
+
+        public PnPContext PnPContext => Connection?.PnPContext ?? PnPConnection.CurrentConnection.PnPContext;
 
         // do not remove '#!#99'
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")]

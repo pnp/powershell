@@ -9,7 +9,7 @@
     <CopyRefAssembliesToPublishDirectory>true</CopyRefAssembliesToPublishDirectory>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <Authors>PnP.PowerShell</Authors>
-    <Configurations>Debug;Release</Configurations>
+    <Configurations>Debug;Release;DebugLocal</Configurations>
     <LocalPnPFramework Condition="'$(LocalPnPFramework)' == ''">false</LocalPnPFramework>
   </PropertyGroup>
   

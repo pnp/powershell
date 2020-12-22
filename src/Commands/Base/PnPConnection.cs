@@ -1,6 +1,7 @@
 ﻿using Microsoft.Identity.Client;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Extensions;
+using PnP.Core.Services;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
@@ -38,6 +39,8 @@ namespace PnP.PowerShell.Commands.Base
 
         private HttpClient httpClient;
 
+        private PnPContext pnpContext {get;set;}
+
         public HttpClient HttpClient
         {
             get
@@ -47,6 +50,18 @@ namespace PnP.PowerShell.Commands.Base
                     httpClient = new HttpClient();
                 }
                 return httpClient;
+            }
+        }
+
+        internal PnPContext PnPContext
+        {
+            get 
+            {
+                if(pnpContext == null && Context != null)
+                {
+                    pnpContext = PnP.Framework.PnPCoreSdk.Instance.GetPnPContext(Context);
+                }
+                return pnpContext;
             }
         }
         /// <summary>

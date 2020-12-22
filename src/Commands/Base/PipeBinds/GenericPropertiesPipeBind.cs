@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Management.Automation;
+using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -8,25 +9,24 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
     {
         private readonly Hashtable _hashtable;
         private string _jsonString;
-        private JObject _jsonObject;
+        private JsonElement _jsonObject;
 
         public PropertyBagPipeBind(Hashtable hashtable)
         {
             _hashtable = hashtable;
             _jsonString = null;
-            _jsonObject = null;
+            _jsonObject = default;
         }
 
         public PropertyBagPipeBind(string json)
         {
             _hashtable = null;
             _jsonString = json;
-            _jsonObject = JObject.Parse(json);
+            _jsonObject = JsonDocument.Parse(json).RootElement;
         }
 
         public string Json => _jsonString;
 
-        public JObject JsonObject => _jsonObject ?? HashtableToJsonObject(_hashtable);
 
         public Hashtable Properties => _hashtable;
 
@@ -34,12 +34,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         private string HashtableToJsonString(Hashtable hashtable)
         {
-            return HashtableToJsonObject(hashtable).ToString();
-        }
-
-        private JObject HashtableToJsonObject(Hashtable hashtable)
-        {
-            var obj = new JObject();
+            var container = new Dictionary<string, object>();
 
             foreach (var key in hashtable.Keys)
             {
@@ -47,12 +42,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
                 // To ensure the value is not serialized as PSObject
                 object value = rawValue is PSObject
-                    ? ((PSObject) rawValue).BaseObject
+                    ? ((PSObject)rawValue).BaseObject
                     : rawValue;
 
-                obj[key] = JToken.FromObject(value);
+                container.Add(key.ToString(), value);
             }
-            return obj;
+            return JsonSerializer.Serialize(container, new JsonSerializerOptions() { WriteIndented = false });
         }
 
     }

@@ -18,7 +18,7 @@ Generates a provisioning site template from a web
 Get-PnPSiteTemplate [[-Out] <String>] [[-Schema] <XMLPnPSchemaVersion>] [-IncludeAllTermGroups]
  [-IncludeSiteCollectionTermGroup] [-IncludeSiteGroups] [-IncludeTermGroupsSecurity]
  [-IncludeSearchConfiguration] [-PersistBrandingFiles] [-PersistPublishingFiles]
- [-IncludeNativePublishingFiles] [-IncludeHiddenLists] [-IncludeAllClientSidePages] [-SkipVersionCheck]
+ [-IncludeNativePublishingFiles] [-IncludeHiddenLists] [-IncludeAllPages] [-SkipVersionCheck]
  [-PersistMultiLanguageResources] [-ResourceFilePrefix <String>] [-Handlers <Handlers>]
  [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-ContentTypeGroups <String[]>] [-Force]
@@ -291,8 +291,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -IncludeAllClientSidePages
-If specified all client side pages will be included
+### -IncludeAllPages
+If specified all site pages will be included
 
 ```yaml
 Type: SwitchParameter
