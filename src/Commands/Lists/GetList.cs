@@ -17,28 +17,47 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false)]
         public SwitchParameter ThrowExceptionIfListNotFound;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter New;
         protected override void ExecuteCmdlet()
         {
-            DefaultRetrievalExpressions = new Expression<Func<List, object>>[] { l => l.Id, l => l.BaseTemplate, l => l.OnQuickLaunch, l => l.DefaultViewUrl, l => l.Title, l => l.Hidden, l => l.RootFolder.ServerRelativeUrl };
-
-            if (Identity != null)
+            if (ParameterSpecified(nameof(New)))
             {
-                var list = Identity.GetList(CurrentWeb);
+                if (Identity != null)
+                {
+                    var list = Identity.GetList(PnPContext);
+                    WriteObject(list);
 
-                if (ThrowExceptionIfListNotFound && list == null)
-                { 
-                    throw new PSArgumentException(string.Format(Resources.ListNotFound, Identity), nameof(Identity));
                 }
-                list?.EnsureProperties(RetrievalExpressions);
-
-                WriteObject(list);
+                else
+                {
+                    var lists = PnPContext.Web.Lists;
+                    WriteObject(lists, true);
+                }
             }
             else
             {
-                var query = CurrentWeb.Lists.IncludeWithDefaultProperties(RetrievalExpressions);
-                var lists = ClientContext.LoadQuery(query);
-                ClientContext.ExecuteQueryRetry();
-                WriteObject(lists, true);
+                DefaultRetrievalExpressions = new Expression<Func<List, object>>[] { l => l.Id, l => l.BaseTemplate, l => l.OnQuickLaunch, l => l.DefaultViewUrl, l => l.Title, l => l.Hidden, l => l.RootFolder.ServerRelativeUrl };
+
+                if (Identity != null)
+                {
+                    var list = Identity.GetList(CurrentWeb);
+
+                    if (ThrowExceptionIfListNotFound && list == null)
+                    {
+                        throw new PSArgumentException(string.Format(Resources.ListNotFound, Identity), nameof(Identity));
+                    }
+                    list?.EnsureProperties(RetrievalExpressions);
+
+                    WriteObject(list);
+                }
+                else
+                {
+                    var query = CurrentWeb.Lists.IncludeWithDefaultProperties(RetrievalExpressions);
+                    var lists = ClientContext.LoadQuery(query);
+                    ClientContext.ExecuteQueryRetry();
+                    WriteObject(lists, true);
+                }
             }
         }
     }

@@ -265,6 +265,227 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
+        public static Dictionary<string,object> GetFieldValues(PnP.Core.Model.SharePoint.IList list, Hashtable valuesToSet, Cmdlet cmdlet)
+        {
+            var item = new Dictionary<string,object>();
+
+            // xxx: return early if hashtable is empty to save getting fields?
+            var itemValues = new List<FieldUpdateValue>();
+
+            var fields = list.Fields;
+
+            Hashtable values = valuesToSet ?? new Hashtable();
+
+            foreach (var key in values.Keys)
+            {
+                var field = fields.FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
+                if (field != null)
+                {
+                    switch (field.TypeAsString)
+                    {
+                        case "User":
+                        case "UserMulti":
+                            {
+                                List<FieldUserValue> userValues = new List<FieldUserValue>();
+
+                                var value = values[key];
+                                if (value == null) goto default;
+                                if (value is string && string.IsNullOrWhiteSpace(value + "")) goto default;
+                                if (value.GetType().IsArray)
+                                {
+                                    foreach (var arrayItem in (value as IEnumerable))
+                                    {
+                                        int userId;
+                                        if (!int.TryParse(arrayItem.ToString(), out userId))
+                                        {
+                                            var user = list.PnPContext.Web.EnsureUser(arrayItem as string);
+                                            userValues.Add(new FieldUserValue() { LookupId = user.Id });
+                                        }
+                                        else
+                                        {
+                                            userValues.Add(new FieldUserValue() { LookupId = userId });
+                                        }
+                                    }
+                                    itemValues.Add(new FieldUpdateValue(key as string, userValues.ToArray(), null));
+                                }
+                                else
+                                {
+                                    int userId;
+                                    if (!int.TryParse(value as string, out userId))
+                                    {
+                                        var user = list.PnPContext.Web.EnsureUser(value as string);
+                                        itemValues.Add(new FieldUpdateValue(key as string, new FieldUserValue() { LookupId = user.Id }));
+                                    }
+                                    else
+                                    {
+                                        itemValues.Add(new FieldUpdateValue(key as string, new FieldUserValue() { LookupId = userId }));
+                                    }
+                                }
+                                break;
+                            }
+                        case "TaxonomyFieldType":
+                        case "TaxonomyFieldTypeMulti":
+                            {
+                                /*
+                                var value = values[key];
+                                if (value != null && value.GetType().IsArray)
+                                {
+                                    
+                                    var taxSession = clonedContext.Site.GetTaxonomySession();
+                                    var terms = new List<KeyValuePair<Guid, string>>();
+                                    foreach (var arrayItem in value as object[])
+                                    {
+                                        TaxonomyItem taxonomyItem;
+                                        Guid termGuid;
+                                        if (!Guid.TryParse(arrayItem as string, out termGuid))
+                                        {
+                                            // Assume it's a TermPath
+                                            taxonomyItem = clonedContext.Site.GetTaxonomyItemByPath(arrayItem as string);
+                                        }
+                                        else
+                                        {
+                                            taxonomyItem = taxSession.GetTerm(termGuid);
+                                            clonedContext.Load(taxonomyItem);
+                                            clonedContext.ExecuteQueryRetry();
+                                        }
+                                        terms.Add(new KeyValuePair<Guid, string>(taxonomyItem.Id, taxonomyItem.Name));
+                                    }
+
+                                    TaxonomyField taxField = context.CastTo<TaxonomyField>(field);
+                                    taxField.EnsureProperty(tf => tf.AllowMultipleValues);
+                                    if (taxField.AllowMultipleValues)
+                                    {
+                                        var termValuesString = String.Empty;
+                                        foreach (var term in terms)
+                                        {
+                                            termValuesString += "-1;#" + term.Value + "|" + term.Key.ToString("D") + ";#";
+                                        }
+
+                                        termValuesString = termValuesString.Substring(0, termValuesString.Length - 2);
+
+                                        var newTaxFieldValue = new TaxonomyFieldValueCollection(context, termValuesString, taxField);
+                                        itemValues.Add(new FieldUpdateValue(key as string, newTaxFieldValue, field.TypeAsString));
+                                    }
+                                    else
+                                    {
+                                        cmdlet.WriteWarning(@"You are trying to set multiple values in a single value field. Skipping values for field ""{field.InternalName}""");
+                                    }
+                                }
+                                else
+                                {
+                                    Guid termGuid = Guid.Empty;
+
+                                    var taxSession = clonedContext.Site.GetTaxonomySession();
+                                    TaxonomyItem taxonomyItem = null;
+                                    if (value != null && !Guid.TryParse(value as string, out termGuid))
+                                    {
+                                        // Assume it's a TermPath
+                                        taxonomyItem = clonedContext.Site.GetTaxonomyItemByPath(value as string);
+                                    }
+                                    else
+                                    {
+                                        if (value != null)
+                                        {
+                                            taxonomyItem = taxSession.GetTerm(termGuid);
+                                            clonedContext.Load(taxonomyItem);
+                                            clonedContext.ExecuteQueryRetry();
+                                        }
+                                    }
+
+                                    TaxonomyField taxField = context.CastTo<TaxonomyField>(field);
+                                    TaxonomyFieldValue taxValue = new TaxonomyFieldValue();
+                                    if (taxonomyItem != null)
+                                    {
+                                        taxValue.TermGuid = taxonomyItem.Id.ToString();
+                                        taxValue.Label = taxonomyItem.Name;
+                                        itemValues.Add(new FieldUpdateValue(key as string, taxValue, field.TypeAsString));
+                                    }
+                                    else
+                                    {
+                                        taxField.ValidateSetValue(item, null);
+                                    }
+                                }
+                                */
+                                break;
+                            }
+                        case "Lookup":
+                        case "LookupMulti":
+                            {
+                                var value = values[key];
+                                if (value == null) goto default;
+                                int[] multiValue;
+                                if (value is Array)
+                                {
+                                    var arr = (object[])values[key];
+                                    multiValue = new int[arr.Length];
+                                    for (int i = 0; i < arr.Length; i++)
+                                    {
+                                        multiValue[i] = int.Parse(arr[i].ToString());
+                                    }
+                                }
+                                else
+                                {
+                                    string valStr = values[key].ToString();
+                                    multiValue = valStr.Split(',', ';').Select(int.Parse).ToArray();
+                                }
+
+                                var newVals = multiValue.Select(id => new FieldLookupValue { LookupId = id }).ToArray();
+                                if (!field.AllowMultipleValues && newVals.Length > 1)
+                                {
+                                    throw new Exception("Field " + field.InternalName + " does not support multiple values");
+                                }
+                                itemValues.Add(new FieldUpdateValue(key as string, newVals));
+                                break;
+                            }
+                        default:
+                            {
+                                itemValues.Add(new FieldUpdateValue(key as string, values[key]));
+                                break;
+                            }
+                    }
+                }
+                else
+                {
+                    throw new PSInvalidOperationException($"Field {key} not present in list.");
+                }
+            }
+            foreach (var itemValue in itemValues)
+            {
+                if (string.IsNullOrEmpty(itemValue.FieldTypeString))
+                {
+                    item[itemValue.Key] = itemValue.Value;
+                }
+                else
+                {
+                    switch (itemValue.FieldTypeString)
+                    {
+                        case "TaxonomyFieldTypeMulti":
+                            {
+                                // var field = fields.FirstOrDefault(f => f.InternalName == itemValue.Key as string || f.Title == itemValue.Key as string);
+                                // var taxField = context.CastTo<TaxonomyField>(field);
+                                // if (itemValue.Value is TaxonomyFieldValueCollection)
+                                // {
+                                //     taxField.SetFieldValueByValueCollection(item, itemValue.Value as TaxonomyFieldValueCollection);
+                                // }
+                                // else
+                                // {
+                                //     taxField.SetFieldValueByValue(item, itemValue.Value as TaxonomyFieldValue);
+                                // }
+                                break;
+                            }
+                        case "TaxonomyFieldType":
+                            {
+                                // var field = fields.FirstOrDefault(f => f.InternalName == itemValue.Key as string || f.Title == itemValue.Key as string);
+                                // var taxField = context.CastTo<TaxonomyField>(field);
+                                // taxField.SetFieldValueByValue(item, itemValue.Value as TaxonomyFieldValue);
+                                break;
+                            }
+                    }
+                }
+            }
+            return item;
+        }
+
         public static void UpdateListItem(this ListItem item, ListItemUpdateType updateType)
         {
             switch (updateType)

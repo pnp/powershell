@@ -112,7 +112,7 @@ if ($LASTEXITCODE -eq 0) {
 		}
 	}
 	Catch {
-		Write-Host "Error: Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module?"
+		Write-Error "Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module?"
 		exit 1
 	}
 

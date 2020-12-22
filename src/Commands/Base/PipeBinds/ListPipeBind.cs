@@ -1,12 +1,15 @@
 ﻿using Microsoft.SharePoint.Client;
 using System;
 using System.Management.Automation;
+using PnPCore = PnP.Core.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public sealed class ListPipeBind
     {
         private readonly List _list;
+
+        private readonly PnPCore.IList _ilist;
         private readonly Guid _id;
         private readonly string _name;
 
@@ -20,6 +23,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _id = guid;
         }
 
+        public ListPipeBind(PnPCore.IList list)
+        {
+            _ilist = list;
+        }
+
         public ListPipeBind(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -27,6 +35,32 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
             if (!Guid.TryParse(id, out _id))
                 _name = id;
+        }
+
+        internal PnPCore.IList GetList(PnP.Core.Services.PnPContext context, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] retrievals)
+        {
+            PnPCore.IList list = null;
+            if (_ilist != null)
+            {
+                list = _ilist;
+                if (retrievals.Length > 0)
+                {
+                    list.Get(retrievals);
+                }
+            }
+            else if (_id != Guid.Empty)
+            {
+                list = context.Web.Lists.GetById(_id, retrievals);
+            }
+            else if (!string.IsNullOrEmpty(_name))
+            {
+                list = context.Web.Lists.GetByTitle(_name, retrievals);
+                if (list == null)
+                {
+                    list = context.Web.Lists.GetByServerRelativeUrl(_name, retrievals);
+                }
+            }
+            return list;
         }
 
         internal List GetList(Web web, params System.Linq.Expressions.Expression<Func<List, object>>[] retrievals)
@@ -76,11 +110,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         private string NoListMessage
             => $"No list found with id, title or url '{this}' (title is case-sensitive)";
 
-        public override string ToString()
-            => _name
-            ?? (_id != Guid.Empty ? _id.ToString() : null)
-            ?? (_list.IsPropertyAvailable(l => l.Title) ? _list.Title : null)
-            ?? (_list.IsPropertyAvailable(l => l.Id) ? _list.Id.ToString() : null)
-            ?? "[List object with no Title or Id]";
+        // public override string ToString()
+        //     => _name
+        //     ?? (_id != Guid.Empty ? _id.ToString() : null)
+        //     ?? (_list.IsPropertyAvailable(l => l.Title) ? _list.Title : null)
+        //     ?? (_list.IsPropertyAvailable(l => l.Id) ? _list.Id.ToString() : null)
+        //     ?? "[List object with no Title or Id]";
     }
 }

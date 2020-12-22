@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using PnP.Core.Services;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Utilities;
@@ -16,6 +17,7 @@ namespace PnP.PowerShell.Commands.Lists
     public class AddListItem : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ValidateNotNull]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false)]
@@ -30,15 +32,20 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false)]
         public String Label;
 
+        [Parameter(Mandatory = false)]
+        public Batch Batch;
+
         protected override void ExecuteCmdlet()
         {
-            List list = null;
-            if (List != null)
+            if (ParameterSpecified(nameof(Batch)))
             {
-                list = List.GetList(CurrentWeb);
+                var list = List.GetList(PnPContext);
+                var values = ListItemHelper.GetFieldValues(list, Values, this);
+                list.Items.AddBatch(Batch, values);
             }
-            if (list != null)
+            else
             {
+                List list = List.GetList(CurrentWeb);
                 ListItemCreationInformation liCI = new ListItemCreationInformation();
                 if (Folder != null)
                 {
