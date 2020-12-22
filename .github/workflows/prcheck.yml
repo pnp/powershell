@@ -42,6 +42,9 @@ jobs:
     - name: Build PnP.Framework
       run: dotnet build --configuration Release --no-restore -p:WarningLevel=0
       working-directory: pnpframework/src/lib/PnP.Framework
+    - name: Install PnP.Core dependencies
+      run: dotnet restore
+      working-directory: pnpcore/src/sdk
     - name: Build PnP.Core
       run: dotnet build --configuration Release --no-restore -p:WarningLevel=0
       working-directory: pnpcore/src/sdk/PnP.Core
