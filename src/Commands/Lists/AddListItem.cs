@@ -33,13 +33,14 @@ namespace PnP.PowerShell.Commands.Lists
         public String Label;
 
         [Parameter(Mandatory = false)]
+        [ValidateNotNull]
         public Batch Batch;
 
         protected override void ExecuteCmdlet()
         {
             if (ParameterSpecified(nameof(Batch)))
             {
-                var list = List.GetList(PnPContext);
+                var list = List.GetList(CurrentWeb, PnPContext);
                 var values = ListItemHelper.GetFieldValues(list, Values, this);
                 list.Items.AddBatch(Batch, values);
             }

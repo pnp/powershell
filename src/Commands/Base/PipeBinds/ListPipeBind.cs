@@ -37,32 +37,19 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 _name = id;
         }
 
-        internal PnPCore.IList GetList(PnP.Core.Services.PnPContext context, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] retrievals)
+
+        internal PnPCore.IList GetList(Web web, PnP.Core.Services.PnPContext context, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] retrievals)
         {
-            PnPCore.IList list = null;
-            if (_ilist != null)
+            var list = GetList(web);
+
+            if (list != null)
             {
-                list = _ilist;
-                if (retrievals.Length > 0)
-                {
-                    list.Get(retrievals);
-                }
+                return context.Web.Lists.GetById(list.Id, retrievals);
             }
-            else if (_id != Guid.Empty)
+            else
             {
-                list = context.Web.Lists.GetById(_id, retrievals);
+                return null;
             }
-            else if (!string.IsNullOrEmpty(_name))
-            {
-                list = context.Web.Lists.GetByTitle(_name, retrievals);
-                if (list == null)
-                {
-                    list = context.Web.Lists.GetByServerRelativeUrl(_name, retrievals);
-                }
-            }
-            list.EnsurePropertiesAsync(l => l.RootFolder);
-            list.RootFolder.EnsurePropertiesAsync(f => f.ServerRelativeUrl);
-            return list;
         }
 
         internal List GetList(Web web, params System.Linq.Expressions.Expression<Func<List, object>>[] retrievals)
