@@ -201,6 +201,12 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false, HelpMessage = "Boolean indicating if a news digest should automatically be sent to end users to inform them about news that they may have missed. On by default. For more information, see https://aka.ms/autonewsdigest")]
         public bool? EnableAutoNewsDigest;
 
+        [Parameter(Mandatory = false)]
+        public bool? CommentsOnListItemsDisabled;
+
+        [Parameter(Mandatory = false)]
+        public bool? CommentsOnFilesDisabled;
+
         protected override void ExecuteCmdlet()
         {
             ClientContext.Load(Tenant);
@@ -775,6 +781,16 @@ namespace PnP.PowerShell.Commands.Admin
             if (EnableAutoNewsDigest.HasValue)
             {
                 Tenant.EnableAutoNewsDigest = EnableAutoNewsDigest.Value;
+                modified = true;
+            }
+            if (CommentsOnListItemsDisabled.HasValue)
+            {
+                Tenant.CommentsOnListItemsDisabled = CommentsOnListItemsDisabled.Value;
+                modified = true;
+            }
+            if (CommentsOnFilesDisabled.HasValue)
+            {
+                Tenant.CommentsOnFilesDisabled = CommentsOnFilesDisabled.Value;
                 modified = true;
             }
             if (modified)
