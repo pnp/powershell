@@ -18,7 +18,7 @@ Write-host "Latest PnP Framework Commit hash $pnpframework_hash" -ForegroundColo
 Write-Host "Stored PnP Framework Commit hash: $existing_pnpframework_hash" -ForegroundColor Yellow
 
 if ($existing_pnppowershell_hash -ne $pnppowershell_hash || $existing_pnpframework_hash -ne $pnpframework_hash) {
-	Set-Content ./pnppowershell_hash.txt -Value $powershell_hash -NoNewline -Force
+	Set-Content ./pnppowershell_hash.txt -Value $pnppowershell_hash -NoNewline -Force
 	Set-Content ./pnpframework_hash.txt -Value $pnpframework_hash -NoNewline -Force
 	$runPublish = $true
 }
@@ -123,7 +123,7 @@ if ($runPublish -eq $true) {
 			$cmdlets -Join ","
 		}
 
-		Write-Host "Starting job to generate PSD1" -ForegroundColor Yellow
+		Write-Host "Starting job to retrieve cmdlet names" -ForegroundColor Yellow
 		$cmdletsString = Start-Job -ScriptBlock $scriptBlock | Receive-Job -Wait
 
 		Write-Host "Writing PSD1" -ForegroundColor Yellow
