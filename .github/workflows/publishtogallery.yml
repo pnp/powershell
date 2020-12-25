@@ -3,7 +3,7 @@ name: Nightly Release to PowerShell Gallery
 on:
   workflow_dispatch:
   schedule:
-  - cron: '0 1 * * *'
+  - cron: '30 2 * * *'
 jobs:
   build:
 
