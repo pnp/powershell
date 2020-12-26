@@ -244,7 +244,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     if (!string.IsNullOrWhiteSpace(clientId))
                     {
-                        using (var authManager = new PnP.Framework.AuthenticationManager(clientId, credentials.UserName, credentials.Password, redirectUrl))
+                        using (var authManager = new PnP.Framework.AuthenticationManager(clientId, credentials.UserName, credentials.Password, redirectUrl, azureEnvironment))
                         {
                             context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                             context.ExecuteQueryRetry();
@@ -255,7 +255,7 @@ namespace PnP.PowerShell.Commands.Base
                     }
                     else
                     {
-                        using (var authManager = new PnP.Framework.AuthenticationManager(credentials.UserName, credentials.Password))
+                        using (var authManager = new PnP.Framework.AuthenticationManager(credentials.UserName, credentials.Password, azureEnvironment))
                         {
                             context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                             context.ExecuteQueryRetry();
