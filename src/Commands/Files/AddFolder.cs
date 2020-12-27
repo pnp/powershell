@@ -2,6 +2,7 @@
 using Microsoft.SharePoint.Client;
 
 using PnP.Framework.Utilities;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Files
 {
@@ -12,16 +13,13 @@ namespace PnP.PowerShell.Commands.Files
         public string Name = string.Empty;
 
         [Parameter(Mandatory = true)]
-        public string Folder = string.Empty;
+        public FolderPipeBind Folder;
 
         protected override void ExecuteCmdlet()
         {
             CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
                         
-            Folder folder = CurrentWeb.GetFolderByServerRelativeUrl(UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, Folder));
-            ClientContext.Load(folder, f => f.ServerRelativeUrl);
-            ClientContext.ExecuteQueryRetry();
-
+            Folder folder = Folder.GetFolder(CurrentWeb);
             var result = folder.CreateFolder(Name);
 
             WriteObject(result);

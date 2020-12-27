@@ -15,7 +15,7 @@ Creates a folder within a parent folder
 ## SYNTAX
 
 ```powershell
-Add-PnPFolder -Name <String> -Folder <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Add-PnPFolder -Name <String> -Folder <FolderPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -50,7 +50,7 @@ Accept wildcard characters: False
 The parent folder in the site
 
 ```yaml
-Type: String
+Type: FolderPipeBind
 Parameter Sets: (All)
 
 Required: True

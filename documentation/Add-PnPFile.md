@@ -16,14 +16,14 @@ Uploads a file to Web
 
 ### Upload file
 ```powershell
-Add-PnPFile -Path <String> -Folder <String> [-NewFileName <String>] [-Checkout] [-CheckInComment <String>]
+Add-PnPFile -Path <String> -Folder <FolderPipeBind> [-NewFileName <String>] [-Checkout] [-CheckInComment <String>]
  [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
  [-ContentType <ContentTypePipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Upload file from stream
 ```powershell
-Add-PnPFile -Folder <String> -FileName <String> -Stream <Stream> [-Checkout] [-CheckInComment <String>]
+Add-PnPFile -Folder <FolderPipeBind> -FileName <String> -Stream <Stream> [-Checkout] [-CheckInComment <String>]
  [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
  [-ContentType <ContentTypePipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
@@ -185,7 +185,7 @@ Accept wildcard characters: False
 The destination folder in the site
 
 ```yaml
-Type: String
+Type: FolderPipeBind
 Parameter Sets: (All)
 
 Required: True
