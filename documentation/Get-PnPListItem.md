@@ -222,7 +222,7 @@ Accept wildcard characters: False
 ```
 
 ### -UniqueId
-The unique id (GUID) of the item to retrieve
+The unique id (UniqueId) of the item to retrieve
 
 ```yaml
 Type: Guid
