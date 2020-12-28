@@ -4,6 +4,7 @@ using PnP.PowerShell.Commands.Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Management.Automation;
 using System.Text;
@@ -265,12 +266,11 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static Dictionary<string,object> GetFieldValues(PnP.Core.Model.SharePoint.IList list, Hashtable valuesToSet, Cmdlet cmdlet)
+        public static Dictionary<string, object> GetFieldValues(PnP.Core.Model.SharePoint.IList list, Hashtable valuesToSet, Cmdlet cmdlet, ClientContext clientContext)
         {
-            var item = new Dictionary<string,object>();
+            var item = new Dictionary<string, object>();
 
             // xxx: return early if hashtable is empty to save getting fields?
-            var itemValues = new List<FieldUpdateValue>();
 
             var fields = list.Fields;
 
@@ -286,7 +286,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         case "User":
                         case "UserMulti":
                             {
-                                List<FieldUserValue> userValues = new List<FieldUserValue>();
+                                var userValueCollection = field.NewFieldValueCollection();
 
                                 var value = values[key];
                                 if (value == null) goto default;
@@ -299,14 +299,14 @@ namespace PnP.PowerShell.Commands.Utilities
                                         if (!int.TryParse(arrayItem.ToString(), out userId))
                                         {
                                             var user = list.PnPContext.Web.EnsureUser(arrayItem as string);
-                                            userValues.Add(new FieldUserValue() { LookupId = user.Id });
+                                            userValueCollection.Values.Add(field.NewFieldUserValue(user));
                                         }
                                         else
                                         {
-                                            userValues.Add(new FieldUserValue() { LookupId = userId });
+                                            userValueCollection.Values.Add(field.NewFieldUserValue(userId));
                                         }
                                     }
-                                    itemValues.Add(new FieldUpdateValue(key as string, userValues.ToArray(), null));
+                                    item[key as string] = userValueCollection;
                                 }
                                 else
                                 {
@@ -314,11 +314,11 @@ namespace PnP.PowerShell.Commands.Utilities
                                     if (!int.TryParse(value as string, out userId))
                                     {
                                         var user = list.PnPContext.Web.EnsureUser(value as string);
-                                        itemValues.Add(new FieldUpdateValue(key as string, new FieldUserValue() { LookupId = user.Id }));
+                                        item[key as string] = field.NewFieldUserValue(user);
                                     }
                                     else
                                     {
-                                        itemValues.Add(new FieldUpdateValue(key as string, new FieldUserValue() { LookupId = userId }));
+                                        item[key as string] = field.NewFieldUserValue(userId);
                                     }
                                 }
                                 break;
@@ -326,86 +326,74 @@ namespace PnP.PowerShell.Commands.Utilities
                         case "TaxonomyFieldType":
                         case "TaxonomyFieldTypeMulti":
                             {
-                                /*
                                 var value = values[key];
                                 if (value != null && value.GetType().IsArray)
                                 {
-                                    
-                                    var taxSession = clonedContext.Site.GetTaxonomySession();
-                                    var terms = new List<KeyValuePair<Guid, string>>();
+                                    var fieldValueCollection = field.NewFieldValueCollection();
+
+                                    var taxSession = clientContext.Site.GetTaxonomySession();
                                     foreach (var arrayItem in value as object[])
                                     {
-                                        TaxonomyItem taxonomyItem;
+                                        Term taxonomyItem;
                                         Guid termGuid;
+                                        var label = string.Empty;
                                         if (!Guid.TryParse(arrayItem as string, out termGuid))
                                         {
                                             // Assume it's a TermPath
-                                            taxonomyItem = clonedContext.Site.GetTaxonomyItemByPath(arrayItem as string);
+                                            taxonomyItem = clientContext.Site.GetTaxonomyItemByPath(arrayItem as string) as Term;
+                                            if (taxonomyItem == null)
+                                            {
+                                                throw new PSInvalidOperationException($"Cannot find term {arrayItem}");
+                                            }
+                                            var labelResult = taxonomyItem.GetDefaultLabel(CultureInfo.CurrentCulture.LCID);
+                                            clientContext.ExecuteQueryRetry();
+                                            label = labelResult.Value;
                                         }
                                         else
                                         {
                                             taxonomyItem = taxSession.GetTerm(termGuid);
-                                            clonedContext.Load(taxonomyItem);
-                                            clonedContext.ExecuteQueryRetry();
+                                            if (taxonomyItem == null)
+                                            {
+                                                throw new PSInvalidOperationException($"Cannot find term {arrayItem}");
+                                            }
+                                            var labelResult = taxonomyItem.GetDefaultLabel(CultureInfo.CurrentCulture.LCID);
+                                            clientContext.Load(taxonomyItem);
+                                            clientContext.ExecuteQueryRetry();
+                                            label = labelResult.Value;
                                         }
-                                        terms.Add(new KeyValuePair<Guid, string>(taxonomyItem.Id, taxonomyItem.Name));
+                                        fieldValueCollection.Values.Add(field.NewFieldTaxonomyValue(taxonomyItem.Id, label));
                                     }
-
-                                    TaxonomyField taxField = context.CastTo<TaxonomyField>(field);
-                                    taxField.EnsureProperty(tf => tf.AllowMultipleValues);
-                                    if (taxField.AllowMultipleValues)
-                                    {
-                                        var termValuesString = String.Empty;
-                                        foreach (var term in terms)
-                                        {
-                                            termValuesString += "-1;#" + term.Value + "|" + term.Key.ToString("D") + ";#";
-                                        }
-
-                                        termValuesString = termValuesString.Substring(0, termValuesString.Length - 2);
-
-                                        var newTaxFieldValue = new TaxonomyFieldValueCollection(context, termValuesString, taxField);
-                                        itemValues.Add(new FieldUpdateValue(key as string, newTaxFieldValue, field.TypeAsString));
-                                    }
-                                    else
-                                    {
-                                        cmdlet.WriteWarning(@"You are trying to set multiple values in a single value field. Skipping values for field ""{field.InternalName}""");
-                                    }
+                                    item[key as string] = fieldValueCollection;
                                 }
                                 else
                                 {
                                     Guid termGuid = Guid.Empty;
 
-                                    var taxSession = clonedContext.Site.GetTaxonomySession();
-                                    TaxonomyItem taxonomyItem = null;
+                                    var taxSession = clientContext.Site.GetTaxonomySession();
+                                    Term taxonomyItem = null;
+                                    var label = string.Empty;
                                     if (value != null && !Guid.TryParse(value as string, out termGuid))
                                     {
                                         // Assume it's a TermPath
-                                        taxonomyItem = clonedContext.Site.GetTaxonomyItemByPath(value as string);
+                                        taxonomyItem = clientContext.Site.GetTaxonomyItemByPath(value as string) as Term;
+                                        var labelResult = taxonomyItem.GetDefaultLabel(CultureInfo.CurrentCulture.LCID);
+                                        clientContext.ExecuteQueryRetry();
+                                        label = labelResult.Value;
                                     }
                                     else
                                     {
                                         if (value != null)
                                         {
                                             taxonomyItem = taxSession.GetTerm(termGuid);
-                                            clonedContext.Load(taxonomyItem);
-                                            clonedContext.ExecuteQueryRetry();
+                                            var labelResult = taxonomyItem.GetDefaultLabel(CultureInfo.CurrentCulture.LCID);
+                                            clientContext.Load(taxonomyItem);
+                                            clientContext.ExecuteQueryRetry();
+                                            label = labelResult.Value;
                                         }
                                     }
 
-                                    TaxonomyField taxField = context.CastTo<TaxonomyField>(field);
-                                    TaxonomyFieldValue taxValue = new TaxonomyFieldValue();
-                                    if (taxonomyItem != null)
-                                    {
-                                        taxValue.TermGuid = taxonomyItem.Id.ToString();
-                                        taxValue.Label = taxonomyItem.Name;
-                                        itemValues.Add(new FieldUpdateValue(key as string, taxValue, field.TypeAsString));
-                                    }
-                                    else
-                                    {
-                                        taxField.ValidateSetValue(item, null);
-                                    }
+                                    item[key as string] = field.NewFieldTaxonomyValue(taxonomyItem.Id, label);
                                 }
-                                */
                                 break;
                             }
                         case "Lookup":
@@ -416,30 +404,38 @@ namespace PnP.PowerShell.Commands.Utilities
                                 int[] multiValue;
                                 if (value is Array)
                                 {
+                                    var fieldValueCollection = field.NewFieldValueCollection();
                                     var arr = (object[])values[key];
-                                    multiValue = new int[arr.Length];
                                     for (int i = 0; i < arr.Length; i++)
                                     {
-                                        multiValue[i] = int.Parse(arr[i].ToString());
+                                        var arrayValue = arr[i].ToString();
+                                        fieldValueCollection.Values.Add(field.NewFieldLookupValue(int.Parse(arrayValue)));
                                     }
+                                    item[key as string] = fieldValueCollection;
                                 }
                                 else
                                 {
+                                    var fieldValueCollection = field.NewFieldValueCollection();
                                     string valStr = values[key].ToString();
                                     multiValue = valStr.Split(',', ';').Select(int.Parse).ToArray();
+                                    if (multiValue.Length > 1)
+                                    {
+                                        for (int i = 0; i < multiValue.Length; i++)
+                                        {
+                                            fieldValueCollection.Values.Add(field.NewFieldLookupValue(multiValue[i]));
+                                        }
+                                        item[key as string] = fieldValueCollection;
+                                    }
+                                    else
+                                    {
+                                        item[key as string] = field.NewFieldLookupValue(multiValue[0]);
+                                    }
                                 }
-
-                                var newVals = multiValue.Select(id => new FieldLookupValue { LookupId = id }).ToArray();
-                                if (!field.AllowMultipleValues && newVals.Length > 1)
-                                {
-                                    throw new Exception("Field " + field.InternalName + " does not support multiple values");
-                                }
-                                itemValues.Add(new FieldUpdateValue(key as string, newVals));
                                 break;
                             }
                         default:
                             {
-                                itemValues.Add(new FieldUpdateValue(key as string, values[key]));
+                                item[key as string] = values[key];
                                 break;
                             }
                     }
@@ -447,40 +443,6 @@ namespace PnP.PowerShell.Commands.Utilities
                 else
                 {
                     throw new PSInvalidOperationException($"Field {key} not present in list.");
-                }
-            }
-            foreach (var itemValue in itemValues)
-            {
-                if (string.IsNullOrEmpty(itemValue.FieldTypeString))
-                {
-                    item[itemValue.Key] = itemValue.Value;
-                }
-                else
-                {
-                    switch (itemValue.FieldTypeString)
-                    {
-                        case "TaxonomyFieldTypeMulti":
-                            {
-                                // var field = fields.FirstOrDefault(f => f.InternalName == itemValue.Key as string || f.Title == itemValue.Key as string);
-                                // var taxField = context.CastTo<TaxonomyField>(field);
-                                // if (itemValue.Value is TaxonomyFieldValueCollection)
-                                // {
-                                //     taxField.SetFieldValueByValueCollection(item, itemValue.Value as TaxonomyFieldValueCollection);
-                                // }
-                                // else
-                                // {
-                                //     taxField.SetFieldValueByValue(item, itemValue.Value as TaxonomyFieldValue);
-                                // }
-                                break;
-                            }
-                        case "TaxonomyFieldType":
-                            {
-                                // var field = fields.FirstOrDefault(f => f.InternalName == itemValue.Key as string || f.Title == itemValue.Key as string);
-                                // var taxField = context.CastTo<TaxonomyField>(field);
-                                // taxField.SetFieldValueByValue(item, itemValue.Value as TaxonomyFieldValue);
-                                break;
-                            }
-                    }
                 }
             }
             return item;

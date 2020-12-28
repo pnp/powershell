@@ -9,9 +9,24 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true)]
         public Batch Batch;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Force;
+
+
         protected override void ExecuteCmdlet()
         {
-            PnPContext.Execute(Batch);
+            bool batchExecuted = Batch.Executed;
+            if (batchExecuted)
+            {
+                if (Force || ShouldContinue($"Batch has been invoked before with {Batch.Requests.Count} requests. Invoke again?", "Invoke Batch"))
+                {
+                    batchExecuted = false;
+                }
+            }
+            if (!batchExecuted)
+            {
+                PnPContext.Execute(Batch);
+            }
         }
     }
 }

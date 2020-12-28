@@ -16,7 +16,7 @@ Adds an item to the list and sets the creation time to the current date and time
 
 ```powershell
 Add-PnPListItem [-List] <ListPipeBind> [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>]
- [-Folder <String>] [-Label <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Folder <String>] [-Label <String>] [-Batch <Batch>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -58,6 +58,14 @@ Add-PnPListItem -List "Demo List" -Values @{"Title"="Sales Report"} -Label "Publ
 
 Adds a new list item to the "Demo List". Sets the retention label to "Public" if it exists on the site.
 
+### EXAMPLE 6
+```powershell
+$batch = New-PnPBatch
+$list = Get-PnPList -Identity "Demo List"
+for($i=0;$i lt 10;$i++)
+{
+    Add-PnPListItem -List $list -Values @{"Title"="Report $i"} -Batch
+}
 ## PARAMETERS
 
 ### -Connection

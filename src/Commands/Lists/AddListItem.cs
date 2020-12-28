@@ -16,6 +16,9 @@ namespace PnP.PowerShell.Commands.Lists
     [Cmdlet(VerbsCommon.Add, "PnPListItem")]
     public class AddListItem : PnPWebCmdlet
     {
+        private const string ParameterSet_SINGLE = "Set add a single list item";
+        private const string ParameterSet_BATCHED = "Adds items in a batched manner";
+
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         [ValidateNotNull]
         public ListPipeBind List;
@@ -29,10 +32,10 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false)]
         public string Folder;
 
-        [Parameter(Mandatory = false)]
-        public String Label;
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        public string Label;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         [ValidateNotNull]
         public Batch Batch;
 
@@ -40,9 +43,10 @@ namespace PnP.PowerShell.Commands.Lists
         {
             if (ParameterSpecified(nameof(Batch)))
             {
-                var list = List.GetList(CurrentWeb, PnPContext);
-                var values = ListItemHelper.GetFieldValues(list, Values, this);
-                list.Items.AddBatch(Batch, values);
+                var list = List.GetList(CurrentWeb, PnPContext, l => l.Fields.LoadProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
+                var values = ListItemHelper.GetFieldValues(list, Values, this, ClientContext);
+                var item = list.Items.AddBatch(Batch, values);
+
             }
             else
             {

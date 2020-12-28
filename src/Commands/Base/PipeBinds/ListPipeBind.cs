@@ -44,7 +44,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
             if (list != null)
             {
-                return context.Web.Lists.GetById(list.Id, retrievals);
+                var iList =  context.Web.Lists.GetById(list.Id);
+                if(retrievals.Length > 0)
+                {
+                    iList.Get(retrievals);
+                }
+                return iList;
             }
             else
             {

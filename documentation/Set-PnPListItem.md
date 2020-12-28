@@ -143,7 +143,7 @@ Use the internal names of the fields when specifying field names.
 
 Single line of text: -Values @{"TextField" = "Title New"}
 
-Multiple lines of text: -Values @{"MultiTextField" = "New text\n\nMore text"}
+Multiple lines of text: -Values @{"MultiTextField" = "New text\`n\`nMore text"}
 
 Rich text: -Values @{"MultiTextField" = "&lt;strong&gt;New&lt;/strong&gt; text"}
 
@@ -177,7 +177,7 @@ Managed Metadata (multiple values with paths to terms): -Values @{"MetadataField
 
 Managed Metadata (multiple values with ids of terms): -Values @{"MetadataField" = ("fe40a95b-2144-4fa2-b82a-0b3d0299d818","52d88107-c2a8-4bf0-adfa-04bc2305b593")}
 
-Hyperlink or Picture: -Values @{"HyperlinkField" = "https://github.com/OfficeDev/, OfficePnp"}
+Hyperlink or Picture: -Values @{"HyperlinkField" = "https://pnp.github.com/powershell, PnP PowerShell Home"}
 
 ```yaml
 Type: Hashtable
