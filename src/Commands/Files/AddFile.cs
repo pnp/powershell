@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Files
 
         [Parameter(Mandatory = true)]
         [ValidateNotNullOrEmpty]
-        public string Folder = string.Empty;
+        public FolderPipeBind Folder;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM)]
         [ValidateNotNullOrEmpty]
@@ -88,7 +88,7 @@ namespace PnP.PowerShell.Commands.Files
             // Check to see if the Content Type exists. If it doesn't we are going to throw an exception and block this transaction right here.
             if (ContentType != null)
             {
-                var list = CurrentWeb.GetListByUrl(Folder);
+                var list = CurrentWeb.GetListByUrl(folder.ServerRelativeUrl);
                 if (list is null)
                 {
                     throw new PSArgumentException("The folder specified does not have a corresponding list", nameof(Folder));
@@ -168,13 +168,12 @@ namespace PnP.PowerShell.Commands.Files
         private Folder EnsureFolder()
         {
             // First try to get the folder if it exists already. This avoids an Access Denied exception if the current user doesn't have Full Control access at Web level
-            CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
-            var Url = UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, Folder);
+            CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);            
 
             Folder folder = null;
             try
             {
-                folder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(Url));
+                folder = Folder.GetFolder(CurrentWeb);
                 folder.EnsureProperties(f => f.ServerRelativeUrl);
                 return folder;
             }
@@ -182,7 +181,7 @@ namespace PnP.PowerShell.Commands.Files
             catch (ServerException serverEx) when (serverEx.ServerErrorCode == -2147024894)
             {
                 // Try to create the folder
-                folder = CurrentWeb.EnsureFolder(CurrentWeb.RootFolder, Folder);
+                folder = CurrentWeb.EnsureFolder(CurrentWeb.RootFolder, Folder.ServerRelativeUrl);
                 folder.EnsureProperties(f => f.ServerRelativeUrl);
                 return folder;
             }
