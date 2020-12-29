@@ -187,7 +187,7 @@ namespace PnP.PowerShell.Commands.Utilities
             Contains
         }
 
-        internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls)
+        internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls = null)
         {
             bool success = false;
 #if Windows
@@ -220,30 +220,33 @@ namespace PnP.PowerShell.Commands.Utilities
                     {
                         var navigatedUrl = args.Url.ToString();
                         var matched = false;
-                        foreach (var closeUrl in closeUrls)
+                        if (null != closeUrls && closeUrls.Length > 0)
                         {
-                            switch (closeUrl.matchType)
+                            foreach (var closeUrl in closeUrls)
                             {
-                                case UrlMatchType.FullMatch:
-                                    matched = navigatedUrl.Equals(closeUrl.url, StringComparison.OrdinalIgnoreCase);
-                                    break;
-                                case UrlMatchType.StartsWith:
-                                    matched = navigatedUrl.StartsWith(closeUrl.url, StringComparison.OrdinalIgnoreCase);
-                                    break;
-                                case UrlMatchType.EndsWith:
-                                    matched = navigatedUrl.EndsWith(closeUrl.url, StringComparison.OrdinalIgnoreCase);
-                                    break;
-                                case UrlMatchType.Contains:
+                                switch (closeUrl.matchType)
+                                {
+                                    case UrlMatchType.FullMatch:
+                                        matched = navigatedUrl.Equals(closeUrl.url, StringComparison.OrdinalIgnoreCase);
+                                        break;
+                                    case UrlMatchType.StartsWith:
+                                        matched = navigatedUrl.StartsWith(closeUrl.url, StringComparison.OrdinalIgnoreCase);
+                                        break;
+                                    case UrlMatchType.EndsWith:
+                                        matched = navigatedUrl.EndsWith(closeUrl.url, StringComparison.OrdinalIgnoreCase);
+                                        break;
+                                    case UrlMatchType.Contains:
 #if NETFRAMEWORK
                                     matched = navigatedUrl.Contains(closeUrl.url);
 #else
-                                    matched = navigatedUrl.Contains(closeUrl.url, StringComparison.OrdinalIgnoreCase);
+                                        matched = navigatedUrl.Contains(closeUrl.url, StringComparison.OrdinalIgnoreCase);
 #endif
+                                        break;
+                                }
+                                if (matched)
+                                {
                                     break;
-                            }
-                            if (matched)
-                            {
-                                break;
+                                }
                             }
                         }
                         if (matched)
