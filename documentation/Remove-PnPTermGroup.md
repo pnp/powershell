@@ -37,7 +37,12 @@ Removes the specified termgroup.
 Remove-PnPTermGroup -Identity "Corporate"
 ```
 
-Removes the specified termgroup.
+### Example 3
+```powershell
+Remove-PnPTermGroup -Identity "HR" -Force
+```
+
+Removes the specified termgroup without prompting for confirmation.
 
 ## PARAMETERS
 
@@ -78,6 +83,19 @@ Term store to use; if not specified the default term store is used.
 Type: TaxonomyTermStorePipeBind
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named
