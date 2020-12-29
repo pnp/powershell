@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Management.Automation;
 using PnP.Core.Services;
+using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -12,6 +14,8 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Details;
 
         protected override void ExecuteCmdlet()
         {
@@ -26,6 +30,15 @@ namespace PnP.PowerShell.Commands.Base
             if (!batchExecuted)
             {
                 PnPContext.Execute(Batch);
+                if(Details)
+                {
+                    var requests = new List<Model.BatchRequest>();
+                    foreach(var request in Batch.Requests)
+                    {
+                        requests.Add(new Model.BatchRequest() { HttpStatusCode = request.Value.ResponseHttpStatusCode, ResponseJson = request.Value.ResponseJson});
+                    }
+                    WriteObject(requests);
+                }
             }
         }
     }
