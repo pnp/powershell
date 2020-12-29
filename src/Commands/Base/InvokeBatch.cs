@@ -6,7 +6,7 @@ namespace PnP.PowerShell.Commands.Base
     [Cmdlet(VerbsLifecycle.Invoke, "PnPBatch")]
     public class InvokeBatch : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, Position = 0)]
         public Batch Batch;
 
         [Parameter(Mandatory = false)]
