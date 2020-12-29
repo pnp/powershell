@@ -45,8 +45,7 @@ namespace PnP.PowerShell.Commands.Lists
             {
                 var list = List.GetList(CurrentWeb, PnPContext, l => l.Fields.LoadProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
                 var values = ListItemHelper.GetFieldValues(list, Values, this, ClientContext);
-                var item = list.Items.AddBatch(Batch, values);
-
+                list.Items.AddBatch(Batch, values);
             }
             else
             {

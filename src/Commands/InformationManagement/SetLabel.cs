@@ -25,20 +25,10 @@ namespace PnP.PowerShell.Commands.InformationManagement
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(CurrentWeb);
+            var list = List.GetList(CurrentWeb, PnPContext);
             if (list != null)
             {
-                var listUrl = list.RootFolder.ServerRelativeUrl;
-                Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetListComplianceTag(ClientContext, listUrl, Label, BlockDeletion, BlockEdit, SyncToItems);
-
-                try
-                {
-                    ClientContext.ExecuteQueryRetry();
-                }
-                catch (System.Exception error)
-                {
-                    WriteWarning(error.Message.ToString());
-                }
+                list.SetComplianceTag(Label, BlockDeletion, BlockEdit, SyncToItems);
             }
             else
             {
