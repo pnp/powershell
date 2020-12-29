@@ -45,10 +45,10 @@ if ($LocalPnPFramework) {
 	# Check if available
 	$pnpFrameworkAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll"
 	$pnpFrameworkAssembly = [System.IO.Path]::GetFullPath($pnpFrameworkAssembly)
-	if(Test-Path $pnpFrameworkAssembly -PathType Leaf)
-	{
+	if (Test-Path $pnpFrameworkAssembly -PathType Leaf) {
 		$buildCmd += " -p:PnPFrameworkPath=`"..\..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll`""
-	} else {
+	}
+ else {
 		$localFolder = Join-Path $PSScriptRoot -ChildPath "..\..\pnpframework"
 		$localFolder = [System.IO.Path]::GetFullPath($localFolder)
 		Write-Error -Message "Please make sure you have a local copy of the PnP.Framework repository installed at $localFolder"
@@ -58,10 +58,10 @@ if ($LocalPnPCore) {
 	# Check if available
 	$pnpCoreAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll"
 	$pnpCoreAssembly = [System.IO.Path]::GetFullPath($pnpCoreAssembly)
-	if(Test-Path $pnpCoreAssembly -PathType Leaf)
-	{
+	if (Test-Path $pnpCoreAssembly -PathType Leaf) {
 		$buildCmd += " -p:PnPCoreSdkPath=`"..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll`""
-	} else {
+	}
+ else {
 		$localFolder = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore"
 		$localFolder = [System.IO.Path]::GetFullPath($localFolder)
 		Write-Error -Message "Please make sure you have a local copy of the PnP.Core repository installed at $localFolder"
@@ -86,6 +86,8 @@ if ($LASTEXITCODE -eq 0) {
 	$commonPath = "$destinationFolder/Common"
 	$frameworkPath = "$destinationFolder/Framework"
 
+	$assemblyExceptions = @("System.Memory.dll");
+	
 	Try {
 		# Module folder there?
 		if (Test-Path $destinationFolder) {
@@ -105,14 +107,14 @@ if ($LASTEXITCODE -eq 0) {
 
 		$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
 		Copy-Item -Path "$PSScriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
-		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Debug/netstandard2.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
+		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Debug/netstandard2.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { if (!$assemblyExceptions.Contains($_.Name)) { [void]$commonFiles.Add($_.Name) }; Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
 		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/$configuration" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
 		if (!$IsLinux -and !$IsMacOs) {
 			Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/net461" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }
 		}
 	}
 	Catch {
-		Write-Host "Error: Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module?"
+		Write-Error "Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module?"
 		exit 1
 	}
 
