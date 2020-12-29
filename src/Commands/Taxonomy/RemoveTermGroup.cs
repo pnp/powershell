@@ -19,6 +19,9 @@ namespace PnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false)]
         public TaxonomyTermStorePipeBind TermStore;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Force;
+
         protected override void ExecuteCmdlet()
         {
             var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
@@ -38,7 +41,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
             group.EnsureProperties(g => g.Name);
             if (group != null)
             {
-                if (ShouldProcess($"Remove group {group.Name} from termstore"))
+                if (Force || ShouldContinue(string.Format(Resources.RemoveTermGroup0AndAllUnderlyingTermSetsAndTerms, group.Name), Resources.Confirm))
                 {
                     group.EnsureProperty(g => group.TermSets);
                     if (group.TermSets.Any())
