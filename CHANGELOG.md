@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [0.3.20-nightly]
+
+### Added
+
+### Changed
+- `Register-PnPManagementShellAccess` will not automatically close the window after consent anymore.
+- `Connect-PnPOnline -UseWebLogin` now allows you to return the connection with `-ReturnConnection` [PR #71](https://github.com/pnp/powershell/71)
+- `Remove-PnPTermGroup` now includes a `-Force` parameter [PR #70](https://github.com/pnp/powershell/pull/70)
+- `Get-PnPListItem` now can filter on both the GUID or the UniqueId value by specifying the -UniqueId parameter. [PR #68](https://github.com/pnp/powershell/pull/68)
+
+### Contributors
+- Gautam Sheth [gautamdsheth]
+
 ## [0.3.*-nightly]
 
 ### Added

@@ -63,7 +63,7 @@ Retrieves the list item with ID 1 from the Tasks list
 Get-PnPListItem -List Tasks -UniqueId bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3
 ```
 
-Retrieves the list item with unique id bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from the tasks lists
+Retrieves the list item with UniqueId or GUID bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from the tasks lists
 
 ### EXAMPLE 4
 ```powershell
@@ -222,7 +222,7 @@ Accept wildcard characters: False
 ```
 
 ### -UniqueId
-The unique id (GUID) of the item to retrieve
+The UniqueId or GUID of the item to retrieve
 
 ```yaml
 Type: Guid
