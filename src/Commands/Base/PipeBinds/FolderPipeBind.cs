@@ -53,7 +53,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (!string.IsNullOrEmpty(ServerRelativeUrl))
             {
-                folder = web.GetFolderByServerRelativeUrl(ServerRelativeUrl);
+                folder = web.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(ServerRelativeUrl));
             }
             if (folder != null)
             {

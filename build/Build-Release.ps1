@@ -65,6 +65,8 @@ if ($runPublish -eq $true) {
 	$commonPath = "$destinationFolder/Common"
 	$frameworkPath = "$destinationFolder/Framework"
 
+	$assemblyExceptions = @("System.Memory.dll");
+
 	Try {
 		# Module folder there?
 		if (Test-Path $destinationFolder) {
@@ -84,7 +86,7 @@ if ($runPublish -eq $true) {
 
 		$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
 		Copy-Item -Path "$PSscriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
-		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Release/netstandard2.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { [void]$commonFiles.Add($_.Name); Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
+		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Release/netstandard2.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { if (!$assemblyExceptions.Contains($_.Name)) { [void]$commonFiles.Add($_.Name) }; Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
 		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/netcoreapp3.1" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
 		if (!$IsLinux -and !$IsMacOs) {
 			Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net461" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }

@@ -47,7 +47,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-AllowDownloadingNonWebViewableFiles <Boolean>] [-AllowEditing <Boolean>]
  [-ApplyAppEnforcedRestrictionsToAdHocRecipients <Boolean>] [-FilePickerExternalImageSearchEnabled <Boolean>]
  [-EmailAttestationRequired <Boolean>] [-EmailAttestationReAuthDays <Int32>] [-HideDefaultThemes <Boolean>]
- [-DisabledWebPartIds <Guid[]>] [-EnableAIPIntegration <Boolean>] [-DisableCustomAppAuthentication <Boolean>] [-EnableAutoNewsDigest <Boolean>]
+ [-DisabledWebPartIds <Guid[]>] [-EnableAIPIntegration <Boolean>] [-DisableCustomAppAuthentication <Boolean>] [-EnableAutoNewsDigest <Boolean>][-CommentsOnListItemsDisabled <Boolean>][-CommentsOnFilesDisabled <Boolean>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -244,7 +244,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisableCustomAppAuthentication
-{{ Fill DisableCustomAppAuthentication Description }}
+Configure if ACS-based app-only authentication should be disabled or not.
 
 ```yaml
 Type: Boolean
@@ -1153,6 +1153,33 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -CommentsOnListItemsDisabled
+Disables or enables commenting functionality on list items.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CommentsOnFilesDisabled
+Disables or enables commenting functionality on files.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
