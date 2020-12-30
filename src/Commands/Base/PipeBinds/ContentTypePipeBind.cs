@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 
@@ -101,6 +102,23 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
             return list.GetContentTypeByName(_idOrName);
         }
+
+        internal PnP.Core.Model.SharePoint.IContentType GetContentType(PnP.Core.Model.SharePoint.IList list)
+        {
+            if(_contentType is object)
+            {
+                var stringId = _contentType.EnsureProperty(c => c.StringId);
+                return list.ContentTypes.FirstOrDefault(c => c.StringId == stringId);
+            }
+            var id = _idOrName.ToLower().StartsWith("0x0") ? _idOrName : null;
+            if(!string.IsNullOrEmpty(id))
+            {
+                return list.ContentTypes.FirstOrDefault(c => c.Id == id);
+            }
+
+            return list.ContentTypes.FirstOrDefault(c => c.Name == _idOrName);
+        }
+
 
         internal ContentType GetContentTypeOrThrow(string paramName, Web web, bool searchInSiteHierarchy = true)
             => GetContentType(web)

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Management.Automation;
 using PnP.Core.Services;
-using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Base
 {

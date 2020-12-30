@@ -14,7 +14,11 @@ Param(
 	[Parameter(Mandatory = $false,
 		ValueFromPipeline = $false)]
 	[switch]
-	$LocalPnPCore
+	$LocalPnPCore,
+	[Parameter(Mandatory = $false,
+		ValueFromPipeline = $false)]
+	[switch]
+	$LocalPnPCoreProject
 )
 
 $versionFileContents = Get-Content "$PSScriptRoot/../version.txt" -Raw
@@ -66,6 +70,11 @@ if ($LocalPnPCore) {
 		$localFolder = [System.IO.Path]::GetFullPath($localFolder)
 		Write-Error -Message "Please make sure you have a local copy of the PnP.Core repository installed at $localFolder"
 	}
+}
+
+if($LocalPnPCoreProject)
+{
+	$buildCmd += " -p:PnPCoreSdkProject=`"true`""
 }
 
 Write-Host "Executing $buildCmd" -ForegroundColor Yellow
