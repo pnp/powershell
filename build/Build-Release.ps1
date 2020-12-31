@@ -3,7 +3,7 @@ $runPublish = $false
 $pnppowershell_hash = git ls-files -s ./src | git hash-object --stdin
 $existing_pnppowershell_hash = Get-Content ./pnppowershell_hash.txt -Raw -ErrorAction SilentlyContinue
 
-$existing_pnpframework_hash = Get-Content ./pnpframeworkhash.txt -Raw -ErrorAction SilentlyContinue
+$existing_pnpframework_hash = Get-Content ./pnpframework_hash.txt -Raw -ErrorAction SilentlyContinue
 $pnpframework_response = Invoke-RestMethod -Method Get -Uri "$($env:GITHUB_API_URL)/repos/pnp/pnpframework/branches/dev" -SkipHttpErrorCheck
 if($null -ne $pnpframework_response)
 {
