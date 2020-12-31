@@ -42,6 +42,7 @@
     <PackageReference Include="Microsoft.Graph" Version="3.19.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.21.0" />
     <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="PnP.Framework" Version="0.1.*-*" Condition="'$(PnPFrameworkPath)' == ''" />
     <PackageReference Include="PnP.Core" Version="0.4.*-*" Condition="'$(PnPCoreSdkPath)' == ''" />

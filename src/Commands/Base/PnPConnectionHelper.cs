@@ -301,6 +301,7 @@ namespace PnP.PowerShell.Commands.Base
                     AzureEnvironment = azureEnvironment,
                 };
             }
+            
             return spoConnection;
         }
 
