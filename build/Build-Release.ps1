@@ -17,8 +17,16 @@ Write-Host "Stored PnP PowerShell Commit hash: $existing_pnppowershell_hash" -Fo
 Write-host "Latest PnP Framework Commit hash $pnpframework_hash" -ForegroundColor Yellow
 Write-Host "Stored PnP Framework Commit hash: $existing_pnpframework_hash" -ForegroundColor Yellow
 
-if ($existing_pnppowershell_hash -ne $pnppowershell_hash || $existing_pnpframework_hash -ne $pnpframework_hash) {
+if ($existing_pnppowershell_hash -ne $pnppowershell_hash)
+{
+	Write-Host "PnP PowerShell is newer"
 	Set-Content ./pnppowershell_hash.txt -Value $pnppowershell_hash -NoNewline -Force
+	$runPublish = $true
+}
+
+if($existing_pnpframework_hash -ne $pnpframework_hash)
+{
+	Write-Host "PnP Framework is newer"
 	Set-Content ./pnpframework_hash.txt -Value $pnpframework_hash -NoNewline -Force
 	$runPublish = $true
 }
