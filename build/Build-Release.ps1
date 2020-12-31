@@ -1,12 +1,12 @@
 $runPublish = $false
 
 $pnppowershell_hash = git ls-files -s ./src | git hash-object --stdin
-$existing_pnppowershell_hash = Get-Content ./pnppowershell_hash.txt -Raw -ErrorAction SilentlyContinue
+$local_pnppowershell_hash = Get-Content ./pnppowershell_hash.txt -Raw -ErrorAction SilentlyContinue
 
-$existing_pnpframework_hash = Get-Content ./pnpframework_hash.txt -Raw -ErrorAction SilentlyContinue
+$local_pnpframework_hash = Get-Content ./pnpframework_hash.txt -Raw -ErrorAction SilentlyContinue
 $pnpframework_response = Invoke-RestMethod -Method Get -Uri "$($env:GITHUB_API_URL)/repos/pnp/pnpframework/branches/dev" -SkipHttpErrorCheck
 
-$existing_pnpcoresdk_hash = Get-Content ./pnpcoresdk_hash.txt -Raw -ErrorAction SilentlyContinue
+$local_pnpcoresdk_hash = Get-Content ./pnpcoresdk_hash.txt -Raw -ErrorAction SilentlyContinue
 $pnpcoresdk_response = Invoke-RestMethod -Method Get -Uri "$($env:GITHUB_API_URL)/repos/pnp/pnpcore/branches/dev" -SkipHttpErrorCheck
 
 if($null -ne $pnpframework_response)
@@ -25,11 +25,11 @@ if($null -ne $pnpcoresdk_response)
 	}
 }
 
-Write-Host "PnP PowerShell Commit: $pnppowershell_hash - $existing_pnppowershell_hash" -ForegroundColor Yellow
-Write-Host "PnP Framework Commit: $pnpframework_hash - $existing_pnpframework_hash" -ForegroundColor Yellow
-Write-Host "PnP Core Commit: $pnpcoresdk_hash - $existing_pnpcoresdk_hash" -ForegroundColor Yellow
+Write-Host "PnP PowerShell Commit: $pnppowershell_hash - $local_pnppowershell_hash" -ForegroundColor Yellow
+Write-Host "PnP Framework Commit: $pnpframework_hash - $local_pnpframework_hash" -ForegroundColor Yellow
+Write-Host "PnP Core Commit: $pnpcoresdk_hash - $local_pnpcoresdk_hash" -ForegroundColor Yellow
 
-if ($existing_pnppowershell_hash -ne $pnppowershell_hash || $existing_pnpframework_hash -ne $pnpframework_hash || $pnpcoresdk_hash -ne $existing_pnpcoresdk_hash) {
+if ($local_pnppowershell_hash -ne $pnppowershell_hash || $local_pnpframework_hash -ne $pnpframework_hash || $local_pnpcoresdk_hash -ne $pnpcoresdk_hash) {
 	Set-Content ./pnppowershell_hash.txt -Value $pnppowershell_hash -NoNewline -Force
 	Set-Content ./pnpframework_hash.txt -Value $pnpframework_hash -NoNewline -Force
 	Set-Content ./pnpcoresdk_hash.txt -Value $pnpcoresdk_hash -NoNewline -Force
