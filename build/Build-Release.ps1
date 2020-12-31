@@ -6,8 +6,8 @@ $local_pnppowershell_hash = Get-Content ./pnppowershell_hash.txt -Raw -ErrorActi
 $local_pnpframework_hash = Get-Content ./pnpframework_hash.txt -Raw -ErrorAction SilentlyContinue
 $pnpframework_response = Invoke-RestMethod -Method Get -Uri "$($env:GITHUB_API_URL)/repos/pnp/pnpframework/branches/dev" -SkipHttpErrorCheck
 
-$local_pnpcoresdk_hash = Get-Content ./pnpcoresdk_hash.txt -Raw -ErrorAction SilentlyContinue
-$pnpcoresdk_response = Invoke-RestMethod -Method Get -Uri "$($env:GITHUB_API_URL)/repos/pnp/pnpcore/branches/dev" -SkipHttpErrorCheck
+# $local_pnpcoresdk_hash = Get-Content ./pnpcoresdk_hash.txt -Raw -ErrorAction SilentlyContinue
+# $pnpcoresdk_response = Invoke-RestMethod -Method Get -Uri "$($env:GITHUB_API_URL)/repos/pnp/pnpcore/branches/dev" -SkipHttpErrorCheck
 
 if($null -ne $pnpframework_response)
 {
@@ -17,22 +17,22 @@ if($null -ne $pnpframework_response)
 	}
 }
 
-if($null -ne $pnpcoresdk_response)
-{
-	if($null -ne $pnpcoresdk_response.commit)
-	{
-		$pnpcoresdk_hash = $pnpcoresdk_response.commit.sha
-	}
-}
+# if($null -ne $pnpcoresdk_response)
+# {
+# 	if($null -ne $pnpcoresdk_response.commit)
+# 	{
+# 		$pnpcoresdk_hash = $pnpcoresdk_response.commit.sha
+# 	}
+# }
 
 Write-Host "PnP PowerShell Commit: $pnppowershell_hash - $local_pnppowershell_hash" -ForegroundColor Yellow
 Write-Host "PnP Framework Commit: $pnpframework_hash - $local_pnpframework_hash" -ForegroundColor Yellow
-Write-Host "PnP Core Commit: $pnpcoresdk_hash - $local_pnpcoresdk_hash" -ForegroundColor Yellow
+#Write-Host "PnP Core Commit: $pnpcoresdk_hash - $local_pnpcoresdk_hash" -ForegroundColor Yellow
 
 if ($local_pnppowershell_hash -ne $pnppowershell_hash || $local_pnpframework_hash -ne $pnpframework_hash) {
 	Set-Content ./pnppowershell_hash.txt -Value $pnppowershell_hash -NoNewline -Force
 	Set-Content ./pnpframework_hash.txt -Value $pnpframework_hash -NoNewline -Force
-	Set-Content ./pnpcoresdk_hash.txt -Value $pnpcoresdk_hash -NoNewline -Force
+	#Set-Content ./pnpcoresdk_hash.txt -Value $pnpcoresdk_hash -NoNewline -Force
 	$runPublish = $true
 }
 
