@@ -607,6 +607,10 @@ namespace PnP.PowerShell.Commands.Base
             }, cancellationToken);
             messageWriter.Start();
             connection.Scopes = Scopes;
+            if(connection != null)
+            {
+                connection.AzureEnvironment = azureEnvironment;
+            }
             return connection;
         }
 

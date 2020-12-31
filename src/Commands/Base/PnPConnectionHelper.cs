@@ -61,7 +61,8 @@ namespace PnP.PowerShell.Commands.Base
 
             var spoConnection = new PnPConnection(context, connectionType, null, clientId, clientSecret, url?.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.ClientIDSecret)
             {
-                Tenant = realm
+                Tenant = realm,
+                AzureEnvironment = azureEnvironment
             };
 
             return spoConnection;
@@ -188,7 +189,8 @@ namespace PnP.PowerShell.Commands.Base
                     ConnectionMethod = ConnectionMethod.AzureADAppOnly,
                     Certificate = certificate,
                     Tenant = tenant,
-                    DeleteCertificateFromCacheOnDisconnect = certificateFromFile
+                    DeleteCertificateFromCacheOnDisconnect = certificateFromFile,
+                    AzureEnvironment = azureEnvironment
                 };
                 return spoConnection;
             }
