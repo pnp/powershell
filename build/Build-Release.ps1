@@ -29,7 +29,7 @@ Write-Host "PnP PowerShell Commit: $pnppowershell_hash - $local_pnppowershell_ha
 Write-Host "PnP Framework Commit: $pnpframework_hash - $local_pnpframework_hash" -ForegroundColor Yellow
 Write-Host "PnP Core Commit: $pnpcoresdk_hash - $local_pnpcoresdk_hash" -ForegroundColor Yellow
 
-if ($local_pnppowershell_hash -ne $pnppowershell_hash || $local_pnpframework_hash -ne $pnpframework_hash || $local_pnpcoresdk_hash -ne $pnpcoresdk_hash) {
+if ($local_pnppowershell_hash -ne $pnppowershell_hash || $local_pnpframework_hash -ne $pnpframework_hash) {
 	Set-Content ./pnppowershell_hash.txt -Value $pnppowershell_hash -NoNewline -Force
 	Set-Content ./pnpframework_hash.txt -Value $pnpframework_hash -NoNewline -Force
 	Set-Content ./pnpcoresdk_hash.txt -Value $pnpcoresdk_hash -NoNewline -Force
