@@ -17,6 +17,12 @@ Param(
 	$LocalPnPCore
 )
 
+$localPnPCoreSdkPathValue = $env:PnPCoreSdkPath
+$localPnPFrameworkPathValue = $env:PnPFrameworkPath
+
+$env:PnPCoreSdkPath = ""
+$env:PnPFrameworkPath = ""
+
 $versionFileContents = Get-Content "$PSScriptRoot/../version.txt" -Raw
 if ($versionFileContents.Contains("%")) {
 	$versionString = $versionFileContents.Replace("%", "0");
@@ -182,3 +188,6 @@ if ($LASTEXITCODE -eq 0) {
 	}
 	Write-Host "`n`n Build and provisioning succeeded`n Version: $version" -ForegroundColor Green
 }
+
+$env:PnPCoreSdkPath = $localPnPCoreSdkPathValue
+$env:PnPFrameworkPath = $localPnPFrameworkPathValue
