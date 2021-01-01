@@ -16,18 +16,18 @@ Finds a file in the virtual file system of the web.
 
 ### Web (Default)
 ```powershell
-Find-PnPFile [-Match] <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Find-PnPFile -Match <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### List
 ```powershell
-Find-PnPFile [-Match] <String> -List <ListPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Find-PnPFile -Match <String> -List <ListPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Folder
 ```powershell
-Find-PnPFile [-Match] <String> -Folder <FolderPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Find-PnPFile -Match <String> -Folder <FolderPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -55,6 +55,13 @@ Find-PnPFile -Folder "Shared Documents/Sub Folder" -Match *.docx
 ```
 
 Will return all docx files located in given folder.
+
+### EXAMPLE 4
+```powershell
+Find-PnPFile -Match *newpnp*
+```
+
+Will return all files containing "newpnp" in the file name located in the current web.
 
 ## PARAMETERS
 
