@@ -710,7 +710,8 @@ namespace PnP.PowerShell.Commands.Base
 
             if (PnPConnection.CurrentConnection?.ClientId == ClientId)
             {
-                if (PnPConnection.CurrentConnection?.PSCredential?.UserName == credentials.UserName)
+                if (PnPConnection.CurrentConnection?.PSCredential?.UserName == credentials.UserName &&
+                   PnPConnection.CurrentConnection?.PSCredential.GetNetworkCredential().Password == credentials.GetNetworkCredential().Password)
                 {
                     ReuseAuthenticationManager();
                 }
