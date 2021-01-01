@@ -147,7 +147,7 @@ if ($LASTEXITCODE -eq 0) {
 			$cmdlets = get-command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
 			$cmdlets -Join ","
 		}
-		$cmdletsString = Start-Job -ScriptBlock $scriptBlock | Receive-Job -Wait
+		$cmdletsString = Start-ThreadJob -ScriptBlock $scriptBlock | Receive-Job -Wait
 
 		$manifest = "@{
 	NestedModules =  if (`$PSEdition -eq 'Core')

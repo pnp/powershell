@@ -152,7 +152,7 @@ if ($runPublish -eq $true) {
 		}
 
 		Write-Host "Starting job to retrieve cmdlet names" -ForegroundColor Yellow
-		$cmdletsString = Start-Job -ScriptBlock $scriptBlock | Receive-Job -Wait
+		$cmdletsString = Start-ThreadJob -ScriptBlock $scriptBlock | Receive-Job -Wait
 
 		Write-Host "Writing PSD1" -ForegroundColor Yellow
 		$manifest = "@{
