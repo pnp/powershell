@@ -23,7 +23,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsLifecycle.Register, "PnPAzureADApp")]
-    [Alias("Initialize-PowerShellAuthentication")]
+    [Alias("Initialize-PnPPowerShellAuthentication")]
     public class InitializePowerShellAuthentication : BasePSCmdlet, IDynamicParameters
     {
         private const string ParameterSet_EXISTINGCERT = "Existing Certificate";
