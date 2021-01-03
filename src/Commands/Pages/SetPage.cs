@@ -3,11 +3,14 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Set, "PnPPage")]
     [Alias("Set-PnPClientSidePage")]
+    [WriteAliasWarning("Please use 'Set-PnPPage'. The alias 'Set-PnPClientSidePage' will be removed in the 1.5.0 release")]
+
     public class SetPage : PnPWebCmdlet, IDynamicParameters
     {
         const string ParameterSet_CUSTOMHEADER = "Custom Header";
