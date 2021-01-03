@@ -4,11 +4,13 @@ using System.Linq;
 using System.Management.Automation;
 using PnP.Core.Model.SharePoint;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Set, "PnPPageWebPart")]
     [Alias("Set-PnPClientSideWebPart")]
+    [WriteAliasWarning("Please use 'Set-PnPPageWebPart'. The alias 'Set-PnPClientSideWebPart' will be removed in the 1.5.0 release")]
     public class SetClientSideWebPart : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

@@ -9,11 +9,14 @@ using PnP.Framework.Modernization.Publishing;
 using PnP.Framework.Modernization.Telemetry.Observers;
 using PnP.PowerShell.ALC;
 using PnP.Framework.Modernization.Cache;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsData.Export, "PnPPageMapping")]
     [Alias("Export-PnPClientSidePageMapping")]
+    [WriteAliasWarning("Please use 'Export-PnPPageMapping'. The alias 'Export-PnPClientSidePageMapping' will be removed in the 1.5.0 release")]
+
     public class ExportPageMapping : PnPWebCmdlet
     {
         private Assembly sitesCoreAssembly;
@@ -89,7 +92,7 @@ namespace PnP.PowerShell.Commands.Pages
                 else
                 {
                     // Load the default one from resources into a model, no need for persisting this file
-                    string pageLayoutMappingFileContents = PublishingPageTransformator.LoadDefaultPageLayoutMappingFile(); 
+                    string pageLayoutMappingFileContents = PublishingPageTransformator.LoadDefaultPageLayoutMappingFile();
                     System.IO.File.WriteAllText(fileName, pageLayoutMappingFileContents);
                 }
             }
@@ -110,7 +113,7 @@ namespace PnP.PowerShell.Commands.Pages
                 }
 
                 Guid siteId = this.ClientContext.Site.EnsureProperty(p => p.Id);
-                
+
                 string fileName = $"custompagelayoutmapping-{siteId.ToString()}.xml";
 
                 if (page != null)

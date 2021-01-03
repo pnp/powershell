@@ -1,4 +1,7 @@
-﻿using Microsoft.SharePoint.Client;
+﻿using System.Linq;
+using Microsoft.SharePoint.Client;
+using PnP.Core.Model.Security;
+using PnP.Core.Services;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -6,6 +9,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
     {
         private readonly int _id = -1;
         private readonly Group _group;
+        private readonly ISharePointGroup _sharePointGroup;
         private readonly string _name;
         public int Id => _id;
 
@@ -32,6 +36,33 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _name = name;
         }
 
+        public GroupPipeBind(ISharePointGroup group)
+        {
+            _sharePointGroup = group;
+        }
+
+        internal ISharePointGroup GetGroup(PnPContext context)
+        {
+            ISharePointGroup group = null;
+            if (Group != null)
+            {
+                group = context.Web.SiteGroups.GetFirstOrDefault(g => g.Id == Group.Id);
+            }
+            if(_sharePointGroup != null)
+            {
+                group = _sharePointGroup;
+            }
+            else if (Id != -1)
+            {
+                group = context.Web.SiteGroups.GetFirstOrDefault(g => g.Id == Id);
+            }
+            else if (!string.IsNullOrEmpty(Name))
+            {
+                group = context.Web.SiteGroups.GetFirstOrDefault(g => g.Title == Name && g.LoginName == Name);
+            }
+            return group;
+        }
+        
         internal Group GetGroup(Web web)
         {
             var clientContext = web.Context;

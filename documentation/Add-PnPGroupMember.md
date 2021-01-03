@@ -2,12 +2,12 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpusertogroup
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpgroupmember
 schema: 2.0.0
-title: Add-PnPUserToGroup
+title: Add-PnPGroupMember
 ---
 
-# Add-PnPUserToGroup
+# Add-PnPGroupMember
 
 ## SYNOPSIS
 Adds a user to a SharePoint group
@@ -16,13 +16,13 @@ Adds a user to a SharePoint group
 
 ### Internal
 ```powershell
-Add-PnPUserToGroup -LoginName <String> -Identity <GroupPipeBind> [-Web <WebPipeBind>]
+Add-PnPGroupMember -LoginName <String> -Group <GroupPipeBind> [-Web <WebPipeBind>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### External
 ```powershell
-Add-PnPUserToGroup -Identity <GroupPipeBind> -EmailAddress <String> [-SendEmail] [-EmailBody <String>]
+Add-PnPGroupMember -Group <GroupPipeBind> -EmailAddress <String> [-SendEmail] [-EmailBody <String>]
  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -32,14 +32,14 @@ Add-PnPUserToGroup -Identity <GroupPipeBind> -EmailAddress <String> [-SendEmail]
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPUserToGroup -LoginName user@company.com -Identity 'Marketing Site Members'
+Add-PnPGroupMember -LoginName user@company.com -Group 'Marketing Site Members'
 ```
 
 Add the specified user to the SharePoint group "Marketing Site Members"
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPUserToGroup -LoginName user@company.com -Identity 5
+Add-PnPGroupMember -LoginName user@company.com -Group 5
 ```
 
 Add the specified user to the SharePoint group with Id 5
@@ -87,7 +87,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Identity
+### -Group
 The SharePoint group id, SharePoint group name or SharePoint group object to add the user to
 
 ```yaml
