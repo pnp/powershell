@@ -158,6 +158,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/Add-PnPGroupMember.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/Add-PnPGroupMember.html",
+          "hash": "UoiY6++iXbt/9zkzVGmq+A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/nightly/Add-PnPListFoldersToSiteTemplate.md",
       "output": {
         ".html": {
@@ -463,6 +475,18 @@
         ".html": {
           "relative_path": "cmdlets/nightly/Get-PnPExternalUser.html",
           "hash": "q7jIup3lRBTdcukkVfk6MQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/Get-PnPGroupMember.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/Get-PnPGroupMember.html",
+          "hash": "Vgfs1v03GXbtDCYNq7P3qA=="
         }
       },
       "is_incremental": false,
@@ -799,6 +823,18 @@
         ".html": {
           "relative_path": "cmdlets/nightly/Remove-PnPFileFromSiteTemplate.html",
           "hash": "v4YgLFV1CD9RyQkrzOmFFg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/nightly/Remove-PnPGroupMember.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/nightly/Remove-PnPGroupMember.html",
+          "hash": "JS8UrXO//Qx5KxRxJ/jTrA=="
         }
       },
       "is_incremental": false,
@@ -6810,7 +6846,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "EumfWUCwIgRxe3zQTHjlfQ=="
+          "hash": "y20dQYm4paLwFDWaqqYhSA=="
         }
       },
       "is_incremental": false,
@@ -6877,7 +6913,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 566,
+          "total_file_count": 569,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
