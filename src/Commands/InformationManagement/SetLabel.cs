@@ -1,7 +1,7 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using System.Linq;
 
 namespace PnP.PowerShell.Commands.InformationManagement
 {
@@ -26,18 +26,36 @@ namespace PnP.PowerShell.Commands.InformationManagement
         protected override void ExecuteCmdlet()
         {
             var list = List.GetList(CurrentWeb);
+            var availableTags = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAvailableTagsForSite(ClientContext, ClientContext.Url);
+            
+            try
+            {
+                ClientContext.ExecuteQueryRetry();
+            }
+            catch (System.Exception error)
+            {
+                WriteWarning(error.Message.ToString());
+            }
+
             if (list != null)
             {
-                var listUrl = list.RootFolder.ServerRelativeUrl;
-                Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetListComplianceTag(ClientContext, listUrl, Label, BlockDeletion, BlockEdit, SyncToItems);
+                if (availableTags.Where(tag => tag.TagName.ToString() == Label) != null)
+                {
+                    var listUrl = list.RootFolder.ServerRelativeUrl;
+                    Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetListComplianceTag(ClientContext, listUrl, Label, BlockDeletion, BlockEdit, SyncToItems);
 
-                try
-                {
-                    ClientContext.ExecuteQueryRetry();
+                    try
+                    {
+                        ClientContext.ExecuteQueryRetry();
+                    }
+                    catch (System.Exception error)
+                    {
+                        WriteWarning(error.Message.ToString());
+                    }
                 }
-                catch (System.Exception error)
+                else
                 {
-                    WriteWarning(error.Message.ToString());
+                    WriteWarning("The provided label is not available in the site.");
                 }
             }
             else
