@@ -16,12 +16,11 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            Group group = Identity.GetGroup(CurrentWeb);
+            var group = Identity.GetGroup(PnPContext);
+            
             if (Force || ShouldContinue(string.Format(Properties.Resources.RemoveGroup0, group.Title), Properties.Resources.Confirm))
             {
-                CurrentWeb.SiteGroups.Remove(group);
-
-                ClientContext.ExecuteQueryRetry();
+                group.Delete();
             }
         }
     }

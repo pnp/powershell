@@ -1,5 +1,5 @@
 ﻿using PnP.Core.Model.SharePoint;
-
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
@@ -8,6 +8,8 @@ namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Add, "PnPPageTextPart")]
     [Alias("Add-PnPClientSideText")]
+    [WriteAliasWarning("Please use 'Add-PnPPageTextPart'. The alias 'Add-PnPClientSideText' will be removed in the 1.5.0 release")]
+
     public class AddTextPart : PnPWebCmdlet
     {
         private const string ParameterSet_DEFAULT = "Default";
@@ -50,7 +52,7 @@ namespace PnP.PowerShell.Commands.Pages
                 throw new Exception($"Page {Page} cannot be found.");
 
             var textControl = clientSidePage.NewTextPart(Text);
-            
+
             if (ParameterSpecified(nameof(Section)))
             {
                 if (ParameterSpecified(nameof(Section)))

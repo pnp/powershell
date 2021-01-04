@@ -2,17 +2,19 @@
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.Model.Configuration;
 using PnP.Framework.Provisioning.ObjectHandlers;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Properties;
 using System;
 using System.IO;
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsData.Export, "PnPPage")]
     [Alias("Export-PnPClientSidePage")]
+    [WriteAliasWarning("Please use 'Export-PnPPage'. The alias 'Export-PnPClientSidePage' will be removed in the 1.5.0 release")]
+
     public class ExportPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
