@@ -23,55 +23,33 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(CurrentWeb);
-
-            List list = List.GetListOrThrow(nameof(List), CurrentWeb);
-
+            var group = Identity.GetGroup(PnPContext);
+            PnP.Core.Model.SharePoint.IList list = null;
+            if (ParameterSpecified(nameof(List)))
+            {
+                list = List.GetListOrThrow(nameof(List), PnPContext);
+            }
             if (AddRole != null)
             {
-                foreach (var role in AddRole)
+                if (ParameterSpecified(nameof(List)))
                 {
-                    var roleDefinition = CurrentWeb.RoleDefinitions.GetByName(role);
-                    var roleDefinitionBindings = new RoleDefinitionBindingCollection(ClientContext) { roleDefinition };
-
-                    RoleAssignmentCollection roleAssignments;
-                    if (list != null)
-                    {
-                        roleAssignments = list.RoleAssignments;
-                    }
-                    else
-                    {
-                        roleAssignments = CurrentWeb.RoleAssignments;
-                    }
-
-                    roleAssignments.Add(group, roleDefinitionBindings);
-                    ClientContext.Load(roleAssignments);
-                    ClientContext.ExecuteQueryRetry();
+                    list.AddRoleDefinitions(group.Id, AddRole);
                 }
+                else
+                {
+                    group.AddRoleDefinitions(AddRole);
+                }
+
             }
             if (RemoveRole != null)
             {
-                foreach (var role in RemoveRole)
+                if (ParameterSpecified(nameof(List)))
                 {
-                    RoleAssignment roleAssignment;
-                    if (list != null)
-                    {
-                        roleAssignment = list.RoleAssignments.GetByPrincipal(group);
-                    }
-                    else
-                    {
-                        roleAssignment = CurrentWeb.RoleAssignments.GetByPrincipal(group);
-                    }
-                    var roleDefinitionBindings = roleAssignment.RoleDefinitionBindings;
-                    ClientContext.Load(roleDefinitionBindings);
-                    ClientContext.ExecuteQueryRetry();
-                    foreach (var roleDefinition in roleDefinitionBindings.Where(roleDefinition => roleDefinition.Name == role))
-                    {
-                        roleDefinitionBindings.Remove(roleDefinition);
-                        roleAssignment.Update();
-                        ClientContext.ExecuteQueryRetry();
-                        break;
-                    }
+                    list.RemoveRoleDefinitions(group.Id, AddRole);
+                }
+                else
+                {
+                    group.RemoveRoleDefinitions(RemoveRole);
                 }
             }
         }
