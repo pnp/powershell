@@ -1215,6 +1215,50 @@
         </TableRowEntries>
       </TableControl>
     </View>
+     <View>
+      <Name>RoleDefinition</Name>
+      <ViewSelectedBy>
+        <TypeName>PnP.Core.Model.Security.RoleDefinition</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>RoleTypeKind</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Hidden</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Order</Label>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>RoleTypeKind</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Hidden</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Order</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
     <View>
       <Name>Audit</Name>
       <ViewSelectedBy>
