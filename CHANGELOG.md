@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPListPermissions` cmdlet.
 
 ### Changed
+- `Connect-PnPOnline -Url [url] -PnPManagementShell -LaunchBrowser` will not try to attempt to close the popup window automatically anymore.
 - `Set-PnPLabel` will now check first if a label is available.
 - Documentation fixes
 
