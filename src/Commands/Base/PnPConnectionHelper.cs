@@ -30,7 +30,16 @@ namespace PnP.PowerShell.Commands.Base
 
             if (url != null)
             {
-                using (var authManager = new PnP.Framework.AuthenticationManager())
+                PnP.Framework.AuthenticationManager authManager = null;
+                if (PnPConnection.CachedAuthenticationManager != null)
+                {
+                    authManager = PnPConnection.CachedAuthenticationManager;
+                }
+                else
+                {
+                    authManager = new PnP.Framework.AuthenticationManager();
+                }
+                using (authManager)
                 {
                     if (realm == null)
                     {
@@ -159,20 +168,24 @@ namespace PnP.PowerShell.Commands.Base
             return InstantiateConnectionWithCert(url, clientId, tenant, tenantAdminUrl, azureEnvironment, certificate, false);
         }
 
-        internal static PnPConnection InstantiateConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, AzureEnvironment azureEnvironment, string base64EncodedCertificate)
-        {
-            X509Certificate2 certificate = CertificateHelper.GetCertificateFromBase64Encodedstring(base64EncodedCertificate);
-            return InstantiateConnectionWithCert(url, clientId, tenant, tenantAdminUrl, azureEnvironment, certificate);
-        }
-
         internal static PnPConnection InstantiateConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, AzureEnvironment azureEnvironment, X509Certificate2 certificate)
         {
+            
             return InstantiateConnectionWithCert(url, clientId, tenant, tenantAdminUrl, azureEnvironment, certificate, false);
         }
 
         private static PnPConnection InstantiateConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool certificateFromFile)
         {
-            using (var authManager = new PnP.Framework.AuthenticationManager(clientId, certificate, tenant, azureEnvironment: azureEnvironment))
+            PnP.Framework.AuthenticationManager authManager = null;
+            if (PnPConnection.CachedAuthenticationManager != null)
+            {
+                authManager = PnPConnection.CachedAuthenticationManager;
+            }
+            else
+            {
+                authManager = new PnP.Framework.AuthenticationManager(clientId, certificate, tenant, azureEnvironment: azureEnvironment);
+            }
+            using (authManager)
             {
                 var clientContext = authManager.GetContext(url.ToString());
                 var context = PnPClientContext.ConvertFrom(clientContext);
@@ -246,7 +259,16 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     if (!string.IsNullOrWhiteSpace(clientId))
                     {
-                        using (var authManager = new PnP.Framework.AuthenticationManager(clientId, credentials.UserName, credentials.Password, redirectUrl, azureEnvironment))
+                        PnP.Framework.AuthenticationManager authManager = null;
+                        if (PnPConnection.CachedAuthenticationManager != null)
+                        {
+                            authManager = PnPConnection.CachedAuthenticationManager;
+                        }
+                        else
+                        {
+                            authManager = new PnP.Framework.AuthenticationManager(clientId, credentials.UserName, credentials.Password, redirectUrl, azureEnvironment);
+                        }
+                        using (authManager)
                         {
                             context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                             context.ExecuteQueryRetry();
@@ -257,7 +279,16 @@ namespace PnP.PowerShell.Commands.Base
                     }
                     else
                     {
-                        using (var authManager = new PnP.Framework.AuthenticationManager(credentials.UserName, credentials.Password, azureEnvironment))
+                        PnP.Framework.AuthenticationManager authManager = null;
+                        if (PnPConnection.CachedAuthenticationManager != null)
+                        {
+                            authManager = PnPConnection.CachedAuthenticationManager;
+                        }
+                        else
+                        {
+                            authManager = new PnP.Framework.AuthenticationManager(credentials.UserName, credentials.Password, azureEnvironment);
+                        }
+                        using (authManager)
                         {
                             context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                             context.ExecuteQueryRetry();
@@ -303,7 +334,7 @@ namespace PnP.PowerShell.Commands.Base
                     AzureEnvironment = azureEnvironment,
                 };
             }
-            
+
             return spoConnection;
         }
 

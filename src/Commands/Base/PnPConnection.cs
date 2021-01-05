@@ -69,6 +69,7 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         internal string UserAgent { get; set; }
 
+        internal static AuthenticationManager CachedAuthenticationManager { get; set; }
 
         internal ConnectionMethod ConnectionMethod { get; set; }
 
