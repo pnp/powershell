@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPListPermissions` cmdlet.
 
 ### Changed
+- Fixed issue where using `Connect-PnPOnline` in a loop would through after several iterations an exception message from MSAL not being able to retrieve a token due to a looped request. We fixed this by trying to reuse the in-memory token cache in scenarios where non-interactive logins are being used.
 - `Connect-PnPOnline -Url [url] -PnPManagementShell -LaunchBrowser` will not try to attempt to close the popup window automatically anymore.
 - `Set-PnPLabel` will now check first if a label is available.
 - Documentation fixes
