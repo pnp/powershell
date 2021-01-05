@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [0.3.27-nightly]
+
+### Added
+- Added `Get-PnPListPermissions` cmdlet.
+
+### Changed
+- `Set-PnPLabel` will now check first if a label is available.
+- Documentation fixes
+
+### Contributors
+- Leon Armstrong [leonarmston]
+- Bhishma Bhandari [bhishma]
+
 ## [0.3.24-nightly]
 
 ### Added
