@@ -10,11 +10,15 @@ title: add-pnpplannerbucket
 # Add-PnPPlannerBucket
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: Group.ReadWrite.All
+
 Adds a new bucket to a Planner plan
 
 ## SYNTAX
 
-### By Group
 ```powershell
 Add-PnPPlannerBucket -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Name <String> [<CommonParameters>]
 ```
