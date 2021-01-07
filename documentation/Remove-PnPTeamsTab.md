@@ -37,7 +37,7 @@ Removes the tab with the display name 'Wiki' from the channel named 'General'
 
 ### EXAMPLE 2
 ```powershell
-Remove-PnPTeamsTab -Team5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Channel General -Identity d8740a7a-e44e-46c5-8f13-e699f964fc25
+Remove-PnPTeamsTab -Team 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Channel General -Identity d8740a7a-e44e-46c5-8f13-e699f964fc25
 ```
 
 Removes a tab with the specified id from the channel
