@@ -38,6 +38,7 @@
           <div class="col-md-10">
           {{/_disableAffix}}
             <article class="content wrap" id="_content" data-uid="{{uid}}">
+                {{#tags}}<div class="pnp_tags">{{tags}}</div>{{/tags}}
                 {{^_disableContribution}}
                   {{>partials/contribution}}
                 {{/_disableContribution}}
