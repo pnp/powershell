@@ -30,14 +30,14 @@ Remove-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -Id
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity Wiki
+Remove-PnPTeamsTab -Team 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Channel General -Identity Wiki
 ```
 
-Removes the tab with the display name 'Wiki' from the channel
+Removes the tab with the display name 'Wiki' from the channel named 'General'
 
 ### EXAMPLE 2
 ```powershell
-Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity fcef815d-2e8e-47a5-b06b-9bebba5c7852
+Remove-PnPTeamsTab -Team5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Channel General -Identity d8740a7a-e44e-46c5-8f13-e699f964fc25
 ```
 
 Removes a tab with the specified id from the channel
@@ -73,7 +73,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Specify the id of the tab 
+Specify the id or display name of the tab 
 
 ```yaml
 Type: TeamsTabPipeBind
