@@ -10,6 +10,10 @@ title: new-pnpplannerplan
 # New-PnPPlannerPlan
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: Group.ReadWrite.All
 Creates a new Planner plan.
 
 ## SYNTAX
@@ -28,7 +32,14 @@ This cmdlet creates a new Planner plan.
 New-PnPPlannerPlan -Group "Marketing" -Title "Conference Plan"
 ```
 
-This example will add a new plan called "Conference Plan" to the "Marketing" group.
+This example will add a new plan called "Conference Plan" to the "Marketing" group
+
+### Example 2
+```powershell
+New-PnPPlannerPlan -Group 'baba9192-55be-488a-9fb7-2e2e76edbef2' -Title "Master Plan"
+```
+
+This example will add a new plan called "Master Plan" to group using the group id.
 
 ## PARAMETERS
 
