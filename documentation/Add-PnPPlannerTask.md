@@ -47,7 +47,7 @@ This cmdlet adds a new task called "Complete Project" using group id, plan id an
 ## PARAMETERS
 
 ### -Bucket
-Specify the name or id of planner bucket to add the task too
+Specify the name or id of the planner bucket to add the task too
 
 ```yaml
 Type: PlannerBucketPipeBind
