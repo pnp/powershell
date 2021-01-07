@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Set-PnPListItemPermission | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -86,17 +87,17 @@
 <p>Sets list item permissions. Use Get-PnPRoleDefinition to retrieve all available roles you can add or remove using this cmdlet.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="user-default">User (Default)</h3>
-<pre><code class="lang-powershell">Set-PnPListItemPermission [-List] &lt;ListPipeBind&gt; -Identity &lt;ListItemPipeBind&gt; -User &lt;String&gt;
+<pre><code>Set-PnPListItemPermission [-List] &lt;ListPipeBind&gt; -Identity &lt;ListItemPipeBind&gt; -User &lt;String&gt;
  [-AddRole &lt;String&gt;] [-RemoveRole &lt;String&gt;] [-ClearExisting] [-SystemUpdate] [-Web &lt;WebPipeBind&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="group">Group</h3>
-<pre><code class="lang-powershell">Set-PnPListItemPermission [-List] &lt;ListPipeBind&gt; -Identity &lt;ListItemPipeBind&gt; -Group &lt;GroupPipeBind&gt;
+<pre><code>Set-PnPListItemPermission [-List] &lt;ListPipeBind&gt; -Identity &lt;ListItemPipeBind&gt; -Group &lt;GroupPipeBind&gt;
  [-AddRole &lt;String&gt;] [-RemoveRole &lt;String&gt;] [-ClearExisting] [-SystemUpdate] [-Web &lt;WebPipeBind&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="inherit">Inherit</h3>
-<pre><code class="lang-powershell">Set-PnPListItemPermission [-List] &lt;ListPipeBind&gt; -Identity &lt;ListItemPipeBind&gt; [-InheritPermissions]
+<pre><code>Set-PnPListItemPermission [-List] &lt;ListPipeBind&gt; -Identity &lt;ListItemPipeBind&gt; [-InheritPermissions]
  [-SystemUpdate] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -122,6 +123,7 @@
 <p>The role that must be assigned to the group or user</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: User, Group
+Aliases:
 
 Required: False
 Position: Named
@@ -133,6 +135,7 @@ Accept wildcard characters: False
 <p>Clear all existing permissions</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: User, Group
+Aliases:
 
 Required: False
 Position: Named
@@ -144,6 +147,7 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -154,6 +158,7 @@ Accept wildcard characters: False
 <h3 id="-group">-Group</h3>
 <pre><code class="lang-yaml">Type: GroupPipeBind
 Parameter Sets: Group
+Aliases:
 
 Required: True
 Position: Named
@@ -165,6 +170,7 @@ Accept wildcard characters: False
 <p>The ID of the listitem, or actual ListItem object</p>
 <pre><code class="lang-yaml">Type: ListItemPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -176,6 +182,7 @@ Accept wildcard characters: False
 <p>Inherit permissions from the list, removing unique permissions</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Inherit
+Aliases:
 
 Required: False
 Position: Named
@@ -187,6 +194,7 @@ Accept wildcard characters: False
 <p>The ID, Title or Url of the list.</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: 0
@@ -198,6 +206,7 @@ Accept wildcard characters: False
 <p>The role that must be removed from the group or user</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: User, Group
+Aliases:
 
 Required: False
 Position: Named
@@ -207,8 +216,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-systemupdate">-SystemUpdate</h3>
 <p>Update the item permissions without creating a new version or triggering MS Flow.</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -219,6 +230,7 @@ Accept wildcard characters: False
 <h3 id="-user">-User</h3>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: User
+Aliases:
 
 Required: True
 Position: Named
@@ -230,6 +242,7 @@ Accept wildcard characters: False
 <p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
 <pre><code class="lang-yaml">Type: WebPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -238,7 +251,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Get-PnPSiteScriptFromWeb | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -90,27 +91,27 @@
 <p>Generates a Site Script from an existing site</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="all-components">All components</h3>
-<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url &lt;String&gt; [-Lists &lt;String[]&gt;] [-IncludeAll] [-Connection &lt;PnPConnection&gt;]
-   [&lt;CommonParameters&gt;]
+<pre><code>Get-PnPSiteScriptFromWeb -Url &lt;String&gt; [-Lists &lt;String[]&gt;] [-IncludeAll] [-Connection &lt;PnPConnection&gt;]
+ [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="specific-components">Specific components</h3>
-<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url &lt;String&gt; [-Lists &lt;String[]&gt;] [-IncludeBranding] [-IncludeLinksToExportedItems]
+<pre><code>Get-PnPSiteScriptFromWeb -Url &lt;String&gt; [-Lists &lt;String[]&gt;] [-IncludeBranding] [-IncludeLinksToExportedItems]
  [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme]
- [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
+ [-Connection &lt;PnPConnection&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This command allows a Site Script to be generated off of an existing site on your tenant. Connect to your SharePoint Online Admin site before executing this command.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url &quot;https://contoso.sharepoint.com/sites/teamsite&quot; -IncludeAll
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url https://contoso.sharepoint.com/sites/teamsite -IncludeAll
 </code></pre>
 <p>Returns the generated Site Script JSON containing all supported components from the site at the provided Url</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url &quot;https://contoso.sharepoint.com/sites/teamsite&quot; -IncludeAll -Lists &quot;Shared Documents&quot;,&quot;Lists\MyList&quot;
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url https://contoso.sharepoint.com/sites/teamsite -IncludeAll -Lists &quot;Shared Documents&quot;,&quot;Lists\MyList&quot;
 </code></pre>
 <p>Returns the generated Site Script JSON containing all supported components from the site at the provided Url including the lists &quot;Shared Documents&quot; and &quot;MyList&quot;</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url &quot;https://contoso.sharepoint.com/sites/teamsite&quot; -IncludeBranding -IncludeLinksToExportedItems
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url https://contoso.sharepoint.com/sites/teamsite -IncludeBranding -IncludeLinksToExportedItems
 </code></pre>
 <p>Returns the generated Site Script JSON containing the branding and navigation links from the site at the provided Url</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -130,6 +131,7 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -141,6 +143,7 @@ Accept wildcard characters: False
 <p>If specified will include all supported components into the Site Script</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: All components
+Aliases:
 
 Required: False
 Position: Named
@@ -152,6 +155,7 @@ Accept wildcard characters: False
 <p>If specified will include the branding of the site into the Site Script</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Specific components
+Aliases:
 
 Required: False
 Position: Named
@@ -163,6 +167,7 @@ Accept wildcard characters: False
 <p>If specified will include navigation links into the Site Script</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Specific components
+Aliases:
 
 Required: False
 Position: Named
@@ -174,6 +179,7 @@ Accept wildcard characters: False
 <p>If specified will include the regional settings into the Site Script</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Specific components
+Aliases:
 
 Required: False
 Position: Named
@@ -185,6 +191,7 @@ Accept wildcard characters: False
 <p>If specified will include the external sharing configuration into the Site Script</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Specific components
+Aliases:
 
 Required: False
 Position: Named
@@ -196,6 +203,7 @@ Accept wildcard characters: False
 <p>If specified will include the branding of the site into the Site Script</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Specific components
+Aliases:
 
 Required: False
 Position: Named
@@ -207,6 +215,7 @@ Accept wildcard characters: False
 <p>Allows specifying one or more site relative URLs of lists that should be included into the Site Script, i.e. &quot;Shared Documents&quot;,&quot;List\MyList&quot;</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -218,6 +227,7 @@ Accept wildcard characters: False
 <p>Specifies the URL of the site to generate a Site Script from</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -238,7 +248,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

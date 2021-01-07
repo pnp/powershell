@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Add-PnPClientSideWebPart | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -86,22 +87,22 @@
 <p>Adds a Client-Side Web Part to a client-side page</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="default-with-built-in-web-part">Default with built-in web part</h3>
-<pre><code class="lang-powershell">Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -DefaultWebPartType &lt;DefaultClientSideWebParts&gt;
+<pre><code>Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -DefaultWebPartType &lt;DefaultClientSideWebParts&gt;
  [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="default-with-3rd-party-web-part">Default with 3rd party web part</h3>
-<pre><code class="lang-powershell">Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -Component &lt;ClientSideComponentPipeBind&gt;
+<pre><code>Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -Component &lt;ClientSideComponentPipeBind&gt;
  [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="positioned-with-built-in-web-part">Positioned with built-in web part</h3>
-<pre><code class="lang-powershell">Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -DefaultWebPartType &lt;DefaultClientSideWebParts&gt;
+<pre><code>Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -DefaultWebPartType &lt;DefaultClientSideWebParts&gt;
  [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] -Section &lt;Int32&gt; -Column &lt;Int32&gt;
  [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="positioned-with-3rd-party-web-part">Positioned with 3rd party web part</h3>
-<pre><code class="lang-powershell">Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -Component &lt;ClientSideComponentPipeBind&gt;
+<pre><code>Add-PnPClientSideWebPart [-Page] &lt;ClientSidePagePipeBind&gt; -Component &lt;ClientSideComponentPipeBind&gt;
  [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] -Section &lt;Int32&gt; -Column &lt;Int32&gt;
  [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
@@ -123,8 +124,10 @@
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-column">-Column</h3>
 <p>Sets the column where to insert the web part control.</p>
+<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: Positioned with built-in web part, Positioned with 3rd party web part
+Aliases:
 
 Required: True
 Position: Named
@@ -134,8 +137,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-component">-Component</h3>
 <p>Specifies the component instance or Id to add.</p>
+<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: ClientSideComponentPipeBind
 Parameter Sets: Default with 3rd party web part, Positioned with 3rd party web part
+Aliases:
 
 Required: True
 Position: Named
@@ -145,8 +150,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -156,8 +163,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-defaultwebparttype">-DefaultWebPartType</h3>
 <p>Defines a default web part type to insert.</p>
+<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: DefaultClientSideWebParts
 Parameter Sets: Default with built-in web part, Positioned with built-in web part
+Aliases:
 Accepted values: ThirdParty, ContentRollup, BingMap, ContentEmbed, DocumentEmbed, Image, ImageGallery, LinkPreview, NewsFeed, NewsReel, News, PowerBIReportEmbed, QuickChart, SiteActivity, VideoEmbed, YammerEmbed, Events, GroupCalendar, Hero, List, PageTitle, People, QuickLinks, CustomMessageRegion, Divider, MicrosoftForms, Spacer, ClientWebPart, PowerApps, CodeSnippet, PageFields, Weather, YouTube, MyDocuments, YammerFullFeed, CountDown, ListProperties, MarkDown, Planner, Sites, CallToAction, Button
 
 Required: True
@@ -168,8 +177,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-order">-Order</h3>
 <p>Sets the order of the web part control. (Default = 1)</p>
+<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -179,8 +190,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-page">-Page</h3>
 <p>The name of the page.</p>
+<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: ClientSidePagePipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: 0
@@ -190,8 +203,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-section">-Section</h3>
 <p>Sets the section where to insert the web part control.</p>
+<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: Positioned with built-in web part, Positioned with 3rd party web part
+Aliases:
 
 Required: True
 Position: Named
@@ -201,8 +216,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-web">-Web</h3>
 <p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
+<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: WebPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -212,8 +229,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-webpartproperties">-WebPartProperties</h3>
 <p>The properties of the web part</p>
+<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: PropertyBagPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -222,7 +241,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

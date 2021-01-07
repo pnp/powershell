@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Get-PnPAADUser | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -90,14 +91,14 @@
 <p>Retrieves users from Azure Active Directory</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="return-a-list-default">Return a list (Default)</h3>
-<pre><code class="lang-powershell">Get-PnPAADUser [-Filter &lt;String&gt;] [-OrderBy &lt;String&gt;] [-Select &lt;String[]&gt;] [-ByPassPermissionCheck]
+<pre><code>Get-PnPAADUser [-Filter &lt;String&gt;] [-OrderBy &lt;String&gt;] [-Select &lt;String[]&gt;] [-ByPassPermissionCheck]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="return-by-specific-id">Return by specific ID</h3>
-<pre><code class="lang-powershell">Get-PnPAADUser [-Identity &lt;String&gt;] [-Select &lt;String[]&gt;] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+<pre><code>Get-PnPAADUser [-Identity &lt;String&gt;] [-Select &lt;String[]&gt;] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="return-the-delta">Return the delta</h3>
-<pre><code class="lang-powershell">Get-PnPAADUser [-Filter &lt;String&gt;] [-OrderBy &lt;String&gt;] [-Select &lt;String[]&gt;] [-Delta] [-DeltaToken &lt;String&gt;]
+<pre><code>Get-PnPAADUser [-Filter &lt;String&gt;] [-OrderBy &lt;String&gt;] [-Select &lt;String[]&gt;] [-Delta] [-DeltaToken &lt;String&gt;]
  [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -139,6 +140,7 @@
 <p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -150,6 +152,7 @@ Accept wildcard characters: False
 <p>Retrieves all users and provides a SkipToken delta token to allow to query for changes since this run when querying again by adding -DeltaToken to the command</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Return the delta
+Aliases:
 
 Required: True
 Position: Named
@@ -161,6 +164,7 @@ Accept wildcard characters: False
 <p>The change token provided during the previous run with -Delta to query for the changes to user objects made in Azure Active Directory since that run</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Return the delta
+Aliases:
 
 Required: False
 Position: Named
@@ -172,6 +176,7 @@ Accept wildcard characters: False
 <p>Includes a filter to the retrieval of the users. Use OData instructions to construct the filter, i.e. &quot;startswith(DisplayName, 'John')&quot;.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Return a list, Return the delta
+Aliases:
 
 Required: False
 Position: Named
@@ -183,6 +188,7 @@ Accept wildcard characters: False
 <p>Returns the user with the provided user id</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Return by specific ID
+Aliases:
 
 Required: False
 Position: Named
@@ -194,6 +200,7 @@ Accept wildcard characters: False
 <p>Includes a custom sorting instruction to the retrieval of the users. Use OData syntax to construct the orderby, i.e. &quot;DisplayName desc&quot;.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Return a list, Return the delta
+Aliases:
 
 Required: False
 Position: Named
@@ -205,6 +212,7 @@ Accept wildcard characters: False
 <p>Allows providing an array with the property names of specific properties to return. If not provided, the default properties will be returned.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -213,7 +221,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </token></article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

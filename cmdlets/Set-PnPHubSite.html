@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Set-PnPHubSite | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -89,7 +90,7 @@
 </ul>
 <p>Sets hub site properties</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPHubSite [-Identity] &lt;HubSitePipeBind&gt; [-Title &lt;String&gt;] [-LogoUrl &lt;String&gt;] [-Description &lt;String&gt;]
+<pre><code>Set-PnPHubSite [-Identity] &lt;HubSitePipeBind&gt; [-Title &lt;String&gt;] [-LogoUrl &lt;String&gt;] [-Description &lt;String&gt;]
  [-SiteDesignId &lt;Guid&gt;] [-HideNameInNavigation] [-RequiresJoinApproval] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
@@ -97,19 +98,19 @@
 <p>Allows configuring a hub site</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPHubSite -Identity &quot;https://tenant.sharepoint.com/sites/myhubsite&quot; -Title &quot;My New Title&quot;
+<pre><code class="lang-powershell">Set-PnPHubSite -Identity https://tenant.sharepoint.com/sites/myhubsite -Title &quot;My New Title&quot;
 </code></pre>
 <p>Sets the title of the hub site</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPHubSite -Identity &quot;https://tenant.sharepoint.com/sites/myhubsite&quot; -Description &quot;My updated description&quot;
+<pre><code class="lang-powershell">Set-PnPHubSite -Identity https://tenant.sharepoint.com/sites/myhubsite -Description &quot;My updated description&quot;
 </code></pre>
 <p>Sets the description of the hub site</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Set-PnPHubSite -Identity &quot;https://tenant.sharepoint.com/sites/myhubsite&quot; -SiteDesignId df8a3ef1-9603-44c4-abd9-541aea2fa745
+<pre><code class="lang-powershell">Set-PnPHubSite -Identity https://tenant.sharepoint.com/sites/myhubsite -SiteDesignId df8a3ef1-9603-44c4-abd9-541aea2fa745
 </code></pre>
 <p>Sets the site design which should be applied to sites joining the the hub site</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Set-PnPHubSite -Identity &quot;https://tenant.sharepoint.com/sites/myhubsite&quot; -LogoUrl &quot;https://tenant.sharepoint.com/SiteAssets/Logo.png&quot;
+<pre><code class="lang-powershell">Set-PnPHubSite -Identity https://tenant.sharepoint.com/sites/myhubsite -LogoUrl &quot;https://tenant.sharepoint.com/SiteAssets/Logo.png&quot;
 </code></pre>
 <p>Sets the logo of the hub site</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -117,6 +118,7 @@
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -128,6 +130,7 @@ Accept wildcard characters: False
 <p>{{ Fill Description Description }}</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -138,6 +141,7 @@ Accept wildcard characters: False
 <h3 id="-hidenameinnavigation">-HideNameInNavigation</h3>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -161,6 +165,7 @@ Accept wildcard characters: False
 <p>{{ Fill LogoUrl Description }}</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -171,6 +176,7 @@ Accept wildcard characters: False
 <h3 id="-requiresjoinapproval">-RequiresJoinApproval</h3>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -182,6 +188,7 @@ Accept wildcard characters: False
 <p>GUID of the SharePoint Site Design which should be applied when a site joins the hub site</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -193,6 +200,7 @@ Accept wildcard characters: False
 <p>{{ Fill Title Description }}</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -201,7 +209,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

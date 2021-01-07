@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Set-PnPList | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -85,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Updates list settings</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPList -Identity &lt;ListPipeBind&gt; [-EnableContentTypes &lt;Boolean&gt;] [-BreakRoleInheritance]
+<pre><code>Set-PnPList -Identity &lt;ListPipeBind&gt; [-EnableContentTypes &lt;Boolean&gt;] [-BreakRoleInheritance]
  [-ResetRoleInheritance] [-CopyRoleAssignments] [-ClearSubscopes] [-Title &lt;String&gt;] [-Description &lt;String&gt;]
  [-Hidden &lt;Boolean&gt;] [-ForceCheckout &lt;Boolean&gt;] [-ListExperience &lt;ListExperience&gt;]
  [-EnableAttachments &lt;Boolean&gt;] [-EnableFolderCreation &lt;Boolean&gt;] [-EnableVersioning &lt;Boolean&gt;]
@@ -123,6 +124,7 @@
 <p>If used the security inheritance is broken for this list</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -134,6 +136,7 @@ Accept wildcard characters: False
 <p>If used the unique permissions are cleared from child objects and they can inherit role assignments from this object</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -145,6 +148,7 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -156,6 +160,7 @@ Accept wildcard characters: False
 <p>If used the roles are copied from the parent web</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -167,6 +172,7 @@ Accept wildcard characters: False
 <p>The description of the list</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -178,6 +184,7 @@ Accept wildcard characters: False
 <p>Enable or disable attachments. Set to $true to enable, $false to disable.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -189,6 +196,7 @@ Accept wildcard characters: False
 <p>Set to $true to enable content types, set to $false to disable content types</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -200,6 +208,7 @@ Accept wildcard characters: False
 <p>Enable or disable folder creation. Set to $true to enable, $false to disable.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -211,6 +220,7 @@ Accept wildcard characters: False
 <p>Enable or disable minor versions versioning. Set to $true to enable, $false to disable.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -222,6 +232,7 @@ Accept wildcard characters: False
 <p>Enable or disable whether content approval is enabled for the list. Set to $true to enable, $false to disable.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -233,6 +244,7 @@ Accept wildcard characters: False
 <p>Enable or disable versioning. Set to $true to enable, $false to disable.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -244,6 +256,7 @@ Accept wildcard characters: False
 <p>Enable or disable force checkout. Set to $true to enable, $false to disable.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -255,6 +268,7 @@ Accept wildcard characters: False
 <p>Hide the list from the SharePoint UI. Set to $true to hide, $false to show.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -266,6 +280,7 @@ Accept wildcard characters: False
 <p>The ID, Title or Url of the list.</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -275,8 +290,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-listexperience">-ListExperience</h3>
 <p>Set the list experience: Auto, NewExperience or ClassicExperience</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: ListExperience
 Parameter Sets: (All)
+Aliases:
 Accepted values: Auto, NewExperience, ClassicExperience
 
 Required: False
@@ -289,6 +306,7 @@ Accept wildcard characters: False
 <p>Maximum major versions to keep</p>
 <pre><code class="lang-yaml">Type: UInt32
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -300,6 +318,7 @@ Accept wildcard characters: False
 <p>Maximum minor versions to keep</p>
 <pre><code class="lang-yaml">Type: UInt32
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -311,6 +330,7 @@ Accept wildcard characters: False
 <p>If used the security inheritance is reset for this list (inherited from parent)</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -322,6 +342,7 @@ Accept wildcard characters: False
 <p>The title of the list</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -333,6 +354,7 @@ Accept wildcard characters: False
 <p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
 <pre><code class="lang-yaml">Type: WebPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -341,7 +363,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Remove-PnPTeamsTab | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -89,7 +90,7 @@
 </ul>
 <p>Removes a Microsoft Teams tab in a channel.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPTeamsTab -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; -Identity &lt;TeamsTabPipeBind&gt;
+<pre><code>Remove-PnPTeamsTab -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; -Identity &lt;TeamsTabPipeBind&gt;
  [-Force] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -107,6 +108,7 @@
 <p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -118,6 +120,7 @@ Accept wildcard characters: False
 <p>Specify the channel id or display name of the channel to use.</p>
 <pre><code class="lang-yaml">Type: TeamsChannelPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -129,6 +132,7 @@ Accept wildcard characters: False
 <p>Specifying the Force parameter will skip the confirmation question.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -140,6 +144,7 @@ Accept wildcard characters: False
 <p>Specify the id of the tab</p>
 <pre><code class="lang-yaml">Type: TeamsTabPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -151,6 +156,7 @@ Accept wildcard characters: False
 <p>Specify the group id, mailNickname or display name of the team to use.</p>
 <pre><code class="lang-yaml">Type: TeamsTeamPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -159,7 +165,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

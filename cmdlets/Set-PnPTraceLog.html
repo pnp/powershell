@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Set-PnPTraceLog | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -86,11 +87,11 @@
 <p>Turn log tracing on or off</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="on">On</h3>
-<pre><code class="lang-powershell">Set-PnPTraceLog [-On] [-LogFile &lt;String&gt;] [-WriteToConsole] [-Level &lt;LogLevel&gt;] [-Delimiter &lt;String&gt;]
+<pre><code>Set-PnPTraceLog [-On] [-LogFile &lt;String&gt;] [-WriteToConsole] [-Level &lt;LogLevel&gt;] [-Delimiter &lt;String&gt;]
  [-IndentSize &lt;Int32&gt;] [-AutoFlush &lt;Boolean&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="off">Off</h3>
-<pre><code class="lang-powershell">Set-PnPTraceLog [-Off] [&lt;CommonParameters&gt;]
+<pre><code>Set-PnPTraceLog [-Off] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets, uses the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off. Notice that basically only the Provisioning Engine writes to the tracelog which means that cmdlets related to the engine will produce output.</p>
@@ -116,6 +117,7 @@
 <p>Auto flush the trace log. Defaults to true.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: On
+Aliases:
 
 Required: False
 Position: Named
@@ -127,6 +129,7 @@ Accept wildcard characters: False
 <p>If specified the trace log entries will be delimited with this value.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: On
+Aliases:
 
 Required: False
 Position: Named
@@ -138,6 +141,7 @@ Accept wildcard characters: False
 <p>Indents in the tracelog will be with this amount of characters. Defaults to 4.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: On
+Aliases:
 
 Required: False
 Position: Named
@@ -149,6 +153,7 @@ Accept wildcard characters: False
 <p>The level of events to capture. Possible values are 'Debug', 'Error', 'Warning', 'Information'. Defaults to 'Information'.</p>
 <pre><code class="lang-yaml">Type: LogLevel
 Parameter Sets: On
+Aliases:
 Accepted values: Debug, Error, Warning, Information
 
 Required: False
@@ -161,6 +166,7 @@ Accept wildcard characters: False
 <p>The path and filename of the file to write the trace log to.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: On
+Aliases:
 
 Required: False
 Position: Named
@@ -172,6 +178,7 @@ Accept wildcard characters: False
 <p>Turn off tracing to log file.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Off
+Aliases:
 
 Required: True
 Position: Named
@@ -183,6 +190,7 @@ Accept wildcard characters: False
 <p>Turn on tracing to log file</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: On
+Aliases:
 
 Required: True
 Position: Named
@@ -194,6 +202,7 @@ Accept wildcard characters: False
 <p>Turn on console trace output.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: On
+Aliases:
 
 Required: False
 Position: Named
@@ -202,7 +211,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

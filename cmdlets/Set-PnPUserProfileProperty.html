@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Set-PnPUserProfileProperty | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -90,11 +91,11 @@
 <p>Office365 only: Uses the tenant API to retrieve site information. You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this command.<p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="single">Single</h3>
-<pre><code class="lang-powershell">Set-PnPUserProfileProperty -Account &lt;String&gt; -PropertyName &lt;String&gt; -Value &lt;String&gt;
+<pre><code>Set-PnPUserProfileProperty -Account &lt;String&gt; -PropertyName &lt;String&gt; -Value &lt;String&gt;
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="multi">Multi</h3>
-<pre><code class="lang-powershell">Set-PnPUserProfileProperty -Account &lt;String&gt; -PropertyName &lt;String&gt; -Values &lt;String[]&gt;
+<pre><code>Set-PnPUserProfileProperty -Account &lt;String&gt; -PropertyName &lt;String&gt; -Values &lt;String[]&gt;
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -113,6 +114,7 @@
 <p>The account of the user, formatted either as a login name, or as a claims identity, e.g. i:0#.f|membership|user@domain.com</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -124,6 +126,7 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -135,6 +138,7 @@ Accept wildcard characters: False
 <p>The property to set, for instance SPS-Skills or SPS-Location</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -146,6 +150,7 @@ Accept wildcard characters: False
 <p>The value to set in the case of a single value property</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Single
+Aliases:
 
 Required: True
 Position: Named
@@ -157,6 +162,7 @@ Accept wildcard characters: False
 <p>The values set in the case of a multi value property, e.g. &quot;Value 1&quot;,&quot;Value 2&quot;</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: Multi
+Aliases:
 
 Required: True
 Position: Named
@@ -165,7 +171,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </tenant></article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

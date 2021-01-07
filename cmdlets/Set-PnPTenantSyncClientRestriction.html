@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Set-PnPTenantSyncClientRestriction | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -89,7 +90,7 @@
 </ul>
 <p>Sets organization-level sync client restriction properties</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPTenantSyncClientRestriction [-BlockMacSync] [-DisableReportProblemDialog]
+<pre><code>Set-PnPTenantSyncClientRestriction [-BlockMacSync] [-DisableReportProblemDialog]
  [-DomainGuids &lt;System.Collections.Generic.List`1[System.Guid]&gt;] [-Enable]
  [-ExcludedFileExtensions &lt;System.Collections.Generic.List`1[System.String]&gt;]
  [-GrooveBlockOption &lt;GrooveBlockOption&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
@@ -103,7 +104,7 @@
 </code></pre>
 <p>This example blocks access to Mac sync clients for OneDrive file synchronization</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPTenantSyncClientRestriction  -ExcludedFileExtensions &quot;pptx;docx;xlsx&quot;
+<pre><code class="lang-powershell">Set-SPOTenantSyncClientRestriction  -ExcludedFileExtensions &quot;pptx;docx;xlsx&quot;
 </code></pre>
 <p>This example blocks syncing of PowerPoint, Word, and Excel file types using the new sync client (OneDrive.exe).</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -111,6 +112,7 @@
 <p>Block Mac sync clients-- the Beta version and the new sync client (OneDrive.exe). The values for this parameter are $true and $false. The default value is $false.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -122,6 +124,7 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -133,6 +136,7 @@ Accept wildcard characters: False
 <p>Specifies if the Report Problem Dialog is disabled or not.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -144,6 +148,7 @@ Accept wildcard characters: False
 <p>Sets the domain GUID to add to the safe recipient list. Requires a minimum of 1 domain GUID. The maximum number of domain GUIDs allowed are 125. I.e. 634c71f6-fa83-429c-b77b-0dba3cb70b93,4fbc735f-0ac2-48ba-b035-b1ae3a480887.</p>
 <pre><code class="lang-yaml">Type: System.Collections.Generic.List`1[System.Guid]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -155,6 +160,7 @@ Accept wildcard characters: False
 <p>Enables the feature to block sync originating from domains that are not present in the safe recipients list.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -166,6 +172,7 @@ Accept wildcard characters: False
 <p>Blocks certain file types from syncing with the new sync client (OneDrive.exe). Provide as one string separating the extensions using a semicolon (;). I.e. &quot;docx;pptx&quot;</p>
 <pre><code class="lang-yaml">Type: System.Collections.Generic.List`1[System.String]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -177,6 +184,7 @@ Accept wildcard characters: False
 <p>Controls whether or not a tenant's users can sync OneDrive for Business libraries with the old OneDrive for Business sync client. The valid values are OptOut, HardOptin, and SoftOptin. GrooveBlockOption is planned to be deprecated. Please refrain from using the parameter.</p>
 <pre><code class="lang-yaml">Type: GrooveBlockOption
 Parameter Sets: (All)
+Aliases:
 Accepted values: OptOut, HardOptin, SoftOptin
 
 Required: False
@@ -186,7 +194,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Set-PnPTenantSite | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -90,7 +91,7 @@
 <p>Updates settings of a site collection</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="set-properties">Set Properties</h3>
-<pre><code class="lang-powershell">Set-PnPTenantSite [-Url] &lt;String&gt; [-Title &lt;String&gt;] [-LocaleId &lt;UInt32&gt;] [-AllowSelfServiceUpgrade]
+<pre><code>Set-PnPTenantSite [-Url] &lt;String&gt; [-Title &lt;String&gt;] [-LocaleId &lt;UInt32&gt;] [-AllowSelfServiceUpgrade]
  [-Owners &lt;System.Collections.Generic.List`1[System.String]&gt;] [-DenyAddAndCustomizePages]
  [-SharingCapability &lt;SharingCapabilities&gt;] [-StorageMaximumLevel &lt;Int64&gt;] [-StorageWarningLevel &lt;Int64&gt;]
  [-DefaultLinkPermission &lt;SharingPermissionType&gt;] [-DefaultSharingLinkType &lt;SharingLinkType&gt;]
@@ -101,30 +102,30 @@
  [-OverrideTenantAnonymousLinkExpirationPolicy] [-Wait] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="set-lock-state">Set Lock State</h3>
-<pre><code class="lang-powershell">Set-PnPTenantSite [-Url] &lt;String&gt; [-LockState &lt;SiteLockState&gt;] [-Wait] [-Connection &lt;PnPConnection&gt;]
+<pre><code>Set-PnPTenantSite [-Url] &lt;String&gt; [-LockState &lt;SiteLockState&gt;] [-Wait] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows settings of a site collection to be updated</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPTenantSite -Url &quot;https://contoso.sharepoint.com&quot; -Title &quot;Contoso Website&quot; -Sharing Disabled
+<pre><code class="lang-powershell">Set-PnPTenantSite -Url https://contoso.sharepoint.com -Title &quot;Contoso Website&quot; -Sharing Disabled
 </code></pre>
 <p>This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website' and disable sharing on this site collection.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPTenantSite -Url &quot;https://contoso.sharepoint.com&quot; -Title &quot;Contoso Website&quot; -StorageWarningLevel 8000 -StorageMaximumLevel 10000
+<pre><code class="lang-powershell">Set-PnPTenantSite -Url https://contoso.sharepoint.com -Title &quot;Contoso Website&quot; -StorageWarningLevel 8000 -StorageMaximumLevel 10000
 </code></pre>
 <p>This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website', set the storage warning level to 8GB and set the storage maximum level to 10GB.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Set-PnPTenantSite -Url &quot;https://contoso.sharepoint.com/sites/sales&quot; -Owners &quot;user@contoso.onmicrosoft.com&quot;
+<pre><code class="lang-powershell">Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -Owners &quot;user@contoso.onmicrosoft.com&quot;
 </code></pre>
 <p>This will add user@contoso.onmicrosoft.com as an additional site collection owner at 'https://contoso.sharepoint.com/sites/sales'.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Set-PnPTenantSite -Url &quot;https://contoso.sharepoint.com/sites/sales&quot; -Owners @(&quot;user1@contoso.onmicrosoft.com&quot;, &quot;user2@contoso.onmicrosoft.com&quot;)
+<pre><code class="lang-powershell">Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -Owners @(&quot;user1@contoso.onmicrosoft.com&quot;, &quot;user2@contoso.onmicrosoft.com&quot;)
 </code></pre>
 <p>This will add user1@contoso.onmicrosoft.com and user2@contoso.onmicrosoft.com as additional site collection owners at 'https://contoso.sharepoint.com/sites/sales'.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Set-PnPTenantSite -Url &quot;https://contoso.sharepoint.com/sites/sales&quot; -NoScriptSite:$false
+<pre><code class="lang-powershell">Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -NoScriptSite:$false
 </code></pre>
 <p>This will enable script support for the site 'https://contoso.sharepoint.com/sites/sales' if disabled.</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -132,6 +133,7 @@
 <p>Specifies if the site administrator can upgrade the site collection</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -143,6 +145,7 @@ Accept wildcard characters: False
 <p>{{ Fill AnonymousLinkExpirationInDays Description }}</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -152,8 +155,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-blockdownloadofnonviewablefiles">-BlockDownloadOfNonViewableFiles</h3>
 <p>Specifies if non web viewable files can be downloaded.</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -163,8 +168,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-commentsonsitepagesdisabled">-CommentsOnSitePagesDisabled</h3>
 <p>Specifies if comments on site pages are enabled</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -176,6 +183,7 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -185,8 +193,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-defaultlinkpermission">-DefaultLinkPermission</h3>
 <p>Specifies the default link permission for the site collection. None - Respect the organization default link permission. View - Sets the default link permission for the site to &quot;view&quot; permissions. Edit - Sets the default link permission for the site to &quot;edit&quot; permissions</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SharingPermissionType
 Parameter Sets: Set Properties
+Aliases:
 Accepted values: None, View, Edit
 
 Required: False
@@ -197,8 +207,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-defaultsharinglinktype">-DefaultSharingLinkType</h3>
 <p>Specifies the default link type for the site collection. None - Respect the organization default sharing link type. AnonymousAccess - Sets the default sharing link for this site to an Anonymous Access or Anyone link. Internal - Sets the default sharing link for this site to the &quot;organization&quot; link or company shareable link. Direct - Sets the default sharing link for this site to the &quot;Specific people&quot; link</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SharingLinkType
 Parameter Sets: Set Properties
+Aliases:
 Accepted values: None, Direct, Internal, AnonymousAccess
 
 Required: False
@@ -223,8 +235,10 @@ Accept wildcard characters: False
 <ul>
 <li></li>
 </ul>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: AppViewsPolicy
 Parameter Sets: Set Properties
+Aliases:
 Accepted values: Unknown, Disabled, NotDisabled
 
 Required: False
@@ -237,8 +251,10 @@ Accept wildcard characters: False
 <ul>
 <li></li>
 </ul>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: CompanyWideSharingLinksPolicy
 Parameter Sets: Set Properties
+Aliases:
 Accepted values: Unknown, Disabled, NotDisabled
 
 Required: False
@@ -251,8 +267,10 @@ Accept wildcard characters: False
 <ul>
 <li></li>
 </ul>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: FlowsPolicy
 Parameter Sets: Set Properties
+Aliases:
 Accepted values: Unknown, Disabled, NotDisabled
 
 Required: False
@@ -265,6 +283,7 @@ Accept wildcard characters: False
 <p>Specifies the language of this site collection. For more information, see Locale IDs supported by SharePoint at <a href="https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint">https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint</a>. To get the list of supported languages on a SharePoint environment use: (Get-PnPWeb -Includes RegionalSettings.InstalledLanguages).RegionalSettings.InstalledLanguages.</p>
 <pre><code class="lang-yaml">Type: UInt32
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -274,8 +293,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-lockstate">-LockState</h3>
 <p>Sets the lockstate of a site</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SiteLockState
 Parameter Sets: Set Lock State
+Aliases:
 Accepted values: Unlock, NoAccess, ReadOnly
 
 Required: False
@@ -288,6 +309,7 @@ Accept wildcard characters: False
 <p>{{ Fill OverrideTenantAnonymousLinkExpirationPolicy Description }}</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -299,6 +321,7 @@ Accept wildcard characters: False
 <p>Specifies owner(s) to add as site collection administrators. They will be added as additional site collection administrators. Existing administrators will stay. Can be both users and groups.</p>
 <pre><code class="lang-yaml">Type: System.Collections.Generic.List`1[System.String]
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -308,8 +331,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-sharingalloweddomainlist">-SharingAllowedDomainList</h3>
 <p>Specifies a list of email domains that is allowed for sharing with the external collaborators. Use the space character as the delimiter for entering multiple values. For example, &quot;contoso.com fabrikam.com&quot;.</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -319,8 +344,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-sharingblockeddomainlist">-SharingBlockedDomainList</h3>
 <p>Specifies a list of email domains that is blocked for sharing with the external collaborators. Use the space character as the delimiter for entering multiple values. For example, &quot;contoso.com fabrikam.com&quot;.</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -330,6 +357,7 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-sharingcapability">-SharingCapability</h3>
 <p>Specifies what the sharing capabilities are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SharingCapabilities
 Parameter Sets: Set Properties
 Aliases: Sharing
@@ -343,8 +371,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-sharingdomainrestrictionmode">-SharingDomainRestrictionMode</h3>
 <p>Specifies the external sharing mode for domains.</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SharingDomainRestrictionModes
 Parameter Sets: Set Properties
+Aliases:
 Accepted values: None, AllowList, BlockList
 
 Required: False
@@ -355,8 +385,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-storagemaximumlevel">-StorageMaximumLevel</h3>
 <p>Specifies the storage quota for this site collection in megabytes. This value must not exceed the company's available quota.</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: Int64
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -366,8 +398,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-storagewarninglevel">-StorageWarningLevel</h3>
 <p>Specifies the warning level for the storage quota in megabytes. This value must not exceed the values set for the StorageMaximumLevel parameter</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: Int64
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -379,6 +413,7 @@ Accept wildcard characters: False
 <p>Specifies the title of the site</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -390,6 +425,7 @@ Accept wildcard characters: False
 <p>Specifies the URL of the site</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: 0
@@ -399,8 +435,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-wait">-Wait</h3>
 <p>Wait for the operation to complete</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -409,7 +447,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

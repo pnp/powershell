@@ -515,3 +515,9 @@ code {
 .affix h5 {
   display: none;
 }
+
+.pnp_tags {
+  background-color: orange;
+  color: black;
+  padding:15px 0;
+}

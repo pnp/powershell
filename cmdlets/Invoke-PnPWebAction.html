@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Invoke-PnPWebAction | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -85,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Executes operations on web, lists and list items.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Invoke-PnPWebAction [-ListName &lt;String&gt;] [-Webs &lt;Web[]&gt;]
+<pre><code>Invoke-PnPWebAction [-ListName &lt;String&gt;] [-Webs &lt;Web[]&gt;]
  [-WebAction &lt;System.Action`1[Microsoft.SharePoint.Client.Web]&gt;]
  [-ShouldProcessWebAction &lt;System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]&gt;]
  [-PostWebAction &lt;System.Action`1[Microsoft.SharePoint.Client.Web]&gt;]
@@ -97,7 +98,7 @@
  [-ListProperties &lt;String[]&gt;] [-ListItemAction &lt;System.Action`1[Microsoft.SharePoint.Client.ListItem]&gt;]
  [-ShouldProcessListItemAction &lt;System.Func`2[Microsoft.SharePoint.Client.ListItem,System.Boolean]&gt;]
  [-ListItemProperties &lt;String[]&gt;] [-SubWebs] [-DisableStatisticsOutput] [-SkipCounting] [-Web &lt;WebPipeBind&gt;]
- [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
+ [-Connection &lt;PnPConnection&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -126,6 +127,7 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -137,6 +139,7 @@ Accept wildcard characters: False
 <p>Will not output statistics after the operation</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -148,6 +151,7 @@ Accept wildcard characters: False
 <p>Function to be executed on the list. There is one input parameter of type List</p>
 <pre><code class="lang-yaml">Type: System.Action`1[Microsoft.SharePoint.Client.List]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -159,6 +163,7 @@ Accept wildcard characters: False
 <p>Function to be executed on the list item. There is one input parameter of type ListItem</p>
 <pre><code class="lang-yaml">Type: System.Action`1[Microsoft.SharePoint.Client.ListItem]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -170,6 +175,7 @@ Accept wildcard characters: False
 <p>The properties to load for list items.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -181,6 +187,7 @@ Accept wildcard characters: False
 <p>{{ Fill ListName Description }}</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -192,6 +199,7 @@ Accept wildcard characters: False
 <p>The properties to load for list.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -203,6 +211,7 @@ Accept wildcard characters: False
 <p>Function to be executed on the list, this will trigger after list items have been processed. There is one input parameter of type List</p>
 <pre><code class="lang-yaml">Type: System.Action`1[Microsoft.SharePoint.Client.List]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -214,6 +223,7 @@ Accept wildcard characters: False
 <p>Function to be executed on the web, this will trigger after lists and list items have been processed. There is one input parameter of type Web</p>
 <pre><code class="lang-yaml">Type: System.Action`1[Microsoft.SharePoint.Client.Web]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -225,6 +235,7 @@ Accept wildcard characters: False
 <p>Function to be executed on the web that would determine if ListAction should be invoked, There is one input parameter of type List and the function should return a boolean value</p>
 <pre><code class="lang-yaml">Type: System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -236,6 +247,7 @@ Accept wildcard characters: False
 <p>Function to be executed on the web that would determine if ListItemAction should be invoked, There is one input parameter of type ListItem and the function should return a boolean value</p>
 <pre><code class="lang-yaml">Type: System.Func`2[Microsoft.SharePoint.Client.ListItem,System.Boolean]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -247,6 +259,7 @@ Accept wildcard characters: False
 <p>Function to be executed on the web that would determine if PostListAction should be invoked, There is one input parameter of type List and the function should return a boolean value</p>
 <pre><code class="lang-yaml">Type: System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -258,6 +271,7 @@ Accept wildcard characters: False
 <p>Function to be executed on the web that would determine if PostWebAction should be invoked, There is one input parameter of type Web and the function should return a boolean value</p>
 <pre><code class="lang-yaml">Type: System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -269,6 +283,7 @@ Accept wildcard characters: False
 <p>Function to be executed on the web that would determine if WebAction should be invoked, There is one input parameter of type Web and the function should return a boolean value</p>
 <pre><code class="lang-yaml">Type: System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -280,6 +295,7 @@ Accept wildcard characters: False
 <p>Will skip the counting process; by doing this you will not get an estimated time remaining</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -291,6 +307,7 @@ Accept wildcard characters: False
 <p>Specify if sub webs will be processed</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -302,6 +319,7 @@ Accept wildcard characters: False
 <p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
 <pre><code class="lang-yaml">Type: WebPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -313,6 +331,7 @@ Accept wildcard characters: False
 <p>Function to be executed on the web. There is one input parameter of type Web</p>
 <pre><code class="lang-yaml">Type: System.Action`1[Microsoft.SharePoint.Client.Web]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -324,6 +343,7 @@ Accept wildcard characters: False
 <p>The properties to load for web.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -335,6 +355,7 @@ Accept wildcard characters: False
 <p>Webs you want to process (for example different site collections), will use Web parameter if not specified</p>
 <pre><code class="lang-yaml">Type: Web[]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -355,7 +376,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

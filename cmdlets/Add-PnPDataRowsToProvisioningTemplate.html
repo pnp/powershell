@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Add-PnPDataRowsToSiteTemplate | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -85,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Adds datarows to a list inside a PnP Provisioning Template</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPDataRowsToSiteTemplate [-Path] &lt;String&gt; -List &lt;ListPipeBind&gt; [-Query &lt;String&gt;]
+<pre><code>Add-PnPDataRowsToSiteTemplate [-Path] &lt;String&gt; -List &lt;ListPipeBind&gt; [-Query &lt;String&gt;]
  [-Fields &lt;String[]&gt;] [-IncludeSecurity] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;]
  [-TokenizeUrls] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
@@ -104,6 +105,7 @@
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -115,6 +117,7 @@ Accept wildcard characters: False
 <p>The fields to retrieve. If not specified all fields will be loaded in the returned list object.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -126,6 +129,7 @@ Accept wildcard characters: False
 <p>A switch to include ObjectSecurity information.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: 5
@@ -137,6 +141,7 @@ Accept wildcard characters: False
 <p>The list to query</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -148,6 +153,7 @@ Accept wildcard characters: False
 <p>Filename of the .PNP Open XML site template to read from, optionally including full path.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: 0
@@ -159,6 +165,7 @@ Accept wildcard characters: False
 <p>The CAML query to execute against the list. Defaults to all items.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -170,6 +177,7 @@ Accept wildcard characters: False
 <p>Allows you to specify ITemplateProviderExtension to execute while loading the template.</p>
 <pre><code class="lang-yaml">Type: ITemplateProviderExtension[]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: 4
@@ -181,6 +189,7 @@ Accept wildcard characters: False
 <p>If set, this switch will try to tokenize the values with web and site related tokens</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -192,6 +201,7 @@ Accept wildcard characters: False
 <p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
 <pre><code class="lang-yaml">Type: WebPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -200,7 +210,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

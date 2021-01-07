@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Set-PnPTenant | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -89,7 +90,7 @@
 </ul>
 <p>Sets organization-level site collection properties</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPTenant [-SpecialCharactersStateInFileFolderNames &lt;SpecialCharactersState&gt;]
+<pre><code>Set-PnPTenant [-SpecialCharactersStateInFileFolderNames &lt;SpecialCharactersState&gt;]
  [-MinCompatibilityLevel &lt;Int32&gt;] [-MaxCompatibilityLevel &lt;Int32&gt;] [-ExternalServicesEnabled &lt;Boolean&gt;]
  [-NoAccessRedirectUrl &lt;String&gt;] [-SharingCapability &lt;SharingCapabilities&gt;]
  [-DisplayStartASiteOption &lt;Boolean&gt;] [-StartASiteFormUrl &lt;String&gt;] [-ShowEveryoneClaim &lt;Boolean&gt;]
@@ -125,8 +126,8 @@ ResourceQuotaAllocated, and SiteCreationMode.</p>
 <p>You must have the SharePoint Online admin or Global admin role to run the cmdlet.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPTenantSite -Identity &quot;https://contoso.sharepoint.com/sites/team1&quot; -LockState NoAccess
-Set-PnPTenant -NoAccessRedirectUrl &quot;http://www.contoso.com&quot;
+<pre><code class="lang-powershell">Set-PnPTenantSite -Identity https://contoso.sharepoint.com/sites/team1 -LockState NoAccess
+Set-PnPTenant -NoAccessRedirectUrl 'http://www.contoso.com'
 </code></pre>
 <p>This example blocks access to <a href="https://contoso.sharepoint.com/sites/team1">https://contoso.sharepoint.com/sites/team1</a> and redirects traffic to <a href="http://www.contoso.com">http://www.contoso.com</a>.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
@@ -145,6 +146,7 @@ Set-PnPTenant -NoAccessRedirectUrl &quot;http://www.contoso.com&quot;
 <h3 id="-allowdownloadingnonwebviewablefiles">-AllowDownloadingNonWebViewableFiles</h3>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -155,6 +157,7 @@ Accept wildcard characters: False
 <h3 id="-allowediting">-AllowEditing</h3>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -165,6 +168,7 @@ Accept wildcard characters: False
 <h3 id="-applyappenforcedrestrictionstoadhocrecipients">-ApplyAppEnforcedRestrictionsToAdHocRecipients</h3>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -179,6 +183,7 @@ False (default) - BCC for external sharing is disabled.
 True - All external sharing invitations that are sent will blind copy the e-mail messages listed in the BccExternalSharingInvitationsList.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -194,6 +199,7 @@ Multiple addresses can be specified by creating a comma separated list with no s
 Single or Multiple e-mail addresses - joe@contoso.com or joe@contoso.com,bob@contoso.com</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -204,6 +210,7 @@ Accept wildcard characters: False
 <h3 id="-commentsonsitepagesdisabled">-CommentsOnSitePagesDisabled</h3>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -214,6 +221,7 @@ Accept wildcard characters: False
 <h3 id="-conditionalaccesspolicy">-ConditionalAccessPolicy</h3>
 <pre><code class="lang-yaml">Type: SPOConditionalAccessPolicyType
 Parameter Sets: (All)
+Aliases:
 Accepted values: AllowFullAccess, AllowLimitedAccess, BlockAccess, ProtectionLevel
 
 Required: False
@@ -226,6 +234,7 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -236,6 +245,7 @@ Accept wildcard characters: False
 <h3 id="-defaultlinkpermission">-DefaultLinkPermission</h3>
 <pre><code class="lang-yaml">Type: SharingPermissionType
 Parameter Sets: (All)
+Aliases:
 Accepted values: None, View, Edit
 
 Required: False
@@ -252,6 +262,7 @@ Setting this value to &quot;none&quot; will default &quot;get a link&quot; to th
 <p>The values are: None Direct Internal AnonymousAccess</p>
 <pre><code class="lang-yaml">Type: SharingLinkType
 Parameter Sets: (All)
+Aliases:
 Accepted values: None, Direct, Internal, AnonymousAccess
 
 Required: False
@@ -264,6 +275,7 @@ Accept wildcard characters: False
 <p>{{ Fill DisableCustomAppAuthentication Description }}</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -275,6 +287,7 @@ Accept wildcard characters: False
 <p>Guids of out of the box modern web part id's to hide</p>
 <pre><code class="lang-yaml">Type: Guid[]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -287,6 +300,7 @@ Accept wildcard characters: False
 <p>Accepts a value of true (enabled) to hide the Download button or false (disabled) to display the Download button. By default this feature is set to false.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -301,6 +315,7 @@ True (default) - Tenant users will see the Start a Site menu option.
 False - Start a Site is hidden from the menu.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -311,6 +326,7 @@ Accept wildcard characters: False
 <h3 id="-emailattestationreauthdays">-EmailAttestationReAuthDays</h3>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -321,6 +337,7 @@ Accept wildcard characters: False
 <h3 id="-emailattestationrequired">-EmailAttestationRequired</h3>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -332,6 +349,7 @@ Accept wildcard characters: False
 <p>Boolean indicating if Azure Information Protection (AIP) should be enabled on the tenant. For more information, see <a href="https://docs.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-onedrive-files#use-powershell-to-enable-support-for-sensitivity-labels">https://docs.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-onedrive-files#use-powershell-to-enable-support-for-sensitivity-labels</a></p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -345,6 +363,7 @@ Accept wildcard characters: False
 If enabled, your identity provider must be capable of authenticating guest users. If it is not, guest users will be unable to log in and access content that was shared with them.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -360,6 +379,7 @@ True (default) - External services are enabled for the tenant.
 False - External services that are outside of the Office 365 datacenters cannot interact with SharePoint.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -370,6 +390,7 @@ Accept wildcard characters: False
 <h3 id="-fileanonymouslinktype">-FileAnonymousLinkType</h3>
 <pre><code class="lang-yaml">Type: AnonymousLinkType
 Parameter Sets: (All)
+Aliases:
 Accepted values: None, View, Edit
 
 Required: False
@@ -381,6 +402,7 @@ Accept wildcard characters: False
 <h3 id="-filepickerexternalimagesearchenabled">-FilePickerExternalImageSearchEnabled</h3>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -391,6 +413,7 @@ Accept wildcard characters: False
 <h3 id="-folderanonymouslinktype">-FolderAnonymousLinkType</h3>
 <pre><code class="lang-yaml">Type: AnonymousLinkType
 Parameter Sets: (All)
+Aliases:
 Accepted values: None, View, Edit
 
 Required: False
@@ -403,6 +426,7 @@ Accept wildcard characters: False
 <p>Defines if the default themes are visible or hidden</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -417,6 +441,7 @@ Accept wildcard characters: False
 The IPAddressAllowList parameter only lets administrators set IP addresses or ranges that are recognized as trusted. To only grant access from these IP addresses or ranges, set the IPAddressEnforcement parameter to $true.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -430,6 +455,7 @@ Accept wildcard characters: False
 <p>Before the IPAddressEnforcement parameter is set, make sure you add a valid IPv4 or IPv6 address to the IPAddressAllowList parameter.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -440,6 +466,7 @@ Accept wildcard characters: False
 <h3 id="-ipaddresswactokenlifetime">-IPAddressWACTokenLifetime</h3>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -456,6 +483,7 @@ Accept wildcard characters: False
 This may also prevent third-party apps from accessing SharePoint Online resources.Also, this will also block apps using the SharePointOnlineCredentials class to access SharePoint Online resources.For additional information about SharePointOnlineCredentials, see SharePointOnlineCredentials class.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -467,6 +495,7 @@ Accept wildcard characters: False
 <p>Specifies the upper bound on the compatibility level for new sites.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -478,6 +507,7 @@ Accept wildcard characters: False
 <p>Specifies the lower bound on the compatibility level for new sites.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -492,6 +522,7 @@ Accept wildcard characters: False
 Full URL - Example: <a href="https://contoso.sharepoint.com/Pages/Locked.aspx">https://contoso.sharepoint.com/Pages/Locked.aspx</a></p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -502,6 +533,7 @@ Accept wildcard characters: False
 <h3 id="-notificationsinonedriveforbusinessenabled">-NotificationsInOneDriveForBusinessEnabled</h3>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -512,6 +544,7 @@ Accept wildcard characters: False
 <h3 id="-notificationsinsharepointenabled">-NotificationsInSharePointEnabled</h3>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -525,6 +558,7 @@ Accept wildcard characters: False
 <p>The values are $true and $false.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -538,6 +572,7 @@ Accept wildcard characters: False
 <p>The values are $true and $false.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -553,6 +588,7 @@ Accept wildcard characters: False
 <p>Unspecified- Let each OneDrive for Business owner enable or disable access requests and requests to share on their OneDrive.</p>
 <pre><code class="lang-yaml">Type: SharingState
 Parameter Sets: (All)
+Aliases:
 Accepted values: Unspecified, On, Off
 
 Required: False
@@ -569,6 +605,7 @@ Accept wildcard characters: False
 <p>Unspecified- Let each OneDrive for Business owner enable or disable re-sharing behavior on their OneDrive.</p>
 <pre><code class="lang-yaml">Type: SharingState
 Parameter Sets: (All)
+Aliases:
 Accepted values: Unspecified, On, Off
 
 Required: False
@@ -584,6 +621,7 @@ False (default) - Modern Authentication is enabled/allowed.
 True - Modern Authentication via ADAL is disabled.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -598,6 +636,7 @@ Accept wildcard characters: False
 <p>$false- Administrator managed Guest users can't be given OneDrives as functionality is turned off.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -612,6 +651,7 @@ Accept wildcard characters: False
 <p>If the value is set larger than the Maximum allowed OneDrive for Business quota, it will have no effect.</p>
 <pre><code class="lang-yaml">Type: Int64
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -624,6 +664,7 @@ Accept wildcard characters: False
 <p>The value range is in days, between 30 and 3650. The default value is 30.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -634,6 +675,7 @@ Accept wildcard characters: False
 <h3 id="-owneranonymousnotification">-OwnerAnonymousNotification</h3>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -644,6 +686,7 @@ Accept wildcard characters: False
 <h3 id="-preventexternalusersfromresharing">-PreventExternalUsersFromResharing</h3>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -660,6 +703,7 @@ False - No folder is created when the site and OneDrive for Business document li
 For additional information about the change, see Provision the Shared with Everyone folder in OneDrive for Business (<a href="https://support.office.com/en-us/article/Provision-the-Shared-with-Everyone-folder-in-OneDrive-for-Business-6bb02c91-fd0b-42ba-9457-3921cb6dc5b2?ui=en-US&amp;rs=en-US&amp;ad=US">https://support.office.com/en-us/article/Provision-the-Shared-with-Everyone-folder-in-OneDrive-for-Business-6bb02c91-fd0b-42ba-9457-3921cb6dc5b2?ui=en-US&amp;rs=en-US&amp;ad=US</a>)</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -670,6 +714,7 @@ Accept wildcard characters: False
 <h3 id="-publiccdnallowedfiletypes">-PublicCdnAllowedFileTypes</h3>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -680,6 +725,7 @@ Accept wildcard characters: False
 <h3 id="-publiccdnenabled">-PublicCdnEnabled</h3>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -696,6 +742,7 @@ False (default) - When a document is shared with an external user, bob@contoso.c
 True - User must accept this invitation with bob@contoso.com.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -708,6 +755,7 @@ Accept wildcard characters: False
 <p>To remove the expiration requirement, set the value to zero (0).</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -723,6 +771,7 @@ False (default) - Starts with / partial name search functionality is available.
 True - Disables starts with / partial name search functionality for all SharePoint users, except SharePoint Admins.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -735,6 +784,7 @@ Accept wildcard characters: False
 <p>For additional information about how to restrict a domain sharing, see Restricted Domains Sharing in Office 365 SharePoint Online and OneDrive for Business</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -747,6 +797,7 @@ Accept wildcard characters: False
 <p>For additional information about how to restrict a domain sharing, see Restricted Domains Sharing in Office 365 SharePoint Online and OneDrive for Business</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -762,6 +813,7 @@ ExternalUserSharingOnly - External user sharing (share by email) is enabled, but
 <p>For more information about sharing, see Manage external sharing for your SharePoint online environment (<a href="http://office.microsoft.com/en-us/office365-sharepoint-online-enterprise-help/manage-external-sharing-for-your-sharepoint-online-environment-HA102849864.aspx">http://office.microsoft.com/en-us/office365-sharepoint-online-enterprise-help/manage-external-sharing-for-your-sharepoint-online-environment-HA102849864.aspx</a>).</p>
 <pre><code class="lang-yaml">Type: SharingCapabilities
 Parameter Sets: (All)
+Aliases:
 Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
 
 Required: False
@@ -776,6 +828,7 @@ Accept wildcard characters: False
 <p>For additional information about how to restrict a domain sharing, see Restricted Domains Sharing in Office 365 SharePoint Online and OneDrive for Business.</p>
 <pre><code class="lang-yaml">Type: SharingDomainRestrictionModes
 Parameter Sets: (All)
+Aliases:
 Accepted values: None, AllowList, BlockList
 
 Required: False
@@ -793,6 +846,7 @@ True(default) - The All Users claim groups are displayed in People Picker.
 False - The All Users claim groups are hidden in People Picker.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -809,6 +863,7 @@ True (default) - The Everyone claim group is displayed in People Picker.
 False - The Everyone claim group is hidden from the People Picker.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -824,6 +879,7 @@ True(default) - The Everyone except external users is displayed in People Picker
 False - The Everyone except external users claim is not visible in People Picker.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -834,6 +890,7 @@ Accept wildcard characters: False
 <h3 id="-showpeoplepickersuggestionsforguestusers">-ShowPeoplePickerSuggestionsForGuestUsers</h3>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -853,6 +910,7 @@ This value can also be used with Azure Active Directory Premium to customize the
 Login Domain - For example: &quot;contoso.com&quot;</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -863,6 +921,7 @@ Accept wildcard characters: False
 <h3 id="-socialbaronsitepagesdisabled">-SocialBarOnSitePagesDisabled</h3>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -874,6 +933,7 @@ Accept wildcard characters: False
 <p>{{ Fill SpecialCharactersStateInFileFolderNames Description }}</p>
 <pre><code class="lang-yaml">Type: SpecialCharactersState
 Parameter Sets: (All)
+Aliases:
 Accepted values: NoPreference, Allowed, Disallowed
 
 Required: False
@@ -889,6 +949,7 @@ Accept wildcard characters: False
 Full URL - Example: &quot;https://contoso.sharepoint.com/path/to/form&quot;</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -901,6 +962,7 @@ Accept wildcard characters: False
 When set to $true, users aren't able to share with security groups or SharePoint groups.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -918,6 +980,7 @@ False(default) - No special cookie is generated and the normal Office 365 sign -
 True - Generates a special cookie that will allow &quot;Open with Explorer&quot; to function if the &quot;Keep Me Signed In&quot; box is not checked at sign -in.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -928,6 +991,7 @@ Accept wildcard characters: False
 <h3 id="-uservoiceforfeedbackenabled">-UserVoiceForFeedbackEnabled</h3>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -939,6 +1003,7 @@ Accept wildcard characters: False
 <p>Boolean indicating if a news digest should automatically be sent to end users to inform them about news that they may have missed. On by default. For more information see <a href="https://aka.ms/autonewsdigest">https://aka.ms/autonewsdigest</a></p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -947,7 +1012,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

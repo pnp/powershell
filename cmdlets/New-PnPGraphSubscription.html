@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="New-PnPGraphSubscription | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -85,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Creates a new Microsof Graph Subscription which allows your webhook API to be called when a change occurs in Microsoft Graph</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">New-PnPGraphSubscription -ChangeType &lt;GraphSubscriptionChangeType&gt; -NotificationUrl &lt;String&gt; -Resource &lt;String&gt;
+<pre><code>New-PnPGraphSubscription -ChangeType &lt;GraphSubscriptionChangeType&gt; -NotificationUrl &lt;String&gt; -Resource &lt;String&gt;
  [-ExpirationDateTime &lt;DateTime&gt;] [-ClientState &lt;String&gt;]
  [-LatestSupportedTlsVersion &lt;GraphSubscriptionTlsVersion&gt;] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
 </code></pre>
@@ -105,6 +106,7 @@
 <p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -116,6 +118,7 @@ Accept wildcard characters: False
 <p>The event(s) the subscription should trigger on</p>
 <pre><code class="lang-yaml">Type: GraphSubscriptionChangeType
 Parameter Sets: (All)
+Aliases:
 Accepted values: Created, Updated, Deleted
 
 Required: True
@@ -128,6 +131,7 @@ Accept wildcard characters: False
 <p>Specifies the value of the clientState property sent by the service in each notification. The maximum length is 128 characters. The client can check that the notification came from the service by comparing the value of the clientState property sent with the subscription with the value of the clientState property received with each notification.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -139,6 +143,7 @@ Accept wildcard characters: False
 <p>The datetime defining how long this subscription should stay alive before which it needs to get extended to stay alive. See <a href="https://docs.microsoft.com/graph/api/resources/subscription#maximum-length-of-subscription-per-resource-type">https://docs.microsoft.com/graph/api/resources/subscription#maximum-length-of-subscription-per-resource-type</a> for the supported maximum lifetime of the subscriber endpoints.</p>
 <pre><code class="lang-yaml">Type: DateTime
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -150,6 +155,7 @@ Accept wildcard characters: False
 <p>Specifies the latest version of Transport Layer Security (TLS) that the notification endpoint, specified by NotificationUrl, supports. If not provided, TLS 1.2 will be assumed.</p>
 <pre><code class="lang-yaml">Type: GraphSubscriptionTlsVersion
 Parameter Sets: (All)
+Aliases:
 Accepted values: v1_0, v1_1, v1_2, v1_3
 
 Required: False
@@ -162,6 +168,7 @@ Accept wildcard characters: False
 <p>The URL that should be called when an event matching this subscription occurs</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -173,6 +180,7 @@ Accept wildcard characters: False
 <p>The resource to monitor for changes. See <a href="https://docs.microsoft.com/graph/api/subscription-post-subscriptions#resources-examples">https://docs.microsoft.com/graph/api/subscription-post-subscriptions#resources-examples</a> for the list with supported options.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -181,7 +189,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

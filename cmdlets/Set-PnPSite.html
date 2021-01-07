@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Set-PnPSite | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -86,7 +87,7 @@
 <p>Sets Site Collection properties.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="set-properties">Set Properties</h3>
-<pre><code class="lang-powershell">Set-PnPSite [-Identity &lt;String&gt;] [-Classification &lt;String&gt;] [-DisableFlows] [-LogoFilePath &lt;String&gt;]
+<pre><code>Set-PnPSite [-Identity &lt;String&gt;] [-Classification &lt;String&gt;] [-DisableFlows] [-LogoFilePath &lt;String&gt;]
  [-Sharing &lt;SharingCapabilities&gt;] [-StorageMaximumLevel &lt;Int64&gt;] [-StorageWarningLevel &lt;Int64&gt;]
  [-AllowSelfServiceUpgrade] [-NoScriptSite] [-Owners &lt;System.Collections.Generic.List`1[System.String]&gt;]
  [-CommentsOnSitePagesDisabled] [-DefaultLinkPermission &lt;SharingPermissionType&gt;]
@@ -97,7 +98,7 @@
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="set-lock-state">Set Lock State</h3>
-<pre><code class="lang-powershell">Set-PnPSite [-Identity &lt;String&gt;] [-Classification &lt;String&gt;] [-DisableFlows] [-LockState &lt;SiteLockState&gt;]
+<pre><code>Set-PnPSite [-Identity &lt;String&gt;] [-Classification &lt;String&gt;] [-DisableFlows] [-LockState &lt;SiteLockState&gt;]
  [-Wait] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -127,6 +128,7 @@
 <p>Specifies if the site administrator can upgrade the site collection</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -138,6 +140,7 @@ Accept wildcard characters: False
 <p>{{ Fill AnonymousLinkExpirationInDays Description }}</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -147,8 +150,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-classification">-Classification</h3>
 <p>The classification to set</p>
+<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -158,8 +163,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-commentsonsitepagesdisabled">-CommentsOnSitePagesDisabled</h3>
 <p>Specifies if comments on site pages are enabled or disabled</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -171,6 +178,7 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -180,8 +188,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-defaultlinkpermission">-DefaultLinkPermission</h3>
 <p>Specifies the default link permission for the site collection. None - Respect the organization default link permission. View - Sets the default link permission for the site to &quot;view&quot; permissions. Edit - Sets the default link permission for the site to &quot;edit&quot; permissions</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SharingPermissionType
 Parameter Sets: Set Properties
+Aliases:
 Accepted values: None, View, Edit
 
 Required: False
@@ -192,8 +202,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-defaultsharinglinktype">-DefaultSharingLinkType</h3>
 <p>Specifies the default link type for the site collection. None - Respect the organization default sharing link type. AnonymousAccess - Sets the default sharing link for this site to an Anonymous Access or Anyone link. Internal - Sets the default sharing link for this site to the &quot;organization&quot; link or company shareable link. Direct - Sets the default sharing link for this site to the &quot;Specific people&quot; link</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SharingLinkType
 Parameter Sets: Set Properties
+Aliases:
 Accepted values: None, Direct, Internal, AnonymousAccess
 
 Required: False
@@ -203,8 +215,10 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-disableappviews">-DisableAppViews</h3>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: AppViewsPolicy
 Parameter Sets: Set Properties
+Aliases:
 Accepted values: Unknown, Disabled, NotDisabled
 
 Required: False
@@ -214,8 +228,10 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-disablecompanywidesharinglinks">-DisableCompanyWideSharingLinks</h3>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: CompanyWideSharingLinksPolicy
 Parameter Sets: Set Properties
+Aliases:
 Accepted values: Unknown, Disabled, NotDisabled
 
 Required: False
@@ -226,8 +242,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-disableflows">-DisableFlows</h3>
 <p>Disables Microsoft Flow for this site</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -237,8 +255,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-disablesharingfornonowners">-DisableSharingForNonOwners</h3>
 <p>Specifies to prevent non-owners from inviting new users to the site</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -261,6 +281,7 @@ Accept wildcard characters: False
 <p>Specifies the language of this site collection.</p>
 <pre><code class="lang-yaml">Type: UInt32
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -270,8 +291,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-lockstate">-LockState</h3>
 <p>Sets the lockstate of a site</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SiteLockState
 Parameter Sets: Set Lock State
+Aliases:
 Accepted values: Unlock, NoAccess, ReadOnly
 
 Required: False
@@ -282,8 +305,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-logofilepath">-LogoFilePath</h3>
 <p>Sets the logo of the site if it concerns a modern team site. Provide a full path to a local image file on your disk which you want to use as the site logo. The logo will be uploaded automatically to SharePoint. If you want to set the logo for a classic site, use Set-PnPWeb -SiteLogoUrl.</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -307,6 +332,7 @@ Accept wildcard characters: False
 <p>{{ Fill OverrideTenantAnonymousLinkExpirationPolicy Description }}</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -318,6 +344,7 @@ Accept wildcard characters: False
 <p>Specifies owner(s) to add as site collection administrators. They will be added as additional site collection administrators. Existing administrators will stay. Can be both users and groups.</p>
 <pre><code class="lang-yaml">Type: System.Collections.Generic.List`1[System.String]
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -327,8 +354,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-restrictedtogeo">-RestrictedToGeo</h3>
 <p>Specifies the Geo/Region restrictions of this site.</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: RestrictedToRegion
 Parameter Sets: Set Properties
+Aliases:
 Accepted values: NoRestriction, BlockMoveOnly, BlockFull, Unknown
 
 Required: False
@@ -339,8 +368,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-sharing">-Sharing</h3>
 <p>Specifies what the sharing capabilities are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SharingCapabilities
 Parameter Sets: Set Properties
+Aliases:
 Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
 
 Required: False
@@ -351,8 +382,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-socialbaronsitepagesdisabled">-SocialBarOnSitePagesDisabled</h3>
 <p>Disables or enables the Social Bar for Site Collection.</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -362,8 +395,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-storagemaximumlevel">-StorageMaximumLevel</h3>
 <p>Specifies the storage quota for this site collection in megabytes. This value must not exceed the company's available quota.</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: Int64
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -373,8 +408,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-storagewarninglevel">-StorageWarningLevel</h3>
 <p>Specifies the warning level for the storage quota in megabytes. This value must not exceed the values set for the StorageMaximumLevel parameter</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: Int64
 Parameter Sets: Set Properties
+Aliases:
 
 Required: False
 Position: Named
@@ -384,8 +421,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-wait">-Wait</h3>
 <p>Wait for the operation to complete</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Lock State
+Aliases:
 
 Required: False
 Position: Named
@@ -394,7 +433,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

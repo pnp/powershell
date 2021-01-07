@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="New-PnPTermSet | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -85,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Creates a taxonomy term set</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">New-PnPTermSet -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Lcid &lt;Int32&gt;] -TermGroup &lt;TermGroupPipeBind&gt; [-Contact &lt;String&gt;]
+<pre><code>New-PnPTermSet -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Lcid &lt;Int32&gt;] -TermGroup &lt;TermGroupPipeBind&gt; [-Contact &lt;String&gt;]
  [-Description &lt;String&gt;] [-IsOpenForTermCreation] [-IsNotAvailableForTagging] [-Owner &lt;String&gt;]
  [-StakeHolders &lt;String[]&gt;] [-CustomProperties &lt;Hashtable&gt;]
  [-TermStore &lt;PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]&gt;]
@@ -102,6 +103,7 @@
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -113,6 +115,7 @@ Accept wildcard characters: False
 <p>An e-mail address for term suggestion and feedback. If left blank the suggestion feature will be disabled.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -123,6 +126,7 @@ Accept wildcard characters: False
 <h3 id="-customproperties">-CustomProperties</h3>
 <pre><code class="lang-yaml">Type: Hashtable
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -134,6 +138,7 @@ Accept wildcard characters: False
 <p>Descriptive text to help users understand the intended use of this term set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -145,6 +150,7 @@ Accept wildcard characters: False
 <p>The Id to use for the term set; if not specified, or the empty GUID, a random GUID is generated and used.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -156,6 +162,7 @@ Accept wildcard characters: False
 <p>By default a term set is available to be used by end users and content editors of sites consuming this term set. Specify this switch to turn this off</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -167,6 +174,7 @@ Accept wildcard characters: False
 <p>When a term set is closed, only metadata managers can add terms to this term set. When it is open, users can add terms from a tagging application. Not specifying this switch will make the term set closed.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -178,6 +186,7 @@ Accept wildcard characters: False
 <p>The locale id to use for the term set. Defaults to the current locale id.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -189,6 +198,7 @@ Accept wildcard characters: False
 <p>The name of the termset.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -200,6 +210,7 @@ Accept wildcard characters: False
 <p>The primary user or group of this term set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -211,6 +222,7 @@ Accept wildcard characters: False
 <p>People and groups in the organization that should be notified before major changes are made to the term set. You can enter multiple users or groups.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -222,6 +234,7 @@ Accept wildcard characters: False
 <p>Name, id or actually termgroup to create the termset in.</p>
 <pre><code class="lang-yaml">Type: TermGroupPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -230,7 +243,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-termstore">-TermStore</h3>
-<p>Term store to use; if not specified the default term store is used.</p>
+<p>Term store to check; if not specified the default term store is used.</p>
 <pre><code class="lang-yaml">Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]
 Parameter Sets: (All)
 Aliases: TermStoreName
@@ -242,7 +255,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

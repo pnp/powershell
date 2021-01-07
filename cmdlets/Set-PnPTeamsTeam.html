@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Set-PnPTeamsTeam | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -89,7 +90,7 @@
 </ul>
 <p>Updates an existing Team.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPTeamsTeam -Identity &lt;TeamsTeamPipeBind&gt; [-DisplayName &lt;String&gt;] [-Description &lt;String&gt;]
+<pre><code>Set-PnPTeamsTeam -Identity &lt;TeamsTeamPipeBind&gt; [-DisplayName &lt;String&gt;] [-Description &lt;String&gt;]
  [-Visibility &lt;TeamVisibility&gt;] [-AllowAddRemoveApps &lt;Boolean&gt;] [-AllowChannelMentions &lt;Boolean&gt;]
  [-AllowCreateUpdateChannels &lt;Boolean&gt;] [-AllowCreateUpdateRemoveConnectors &lt;Boolean&gt;]
  [-AllowCreateUpdateRemoveTabs &lt;Boolean&gt;] [-AllowCustomMemes &lt;Boolean&gt;] [-AllowDeleteChannels &lt;Boolean&gt;]
@@ -110,6 +111,7 @@
 <p>Boolean value that determines whether or not members (not only owners) are allowed to add apps to the team.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -121,6 +123,7 @@ Accept wildcard characters: False
 <p>Boolean value that determines whether or not channels in the team can be @ mentioned so that all users who follow the channel are notified.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -132,6 +135,7 @@ Accept wildcard characters: False
 <p>Setting that determines whether or not members (and not just owners) are allowed to create channels.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -143,6 +147,7 @@ Accept wildcard characters: False
 <p>Setting that determines whether or not members (and not only owners) can manage connectors in the team.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -154,6 +159,7 @@ Accept wildcard characters: False
 <p>Setting that determines whether or not members (and not only owners) can manage tabs in channels.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -165,6 +171,7 @@ Accept wildcard characters: False
 <p>Setting that determines whether or not members can use the custom memes functionality in teams.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -176,6 +183,7 @@ Accept wildcard characters: False
 <p>Setting that determines whether or not members (and not only owners) can delete channels in the team.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -187,6 +195,7 @@ Accept wildcard characters: False
 <p>Setting that determines whether or not giphy can be used in the team.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -198,6 +207,7 @@ Accept wildcard characters: False
 <p>Setting that determines whether or not guests can create channels in the team.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -209,6 +219,7 @@ Accept wildcard characters: False
 <p>Setting that determines whether or not guests can delete in the team.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -220,6 +231,7 @@ Accept wildcard characters: False
 <p>Setting that determines whether or not owners can delete messages that they or other members of the team have posted.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -231,6 +243,7 @@ Accept wildcard characters: False
 <p>Setting that determines whether stickers and memes usage is allowed in the team.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -242,6 +255,7 @@ Accept wildcard characters: False
 <p>Setting that determines whether the entire team can be @ mentioned (which means that all users will be notified)</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -253,6 +267,7 @@ Accept wildcard characters: False
 <p>Setting that determines whether or not members can delete messages that they have posted.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -264,6 +279,7 @@ Accept wildcard characters: False
 <p>Setting that determines whether or not users can edit messages that they have posted.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -275,6 +291,7 @@ Accept wildcard characters: False
 <p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -285,6 +302,7 @@ Accept wildcard characters: False
 <h3 id="-classification">-Classification</h3>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -296,6 +314,7 @@ Accept wildcard characters: False
 <p>Changes the description of the specified team.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -307,6 +326,7 @@ Accept wildcard characters: False
 <p>Changes the display name of the specified team.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -318,6 +338,7 @@ Accept wildcard characters: False
 <p>Setting that determines the level of sensitivity of giphy usage that is allowed in the team. Accepted values are &quot;Strict&quot; or &quot;Moderate&quot;</p>
 <pre><code class="lang-yaml">Type: TeamGiphyContentRating
 Parameter Sets: (All)
+Aliases:
 Accepted values: moderate, strict
 
 Required: False
@@ -330,6 +351,7 @@ Accept wildcard characters: False
 <p>Specify the group id, mailNickname or display name of the team to use.</p>
 <pre><code class="lang-yaml">Type: TeamsTeamPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -341,6 +363,7 @@ Accept wildcard characters: False
 <p>Setting that determines whether or not private teams should be searchable from Teams clients for users who do not belong to that team. Set to $false to make those teams not discoverable from Teams clients.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -352,6 +375,7 @@ Accept wildcard characters: False
 <p>Changes the visibility of the specified team.</p>
 <pre><code class="lang-yaml">Type: TeamVisibility
 Parameter Sets: (All)
+Aliases:
 Accepted values: Private, Public
 
 Required: False
@@ -361,7 +385,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

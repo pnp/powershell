@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Get-PnPTerm | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,31 +77,30 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="get-pnpterm">Get-PnPTerm</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Returns a Term Store Term.</p>
+<p>Returns a taxonomy term</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-term-id">By Term Id</h3>
-<pre><code class="lang-powershell">Get-PnPTerm
-    -Identity &lt;Guid&gt;
-    [-TermStore &lt;Guid&gt;]
-    [-IncludeChildTerms] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;] [&lt;CommonParameters&gt;]
+<pre><code>Get-PnPTerm
+ -Identity &lt;PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]&gt;
+ [-TermStore &lt;PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]&gt;]
+ [-IncludeChildTerms] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
-<h3 id="by-term-name">By Term Name</h3>
-<pre><code class="lang-powershell">Get-PnPTerm
-    -Identity &lt;Name&gt;
-    -TermSet &lt;Guid|Name&gt;
-    -TermGroup &lt;Guid|Name&gt;
-    [-TermStore &lt;Guid&gt;]
-    [-Recursive] 
-    [-IncludeChildTerms] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;] [&lt;CommonParameters&gt;]
+<h3 id="by-termset">By Termset</h3>
+<pre><code>Get-PnPTerm
+ [-Identity &lt;PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]&gt;]
+ [-TermSet] &lt;PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]&gt;
+ [-TermGroup] &lt;TermGroupPipeBind&gt;
+ [-TermStore &lt;PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]&gt;]
+ [-Recursive] [-IncludeChildTerms] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Retries a Term Store Term.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPTerm -TermSet &quot;Departments&quot; -TermGroup &quot;Corporate&quot;
@@ -118,7 +117,7 @@
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPTerm -Identity &quot;Small Finance&quot; -TermSet &quot;Departments&quot; -TermGroup &quot;Corporate&quot; -Recursive
 </code></pre>
-<p>Returns the term named &quot;Small Finance&quot;, from the &quot;Departments&quot; termset in a term group called &quot;Corporate&quot; from the site collection termstore even if it is a subterm below &quot;Finance&quot;</p>
+<p>Returns the term named &quot;Small Finance&quot;, from the &quot;Departments&quot; termset in a term group called &quot;Corporate&quot; from the site collection termstore even if it's a subterm below &quot;Finance&quot;</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">$term = Get-PnPTerm -Identity &quot;Small Finance&quot; -TermSet &quot;Departments&quot; -TermGroup &quot;Corporate&quot; -Include Labels
 $term.Labels
@@ -129,6 +128,7 @@ $term.Labels
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -138,10 +138,21 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>The Id or Name of a Term</p>
-<pre><code class="lang-yaml">Type: GenericObjectNameIdPipeBind&lt;Microsoft.SharePoint.Client.Taxonomy.Term&gt;
-Parameter Sets: All
+<pre><code class="lang-yaml">Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]
+Parameter Sets: By Term Id
+Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<pre><code class="lang-yaml">Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]
+Parameter Sets: By Termset
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -151,6 +162,7 @@ Accept wildcard characters: False
 <p>Includes the hierarchy of child terms if available</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -161,7 +173,8 @@ Accept wildcard characters: False
 <h3 id="-recursive">-Recursive</h3>
 <p>Find the first term recursively matching the label in a term hierarchy.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: By Termset
+Aliases:
 
 Required: False
 Position: Named
@@ -173,6 +186,7 @@ Accept wildcard characters: False
 <p>Name of the termgroup to check.</p>
 <pre><code class="lang-yaml">Type: TermGroupPipeBind
 Parameter Sets: By Termset
+Aliases:
 
 Required: True
 Position: 0
@@ -182,8 +196,9 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-termset">-TermSet</h3>
 <p>Name of the termset to check.</p>
-<pre><code class="lang-yaml">Type: TaxonomyItemPipeBind&lt;TermSet&gt;
+<pre><code class="lang-yaml">Type: PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]
 Parameter Sets: By Termset
+Aliases:
 
 Required: True
 Position: 0
@@ -192,9 +207,10 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-termstore">-TermStore</h3>
-<p>Term store to use; if not specified the default term store is used.</p>
-<pre><code class="lang-yaml">Type: GenericObjectNameIdPipeBind&lt;TermStore&gt;
+<p>Term store to check; if not specified the default term store is used.</p>
+<pre><code class="lang-yaml">Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -203,7 +219,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

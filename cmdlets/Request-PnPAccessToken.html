@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Request-PnPAccessToken | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -85,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Requests an OAuth Access token</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Request-PnPAccessToken [-ClientId &lt;String&gt;] [-Resource &lt;String&gt;]
+<pre><code>Request-PnPAccessToken [-ClientId &lt;String&gt;] [-Resource &lt;String&gt;]
  [-Scopes &lt;System.Collections.Generic.List`1[System.String]&gt;] [-Decoded] [-SetAsCurrent]
  [-Credentials &lt;PSCredential&gt;] [-TenantUrl &lt;String&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
@@ -109,15 +110,17 @@
 </code></pre>
 <p>Returns the access token using the specified client id and the specified scopes</p>
 <h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">$token = Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2 -Resource &quot;https://contoso.sharepoint.com&quot; -Credentials (Get-Credential) -TenantUrl &quot;https://contoso.sharepoint.com&quot;
+<pre><code class="lang-powershell">$token = Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2 -Resource https://contoso.sharepoint.com -Credentials (Get-Credential) -TenantUrl https://contoso.sharepoint.com
     Connect-PnPOnline -AccessToken $token
 </code></pre>
 <p>Returns the access token using the specified client id and the specified scopes while using the credentials and tenanturl specified to authentication against Azure AD</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-clientid">-ClientId</h3>
 <p>The Azure Application Client Id to use to retrieve the token. Defaults to the PnP Office 365 Management Shell</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -127,8 +130,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-credentials">-Credentials</h3>
 <p>Optional credentials to use when retrieving the access token. If not present you need to connect first with Connect-PnPOnline.</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: PSCredential
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -138,8 +143,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-decoded">-Decoded</h3>
 <p>Returns the token in a decoded / human readible manner</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -149,8 +156,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-resource">-Resource</h3>
 <p>The scopes to retrieve the token for. Defaults to AllSites.FullControl</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -160,8 +169,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-scopes">-Scopes</h3>
 <p>The scopes to retrieve the token for. Defaults to AllSites.FullControl</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: System.Collections.Generic.List`1[System.String]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -171,8 +182,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-setascurrent">-SetAsCurrent</h3>
 <p>Set this token as the current token to use when performing Azure AD based authentication requests with PnP PowerShell</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -182,8 +195,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-tenanturl">-TenantUrl</h3>
 <p>Optional tenant URL to use when retrieving the access token. The Url should be in the shape of <a href="https://yourtenant.sharepoint.com">https://yourtenant.sharepoint.com</a>. See examples for more info.</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -192,7 +207,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

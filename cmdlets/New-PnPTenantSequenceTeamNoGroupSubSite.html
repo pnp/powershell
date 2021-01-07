@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="New-PnPTenantSequenceTeamNoGroupSubSite | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -85,9 +86,9 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Creates a team site subsite with no Microsoft 365 group object</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">New-PnPTenantSequenceTeamNoGroupSubSite -Url &lt;String&gt; -Title &lt;String&gt; -TimeZoneId &lt;UInt32&gt; [-Language &lt;UInt32&gt;]
+<pre><code>New-PnPTenantSequenceTeamNoGroupSubSite -Url &lt;String&gt; -Title &lt;String&gt; -TimeZoneId &lt;UInt32&gt; [-Language &lt;UInt32&gt;]
  [-Description &lt;String&gt;] [-TemplateIds &lt;String[]&gt;] [-QuickLaunchDisabled]
- [-UseDifferentPermissionsFromParentSite]   [&lt;CommonParameters&gt;]
+ [-UseDifferentPermissionsFromParentSite] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -111,6 +112,7 @@ Accept wildcard characters: False
 <h3 id="-description">-Description</h3>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -121,6 +123,7 @@ Accept wildcard characters: False
 <h3 id="-language">-Language</h3>
 <pre><code class="lang-yaml">Type: UInt32
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -131,6 +134,7 @@ Accept wildcard characters: False
 <h3 id="-quicklaunchdisabled">-QuickLaunchDisabled</h3>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -141,6 +145,7 @@ Accept wildcard characters: False
 <h3 id="-templateids">-TemplateIds</h3>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -151,6 +156,7 @@ Accept wildcard characters: False
 <h3 id="-timezoneid">-TimeZoneId</h3>
 <pre><code class="lang-yaml">Type: UInt32
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -161,6 +167,7 @@ Accept wildcard characters: False
 <h3 id="-title">-Title</h3>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -171,6 +178,7 @@ Accept wildcard characters: False
 <h3 id="-url">-Url</h3>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -181,6 +189,7 @@ Accept wildcard characters: False
 <h3 id="-usedifferentpermissionsfromparentsite">-UseDifferentPermissionsFromParentSite</h3>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -201,7 +210,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

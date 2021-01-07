@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Add-PnPJavaScriptLink | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -85,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Adds a link to a JavaScript file to a web or sitecollection, valid only for SharePoint classic site experience.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPJavaScriptLink -Name &lt;String&gt; -Url &lt;String[]&gt; [-Sequence &lt;Int32&gt;] [-Scope &lt;CustomActionScope&gt;]
+<pre><code>Add-PnPJavaScriptLink -Name &lt;String&gt; -Url &lt;String[]&gt; [-Sequence &lt;Int32&gt;] [-Scope &lt;CustomActionScope&gt;]
  [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -104,6 +105,7 @@
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -127,6 +129,7 @@ Accept wildcard characters: False
 <p>Defines if this JavaScript file will be injected to every page within the current site collection or web. All is not allowed in for this command. Default is web.</p>
 <pre><code class="lang-yaml">Type: CustomActionScope
 Parameter Sets: (All)
+Aliases:
 Accepted values: Web, Site, All
 
 Required: False
@@ -139,6 +142,7 @@ Accept wildcard characters: False
 <p>Sequence of this JavaScript being injected. Use when you have a specific sequence with which to have JavaScript files being added to the page. I.e. jQuery library first and then jQueryUI.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -150,6 +154,7 @@ Accept wildcard characters: False
 <p>URL to the JavaScript file to inject</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -161,6 +166,7 @@ Accept wildcard characters: False
 <p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
 <pre><code class="lang-yaml">Type: WebPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -169,7 +175,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

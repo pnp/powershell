@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Enable-PnPSiteClassification | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -89,7 +90,7 @@
 </ul>
 <p>Enables Site Classifications for the tenant</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Enable-PnPSiteClassification -Classifications &lt;System.Collections.Generic.List`1[System.String]&gt;
+<pre><code>Enable-PnPSiteClassification -Classifications &lt;System.Collections.Generic.List`1[System.String]&gt;
  -DefaultClassification &lt;String&gt; [-UsageGuidelinesUrl &lt;String&gt;] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -101,7 +102,7 @@ Enable-PnPSiteClassification -Classifications &quot;HBI&quot;,&quot;LBI&quot;,&q
 <p>Enables Site Classifications for your tenant and provides three classification values. The default value will be set to &quot;LBI&quot;</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Scopes &quot;Directory.ReadWrite.All&quot;
-Enable-PnPSiteClassification -Classifications &quot;HBI&quot;,&quot;LBI&quot;,&quot;Top Secret&quot; -UsageGuidelinesUrl https://aka.ms/m365pnp
+Enable-PnPSiteClassification -Classifications &quot;HBI&quot;,&quot;LBI&quot;,&quot;Top Secret&quot; -UsageGuidelinesUrl https://aka.ms/sppnp
 </code></pre>
 <p>Enables Site Classifications for your tenant and provides three classification values. The usage guideliness will be set to the specified URL.</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -109,6 +110,7 @@ Enable-PnPSiteClassification -Classifications &quot;HBI&quot;,&quot;LBI&quot;,&q
 <p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -119,6 +121,7 @@ Accept wildcard characters: False
 <h3 id="-classifications">-Classifications</h3>
 <pre><code class="lang-yaml">Type: System.Collections.Generic.List`1[System.String]
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -129,6 +132,7 @@ Accept wildcard characters: False
 <h3 id="-defaultclassification">-DefaultClassification</h3>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -139,6 +143,7 @@ Accept wildcard characters: False
 <h3 id="-usageguidelinesurl">-UsageGuidelinesUrl</h3>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -147,7 +152,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

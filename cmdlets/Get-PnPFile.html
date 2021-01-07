@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Get-PnPFile | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -86,19 +87,19 @@
 <p>Downloads a file.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="return-as-file-object-default">Return as file object (Default)</h3>
-<pre><code class="lang-powershell">Get-PnPFile [-Url] &lt;String&gt; [-AsFileObject] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+<pre><code>Get-PnPFile [-Url] &lt;String&gt; [-AsFileObject] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="return-as-list-item">Return as list item</h3>
-<pre><code class="lang-powershell">Get-PnPFile [-Url] &lt;String&gt; [-AsListItem] [-ThrowExceptionIfFileNotFound] [-Web &lt;WebPipeBind&gt;]
+<pre><code>Get-PnPFile [-Url] &lt;String&gt; [-AsListItem] [-ThrowExceptionIfFileNotFound] [-Web &lt;WebPipeBind&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="save-to-local-path">Save to local path</h3>
-<pre><code class="lang-powershell">Get-PnPFile [-Url] &lt;String&gt; [-Path &lt;String&gt;] [-Filename &lt;String&gt;] [-AsFile] [-Force] [-Web &lt;WebPipeBind&gt;]
+<pre><code>Get-PnPFile [-Url] &lt;String&gt; [-Path &lt;String&gt;] [-Filename &lt;String&gt;] [-AsFile] [-Force] [-Web &lt;WebPipeBind&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="return-as-string">Return as string</h3>
-<pre><code class="lang-powershell">Get-PnPFile [-Url] &lt;String&gt; [-AsString] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code>Get-PnPFile [-Url] &lt;String&gt; [-AsString] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -130,6 +131,7 @@
 <h3 id="-asfile">-AsFile</h3>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Save to local path
+Aliases:
 
 Required: True
 Position: Named
@@ -141,6 +143,7 @@ Accept wildcard characters: False
 <p>Retrieve the file contents as a file object.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Return as file object
+Aliases:
 
 Required: False
 Position: Named
@@ -152,6 +155,7 @@ Accept wildcard characters: False
 <p>Returns the file as a listitem showing all its properties</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Return as list item
+Aliases:
 
 Required: False
 Position: Named
@@ -163,6 +167,7 @@ Accept wildcard characters: False
 <p>Retrieve the file contents as a string</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Return as string
+Aliases:
 
 Required: False
 Position: Named
@@ -174,6 +179,7 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -185,6 +191,7 @@ Accept wildcard characters: False
 <p>Name for the local file</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Save to local path
+Aliases:
 
 Required: False
 Position: Named
@@ -196,6 +203,7 @@ Accept wildcard characters: False
 <p>Overwrites the file if it exists.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Save to local path
+Aliases:
 
 Required: False
 Position: Named
@@ -207,6 +215,7 @@ Accept wildcard characters: False
 <p>Local path where the file should be saved</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Save to local path
+Aliases:
 
 Required: False
 Position: Named
@@ -218,6 +227,7 @@ Accept wildcard characters: False
 <p>If provided in combination with -AsListItem, a System.ArgumentException will be thrown if the file specified in the -Url argument does not exist. Otherwise it will return nothing instead.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Return as list item
+Aliases:
 
 Required: False
 Position: Named
@@ -241,6 +251,7 @@ Accept wildcard characters: False
 <p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
 <pre><code class="lang-yaml">Type: WebPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -249,7 +260,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

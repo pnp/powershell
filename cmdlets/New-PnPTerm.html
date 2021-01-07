@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="New-PnPTerm | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -85,25 +86,34 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Creates a taxonomy term</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>New-PnPTerm -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Lcid &lt;Int32&gt;] [-TermSet] &lt;TaxonomyTermSetPipeBind&gt;
- -TermGroup &lt;TaxonomyTermGroupPipeBind&gt; [-Description &lt;String&gt;] [-CustomProperties &lt;Hashtable&gt;]
- [-LocalCustomProperties &lt;Hashtable&gt;] [-TermStore &lt;TaxonomyTermStorePipeBind&gt;]
- [&lt;CommonParameters&gt;]
+<pre><code>New-PnPTerm -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Lcid &lt;Int32&gt;]
+ [-TermSet] &lt;PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]&gt;
+ -TermGroup &lt;TermGroupPipeBind&gt; [-Description &lt;String&gt;] [-CustomProperties &lt;Hashtable&gt;]
+ [-LocalCustomProperties &lt;Hashtable&gt;]
+ [-TermStore &lt;PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]&gt;]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet adds a new taxonony term to a given termset.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">Example 1</h3>
+<h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">New-PnPTerm -TermSet &quot;Departments&quot; -TermGroup &quot;Corporate&quot; -Name &quot;Finance&quot;
 </code></pre>
 <p>Creates a new taxonomy term named &quot;Finance&quot; in the termset Departments which is located in the &quot;Corporate&quot; termgroup</p>
-<h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">New-PnPTerm -TermSet &quot;Departments&quot; -TermGroup &quot;Corporate&quot; -Name &quot;Finance&quot; -CustomProperties @{&quot;IsCorporate&quot;=&quot;True&quot;}
-</code></pre>
-<p>Creates a new taxonomy term named &quot;Finance&quot; in the termset Departments which is located in the &quot;Corporate&quot; termgroup and sets a custom property on the termset.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-customproperties">-CustomProperties</h3>
-<p>Sets custom properties.</p>
+<p>Custom Properties</p>
 <pre><code class="lang-yaml">Type: Hashtable
 Parameter Sets: (All)
 Aliases:
@@ -127,7 +137,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-id">-Id</h3>
-<p>The Id to use for the term; if not specified, or provided with an empty GUID, a random GUID is generated and used.</p>
+<p>The Id to use for the term; if not specified, or the empty GUID, a random GUID is generated and used.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
 Aliases:
@@ -139,7 +149,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-lcid">-Lcid</h3>
-<p>The locale id to use for the term. Defaults to the default language of the termstore.</p>
+<p>The locale id to use for the term. Defaults to the current locale id.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 Aliases:
@@ -151,7 +161,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-localcustomproperties">-LocalCustomProperties</h3>
-<p>Sets local custom properties</p>
+<p>Custom Properties</p>
 <pre><code class="lang-yaml">Type: Hashtable
 Parameter Sets: (All)
 Aliases:
@@ -176,7 +186,7 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-termgroup">-TermGroup</h3>
 <p>The termgroup to create the term in.</p>
-<pre><code class="lang-yaml">Type: TaxonomyTermGroupPipeBind
+<pre><code class="lang-yaml">Type: TermGroupPipeBind
 Parameter Sets: (All)
 Aliases:
 
@@ -188,7 +198,7 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-termset">-TermSet</h3>
 <p>The termset to add the term to.</p>
-<pre><code class="lang-yaml">Type: TaxonomyTermSetPipeBind
+<pre><code class="lang-yaml">Type: PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermSet]
 Parameter Sets: (All)
 Aliases:
 
@@ -199,8 +209,8 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-termstore">-TermStore</h3>
-<p>Term store to use; if not specified the default term store is used.</p>
-<pre><code class="lang-yaml">Type: TaxonomyTermStorePipeBind
+<p>Term store to check; if not specified the default term store is used.</p>
+<pre><code class="lang-yaml">Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]
 Parameter Sets: (All)
 Aliases: TermStoreName
 
@@ -210,10 +220,8 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="commonparameters">CommonParameters</h3>
-<p>This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see <a href="http://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

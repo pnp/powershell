@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Get-PnPTenantTemplate | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work against Microsoft 365.">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -77,6 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -90,13 +91,13 @@
 <p>Generates a provisioning tenant template from a site. If the site is a hubsite any connected site will be included.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="extract-a-template-to-a-file">Extract a template to a file</h3>
-<pre><code class="lang-powershell">Get-PnPTenantTemplate [-SiteUrl &lt;String&gt;] [-Out] &lt;String&gt; [-Force]
- [-Configuration &lt;ExtractConfigurationPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]  
+<pre><code>Get-PnPTenantTemplate [-SiteUrl &lt;String&gt;] [-Out] &lt;String&gt; [-Force]
+ [-Configuration &lt;ExtractConfigurationPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [-WhatIf] [-Confirm]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="extract-a-template-as-an-object">Extract a template as an object</h3>
-<pre><code class="lang-powershell">Get-PnPTenantTemplate [-SiteUrl &lt;String&gt;] [-AsInstance] [-Configuration &lt;ExtractConfigurationPipeBind&gt;]
- [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
+<pre><code>Get-PnPTenantTemplate [-SiteUrl &lt;String&gt;] [-AsInstance] [-Configuration &lt;ExtractConfigurationPipeBind&gt;]
+ [-Connection &lt;PnPConnection&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -107,8 +108,10 @@
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-asinstance">-AsInstance</h3>
 <p>Returns the template as an in-memory object, which is an instance of the ProvisioningHierarchy type of the PnP Core Component. It cannot be used together with the -Out parameter.</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Extract a template as an object
+Aliases:
 
 Required: True
 Position: Named
@@ -118,8 +121,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-configuration">-Configuration</h3>
 <p>Specify a JSON configuration file to configure the extraction progress.</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: ExtractConfigurationPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -141,8 +146,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -152,8 +159,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-force">-Force</h3>
 <p>Overwrites the output file if it exists.</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Extract a template to a file
+Aliases:
 
 Required: False
 Position: Named
@@ -163,8 +172,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-out">-Out</h3>
 <p>Filename to write to, optionally including full path</p>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Extract a template to a file
+Aliases:
 
 Required: True
 Position: 0
@@ -173,8 +184,10 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-siteurl">-SiteUrl</h3>
+<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -195,7 +208,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
