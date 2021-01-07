@@ -41,7 +41,7 @@ Adds a new bucket called "Project Todos" to the plan with the specified plan id 
 ## PARAMETERS
 
 ### -Group
-Specify the group id of group owning the plan.
+Specify the group id, mailNickname or display name of the group to use.
 
 ```yaml
 Type: PlannerGroupPipeBind
