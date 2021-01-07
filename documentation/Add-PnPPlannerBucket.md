@@ -19,11 +19,6 @@ Adds a new bucket to a Planner plan
 Add-PnPPlannerBucket -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Name <String> [<CommonParameters>]
 ```
 
-### By Plan Id
-```powershell
-Add-PnPPlannerBucket -PlanId <String> -Name <String> [<CommonParameters>]
-```
-
 ## DESCRIPTION
 This cmdlets creates a new bucket for tasks in a Planner plan.
 
@@ -34,14 +29,14 @@ This cmdlets creates a new bucket for tasks in a Planner plan.
 Add-PnPPlannerBucket -Group "My Group" -Plan "My Plan" -Name "Project Todos"
 ```
 
-Adds a new bucket called "Project Todos" to the specified plans
+Adds a new bucket called "Project Todos" to the specified named plan and named group.
 
 ### Example 2
 ```powershell
-Add-PnPPlannerBucket -PlanId "QvfkTd1mc02gwxHjHC_43JYABhAy" -Name "Project Todos"
+Add-PnPPlannerBucket -Group "baba9192-55be-488a-9fb7-2e2e76edbef2" -PlanId "QvfkTd1mc02gwxHjHC_43JYABhAy" -Name "Project Todos"
 ```
 
-Adds a new bucket called "Project Todos" to the plan with the specified id.
+Adds a new bucket called "Project Todos" to the plan with the specified plan id and group id.
 
 ## PARAMETERS
 
