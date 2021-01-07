@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         public TeamsChannelPipeBind(string input)
         {
             // check if it's a channel id
-            if (input.EndsWith("@thread.skype") && input.Substring(2, 1) == ":")
+            if (input.Contains("@thread.") && input.Substring(2, 1) == ":")
             {
                 _id = input;
             }
