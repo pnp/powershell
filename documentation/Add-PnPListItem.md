@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnplistitem
+online version: https://pnp.github.io/powershell/cmdlets/add-pnplistitem
 schema: 2.0.0
 title: Add-PnPListItem
 ---
@@ -14,9 +14,16 @@ Adds an item to the list and sets the creation time to the current date and time
 
 ## SYNTAX
 
+### Add a single item
 ```powershell
 Add-PnPListItem [-List] <ListPipeBind> [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>]
- [-Folder <String>] [-Label <String>] [-Batch <Batch>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Folder <String>] [-Label <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+```
+
+### Adds items in a batched manner
+```powershell
+Add-PnPListItem [-List] <ListPipeBind> -Batch <Batch> [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>]
+ [-Folder <String>]  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -62,10 +69,15 @@ Adds a new list item to the "Demo List". Sets the retention label to "Public" if
 ```powershell
 $batch = New-PnPBatch
 $list = Get-PnPList -Identity "Demo List"
-for($i=0;$i lt 10;$i++)
+for($i=0;$i -lt 10;$i++)
 {
     Add-PnPListItem -List $list -Values @{"Title"="Report $i"} -Batch
 }
+Invoke-PnPBatch -Batch $batch
+```
+
+This creates 10 list items by using a batched approach.
+
 ## PARAMETERS
 
 ### -Connection

@@ -1,6 +1,6 @@
 ---
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/save-pnppageconversionlog
+online version: https://pnp.github.io/powershell/cmdlets/save-pnppageconversionlog
 applicable: SharePoint Online
 schema: 2.0.0
 title: Save-PnPPageConversionLog

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpsiteclassification
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpsiteclassification
 schema: 2.0.0
 title: Get-PnPSiteClassification
 ---

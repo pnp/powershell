@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/clear-pnpmicrosoft365groupmember
+online version: https://pnp.github.io/powershell/cmdlets/clear-pnpmicrosoft365groupmember
 schema: 2.0.0
 title: Clear-PnPMicrosoft365GroupMember
 ---

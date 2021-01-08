@@ -1,6 +1,6 @@
 ---
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/reset-pnpmicrosoft365groupexpiration
+online version: https://pnp.github.io/powershell/cmdlets/reset-pnpmicrosoft365groupexpiration
 applicable: SharePoint Online
 schema: 2.0.0
 title: Reset-PnPMicrosoft365GroupExpiration

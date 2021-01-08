@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpalert
+online version: https://pnp.github.io/powershell/cmdlets/add-pnpalert
 schema: 2.0.0
 title: Add-PnPAlert
 ---

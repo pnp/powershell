@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/new-pnpgraphsubscription
+online version: https://pnp.github.io/powershell/cmdlets/new-pnpgraphsubscription
 schema: 2.0.0
 title: New-PnPGraphSubscription
 ---

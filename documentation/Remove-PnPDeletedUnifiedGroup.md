@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnpdeletedunifiedgroup
+online version: https://pnp.github.io/powershell/cmdlets/remove-pnpdeletedunifiedgroup
 schema: 2.0.0
 title: Remove-PnPDeletedUnifiedGroup
 ---

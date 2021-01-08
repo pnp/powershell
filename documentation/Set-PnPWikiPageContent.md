@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpwikipagecontent
+online version: https://pnp.github.io/powershell/cmdlets/set-pnpwikipagecontent
 schema: 2.0.0
 title: Set-PnPWikiPageContent
 ---
