@@ -44,14 +44,21 @@ Retrieves a tab with the display name 'Wiki' from the specified team and channel
 
 ### EXAMPLE 3
 ```powershell
+Get-PnPTeamsTab -Team 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Channel 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity d8740a7a-e44e-46c5-8f13-e699f964fc25
+```
+
+Retrieves a tab with an id from the specified team and channel
+
+### EXAMPLE 4
+```powershell
 Get-PnPTeamsTab -Team "My Team" -Channel "My Channel"
 ```
 
 Retrieves the tabs for the specified Microsoft Teams instance and channel
 
-### EXAMPLE 4
+### EXAMPLE 5
 ```powershell
-Get-PnPTeamsTab "My Team" -Channel "My Channel" -Identity "Wiki"
+Get-PnPTeamsTab -Team "My Team" -Channel "My Channel" -Identity "Wiki"
 ```
 
 Retrieves a tab with the display name 'Wiki' from the specified team and channel
@@ -59,7 +66,7 @@ Retrieves a tab with the display name 'Wiki' from the specified team and channel
 ## PARAMETERS
 
 ### -Channel
-Specify the channel id of the team to retrieve.
+Specify the channel id or display name of the channel to use.
 
 ```yaml
 Type: TeamsChannelPipeBind
@@ -73,7 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Identity
+Specify the id or display name of the tab
 
 ```yaml
 Type: TeamsTabPipeBind
@@ -87,7 +94,7 @@ Accept wildcard characters: False
 ```
 
 ### -Team
-Specify the group id of the team to retrieve.
+Specify the group id, mailNickname or display name of the team to use.
 
 ```yaml
 Type: TeamsTeamPipeBind
