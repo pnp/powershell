@@ -1,7 +1,7 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using System.Linq;
 
 namespace PnP.PowerShell.Commands.InformationManagement
 {
@@ -25,10 +25,38 @@ namespace PnP.PowerShell.Commands.InformationManagement
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(CurrentWeb, PnPContext);
+            var list = List.GetList(CurrentWeb);
+            var availableTags = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAvailableTagsForSite(ClientContext, ClientContext.Url);
+            
+            try
+            {
+                ClientContext.ExecuteQueryRetry();
+            }
+            catch (System.Exception error)
+            {
+                WriteWarning(error.Message.ToString());
+            }
+
             if (list != null)
             {
-                list.SetComplianceTag(Label, BlockDeletion, BlockEdit, SyncToItems);
+                if (availableTags.Where(tag => tag.TagName.ToString() == Label) != null)
+                {
+                    var listUrl = list.RootFolder.ServerRelativeUrl;
+                    Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetListComplianceTag(ClientContext, listUrl, Label, BlockDeletion, BlockEdit, SyncToItems);
+
+                    try
+                    {
+                        ClientContext.ExecuteQueryRetry();
+                    }
+                    catch (System.Exception error)
+                    {
+                        WriteWarning(error.Message.ToString());
+                    }
+                }
+                else
+                {
+                    WriteWarning("The provided label is not available in the site.");
+                }
             }
             else
             {

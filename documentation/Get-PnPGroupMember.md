@@ -2,33 +2,54 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnpuserfromgroup
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpgroupmember
 schema: 2.0.0
-title: Remove-PnPUserFromGroup
+title: Get-PnPGroupMember
 ---
 
-# Remove-PnPUserFromGroup
+# Get-PnPGroupMember
 
 ## SYNOPSIS
-Removes a user from a group
+Retrieves all members of a group
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPUserFromGroup -LoginName <String> -Identity <GroupPipeBind> [-Web <WebPipeBind>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPGroupMember -Group <GroupPipeBind> [-User String]
 ```
 
 ## DESCRIPTION
+This command will return all the users or a specific user that are members of the provided SharePoint Group
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPUserFromGroup -LoginName user@company.com -GroupName 'Marketing Site Members'
+Get-PnPGroupMember -Group 'Marketing Site Members'
 ```
 
-Removes the user user@company.com from the Group 'Marketing Site Members'
+Returns all the users that are a member of the group 'Marketing Site Members' in the current sitecollection
+
+### EXAMPLE 2
+```powershell
+Get-PnPGroupMember -Group "Marketing Site Members" -User "manager@domain.com"
+```
+
+Will return a user if the user specific is a member of the specified group.
+
+### EXAMPLE 3
+```powershell
+Get-PnPGroup | Get-PnPGroupMember
+```
+
+Returns all the users that are a member of any of the groups in the current sitecollection
+
+### EXAMPLE 4
+```powershell
+Get-PnPGroup | ? Title -Like 'Marketing*' | Get-PnPGroupMember
+```
+
+Returns all the users that are a member of any of the groups of which their name starts with the word 'Marketing' in the current sitecollection
 
 ## PARAMETERS
 
@@ -46,33 +67,17 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Identity
+### -Group
 A group object, an ID or a name of a group
 
 ```yaml
 Type: GroupPipeBind
 Parameter Sets: (All)
-Aliases: GroupName
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -LoginName
-A valid login name of a user (user@company.com)
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: LogonName
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 

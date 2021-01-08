@@ -1,4 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
+using PnPCore = PnP.Core.Model.SharePoint;
 using System;
 using System.Management.Automation;
 using PnPCore = PnP.Core.Model.SharePoint;
@@ -8,8 +9,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
     public sealed class ListPipeBind
     {
         private readonly List _list;
-
-        private readonly PnPCore.IList _ilist;
+        private readonly PnPCore.IList _corelist;
         private readonly Guid _id;
         private readonly string _name;
 
@@ -23,18 +23,22 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _id = guid;
         }
 
-        public ListPipeBind(PnPCore.IList list)
-        {
-            _ilist = list;
-        }
-
         public ListPipeBind(string id)
         {
             if (string.IsNullOrEmpty(id))
+            {
                 throw new ArgumentNullException(nameof(id));
+            }
 
             if (!Guid.TryParse(id, out _id))
+            {
                 _name = id;
+            }
+        }
+
+        public ListPipeBind(PnPCore.IList list)
+        {
+            _corelist = list ?? throw new ArgumentNullException(nameof(list));
         }
 
 
@@ -102,8 +106,56 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             return list;
         }
 
+        internal PnPCore.IList GetList(PnP.Core.Services.PnPContext context, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] selectors)
+        {
+            PnPCore.IList returnList = null;
+            if (_corelist != null)
+            {
+                returnList = _corelist;
+            }
+            if (_list != null)
+            {
+                returnList = context.Web.Lists.GetById(_list.Id, selectors);
+            }
+            else if (_id != Guid.Empty)
+            {
+                returnList = context.Web.Lists.GetById(_id, selectors);
+            }
+            else if (!string.IsNullOrEmpty(_name))
+            {
+                returnList = context.Web.Lists.GetByTitle(_name, selectors);
+                if (returnList == null)
+                {
+                    var url = _name;
+                    context.Web.EnsurePropertiesAsync(w => w.ServerRelativeUrl).GetAwaiter().GetResult();
+                    if (!_name.ToLower().StartsWith(context.Web.ServerRelativeUrl.ToLower()))
+                    {
+                        url = $"{context.Web.ServerRelativeUrl}/{url.TrimStart('/')}";
+                    }
+                    try
+                    {
+                        returnList = context.Web.Lists.GetByServerRelativeUrl(url, selectors);
+                    }
+                    catch (PnP.Core.SharePointRestServiceException ex)
+                    {
+                        throw new PSInvalidOperationException((ex.Error as PnP.Core.SharePointRestError).Message);
+                    }
+                }
+            }
+            if (returnList != null)
+            {
+                returnList.EnsurePropertiesAsync(l => l.OnQuickLaunch, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder.ServerRelativeUrl);
+            }
+            return returnList;
+        }
+
         internal List GetListOrThrow(string paramName, Web selectedWeb, params System.Linq.Expressions.Expression<Func<List, object>>[] retrievals)
             => GetList(selectedWeb, retrievals)
+            ?? throw new PSArgumentException(NoListMessage, paramName);
+
+
+        internal PnPCore.IList GetListOrThrow(string paramName, PnP.Core.Services.PnPContext context, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] retrievals)
+            => GetList(context, retrievals)
             ?? throw new PSArgumentException(NoListMessage, paramName);
 
         internal List GetListOrWarn(Cmdlet cmdlet, Web web, params System.Linq.Expressions.Expression<Func<List, object>>[] retrievals)

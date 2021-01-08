@@ -413,7 +413,7 @@ namespace PnP.PowerShell.Commands.Base
                 Environment.SetEnvironmentVariable("PNPPSHOST", "GRAPH");
                 Environment.SetEnvironmentVariable("PNPPSSITE", "GRAPH");
             }
-         
+
             if (ReturnConnection)
             {
                 WriteObject(connection);
@@ -429,6 +429,12 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectToken()
         {
+            if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
+                PnPConnection.CurrentConnection?.ClientSecret == ClientSecret &&
+                PnPConnection.CurrentConnection?.Tenant == AADDomain)
+            {
+                ReuseAuthenticationManager();
+            }
             return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, TenantAdminUrl, false, AzureEnvironment);
         }
 
@@ -439,6 +445,12 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyClientIdCClientSecretUrl()
         {
+            if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
+                PnPConnection.CurrentConnection?.ClientSecret == ClientSecret &&
+                PnPConnection.CurrentConnection?.Tenant == AADDomain)
+            {
+                ReuseAuthenticationManager();
+            }
             return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, TenantAdminUrl, false, AzureEnvironment);
         }
 
@@ -478,6 +490,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             var task = Task.Factory.StartNew(() =>
             {
+
                 var returnedConnection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, TenantAdminUrl, messageWriter, AzureEnvironment, cancellationToken);
                 connection = returnedConnection;
                 messageWriter.Finished = true;
@@ -516,16 +529,40 @@ namespace PnP.PowerShell.Commands.Base
                     CertificatePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path,
                                CertificatePath);
                 }
-                //WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
-                return PnPConnectionHelper.InstantiateConnectionWithCertPath(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, TenantAdminUrl, AzureEnvironment);
+                if (!File.Exists(CertificatePath))
+                {
+                    throw new FileNotFoundException("Certificate not found");
+                }
+                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(CertificatePath, CertificatePassword);
+                if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
+                    PnPConnection.CurrentConnection?.Tenant == Tenant &&
+                    PnPConnection.CurrentConnection?.Certificate.Thumbprint == certificate.Thumbprint)
+                {
+                    ReuseAuthenticationManager();
+                }
+                return PnPConnectionHelper.InstantiateConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
             }
             else if (ParameterSpecified(nameof(Certificate)))
             {
+                if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
+                    PnPConnection.CurrentConnection?.Tenant == Tenant &&
+                    PnPConnection.CurrentConnection?.Certificate.Thumbprint == Certificate.Thumbprint)
+                {
+                    ReuseAuthenticationManager();
+                }
                 return PnPConnectionHelper.InstantiateConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, Certificate);
             }
             else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
             {
-                return PnPConnectionHelper.InstantiateConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, CertificateBase64Encoded);
+                X509Certificate2 certificate = CertificateHelper.GetCertificateFromBase64Encodedstring(CertificateBase64Encoded);
+
+                if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
+                    PnPConnection.CurrentConnection?.Tenant == Tenant &&
+                    PnPConnection.CurrentConnection?.Certificate.Thumbprint == certificate.Thumbprint)
+                {
+                    ReuseAuthenticationManager();
+                }
+                return PnPConnectionHelper.InstantiateConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
             }
             else
             {
@@ -607,6 +644,10 @@ namespace PnP.PowerShell.Commands.Base
             }, cancellationToken);
             messageWriter.Start();
             connection.Scopes = Scopes;
+            if (connection != null)
+            {
+                connection.AzureEnvironment = azureEnvironment;
+            }
             return connection;
         }
 
@@ -662,7 +703,19 @@ namespace PnP.PowerShell.Commands.Base
                     }
                 }
             }
+            if (ClientId == null)
+            {
+                ClientId = PnPConnection.PnPManagementShellClientId;
+            }
 
+            if (PnPConnection.CurrentConnection?.ClientId == ClientId)
+            {
+                if (PnPConnection.CurrentConnection?.PSCredential?.UserName == credentials.UserName &&
+                   PnPConnection.CurrentConnection?.PSCredential.GetNetworkCredential().Password == credentials.GetNetworkCredential().Password)
+                {
+                    ReuseAuthenticationManager();
+                }
+            }
             return PnPConnectionHelper.InstantiateConnectionWithCredentials(new Uri(Url),
                                                                credentials,
                                                                TenantAdminUrl,
@@ -748,6 +801,11 @@ namespace PnP.PowerShell.Commands.Base
             cancellationTokenSource.Cancel();
         }
 
+        private void ReuseAuthenticationManager()
+        {
+            var contextSettings = PnPConnection.CurrentConnection.Context.GetContextSettings();
+            PnPConnection.CachedAuthenticationManager = contextSettings.AuthenticationManager;
+        }
         #endregion
     }
 }

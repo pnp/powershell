@@ -10,17 +10,19 @@ using PnP.Framework.Modernization.Transform;
 using PnP.Framework.Modernization.Publishing;
 using PnP.Framework.Modernization.Telemetry.Observers;
 using PnP.Framework.Modernization.Cache;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Pages
 {
 
     [Cmdlet(VerbsData.ConvertTo, "PnPPage")]
     [Alias("ConvertTo-PnPClientSidePage")]
+    [WriteAliasWarning("Please use 'ConvertTo-PnPPage'. The alias 'ConvertTo-PnPClientSidePage' will be removed in the 1.5.0 release")]
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
         private static string rootFolder = "<root>";
         private Assembly sitesCoreAssembly;
-       // private Assembly newtonsoftAssembly;
+        // private Assembly newtonsoftAssembly;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ClassicPagePipeBind Identity;
@@ -155,7 +157,7 @@ namespace PnP.PowerShell.Commands.Pages
         {
             //Fix loading of modernization framework
             FixLocalAssemblyResolving();
-            
+
             // Load the page to transform
             Identity.Library = this.Library;
             Identity.Folder = this.Folder;
@@ -168,7 +170,7 @@ namespace PnP.PowerShell.Commands.Pages
             {
                 throw new Exception($"The page is either a blog page, a publishing page or a Delve blog page. Setting PublishingPage, BlogPage and DelveBlogPage to true is not valid.");
             }
-            
+
             ListItem page = null;
             if (this.PublishingPage)
             {
@@ -310,7 +312,7 @@ namespace PnP.PowerShell.Commands.Pages
             {
                 if (this.PublishingPage)
                 {
-                    publishingPageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeVerbose:this.LogVerbose, includeDebugEntries: this.LogVerbose));
+                    publishingPageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
                 else
                 {

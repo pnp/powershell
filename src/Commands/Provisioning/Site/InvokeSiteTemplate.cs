@@ -355,7 +355,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                     }
                     else
                     {
-                        throw new PSInvalidOperationException($"Your template contains artifacts that require an access token for {resource}. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
+                        throw new PSInvalidOperationException($"Your template contains artifacts that require an access token for {resource}. Either connect with a clientid which the appropriate permissions, or use credentials with Connect-PnPOnline after providing consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess. See https://pnp.github.io/powershell/articles/authentication.html");
                     }
                 }
             }))

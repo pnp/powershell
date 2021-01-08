@@ -21,6 +21,12 @@ Param(
 	$LocalPnPCoreProject
 )
 
+$localPnPCoreSdkPathValue = $env:PnPCoreSdkPath
+$localPnPFrameworkPathValue = $env:PnPFrameworkPath
+
+$env:PnPCoreSdkPath = ""
+$env:PnPFrameworkPath = ""
+
 $versionFileContents = Get-Content "$PSScriptRoot/../version.txt" -Raw
 if ($versionFileContents.Contains("%")) {
 	$versionString = $versionFileContents.Replace("%", "0");
@@ -150,7 +156,7 @@ if ($LASTEXITCODE -eq 0) {
 			$cmdlets = get-command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
 			$cmdlets -Join ","
 		}
-		$cmdletsString = Start-Job -ScriptBlock $scriptBlock | Receive-Job -Wait
+		$cmdletsString = Start-ThreadJob -ScriptBlock $scriptBlock | Receive-Job -Wait
 
 		$manifest = "@{
 	NestedModules =  if (`$PSEdition -eq 'Core')
@@ -191,3 +197,6 @@ if ($LASTEXITCODE -eq 0) {
 	}
 	Write-Host "`n`n Build and provisioning succeeded`n Version: $version" -ForegroundColor Green
 }
+
+$env:PnPCoreSdkPath = $localPnPCoreSdkPathValue
+$env:PnPFrameworkPath = $localPnPFrameworkPathValue

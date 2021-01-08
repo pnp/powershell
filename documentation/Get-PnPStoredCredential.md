@@ -30,13 +30,6 @@ Get-PnPStoredCredential -Name O365
 
 Returns the credential associated with the specified identifier
 
-### EXAMPLE 2
-```powershell
-Get-PnPStoredCredential -Name testEnvironment -Type OnPrem
-```
-
-Gets the credential associated with the specified identifier from the credential manager and then will return a credential that can be used for on-premises authentication
-
 ## PARAMETERS
 
 ### -Name

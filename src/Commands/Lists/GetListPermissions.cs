@@ -5,16 +5,19 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Get, "PnPGroupPermissions")]
-    public class GetGroupPermissions : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPListPermissions")]
+    public class GetListPermissions : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByName")]
-        public GroupPipeBind Identity = new GroupPipeBind();
+        public ListPipeBind Identity;
+
+        [Parameter(Mandatory = true)]
+        public int PrincipalId;
 
         protected override void ExecuteCmdlet()
         {
-            var g = Identity.GetGroup(PnPContext);
-            WriteObject(g.GetRoleDefinitions(),true);
+            var list = Identity.GetListOrThrow(nameof(List), PnPContext);
+            WriteObject(list.GetRoleDefinitions(PrincipalId));
         }
     }
 }

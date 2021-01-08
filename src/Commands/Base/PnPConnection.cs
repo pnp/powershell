@@ -69,6 +69,7 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         internal string UserAgent { get; set; }
 
+        internal static AuthenticationManager CachedAuthenticationManager { get; set; }
 
         internal ConnectionMethod ConnectionMethod { get; set; }
 
@@ -175,7 +176,7 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         ClipboardService.SetText(deviceCodeResult.UserCode);
                         messageWriter.WriteMessage($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard\n\n");
-                        BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in", new[] { ("/common/Consent/Set", BrowserHelper.UrlMatchType.EndsWith), ("/common/reprocess?ctx=", BrowserHelper.UrlMatchType.Contains), ("https://login.microsoftonline.com/common/login", BrowserHelper.UrlMatchType.FullMatch) });
+                        BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in");
                     }
                     else
                     {

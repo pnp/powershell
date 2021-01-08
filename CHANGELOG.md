@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [0.3.27-nightly]
+
+### Added
+- Added `Get-PnPListPermissions` cmdlet.
+
+### Changed
+- Fixed issue where using `Connect-PnPOnline` in a loop would through after several iterations an exception message from MSAL not being able to retrieve a token due to a looped request. We fixed this by trying to reuse the in-memory token cache in scenarios where non-interactive logins are being used.
+- `Connect-PnPOnline -Url [url] -PnPManagementShell -LaunchBrowser` will not try to attempt to close the popup window automatically anymore.
+- `Set-PnPLabel` will now check first if a label is available.
+- Documentation fixes
+
+### Contributors
+- Leon Armstrong [leonarmston]
+- Bhishma Bhandari [bhishma]
+
+## [0.3.24-nightly]
+
+### Added
+
+### Changed
+
+- Renamed `Add-PnPUserToGroup` to `Add-PnPGroupMember`. Alias for the old cmdlet name is available.
+- Renamed `Remove-PnPUserFromGroup` to `Remove-PnPGroupMember`. Alias for the old cmdlet name is available.
+- Renamed `Get-PnPGroupMembers` to `Get-PnPGroupMember`. Alias for the old cmdlet name is available.
+
+## [0.3.22-nightly]
+
+### Added
+
+### Changed
+- Fixed issue when using `Connect-PnPOnline` using either `-UseWebLogin` or `-SPOManagementShell` and invoking a site template containing modern pages, or when trying to create or update modern pages using the PnP Cmdlets.
+
 ## [0.3.20-nightly]
 
 ### Added

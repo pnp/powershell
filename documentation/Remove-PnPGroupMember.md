@@ -2,48 +2,33 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpgroupmembers
+online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnpgroupmember
 schema: 2.0.0
-title: Get-PnPGroupMembers
+title: Remove-PnPGroupMember
 ---
 
-# Get-PnPGroupMembers
+# Remove-PnPGroupMember
 
 ## SYNOPSIS
-Retrieves all members of a group
+Removes a user from a group
 
 ## SYNTAX
 
 ```powershell
-Get-PnPGroupMembers -Identity <GroupPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+Remove-PnPGroupMember -LoginName <String> -Group <GroupPipeBind> [-Web <WebPipeBind>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This command will return all the users that are a member of the provided SharePoint Group
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPGroupMembers -Identity 'Marketing Site Members'
+Remove-PnPGroupMember -LoginName user@company.com -Group 'Marketing Site Members'
 ```
 
-Returns all the users that are a member of the group 'Marketing Site Members' in the current sitecollection
-
-### EXAMPLE 2
-```powershell
-Get-PnPGroup | Get-PnPGroupMembers
-```
-
-Returns all the users that are a member of any of the groups in the current sitecollection
-
-### EXAMPLE 3
-```powershell
-Get-PnPGroup | ? Title -Like 'Marketing*' | Get-PnPGroupMembers
-```
-
-Returns all the users that are a member of any of the groups of which their name starts with the word 'Marketing' in the current sitecollection
+Removes the user user@company.com from the Group 'Marketing Site Members'
 
 ## PARAMETERS
 
@@ -61,17 +46,33 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Identity
+### -Group
 A group object, an ID or a name of a group
 
 ```yaml
 Type: GroupPipeBind
 Parameter Sets: (All)
+Aliases: GroupName
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LoginName
+A valid login name of a user (user@company.com)
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: LogonName
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
