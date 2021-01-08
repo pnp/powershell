@@ -2,7 +2,6 @@
 using PnPCore = PnP.Core.Model.SharePoint;
 using System;
 using System.Management.Automation;
-using PnPCore = PnP.Core.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
