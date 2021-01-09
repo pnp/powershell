@@ -15,7 +15,7 @@ Gets the Office 365 retention label/tag of the specified list or library (if app
 ## SYNTAX
 
 ```powershell
-Get-PnPLabel -List <ListPipeBind> [-ValuesOnly] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Get-PnPLabel [-List <ListPipeBind>] [-Raw] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -25,10 +25,17 @@ Get-PnPLabel -List <ListPipeBind> [-ValuesOnly] [-Web <WebPipeBind>] [-Connectio
 
 ### EXAMPLE 1
 ```powershell
+Get-PnPLabel
+```
+
+Returns all retention labels for the current web
+
+### EXAMPLE 2
+```powershell
 Get-PnPLabel -List "Demo List" -ValuesOnly
 ```
 
-This gets the Office 365 retention label which is set to a list or a library
+This gets the retention label which is set to a list or a library
 
 ## PARAMETERS
 
@@ -60,25 +67,11 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -ValuesOnly
+### -Raw
 If provided, the results will be returned as values instead of in written text and will include more detailed information
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-```yaml
-Type: WebPipeBind
 Parameter Sets: (All)
 
 Required: False

@@ -14,11 +14,18 @@ Updates a list item
 
 ## SYNTAX
 
+### Update a single item
 ```powershell
 Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-ContentType <ContentTypePipeBind>]
  [-Values <Hashtable>] [-SystemUpdate] [-Label <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
- [<CommonParameters>]
 ```
+
+### Update more items in a batch manner
+```powershell
+Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> -Batch <PnPBatch> [-ContentType <ContentTypePipeBind>]
+ [-Values <Hashtable>] [-SystemUpdate] [-Connection <PnPConnection>]
+```
+
 
 ## DESCRIPTION
 
@@ -52,7 +59,32 @@ Set-PnPListItem -List "Demo List" -Identity 1 -Label "Public"
 
 Sets the retention label in the list item with ID 1 in the "Demo List".
 
+### EXAMPLE 5
+```powershell
+$batch = New-PnPBatch
+for($i=0;$i -lt 100;$i++)
+{
+    Set-PnPListItem -List "Demo List" -Identity $i -Values @{"Title"="Updated Title"} -Batch $batch
+}
+Invoke-PnPBatch -Batch $batch
+```
+
+This example updates the items with ids 0 to 100 with a new title in a batched manner.
+
 ## PARAMETERS
+
+### -Batch
+Optional batch object used to add items in a batched manner. See examples on how to use this.
+
+```yaml
+Type: PnPBatch
+Parametet Sets: Adds items in a batched manner
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.

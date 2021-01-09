@@ -1,4 +1,5 @@
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -7,7 +8,8 @@ namespace PnP.PowerShell.Commands.Base
     {
         protected override void ExecuteCmdlet()
         {
-            WriteObject(PnPContext.NewBatch());
+            var batch = new PnPBatch(PnPContext);
+            WriteObject(batch);
         }
     }
 }

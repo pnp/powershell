@@ -10,6 +10,7 @@ namespace PnP.PowerShell.Commands.Lists
     public class RemoveListItem : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ValidateNotNull]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true)]
@@ -31,7 +32,8 @@ namespace PnP.PowerShell.Commands.Lists
             if (Identity != null)
             {
                 var item = Identity.GetListItem(list);
-                if (Force || ShouldContinue(string.Format(Resources.RemoveListItemWithId0, item.Id), Resources.Confirm))
+                var message = $"{(Recycle ? "Recycle" : "Remove")} list item with id {item.Id}?";
+                if (Force || ShouldContinue(message, Resources.Confirm))
                 {
                     if (Recycle)
                     {

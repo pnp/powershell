@@ -15,11 +15,11 @@ Executes the batch
 ## SYNTAX
 
 ```powershell
-Invoke-PnPBatch [-Batch] <Batch> [-Details] [-Force]
+Invoke-PnPBatch [-Batch] <PnPBatch> [-Details] [-Force]
 ```
 
 ## DESCRIPTION
-Executes any queued actions / changes on in the batch.
+Executes any queued actions / changes in the batch.
 
 ## EXAMPLES
 
@@ -40,7 +40,7 @@ This will add the 3 defined list items in the batch.
 The batch to execute
 
 ```yaml
-Type: Batch
+Type: PnPBatch
 Parameter Sets: (All)
 
 Required: False

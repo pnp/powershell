@@ -22,8 +22,8 @@ Add-PnPListItem [-List] <ListPipeBind> [-ContentType <ContentTypePipeBind>] [-Va
 
 ### Adds items in a batched manner
 ```powershell
-Add-PnPListItem [-List] <ListPipeBind> -Batch <Batch> [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>]
- [-Folder <String>]  [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Add-PnPListItem [-List] <ListPipeBind> -Batch <PnPBatch> [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>]
+ [-Folder <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -68,10 +68,9 @@ Adds a new list item to the "Demo List". Sets the retention label to "Public" if
 ### EXAMPLE 6
 ```powershell
 $batch = New-PnPBatch
-$list = Get-PnPList -Identity "Demo List"
 for($i=0;$i -lt 10;$i++)
 {
-    Add-PnPListItem -List $list -Values @{"Title"="Report $i"} -Batch
+    Add-PnPListItem -List "Demo List" -Values @{"Title"="Report $i"} -Batch $batch
 }
 Invoke-PnPBatch -Batch $batch
 ```
@@ -79,6 +78,19 @@ Invoke-PnPBatch -Batch $batch
 This creates 10 list items by using a batched approach.
 
 ## PARAMETERS
+
+### -Batch
+Optional batch object used to add items in a batched manner. See examples on how to use this.
+
+```yaml
+Type: PnPBatch
+Parametet Sets: Adds items in a batched manner
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.

@@ -28,6 +28,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
 
                 if (Identity != null)
                 {
+
                     var ct = Identity.GetContentTypeOrError(this, nameof(Identity), list);
 
                     if (ct is null)
@@ -36,6 +37,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
                     }
 
                     WriteObject(ct, false);
+
                 }
                 else
                 {
@@ -49,24 +51,21 @@ namespace PnP.PowerShell.Commands.ContentTypes
                 if (Identity != null)
                 {
                     var ct = Identity.GetContentTypeOrError(this, nameof(Identity), CurrentWeb, InSiteHierarchy);
-
                     if (ct is null)
                     {
                         return;
                     }
-
                     WriteObject(ct, false);
                 }
                 else
                 {
-                    var cts = InSiteHierarchy ? ClientContext.LoadQuery(CurrentWeb.AvailableContentTypes)  : ClientContext.LoadQuery(CurrentWeb.ContentTypes);
+                    var cts = InSiteHierarchy ? ClientContext.LoadQuery(CurrentWeb.AvailableContentTypes) : ClientContext.LoadQuery(CurrentWeb.ContentTypes);
 
                     ClientContext.ExecuteQueryRetry();
 
                     WriteObject(cts, true);
                 }
             }
-
         }
     }
 }

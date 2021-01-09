@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Management.Automation;
 using PnP.Core.Services;
+using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -8,7 +9,7 @@ namespace PnP.PowerShell.Commands.Base
     public class InvokeBatch : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
-        public Batch Batch;
+        public PnPBatch Batch;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
@@ -28,13 +29,13 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (!batchExecuted)
             {
-                PnPContext.Execute(Batch);
-                if(Details)
+                Batch.Execute();
+                if (Details)
                 {
                     var requests = new List<Model.BatchRequest>();
-                    foreach(var request in Batch.Requests)
+                    foreach (var request in Batch.Requests)
                     {
-                        requests.Add(new Model.BatchRequest() { HttpStatusCode = request.Value.ResponseHttpStatusCode, ResponseJson = request.Value.ResponseJson});
+                        requests.Add(new Model.BatchRequest() { HttpStatusCode = request.Value.ResponseHttpStatusCode, ResponseJson = request.Value.ResponseJson });
                     }
                     WriteObject(requests);
                 }

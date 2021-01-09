@@ -5,6 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Linq.Expressions;
 using System;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
+using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Lists
 {
@@ -24,13 +25,12 @@ namespace PnP.PowerShell.Commands.Lists
             if (Identity != null)
             {
                 var list = Identity.GetList(CurrentWeb);
-
                 if (ThrowExceptionIfListNotFound && list == null)
                 {
                     throw new PSArgumentException(string.Format(Resources.ListNotFound, Identity), nameof(Identity));
                 }
-                list?.EnsureProperties(RetrievalExpressions);
 
+                list?.EnsureProperties(RetrievalExpressions);
                 WriteObject(list);
             }
             else

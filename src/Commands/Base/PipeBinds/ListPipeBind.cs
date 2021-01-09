@@ -2,6 +2,7 @@
 using PnPCore = PnP.Core.Model.SharePoint;
 using System;
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -41,38 +42,6 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         }
 
 
-        internal PnPCore.IList GetList(Web web, PnP.Core.Services.PnPContext context, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] retrievals)
-        {
-            PnPCore.IList list = null;
-            if (_list != null)
-            {
-                list = context.Web.Lists.GetById(_list.Id);
-            }
-            else if (_id != Guid.Empty)
-            {
-                list = context.Web.Lists.GetById(_id);
-            }
-            else if (!string.IsNullOrEmpty(_name))
-            {
-                list = context.Web.Lists.GetByTitle(_name);
-                if (list == null)
-                {
-                    var url = _name;
-                    context.Web.EnsurePropertiesAsync(w => w.ServerRelativeUrl).GetAwaiter().GetResult();
-                    if (!_name.StartsWith(context.Web.ServerRelativeUrl))
-                    {
-                        url = $"{context.Web.ServerRelativeUrl}/{_name.Trim('/')}";
-                    }
-                    list = context.Web.Lists.GetByServerRelativeUrl(url);
-                }
-            }
-            if (retrievals.Length > 0)
-            {
-                list.Get(retrievals);
-            }
-            return list;
-        }
-
 
         internal List GetList(Web web, params System.Linq.Expressions.Expression<Func<List, object>>[] retrievals)
         {
@@ -95,8 +64,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             if (list != null)
             {
-                web.Context.Load(list, l => l.Id, l => l.BaseTemplate, l => l.OnQuickLaunch, l => l.DefaultViewUrl, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder.ServerRelativeUrl);
-                if (retrievals != null)
+                web.Context.Load(list, l => l.Id, l => l.BaseTemplate, l => l.OnQuickLaunch, l => l.DefaultViewUrl, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder.ServerRelativeUrl); if (retrievals != null)
                 {
                     web.Context.Load(list, retrievals);
                 }
@@ -105,6 +73,68 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             return list;
         }
 
+        internal PnPCore.IList GetList(PnPBatch batch, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] selectors)
+        {
+            PnPCore.IList returnList = null;
+            if (_corelist != null)
+            {
+                returnList = _corelist;
+            }
+            if (_list != null)
+            {
+                var batchedList = batch.GetCachedList(_list.Id);
+                if (batchedList != null)
+                {
+                    return batchedList;
+                }
+                returnList = batch.Context.Web.Lists.GetById(_list.Id, selectors);
+            }
+            else if (_id != Guid.Empty)
+            {
+                var batchedList = batch.GetCachedList(_id);
+                if (batchedList != null)
+                {
+                    return batchedList;
+                }
+                returnList = batch.Context.Web.Lists.GetById(_id, selectors);
+            }
+            else if (!string.IsNullOrEmpty(_name))
+            {
+                var batchedList = batch.GetCachedList(_name);
+                if (batchedList != null)
+                {
+                    return batchedList;
+                }
+                returnList = batch.Context.Web.Lists.GetByTitle(_name, selectors);
+                if (returnList == null)
+                {
+                    var url = _name;
+                    if (!_name.ToLower().StartsWith(batch.Context.Web.ServerRelativeUrl.ToLower()))
+                    {
+                        url = $"{batch.Context.Web.ServerRelativeUrl}/{url.TrimStart('/')}";
+                    }
+                    try
+                    {
+                        batchedList = batch.GetCachedList(url);
+                        if (batchedList != null)
+                        {
+                            return batchedList;
+                        }
+                        returnList = batch.Context.Web.Lists.GetByServerRelativeUrl(url, selectors);
+                    }
+                    catch (PnP.Core.SharePointRestServiceException ex)
+                    {
+                        throw new PSInvalidOperationException((ex.Error as PnP.Core.SharePointRestError).Message);
+                    }
+                }
+            }
+            if (returnList != null)
+            {
+                returnList.EnsureProperties(l => l.Id, l => l.OnQuickLaunch, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder);
+                batch.CacheList(returnList);
+            }
+            return returnList;
+        }
         internal PnPCore.IList GetList(PnP.Core.Services.PnPContext context, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] selectors)
         {
             PnPCore.IList returnList = null;
@@ -135,15 +165,15 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                     {
                         returnList = context.Web.Lists.GetByServerRelativeUrl(url, selectors);
                     }
-                    catch (PnP.Core.SharePointRestServiceException ex)
+                    catch (PnP.Core.SharePointRestServiceException)
                     {
-                        throw new PSInvalidOperationException((ex.Error as PnP.Core.SharePointRestError).Message);
+                        throw new PSInvalidOperationException("List not found");
                     }
                 }
             }
             if (returnList != null)
             {
-                returnList.EnsurePropertiesAsync(l => l.OnQuickLaunch, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder.ServerRelativeUrl);
+                returnList.EnsureProperties(l => l.Id, l => l.OnQuickLaunch, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder);
             }
             return returnList;
         }
@@ -169,6 +199,23 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         private string NoListMessage
             => $"No list found with id, title or url '{this}' (title is case-sensitive)";
 
+
+        public override string ToString()
+        {
+            if (!string.IsNullOrEmpty(_name))
+            {
+                return _name;
+            }
+            if (_corelist != null)
+            {
+                return _corelist.Title;
+            }
+            if (_list != null)
+            {
+                return _list.Title;
+            }
+            return "Unknown list";
+        }
         // public override string ToString()
         //     => _name
         //     ?? (_id != Guid.Empty ? _id.ToString() : null)

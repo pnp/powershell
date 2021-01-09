@@ -64,6 +64,10 @@ namespace PnP.PowerShell.Commands
                 //it makes select-object work weird
                 throw;
             }
+            catch (PnP.Core.SharePointRestServiceException ex)
+            {
+                throw new PSInvalidOperationException((ex.Error as PnP.Core.SharePointRestError).Message);
+            }
             catch (Exception ex)
             {
                 PnPConnection.CurrentConnection.RestoreCachedContext(PnPConnection.CurrentConnection.Url);
@@ -77,6 +81,7 @@ namespace PnP.PowerShell.Commands
 
                 WriteError(errorRecord);
             }
+
         }
 
         protected override void EndProcessing()

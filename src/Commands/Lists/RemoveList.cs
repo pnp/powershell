@@ -9,6 +9,7 @@ namespace PnP.PowerShell.Commands.Lists
     public class RemoveList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ValidateNotNull]
         public ListPipeBind Identity;
 
         [Parameter(Mandatory = false)]
@@ -18,26 +19,22 @@ namespace PnP.PowerShell.Commands.Lists
         public SwitchParameter Force;
         protected override void ExecuteCmdlet()
         {
-            if (Identity != null)
+            var list = Identity.GetList(CurrentWeb);
+            if (list != null)
             {
-                var list = Identity.GetList(CurrentWeb);
-                if (list != null)
+                if (Force || ShouldContinue(Properties.Resources.RemoveList, Properties.Resources.Confirm))
                 {
-                    if (Force || ShouldContinue(Properties.Resources.RemoveList, Properties.Resources.Confirm))
+                    if (Recycle)
                     {
-                        if (Recycle)
-                        {
-                            list.Recycle();
-                        }
-                        else
-                        {
-                            list.DeleteObject();
-                        }
-                        ClientContext.ExecuteQueryRetry();
+                        list.Recycle();
                     }
+                    else
+                    {
+                        list.DeleteObject();
+                    }
+                    ClientContext.ExecuteQueryRetry();
                 }
             }
         }
     }
-
 }

@@ -7,6 +7,7 @@ using Microsoft.SharePoint.Client;
 using PnP.Core.Services;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 
 // IMPORTANT: If you make changes to this cmdlet, also make the similar/same changes to the Set-PnPListItem Cmdlet
@@ -16,8 +17,9 @@ namespace PnP.PowerShell.Commands.Lists
     [Cmdlet(VerbsCommon.Add, "PnPListItem")]
     public class AddListItem : PnPWebCmdlet
     {
-        private const string ParameterSet_SINGLE = "Set add a single list item";
+        private const string ParameterSet_SINGLE = "Add a single list item";
         private const string ParameterSet_BATCHED = "Adds items in a batched manner";
+
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         [ValidateNotNull]
@@ -35,23 +37,24 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
         public string Label;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BATCHED)]
         [ValidateNotNull]
-        public Batch Batch;
+        public PnPBatch Batch;
 
         protected override void ExecuteCmdlet()
         {
             if (ParameterSpecified(nameof(Batch)))
             {
-                var list = List.GetList(CurrentWeb, PnPContext, l => l.Fields.LoadProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
+                var list = List.GetList(Batch);
+                list.EnsureProperties(l => l.Id, l => l.Fields.LoadProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
+
                 var values = ListItemHelper.GetFieldValues(list, Values, this, ClientContext);
-                if(ContentType != null)
+                if (ContentType != null)
                 {
-                    var contentType = ContentType.GetContentType(list);
-                    contentType.EnsurePropertiesAsync(c => c.StringId).GetAwaiter().GetResult();
-                    values.Add("ContentTypeId",contentType.StringId);
+                    var contentType = ContentType.GetContentType(Batch, list);
+                    values.Add("ContentTypeId", contentType.StringId);
                 }
-                list.Items.AddBatch(Batch, values);
+                list.Items.AddBatch(Batch.Batch, values, Folder);
             }
             else
             {

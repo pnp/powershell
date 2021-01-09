@@ -16,6 +16,17 @@ namespace PnP.PowerShell.Commands
         [Obsolete("The -Web parameter will be removed in a future release. Use Connect-PnPOnline -Url [subweburl] instead to connect to a subweb.")]
         public WebPipeBind Web;
 
+        internal void ThrowIfWebParameterUsed()
+        {
+#pragma warning disable CS0618
+
+            if (ParameterSpecified(nameof(Web)))
+            {
+                throw new PSArgumentException("The -Web parameter is not supported in this case");
+            }
+#pragma warning restore CS0618
+        }
+        
         protected Web CurrentWeb
         {
             get
