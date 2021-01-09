@@ -41,7 +41,7 @@ This will return all installed apps from the external marketplace or from the Ap
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAppInfo -Identity 2646ccc3-6a2b-46ef-9273-81411cbbb60f
+Get-PnPAppInfo -ProductId 2646ccc3-6a2b-46ef-9273-81411cbbb60f
 ```
 
 This will return the installed application info for the app with the given product id.
