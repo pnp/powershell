@@ -6,7 +6,7 @@ using System.Linq;
 namespace PnP.PowerShell.Commands.InformationManagement
 {
     [Cmdlet(VerbsCommon.Set, "PnPLabel")]
-    public class SetLabel : PnPWebCmdlet
+    public class SetLabel : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ListPipeBind List;
@@ -25,33 +25,14 @@ namespace PnP.PowerShell.Commands.InformationManagement
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(CurrentWeb);
-            var availableTags = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAvailableTagsForSite(ClientContext, ClientContext.Url);
-            
-            try
-            {
-                ClientContext.ExecuteQueryRetry();
-            }
-            catch (System.Exception error)
-            {
-                WriteWarning(error.Message.ToString());
-            }
+            var list = List.GetList(PnPContext);
+            var availableTags = PnPContext.Site.GetAvailableComplianceTags();
 
             if (list != null)
             {
-                if (availableTags.Where(tag => tag.TagName.ToString() == Label) != null)
+                if (availableTags.FirstOrDefault(tag => tag.TagName.ToString() == Label) != null)
                 {
-                    var listUrl = list.RootFolder.ServerRelativeUrl;
-                    Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetListComplianceTag(ClientContext, listUrl, Label, BlockDeletion, BlockEdit, SyncToItems);
-
-                    try
-                    {
-                        ClientContext.ExecuteQueryRetry();
-                    }
-                    catch (System.Exception error)
-                    {
-                        WriteWarning(error.Message.ToString());
-                    }
+                    list.SetComplianceTag(Label, BlockDeletion, BlockEdit, SyncToItems);
                 }
                 else
                 {

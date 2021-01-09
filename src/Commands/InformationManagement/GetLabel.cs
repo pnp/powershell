@@ -6,10 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.InformationManagement
 {
     [Cmdlet(VerbsCommon.Get, "PnPLabel")]
-
-
-
-    public class GetLabel : PnPWebCmdlet
+    public class GetLabel : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public ListPipeBind List;
@@ -22,12 +19,13 @@ namespace PnP.PowerShell.Commands.InformationManagement
         {
             if (!ParameterSpecified(nameof(List)))
             {
+                
                 var tags = PnPContext.Site.GetAvailableComplianceTags();
                 WriteObject(tags, true);
             }
             else
             {
-                var list = List.GetList(CurrentWeb, PnPContext);
+                var list = List.GetList(PnPContext);
                 if (null != list)
                 {
                     var tag = list.GetComplianceTag();

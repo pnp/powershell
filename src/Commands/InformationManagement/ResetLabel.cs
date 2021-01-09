@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.InformationManagement
 {
     [Cmdlet(VerbsCommon.Reset, "PnPLabel")]
-    public class ResetLabel : PnPWebCmdlet
+    public class ResetLabel : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ListPipeBind List;
@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(CurrentWeb, PnPContext);
+            var list = List.GetList(PnPContext);
             if (list != null)
             {
                 list.SetComplianceTag(string.Empty, false, false, SyncToItems);
