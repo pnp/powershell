@@ -31,6 +31,11 @@ Read [more information about authentication](./authentication.md).
 
 ## Changes
 
+Check your scripts. As this is a major release, we have deprecated cmdlets, renamed cmdlets, and we marked some parameters as obsolete. 
+
+> [!Important]
+> We marked the `-Web` parameter as obsolete on many cmdlets. The `-Web` parameter allows you to execute cmdlets to a subweb underneath the current web. Due to API changes under the hood of PnP Powershell we marked this parameter as obsolete. The parameter will be removed in a future release. Notice though that it is still fully possible to connect to a subweb by using the full url to the subweb with Connect-PnPOnline.
+
 |Old|New/Replaced with|Notes|
 |----|----|---|
 |`Apply-PnPProvisioningTemplate`|`Invoke-PnPSiteTemplate`||
