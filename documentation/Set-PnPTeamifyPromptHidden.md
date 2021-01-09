@@ -33,7 +33,7 @@ This example hides the teamify prompt for the currently connected to site.
 ## PARAMETERS
 
 ### -Connection
-{{ Fill Connection Description }}
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
@@ -50,13 +50,6 @@ Accept wildcard characters: False
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
-## INPUTS
-
-### None
-
-## OUTPUTS
-
-### System.Object
-## NOTES
-
 ## RELATED LINKS
+
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
