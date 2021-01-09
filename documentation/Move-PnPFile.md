@@ -17,20 +17,20 @@ Moves a file or folder to a different location
 ### Site Relative (Default)
 ```powershell
 Move-PnPFile [-SiteRelativeUrl] <String> [-TargetUrl] <String> [-OverwriteIfAlreadyExists] [-Force]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ### Server Relative
 ```powershell
 Move-PnPFile [-ServerRelativeUrl] <String> [-TargetUrl] <String> [-OverwriteIfAlreadyExists] [-Force]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ### Other Site Collection
 ```powershell
 Move-PnPFile [[-ServerRelativeUrl] <String>] [[-SiteRelativeUrl] <String>]
  [-TargetServerRelativeLibrary] <String> [-OverwriteIfAlreadyExists] [-AllowSchemaMismatch]
- [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-Force] [-Web <WebPipeBind>]
+ [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-Force] 
  [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
@@ -246,19 +246,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -WhatIf
 Shows what would happen if the cmdlet runs. The cmdlet is not run.

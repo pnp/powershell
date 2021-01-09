@@ -15,7 +15,7 @@ Return registered eventreceivers
 ## SYNTAX
 
 ```powershell
-Get-PnPEventReceiver [-List <ListPipeBind>] [-Identity <EventReceiverPipeBind>] [-Web <WebPipeBind>]
+Get-PnPEventReceiver [-List <ListPipeBind>] [-Identity <EventReceiverPipeBind>] 
  [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```
 
@@ -110,19 +110,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-The web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

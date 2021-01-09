@@ -15,7 +15,7 @@ Marks values of the propertybag to be indexed by search. Notice that this will o
 ## SYNTAX
 
 ```powershell
-Set-PnPIndexedProperties -Keys <System.Collections.Generic.List`1[System.String]> [-Web <WebPipeBind>]
+Set-PnPIndexedProperties -Keys <System.Collections.Generic.List`1[System.String]> 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -52,19 +52,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

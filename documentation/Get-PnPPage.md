@@ -15,7 +15,7 @@ Returns a page
 ## SYNTAX
 
 ```powershell
-Get-PnPPage [-Identity] <PagePipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Get-PnPPage [-Identity] <PagePipeBind> [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -82,19 +82,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

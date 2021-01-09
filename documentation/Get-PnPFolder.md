@@ -16,13 +16,13 @@ Return a folder object
 
 ### Folder By Url
 ```powershell
-Get-PnPFolder [-Url] <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
+Get-PnPFolder [-Url] <String> [-Connection <PnPConnection>] [-Includes <String[]>]
  [<CommonParameters>]
 ```
 
 ### Folders In List
 ```powershell
-Get-PnPFolder [-List] <ListPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
+Get-PnPFolder [-List] <ListPipeBind> [-Connection <PnPConnection>] [-Includes <String[]>]
  [<CommonParameters>]
 ```
 
@@ -97,19 +97,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Web
-The web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

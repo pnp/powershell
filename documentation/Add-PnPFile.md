@@ -18,14 +18,14 @@ Uploads a file to Web
 ```powershell
 Add-PnPFile -Path <String> -Folder <FolderPipeBind> [-NewFileName <String>] [-Checkout] [-CheckInComment <String>]
  [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
- [-ContentType <ContentTypePipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Upload file from stream
 ```powershell
 Add-PnPFile -Folder <FolderPipeBind> -FileName <String> -Stream <Stream> [-Checkout] [-CheckInComment <String>]
  [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
- [-ContentType <ContentTypePipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -330,19 +330,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

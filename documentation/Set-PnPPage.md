@@ -18,7 +18,7 @@ Sets parameters of a page
 Set-PnPPage [-Identity] <PagePipeBind> [-Name <String>] [-Title <String>]
  [-LayoutType <PageLayoutType>] [-PromoteAs <PagePromoteType>] [-CommentsEnabled]
  [-Publish] [-HeaderType <PageHeaderType>] [-HeaderLayoutType <PageHeaderLayoutType>] [-ContentType <ContentTypePipeBind>]
- [-ThumbnailUrl <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-ThumbnailUrl <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -241,19 +241,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

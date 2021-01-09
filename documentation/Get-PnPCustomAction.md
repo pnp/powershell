@@ -16,7 +16,7 @@ Return user custom actions
 
 ```powershell
 Get-PnPCustomAction [-Identity <Guid>] [-Scope <CustomActionScope>]
- [-ThrowExceptionIfCustomActionNotFound] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+ [-ThrowExceptionIfCustomActionNotFound] [-Connection <PnPConnection>]
  [-Includes <String[]>] [<CommonParameters>]
 ```
 
@@ -105,19 +105,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-The web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

@@ -18,26 +18,26 @@ Add a field
 ```powershell
 Add-PnPField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> -Type <FieldType>
  [-Id <Guid>] [-AddToDefaultView] [-Required] [-Group <String>] [-ClientSideComponentId <Guid>]
- [-ClientSideComponentProperties <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+ [-ClientSideComponentProperties <String>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Add field reference to list
 ```powershell
-Add-PnPField -List <ListPipeBind> -Field <FieldPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Add-PnPField -List <ListPipeBind> -Field <FieldPipeBind> [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Add field to web
 ```powershell
 Add-PnPField -DisplayName <String> -InternalName <String> -Type <FieldType> [-Id <Guid>]
- [-ClientSideComponentId <Guid>] [-ClientSideComponentProperties <String>] [-Web <WebPipeBind>]
+ [-ClientSideComponentId <Guid>] [-ClientSideComponentProperties <String>] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Add field by XML to list
 ```powershell
-Add-PnPField [-AddToDefaultView] [-Required] [-Group <String>] [-Web <WebPipeBind>]
+Add-PnPField [-AddToDefaultView] [-Required] [-Group <String>] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -249,19 +249,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

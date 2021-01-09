@@ -16,17 +16,17 @@ Returns site users of current web
 
 ### Identity based request (Default)
 ```powershell
-Get-PnPUser [-Identity <UserPipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPUser [-Identity <UserPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### With rights assigned
 ```powershell
-Get-PnPUser [-WithRightsAssigned] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPUser [-WithRightsAssigned] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### With rights assigned detailed
 ```powershell
-Get-PnPUser [-WithRightsAssignedDetailed] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Get-PnPUser [-WithRightsAssignedDetailed] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -114,19 +114,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -WithRightsAssigned
 If provided, only users that currently have any kinds of access rights assigned to the current site collection will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.

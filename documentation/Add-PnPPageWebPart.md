@@ -17,14 +17,14 @@ Adds a web part to a page
 ### Default with built-in web part
 ```powershell
 Add-PnPPageWebPart [-Page] <PagePipeBind> -DefaultWebPartType <DefaultClientSideWebParts>
- [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+ [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Default with 3rd party web part
 ```powershell
 Add-PnPPageWebPart [-Page] <PagePipeBind> -Component <PageComponentPipeBind>
- [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+ [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -32,14 +32,14 @@ Add-PnPPageWebPart [-Page] <PagePipeBind> -Component <PageComponentPipeBind>
 ```powershell
 Add-PnPPageWebPart [-Page] <PagePipeBind> -DefaultWebPartType <DefaultClientSideWebParts>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] -Section <Int32> -Column <Int32>
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Positioned with 3rd party web part
 ```powershell
 Add-PnPPageWebPart [-Page] <PagePipeBind> -Component <PageComponentPipeBind>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] -Section <Int32> -Column <Int32>
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -169,19 +169,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -WebPartProperties
 The properties of the web part

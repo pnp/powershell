@@ -15,7 +15,7 @@ Returns the subwebs of the current web
 ## SYNTAX
 
 ```powershell
-Get-PnPSubWeb [[-Identity] <WebPipeBind>] [-Recurse] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Get-PnPSubWeb [[-Identity] <WebPipeBind>] [-Recurse] [-Connection <PnPConnection>]
  [-Includes <String[]>] [<CommonParameters>]
 ```
 
@@ -116,19 +116,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-The web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

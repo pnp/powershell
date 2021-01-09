@@ -17,10 +17,24 @@
     },
     "tasks": [
         {
-            "label": "Build with PnP Framework Nuget",
+            "label": "Build with nugets",
             "type": "shell",
             "command": "${cwd}/build/Build-Debug.ps1",
             "problemMatcher":"$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Build with local copy of PnP Framework/PnP Core SDK",
+            "type": "shell",
+            "command": "${cwd}/build/Build-Debug.ps1",
+            "problemMatcher": "$msCompile",
+            "args": [
+                "-LocalPnPFramework",
+                "-LocalPnPCore"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -33,7 +47,19 @@
             "problemMatcher": "$msCompile",
             "args": [
                 "-LocalPnPFramework",
-                "-LocalPnPCoreProject"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Build with local copy of PnP Core SDK",
+            "type": "shell",
+            "command": "${cwd}/build/Build-Debug.ps1",
+            "problemMatcher": "$msCompile",
+            "args": [
+                "-LocalPnPCore",
             ],
             "group": {
                 "kind": "build",

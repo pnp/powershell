@@ -17,25 +17,25 @@ Moves a page component to a different section/column
 ### Move to other section
 ```powershell
 Move-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> -Section <Int32>
- [-Position <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Position <Int32>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Move to other section and column
 ```powershell
 Move-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> -Section <Int32>
- -Column <Int32> [-Position <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ -Column <Int32> [-Position <Int32>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Move to other column
 ```powershell
 Move-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> -Column <Int32>
- [-Position <Int32>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Position <Int32>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Move within a column
 ```powershell
 Move-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> -Position <Int32>
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -168,19 +168,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

@@ -9,20 +9,17 @@ namespace PnP.PowerShell.Commands.Apps
     [Cmdlet(VerbsCommon.Add, "PnPApp")]
     public class AddApp : PnPSharePointCmdlet
     {
-        private const string ParameterSet_ADD = "Add only";
-        private const string ParameterSet_PUBLISH = "Add and Publish";
 
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ADD, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_PUBLISH, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public string Path;
 
         [Parameter(Mandatory = false)]
         public AppCatalogScope Scope = AppCatalogScope.Tenant;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = false, ParameterSetName = ParameterSet_PUBLISH)]
+        [Parameter(Mandatory = false, ValueFromPipeline = false)]
         public SwitchParameter Publish;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_PUBLISH)]
+        [Parameter(Mandatory = false, ValueFromPipeline = false)]
         public SwitchParameter SkipFeatureDeployment;
 
         [Parameter(Mandatory = false)]

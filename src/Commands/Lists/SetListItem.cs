@@ -16,8 +16,8 @@ namespace PnP.PowerShell.Commands.Lists
     [Cmdlet(VerbsCommon.Set, "PnPListItem")]
     public class SetListItem : PnPWebCmdlet
     {
-        const string ParameterSet_SINGLE = "Update single item";
-        const string Parameterset_BATCHED = "Updated a set of items";
+        const string ParameterSet_SINGLE = "Single";
+        const string Parameterset_BATCHED = "Batched";
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
 

@@ -14,16 +14,9 @@ Add/uploads an available app to the app catalog
 
 ## SYNTAX
 
-### Add only
 ```powershell
-Add-PnPApp [-Path] <String> [-Scope <AppCatalogScope>] [-Overwrite] [-Timeout <Int32>]
+Add-PnPApp [-Path] <String> [-Scope <AppCatalogScope>] [-Overwrite] [-Timeout <Int32>] [-Publish [-SkipFeatureDeployment]]
  [-Connection <PnPConnection>] [<CommonParameters>]
-```
-
-### Add and Publish
-```powershell
-Add-PnPApp [-Path] <String> [-Scope <AppCatalogScope>] [-Publish] [-SkipFeatureDeployment] [-Overwrite]
- [-Timeout <Int32>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -97,8 +90,8 @@ This will deploy/trust an app into the app catalog
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Add and Publish
-Required: True
+Parameter Sets: (All)
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -123,7 +116,7 @@ Accept wildcard characters: False
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Add and Publish
+Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None

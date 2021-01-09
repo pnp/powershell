@@ -16,19 +16,19 @@ Sets the available page layouts for the current site
 
 ### SPECIFIC
 ```powershell
-Set-PnPAvailablePageLayouts -PageLayouts <String[]> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Set-PnPAvailablePageLayouts -PageLayouts <String[]> [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### ALL
 ```powershell
-Set-PnPAvailablePageLayouts [-AllowAllPageLayouts] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Set-PnPAvailablePageLayouts [-AllowAllPageLayouts] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### INHERIT
 ```powershell
-Set-PnPAvailablePageLayouts [-InheritPageLayouts] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Set-PnPAvailablePageLayouts [-InheritPageLayouts] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -94,19 +94,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

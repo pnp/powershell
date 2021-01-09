@@ -16,30 +16,30 @@ Returns a specific SharePoint group or all SharePoint groups in site.
 
 ### All (Default)
 ```powershell
-Get-PnPGroup [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
+Get-PnPGroup [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```
 
 ### ByName
 ```powershell
-Get-PnPGroup [[-Identity] <GroupPipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Get-PnPGroup [[-Identity] <GroupPipeBind>] [-Connection <PnPConnection>]
  [-Includes <String[]>] [<CommonParameters>]
 ```
 
 ### Members
 ```powershell
-Get-PnPGroup [-AssociatedMemberGroup] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
+Get-PnPGroup [-AssociatedMemberGroup] [-Connection <PnPConnection>] [-Includes <String[]>]
  [<CommonParameters>]
 ```
 
 ### Visitors
 ```powershell
-Get-PnPGroup [-AssociatedVisitorGroup] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Get-PnPGroup [-AssociatedVisitorGroup] [-Connection <PnPConnection>]
  [-Includes <String[]>] [<CommonParameters>]
 ```
 
 ### Owners
 ```powershell
-Get-PnPGroup [-AssociatedOwnerGroup] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
+Get-PnPGroup [-AssociatedOwnerGroup] [-Connection <PnPConnection>] [-Includes <String[]>]
  [<CommonParameters>]
 ```
 
@@ -141,19 +141,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Web
-The web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

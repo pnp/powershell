@@ -17,8 +17,8 @@ namespace PnP.PowerShell.Commands.Lists
     [Cmdlet(VerbsCommon.Add, "PnPListItem")]
     public class AddListItem : PnPWebCmdlet
     {
-        private const string ParameterSet_SINGLE = "Add a single list item";
-        private const string ParameterSet_BATCHED = "Adds items in a batched manner";
+        private const string ParameterSet_SINGLE = "Single";
+        private const string ParameterSet_BATCHED = "Batched";
 
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

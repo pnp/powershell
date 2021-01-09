@@ -17,26 +17,26 @@ Retrieves list items
 ### All Items (Default)
 ```powershell
 Get-PnPListItem [-List] <ListPipeBind> [-FolderServerRelativeUrl <String>] [-Fields <String[]>]
- [-PageSize <Int32>] [-ScriptBlock <ScriptBlock>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+ [-PageSize <Int32>] [-ScriptBlock <ScriptBlock>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### By Id
 ```powershell
-Get-PnPListItem [-List] <ListPipeBind> [-Id <Int32>] [-Fields <String[]>] [-Web <WebPipeBind>]
+Get-PnPListItem [-List] <ListPipeBind> [-Id <Int32>] [-Fields <String[]>] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### By Unique Id
 ```powershell
-Get-PnPListItem [-List] <ListPipeBind> [-UniqueId <Guid>] [-Fields <String[]>] [-Web <WebPipeBind>]
+Get-PnPListItem [-List] <ListPipeBind> [-UniqueId <Guid>] [-Fields <String[]>] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### By Query
 ```powershell
 Get-PnPListItem [-List] <ListPipeBind> [-Query <String>] [-FolderServerRelativeUrl <String>]
- [-PageSize <Int32>] [-ScriptBlock <ScriptBlock>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+ [-PageSize <Int32>] [-ScriptBlock <ScriptBlock>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -235,19 +235,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

@@ -16,7 +16,7 @@ Returns a field from a list or site
 
 ```powershell
 Get-PnPField [-List <ListPipeBind>] [[-Identity] <FieldPipeBind>] [-Group <String>] [-InSiteHierarchy]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
+ [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -109,19 +109,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Web
-The web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

@@ -15,7 +15,7 @@ Returns a folder from a given site relative path, and will create it if it does 
 ## SYNTAX
 
 ```powershell
-Resolve-PnPFolder [-SiteRelativePath] <String> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+Resolve-PnPFolder [-SiteRelativePath] <String> [-Connection <PnPConnection>]
  [-Includes <String[]>] [<CommonParameters>]
 ```
 
@@ -61,19 +61,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-The web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

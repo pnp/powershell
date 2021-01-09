@@ -14,13 +14,13 @@ Adds an item to the list and sets the creation time to the current date and time
 
 ## SYNTAX
 
-### Add a single item
+### Single
 ```powershell
 Add-PnPListItem [-List] <ListPipeBind> [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>]
- [-Folder <String>] [-Label <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Folder <String>] [-Label <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
-### Adds items in a batched manner
+### Batched
 ```powershell
 Add-PnPListItem [-List] <ListPipeBind> -Batch <PnPBatch> [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>]
  [-Folder <String>] [-Connection <PnPConnection>] [<CommonParameters>]
@@ -84,7 +84,7 @@ Optional batch object used to add items in a batched manner. See examples on how
 
 ```yaml
 Type: PnPBatch
-Parameter Sets: Adds items in a batched manner
+Parameter Sets: Batched
 Required: True
 Position: Named
 Default value: None
@@ -139,7 +139,7 @@ The name of the retention label.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Single
 
 Required: False
 Position: Named
@@ -214,19 +214,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
