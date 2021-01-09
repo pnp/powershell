@@ -84,7 +84,7 @@ Optional batch object used to add items in a batched manner. See examples on how
 
 ```yaml
 Type: PnPBatch
-Parametet Sets: Adds items in a batched manner
+Parameter Sets: Adds items in a batched manner
 Required: True
 Position: Named
 Default value: None
