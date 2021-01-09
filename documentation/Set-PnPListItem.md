@@ -17,7 +17,7 @@ Updates a list item
 ### Single
 ```powershell
 Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-ContentType <ContentTypePipeBind>]
- [-Values <Hashtable>] [-SystemUpdate] [-Label <String>] [-Connection <PnPConnection>]
+ [-Values <Hashtable>] [-SystemUpdate] [-Label <String>] [-ClearLabel] [-Connection <PnPConnection>]
 ```
 
 ### Batched
@@ -162,6 +162,20 @@ Update the item without creating a new version.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ClearLabel
+Clears the retention label of the item.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Single
 
 Required: False
 Position: Named
