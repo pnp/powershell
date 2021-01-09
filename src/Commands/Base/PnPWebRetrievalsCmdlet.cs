@@ -17,6 +17,7 @@ namespace PnP.PowerShell.Commands
         private Web _currentWeb;
 
         [Parameter(Mandatory = false)]
+        [Obsolete("The -Web parameter will be removed in a future release. Use Connect-PnPOnline -Url [subweburl] instead to connect to a subweb.")]
         public WebPipeBind Web = new WebPipeBind();
 
         protected Web CurrentWeb
@@ -31,10 +32,11 @@ namespace PnP.PowerShell.Commands
             }
         }
 
-         private Web GetWeb()
+        private Web GetWeb()
         {
             Web web = ClientContext.Web;
 
+#pragma warning disable CS0618
             if (ParameterSpecified(nameof(Web)))
             {
                 var subWeb = Web.GetWeb(ClientContext);
@@ -42,6 +44,7 @@ namespace PnP.PowerShell.Commands
                 PnPConnection.CurrentConnection.CloneContext(subWeb.Url);
                 web = PnPConnection.CurrentConnection.Context.Web;
             }
+#pragma warning restore CS0618
             else
             {
                 if (PnPConnection.CurrentConnection.Context.Url != PnPConnection.CurrentConnection.Url)
