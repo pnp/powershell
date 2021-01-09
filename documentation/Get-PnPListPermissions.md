@@ -31,7 +31,7 @@ Get-PnPListPermissions -Identity DemoList -PrincipalId 60
 
 Returns the permissions for the SharePoint group with id for the list DemoList.
 
-### EXAMPLE 1
+### EXAMPLE 2
 ```powershell
 Get-PnPListPermissions -Identity DemoList -PrincipalId (Get-PnPGroup -Identity DemoGroup).Id
 ```
