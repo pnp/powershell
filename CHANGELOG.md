@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 - Veronique Lengelle [veronicageek]
+- Leon Armston [leonarmston]
 
 ## [0.3.27-nightly]
 
@@ -31,7 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Documentation fixes
 
 ### Contributors
-- Leon Armstrong [leonarmston]
+- Leon Armston [leonarmston]
 - Bhishma Bhandari [bhishma]
 
 ## [0.3.24-nightly]
