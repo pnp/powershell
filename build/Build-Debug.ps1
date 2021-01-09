@@ -78,11 +78,6 @@ if ($LocalPnPCore) {
 	}
 }
 
-if($LocalPnPCoreProject)
-{
-	$buildCmd += " -p:PnPCoreSdkProject=`"true`""
-}
-
 Write-Host "Executing $buildCmd" -ForegroundColor Yellow
 
 Invoke-Expression $buildCmd

@@ -16,8 +16,6 @@
     <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
     <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
     <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
-    <PnPCoreSdkProject Condition="'$(PnPCoreSdkProject)' == ''">false</PnPCoreSdkProject>
-    <PnPFrameworkProject Condition="'$(PnPFrameworkProject)' == ''">false</PnPFrameworkProject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsWindows)'=='true'">
@@ -47,7 +45,7 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="PnP.Framework" Version="0.1.*-*" Condition="'$(PnPFrameworkPath)' == ''" />
-    <PackageReference Include="PnP.Core" Version="0.4.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(PnPCoreSdkProject)' == 'false'" />
+    <PackageReference Include="PnP.Core" Version="0.4.*-*" Condition="'$(PnPCoreSdkPath)' == ''" />
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
@@ -62,18 +60,13 @@
 
   </ItemGroup>
 
-  <ItemGroup Condition="'$(PnPCoreSdkPath)' != '' and '$(PnPCoreSdkProject)' == 'false'" >
+  <ItemGroup Condition="'$(PnPCoreSdkPath)' != ''" >
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
     <Reference Include="PnP.Core">
       <HintPath>$(PnPCoreSdkPath)</HintPath>
       <Private>true</Private>
       <SpecificVersion>false</SpecificVersion>
     </Reference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(PnPCoreSdkProject)' == 'true'">
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
-    <ProjectReference Include="..\..\..\pnpcore\src\sdk\PnP.Core\PnP.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(PnPFrameworkPath)' != ''">
