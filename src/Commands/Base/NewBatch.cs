@@ -6,9 +6,11 @@ namespace PnP.PowerShell.Commands.Base
     [Cmdlet(VerbsCommon.New, "PnPBatch")]
     public class NewBatch : PnPWebCmdlet
     {
+        [Parameter(Mandatory = false)]
+        public SwitchParameter RetainRequests;
         protected override void ExecuteCmdlet()
         {
-            var batch = new PnPBatch(PnPContext);
+            var batch = new PnPBatch(PnPContext, RetainRequests);
             WriteObject(batch);
         }
     }

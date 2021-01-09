@@ -9,6 +9,7 @@ namespace PnP.PowerShell.Commands.Model
 
     public class PnPBatch
     {
+        internal bool RetainAfterExecute { get; set; }
         internal PnPContext Context { get; set; }
         internal Batch Batch { get; set; }
 
@@ -19,8 +20,9 @@ namespace PnP.PowerShell.Commands.Model
 
         internal SortedList<int, PnP.Core.Services.BatchRequest> Requests => Batch.Requests;
 
-        public PnPBatch(PnPContext context)
+        public PnPBatch(PnPContext context, bool retainRequestsAfterExecute)
         {
+            this.RetainAfterExecute = retainRequestsAfterExecute;
             Batch = context.NewBatch();
             this.Context = context;
         }
@@ -30,7 +32,12 @@ namespace PnP.PowerShell.Commands.Model
             if (Batch != null)
             {
                 Context.Execute(Batch);
+
                 ClearCache();
+                if (!RetainAfterExecute)
+                {
+                    Batch = Context.NewBatch();
+                }
             }
         }
 
@@ -40,12 +47,12 @@ namespace PnP.PowerShell.Commands.Model
             ContentTypes.Clear();
         }
 
-        public IList GetCachedList(Guid id)
+        internal IList GetCachedList(Guid id)
         {
             return Lists.FirstOrDefault(l => l.Id == id);
         }
 
-        public IList GetCachedList(string titleOrUrl)
+        internal IList GetCachedList(string titleOrUrl)
         {
             var list = Lists.FirstOrDefault(l => l.Title == titleOrUrl);
             if (list == null)
@@ -55,7 +62,7 @@ namespace PnP.PowerShell.Commands.Model
             return list;
         }
 
-        public IContentType GetCachedContentType(string idOrName)
+        internal IContentType GetCachedContentType(string idOrName)
         {
             var ct = ContentTypes.FirstOrDefault(c => c.StringId == idOrName);
             if (ct == null)
@@ -65,7 +72,7 @@ namespace PnP.PowerShell.Commands.Model
             return ct;
         }
 
-        public void CacheList(IList list)
+        internal void CacheList(IList list)
         {
             var existingList = Lists.FirstOrDefault(l => l.Id == list.Id);
             if (existingList != null)
@@ -76,7 +83,7 @@ namespace PnP.PowerShell.Commands.Model
             Lists.Add(list);
         }
 
-        public void CacheContentType(IContentType contentType)
+        internal void CacheContentType(IContentType contentType)
         {
             var existingCT = ContentTypes.FirstOrDefault(l => l.StringId == contentType.StringId);
             if (existingCT != null)
