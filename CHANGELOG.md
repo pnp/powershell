@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [0.3.31-nightly]
+
+### Added
+- Added initial batching support. See `New-PnPBatch`, `Invoke-PnPBatch`, `Add-PnPListItem` and `Set-PnPListItem`
+
+### Changed
+- Deprecated the use of the `-Web` cmdlet parameters due to API reasons. Use `Connect-PnPOnline -Url [fullsubweburl]` instead to connect to a subweb. 
+- Updated `Get-PnPLabel` to allow returning available compliance tags for a site
+- Updated several cmdlets to use the Code SDK behind the scenes
+
 ## [0.3.27-nightly]
 
 ### Added
