@@ -38,7 +38,7 @@ This example runs all the site collection health checks on the https://contoso.s
 
 ### EXAMPLE 2
 ```powershell
-Test-PnPSite "https://contoso.sharepoint.com/sites/marketing" -RuleID "ee967197-ccbe-4c00-88e4-e6fab81145e1"
+Test-PnPSite -Identity "https://contoso.sharepoint.com/sites/marketing" -RuleID "ee967197-ccbe-4c00-88e4-e6fab81145e1"
 ```
 
 This example runs the Missing Galleries Check rule in test mode on the https://contoso.sharepoint.com/sites/marketing site collection.
