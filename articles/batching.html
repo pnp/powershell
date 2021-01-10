@@ -85,7 +85,7 @@
 
 <p>Some cmdlets support batching, but there are a few things to point our here. Let me first explain the difference between a normal request and a batched request.</p>
 <h2 id="adding-items-without-batching-csom">Adding items without batching (CSOM)</h2>
-<pre><code class="lang-powershell">1..100 | ForEach-Object{ Add-PnPListItem -List &quot;ItemTest&quot; -Values @{&quot;Title&quot;} }
+<pre><code class="lang-powershell">1..100 | ForEach-Object{ Add-PnPListItem -List &quot;ItemTest&quot; -Values @{&quot;Title&quot; = &quot;Test Item $_&quot;} }
 </code></pre>
 <p>If you add a list item with Add-PnPListItem without batching, the following happens behind the scenes:</p>
 <ol>
@@ -97,8 +97,8 @@
 <p>All in all you see we make around 6 requests, allthough the exact number depends a bit on what type of fields you are setting. So if you loop through 100 items, you get at least 600 requests.</p>
 <h2 id="adding-a-item-with-batching-rest">Adding a item with batching (REST)</h2>
 <pre><code class="lang-powershell">$batch = New-PnPBatch
-1..100 | ForEach-Object{ Add-PnPListItem -List &quot;ItemTest&quot; -Values @{&quot;Title&quot;} -Batch $batch }
-Invoke-PnPBatch
+1..100 | ForEach-Object{ Add-PnPListItem -List &quot;ItemTest&quot; -Values @{&quot;Title&quot;=&quot;Test Item Batched $_&quot;} -Batch $batch }
+Invoke-PnPBatch -Batch $batch
 </code></pre>
 <p>When you use batching, these number of requests are much lower. This is what happens when you use batching</p>
 <ol>
