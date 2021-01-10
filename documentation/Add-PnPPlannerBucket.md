@@ -81,7 +81,7 @@ Accept wildcard characters: False
 ```
 
 ### -Plan
-Specify the name of the plan to add the bucket to.
+Specify the id or name of the plan to add the tasks to.
 
 ```yaml
 Type: PlannerPlanPipeBind
