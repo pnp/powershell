@@ -86,6 +86,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/index.html",
+          "hash": "C4iqj9AgERVmTt0xhRsKRg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/installation.md",
       "output": {
         ".html": {
@@ -6940,7 +6952,7 @@
       "output": {
         ".html": {
           "relative_path": "toc.html",
-          "hash": "lQgRu6kC4JwPY21ZQ5wfzg=="
+          "hash": "Ot2sfimcaktWwILbtOKqGQ=="
         }
       },
       "is_incremental": false,
@@ -6961,7 +6973,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 573,
+          "total_file_count": 574,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
