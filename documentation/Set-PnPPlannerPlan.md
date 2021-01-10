@@ -10,13 +10,14 @@ title: set-pnpplannerplan
 # Set-PnPPlannerPlan
 
 ## SYNOPSIS
-Updates an existing Planner plan
-
-## SYNTAX
 
 **Required Permissions**
 
   * Microsoft Graph API: Group.ReadWrite.All
+
+Updates an existing Planner plan
+
+## SYNTAX
 
 ### By Group
 ```powershell
