@@ -1142,18 +1142,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Clear-PnPRecycleBinItem.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Clear-PnPRecycleBinItem.html",
-          "hash": "jn9UxRqZp284qtb62CJbUA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "cmdlets/Clear-PnPTenantAppCatalogUrl.md",
       "output": {
         ".html": {
@@ -3842,18 +3830,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Move-PnPRecycleBinItem.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Move-PnPRecycleBinItem.html",
-          "hash": "MTJOHSifvRza8psJQ6WwpA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "cmdlets/Move-PnpRecycleBinItem.md",
       "output": {
         ".html": {
@@ -5498,18 +5474,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Restore-PnPRecycleBinItem.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Restore-PnPRecycleBinItem.html",
-          "hash": "R/3CWfoLLm0tzvYlUOO0cg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "cmdlets/Restore-PnPTenantRecycleBinItem.md",
       "output": {
         ".html": {
@@ -6906,7 +6870,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "/gVQYo+cCp+IdeWPZOgkCg=="
+          "hash": "izyhHBx6dK92FnxierSqzg=="
         }
       },
       "is_incremental": false,
@@ -6973,7 +6937,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 574,
+          "total_file_count": 571,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
