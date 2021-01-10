@@ -9,11 +9,12 @@ title: set-pnpplannertask
 
 # Set-PnPPlannerTask
 
+## SYNOPSIS
+
 **Required Permissions**
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-## SYNOPSIS
 Updates an existing task
 
 ## SYNTAX
