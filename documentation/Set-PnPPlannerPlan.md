@@ -14,6 +14,10 @@ Updates an existing Planner plan
 
 ## SYNTAX
 
+**Required Permissions**
+
+  * Microsoft Graph API: Group.ReadWrite.All
+
 ### By Group
 ```powershell
 Set-PnPPlannerPlan -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Title <String>
@@ -40,7 +44,7 @@ This example renames the "Conference" plan to "Conference 2020"
 ## PARAMETERS
 
 ### -Group
-Specify the group id of group owning the plan.
+Specify the group id or name of the group owning the plan.
 
 ```yaml
 Type: PlannerGroupPipeBind
