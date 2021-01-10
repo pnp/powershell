@@ -37,3 +37,4 @@ jobs:
           cwd: ./gh-pages
           branch: gh-pages
           push: true
+          token: ${{ secrets.GITHUB_TOKEN }}
