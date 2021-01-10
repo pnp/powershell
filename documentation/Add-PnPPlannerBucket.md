@@ -10,6 +10,11 @@ title: add-pnpplannerbucket
 # Add-PnPPlannerBucket
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: Group.ReadWrite.All
+  
 Adds a new bucket to a Planner plan
 
 ## SYNTAX
@@ -46,7 +51,7 @@ Adds a new bucket called "Project Todos" to the plan with the specified id.
 ## PARAMETERS
 
 ### -Group
-Specify the group id of group owning the plan.
+Specify the group id or group name of the group owning the plan.
 
 ```yaml
 Type: PlannerGroupPipeBind
@@ -76,7 +81,7 @@ Accept wildcard characters: False
 ```
 
 ### -Plan
-Specify the id or name of the plan to add the bucket to.
+Specify the name of the plan to add the bucket to.
 
 ```yaml
 Type: PlannerPlanPipeBind
