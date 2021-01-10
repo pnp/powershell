@@ -87,12 +87,12 @@
 <p>Adds a user to a SharePoint group</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="internal">Internal</h3>
-<pre><code class="lang-powershell">Add-PnPGroupMember -LoginName &lt;String&gt; -Group &lt;GroupPipeBind&gt; [-Web &lt;WebPipeBind&gt;]
+<pre><code class="lang-powershell">Add-PnPGroupMember -LoginName &lt;String&gt; -Group &lt;GroupPipeBind&gt; 
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="external">External</h3>
 <pre><code class="lang-powershell">Add-PnPGroupMember -Group &lt;GroupPipeBind&gt; -EmailAddress &lt;String&gt; [-SendEmail] [-EmailBody &lt;String&gt;]
- [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -162,17 +162,6 @@ Accept wildcard characters: False
 <h3 id="-sendemail">-SendEmail</h3>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: External
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
 
 Required: False
 Position: Named

@@ -87,12 +87,12 @@
 <p>Adds a text element to a client-side page.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="default">Default</h3>
-<pre><code class="lang-powershell">Add-PnPPageTextPart [-Page] &lt;PagePipeBind&gt; -Text &lt;String&gt; [-Order &lt;Int32&gt;] [-Web &lt;WebPipeBind&gt;]
+<pre><code class="lang-powershell">Add-PnPPageTextPart [-Page] &lt;PagePipeBind&gt; -Text &lt;String&gt; [-Order &lt;Int32&gt;] 
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="positioned">Positioned</h3>
 <pre><code class="lang-powershell">Add-PnPPageTextPart [-Page] &lt;PagePipeBind&gt; -Text &lt;String&gt; [-Order &lt;Int32&gt;] -Section &lt;Int32&gt;
- -Column &lt;Int32&gt; [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ -Column &lt;Int32&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Adds a new text element to a section on a client-side page.</p>
@@ -163,17 +163,6 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

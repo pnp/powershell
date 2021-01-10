@@ -88,23 +88,23 @@
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="default-with-built-in-web-part">Default with built-in web part</h3>
 <pre><code class="lang-powershell">Add-PnPPageWebPart [-Page] &lt;PagePipeBind&gt; -DefaultWebPartType &lt;DefaultClientSideWebParts&gt;
- [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="default-with-3rd-party-web-part">Default with 3rd party web part</h3>
 <pre><code class="lang-powershell">Add-PnPPageWebPart [-Page] &lt;PagePipeBind&gt; -Component &lt;PageComponentPipeBind&gt;
- [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="positioned-with-built-in-web-part">Positioned with built-in web part</h3>
 <pre><code class="lang-powershell">Add-PnPPageWebPart [-Page] &lt;PagePipeBind&gt; -DefaultWebPartType &lt;DefaultClientSideWebParts&gt;
  [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] -Section &lt;Int32&gt; -Column &lt;Int32&gt;
- [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="positioned-with-3rd-party-web-part">Positioned with 3rd party web part</h3>
 <pre><code class="lang-powershell">Add-PnPPageWebPart [-Page] &lt;PagePipeBind&gt; -Component &lt;PageComponentPipeBind&gt;
  [-WebPartProperties &lt;PropertyBagPipeBind&gt;] [-Order &lt;Int32&gt;] -Section &lt;Int32&gt; -Column &lt;Int32&gt;
- [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Adds a client-side web part to an existing client-side page.</p>
@@ -195,17 +195,6 @@ Accept wildcard characters: False
 Parameter Sets: Positioned with built-in web part, Positioned with 3rd party web part
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

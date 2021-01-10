@@ -99,6 +99,11 @@
 </code></pre>
 <p>Read <a href="authentication.html">more information about authentication</a>.</p>
 <h2 id="changes">Changes</h2>
+<p>Check your scripts. As this is a major release, we have deprecated cmdlets, renamed cmdlets, and we marked some parameters as obsolete.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>We marked the <code>-Web</code> parameter as obsolete on many cmdlets. The <code>-Web</code> parameter allows you to execute cmdlets to a subweb underneath the current web. Due to API changes under the hood of PnP Powershell we marked this parameter as obsolete. The parameter will be removed in a future release. Notice though that it is still fully possible to connect to a subweb by using the full url to the subweb with Connect-PnPOnline.</p>
+</div>
 <table>
 <thead>
 <tr>

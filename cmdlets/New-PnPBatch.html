@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Add-PnPDataRowsToSiteTemplate | PnP PowerShell </title>
+    <title>New-PnPBatch | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Add-PnPDataRowsToSiteTemplate | PnP PowerShell ">
+    <meta name="title" content="New-PnPBatch | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -81,109 +81,36 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="add-pnpdatarowstositetemplate">Add-PnPDataRowsToSiteTemplate</h1>
+                    <h1 id="new-pnpbatch">New-PnPBatch</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Adds datarows to a list inside a PnP Provisioning Template</p>
+<p>Creates a new batch</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPDataRowsToSiteTemplate [-Path] &lt;String&gt; -List &lt;ListPipeBind&gt; [-Query &lt;String&gt;]
- [-Fields &lt;String[]&gt;] [-IncludeSecurity] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;]
- [-TokenizeUrls] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">New-PnPBatch [-RetainRequests]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Creates a new batch to be used by cmdlets that support batching. The requests in the batch are clear after execute Invoke-PnPBatch, unless you specify -RetainRequests. That allows you to execute batch multiple times.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPDataRowsToSiteTemplate -Path template.pnp -List 'PnPTestList' -Query '&lt;View&gt;&lt;/View&gt;' -Fields 'Title','Choice'
+<pre><code class="lang-powershell">$batch = New-PnPBatch
+Add-PnPListItem -List &quot;DemoList&quot; -Values @{&quot;Title&quot;=&quot;Demo Item 1&quot;} -Batch $batch
+Add-PnPListItem -List &quot;DemoList&quot; -Values @{&quot;Title&quot;=&quot;Demo Item 2&quot;} -Batch $batch
+Add-PnPListItem -List &quot;DemoList&quot; -Values @{&quot;Title&quot;=&quot;Demo Item 3&quot;} -Batch $batch
+Invoke-PnPBatch -Batch $batch
 </code></pre>
-<p>Adds datarows from the provided list to the PnP Provisioning Template at the provided location</p>
+<p>This will add the 3 defined list items in the batch.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPDataRowsToSiteTemplate -Path template.pnp -List 'PnPTestList' -Query '&lt;View&gt;&lt;/View&gt;' -Fields 'Title','Choice' -IncludeSecurity
+<pre><code class="lang-powershell">$batch = New-PnPBatch
+1..50 | Foreach-Object{Remove-PnPListItem -List &quot;DemoList&quot; -Identity $_ -Batch $batch}
+Invoke-PnPBatch -Batch $batch
 </code></pre>
-<p>Adds datarows from the provided list to the PnP Provisioning Template at the provided location</p>
+<p>This will delete all the items with Id 1 to Id 50 in the specified list.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-fields">-Fields</h3>
-<p>The fields to retrieve. If not specified all fields will be loaded in the returned list object.</p>
-<pre><code class="lang-yaml">Type: String[]
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-includesecurity">-IncludeSecurity</h3>
-<p>A switch to include ObjectSecurity information.</p>
+<h3 id="-retainrequests">-RetainRequests</h3>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
-Required: False
-Position: 5
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-list">-List</h3>
-<p>The list to query</p>
-<pre><code class="lang-yaml">Type: ListPipeBind
-Parameter Sets: (All)
-
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-path">-Path</h3>
-<p>Filename of the .PNP Open XML site template to read from, optionally including full path.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-query">-Query</h3>
-<p>The CAML query to execute against the list. Defaults to all items.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-templateproviderextensions">-TemplateProviderExtensions</h3>
-<p>Allows you to specify ITemplateProviderExtension to execute while loading the template.</p>
-<pre><code class="lang-yaml">Type: ITemplateProviderExtension[]
-Parameter Sets: (All)
-
-Required: False
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-tokenizeurls">-TokenizeUrls</h3>
-<p>If set, this switch will try to tokenize the values with web and site related tokens</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

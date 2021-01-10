@@ -96,7 +96,7 @@
  [-NoBaseTemplate] [-Encoding &lt;Encoding&gt;] [-TemplateDisplayName &lt;String&gt;] [-TemplateImagePreviewUrl &lt;String&gt;]
  [-TemplateProperties &lt;Hashtable&gt;] [-OutputInstance] [-ExcludeContentTypesFromSyndication]
  [-ListsToExtract &lt;System.Collections.Generic.List`1[System.String]&gt;]
- [-Configuration &lt;ExtractConfigurationPipeBind&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] 
+ [-Configuration &lt;ExtractConfigurationPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] 
   [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -519,17 +519,6 @@ Accept wildcard characters: False
 <h3 id="-templateproviderextensions">-TemplateProviderExtensions</h3>
 <p>Allows you to specify ITemplateProviderExtension to execute while extracting a template.</p>
 <pre><code class="lang-yaml">Type: ITemplateProviderExtension[]
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
 Parameter Sets: (All)
 
 Required: False
