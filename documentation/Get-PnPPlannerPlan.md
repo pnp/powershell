@@ -10,6 +10,12 @@ title: get-pnpplannerplan
 # Get-PnPPlannerPlan
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: Group.ReadWrite.All
+  * Microsoft Graph API: Group.Read.All
+  
 Returns all or a specific Planner plan for a Microsoft 365 Group.
 
 ## SYNTAX
