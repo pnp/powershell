@@ -14,6 +14,7 @@ title: get-pnpplannerbucket
 **Required Permissions**
 
   * Microsoft Graph API: Group.ReadWrite.All
+  * Microsoft Graph API: Group.Read.All
 
 Returns all or a specific Planner bucket
 
