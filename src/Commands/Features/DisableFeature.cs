@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Features
 {
-    [Cmdlet(VerbsLifecycle.Disable, "Feature")]
+    [Cmdlet(VerbsLifecycle.Disable, "PnPFeature")]
     public class DisableFeature : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Features
         {
             if (Scope == FeatureScope.Web)
             {
-                SelectedWeb.DeactivateFeature(Identity);
+                CurrentWeb.DeactivateFeature(Identity);
             }
             else
             {

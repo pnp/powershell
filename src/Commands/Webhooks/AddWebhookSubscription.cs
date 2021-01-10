@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Webhooks
 {
-    [Cmdlet(VerbsCommon.Add, "WebhookSubscription")]
+    [Cmdlet(VerbsCommon.Add, "PnPWebhookSubscription")]
     public class AddWebhookSubscription : PnPWebCmdlet
     {
         public const int DefaultValidityInMonths = 6;
@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Webhooks
             if (ParameterSpecified(nameof(List)))
             {
                 // Get the list from the currently selected web
-                List list = List.GetList(SelectedWeb);
+                List list = List.GetList(CurrentWeb);
                 if (list != null)
                 {
                     // Ensure we have list Id (TODO Should be changed in the Core extension method)

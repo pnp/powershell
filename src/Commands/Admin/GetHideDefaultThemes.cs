@@ -12,7 +12,7 @@ using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "HideDefaultThemes")]
+    [Cmdlet(VerbsCommon.Get, "PnPHideDefaultThemes")]
     public class GetHideDefaultThemes : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()

@@ -7,11 +7,15 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.New, "TermLabel")]
+    [Cmdlet(VerbsCommon.New, "PnPTermLabel")]
     public class NewTermLabel : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public TaxonomyItemPipeBind<Term> Term;
+        private const string ParameterSet_BYID = "By Term Id";
+        private const string ParameterSet_BYNAME = "By Termset";
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYID)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYNAME)]
+        public TaxonomyTermPipeBind Term;
 
         [Parameter(Mandatory = true)]
         public string Name;
@@ -19,17 +23,48 @@ namespace PnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = true)]
         public int Lcid;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IsDefault = true;
+
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYNAME)]
+        public TaxonomyTermSetPipeBind TermSet;
+
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYNAME)]
+        public TaxonomyTermGroupPipeBind TermGroup;
+
+        [Parameter(Mandatory = false)]
+        public TaxonomyTermStorePipeBind TermStore;
 
         protected override void ExecuteCmdlet()
         {
-            if (Term.Item == null)
+            var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
+
+            TermStore termStore = null;
+            if (TermStore == null)
             {
-                throw new ArgumentException("You must pass in a Term instance to this command", nameof(Term));
+                termStore = taxonomySession.GetDefaultSiteCollectionTermStore();
+            }
+            else
+            {
+                termStore = TermStore.GetTermStore(taxonomySession);
             }
 
-            var label = Term.Item.CreateLabel(Name, Lcid, IsDefault.IsPresent ? IsDefault.ToBool() : true);
+            termStore.EnsureProperty(ts => ts.DefaultLanguage);
+
+            Term term = null;
+            if (ParameterSetName == ParameterSet_BYID)
+            {
+                term = Term.GetTerm(ClientContext, termStore, null, false, null);
+            }
+            else
+            {
+                var termGroup = TermGroup.GetGroup(termStore);
+                var termSet = TermSet.GetTermSet(termGroup);
+                term = Term.GetTerm(ClientContext, termStore, termSet, false, null);
+            }
+
+            var label = term.CreateLabel(Name, Lcid, IsDefault.IsPresent ? IsDefault.ToBool() : true);
+            ClientContext.Load(label);
             ClientContext.ExecuteQueryRetry();
             WriteObject(label);
         }

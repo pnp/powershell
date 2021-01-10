@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/invoke-pnpwebaction
+online version: https://pnp.github.io/powershell/cmdlets/invoke-pnpwebaction
 schema: 2.0.0
 title: Invoke-PnPWebAction
 ---
@@ -14,7 +14,7 @@ Executes operations on web, lists and list items.
 
 ## SYNTAX
 
-```
+```powershell
 Invoke-PnPWebAction [-ListName <String>] [-Webs <Web[]>]
  [-WebAction <System.Action`1[Microsoft.SharePoint.Client.Web]>]
  [-ShouldProcessWebAction <System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]>]
@@ -26,8 +26,8 @@ Invoke-PnPWebAction [-ListName <String>] [-Webs <Web[]>]
  [-ShouldProcessPostListAction <System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]>]
  [-ListProperties <String[]>] [-ListItemAction <System.Action`1[Microsoft.SharePoint.Client.ListItem]>]
  [-ShouldProcessListItemAction <System.Func`2[Microsoft.SharePoint.Client.ListItem,System.Boolean]>]
- [-ListItemProperties <String[]>] [-SubWebs] [-DisableStatisticsOutput] [-SkipCounting] [-Web <WebPipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-ListItemProperties <String[]>] [-SubWebs] [-DisableStatisticsOutput] [-SkipCounting] 
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -71,7 +71,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -86,7 +85,6 @@ Will not output statistics after the operation
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -101,7 +99,6 @@ Function to be executed on the list. There is one input parameter of type List
 ```yaml
 Type: System.Action`1[Microsoft.SharePoint.Client.List]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -116,7 +113,6 @@ Function to be executed on the list item. There is one input parameter of type L
 ```yaml
 Type: System.Action`1[Microsoft.SharePoint.Client.ListItem]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -131,7 +127,6 @@ The properties to load for list items.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -146,7 +141,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -161,7 +155,6 @@ The properties to load for list.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -176,7 +169,6 @@ Function to be executed on the list, this will trigger after list items have bee
 ```yaml
 Type: System.Action`1[Microsoft.SharePoint.Client.List]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -191,7 +183,6 @@ Function to be executed on the web, this will trigger after lists and list items
 ```yaml
 Type: System.Action`1[Microsoft.SharePoint.Client.Web]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -206,7 +197,6 @@ Function to be executed on the web that would determine if ListAction should be 
 ```yaml
 Type: System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -221,7 +211,6 @@ Function to be executed on the web that would determine if ListItemAction should
 ```yaml
 Type: System.Func`2[Microsoft.SharePoint.Client.ListItem,System.Boolean]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -236,7 +225,6 @@ Function to be executed on the web that would determine if PostListAction should
 ```yaml
 Type: System.Func`2[Microsoft.SharePoint.Client.List,System.Boolean]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -251,7 +239,6 @@ Function to be executed on the web that would determine if PostWebAction should 
 ```yaml
 Type: System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -266,7 +253,6 @@ Function to be executed on the web that would determine if WebAction should be i
 ```yaml
 Type: System.Func`2[Microsoft.SharePoint.Client.Web,System.Boolean]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -281,7 +267,6 @@ Will skip the counting process; by doing this you will not get an estimated time
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -296,7 +281,6 @@ Specify if sub webs will be processed
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -305,20 +289,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -WebAction
 Function to be executed on the web. There is one input parameter of type Web
@@ -326,7 +297,6 @@ Function to be executed on the web. There is one input parameter of type Web
 ```yaml
 Type: System.Action`1[Microsoft.SharePoint.Client.Web]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -341,7 +311,6 @@ The properties to load for web.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -356,7 +325,6 @@ Webs you want to process (for example different site collections), will use Web 
 ```yaml
 Type: Web[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -382,4 +350,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

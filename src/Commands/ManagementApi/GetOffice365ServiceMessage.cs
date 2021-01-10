@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.ManagementApi
 {
-    [Cmdlet(VerbsCommon.Get, "Office365ServiceMessage")]
+    [Cmdlet(VerbsCommon.Get, "PnPOffice365ServiceMessage")]
     [OfficeManagementApiPermissionCheck(OfficeManagementApiPermission.ServiceHealth_Read)]
     [PnPManagementShellScopes("ServiceHealth.Read")]
     public class GetOffice365ServiceMessage : PnPOfficeManagementApiCmdlet
@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
 
         protected override void ExecuteCmdlet()
         {
-            var collection = GraphHelper.GetAsync<GraphCollection<ManagementApiServiceMessage>>(HttpClient, $"{ApiRootUrl}ServiceComms/Messages{(ParameterSpecified(nameof(Workload)) ? $"?$filter=Workload eq '{Workload.Value}'" : "")}", AccessToken, false).GetAwaiter().GetResult();
+            var collection = GraphHelper.GetAsync<RestResultCollection<ManagementApiServiceMessage>>(HttpClient, $"{ApiRootUrl}ServiceComms/Messages{(ParameterSpecified(nameof(Workload)) ? $"?$filter=Workload eq '{Workload.Value}'" : "")}", AccessToken, false).GetAwaiter().GetResult();
 
             if (collection != null)
             {

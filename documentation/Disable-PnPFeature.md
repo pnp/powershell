@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/disable-pnpfeature
+online version: https://pnp.github.io/powershell/cmdlets/disable-pnpfeature
 schema: 2.0.0
 title: Disable-PnPFeature
 ---
@@ -14,8 +14,8 @@ Disables a feature
 
 ## SYNTAX
 
-```
-Disable-PnPFeature [-Identity] <Guid> [-Force] [-Scope <FeatureScope>] [-Web <WebPipeBind>]
+```powershell
+Disable-PnPFeature [-Identity] <Guid> [-Force] [-Scope <FeatureScope>] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -53,7 +53,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -68,7 +67,6 @@ Specifies whether to continue if an error occurs when deactivating the feature.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -83,7 +81,6 @@ The id of the feature to disable.
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -98,7 +95,6 @@ Specify the scope of the feature to deactivate, either Web or Site. Defaults to 
 ```yaml
 Type: FeatureScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site
 
 Required: False
@@ -108,21 +104,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

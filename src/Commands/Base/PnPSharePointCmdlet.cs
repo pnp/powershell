@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Management.Automation;
+using System.Reflection;
 using System.Threading;
+using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
+using PnP.Core.Services;
+using PnP.Framework;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
@@ -19,8 +23,12 @@ namespace PnP.PowerShell.Commands
         /// </summary>
         public ClientContext ClientContext => Connection?.Context ?? PnPConnection.CurrentConnection.Context;
 
-        [Parameter(Mandatory = false)] // do not remove '#!#99'
+        public PnPContext PnPContext => Connection?.PnPContext ?? PnPConnection.CurrentConnection.PnPContext;
+
+        // do not remove '#!#99'
+        [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")]
         public PnPConnection Connection = null;
+        // do not remove '#!#99'
 
         protected override void BeginProcessing()
         {
@@ -41,7 +49,7 @@ namespace PnP.PowerShell.Commands
         {
             try
             {
-                var tag = PnPConnection.CurrentConnection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name.Replace("SPO", "");
+                var tag = PnPConnection.CurrentConnection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name;
                 if (tag.Length > 32)
                 {
                     tag = tag.Substring(0, 32);
@@ -56,6 +64,10 @@ namespace PnP.PowerShell.Commands
                 //it makes select-object work weird
                 throw;
             }
+            catch (PnP.Core.SharePointRestServiceException ex)
+            {
+                throw new PSInvalidOperationException((ex.Error as PnP.Core.SharePointRestError).Message);
+            }
             catch (Exception ex)
             {
                 PnPConnection.CurrentConnection.RestoreCachedContext(PnPConnection.CurrentConnection.Url);
@@ -69,11 +81,60 @@ namespace PnP.PowerShell.Commands
 
                 WriteError(errorRecord);
             }
+
         }
 
         protected override void EndProcessing()
         {
             base.EndProcessing();
         }
+
+        protected string AccessToken
+        {
+            get
+            {
+                if (PnPConnection.CurrentConnection != null)
+                {
+                    if (PnPConnection.CurrentConnection.Context != null)
+                    {
+                        var settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(PnPConnection.CurrentConnection.Context);
+                        if (settings != null)
+                        {
+                            var authManager = settings.AuthenticationManager;
+                            if (authManager != null)
+                            {
+                                return authManager.GetAccessTokenAsync(PnPConnection.CurrentConnection.Context.Url).GetAwaiter().GetResult();
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+        }
+
+        protected void PollOperation(SpoOperation spoOperation)
+        {
+            while (true)
+            {
+                if (!spoOperation.IsComplete)
+                {
+                    if (spoOperation.HasTimedout)
+                    {
+                        throw new TimeoutException("SharePoint Operation Timeout");
+                    }
+                    Thread.Sleep(spoOperation.PollingInterval);
+                    if (Stopping)
+                    {
+                        break;
+                    }
+                    ClientContext.Load(spoOperation);
+                    ClientContext.ExecuteQueryRetry();
+                    continue;
+                }
+                return;
+            }
+            WriteWarning("SharePoint Operation Wait Interrupted");
+        }
+
     }
 }

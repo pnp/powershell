@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Remove, "Alert")]
+    [Cmdlet(VerbsCommon.Remove, "PnPAlert")]
     public class RemoveAlert : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Principals
             }
             else
             {
-                user = SelectedWeb.CurrentUser;
+                user = CurrentWeb.CurrentUser;
             }
             if (!Force)
             {

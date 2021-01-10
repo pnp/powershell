@@ -4,16 +4,16 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "MasterPage")]
+    [Cmdlet(VerbsCommon.Get, "PnPMasterPage")]
     public class GetMasterPage : PnPWebCmdlet
     {
 
         protected override void ExecuteCmdlet()
         {
-            ClientContext.Load(SelectedWeb, w => w.MasterUrl, w => w.CustomMasterUrl);
+            ClientContext.Load(CurrentWeb, w => w.MasterUrl, w => w.CustomMasterUrl);
             ClientContext.ExecuteQueryRetry();
 
-            WriteObject(new {SelectedWeb.MasterUrl, SelectedWeb.CustomMasterUrl });
+            WriteObject(new {CurrentWeb.MasterUrl, CurrentWeb.CustomMasterUrl });
         }
     }
 }

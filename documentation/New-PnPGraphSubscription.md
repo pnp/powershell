@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/new-pnpgraphsubscription
+online version: https://pnp.github.io/powershell/cmdlets/new-pnpgraphsubscription
 schema: 2.0.0
 title: New-PnPGraphSubscription
 ---
@@ -14,10 +14,10 @@ Creates a new Microsof Graph Subscription which allows your webhook API to be ca
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPGraphSubscription -ChangeType <GraphSubscriptionChangeType> -NotificationUrl <String> -Resource <String>
  [-ExpirationDateTime <DateTime>] [-ClientState <String>]
- [-LatestSupportedTlsVersion <GraphSubscriptionTlsVersion>] [-ByPassPermissionCheck] [<CommonParameters>]
+ [-LatestSupportedTlsVersion <GraphSubscriptionTlsVersion>]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,28 +41,12 @@ Creates a new Microsoft Graph subscription listening for changes to user objects
 
 ## PARAMETERS
 
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -ChangeType
 The event(s) the subscription should trigger on
 
 ```yaml
 Type: GraphSubscriptionChangeType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Created, Updated, Deleted
 
 Required: True
@@ -78,7 +62,6 @@ Specifies the value of the clientState property sent by the service in each noti
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -93,7 +76,6 @@ The datetime defining how long this subscription should stay alive before which 
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -108,7 +90,6 @@ Specifies the latest version of Transport Layer Security (TLS) that the notifica
 ```yaml
 Type: GraphSubscriptionTlsVersion
 Parameter Sets: (All)
-Aliases:
 Accepted values: v1_0, v1_1, v1_2, v1_3
 
 Required: False
@@ -124,7 +105,6 @@ The URL that should be called when an event matching this subscription occurs
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -139,7 +119,6 @@ The resource to monitor for changes. See https://docs.microsoft.com/graph/api/su
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -150,4 +129,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

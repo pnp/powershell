@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpfile
+online version: https://pnp.github.io/powershell/cmdlets/add-pnpfile
 schema: 2.0.0
 title: Add-PnPFile
 ---
@@ -15,17 +15,17 @@ Uploads a file to Web
 ## SYNTAX
 
 ### Upload file
-```
-Add-PnPFile -Path <String> -Folder <String> [-NewFileName <String>] [-Checkout] [-CheckInComment <String>]
+```powershell
+Add-PnPFile -Path <String> -Folder <FolderPipeBind> [-NewFileName <String>] [-Checkout] [-CheckInComment <String>]
  [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
- [-ContentType <ContentTypePipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Upload file from stream
-```
-Add-PnPFile -Folder <String> -FileName <String> -Stream <Stream> [-Checkout] [-CheckInComment <String>]
+```powershell
+Add-PnPFile -Folder <FolderPipeBind> -FileName <String> -Stream <Stream> [-Checkout] [-CheckInComment <String>]
  [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
- [-ContentType <ContentTypePipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -89,7 +89,6 @@ Will auto approve the uploaded file
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -104,7 +103,6 @@ The comment added to the approval
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -119,7 +117,6 @@ The comment added to the checkin
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -134,7 +131,6 @@ If versioning is enabled, this will check out the file first if it exists, uploa
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -149,7 +145,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -164,7 +159,6 @@ Use to assign a ContentType to the file
 ```yaml
 Type: ContentTypePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -179,7 +173,6 @@ Name for file
 ```yaml
 Type: String
 Parameter Sets: Upload file from stream
-Aliases:
 
 Required: True
 Position: Named
@@ -192,9 +185,8 @@ Accept wildcard characters: False
 The destination folder in the site
 
 ```yaml
-Type: String
+Type: FolderPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -209,7 +201,6 @@ Filename to give the file on SharePoint
 ```yaml
 Type: String
 Parameter Sets: Upload file
-Aliases:
 
 Required: False
 Position: Named
@@ -224,7 +215,6 @@ The local file path
 ```yaml
 Type: String
 Parameter Sets: Upload file
-Aliases:
 
 Required: True
 Position: Named
@@ -239,7 +229,6 @@ Will auto publish the file
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -254,7 +243,6 @@ The comment added to the publish action
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -269,7 +257,6 @@ Stream with the file contents
 ```yaml
 Type: Stream
 Parameter Sets: Upload file from stream
-Aliases:
 
 Required: True
 Position: Named
@@ -283,7 +270,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -336,7 +322,6 @@ Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, Of
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -345,21 +330,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

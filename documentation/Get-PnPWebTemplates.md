@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpwebtemplates
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpwebtemplates
 schema: 2.0.0
 title: Get-PnPWebTemplates
 ---
@@ -19,7 +19,7 @@ Returns the available classic web templates
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPWebTemplates [-Lcid <UInt32>] [-CompatibilityLevel <Int32>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -56,7 +56,6 @@ The compatibily level of SharePoint where 14 is SharePoint 2010, 15 is SharePoin
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -71,7 +70,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -86,7 +84,6 @@ The language ID. For instance: 1033 for English. For more information, see Local
 ```yaml
 Type: UInt32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -97,4 +94,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)[Locale IDs](https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[Locale IDs](https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint)

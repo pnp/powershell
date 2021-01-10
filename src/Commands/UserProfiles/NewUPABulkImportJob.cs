@@ -11,7 +11,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
-    [Cmdlet(VerbsCommon.New, "UPABulkImportJob")]
+    [Cmdlet(VerbsCommon.New, "PnPUPABulkImportJob")]
     public class NewUPABulkImportJob : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

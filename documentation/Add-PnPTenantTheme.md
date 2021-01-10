@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnptenanttheme
+online version: https://pnp.github.io/powershell/cmdlets/add-pnptenanttheme
 schema: 2.0.0
 title: Add-PnPTenantTheme
 ---
@@ -19,7 +19,7 @@ Adds or updates a theme to the tenant.
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPTenantTheme [-Overwrite] -Identity <ThemePipeBind> -Palette <ThemePalettePipeBind> -IsInverted <Boolean>
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
@@ -71,7 +71,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -86,7 +85,6 @@ The name of the theme to add or update
 ```yaml
 Type: ThemePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -101,7 +99,6 @@ If the theme is inverted or not
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -116,7 +113,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -131,7 +127,6 @@ The palette to add. See examples for more information.
 ```yaml
 Type: ThemePalettePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -142,4 +137,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

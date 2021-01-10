@@ -7,7 +7,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Set, "PropertyBagValue")]
+    [Cmdlet(VerbsCommon.Set, "PnPPropertyBagValue")]
     public class SetPropertyBagValue : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "Web")]
@@ -34,25 +34,25 @@ namespace PnP.PowerShell.Commands
                     if (!Indexed)
                     {
                         // If it is already an indexed property we still have to add it back to the indexed properties
-                        Indexed = !string.IsNullOrEmpty(SelectedWeb.GetIndexedPropertyBagKeys().FirstOrDefault(k => k == Key));
+                        Indexed = !string.IsNullOrEmpty(CurrentWeb.GetIndexedPropertyBagKeys().FirstOrDefault(k => k == Key));
                     }
 
-                    SelectedWeb.SetPropertyBagValue(Key, Value);
+                    CurrentWeb.SetPropertyBagValue(Key, Value);
                     if (Indexed)
                     {
-                        SelectedWeb.AddIndexedPropertyBagKey(Key);
+                        CurrentWeb.AddIndexedPropertyBagKey(Key);
                     }
                     else
                     {
-                        SelectedWeb.RemoveIndexedPropertyBagKey(Key);
+                        CurrentWeb.RemoveIndexedPropertyBagKey(Key);
                     }
                 }
                 else
                 {
-                    SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                    CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
-                    var folderUrl = UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder);
-                    var folder = SelectedWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
+                    var folderUrl = UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, Folder);
+                    var folder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
 
                     folder.EnsureProperty(f => f.Properties);
 
@@ -65,7 +65,7 @@ namespace PnP.PowerShell.Commands
             {
                 if (ex is ServerUnauthorizedAccessException)
                 {
-                    if (SelectedWeb.IsNoScriptSite())
+                    if (CurrentWeb.IsNoScriptSite())
                     {
                         ThrowTerminatingError(new ErrorRecord(new Exception($"{ex.Message} Site might have NoScript enabled, this prevents setting some property bag values.", ex), "NoScriptEnabled", ErrorCategory.InvalidOperation, this));
                         return;

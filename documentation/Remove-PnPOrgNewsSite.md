@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnporgnewssite
+online version: https://pnp.github.io/powershell/cmdlets/remove-pnporgnewssite
 schema: 2.0.0
 title: Remove-PnPOrgNewsSite
 ---
@@ -19,7 +19,7 @@ Removes a given site from the list of organizational news sites.
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPOrgNewsSite -OrgNewsSiteUrl <SitePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -30,7 +30,7 @@ Removes a given site from the list of organizational news sites based on its URL
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPOrgNewsSite -OrgNewsSiteUrl https://tenant.sharepoint.com/sites/mysite
+Remove-PnPOrgNewsSite -OrgNewsSiteUrl "https://tenant.sharepoint.com/sites/mysite"
 ```
 
 This example removes the specified site from list of organization's news sites.
@@ -43,7 +43,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -58,7 +57,6 @@ The site to be removed from list of organization's news sites
 ```yaml
 Type: SitePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -69,4 +67,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

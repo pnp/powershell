@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/restore-pnprecyclebinitem
+online version: https://pnp.github.io/powershell/cmdlets/restore-pnprecyclebinitem
 schema: 2.0.0
 title: Restore-PnPRecycleBinItem
 ---
@@ -14,7 +14,7 @@ Restores the provided recycle bin item to its original location
 
 ## SYNTAX
 
-```
+```powershell
 Restore-PnPRecycleBinItem -Identity <RecycleBinItemPipeBind> [-Force] [-RowLimit <Int32>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
@@ -52,7 +52,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -67,7 +66,6 @@ If provided, no confirmation will be asked to restore the recycle bin item
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -82,7 +80,6 @@ Id of the recycle bin item or the recycle bin item object itself to restore
 ```yaml
 Type: RecycleBinItemPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -94,12 +91,9 @@ Accept wildcard characters: False
 ### -RowLimit
 Limits restoration to specified number of items
 
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
-
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -110,4 +104,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

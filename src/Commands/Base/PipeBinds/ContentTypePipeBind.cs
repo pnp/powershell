@@ -1,75 +1,340 @@
-﻿using Microsoft.SharePoint.Client;
+﻿using System;
+using System.Linq;
+using System.Management.Automation;
+using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Model;
+using PnPCore = PnP.Core.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public sealed class ContentTypePipeBind
     {
-        private readonly string _id;
-        private readonly string _name;
+        private readonly string _idOrName;
         private readonly ContentType _contentType;
 
-        public ContentTypePipeBind()
+        private readonly PnPCore.IContentType _coreContentType;
+
+        public ContentTypePipeBind(string idOrName)
         {
-            _id = string.Empty;
-            _name = string.Empty;
-            _contentType = null;
+            if (string.IsNullOrEmpty(idOrName))
+                throw new ArgumentException("Content type name or ID null or empty.", nameof(idOrName));
+
+            _idOrName = idOrName;
         }
 
-        public ContentTypePipeBind(string id)
+        public ContentTypePipeBind(ContentTypeId contentTypeId)
         {
-            if (id.ToLower().StartsWith("0x0"))
-            {
-                _id = id;
-            }
-            else
-            {
-                _name = id;
-            }
-
+            _idOrName = contentTypeId?.StringValue
+                ?? throw new ArgumentNullException(nameof(contentTypeId));
         }
 
         public ContentTypePipeBind(ContentType contentType)
         {
-            _contentType = contentType;
+            _contentType = contentType
+                ?? throw new ArgumentNullException(nameof(contentType));
         }
 
-        public string Id
+        public ContentTypePipeBind(PnPCore.IContentType contentType)
         {
-            get
+            _coreContentType = contentType ?? throw new ArgumentNullException(nameof(contentType));
+        }
+
+        private string GetId()
+        {
+            if (_coreContentType != null)
             {
-                if (_contentType != null)
+                _coreContentType.EnsurePropertiesAsync(ct => ct.StringId);
+                return _coreContentType.StringId;
+            }
+            if (_contentType != null)
+            {
+                return _contentType.EnsureProperty(ct => ct.StringId);
+            }
+            if (_idOrName.ToLower().StartsWith("0x0"))
+            {
+                return _idOrName;
+            }
+            return null;
+        }
+
+        public string GetId(Web web, bool searchInSiteHierarchy = true)
+            => GetId()
+            ?? web.GetContentTypeByName(_idOrName, searchInSiteHierarchy)?.StringId;
+
+        public string GetId(PnP.Core.Services.PnPContext context, bool searchInSiteHierarchy = true)
+            => GetId()
+            ?? (searchInSiteHierarchy ? context.Web.AvailableContentTypes : context.Web.ContentTypes).GetFirstOrDefault(ct => ct.Name == _idOrName)?.StringId;
+        public string GetId(List list)
+            => GetId()
+            ?? list.GetContentTypeByName(_idOrName)?.StringId;
+
+        public string GetId(PnPCore.IList list)
+            => GetId()
+            ?? list.ContentTypes.GetFirstOrDefault(ct => ct.Name == _idOrName)?.StringId;
+
+        internal string GetIdOrThrow(string paramName, Web web, bool searchInSiteHierarchy = true)
+            => GetId(web, searchInSiteHierarchy)
+            ?? throw new PSArgumentException(NotFoundMessage(web, searchInSiteHierarchy), paramName);
+
+        internal string GetIdOrThrow(string paramName, List list)
+            => GetId(list)
+            ?? throw new PSArgumentException(NotFoundMessage(list), paramName);
+
+        internal string GetIdOrThrow(string paramName, PnPCore.IList list)
+            => GetId(list)
+            ?? throw new PSArgumentException(NotFoundMessage(list), paramName);
+
+        public string GetIdOrWarn(Cmdlet cmdlet, Web web, bool searchInSiteHierarchy = true)
+        {
+            var id = GetId(web, searchInSiteHierarchy);
+            if (id is null)
+                cmdlet.WriteWarning(NotFoundMessage(web, searchInSiteHierarchy));
+
+            return id;
+        }
+
+        public string GetIdOrWarn(Cmdlet cmdlet, PnP.Core.Services.PnPContext context, bool searchInSiteHierarchy = true)
+        {
+            var id = GetId(context, searchInSiteHierarchy);
+            if (id is null)
+                cmdlet.WriteWarning(NotFoundMessage(context.Web, searchInSiteHierarchy));
+
+            return id;
+        }
+
+        public string GetIdOrWarn(Cmdlet cmdlet, List list)
+        {
+            var id = GetId(list);
+            if (id is null)
+            {
+                cmdlet.WriteWarning(NotFoundMessage(list));
+            }
+
+            return id;
+        }
+
+        internal ContentType GetContentType(Web web, bool searchInSiteHierarchy = true)
+        {
+            if (_contentType is object)
+            {
+                return _contentType;
+            }
+
+            var id = GetId();
+            if (!string.IsNullOrEmpty(id))
+            {
+                return web.GetContentTypeById(id, searchInSiteHierarchy);
+            }
+
+            return web.GetContentTypeByName(_idOrName, searchInSiteHierarchy);
+        }
+
+        internal PnPCore.IContentType GetContentType(PnP.Core.Services.PnPContext context, bool searchInSiteHierarchy = true)
+        {
+            if (_coreContentType is object)
+            {
+                return _coreContentType;
+            }
+            if (!string.IsNullOrEmpty(_idOrName))
+            {
+                var collection = searchInSiteHierarchy ? context.Web.AvailableContentTypes : context.Web.ContentTypes;
+
+                if (_idOrName.ToLower().StartsWith("0x0"))
                 {
-                    return _contentType.StringId;
+                    return collection.GetFirstOrDefault(ct => ct.StringId == _idOrName);
                 }
                 else
                 {
-                    return _id;
+                    return collection.GetFirstOrDefault(ct => ct.Name == _idOrName);
                 }
             }
+            return null;
+        }
+        internal ContentType GetContentType(List list)
+        {
+            if (_contentType is object)
+            {
+                return _contentType;
+            }
+
+            var id = GetId();
+            if (!string.IsNullOrEmpty(id))
+            {
+                return list.ContentTypes.GetById(id);
+            }
+
+            return list.GetContentTypeByName(_idOrName);
         }
 
-        public string Name => _name;
-
-        public ContentType ContentType => _contentType;
-
-        public ContentType GetContentType(Web web)
+        internal PnP.Core.Model.SharePoint.IContentType GetContentType(PnP.Core.Model.SharePoint.IList list)
         {
-            if (ContentType != null)
+            if (_contentType is object)
             {
-                return ContentType;
+                var stringId = _contentType.EnsureProperty(c => c.StringId);
+                return list.ContentTypes.FirstOrDefault(c => c.StringId == stringId);
             }
-            ContentType ct;
-            if (!string.IsNullOrEmpty(Id))
+            var id = _idOrName.ToLower().StartsWith("0x0") ? _idOrName : null;
+            if (!string.IsNullOrEmpty(id))
             {
-                ct = web.GetContentTypeById(Id,true);
+                return list.ContentTypes.FirstOrDefault(c => c.Id == id);
+            }
 
+            return list.ContentTypes.FirstOrDefault(c => c.Name == _idOrName);
+        }
+
+        internal PnP.Core.Model.SharePoint.IContentType GetContentType(PnPBatch batch, PnP.Core.Model.SharePoint.IList list, params System.Linq.Expressions.Expression<Func<PnPCore.IContentType, object>>[] selectors)
+        {
+            PnPCore.IContentType returnCt = null;
+            if (_contentType is object)
+            {
+                var stringId = _contentType.EnsureProperty(c => c.StringId);
+                var batchedCt = batch.GetCachedContentType(stringId);
+                if (batchedCt != null)
+                {
+                    return batchedCt;
+                }
+                returnCt = list.ContentTypes.FirstOrDefault(c => c.StringId == stringId);
+            }
+            var id = _idOrName.ToLower().StartsWith("0x0") ? _idOrName : null;
+            if (!string.IsNullOrEmpty(id))
+            {
+                var batchedCt = batch.GetCachedContentType(id);
+                if (batchedCt != null)
+                {
+                    return batchedCt;
+                }
+                returnCt = list.ContentTypes.FirstOrDefault(c => c.Id == id);
             }
             else
             {
-                ct = web.GetContentTypeByName(Name,true);
+                var batchedCt = batch.GetCachedContentType(_idOrName);
+                if (batchedCt != null)
+                {
+                    return batchedCt;
+                }
+                returnCt = list.ContentTypes.FirstOrDefault(c => c.Name == _idOrName);
             }
+            if (returnCt != null)
+            {
+                returnCt.EnsureProperties(ct => ct.StringId);
+                batch.CacheContentType(returnCt);
+            }
+            return returnCt;
+        }
+
+
+        internal ContentType GetContentTypeOrThrow(string paramName, Web web, bool searchInSiteHierarchy = true)
+                => GetContentType(web, searchInSiteHierarchy)
+                ?? throw new PSArgumentException(NotFoundMessage(web, searchInSiteHierarchy), paramName);
+
+        internal PnPCore.IContentType GetContentTypeOrThrow(string paramName, PnP.Core.Services.PnPContext context, bool searchInSiteHierarchy = true)
+            => GetContentType(context, searchInSiteHierarchy)
+            ?? throw new PSArgumentException(NotFoundMessage(context.Web, searchInSiteHierarchy), paramName);
+
+        internal ContentType GetContentTypeOrError(Cmdlet cmdlet, string paramName, Web web, bool searchInSiteHierarchy = true)
+        {
+            var ct = GetContentType(web, searchInSiteHierarchy);
+            if (ct is null)
+                cmdlet.WriteError(new ErrorRecord(new PSArgumentException(NotFoundMessage(web, searchInSiteHierarchy), paramName), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
+            return ct;
+        }
+
+        internal PnPCore.IContentType GetContentTypeOrError(Cmdlet cmdlet, string paramName, PnP.Core.Services.PnPContext context, bool searchInSiteHierarchy = true)
+        {
+            var ct = GetContentType(context, searchInSiteHierarchy);
+            if (ct is null)
+            {
+                cmdlet.WriteError(new ErrorRecord(new PSArgumentException(NotFoundMessage(context.Web, searchInSiteHierarchy), paramName), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
+            }
+            return ct;
+        }
+
+        internal ContentType GetContentTypeOrThrow(string paramName, List list)
+            => GetContentType(list)
+            ?? throw new PSArgumentException(NotFoundMessage(list), paramName);
+
+        internal ContentType GetContentTypeOrError(Cmdlet cmdlet, string paramName, List list)
+        {
+            var ct = GetContentType(list);
+            if (ct is null)
+                cmdlet.WriteError(new ErrorRecord(new PSArgumentException(NotFoundMessage(list), paramName), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
+            return ct;
+        }
+
+        internal PnPCore.IContentType GetContentTypeOrError(Cmdlet cmdlet, string paramName, PnPCore.IList list)
+        {
+            var ct = GetContentType(list);
+            if (ct is null)
+                cmdlet.WriteError(new ErrorRecord(new PSArgumentException(NotFoundMessage(list), paramName), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
+            return ct;
+        }
+
+        internal ContentType GetContentTypeOrWarn(Cmdlet cmdlet, Web web, bool searchInSiteHierarchy = true)
+        {
+            var ct = GetContentType(web, searchInSiteHierarchy);
+            if (ct is null)
+                cmdlet.WriteWarning(NotFoundMessage(web, searchInSiteHierarchy));
 
             return ct;
+        }
+
+        internal PnPCore.IContentType GetContentTypeOrWarn(Cmdlet cmdlet, PnP.Core.Services.PnPContext context, bool searchInSiteHierarchy = true)
+        {
+            var ct = GetContentType(context, searchInSiteHierarchy);
+            if (ct is null)
+                cmdlet.WriteWarning(NotFoundMessage(context.Web, searchInSiteHierarchy));
+
+            return ct;
+        }
+
+        internal ContentType GetContentTypeOrWarn(Cmdlet cmdlet, List list)
+        {
+            var ct = GetContentType(list);
+            if (ct is null)
+                cmdlet.WriteWarning(NotFoundMessage(list));
+
+            return ct;
+        }
+
+        internal PnPCore.IContentType GetContentTypeOrWarn(Cmdlet cmdlet, PnPCore.IList list)
+        {
+            var ct = GetContentType(list);
+            if (ct is null)
+                cmdlet.WriteWarning(NotFoundMessage(list));
+
+            return ct;
+        }
+
+        private string NotFoundMessage(Web web, bool searchInSiteHierarchy)
+            => $"Content type '{this}' not found in site{(searchInSiteHierarchy ? " hierachy" : "")}.";
+
+        private string NotFoundMessage(List list)
+            => $"Content type '{this}' not found in list '{new ListPipeBind(list)}'.";
+
+        private string NotFoundMessage(PnPCore.IList list)
+                   => $"Content type '{this}' not found in list '{new ListPipeBind(list)}'.";
+
+        private string NotFoundMessage(PnPCore.IWeb web, bool searchInSiteHierarchy)
+            => $"Content type '{this}' not find in site{(searchInSiteHierarchy ? " hierachy" : "")}.";
+
+        public override string ToString()
+        {
+            if (!string.IsNullOrEmpty(_idOrName))
+            {
+                return _idOrName;
+            }
+            else
+            {
+                if (_contentType != null)
+                {
+                    return _contentType.Name;
+                }
+                if (_coreContentType != null)
+                {
+                    return _coreContentType.Name;
+                }
+            }
+            return "Unknown identity";
         }
     }
 }

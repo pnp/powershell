@@ -1,6 +1,6 @@
 ---
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/invoke-pnpsprestmethod
+online version: https://pnp.github.io/powershell/cmdlets/invoke-pnpsprestmethod
 applicable: SharePoint Online
 schema: 2.0.0
 title: Invoke-PnPSPRestMethod
@@ -129,4 +129,4 @@ Accept pipeline input: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

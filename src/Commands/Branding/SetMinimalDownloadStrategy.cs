@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "MinimalDownloadStrategy")]
+    [Cmdlet(VerbsCommon.Set, "PnPMinimalDownloadStrategy")]
     public class SetMinimalDownloadStrategy : PnPWebCmdlet
     {
         [Parameter(ParameterSetName = "On", Mandatory = true)]
@@ -20,11 +20,11 @@ namespace PnP.PowerShell.Commands.Branding
         {
             if (On)
             {
-                SelectedWeb.Features.Add(PnP.Framework.Constants.FeatureId_Web_MinimalDownloadStrategy, Force, FeatureDefinitionScope.None);
+                CurrentWeb.Features.Add(PnP.Framework.Constants.FeatureId_Web_MinimalDownloadStrategy, Force, FeatureDefinitionScope.None);
             }
             else
             {
-                SelectedWeb.Features.Remove(PnP.Framework.Constants.FeatureId_Web_MinimalDownloadStrategy, Force);
+                CurrentWeb.Features.Remove(PnP.Framework.Constants.FeatureId_Web_MinimalDownloadStrategy, Force);
             }
             ClientContext.ExecuteQueryRetry();
         }

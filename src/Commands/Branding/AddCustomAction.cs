@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Add, "CustomAction")]
+    [Cmdlet(VerbsCommon.Add, "PnPCustomAction")]
     public class AddCustomAction : PnPWebCmdlet
     {
         private const string ParameterSet_DEFAULT = "Default";
@@ -121,7 +121,7 @@ namespace PnP.PowerShell.Commands.Branding
             switch (Scope)
             {
                 case CustomActionScope.Web:
-                    SelectedWeb.AddCustomAction(ca);
+                    CurrentWeb.AddCustomAction(ca);
                     break;
 
                 case CustomActionScope.Site:

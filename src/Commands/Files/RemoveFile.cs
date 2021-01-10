@@ -6,7 +6,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Remove, "File")]
+    [Cmdlet(VerbsCommon.Remove, "PnPFile")]
     public class RemoveFile : PnPWebCmdlet
     {
         private const string ParameterSet_SERVER = "Server Relative";
@@ -28,10 +28,10 @@ namespace PnP.PowerShell.Commands.Files
         {
             if (ParameterSetName == ParameterSet_SITE)
             {
-                var webUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
                 ServerRelativeUrl = UrlUtility.Combine(webUrl, SiteRelativeUrl);
             }
-            var file = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(ServerRelativeUrl));
+            var file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(ServerRelativeUrl));
             ClientContext.Load(file, f => f.Name);
             ClientContext.ExecuteQueryRetry();
 

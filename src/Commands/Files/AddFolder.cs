@@ -2,26 +2,24 @@
 using Microsoft.SharePoint.Client;
 
 using PnP.Framework.Utilities;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Add, "Folder")]
+    [Cmdlet(VerbsCommon.Add, "PnPFolder")]
     public class AddFolder : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Name = string.Empty;
 
         [Parameter(Mandatory = true)]
-        public string Folder = string.Empty;
+        public FolderPipeBind Folder;
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
                         
-            Folder folder = SelectedWeb.GetFolderByServerRelativeUrl(UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder));
-            ClientContext.Load(folder, f => f.ServerRelativeUrl);
-            ClientContext.ExecuteQueryRetry();
-
+            Folder folder = Folder.GetFolder(CurrentWeb);
             var result = folder.CreateFolder(Name);
 
             WriteObject(result);

@@ -7,7 +7,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
-    [Cmdlet(VerbsCommon.Remove, "WebPart")]
+    [Cmdlet(VerbsCommon.Remove, "PnPWebPart")]
     public class RemoveWebPart : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "ID")]
@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.WebParts
 
         protected override void ExecuteCmdlet()
         {
-            var serverRelativeWebUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var serverRelativeWebUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             if (!ServerRelativePageUrl.ToLowerInvariant().StartsWith(serverRelativeWebUrl.ToLowerInvariant()))
             {
@@ -32,11 +32,11 @@ namespace PnP.PowerShell.Commands.WebParts
 
             if (ParameterSetName == "NAME")
             {
-                SelectedWeb.DeleteWebPart(ServerRelativePageUrl, Title);
+                CurrentWeb.DeleteWebPart(ServerRelativePageUrl, Title);
             }
             else
             {
-                var wps = SelectedWeb.GetWebParts(ServerRelativePageUrl);
+                var wps = CurrentWeb.GetWebParts(ServerRelativePageUrl);
                 var wp = from w in wps where w.Id == Identity select w;
                 var webPartDefinitions = wp as WebPartDefinition[] ?? wp.ToArray();
                 if(webPartDefinitions.Any())

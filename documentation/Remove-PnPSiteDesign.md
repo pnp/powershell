@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnpsitedesign
+online version: https://pnp.github.io/powershell/cmdlets/remove-pnpsitedesign
 schema: 2.0.0
 title: Remove-PnPSiteDesign
 ---
@@ -19,9 +19,9 @@ Removes a Site Design
 
 ## SYNTAX
 
-```
-Remove-PnPSiteDesign [-Identity] <TenantSiteDesignPipeBind> [-Force] [-Connection <PnPConnection>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+```powershell
+Remove-PnPSiteDesign [-Identity] <TenantSiteDesignPipeBind> [-Force] [-Connection <PnPConnection>] 
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -58,7 +58,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -73,7 +72,6 @@ If specified you will not be asked to confirm removing the specified Site Design
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -88,7 +86,6 @@ The ID of the site design to remove
 ```yaml
 Type: TenantSiteDesignPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -114,4 +111,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

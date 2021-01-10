@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnporgnewssite
+online version: https://pnp.github.io/powershell/cmdlets/add-pnporgnewssite
 schema: 2.0.0
 title: Add-PnPOrgNewsSite
 ---
@@ -19,7 +19,7 @@ Adds the site as an organization news source in your tenant
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPOrgNewsSite -OrgNewsSiteUrl <SitePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -29,7 +29,7 @@ Add-PnPOrgNewsSite -OrgNewsSiteUrl <SitePipeBind> [-Connection <PnPConnection>] 
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPOrgNewsSite -OrgNewsSiteUrl https://yourtenant.sharepoint.com/sites/news
+Add-PnPOrgNewsSite -OrgNewsSiteUrl "https://yourtenant.sharepoint.com/sites/news"
 ```
 
 Adds the site as one of multiple possible tenant's organizational news sites
@@ -42,7 +42,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -57,7 +56,6 @@ The url of the site to be marked as one of organization's news sites
 ```yaml
 Type: SitePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -68,4 +66,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

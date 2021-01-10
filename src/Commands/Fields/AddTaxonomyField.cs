@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Add, "TaxonomyField")]
+    [Cmdlet(VerbsCommon.Add, "PnPTaxonomyField")]
     public class AddTaxonomyField : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -97,12 +97,12 @@ namespace PnP.PowerShell.Commands.Fields
 
             if (List != null)
             {
-                var list = List.GetList(SelectedWeb);
+                var list = List.GetList(CurrentWeb);
                 field = list.CreateTaxonomyField(fieldCI);
             }
             else
             {
-                field = SelectedWeb.CreateTaxonomyField(fieldCI);
+                field = CurrentWeb.CreateTaxonomyField(fieldCI);
             }
             WriteObject(ClientContext.CastTo<TaxonomyField>(field));
         }

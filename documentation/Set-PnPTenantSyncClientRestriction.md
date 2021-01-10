@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnptenantsyncclientrestriction
+online version: https://pnp.github.io/powershell/cmdlets/set-pnptenantsyncclientrestriction
 schema: 2.0.0
 title: Set-PnPTenantSyncClientRestriction
 ---
@@ -19,7 +19,7 @@ Sets organization-level sync client restriction properties
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTenantSyncClientRestriction [-BlockMacSync] [-DisableReportProblemDialog]
  [-DomainGuids <System.Collections.Generic.List`1[System.Guid]>] [-Enable]
  [-ExcludedFileExtensions <System.Collections.Generic.List`1[System.String]>]
@@ -42,7 +42,7 @@ This example blocks access to Mac sync clients for OneDrive file synchronization
 
 ### EXAMPLE 2
 ```powershell
-Set-SPOTenantSyncClientRestriction  -ExcludedFileExtensions "pptx;docx;xlsx"
+Set-PnPTenantSyncClientRestriction  -ExcludedFileExtensions "pptx;docx;xlsx"
 ```
 
 This example blocks syncing of PowerPoint, Word, and Excel file types using the new sync client (OneDrive.exe).
@@ -55,7 +55,6 @@ Block Mac sync clients-- the Beta version and the new sync client (OneDrive.exe)
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -70,7 +69,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -85,7 +83,6 @@ Specifies if the Report Problem Dialog is disabled or not.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -100,7 +97,6 @@ Sets the domain GUID to add to the safe recipient list. Requires a minimum of 1 
 ```yaml
 Type: System.Collections.Generic.List`1[System.Guid]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -115,7 +111,6 @@ Enables the feature to block sync originating from domains that are not present 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -130,7 +125,6 @@ Blocks certain file types from syncing with the new sync client (OneDrive.exe). 
 ```yaml
 Type: System.Collections.Generic.List`1[System.String]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -145,7 +139,6 @@ Controls whether or not a tenant's users can sync OneDrive for Business librarie
 ```yaml
 Type: GrooveBlockOption
 Parameter Sets: (All)
-Aliases:
 Accepted values: OptOut, HardOptin, SoftOptin
 
 Required: False
@@ -157,4 +150,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -7,8 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommon.Add, "SiteTemplate")]
-    [Alias("Add-ProvisioningTemplate")]
+    [Cmdlet(VerbsCommon.Add, "PnPSiteTemplate")]
     public class AddSiteTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true)]

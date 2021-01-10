@@ -7,7 +7,6 @@ using PnP.Framework.Provisioning.Connectors;
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.ObjectHandlers;
 using PnP.Framework.Provisioning.Providers;
-
 using PnP.Framework.Provisioning.Providers.Xml;
 using File = System.IO.File;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
@@ -18,10 +17,12 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.Framework.Provisioning.Model.Configuration;
 using PnP.PowerShell.Commands.Base;
 using System.Threading.Tasks;
+using PnP.Framework.Provisioning.Providers.Markdown;
+
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Get, "SiteTemplate")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteTemplate")]
     public class GetSiteTemplate : PnPWebCmdlet
     {
         //private readonly ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");
@@ -61,7 +62,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         public SwitchParameter IncludeHiddenLists;
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter IncludeAllClientSidePages;
+        [Alias("IncludeAllClientSidePages")]
+        public SwitchParameter IncludeAllPages;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter SkipVersionCheck;
@@ -155,15 +157,15 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         private void ExtractTemplate(XMLPnPSchemaVersion schema, string path, string packageName, ExtractConfiguration configuration)
         {
-            SelectedWeb.EnsureProperty(w => w.Url);
+            CurrentWeb.EnsureProperty(w => w.Url);
             ProvisioningTemplateCreationInformation creationInformation = null;
             if (configuration != null)
             {
-                creationInformation = configuration.ToCreationInformation(SelectedWeb);
+                creationInformation = configuration.ToCreationInformation(CurrentWeb);
             }
             else
             {
-                creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb);
+                creationInformation = new ProvisioningTemplateCreationInformation(CurrentWeb);
             }
 
             if (ParameterSpecified(nameof(Handlers)))
@@ -201,6 +203,10 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 creationInformation.FileConnector = new OpenXMLConnector(packageName, fileSystemConnector);
             }
+            else if (extension == ".md")
+            {
+                creationInformation.FileConnector = fileSystemConnector;
+            }
             else
             {
                 creationInformation.FileConnector = fileSystemConnector;
@@ -223,9 +229,9 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 creationInformation.IncludeHiddenLists = IncludeHiddenLists;
             }
-            if (ParameterSpecified(nameof(IncludeAllClientSidePages)))
+            if (ParameterSpecified(nameof(IncludeAllPages)))
             {
-                creationInformation.IncludeAllClientSidePages = IncludeAllClientSidePages;
+                creationInformation.IncludeAllClientSidePages = IncludeAllPages;
             }
             creationInformation.SkipVersionCheck = SkipVersionCheck;
             if (ParameterSpecified(nameof(ContentTypeGroups)) && ContentTypeGroups != null)
@@ -272,7 +278,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
             else
             {
-                creationInformation.BaseTemplate = SelectedWeb.GetBaseTemplate();
+                creationInformation.BaseTemplate = CurrentWeb.GetBaseTemplate();
             }
 #pragma warning restore CS0618 // Type or member is obsolete
 
@@ -280,7 +286,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 var percentage = Convert.ToInt32((100 / Convert.ToDouble(total)) * Convert.ToDouble(step));
 
-                WriteProgress(new ProgressRecord(0, $"Extracting Template from {SelectedWeb.Url}", message) { PercentComplete = percentage });
+                WriteProgress(new ProgressRecord(0, $"Extracting Template from {CurrentWeb.Url}", message) { PercentComplete = percentage });
                 WriteProgress(new ProgressRecord(1, " ", " ") { RecordType = ProgressRecordType.Completed });
             };
             creationInformation.MessagesDelegate = (message, type) =>
@@ -357,32 +363,38 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 creationInformation.ListsToExtract.AddRange(ListsToExtract);
             }
             ProvisioningTemplate template = null;
-            using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
+            using (var provisioningContext = new PnPProvisioningContext(async (resource, scope) =>
             {
-                // Get Azure AD Token
-                if (PnPConnection.CurrentConnection != null)
+                    // Get Azure AD Token
+                    if (PnPConnection.CurrentConnection != null && PnPConnection.CurrentConnection.ConnectionMethod != Model.ConnectionMethod.WebLogin)
                 {
-                    var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                    var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessTokenAsync(Enums.TokenAudience.MicrosoftGraph).GetAwaiter().GetResult();
                     if (graphAccessToken != null)
                     {
-                        // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                        return Task.FromResult(graphAccessToken);
+                            // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
+                            return graphAccessToken;
                     }
                 }
 
                 if (PnPConnection.CurrentConnection.PSCredential != null)
                 {
-                    // Using normal credentials
-                    return Task.FromResult(TokenHandler.AcquireToken(resource, null));
+                        // Using normal credentials
+                        return await TokenHandler.AcquireTokenAsync(resource, null);
                 }
                 else
                 {
-                    // No token...
-                    return null;
+                    if (resource.ToLower().Contains(".sharepoint."))
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        throw new PSInvalidOperationException($"Your template contains artifacts that require an access token for {resource}. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
+                    }
                 }
             }))
             {
-                template = SelectedWeb.GetProvisioningTemplate(creationInformation);
+                template = CurrentWeb.GetProvisioningTemplate(creationInformation);
             }
             // Set metadata for template, if any
             SetTemplateMetadata(template, TemplateDisplayName, TemplateImagePreviewUrl, TemplateProperties);
@@ -398,6 +410,20 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                     var templateFileName = packageName.Substring(0, packageName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
 
                     provider.SaveAs(template, templateFileName, formatter, TemplateProviderExtensions);
+                }
+                else if (extension == ".md")
+                {
+                    WriteWarning("The generation of a markdown report is work in progress, it will improve/grow with later releases.");
+                    ITemplateFormatter mdFormatter = new MarkdownPnPFormatter();
+                    using (var outputStream = mdFormatter.ToFormattedTemplate(template))
+                    {
+                        using (var fileStream = File.Create(Path.Combine(path, packageName)))
+                        {
+                            outputStream.Seek(0, SeekOrigin.Begin);
+                            outputStream.CopyTo(fileStream);
+                            fileStream.Close();
+                        }
+                    }
                 }
                 else
                 {

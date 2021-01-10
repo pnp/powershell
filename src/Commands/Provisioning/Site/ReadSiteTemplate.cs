@@ -11,7 +11,7 @@ using System.Text;
 
 namespace PnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsCommunications.Read, "SiteTemplate")]
+    [Cmdlet(VerbsCommunications.Read, "PnPSiteTemplate")]
     public class ReadSiteTemplate : PSCmdlet
     {
         const string ParameterSet_PATH = "By Path";
@@ -28,10 +28,6 @@ namespace PnP.PowerShell.Commands.Provisioning
 
         protected override void ProcessRecord()
         {
-            if (MyInvocation.InvocationName.ToLower() == "read-pnpprovisioningtemplate")
-            {
-                WriteWarning("Read-PnPProvisioningTemplate has been deprecated in favor of Read-PnPSiteTemplate which supports the same parameters.");
-            }
             switch (ParameterSetName)
             {
                 case ParameterSet_PATH:
@@ -41,7 +37,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                         {
                             Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
                         }
-                        WriteObject(LoadSiteTemplateFromFile(Path, TemplateProviderExtensions, (e) =>
+                        WriteObject(ProvisioningHelper.LoadSiteTemplateFromFile(Path, TemplateProviderExtensions, (e) =>
                         {
                             WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
                         }));
@@ -49,98 +45,12 @@ namespace PnP.PowerShell.Commands.Provisioning
                     }
                 case ParameterSet_XML:
                     {
-                        WriteObject(LoadSiteTemplateFromString(Xml, TemplateProviderExtensions, (e) =>
+                        WriteObject(ProvisioningHelper.LoadSiteTemplateFromString(Xml, TemplateProviderExtensions, (e) =>
                         {
                             WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
                         }));
                         break;
                     }
-            }
-        }
-
-        internal static ProvisioningTemplate LoadSiteTemplateFromString(string xml, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler)
-        {
-            XMLTemplateProvider provider = new XMLStreamTemplateProvider();
-
-            try
-            {
-                using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(xml)))
-                {
-                    return provider.GetTemplate(stream, templateProviderExtensions);
-                }
-            }
-            catch (ApplicationException ex)
-            {
-                if (ex.InnerException is AggregateException)
-                {
-                    if (exceptionHandler != null)
-                    {
-                        foreach (var exception in ((AggregateException)ex.InnerException).InnerExceptions)
-                        {
-                            exceptionHandler(exception);
-                        }
-                    }
-                }
-            }
-            return null;
-        }
-
-        internal static ProvisioningTemplate LoadSiteTemplateFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler)
-        {
-            // Prepare the File Connector
-            string templateFileName = System.IO.Path.GetFileName(templatePath);
-
-            // Prepare the template path
-            var fileInfo = new FileInfo(templatePath);
-            FileConnectorBase fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
-
-            // Load the site template file
-            using (var stream = fileConnector.GetFileStream(templateFileName))
-            {
-                if(stream == null)
-                {
-                    throw new FileNotFoundException($"File {templatePath} does not exist.", templatePath);
-                }
-                var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
-
-                XMLTemplateProvider provider;
-                if (isOpenOfficeFile)
-                {
-                    var openXmlConnector = new OpenXMLConnector(templateFileName, fileConnector);
-                    provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
-                    if (!String.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName))
-                    {
-                        templateFileName = openXmlConnector.Info.Properties.TemplateFileName;
-                    }
-                    else
-                    {
-                        templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
-                    }
-                }
-                else
-                {
-                    provider = new XMLFileSystemTemplateProvider(fileConnector.Parameters[FileConnectorBase.CONNECTIONSTRING] + "", "");
-                }
-                try
-                {
-                    ProvisioningTemplate provisioningTemplate = provider.GetTemplate(templateFileName, templateProviderExtensions);
-                    provisioningTemplate.Connector = provider.Connector;
-                    return provisioningTemplate;
-                }
-                catch (ApplicationException ex)
-                {
-                    if (ex.InnerException is AggregateException)
-                    {
-                        if (exceptionHandler != null)
-                        {
-                            foreach (var exception in ((AggregateException)ex.InnerException).InnerExceptions)
-                            {
-                                exceptionHandler(exception);
-                            }
-                        }
-                    }
-                }
-                return null;
             }
         }
     }

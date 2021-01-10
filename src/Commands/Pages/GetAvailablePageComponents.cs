@@ -1,0 +1,37 @@
+﻿
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using System;
+using System.Linq;
+using System.Management.Automation;
+
+namespace PnP.PowerShell.Commands.Pages
+{
+    [Cmdlet(VerbsCommon.Get, "PnPAvailablePageComponents")]
+    [Alias("Get-PnPAvailableClientSideComponents")]
+    [Obsolete("Use Get-PnPPageComponent -Page -ListAvailable")]
+    public class GetAvailablePageComponents : PnPWebCmdlet
+    {
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        public PagePipeBind Page;
+
+        [Parameter(Mandatory = false)]
+        public PageComponentPipeBind Component;
+
+        protected override void ExecuteCmdlet()
+        {
+            var clientSidePage = Page.GetPage();
+            if (clientSidePage == null)
+                throw new PSArgumentException($"Page '{Page}' does not exist", "List");
+
+            if (Component == null)
+            {
+                var allComponents = clientSidePage.AvailablePageComponents().Where(c => c.ComponentType == 1);
+                WriteObject(allComponents, true);
+            }
+            else
+            {
+                WriteObject(Component.GetComponent(clientSidePage));
+            }
+        }
+    }
+}

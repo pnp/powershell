@@ -13,10 +13,11 @@ using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Add, "ListFoldersToSiteTemplate")]
+    [Cmdlet(VerbsCommon.Add, "PnPListFoldersToSiteTemplate")]
     public class AddListFoldersToSiteTemplate : PnPWebCmdlet
     {
 
@@ -38,15 +39,12 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         protected override void ExecuteCmdlet()
         {
-
             if (!System.IO.Path.IsPathRooted(Path))
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
             // Load the template
-            var template = ReadSiteTemplate
-                .LoadSiteTemplateFromFile(Path,
-                TemplateProviderExtensions, (e) =>
+            var template = ProvisioningHelper.LoadSiteTemplateFromFile(Path, TemplateProviderExtensions, (e) =>
                 {
                     WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
                 });
@@ -57,7 +55,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
 
 
-            List spList = List.GetList(SelectedWeb);
+            List spList = List.GetList(CurrentWeb);
             ClientContext.Load(spList, l => l.RootFolder, l => l.HasUniqueRoleAssignments);
             ClientContext.ExecuteQueryRetry();
 

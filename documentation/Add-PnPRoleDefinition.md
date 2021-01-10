@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnproledefinition
+online version: https://pnp.github.io/powershell/cmdlets/add-pnproledefinition
 schema: 2.0.0
 title: Add-PnPRoleDefinition
 ---
@@ -14,7 +14,7 @@ Adds a Role Defintion (Permission Level) to the site collection in the current c
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPRoleDefinition -RoleName <String> [-Clone <RoleDefinitionPipeBind>] [-Include <PermissionKind[]>]
  [-Exclude <PermissionKind[]>] [-Description <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
@@ -61,7 +61,6 @@ An existing permission level or the name of an permission level to clone as base
 ```yaml
 Type: RoleDefinitionPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -76,7 +75,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -91,7 +89,6 @@ Optional description for the new permission level.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -106,7 +103,6 @@ Specifies permission flags(s) to disable. Please visit https://docs.microsoft.co
 ```yaml
 Type: PermissionKind[]
 Parameter Sets: (All)
-Aliases:
 Accepted values: EmptyMask, ViewListItems, AddListItems, EditListItems, DeleteListItems, ApproveItems, OpenItems, ViewVersions, DeleteVersions, CancelCheckout, ManagePersonalViews, ManageLists, ViewFormPages, AnonymousSearchAccessList, Open, ViewPages, AddAndCustomizePages, ApplyThemeAndBorder, ApplyStyleSheets, ViewUsageData, CreateSSCSite, ManageSubwebs, CreateGroups, ManagePermissions, BrowseDirectories, BrowseUserInfo, AddDelPrivateWebParts, UpdatePersonalWebParts, ManageWeb, AnonymousSearchAccessWebLists, UseClientIntegration, UseRemoteAPIs, ManageAlerts, CreateAlerts, EditMyUserInfo, EnumeratePermissions, FullMask
 
 Required: False
@@ -122,7 +118,6 @@ Specifies permission flags(s) to enable. Please visit https://docs.microsoft.com
 ```yaml
 Type: PermissionKind[]
 Parameter Sets: (All)
-Aliases:
 Accepted values: EmptyMask, ViewListItems, AddListItems, EditListItems, DeleteListItems, ApproveItems, OpenItems, ViewVersions, DeleteVersions, CancelCheckout, ManagePersonalViews, ManageLists, ViewFormPages, AnonymousSearchAccessList, Open, ViewPages, AddAndCustomizePages, ApplyThemeAndBorder, ApplyStyleSheets, ViewUsageData, CreateSSCSite, ManageSubwebs, CreateGroups, ManagePermissions, BrowseDirectories, BrowseUserInfo, AddDelPrivateWebParts, UpdatePersonalWebParts, ManageWeb, AnonymousSearchAccessWebLists, UseClientIntegration, UseRemoteAPIs, ManageAlerts, CreateAlerts, EditMyUserInfo, EnumeratePermissions, FullMask
 
 Required: False
@@ -138,7 +133,6 @@ Name of new permission level.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -149,4 +143,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

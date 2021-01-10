@@ -7,7 +7,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Get, "ApplicationCustomizer")]
+    [Cmdlet(VerbsCommon.Get, "PnPApplicationCustomizer")]
     public class GetApplicationCustomizer : PnPWebRetrievalsCmdlet<UserCustomAction>
     {
         private const string ParameterSet_CUSTOMACTIONID = "Custom Action Id";
@@ -31,14 +31,14 @@ namespace PnP.PowerShell.Commands.Branding
 
             if (Scope == CustomActionScope.All || Scope == CustomActionScope.Web)
             {
-                actions.AddRange(SelectedWeb.GetCustomActions(RetrievalExpressions));
+                actions.AddRange(CurrentWeb.GetCustomActions(RetrievalExpressions));
             }
             if (Scope == CustomActionScope.All || Scope == CustomActionScope.Site)
             {
                 actions.AddRange(ClientContext.Site.GetCustomActions(RetrievalExpressions));
             }
 
-            if (Identity != null)
+            if (Identity != Guid.Empty)
             {
                 var foundAction = actions.FirstOrDefault(x => x.Id == Identity && x.Location == "ClientSideExtension.ApplicationCustomizer");
                 if (foundAction != null || !ThrowExceptionIfCustomActionNotFound)

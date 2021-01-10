@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpweb
+online version: https://pnp.github.io/powershell/cmdlets/set-pnpweb
 schema: 2.0.0
 title: Set-PnPWeb
 ---
@@ -14,11 +14,11 @@ Sets properties on a web
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPWeb [-SiteLogoUrl <String>] [-AlternateCssUrl <String>] [-Title <String>] [-Description <String>]
  [-MasterUrl <String>] [-CustomMasterUrl <String>] [-QuickLaunchEnabled] [-MembersCanShare] [-NoCrawl]
  [-HeaderLayout <HeaderLayoutType>] [-HeaderEmphasis <SPVariantThemeType>] [-NavAudienceTargetingEnabled]
- [-MegaMenuEnabled] [-DisablePowerAutomate] [-CommentsOnSitePagesDisabled] [-Web <WebPipeBind>]
+ [-MegaMenuEnabled] [-DisablePowerAutomate] [-CommentsOnSitePagesDisabled] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -56,7 +56,6 @@ Sets the AlternateCssUrl of the web. Only works for classic pages.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -68,12 +67,9 @@ Accept wildcard characters: False
 ### -CommentsOnSitePagesDisabled
 Defines if comments on modern site pages should be enabled by default ($false) or they should be hidden ($true)
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -88,7 +84,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -103,7 +98,6 @@ Sets the CustomMasterUrl of the web. Only works for classic pages.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -118,7 +112,6 @@ Sets the description of the web
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -130,12 +123,9 @@ Accept wildcard characters: False
 ### -DisablePowerAutomate
 Defines if Power Automate should be available on lists and document libraries ($false) or if the option should be hidden ($true)
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -146,12 +136,9 @@ Accept wildcard characters: False
 
 ### -HeaderEmphasis
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SPVariantThemeType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, Neutral, Soft, Strong
 
 Required: False
@@ -163,12 +150,9 @@ Accept wildcard characters: False
 
 ### -HeaderLayout
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: HeaderLayoutType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, Standard, Compact, Minimal, Extended
 
 Required: False
@@ -184,7 +168,6 @@ Sets the MasterUrl of the web. Only works for classic pages.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -196,12 +179,9 @@ Accept wildcard characters: False
 ### -MegaMenuEnabled
 Defines if the navigation menu should be shown as the mega menu ($true) or the smaller sized menu ($false)
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -216,7 +196,6 @@ Indicates if members of this site can share the site and individual sites with o
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -228,12 +207,9 @@ Accept wildcard characters: False
 ### -NavAudienceTargetingEnabled
 Defines if the navigation menu on a modern site should be enabled for modern audience targeting ($true) or not ($false)
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -248,7 +224,6 @@ Indicates if this site should not be returned in search results ($true) or if it
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -263,7 +238,6 @@ Defines if the quick launch menu on the left side of modern Team Sites should be
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -278,7 +252,6 @@ Sets the logo of the web to the current url. If you want to set the logo to a mo
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -293,7 +266,6 @@ Sets the title of the web
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -302,21 +274,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

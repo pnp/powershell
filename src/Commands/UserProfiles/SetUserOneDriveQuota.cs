@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
-    [Cmdlet(VerbsCommon.Set, "UserOneDriveQuota")]
+    [Cmdlet(VerbsCommon.Set, "PnPUserOneDriveQuota")]
     public class SetUserOneDriveQuota : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

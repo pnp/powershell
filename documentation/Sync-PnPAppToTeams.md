@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/sync-pnpapptoteams
+online version: https://pnp.github.io/powershell/cmdlets/sync-pnpapptoteams
 schema: 2.0.0
 title: Sync-PnPAppToTeams
 ---
@@ -14,7 +14,7 @@ Synchronize an app from the tenant app catalog to the Microsoft Teams app catalo
 
 ## SYNTAX
 
-```
+```powershell
 Sync-PnPAppToTeams [-Identity] <AppMetadataPipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -37,7 +37,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -52,7 +51,6 @@ Specifies the Id of the Addin Instance
 ```yaml
 Type: AppMetadataPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -63,4 +61,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

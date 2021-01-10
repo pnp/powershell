@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsData.Restore, "DeletedMicrosoft365Group")]
+    [Cmdlet(VerbsData.Restore, "PnPDeletedMicrosoft365Group")]
     [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class RestoreDeletedMicrosoft365Group : PnPGraphCmdlet

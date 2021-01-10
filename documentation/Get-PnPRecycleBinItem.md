@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnprecyclebinitem
+online version: https://pnp.github.io/powershell/cmdlets/get-pnprecyclebinitem
 schema: 2.0.0
 title: Get-PnPRecycleBinItem
 ---
@@ -15,25 +15,25 @@ Returns the items in the recycle bin from the context
 ## SYNTAX
 
 ### All (Default)
-```
+```powershell
 Get-PnPRecycleBinItem [-RowLimit <Int32>] [-Connection <PnPConnection>] [-Includes <String[]>]
  [<CommonParameters>]
 ```
 
 ### Identity
-```
+```powershell
 Get-PnPRecycleBinItem [-Identity <Guid>] [-Connection <PnPConnection>] [-Includes <String[]>]
  [<CommonParameters>]
 ```
 
 ### FirstStage
-```
+```powershell
 Get-PnPRecycleBinItem [-FirstStage] [-RowLimit <Int32>] [-Connection <PnPConnection>] [-Includes <String[]>]
  [<CommonParameters>]
 ```
 
 ### SecondStage
-```
+```powershell
 Get-PnPRecycleBinItem [-SecondStage] [-RowLimit <Int32>] [-Connection <PnPConnection>] [-Includes <String[]>]
  [<CommonParameters>]
 ```
@@ -85,7 +85,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -100,7 +99,6 @@ Return all items in the first stage recycle bin
 ```yaml
 Type: SwitchParameter
 Parameter Sets: FirstStage
-Aliases:
 
 Required: False
 Position: Named
@@ -115,7 +113,6 @@ Returns a recycle bin item with a specific identity
 ```yaml
 Type: Guid
 Parameter Sets: Identity
-Aliases:
 
 Required: False
 Position: Named
@@ -127,12 +124,9 @@ Accept wildcard characters: False
 ### -RowLimit
 Limits return results to specified amount
 
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
-
 ```yaml
 Type: Int32
 Parameter Sets: All, FirstStage, SecondStage
-Aliases:
 
 Required: False
 Position: Named
@@ -147,7 +141,6 @@ Return all items in the second stage recycle bin
 ```yaml
 Type: SwitchParameter
 Parameter Sets: SecondStage
-Aliases:
 
 Required: False
 Position: Named
@@ -158,4 +151,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

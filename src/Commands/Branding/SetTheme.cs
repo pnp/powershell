@@ -8,7 +8,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "Theme")]
+    [Cmdlet(VerbsCommon.Set, "PnPTheme")]
     
     
     
@@ -36,8 +36,8 @@ namespace PnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-            var rootWebServerRelativeUrl = (SelectedWeb.Context as ClientContext).Site.RootWeb.EnsureProperty(r => r.ServerRelativeUrl);
-            var serverRelativeUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var rootWebServerRelativeUrl = (CurrentWeb.Context as ClientContext).Site.RootWeb.EnsureProperty(r => r.ServerRelativeUrl);
+            var serverRelativeUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
             if (ColorPaletteUrl == null)
             {
                 ColorPaletteUrl = "/_catalogs/theme/15/palette001.spcolor";
@@ -58,28 +58,28 @@ namespace PnP.PowerShell.Commands.Branding
                 BackgroundImageUrl = UrlUtility.Combine(rootWebServerRelativeUrl, BackgroundImageUrl);
             }
 
-            SelectedWeb.SetThemeByUrl(ColorPaletteUrl, FontSchemeUrl, BackgroundImageUrl, ResetSubwebsToInherit, UpdateRootWebOnly);
+            CurrentWeb.SetThemeByUrl(ColorPaletteUrl, FontSchemeUrl, BackgroundImageUrl, ResetSubwebsToInherit, UpdateRootWebOnly);
 
             ClientContext.ExecuteQueryRetry();
 
-            if (!SelectedWeb.IsNoScriptSite())
+            if (!CurrentWeb.IsNoScriptSite())
             {
                 ComposedLook composedLook;
                 // Set the corresponding property bag value which is used by the provisioning engine
-                if (SelectedWeb.PropertyBagContainsKey(PROPBAGKEY))
+                if (CurrentWeb.PropertyBagContainsKey(PROPBAGKEY))
                 {
                     composedLook =
-                        JsonSerializer.Deserialize<ComposedLook>(SelectedWeb.GetPropertyBagValueString(PROPBAGKEY, ""));
+                        JsonSerializer.Deserialize<ComposedLook>(CurrentWeb.GetPropertyBagValueString(PROPBAGKEY, ""));
 
                 }
                 else
                 {
                     composedLook = new ComposedLook { BackgroundFile = "" };
-                    SelectedWeb.EnsureProperty(w => w.AlternateCssUrl);
+                    CurrentWeb.EnsureProperty(w => w.AlternateCssUrl);
                     composedLook.ColorFile = "";
-                    SelectedWeb.EnsureProperty(w => w.MasterUrl);
+                    CurrentWeb.EnsureProperty(w => w.MasterUrl);
                     composedLook.FontFile = "";
-                    SelectedWeb.EnsureProperty(w => w.SiteLogoUrl);
+                    CurrentWeb.EnsureProperty(w => w.SiteLogoUrl);
                 }
 
                 composedLook.Name = composedLook.Name ?? "Custom by PnP PowerShell";
@@ -88,7 +88,7 @@ namespace PnP.PowerShell.Commands.Branding
                 composedLook.BackgroundFile = BackgroundImageUrl ?? composedLook.BackgroundFile;
                 var composedLookJson = JsonSerializer.Serialize(composedLook);
 
-                SelectedWeb.SetPropertyBagValue(PROPBAGKEY, composedLookJson);
+                CurrentWeb.SetPropertyBagValue(PROPBAGKEY, composedLookJson);
             }
         }
     }

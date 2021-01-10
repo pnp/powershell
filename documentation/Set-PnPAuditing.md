@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpauditing
+online version: https://pnp.github.io/powershell/cmdlets/set-pnpauditing
 schema: 2.0.0
 title: Set-PnPAuditing
 ---
@@ -15,18 +15,18 @@ Set Auditing setting for a site
 ## SYNTAX
 
 ### Enable all
-```
+```powershell
 Set-PnPAuditing [-EnableAll] [-RetentionTime <Int32>] [-TrimAuditLog] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Disable All
-```
+```powershell
 Set-PnPAuditing [-DisableAll] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Specific flags
-```
+```powershell
 Set-PnPAuditing [-RetentionTime <Int32>] [-TrimAuditLog] [-EditItems] [-CheckOutCheckInItems] [-MoveCopyItems]
  [-DeleteRestoreItems] [-EditContentTypesColumns] [-SearchContent] [-EditUsersPermissions]
  [-Connection <PnPConnection>] [<CommonParameters>]
@@ -84,7 +84,6 @@ Audit checking out or checking in items
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -99,7 +98,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -114,7 +112,6 @@ Audit deleting or restoring items
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -129,7 +126,6 @@ Disable all audit flags
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Disable All
-Aliases:
 
 Required: True
 Position: Named
@@ -144,7 +140,6 @@ Audit editing content types and columns
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -159,7 +154,6 @@ Audit editing items
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -174,7 +168,6 @@ Audit editing users and permissions
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -189,7 +182,6 @@ Enable all audit flags
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Enable all
-Aliases:
 
 Required: True
 Position: Named
@@ -204,7 +196,6 @@ Audit moving or copying items to another location in the site.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -219,7 +210,6 @@ Set the retention time
 ```yaml
 Type: Int32
 Parameter Sets: Enable all, Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -234,7 +224,6 @@ Audit searching site content
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -249,7 +238,6 @@ Trim the audit log
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Enable all, Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -260,4 +248,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "WebTheme")]
+    [Cmdlet(VerbsCommon.Set, "PnPWebTheme")]
     
     
     
@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-            var url = SelectedWeb.EnsureProperty(w => w.Url);
+            var url = CurrentWeb.EnsureProperty(w => w.Url);
             var tenantUrl = UrlUtilities.GetTenantAdministrationUrl(ClientContext.Url);
             using (var tenantContext = ClientContext.Clone(tenantUrl))
             {

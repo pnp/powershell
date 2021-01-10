@@ -1,0 +1,9 @@
+<div class="contribution-panel mobile-hide pull-right">
+    {{#sourceurl}}
+    <a href="{{sourceurl}}" title="{{__global.viewSource}}" class="view-source-lg"><i class="fa fa-code"></i></a>
+    {{/sourceurl}}
+    {{#docurl}}
+    <a href="{{docurl}}" title="{{__global.improveThisDoc}}" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+    {{/docurl}}
+</div>
+  

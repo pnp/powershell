@@ -5,78 +5,39 @@ using System.Management.Automation.Runspaces;
 namespace PnP.PowerShell.Tests.Files
 {
     [TestClass]
-    public class AddFolderTests
+    public class AddFolderTests : PnPTest
     {
         #region Test Setup/CleanUp
+
+        private static string folderName;
+
+        // #region Setup
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
         {
-            // This runs on class level once before all tests run
-            //using (var ctx = TestCommon.CreateClientContext())
-            //{
-            //}
+            folderName = $"Folder_{Guid.NewGuid()}";
         }
 
         [ClassCleanup]
-        public static void Cleanup(TestContext testContext)
+        public static void Cleanup()
         {
-            // This runs on class level once
-            //using (var ctx = TestCommon.CreateClientContext())
-            //{
-            //}
-        }
-
-        [TestInitialize]
-        public void Initialize()
-        {
-            using (var scope = new PSTestScope())
-            {
-                // Example
-                // scope.ExecuteCommand("cmdlet", new CommandParameter("param1", prop));
-            }
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            using (var scope = new PSTestScope())
-            {
-                try
-                {
-                    // Do Test Setup - Note, this runs PER test
-                }
-                catch (Exception)
-                {
-                    // Describe Exception
-                }
-            }
+            TestScope.ExecuteCommand("Remove-PnPFolder",
+                new CommandParameter("Name", folderName),
+                new CommandParameter("Folder", "Shared Documents"),
+                new CommandParameter("Force"));
         }
         #endregion
 
         #region Scaffolded Cmdlet Tests
-        //TODO: This is a scaffold of the cmdlet - complete the unit test
-        //[TestMethod]
+        [TestMethod]
         public void AddPnPFolderTest()
         {
-            using (var scope = new PSTestScope(true))
-            {
-                // Complete writing cmd parameters
+            var results = TestScope.ExecuteCommand("Add-PnPFolder",
+                new CommandParameter("Name", folderName),
+                new CommandParameter("Folder", "Shared Documents"));
 
-				// This is a mandatory parameter
-				// From Cmdlet Help: The folder name
-				var name = "";
-				// This is a mandatory parameter
-				// From Cmdlet Help: The parent folder in the site
-				var folder = "";
-
-                var results = scope.ExecuteCommand("Add-PnPFolder",
-					new CommandParameter("Name", name),
-					new CommandParameter("Folder", folder));
-                
-                Assert.IsNotNull(results);
-            }
+            Assert.AreEqual(results.Count, 1);
         }
         #endregion
     }
 }
-            

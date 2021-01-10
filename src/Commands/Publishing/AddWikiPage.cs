@@ -5,7 +5,7 @@ using PnP.Framework;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Add, "WikiPage")]
+    [Cmdlet(VerbsCommon.Add, "PnPWikiPage")]
     public class AddWikiPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -24,18 +24,18 @@ namespace PnP.PowerShell.Commands.Publishing
             {
                 case "WithContent":
                     {
-                        SelectedWeb.AddWikiPageByUrl(ServerRelativePageUrl, Content);
+                        CurrentWeb.AddWikiPageByUrl(ServerRelativePageUrl, Content);
                         break;
                     }
                 case "WithLayout":
                     {
-                        SelectedWeb.AddWikiPageByUrl(ServerRelativePageUrl);
-                        SelectedWeb.AddLayoutToWikiPage(Layout, ServerRelativePageUrl);
+                        CurrentWeb.AddWikiPageByUrl(ServerRelativePageUrl);
+                        CurrentWeb.AddLayoutToWikiPage(Layout, ServerRelativePageUrl);
                         break;
                     }
                 default:
                     {
-                        SelectedWeb.AddWikiPageByUrl(ServerRelativePageUrl);
+                        CurrentWeb.AddWikiPageByUrl(ServerRelativePageUrl);
                         break;
                     }
             }

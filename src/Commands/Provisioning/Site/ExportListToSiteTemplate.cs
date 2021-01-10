@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsData.Export, "ListToSiteTemplate")]
+    [Cmdlet(VerbsData.Export, "PnPListToSiteTemplate")]
     public class ExportListToSiteTemplate : PnPWebCmdlet
     {
         //private ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");
@@ -64,9 +64,9 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         private void ExtractTemplate(XMLPnPSchemaVersion schema, string path, string packageName)
         {
-            SelectedWeb.EnsureProperty(w => w.Url);
+            CurrentWeb.EnsureProperty(w => w.Url);
 
-            var creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb)
+            var creationInformation = new ProvisioningTemplateCreationInformation(CurrentWeb)
             {
                 HandlersToProcess = Handlers.Lists
             };
@@ -99,7 +99,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 var percentage = Convert.ToInt32((100 / Convert.ToDouble(total)) * Convert.ToDouble(step));
 
-                WriteProgress(new ProgressRecord(0, $"Extracting Template from {SelectedWeb.Url}", message) { PercentComplete = percentage });
+                WriteProgress(new ProgressRecord(0, $"Extracting Template from {CurrentWeb.Url}", message) { PercentComplete = percentage });
             };
             creationInformation.MessagesDelegate = (message, type) =>
             {
@@ -158,7 +158,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 creationInformation.ListsToExtract.AddRange(List);
             }
 
-            var template = SelectedWeb.GetProvisioningTemplate(creationInformation);
+            var template = CurrentWeb.GetProvisioningTemplate(creationInformation);
 
             
       

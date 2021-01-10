@@ -5,10 +5,11 @@ using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Model.Graph;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Add, "TeamsTab")]
+    [Cmdlet(VerbsCommon.Add, "PnPTeamsTab")]
     [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]
 

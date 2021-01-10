@@ -9,14 +9,14 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Set, "TermGroup")]
+    [Cmdlet(VerbsCommon.Set, "PnPTermGroup")]
     public class SetTermGroup : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public TaxonomyItemPipeBind<TermGroup> Identity;
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        public TaxonomyTermGroupPipeBind Identity;
 
         [Parameter(Mandatory = false)]
-        public GenericObjectNameIdPipeBind<TermStore> TermStore;
+        public TaxonomyTermStorePipeBind TermStore;
 
         [Parameter(Mandatory = false)]
         public string Name { get; set; }
@@ -35,66 +35,40 @@ namespace PnP.PowerShell.Commands.Taxonomy
             }
             else
             {
-                if (TermStore.StringValue != null)
-                {
-                    termStore = taxonomySession.TermStores.GetByName(TermStore.StringValue);
-                }
-                else if (TermStore.IdValue != Guid.Empty)
-                {
-                    termStore = taxonomySession.TermStores.GetById(TermStore.IdValue);
-                }
-                else
-                {
-                    if (TermStore.Item != null)
-                    {
-                        termStore = TermStore.Item;
-                    }
-                }
+                termStore = TermStore.GetTermStore(taxonomySession);
             }
             // Get Group
             if (termStore != null)
             {
-                TermGroup group = null;
-                if (Identity.Id != Guid.Empty)
-                {
-                    group = termStore.Groups.GetById(Identity.Id);
-                }
-                else
-                {
-                    group = termStore.Groups.GetByName(Identity.Title);
-                }
+                var group = Identity.GetGroup(termStore);
                 ClientContext.Load(group);
                 ClientContext.ExecuteQueryRetry();
 
                 if (group.ServerObjectIsNull.Value != false)
                 {
                     bool updateRequired = false;
-                    if(ParameterSpecified(nameof(Name)))
+                    if (ParameterSpecified(nameof(Name)))
                     {
                         group.Name = Name;
                         updateRequired = true;
                     }
-                    if(ParameterSpecified(nameof(Description)))
+                    if (ParameterSpecified(nameof(Description)))
                     {
                         group.Description = Description;
                         updateRequired = true;
                     }
-                    if(updateRequired)
+                    if (updateRequired)
                     {
                         termStore.CommitAll();
-                        ClientContext.ExecuteQuery();
+                        ClientContext.ExecuteQueryRetry();
                     }
                     WriteObject(group);
-                } else
+                }
+                else
                 {
                     throw new PSArgumentException("Group not found");
                 }
             }
-            else
-            {
-                WriteError(new ErrorRecord(new ArgumentException("Cannot find termstore"), "INCORRECTTERMSTORE", ErrorCategory.ObjectNotFound, TermStore));
-            }
         }
-
     }
 }

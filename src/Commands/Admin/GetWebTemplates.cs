@@ -5,7 +5,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "WebTemplates")]
+    [Cmdlet(VerbsCommon.Get, "PnPWebTemplates")]
     public class GetWebTemplates : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false)]

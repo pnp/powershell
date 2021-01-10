@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/new-pnptenantsequenceteamsite
+online version: https://pnp.github.io/powershell/cmdlets/new-pnptenantsequenceteamsite
 schema: 2.0.0
 title: New-PnPTenantSequenceTeamSite
 ---
@@ -14,9 +14,9 @@ Creates a team site object
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPTenantSequenceTeamSite -Alias <String> -Title <String> [-Description <String>] [-DisplayName <String>]
- [-Classification <String>] [-Public] [-HubSite] [-TemplateIds <String[]>] [-WhatIf] [-Confirm]
+ [-Classification <String>] [-Public] [-HubSite] [-TemplateIds <String[]>]  
  [<CommonParameters>]
 ```
 
@@ -38,7 +38,6 @@ Creates a new team site object with the specified variables
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -52,7 +51,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -81,7 +79,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -95,7 +92,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -109,7 +105,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -123,7 +118,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -137,7 +131,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -151,7 +144,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -177,4 +169,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

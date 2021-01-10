@@ -10,7 +10,7 @@ using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.RecordsManagement
 {
-    [Cmdlet(VerbsCommon.Get, "InPlaceRecordsManagement")]
+    [Cmdlet(VerbsCommon.Get, "PnPInPlaceRecordsManagement")]
     public class GetInPlaceRecordsManagement : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()

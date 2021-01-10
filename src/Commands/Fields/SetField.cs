@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace PnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Set, "Field")]
+    [Cmdlet(VerbsCommon.Set, "PnPField")]
     public class SetField : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Fields
             Field field = null;
             if (List != null)
             {
-                var list = List.GetList(SelectedWeb);
+                var list = List.GetList(CurrentWeb);
 
                 if (list == null)
                 {

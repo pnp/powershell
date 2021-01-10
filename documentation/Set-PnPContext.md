@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpcontext
+online version: https://pnp.github.io/powershell/cmdlets/set-pnpcontext
 schema: 2.0.0
 title: Set-PnPContext
 ---
@@ -14,7 +14,7 @@ Set the ClientContext
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPContext [-Context] <ClientContext> [<CommonParameters>]
 ```
 
@@ -42,7 +42,6 @@ The ClientContext to set
 ```yaml
 Type: ClientContext
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 1
@@ -53,4 +52,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

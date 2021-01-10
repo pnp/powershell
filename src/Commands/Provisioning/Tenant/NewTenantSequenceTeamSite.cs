@@ -5,7 +5,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommon.New, "TenantSequenceTeamSite")]
+    [Cmdlet(VerbsCommon.New, "PnPTenantSequenceTeamSite")]
     public class NewTenantSequenceTeamSite : PSCmdlet
     {
 

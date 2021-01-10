@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace PnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Set, "View")]
+    [Cmdlet(VerbsCommon.Set, "PnPView")]
     public class SetView : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]
@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Fields
             View view = null;
             if (List != null)
             {
-                list = List.GetList(SelectedWeb);
+                list = List.GetList(CurrentWeb);
                 if (list == null)
                 {
                     throw new PSArgumentException("List provided in the List argument could not be found", "List");

@@ -1,0 +1,1 @@
+docker build -t pnppowershell -f ./pnppowershell.dockerFile . --no-cache

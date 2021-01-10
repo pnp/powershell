@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Get, "Auditing")]
+    [Cmdlet(VerbsCommon.Get, "PnPAuditing")]
     public class GetAuditing : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()

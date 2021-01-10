@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Get, "PublishingImageRendition")]
+    [Cmdlet(VerbsCommon.Get, "PnPPublishingImageRendition")]
     public class GetPublishingImageRendition : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
@@ -16,11 +16,11 @@ namespace PnP.PowerShell.Commands.Publishing
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(Identity.GetImageRendition(SelectedWeb));
+                WriteObject(Identity.GetImageRendition(CurrentWeb));
             }
             else
             {
-                WriteObject(SelectedWeb.GetPublishingImageRenditions(), true);
+                WriteObject(CurrentWeb.GetPublishingImageRenditions(), true);
             }
         }
     }

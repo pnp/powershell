@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Remove, "IndexedProperty")]
+    [Cmdlet(VerbsCommon.Remove, "PnPIndexedProperty")]
     public class RemovedIndexedProperty : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands
             {
                 if (List != null)
                 {
-                    var list = List.GetList(SelectedWeb);
+                    var list = List.GetList(CurrentWeb);
                     if (list != null)
                     {
                         list.RemoveIndexedPropertyBagKey(Key);
@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands
                 }
                 else
                 {
-                    SelectedWeb.RemoveIndexedPropertyBagKey(Key);
+                    CurrentWeb.RemoveIndexedPropertyBagKey(Key);
                 }
             }
         }

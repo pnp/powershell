@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.InformationManagement
 {
 
-    [Cmdlet(VerbsCommon.Set, "ListInformationRightsManagement")]
+    [Cmdlet(VerbsCommon.Set, "PnPListInformationRightsManagement")]
     public class SetListInformationRightsManagement : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -69,7 +69,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(SelectedWeb, l => l.InformationRightsManagementSettings, l => l.IrmEnabled, l => l.IrmExpire, l => l.IrmReject);
+            var list = List.GetList(CurrentWeb, l => l.InformationRightsManagementSettings, l => l.IrmEnabled, l => l.IrmExpire, l => l.IrmReject);
             if (list == null)
                 throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 

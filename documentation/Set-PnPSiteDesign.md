@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpsitedesign
+online version: https://pnp.github.io/powershell/cmdlets/set-pnpsitedesign
 schema: 2.0.0
 title: Set-PnPSiteDesign
 ---
@@ -19,10 +19,10 @@ Updates a Site Design on the current tenant.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPSiteDesign -Identity <TenantSiteDesignPipeBind> [-Title <String>] [-SiteScriptIds <GuidPipeBind[]>]
  [-Description <String>] [-IsDefault] [-PreviewImageAltText <String>] [-PreviewImageUrl <String>]
- [-WebTemplate <SiteWebTemplate>] [-Version <Int32>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
+ [-WebTemplate <SiteWebTemplate>] [-Version <Int32>] [-Connection <PnPConnection>]  
  [<CommonParameters>]
 ```
 
@@ -68,7 +68,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -83,7 +82,6 @@ The description of the site design
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -98,7 +96,6 @@ The guid or an object representing the site design
 ```yaml
 Type: TenantSiteDesignPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -113,7 +110,6 @@ Specifies if the site design is a default site design
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -128,7 +124,6 @@ Sets the text for the preview image
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -143,7 +138,6 @@ Sets the url to the preview image
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -158,7 +152,6 @@ An array of guids of site scripts
 ```yaml
 Type: Guid[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -173,7 +166,6 @@ The title of the site design
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -188,7 +180,6 @@ Specifies the version of the design
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -203,7 +194,6 @@ Specifies the type of site to which this design applies
 ```yaml
 Type: SiteWebTemplate
 Parameter Sets: (All)
-Aliases:
 Accepted values: TeamSite, CommunicationSite
 
 Required: False
@@ -230,4 +220,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

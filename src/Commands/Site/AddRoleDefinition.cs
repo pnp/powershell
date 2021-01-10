@@ -7,7 +7,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Add, "RoleDefinition")]
+    [Cmdlet(VerbsCommon.Add, "PnPRoleDefinition")]
     public class AddRoleDefinition : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Site
             {
                 roleDefinition = ClientContext.Site.RootWeb.RoleDefinitions.GetByName(RoleName);
                 ClientContext.Load(roleDefinition);
-                ClientContext.ExecuteQuery();
+                ClientContext.ExecuteQueryRetry();
             }
             catch { }
             if (roleDefinition.ServerObjectIsNull == null)

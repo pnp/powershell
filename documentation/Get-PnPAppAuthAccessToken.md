@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpappauthaccesstoken
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpappauthaccesstoken
 schema: 2.0.0
 title: Get-PnPAppAuthAccessToken
 ---
@@ -14,7 +14,7 @@ Returns the access token
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPAppAuthAccessToken [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -38,7 +38,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -49,4 +48,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpknowledgehubsite
+online version: https://pnp.github.io/powershell/cmdlets/set-pnpknowledgehubsite
 schema: 2.0.0
 title: Set-PnPKnowledgeHubSite
 ---
@@ -19,7 +19,7 @@ Sets the Knowledge Hub Site for your tenant
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPKnowledgeHubSite -KnowledgeHubSiteUrl <String> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -29,7 +29,7 @@ Set-PnPKnowledgeHubSite -KnowledgeHubSiteUrl <String> [-Connection <PnPConnectio
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPKnowledgeHubSite -KnowledgeHubSiteUrl https://yoursite.sharepoint.com/sites/knowledge
+Set-PnPKnowledgeHubSite -KnowledgeHubSiteUrl "https://yoursite.sharepoint.com/sites/knowledge"
 ```
 
 Sets the Knowledge Hub Site for your tenant
@@ -42,7 +42,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -56,7 +55,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -67,4 +65,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -3,12 +3,13 @@ using PnP.Framework.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 using System.Collections.Generic;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Get, "Microsoft365Group")]
+    [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365Group")]
     [MicrosoftGraphApiPermissionCheck(MicrosoftGraphApiPermission.Group_Read_All | MicrosoftGraphApiPermission.Group_ReadWrite_All | MicrosoftGraphApiPermission.GroupMember_ReadWrite_All | MicrosoftGraphApiPermission.GroupMember_Read_All | MicrosoftGraphApiPermission.Directory_ReadWrite_All | MicrosoftGraphApiPermission.Directory_Read_All)]
     [PnPManagementShellScopes("Group.ReadWrite.All")]
     public class GetMicrosoft365Group : PnPGraphCmdlet
@@ -17,7 +18,11 @@ namespace PnP.PowerShell.Commands.Graph
         public Microsoft365GroupPipeBind Identity;
 
         [Parameter(Mandatory = false)]
+        [Obsolete("ExcludeSiteUrl is now the default behaviour. Use IncludeSiteUrl instead to include the site url of the underlying SharePoint site.")]
         public SwitchParameter ExcludeSiteUrl;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter IncludeSiteUrl;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter IncludeClassification;
@@ -35,8 +40,11 @@ namespace PnP.PowerShell.Commands.Graph
             }
             else
             {
+#pragma warning disable 0618
+                var includeSiteUrl = ParameterSpecified(nameof(ExcludeSiteUrl)) ? !ExcludeSiteUrl.ToBool() : IncludeSiteUrl.ToBool();
+#pragma warning restore 0618
                 // Retrieve all the groups
-                groups = UnifiedGroupsUtility.GetUnifiedGroups(AccessToken, includeSite: !ExcludeSiteUrl.IsPresent, includeClassification:IncludeClassification.IsPresent, includeHasTeam: IncludeHasTeam.IsPresent);
+                groups = UnifiedGroupsUtility.GetUnifiedGroups(AccessToken, includeSite: IncludeSiteUrl, includeClassification: IncludeClassification.IsPresent, includeHasTeam: IncludeHasTeam.IsPresent);
             }
 
             if (group != null)

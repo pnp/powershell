@@ -8,7 +8,7 @@ using Microsoft.Online.SharePoint.TenantManagement;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Set, "Tenant", DefaultParameterSetName = ParameterAttribute.AllParameterSets)]
+    [Cmdlet(VerbsCommon.Set, "PnPTenant", DefaultParameterSetName = ParameterAttribute.AllParameterSets)]
    
     public class SetTenant : PnPAdminCmdlet
     {
@@ -200,6 +200,12 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false, HelpMessage = "Boolean indicating if a news digest should automatically be sent to end users to inform them about news that they may have missed. On by default. For more information, see https://aka.ms/autonewsdigest")]
         public bool? EnableAutoNewsDigest;
+
+        [Parameter(Mandatory = false)]
+        public bool? CommentsOnListItemsDisabled;
+
+        [Parameter(Mandatory = false)]
+        public bool? CommentsOnFilesDisabled;
 
         protected override void ExecuteCmdlet()
         {
@@ -692,7 +698,7 @@ namespace PnP.PowerShell.Commands.Admin
                         Tenant.AllowEditing = AllowEditing.Value;
                         modified = true;
                     }
-                    else if (ShouldContinue("To set this parameter, you need to set the Set-SPOTenant -ConditionalAccessPolicy to AllowLimitedAccess. Would you like to set it now?", "Confirm"))
+                    else if (ShouldContinue("To set this parameter, you need to set the Set-PnPTenant -ConditionalAccessPolicy to AllowLimitedAccess. Would you like to set it now?", "Confirm"))
                     {
                         Tenant.ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
                         Tenant.AllowEditing = AllowEditing.Value;
@@ -775,6 +781,16 @@ namespace PnP.PowerShell.Commands.Admin
             if (EnableAutoNewsDigest.HasValue)
             {
                 Tenant.EnableAutoNewsDigest = EnableAutoNewsDigest.Value;
+                modified = true;
+            }
+            if (CommentsOnListItemsDisabled.HasValue)
+            {
+                Tenant.CommentsOnListItemsDisabled = CommentsOnListItemsDisabled.Value;
+                modified = true;
+            }
+            if (CommentsOnFilesDisabled.HasValue)
+            {
+                Tenant.CommentsOnFilesDisabled = CommentsOnFilesDisabled.Value;
                 modified = true;
             }
             if (modified)

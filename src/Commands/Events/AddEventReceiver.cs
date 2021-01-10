@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Events
 {
-    [Cmdlet(VerbsCommon.Add, "EventReceiver")]
+    [Cmdlet(VerbsCommon.Add, "PnPEventReceiver")]
     public class AddEventReceiver : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -33,12 +33,12 @@ namespace PnP.PowerShell.Commands.Events
         {
             if (ParameterSpecified(nameof(List)))
             {
-                var list = List.GetList(SelectedWeb);
+                var list = List.GetList(CurrentWeb);
                 WriteObject(list.AddRemoteEventReceiver(Name, Url, EventReceiverType, Synchronization, SequenceNumber, Force));
             }
             else
             {
-                WriteObject(SelectedWeb.AddRemoteEventReceiver(Name, Url, EventReceiverType, Synchronization, SequenceNumber, Force));
+                WriteObject(CurrentWeb.AddRemoteEventReceiver(Name, Url, EventReceiverType, Synchronization, SequenceNumber, Force));
             }
         }
     }

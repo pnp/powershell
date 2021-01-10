@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpuser
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpuser
 schema: 2.0.0
 title: Get-PnPUser
 ---
@@ -15,18 +15,18 @@ Returns site users of current web
 ## SYNTAX
 
 ### Identity based request (Default)
-```
-Get-PnPUser [-Identity <UserPipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+```powershell
+Get-PnPUser [-Identity <UserPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### With rights assigned
-```
-Get-PnPUser [-WithRightsAssigned] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+```powershell
+Get-PnPUser [-WithRightsAssigned] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### With rights assigned detailed
-```
-Get-PnPUser [-WithRightsAssignedDetailed] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+```powershell
+Get-PnPUser [-WithRightsAssignedDetailed] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -92,7 +92,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -107,7 +106,6 @@ User ID or login name
 ```yaml
 Type: UserPipeBind
 Parameter Sets: Identity based request
-Aliases:
 
 Required: False
 Position: Named
@@ -116,20 +114,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -WithRightsAssigned
 If provided, only users that currently have any kinds of access rights assigned to the current site collection will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.
@@ -137,7 +122,6 @@ If provided, only users that currently have any kinds of access rights assigned 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: With rights assigned
-Aliases:
 
 Required: False
 Position: Named
@@ -149,12 +133,9 @@ Accept wildcard characters: False
 ### -WithRightsAssignedDetailed
 If provided, only users that currently have any specific kind of access rights assigned to the current site, lists or listitems/documents will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: With rights assigned detailed
-Aliases:
 
 Required: False
 Position: Named
@@ -165,4 +146,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

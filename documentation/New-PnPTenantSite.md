@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/new-pnptenantsite
+online version: https://pnp.github.io/powershell/cmdlets/new-pnptenantsite
 schema: 2.0.0
 title: New-PnPTenantSite
 ---
@@ -19,7 +19,7 @@ Creates a new (classic) site collection for the current tenant
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPTenantSite -Title <String> -Url <String> -Owner <String> [-Lcid <UInt32>] [-Template <String>]
  -TimeZone <Int32> [-ResourceQuota <Double>] [-ResourceQuotaWarningLevel <Double>] [-StorageQuota <Int64>]
  [-StorageQuotaWarningLevel <Int64>] [-RemoveDeletedSite] [-Wait] [-Force] [-Connection <PnPConnection>]
@@ -34,7 +34,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
 
 ### EXAMPLE 1
 ```powershell
-New-PnPTenantSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Owner user@example.org -TimeZone 4 -Template STS#0
+New-PnPTenantSite -Title Contoso -Url "https://tenant.sharepoint.com/sites/contoso" -Owner user@example.org -TimeZone 4 -Template STS#0
 ```
 
 This will add a site collection with the title 'Contoso', the url 'https://tenant.sharepoint.com/sites/contoso', the timezone 'UTC+01:00',the owner 'user@example.org' and the template used will be STS#0, a TeamSite
@@ -54,7 +54,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -69,7 +68,6 @@ Do not ask for confirmation.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -84,7 +82,6 @@ Specifies the language of this site collection. For more information, see Locale
 ```yaml
 Type: UInt32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -99,7 +96,6 @@ Specifies the user name of the site collection's primary owner. The owner must b
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -111,12 +107,9 @@ Accept wildcard characters: False
 ### -RemoveDeletedSite
 Specifies if any existing site with the same URL should be removed from the recycle bin
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -131,7 +124,6 @@ Specifies the quota for this site collection in Sandboxed Solutions units. This 
 ```yaml
 Type: Double
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -146,7 +138,6 @@ Specifies the warning level for the resource quota. This value must not exceed t
 ```yaml
 Type: Double
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -161,7 +152,6 @@ Specifies the storage quota for this site collection in megabytes. This value mu
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -176,7 +166,6 @@ Specifies the warning level for the storage quota in megabytes. This value must 
 ```yaml
 Type: Int64
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -191,7 +180,6 @@ Specifies the site collection template type. Use the Get-PnPWebTemplates cmdlet 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -206,7 +194,6 @@ Use Get-PnPTimeZoneId to retrieve possible timezone values
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -221,7 +208,6 @@ Specifies the title of the new site collection
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -236,7 +222,6 @@ Specifies the full URL of the new site collection. It must be in a valid managed
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -250,7 +235,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -261,4 +245,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)[Locale IDs](https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint)[Resource Usage Limits on Sandboxed Solutions in SharePoint 2010](https://docs.microsoft.com/previous-versions/office/developer/sharepoint-2010/gg615462(v=office.14))[Creating on-premises site collections using CSOM](http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/import-pnptermset
+online version: https://pnp.github.io/powershell/cmdlets/import-pnptermset
 schema: 2.0.0
 title: Import-PnPTermSet
 ---
@@ -14,7 +14,7 @@ Imports a taxonomy term set from a file in the standard format.
 
 ## SYNTAX
 
-```
+```powershell
 Import-PnPTermSet -GroupName <String> -Path <String> [-TermSetId <Guid>] [-SynchronizeDeletions]
  [-IsOpen <Boolean>] [-Contact <String>] [-Owner <String>] [-TermStoreName <String>]
  [-Connection <PnPConnection>] [<CommonParameters>]
@@ -66,7 +66,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -81,7 +80,6 @@ Contact for the term set; if not specified, the existing setting is retained.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -96,7 +94,6 @@ Group to import the term set to; an error is returned if the group does not exis
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -111,7 +108,6 @@ Whether the term set should be marked open; if not specified, then the existing 
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -126,7 +122,6 @@ Owner for the term set; if not specified, the existing setting is retained.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -141,7 +136,6 @@ Local path to the file containing the term set to import, in the standard format
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -156,7 +150,6 @@ If specified, the import will remove any terms (and children) previously in the 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -171,7 +164,6 @@ GUID to use for the term set; if not specified, or the empty GUID, a random GUID
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -186,7 +178,6 @@ Term store to import into; if not specified the default term store is used.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -197,4 +188,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

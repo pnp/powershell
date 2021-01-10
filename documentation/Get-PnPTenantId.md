@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnptenantid
+online version: https://pnp.github.io/powershell/cmdlets/get-pnptenantid
 schema: 2.0.0
 title: Get-PnPTenantId
 ---
@@ -14,7 +14,7 @@ Returns the Tenant ID
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTenantId [-TenantUrl <String>] [<CommonParameters>]
 ```
 
@@ -31,7 +31,7 @@ Returns the current Tenant Id. A valid connection with Connect-PnPOnline is requ
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPTenantId -TenantUrl https://contoso.sharepoint.com
+Get-PnPTenantId -TenantUrl "https://contoso.sharepoint.com"
 ```
 
 Returns the Tenant ID for the specified tenant. Can be executed without a connecting first with Connect-PnPOnline
@@ -43,7 +43,6 @@ Returns the Tenant ID for the specified tenant. Can be executed without a connec
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -54,4 +53,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

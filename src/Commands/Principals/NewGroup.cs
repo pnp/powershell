@@ -6,7 +6,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.New, "Group")]
+    [Cmdlet(VerbsCommon.New, "PnPGroup")]
     public class NewGroup : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            var web = SelectedWeb;
+            var web = CurrentWeb;
 
             var groupCI = new GroupCreationInformation { Title = Title, Description = Description };
 

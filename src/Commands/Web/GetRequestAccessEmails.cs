@@ -5,12 +5,12 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "RequestAccessEmails")]
+    [Cmdlet(VerbsCommon.Get, "PnPRequestAccessEmails")]
     public class GetRequestAccessEmails : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()
         {
-            var emails = SelectedWeb.GetRequestAccessEmails();
+            var emails = CurrentWeb.GetRequestAccessEmails();
             WriteObject(emails, true);
         }
     }

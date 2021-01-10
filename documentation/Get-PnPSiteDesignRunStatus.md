@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpsitedesignrunstatus
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpsitedesignrunstatus
 schema: 2.0.0
 title: Get-PnPSiteDesignRunStatus
 ---
@@ -19,8 +19,8 @@ Retrieves and displays a list of all site script actions executed for a specifie
 
 ## SYNTAX
 
-```
-Get-PnPSiteDesignRunStatus -Run <TenantSiteDesignRun> [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
+```powershell
+Get-PnPSiteDesignRunStatus -Run <TenantSiteDesignRun> [-Connection <PnPConnection>]  
  [<CommonParameters>]
 ```
 
@@ -59,7 +59,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -74,7 +73,6 @@ The site design run for the desired set of script action details.
 ```yaml
 Type: TenantSiteDesignRun
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -100,4 +98,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

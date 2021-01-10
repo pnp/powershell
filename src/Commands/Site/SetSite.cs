@@ -12,7 +12,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Set, "Site")]
+    [Cmdlet(VerbsCommon.Set, "PnPSite")]
     public class SetSite : PnPSharePointCmdlet
     {
 
@@ -270,7 +270,7 @@ namespace PnP.PowerShell.Commands.Site
                     context.Load(office365Tenant);
                     context.ExecuteQueryRetry();
                     office365Tenant.DisableSharingForNonOwnersOfSite(siteUrl);
-                    context.ExecuteQuery();
+                    context.ExecuteQueryRetry();
                 }
             }
         }

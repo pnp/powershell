@@ -5,49 +5,52 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.InformationManagement
 {
-    [Cmdlet(VerbsCommon.Get, "Label")]
-    
-    
-
-    public class GetLabel : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPLabel")]
+    public class GetLabel : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter ValuesOnly;
+        [Alias("ValuesOnly")]
+        public SwitchParameter Raw;
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(SelectedWeb);
-            if (list != null)
+            if (!ParameterSpecified(nameof(List)))
             {
-                var listUrl = list.RootFolder.ServerRelativeUrl;
-                var label = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetListComplianceTag(ClientContext, listUrl);
-                ClientContext.ExecuteQueryRetry();
-
-                if (label.Value == null)
-                {
-                    WriteWarning("No label found for the specified library.");
-                }
-                else
-                {
-                    if (ParameterSpecified(nameof(ValuesOnly)))
-                    {
-                        WriteObject(label.Value);
-                    }
-                    else
-                    {
-                        WriteObject("The label '" + label.Value.TagName + "' is set to the specified list or library. ");
-                        // There is no property yet that exposes if the SyncToItems is set or not.. :(
-                        WriteObject("Block deletion: " + label.Value.BlockDelete.ToString());
-                        WriteObject("Block editing: " + label.Value.BlockEdit.ToString());
-                    }
-                }
+                
+                var tags = PnPContext.Site.GetAvailableComplianceTags();
+                WriteObject(tags, true);
             }
             else
             {
-                WriteWarning("List or library not found.");
+                var list = List.GetList(PnPContext);
+                if (null != list)
+                {
+                    var tag = list.GetComplianceTag();
+                    if (null == tag)
+                    {
+                        WriteWarning("No label found for the specified list/library.");
+                    }
+                    else
+                    {
+                        if (ParameterSpecified(nameof(Raw)))
+                        {
+                            WriteObject(tag);
+                        }
+                        else
+                        {
+                            WriteObject($"The label '{tag.TagName}' is set to the specified list or library. ");
+                            WriteObject($"Block deletion: '{tag.BlockDelete}'");
+                            WriteObject($"Block editing: '{tag.BlockEdit}'");
+                        }
+                    }
+                }
+                else
+                {
+                    throw new PSArgumentException("List not found");
+                }
             }
         }
     }

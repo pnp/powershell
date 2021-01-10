@@ -1,0 +1,6 @@
+<div class="hidden-sm col-md-2" role="complementary">
+  <div class="sideaffix">
+    <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+    </nav>
+  </div>
+</div>

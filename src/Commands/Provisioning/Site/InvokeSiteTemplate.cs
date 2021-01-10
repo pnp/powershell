@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "SiteTemplate")]
+    [Cmdlet(VerbsLifecycle.Invoke, "PnPSiteTemplate")]
     public class InvokeSiteTemplate : PnPWebCmdlet
     {
         private ProgressRecord progressRecord = new ProgressRecord(0, "Activity", "Status");
@@ -68,7 +68,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.EnsureProperty(w => w.Url);
+            CurrentWeb.EnsureProperty(w => w.Url);
             ProvisioningTemplate provisioningTemplate;
 
             FileConnectorBase fileConnector;
@@ -246,7 +246,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 if (message != null)
                 {
                     var percentage = Convert.ToInt32((100 / Convert.ToDouble(total)) * Convert.ToDouble(step));
-                    progressRecord.Activity = $"Applying template to {SelectedWeb.Url}";
+                    progressRecord.Activity = $"Applying template to {CurrentWeb.Url}";
                     progressRecord.StatusDescription = message;
                     progressRecord.PercentComplete = percentage;
                     progressRecord.RecordType = ProgressRecordType.Processing;
@@ -332,11 +332,11 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 // Get Azure AD Token
                 if (PnPConnection.CurrentConnection != null)
                 {
-                    var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                    var graphAccessToken = await PnPConnection.CurrentConnection.TryGetAccessTokenAsync(Enums.TokenAudience.MicrosoftGraph);
                     if (graphAccessToken != null)
                     {
                         // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                        return await Task.FromResult(graphAccessToken);
+                        return graphAccessToken;
 
                     }
                 }
@@ -344,19 +344,26 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 if (PnPConnection.CurrentConnection.PSCredential != null)
                 {
                     // Using normal credentials
-                    return await Task.FromResult(TokenHandler.AcquireToken(resource, null));
+                    return await TokenHandler.AcquireTokenAsync(resource, null);
                 }
                 else
                 {
                     // No token...
-                    throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
+                    if (resource.ToLower().Contains(".sharepoint."))
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        throw new PSInvalidOperationException($"Your template contains artifacts that require an access token for {resource}. Either connect with a clientid which the appropriate permissions, or use credentials with Connect-PnPOnline after providing consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess. See https://pnp.github.io/powershell/articles/authentication.html");
+                    }
                 }
             }))
             {
-                SelectedWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
+                CurrentWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
             }
 
-            WriteProgress(new ProgressRecord(0, $"Applying template to {SelectedWeb.Url}", " ") { RecordType = ProgressRecordType.Completed });
+            WriteProgress(new ProgressRecord(0, $"Applying template to {CurrentWeb.Url}", " ") { RecordType = ProgressRecordType.Completed });
         }
     }
 }

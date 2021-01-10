@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpsitescriptfromweb
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpsitescriptfromweb
 schema: 2.0.0
 title: Get-PnPSiteScriptFromWeb
 ---
@@ -20,16 +20,16 @@ Generates a Site Script from an existing site
 ## SYNTAX
 
 ### All components
-```
+```powershell
 Get-PnPSiteScriptFromWeb -Url <String> [-Lists <String[]>] [-IncludeAll] [-Connection <PnPConnection>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+   [<CommonParameters>]
 ```
 
 ### Specific components
-```
+```powershell
 Get-PnPSiteScriptFromWeb -Url <String> [-Lists <String[]>] [-IncludeBranding] [-IncludeLinksToExportedItems]
  [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -39,21 +39,21 @@ This command allows a Site Script to be generated off of an existing site on you
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPSiteScriptFromWeb -Url https://contoso.sharepoint.com/sites/teamsite -IncludeAll
+Get-PnPSiteScriptFromWeb -Url "https://contoso.sharepoint.com/sites/teamsite" -IncludeAll
 ```
 
 Returns the generated Site Script JSON containing all supported components from the site at the provided Url
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPSiteScriptFromWeb -Url https://contoso.sharepoint.com/sites/teamsite -IncludeAll -Lists "Shared Documents","Lists\MyList"
+Get-PnPSiteScriptFromWeb -Url "https://contoso.sharepoint.com/sites/teamsite" -IncludeAll -Lists "Shared Documents","Lists\MyList"
 ```
 
 Returns the generated Site Script JSON containing all supported components from the site at the provided Url including the lists "Shared Documents" and "MyList"
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPSiteScriptFromWeb -Url https://contoso.sharepoint.com/sites/teamsite -IncludeBranding -IncludeLinksToExportedItems
+Get-PnPSiteScriptFromWeb -Url "https://contoso.sharepoint.com/sites/teamsite" -IncludeBranding -IncludeLinksToExportedItems
 ```
 
 Returns the generated Site Script JSON containing the branding and navigation links from the site at the provided Url
@@ -81,7 +81,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -96,7 +95,6 @@ If specified will include all supported components into the Site Script
 ```yaml
 Type: SwitchParameter
 Parameter Sets: All components
-Aliases:
 
 Required: False
 Position: Named
@@ -111,7 +109,6 @@ If specified will include the branding of the site into the Site Script
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific components
-Aliases:
 
 Required: False
 Position: Named
@@ -126,7 +123,6 @@ If specified will include navigation links into the Site Script
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific components
-Aliases:
 
 Required: False
 Position: Named
@@ -141,7 +137,6 @@ If specified will include the regional settings into the Site Script
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific components
-Aliases:
 
 Required: False
 Position: Named
@@ -156,7 +151,6 @@ If specified will include the external sharing configuration into the Site Scrip
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific components
-Aliases:
 
 Required: False
 Position: Named
@@ -171,7 +165,6 @@ If specified will include the branding of the site into the Site Script
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Specific components
-Aliases:
 
 Required: False
 Position: Named
@@ -186,7 +179,6 @@ Allows specifying one or more site relative URLs of lists that should be include
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -201,7 +193,6 @@ Specifies the URL of the site to generate a Site Script from
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -227,4 +218,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

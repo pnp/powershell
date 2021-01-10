@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnptenantsite
+online version: https://pnp.github.io/powershell/cmdlets/remove-pnptenantsite
 schema: 2.0.0
 title: Remove-PnPTenantSite
 ---
@@ -19,7 +19,7 @@ Removes a site collection
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPTenantSite [-Url] <String> [-SkipRecycleBin] [-Force] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -31,21 +31,21 @@ Removes a site collection which is listed in your tenant administration site.
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso
+Remove-PnPTenantSite -Url "https://tenant.sharepoint.com/sites/contoso"
 ```
 
 This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso'  and put it in the recycle bin.
 
 ### EXAMPLE 2
 ```powershell
-Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin
+Remove-PnPTenantSite -Url "https://tenant.sharepoint.com/sites/contoso" -Force -SkipRecycleBin
 ```
 
 This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' with force and it will skip the recycle bin.
 
 ### EXAMPLE 3
 ```powershell
-Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -FromRecycleBin
+Remove-PnPTenantSite -Url "https://tenant.sharepoint.com/sites/contoso" -FromRecycleBin
 ```
 
 This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin.
@@ -58,7 +58,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -73,7 +72,6 @@ Do not ask for confirmation.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -84,8 +82,6 @@ Accept wildcard characters: False
 
 ### -SkipRecycleBin
 Do not add to the tenant scoped recycle bin when selected.
-
-Only applicable to: SharePoint Online
 
 ```yaml
 Type: SwitchParameter
@@ -105,7 +101,6 @@ Specifies the full URL of the site collection that needs to be deleted
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -116,4 +111,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

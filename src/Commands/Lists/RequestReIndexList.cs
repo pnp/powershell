@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsLifecycle.Request, "ReIndexList")]
+    [Cmdlet(VerbsLifecycle.Request, "PnPReIndexList")]
     public class RequestReIndexList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            var list = Identity.GetList(SelectedWeb);
+            var list = Identity.GetList(CurrentWeb);
 
             if (list != null)
             {

@@ -8,7 +8,7 @@ using File = Microsoft.SharePoint.Client.File;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Get, "File", DefaultParameterSetName = "Return as file object")]
+    [Cmdlet(VerbsCommon.Get, "PnPFile", DefaultParameterSetName = "Return as file object")]
     public class GetFile : PnPWebCmdlet
     {
         private const string URLTOPATH = "Save to local path";
@@ -62,7 +62,7 @@ namespace PnP.PowerShell.Commands.Files
                 }
             }
 
-            var webUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             if (!Url.ToLower().StartsWith(webUrl.ToLower()))
             {
@@ -79,7 +79,7 @@ namespace PnP.PowerShell.Commands.Files
             {
                 case URLTOPATH:
 
-                    SaveFileToLocal(SelectedWeb, serverRelativeUrl, Path, Filename, (fileToSave) =>
+                    SaveFileToLocal(CurrentWeb, serverRelativeUrl, Path, Filename, (fileToSave) =>
                     {
                         if (!Force)
                         {
@@ -89,14 +89,15 @@ namespace PnP.PowerShell.Commands.Files
                     });
                     break;
                 case URLASFILEOBJECT:
-                    file = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+                    file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
                     try
                     {
                         ClientContext.Load(file, f => f.Author, f => f.Length, f => f.ModifiedBy, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
                         ClientContext.ExecuteQueryRetry();
                     }                    
-                    catch (ServerException e) when (e.Message == "User cannot be found.")
+                    catch (ServerException)
                     {
+                        // Assume the cause of the exception is that a principal cannot be found and try again without:
                         // Fallback in case the creator or person having last modified the file no longer exists in the environment such that the file can still be downloaded
                         ClientContext.Load(file, f => f.Length, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
                         ClientContext.ExecuteQueryRetry();
@@ -105,7 +106,7 @@ namespace PnP.PowerShell.Commands.Files
                     WriteObject(file);
                     break;
                 case URLASLISTITEM:
-                    file = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+                    file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
 
                     ClientContext.Load(file, f => f.Exists, f => f.ListItemAllFields);
 
@@ -123,7 +124,7 @@ namespace PnP.PowerShell.Commands.Files
                     }
                     break;
                 case URLASSTRING:
-                    WriteObject(SelectedWeb.GetFileAsString(serverRelativeUrl));
+                    WriteObject(CurrentWeb.GetFileAsString(serverRelativeUrl));
                     break;
             }
         }

@@ -5,7 +5,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Remove, "PropertyBagValue")]
+    [Cmdlet(VerbsCommon.Remove, "PnPPropertyBagValue")]
     public class RemovePropertyBagValue : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
@@ -21,20 +21,20 @@ namespace PnP.PowerShell.Commands
         {
             if (string.IsNullOrEmpty(Folder))
             {
-                if (SelectedWeb.PropertyBagContainsKey(Key))
+                if (CurrentWeb.PropertyBagContainsKey(Key))
                 {
                     if (Force || ShouldContinue(string.Format(Properties.Resources.Delete0, Key), Properties.Resources.Confirm))
                     {
-                        SelectedWeb.RemovePropertyBagValue(Key);
+                        CurrentWeb.RemovePropertyBagValue(Key);
                     }
                 }
             }
             else
             {
-                SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
-                var folderUrl = UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder);
-                var folder = SelectedWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
+                var folderUrl = UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, Folder);
+                var folder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
 
                 folder.EnsureProperty(f => f.Properties);
 

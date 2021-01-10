@@ -6,13 +6,14 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.ContentTypes
 {
-    [Cmdlet(VerbsCommon.Add, "FieldToContentType")]
+    [Cmdlet(VerbsCommon.Add, "PnPFieldToContentType")]
     public class AddFieldToContentType : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
         public FieldPipeBind Field;
 
         [Parameter(Mandatory = true)]
+        [ValidateNotNullOrEmpty]
         public ContentTypePipeBind ContentType;
 
         [Parameter(Mandatory = false)]
@@ -28,45 +29,24 @@ namespace PnP.PowerShell.Commands.ContentTypes
             {
                 if (Field.Id != Guid.Empty)
                 {
-                    field = SelectedWeb.Fields.GetById(Field.Id);
+                    field = CurrentWeb.Fields.GetById(Field.Id);
                 }
                 else if (!string.IsNullOrEmpty(Field.Name))
                 {
-                    field = SelectedWeb.Fields.GetByInternalNameOrTitle(Field.Name);
+                    field = CurrentWeb.Fields.GetByInternalNameOrTitle(Field.Name);
                 }
                 ClientContext.Load(field);
                 ClientContext.ExecuteQueryRetry();
             }
-            if (field != null)
+            if (field == null)
             {
-                if (ContentType.ContentType != null)
-                {
-                    SelectedWeb.AddFieldToContentType(ContentType.ContentType, field, Required, Hidden);
-                }
-                else
-                {
-                    ContentType ct;
-                    if (!string.IsNullOrEmpty(ContentType.Id))
-                    {
-                        ct = SelectedWeb.GetContentTypeById(ContentType.Id);
-                      
-                    }
-                    else
-                    {
-                        ct = SelectedWeb.GetContentTypeByName(ContentType.Name);
-                    }
-                    if (ct != null)
-                    {
-                        SelectedWeb.AddFieldToContentType(ct, field, Required, Hidden);
-                    }
-                }
+                throw new PSArgumentException("Field not found", nameof(Field));
             }
-            else
+            var ct = ContentType.GetContentTypeOrWarn(this, CurrentWeb);
+            if (ct != null)
             {
-                throw new Exception("Field not found");
+                CurrentWeb.AddFieldToContentType(ct, field, Required, Hidden);
             }
         }
-
-
     }
 }

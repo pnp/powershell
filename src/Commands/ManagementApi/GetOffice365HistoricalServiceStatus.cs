@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.ManagementApi
 {
-    [Cmdlet(VerbsCommon.Get, "Office365HistoricalServiceStatus")]
+    [Cmdlet(VerbsCommon.Get, "PnPOffice365HistoricalServiceStatus")]
     [OfficeManagementApiPermissionCheck(OfficeManagementApiPermission.ServiceHealth_Read)]
     [PnPManagementShellScopes("ServiceHealth.Read")]
     public class GetOffice365HistoricalServiceStatus : PnPOfficeManagementApiCmdlet
@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
 
         protected override void ExecuteCmdlet()
         {
-            var collection = GraphHelper.GetAsync<GraphCollection<ManagementApiServiceStatus>>(HttpClient, $"{ApiRootUrl}ServiceComms/HistoricalStatus{(ParameterSpecified(nameof(Workload)) ? $"?$filter=Workload eq '{Workload.Value}'" : "")}", AccessToken, false).GetAwaiter().GetResult();
+            var collection = GraphHelper.GetAsync<RestResultCollection<ManagementApiServiceStatus>>(HttpClient, $"{ApiRootUrl}ServiceComms/HistoricalStatus{(ParameterSpecified(nameof(Workload)) ? $"?$filter=Workload eq '{Workload.Value}'" : "")}", AccessToken, false).GetAwaiter().GetResult();
 
             if (collection != null)
             {

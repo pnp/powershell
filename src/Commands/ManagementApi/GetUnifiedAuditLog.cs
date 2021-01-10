@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using System.Text.Json;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model;
@@ -9,7 +10,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.ManagementApi
 {
-    [Cmdlet(VerbsCommon.Get, "UnifiedAuditLog")]
+    [Cmdlet(VerbsCommon.Get, "PnPUnifiedAuditLog")]
     [OfficeManagementApiPermissionCheck(OfficeManagementApiPermission.ActivityFeed_Read)]
     [PnPManagementShellScopes("ActivityFeed.Read")]
     public class GetUnifiedAuditLog : PnPOfficeManagementApiCmdlet
@@ -86,13 +87,29 @@ namespace PnP.PowerShell.Commands.ManagementApi
             {
                 url += $"&endTime={EndTime:yyyy-MM-ddThh:mm:ss}";
             }
-            
-            var subscriptionContents = GraphHelper.GetAsync<IEnumerable<ManagementApiSubscriptionContent>>(HttpClient, url, AccessToken).GetAwaiter().GetResult();
-            if(subscriptionContents != null)
+
+            List<ManagementApiSubscriptionContent> subscriptionContents = new List<ManagementApiSubscriptionContent>();
+            var subscriptionResponse = GraphHelper.GetResponseAsync(HttpClient, url, AccessToken).GetAwaiter().GetResult();
+            if (subscriptionResponse.IsSuccessStatusCode)
             {
-                foreach(var content in subscriptionContents)
+                var content = subscriptionResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                subscriptionContents.AddRange(System.Text.Json.JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content, new System.Text.Json.JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+                while (subscriptionResponse.Headers.Contains("NextPageUri"))
                 {
-                    var logs = GraphHelper.GetAsync<IEnumerable<ManagementApiUnifiedLogRecord>>(HttpClient, content.ContentUri, AccessToken,false).GetAwaiter().GetResult();
+                    subscriptionResponse = GraphHelper.GetResponseAsync(HttpClient, subscriptionResponse.Headers.GetValues("NextPageUri").First(), AccessToken).GetAwaiter().GetResult();
+                    if (subscriptionResponse.IsSuccessStatusCode)
+                    {
+                        content = subscriptionResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                        subscriptionContents.AddRange(System.Text.Json.JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content));
+                    }
+                }
+            }
+            if (subscriptionContents.Any())
+            {
+                foreach (var content in subscriptionContents)
+                {
+
+                    var logs = GraphHelper.GetAsync<IEnumerable<ManagementApiUnifiedLogRecord>>(HttpClient, content.ContentUri, AccessToken, false).GetAwaiter().GetResult();
                     WriteObject(logs, true);
                 }
             }

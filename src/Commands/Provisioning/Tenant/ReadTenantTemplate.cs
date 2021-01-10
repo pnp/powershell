@@ -10,7 +10,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommunications.Read, "TenantTemplate")]
+    [Cmdlet(VerbsCommunications.Read, "PnPTenantTemplate")]
     public class ReadTenantTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

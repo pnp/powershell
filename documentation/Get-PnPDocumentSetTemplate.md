@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpdocumentsettemplate
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpdocumentsettemplate
 schema: 2.0.0
 title: Get-PnPDocumentSetTemplate
 ---
@@ -14,8 +14,8 @@ Retrieves a document set template
 
 ## SYNTAX
 
-```
-Get-PnPDocumentSetTemplate [-Identity] <DocumentSetPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+```powershell
+Get-PnPDocumentSetTemplate [-Identity] <DocumentSetPipeBind> [-Connection <PnPConnection>]
  [-Includes <String[]>] [<CommonParameters>]
 ```
 
@@ -45,7 +45,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -60,7 +59,6 @@ Either specify a name, an id, a document set template object or a content type o
 ```yaml
 Type: DocumentSetPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -69,21 +67,8 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Web
-The web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

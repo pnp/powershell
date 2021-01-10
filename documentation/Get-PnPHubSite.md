@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnphubsite
+online version: https://pnp.github.io/powershell/cmdlets/get-pnphubsite
 schema: 2.0.0
 title: Get-PnPHubSite
 ---
@@ -19,7 +19,7 @@ Retrieve all or a specific hubsite.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPHubSite [[-Identity] <HubSitePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -36,7 +36,7 @@ Returns all hubsite properties
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPHubSite -Identity https://contoso.sharepoint.com/sites/myhubsite
+Get-PnPHubSite -Identity "https://contoso.sharepoint.com/sites/myhubsite"
 ```
 
 Returns the properties of the specified hubsite
@@ -49,7 +49,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -64,7 +63,6 @@ Accept wildcard characters: False
 ```yaml
 Type: HubSitePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -75,4 +73,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

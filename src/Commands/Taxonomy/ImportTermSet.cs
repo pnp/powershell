@@ -6,7 +6,7 @@ using Microsoft.SharePoint.Client.Taxonomy;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsData.Import, "TermSet")]
+    [Cmdlet(VerbsData.Import, "PnPTermSet")]
     public class ImportTermSet : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true)]

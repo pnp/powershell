@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.RecycleBin
 {
-    [Cmdlet(VerbsCommon.Get, "TenantRecycleBinItem", DefaultParameterSetName = "All")]
+    [Cmdlet(VerbsCommon.Get, "PnPTenantRecycleBinItem", DefaultParameterSetName = "All")]
     public class GetTenantRecycleBinItems : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()

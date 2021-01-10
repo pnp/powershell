@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "IndexedPropertyKeys")]
+    [Cmdlet(VerbsCommon.Get, "PnPIndexedPropertyKeys")]
     public class GetIndexedProperties : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands
         {
             if (List != null)
             {
-                var list = List.GetList(SelectedWeb);
+                var list = List.GetList(CurrentWeb);
                 if (list != null)
                 {
                     var keys = list.GetIndexedPropertyBagKeys();
@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands
             }
             else
             {
-                var keys = SelectedWeb.GetIndexedPropertyBagKeys();
+                var keys = CurrentWeb.GetIndexedPropertyBagKeys();
                 WriteObject(keys);
             }
         }

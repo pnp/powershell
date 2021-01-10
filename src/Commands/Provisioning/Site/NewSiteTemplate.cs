@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsCommon.New, "SiteTemplate")]
+    [Cmdlet(VerbsCommon.New, "PnPSiteTemplate")]
     public class NewSiteTemplate : PSCmdlet
     {
         protected override void ProcessRecord()

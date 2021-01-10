@@ -11,7 +11,7 @@ using File = Microsoft.SharePoint.Client.File;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Copy, "File")]
+    [Cmdlet(VerbsCommon.Copy, "PnPFile")]
     public class CopyFile : PnPWebCmdlet
     {
         private ProgressRecord _progressFolder = new ProgressRecord(0, "Activity", "Status") { Activity = "Copying folder" };
@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            var webServerRelativeUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var webServerRelativeUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             if (!SourceUrl.StartsWith("/"))
             {
@@ -52,8 +52,9 @@ namespace PnP.PowerShell.Commands.Files
                 TargetUrl = UrlUtility.Combine(webServerRelativeUrl, TargetUrl);
             }
 
+            string sourceFolder = SourceUrl.Substring(0, SourceUrl.LastIndexOf('/'));
             Uri currentContextUri = new Uri(ClientContext.Url);
-            Uri sourceUri = new Uri(currentContextUri, SourceUrl);
+            Uri sourceUri = new Uri(currentContextUri, sourceFolder);
             Uri sourceWebUri = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, sourceUri);
             Uri targetUri = new Uri(currentContextUri, TargetUrl);
             Uri targetWebUri = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, targetUri);

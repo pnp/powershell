@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/test-pnptenanttemplate
+online version: https://pnp.github.io/powershell/cmdlets/test-pnptenanttemplate
 schema: 2.0.0
 title: Test-PnPTenantTemplate
 ---
@@ -14,8 +14,8 @@ Tests a tenant template for invalid references
 
 ## SYNTAX
 
-```
-Test-PnPTenantTemplate -Template <ProvisioningHierarchy> [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
+```powershell
+Test-PnPTenantTemplate -Template <ProvisioningHierarchy> [-Connection <PnPConnection>]  
  [<CommonParameters>]
 ```
 
@@ -50,12 +50,9 @@ Accept wildcard characters: False
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -67,12 +64,9 @@ Accept wildcard characters: False
 ### -Template
 The in-memory template to test
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: ProvisioningHierarchy
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -98,4 +92,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

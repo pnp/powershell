@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Get, "Group",DefaultParameterSetName="All")]
+    [Cmdlet(VerbsCommon.Get, "PnPGroup", DefaultParameterSetName = "All")]
     public class GetGroup : PnPWebRetrievalsCmdlet<Group>
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByName")]
@@ -25,35 +25,35 @@ namespace PnP.PowerShell.Commands.Principals
         {
             if (ParameterSetName == "ByName")
             {
-                Group group = Identity.GetGroup(SelectedWeb);
+                Group group = Identity.GetGroup(CurrentWeb);
                 WriteObject(group);
             }
             else if (ParameterSetName == "Members")
             {
-                ClientContext.Load(SelectedWeb.AssociatedMemberGroup);
-                ClientContext.Load(SelectedWeb.AssociatedMemberGroup.Users);
+                ClientContext.Load(CurrentWeb.AssociatedMemberGroup);
+                ClientContext.Load(CurrentWeb.AssociatedMemberGroup.Users);
                 ClientContext.ExecuteQueryRetry();
-                WriteObject(SelectedWeb.AssociatedMemberGroup);
+                WriteObject(CurrentWeb.AssociatedMemberGroup);
             }
             else if (ParameterSetName == "Visitors")
             {
-                ClientContext.Load(SelectedWeb.AssociatedVisitorGroup);
-                ClientContext.Load(SelectedWeb.AssociatedVisitorGroup.Users);
+                ClientContext.Load(CurrentWeb.AssociatedVisitorGroup);
+                ClientContext.Load(CurrentWeb.AssociatedVisitorGroup.Users);
                 ClientContext.ExecuteQueryRetry();
-                WriteObject(SelectedWeb.AssociatedVisitorGroup);
+                WriteObject(CurrentWeb.AssociatedVisitorGroup);
             }
             else if (ParameterSetName == "Owners")
             {
-                ClientContext.Load(SelectedWeb.AssociatedOwnerGroup);
-                ClientContext.Load(SelectedWeb.AssociatedOwnerGroup.Users);
+                ClientContext.Load(CurrentWeb.AssociatedOwnerGroup);
+                ClientContext.Load(CurrentWeb.AssociatedOwnerGroup.Users);
                 ClientContext.ExecuteQueryRetry();
-                WriteObject(SelectedWeb.AssociatedOwnerGroup);
+                WriteObject(CurrentWeb.AssociatedOwnerGroup);
             }
             else if (ParameterSetName == "All")
             {
-                var groups = ClientContext.LoadQuery(SelectedWeb.SiteGroups.IncludeWithDefaultProperties(g => g.Users));
+                var groups = ClientContext.LoadQuery(CurrentWeb.SiteGroups.IncludeWithDefaultProperties(g => g.Users, g => g.Title, g => g.OwnerTitle, g => g.Owner.LoginName, g => g.LoginName));
                 ClientContext.ExecuteQueryRetry();
-                WriteObject(groups,true);
+                WriteObject(groups, true);
             }
 
         }

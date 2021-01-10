@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpsiteclassification
+online version: https://pnp.github.io/powershell/cmdlets/add-pnpsiteclassification
 schema: 2.0.0
 title: Add-PnPSiteClassification
 ---
@@ -19,9 +19,8 @@ Adds one ore more site classification values to the list of possible values
 
 ## SYNTAX
 
-```
-Add-PnPSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]>
- [-ByPassPermissionCheck] [<CommonParameters>]
+```powershell
+Add-PnPSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,27 +43,11 @@ Adds the "Top Secret" and the "For Your Eyes Only" classification to the already
 
 ## PARAMETERS
 
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Classifications
 
 ```yaml
 Type: System.Collections.Generic.List`1[System.String]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -75,4 +58,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

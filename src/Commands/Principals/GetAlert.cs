@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Get, "Alert")]
+    [Cmdlet(VerbsCommon.Get, "PnPAlert")]
     public class GetAlert : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Principals
             List list = null;
             if (List != null)
             {
-                list = List.GetList(SelectedWeb);
+                list = List.GetList(CurrentWeb);
             }
 
             var alert = new AlertCreationInformation();
@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Principals
             }
             else
             {
-                user = SelectedWeb.CurrentUser;
+                user = CurrentWeb.CurrentUser;
             }
 
             user.EnsureProperty(u => u.Alerts.IncludeWithDefaultProperties(a => a.ListID));

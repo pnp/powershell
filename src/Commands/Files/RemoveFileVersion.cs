@@ -8,7 +8,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Remove, "FileVersion", DefaultParameterSetName = "Return as file object")]
+    [Cmdlet(VerbsCommon.Remove, "PnPFileVersion", DefaultParameterSetName = "Return as file object")]
     public class RemoveFileVersion : PnPWebCmdlet
     {
         private const string ParameterSetName_BYID = "By Id";
@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Files
         {
             var serverRelativeUrl = string.Empty;
 
-            var webUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             if (!Url.ToLower().StartsWith(webUrl.ToLower()))
             {
@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.Files
 
             File file;
 
-            file = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+            file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
 
             ClientContext.Load(file, f => f.Exists, f => f.Versions.IncludeWithDefaultProperties(i => i.CreatedBy));
             ClientContext.ExecuteQueryRetry();

@@ -8,7 +8,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Add, "ApplicationCustomizer")]
+    [Cmdlet(VerbsCommon.Add, "PnPApplicationCustomizer")]
     public class AddApplicationCustomizer : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Branding
             switch (Scope)
             {
                 case CustomActionScope.Web:
-                    SelectedWeb.AddCustomAction(ca);
+                    CurrentWeb.AddCustomAction(ca);
                     break;
 
                 case CustomActionScope.Site:

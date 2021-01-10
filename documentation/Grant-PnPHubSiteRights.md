@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/grant-pnphubsiterights
+online version: https://pnp.github.io/powershell/cmdlets/grant-pnphubsiterights
 schema: 2.0.0
 title: Grant-PnPHubSiteRights
 ---
@@ -19,7 +19,7 @@ Grant additional permissions to the permissions already in place to associate si
 
 ## SYNTAX
 
-```
+```powershell
 Grant-PnPHubSiteRights [-Identity] <HubSitePipeBind> -Principals <String[]> [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -30,7 +30,7 @@ Grant-PnPHubSiteRights [-Identity] <HubSitePipeBind> -Principals <String[]> [-Co
 
 ### EXAMPLE 1
 ```powershell
-Grant-PnPHubSiteRights -Identity https://contoso.sharepoint.com/sites/hubsite -Principals "myuser@mydomain.com","myotheruser@mydomain.com"
+Grant-PnPHubSiteRights -Identity "https://contoso.sharepoint.com/sites/hubsite" -Principals "myuser@mydomain.com","myotheruser@mydomain.com"
 ```
 
 This example shows how to grant rights to myuser and myotheruser to associate their sites with the provided Hub Site
@@ -43,7 +43,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -73,7 +72,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -84,4 +82,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

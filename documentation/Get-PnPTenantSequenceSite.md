@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnptenantsequencesite
+online version: https://pnp.github.io/powershell/cmdlets/get-pnptenantsequencesite
 schema: 2.0.0
 title: Get-PnPTenantSequenceSite
 ---
@@ -14,9 +14,9 @@ Returns one ore more sites from a tenant template
 
 ## SYNTAX
 
-```
-Get-PnPTenantSequenceSite -Sequence <ProvisioningSequence> [-Identity <ProvisioningSitePipeBind>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+```powershell
+Get-PnPTenantSequenceSite -Sequence <ProvisioningSequence> [-Identity <ProvisioningSitePipeBind>] 
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -57,12 +57,9 @@ Accept wildcard characters: False
 ### -Identity
 Optional Id of the site
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: ProvisioningSitePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -74,12 +71,9 @@ Accept wildcard characters: False
 ### -Sequence
 The sequence to retrieve the site from
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: ProvisioningSequence
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -105,4 +99,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

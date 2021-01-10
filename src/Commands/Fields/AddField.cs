@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Add, "Field", DefaultParameterSetName = "Add field to list")]
+    [Cmdlet(VerbsCommon.Add, "PnPField", DefaultParameterSetName = "Add field to list")]
     public class AddField : PnPWebCmdlet, IDynamicParameters
     {
         const string ParameterSet_ADDFIELDTOLIST = "Add field to list";
@@ -58,6 +58,10 @@ namespace PnP.PowerShell.Commands.Fields
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOWEB)]
         public string ClientSideComponentProperties;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDBYXMLTOLIST)]
+        public SwitchParameter AddToAllContentTypes;
+
         public object GetDynamicParameters()
         {
             if (Type == FieldType.Choice || Type == FieldType.MultiChoice)
@@ -86,7 +90,7 @@ namespace PnP.PowerShell.Commands.Fields
 
             if (List != null)
             {
-                var list = List.GetList(SelectedWeb);
+                var list = List.GetList(CurrentWeb);
                 if (list == null)
                     throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
                 Field f;
@@ -100,6 +104,12 @@ namespace PnP.PowerShell.Commands.Fields
                         Group = Group,
                         AddToDefaultView = AddToDefaultView
                     };
+
+                    if (AddToAllContentTypes)
+                    {
+                        fieldCI.FieldOptions |= AddFieldOptions.AddToAllContentTypes;
+                    }
+
                     if (ClientSideComponentId != null)
                     {
                         fieldCI.ClientSideComponentId = ClientSideComponentId;
@@ -161,7 +171,7 @@ namespace PnP.PowerShell.Commands.Fields
                     {
                         if (Field.Id != Guid.Empty)
                         {
-                            field = SelectedWeb.Fields.GetById(Field.Id);
+                            field = CurrentWeb.Fields.GetById(Field.Id);
                             ClientContext.Load(field);
                             ClientContext.ExecuteQueryRetry();
                         }
@@ -169,7 +179,7 @@ namespace PnP.PowerShell.Commands.Fields
                         {
                             try
                             {
-                                field = SelectedWeb.Fields.GetByInternalNameOrTitle(Field.Name);
+                                field = CurrentWeb.Fields.GetByInternalNameOrTitle(Field.Name);
                                 ClientContext.Load(field);
                                 ClientContext.ExecuteQueryRetry();
                             }
@@ -218,21 +228,21 @@ namespace PnP.PowerShell.Commands.Fields
 
                 if (Type == FieldType.Choice || Type == FieldType.MultiChoice)
                 {
-                    f = SelectedWeb.CreateField<FieldChoice>(fieldCI);
+                    f = CurrentWeb.CreateField<FieldChoice>(fieldCI);
                     ((FieldChoice)f).Choices = choiceFieldParameters.Choices;
                     f.Update();
                     ClientContext.ExecuteQueryRetry();
                 }
                 else if (Type == FieldType.Calculated)
                 {
-                    f = SelectedWeb.CreateField<FieldCalculated>(fieldCI);
+                    f = CurrentWeb.CreateField<FieldCalculated>(fieldCI);
                     ((FieldCalculated)f).Formula = calculatedFieldParameters.Formula;
                     f.Update();
                     ClientContext.ExecuteQueryRetry();
                 }
                 else
                 {
-                    f = SelectedWeb.CreateField(fieldCI);
+                    f = CurrentWeb.CreateField(fieldCI);
                 }
 
                 if (Required)

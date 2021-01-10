@@ -3,26 +3,39 @@ name: Nightly Release to PowerShell Gallery
 on:
   workflow_dispatch:
   schedule:
-  - cron: '0 1 * * *'
+  - cron: '30 2 * * *'
 jobs:
   build:
 
     runs-on: windows-latest
 
     steps:
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
     - uses: actions/checkout@v2
       with:
         ref: dev
+        token: ${{ secrets.PAT }}
     - name: Build and Publish Module
       env:
         POWERSHELLGALLERY_API_KEY: ${{ secrets.POWERSHELLGALLERY_API_KEY }}
       shell: pwsh
       run: |
         ./build/Build-Release.ps1
+    - name: Set variables
+      shell: pwsh
+      run: |
+          $version = Get-Content version.txt -raw
+          "BUILDVERSION=$version" | Out-File $env:GITHUB_ENV -Encoding utf8 -Append
     - name: Add & Commit
       uses: EndBug/add-and-commit@v4.2.1
+      with:
+        message: 'Nightly publish to PowerShell Gallery'
+        tag: '${{env.BUILDVERSION}}-nightly --force'
     - name: Push changes to github
       uses: ad-m/github-push-action@v0.6.0
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.PAT }}
         branch: dev

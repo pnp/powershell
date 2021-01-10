@@ -5,7 +5,7 @@ using PnP.Framework;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Set, "AppSideLoading")]
+    [Cmdlet(VerbsCommon.Set, "PnPAppSideLoading")]
     public class SetAppSideLoading : PnPSharePointCmdlet
     {
         [Parameter(ParameterSetName = "On", Mandatory = true)]

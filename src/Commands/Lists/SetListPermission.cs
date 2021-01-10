@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Lists
 {
     //TODO: Create Test
-    [Cmdlet(VerbsCommon.Set, "ListPermission")]
+    [Cmdlet(VerbsCommon.Set, "PnPListPermission")]
     public class SetListPermission : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            var list = Identity.GetList(SelectedWeb);
+            var list = Identity.GetList(CurrentWeb);
 
             if (list != null)
             {
@@ -37,11 +37,11 @@ namespace PnP.PowerShell.Commands.Lists
                 {
                     if (Group.Id != -1)
                     {
-                        principal = SelectedWeb.SiteGroups.GetById(Group.Id);
+                        principal = CurrentWeb.SiteGroups.GetById(Group.Id);
                     }
                     else if (!string.IsNullOrEmpty(Group.Name))
                     {
-                        principal = SelectedWeb.SiteGroups.GetByName(Group.Name);
+                        principal = CurrentWeb.SiteGroups.GetByName(Group.Name);
                     }
                     else if (Group.Group != null)
                     {
@@ -50,14 +50,14 @@ namespace PnP.PowerShell.Commands.Lists
                 }
                 else
                 {
-                    principal = SelectedWeb.EnsureUser(User);
+                    principal = CurrentWeb.EnsureUser(User);
                     ClientContext.ExecuteQueryRetry();
                 }
                 if (principal != null)
                 {
                     if (!string.IsNullOrEmpty(AddRole))
                     {
-                        var roleDefinition = SelectedWeb.RoleDefinitions.GetByName(AddRole);
+                        var roleDefinition = CurrentWeb.RoleDefinitions.GetByName(AddRole);
                         var roleDefinitionBindings = new RoleDefinitionBindingCollection(ClientContext);
                         roleDefinitionBindings.Add(roleDefinition);
                         var roleAssignments = list.RoleAssignments;

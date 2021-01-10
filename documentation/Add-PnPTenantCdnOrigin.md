@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnptenantcdnorigin
+online version: https://pnp.github.io/powershell/cmdlets/add-pnptenantcdnorigin
 schema: 2.0.0
 title: Add-PnPTenantCdnOrigin
 ---
@@ -19,7 +19,7 @@ Adds a new origin to the public or private content delivery network (CDN).
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPTenantCdnOrigin -OriginUrl <String> -CdnType <SPOTenantCdnType> [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -46,7 +46,6 @@ Specifies the CDN type. The valid values are: public or private.
 ```yaml
 Type: SPOTenantCdnType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Public, Private
 
 Required: True
@@ -62,7 +61,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -79,7 +77,6 @@ Relative-Relative path depends on the OriginScope. If the originScope is Tenant,
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -90,4 +87,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

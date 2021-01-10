@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "TenantTemplate")]
+    [Cmdlet(VerbsLifecycle.Invoke, "PnPTenantTemplate")]
     public class InvokeTenantTemplate : PnPAdminCmdlet
     {
         private const string ParameterSet_PATH = "By Path";
@@ -282,7 +282,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             {
                 consentRequired = true;
             }
-            if(hierarchyToApply.AzureActiveDirectory != null)
+            if (hierarchyToApply.AzureActiveDirectory != null)
             {
                 consentRequired = true;
             }
@@ -290,24 +290,24 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             {
                 // try to retrieve an access token for the Microsoft Graph:
 
-                var accessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                var accessToken = PnPConnection.CurrentConnection.TryGetAccessTokenAsync(Enums.TokenAudience.MicrosoftGraph).GetAwaiter().GetResult();
                 if (accessToken == null)
                 {
                     if (PnPConnection.CurrentConnection.PSCredential != null)
                     {
                         // Using normal credentials
-                        accessToken = TokenHandler.AcquireToken("graph.microsoft.com", null);
+                        accessToken = TokenHandler.AcquireTokenAsync("graph.microsoft.com", null).GetAwaiter().GetResult();
                     }
                     if (accessToken == null)
                     {
-                        throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
+                        throw new PSInvalidOperationException("Your template contains artifacts that require an access token for https://graph.microsoft.com. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
                     }
                 }
             }
 
-            using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
+            using (var provisioningContext = new PnPProvisioningContext(async (resource, scope) =>
             {
-                if(resource.ToLower().StartsWith("https://"))
+                if (resource.ToLower().StartsWith("https://"))
                 {
                     var uri = new Uri(resource);
                     resource = uri.Authority;
@@ -317,25 +317,51 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                 {
                     if (resource.Equals("graph.microsoft.com", StringComparison.OrdinalIgnoreCase))
                     {
-                        var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                        var graphAccessToken = await PnPConnection.CurrentConnection.TryGetAccessTokenAsync(Enums.TokenAudience.MicrosoftGraph);
                         if (graphAccessToken != null)
                         {
                             // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                            return Task.FromResult(graphAccessToken);
+                            return graphAccessToken;
+                        }
+                    }
+#if NETFRAMEWORK
+                    else if (resource.ToLower().Contains(".sharepoint."))
+#else
+                    else if (resource.Contains(".sharepoint.", StringComparison.OrdinalIgnoreCase))
+#endif
+                    {
+                        using (var clientContext = PnPConnection.CurrentConnection.CloneContext($"https://{resource}"))
+                        {
+                            string accessToken = null;
+                            EventHandler<WebRequestEventArgs> handler = (s, e) =>
+                            {
+                                string authorization = e.WebRequestExecutor.RequestHeaders["Authorization"];
+                                if (!string.IsNullOrEmpty(authorization))
+                                {
+                                    accessToken = authorization.Replace("Bearer ", string.Empty);
+                                }
+                            };
+
+                            // Issue a dummy request to get it from the Authorization header
+                            clientContext.ExecutingWebRequest += handler;
+                            clientContext.ExecuteQueryRetry();
+                            clientContext.ExecutingWebRequest -= handler;
+
+                            return accessToken;
                         }
                     }
                 }
 
-                if (PnPConnection.CurrentConnection.PSCredential != null)
+                if (PnPConnection.CurrentConnection.PSCredential != null || PnPConnection.CurrentConnection.ClientId != null)
                 {
                     // Using normal credentials
-                    return Task.FromResult(TokenHandler.AcquireToken(resource, null));
+                    return await TokenHandler.AcquireTokenAsync(resource, null);
                 }
                 else
                 {
                     // No token...
                     throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
-                 }
+                }
             }))
             {
                 if (!string.IsNullOrEmpty(SequenceId))

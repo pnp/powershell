@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/new-pnptermlabel
+online version: https://pnp.github.io/powershell/cmdlets/new-pnptermlabel
 schema: 2.0.0
 title: New-PnPTermLabel
 ---
@@ -14,10 +14,9 @@ Creates a localized label for a taxonomy term
 
 ## SYNTAX
 
-```
-New-PnPTermLabel
- [-Term] <PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.Term]>
- -Name <String> -Lcid <Int32> [-IsDefault] [-Connection <PnPConnection>] [<CommonParameters>]
+
+```powershell
+New-PnPTermLabel -Term <TaxonomyTermPipeBind> -Name <String> -Lcid <Int32> [-IsDefault] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,28 +40,12 @@ Creates a new localized taxonomy label in German (LCID 1031) named "Finanzwesen"
 
 ## PARAMETERS
 
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -IsDefault
 Makes this new label the default label
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -77,7 +60,6 @@ The locale id to use for the localized term
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -92,7 +74,6 @@ The localized name of the term
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -102,12 +83,11 @@ Accept wildcard characters: False
 ```
 
 ### -Term
-The term to add the localized label to
+The term to add the localized label to.
 
 ```yaml
-Type: PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.Term]
+Type: TaxonomyTermPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -118,4 +98,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

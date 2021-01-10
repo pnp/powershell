@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpmanagementapiaccesstoken
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpmanagementapiaccesstoken
 schema: 2.0.0
 title: Get-PnPManagementApiAccessToken
 ---
@@ -14,7 +14,7 @@ Gets an access token for the Office 365 Management API
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPManagementApiAccessToken -TenantId <String> -ClientId <String> -ClientSecret <String>
  [<CommonParameters>]
 ```
@@ -38,7 +38,6 @@ The App\Client ID of the app which gives you access to the Office 365 Management
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -53,7 +52,6 @@ The Client Secret of the app which gives you access to the Office 365 Management
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -68,7 +66,6 @@ The Tenant ID to connect to the Office 365 Management API
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -79,4 +76,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

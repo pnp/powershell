@@ -3,7 +3,7 @@
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Remove, "StoredCredential")]
+    [Cmdlet(VerbsCommon.Remove, "PnPStoredCredential")]
     public class RemoveStoredCredential : PSCmdlet
     {
         [Parameter(Mandatory = true)]

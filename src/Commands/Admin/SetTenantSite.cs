@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Set, "TenantSite")]
+    [Cmdlet(VerbsCommon.Set, "PnPTenantSite")]
     public class SetTenantSite : PnPAdminCmdlet
     {
         private const string ParameterSet_LOCKSTATE = "Set Lock State";

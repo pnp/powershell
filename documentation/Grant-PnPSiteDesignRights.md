@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/grant-pnpsitedesignrights
+online version: https://pnp.github.io/powershell/cmdlets/grant-pnpsitedesignrights
 schema: 2.0.0
 title: Grant-PnPSiteDesignRights
 ---
@@ -19,9 +19,9 @@ Grants the specified principals rights to use the site design.
 
 ## SYNTAX
 
-```
+```powershell
 Grant-PnPSiteDesignRights [-Identity] <TenantSiteDesignPipeBind> -Principals <String[]>
- [-Rights <TenantSiteDesignPrincipalRights>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
+ [-Rights <TenantSiteDesignPrincipalRights>] [-Connection <PnPConnection>]  
  [<CommonParameters>]
 ```
 
@@ -66,7 +66,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -81,7 +80,6 @@ The site design to use.
 ```yaml
 Type: TenantSiteDesignPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -96,7 +94,6 @@ One or more principals to grant rights to.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -111,7 +108,6 @@ The rights to set. Defaults to 'View'
 ```yaml
 Type: TenantSiteDesignPrincipalRights
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, View
 
 Required: False
@@ -138,4 +134,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

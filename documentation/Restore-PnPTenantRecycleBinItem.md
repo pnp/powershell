@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/restore-pnptenantrecyclebinitem
+online version: https://pnp.github.io/powershell/cmdlets/restore-pnptenantrecyclebinitem
 schema: 2.0.0
 title: Restore-PnPTenantRecycleBinItem
 ---
@@ -19,7 +19,7 @@ Restores a site collection from the tenant scoped recycle bin
 
 ## SYNTAX
 
-```
+```powershell
 Restore-PnPTenantRecycleBinItem -Url <String> [-Wait] [-Force] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -31,14 +31,14 @@ The Restore-PnPTenantRecycleBinItem cmdlet allows a site collection that has bee
 
 ### EXAMPLE 1
 ```powershell
-Restore-PnPTenantRecycleBinItem -Url https://tenant.sharepoint.com/sites/contoso
+Restore-PnPTenantRecycleBinItem -Url "https://tenant.sharepoint.com/sites/contoso"
 ```
 
 This will restore the deleted site collection with the url 'https://tenant.sharepoint.com/sites/contoso' to its original location
 
 ### EXAMPLE 2
 ```powershell
-Restore-PnPTenantRecycleBinItem -Url https://tenant.sharepoint.com/sites/contoso -Wait
+Restore-PnPTenantRecycleBinItem -Url "https://tenant.sharepoint.com/sites/contoso" -Wait
 ```
 
 This will restore the deleted site collection with the url 'https://tenant.sharepoint.com/sites/contoso' to its original location and will wait with executing further PowerShell commands until the site collection restore has completed
@@ -51,7 +51,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -66,7 +65,6 @@ If provided, no confirmation will be asked to restore the site collection from t
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -81,7 +79,6 @@ Url of the site collection to restore from the tenant recycle bin
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -96,7 +93,6 @@ If provided, the PowerShell execution will halt until the site restore process h
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -107,4 +103,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

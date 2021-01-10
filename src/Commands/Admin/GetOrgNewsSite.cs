@@ -5,7 +5,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "OrgNewsSite")]
+    [Cmdlet(VerbsCommon.Get, "PnPOrgNewsSite")]
     public class GetOrgNewsSite : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()

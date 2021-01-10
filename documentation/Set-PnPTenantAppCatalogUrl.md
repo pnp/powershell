@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnptenantappcatalogurl
+online version: https://pnp.github.io/powershell/cmdlets/set-pnptenantappcatalogurl
 schema: 2.0.0
 title: Set-PnPTenantAppCatalogUrl
 ---
@@ -19,8 +19,8 @@ Sets the url of the tenant scoped app catalog
 
 ## SYNTAX
 
-```
-Set-PnPTenantAppCatalogUrl -Url <String> [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
+```powershell
+Set-PnPTenantAppCatalogUrl -Url <String> [-Connection <PnPConnection>]  
  [<CommonParameters>]
 ```
 
@@ -30,7 +30,7 @@ Set-PnPTenantAppCatalogUrl -Url <String> [-Connection <PnPConnection>] [-WhatIf]
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPTenantAppCatalogUrl -Url https://yourtenant.sharepoint.com/sites/appcatalog
+Set-PnPTenantAppCatalogUrl -Url "https://yourtenant.sharepoint.com/sites/appcatalog"
 ```
 
 Sets the tenant scoped app catalog to the provided site collection url
@@ -58,7 +58,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -73,7 +72,6 @@ The url of the site to set as the tenant scoped app catalog
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -99,4 +97,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

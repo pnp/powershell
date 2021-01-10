@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpmicrosoft365grouptosite
+online version: https://pnp.github.io/powershell/cmdlets/add-pnpmicrosoft365grouptosite
 schema: 2.0.0
 title: Add-PnPMicrosoft365GroupToSite
 ---
@@ -19,7 +19,7 @@ Groupifies a classic team site by creating a Microsoft 365 group for it and conn
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPMicrosoft365GroupToSite -Url <String> -Alias <String> [-Description <String>] -DisplayName <String>
  [-Classification <String>] [-IsPublic] [-KeepOldHomePage] [-HubSiteId <Guid>] [-Owners <String[]>]
  [-Connection <PnPConnection>] [<CommonParameters>]
@@ -45,7 +45,6 @@ Specifies the alias of the group. Cannot contain spaces.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -60,7 +59,6 @@ Specifies the classification of the group
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -75,7 +73,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -90,7 +87,6 @@ The optional description of the group
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -105,7 +101,6 @@ The display name of the group
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -120,7 +115,6 @@ If specified the site will be associated to the hubsite as identified by this id
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -135,7 +129,6 @@ Specifies if the group is public. Defaults to false.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -150,7 +143,6 @@ Specifies if the current site home page is kept. Defaults to false.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -165,7 +157,6 @@ The array UPN values of the group's owners
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -180,7 +171,6 @@ Url of the site to be connected to an Microsoft 365 Group
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -191,4 +181,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -8,6 +8,8 @@ using System.Text;
 using SecureString = System.Security.SecureString;
 using RuntimeHelpers = System.Runtime.CompilerServices.RuntimeHelpers;
 using System.Management.Automation;
+using System.Collections;
+using System.Linq;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -21,7 +23,25 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static string PrivateKeyToBase64(X509Certificate2 certificate, bool useLineBreaks = false)
         {
+#if NETFRAMEWORK
             var param = ((RSACryptoServiceProvider)certificate.PrivateKey).ExportParameters(true);
+#else
+            RSAParameters param = new RSAParameters();
+            switch (certificate.PrivateKey)
+            {
+                case RSACng rsaCNGKey:
+                    {
+                        param = rsaCNGKey.ExportParameters(true);
+                        break;
+                    }
+                case System.Security.Cryptography.RSAOpenSsl rsaOpenSslKey:
+                    {
+                        param = rsaOpenSslKey.ExportParameters(true);
+                        break;
+                    }
+            }
+            //var param = ((RSACng)certificate.PrivateKey).ExportParameters(true);
+#endif
             string base64String;
             using (var stream = new MemoryStream())
             {
@@ -316,6 +336,63 @@ namespace PnP.PowerShell.Commands.Utilities
             return pfxData;
         }
 
+#if !NETFRAMEWORK
+        internal static X509Certificate2 CreateSelfSignedCertificate2(
+            string commonName,
+            string country,
+            string stateOrProvince,
+            string locality,
+            string organization,
+            string organizationUnit,
+            int keyLength,
+            X509KeyUsageFlags[] keyUsage,
+            EnhancedKeyUsageEnum[] enhancedKeyUsage,
+            DateTimeOffset notBefore,
+            DateTimeOffset notAfter,
+            string friendlyName,
+            bool forCertificateAuthority,
+            X509Extension[] additionalExtension
+        )
+        {
+            var keyUsageFlags = System.Security.Cryptography.X509Certificates.X509KeyUsageFlags.None;
+            if (keyUsage != null)
+            {
+                foreach (var keyUsageFlag in keyUsage)
+                {
+                    keyUsageFlags = keyUsageFlags | keyUsageFlag;
+                }
+            }
+
+            var subjectName = new CertificateDistinguishedName()
+            {
+                CommonName = commonName,
+                Country = country,
+                StateOrProvince = stateOrProvince,
+                Locality = locality,
+                Organization = organization,
+                OrganizationalUnit = organizationUnit,
+            };
+
+            var certificate = new SelfSignedCertificate()
+            {
+                SubjectName = subjectName,
+                KeyLength = keyLength,
+                KeyUsage = keyUsageFlags,
+                EnhancedKeyUsage = enhancedKeyUsage,
+                NotBefore = notBefore,
+                NotAfter = notAfter,
+                FriendlyName = friendlyName,
+                ForCertificateAuthority = forCertificateAuthority,
+                AdditionalExtensions = additionalExtension
+            };
+
+            System.Security.Cryptography.X509Certificates.X509Certificate2 x509Certificate2 = certificate.AsX509Certificate2();
+
+            return x509Certificate2;
+
+        }
+#endif
+
         internal static byte[] CreateSelfSignCertificatePfx(
             string x500,
             DateTime startTime,
@@ -606,7 +683,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 IntPtr x500,
                 int strType,
                 IntPtr reserved,
-                [MarshalAs(UnmanagedType.LPArray)] [Out] byte[] encoded,
+                [MarshalAs(UnmanagedType.LPArray)][Out] byte[] encoded,
                 ref int encodedLength,
                 out IntPtr errorString);
 
@@ -669,4 +746,232 @@ namespace PnP.PowerShell.Commands.Utilities
         #endregion
     }
 
+#if !NETFRAMEWORK
+    internal class CertificateDistinguishedName
+    {
+        // Name of a person or an object host name
+        public string CommonName;
+
+        // 2-character ISO country code 
+        public string Country;
+
+        // The state or province where the owner is physically located
+        public string StateOrProvince;
+
+        // The city where the owner is located
+        public string Locality;
+
+        // The name of the registering organization
+        public string Organization;
+
+        // The division of the organization owning the certificate
+        public string OrganizationalUnit;
+
+        // Format the distinguished name like 'CN="com.contoso"; C="US"; S="Nebraska"'
+        public string Format()
+        {
+            return this.Format(';', true);
+        }
+
+        // Format the distinguished name with the given separator and quote usage setting
+        public string Format(char Separator, bool useQuotes)
+        {
+            var sb = new StringBuilder();
+
+            if (useQuotes)
+            {
+                sb.Append($@"CN=""{CommonName}""");
+            }
+            else
+            {
+                sb.Append($"CN={CommonName}");
+            }
+
+            var fields = new Hashtable() {
+                {"OU",OrganizationalUnit},
+                {"O",Organization},
+                {"L",Locality},
+                {"S",StateOrProvince},
+                {"C",Country}
+            };
+
+            foreach (var field in new[] { "OU", "O", "L", "S", "C" })
+            {
+                var val = fields[field];
+                if (val != null)
+                {
+                    sb.Append(Separator);
+                    sb.Append(" ");
+                    if (useQuotes)
+                    {
+                        sb.Append($@"{field}=""{val}""");
+                    }
+                    else
+                    {
+                        sb.Append($"{field}={val}");
+                    }
+                }
+            }
+            return sb.ToString();
+        }
+
+        public override string ToString()
+        {
+            return Format(',', false);
+        }
+
+        public X500DistinguishedName AsX500DistinguishedName()
+        {
+            return new X500DistinguishedName(Format());
+        }
+    }
+
+    internal enum EnhancedKeyUsageEnum
+    {
+        ServerAuthentication,
+        ClientAuthentication
+    }
+
+    internal class SelfSignedCertificate
+    {
+        // The friendly name of the certificate
+        public string FriendlyName = string.Empty;
+
+        //The length of the private key to use in bits
+        public int KeyLength = 2048;
+
+        // The format of the certificate
+        public System.Security.Cryptography.X509Certificates.X509ContentType Format = System.Security.Cryptography.X509Certificates.X509ContentType.Pfx;
+
+        // The start time of the certificate's valid period
+        public DateTimeOffset NotBefore = DateTimeOffset.Now;
+
+        // The end time of the certificate's valid period
+        public DateTimeOffset NotAfter = DateTimeOffset.Now.AddDays(365);
+
+        // The certificate's subject and issuer name (since it's self-signed)
+        public CertificateDistinguishedName SubjectName;
+
+        // The key usages for the certificate -- what it will be used to do
+        public System.Security.Cryptography.X509Certificates.X509KeyUsageFlags KeyUsage = System.Security.Cryptography.X509Certificates.X509KeyUsageFlags.None;
+
+        // Extensions to be added to the certificate beyond those added automatically
+        public System.Security.Cryptography.X509Certificates.X509Extension[] AdditionalExtensions;
+
+        // The enhanced key usages for the certificate -- what specific scenarios it will be used for
+        public EnhancedKeyUsageEnum[] EnhancedKeyUsage;
+
+        // Whether or not this certificate is for a certificate authority
+        public bool ForCertificateAuthority;
+
+        private Hashtable SupportedUsages = new Hashtable() {
+            { EnhancedKeyUsageEnum.ServerAuthentication, new System.Security.Cryptography.Oid("1.3.6.1.5.5.7.3.1", "Server Authentication") },
+            { EnhancedKeyUsageEnum.ClientAuthentication, new System.Security.Cryptography.Oid("1.3.6.1.5.5.7.3.2", "Client Authentication") }
+        };
+
+        private System.Security.Cryptography.X509Certificates.X509Extension NewAuthorityKeyIdentifier(System.Security.Cryptography.X509Certificates.X509SubjectKeyIdentifierExtension subjectKeyIdentifier, bool critical)
+        {
+            string akiOid = "2.5.29.35";
+            var ski = subjectKeyIdentifier.SubjectKeyIdentifier;
+            var key = new List<byte>();
+            for (var i = 0; i < subjectKeyIdentifier.SubjectKeyIdentifier.Length; i += 2)
+            {
+                var x = ski[i] + ski[i + 1];
+                var b = System.Convert.ToByte(x);
+                key.Add(b);
+            }
+
+            // Ensure our assumptions about not having to encode too much are correct
+            if (key.Count + 2 > 0x79)
+            {
+                throw new System.InvalidOperationException($"Subject key identifier length is to high to encode: {key.Count}");
+            }
+
+            byte octetLength = Convert.ToByte(key.Count);
+            byte sequenceLength = Convert.ToByte(octetLength + 2);
+
+            byte sequenceTag = 0x30;
+            byte keyIdentifierTag = 0x80;
+
+            // Assemble the raw data
+            byte[] akiRawData = new byte[] { sequenceTag, sequenceLength, keyIdentifierTag, octetLength };
+            akiRawData = akiRawData.Concat(key).ToArray();
+
+            // Construct the Authority Key Identifier extension
+            return new System.Security.Cryptography.X509Certificates.X509Extension(akiOid, akiRawData, critical);
+        }
+
+        //Instantiate an X509Certificate2 object from this object
+        public System.Security.Cryptography.X509Certificates.X509Certificate2 AsX509Certificate2()
+        {
+            var extensions = new List<System.Security.Cryptography.X509Certificates.X509Extension>();
+
+            if (AdditionalExtensions != null)
+            {
+                extensions.AddRange(AdditionalExtensions);
+            }
+
+            if (KeyUsage != X509KeyUsageFlags.None)
+            {
+                // Create Key Usage
+                var keyUsages = new System.Security.Cryptography.X509Certificates.X509KeyUsageExtension(KeyUsage, false);
+                extensions.Add(keyUsages);
+            }
+
+            // Create Enhanced Key Usage from configured usages
+            if (EnhancedKeyUsage != null && EnhancedKeyUsage.Any())
+            {
+                var ekuOidCollection = new System.Security.Cryptography.OidCollection();
+                foreach (var usage in EnhancedKeyUsage)
+                {
+                    if (SupportedUsages.Contains(usage))
+                    {
+                        ekuOidCollection.Add(SupportedUsages[usage] as System.Security.Cryptography.Oid);
+                    }
+                }
+
+                var enhancedKeyUsages = new System.Security.Cryptography.X509Certificates.X509EnhancedKeyUsageExtension(ekuOidCollection, false);
+                extensions.Add(enhancedKeyUsages);
+            }
+
+
+            // Create Basic Constraints
+            var basicConstraints = new System.Security.Cryptography.X509Certificates.X509BasicConstraintsExtension(ForCertificateAuthority, false, 0, false);
+            extensions.Add(basicConstraints);
+
+            // Create Private Key
+            var key = System.Security.Cryptography.RSA.Create(2048);
+
+            // Create the subject of the certificate
+            var subject = SubjectName.AsX500DistinguishedName();
+
+            // Create Certificate Request
+            var certRequest = new System.Security.Cryptography.X509Certificates.CertificateRequest(subject, key, System.Security.Cryptography.HashAlgorithmName.SHA256, System.Security.Cryptography.RSASignaturePadding.Pkcs1);
+
+            // Create the Subject Key Identifier extension
+            var subjectKeyIdentifier = new System.Security.Cryptography.X509Certificates.X509SubjectKeyIdentifierExtension(certRequest.PublicKey, false);
+            extensions.Add(subjectKeyIdentifier);
+
+            // Create Authority Key Identifier if the certificate is for a CA
+            if (ForCertificateAuthority)
+            {
+                var authorityKeyIdentifier = NewAuthorityKeyIdentifier(subjectKeyIdentifier, false);
+                extensions.Add(authorityKeyIdentifier);
+            }
+
+            foreach (var extension in extensions)
+            {
+                certRequest.CertificateExtensions.Add(extension);
+            }
+
+            var cert = certRequest.CreateSelfSigned(NotBefore, NotAfter);
+
+            if (!Platform.IsLinux && !Platform.IsMacOS)
+            {
+                cert.FriendlyName = FriendlyName;
+            }
+            return cert;
+        }
+    }
+#endif
 }

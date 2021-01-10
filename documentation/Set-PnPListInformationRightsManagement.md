@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnplistinformationrightsmanagement
+online version: https://pnp.github.io/powershell/cmdlets/set-pnplistinformationrightsmanagement
 schema: 2.0.0
 title: Set-PnPListInformationRightsManagement
 ---
@@ -14,14 +14,14 @@ Get the site closure status of the site which has a site policy applied
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPListInformationRightsManagement -List <ListPipeBind> [-Enable <Boolean>] [-EnableExpiration <Boolean>]
  [-EnableRejection <Boolean>] [-AllowPrint <Boolean>] [-AllowScript <Boolean>] [-AllowWriteCopy <Boolean>]
  [-DisableDocumentBrowserView <Boolean>] [-DocumentAccessExpireDays <Int32>]
  [-DocumentLibraryProtectionExpireDate <DateTime>] [-EnableDocumentAccessExpire <Boolean>]
  [-EnableDocumentBrowserPublishingView <Boolean>] [-EnableGroupProtection <Boolean>]
  [-EnableLicenseCacheExpire <Boolean>] [-LicenseCacheExpireDays <Int32>] [-GroupName <String>]
- [-PolicyDescription <String>] [-PolicyTitle <String>] [-TemplateId <String>] [-Web <WebPipeBind>]
+ [-PolicyDescription <String>] [-PolicyTitle <String>] [-TemplateId <String>] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -44,7 +44,6 @@ Sets a value indicating whether the viewer can print the downloaded document.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -59,7 +58,6 @@ Sets a value indicating whether the viewer can run a script on the downloaded do
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -74,7 +72,6 @@ Sets a value indicating whether the viewer can write on a copy of the downloaded
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +86,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -104,7 +100,6 @@ Sets a value indicating whether to block Office Web Application Companion applic
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -119,7 +114,6 @@ Sets the number of days after which the downloaded document will expire.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -134,7 +128,6 @@ Sets the date after which the Information Rights Management (IRM) protection of 
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -149,7 +142,6 @@ Specifies whether Information Rights Management (IRM) is enabled for the list.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -164,7 +156,6 @@ Sets a value indicating whether the downloaded document will expire.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -179,7 +170,6 @@ Sets a value indicating whether to enable Office Web Application Companion appli
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -194,7 +184,6 @@ Specifies whether Information Rights Management (IRM) expiration is enabled for 
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -209,7 +198,6 @@ Sets a value indicating whether the permission of the downloaded document is app
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -224,7 +212,6 @@ Sets whether a user must verify their credentials after some interval.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -239,7 +226,6 @@ Specifies whether Information Rights Management (IRM) rejection is enabled for t
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -254,7 +240,6 @@ Sets the group name (email address) that the permission is also applicable to.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -269,7 +254,6 @@ Sets the number of days that the application that opens the document caches the 
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -284,7 +268,6 @@ The list to set Information Rights Management (IRM) settings for.
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -299,7 +282,6 @@ Sets the permission policy description.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -314,7 +296,6 @@ Sets the permission policy title.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -328,7 +309,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -337,21 +317,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

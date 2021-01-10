@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpteamstab
+online version: https://pnp.github.io/powershell/cmdlets/set-pnpteamstab
 schema: 2.0.0
 title: Set-PnPTeamsTab
 ---
@@ -19,9 +19,9 @@ Updates Teams Tab settings
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> [-Identity <TeamsTabPipeBind>]
- [-DisplayName <String>] [-ByPassPermissionCheck] [<CommonParameters>]
+ [-DisplayName <String>]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -37,28 +37,12 @@ Updates the tab named 'Wiki' and changes the display name of the tab to 'Channel
 
 ## PARAMETERS
 
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Channel
 Specify the channel id of the team to retrieve.
 
 ```yaml
 Type: TeamsChannelPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -73,7 +57,6 @@ The new name of the tab.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -88,7 +71,6 @@ Identity of the tab.
 ```yaml
 Type: TeamsTabPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -103,7 +85,6 @@ Specify the group id of the team to retrieve.
 ```yaml
 Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -114,4 +95,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "HomePage")]
+    [Cmdlet(VerbsCommon.Set, "PnPHomePage")]
     public class SetHomePage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.SetHomePage(RootFolderRelativeUrl);
+            CurrentWeb.SetHomePage(RootFolderRelativeUrl);
         }
     }
 

@@ -8,7 +8,7 @@ using PnP.Framework.Enums;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Get, "NavigationNode", DefaultParameterSetName = ParameterSet_ALLBYLOCATION)]
+    [Cmdlet(VerbsCommon.Get, "PnPNavigationNode", DefaultParameterSetName = ParameterSet_ALLBYLOCATION)]
     public class GetNavigationNode : PnPWebCmdlet
     {
         private const string ParameterSet_ALLBYLOCATION = "All nodes by location";
@@ -32,15 +32,15 @@ namespace PnP.PowerShell.Commands.Branding
                     NavigationNodeCollection navigationNodes = null;
                     if (Location == NavigationType.SearchNav)
                     {
-                        navigationNodes = SelectedWeb.Navigation.GetNodeById(1040).Children;
+                        navigationNodes = CurrentWeb.Navigation.GetNodeById(1040).Children;
                     }
                     else if (Location == NavigationType.Footer)
                     {
-                        navigationNodes = SelectedWeb.LoadFooterNavigation();
+                        navigationNodes = CurrentWeb.LoadFooterNavigation();
                     }
                     else
                     {
-                        navigationNodes = Location == NavigationType.QuickLaunch ? SelectedWeb.Navigation.QuickLaunch : SelectedWeb.Navigation.TopNavigationBar;
+                        navigationNodes = Location == NavigationType.QuickLaunch ? CurrentWeb.Navigation.QuickLaunch : CurrentWeb.Navigation.TopNavigationBar;
                     }
                     if (navigationNodes != null)
                     {
@@ -56,22 +56,22 @@ namespace PnP.PowerShell.Commands.Branding
                     {
                         case NavigationType.QuickLaunch:
                             {
-                                nodes = SelectedWeb.Navigation.QuickLaunch;
+                                nodes = CurrentWeb.Navigation.QuickLaunch;
                                 break;
                             }
                         case NavigationType.TopNavigationBar:
                             {
-                                nodes = SelectedWeb.Navigation.TopNavigationBar;
+                                nodes = CurrentWeb.Navigation.TopNavigationBar;
                                 break;
                             }
                         case NavigationType.SearchNav:
                             {
-                                nodes = SelectedWeb.Navigation.GetNodeById(1040).Children;
+                                nodes = CurrentWeb.Navigation.GetNodeById(1040).Children;
                                 break;
                             }
                         case NavigationType.Footer:
                             {
-                                nodes = SelectedWeb.LoadFooterNavigation();
+                                nodes = CurrentWeb.LoadFooterNavigation();
                                 break;
                             }
                     }
@@ -85,7 +85,7 @@ namespace PnP.PowerShell.Commands.Branding
             }
             if (ParameterSpecified(nameof(Id)))
             {
-                var node = SelectedWeb.Navigation.GetNodeById(Id);
+                var node = CurrentWeb.Navigation.GetNodeById(Id);
                 ClientContext.Load(node);
                 ClientContext.Load(node, n => n.Children.IncludeWithDefaultProperties());
                 ClientContext.ExecuteQueryRetry();

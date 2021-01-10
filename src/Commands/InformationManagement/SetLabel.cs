@@ -1,12 +1,12 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using System.Linq;
 
 namespace PnP.PowerShell.Commands.InformationManagement
 {
-    [Cmdlet(VerbsCommon.Set, "Label")]
-    public class SetLabel : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Set, "PnPLabel")]
+    public class SetLabel : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ListPipeBind List;
@@ -25,19 +25,18 @@ namespace PnP.PowerShell.Commands.InformationManagement
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(SelectedWeb);
+            var list = List.GetList(PnPContext);
+            var availableTags = PnPContext.Site.GetAvailableComplianceTags();
+
             if (list != null)
             {
-                var listUrl = list.RootFolder.ServerRelativeUrl;
-                Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetListComplianceTag(ClientContext, listUrl, Label, BlockDeletion, BlockEdit, SyncToItems);
-
-                try
+                if (availableTags.FirstOrDefault(tag => tag.TagName.ToString() == Label) != null)
                 {
-                    ClientContext.ExecuteQueryRetry();
+                    list.SetComplianceTag(Label, BlockDeletion, BlockEdit, SyncToItems);
                 }
-                catch (System.Exception error)
+                else
                 {
-                    WriteWarning(error.Message.ToString());
+                    WriteWarning("The provided label is not available in the site.");
                 }
             }
             else

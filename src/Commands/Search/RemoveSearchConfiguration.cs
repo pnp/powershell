@@ -8,7 +8,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Search
 {
-    [Cmdlet(VerbsCommon.Remove, "SearchConfiguration")]
+    [Cmdlet(VerbsCommon.Remove, "PnPSearchConfiguration")]
     public class RemoveSearchConfiguration : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "Config")]
@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Search
             {
                 case SearchConfigurationScope.Web:
                     {
-                        SelectedWeb.DeleteSearchConfiguration(Configuration);
+                        CurrentWeb.DeleteSearchConfiguration(Configuration);
                         break;
                     }
                 case SearchConfigurationScope.Site:

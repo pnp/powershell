@@ -5,7 +5,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Set, "TraceLog")]
+    [Cmdlet(VerbsCommon.Set, "PnPTraceLog")]
     public class SetTraceLog : PSCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "On")]

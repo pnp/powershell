@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpstorageentity
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpstorageentity
 schema: 2.0.0
 title: Get-PnPStorageEntity
 ---
@@ -14,9 +14,9 @@ Retrieve Storage Entities / Farm Properties from either the Tenant App Catalog o
 
 ## SYNTAX
 
-```
-Get-PnPStorageEntity [-Key <String>] [-Scope <StorageEntityScope>] [-Connection <PnPConnection>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+```powershell
+Get-PnPStorageEntity [-Key <String>] [-Scope <StorageEntityScope>] [-Connection <PnPConnection>] 
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -74,7 +74,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +88,6 @@ The key of the value to retrieve.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -104,7 +102,6 @@ Defines the scope of the storage entity. Defaults to Tenant.
 ```yaml
 Type: StorageEntityScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Site, Tenant
 
 Required: False
@@ -131,4 +128,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

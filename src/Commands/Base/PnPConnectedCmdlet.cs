@@ -1,5 +1,5 @@
-﻿using PnP.PowerShell.Commands.Properties;
-using System;
+﻿using System;
+using System.Net.Http;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -15,8 +15,12 @@ namespace PnP.PowerShell.Commands.Base
             // Ensure there is an active connection
             if (PnPConnection.CurrentConnection == null)
             {
-                throw new InvalidOperationException(Resources.NoConnection);
+                throw new InvalidOperationException(Properties.Resources.NoConnection);
             }
         }
+
+        public HttpClient HttpClient => PnPConnection.CurrentConnection.HttpClient;
     }
+
+
 }

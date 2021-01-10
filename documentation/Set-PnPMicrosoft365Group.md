@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpmicrosoft365group
+online version: https://pnp.github.io/powershell/cmdlets/set-pnpmicrosoft365group
 schema: 2.0.0
 title: Set-PnPMicrosoft365Group
 ---
@@ -19,10 +19,10 @@ Sets Microsoft 365 Group properties
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-DisplayName <String>] [-Description <String>]
  [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-GroupLogoPath <String>] [-CreateTeam]
- [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-ByPassPermissionCheck]
+ [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] 
  [<CommonParameters>]
 ```
 
@@ -67,28 +67,12 @@ Sets demo@contoso.com as owner of the group
 
 ## PARAMETERS
 
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -CreateTeam
 Creates a Microsoft Teams team associated with created group
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -103,7 +87,6 @@ The Description of the group to set
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -118,7 +101,6 @@ The DisplayName of the group to set
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -133,7 +115,6 @@ The path to the logo file of to set. Logo must be at least 48 pixels wide and ma
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -148,7 +129,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -163,7 +143,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -178,7 +157,6 @@ The Identity of the Microsoft 365 Group
 ```yaml
 Type: Microsoft365GroupPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -193,7 +171,6 @@ Makes the group private when selected
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -208,7 +185,6 @@ The array UPN values of members to set to the group. Note: Will replace members.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -223,7 +199,6 @@ The array UPN values of owners to set to the group. Note: Will replace owners.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -234,4 +209,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)[Documentation](https://docs.microsoft.com/graph/api/group-update)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[Documentation](https://docs.microsoft.com/graph/api/group-update)

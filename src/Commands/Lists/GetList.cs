@@ -5,10 +5,11 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Linq.Expressions;
 using System;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
+using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "List")]
+    [Cmdlet(VerbsCommon.Get, "PnPList")]
     public class GetList : PnPWebRetrievalsCmdlet<List>
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
@@ -23,19 +24,18 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (Identity != null)
             {
-                var list = Identity.GetList(SelectedWeb);
-
+                var list = Identity.GetList(CurrentWeb);
                 if (ThrowExceptionIfListNotFound && list == null)
-                { 
+                {
                     throw new PSArgumentException(string.Format(Resources.ListNotFound, Identity), nameof(Identity));
                 }
-                list?.EnsureProperties(RetrievalExpressions);
 
+                list?.EnsureProperties(RetrievalExpressions);
                 WriteObject(list);
             }
             else
             {
-                var query = SelectedWeb.Lists.IncludeWithDefaultProperties(RetrievalExpressions);
+                var query = CurrentWeb.Lists.IncludeWithDefaultProperties(RetrievalExpressions);
                 var lists = ClientContext.LoadQuery(query);
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(lists, true);

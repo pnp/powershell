@@ -8,7 +8,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "WebAction", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsLifecycle.Invoke, "PnPWebAction", SupportsShouldProcess = true)]
     public class InvokeWebAction : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -103,7 +103,7 @@ namespace PnP.PowerShell.Commands
             {
                 IEnumerable<web> websToProcess;
                 if (Webs == null || Webs.Length == 0)
-                    websToProcess = new[] { SelectedWeb };
+                    websToProcess = new[] { CurrentWeb };
                 else
                     websToProcess = Webs;
 
@@ -111,7 +111,7 @@ namespace PnP.PowerShell.Commands
             }
             else
             {
-                invokeAction = new InvokeAction.InvokeWebAction(this, SelectedWeb, ListName, webActions, listActions, listItemActions, SkipCounting.ToBool());
+                invokeAction = new InvokeAction.InvokeWebAction(this, CurrentWeb, ListName, webActions, listActions, listItemActions, SkipCounting.ToBool());
             }
 
             InvokeWebActionResult result = invokeAction.StartProcessAction();

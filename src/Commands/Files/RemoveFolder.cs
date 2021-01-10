@@ -6,7 +6,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Remove, "Folder")]
+    [Cmdlet(VerbsCommon.Remove, "PnPFolder")]
     public class RemoveFolder : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -23,10 +23,10 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
-            var folderUrl = UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder, Name);
-            Folder folder = SelectedWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
+            var folderUrl = UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, Folder, Name);
+            Folder folder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
             folder.EnsureProperty(f => f.Name);
 
             if (Force || ShouldContinue(string.Format(Resources.Delete0, folder.Name), Resources.Confirm))

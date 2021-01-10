@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Get, "SiteCollectionAdmin")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteCollectionAdmin")]
     public class GetSiteCollectionAdmin : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()
@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Site
                     g => g.LoginName)
            };
 
-            var siteCollectionAdminUsersQuery = SelectedWeb.SiteUsers.Where(u => u.IsSiteAdmin);
+            var siteCollectionAdminUsersQuery = CurrentWeb.SiteUsers.Where(u => u.IsSiteAdmin);
             var siteCollectionAdminUsers = ClientContext.LoadQuery(siteCollectionAdminUsersQuery.Include(retrievalExpressions));
             ClientContext.ExecuteQueryRetry();
 

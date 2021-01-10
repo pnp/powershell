@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Add, "JavaScriptBlock")]
+    [Cmdlet(VerbsCommon.Add, "PnPJavaScriptBlock")]
     public class AddJavaScriptBlock : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Branding
             {
                 if (Scope == CustomActionScope.Web)
                 {
-                    SelectedWeb.AddJsBlock(Name, Script, Sequence);
+                    CurrentWeb.AddJsBlock(Name, Script, Sequence);
                 }
                 else
                 {

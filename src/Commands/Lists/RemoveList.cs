@@ -5,11 +5,12 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Remove, "List")]
+    [Cmdlet(VerbsCommon.Remove, "PnPList")]
     public class RemoveList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public ListPipeBind Identity = new ListPipeBind();
+        [ValidateNotNull]
+        public ListPipeBind Identity;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Recycle;
@@ -18,26 +19,22 @@ namespace PnP.PowerShell.Commands.Lists
         public SwitchParameter Force;
         protected override void ExecuteCmdlet()
         {
-            if (Identity != null)
+            var list = Identity.GetList(CurrentWeb);
+            if (list != null)
             {
-                var list = Identity.GetList(SelectedWeb);
-                if (list != null)
+                if (Force || ShouldContinue(Properties.Resources.RemoveList, Properties.Resources.Confirm))
                 {
-                    if (Force || ShouldContinue(Properties.Resources.RemoveList, Properties.Resources.Confirm))
+                    if (Recycle)
                     {
-                        if (Recycle)
-                        {
-                            list.Recycle();
-                        }
-                        else
-                        {
-                            list.DeleteObject();
-                        }
-                        ClientContext.ExecuteQueryRetry();
+                        list.Recycle();
                     }
+                    else
+                    {
+                        list.DeleteObject();
+                    }
+                    ClientContext.ExecuteQueryRetry();
                 }
             }
         }
     }
-
 }

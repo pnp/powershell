@@ -6,7 +6,7 @@ using Microsoft.Online.SharePoint.TenantAdministration;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Add, "OrgAssetsLibrary")]
+    [Cmdlet(VerbsCommon.Add, "PnPOrgAssetsLibrary")]
     public class AddOrgAssetsLibrary : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/new-pnpextensibilityhandlerobject
+online version: https://pnp.github.io/powershell/cmdlets/new-pnpextensibilityhandlerobject
 schema: 2.0.0
 title: New-PnPExtensibilityHandlerObject
 ---
@@ -14,7 +14,7 @@ Creates an ExtensibilityHandler Object, to be used by the Get-PnPSiteTemplate cm
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPExtensibilityHandlerObject [-Assembly] <String> -Type <String> [-Configuration <String>] [-Disabled]
  [<CommonParameters>]
 ```
@@ -39,7 +39,6 @@ The full assembly name of the handler
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -54,7 +53,6 @@ Any configuration data you want to send to the handler
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -69,7 +67,6 @@ If set, the handler will be disabled
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -84,7 +81,6 @@ The type of the handler
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -95,4 +91,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

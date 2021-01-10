@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpgroup
+online version: https://pnp.github.io/powershell/cmdlets/set-pnpgroup
 schema: 2.0.0
 title: Set-PnPGroup
 ---
@@ -14,12 +14,12 @@ Updates a group
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPGroup -Identity <GroupPipeBind> [-SetAssociatedGroup <AssociatedGroupType>] [-AddRole <String>]
  [-RemoveRole <String>] [-Title <String>] [-Owner <String>] [-Description <String>]
  [-AllowRequestToJoinLeave <Boolean>] [-AutoAcceptRequestToJoinLeave <Boolean>]
  [-AllowMembersEditMembership <Boolean>] [-OnlyAllowMembersViewMembership <Boolean>]
- [-RequestToJoinEmail <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-RequestToJoinEmail <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -48,7 +48,6 @@ Name of the permission set to add to this SharePoint group
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -63,7 +62,6 @@ A switch parameter that specifies whether group members can modify membership in
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -78,7 +76,6 @@ A switch parameter that specifies whether to allow users to request membership i
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -93,7 +90,6 @@ A switch parameter that specifies whether users are automatically added or remov
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -108,7 +104,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -123,7 +118,6 @@ The description for the group
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -138,7 +132,6 @@ A group object, an ID or a name of a group
 ```yaml
 Type: GroupPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -153,7 +146,6 @@ A switch parameter that specifies whether only group members are allowed to view
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -168,7 +160,6 @@ The owner for the group, which can be a user or another group
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -183,7 +174,6 @@ Name of the permission set to remove from this SharePoint group
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -198,7 +188,6 @@ The e-mail address to which membership requests are sent
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -213,7 +202,6 @@ One of the associated group types (Visitors, Members, Owners
 ```yaml
 Type: AssociatedGroupType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, Visitors, Members, Owners
 
 Required: False
@@ -229,7 +217,6 @@ The title for the group
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -238,21 +225,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

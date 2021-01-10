@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.DocumentSets
 {
-    [Cmdlet(VerbsCommon.Add,"ContentTypeToDocumentSet")]
+    [Cmdlet(VerbsCommon.Add,"PnPContentTypeToDocumentSet")]
     public class AddContentTypeToDocumentSet : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -16,11 +16,11 @@ namespace PnP.PowerShell.Commands.DocumentSets
 
         protected override void ExecuteCmdlet()
         {
-            var docSetTemplate = DocumentSet.GetDocumentSetTemplate(SelectedWeb);
+            var docSetTemplate = DocumentSet.GetDocumentSetTemplate(CurrentWeb);
 
             foreach (var ct in ContentType)
             {
-                var contentType = ct.GetContentType(SelectedWeb);
+                var contentType = ct.GetContentType(CurrentWeb);
 
                 docSetTemplate.AllowedContentTypes.Add(contentType.Id);
             }

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnpstoredcredential
+online version: https://pnp.github.io/powershell/cmdlets/remove-pnpstoredcredential
 schema: 2.0.0
 title: Remove-PnPStoredCredential
 ---
@@ -10,25 +10,25 @@ title: Remove-PnPStoredCredential
 # Remove-PnPStoredCredential
 
 ## SYNOPSIS
-Removes a credential
+Removes a credential from the Credential Manager
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPStoredCredential -Name <String> [-Force] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Removes a stored credential from the Windows Credential Manager
+Removes a stored credential from the Credential Manager
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPStoredCredential -Name https://tenant.sharepoint.com
+Remove-PnPStoredCredential -Name "https://tenant.sharepoint.com"
 ```
 
-Removes the specified credential from the Windows Credential Manager
+Removes the specified credential from the Credential Manager
 
 ## PARAMETERS
 
@@ -38,7 +38,6 @@ If specified you will not be asked for confirmation
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -53,7 +52,6 @@ The credential to remove
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -64,4 +62,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

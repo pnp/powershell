@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpwebparttowebpartpage
+online version: https://pnp.github.io/powershell/cmdlets/add-pnpwebparttowebpartpage
 schema: 2.0.0
 title: Add-PnPWebPartToWebPartPage
 ---
@@ -15,15 +15,15 @@ Adds a web part to a web part page in a specified zone
 ## SYNTAX
 
 ### XML
-```
+```powershell
 Add-PnPWebPartToWebPartPage -ServerRelativePageUrl <String> -Xml <String> -ZoneId <String> -ZoneIndex <Int32>
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### FILE
-```
+```powershell
 Add-PnPWebPartToWebPartPage -ServerRelativePageUrl <String> -Path <String> -ZoneId <String> -ZoneIndex <Int32>
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -52,7 +52,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -67,7 +66,6 @@ A path to a web part file on a the file system.
 ```yaml
 Type: String
 Parameter Sets: FILE
-Aliases:
 
 Required: True
 Position: Named
@@ -91,20 +89,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Xml
 A string containing the XML for the web part.
@@ -112,7 +97,6 @@ A string containing the XML for the web part.
 ```yaml
 Type: String
 Parameter Sets: XML
-Aliases:
 
 Required: True
 Position: Named
@@ -127,7 +111,6 @@ The Zone Id where the web part must be placed
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -142,7 +125,6 @@ The Zone Index where the web part must be placed
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -153,4 +135,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -7,7 +7,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Webhooks
 {
-    [Cmdlet(VerbsCommon.Get, "WebhookSubscriptions")]
+    [Cmdlet(VerbsCommon.Get, "PnPWebhookSubscriptions")]
     public class GetWebhookSubscriptions : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Webhooks
                 }
 
                 // Get the list from the currently selected web
-                List list = List.GetList(SelectedWeb);
+                List list = List.GetList(CurrentWeb);
                 if (list != null)
                 {
                     // Get all the webhook subscriptions for the specified list

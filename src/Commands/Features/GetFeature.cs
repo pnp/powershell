@@ -11,7 +11,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Features
 {
-    [Cmdlet(VerbsCommon.Get, "Feature")]
+    [Cmdlet(VerbsCommon.Get, "PnPFeature")]
     public class GetFeature : PnPWebRetrievalsCmdlet<Feature>
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Features
             }
             else
             {
-                featureCollection = SelectedWeb.Features;
+                featureCollection = CurrentWeb.Features;
             }
             IEnumerable<Feature> query = ClientContext.LoadQuery(featureCollection.IncludeWithDefaultProperties(RetrievalExpressions));
             ClientContext.ExecuteQueryRetry();

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpcustomaction
+online version: https://pnp.github.io/powershell/cmdlets/add-pnpcustomaction
 schema: 2.0.0
 title: Add-PnPCustomAction
 ---
@@ -15,19 +15,19 @@ Adds a custom action
 ## SYNTAX
 
 ### Default
-```
+```powershell
 Add-PnPCustomAction -Name <String> -Title <String> -Description <String> -Group <String> -Location <String>
  [-Sequence <Int32>] [-Url <String>] [-ImageUrl <String>] [-CommandUIExtension <String>]
  [-RegistrationId <String>] [-Rights <PermissionKind[]>] [-RegistrationType <UserCustomActionRegistrationType>]
- [-Scope <CustomActionScope>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Scope <CustomActionScope>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Client Side Component Id
-```
+```powershell
 Add-PnPCustomAction -Name <String> -Title <String> -Location <String> [-Sequence <Int32>]
  [-RegistrationId <String>] [-RegistrationType <UserCustomActionRegistrationType>] [-Scope <CustomActionScope>]
  -ClientSideComponentId <Guid> [-ClientSideComponentProperties <String>]
- [-ClientSideHostProperties <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-ClientSideHostProperties <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -46,7 +46,7 @@ Adds a new custom action to the custom list template, and sets the Title, Name a
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPCustomAction -Title "CollabFooter" -Name "CollabFooter" -Location "ClientSideExtension.ApplicationCustomizer" -ClientSideComponentId c0ab3b94-8609-40cf-861e-2a1759170b43 -ClientSideComponentProperties "{`"sourceTermSet`":`"PnP-CollabFooter-SharedLinks`",`"personalItemsStorageProperty`":`"PnP-CollabFooter-MyLinks`"}
+Add-PnPCustomAction -Title "CollabFooter" -Name "CollabFooter" -Location "ClientSideExtension.ApplicationCustomizer" -ClientSideComponentId c0ab3b94-8609-40cf-861e-2a1759170b43 -ClientSideComponentProperties "{`"sourceTermSet`":`"PnP-CollabFooter-SharedLinks`",`"personalItemsStorageProperty`":`"PnP-CollabFooter-MyLinks`"}"
 ```
 
 Adds a new application customizer to the site. This requires that an SPFX solution has been deployed containing the application customizer specified. Be sure to run Install-PnPApp before trying this cmdlet on a site.
@@ -56,12 +56,9 @@ Adds a new application customizer to the site. This requires that an SPFX soluti
 ### -ClientSideComponentId
 The Client Side Component Id of the custom action
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: Guid
 Parameter Sets: Client Side Component Id
-Aliases:
 
 Required: True
 Position: Named
@@ -73,12 +70,9 @@ Accept wildcard characters: False
 ### -ClientSideComponentProperties
 The Client Side Component Properties of the custom action. Specify values as a json string : "{Property1 : 'Value1', Property2: 'Value2'}"
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: String
 Parameter Sets: Client Side Component Id
-Aliases:
 
 Required: False
 Position: Named
@@ -90,12 +84,9 @@ Accept wildcard characters: False
 ### -ClientSideHostProperties
 The Client Side Host Properties of the custom action. Specify values as a json string : "{'preAllocatedApplicationCustomizerTopHeight': '50', 'preAllocatedApplicationCustomizerBottomHeight': '50'}"
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: Client Side Component Id
-Aliases:
 
 Required: False
 Position: Named
@@ -110,7 +101,6 @@ XML fragment that determines user interface properties of the custom action
 ```yaml
 Type: String
 Parameter Sets: Default
-Aliases:
 
 Required: False
 Position: Named
@@ -125,7 +115,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -140,7 +129,6 @@ The description of the custom action
 ```yaml
 Type: String
 Parameter Sets: Default
-Aliases:
 
 Required: True
 Position: Named
@@ -155,7 +143,6 @@ The group where this custom action needs to be added like 'SiteActions'
 ```yaml
 Type: String
 Parameter Sets: Default
-Aliases:
 
 Required: True
 Position: Named
@@ -170,7 +157,6 @@ The URL of the image associated with the custom action
 ```yaml
 Type: String
 Parameter Sets: Default
-Aliases:
 
 Required: False
 Position: Named
@@ -185,7 +171,6 @@ The actual location where this custom action need to be added like 'CommandUI.Ri
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -200,7 +185,6 @@ The name of the custom action
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -215,7 +199,6 @@ The identifier of the object associated with the custom action.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -230,7 +213,6 @@ Specifies the type of object associated with the custom action
 ```yaml
 Type: UserCustomActionRegistrationType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, List, ContentType, ProgId, FileType
 
 Required: False
@@ -246,7 +228,6 @@ A string array that contain the permissions needed for the custom action
 ```yaml
 Type: PermissionKind[]
 Parameter Sets: Default
-Aliases:
 Accepted values: EmptyMask, ViewListItems, AddListItems, EditListItems, DeleteListItems, ApproveItems, OpenItems, ViewVersions, DeleteVersions, CancelCheckout, ManagePersonalViews, ManageLists, ViewFormPages, AnonymousSearchAccessList, Open, ViewPages, AddAndCustomizePages, ApplyThemeAndBorder, ApplyStyleSheets, ViewUsageData, CreateSSCSite, ManageSubwebs, CreateGroups, ManagePermissions, BrowseDirectories, BrowseUserInfo, AddDelPrivateWebParts, UpdatePersonalWebParts, ManageWeb, AnonymousSearchAccessWebLists, UseClientIntegration, UseRemoteAPIs, ManageAlerts, CreateAlerts, EditMyUserInfo, EnumeratePermissions, FullMask
 
 Required: False
@@ -262,7 +243,6 @@ The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'A
 ```yaml
 Type: CustomActionScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site, All
 
 Required: False
@@ -278,7 +258,6 @@ Sequence of this CustomAction being injected. Use when you have a specific seque
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -293,7 +272,6 @@ The title of the custom action
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -308,7 +286,6 @@ The URL, URI or ECMAScript (JScript, JavaScript) function associated with the ac
 ```yaml
 Type: String
 Parameter Sets: Default
-Aliases:
 
 Required: False
 Position: Named
@@ -317,21 +294,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)[UserCustomAction](https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee539583(v=office.15))[BasePermissions](https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee543321(v=office.15))
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[UserCustomAction](https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee539583(v=office.15))[BasePermissions](https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee543321(v=office.15))

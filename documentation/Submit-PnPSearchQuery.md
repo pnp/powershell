@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/submit-pnpsearchquery
+online version: https://pnp.github.io/powershell/cmdlets/submit-pnpsearchquery
 schema: 2.0.0
 title: Submit-PnPSearchQuery
 ---
@@ -15,25 +15,25 @@ Executes an arbitrary search query against the SharePoint search index
 ## SYNTAX
 
 ### Limit (Default)
-```
+```powershell
 Submit-PnPSearchQuery [-Query] <String> [-StartRow <Int32>] [-MaxResults <Int32>] [-TrimDuplicates <Boolean>]
  [-Properties <Hashtable>] [-Refiners <String>] [-Culture <Int32>] [-QueryTemplate <String>]
  [-SelectProperties <String[]>] [-RefinementFilters <String[]>] [-SortList <Hashtable>]
  [-RankingModelId <String>] [-ClientType <String>] [-CollapseSpecification <String>]
  [-HiddenConstraints <String>] [-TimeZoneId <Int32>] [-EnablePhonetic <Boolean>] [-EnableStemming <Boolean>]
  [-EnableQueryRules <Boolean>] [-SourceId <Guid>] [-ProcessBestBets <Boolean>]
- [-ProcessPersonalFavorites <Boolean>] [-RelevantResults] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+ [-ProcessPersonalFavorites <Boolean>] [-RelevantResults] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### All
-```
+```powershell
 Submit-PnPSearchQuery [-Query] <String> [-All] [-TrimDuplicates <Boolean>] [-Properties <Hashtable>]
  [-Refiners <String>] [-Culture <Int32>] [-QueryTemplate <String>] [-SelectProperties <String[]>]
  [-RefinementFilters <String[]>] [-SortList <Hashtable>] [-RankingModelId <String>] [-ClientType <String>]
  [-CollapseSpecification <String>] [-HiddenConstraints <String>] [-TimeZoneId <Int32>]
  [-EnablePhonetic <Boolean>] [-EnableStemming <Boolean>] [-EnableQueryRules <Boolean>] [-SourceId <Guid>]
- [-ProcessBestBets <Boolean>] [-ProcessPersonalFavorites <Boolean>] [-RelevantResults] [-Web <WebPipeBind>]
+ [-ProcessBestBets <Boolean>] [-ProcessPersonalFavorites <Boolean>] [-RelevantResults] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -77,7 +77,6 @@ Automatically page results until the end to get more than 500. Use with caution!
 ```yaml
 Type: SwitchParameter
 Parameter Sets: All
-Aliases:
 
 Required: False
 Position: Named
@@ -92,7 +91,6 @@ Specifies the name of the client which issued the query.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -107,7 +105,6 @@ Limit the number of items per the collapse specification. See https://docs.micro
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -122,7 +119,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -137,7 +133,6 @@ The locale for the query.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -152,7 +147,6 @@ Specifies whether the phonetic forms of the query terms are used to find matches
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -167,7 +161,6 @@ Specifies whether Query Rules are enabled for this query.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -182,7 +175,6 @@ Specifies whether stemming is enabled.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -197,7 +189,6 @@ The keyword query's hidden constraints.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -212,7 +203,6 @@ Maximum amount of search results to return. Default and max per page is 500 sear
 ```yaml
 Type: Int32
 Parameter Sets: Limit
-Aliases:
 
 Required: False
 Position: Named
@@ -227,7 +217,6 @@ Determines whether Best Bets are enabled.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -242,7 +231,6 @@ Determines whether personal favorites data is processed or not.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -257,7 +245,6 @@ Extra query properties. Can for example be used for Office Graph queries.
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -272,7 +259,6 @@ Search query in Keyword Query Language (KQL).
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -287,7 +273,6 @@ Specifies the query template that is used at run time to transform the query bas
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -302,7 +287,6 @@ The identifier (ID) of the ranking model to use for the query.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -317,7 +301,6 @@ The set of refinement filters used.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -332,7 +315,6 @@ The list of refiners to be returned in a search result.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -347,7 +329,6 @@ Specifies whether only relevant results are returned
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -362,7 +343,6 @@ The list of properties to return in the search results.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -377,7 +357,6 @@ The list of properties by which the search results are ordered.
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -392,7 +371,6 @@ Specifies the identifier (ID or name) of the result source to be used to run the
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -407,7 +385,6 @@ Search result item to start returning the results from. Useful for paging. Leave
 ```yaml
 Type: Int32
 Parameter Sets: Limit
-Aliases:
 
 Required: False
 Position: Named
@@ -422,7 +399,6 @@ The identifier for the search query time zone.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -437,7 +413,6 @@ Specifies whether near duplicate items should be removed from the search results
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -446,21 +421,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

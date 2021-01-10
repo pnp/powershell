@@ -6,7 +6,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.RecordsManagement
 {
-    [Cmdlet(VerbsCommon.Set, "ListItemAsRecord")]
+    [Cmdlet(VerbsCommon.Set, "PnPListItemAsRecord")]
     public class SetListItemAsRecord : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.RecordsManagement
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(SelectedWeb);
+            var list = List.GetList(CurrentWeb);
             if (list == null)
                 throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 

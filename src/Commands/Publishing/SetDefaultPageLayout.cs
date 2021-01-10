@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Set, "DefaultPageLayout")]
+    [Cmdlet(VerbsCommon.Set, "PnPDefaultPageLayout")]
     public class SetDefaultPageLayout : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "TITLE")]
@@ -17,12 +17,12 @@ namespace PnP.PowerShell.Commands.Publishing
         {
             if (InheritFromParentSite.IsPresent)
             {
-                SelectedWeb.SetSiteToInheritPageLayouts();
+                CurrentWeb.SetSiteToInheritPageLayouts();
             }
             else
             {
                 var rootWeb = ClientContext.Site.RootWeb;
-                SelectedWeb.SetDefaultPageLayoutForSite(rootWeb, Title);
+                CurrentWeb.SetDefaultPageLayoutForSite(rootWeb, Title);
             }
         }
     }

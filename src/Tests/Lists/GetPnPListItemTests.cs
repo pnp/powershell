@@ -1,99 +1,60 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
+using System.Collections;
+using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Tests.Lists
 {
     [TestClass]
-    public class GetListItemTests
+    public class GetListItemTests : PnPTest
     {
-        #region Test Setup/CleanUp
+        private static string listTitle;
+        private static int itemId;
+
+        #region Setup
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
         {
-            // This runs on class level once before all tests run
-            //using (var ctx = TestCommon.CreateClientContext())
-            //{
-            //}
+            listTitle = $"TempList {Guid.NewGuid()}";
+
+            var values = new Hashtable();
+            values.Add("Title", "Test Item");
+            TestScope.ExecuteCommand("New-PnPList",
+            new CommandParameter("Title", listTitle),
+            new CommandParameter("Template", ListTemplateType.GenericList)
+            );
+
+            var results = TestScope.ExecuteCommand("Add-PnPListItem",
+                new CommandParameter("List", listTitle),
+                new CommandParameter("Values", values));
+
+            if (results.Count > 0)
+            {
+                itemId = ((ListItem)results[0].BaseObject).Id;
+            }
         }
 
         [ClassCleanup]
-        public static void Cleanup(TestContext testContext)
+        public static void Cleanup()
         {
-            // This runs on class level once
-            //using (var ctx = TestCommon.CreateClientContext())
-            //{
-            //}
-        }
-
-        [TestInitialize]
-        public void Initialize()
-        {
-            using (var scope = new PSTestScope())
-            {
-                // Example
-                // scope.ExecuteCommand("cmdlet", new CommandParameter("param1", prop));
-            }
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            using (var scope = new PSTestScope())
-            {
-                try
-                {
-                    // Do Test Setup - Note, this runs PER test
-                }
-                catch (Exception)
-                {
-                    // Describe Exception
-                }
-            }
+            TestScope.ExecuteCommand("Remove-PnPList",
+                new CommandParameter("Identity", listTitle),
+                new CommandParameter("Force"));
         }
         #endregion
 
         #region Scaffolded Cmdlet Tests
-        //TODO: This is a scaffold of the cmdlet - complete the unit test
-        //[TestMethod]
+        [TestMethod]
         public void GetPnPListItemTest()
         {
-            using (var scope = new PSTestScope(true))
-            {
-                // Complete writing cmd parameters
 
-				// This is a mandatory parameter
-				// From Cmdlet Help: The list to query
-				var list = "";
-				// From Cmdlet Help: The ID of the item to retrieve
-				var id = "";
-				// From Cmdlet Help: The unique id (GUID) of the item to retrieve
-				var uniqueId = "";
-				// From Cmdlet Help: The CAML query to execute against the list
-				var query = "";
-				// From Cmdlet Help: The server relative URL of a list folder from which results will be returned.
-				var folderServerRelativeUrl = "";
-				// From Cmdlet Help: The fields to retrieve. If not specified all fields will be loaded in the returned list object.
-				var fields = "";
-				// From Cmdlet Help: The number of items to retrieve per page request.
-				var pageSize = "";
-				// From Cmdlet Help: The script block to run after every page request.
-				var scriptBlock = "";
+            var results = TestScope.ExecuteCommand("Get-PnPListItem",
+                new CommandParameter("List", listTitle),
+                new CommandParameter("Id", itemId));
 
-                var results = scope.ExecuteCommand("Get-PnPListItem",
-					new CommandParameter("List", list),
-					new CommandParameter("Id", id),
-					new CommandParameter("UniqueId", uniqueId),
-					new CommandParameter("Query", query),
-					new CommandParameter("FolderServerRelativeUrl", folderServerRelativeUrl),
-					new CommandParameter("Fields", fields),
-					new CommandParameter("PageSize", pageSize),
-					new CommandParameter("ScriptBlock", scriptBlock));
-                
-                Assert.IsNotNull(results);
-            }
+            Assert.AreEqual(results.Count, 1);
         }
         #endregion
     }
 }
-            

@@ -6,7 +6,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Rename, "File")]
+    [Cmdlet(VerbsCommon.Rename, "PnPFile")]
     public class RenameFile : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SERVER")]
@@ -28,10 +28,10 @@ namespace PnP.PowerShell.Commands.Files
         {
             if (ParameterSetName == "SITE")
             {
-                var webUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
                 ServerRelativeUrl = UrlUtility.Combine(webUrl, SiteRelativeUrl);
             }
-            var file = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(ServerRelativeUrl));
+            var file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(ServerRelativeUrl));
 
             ClientContext.Load(file, f => f.Name, f => f.ServerRelativePath);
             ClientContext.ExecuteQueryRetry();

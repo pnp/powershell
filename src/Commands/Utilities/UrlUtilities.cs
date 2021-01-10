@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Text.Encodings.Web;
+#if !NETFRAMEWORK
+using System.Web;
+#endif
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -28,6 +32,15 @@ namespace PnP.PowerShell.Commands.Utilities
         public static bool IsTenantAdministrationUrl(string url)
         {
             return IsTenantAdministrationUrl(new Uri(url));
+        }
+
+        public static string UrlEncode(string urlToEncode)
+        {
+#if NETFRAMEWORK
+            return System.Net.WebUtility.UrlEncode(urlToEncode);
+#else
+            return HttpUtility.UrlEncode(urlToEncode);
+#endif
         }
     }
 }

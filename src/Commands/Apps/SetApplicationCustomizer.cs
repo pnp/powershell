@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "ApplicationCustomizer")]
+    [Cmdlet(VerbsCommon.Set, "PnPApplicationCustomizer")]
     public class SetApplicationCustomizer : PnPWebCmdlet
     {
         private const string ParameterSet_CUSTOMACTIONID = "Custom Action Id";
@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Branding
             {
                 if (Scope == CustomActionScope.All || Scope == CustomActionScope.Web)
                 {
-                    actions.AddRange(SelectedWeb.GetCustomActions());
+                    actions.AddRange(CurrentWeb.GetCustomActions());
                 }
                 if (Scope == CustomActionScope.All || Scope == CustomActionScope.Site)
                 {

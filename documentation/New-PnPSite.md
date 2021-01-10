@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/new-pnpsite
+online version: https://pnp.github.io/powershell/cmdlets/new-pnpsite
 schema: 2.0.0
 title: New-PnPSite
 ---
@@ -14,7 +14,7 @@ Creates either a communication site or a Microsoft 365 group-connected team site
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPSite -Type <SiteType> [-HubSiteId <Guid>] [-Wait] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -95,7 +95,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -110,7 +109,6 @@ If specified the site will be associated to the hubsite as identified by this id
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -125,7 +123,6 @@ Specifies with type of site to create.
 ```yaml
 Type: SiteType
 Parameter Sets: (All)
-Aliases:
 Accepted values: CommunicationSite, TeamSite
 
 Required: True
@@ -141,7 +138,6 @@ If specified the cmdlet will wait until the site has been fully created and all 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -152,4 +148,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

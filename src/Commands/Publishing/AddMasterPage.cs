@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Add, "MasterPage")]
+    [Cmdlet(VerbsCommon.Add, "PnPMasterPage")]
     public class AddMasterPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Publishing
                 SourceFilePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, SourceFilePath);
             }
 
-            var masterPageFile = SelectedWeb.DeployMasterPage(SourceFilePath, Title, Description, UIVersion, DefaultCssFile, DestinationFolderHierarchy);
+            var masterPageFile = CurrentWeb.DeployMasterPage(SourceFilePath, Title, Description, UIVersion, DefaultCssFile, DestinationFolderHierarchy);
             WriteObject(masterPageFile);
         }
     }

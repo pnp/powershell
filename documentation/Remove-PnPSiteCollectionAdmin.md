@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnpsitecollectionadmin
+online version: https://pnp.github.io/powershell/cmdlets/remove-pnpsitecollectionadmin
 schema: 2.0.0
 title: Remove-PnPSiteCollectionAdmin
 ---
@@ -14,7 +14,7 @@ Removes one or more users as site collection administrators from the site collec
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPSiteCollectionAdmin
  -Owners <System.Collections.Generic.List`1[PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind]>
  [-Connection <PnPConnection>] [<CommonParameters>]
@@ -61,7 +61,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -76,7 +75,6 @@ Specifies owner(s) to remove as site collection administrators. Can be both user
 ```yaml
 Type: System.Collections.Generic.List`1[PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -87,4 +85,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnptenantsequencesubsite
+online version: https://pnp.github.io/powershell/cmdlets/add-pnptenantsequencesubsite
 schema: 2.0.0
 title: Add-PnPTenantSequenceSubSite
 ---
@@ -14,8 +14,8 @@ Adds a tenant sequence sub site object to a tenant sequence site object
 
 ## SYNTAX
 
-```
-Add-PnPTenantSequenceSubSite -SubSite <TeamNoGroupSubSite> -Site <SiteCollection> [-WhatIf] [-Confirm]
+```powershell
+Add-PnPTenantSequenceSubSite -SubSite <TeamNoGroupSubSite> -Site <SiteCollection>  
  [<CommonParameters>]
 ```
 
@@ -53,7 +53,6 @@ The site to add the subsite to
 ```yaml
 Type: SiteCollection
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -68,7 +67,6 @@ The subsite to add
 ```yaml
 Type: TeamNoGroupSubSite
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -94,4 +92,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

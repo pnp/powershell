@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpcontext
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpcontext
 schema: 2.0.0
 title: Get-PnPContext
 ---
@@ -14,7 +14,7 @@ Returns the current context
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPContext [<CommonParameters>]
 ```
 
@@ -45,4 +45,4 @@ Get-PnPList # returns the lists from site A
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

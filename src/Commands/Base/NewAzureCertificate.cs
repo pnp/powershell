@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.New, "AzureCertificate")]
+    [Cmdlet(VerbsCommon.New, "PnPAzureCertificate")]
     public class NewPnPAdalCertificate : PSCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]
@@ -43,6 +43,7 @@ namespace PnP.PowerShell.Commands.Base
         public SecureString CertificatePassword;
         protected override void ProcessRecord()
         {
+#if NETFRAMEWORK
             var x500Values = new List<string>();
             if (!string.IsNullOrWhiteSpace(CommonName)) x500Values.Add($"CN={CommonName}");
             if (!string.IsNullOrWhiteSpace(Country)) x500Values.Add($"C={Country}");
@@ -60,8 +61,13 @@ namespace PnP.PowerShell.Commands.Base
             DateTime validFrom = DateTime.Today;
             DateTime validTo = validFrom.AddYears(ValidYears);
 
-            byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
+            byte[] certificateBytes = certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
             var certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable);
+#else
+            DateTimeOffset validFrom = DateTimeOffset.Now;
+            DateTimeOffset validTo = validFrom.AddYears(ValidYears);
+            var certificate = CertificateHelper.CreateSelfSignedCertificate2(CommonName, Country, State, Locality, Organization, OrganizationUnit, 2048, null, null, validFrom, validTo, "", false, null);
+#endif
 
             if (!string.IsNullOrWhiteSpace(OutPfx))
             {

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpteamsteam
+online version: https://pnp.github.io/powershell/cmdlets/set-pnpteamsteam
 schema: 2.0.0
 title: Set-PnPTeamsTeam
 ---
@@ -19,7 +19,7 @@ Updates an existing Team.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTeamsTeam -Identity <TeamsTeamPipeBind> [-DisplayName <String>] [-Description <String>]
  [-Visibility <TeamVisibility>] [-AllowAddRemoveApps <Boolean>] [-AllowChannelMentions <Boolean>]
  [-AllowCreateUpdateChannels <Boolean>] [-AllowCreateUpdateRemoveConnectors <Boolean>]
@@ -28,7 +28,7 @@ Set-PnPTeamsTeam -Identity <TeamsTeamPipeBind> [-DisplayName <String>] [-Descrip
  [-AllowOwnerDeleteMessages <Boolean>] [-AllowStickersAndMemes <Boolean>] [-AllowTeamMentions <Boolean>]
  [-AllowUserDeleteMessages <Boolean>] [-AllowUserEditMessages <Boolean>]
  [-GiphyContentRating <TeamGiphyContentRating>] [-ShowInTeamsSearchAndSuggestions <Boolean>]
- [-Classification <String>] [-ByPassPermissionCheck] [<CommonParameters>]
+ [-Classification <String>]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -50,7 +50,6 @@ Boolean value that determines whether or not members (not only owners) are allow
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -65,7 +64,6 @@ Boolean value that determines whether or not channels in the team can be @ menti
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -80,7 +78,6 @@ Setting that determines whether or not members (and not just owners) are allowed
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -95,7 +92,6 @@ Setting that determines whether or not members (and not only owners) can manage 
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -110,7 +106,6 @@ Setting that determines whether or not members (and not only owners) can manage 
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -125,7 +120,6 @@ Setting that determines whether or not members can use the custom memes function
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -140,7 +134,6 @@ Setting that determines whether or not members (and not only owners) can delete 
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -155,7 +148,6 @@ Setting that determines whether or not giphy can be used in the team.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -170,7 +162,6 @@ Setting that determines whether or not guests can create channels in the team.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -185,7 +176,6 @@ Setting that determines whether or not guests can delete in the team.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -200,7 +190,6 @@ Setting that determines whether or not owners can delete messages that they or o
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -215,7 +204,6 @@ Setting that determines whether stickers and memes usage is allowed in the team.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -230,7 +218,6 @@ Setting that determines whether the entire team can be @ mentioned (which means 
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -245,7 +232,6 @@ Setting that determines whether or not members can delete messages that they hav
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -260,22 +246,6 @@ Setting that determines whether or not users can edit messages that they have po
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -289,7 +259,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -304,7 +273,6 @@ Changes the description of the specified team.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -319,7 +287,6 @@ Changes the display name of the specified team.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -334,7 +301,6 @@ Setting that determines the level of sensitivity of giphy usage that is allowed 
 ```yaml
 Type: TeamGiphyContentRating
 Parameter Sets: (All)
-Aliases:
 Accepted values: moderate, strict
 
 Required: False
@@ -350,7 +316,6 @@ Specify the group id, mailNickname or display name of the team to use.
 ```yaml
 Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -365,7 +330,6 @@ Setting that determines whether or not private teams should be searchable from T
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -380,7 +344,6 @@ Changes the visibility of the specified team.
 ```yaml
 Type: TeamVisibility
 Parameter Sets: (All)
-Aliases:
 Accepted values: Private, Public
 
 Required: False
@@ -392,4 +355,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

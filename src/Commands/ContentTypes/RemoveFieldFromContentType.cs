@@ -7,13 +7,15 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.ContentTypes
 {
-    [Cmdlet(VerbsCommon.Remove, "FieldFromContentType")]
+    [Cmdlet(VerbsCommon.Remove, "PnPFieldFromContentType")]
     public class RemoveFieldFromContentType : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
+        [ValidateNotNullOrEmpty]
         public FieldPipeBind Field;
 
         [Parameter(Mandatory = true)]
+        [ValidateNotNullOrEmpty]
         public ContentTypePipeBind ContentType;
 
         [Parameter(Mandatory = false)]
@@ -26,66 +28,30 @@ namespace PnP.PowerShell.Commands.ContentTypes
             {
                 if (Field.Id != Guid.Empty)
                 {
-                    field = SelectedWeb.Fields.GetById(Field.Id);
+                    field = CurrentWeb.Fields.GetById(Field.Id);
                 }
                 else if (!string.IsNullOrEmpty(Field.Name))
                 {
-                    field = SelectedWeb.Fields.GetByInternalNameOrTitle(Field.Name);
+                    field = CurrentWeb.Fields.GetByInternalNameOrTitle(Field.Name);
                 }
                 ClientContext.Load(field);
                 ClientContext.ExecuteQueryRetry();
             }
-            if (field != null)
+            if (field is null)
             {
-                if (ContentType.ContentType != null)
-                {
-                    ContentType.ContentType.EnsureProperty(c => c.FieldLinks);
-                    var fieldLink = ContentType.ContentType.FieldLinks.FirstOrDefault(f => f.Id == field.Id);
-                    if (fieldLink != null)
-                    {
-                        fieldLink.DeleteObject();
-                        ContentType.ContentType.Update(!DoNotUpdateChildren);
-                        ClientContext.ExecuteQueryRetry();
-                    }
-                    else
-                    {
-                        ThrowTerminatingError(new ErrorRecord(new Exception("Cannot find field reference in content type"), "FieldRefNotFound", ErrorCategory.ObjectNotFound, ContentType));
-                    }
-
-                }
-                else
-                {
-                    ContentType ct;
-                    if (!string.IsNullOrEmpty(ContentType.Id))
-                    {
-                        ct = SelectedWeb.GetContentTypeById(ContentType.Id, true);
-
-                    }
-                    else
-                    {
-                        ct = SelectedWeb.GetContentTypeByName(ContentType.Name, true);
-                    }
-                    if (ct != null)
-                    {
-                        ct.EnsureProperty(c => c.FieldLinks);
-                        var fieldLink = ct.FieldLinks.FirstOrDefault(f => f.Id == field.Id);
-                        if (fieldLink != null)
-                        {
-                            fieldLink.DeleteObject();
-                            ct.Update(!DoNotUpdateChildren);
-                            ClientContext.ExecuteQueryRetry();
-                        }
-                        else
-                        {
-                            ThrowTerminatingError(new ErrorRecord(new Exception("Cannot find field reference in content type"), "FieldRefNotFound", ErrorCategory.ObjectNotFound, ContentType));
-                        }
-                    }
-                }
+                throw new PSArgumentException("Field not found", nameof(Field));
             }
-            else
+            var ct = ContentType.GetContentTypeOrThrow(nameof(ContentType), CurrentWeb, true);
+            ct.EnsureProperty(c => c.FieldLinks);
+            var fieldLink = ct.FieldLinks.FirstOrDefault(f => f.Id == field.Id);
+            if (fieldLink is null)
             {
-                ThrowTerminatingError(new ErrorRecord(new Exception("Field not found"), "FieldNotFound", ErrorCategory.ObjectNotFound, this));
+                throw new PSArgumentException("Cannot find field reference in content type");
             }
+            fieldLink.DeleteObject();
+            ct.Update(!DoNotUpdateChildren);
+            ClientContext.ExecuteQueryRetry();
+
         }
 
 

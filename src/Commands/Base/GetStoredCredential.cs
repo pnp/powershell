@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Get, "StoredCredential")]
+    [Cmdlet(VerbsCommon.Get, "PnPStoredCredential")]
     public class GetStoredCredential : PSCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -18,8 +18,7 @@ namespace PnP.PowerShell.Commands.Base
             var creds = Utilities.CredentialManager.GetCredential(Name);
             if (creds != null)
             {
-                var spoCreds = new System.Net.NetworkCredential(creds.UserName, creds.Password);
-                WriteObject(spoCreds);
+                WriteObject(creds);
             }
             else
             {

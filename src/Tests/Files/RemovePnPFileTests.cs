@@ -5,51 +5,32 @@ using System.Management.Automation.Runspaces;
 namespace PnP.PowerShell.Tests.Files
 {
     [TestClass]
-    public class RemoveFileTests
+    public class RemoveFileTests : PnPTest
     {
-        #region Test Setup/CleanUp
+        #region Setup
+
+        private static string fileName;
+
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
         {
-            // This runs on class level once before all tests run
-            //using (var ctx = TestCommon.CreateClientContext())
-            //{
-            //}
+            fileName = $"{Guid.NewGuid()}.txt";
+            var filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Resources{System.IO.Path.DirectorySeparatorChar}template.xml");
+
+            TestScope.ExecuteCommand("Add-PnPFile",
+                new CommandParameter("Path", filePath),
+                new CommandParameter("NewFileName", fileName),
+                new CommandParameter("Folder", "Shared Documents"));
+
         }
 
         [ClassCleanup]
-        public static void Cleanup(TestContext testContext)
+        public static void Cleanup()
         {
-            // This runs on class level once
-            //using (var ctx = TestCommon.CreateClientContext())
-            //{
-            //}
-        }
+            TestScope.ExecuteCommand("Remove-PnPFile",
+                new CommandParameter("SiteRelativeUrl", $"Shared documents/{fileName}"),
+                new CommandParameter("Force"));
 
-        [TestInitialize]
-        public void Initialize()
-        {
-            using (var scope = new PSTestScope())
-            {
-                // Example
-                // scope.ExecuteCommand("cmdlet", new CommandParameter("param1", prop));
-            }
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            using (var scope = new PSTestScope())
-            {
-                try
-                {
-                    // Do Test Setup - Note, this runs PER test
-                }
-                catch (Exception)
-                {
-                    // Describe Exception
-                }
-            }
         }
         #endregion
 
@@ -58,29 +39,12 @@ namespace PnP.PowerShell.Tests.Files
         //[TestMethod]
         public void RemovePnPFileTest()
         {
-            using (var scope = new PSTestScope(true))
-            {
-                // Complete writing cmd parameters
+            var results = TestScope.ExecuteCommand("Remove-PnPFile",
+                 new CommandParameter("SiteRelativeUrl", $"Shared Documents/{fileName}"),
+                 new CommandParameter("Force"));
 
-				// This is a mandatory parameter
-				// From Cmdlet Help: Server relative URL to the file
-				var serverRelativeUrl = "";
-				// This is a mandatory parameter
-				// From Cmdlet Help: Site relative URL to the file
-				var siteRelativeUrl = "";
-				var recycle = "";
-				var force = "";
-
-                var results = scope.ExecuteCommand("Remove-PnPFile",
-					new CommandParameter("ServerRelativeUrl", serverRelativeUrl),
-					new CommandParameter("SiteRelativeUrl", siteRelativeUrl),
-					new CommandParameter("Recycle", recycle),
-					new CommandParameter("Force", force));
-                
-                Assert.IsNotNull(results);
-            }
+            Assert.AreEqual(results.Count, 0);
         }
-        #endregion
     }
+    #endregion
 }
-            

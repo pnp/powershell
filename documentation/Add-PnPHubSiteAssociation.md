@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnphubsiteassociation
+online version: https://pnp.github.io/powershell/cmdlets/add-pnphubsiteassociation
 schema: 2.0.0
 title: Add-PnPHubSiteAssociation
 ---
@@ -19,7 +19,7 @@ Connects a site to a hubsite.
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPHubSiteAssociation -Site <SitePipeBind> -HubSite <SitePipeBind> [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -31,7 +31,7 @@ Connects an existing site to a hubsite
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPHubSiteAssociation -Site https://tenant.sharepoint.com/sites/mysite -HubSite https://tenant.sharepoint.com/sites/hubsite
+Add-PnPHubSiteAssociation -Site "https://tenant.sharepoint.com/sites/mysite" -HubSite "https://tenant.sharepoint.com/sites/hubsite"
 ```
 
 This example adds the specified site to the hubsite.
@@ -44,7 +44,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -59,7 +58,6 @@ The hubsite to connect the site to
 ```yaml
 Type: SitePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -74,7 +72,6 @@ The site to connect to the hubsite
 ```yaml
 Type: SitePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -85,4 +82,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

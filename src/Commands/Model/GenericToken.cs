@@ -13,6 +13,8 @@ using System.Security;
 using PnP.Framework;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Base;
+using System.Threading;
+using System.Net.Http;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -158,7 +160,7 @@ namespace PnP.PowerShell.Commands.Model
             }
         }
 
-        public static GenericToken AcquireApplicationToken(string tenant, string clientId, string authority, string[] scopes, X509Certificate2 certificate)
+        public static async Task<GenericToken> AcquireApplicationTokenAsync(string tenant, string clientId, string authority, string[] scopes, X509Certificate2 certificate)
         {
             if (string.IsNullOrEmpty(tenant))
             {
@@ -179,17 +181,17 @@ namespace PnP.PowerShell.Commands.Model
                 confidentialClientApplication = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority(authority).WithCertificate(certificate).Build();
             }
 
-            var account = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
+            var account = await confidentialClientApplication.GetAccountsAsync();
 
             try
             {
-                tokenResult = confidentialClientApplication.AcquireTokenSilent(scopes, account.First()).WithForceRefresh(true).ExecuteAsync().GetAwaiter().GetResult();
+                tokenResult = await confidentialClientApplication.AcquireTokenSilent(scopes, account.First()).WithForceRefresh(true).ExecuteAsync();
             }
             catch
             {
                 try
                 {
-                    tokenResult = confidentialClientApplication.AcquireTokenForClient(scopes).ExecuteAsync().GetAwaiter().GetResult();
+                    tokenResult = await confidentialClientApplication.AcquireTokenForClient(scopes).ExecuteAsync();
                 }
                 catch (MsalUiRequiredException msalEx)
                 {
@@ -211,13 +213,42 @@ namespace PnP.PowerShell.Commands.Model
         }
 
         /// <summary>
+        /// Tries to acquire an application token from the Managed Identity Service
+        /// </summary>
+        public static async Task<GraphToken> AcquireManagedIdentityTokenAsync(HttpClient httpClient, string resource, PSCmdlet cmdletInstance = null)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{Environment.GetEnvironmentVariable("MSI_ENDPOINT")}/?resource={resource}");
+            request.Headers.Add("Metadata", "true");
+            var response = await httpClient.SendAsync(request);
+            var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var accessTokenResponse = JsonSerializer.Deserialize<Dictionary<string, string>>(responseString);
+                if (accessTokenResponse != null && accessTokenResponse["access_token"] != null)
+                {
+                    cmdletInstance?.WriteVerbose("Token retrieved");
+                }
+                return new GraphToken(accessTokenResponse["access_token"]);
+            }
+            else
+            {
+                var message = JsonDocument.Parse(responseString);
+                var errorProp = message.RootElement.GetProperty("error");
+                var code = errorProp.GetProperty("code").GetString();
+                var errorMessage = errorProp.GetProperty("message").GetString();
+                throw new Exception(errorMessage);
+            }
+        }
+
+        /// <summary>
         /// Tries to acquire an application Microsoft Graph Access Token
         /// </summary>
         /// <param name="tenant">Name of the tenant to acquire the token for (i.e. contoso.onmicrosoft.com). Required.</param>
         /// <param name="clientId">ClientId to use to acquire the token. Required.</param>
         /// <param name="clientSecret">Client Secret to use to acquire the token. Required.</param>
         /// <returns><see cref="GraphToken"/> instance with the token</returns>
-        public static GenericToken AcquireApplicationToken(string tenant, string clientId, string authority, string[] scopes, string clientSecret)
+        public static async Task<GenericToken> AcquireApplicationTokenAsync(string tenant, string clientId, string authority, string[] scopes, string clientSecret)
         {
             if (string.IsNullOrEmpty(tenant))
             {
@@ -239,17 +270,17 @@ namespace PnP.PowerShell.Commands.Model
                 confidentialClientApplication = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority(authority).WithClientSecret(clientSecret).Build();
             }
 
-            var account = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
+            var account = await confidentialClientApplication.GetAccountsAsync();
 
             try
             {
-                tokenResult = confidentialClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync().GetAwaiter().GetResult();
+                tokenResult = await confidentialClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync();
             }
             catch
             {
                 try
                 {
-                    tokenResult = confidentialClientApplication.AcquireTokenForClient(scopes).ExecuteAsync().GetAwaiter().GetResult();
+                    tokenResult = await confidentialClientApplication.AcquireTokenForClient(scopes).ExecuteAsync();
                 }
                 catch (MsalUiRequiredException msalEx)
                 {
@@ -275,7 +306,7 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="clientId">ClientId to use to acquire the token. Required.</param>
         /// <param name="scopes">Array with scopes that should be requested access to. Required.</param>
         /// <returns><see cref="GraphToken"/> instance with the token</returns>
-        public static GenericToken AcquireApplicationTokenInteractive(string clientId, string[] scopes, AzureEnvironment azureEnvironment)
+        public static async Task<GenericToken> AcquireApplicationTokenInteractiveAsync(string clientId, string[] scopes, AzureEnvironment azureEnvironment)
         {
             var endPoint = GetAzureADLoginEndPoint(azureEnvironment);
             if (string.IsNullOrEmpty(clientId))
@@ -295,17 +326,17 @@ namespace PnP.PowerShell.Commands.Model
 
             AuthenticationResult tokenResult = null;
 
-            var account = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
+            var account = await publicClientApplication.GetAccountsAsync();
 
             try
             {
-                tokenResult = publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync().GetAwaiter().GetResult();
+                tokenResult = await publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync();
             }
             catch
             {
                 try
                 {
-                    tokenResult = publicClientApplication.AcquireTokenInteractive(scopes).WithExtraScopesToConsent(new[] { "https://graph.microsoft.com/.default" }).ExecuteAsync().GetAwaiter().GetResult();
+                    tokenResult = await publicClientApplication.AcquireTokenInteractive(scopes).WithExtraScopesToConsent(new[] { "https://graph.microsoft.com/.default" }).ExecuteAsync();
                 }
                 catch (MsalUiRequiredException msalEx)
                 {
@@ -325,7 +356,7 @@ namespace PnP.PowerShell.Commands.Model
             return new GenericToken(tokenResult.AccessToken);
         }
 
-        public static GenericToken AcquireApplicationTokenDeviceLogin(string clientId, string[] scopes, string authority, Action<DeviceCodeResult> callBackAction)
+        public static async Task<GenericToken> AcquireApplicationTokenDeviceLoginAsync(string clientId, string[] scopes, string authority, Action<DeviceCodeResult> callBackAction, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(clientId))
             {
@@ -343,11 +374,11 @@ namespace PnP.PowerShell.Commands.Model
                 publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithAuthority(authority).Build();
 
             }
-            var account = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
+            var account = await publicClientApplication.GetAccountsAsync();
 
             try
             {
-                tokenResult = publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync().GetAwaiter().GetResult();
+                tokenResult = await publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync(cancellationToken);
             }
             catch
             {
@@ -359,7 +390,7 @@ namespace PnP.PowerShell.Commands.Model
                     }
                     return Task.FromResult(0);
                 });
-                tokenResult = builder.ExecuteAsync().GetAwaiter().GetResult();
+                tokenResult = await builder.ExecuteAsync(cancellationToken);
             }
             return new GenericToken(tokenResult.AccessToken);
         }
@@ -371,7 +402,7 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="username">The username to authenticate with. Required.</param>
         /// <param name="securePassword">The password to authenticate with. Required.</param>
         /// <returns><see cref="GraphToken"/> instance with the token</returns>
-        public static GenericToken AcquireDelegatedTokenWithCredentials(string clientId, string[] scopes, string authority, string username, SecureString securePassword)
+        public static async Task<GenericToken> AcquireDelegatedTokenWithCredentialsAsync(string clientId, string[] scopes, string authority, string username, SecureString securePassword)
         {
             if (string.IsNullOrEmpty(clientId))
             {
@@ -397,16 +428,16 @@ namespace PnP.PowerShell.Commands.Model
                 publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithAuthority(authority).Build();
 
             }
-            var account = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
+            var account = await publicClientApplication.GetAccountsAsync();
             try
             {
-                tokenResult = publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync().GetAwaiter().GetResult();
+                tokenResult = await publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync();
             }
             catch
             {
                 try
                 {
-                    tokenResult = publicClientApplication.AcquireTokenByUsernamePassword(scopes, username, securePassword).ExecuteAsync().GetAwaiter().GetResult();
+                    tokenResult = await publicClientApplication.AcquireTokenByUsernamePassword(scopes, username, securePassword).ExecuteAsync();
                 }
                 catch (MsalUiRequiredException msalEx)
                 {

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnptheme
+online version: https://pnp.github.io/powershell/cmdlets/set-pnptheme
 schema: 2.0.0
 title: Set-PnPTheme
 ---
@@ -14,9 +14,9 @@ Sets the theme of the current web.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTheme [-ColorPaletteUrl <String>] [-FontSchemeUrl <String>] [-BackgroundImageUrl <String>]
- [-ResetSubwebsToInherit] [-UpdateRootWebOnly] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+ [-ResetSubwebsToInherit] [-UpdateRootWebOnly] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -57,7 +57,6 @@ Specifies the Background Image Url based on the site or server relative url
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -72,7 +71,6 @@ Specifies the Color Palette Url based on the site or server relative url
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -87,7 +85,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -102,7 +99,6 @@ Specifies the Font Scheme Url based on the site or server relative url
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -117,7 +113,6 @@ Resets subwebs to inherit the theme from the rootweb
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -132,7 +127,6 @@ Updates only the rootweb, even if subwebs are set to inherit the theme.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -141,21 +135,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

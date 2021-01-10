@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnptenantcdnpolicy
+online version: https://pnp.github.io/powershell/cmdlets/set-pnptenantcdnpolicy
 schema: 2.0.0
 title: Set-PnPTenantCdnPolicy
 ---
@@ -19,7 +19,7 @@ Sets the CDN Policies for the specified CDN (Public | Private).
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTenantCdnPolicy -CdnType <SPOTenantCdnType> -PolicyType <SPOTenantCdnPolicyType> -PolicyValue <String>
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
@@ -44,7 +44,6 @@ The type of cdn to retrieve the policies from
 ```yaml
 Type: SPOTenantCdnType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Public, Private
 
 Required: True
@@ -60,7 +59,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -75,7 +73,6 @@ The type of the policy to set
 ```yaml
 Type: SPOTenantCdnPolicyType
 Parameter Sets: (All)
-Aliases:
 Accepted values: IncludeFileExtensions, ExcludeRestrictedSiteClassifications, ExcludeIfNoScriptDisabled
 
 Required: True
@@ -91,7 +88,6 @@ The value of the policy to set
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -102,4 +98,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

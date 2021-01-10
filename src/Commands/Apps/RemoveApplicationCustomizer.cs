@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Remove, "ApplicationCustomizer")]
+    [Cmdlet(VerbsCommon.Remove, "PnPApplicationCustomizer")]
     public class RemoveApplicationCustomizer : PnPWebCmdlet
     {
         private const string ParameterSet_CUSTOMACTIONID = "Custom Action Id";
@@ -39,7 +39,7 @@ namespace PnP.PowerShell.Commands.Branding
             {
                 if (Scope == CustomActionScope.All || Scope == CustomActionScope.Web)
                 {
-                    actions.AddRange(SelectedWeb.GetCustomActions());
+                    actions.AddRange(CurrentWeb.GetCustomActions());
                 }
                 if (Scope == CustomActionScope.All || Scope == CustomActionScope.Site)
                 {
@@ -77,7 +77,7 @@ namespace PnP.PowerShell.Commands.Branding
                 switch (action.Scope)
                 {
                     case UserCustomActionScope.Web:
-                        SelectedWeb.DeleteCustomAction(action.Id);
+                        CurrentWeb.DeleteCustomAction(action.Id);
                         break;
 
                     case UserCustomActionScope.Site:

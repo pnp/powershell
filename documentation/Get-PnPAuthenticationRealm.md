@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpauthenticationrealm
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpauthenticationrealm
 schema: 2.0.0
 title: Get-PnPAuthenticationRealm
 ---
@@ -14,7 +14,7 @@ Returns the authentication realm
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPAuthenticationRealm [[-Url] <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -32,7 +32,7 @@ This will get the authentication realm for the current connected site
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAuthenticationRealm -Url https://contoso.sharepoint.com
+Get-PnPAuthenticationRealm -Url "https://contoso.sharepoint.com"
 ```
 
 This will get the authentication realm for https://contoso.sharepoint.com
@@ -45,7 +45,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -60,7 +59,6 @@ Specifies the URL of the site
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -71,4 +69,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

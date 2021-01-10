@@ -8,7 +8,7 @@ using File = System.IO.File;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
-    [Cmdlet(VerbsCommon.Add, "WebPartToWebPartPage")]
+    [Cmdlet(VerbsCommon.Add, "PnPWebPartToWebPartPage")]
     public class AddWebPartToWebPartPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.WebParts
 
         protected override void ExecuteCmdlet()
         {
-            var serverRelativeWebUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var serverRelativeWebUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             if (!ServerRelativePageUrl.ToLowerInvariant().StartsWith(serverRelativeWebUrl.ToLowerInvariant()))
             {
@@ -62,7 +62,7 @@ namespace PnP.PowerShell.Commands.WebParts
             }
             if (wp != null)
             {
-                SelectedWeb.AddWebPartToWebPartPage(ServerRelativePageUrl, wp);
+                CurrentWeb.AddWebPartToWebPartPage(ServerRelativePageUrl, wp);
             }
         }
     }

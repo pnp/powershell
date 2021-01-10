@@ -1,0 +1,25 @@
+﻿
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using System;
+using System.Management.Automation;
+
+namespace PnP.PowerShell.Commands.Pages
+{
+    [Cmdlet(VerbsCommon.Get, "PnPPage")]
+    [Alias("Get-PnPClientSidePage")]
+    public class GetPage : PnPWebCmdlet
+    {
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        public PagePipeBind Identity;
+
+        protected override void ExecuteCmdlet()
+        {
+            var clientSidePage = Identity.GetPage();
+
+            if (clientSidePage == null)
+                throw new Exception($"Page '{Identity?.Name}' does not exist");
+
+            WriteObject(clientSidePage);
+        }
+    }
+}

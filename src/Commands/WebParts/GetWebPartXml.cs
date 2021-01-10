@@ -12,7 +12,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
-    [Cmdlet(VerbsCommon.Get, "WebPartXml")]
+    [Cmdlet(VerbsCommon.Get, "PnPWebPartXml")]
     public class GetWebPartXml : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -20,11 +20,11 @@ namespace PnP.PowerShell.Commands.WebParts
         public string ServerRelativePageUrl = string.Empty;
 
         [Parameter(Mandatory = true)]
-        public WebPartPipeBind Identity;
+        public ClassicWebPartPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
-            var serverRelativeWebUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var serverRelativeWebUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             if (!ServerRelativePageUrl.ToLowerInvariant().StartsWith(serverRelativeWebUrl.ToLowerInvariant()))
             {
@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.WebParts
             Guid id;
             if (Identity.Id == Guid.Empty)
             {
-                var wp = SelectedWeb.GetWebParts(ServerRelativePageUrl).FirstOrDefault(wps => wps.WebPart.Title == Identity.Title);
+                var wp = CurrentWeb.GetWebParts(ServerRelativePageUrl).FirstOrDefault(wps => wps.WebPart.Title == Identity.Title);
                 if (wp != null)
                 {
                     id = wp.Id;
@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.WebParts
             }
 
 
-            WriteObject(SelectedWeb.GetWebPartXml(id,ServerRelativePageUrl));
+            WriteObject(CurrentWeb.GetWebPartXml(id,ServerRelativePageUrl));
 
             
         }

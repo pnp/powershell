@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/update-pnpsiteclassification
+online version: https://pnp.github.io/powershell/cmdlets/update-pnpsiteclassification
 schema: 2.0.0
 title: Update-PnPSiteClassification
 ---
@@ -20,15 +20,15 @@ Updates Site Classifications for the tenant
 ## SYNTAX
 
 ### Settings
-```
-Update-PnPSiteClassification -Settings <SiteClassificationsSettings> [-ByPassPermissionCheck]
+```powershell
+Update-PnPSiteClassification -Settings <SiteClassificationsSettings> 
  [<CommonParameters>]
 ```
 
 ### Specific
-```
+```powershell
 Update-PnPSiteClassification [-Classifications <System.Collections.Generic.List`1[System.String]>]
- [-DefaultClassification <String>] [-UsageGuidelinesUrl <String>] [-ByPassPermissionCheck] [<CommonParameters>]
+ [-DefaultClassification <String>] [-UsageGuidelinesUrl <String>]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -51,27 +51,12 @@ Sets the default classification value to "LBI". This value needs to be present i
 
 ### EXAMPLE 3
 ```powershell
-Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/sppnp
+Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/m365pnp
 ```
 
 sets the usage guideliness URL to the specified URL
 
 ## PARAMETERS
-
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Classifications
 A list of classifications, separated by commas. E.g. "HBI","LBI","Top Secret"
@@ -79,7 +64,6 @@ A list of classifications, separated by commas. E.g. "HBI","LBI","Top Secret"
 ```yaml
 Type: System.Collections.Generic.List`1[System.String]
 Parameter Sets: Specific
-Aliases:
 
 Required: False
 Position: Named
@@ -94,7 +78,6 @@ The default classification to be used. The value needs to be present in the list
 ```yaml
 Type: String
 Parameter Sets: Specific
-Aliases:
 
 Required: False
 Position: Named
@@ -109,7 +92,6 @@ A settings object retrieved by Get-PnPSiteClassification
 ```yaml
 Type: SiteClassificationsSettings
 Parameter Sets: Settings
-Aliases:
 
 Required: True
 Position: Named
@@ -124,7 +106,6 @@ The UsageGuidelinesUrl. Set to "" to clear.
 ```yaml
 Type: String
 Parameter Sets: Specific
-Aliases:
 
 Required: False
 Position: Named
@@ -135,4 +116,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

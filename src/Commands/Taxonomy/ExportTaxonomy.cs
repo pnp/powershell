@@ -9,7 +9,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsData.Export, "Taxonomy")]
+    [Cmdlet(VerbsData.Export, "PnPTaxonomy")]
     public class ExportTaxonomy : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ParameterSetName = "TermSet")]
