@@ -1,0 +1,56 @@
+name: Build Pull Request or Commit
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+    paths: 
+      - 'src/**'
+  pull_request:
+    branches: 
+      - dev
+    paths: 
+      - 'src/**'
+jobs:
+  build_dev_branch:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout PnP.Framework
+      uses: actions/checkout@v2
+      with:
+        repository: pnp/pnpframework
+        path: pnpframework
+        ref: 'dev'
+    - name: Checkout PnP.Core
+      uses: actions/checkout@v2
+      with:
+        repository: pnp/pnpcore
+        path: pnpcore
+        ref: 'dev'  
+    - name: Checkout PnP.PowerShell
+      uses: actions/checkout@v2
+      with:
+        path: powershell
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0.101'
+    - name: Install PnP.Framework dependencies
+      run: dotnet restore
+      working-directory: pnpframework/src/lib
+    - name: Build PnP.Framework
+      run: dotnet build --configuration Release --no-restore -p:WarningLevel=0
+      working-directory: pnpframework/src/lib/PnP.Framework
+    - name: Install PnP.Core dependencies
+      run: dotnet restore
+      working-directory: pnpcore/src/sdk
+    - name: Build PnP.Core
+      run: dotnet build --configuration Release --no-restore -p:WarningLevel=0
+      working-directory: pnpcore/src/sdk/PnP.Core
+    - name: Install PnP.PowerShell dependencies
+      run: dotnet restore -p:PnPFrameworkPath="..\..\..\pnpframework\src\lib\PnP.Framework\bin\Release\netstandard2.0\PnP.Framework.dll" -p:PnPCoreSdkPath="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Release\netstandard2.0\PnP.Core.dll"
+      working-directory: powershell/src
+    - name: Build PnP.PowerShell
+      run: dotnet build --configuration Release --no-restore -p:PnPFrameworkPath="..\..\..\pnpframework\src\lib\PnP.Framework\bin\Release\netstandard2.0\PnP.Framework.dll" -p:PnPCoreSdkPath="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Release\netstandard2.0\PnP.Core.dll"
+      working-directory: powershell/src
