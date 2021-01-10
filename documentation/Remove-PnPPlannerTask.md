@@ -10,6 +10,11 @@ title: remove-pnpplannertask
 # Remove-PnPPlannerTask
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: Group.ReadWrite.All
+
 Removes a Planner task
 
 ## SYNTAX
