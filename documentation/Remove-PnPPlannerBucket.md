@@ -10,6 +10,11 @@ title: remove-pnpplannerbucket
 # Remove-PnPPlannerBucket
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: Group.ReadWrite.All
+
 Removes a planner bucket
 
 ## SYNTAX
@@ -71,7 +76,7 @@ Accept wildcard characters: False
 ```
 
 ### -Group
-Specify the group id of group owning the plan.
+Specify the group id or name of the group owning the plan.
 
 ```yaml
 Type: PlannerGroupPipeBind

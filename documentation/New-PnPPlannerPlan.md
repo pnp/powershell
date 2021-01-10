@@ -10,6 +10,11 @@ title: new-pnpplannerplan
 # New-PnPPlannerPlan
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: Group.ReadWrite.All
+
 Creates a new Planner plan.
 
 ## SYNTAX

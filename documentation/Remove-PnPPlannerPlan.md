@@ -10,6 +10,11 @@ title: remove-pnpplannerplan
 # Remove-PnPPlannerPlan
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: Group.ReadWrite.All
+
 Removes a planner plan
 
 ## SYNTAX
@@ -49,7 +54,7 @@ Accept wildcard characters: False
 ```
 
 ### -Group
-Specify the group owning the plan.
+Specify the id or name of the group owning the plan.
 
 ```yaml
 Type: PlannerGroupPipeBind

@@ -10,6 +10,12 @@ title: get-pnpplannertask
 # Get-PnPPlannerTask
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: Group.ReadWrite.All
+  * Microsoft Graph API: Group.Read.All
+
 Returns Planner tasks
 
 ## SYNTAX
@@ -89,7 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -Group
-Specify the group id of group owning the plan.
+Specify the group id or name of group owning the plan.
 
 ```yaml
 Type: PlannerGroupPipeBind

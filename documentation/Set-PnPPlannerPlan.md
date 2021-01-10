@@ -10,6 +10,11 @@ title: set-pnpplannerplan
 # Set-PnPPlannerPlan
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: Group.ReadWrite.All
+
 Updates an existing Planner plan
 
 ## SYNTAX
@@ -40,7 +45,7 @@ This example renames the "Conference" plan to "Conference 2020"
 ## PARAMETERS
 
 ### -Group
-Specify the group id of group owning the plan.
+Specify the group id or name of the group owning the plan.
 
 ```yaml
 Type: PlannerGroupPipeBind
