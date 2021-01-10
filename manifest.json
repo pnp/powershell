@@ -38,6 +38,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/batching.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/batching.html",
+          "hash": "k9FKoUZ1F3RibMvplmrAzw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/buildingsource.md",
       "output": {
         ".html": {
@@ -102,7 +114,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "Qfj3rJElIBB2edpNryHDAg=="
+          "hash": "/7HjEgYszm5OPVy/ibEvuQ=="
         }
       },
       "is_incremental": false,
@@ -6949,7 +6961,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 572,
+          "total_file_count": 573,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
