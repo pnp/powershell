@@ -10,6 +10,11 @@ title: get-pnpplannerbucket
 # Get-PnPPlannerBucket
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: Group.ReadWrite.All
+
 Returns all or a specific Planner bucket
 
 ## SYNTAX
@@ -42,7 +47,7 @@ This will returns all buckets in the specified plan
 
 
 ### -Group
-Specify the group id of group owning the plan.
+Specify the group id or name of the group owning the plan.
 
 ```yaml
 Type: PlannerGroupPipeBind
