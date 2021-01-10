@@ -10,6 +10,11 @@ title: set-pnpplannerbucket
 # Set-PnPPlannerBucket
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API: Group.ReadWrite.All
+
 Updates an existing Planner bucket
 
 ## SYNTAX
@@ -56,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -Group
-Specify the group id of group owning the plan.
+Specify the group id or name of the group owning the plan.
 
 ```yaml
 Type: PlannerGroupPipeBind
@@ -86,7 +91,7 @@ Accept wildcard characters: False
 ```
 
 ### -Plan
-Specify the name of the plan to retrieve the buckets for.
+Specify the name or id of the plan to retrieve the buckets for.
 
 ```yaml
 Type: PlannerPlanPipeBind
