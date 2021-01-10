@@ -8,15 +8,22 @@ jobs:
   documentation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Wait for actions to finish
+        uses: softprops/turnstyle@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout master branch
+        uses: actions/checkout@v2
         with:
           ref: master
           path: master
-      - uses: actions/checkout@v2
+      - name: Checkout dev branch
+        uses: actions/checkout@v2
         with:
           ref: dev
           path: dev
-      - uses: actions/checkout@v2
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v2
         with:
           ref: gh-pages
           path: gh-pages
@@ -32,7 +39,7 @@ jobs:
         shell: pwsh
         run: |
           ./dev/pages/Build-Site.ps1
-      - name: Add & Commit
+      - name: Add & Commit & Push
         uses: EndBug/add-and-commit@v6
         with:
           cwd: ./gh-pages
