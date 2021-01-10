@@ -95,7 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -Group
-Specify the group idor name of group owning the plan.
+Specify the group id or name of group owning the plan.
 
 ```yaml
 Type: PlannerGroupPipeBind
