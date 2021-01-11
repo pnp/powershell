@@ -1,8 +1,8 @@
 ﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
 using PnP.Framework.Entities;
 using System;
 using PnP.PowerShell.Commands.Enums;
+using PnP.Core.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Branding
 {
@@ -66,19 +66,11 @@ namespace PnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-            var permissions = new BasePermissions();
-            if (Rights != null)
-            {
-                foreach (var kind in Rights)
-                {
-                    permissions.Set(kind);
-                }
-            }
-            CustomActionEntity ca;
+            AddUserCustomActionOptions ca;
             if (ParameterSetName == ParameterSet_DEFAULT)
             {
 
-                ca = new CustomActionEntity
+                ca = new AddUserCustomActionOptions
                 {
                     Name = Name,
                     ImageUrl = ImageUrl,
@@ -91,12 +83,18 @@ namespace PnP.PowerShell.Commands.Branding
                     Sequence = Sequence,
                     Title = Title,
                     Url = Url,
-                    Rights = permissions,
                 };
+                if (ParameterSpecified(nameof(Rights)))
+                {
+                    foreach (var kind in Rights)
+                    {
+                        ca.Rights.Set(kind);
+                    }
+                }
             }
             else
             {
-                ca = new CustomActionEntity()
+                ca = new AddUserCustomActionOptions()
                 {
                     Name = Name,
                     Title = Title,
@@ -104,7 +102,7 @@ namespace PnP.PowerShell.Commands.Branding
                     Sequence = Sequence,
                     ClientSideComponentId = ClientSideComponentId,
                     ClientSideComponentProperties = ClientSideComponentProperties,
-                    ClientSideHostProperties = ClientSideHostProperties
+                    HostProperties = ClientSideHostProperties
                 };
 
                 if (ParameterSpecified(nameof(RegistrationId)))
@@ -121,13 +119,15 @@ namespace PnP.PowerShell.Commands.Branding
             switch (Scope)
             {
                 case CustomActionScope.Web:
-                    CurrentWeb.AddCustomAction(ca);
-                    break;
-
+                    {
+                        PnPContext.Web.UserCustomActions.Add(ca);
+                        break;
+                    }
                 case CustomActionScope.Site:
-                    ClientContext.Site.AddCustomAction(ca);
-                    break;
-
+                    {
+                        PnPContext.Site.UserCustomActions.Add(ca);
+                        break;
+                    }
                 case CustomActionScope.All:
                     WriteWarning("CustomActionScope 'All' is not supported for adding CustomActions");
                     break;

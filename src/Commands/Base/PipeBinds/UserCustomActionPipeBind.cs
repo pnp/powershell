@@ -1,5 +1,10 @@
 ﻿using Microsoft.SharePoint.Client;
+using PnP.Core.Model.SharePoint;
+using PnP.Core.Services;
+using PnP.PowerShell.Commands.Enums;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -8,37 +13,24 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
     /// </summary>
     public sealed class UserCustomActionPipeBind
     {
-        /// <summary>
-        /// Id of the UserCustomAction
-        /// </summary>
-        public Guid? Id { get; private set; }
+        private Microsoft.SharePoint.Client.UserCustomAction _userCustomAction;
+        private IUserCustomAction _coreUserCustomAction;
+        private Guid? _id;
+        private string _name;
 
-        /// <summary>
-        /// Name of the UserCustomAction
-        /// </summary>
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// The UserCustomAction that is piped in
-        /// </summary>
-        public UserCustomAction UserCustomAction { get; private set; }
-
-        /// <summary>
-        /// Accepts an id of a UserCustomAction
-        /// </summary>
-        /// <param name="guid">Id of the UserCustomAction</param>
         public UserCustomActionPipeBind(Guid guid)
         {
-            Id = guid;
+            _id = guid;
         }
 
-        /// <summary>
-        /// Accepts a UserCustomAction to be passed in
-        /// </summary>
-        /// <param name="userCustomAction">UserCustomAction itself</param>
-        public UserCustomActionPipeBind(UserCustomAction userCustomAction)
+        public UserCustomActionPipeBind(Microsoft.SharePoint.Client.UserCustomAction userCustomAction)
         {
-            UserCustomAction = userCustomAction;
+            _userCustomAction = userCustomAction;
+        }
+
+        public UserCustomActionPipeBind(IUserCustomAction userCustomAction)
+        {
+            _coreUserCustomAction = userCustomAction;
         }
 
         /// <summary>
@@ -50,12 +42,54 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             // Added Guid checking first for backwards compatibility
             if (Guid.TryParse(id, out Guid result))
             {
-                Id = result;
+                _id = result;
             }
             else
             {
-                Name = id;
+                _name = id;
             }
+        }
+
+        public IEnumerable<IUserCustomAction> GetCustomActions(PnPContext context, CustomActionScope scope)
+        {
+            if (_coreUserCustomAction != null)
+            {
+                return new List<IUserCustomAction> { _coreUserCustomAction };
+            }
+            if (_userCustomAction != null)
+            {
+                switch (_userCustomAction.Scope)
+                {
+                    case Microsoft.SharePoint.Client.UserCustomActionScope.Web:
+                        {
+                            return new List<IUserCustomAction> { context.Web.UserCustomActions.GetFirstOrDefault(ca => ca.Id == _userCustomAction.Id) };
+                        }
+                        case Microsoft.SharePoint.Client.UserCustomActionScope.Site:
+                        {
+                            return new List<IUserCustomAction> { context.Site.UserCustomActions.GetFirstOrDefault(ca => ca.Id == _userCustomAction.Id) };
+                        }
+
+                }
+            }
+            var customActions = new List<IUserCustomAction>();
+
+            if (scope == CustomActionScope.Web || scope == CustomActionScope.All)
+            {
+                customActions.AddRange(context.Web.UserCustomActions.Get());
+            }
+            if (scope == CustomActionScope.Site || scope == CustomActionScope.All)
+            {
+                customActions.AddRange(context.Site.UserCustomActions.Get());
+            }
+            if (_id != null)
+            {
+                return customActions.Where(ca => ca.Id == _id.Value);
+            }
+            if (!string.IsNullOrEmpty(_name))
+            {
+                return customActions.Where(ca => ca.Name == _name);
+            }
+            return null;
         }
     }
 }
