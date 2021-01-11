@@ -65,7 +65,7 @@ Retrieves a specific Microsoft 365 Group based on its object instance
 
 ### EXAMPLE 6
 ```powershell
-Get-PnPMicrosoft365Group -IncludeIfHasTeam
+Get-PnPMicrosoft365Group -IncludeHasTeam
 ```
 
 Retrieves all the Microsoft 365 Groups and checks for each of them if it has a Microsoft Team provisioned for it
