@@ -9,10 +9,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Added -ClientSideHostProperties to `Set-PnPApplicationCustomizer`
+- Documentation updates for Teams cmdlets
 
 ### Changed
 
 ### Contributors
+- Leon Armston [leonarmston]
 
 
 ## [0.3.32-nightly]
