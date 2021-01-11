@@ -66,7 +66,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Specify the channel id of the team to retrieve.
+Specify the channel id or display name of the channel to use.
 
 ```yaml
 Type: TeamsChannelPipeBind
