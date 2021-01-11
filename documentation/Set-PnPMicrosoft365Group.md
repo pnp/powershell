@@ -124,7 +124,7 @@ Accept wildcard characters: False
 ```
 
 ### -HideFromAddressLists
-{{ Fill HideFromAddressLists Description }}
+Controls whether the group is hidden or shown in the Global Address List (GAL).
 
 ```yaml
 Type: Boolean
@@ -138,7 +138,7 @@ Accept wildcard characters: False
 ```
 
 ### -HideFromOutlookClients
-{{ Fill HideFromOutlookClients Description }}
+Controls whether the group shows in the Outlook left-hand navigation.
 
 ```yaml
 Type: Boolean
