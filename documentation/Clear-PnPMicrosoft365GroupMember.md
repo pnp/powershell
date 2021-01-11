@@ -37,7 +37,7 @@ Removes all the current members from the Microsoft 365 Group named "Project Team
 ## PARAMETERS
 
 ### -Identity
-The Identity of the Microsoft 365 Group to remove all owners from
+The Identity of the Microsoft 365 Group to remove all members from
 
 ```yaml
 Type: Microsoft365GroupPipeBind
