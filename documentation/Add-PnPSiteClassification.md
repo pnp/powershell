@@ -15,7 +15,7 @@ title: Add-PnPSiteClassification
 
   * Microsoft Graph API: Directory.ReadWrite.All
 
-Adds one ore more site classification values to the list of possible values
+Adds one or more site classification values to the list of possible values
 
 ## SYNTAX
 
