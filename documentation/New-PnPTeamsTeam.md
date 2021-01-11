@@ -62,7 +62,7 @@ This will create a newTeam called "myPnPDemo1" and sets the privacy to Private, 
 New-PnPTeamsTeam -GroupId $groupId
 ```
 
-This will create a new TEam from a Microsoft 365 Group using the Group ID
+This will create a new Team from a Microsoft 365 Group using the Group ID
 
 ## PARAMETERS
 
@@ -193,7 +193,7 @@ Accept wildcard characters: False
 ```
 
 ### -AllowGuestDeleteChannels
-Setting that determines whether or not guests can delete in the team.
+Setting that determines whether or not guests can delete channels in the team.
 
 ```yaml
 Type: Boolean
