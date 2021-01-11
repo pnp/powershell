@@ -32,13 +32,14 @@ Remove-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -Id
 ```powershell
 Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Channel "General" -Identity Wiki
 ```
+Removes the tab with the display name 'Wiki' from the General channel using diaply name.
 
 ### EXAMPLE 2
 ```powershell
 Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Channel 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity Wiki
 ```
 
-Removes the tab with the display name 'Wiki' from the channel
+Removes the tab with the display name 'Wiki' from the channel using id.
 
 ### EXAMPLE 3
 ```powershell
