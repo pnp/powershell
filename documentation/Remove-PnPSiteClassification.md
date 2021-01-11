@@ -40,7 +40,7 @@ Removes the "HBI" site classification from the list of available values.
 Remove-PnPSiteClassification -Classifications "HBI", "Top Secret"
 ```
 
-Removes the "HBI" site classification from the list of available values.
+Removes the "HBI" and "Top Secret" site classification from the list of available values.
 
 ## PARAMETERS
 
