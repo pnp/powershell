@@ -84,6 +84,10 @@
                     <h1 id="add-pnpplannertask">Add-PnPPlannerTask</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: Group.ReadWrite.All</li>
+</ul>
 <p>Adds a new task to a planner bucket</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-group">By Group</h3>
@@ -118,7 +122,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-group">-Group</h3>
-<p>Specify the group id of group owning the plan.</p>
+<p>Specify the group id or name of the group owning the plan.</p>
 <pre><code class="lang-yaml">Type: PlannerGroupPipeBind
 Parameter Sets: By Group
 Aliases:

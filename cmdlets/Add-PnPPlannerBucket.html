@@ -84,6 +84,10 @@
                     <h1 id="add-pnpplannerbucket">Add-PnPPlannerBucket</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: Group.ReadWrite.All</li>
+</ul>
 <p>Adds a new bucket to a Planner plan</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-group">By Group</h3>
@@ -105,7 +109,7 @@
 <p>Adds a new bucket called &quot;Project Todos&quot; to the plan with the specified id.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-group">-Group</h3>
-<p>Specify the group id of group owning the plan.</p>
+<p>Specify the group id or group name of the group owning the plan.</p>
 <pre><code class="lang-yaml">Type: PlannerGroupPipeBind
 Parameter Sets: By Group
 Aliases:
@@ -129,7 +133,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-plan">-Plan</h3>
-<p>Specify the id or name of the plan to add the bucket to.</p>
+<p>Specify the id or name of the plan to add the tasks to.</p>
 <pre><code class="lang-yaml">Type: PlannerPlanPipeBind
 Parameter Sets: By Group
 Aliases:

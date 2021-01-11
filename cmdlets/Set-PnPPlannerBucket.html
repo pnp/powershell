@@ -84,6 +84,10 @@
                     <h1 id="set-pnpplannerbucket">Set-PnPPlannerBucket</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: Group.ReadWrite.All</li>
+</ul>
 <p>Updates an existing Planner bucket</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-group">By Group</h3>
@@ -115,7 +119,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-group">-Group</h3>
-<p>Specify the group id of group owning the plan.</p>
+<p>Specify the group id or name of the group owning the plan.</p>
 <pre><code class="lang-yaml">Type: PlannerGroupPipeBind
 Parameter Sets: By Group
 Aliases:
@@ -139,7 +143,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-plan">-Plan</h3>
-<p>Specify the name of the plan to retrieve the buckets for.</p>
+<p>Specify the name or id of the plan to retrieve the buckets for.</p>
 <pre><code class="lang-yaml">Type: PlannerPlanPipeBind
 Parameter Sets: By Group
 Aliases:
