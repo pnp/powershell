@@ -329,6 +329,20 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                     var uri = new Uri(resource);
                     resource = uri.Authority;
                 }
+                if (resource.ToLower().Contains(".sharepoint."))
+                {
+                    // SharePoint
+                    var authManager = PnPConnection.CurrentConnection.Context.GetContextSettings().AuthenticationManager;
+                    if (authManager != null)
+                    {
+                        var token = await authManager.GetAccessTokenAsync($"https://{resource}");
+                        if (token != null)
+                        {
+                            return token;
+                        }
+                    }
+                }
+                
                 // Get Azure AD Token
                 if (PnPConnection.CurrentConnection != null)
                 {
@@ -337,7 +351,6 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                     {
                         // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
                         return graphAccessToken;
-
                     }
                 }
 
