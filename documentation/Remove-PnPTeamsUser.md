@@ -15,7 +15,7 @@ title: Remove-PnPTeamsUser
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-Removes users from a team.
+Removes a user from a team.
 
 ## SYNTAX
 
