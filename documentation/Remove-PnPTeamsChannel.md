@@ -52,6 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
+Specify the channel id or display name of the channel to delete.
 
 ```yaml
 Type: TeamsChannelPipeBind
@@ -65,6 +66,7 @@ Accept wildcard characters: False
 ```
 
 ### -Team
+Specify the group id, mailNickname or display name of the team to use.
 
 ```yaml
 Type: TeamsTeamPipeBind
