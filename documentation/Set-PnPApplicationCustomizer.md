@@ -17,14 +17,14 @@ Updates a SharePoint Framework client side extension application customizer
 ### Custom Action Id
 ```powershell
 Set-PnPApplicationCustomizer [[-Identity] <UserCustomActionPipeBind>] [-Scope <CustomActionScope>]
- [-Title <String>] [-Description <String>] [-Sequence <Int32>] [-ClientSideComponentProperties <String>]
+ [-Title <String>] [-Description <String>] [-Sequence <Int32>] [-ClientSideComponentProperties <String>] [-ClientSideHostProperties> <String>]
  [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ### Client Side Component Id
 ```powershell
 Set-PnPApplicationCustomizer [-ClientSideComponentId <Guid>] [-Scope <CustomActionScope>]
- [-Title <String>] [-Description <String>] [-Sequence <Int32>] [-ClientSideComponentProperties <String>]
+ [-Title <String>] [-Description <String>] [-Sequence <Int32>] [-ClientSideComponentProperties <String>] [-ClientSideHostProperties> <String>]
  [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
@@ -65,6 +65,20 @@ Accept wildcard characters: False
 
 ### -ClientSideComponentProperties
 The Client Side Component Properties of the application customizer to update. Specify values as a json string : "{Property1 : 'Value1', Property2: 'Value2'}". Omit to not update this property.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ClientSideHostProperties
+The Client Side Host Properties of the application customizer to update. Omit to not update this property.
 
 ```yaml
 Type: String
