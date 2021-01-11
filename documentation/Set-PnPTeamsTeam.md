@@ -37,10 +37,31 @@ Set-PnPTeamsTeam -Identity <TeamsTeamPipeBind> [-DisplayName <String>] [-Descrip
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPTeamsChannel -Team "MyTeam" -DisplayName "My Team"
+Set-PnPTeamsTeam -Identity 'MyTeam' -DisplayName 'My Team'
 ```
 
-Updates the team called 'MyTeam' to have the display name set to 'My Team'
+Updates the team called 'MyTeam' to have the display name set to 'My Team'.
+
+### EXAMPLE 2
+```powershell
+Set-PnPTeamsTeam -Identity "baba9192-55be-488a-9fb7-2e2e76edbef2" -Visibility Public
+```
+
+Updates the team by using id to have the visibility Public.
+
+### EXAMPLE 3
+```powershell
+Set-PnPTeamsTeam -Identity "My Team" -AllowTeamMentions $false -AllowChannelMentions $true -AllowDeleteChannels $false
+```
+
+Updates the team 'My Team' to disallow Team @mentions, allow Channel @mentions and disallow members from deleting channels.
+
+### EXAMPLE 4
+```powershell
+Set-PnPTeamsTeam -Identity "My Team" -GiphyContentRating Moderate
+```
+
+Updates the team 'My Team' to make the have a moderate level of sensitivity for giphy usage.
 
 ## PARAMETERS
 
