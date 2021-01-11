@@ -23,7 +23,6 @@ Reset-PnPMicrosoft365GroupExpiration -Identity <Microsoft365GroupPipeBind>
 ```
 
 ## DESCRIPTION
-Renews the Microsoft 365 Group by extending its expiration with the number of days defined in the group expiration policy set on the Azure Active Directory
 
 ## EXAMPLES
 
