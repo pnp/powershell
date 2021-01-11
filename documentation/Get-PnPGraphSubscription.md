@@ -10,7 +10,12 @@ title: Get-PnPGraphSubscription
 # Get-PnPGraphSubscription
 
 ## SYNOPSIS
-Gets subscriptions from Microsoft Graph. Requires the Azure Active Directory application permission 'Subscription.Read.All'.
+
+**Required Permissions**
+
+  * Microsoft Graph API : Subscription.Read.All
+
+Gets subscriptions from Microsoft Graph.
 
 ## SYNTAX
 
