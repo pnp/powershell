@@ -52,7 +52,7 @@ Retrieves the channel specified by its channel id
 ## PARAMETERS
 
 ### -Identity
-The identity of the channel to retrieve.
+The id or name of the channel to retrieve.
 
 ```yaml
 Type: TeamsChannelPipeBind
