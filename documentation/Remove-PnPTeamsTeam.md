@@ -58,7 +58,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Either the group id or the mailnickname of the group to remove.
+Specify the group id, mailNickname or display name of the team to remove.
 
 ```yaml
 Type: TeamsTeamPipeBind

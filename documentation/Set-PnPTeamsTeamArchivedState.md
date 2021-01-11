@@ -52,6 +52,7 @@ Archives the team as identified and sets the underlying SharePoint Online Site C
 ## PARAMETERS
 
 ### -Archived
+Setting that determines whether the Team is archived.
 
 ```yaml
 Type: Boolean
@@ -65,7 +66,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Specify the name, id or external id of the app.
+Specify the group id, mailNickname or display name of the team to use.
 
 ```yaml
 Type: TeamsTeamPipeBind
@@ -79,6 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -SetSiteReadOnlyForMembers
+Setting that determines whether the connected SharePoint site is set to read only.
 
 ```yaml
 Type: Boolean

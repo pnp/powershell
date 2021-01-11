@@ -32,21 +32,15 @@ Remove-PnPTeamsApp -Identity <TeamsAppPipeBind> [-Force]  [<CommonParameters>]
 Remove-PnPTeamsApp -Identity ac139d8b-fa2b-4ffe-88b3-f0b30158b58b
 ```
 
-Adds a new channel to the specified Teams instance
+Removes an app from the Teams AppCatalog by using the id.
 
 ### EXAMPLE 2
 ```powershell
 Remove-PnPTeamsApp -Identity "My Teams App"
 ```
 
-Adds a new channel to the specified Teams instance
+Removes the app "My teams App" from the Teams AppCatalog by using display name.
 
-### EXAMPLE 3
-```powershell
-Add-PnPTeamsChannel -Team MyTeam -DisplayName "My Channel" -Private
-```
-
-Adds a new private channel to the specified Teams instance
 
 ## PARAMETERS
 

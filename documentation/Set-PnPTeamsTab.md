@@ -38,7 +38,7 @@ Updates the tab named 'Wiki' and changes the display name of the tab to 'Channel
 ## PARAMETERS
 
 ### -Channel
-Specify the channel id of the team to retrieve.
+Specify the channel id or display name of the channel to use.
 
 ```yaml
 Type: TeamsChannelPipeBind
@@ -80,7 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -Team
-Specify the group id of the team to retrieve.
+Specify the group id, mailNickname or display name of the team to use.
 
 ```yaml
 Type: TeamsTeamPipeBind

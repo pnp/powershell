@@ -15,7 +15,7 @@ title: Add-PnPTeamsUser
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-Adds a channel to an existing Microsoft Teams instance.
+Adds a user to an existing Microsoft Teams instance.
 
 ## SYNTAX
 
