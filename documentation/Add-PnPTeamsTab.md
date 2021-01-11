@@ -38,7 +38,7 @@ Adds a web site tab to the specified channel.
 ## PARAMETERS
 
 ### -Channel
-Specify the channel id of the team to retrieve.
+Specify the channel id or name of the team to retrieve.
 
 ```yaml
 Type: TeamsChannelPipeBind

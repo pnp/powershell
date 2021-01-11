@@ -36,15 +36,22 @@ Retrieves all the Microsoft Teams instances
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPTeamsTeam -Identity $groupId
+Get-PnPTeamsTeam -Identity "PnP PowerShell"
 ```
 
-Retrieves a specific Microsoft Teams instance
+Retrieves a specific Microsoft Teams instance using display name.
+
+### EXAMPLE 3
+```powershell
+Get-PnPTeamsTeam -Identity "baba9192-55be-488a-9fb7-2e2e76edbef2"
+```
+
+Retrieves a specific Microsoft Teams instance using group id.
 
 ## PARAMETERS
 
 ### -Identity
-Specify the group id of the team to retrieve.
+Specify the group id, mailNickname or display name of the team to use.
 
 ```yaml
 Type: TeamsTeamPipeBind

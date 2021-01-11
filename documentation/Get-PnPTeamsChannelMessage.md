@@ -38,7 +38,7 @@ Gets all messages of the specified channel
 ## PARAMETERS
 
 ### -Channel
-Specify the group id, mailNickname or display name of the team to use.
+Specify id or name of the channel to use.
 
 ```yaml
 Type: TeamsChannelPipeBind
