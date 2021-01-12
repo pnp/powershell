@@ -29,18 +29,20 @@ namespace PnP.PowerShell.Commands.Model
             this.Context = context;
         }
 
-        public void Execute()
+        public List<BatchResult> Execute(bool throwOnError)
         {
             if (Batch != null)
             {
-                Context.Execute(Batch);
+                var results = Context.ExecuteAsync(Batch, false).GetAwaiter().GetResult();
 
                 ClearCache();
                 if (!RetainAfterExecute)
                 {
                     Batch = Context.NewBatch();
                 }
+                return results;
             }
+            return null;
         }
 
         internal void ClearCache()

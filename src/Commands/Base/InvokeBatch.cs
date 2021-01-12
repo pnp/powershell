@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 using PnP.Core.Services;
 using PnP.PowerShell.Commands.Model;
@@ -29,7 +30,16 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (!batchExecuted)
             {
-                Batch.Execute();
+                var results = Batch.Execute(false);
+                if (results != null && results.Any())
+                {
+                    var resultList = new List<BatchResult>();
+                    foreach (var result in results)
+                    {
+                        resultList.Add(new BatchResult() { ErrorMessage = result.Error.Message, ResponseCode = result.Error.HttpResponseCode, Request = result.ApiRequest });
+                    }
+                    WriteObject(resultList, true);
+                }
                 if (Details)
                 {
                     var requests = new List<Model.BatchRequest>();
@@ -41,5 +51,12 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
         }
+    }
+
+    public class BatchResult
+    {
+        public string ErrorMessage { get; set; }
+        public int ResponseCode { get; set; }
+        public string Request { get; set; }
     }
 }
