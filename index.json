@@ -2849,6 +2849,11 @@
     "title": "Update-PnPUserType | PnP PowerShell",
     "keywords": "Available in the current Nightly Release only. Update-PnPUserType SYNOPSIS Updates an available app from the app catalog SYNTAX Update-PnPUserType -LoginName <String> DESCRIPTION This cmdlet retrieves the UserType value of the specified user and updates the UserType across all SharePoint Online sites in the SharePoint Online tenant. This can be used, for example, to convert a Guest user to a standard (Member) user if the user's UserType was previously updated in Azure AD. EXAMPLES EXAMPLE 1 Update-PnPUserType -LoginName jdoe@contoso.com Updates the jdoe@contoso.com's UserType on all SharePoint Online sites in the tenant based on the UserType value in Azure AD. PARAMETERS -LoginName The login name of the target user to update across SharePoint Online. Type: String Parameter Sets: (All) Required: True Position: Named Default value: None Accept pipeline input: False Accept wildcard characters: False RELATED LINKS Microsoft 365 Patterns and Practices"
   },
+  "consent.html": {
+    "href": "consent.html",
+    "title": "Consent results | PnP PowerShell",
+    "keywords": "Consent results var queryString = window.location.search; var urlParams = new URLSearchParams(queryString); var success = urlParams.get('admin_consent') if(success.toLowerCase() === 'true') { document.write(\"You consented successfully for your newly created Azure AD Application. You may close this browser now.\"); } else { document.write(\"You did not consent successfully for your newly created Azure AD Application. Please navigate to your Azure AD, find the application and provide consent there.\"); }"
+  },
   "index.html": {
     "href": "index.html",
     "title": "PnP PowerShell | PnP PowerShell",

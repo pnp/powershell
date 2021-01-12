@@ -6877,6 +6877,18 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "consent.md",
+      "output": {
+        ".html": {
+          "relative_path": "consent.html",
+          "hash": "G3grAT+K9FdjliIwQGRI9w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Resource",
       "source_relative_path": "images/PnP_PowerShell_Roadmap.png",
       "output": {
@@ -6937,7 +6949,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 571,
+          "total_file_count": 572,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
