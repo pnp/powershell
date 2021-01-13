@@ -2,11 +2,6 @@ name: Build Pull Request or Commit
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - dev
-    paths: 
-      - 'src/**'
   pull_request:
     branches: 
       - dev
