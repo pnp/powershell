@@ -89,8 +89,13 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false)]
         public SwitchParameter DeviceLogin;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter NoPopup;
+
         protected override void ProcessRecord()
         {
+            var redirectUri = "https://pnp.github.io/powershell/consent.html";
+
             var messageWriter = new CmdletMessageWriter(this);
             cancellationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = cancellationTokenSource.Token;
@@ -104,12 +109,105 @@ namespace PnP.PowerShell.Commands.Base
                 loginEndPoint = authenticationManager.GetAzureADLoginEndPoint(AzureEnvironment);
             }
 
-            string token = string.Empty;
+            string token = GetAuthToken(messageWriter, loginEndPoint);
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                var cert = GetCertificate(record);
+
+                using (var httpClient = new HttpClient())
+                {
+                    if (!AppExists(ApplicationName, httpClient, token))
+                    {
+                        var azureApp = CreateApp(loginEndPoint, httpClient, token, cert, redirectUri);
+
+                        record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId/ClientId", azureApp.AppId)));
+
+                        StartConsentFlow(loginEndPoint, azureApp, redirectUri, token, httpClient, record, cert.GetCertHashString());
+                    }
+                    else
+                    {
+                        throw new PSInvalidOperationException($"The app with name {ApplicationName} already exists.");
+                    }
+                }
+            }
+        }
+
+        protected override void StopProcessing()
+        {
+            cancellationTokenSource.Cancel();
+        }
+
+        private static object GetScopesPayload(List<PermissionScope> scopes)
+        {
+            var resourcePermissions = new List<AppResource>();
+            var distinctResources = scopes.GroupBy(s => s.resourceAppId).Select(r => r.First()).ToList();
+            foreach (var distinctResource in distinctResources)
+            {
+                var id = distinctResource.resourceAppId;
+                var appResource = new AppResource() { Id = id };
+                appResource.ResourceAccess.AddRange(scopes.Where(s => s.resourceAppId == id).ToList());
+                resourcePermissions.Add(appResource);
+            }
+            return resourcePermissions;
+        }
+
+        protected IEnumerable<string> Scopes
+        {
+            get
+            {
+                if (ParameterSpecified(nameof(Scopes)) && MyInvocation.BoundParameters["Scopes"] != null)
+                {
+                    return MyInvocation.BoundParameters["Scopes"] as string[];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public object GetDynamicParameters()
+        {
+            var classAttribute = this.GetType().GetCustomAttributes(false).FirstOrDefault(a => a is PropertyLoadingAttribute);
+            const string parameterName = "Scopes";
+
+            var parameterDictionary = new RuntimeDefinedParameterDictionary();
+            var attributeCollection = new System.Collections.ObjectModel.Collection<Attribute>();
+
+            var parameterAttribute = new ParameterAttribute
+            {
+                ValueFromPipeline = false,
+                ValueFromPipelineByPropertyName = false,
+                Mandatory = false
+            };
+
+            attributeCollection.Add(parameterAttribute);
+
+            var identifiers = new PermissionScopes().GetIdentifiers();
+
+            var validateSetAttribute = new ValidateSetAttribute(identifiers);
+            attributeCollection.Add(validateSetAttribute);
+
+            var runtimeParameter = new RuntimeDefinedParameter(parameterName, typeof(string[]), attributeCollection);
+
+            parameterDictionary.Add(parameterName, runtimeParameter);
+
+            return parameterDictionary;
+        }
+
+        private string GetAuthToken(CmdletMessageWriter messageWriter, string loginEndPoint)
+        {
+            var token = string.Empty;
             if (DeviceLogin.IsPresent)
             {
                 Task.Factory.StartNew(() =>
                 {
-                    token = AzureAuthHelper.AuthenticateDeviceLogin(Tenant, ref cancellationToken, messageWriter, loginEndPoint);
+                    token = AzureAuthHelper.AuthenticateDeviceLogin(Tenant, cancellationTokenSource, messageWriter, NoPopup, loginEndPoint);
+                    if (token == null)
+                    {
+                        messageWriter.WriteError("Operation cancelled or not token retrieved.");
+                    }
                     messageWriter.Stop();
                 });
                 messageWriter.Start();
@@ -132,6 +230,11 @@ namespace PnP.PowerShell.Commands.Base
                 token = AzureAuthHelper.AuthenticateAsync(Tenant, Username, Password, loginEndPoint).GetAwaiter().GetResult();
             }
 
+            return token;
+        }
+
+        private X509Certificate2 GetCertificate(PSObject record)
+        {
             var cert = new X509Certificate2();
             if (ParameterSetName == ParameterSet_EXISTINGCERT)
             {
@@ -232,35 +335,47 @@ namespace PnP.PowerShell.Commands.Base
                     Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, "Certificate added to store");
                 }
             }
+            return cert;
+        }
 
+        private bool AppExists(string appName, HttpClient httpClient, string token)
+        {
+            var azureApps = GraphHelper.GetAsync<RestResultCollection<AzureApp>>(httpClient, $@"/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token).GetAwaiter().GetResult();
+            if (azureApps != null && azureApps.Items.Any())
+            {
+                return true;
+            }
+            return false;
+        }
+        private AzureApp CreateApp(string loginEndPoint, HttpClient httpClient, string token, X509Certificate2 cert, string redirectUri)
+        {
             var expirationDate = DateTime.Parse(cert.GetExpirationDateString()).ToUniversalTime();
             var startDate = DateTime.Parse(cert.GetEffectiveDateString()).ToUniversalTime();
 
-            if (token != null)
+            var permissionScopes = new PermissionScopes();
+            var scopes = new List<PermissionScope>();
+            if (this.Scopes != null)
             {
-                var permissionScopes = new PermissionScopes();
-                var scopes = new List<PermissionScope>();
-                if (this.Scopes != null)
+                foreach (var scopeIdentifier in this.Scopes)
                 {
-                    foreach (var scopeIdentifier in this.Scopes)
-                    {
-                        scopes.Add(permissionScopes.GetScope(scopeIdentifier));
-                    }
+                    scopes.Add(permissionScopes.GetScope(scopeIdentifier));
                 }
-                else
-                {
-                    scopes.Add(permissionScopes.GetScope("SPO.Sites.FullControl.All"));
-                    scopes.Add(permissionScopes.GetScope("MSGraph.Group.ReadWrite.All"));
-                    scopes.Add(permissionScopes.GetScope("SPO.User.Read.All"));
-                    scopes.Add(permissionScopes.GetScope("MSGraph.User.Read.All"));
-                }
+            }
+            else
+            {
+                scopes.Add(permissionScopes.GetScope("SPO.Sites.FullControl.All"));
+                scopes.Add(permissionScopes.GetScope("MSGraph.Group.ReadWrite.All"));
+                scopes.Add(permissionScopes.GetScope("SPO.User.Read.All"));
+                scopes.Add(permissionScopes.GetScope("MSGraph.User.Read.All"));
+            }
 
-                var scopesPayload = GetScopesPayload(scopes);
-                var payload = new
-                {
-                    displayName = ApplicationName,
-                    signInAudience = "AzureADMyOrg",
-                    keyCredentials = new[] {
+
+            var scopesPayload = GetScopesPayload(scopes);
+            var payload = new
+            {
+                displayName = ApplicationName,
+                signInAudience = "AzureADMyOrg",
+                keyCredentials = new[] {
                         new {
                             customKeyIdentifier = cert.GetCertHashString(),
                             endDateTime = expirationDate,
@@ -271,115 +386,75 @@ namespace PnP.PowerShell.Commands.Base
                             key = Convert.ToBase64String(cert.GetRawCertData())
                         }
                     },
-                    publicClient = new
-                    {
-                        redirectUris = new[] {
-                            $"{loginEndPoint}/common/oauth2/nativeclient"
-                        }
-                    },
-                    requiredResourceAccess = scopesPayload
-                };
-                var requestContent = new StringContent(JsonSerializer.Serialize(payload));
-                requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                var azureApp = GraphHelper.PostAsync<AzureApp>(new System.Net.Http.HttpClient(), "/beta/applications", requestContent, token).GetAwaiter().GetResult();
-                record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId", azureApp.AppId)));
-
-                var consentUrl = $"{loginEndPoint}/{Tenant}/v2.0/adminconsent?client_id={azureApp.AppId}&scope=https://microsoft.sharepoint-df.com/.default";
-                record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
-
-
-                if (OperatingSystem.IsWindows())
+                publicClient = new
                 {
-                    var waitTime = 60;
-                    Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to launch consent flow in a browser window. This wait is required to make sure that Azure AD is able to initialize all required artifacts. After you provided consent you will see a blank page. This is expected. You can always navigate to the consent page manually: {consentUrl}");
-
-                    for (var i = 0; i < waitTime; i++)
-                    {
-                        Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, ".");
-                        System.Threading.Thread.Sleep(1000);
-
-                        // Check if CTRL+C has been pressed and if so, abort the wait
-                        if (Stopping)
-                        {
-                            break;
+                    redirectUris = new[] {
+                            $"{loginEndPoint}/common/oauth2/nativeclient",
+                            redirectUri
                         }
+                },
+                requiredResourceAccess = scopesPayload
+            };
+            var requestContent = new StringContent(JsonSerializer.Serialize(payload));
+            requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+            var azureApp = GraphHelper.PostAsync<AzureApp>(httpClient, "/v1.0/applications", requestContent, token).GetAwaiter().GetResult();
+
+            return azureApp;
+        }
+
+        private void StartConsentFlow(string loginEndPoint, AzureApp azureApp, string redirectUri, string token, HttpClient httpClient, PSObject record, string certificateThumbPrint)
+        {
+
+            var consentUrl = $"{loginEndPoint}/{Tenant}/v2.0/adminconsent?client_id={azureApp.AppId}&scope=https://microsoft.sharepoint-df.com/.default&redirect_uri={redirectUri}";
+            record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", certificateThumbPrint)));
+
+            if (OperatingSystem.IsWindows() && !NoPopup)
+            {
+                var waitTime = 60;
+                CmdletMessageWriter.WriteFormattedWarning(this, $"Waiting {waitTime} seconds to launch consent flow in a popup window.\n\nThis wait is required to make sure that Azure AD is able to initialize all required artifacts. You can always navigate to the consent page manually:\n\n{consentUrl}");
+
+                for (var i = 0; i < waitTime; i++)
+                {
+                    Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, ".");
+                    System.Threading.Thread.Sleep(1000);
+
+                    // Check if CTRL+C has been pressed and if so, abort the wait
+                    if (Stopping)
+                    {
+                        break;
                     }
+                }
+                if (!Stopping)
+                {
                     Host.UI.WriteLine();
 
+                    BrowserHelper.GetWebBrowserPopup(consentUrl, "Please provide consent", new[] { (redirectUri, BrowserHelper.UrlMatchType.StartsWith) });
 
+                    // remove redirectUri from app
+                    var patchPayload = new
+                    {
+                        publicClient = new
+                        {
+                            redirectUris = new[] {
+                                        $"{loginEndPoint}/common/oauth2/nativeclient",
+                                    }
+                        }
+                    };
+                    var patchContent = new StringContent(JsonSerializer.Serialize(patchPayload));
+                    patchContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+                    GraphHelper.PatchAsync(httpClient, $"/v1.0/applications{azureApp.Id}", patchContent, token).GetAwaiter().GetResult();
+
+                    // Write results
                     WriteObject(record);
-
-                    BrowserHelper.LaunchBrowser(consentUrl);
-                }
-                else
-                {
-                    Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Please wait approximately 60 seconds, then open the following URL in a browser window to provide consent. This consent is required in order to use this application. After you provided consent you will see a blank page, this is correct.\n\n{consentUrl}");
-                    WriteObject(record);
                 }
             }
-        }
-
-        protected override void StopProcessing()
-        {
-            cancellationTokenSource.Cancel();
-        }
-
-        private static object GetScopesPayload(List<PermissionScope> scopes)
-        {
-            var resourcePermissions = new List<AppResource>();
-            var distinctResources = scopes.GroupBy(s => s.resourceAppId).Select(r => r.First()).ToList();
-            foreach (var distinctResource in distinctResources)
+            else
             {
-                var id = distinctResource.resourceAppId;
-                var appResource = new AppResource() { Id = id };
-                appResource.ResourceAccess.AddRange(scopes.Where(s => s.resourceAppId == id).ToList());
-                resourcePermissions.Add(appResource);
+                Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Please wait approximately 60 seconds, then open the following URL in a browser window to provide consent. This consent is required in order to use this application.\n\n{consentUrl}");
+                WriteObject(record);
             }
-            return resourcePermissions;
-        }
-
-        protected IEnumerable<string> Scopes
-        {
-            get
-            {
-                if (ParameterSpecified(nameof(Scopes)) && MyInvocation.BoundParameters["Scopes"] != null)
-                {
-                    return MyInvocation.BoundParameters["Scopes"] as string[];
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
-
-        public object GetDynamicParameters()
-        {
-            var classAttribute = this.GetType().GetCustomAttributes(false).FirstOrDefault(a => a is PropertyLoadingAttribute);
-            const string parameterName = "Scopes";
-
-            var parameterDictionary = new RuntimeDefinedParameterDictionary();
-            var attributeCollection = new System.Collections.ObjectModel.Collection<Attribute>();
-
-            var parameterAttribute = new ParameterAttribute
-            {
-                ValueFromPipeline = false,
-                ValueFromPipelineByPropertyName = false,
-                Mandatory = false
-            };
-
-            attributeCollection.Add(parameterAttribute);
-
-            var identifiers = new PermissionScopes().GetIdentifiers();
-
-            var validateSetAttribute = new ValidateSetAttribute(identifiers);
-            attributeCollection.Add(validateSetAttribute);
-
-            var runtimeParameter = new RuntimeDefinedParameter(parameterName, typeof(string[]), attributeCollection);
-
-            parameterDictionary.Add(parameterName, runtimeParameter);
-
-            return parameterDictionary;
         }
     }
 }

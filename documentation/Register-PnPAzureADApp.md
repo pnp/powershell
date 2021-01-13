@@ -31,6 +31,7 @@ Register-PnPAzureADApp -ApplicationName <String>
                                        [-OrganizationUnit <String>]
                                        [-ValidYears <Int>]
                                        [-CertificatePassword <SecureString>]
+                                       [-NoPopup]
 ```
 
 ### Existing Certificate
@@ -43,10 +44,11 @@ Register-PnPAzureADApp -CertificatePath <String>
                                        [-DeviceLogin]
                                        [-Scopes <String[]>]
                                        [-CertificatePassword <SecureString>]
+                                       [-NoPopup]
 ```
 
 ## DESCRIPTION
-Registers an Azure AD App and optionally creates a new self-signed certificate to use with the application registration. Have a look at https://www.youtube.com/watch?v=QWY7AJ2ZQYI for a demonstration on how this cmdlet works and can be used. You can login either with username/password or you can use the -DeviceLogin option if your tenant has been configured for Multi-Factor Authentication.
+Registers an Azure AD App and optionally creates a new self-signed certificate to use with the application registration. You can login either with username/password or you can use the -DeviceLogin option if your tenant has been configured for Multi-Factor Authentication.
 
 ## EXAMPLES
 
@@ -92,7 +94,7 @@ The username to use when logging into the Microsoft Graph. Notice that this user
 
 ```yaml
 Type: String
-Parameter Sets: __AllParameterSets
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -104,7 +106,7 @@ The password to use when logging into the Microsoft Graph
 
 ```yaml
 Type: String
-Parameter Sets: __AllParameterSets
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -116,7 +118,7 @@ If specified, a device login flow, supporting Multi-Factor Authentication will b
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: __AllParameterSets
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -128,7 +130,7 @@ The name of the Azure AD Application to create
 
 ```yaml
 Type: String
-Parameter Sets: __AllParameterSets
+Parameter Sets: (All)
 
 Required: True
 Position: Named
@@ -140,7 +142,7 @@ Optional certificate password
 
 ```yaml
 Type: SecureString
-Parameter Sets: Generate Certificate, Existing Certificate
+Parameter Sets: (All)
 
 Required: False
 Position: 8
@@ -272,7 +274,7 @@ The identifier of your tenant, e.g. mytenant.onmicrosoft.com
 
 ```yaml
 Type: String
-Parameter Sets: __AllParameterSets
+Parameter Sets: (All)
 
 Required: True
 Position: Named
@@ -288,6 +290,20 @@ Parameter Sets: Generate Certificate
 
 Required: False
 Position: 7
+Accept pipeline input: False
+```
+
+### -NoPopup
+This switch only applies to Windows and has no effect on Linux and MacOS.
+
+If not specified and running on Windows, all authentication and consent steps will be presented in a popup. If you want to open the URLs manually in a browser, specify this switch.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Accept pipeline input: False
 ```
 

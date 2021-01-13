@@ -213,7 +213,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     form.Text = title;
                     form.Controls.Add(browser);
                     form.ResumeLayout(false);
-
+                  
                     browser.Navigate(siteUrl);
 
                     browser.Navigated += (sender, args) =>
