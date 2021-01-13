@@ -25,14 +25,14 @@ Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPAccessToken
+Get-PnPGraphAccessToken
 ```
 
 Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAccessToken -Decoded
+Get-PnPGraphAccessToken -Decoded
 ```
 
 Gets the full OAuth 2.0 Token to consume the Microsoft Graph API

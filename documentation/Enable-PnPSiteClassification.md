@@ -30,7 +30,6 @@ Enable-PnPSiteClassification -Classifications <System.Collections.Generic.List`1
 
 ### EXAMPLE 1
 ```powershell
-Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
 Enable-PnPSiteClassification -Classifications "HBI","LBI","Top Secret" -DefaultClassification "LBI"
 ```
 
@@ -38,7 +37,6 @@ Enables Site Classifications for your tenant and provides three classification v
 
 ### EXAMPLE 2
 ```powershell
-Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
 Enable-PnPSiteClassification -Classifications "HBI","LBI","Top Secret" -UsageGuidelinesUrl https://aka.ms/m365pnp
 ```
 

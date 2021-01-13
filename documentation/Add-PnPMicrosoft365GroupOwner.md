@@ -36,7 +36,7 @@ Adds the provided two users as additional owners to the Microsoft 365 Group name
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPMicrosoft365GroupMember -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com" -RemoveExisting
+Add-PnPMicrosoft365GroupOwner -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com" -RemoveExisting
 ```
 
 Sets the provided two users as the only owners of the Microsoft 365 Group named "Project Team" by removing any current existing members first

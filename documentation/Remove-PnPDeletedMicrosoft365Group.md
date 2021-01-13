@@ -46,7 +46,7 @@ Permanently removes the provided deleted Microsoft 365 Group
 ## PARAMETERS
 
 ### -Identity
-The Identity of the deleted Microsoft 365 Group
+The identity of the deleted Microsoft 365 Group to be deleted
 
 ```yaml
 Type: Microsoft365GroupPipeBind
