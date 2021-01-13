@@ -365,31 +365,51 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             ProvisioningTemplate template = null;
             using (var provisioningContext = new PnPProvisioningContext(async (resource, scope) =>
             {
-                    // Get Azure AD Token
-                    if (PnPConnection.CurrentConnection != null && PnPConnection.CurrentConnection.ConnectionMethod != Model.ConnectionMethod.WebLogin)
+                if (resource.ToLower().StartsWith("https://"))
                 {
-                    var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessTokenAsync(Enums.TokenAudience.MicrosoftGraph).GetAwaiter().GetResult();
+                    var uri = new Uri(resource);
+                    resource = uri.Authority;
+                }
+                if (resource.ToLower().Contains(".sharepoint."))
+                {
+                    // SharePoint
+                    var authManager = PnPConnection.CurrentConnection.Context.GetContextSettings().AuthenticationManager;
+                    if (authManager != null)
+                    {
+                        var token = await authManager.GetAccessTokenAsync($"https://{resource}");
+                        if (token != null)
+                        {
+                            return token;
+                        }
+                    }
+                }
+
+                // Get Azure AD Token
+                if (PnPConnection.CurrentConnection != null)
+                {
+                    var graphAccessToken = await PnPConnection.CurrentConnection.TryGetAccessTokenAsync(Enums.TokenAudience.MicrosoftGraph);
                     if (graphAccessToken != null)
                     {
-                            // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                            return graphAccessToken;
+                        // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
+                        return graphAccessToken;
                     }
                 }
 
                 if (PnPConnection.CurrentConnection.PSCredential != null)
                 {
-                        // Using normal credentials
-                        return await TokenHandler.AcquireTokenAsync(resource, null);
+                    // Using normal credentials
+                    return await TokenHandler.AcquireTokenAsync(resource, null);
                 }
                 else
                 {
+                    // No token...
                     if (resource.ToLower().Contains(".sharepoint."))
                     {
                         return null;
                     }
                     else
                     {
-                        throw new PSInvalidOperationException($"Your template contains artifacts that require an access token for {resource}. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
+                        throw new PSInvalidOperationException($"Your template contains artifacts that require an access token for {resource}. Either connect with a clientid which the appropriate permissions, or use credentials with Connect-PnPOnline after providing consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess. See https://pnp.github.io/powershell/articles/authentication.html");
                     }
                 }
             }))
