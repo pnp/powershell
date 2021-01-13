@@ -258,7 +258,7 @@ Accept pipeline input: False
 ```
 
 ### -Store
-Local Certificate Store to add the certificate to
+Local Certificate Store to add the certificate to. Only works on Microsoft Windows.
 
 ```yaml
 Type: StoreLocation

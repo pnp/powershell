@@ -41,33 +41,50 @@ namespace PnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = false, Position = 8)]
         public SecureString CertificatePassword;
+
+        [Parameter(Mandatory = false)]
+        public StoreLocation Store;
+
         protected override void ProcessRecord()
         {
-#if NETFRAMEWORK
-            var x500Values = new List<string>();
-            if (!string.IsNullOrWhiteSpace(CommonName)) x500Values.Add($"CN={CommonName}");
-            if (!string.IsNullOrWhiteSpace(Country)) x500Values.Add($"C={Country}");
-            if (!string.IsNullOrWhiteSpace(State)) x500Values.Add($"S={State}");
-            if (!string.IsNullOrWhiteSpace(Locality)) x500Values.Add($"L={Locality}");
-            if (!string.IsNullOrWhiteSpace(Organization)) x500Values.Add($"O={Organization}");
-            if (!string.IsNullOrWhiteSpace(OrganizationUnit)) x500Values.Add($"OU={OrganizationUnit}");
-
-            string x500 = string.Join("; ", x500Values);
-
-            if (ValidYears < 1 || ValidYears > 30)
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(Store)) && !Utilities.OperatingSystem.IsWindows())
             {
-                ValidYears = 10;
+                throw new PSArgumentException("The Store parameter is only supported on Microsoft Windows");
             }
-            DateTime validFrom = DateTime.Today;
-            DateTime validTo = validFrom.AddYears(ValidYears);
 
-            byte[] certificateBytes = certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
-            var certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable);
-#else
-            DateTimeOffset validFrom = DateTimeOffset.Now;
-            DateTimeOffset validTo = validFrom.AddYears(ValidYears);
-            var certificate = CertificateHelper.CreateSelfSignedCertificate2(CommonName, Country, State, Locality, Organization, OrganizationUnit, 2048, null, null, validFrom, validTo, "", false, null);
+            X509Certificate2 certificate = null;
+            if (Utilities.OperatingSystem.IsWindows())
+            {
+                var x500Values = new List<string>();
+                if (!string.IsNullOrWhiteSpace(CommonName)) x500Values.Add($"CN={CommonName}");
+                if (!string.IsNullOrWhiteSpace(Country)) x500Values.Add($"C={Country}");
+                if (!string.IsNullOrWhiteSpace(State)) x500Values.Add($"S={State}");
+                if (!string.IsNullOrWhiteSpace(Locality)) x500Values.Add($"L={Locality}");
+                if (!string.IsNullOrWhiteSpace(Organization)) x500Values.Add($"O={Organization}");
+                if (!string.IsNullOrWhiteSpace(OrganizationUnit)) x500Values.Add($"OU={OrganizationUnit}");
+
+                string x500 = string.Join("; ", x500Values);
+
+                if (ValidYears < 1 || ValidYears > 30)
+                {
+                    ValidYears = 10;
+                }
+                DateTime validFrom = DateTime.Today;
+                DateTime validTo = validFrom.AddYears(ValidYears);
+
+
+                byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
+                certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
+            }
+            else
+            {
+#if !NETFRAMEWORK
+                DateTimeOffset validFrom = DateTimeOffset.Now;
+                DateTimeOffset validTo = validFrom.AddYears(ValidYears);
+                byte[] certificateBytes = CertificateHelper.CreateSelfSignedCertificate2(CommonName, Country, State, Locality, Organization, OrganizationUnit, 2048, null, null, validFrom, validTo, "", false, null);
+                certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
 #endif
+            }
 
             if (!string.IsNullOrWhiteSpace(OutPfx))
             {
@@ -87,6 +104,17 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 byte[] certData = certificate.Export(X509ContentType.Cert);
                 File.WriteAllBytes(OutCert, certData);
+            }
+
+            if (Utilities.OperatingSystem.IsWindows() && MyInvocation.BoundParameters.ContainsKey(nameof(Store)))
+            {
+                using (var store = new X509Store("My", Store))
+                {
+                    store.Open(OpenFlags.ReadWrite);
+                    store.Add(certificate);
+                    store.Close();
+                }
+                Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, "Certificate added to store");
             }
 
             var rawCert = certificate.GetRawCertData();

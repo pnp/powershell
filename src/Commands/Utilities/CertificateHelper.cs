@@ -337,7 +337,7 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
 #if !NETFRAMEWORK
-        internal static X509Certificate2 CreateSelfSignedCertificate2(
+        internal static byte[] CreateSelfSignedCertificate2(
             string commonName,
             string country,
             string stateOrProvince,
@@ -388,7 +388,8 @@ namespace PnP.PowerShell.Commands.Utilities
 
             System.Security.Cryptography.X509Certificates.X509Certificate2 x509Certificate2 = certificate.AsX509Certificate2();
 
-            return x509Certificate2;
+
+            return x509Certificate2.GetRawCertData();
 
         }
 #endif
@@ -746,7 +747,6 @@ namespace PnP.PowerShell.Commands.Utilities
         #endregion
     }
 
-#if !NETFRAMEWORK
     internal class CertificateDistinguishedName
     {
         // Name of a person or an object host name
@@ -901,6 +901,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return new System.Security.Cryptography.X509Certificates.X509Extension(akiOid, akiRawData, critical);
         }
 
+#if !NETFRAMEWORK
         //Instantiate an X509Certificate2 object from this object
         public System.Security.Cryptography.X509Certificates.X509Certificate2 AsX509Certificate2()
         {
@@ -972,6 +973,6 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             return cert;
         }
-    }
 #endif
+    }
 }

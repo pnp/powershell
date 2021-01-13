@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     if (Utilities.OperatingSystem.IsWindows() && !NoPopup)
                     {
                         ClipboardService.SetText(result.UserCode);
-                        messageWriter.WriteMessage($"Provide consent.\n\nWe opened a browser and navigated to {result.VerificationUrl}\n\nEnter code: {result.UserCode} (we copied this code to your clipboard)\n\nClose the popup after you authenticated successfully.");
+                        messageWriter.WriteMessage($"Provide consent.\n\nWe opened a browser and navigated to {result.VerificationUrl}\n\nEnter code: {result.UserCode} (we copied this code to your clipboard)\n\nNOTICE: close the popup after you authenticated successfully to continue the process.");
                         BrowserHelper.GetWebBrowserPopup(result.VerificationUrl, "Provide consent");
                     }
                     else

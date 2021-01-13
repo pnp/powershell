@@ -23,9 +23,9 @@ PrivateKey contains the PEM encoded private key of the certificate.
 ## SYNTAX
 
 ```powershell
-New-PnPAzureCertificate [[-CommonName] <String>] [[-Country] <String>] [[-State] <String>]
- [[-Locality] <String>] [[-Organization] <String>] [[-OrganizationUnit] <String>] [[-OutPfx] <String>]
- [[-OutCert] <String>] [[-ValidYears] <Int32>] [[-CertificatePassword] <SecureString>] [<CommonParameters>]
+New-PnPAzureCertificate [-CommonName <String>] [-Country <String>] [-State <String>]
+ [-Locality <String>] [-Organization <String>] [-OrganizationUnit <String>] [-OutPfx <String>]
+ [-OutCert <String>] [-ValidYears <Int32>] [-CertificatePassword <SecureString>] [-Store <StoreLocation>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -63,7 +63,7 @@ Type: SecureString
 Parameter Sets: (All)
 
 Required: False
-Position: 8
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -77,7 +77,7 @@ Type: String
 Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: 0Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -91,7 +91,7 @@ Type: String
 Parameter Sets: (All)
 
 Required: False
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -105,7 +105,7 @@ Type: String
 Parameter Sets: (All)
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -119,7 +119,7 @@ Type: String
 Parameter Sets: (All)
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -133,7 +133,7 @@ Type: String
 Parameter Sets: (All)
 
 Required: False
-Position: 5
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -147,7 +147,7 @@ Type: String
 Parameter Sets: (All)
 
 Required: False
-Position: 6
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -161,7 +161,7 @@ Type: String
 Parameter Sets: (All)
 
 Required: False
-Position: 6
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -175,7 +175,7 @@ Type: String
 Parameter Sets: (All)
 
 Required: False
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -189,10 +189,22 @@ Type: Int32
 Parameter Sets: (All)
 
 Required: False
-Position: 7
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
+```
+
+### -Store
+Local Certificate Store to add the certificate to. Only works on Microsoft Windows.
+
+```yaml
+Type: StoreLocation
+Parameter Sets: Generate Certificate
+
+Required: False
+Position: Named
+Accept pipeline input: False
 ```
 
 ## RELATED LINKS
