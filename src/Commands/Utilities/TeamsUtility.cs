@@ -123,6 +123,32 @@ namespace PnP.PowerShell.Commands.Utilities
             if (string.IsNullOrEmpty(groupId))
             {
                 group = await CreateGroupAsync(accessToken, httpClient, displayName, description, classification, mailNickname, owner, visibility);
+                bool wait = true;
+                int iterations = 0;
+                while (wait)
+                {
+                    iterations++;
+
+                    try
+                    {
+                        var createdGroup = await GraphHelper.GetAsync<Group>(httpClient, $"v1.0/groups/{group.Id}", accessToken);
+                        if (!string.IsNullOrEmpty(createdGroup.DisplayName))
+                        {
+                            wait = false;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // In case of exception wait for 5 secs
+                        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+                    }
+
+                    // Don't wait more than 1 minute
+                    if (iterations > 12)
+                    {
+                        wait = false;
+                    }
+                }
             }
             else
             {
@@ -137,10 +163,30 @@ namespace PnP.PowerShell.Commands.Utilities
             if (group != null)
             {
                 Team team = teamCI.ToTeam();
-                var teamSettings = await GraphHelper.PutAsync(httpClient, $"v1.0/groups/{group.Id}/team", team, accessToken);
-                if (teamSettings != null)
+                var retry = true;
+                var iteration = 0;
+                while (retry)
                 {
-                    returnTeam = await TeamsUtility.GetTeamAsync(accessToken, httpClient, group.Id);
+                    try
+                    {
+                        var teamSettings = await GraphHelper.PutAsync(httpClient, $"v1.0/groups/{group.Id}/team", team, accessToken);
+                        if (teamSettings != null)
+                        {
+                            returnTeam = await TeamsUtility.GetTeamAsync(accessToken, httpClient, group.Id);
+                        }
+                        retry = false;
+                    }
+
+                    catch (Exception)
+                    {
+                        System.Threading.Thread.Sleep(5000);
+                        iteration++;
+                    }
+
+                    if (iteration > 10) // don't try more than 10 times
+                    {
+                        retry = false;
+                    }
                 }
             }
             return returnTeam;
