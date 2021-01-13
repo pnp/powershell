@@ -52,6 +52,14 @@ namespace PnP.PowerShell.Commands.Base
                 throw new PSArgumentException("The Store parameter is only supported on Microsoft Windows");
             }
 
+            if (ValidYears < 1 || ValidYears > 30)
+            {
+                ValidYears = 10;
+            }
+            DateTime validFrom = DateTime.Today;
+            DateTime validTo = validFrom.AddYears(ValidYears);
+
+
             X509Certificate2 certificate = null;
             if (Utilities.OperatingSystem.IsWindows())
             {
@@ -65,24 +73,19 @@ namespace PnP.PowerShell.Commands.Base
 
                 string x500 = string.Join("; ", x500Values);
 
-                if (ValidYears < 1 || ValidYears > 30)
-                {
-                    ValidYears = 10;
-                }
-                DateTime validFrom = DateTime.Today;
-                DateTime validTo = validFrom.AddYears(ValidYears);
-
-
                 byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
                 certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
             }
             else
             {
 #if !NETFRAMEWORK
-                DateTimeOffset validFrom = DateTimeOffset.Now;
-                DateTimeOffset validTo = validFrom.AddYears(ValidYears);
-                byte[] certificateBytes = CertificateHelper.CreateSelfSignedCertificate2(CommonName, Country, State, Locality, Organization, OrganizationUnit, 2048, null, null, validFrom, validTo, "", false, null);
-                certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
+                certificate = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo);
+
+                //certificate = CertificateHelper.CreateSelfSignedCertificateLinux(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword);
+                // DateTimeOffset validFrom = DateTimeOffset.Now;
+                // DateTimeOffset validTo = validFrom.AddYears(ValidYears);
+                // byte[] certificateBytes = CertificateHelper.CreateSelfSignedCertificate2(CommonName, Country, State, Locality, Organization, OrganizationUnit, 2048, null, null, validFrom, validTo, "", false, null);
+                // certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
 #endif
             }
 
