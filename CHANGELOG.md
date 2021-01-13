@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
-- Updated certificate handling for `Register-PnPAzureADApp` and `New-PnPAzureADCertificate`
+- Updated certificate handling for `Register-PnPAzureADApp` and `New-PnPAzureCertificate`
 - Updated `Register-PnPAzureApp` to use popup windows on Microsoft Windows. Added the `-NoPopup` switch to disable this behavior.
 - Updated `Invoke-PnPBatch` to fully execute a batch by default if one of the requests in the large batch throws an exception. Specify the `-StopOnException` switch to immmediately stop after an exception occurs. The rest of the batch will be skipped where possible. See https://pnp.github.io/powershell/articles/batching for more information.
 - Documentation updates
