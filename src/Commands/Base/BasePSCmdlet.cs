@@ -51,7 +51,14 @@ namespace PnP.PowerShell.Commands.Base
 
         protected override void ProcessRecord()
         {
-            ExecuteCmdlet();
+            try
+            {
+                ExecuteCmdlet();
+            }
+            catch (PnP.PowerShell.Commands.Model.Graph.GraphException gex)
+            {
+                throw new PSInvalidOperationException(gex.Error.Message);
+            }
         }
 
         protected override void StopProcessing()

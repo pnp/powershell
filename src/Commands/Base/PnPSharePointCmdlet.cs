@@ -68,6 +68,11 @@ namespace PnP.PowerShell.Commands
             {
                 throw new PSInvalidOperationException((ex.Error as PnP.Core.SharePointRestError).Message);
             }
+            catch (PnP.PowerShell.Commands.Model.Graph.GraphException gex)
+            {
+                throw new PSInvalidOperationException((gex.Message));
+            }
+
             catch (Exception ex)
             {
                 PnPConnection.CurrentConnection.RestoreCachedContext(PnPConnection.CurrentConnection.Url);
