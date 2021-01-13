@@ -99,6 +99,18 @@ namespace PnP.PowerShell.Commands.Base
                 throw new PSArgumentException("The Store parameter is only supported on Microsoft Windows");
             }
 
+            if (!string.IsNullOrWhiteSpace(OutPath))
+            {
+                if (!Path.IsPathRooted(OutPath))
+                {
+                    OutPath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, OutPath);
+                }
+            }
+            else
+            {
+                OutPath = SessionState.Path.CurrentFileSystemLocation.Path;
+            }
+
             var redirectUri = "https://pnp.github.io/powershell/consent.html";
 
             var messageWriter = new CmdletMessageWriter(this);
@@ -120,31 +132,17 @@ namespace PnP.PowerShell.Commands.Base
             {
                 var cert = GetCertificate(record);
 
+
                 using (var httpClient = new HttpClient())
                 {
                     if (!AppExists(ApplicationName, httpClient, token))
                     {
-                        var azureApp = CreateApp(loginEndPoint, httpClient, token, cert, redirectUri);
+                        var azureApp = CreateApp(loginEndPoint, httpClient, token, cert, redirectUri, CertificatePassword);
 
                         record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId/ClientId", azureApp.AppId)));
                         record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
 
                         StartConsentFlow(loginEndPoint, azureApp, redirectUri, token, httpClient, record);
-
-                        var message = $"You can now connect with:\n\nConnect-PnPOnline -Url http://[yoursite] -ClientId {azureApp.AppId} ";
-                        if (MyInvocation.BoundParameters.ContainsKey(nameof(Store)))
-                        {
-                            message += $"-Thumbprint {cert.GetCertHashString()} -Tenant {Tenant}";
-                        }
-                        else
-                        {
-                            message += $"-CertificatePath {Path.Combine(OutPath, $"{ApplicationName}.pfx")}";
-                            if (MyInvocation.BoundParameters.ContainsKey(nameof(CertificatePassword)))
-                            {
-                                message += " -CertificatePassword [yourpassword]";
-                            }
-                        }
-                        CmdletMessageWriter.WriteFormattedWarning(this, message);
                     }
                     else
                     {
@@ -259,35 +257,23 @@ namespace PnP.PowerShell.Commands.Base
             var cert = new X509Certificate2();
             if (ParameterSetName == ParameterSet_EXISTINGCERT)
             {
+                if (!System.IO.Path.IsPathRooted(CertificatePath))
+                {
+                    CertificatePath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, CertificatePath);
+                }
                 // Ensure a file exists at the provided CertificatePath
                 if (!File.Exists(CertificatePath))
                 {
                     throw new PSArgumentException(string.Format(Resources.CertificateNotFoundAtPath, CertificatePath), nameof(CertificatePath));
                 }
 
-                if (ParameterSpecified(nameof(CertificatePassword)))
+                try
                 {
-                    try
-                    {
-                        cert = new X509Certificate2(CertificatePath, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
-                        //cert.Import(CertificatePath, CertificatePassword, X509KeyStorageFlags.Exportable);
-                    }
-                    catch (CryptographicException e) when (e.Message.Contains("The specified network password is not correct"))
-                    {
-                        throw new PSArgumentNullException(nameof(CertificatePassword), string.Format(Resources.PrivateKeyCertificateImportFailedPasswordIncorrect, nameof(CertificatePassword)));
-                    }
+                    cert = new X509Certificate2(CertificatePath, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
                 }
-                else
+                catch (CryptographicException e) when (e.Message.Contains("The specified password is not correct"))
                 {
-                    try
-                    {
-                        cert = new X509Certificate2(CertificatePath);
-                        //cert.Import(CertificatePath);
-                    }
-                    catch (CryptographicException e) when (e.Message.Contains("The specified network password is not correct"))
-                    {
-                        throw new PSArgumentNullException(nameof(CertificatePassword), string.Format(Resources.PrivateKeyCertificateImportFailedPasswordMissing, nameof(CertificatePassword)));
-                    }
+                    throw new PSArgumentNullException(nameof(CertificatePassword), string.Format(Resources.PrivateKeyCertificateImportFailedPasswordIncorrect, nameof(CertificatePassword)));
                 }
 
                 // Ensure the certificate at the provided CertificatePath holds a private key
@@ -328,37 +314,32 @@ namespace PnP.PowerShell.Commands.Base
                 else
                 {
 #if !NETFRAMEWORK
-                    DateTimeOffset validFrom = DateTimeOffset.Now;
-                    DateTimeOffset validTo = validFrom.AddYears(ValidYears);
-                    byte[] certificateBytes = CertificateHelper.CreateSelfSignedCertificate2(CommonName, Country, State, Locality, Organization, OrganizationUnit, 2048, null, null, validFrom, validTo, "", false, null);
-                    cert = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
+                    if (!MyInvocation.BoundParameters.ContainsKey("CommonName"))
+                    {
+                        CommonName = ApplicationName;
+                    }
+                    DateTime validFrom = DateTime.Today;
+                    DateTime validTo = validFrom.AddYears(ValidYears);
+                    cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo);
 #endif
                 }
 
-                if (!string.IsNullOrWhiteSpace(OutPath))
-                {
-                    if (!Path.IsPathRooted(OutPath))
-                    {
-                        OutPath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, OutPath);
-                    }
-                }
-                else
-                {
-                    OutPath = SessionState.Path.CurrentFileSystemLocation.Path;
-                }
+                var pfxPath = string.Empty;
+                var cerPath = string.Empty;
+
 
                 if (Directory.Exists(OutPath))
                 {
-                    var pfxPath = Path.Combine(OutPath, $"{ApplicationName}.pfx");
+                    pfxPath = Path.Combine(OutPath, $"{ApplicationName}.pfx");
+                    cerPath = Path.Combine(OutPath, $"{ApplicationName}.cer");
                     byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
                     File.WriteAllBytes(pfxPath, certPfxData);
                     record.Properties.Add(new PSVariableProperty(new PSVariable("Pfx file", pfxPath)));
-                    var cerPath = Path.Combine(OutPath, $"{ApplicationName}.cer");
+
                     byte[] certCerData = cert.Export(X509ContentType.Cert);
                     File.WriteAllBytes(cerPath, certCerData);
                     record.Properties.Add(new PSVariableProperty(new PSVariable("Cer file", cerPath)));
                 }
-
                 if (ParameterSpecified(nameof(Store)))
                 {
                     if (OperatingSystem.IsWindows())
@@ -385,7 +366,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             return false;
         }
-        private AzureApp CreateApp(string loginEndPoint, HttpClient httpClient, string token, X509Certificate2 cert, string redirectUri)
+        private AzureApp CreateApp(string loginEndPoint, HttpClient httpClient, string token, X509Certificate2 cert, string redirectUri, SecureString password)
         {
             var expirationDate = DateTime.Parse(cert.GetExpirationDateString()).ToUniversalTime();
             var startDate = DateTime.Parse(cert.GetEffectiveDateString()).ToUniversalTime();
@@ -407,29 +388,29 @@ namespace PnP.PowerShell.Commands.Base
                 scopes.Add(permissionScopes.GetScope("MSGraph.User.Read.All"));
             }
 
-
             var scopesPayload = GetScopesPayload(scopes);
             var payload = new
             {
                 displayName = ApplicationName,
                 signInAudience = "AzureADMyOrg",
                 keyCredentials = new[] {
-                        new {
-                            customKeyIdentifier = cert.GetCertHashString(),
-                            endDateTime = expirationDate,
-                            keyId = Guid.NewGuid().ToString(),
-                            startDateTime = startDate,
-                            type= "AsymmetricX509Cert",
-                            usage= "Verify",
-                            key = Convert.ToBase64String(cert.GetRawCertData())
-                        }
-                    },
+                    new {
+                        customKeyIdentifier = cert.GetCertHashString(),
+                        endDateTime = expirationDate,
+                        keyId = Guid.NewGuid().ToString(),
+                        startDateTime = startDate,
+                        type= "AsymmetricX509Cert",
+                        usage= "Verify",
+                        key = Convert.ToBase64String(cert.GetRawCertData()),
+                        displayName = cert.Subject
+                    }
+                },
                 publicClient = new
                 {
                     redirectUris = new[] {
-                            $"{loginEndPoint}/common/oauth2/nativeclient",
-                            redirectUri
-                        }
+                        $"{loginEndPoint}/common/oauth2/nativeclient",
+                        redirectUri
+                    }
                 },
                 requiredResourceAccess = scopesPayload
             };
