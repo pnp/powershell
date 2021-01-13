@@ -146,7 +146,7 @@ namespace PnP.PowerShell.Commands.Base
                     }
                     else
                     {
-                        throw new PSInvalidOperationException($"The app with name {ApplicationName} already exists.");
+                        throw new PSInvalidOperationException($"The application with name {ApplicationName} already exists.");
                     }
                 }
             }
@@ -284,74 +284,67 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
+#if NETFRAMEWORK
+                var x500Values = new List<string>();
+                if (!MyInvocation.BoundParameters.ContainsKey("CommonName"))
+                {
+                    CommonName = ApplicationName;
+                }
+                if (!string.IsNullOrWhiteSpace(CommonName)) x500Values.Add($"CN={CommonName}");
+                if (!string.IsNullOrWhiteSpace(Country)) x500Values.Add($"C={Country}");
+                if (!string.IsNullOrWhiteSpace(State)) x500Values.Add($"S={State}");
+                if (!string.IsNullOrWhiteSpace(Locality)) x500Values.Add($"L={Locality}");
+                if (!string.IsNullOrWhiteSpace(Organization)) x500Values.Add($"O={Organization}");
+                if (!string.IsNullOrWhiteSpace(OrganizationUnit)) x500Values.Add($"OU={OrganizationUnit}");
+
+                string x500 = string.Join("; ", x500Values);
+
+                if (ValidYears < 1 || ValidYears > 30)
+                {
+                    ValidYears = 10;
+                }
+                DateTime validFrom = DateTime.Today;
+                DateTime validTo = validFrom.AddYears(ValidYears);
+
+                byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
+                cert = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
+#else
+                if (!MyInvocation.BoundParameters.ContainsKey("CommonName"))
+                {
+                    CommonName = ApplicationName;
+                }
+                DateTime validFrom = DateTime.Today;
+                DateTime validTo = validFrom.AddYears(ValidYears);
+                cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo);
+#endif
+            }
+            var pfxPath = string.Empty;
+            var cerPath = string.Empty;
+
+
+            if (Directory.Exists(OutPath))
+            {
+                pfxPath = Path.Combine(OutPath, $"{ApplicationName}.pfx");
+                cerPath = Path.Combine(OutPath, $"{ApplicationName}.cer");
+                byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
+                File.WriteAllBytes(pfxPath, certPfxData);
+                record.Properties.Add(new PSVariableProperty(new PSVariable("Pfx file", pfxPath)));
+
+                byte[] certCerData = cert.Export(X509ContentType.Cert);
+                File.WriteAllBytes(cerPath, certCerData);
+                record.Properties.Add(new PSVariableProperty(new PSVariable("Cer file", cerPath)));
+            }
+            if (ParameterSpecified(nameof(Store)))
+            {
                 if (OperatingSystem.IsWindows())
                 {
-                    // Generate a certificate
-                    var x500Values = new List<string>();
-                    if (!MyInvocation.BoundParameters.ContainsKey("CommonName"))
+                    using (var store = new X509Store("My", Store))
                     {
-                        CommonName = ApplicationName;
+                        store.Open(OpenFlags.ReadWrite);
+                        store.Add(cert);
+                        store.Close();
                     }
-                    if (!string.IsNullOrWhiteSpace(CommonName)) x500Values.Add($"CN={CommonName}");
-                    if (!string.IsNullOrWhiteSpace(Country)) x500Values.Add($"C={Country}");
-                    if (!string.IsNullOrWhiteSpace(State)) x500Values.Add($"S={State}");
-                    if (!string.IsNullOrWhiteSpace(Locality)) x500Values.Add($"L={Locality}");
-                    if (!string.IsNullOrWhiteSpace(Organization)) x500Values.Add($"O={Organization}");
-                    if (!string.IsNullOrWhiteSpace(OrganizationUnit)) x500Values.Add($"OU={OrganizationUnit}");
-
-                    string x500 = string.Join("; ", x500Values);
-
-                    if (ValidYears < 1 || ValidYears > 30)
-                    {
-                        ValidYears = 10;
-                    }
-                    DateTime validFrom = DateTime.Today;
-                    DateTime validTo = validFrom.AddYears(ValidYears);
-
-                    byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
-                    cert = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
-                }
-                else
-                {
-#if !NETFRAMEWORK
-                    if (!MyInvocation.BoundParameters.ContainsKey("CommonName"))
-                    {
-                        CommonName = ApplicationName;
-                    }
-                    DateTime validFrom = DateTime.Today;
-                    DateTime validTo = validFrom.AddYears(ValidYears);
-                    cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo);
-#endif
-                }
-
-                var pfxPath = string.Empty;
-                var cerPath = string.Empty;
-
-
-                if (Directory.Exists(OutPath))
-                {
-                    pfxPath = Path.Combine(OutPath, $"{ApplicationName}.pfx");
-                    cerPath = Path.Combine(OutPath, $"{ApplicationName}.cer");
-                    byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
-                    File.WriteAllBytes(pfxPath, certPfxData);
-                    record.Properties.Add(new PSVariableProperty(new PSVariable("Pfx file", pfxPath)));
-
-                    byte[] certCerData = cert.Export(X509ContentType.Cert);
-                    File.WriteAllBytes(cerPath, certCerData);
-                    record.Properties.Add(new PSVariableProperty(new PSVariable("Cer file", cerPath)));
-                }
-                if (ParameterSpecified(nameof(Store)))
-                {
-                    if (OperatingSystem.IsWindows())
-                    {
-                        using (var store = new X509Store("My", Store))
-                        {
-                            store.Open(OpenFlags.ReadWrite);
-                            store.Add(cert);
-                            store.Close();
-                        }
-                        Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, "Certificate added to store");
-                    }
+                    Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, "Certificate added to store");
                 }
             }
             return cert;
@@ -359,11 +352,14 @@ namespace PnP.PowerShell.Commands.Base
 
         private bool AppExists(string appName, HttpClient httpClient, string token)
         {
+            Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Checking if application '{appName}' does not exist yet...");
             var azureApps = GraphHelper.GetAsync<RestResultCollection<AzureApp>>(httpClient, $@"/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token).GetAwaiter().GetResult();
             if (azureApps != null && azureApps.Items.Any())
             {
+                Host.UI.WriteLine();
                 return true;
             }
+            Host.UI.WriteLine(ConsoleColor.Green, Host.UI.RawUI.BackgroundColor, $"Success. Application '{appName}' can be registered.");
             return false;
         }
         private AzureApp CreateApp(string loginEndPoint, HttpClient httpClient, string token, X509Certificate2 cert, string redirectUri, SecureString password)
@@ -435,7 +431,14 @@ namespace PnP.PowerShell.Commands.Base
 
                 for (var i = 0; i < waitTime; i++)
                 {
-                    Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, ".");
+                    if (Convert.ToDouble(i) % Convert.ToDouble(10) > 0)
+                    {
+                        Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, "-");
+                    }
+                    else
+                    {
+                        Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"[{i}]");
+                    }
                     System.Threading.Thread.Sleep(1000);
 
                     // Check if CTRL+C has been pressed and if so, abort the wait
@@ -444,8 +447,11 @@ namespace PnP.PowerShell.Commands.Base
                         break;
                     }
                 }
+
                 if (!Stopping)
                 {
+                    Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"[{waitTime}]");
+
                     Host.UI.WriteLine();
 
                     BrowserHelper.GetWebBrowserPopup(consentUrl, "Please provide consent", new[] { (redirectUri, BrowserHelper.UrlMatchType.StartsWith) });
@@ -471,7 +477,34 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Please wait approximately 60 seconds, then open the following URL in a browser window to provide consent. This consent is required in order to use this application.\n\n{consentUrl}");
+                var waitTime = 60;
+                CmdletMessageWriter.WriteFormattedWarning(this, $"Waiting {waitTime} seconds to launch consent flow in a popup window.\n\nThis wait is required to make sure that Azure AD is able to initialize all required artifacts. You can always navigate to the consent page manually:\n\n{consentUrl}");
+
+                for (var i = 0; i < waitTime; i++)
+                {
+                    if (Convert.ToDouble(i) % Convert.ToDouble(10) > 0)
+                    {
+                        Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, "-");
+                    }
+                    else
+                    {
+                        Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"[{i}]");
+                    }
+                    System.Threading.Thread.Sleep(1000);
+
+                    // Check if CTRL+C has been pressed and if so, abort the wait
+                    if (Stopping)
+                    {
+                        break;
+                    }
+                }
+
+                if (!Stopping)
+                {
+                    Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"[{waitTime}]");
+                }
+
+                Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Open the following URL in a browser window to provide consent. This consent is required in order to use this application.\n\n{consentUrl}");
                 WriteObject(record);
             }
         }

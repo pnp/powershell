@@ -395,6 +395,7 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 #endif
 
+#if !NETFRAMEWORK
         internal static X509Certificate2 CreateSelfSignedCertificate(string commonName, string country, string state, string locality, string organization, string organizationUnit, SecureString password, string friendlyName, DateTimeOffset from, DateTimeOffset to)
         {
             SubjectAlternativeNameBuilder sanBuilder = new SubjectAlternativeNameBuilder();
@@ -436,8 +437,9 @@ namespace PnP.PowerShell.Commands.Utilities
 
                 return new X509Certificate2(certificate.Export(X509ContentType.Pfx, password), password, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
             }
-
         }
+#endif
+
         internal static byte[] CreateSelfSignCertificatePfx(
             string x500,
             DateTime startTime,
