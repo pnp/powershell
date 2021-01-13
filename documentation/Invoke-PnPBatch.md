@@ -15,7 +15,7 @@ Executes the batch
 ## SYNTAX
 
 ```powershell
-Invoke-PnPBatch [-Batch] <PnPBatch> [-Details] [-Force]
+Invoke-PnPBatch [-Batch] <PnPBatch> [-Details] [-StopOnException] [-Force]
 ```
 
 ## DESCRIPTION
@@ -68,7 +68,21 @@ Accept wildcard characters: False
 Will return detailed information of the batch executed.
 
 ```yaml
-Type: Int32
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -StopOnException
+By default the batch will be fully executed. If any exceptions occur during this process they will be listed after the full run. Specify this switch to stop immediately after an exception occurs. The rest of the batch will be skipped then.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

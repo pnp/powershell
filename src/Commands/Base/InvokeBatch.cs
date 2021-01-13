@@ -18,6 +18,9 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false)]
         public SwitchParameter Details;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter StopOnException;
+
         protected override void ExecuteCmdlet()
         {
             bool batchExecuted = Batch.Executed;
@@ -30,7 +33,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (!batchExecuted)
             {
-                var results = Batch.Execute(false);
+                var results = Batch.Execute(StopOnException);
                 if (results != null && results.Any())
                 {
                     var resultList = new List<BatchResult>();
