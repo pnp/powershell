@@ -16,6 +16,8 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using System.Threading.Tasks;
+using TextCopy;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Base
@@ -75,6 +77,58 @@ namespace PnP.PowerShell.Commands.Base
             };
 
             return spoConnection;
+        }
+
+        internal static PnPConnection InstantiateDeviceLoginConnection2(string url, bool launchBrowser, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
+        {
+            var connectionUri = new Uri(url);
+            var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
+            PnP.Framework.AuthenticationManager authManager = null;
+            if (PnPConnection.CachedAuthenticationManager != null)
+            {
+                authManager = PnPConnection.CachedAuthenticationManager;
+            }
+            else
+            {
+                Func<DeviceCodeResult, Task> deviceCodeCallback = (deviceCodeResult) =>
+                 {
+                     if (launchBrowser)
+                     {
+                         if (Utilities.OperatingSystem.IsWindows())
+                         {
+                             ClipboardService.SetText(deviceCodeResult.UserCode);
+                             messageWriter.WriteMessage($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard\n\n");
+                             BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in");
+                         }
+                         else
+                         {
+                             messageWriter.WriteMessage($"\n\n{deviceCodeResult.Message}\n\n");
+                         }
+                     }
+                     else
+                     {
+                         messageWriter.WriteMessage($"\n\n{deviceCodeResult.Message}\n\n");
+                     }
+                     return Task.FromResult(0);
+                 };
+
+                authManager = new PnP.Framework.AuthenticationManager(PnPConnection.PnPManagementShellClientId, deviceCodeCallback, azureEnvironment);
+
+            }
+            using (authManager)
+            {
+                var clientContext = authManager.GetContext(url.ToString());
+                var context = PnPClientContext.ConvertFrom(clientContext);
+
+                var connectionType = ConnectionType.O365;
+
+                var spoConnection = new PnPConnection(context, connectionType, null, PnPConnection.PnPManagementShellClientId, null, url.ToString(), null, PnPPSVersionTag, InitializationType.ClientIDCertificate)
+                {
+                    ConnectionMethod = ConnectionMethod.DeviceLogin,
+                    AzureEnvironment = azureEnvironment
+                };
+                return spoConnection;
+            }
         }
 
         internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, string tenantAdminUrl, CmdletMessageWriter adapter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
@@ -170,7 +224,7 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static PnPConnection InstantiateConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, AzureEnvironment azureEnvironment, X509Certificate2 certificate)
         {
-            
+
             return InstantiateConnectionWithCert(url, clientId, tenant, tenantAdminUrl, azureEnvironment, certificate, false);
         }
 

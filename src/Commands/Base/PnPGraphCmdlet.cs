@@ -38,6 +38,27 @@ namespace PnP.PowerShell.Commands.Base
         {
             get
             {
+                if (PnPConnection.CurrentConnection?.Context != null)
+                {
+                    var authManager = PnPConnection.CurrentConnection.Context.GetContextSettings().AuthenticationManager;
+                    if (authManager != null)
+                    {
+                        string[] managementShellScopes = null;
+                        if (PnPConnection.CurrentConnection.ClientId == PnPConnection.PnPManagementShellClientId)
+                        {
+                            var managementShellScopesAttribute = (PnPManagementShellScopesAttribute)Attribute.GetCustomAttribute(GetType(), typeof(PnPManagementShellScopesAttribute));
+                            if (managementShellScopesAttribute != null)
+                            {
+                                managementShellScopes = managementShellScopesAttribute.PermissionScopes;
+                            }
+                            return new GraphToken(authManager.GetAccessTokenAsync(managementShellScopes).GetAwaiter().GetResult());
+                        }
+                        else
+                        {
+                            return new GraphToken(authManager.GetAccessTokenAsync(PnPConnection.CurrentConnection.Scopes).GetAwaiter().GetResult());
+                        }
+                    }
+                }
                 var tokenType = TokenType.All;
 
                 // Collect, if present, the token type attribute
@@ -72,7 +93,6 @@ namespace PnP.PowerShell.Commands.Base
                 // Ensure we have an active connection
                 if (PnPConnection.CurrentConnection != null)
                 {
-                    WriteVerbose("Connection is present");
                     string[] managementShellScopes = null;
                     if (PnPConnection.CurrentConnection.ClientId == PnPConnection.PnPManagementShellClientId)
                     {
@@ -85,7 +105,6 @@ namespace PnP.PowerShell.Commands.Base
                     // There is an active connection, try to get a Microsoft Graph Token on the active connection
                     if (PnPConnection.CurrentConnection.TryGetTokenAsync(Enums.TokenAudience.MicrosoftGraph, PnPConnection.CurrentConnection.AzureEnvironment, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray(), tokenType, managementShellScopes, this).GetAwaiter().GetResult() is GraphToken token)
                     {
-                        WriteVerbose("Token returned to Graph Cmdlet");
                         // Microsoft Graph Access Token available, return it
                         return (GraphToken)token;
                     }

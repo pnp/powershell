@@ -490,8 +490,21 @@ namespace PnP.PowerShell.Commands.Base
             }
             var task = Task.Factory.StartNew(() =>
             {
+                Uri oldUri = null;
 
-                var returnedConnection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, TenantAdminUrl, messageWriter, AzureEnvironment, cancellationToken);
+                if (PnPConnection.CurrentConnection != null)
+                {
+                    if (PnPConnection.CurrentConnection.Url != null)
+                    {
+                        oldUri = new Uri(PnPConnection.CurrentConnection.Url);
+                    }
+                }
+                if (oldUri != null && oldUri.Host == new Uri(Url).Host && PnPConnection.CurrentConnection?.ConnectionMethod == ConnectionMethod.DeviceLogin)
+                {
+                    ReuseAuthenticationManager();
+                }
+
+                var returnedConnection = PnPConnectionHelper.InstantiateDeviceLoginConnection2(Url, LaunchBrowser, messageWriter, AzureEnvironment, cancellationToken);
                 connection = returnedConnection;
                 messageWriter.Finished = true;
             }, cancellationToken);
