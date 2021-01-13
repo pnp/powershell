@@ -2,9 +2,9 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/add-pnpsitecollectiontermstore
+online version: https://pnp.github.io/powershell/cmdlets/new-pnpsitecollectiontermstore
 schema: 2.0.0
-title: Add-PnPSiteCollectionTermStore
+title: New-PnPSiteCollectionTermStore
 ---
 
 # Add-PnPSiteCollectionTermStore
@@ -15,7 +15,7 @@ Creates the site collection term store if it doesn't exist yet or if it does it 
 ## SYNTAX
 
 ```powershell
-Add-PnPSiteCollectionTermStore [-Connection <PnPConnection>] [<CommonParameters>]
+New-PnPSiteCollectionTermStore [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,7 +26,7 @@ The site collection scoped term store will be created if it does not exist yet. 
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPSiteCollectionTermStore
+New-PnPSiteCollectionTermStore
 ```
 
 Returns the site collection term store by creating it if it doesn't exist yet or returning the existing instance if it does
