@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Connecting with PnP PowerShell | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Connecting with PnP PowerShell | PnP PowerShell ">
+    <meta name="generator" content="docfx 2.51.0.0">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/connecting.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+                    <h1 id="connecting-with-pnp-powershell">Connecting with PnP PowerShell</h1>
+
+<p>PnP PowerShell offers many ways to connect to an environment. This page provides guidance on the various options you have and how they can be used against which environment(s).</p>
+<h2 id="connect-using-credentials">Connect using credentials</h2>
+<p>In order to connect with credentials you have two options:</p>
+<h3 id="connect-by-using-the-pnp-management-shell-multi-tenant-azure-ad-application">Connect by using the PnP Management Shell Multi-Tenant Azure AD Application</h3>
+<p>You will have to consent / register the PnP Management Shell Multi-Tenant Azure AD Application in your own tenant:</p>
+<pre><code class="lang-powershell">Register-PnPManagementShellAccess
+</code></pre>
+<p>This will launch a device login flow that will ask you to consent to the application. Notice that is only required -once- per tenant. You will need to have appropriate access rights to be able to consent applications in your Azure AD.</p>
+<p>After that you can authenticate using</p>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://[yourtenant].sharepoint.com&quot; -Credentials (Get-Credential)
+</code></pre>
+<h3 id="connect-by-using-your-own-azure-ad-application">Connect by using your own Azure AD Application</h3>
+<p>You will have to create your own Azure AD Application registration, or you can create one:</p>
+<pre><code class="lang-powershell">Register-PnPAzureADApp -Name &quot;YourApplicationName&quot; -Tenant [yourtenant.onmicrosoft.com] -DeviceLogin
+</code></pre>
+<p>This will launch a authentication dialog where need to authenticate. After closing this window the cmdlet will continue to register a new application with a set of default permissions. By default a certificate will be generated and stored in the current folder, named after the application you want to create. You can specify your own certificate by using the <code>-CertificatePath</code> parameter and optional <code>-CertificatePassword</code> parameter.</p>
+<p>You can add permissions by using the <code>-Scope</code> parameter. The cmdlet will output the Azure AppId/client id, the name and location of the certificates created (if any) and the thumbprint of the certificate. It is possible to add the certificate created to the certificate management store in Windows by adding the <code>-Store</code> parameter.</p>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://[yourtenant.sharepoint.com] -Credentials (Get-Credential) -ClientId [clientid]
+</code></pre>
+<h2 id="connect-interactively-using-weblogin-supporting-mfa">Connect interactively using WebLogin supporting MFA</h2>
+<p>One of the easiest methods to use. However notice that this connection method will have it's limitation as we will utility cookie based authentication. For instance, we will not be able to make calls to the Microsoft Graph behind the scenes.</p>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url https://tenant.sharepoint.com -UseWebLogin
+</code></pre>
+<h2 id="connect-using-a-clientid-and-pfx-certificate-stored-on-your-local-machine">Connect using a ClientId and PFX certificate stored on your local machine</h2>
+<p>Allows using an Azure Active Directory app registration from your own Azure Active Directory with a certificate to connect. The private key certificate, typically the .pfx file, should be accessible on your local machine.</p>
+<p>The following will generate an Azure AD Application registration and create a certificate containing a public and private key.</p>
+<pre><code class="lang-powershell">$password = ConvertTo-SecureString -String &quot;password&quot; -AsPlainText -Force
+Register-PnPAzureADApp -ApplicationName &quot;PnPPowerShell&quot; -Tenant yourtenant.onmicrosoft.com
+</code></pre>
+<p>You will be asked to authenticate. After that the cmdlet will generate two files, PnPPowerShell.pfx and PnPPowerShell.cer and a new Azure AD Application will be registered with the specified name. The public key/CER file will be uploaded and registered with the newly create application registration. You will have to use the .pfx file to connect. Notice that the <code>Register-PnPAzureADApp</code> cmdlet only have to be executed once per tenant/application.</p>
+<pre><code class="lang-PowerShell">Connect-PnPOnline -ClientId fa1a81f1-e729-44d8-bb71-0a0c339c0f62 -Url &quot;https://tenant.sharepoint.com&quot; -Tenant tenant.onmicrosoft.com -CertificatePath '.\PnPPowerShell.pfx'
+</code></pre>
+<h2 id="connect-using-a-clientid-and-pfx-certificate-stored-in-the-windows-certificate-management-store">Connect using a ClientId and PFX certificate stored in the Windows Certificate Management Store</h2>
+<p>Allows using an Azure Active Directory app registration from your own Azure Active Directory with a certificate to connect. The private key certificate, typically the .pfx file, should be accessible on your local machine in the Certificate Management Store.</p>
+<p>The following will generate an Azure AD Application registration and create a certificate containing a public and private key which will be stored for the current user in the Windows Certificate Management Store.</p>
+<pre><code class="lang-powershell">$password = ConvertTo-SecureString -String &quot;password&quot; -AsPlainText -Force
+Register-PnPAzureADApp -ApplicationName &quot;PnPPowerShell&quot; -Tenant yourtenant.onmicrosoft.com -Store CurrentUser
+</code></pre>
+<p>You will be asked to authenticate. After that the cmdlet will generate a certificate and will store it in the Windows Certificate Management Store and a new Azure AD Application will be registered with the specified name. The public key of the certificate file will be uploaded and registered with the newly create application registration. Notice that the <code>Register-PnPAzureADApp</code> cmdlet only have to be executed once per tenant/application. The output of the cmdlet contains the thumbprint to use.</p>
+<pre><code class="lang-PowerShell">Connect-PnPOnline -ClientId fa1a81f1-e729-44d8-bb71-0a0c339c0f62 -Url &quot;https://tenant.sharepoint.com&quot; -Tenant tenant.onmicrosoft.com -Thumbprint $thumbprint
+</code></pre>
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://telemetry.sharepointpnp.com/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+</html>

@@ -30,7 +30,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/azurefunctions.html",
-          "hash": "kP6szpTTTJh2SPmLpLdX6g=="
+          "hash": "9XT2uTNfzOZ0zX3bEFgUjQ=="
         }
       },
       "is_incremental": false,
@@ -67,6 +67,18 @@
         ".html": {
           "relative_path": "articles/configuration.html",
           "hash": "28HxoqgxR6sEdu9PwhuLqw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/connecting.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/connecting.html",
+          "hash": "tySRxMnyrERJ0wyKjW4SNA=="
         }
       },
       "is_incremental": false,
@@ -3998,6 +4010,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPSiteCollectionTermStore.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPSiteCollectionTermStore.html",
+          "hash": "FMYTj0GSN3tuM+AK+2RsYA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/New-PnPSiteGroup.md",
       "output": {
         ".html": {
@@ -4927,6 +4951,18 @@
         ".html": {
           "relative_path": "cmdlets/Remove-PnPSiteCollectionAppCatalog.html",
           "hash": "LQBGhnPMqx6uKyARzA6VSg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPSiteCollectionTermStore.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPSiteCollectionTermStore.html",
+          "hash": "AB+qo03RHzT9ifBH0IOFcw=="
         }
       },
       "is_incremental": false,
@@ -6882,7 +6918,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "U4UH7M1WsZdQuo2Tocdltw=="
+          "hash": "AnVaz3ikq9wCWvPrhQ9qJw=="
         }
       },
       "is_incremental": false,
@@ -6961,7 +6997,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 573,
+          "total_file_count": 576,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
