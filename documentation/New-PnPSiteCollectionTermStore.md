@@ -7,7 +7,7 @@ schema: 2.0.0
 title: New-PnPSiteCollectionTermStore
 ---
 
-# Add-PnPSiteCollectionTermStore
+# New-PnPSiteCollectionTermStore
 
 ## SYNOPSIS
 Creates the site collection term store if it doesn't exist yet or if it does it will return the already existing site collection term store
