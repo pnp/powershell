@@ -307,61 +307,62 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
 
             using (var provisioningContext = new PnPProvisioningContext(async (resource, scope) =>
             {
-                if (resource.ToLower().StartsWith("https://"))
-                {
-                    var uri = new Uri(resource);
-                    resource = uri.Authority;
-                }
-                // Get Azure AD Token
-                if (PnPConnection.CurrentConnection != null)
-                {
-                    if (resource.Equals("graph.microsoft.com", StringComparison.OrdinalIgnoreCase))
-                    {
-                        var graphAccessToken = await PnPConnection.CurrentConnection.TryGetAccessTokenAsync(Enums.TokenAudience.MicrosoftGraph);
-                        if (graphAccessToken != null)
-                        {
-                            // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                            return graphAccessToken;
-                        }
-                    }
-#if NETFRAMEWORK
-                    else if (resource.ToLower().Contains(".sharepoint."))
-#else
-                    else if (resource.Contains(".sharepoint.", StringComparison.OrdinalIgnoreCase))
-#endif
-                    {
-                        using (var clientContext = PnPConnection.CurrentConnection.CloneContext($"https://{resource}"))
-                        {
-                            string accessToken = null;
-                            EventHandler<WebRequestEventArgs> handler = (s, e) =>
-                            {
-                                string authorization = e.WebRequestExecutor.RequestHeaders["Authorization"];
-                                if (!string.IsNullOrEmpty(authorization))
-                                {
-                                    accessToken = authorization.Replace("Bearer ", string.Empty);
-                                }
-                            };
+                return await TokenRetrieval.GetAccessTokenAsync(resource, scope);
+//                 if (resource.ToLower().StartsWith("https://"))
+//                 {
+//                     var uri = new Uri(resource);
+//                     resource = uri.Authority;
+//                 }
+//                 // Get Azure AD Token
+//                 if (PnPConnection.CurrentConnection != null)
+//                 {
+//                     if (resource.Equals("graph.microsoft.com", StringComparison.OrdinalIgnoreCase))
+//                     {
+//                         var graphAccessToken = await PnPConnection.CurrentConnection.TryGetAccessTokenAsync(Enums.TokenAudience.MicrosoftGraph);
+//                         if (graphAccessToken != null)
+//                         {
+//                             // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
+//                             return graphAccessToken;
+//                         }
+//                     }
+// #if NETFRAMEWORK
+//                     else if (resource.ToLower().Contains(".sharepoint."))
+// #else
+//                     else if (resource.Contains(".sharepoint.", StringComparison.OrdinalIgnoreCase))
+// #endif
+//                     {
+//                         using (var clientContext = PnPConnection.CurrentConnection.CloneContext($"https://{resource}"))
+//                         {
+//                             string accessToken = null;
+//                             EventHandler<WebRequestEventArgs> handler = (s, e) =>
+//                             {
+//                                 string authorization = e.WebRequestExecutor.RequestHeaders["Authorization"];
+//                                 if (!string.IsNullOrEmpty(authorization))
+//                                 {
+//                                     accessToken = authorization.Replace("Bearer ", string.Empty);
+//                                 }
+//                             };
 
-                            // Issue a dummy request to get it from the Authorization header
-                            clientContext.ExecutingWebRequest += handler;
-                            clientContext.ExecuteQueryRetry();
-                            clientContext.ExecutingWebRequest -= handler;
+//                             // Issue a dummy request to get it from the Authorization header
+//                             clientContext.ExecutingWebRequest += handler;
+//                             clientContext.ExecuteQueryRetry();
+//                             clientContext.ExecutingWebRequest -= handler;
 
-                            return accessToken;
-                        }
-                    }
-                }
+//                             return accessToken;
+//                         }
+//                     }
+//                 }
 
-                if (PnPConnection.CurrentConnection.PSCredential != null || PnPConnection.CurrentConnection.ClientId != null)
-                {
-                    // Using normal credentials
-                    return await TokenHandler.AcquireTokenAsync(resource, null);
-                }
-                else
-                {
-                    // No token...
-                    throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
-                }
+//                 if (PnPConnection.CurrentConnection.PSCredential != null || PnPConnection.CurrentConnection.ClientId != null)
+//                 {
+//                     // Using normal credentials
+//                     return await TokenHandler.AcquireTokenAsync(resource, null);
+//                 }
+//                 else
+//                 {
+//                     // No token...
+//                     throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
+//                 }
             }))
             {
                 if (!string.IsNullOrEmpty(SequenceId))

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Identity.Client;
-using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using PnP.Framework;
 using PnP.PowerShell.Commands.Enums;
@@ -8,14 +7,13 @@ using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Linq;
 using System.Management.Automation;
-using System.Management.Automation.Host;
 using System.Net;
-using System.Net.Http;
 using System.Reflection;
-using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using System.Threading.Tasks;
+using TextCopy;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Base
@@ -23,7 +21,8 @@ namespace PnP.PowerShell.Commands.Base
     internal class PnPConnectionHelper
     {
 
-        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, string realm, string clientId, string clientSecret, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        #region Connection Creation
+        internal static PnPConnection InstantiateACSAppOnlyConnection(Uri url, string realm, string clientId, string clientSecret, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             ConnectionType connectionType;
             PnPClientContext context = null;
@@ -77,6 +76,58 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
+        internal static PnPConnection InstantiateDeviceLoginConnection2(string url, bool launchBrowser, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
+        {
+            var connectionUri = new Uri(url);
+            var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
+            PnP.Framework.AuthenticationManager authManager = null;
+            if (PnPConnection.CachedAuthenticationManager != null)
+            {
+                authManager = PnPConnection.CachedAuthenticationManager;
+            }
+            else
+            {
+                Func<DeviceCodeResult, Task> deviceCodeCallback = (deviceCodeResult) =>
+                 {
+                     if (launchBrowser)
+                     {
+                         if (Utilities.OperatingSystem.IsWindows())
+                         {
+                             ClipboardService.SetText(deviceCodeResult.UserCode);
+                             messageWriter.WriteMessage($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard\n\n");
+                             BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in");
+                         }
+                         else
+                         {
+                             messageWriter.WriteMessage($"\n\n{deviceCodeResult.Message}\n\n");
+                         }
+                     }
+                     else
+                     {
+                         messageWriter.WriteMessage($"\n\n{deviceCodeResult.Message}\n\n");
+                     }
+                     return Task.FromResult(0);
+                 };
+
+                authManager = new PnP.Framework.AuthenticationManager(PnPConnection.PnPManagementShellClientId, deviceCodeCallback, azureEnvironment);
+
+            }
+            using (authManager)
+            {
+                var clientContext = authManager.GetContext(url.ToString());
+                var context = PnPClientContext.ConvertFrom(clientContext);
+
+                var connectionType = ConnectionType.O365;
+
+                var spoConnection = new PnPConnection(context, connectionType, null, PnPConnection.PnPManagementShellClientId, null, url.ToString(), null, PnPPSVersionTag, InitializationType.ClientIDCertificate)
+                {
+                    ConnectionMethod = ConnectionMethod.DeviceLogin,
+                    AzureEnvironment = azureEnvironment
+                };
+                return spoConnection;
+            }
+        }
+
         internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, string tenantAdminUrl, CmdletMessageWriter adapter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
         {
             var connectionUri = new Uri(url);
@@ -107,16 +158,6 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection InstantiateGraphAccessTokenConnection(string accessToken)
-        {
-            var tokenResult = new GenericToken(accessToken);
-            var spoConnection = new PnPConnection(tokenResult, ConnectionMethod.AccessToken, ConnectionType.O365, PnPPSVersionTag, InitializationType.Graph)
-            {
-                ConnectionMethod = ConnectionMethod.GraphDeviceLogin
-            };
-            return spoConnection;
-        }
-
         internal static PnPConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, PSCmdlet cmdlet, CmdletMessageWriter adapter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
         {
 
@@ -134,47 +175,7 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-
-        internal static PnPConnection InstantiateConnectionWithCertPath(Uri url, string clientId, string tenant, string certificatePath, SecureString certificatePassword, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
-        {
-            X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(certificatePath, certificatePassword);
-
-            return InstantiateConnectionWithCert(url, clientId, tenant, tenantAdminUrl, azureEnvironment, certificate, true);
-        }
-
-        internal static PnPConnection InstantiateConnectionWithCertThumbprint(Uri url, string clientId, string tenant, string thumbprint, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
-        {
-            X509Certificate2 certificate = CertificateHelper.GetCertificatFromStore(thumbprint);
-
-            if (certificate == null)
-            {
-                throw new PSArgumentOutOfRangeException(nameof(thumbprint), null, string.Format(Resources.CertificateWithThumbprintNotFound, thumbprint));
-            }
-
-            // Ensure the private key of the certificate is available
-            if (!certificate.HasPrivateKey)
-            {
-                throw new PSArgumentOutOfRangeException(nameof(thumbprint), null, string.Format(Resources.CertificateWithThumbprintDoesNotHavePrivateKey, thumbprint));
-            }
-
-            return InstantiateConnectionWithCert(url, clientId, tenant, tenantAdminUrl, azureEnvironment, certificate, false);
-        }
-
-        internal static PnPConnection InstantiateConnectionWithPEMCert(Uri url, string clientId, string tenant, string certificatePEM, string privateKeyPEM, SecureString certificatePassword, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
-        {
-            string password = new System.Net.NetworkCredential(string.Empty, certificatePassword).Password;
-            X509Certificate2 certificate = CertificateHelper.GetCertificateFromPEMstring(certificatePEM, privateKeyPEM, password);
-
-            return InstantiateConnectionWithCert(url, clientId, tenant, tenantAdminUrl, azureEnvironment, certificate, false);
-        }
-
-        internal static PnPConnection InstantiateConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, AzureEnvironment azureEnvironment, X509Certificate2 certificate)
-        {
-            
-            return InstantiateConnectionWithCert(url, clientId, tenant, tenantAdminUrl, azureEnvironment, certificate, false);
-        }
-
-        private static PnPConnection InstantiateConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool certificateFromFile)
+        internal static PnPConnection InstantiateConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool certificateFromFile = false)
         {
             PnP.Framework.AuthenticationManager authManager = null;
             if (PnPConnection.CachedAuthenticationManager != null)
@@ -206,41 +207,6 @@ namespace PnP.PowerShell.Commands.Base
                     AzureEnvironment = azureEnvironment
                 };
                 return spoConnection;
-            }
-        }
-
-        /// <summary>
-        /// Tries to remove the local cached machine copy of the private key
-        /// </summary>
-        /// <param name="certificate">Certificate to try to clean up the local cached copy of the private key of</param>
-        internal static void CleanupCryptoMachineKey(X509Certificate2 certificate)
-        {
-            if (!certificate.HasPrivateKey)
-            {
-                // If somehow a public key certificate was passed in, we can't clean it up, thus we have nothing to do here
-                return;
-            }
-
-            var privateKey = (RSACryptoServiceProvider)certificate.PrivateKey;
-            string uniqueKeyContainerName = privateKey.CspKeyContainerInfo.UniqueKeyContainerName;
-            certificate.Reset();
-
-            var programDataPath = Environment.GetEnvironmentVariable("ProgramData");
-            if (string.IsNullOrEmpty(programDataPath))
-            {
-                programDataPath = @"C:\ProgramData";
-            }
-            try
-            {
-                var temporaryCertificateFilePath = $@"{programDataPath}\Microsoft\Crypto\RSA\MachineKeys\{uniqueKeyContainerName}";
-                if (System.IO.File.Exists(temporaryCertificateFilePath))
-                {
-                    System.IO.File.Delete(temporaryCertificateFilePath);
-                }
-            }
-            catch (Exception)
-            {
-                // best effort cleanup
             }
         }
 
@@ -371,6 +337,44 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
+        #endregion
+
+        #region Helper Methods
+        /// <summary>
+        /// Tries to remove the local cached machine copy of the private key
+        /// </summary>
+        /// <param name="certificate">Certificate to try to clean up the local cached copy of the private key of</param>
+        internal static void CleanupCryptoMachineKey(X509Certificate2 certificate)
+        {
+            if (!certificate.HasPrivateKey)
+            {
+                // If somehow a public key certificate was passed in, we can't clean it up, thus we have nothing to do here
+                return;
+            }
+
+            var privateKey = (RSACryptoServiceProvider)certificate.PrivateKey;
+            string uniqueKeyContainerName = privateKey.CspKeyContainerInfo.UniqueKeyContainerName;
+            certificate.Reset();
+
+            var programDataPath = Environment.GetEnvironmentVariable("ProgramData");
+            if (string.IsNullOrEmpty(programDataPath))
+            {
+                programDataPath = @"C:\ProgramData";
+            }
+            try
+            {
+                var temporaryCertificateFilePath = $@"{programDataPath}\Microsoft\Crypto\RSA\MachineKeys\{uniqueKeyContainerName}";
+                if (System.IO.File.Exists(temporaryCertificateFilePath))
+                {
+                    System.IO.File.Delete(temporaryCertificateFilePath);
+                }
+            }
+            catch (Exception)
+            {
+                // best effort cleanup
+            }
+        }
+
         public static string GetRealmFromTargetUrl(Uri targetApplicationUri)
         {
             WebRequest request = WebRequest.Create(targetApplicationUri + "/_vti_bin/client.svc");
@@ -433,6 +437,8 @@ namespace PnP.PowerShell.Commands.Base
                 return (result);
             },
             true);
+
+        #endregion
 
     }
 }
