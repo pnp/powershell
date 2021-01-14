@@ -22,7 +22,7 @@ Creates a new (classic) site collection for the current tenant
 ```powershell
 New-PnPTenantSite -Title <String> -Url <String> -Owner <String> [-Lcid <UInt32>] [-Template <String>]
  -TimeZone <Int32> [-ResourceQuota <Double>] [-ResourceQuotaWarningLevel <Double>] [-StorageQuota <Int64>]
- [-StorageQuotaWarningLevel <Int64>] [-RemoveDeletedSite] [-Wait] [-Force] [-Connection <PnPConnection>]
+ [-StorageQuotaWarningLevel <Int64>] [-RemoveDeletedSite] [-Wait] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -53,20 +53,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Force
-Do not ask for confirmation.
-
-```yaml
-Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
