@@ -103,6 +103,7 @@
                                        [-OrganizationUnit &lt;String&gt;]
                                        [-ValidYears &lt;Int&gt;]
                                        [-CertificatePassword &lt;SecureString&gt;]
+                                       [-NoPopup]
 </code></pre>
 <h3 id="existing-certificate">Existing Certificate</h3>
 <pre><code class="lang-powershell">Register-PnPAzureADApp -CertificatePath &lt;String&gt;
@@ -113,9 +114,10 @@
                                        [-DeviceLogin]
                                        [-Scopes &lt;String[]&gt;]
                                        [-CertificatePassword &lt;SecureString&gt;]
+                                       [-NoPopup]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Registers an Azure AD App and optionally creates a new self-signed certificate to use with the application registration. Have a look at <a href="https://www.youtube.com/watch?v=QWY7AJ2ZQYI">https://www.youtube.com/watch?v=QWY7AJ2ZQYI</a> for a demonstration on how this cmdlet works and can be used. You can login either with username/password or you can use the -DeviceLogin option if your tenant has been configured for Multi-Factor Authentication.</p>
+<p>Registers an Azure AD App and optionally creates a new self-signed certificate to use with the application registration. You can login either with username/password or you can use the -DeviceLogin option if your tenant has been configured for Multi-Factor Authentication.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="------------------example-1------------------">------------------EXAMPLE 1------------------</h3>
 <pre><code class="lang-powershell">Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -Username &quot;yourname@domain.com&quot; -Password (Read-Host -AsSecureString -Prompt &quot;Enter Password&quot;)
@@ -141,7 +143,7 @@
 <h3 id="-username">-Username</h3>
 <p>The username to use when logging into the Microsoft Graph. Notice that this user account needs to have write access to the Azure AD</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: __AllParameterSets
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -150,7 +152,7 @@ Accept pipeline input: False
 <h3 id="-password">-Password</h3>
 <p>The password to use when logging into the Microsoft Graph</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: __AllParameterSets
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -159,7 +161,7 @@ Accept pipeline input: False
 <h3 id="-devicelogin">-DeviceLogin</h3>
 <p>If specified, a device login flow, supporting Multi-Factor Authentication will be used to authenticate towards the Microsoft Graph</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: __AllParameterSets
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -168,7 +170,7 @@ Accept pipeline input: False
 <h3 id="-applicationname">-ApplicationName</h3>
 <p>The name of the Azure AD Application to create</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: __AllParameterSets
+Parameter Sets: (All)
 
 Required: True
 Position: Named
@@ -177,7 +179,7 @@ Accept pipeline input: False
 <h3 id="-certificatepassword">-CertificatePassword</h3>
 <p>Optional certificate password</p>
 <pre><code class="lang-yaml">Type: SecureString
-Parameter Sets: Generate Certificate, Existing Certificate
+Parameter Sets: (All)
 
 Required: False
 Position: 8
@@ -265,7 +267,7 @@ Position: 2
 Accept pipeline input: False
 </code></pre>
 <h3 id="-store">-Store</h3>
-<p>Local Certificate Store to add the certificate to</p>
+<p>Local Certificate Store to add the certificate to. Only works on Microsoft Windows.</p>
 <pre><code class="lang-yaml">Type: StoreLocation
 Parameter Sets: Generate Certificate
 
@@ -276,7 +278,7 @@ Accept pipeline input: False
 <h3 id="-tenant">-Tenant</h3>
 <p>The identifier of your tenant, e.g. mytenant.onmicrosoft.com</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: __AllParameterSets
+Parameter Sets: (All)
 
 Required: True
 Position: Named
@@ -289,6 +291,16 @@ Parameter Sets: Generate Certificate
 
 Required: False
 Position: 7
+Accept pipeline input: False
+</code></pre>
+<h3 id="-nopopup">-NoPopup</h3>
+<p>This switch only applies to Windows and has no effect on Linux and MacOS.</p>
+<p>If not specified and running on Windows, all authentication and consent steps will be presented in a popup. If you want to open the URLs manually in a browser, specify this switch.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Accept pipeline input: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>

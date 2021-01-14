@@ -99,7 +99,7 @@
 </code></pre>
 <p>Adds the provided two users as additional owners to the Microsoft 365 Group named &quot;Project Team&quot;</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPMicrosoft365GroupMember -Identity &quot;Project Team&quot; -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot; -RemoveExisting
+<pre><code class="lang-powershell">Add-PnPMicrosoft365GroupOwner -Identity &quot;Project Team&quot; -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot; -RemoveExisting
 </code></pre>
 <p>Sets the provided two users as the only owners of the Microsoft 365 Group named &quot;Project Team&quot; by removing any current existing members first</p>
 <h2 id="parameters">PARAMETERS</h2>

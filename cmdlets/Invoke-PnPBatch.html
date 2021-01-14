@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Executes the batch</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Invoke-PnPBatch [-Batch] &lt;PnPBatch&gt; [-Details] [-Force]
+<pre><code class="lang-powershell">Invoke-PnPBatch [-Batch] &lt;PnPBatch&gt; [-Details] [-StopOnException] [-Force]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Executes any queued actions / changes in the batch.</p>
@@ -124,7 +124,18 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-details">-Details</h3>
 <p>Will return detailed information of the batch executed.</p>
-<pre><code class="lang-yaml">Type: Int32
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-stoponexception">-StopOnException</h3>
+<p>By default the batch will be fully executed. If any exceptions occur during this process they will be listed after the full run. Specify this switch to stop immediately after an exception occurs. The rest of the batch will be skipped then.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
