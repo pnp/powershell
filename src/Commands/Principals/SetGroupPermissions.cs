@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Principals
             {
                 if (ParameterSpecified(nameof(List)))
                 {
-                    list.RemoveRoleDefinitions(group.Id, AddRole);
+                    list.RemoveRoleDefinitions(group.Id, RemoveRole);
                 }
                 else
                 {
