@@ -2,6 +2,9 @@
 
 In this article we will setup an Azure Function to use PnP PowerShell
 
+> [!Important]
+> Notice that the Azure Function scripts in this article run in a separate thread/job. We do this because of possible conflicts between assemblies of already loaded PowerShell modules and PnP PowerShell (for instance, the Az cmdlets that get loaded by default use some of the same assemblies as PnP PowerShell but in different versions which can cause conflicts). By running the script in a separate thread we will not have these conflicts. If PnP PowerShell is the only module currently being used and loaded in your Azure Function you don't need the Start-ThreadJob construct and you can simply write the script as usual.
+
 ## Create the function app
 
 As the UI in https://portal.azure.com changes every now and then, but the principles stay the same, follow the following steps:
@@ -41,12 +44,16 @@ If you decide to remove the Az cmdlets, save the `requirements.psd1` file and ed
 
 Save the file.
 
-## Create your credentials
+## Decide how you want to authenticate in your PowerShell Function
+
+### By using Credentials
+
+#### Create your credentials
 1. Navigate to `Configuration` under `Settings` and create a new Application Setting. 
 1. Enter `tenant_user` and enter the username you want to authenticate with as the user
 1. Enter `tenant_pwd` and enter the password you want to use for that user
 
-## Create the function
+#### Create the function
 
 Create a new function and replace the function code with following example:
 
@@ -82,4 +89,54 @@ Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
 
 In the example above we are retrieving the username and password from the settings as environment variables. We then create a new credentials object which we pass in to the `Connect-PnPOnline` cmdlet. After connecting to SharePoint we output the title of the web through the function.
 
-Notice that we run the script in a separate thread/job. We do this because of possible conflicts between assemblies of already loaded PowerShell modules and PnP PowerShell (for instance, the Az cmdlets that get loaded by default use some of the same assemblies as PnP PowerShell but in different versions which can cause conflicts). By running the script in a separate thread we will not have these conflicts. If PnP PowerShell is the only module currently being used and loaded in your Azure Function you don't need the Start-ThreadJob construct and you can simply write the script as usual.
+### By using a certificate
+
+#### Create your certificate
+
+In this following example we create a new Azure AD Application registration which creates your certificates. You can of course do all this work manually too with your own certificates.
+
+```powershell
+$password = Read-Host -Prompt "Enter certificate password" -AsSecureString
+Register-PnPAzureADApp -ApplicationName "MyDemoApp" -Tenant [yourtenant.onmicrosoft.com] -CertificatePassword $password -DeviceLogin
+```
+
+You will be asked to authenticate and then a pkx and a cer file (public/private keypair) will be create and a new Azure AD Application called 'MyDemoApp' will be created and the public key of the certificate will be configured for the application. Make a note of the clientid shown.
+
+- In your function app, navigate to `TLS/SSL Settings` and switch to the `Private Key Certificates (.pfx)` section.
+- Click `Upload Certificate` and select the "MyDemoApp.pfx" file that has been created for you. Enter the password you used in the script above.
+- After the certificate has been uploaded, copy the thumbprint value shown.
+- Navigate to `Configuration` and add a new Application Setting
+- Call the setting `WEBSITE_LOAD_CERTIFICATES` and set the thumbprint as a value. To make all the certificates you uploaded available use `*` as the value. See https://docs.microsoft.com/en-gb/azure/app-service/configure-ssl-certificate-in-code for more information.
+- Save the settings
+
+Create a new function and replace the function code with following example:
+
+````powershell
+using namespace System.Net
+
+# Input bindings are passed in via param block.
+param($Request, $TriggerMetadata)
+
+# Write to the Azure Functions log stream.
+Write-Host "PowerShell HTTP trigger function processed a request."
+
+$script = {
+    $securePassword = ConvertTo-SecureString $env:tenant_pwd -AsPlainText -Force
+    $credentials = New-Object PSCredential ($env:tenant_user, $securePassword)
+
+    Connect-PnPOnline -Url https://yourtenant.sharepoint.com/sites/demo -ClientId [the clientid created earlier] -Thumbprint [the thumbprint you copied] -Tenant [yourtenant.onmicrosoft.com]
+
+    $web = Get-PnPWeb;
+    $web.Title
+}
+
+$webTitle = Start-ThreadJob -Script $script | Receive-Job -Wait
+
+$body = "The title of the web is $($webTitle)"
+
+# Associate values to output bindings by calling 'Push-OutputBinding'.
+Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
+        StatusCode = [HttpStatusCode]::OK
+        Body = $body
+    })
+````
