@@ -27,8 +27,7 @@ New-PnPTenantSite -Title <String> -Url <String> -Owner <String> [-Lcid <UInt32>]
 ```
 
 ## DESCRIPTION
-The New-PnPTenantSite cmdlet creates a new site collection for the current company. However, creating a new SharePoint
-Online site collection fails if a deleted site with the same URL exists in the Recycle Bin. If you want to use this command for an on-premises farm, please refer to http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx 
+The New-PnPTenantSite cmdlet creates a new site collection for the current company. However, creating a new SharePoint Online site collection fails if a deleted site with the same URL exists in the Recycle Bin
 
 ## EXAMPLES
 
