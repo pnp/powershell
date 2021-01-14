@@ -26,7 +26,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Realm <String>] -ClientS
  [-DriveName <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [<CommonParameters>]
 ```
 
-### App-Only using a clientId and clientSecret and an URL
+### ACS (Legacy) App-Only using a clientId and clientSecret and an URL
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Realm <String>] -ClientSecret <String> [-CreateDrive]
  [-DriveName <String>] -ClientId <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
@@ -54,24 +54,11 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName
  [-TenantAdminUrl <String>] [<CommonParameters>]
 ```
 
-### App-Only with Azure Active Directory using certificate as PEM strings
-```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
- -Tenant <String> [-CertificatePassword <SecureString>] -PEMCertificate <String> -PEMPrivateKey <String>
- [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [<CommonParameters>]
-```
-
 ### App-Only with Azure Active Directory using certificate from certificate store by thumbprint
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
  -Tenant <String> -Thumbprint <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
  [<CommonParameters>]
-```
-
-### App-Only with Azure Active Directory using X502 certificates
-```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
- -Tenant <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [<CommonParameters>]
 ```
 
 ### Access Token
@@ -92,24 +79,19 @@ Connect-PnPOnline [-Credentials <CredentialPipeBind>] [-AzureEnvironment <AzureE
    [<CommonParameters>]
 ```
 
-### PnP Management Shell to the Microsoft Graph
+### PnP Management Shell / DeviceLogin to the Microsoft Graph
 ```powershell
 Connect-PnPOnline [-LaunchBrowser] [-Graph] [-AzureEnvironment <AzureEnvironment>]
  [<CommonParameters>]
 ```
 
-### Microsoft Graph using Azure Active Directory
-```powershell
-Connect-PnPOnline -AADDomain <String> [<CommonParameters>]
-```
-
 ### WebLogin for Multi-Factor authentication
 ```powershell
-Connect-PnPOnlue -Url <String> -UseWebLogin [-ForceAuthentication]
+Connect-PnPOnline -Url <String> -UseWebLogin [-ForceAuthentication]
 ```
 
 ## DESCRIPTION
-Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets. See https://github.com/pnp/PnP-PowerShell/wiki/Connect-options for more information on the options to connect and the APIs you can access with them.
+Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets. See https://pnp.github.io/powershell/articles/connecting.html for more information on the options to connect.
 
 ## EXAMPLES
 
@@ -171,61 +153,26 @@ Connects to Azure Active Directory using delegated permissions and gets an OAuth
 
 ### EXAMPLE 9
 ```powershell
-Connect-PnPOnline -ClientId '<id>' -ClientSecret '<secret>' -AADDomain 'contoso.onmicrosoft.com'
-```
-
-Connects to the Microsoft Graph API using application permissions via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/Graph.ConnectUsingAppPermissions for a sample on how to get started.
-
-### EXAMPLE 10
-```powershell
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId '<id>' -Tenant 'contoso.onmicrosoft.com' -CertificatePath c:\absolute-path\to\pnp.pfx -CertificatePassword <if needed>
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -CertificatePath c:\absolute-path\to\pnp.pfx -CertificatePassword <if needed>
 ```
 
 Connects to SharePoint using app-only tokens via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started.
 
-### EXAMPLE 11
+### EXAMPLE 10
 ```powershell
-Connect-PnPOnline -ClientId <id> -CertificatePath 'c:\mycertificate.pfx' -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url "https://contoso.sharepoint.com" -Tenant 'contoso.onmicrosoft.com'
+Connect-PnPOnline -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificatePath 'c:\mycertificate.pfx' -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url "https://contoso.sharepoint.com" -Tenant 'contoso.onmicrosoft.com'
 ```
 
 Connects using an Azure Active Directory registered application using a locally available certificate containing a private key. See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.
 
-### EXAMPLE 12
+### EXAMPLE 11
 ```powershell
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId '<id>' -Tenant 'contoso.onmicrosoft.com' -Thumbprint 34CFAA860E5FB8C44335A38A097C1E41EEA206AA
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -Thumbprint 34CFAA860E5FB8C44335A38A097C1E41EEA206AA
 ```
 
 Connects to SharePoint using app-only tokens via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started. Ensure you have imported the private key certificate, typically the .pfx file, into the Windows Certificate Store for the certificate with the provided thumbprint.
 
-### EXAMPLE 13
-```powershell
-Connect-PnPOnline -ClientId <id> -CertificateBase64Encoded 'xxxx' -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url "https://contoso.sharepoint.com" -Tenant 'contoso.onmicrosoft.com'
-```
-
-Connects using an Azure Active Directory registered application using a certificate containing a private key encoded in base 64 such as received in an Azure Function when using Azure KeyVault. See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.
-
-### EXAMPLE 14
-```powershell
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId '<id>' -Tenant 'contoso.onmicrosoft.com' -PEMCertificate <PEM string> -PEMPrivateKey <PEM string> -CertificatePassword <if needed>
-```
-
-Connects to SharePoint using app-only tokens via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started.
-
-### EXAMPLE 15
-```powershell
-Connect-PnPOnline -ClientId <id> -Certificate $cert -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url "https://contoso.sharepoint.com" -Tenant 'contoso.onmicrosoft.com'
-```
-
-Connects using an Azure Active Directory registered application using a certificate instance containing a private key. See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.
-
-### EXAMPLE 16
-```powershell
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId '<id>' -Tenant 'contoso.onmicrosoft.com' -Certificate <X509Certificate2>
-```
-
-Connects to SharePoint using app-only auth in combination with a certificate. See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread#using-this-principal-in-your-powershell-script-using-the-pnp-sites-core-library for a sample on how to get started.
-
-### EXAMPLE 17
+### EXAMPLE 12
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -UseWebLogin
 ```
@@ -269,34 +216,6 @@ The Azure environment to use for authentication, the defaults to 'Production' wh
 Type: AzureEnvironment
 Parameter Sets: Token, App-Only using a clientId and clientSecret and an URL, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, PnP Management Shell / DeviceLogin, Azure Active Directory using Scopes, PnP Management Shell to the Microsoft Graph
 Accepted values: Production, PPE, China, Germany, USGovernment
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Certificate
-X509Certificate2 reference containing the private key to authenticate the requests to SharePoint Online
-
-```yaml
-Type: X509Certificate2
-Parameter Sets: App-Only with Azure Active Directory
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -CertificateBase64Encoded
-Base64 Encoded X509Certificate2 certificate containing the private key to authenticate the requests to SharePoint Online such as retrieved in Azure Functions from Azure KeyVault
-
-```yaml
-Type: String
-Parameter Sets: App-Only with Azure Active Directory
 
 Required: False
 Position: Named
@@ -403,20 +322,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -CurrentCredentials
-If you want to connect with the current user credentials
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: Main
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -DriveName
 Name of the PSDrive to create (default: SPO)
 
@@ -463,34 +368,6 @@ Type: SwitchParameter
 Parameter Sets: PnP Management Shell / DeviceLogin, PnP Management Shell to the Microsoft Graph
 
 Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PEMCertificate
-PEM encoded certificate
-
-```yaml
-Type: String
-Parameter Sets: App-Only with Azure Active Directory using certificate as PEM strings
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PEMPrivateKey
-PEM encoded private key for the certificate
-
-```yaml
-Type: String
-Parameter Sets: App-Only with Azure Active Directory using certificate as PEM strings
-
-Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -592,7 +469,7 @@ Accept wildcard characters: False
 ```
 
 ### -TenantAdminUrl
-The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://&lt;tenantname&gt;-admin.sharepoint.com where appropriate.
+The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://[tenantname]-admin.sharepoint.com where appropriate.
 
 ```yaml
 Type: String
