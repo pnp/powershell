@@ -4,20 +4,22 @@ using Microsoft.SharePoint.Client.Taxonomy;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteCollectionTermStore")]
-    public class GetPnPSiteCollectionTermStore : PnPSharePointCmdlet
+    [Cmdlet(VerbsCommon.Remove, "PnPSiteCollectionTermStore")]
+    public class RemovePnPSiteCollectionTermStore : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()
         {
             TaxonomySession session = ClientContext.Site.GetTaxonomySession();
             var termStore = session.GetDefaultSiteCollectionTermStore();
             var termGroup = termStore.GetSiteCollectionGroup(ClientContext.Site, false);
+
             ClientContext.Load(termGroup, g => g.Id, g => g.Name);
             ClientContext.ExecuteQueryRetry();
 
             if(!termGroup.ServerObjectIsNull.GetValueOrDefault(true))
             {
-                WriteObject(termGroup);
+                termGroup.DeleteObject();
+                ClientContext.ExecuteQueryRetry();
             }
         }
     }

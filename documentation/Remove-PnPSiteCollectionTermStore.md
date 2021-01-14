@@ -2,34 +2,34 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/get-pnpsitecollectiontermstore
+online version: https://pnp.github.io/powershell/cmdlets/remove-pnpsitecollectiontermstore
 schema: 2.0.0
-title: Get-PnPSiteCollectionTermStore
+title: Remove-PnPSiteCollectionTermStore
 ---
 
-# Get-PnPSiteCollectionTermStore
+# Remove-PnPSiteCollectionTermStore
 
 ## SYNOPSIS
-Returns the site collection term store if it exists or else it will not return anything
+Removes the site collection term store if it exists or else nothing will happen
 
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteCollectionTermStore [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPSiteCollectionTermStore [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Returns the site collection scoped term store for the currently connected to site collection. If it does not exist yet, it will return a null value.
+Removes the site collection scoped term store for the currently connected to site collection. If it does not exist yet, it will not do anything.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPSiteCollectionTermStore
+Remove-PnPSiteCollectionTermStore
 ```
 
-Returns the site collection term store.
+Removes the site collection term store.
 
 ## PARAMETERS
 
