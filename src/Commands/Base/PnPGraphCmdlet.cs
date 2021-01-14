@@ -40,23 +40,22 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (PnPConnection.CurrentConnection?.Context != null)
                 {
-                    var authManager = PnPConnection.CurrentConnection.Context.GetContextSettings().AuthenticationManager;
+                    var contextSettings = PnPConnection.CurrentConnection.Context.GetContextSettings();
+                    var authManager = contextSettings.AuthenticationManager;
                     if (authManager != null)
                     {
                         string[] managementShellScopes = null;
-                        if (PnPConnection.CurrentConnection.ClientId == PnPConnection.PnPManagementShellClientId)
+                        var managementShellScopesAttribute = (PnPManagementShellScopesAttribute)Attribute.GetCustomAttribute(GetType(), typeof(PnPManagementShellScopesAttribute));
+                        if (managementShellScopesAttribute != null)
                         {
-                            var managementShellScopesAttribute = (PnPManagementShellScopesAttribute)Attribute.GetCustomAttribute(GetType(), typeof(PnPManagementShellScopesAttribute));
-                            if (managementShellScopesAttribute != null)
-                            {
-                                managementShellScopes = managementShellScopesAttribute.PermissionScopes;
-                            }
-                            return new GraphToken(authManager.GetAccessTokenAsync(managementShellScopes).GetAwaiter().GetResult());
+                            managementShellScopes = managementShellScopesAttribute.PermissionScopes;
                         }
-                        else
+                        if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
                         {
-                            return new GraphToken(authManager.GetAccessTokenAsync(PnPConnection.CurrentConnection.Scopes).GetAwaiter().GetResult());
+                            managementShellScopes = new[] { "https://graph.microsoft.com/.default" }; // override for app only
                         }
+                        return new GraphToken(authManager.GetAccessTokenAsync(managementShellScopes).GetAwaiter().GetResult());
+                        
                     }
                 }
                 var tokenType = TokenType.All;

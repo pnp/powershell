@@ -457,7 +457,7 @@ namespace PnP.PowerShell.Commands.Base
                     ReuseAuthenticationManager();
                 }
 
-                var returnedConnection = PnPConnectionHelper.InstantiateDeviceLoginConnection2(Url, LaunchBrowser, messageWriter, AzureEnvironment, cancellationToken);
+                var returnedConnection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, messageWriter, AzureEnvironment, cancellationToken);
                 connection = returnedConnection;
                 messageWriter.Finished = true;
             }, cancellationToken);

@@ -76,7 +76,7 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection InstantiateDeviceLoginConnection2(string url, bool launchBrowser, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
+        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
         {
             var connectionUri = new Uri(url);
             var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
@@ -128,35 +128,35 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, string tenantAdminUrl, CmdletMessageWriter adapter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
-        {
-            var connectionUri = new Uri(url);
-            var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
-            var context = new ClientContext(url);
-            GenericToken tokenResult = null;
-            try
-            {
-                tokenResult = GraphToken.AcquireApplicationTokenDeviceLoginAsync(PnPConnection.PnPManagementShellClientId, scopes, PnPConnection.DeviceLoginCallback(adapter, launchBrowser), azureEnvironment, cancellationToken).GetAwaiter().GetResult();
-            }
-            catch (MsalUiRequiredException ex)
-            {
-                if (ex.Classification == UiRequiredExceptionClassification.ConsentRequired)
-                {
-                    adapter.WriteMessage("You need to provide consent to the PnP Management Shell application for your tenant. The easiest way to do this is by issueing: 'Connect-PnPOnline -Url [yoursiteur] -PnPManagementShell -LaunchBrowser'. Make sure to authenticate as a Azure administrator allowing to provide consent to the application. Follow the steps provided.");
-                    throw ex;
-                }
-            }
-            var spoConnection = new PnPConnection(context, tokenResult, ConnectionType.O365, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.DeviceLogin)
-            {
-                Scopes = scopes,
-                AzureEnvironment = azureEnvironment,
-            };
-            if (spoConnection != null)
-            {
-                spoConnection.ConnectionMethod = ConnectionMethod.DeviceLogin;
-            }
-            return spoConnection;
-        }
+        // internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, string tenantAdminUrl, CmdletMessageWriter adapter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
+        // {
+        //     var connectionUri = new Uri(url);
+        //     var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
+        //     var context = new ClientContext(url);
+        //     GenericToken tokenResult = null;
+        //     try
+        //     {
+        //         tokenResult = GraphToken.AcquireApplicationTokenDeviceLoginAsync(PnPConnection.PnPManagementShellClientId, scopes, PnPConnection.DeviceLoginCallback(adapter, launchBrowser), azureEnvironment, cancellationToken).GetAwaiter().GetResult();
+        //     }
+        //     catch (MsalUiRequiredException ex)
+        //     {
+        //         if (ex.Classification == UiRequiredExceptionClassification.ConsentRequired)
+        //         {
+        //             adapter.WriteMessage("You need to provide consent to the PnP Management Shell application for your tenant. The easiest way to do this is by issueing: 'Connect-PnPOnline -Url [yoursiteur] -PnPManagementShell -LaunchBrowser'. Make sure to authenticate as a Azure administrator allowing to provide consent to the application. Follow the steps provided.");
+        //             throw ex;
+        //         }
+        //     }
+        //     var spoConnection = new PnPConnection(context, tokenResult, ConnectionType.O365, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.DeviceLogin)
+        //     {
+        //         Scopes = scopes,
+        //         AzureEnvironment = azureEnvironment,
+        //     };
+        //     if (spoConnection != null)
+        //     {
+        //         spoConnection.ConnectionMethod = ConnectionMethod.DeviceLogin;
+        //     }
+        //     return spoConnection;
+        // }
 
         internal static PnPConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, PSCmdlet cmdlet, CmdletMessageWriter adapter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
         {
