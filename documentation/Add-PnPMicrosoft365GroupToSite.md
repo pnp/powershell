@@ -20,7 +20,7 @@ Groupifies a classic team site by creating a Microsoft 365 group for it and conn
 ## SYNTAX
 
 ```powershell
-Add-PnPMicrosoft365GroupToSite -Url <String> -Alias <String> [-Description <String>] -DisplayName <String>
+Add-PnPMicrosoft365GroupToSite -Url <String> -Alias <String> -DisplayName <String> [-Description <String>]
  [-Classification <String>] [-IsPublic] [-KeepOldHomePage] [-HubSiteId <Guid>] [-Owners <String[]>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
@@ -32,7 +32,7 @@ This command allows you to add a Microsoft 365 Unified group to an existing clas
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPOffice365GroupToSite -Url "https://contoso.sharepoint.com/sites/FinanceTeamsite" -Alias "FinanceTeamsite" -DisplayName = "My finance team site group"
+Add-PnPMicrosoft365GroupToSite -Url "https://contoso.sharepoint.com/sites/FinanceTeamsite" -Alias "FinanceTeamsite" -DisplayName "My finance team site group"
 ```
 
 This will groupify the FinanceTeamsite
