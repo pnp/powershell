@@ -65,7 +65,6 @@ namespace PnP.PowerShell.Commands
             }
             if (shouldContinue)
             {
-
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
                 Tenant.CreateSiteCollection(Url, Title, Owner, Template, (int)StorageQuota,
