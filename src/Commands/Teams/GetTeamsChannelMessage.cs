@@ -7,9 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsChannelMessage")]
-    [MicrosoftGraphApiPermissionCheck(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
-    [PnPManagementShellScopes("Group.ReadWrite.All")]
-
+    [RequiredMinimalApiPermissions("Group.Read.All")]
     public class GetTeamsChannelMessage : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

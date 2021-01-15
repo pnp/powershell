@@ -8,6 +8,8 @@ namespace PnP.PowerShell.Commands.Model.Graph
     public class GraphException : Exception
     {
         public GraphError Error { get; set; }
+
+        public string AccessToken { get; set; }
     }
 
     public class GraphError
@@ -18,8 +20,9 @@ namespace PnP.PowerShell.Commands.Model.Graph
 
         public GraphError InnerError { get; set; }
 
-        public Dictionary<string,object> AdditionalData { get; set; }
+        public Dictionary<string, object> AdditionalData { get; set; }
 
         public string ThrowSite { get; set; }
+
     }
 }

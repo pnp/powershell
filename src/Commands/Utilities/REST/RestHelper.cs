@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         #region GET
         public static T ExecuteGetRequest<T>(ClientContext context, string url, string select = null, string filter = null, string expand = null, uint? top = null)
         {
-            var returnValue = ExecuteGetRequest(context, url, select, filter, expand);
+            var returnValue = ExecuteGetRequest(context, url, select, filter, expand, top);
 
             var returnObject = JsonSerializer.Deserialize<T>(returnValue, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
             return returnObject;
@@ -195,7 +195,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         #endregion
 
         #region PUT
-        public static T ExecutePutRequest<T>(ClientContext context, string url, string content, string select = null, string filter = null, string expand = null, Dictionary<string, string> additionalHeaders = null, string contentType = null)
+        public static T ExecutePutRequest<T>(ClientContext context, string url, string content, string select = null, string filter = null, string expand = null, string contentType = null)
         {
             HttpContent stringContent = new StringContent(content);
             if (contentType != null)
@@ -261,7 +261,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         #endregion
 
         #region MERGE
-        public static T ExecuteMergeRequest<T>(ClientContext context, string url, string content, string select = null, string filter = null, string expand = null, Dictionary<string, string> additionalHeaders = null, string contentType = null)
+        public static T ExecuteMergeRequest<T>(ClientContext context, string url, string content, string select = null, string filter = null, string expand = null, string contentType = null)
         {
             HttpContent stringContent = new StringContent(content);
             if (contentType != null)

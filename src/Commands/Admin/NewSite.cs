@@ -99,9 +99,7 @@ namespace PnP.PowerShell.Commands
                 creationInformation.PreferredDataLocation = _teamSiteParameters.PreferredDataLocation;
                 creationInformation.SensitivityLabel = _teamSiteParameters.SensitivityLabel;
 
-                var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: PnPConnection.CurrentConnection.TryGetAccessTokenAsync(TokenAudience.MicrosoftGraph).GetAwaiter().GetResult());
-                //var results = ClientContext.CreateSiteAsync(creationInformation);
-                //var returnedContext = results.GetAwaiter().GetResult();
+                var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GetGraphAccessToken(new[] { "Group.ReadWrite.All" }));
                 WriteObject(returnedContext.Url);
             }
         }

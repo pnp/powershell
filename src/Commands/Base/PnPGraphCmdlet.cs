@@ -31,6 +31,19 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, DontShow = true)]
         public SwitchParameter ByPassPermissionCheck;
 
+
+        protected override void BeginProcessing()
+        {
+            base.BeginProcessing();
+            if (PnPConnection.CurrentConnection?.Context != null)
+            {
+                if (PnPConnection.CurrentConnection.Context.GetContextSettings().Type == Framework.Utilities.Context.ClientContextType.Cookie)
+                {
+                    throw new PSInvalidOperationException("This cmdlet not work with a WebLogin/Cookie based connection towards SharePoint.");
+                }
+            }
+        }
+
         /// <summary>
         /// Returns an Access Token for the Microsoft Graph API, if available, otherwise NULL
         /// </summary>
@@ -40,79 +53,11 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (PnPConnection.CurrentConnection?.Context != null)
                 {
-                    var contextSettings = PnPConnection.CurrentConnection.Context.GetContextSettings();
-                    var authManager = contextSettings.AuthenticationManager;
-                    if (authManager != null)
-                    {
-                        string[] managementShellScopes = null;
-                        var managementShellScopesAttribute = (PnPManagementShellScopesAttribute)Attribute.GetCustomAttribute(GetType(), typeof(PnPManagementShellScopesAttribute));
-                        if (managementShellScopesAttribute != null)
-                        {
-                            managementShellScopes = managementShellScopesAttribute.PermissionScopes;
-                        }
-                        if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
-                        {
-                            managementShellScopes = new[] { "https://graph.microsoft.com/.default" }; // override for app only
-                        }
-                        return new GraphToken(authManager.GetAccessTokenAsync(managementShellScopes).GetAwaiter().GetResult());
-                        
-                    }
-                }
-                var tokenType = TokenType.All;
-
-                // Collect, if present, the token type attribute
-                var tokenTypeAttribute = (TokenTypeAttribute)Attribute.GetCustomAttribute(GetType(), typeof(TokenTypeAttribute));
-                if (tokenTypeAttribute != null)
-                {
-                    tokenType = tokenTypeAttribute.TokenType;
-                }
-                // Collect the permission attributes to discover required roles
-                var requiredRoleAttributes = (MicrosoftGraphApiPermissionCheckAttribute[])Attribute.GetCustomAttributes(GetType(), typeof(MicrosoftGraphApiPermissionCheckAttribute));
-                var orRequiredRoles = new List<string>(requiredRoleAttributes.Length);
-                var andRequiredRoles = new List<string>(requiredRoleAttributes.Length);
-                foreach (var requiredRoleAttribute in requiredRoleAttributes)
-                {
-
-                    foreach (MicrosoftGraphApiPermission role in Enum.GetValues(typeof(MicrosoftGraphApiPermission)))
-                    {
-                        if (role != MicrosoftGraphApiPermission.None)
-                        {
-                            if (requiredRoleAttribute.OrApiPermissions.HasFlag(role))
-                            {
-                                orRequiredRoles.Add(role.ToString().Replace("_", "."));
-                            }
-                            if (requiredRoleAttribute.AndApiPermissions.HasFlag(role))
-                            {
-                                andRequiredRoles.Add(role.ToString().Replace("_", "."));
-                            }
-                        }
-                    }
+                    var token = TokenHandler.GetAccessToken(GetType(), "https://graph.microsoft.com/.default");
+                    return new GraphToken(token);
                 }
 
-                // Ensure we have an active connection
-                if (PnPConnection.CurrentConnection != null)
-                {
-                    string[] managementShellScopes = null;
-                    if (PnPConnection.CurrentConnection.ClientId == PnPConnection.PnPManagementShellClientId)
-                    {
-                        var managementShellScopesAttribute = (PnPManagementShellScopesAttribute)Attribute.GetCustomAttribute(GetType(), typeof(PnPManagementShellScopesAttribute));
-                        if (managementShellScopesAttribute != null)
-                        {
-                            managementShellScopes = managementShellScopesAttribute.PermissionScopes;
-                        }
-                    }
-                    // There is an active connection, try to get a Microsoft Graph Token on the active connection
-                    if (PnPConnection.CurrentConnection.TryGetTokenAsync(Enums.TokenAudience.MicrosoftGraph, PnPConnection.CurrentConnection.AzureEnvironment, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray(), tokenType, managementShellScopes, this).GetAwaiter().GetResult() is GraphToken token)
-                    {
-                        // Microsoft Graph Access Token available, return it
-                        return (GraphToken)token;
-                    }
-                }
-
-                // No valid Microsoft Graph Access Token available, throw an error
-                ThrowTerminatingError(new ErrorRecord(new InvalidOperationException(string.Format(Properties.Resources.NoApiAccessToken, Enums.TokenAudience.MicrosoftGraph)), "NO_OAUTH_TOKEN", ErrorCategory.ConnectionError, null));
                 return null;
-
             }
         }
 

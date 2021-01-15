@@ -15,8 +15,7 @@ Loads/Reads a PnP tenant template from the file system and returns an in-memory 
 ## SYNTAX
 
 ```powershell
-Read-PnPTenantTemplate [-Path] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
- [<CommonParameters>]
+Read-PnPTenantTemplate [-Path] <String>
 ```
 
 ## DESCRIPTION
@@ -41,20 +40,6 @@ Parameter Sets: (All)
 
 Required: True
 Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -TemplateProviderExtensions
-Allows you to specify ITemplateProviderExtension to execute while loading the template.
-
-```yaml
-Type: ITemplateProviderExtension[]
-Parameter Sets: (All)
-
-Required: False
-Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

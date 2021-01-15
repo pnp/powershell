@@ -10,8 +10,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365Group")]
-    [MicrosoftGraphApiPermissionCheck(MicrosoftGraphApiPermission.Group_Read_All | MicrosoftGraphApiPermission.Group_ReadWrite_All | MicrosoftGraphApiPermission.GroupMember_ReadWrite_All | MicrosoftGraphApiPermission.GroupMember_Read_All | MicrosoftGraphApiPermission.Directory_ReadWrite_All | MicrosoftGraphApiPermission.Directory_Read_All)]
-    [PnPManagementShellScopes("Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("Group.Read.All")]
     public class GetMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]

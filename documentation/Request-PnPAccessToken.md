@@ -15,9 +15,7 @@ Requests an OAuth Access token
 ## SYNTAX
 
 ```powershell
-Request-PnPAccessToken [-ClientId <String>] [-Resource <String>]
- [-Scopes <System.Collections.Generic.List`1[System.String]>] [-Decoded] [-SetAsCurrent]
- [-Credentials <PSCredential>] [-TenantUrl <String>] [<CommonParameters>]
+Request-PnPAccessToken [-ClientId <String>] [-Resource <String>] [-Scopes <String[]]>] [-Decoded]  [-Credentials <PSCredential>] [-TenantUrl <String>]
 ```
 
 ## DESCRIPTION
@@ -52,14 +50,6 @@ Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2 -Scopes Gr
 ```
 
 Returns the access token using the specified client id and the specified scopes
-
-### EXAMPLE 5
-```powershell
-$token = Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2 -Resource "https://contoso.sharepoint.com" -Credentials (Get-Credential) -TenantUrl "https://contoso.sharepoint.com"
-    Connect-PnPOnline -AccessToken $token
-```
-
-Returns the access token using the specified client id and the specified scopes while using the credentials and tenanturl specified to authentication against Azure AD
 
 ## PARAMETERS
 
@@ -123,21 +113,7 @@ Accept wildcard characters: False
 The scopes to retrieve the token for. Defaults to AllSites.FullControl
 
 ```yaml
-Type: System.Collections.Generic.List`1[System.String]
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -SetAsCurrent
-Set this token as the current token to use when performing Azure AD based authentication requests with PnP PowerShell
-
-```yaml
-Type: SwitchParameter
+Type: String[]
 Parameter Sets: (All)
 
 Required: False

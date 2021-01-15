@@ -10,8 +10,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.New, "PnPTeamsTeam")]
-    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
-    [PnPManagementShellScopes("Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class NewTeamsTeam : PnPGraphCmdlet
     {
         private const string ParameterSet_EXISTINGGROUP = "For an existing group";

@@ -67,7 +67,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         public static async Task<string> GetAsync(HttpClient httpClient, string url, string accessToken)
         {
             var message = GetMessage(url, HttpMethod.Get, accessToken);
-            return await SendMessageAsync(httpClient, message);
+            return await SendMessageAsync(httpClient, message, accessToken);
         }
 
         public static async Task<HttpResponseMessage> GetResponseAsync(HttpClient httpClient, string url, string accessToken)
@@ -160,7 +160,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 #else
             var message = GetMessage(url, HttpMethod.Patch, accessToken, requestContent, additionalHeaders);
 #endif
-            var returnValue = await SendMessageAsync(httpClient, message);
+            var returnValue = await SendMessageAsync(httpClient, message, accessToken);
             if (!string.IsNullOrEmpty(returnValue))
             {
                 return JsonSerializer.Deserialize<T>(returnValue);
@@ -178,7 +178,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 #else
             var message = GetMessage(url, HttpMethod.Patch, accessToken, content, additionalHeaders);
 #endif
-            var returnValue = await SendMessageAsync(httpClient, message);
+            var returnValue = await SendMessageAsync(httpClient, message, accessToken);
             if (!string.IsNullOrEmpty(returnValue))
             {
                 return JsonSerializer.Deserialize<T>(returnValue);
@@ -227,7 +227,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         public static async Task<T> PutAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content, Dictionary<string, string> additionalHeaders = null)
         {
             var message = GetMessage(url, HttpMethod.Put, accessToken, content, additionalHeaders);
-            var stringContent = await SendMessageAsync(httpClient, message);
+            var stringContent = await SendMessageAsync(httpClient, message, accessToken);
             if (stringContent != null)
             {
                 try
@@ -258,7 +258,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         private static async Task<T> PostInternalAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content, Dictionary<string, string> additionalHeaders = null)
         {
             var message = GetMessage(url, HttpMethod.Post, accessToken, content, additionalHeaders);
-            var stringContent = await SendMessageAsync(httpClient, message);
+            var stringContent = await SendMessageAsync(httpClient, message, accessToken);
             if (stringContent != null)
             {
                 try
@@ -278,7 +278,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             var message = GetMessage(url, HttpMethod.Put, accessToken, requestContent);
-            var returnValue = await SendMessageAsync(httpClient, message);
+            var returnValue = await SendMessageAsync(httpClient, message, accessToken);
             if (!string.IsNullOrEmpty(returnValue))
             {
                 return JsonSerializer.Deserialize<T>(returnValue, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
@@ -296,7 +296,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return response;
         }
 
-        private static async Task<string> SendMessageAsync(HttpClient httpClient, HttpRequestMessage message)
+        private static async Task<string> SendMessageAsync(HttpClient httpClient, HttpRequestMessage message, string accessToken)
         {
             var response = await httpClient.SendAsync(message);
             while (response.StatusCode == (HttpStatusCode)429)
@@ -314,6 +314,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
                 var exception = JsonSerializer.Deserialize<GraphException>(errorContent, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                exception.AccessToken = accessToken;
                 throw exception;
             }
         }

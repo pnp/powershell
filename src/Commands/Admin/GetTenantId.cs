@@ -45,15 +45,8 @@ namespace PnP.PowerShell.Commands.Admin
                             WriteObject(errorDescription);
                         }
                     }
-                    else
-                    {
-                        throw ex;
-                    }
                 }
-                else
-                {
-                    throw ex;
-                }
+                throw;
             }
         }
     }

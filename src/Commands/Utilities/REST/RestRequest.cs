@@ -156,7 +156,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             RestHelper.ExecuteMergeRequest(_context, _root, content, select, _filter, expands, contentType: contentType);
         }
 
-        public void Delete(string content = null, string contentType = "application/json;odata=version")
+        public void Delete(string content = null)
         {
             var select = _selects.Any() ? string.Join(",", _selects) : null;
             var expands = _expands.Any() ? string.Join(",", _expands) : null;

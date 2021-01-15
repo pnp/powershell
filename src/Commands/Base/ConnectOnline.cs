@@ -30,116 +30,75 @@ namespace PnP.PowerShell.Commands.Base
         private CancellationTokenSource cancellationTokenSource;
         private const string ParameterSet_MAIN = "Main";
         private const string ParameterSet_ACSAPPONLY = "SharePoint ACS (Legacy) App Only";
-        private const string ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL = "App-Only using a clientId and clientSecret and an URL";
-        private const string ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN = "App-Only using a clientId and clientSecret and an AAD Domain";
-        private const string ParameterSet_ADFSCERT = "ADFS with client Certificate";
-        private const string ParameterSet_ADFSCREDENTIALS = "ADFS with user credentials";
-        // private const string ParameterSet_NATIVEAAD = "Azure Active Directory";
+        // private const string ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL = "App-Only using a clientId and clientSecret and an URL";
+        // private const string ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN = "App-Only using a clientId and clientSecret and an AAD Domain";
         private const string ParameterSet_APPONLYAADCERTIFICATE = "App-Only with Azure Active Directory";
-        private const string ParameterSet_APPONLYAADTHUMBPRINT = "App-Only with Azure Active Directory using certificate from certificate store by thumbprint";
+        private const string ParameterSet_APPONLYAADTHUMBPRINT = "App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint";
         private const string ParameterSet_SPOMANAGEMENT = "SPO Management Shell Credentials";
         private const string ParameterSet_DEVICELOGIN = "PnP Management Shell / DeviceLogin";
-        private const string ParameterSet_GRAPHDEVICELOGIN = "PnP Management Shell to the Microsoft Graph";
-        private const string ParameterSet_AADWITHSCOPE = "Azure Active Directory using Scopes";
-        private const string ParameterSet_ACCESSTOKEN = "Access Token";
+        // private const string ParameterSet_ACCESSTOKEN = "Access Token";
         private const string ParameterSet_WEBLOGIN = "Web Login";
-        // private const string ParameterSet_GRAPHWITHAAD = "Microsoft Graph using Azure Active Directory";
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
         private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
-
-
-
-        //private static readonly Uri GraphAADLogin = new Uri("https://login.microsoftonline.com/");
-        //private static readonly string[] GraphDefaultScope = { "https://graph.microsoft.com/.default" };
-
         private const string ParameterSet_MANAGEDIDENTITY = "Managed Identity";
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY, ValueFromPipeline = true)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, ValueFromPipeline = true)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, ValueFromPipeline = true)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, ValueFromPipeline = true)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, ValueFromPipeline = true)]
-        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, ValueFromPipeline = true)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         public SwitchParameter ReturnConnection;
 
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ACSAPPONLY, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ADFSCERT, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ADFSCREDENTIALS, ValueFromPipeline = true)]
-        // [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true)]
+        // [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true)]
-        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
+        // [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         public string Url;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AADWITHSCOPE)]
         public CredentialPipeBind Credentials;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
         public SwitchParameter CurrentCredentials;
 
-        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
-        //public SwitchParameter UseAdfs;
-
-        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
-        //public SwitchParameter UseAdfsCert;
-
-        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
-        //public X509Certificate2 ClientCertificate;
-
-        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
-        //public SwitchParameter Kerberos;
-
-        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
-        //[Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
-        //public string LoginProviderName;
-
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         public string Realm;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACSAPPONLY)]
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
+        // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
+        // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         public string ClientSecret;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
         public SwitchParameter CreateDrive;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
         public string DriveName = "SPO";
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
@@ -150,17 +109,13 @@ namespace PnP.PowerShell.Commands.Base
         public SwitchParameter PnPManagementShell;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN)]
         public SwitchParameter LaunchBrowser;
-
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN)]
-        public SwitchParameter Graph;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
+        // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
+        // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         public string ClientId;
 
         //[Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD)]
@@ -168,17 +123,12 @@ namespace PnP.PowerShell.Commands.Base
         public string RedirectUri;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
+        // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         public string Tenant;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         public string CertificatePath;
-
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
-        public string CertificateBase64Encoded;
-
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
-        public System.Security.Cryptography.X509Certificates.X509Certificate2 Certificate;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         public SecureString CertificatePassword;
@@ -189,26 +139,19 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AADWITHSCOPE)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN)]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_AADWITHSCOPE)]
-        public string[] Scopes;
-
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
+        // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         public string AADDomain;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACCESSTOKEN)]
-        public string AccessToken;
+        // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACCESSTOKEN)]
+        // public string AccessToken;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS)]
+        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
@@ -259,7 +202,7 @@ namespace PnP.PowerShell.Commands.Base
             catch (Exception ex)
             {
                 ex.Data["TimeStampUtc"] = DateTime.UtcNow;
-                throw ex;
+                throw;
             }
         }
 
@@ -291,30 +234,24 @@ namespace PnP.PowerShell.Commands.Base
                 case ParameterSet_DEVICELOGIN:
                     connection = ConnectDeviceLogin(cancellationToken);
                     break;
-                case ParameterSet_GRAPHDEVICELOGIN:
-                    connection = ConnectGraphDeviceLogin(cancellationToken);
-                    break;
                 case ParameterSet_APPONLYAADCERTIFICATE:
                     connection = ConnectAppOnlyWithCertificate();
                     break;
                 case ParameterSet_APPONLYAADTHUMBPRINT:
                     connection = ConnectAppOnlyWithCertificate();
                     break;
-                case ParameterSet_AADWITHSCOPE:
-                    connection = ConnectAadWithScope(credentials, AzureEnvironment, cancellationToken);
-                    break;
-                case ParameterSet_ACCESSTOKEN:
-                    connection = ConnectAccessToken();
-                    break;
+                // case ParameterSet_ACCESSTOKEN:
+                //     connection = ConnectAccessToken();
+                //     break;
                 case ParameterSet_ACSAPPONLY:
                     connection = ConnectACSAppOnly();
                     break;
-                case ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL:
-                    connection = ConnectAppOnlyClientIdClientSecretUrl();
-                    break;
-                case ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN:
-                    connection = ConnectAppOnlyClientIdClientSecretAadDomain();
-                    break;
+                // case ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL:
+                //     connection = ConnectAppOnlyClientIdClientSecretUrl();
+                //     break;
+                // case ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN:
+                //     connection = ConnectAppOnlyClientIdClientSecretAadDomain();
+                //     break;
                 case ParameterSet_MAIN:
                     connection = ConnectCredentials(credentials);
                     break;
@@ -388,32 +325,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 ReuseAuthenticationManager();
             }
-            return PnPConnectionHelper.InstantiateACSAppOnlyConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, TenantAdminUrl, false, AzureEnvironment);
-        }
-
-
-        /// <summary>
-        /// Connect using the parameter set APPONLYCLIENTIDCLIENTSECRETURL
-        /// </summary>
-        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        private PnPConnection ConnectAppOnlyClientIdClientSecretUrl()
-        {
-            if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
-                PnPConnection.CurrentConnection?.ClientSecret == ClientSecret &&
-                PnPConnection.CurrentConnection?.Tenant == AADDomain)
-            {
-                ReuseAuthenticationManager();
-            }
-            return PnPConnectionHelper.InstantiateACSAppOnlyConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, TenantAdminUrl, false, AzureEnvironment);
-        }
-
-        /// <summary>
-        /// Connect using the parameter set APPONLYCLIENTIDCLIENTSECRETAADDOMAIN
-        /// </summary>
-        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        private PnPConnection ConnectAppOnlyClientIdClientSecretAadDomain()
-        {
-            return PnPConnection.GetConnectionWithClientIdAndClientSecret(ClientId, ClientSecret, InitializationType.ClientIDSecret, Url, AADDomain);
+            return PnPConnectionHelper.InstantiateACSAppOnlyConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, TenantAdminUrl, AzureEnvironment);
         }
 
         /// <summary>
@@ -466,23 +378,6 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         /// <summary>
-        /// Connect using the parameter set GRAPHDEVICELOGIN
-        /// </summary>
-        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        private PnPConnection ConnectGraphDeviceLogin(CancellationToken cancellationToken)
-        {
-            PnPConnection connection = null;
-            var messageWriter = new CmdletMessageWriter(this);
-            Task.Factory.StartNew(() =>
-            {
-                connection = PnPConnectionHelper.InstantiateGraphDeviceLoginConnection(LaunchBrowser, this, messageWriter, AzureEnvironment, cancellationToken);
-                messageWriter.Stop();
-            });
-            messageWriter.Start();
-            return connection;
-        }
-
-        /// <summary>
         /// Connect using the parameter set APPONLYAAD
         /// </summary>
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
@@ -508,31 +403,9 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 return PnPConnectionHelper.InstantiateConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
             }
-            else if (ParameterSpecified(nameof(Certificate)))
-            {
-                if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
-                    PnPConnection.CurrentConnection?.Tenant == Tenant &&
-                    PnPConnection.CurrentConnection?.Certificate.Thumbprint == Certificate.Thumbprint)
-                {
-                    ReuseAuthenticationManager();
-                }
-                return PnPConnectionHelper.InstantiateConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, Certificate);
-            }
-            else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
-            {
-                X509Certificate2 certificate = CertificateHelper.GetCertificateFromBase64Encodedstring(CertificateBase64Encoded);
-
-                if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
-                    PnPConnection.CurrentConnection?.Tenant == Tenant &&
-                    PnPConnection.CurrentConnection?.Certificate.Thumbprint == certificate.Thumbprint)
-                {
-                    ReuseAuthenticationManager();
-                }
-                return PnPConnectionHelper.InstantiateConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
-            }
             else if (ParameterSpecified(nameof(Thumbprint)))
             {
-                X509Certificate2 certificate = CertificateHelper.GetCertificatFromStore(Thumbprint);
+                X509Certificate2 certificate = CertificateHelper.GetCertificateFromStore(Thumbprint);
 
                 if (certificate == null)
                 {
@@ -559,87 +432,35 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         /// <summary>
-        /// Connect using the parameter set AADWITHSCOPE
-        /// </summary>
-        /// <param name="credentials">Credentials to authenticate with for delegated access or NULL for application permissions</param>
-        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        private PnPConnection ConnectAadWithScope(PSCredential credentials, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
-        {
-            var messageWriter = new CmdletMessageWriter(this);
-            // Filter out the scopes for the Microsoft Office 365 Management API
-            var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
-
-            // Take the remaining scopes and try requesting them from the Microsoft Graph API
-            var graphScopes = Scopes.Except(officeManagementApiScopes).ToArray();
-
-            PnPConnection connection = null;
-
-            Task.Factory.StartNew(() =>
-            {
-                // If we have Office 365 scopes, get a token for those first
-                if (officeManagementApiScopes.Length > 0)
-                {
-                    var officeManagementApiToken = credentials == null ?
-                        OfficeManagementApiToken.AcquireApplicationTokenDeviceLoginAsync(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, PnPConnection.DeviceLoginCallback(messageWriter, true), azureEnvironment, cancellationToken).GetAwaiter().GetResult() :
-                        OfficeManagementApiToken.AcquireDelegatedTokenWithCredentialsAsync(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, credentials.UserName, credentials.Password).GetAwaiter().GetResult();
-                    connection = PnPConnection.GetConnectionWithToken(officeManagementApiToken, TokenAudience.OfficeManagementApi, InitializationType.DeviceLogin, credentials);
-                }
-
-                // If we have Graph scopes, get a token for it
-                if (graphScopes.Length > 0)
-                {
-                    var graphToken = credentials == null ? GraphToken.AcquireApplicationTokenDeviceLoginAsync(PnPConnection.PnPManagementShellClientId, graphScopes, PnPConnection.DeviceLoginCallback(messageWriter, true), azureEnvironment, cancellationToken).GetAwaiter().GetResult() : GraphToken.AcquireDelegatedTokenWithCredentialsAsync(PnPConnection.PnPManagementShellClientId, graphScopes, credentials.UserName, credentials.Password, AzureEnvironment).GetAwaiter().GetResult();
-                    // If there's a connection already, add the AAD token to it, otherwise set up a new connection with it
-                    if (connection != null)
-                    {
-                        //connection.AddToken(TokenAudience.MicrosoftGraph, graphToken);
-                    }
-                    else
-                    {
-                        connection = PnPConnection.GetConnectionWithToken(graphToken, TokenAudience.MicrosoftGraph, InitializationType.GraphDeviceLogin, credentials);
-                    }
-                }
-                messageWriter.Stop();
-            }, cancellationToken);
-            messageWriter.Start();
-            connection.Scopes = Scopes;
-            if (connection != null)
-            {
-                connection.AzureEnvironment = azureEnvironment;
-            }
-            return connection;
-        }
-
-        /// <summary>
         /// Connect using the parameter set ACCESSTOKEN
         /// </summary>
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        private PnPConnection ConnectAccessToken()
-        {
-            var handler = new JwtSecurityTokenHandler();
-            var jwtToken = handler.ReadJwtToken(AccessToken);
-            var aud = jwtToken.Audiences.FirstOrDefault();
-            var url = Url ?? aud ?? throw new PSArgumentException(Resources.AccessTokenConnectFailed);
+        // private PnPConnection ConnectAccessToken()
+        // {
+        //     var handler = new JwtSecurityTokenHandler();
+        //     var jwtToken = handler.ReadJwtToken(AccessToken);
+        //     var aud = jwtToken.Audiences.FirstOrDefault();
+        //     var url = Url ?? aud ?? throw new PSArgumentException(Resources.AccessTokenConnectFailed);
 
-            switch (url.ToLower())
-            {
-                case GraphToken.ResourceIdentifier:
-                    return PnPConnection.GetConnectionWithToken(new GraphToken(AccessToken), TokenAudience.MicrosoftGraph, InitializationType.Token, null);
+        //     switch (url.ToLower())
+        //     {
+        //         case GraphToken.ResourceIdentifier:
+        //             return PnPConnection.GetConnectionWithToken(new GraphToken(AccessToken), TokenAudience.MicrosoftGraph, InitializationType.Token, null);
 
-                case OfficeManagementApiToken.ResourceIdentifier:
-                    return PnPConnection.GetConnectionWithToken(new OfficeManagementApiToken(AccessToken), TokenAudience.OfficeManagementApi, InitializationType.Token, null);
+        //         case OfficeManagementApiToken.ResourceIdentifier:
+        //             return PnPConnection.GetConnectionWithToken(new OfficeManagementApiToken(AccessToken), TokenAudience.OfficeManagementApi, InitializationType.Token, null);
 
-                default:
-                    {
-                        ClientContext clientContext = null;
-                        if (ParameterSpecified(nameof(Url)))
-                        {
-                            clientContext = new ClientContext(Url);
-                        }
-                        return PnPConnection.GetConnectionWithToken(new SharePointToken(AccessToken), TokenAudience.SharePointOnline, InitializationType.Token, null, Url, clientContext: clientContext);
-                    }
-            }
-        }
+        //         default:
+        //             {
+        //                 ClientContext clientContext = null;
+        //                 if (ParameterSpecified(nameof(Url)))
+        //                 {
+        //                     clientContext = new ClientContext(Url);
+        //                 }
+        //                 return PnPConnection.GetConnectionWithToken(new SharePointToken(AccessToken), TokenAudience.SharePointOnline, InitializationType.Token, null, Url, clientContext: clientContext);
+        //             }
+        //     }
+        // }
 
         /// <summary>
         /// Connect using provided credentials or the current credentials
@@ -694,7 +515,6 @@ namespace PnP.PowerShell.Commands.Base
         {
             if (Utilities.OperatingSystem.IsWindows())
             {
-                WriteWarning("THIS IS AN EXPERIMENTAL FEATURE:\n\nDue to the way of authentication we are not able to retrieve on demand access tokens which are required for some cmdlets to work. None of the cmdlets that require the Microsoft Graph (Teams and Planner cmdlets) will work and some of the handlers in the PnP Provisioning Engine (Get-PnPSiteTemplate, Invoke-PnPSiteTemplate, etc.) will fail too. Consider moving to other types of authentication.");
                 return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication);
             }
             else

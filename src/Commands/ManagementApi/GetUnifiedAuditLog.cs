@@ -11,8 +11,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPUnifiedAuditLog")]
-    [OfficeManagementApiPermissionCheck(OfficeManagementApiPermission.ActivityFeed_Read)]
-    [PnPManagementShellScopes("ActivityFeed.Read")]
+    [RequiredMinimalApiPermissions("ActivityFeed.Read")]
     public class GetUnifiedAuditLog : PnPOfficeManagementApiCmdlet
     {
         private const string ParameterSet_LogsByDate = "Logs by date";

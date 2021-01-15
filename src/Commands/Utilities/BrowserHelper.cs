@@ -19,26 +19,10 @@ namespace PnP.PowerShell.Commands.Utilities
     internal static class BrowserHelper
     {
 
-#pragma warning disable CS0169
+#pragma warning disable CS0169,CA1823
         // not required when compiling for .NET Framework
         private static ConcurrentDictionary<string, (string requestDigest, DateTime expiresOn)> requestDigestInfos = new ConcurrentDictionary<string, (string requestDigest, DateTime expiresOn)>();
-#pragma warning restore CS0169
-        internal static void LaunchBrowser(string url)
-        {
-            if (OperatingSystem.IsWindows())
-            {
-                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); // Works ok on windows
-            }
-            else if (OperatingSystem.IsLinux())
-            {
-                Process.Start("xdg-open", url);  // Works ok on linux
-            }
-            else if (OperatingSystem.IsMacOS())
-            {
-                Process.Start("open", url); // Not tested
-            }
-        }
-
+#pragma warning restore CS0169,CA1823
 
         internal static ClientContext GetWebLoginClientContext(string siteUrl, bool clearCookies, bool scriptErrorsSuppressed = true, Uri loginRequestUri = null, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {

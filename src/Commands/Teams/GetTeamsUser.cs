@@ -10,9 +10,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsUser")]
-    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_Read_All)]
-    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
-    [PnPManagementShellScopes("Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("Group.Read.All")]
     public class GetTeamsUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -52,7 +50,7 @@ namespace PnP.PowerShell.Commands.Graph
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }

@@ -13,8 +13,6 @@ namespace PnP.PowerShell.Commands.Pages
 
     public class SetPage : PnPWebCmdlet, IDynamicParameters
     {
-        const string ParameterSet_CUSTOMHEADER = "Custom Header";
-
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public PagePipeBind Identity;
 

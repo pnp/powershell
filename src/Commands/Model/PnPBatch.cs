@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Model
         {
             if (Batch != null)
             {
-                var results = Context.ExecuteAsync(Batch, false).GetAwaiter().GetResult();
+                var results = Context.ExecuteAsync(Batch, throwOnError).GetAwaiter().GetResult();
 
                 ClearCache();
                 if (!RetainAfterExecute)

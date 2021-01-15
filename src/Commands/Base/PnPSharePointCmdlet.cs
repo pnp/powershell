@@ -117,6 +117,31 @@ namespace PnP.PowerShell.Commands
             }
         }
 
+        protected string GetGraphAccessToken(string[] scopes)
+        {
+            if (PnPConnection.CurrentConnection != null)
+            {
+                if (PnPConnection.CurrentConnection.Context != null)
+                {
+                    var settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(PnPConnection.CurrentConnection.Context);
+
+                    if (settings != null)
+                    {
+                        var authManager = settings.AuthenticationManager;
+                        if (authManager != null)
+                        {
+                            if (settings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
+                            {
+                                scopes = new[] { "https://graph.microsoft.com/.default" };
+                            }
+                            return authManager.GetAccessTokenAsync(scopes).GetAwaiter().GetResult();
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
         protected void PollOperation(SpoOperation spoOperation)
         {
             while (true)

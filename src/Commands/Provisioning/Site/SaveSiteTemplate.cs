@@ -87,7 +87,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                 var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
 
                 provider.SaveAs(templateObject, templateFileName, formatter, TemplateProviderExtensions);
-                ProcessFiles(templateObject, Out, fileSystemConnector, provider.Connector);
+                ProcessFiles(templateObject, Out, fileSystemConnector);
             }
             else
             {
@@ -96,7 +96,7 @@ namespace PnP.PowerShell.Commands.Provisioning
             }
         }
 
-        private void ProcessFiles(ProvisioningTemplate template, string templateFileName, FileConnectorBase fileSystemConnector, FileConnectorBase connector)
+        private void ProcessFiles(ProvisioningTemplate template, string templateFileName, FileConnectorBase fileSystemConnector)
         {
             var templateFile = ProvisioningHelper.LoadSiteTemplateFromFile(templateFileName, null, (e) =>
             {

@@ -10,9 +10,7 @@ using PnP.PowerShell.Commands.Model.Graph;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Add, "PnPTeamsTab")]
-    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
-    [PnPManagementShellScopes("Group.ReadWrite.All")]
-
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class AddTeamsTab : PnPGraphCmdlet, IDynamicParameters
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -112,7 +110,7 @@ namespace PnP.PowerShell.Commands.Graph
                         }
                         else
                         {
-                            throw ex;
+                            throw;
                         }
                     }
                 }

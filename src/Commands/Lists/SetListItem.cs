@@ -57,14 +57,14 @@ namespace PnP.PowerShell.Commands.Lists
                     {
                         throw new PSArgumentException($"Cannot find item with Identity {Identity}");
                     }
-                    var values = ListItemHelper.GetFieldValues(list, Values, this, ClientContext);
+                    var values = ListItemHelper.GetFieldValues(list, Values, ClientContext);
                     if (values == null)
                     {
                         values = new Dictionary<string, object>();
                     }
                     if (ContentType != null)
                     {
-                        var ct = ContentType.GetContentType(Batch, list, c => c.StringId);
+                        var ct = ContentType.GetContentType(Batch, list);
                         if (ct != null)
                         {
                             values.Add("ContentTypeId", ct.StringId);

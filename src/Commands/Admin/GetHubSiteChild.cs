@@ -30,8 +30,7 @@ namespace PnP.PowerShell.Commands.Admin
                 {
                     throw new ArgumentException(Resources.SiteNotFound, nameof(Identity));
                 }
-
-                throw ex;
+                throw;
             }
 
             // Get the ID of the hubsite for which we need to find child sites

@@ -31,11 +31,7 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_EXISTINGCERT = "Existing Certificate";
         private const string ParameterSet_NEWCERT = "Generate Certificate";
 
-        private const string ParameterSet_UserName = "By UserName / Password";
-        private const string ParameterSet_DeviceLogin = "By Device Login";
-
         private CancellationTokenSource cancellationTokenSource;
-
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string ApplicationName;
@@ -137,7 +133,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     if (!AppExists(ApplicationName, httpClient, token))
                     {
-                        var azureApp = CreateApp(loginEndPoint, httpClient, token, cert, redirectUri, CertificatePassword);
+                        var azureApp = CreateApp(loginEndPoint, httpClient, token, cert, redirectUri);
 
                         record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId/ClientId", azureApp.AppId)));
                         record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
@@ -362,7 +358,7 @@ namespace PnP.PowerShell.Commands.Base
             Host.UI.WriteLine(ConsoleColor.Green, Host.UI.RawUI.BackgroundColor, $"Success. Application '{appName}' can be registered.");
             return false;
         }
-        private AzureApp CreateApp(string loginEndPoint, HttpClient httpClient, string token, X509Certificate2 cert, string redirectUri, SecureString password)
+        private AzureApp CreateApp(string loginEndPoint, HttpClient httpClient, string token, X509Certificate2 cert, string redirectUri)
         {
             var expirationDate = DateTime.Parse(cert.GetExpirationDateString()).ToUniversalTime();
             var startDate = DateTime.Parse(cert.GetEffectiveDateString()).ToUniversalTime();

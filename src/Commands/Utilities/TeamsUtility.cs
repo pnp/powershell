@@ -109,7 +109,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 else
                 {
-                    throw ex;
+                    throw;
                 }
                 return null;
             }

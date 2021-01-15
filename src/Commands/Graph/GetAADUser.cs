@@ -8,8 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPAADUser", DefaultParameterSetName = ParameterSet_LIST)]
-    [MicrosoftGraphApiPermissionCheck(MicrosoftGraphApiPermission.User_Read_All | MicrosoftGraphApiPermission.User_ReadWrite_All | MicrosoftGraphApiPermission.Directory_Read_All | MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
-    [PnPManagementShellScopes("Directory.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("User.Read.All")]
     public class GetAADUser : PnPGraphCmdlet
     {
         const string ParameterSet_BYID = "Return by specific ID";

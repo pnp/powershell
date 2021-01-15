@@ -7,8 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteClassification")]
-    [MicrosoftGraphApiPermissionCheck(MicrosoftGraphApiPermission.Directory_ReadWrite_All | MicrosoftGraphApiPermission.Directory_Read_All)]
-    [PnPManagementShellScopes("Directory.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("Directory.Read.All")]
     public class GetSiteClassification : PnPGraphCmdlet
     {
         protected override void ExecuteCmdlet()

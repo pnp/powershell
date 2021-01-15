@@ -28,15 +28,8 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Realm <String>] -ClientS
 
 ### ACS (Legacy) App-Only using a clientId and clientSecret and an URL
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Realm <String>] -ClientSecret <String> [-CreateDrive]
- [-DriveName <String>] -ClientId <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
+Connect-PnPOnline [-Url] <String> -ClientId <String> -ClientSecret <String> [-ReturnConnection] [-Realm <String>]  [-CreateDrive] [-DriveName <String>]  [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
  [<CommonParameters>]
-```
-
-### App-Only using a clientId and clientSecret and an AAD Domain
-```powershell
-Connect-PnPOnline [-ReturnConnection] [-Realm <String>] -ClientSecret <String> [-CreateDrive]
- [-DriveName <String>] -ClientId <String> -AADDomain <String> [<CommonParameters>]
 ```
 
 ### Azure Active Directory
@@ -48,41 +41,22 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName
 
 ### App-Only with Azure Active Directory
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
- -Tenant <String> [-CertificatePath <String>] [-CertificateBase64Encoded <String>]
- [-Certificate <X509Certificate2>] [-CertificatePassword <SecureString>] [-AzureEnvironment <AzureEnvironment>]
+Connect-PnPOnline [-Url] <String> -ClientId <String> -Tenant <String> -CertificatePath <String> [-CertificatePassword <SecureString>] [-ReturnConnection]  [-CreateDrive] [-DriveName <String>] 
+ [-AzureEnvironment <AzureEnvironment>]
  [-TenantAdminUrl <String>] [<CommonParameters>]
 ```
 
 ### App-Only with Azure Active Directory using certificate from certificate store by thumbprint
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
- -Tenant <String> -Thumbprint <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
+Connect-PnPOnline [-Url] <String> -ClientId <String> -Tenant <String> -Thumbprint <String> [-ReturnConnection]  [-CreateDrive] [-DriveName <String>] 
+ [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
  [<CommonParameters>]
-```
-
-### Access Token
-```powershell
-Connect-PnPOnline [-ReturnConnection] [[-Url] <String>] [-CreateDrive] [-DriveName <String>]
- -AccessToken <String> [<CommonParameters>]
 ```
 
 ### PnP Management Shell / DeviceLogin
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-PnPManagementShell] [-LaunchBrowser]
+Connect-PnPOnline [-Url] <String> -PnPManagementShell [-ReturnConnection] [-LaunchBrowser]
  [-AzureEnvironment <AzureEnvironment>] [<CommonParameters>]
-```
-
-### Azure Active Directory using Scopes
-```powershell
-Connect-PnPOnline [-Credentials <CredentialPipeBind>] [-AzureEnvironment <AzureEnvironment>] -Scopes <String[]>
-   [<CommonParameters>]
-```
-
-### PnP Management Shell / DeviceLogin to the Microsoft Graph
-```powershell
-Connect-PnPOnline [-LaunchBrowser] [-Graph] [-AzureEnvironment <AzureEnvironment>]
- [<CommonParameters>]
 ```
 
 ### WebLogin for Multi-Factor authentication
@@ -111,10 +85,10 @@ Connect to SharePoint prompting for the username and password to use to authenti
 
 ### EXAMPLE 3
 ```powershell
-Connect-PnPOnline -Url "https://contoso.sharepoint.de" -ClientId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -ClientSecret $clientSecret -AzureEnvironment Germany
+Connect-PnPOnline -Url "https://contoso.sharepoint.de" -ClientId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -ClientSecret $clientSecret
 ```
 
-This will authenticate you to the German Azure environment using the German Azure endpoints for authentication
+This will authenticate you to the site using Legacy ACS authentication
 
 ### EXAMPLE 4
 ```powershell
@@ -132,47 +106,19 @@ This will authenticate you using the PnP O365 Management Shell Multi-Tenant appl
 
 ### EXAMPLE 6
 ```powershell
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -AccessToken $myaccesstoken
-```
-
-Connects using the provided access token
-
-### EXAMPLE 7
-```powershell
-Connect-PnPOnline -Scopes "Mail.Read","Files.Read","ActivityFeed.Read"
-```
-
-Connects to Azure Active Directory interactively and gets an OAuth 2.0 Access Token to consume the resources of the declared permission scopes. It will utilize the Azure Active Directory enterprise application named PnP Management Shell with application id 31359c7f-bd7e-475c-86db-fdb8c937548e registered by the PnP team. If you want to connect using your own Azure Active Directory application registration, use one of the Connect-PnPOnline cmdlets using a -ClientId attribute instead and pre-assign the required permissions/scopes/roles in your application registration in Azure Active Directory. The available permission scopes for Microsoft Graph are defined at the following URL: https://docs.microsoft.com/graph/permissions-reference . If the requested scope(s) have been used with this connect cmdlet before, they will not be asked for consent again. You can request scopes from different APIs in one Connect, i.e. from Microsoft Graph and the Microsoft Office Management API. It will ask you to authenticate for each of the APIs you have listed scopes for.
-
-### EXAMPLE 8
-```powershell
-Connect-PnPOnline -Scopes "Mail.Read","Files.Read","ActivityFeed.Read" -Credentials (New-Object System.Management.Automation.PSCredential ("johndoe@contoso.onmicrosoft.com", (ConvertTo-SecureString "password" -AsPlainText -Force)))
-```
-
-Connects to Azure Active Directory using delegated permissions and gets an OAuth 2.0 Access Token to consume the resources of the declared permission scopes. It will utilize the Azure Active Directory enterprise application named PnP Management Shell with application id 31359c7f-bd7e-475c-86db-fdb8c937548e registered by the PnP team. If you want to connect using your own Azure Active Directory application registration, use one of the Connect-PnPOnline cmdlets using a -ClientId attribute instead and pre-assign the required permissions/scopes/roles in your application registration in Azure Active Directory. The available permission scopes for Microsoft Graph are defined at the following URL: https://docs.microsoft.com/graph/permissions-reference . If the requested scope(s) have been used with this connect cmdlet before, they will not be asked for consent again. You can request scopes from different APIs in one Connect, i.e. from Microsoft Graph and the Microsoft Office Management API. You must have logged on interactively with the same scopes at least once without using -Credentials to allow for the permission grant dialog to show and allow constent for the user account you would like to use. You can provide this consent by logging in once with Connect-PnPOnline -Url <tenanturl> -PnPManagementShell -LaunchBrowser, and provide consent. This is a one-time action. From that moment on you will be able to use the cmdlet as stated here.
-
-### EXAMPLE 9
-```powershell
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -CertificatePath c:\absolute-path\to\pnp.pfx -CertificatePassword <if needed>
-```
-
-Connects to SharePoint using app-only tokens via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started.
-
-### EXAMPLE 10
-```powershell
-Connect-PnPOnline -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificatePath 'c:\mycertificate.pfx' -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url "https://contoso.sharepoint.com" -Tenant 'contoso.onmicrosoft.com'
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificatePath 'c:\mycertificate.pfx' -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force)  -Tenant 'contoso.onmicrosoft.com'
 ```
 
 Connects using an Azure Active Directory registered application using a locally available certificate containing a private key. See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.
 
-### EXAMPLE 11
+### EXAMPLE 7
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -Thumbprint 34CFAA860E5FB8C44335A38A097C1E41EEA206AA
 ```
 
 Connects to SharePoint using app-only tokens via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started. Ensure you have imported the private key certificate, typically the .pfx file, into the Windows Certificate Store for the certificate with the provided thumbprint.
 
-### EXAMPLE 12
+### EXAMPLE 8
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -UseWebLogin
 ```
@@ -187,20 +133,6 @@ The AAD where the O365 app is registered. Eg.: contoso.com, or contoso.onmicroso
 ```yaml
 Type: String
 Parameter Sets: App-Only using a clientId and clientSecret and an AAD Domain, Microsoft Graph using Azure Active Directory
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -AccessToken
-Connect with an existing Access Token
-
-```yaml
-Type: String
-Parameter Sets: Access Token
 
 Required: True
 Position: Named
@@ -244,20 +176,6 @@ Path to the certificate containing the private key (*.pfx)
 ```yaml
 Type: String
 Parameter Sets: App-Only with Azure Active Directory
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ClientCertificate
-The client certificate which you want to use for the ADFS authentication
-
-```yaml
-Type: X509Certificate2
-Parameter Sets: ADFS with client Certificate
 
 Required: False
 Position: Named
@@ -330,30 +248,6 @@ Type: String
 Parameter Sets: Main, Token, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, Access Token
 
 Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Graph
-Log in using the PnP O365 Management Shell application towards the Graph. You will be asked to consent to:
-
-* Read and write managed metadata
-* Have full control of all site collections
-* Read user profiles
-* Invite guest users to the organization
-* Read and write all groups
-* Read and write directory data
-* Read and write identity providers
-* Access the directory as you
-
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: PnP Management Shell to the Microsoft Graph
-
-Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -437,20 +331,6 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Scopes
-The array of permission scopes to request from Azure Active Directory
-
-```yaml
-Type: String[]
-Parameter Sets: Azure Active Directory using Scopes
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

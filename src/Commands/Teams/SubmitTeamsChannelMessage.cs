@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsLifecycle.Submit, "PnPTeamsChannelMessage")]
-    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
-    [PnPManagementShellScopes("Group.ReadWrite.All")]
-
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class SubmitTeamsChannelMessage : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

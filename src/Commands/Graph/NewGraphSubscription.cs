@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.New, "PnPGraphSubscription")]
     
-    // Deliberately omitting the CmdletMicrosoftGraphApiPermission attribute as permissions vary largely by the subscription type being used
+    // Deliberately omitting the CmdletMicrosoftGraphApiPermission attribute as permissions vary largely by the subscription type being used. This means it will not work with an app-only token.
     public class NewGraphSubscription : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

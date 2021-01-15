@@ -85,7 +85,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                       Out, fileSystemConnector, templateFileName: templateFileName);
                 WriteObject("Processing template");
                 provider.SaveAs(templateObject, templateFileName, formatter);
-                ProcessFiles(templateObject, Out, fileSystemConnector, provider.Connector, (message) =>
+                ProcessFiles(templateObject, Out, fileSystemConnector, (message) =>
                 {
                     WriteObject(message);
                 });
@@ -97,15 +97,15 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             }
         }
 
-        internal static void ProcessFiles(ProvisioningHierarchy tenantTemplate, string templateFileName, FileConnectorBase fileSystemConnector, FileConnectorBase connector, Action<string> progress)
+        internal static void ProcessFiles(ProvisioningHierarchy tenantTemplate, string templateFileName, FileConnectorBase fileSystemConnector, Action<string> progress)
         {
-            var templateFile = ReadTenantTemplate.LoadProvisioningHierarchyFromFile(templateFileName, null, null);
+            var templateFile = ReadTenantTemplate.LoadProvisioningHierarchyFromFile(templateFileName, null);
             if (tenantTemplate.Tenant?.AppCatalog != null)
             {
                 foreach (var app in tenantTemplate.Tenant.AppCatalog.Packages)
                 {
                     progress($"Processing {app.Src}");
-                    AddFile(app.Src, templateFile, fileSystemConnector, connector);
+                    AddFile(app.Src, templateFile, fileSystemConnector);
                 }
             }
             if (tenantTemplate.Tenant?.SiteScripts != null)
@@ -113,7 +113,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                 foreach (var siteScript in tenantTemplate.Tenant.SiteScripts)
                 {
                     progress($"Processing {siteScript.JsonFilePath}");
-                    AddFile(siteScript.JsonFilePath, templateFile, fileSystemConnector, connector);
+                    AddFile(siteScript.JsonFilePath, templateFile, fileSystemConnector);
                 }
             }
             if (tenantTemplate.Localizations != null && tenantTemplate.Localizations.Any())
@@ -121,7 +121,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                 foreach (var location in tenantTemplate.Localizations)
                 {
                     progress($"Processing {location.ResourceFile}");
-                    AddFile(location.ResourceFile, templateFile, fileSystemConnector, connector);
+                    AddFile(location.ResourceFile, templateFile, fileSystemConnector);
                 }
             }
             foreach (var template in tenantTemplate.Templates)
@@ -141,7 +141,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                     if (isFile)
                     {
                         progress($"Processing {template.WebSettings.SiteLogo}");
-                        AddFile(template.WebSettings.SiteLogo, templateFile, fileSystemConnector, connector);
+                        AddFile(template.WebSettings.SiteLogo, templateFile, fileSystemConnector);
                     }
                 }
                 if (template.Files.Any())
@@ -149,7 +149,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                     foreach (var file in template.Files)
                     {
                         progress($"Processing {file.Src}");
-                        AddFile(file.Src, templateFile, fileSystemConnector, connector);
+                        AddFile(file.Src, templateFile, fileSystemConnector);
                     }
                 }
                 if (template.Lists.Any())
@@ -165,7 +165,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                                     progress("List attachments");
                                     foreach (var attachment in dataRow.Attachments)
                                     {
-                                        AddFile(attachment.Src, templateFile, fileSystemConnector, connector);
+                                        AddFile(attachment.Src, templateFile, fileSystemConnector);
                                     }
                                 }
                             }
@@ -179,7 +179,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             }
         }
 
-        private static void AddFile(string sourceName, ProvisioningHierarchy hierarchy, FileConnectorBase fileSystemConnector, FileConnectorBase connector)
+        private static void AddFile(string sourceName, ProvisioningHierarchy hierarchy, FileConnectorBase fileSystemConnector)
         {
             using (var fs = fileSystemConnector.GetFileStream(sourceName))
             {

@@ -4,7 +4,8 @@ using PnP.PowerShell.Commands.Properties;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using System.Net.Http;
+using Microsoft.SharePoint.Client;
+
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -23,61 +24,24 @@ namespace PnP.PowerShell.Commands.Base
         {
             get
             {
-                var tokenType = TokenType.All;
-
-                // Collect, if present, the token type attribute
-                var tokenTypeAttribute = (TokenTypeAttribute)Attribute.GetCustomAttribute(GetType(), typeof(TokenTypeAttribute));
-                if (tokenTypeAttribute != null)
+                if (PnPConnection.CurrentConnection?.Context != null)
                 {
-                    tokenType = tokenTypeAttribute.TokenType;
+                    var token = TokenHandler.GetAccessToken(GetType(), "https://manage.office.com/.default");
+                    return new OfficeManagementApiToken(token);
                 }
-
-                // Collect the permission attributes to discover required roles
-                var requiredRoleAttributes = (OfficeManagementApiPermissionCheckAttribute[])Attribute.GetCustomAttributes(GetType(), typeof(OfficeManagementApiPermissionCheckAttribute));
-                var orRequiredRoles = new List<string>(requiredRoleAttributes.Length);
-                var andRequiredRoles = new List<string>(requiredRoleAttributes.Length);
-
-                foreach (var requiredRoleAttribute in requiredRoleAttributes)
-                {
-                    foreach (OfficeManagementApiPermission role in Enum.GetValues(typeof(OfficeManagementApiPermission)))
-                    {
-                        if (role != OfficeManagementApiPermission.None)
-                        {
-                            if (requiredRoleAttribute.OrApiPermissions.HasFlag(role))
-                            {
-                                orRequiredRoles.Add(role.ToString().Replace("_", "."));
-                            }
-                            if (requiredRoleAttribute.AndApiPermissions.HasFlag(role))
-                            {
-                                andRequiredRoles.Add(role.ToString().Replace("_", "."));
-                            }
-                        }
-                    }
-                }
-
-                // Ensure we have an active connection
-                if (PnPConnection.CurrentConnection != null)
-                {
-                    string[] managementShellScopes = null;
-                    if (PnPConnection.CurrentConnection.ClientId == PnPConnection.PnPManagementShellClientId)
-                    {
-                        var managementShellScopesAttribute = (PnPManagementShellScopesAttribute)Attribute.GetCustomAttribute(GetType(), typeof(PnPManagementShellScopesAttribute));
-                        if (managementShellScopesAttribute != null)
-                        {
-                            managementShellScopes = managementShellScopesAttribute.PermissionScopes;
-                        }
-                    }
-                    // There is an active connection, try to get a Microsoft Office Management API Token on the active connection
-                    if (PnPConnection.CurrentConnection.TryGetTokenAsync(Enums.TokenAudience.OfficeManagementApi, PnPConnection.CurrentConnection.AzureEnvironment, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray(), tokenType, managementShellScopes).GetAwaiter().GetResult() is OfficeManagementApiToken token)
-                    {
-                        // Microsoft Office Management API Access Token available, return it
-                        return token;
-                    }
-                }
-
-                // No valid Microsoft Office Management API Access Token available, throw an error
-                ThrowTerminatingError(new ErrorRecord(new InvalidOperationException(string.Format(Resources.NoApiAccessToken, Enums.TokenAudience.OfficeManagementApi)), "NO_OAUTH_TOKEN", ErrorCategory.ConnectionError, null));
                 return null;
+            }
+        }
+
+        protected override void BeginProcessing()
+        {
+            base.BeginProcessing();
+            if (PnPConnection.CurrentConnection?.Context != null)
+            {
+                if (PnPConnection.CurrentConnection.Context.GetContextSettings().Type == Framework.Utilities.Context.ClientContextType.Cookie)
+                {
+                    throw new PSInvalidOperationException("This cmdlet not work with a WebLogin/Cookie based connection towards SharePoint.");
+                }
             }
         }
 

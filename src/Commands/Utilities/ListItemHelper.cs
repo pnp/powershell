@@ -266,7 +266,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static Dictionary<string, object> GetFieldValues(PnP.Core.Model.SharePoint.IList list, Hashtable valuesToSet, Cmdlet cmdlet, ClientContext clientContext)
+        public static Dictionary<string, object> GetFieldValues(PnP.Core.Model.SharePoint.IList list, Hashtable valuesToSet, ClientContext clientContext)
         {
             var item = new Dictionary<string, object>();
 

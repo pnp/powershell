@@ -16,8 +16,6 @@ namespace PnP.PowerShell.Commands.Base
 
 #if NETFRAMEWORK
         private static string s_binFrameworkPath = Path.Combine(s_binBasePath, "Framework");
-#else
-        private static string s_binCorePath = Path.Join(s_binBasePath, "Core");
 #endif
 
         public void OnImport()

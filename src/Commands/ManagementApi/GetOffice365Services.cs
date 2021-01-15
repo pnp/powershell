@@ -9,8 +9,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPOffice365Services")]
-    [OfficeManagementApiPermissionCheck(OfficeManagementApiPermission.ServiceHealth_Read)]
-    [PnPManagementShellScopes("ServiceHealth.Read")]
+    [RequiredMinimalApiPermissions("ServiceHealth.Read")]
     public class GetOffice365Services : PnPOfficeManagementApiCmdlet
     {
         protected override void ExecuteCmdlet()

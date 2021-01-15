@@ -203,7 +203,7 @@ namespace PnP.PowerShell.Commands.Model
                         }
                         else
                         {
-                            throw msalEx;
+                            throw;
                         }
                     }
                 }
@@ -292,7 +292,7 @@ namespace PnP.PowerShell.Commands.Model
                         }
                         else
                         {
-                            throw msalEx;
+                            throw;
                         }
                     }
                 }
@@ -348,7 +348,7 @@ namespace PnP.PowerShell.Commands.Model
                         }
                         else
                         {
-                            throw msalEx;
+                            throw;
                         }
                     }
                 }
@@ -449,7 +449,7 @@ namespace PnP.PowerShell.Commands.Model
                         }
                         else
                         {
-                            throw msalEx;
+                            throw;
                         }
                     }
                 }

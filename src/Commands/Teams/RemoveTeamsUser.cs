@@ -8,8 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTeamsUser")]
-    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
-    [PnPManagementShellScopes("Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class RemoveTeamsUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -44,7 +43,7 @@ namespace PnP.PowerShell.Commands.Graph
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }

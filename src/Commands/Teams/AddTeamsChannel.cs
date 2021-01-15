@@ -9,9 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Add, "PnPTeamsChannel")]
-    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
-    [PnPManagementShellScopes("Group.ReadWrite.All")]
-
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class AddTeamsChannel : PnPGraphCmdlet
     {
         private const string ParameterSET_PRIVATE = "Private channel";
@@ -53,7 +51,7 @@ namespace PnP.PowerShell.Commands.Graph
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }

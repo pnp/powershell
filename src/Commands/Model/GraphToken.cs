@@ -70,26 +70,27 @@ namespace PnP.PowerShell.Commands.Model
             return new GraphToken(graphToken.AccessToken);
         }
 
-        public static async Task<GraphToken> AcquireApplicationTokenDeviceLoginAsync(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
-        {
-            var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
-            var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopes).ToArray();
-            // Take the remaining scopes and try requesting them from the Microsoft Graph API
-            scopes = scopes.Except(officeManagementApiScopes).ToArray();
-            var graphToken = await AcquireApplicationTokenDeviceLoginAsync(clientId, scopes, $"{endPoint}/organizations", callBackAction, cancellationToken);
-            return new GraphToken(graphToken.AccessToken);
-        }
+        // public static async Task<GraphToken> AcquireApplicationTokenDeviceLoginAsync(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
+        // {
+        //     var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
+        //     var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopes).ToArray();
+        //     // Take the remaining scopes and try requesting them from the Microsoft Graph API
+        //     scopes = scopes.Except(officeManagementApiScopes).ToArray();
+        //     var graphToken = await AcquireApplicationTokenDeviceLoginAsync(clientId, scopes, $"{endPoint}/organizations", callBackAction, cancellationToken);
+        //     return new GraphToken(graphToken.AccessToken);
+        // }
 
-        public static async Task<GraphToken> AcquireApplicationTokenDeviceLoginAsync(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction, AzureEnvironment azureEnvironment)
-        {
-            var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
-            var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopes).ToArray();
-            // Take the remaining scopes and try requesting them from the Microsoft Graph API
-            scopes = scopes.Except(officeManagementApiScopes).ToArray();
-            var token = default(CancellationToken);
-            var graphToken = await AcquireApplicationTokenDeviceLoginAsync(clientId, scopes, $"{endPoint}/organizations", callBackAction, token);
-            return new GraphToken(graphToken.AccessToken);
-        }
+        // public static async Task<GraphToken> AcquireApplicationTokenDeviceLoginAsync(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction, AzureEnvironment azureEnvironment)
+        // {
+        //     var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
+        //     var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopes).ToArray();
+        //     // Take the remaining scopes and try requesting them from the Microsoft Graph API
+        //     scopes = scopes.Except(officeManagementApiScopes).ToArray();
+        //     var token = default(CancellationToken);
+        //     var graphToken = await AcquireApplicationTokenDeviceLoginAsync(clientId, scopes, $"{endPoint}/organizations", callBackAction, token);
+        //     return new GraphToken(graphToken.AccessToken);
+        // }
+
         /// <summary>
         /// Tries to acquire a delegated Microsoft Graph Access Token for the provided scopes using the provided credentials
         /// </summary>
@@ -98,14 +99,14 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="username">The username to authenticate with. Required.</param>
         /// <param name="securePassword">The password to authenticate with. Required.</param>
         /// <returns><see cref="GraphToken"/> instance with the token</returns>
-        public static async Task<GraphToken> AcquireDelegatedTokenWithCredentialsAsync(string clientId, string[] scopes, string username, SecureString securePassword, AzureEnvironment azureEnvironment)
-        {
-            var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
-            var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopes).ToArray();
-            // Take the remaining scopes and try requesting them from the Microsoft Graph API
-            scopes = scopes.Except(officeManagementApiScopes).ToArray();
-            var graphToken = await AcquireDelegatedTokenWithCredentialsAsync(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{endPoint}/organizations/", username, securePassword);
-            return new GraphToken(graphToken.AccessToken);
-        }
+        // public static async Task<GraphToken> AcquireDelegatedTokenWithCredentialsAsync(string clientId, string[] scopes, string username, SecureString securePassword, AzureEnvironment azureEnvironment)
+        // {
+        //     var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
+        //     var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopes).ToArray();
+        //     // Take the remaining scopes and try requesting them from the Microsoft Graph API
+        //     scopes = scopes.Except(officeManagementApiScopes).ToArray();
+        //     var graphToken = await AcquireDelegatedTokenWithCredentialsAsync(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{endPoint}/organizations/", username, securePassword);
+        //     return new GraphToken(graphToken.AccessToken);
+        // }
     }
 }

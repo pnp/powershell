@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Base
     {
 
         #region Connection Creation
-        internal static PnPConnection InstantiateACSAppOnlyConnection(Uri url, string realm, string clientId, string clientSecret, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static PnPConnection InstantiateACSAppOnlyConnection(Uri url, string realm, string clientId, string clientSecret, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             ConnectionType connectionType;
             PnPClientContext context = null;
@@ -33,6 +33,7 @@ namespace PnP.PowerShell.Commands.Base
                 if (PnPConnection.CachedAuthenticationManager != null)
                 {
                     authManager = PnPConnection.CachedAuthenticationManager;
+                    PnPConnection.CachedAuthenticationManager = null;
                 }
                 else
                 {
@@ -84,6 +85,7 @@ namespace PnP.PowerShell.Commands.Base
             if (PnPConnection.CachedAuthenticationManager != null)
             {
                 authManager = PnPConnection.CachedAuthenticationManager;
+                PnPConnection.CachedAuthenticationManager = null;
             }
             else
             {
@@ -114,12 +116,12 @@ namespace PnP.PowerShell.Commands.Base
             }
             using (authManager)
             {
-                var clientContext = authManager.GetContext(url.ToString());
+                var clientContext = authManager.GetContext(url.ToString(), cancellationToken);
                 var context = PnPClientContext.ConvertFrom(clientContext);
 
                 var connectionType = ConnectionType.O365;
 
-                var spoConnection = new PnPConnection(context, connectionType, null, PnPConnection.PnPManagementShellClientId, null, url.ToString(), null, PnPPSVersionTag, InitializationType.ClientIDCertificate)
+                var spoConnection = new PnPConnection(context, connectionType, null, PnPConnection.PnPManagementShellClientId, null, url.ToString(), null, PnPPSVersionTag, InitializationType.DeviceLogin)
                 {
                     ConnectionMethod = ConnectionMethod.DeviceLogin,
                     AzureEnvironment = azureEnvironment
@@ -128,59 +130,13 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        // internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, string tenantAdminUrl, CmdletMessageWriter adapter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
-        // {
-        //     var connectionUri = new Uri(url);
-        //     var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
-        //     var context = new ClientContext(url);
-        //     GenericToken tokenResult = null;
-        //     try
-        //     {
-        //         tokenResult = GraphToken.AcquireApplicationTokenDeviceLoginAsync(PnPConnection.PnPManagementShellClientId, scopes, PnPConnection.DeviceLoginCallback(adapter, launchBrowser), azureEnvironment, cancellationToken).GetAwaiter().GetResult();
-        //     }
-        //     catch (MsalUiRequiredException ex)
-        //     {
-        //         if (ex.Classification == UiRequiredExceptionClassification.ConsentRequired)
-        //         {
-        //             adapter.WriteMessage("You need to provide consent to the PnP Management Shell application for your tenant. The easiest way to do this is by issueing: 'Connect-PnPOnline -Url [yoursiteur] -PnPManagementShell -LaunchBrowser'. Make sure to authenticate as a Azure administrator allowing to provide consent to the application. Follow the steps provided.");
-        //             throw ex;
-        //         }
-        //     }
-        //     var spoConnection = new PnPConnection(context, tokenResult, ConnectionType.O365, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.DeviceLogin)
-        //     {
-        //         Scopes = scopes,
-        //         AzureEnvironment = azureEnvironment,
-        //     };
-        //     if (spoConnection != null)
-        //     {
-        //         spoConnection.ConnectionMethod = ConnectionMethod.DeviceLogin;
-        //     }
-        //     return spoConnection;
-        // }
-
-        internal static PnPConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, PSCmdlet cmdlet, CmdletMessageWriter adapter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
-        {
-
-            var tokenResult = GraphToken.AcquireApplicationTokenDeviceLoginAsync(
-                PnPConnection.PnPManagementShellClientId,
-                new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" },
-                PnPConnection.DeviceLoginCallback(adapter, launchBrowser),
-                azureEnvironment,
-                cancellationToken).GetAwaiter().GetResult();
-            var spoConnection = new PnPConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, PnPPSVersionTag, InitializationType.GraphDeviceLogin)
-            {
-                Scopes = new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" },
-                AzureEnvironment = azureEnvironment,
-            };
-            return spoConnection;
-        }
-
         internal static PnPConnection InstantiateConnectionWithCert(Uri url, string clientId, string tenant, string tenantAdminUrl, AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool certificateFromFile = false)
         {
             PnP.Framework.AuthenticationManager authManager = null;
             if (PnPConnection.CachedAuthenticationManager != null)
             {
                 authManager = PnPConnection.CachedAuthenticationManager;
+                PnPConnection.CachedAuthenticationManager = null;
             }
             else
             {
@@ -229,6 +185,7 @@ namespace PnP.PowerShell.Commands.Base
                         if (PnPConnection.CachedAuthenticationManager != null)
                         {
                             authManager = PnPConnection.CachedAuthenticationManager;
+                            PnPConnection.CachedAuthenticationManager = null;
                         }
                         else
                         {

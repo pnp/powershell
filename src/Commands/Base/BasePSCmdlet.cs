@@ -57,6 +57,13 @@ namespace PnP.PowerShell.Commands.Base
             }
             catch (PnP.PowerShell.Commands.Model.Graph.GraphException gex)
             {
+                if (gex.Error.Code == "Authorization_RequestDenied")
+                {
+                    if (!string.IsNullOrEmpty(gex.AccessToken))
+                    {
+                        TokenHandler.ValidateTokenForPermissions(GetType(), gex.AccessToken);
+                    }
+                }
                 throw new PSInvalidOperationException(gex.Error.Message);
             }
         }
