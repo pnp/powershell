@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [0.3.37-nightly]
+
+### Added
+
+### Changed
+- Reorganized Connect-PnPOnline and simplified/cleared up usage. See https://pnp.github.io/powershell/cmdlets/connect-pnponline.html and https://pnp.github.io/powershell/articles/connecting.html for more information.
+- Reorganized internals with regards to access token handling.
+
+### Contributors
+
+
 ## [0.3.36-nightly]
 
 ### Added
