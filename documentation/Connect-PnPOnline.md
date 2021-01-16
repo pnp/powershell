@@ -39,9 +39,16 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName
  [<CommonParameters>]
 ```
 
-### App-Only with Azure Active Directory
+### App-Only with Azure Active Directory with a certificate file
 ```powershell
 Connect-PnPOnline [-Url] <String> -ClientId <String> -Tenant <String> -CertificatePath <String> [-CertificatePassword <SecureString>] [-ReturnConnection]  [-CreateDrive] [-DriveName <String>] 
+ [-AzureEnvironment <AzureEnvironment>]
+ [-TenantAdminUrl <String>] [<CommonParameters>]
+```
+
+### App-Only with Azure Active Directory with a certificate file
+```powershell
+Connect-PnPOnline [-Url] <String> -ClientId <String> -Tenant <String> -CertificateBase64Encoded <String> [-CertificatePassword <SecureString>] [-ReturnConnection]  [-CreateDrive] [-DriveName <String>] 
  [-AzureEnvironment <AzureEnvironment>]
  [-TenantAdminUrl <String>] [<CommonParameters>]
 ```
@@ -106,7 +113,8 @@ This will authenticate you using the PnP O365 Management Shell Multi-Tenant appl
 
 ### EXAMPLE 6
 ```powershell
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificatePath 'c:\mycertificate.pfx' -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force)  -Tenant 'contoso.onmicrosoft.com'
+$password = (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force)
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificatePath 'c:\mycertificate.pfx' -CertificatePassword $password  -Tenant 'contoso.onmicrosoft.com'
 ```
 
 Connects using an Azure Active Directory registered application using a locally available certificate containing a private key. See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.
@@ -119,6 +127,13 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-
 Connects to SharePoint using app-only tokens via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started. Ensure you have imported the private key certificate, typically the .pfx file, into the Windows Certificate Store for the certificate with the provided thumbprint.
 
 ### EXAMPLE 8
+```powershell
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificateBase64Encoded $base64encodedstring -Tenant 'contoso.onmicrosoft.com'
+```
+
+Connects using an Azure Active Directory registered application using a certificate with a private key that has been base64 encoded. See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.
+
+### EXAMPLE 9
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -UseWebLogin
 ```

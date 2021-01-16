@@ -131,6 +131,9 @@ namespace PnP.PowerShell.Commands.Base
         public string CertificatePath;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
+        public string CertificateBase64Encoded;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         public SecureString CertificatePassword;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
@@ -395,6 +398,19 @@ namespace PnP.PowerShell.Commands.Base
                     throw new FileNotFoundException("Certificate not found");
                 }
                 X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(CertificatePath, CertificatePassword);
+                if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
+                    PnPConnection.CurrentConnection?.Tenant == Tenant &&
+                    PnPConnection.CurrentConnection?.Certificate.Thumbprint == certificate.Thumbprint)
+                {
+                    ReuseAuthenticationManager();
+                }
+                return PnPConnectionHelper.InstantiateConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
+            }
+            else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
+            {
+                var certificateBytes = Convert.FromBase64String(CertificateBase64Encoded);
+                var certificate = new X509Certificate2(certificateBytes, CertificatePassword);
+
                 if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
                     PnPConnection.CurrentConnection?.Tenant == Tenant &&
                     PnPConnection.CurrentConnection?.Certificate.Thumbprint == certificate.Thumbprint)
