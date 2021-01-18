@@ -21,7 +21,7 @@ Updates an existing task
 
 ```
 Set-PnPPlannerTask -TaskId <String> [-Title <String>] [-Bucket <PlannerBucketPipeBind>]
- [-PercentComplete <Int32>] [-DueDateTime <DateTime>] [-StartDateTime <DateTime>] [-ByPassPermissionCheck]
+ [-PercentComplete <Int32>] [-DueDateTime <DateTime>] [-StartDateTime <DateTime>]
  [<CommonParameters>]
 ```
 

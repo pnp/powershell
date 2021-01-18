@@ -66,7 +66,6 @@ namespace PnP.PowerShell.Commands.Base
             {
                 return false;
             }
-            GenericToken.ClearCaches();
             connection.Context = null;
             connection = null;
             return true;

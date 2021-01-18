@@ -28,10 +28,6 @@ namespace PnP.PowerShell.Commands.Base
 
         private GraphServiceClient serviceClient;
 
-        [Parameter(Mandatory = false, DontShow = true)]
-        public SwitchParameter ByPassPermissionCheck;
-
-
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
@@ -47,24 +43,18 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// Returns an Access Token for the Microsoft Graph API, if available, otherwise NULL
         /// </summary>
-        public GraphToken Token
+        public string AccessToken
         {
             get
             {
                 if (PnPConnection.CurrentConnection?.Context != null)
                 {
-                    var token = TokenHandler.GetAccessToken(GetType(), "https://graph.microsoft.com/.default");
-                    return new GraphToken(token);
+                    return TokenHandler.GetAccessToken(GetType(), "https://graph.microsoft.com/.default");
                 }
 
                 return null;
             }
         }
-
-        /// <summary>
-        /// Returns an Access Token for Microsoft Graph, if available, otherwise NULL
-        /// </summary>
-        public string AccessToken => Token?.AccessToken;
 
         internal GraphServiceClient ServiceClient
         {

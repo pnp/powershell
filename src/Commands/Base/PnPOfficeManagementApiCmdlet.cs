@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
+using System.Linq;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -14,20 +14,16 @@ namespace PnP.PowerShell.Commands.Base
     /// </summary>
     public abstract class PnPOfficeManagementApiCmdlet : PnPConnectedCmdlet
     {
-        [Parameter(Mandatory = false, DontShow = true)]
-        public SwitchParameter ByPassPermissionCheck;
-
         /// <summary>
         /// Returns an Access Token for the Microsoft Office Management API, if available, otherwise NULL
         /// </summary>
-        public OfficeManagementApiToken Token
+        public string AccessToken
         {
             get
             {
                 if (PnPConnection.CurrentConnection?.Context != null)
                 {
-                    var token = TokenHandler.GetAccessToken(GetType(), "https://manage.office.com/.default");
-                    return new OfficeManagementApiToken(token);
+                    return TokenHandler.GetAccessToken(GetType(), "https://manage.office.com/.default");
                 }
                 return null;
             }
@@ -45,15 +41,18 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        /// <summary>
-        /// Returns an Access Token for the Microsoft Office Management API, if available, otherwise NULL
-        /// </summary>
-        public string AccessToken => Token?.AccessToken;
-
+        protected Guid? TenantId
+        {
+            get
+            {
+                var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(AccessToken);
+                return Guid.TryParse(parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value, out Guid tenandIdGuid) ? (Guid?)tenandIdGuid : null;
+            }
+        }
         /// <summary>
         /// Root URL to the Office 365 Management API
         /// </summary>
-        protected string ApiRootUrl => $"https://manage.office.com/api/v1.0/{Token.TenantId}/";
-
+        protected string ApiRootUrl => $"https://manage.office.com/api/v1.0/{TenantId}/";
+        
     }
 }

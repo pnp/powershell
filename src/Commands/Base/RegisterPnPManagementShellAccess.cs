@@ -26,9 +26,11 @@ namespace PnP.PowerShell.Commands.Base
             var messageWriter = new CmdletMessageWriter(this);
             CancellationToken cancellationToken = source.Token;
 
-            var endPoint = GenericToken.GetAzureADLoginEndPoint(AzureEnvironment);
-
-
+            var endPoint = string.Empty;
+            using (var authManager = new AuthenticationManager())
+            {
+                endPoint = authManager.GetAzureADLoginEndPoint(AzureEnvironment);
+            }
 
             Task.Factory.StartNew(() =>
             {

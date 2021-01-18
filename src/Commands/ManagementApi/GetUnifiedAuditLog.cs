@@ -65,7 +65,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
             var subscription = subscriptions.FirstOrDefault(s => s.ContentType == contentType);
             if (subscription == null)
             {
-                subscription = GraphHelper.PostAsync<ManagementApiSubscription>(HttpClient, $"{ApiUrl}/subscriptions/start?contentType={contentType}&PublisherIdentifier={Token.TenantId}", AccessToken).GetAwaiter().GetResult();
+                subscription = GraphHelper.PostAsync<ManagementApiSubscription>(HttpClient, $"{ApiUrl}/subscriptions/start?contentType={contentType}&PublisherIdentifier={TenantId}", AccessToken).GetAwaiter().GetResult();
                 if (!subscription.Status.Equals("enabled", StringComparison.OrdinalIgnoreCase))
                 {
                     throw new Exception($"Cannot enable subscription for {contentType}");
@@ -77,7 +77,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
         {
             EnsureSubscription(ContentTypeString);
 
-            var url = $"{ApiUrl}/subscriptions/content?contentType={ContentTypeString}&PublisherIdentifier=${Token.TenantId}";
+            var url = $"{ApiUrl}/subscriptions/content?contentType={ContentTypeString}&PublisherIdentifier=${TenantId}";
             if (StartTime != DateTime.MinValue)
             {
                 url += $"&startTime={StartTime:yyyy-MM-ddThh:mm:ss}";

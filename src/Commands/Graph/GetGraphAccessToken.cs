@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             if (Decoded.IsPresent)
             {
-                WriteObject(Token.ParsedToken);
+                WriteObject(new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(AccessToken));
             }
             else
             {
