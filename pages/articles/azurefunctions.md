@@ -121,9 +121,6 @@ param($Request, $TriggerMetadata)
 Write-Host "PowerShell HTTP trigger function processed a request."
 
 $script = {
-    $securePassword = ConvertTo-SecureString $env:tenant_pwd -AsPlainText -Force
-    $credentials = New-Object PSCredential ($env:tenant_user, $securePassword)
-
     Connect-PnPOnline -Url https://yourtenant.sharepoint.com/sites/demo -ClientId [the clientid created earlier] -Thumbprint [the thumbprint you copied] -Tenant [yourtenant.onmicrosoft.com]
 
     $web = Get-PnPWeb;
