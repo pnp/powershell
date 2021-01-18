@@ -210,7 +210,7 @@
         </TableRowEntries>
       </TableControl>
     </View>
-     <View>
+    <View>
       <Name>List</Name>
       <ViewSelectedBy>
         <TypeName>PnP.Core.Model.SharePoint.List</TypeName>
@@ -290,7 +290,7 @@
         </TableRowEntries>
       </TableControl>
     </View>
-      <View>
+    <View>
       <Name>ContentType</Name>
       <ViewSelectedBy>
         <TypeName>PnP.Core.Model.SharePoint.ContentType</TypeName>
@@ -1295,7 +1295,7 @@
         </TableRowEntries>
       </TableControl>
     </View>
-     <View>
+    <View>
       <Name>RoleDefinition</Name>
       <ViewSelectedBy>
         <TypeName>PnP.Core.Model.Security.RoleDefinition</TypeName>
@@ -2602,6 +2602,44 @@
           </ListEntry>
         </ListEntries>
       </ListControl>
+    </View>
+    <View>
+      <Name>Flow</Name>
+      <ViewSelectedBy>
+        <TypeName>PnP.PowerShell.Commands.Model.PowerAutomate.Flow</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Name</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Properties.DisplayName</Label>
+          </TableColumnHeader>
+           <TableColumnHeader>
+            <Label>Properties.State</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                $_.Properties.DisplayName
+                </ScriptBlock>
+              </TableColumnItem>
+               <TableColumnItem>
+                <ScriptBlock>
+                $_.Properties.State
+                </ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
     </View>
   </ViewDefinitions>
 </Configuration>
