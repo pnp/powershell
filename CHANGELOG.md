@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [0.3.40-nightly]
+
+### Added
+- Added `Get-PnPFlow`, `Get-PnPFlowEnvironment`, `Enable-PnPFlow`, `Disable-PnPFlow`, `Remove-PnPFlow`, `Export-PnPFlow` cmdlets
+
+### Changed
+- Documentation updates
+
+### Contributors
+- Yannick Reekmans [YannickRe]
+
+
 ## [0.3.38-nightly]
 
 ### Added
