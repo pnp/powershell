@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [1.0.0]
+## [1.1.1]
+
+- Fixed issues with `Copy-PnPFile` and `Move-PnPFile`
+- Updated `Get-PnPTenantSite` to support `-DisableSharingForNonOwnersStatus`
+
+## [1.1.0]
 
 First released version of PnP PowerShell
 

@@ -19,9 +19,16 @@ Retrieve site information.
 
 ## SYNTAX
 
+### By Site
 ```powershell
-Get-PnPTenantSite [[-Url] <String>] [-Template <String>] [-Detailed] [-IncludeOneDriveSites] [-Filter <String>]
- [-Connection <PnPConnection>]   [<CommonParameters>]
+Get-PnPTenantSite [-Url] <string> [-Detailed] [-DisableSharingForNonOwnersStatus] [-Connection <PnPConnection>]
+    [<CommonParameters>]
+```
+
+### All Sites
+```powershell
+Get-PnPTenantSite [-Template <string>] [-Detailed] [-IncludeOneDriveSites] [-Filter <string>] [-Connection
+    <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -80,21 +87,6 @@ Returns all sites including 'sales' in the url
 
 ## PARAMETERS
 
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
@@ -123,12 +115,26 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DisableSharingForNonOwnersStatus
+This parameter will include the status for non owners sharing on the returned object. By default the value for this property is null.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: By Site
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Filter
 Specifies the script block of the server-side filter to apply. See https://technet.microsoft.com/en-us/library/fp161380.aspx
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: All sites
 
 Required: False
 Position: Named
@@ -142,7 +148,7 @@ By default, the OneDrives are not returned. This switch includes all OneDrives.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: All Sites
 
 Required: False
 Position: Named
@@ -156,7 +162,7 @@ By default, all sites will be returned. Specify a template value alike "STS#0" h
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: All Sites
 
 Required: False
 Position: Named
@@ -170,28 +176,13 @@ The URL of the site
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: By Site
 Aliases: Identity
 
 Required: False
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
