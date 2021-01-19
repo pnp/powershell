@@ -14,55 +14,40 @@ Moves a file or folder to a different location
 
 ## SYNTAX
 
-### Site Relative (Default)
 ```powershell
-Move-PnPFile [-SiteRelativeUrl] <String> [-TargetUrl] <String> [-OverwriteIfAlreadyExists] [-Force]
- [-Connection <PnPConnection>]   [<CommonParameters>]
-```
-
-### Server Relative
-```powershell
-Move-PnPFile [-ServerRelativeUrl] <String> [-TargetUrl] <String> [-OverwriteIfAlreadyExists] [-Force]
- [-Connection <PnPConnection>]   [<CommonParameters>]
-```
-
-### Other Site Collection
-```powershell
-Move-PnPFile [[-ServerRelativeUrl] <String>] [[-SiteRelativeUrl] <String>]
- [-TargetServerRelativeLibrary] <String> [-OverwriteIfAlreadyExists] [-AllowSchemaMismatch]
- [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-Force] 
+Move-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-Force]
  [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Allows moving a file or folder to a different location inside the same document library, such as in a subfolder, to a different document library on the same site collection or to a document library on another site collection
+Allows moving a file or folder to a different location inside the same document library, such as in a subfolder, to a different document library on the same site collection or to a document library on another site collection. If you move a file to a different site or subweb you cannot specify a target filename.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-PS:>Move-PnPFile -SiteRelativeUrl "Shared Documents/Document.docx" -TargetUrl "/sites/project/Archive/Document2.docx"
+Move-PnPFile -SourceUrl "Shared Documents/Document.docx" -TargetUrl "Archive/Document2.docx"
 ```
 
 Moves a file named Document.docx located in the document library named "Shared Documents" in the current site to the document library named "Archive" in the same site, renaming the file to Document2.docx. If a file named Document2.docx already exists at the destination, it won't perform the move.
 
 ### EXAMPLE 2
 ```powershell
-PS:>Move-PnPFile -ServerRelativeUrl "/sites/project/Shared Documents/Document.docx -TargetUrl "/sites/project/Archive/Document.docx" -OverwriteIfAlreadyExists
+Move-PnPFile -SourceUrl "Shared Documents/Document.docx" -TargetUrl "Archive" -Overwrite
 ```
 
 Moves a file named Document.docx located in the document library named "Shared Documents" in the current site to the document library named "Archive" in the same site. If a file named Document.docx already exists at the destination, it will overwrite it.
 
 ### EXAMPLE 3
 ```powershell
-PS:>Move-PnPFile -ServerRelativeUrl "/sites/project/Shared Documents/Document.docx" -TargetServerRelativeLibrary "/sites/otherproject/Shared Documents" -OverwriteIfAlreadyExists -AllowSchemaMismatch -AllowSmallerVersionLimitOnDestination
+Move-PnPFile -SourceUrl "Shared Documents/Document.docx" -TargetUrl "/sites/otherproject/Shared Documents" -OverwriteIfAlreadyExists -AllowSchemaMismatch -AllowSmallerVersionLimitOnDestination
 ```
 
 Moves a file named Document.docx located in the document library named "Shared Documents" in the current site to the document library named "Shared Documents" in another site collection "otherproject" allowing it to overwrite an existing file Document.docx in the destination, allowing the fields to be different on the destination document library from the source document library and allowing a lower document version limit on the destination compared to the source.
 
 ### EXAMPLE 4
 ```powershell
-PS:>Move-PnPFile -ServerRelativeUrl "/sites/project/Shared Documents/Archive" -TargetServerRelativeLibrary "/sites/archive/Project" -AllowSchemaMismatch -AllowSmallerVersionLimitOnDestination
+Move-PnPFile -SourceUrl "/sites/project/Shared Documents/Archive" -TargetUrl "/sites/archive/Project" -AllowSchemaMismatch -AllowSmallerVersionLimitOnDestination
 ```
 
 Moves a folder named Archive located in the document library named "Shared Documents" in the current site to the document library named "Project" in another site collection "archive" not allowing it to overwrite an existing folder named "Archive" in the destination, allowing the fields to be different on the destination document library from the source document library and allowing a lower document version limit on the destination compared to the source.
@@ -74,7 +59,7 @@ If provided and the target document library specified using TargetServerRelative
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Other Site Collection
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -88,22 +73,7 @@ If provided and the target document library specified using TargetServerRelative
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Other Site Collection
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: cf
 
 Required: False
 Position: Named
@@ -145,7 +115,7 @@ If provided, only the latest version of the document will be moved and its histo
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Other Site Collection
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -154,7 +124,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -OverwriteIfAlreadyExists
+### -Overwrite
 If provided, if a file or folder already exists at the TargetUrl, it will be overwritten. If omitted, the move operation will be canceled if the file or folder already exists at the TargetUrl location.
 
 ```yaml
@@ -168,96 +138,29 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ServerRelativeUrl
-Server relative Url specifying the file to move. Must include the file name.
+### -SourceUrl
+Site or server relative URL specifying the file or folder to move. Must include the file name if it is a file or the entire path to the folder if it is a folder.
 
 ```yaml
 Type: String
-Parameter Sets: Server Relative
+Parameter Sets: (All)
 
 Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-```yaml
-Type: String
-Parameter Sets: Other Site Collection
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -SiteRelativeUrl
-Site relative Url specifying the file or folder to move. Must include the file or folder name.
-
-```yaml
-Type: String
-Parameter Sets: Site Relative
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-```yaml
-Type: String
-Parameter Sets: Other Site Collection
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -TargetServerRelativeLibrary
-Server relative url of a document library where to move the fileor folder to. Must not include the file or folder name.
-
-```yaml
-Type: String
-Parameter Sets: Other Site Collection
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -TargetUrl
-Server relative Url where to move the file or folder to. Must include the file or folder name.
+Site or server relative URL of a document library where to move the file or folder to. 
 
 ```yaml
 Type: String
-Parameter Sets: Site Relative, Server Relative
+Parameter Sets: (All)
 
 Required: True
 Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

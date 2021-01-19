@@ -2616,7 +2616,7 @@
           <TableColumnHeader>
             <Label>Properties.DisplayName</Label>
           </TableColumnHeader>
-           <TableColumnHeader>
+          <TableColumnHeader>
             <Label>Properties.State</Label>
           </TableColumnHeader>
         </TableHeaders>
@@ -2631,10 +2631,44 @@
                 $_.Properties.DisplayName
                 </ScriptBlock>
               </TableColumnItem>
-               <TableColumnItem>
+              <TableColumnItem>
                 <ScriptBlock>
                 $_.Properties.State
                 </ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>CopyJobLog</Name>
+      <ViewSelectedBy>
+        <TypeName>PnP.PowerShell.Commands.Model.CopyJobLog</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Url</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Message</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>ItemId</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Url</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Message</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ItemId</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>

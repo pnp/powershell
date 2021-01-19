@@ -1,0 +1,10 @@
+namespace PnP.PowerShell.Commands.Model
+{
+    internal class CopyMigrationInfo
+    {
+        public string EncryptionKey { get; set; }
+        public string JobId { get; set; }
+        public string JobQueueUri { get; set; }
+        public string[] SourceListItemUniqueIds { get; set; }
+    }
+}
