@@ -9,7 +9,7 @@ Uninstall-Module -Name "SharePointPnPPowerShellOnline" -AllVersions -Force
 Now install the new module:
 
 ```powershell
-Install-Module -Name "PnP.PowerShell" -AllowPrerelease
+Install-Module -Name "PnP.PowerShell"
 ```
 ## Setup authentication. 
 
