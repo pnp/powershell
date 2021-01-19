@@ -1,26 +1,21 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Framework;
-using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Provider;
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Net;
-using System.Security;
-using File = System.IO.File;
-using System.Security.Cryptography.X509Certificates;
-using System.IdentityModel.Tokens.Jwt;
-using PnP.PowerShell.Commands.Enums;
-using PnP.PowerShell.Commands.Model;
-using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using System.Collections.Generic;
-using PnP.Framework.Utilities;
 using System.Reflection;
+using System.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
-using PnP.PowerShell.Commands.Utilities;
 using System.Threading.Tasks;
+using File = System.IO.File;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -114,6 +109,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACSAPPONLY)]
         // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
         // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         public string ClientId;
