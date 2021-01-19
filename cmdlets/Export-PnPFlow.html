@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>set-pnpplannertask | PnP PowerShell </title>
+    <title>Export-PnPFlow | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="set-pnpplannertask | PnP PowerShell ">
+    <meta name="title" content="Export-PnPFlow | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -81,34 +81,46 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="set-pnpplannertask">Set-PnPPlannerTask</h1>
+                    <h1 id="export-pnpflow">Export-PnPFlow</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>Microsoft Graph API: Group.ReadWrite.All</li>
-</ul>
-<p>Updates an existing task</p>
+<p>Exports the Flow</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Set-PnPPlannerTask -TaskId &lt;String&gt; [-Title &lt;String&gt;] [-Bucket &lt;PlannerBucketPipeBind&gt;]
- [-PercentComplete &lt;Int32&gt;] [-DueDateTime &lt;DateTime&gt;] [-StartDateTime &lt;DateTime&gt;]
+<h3 id="as-zip-package">As ZIP Package</h3>
+<pre><code>Export-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Identity &lt;PowerAutomateFlowPipeBind&gt;
+ [-AsZipPackage] [-PackageDisplayName &lt;String&gt;] [-PackageDescription &lt;String&gt;] [-PackageCreatedBy &lt;String&gt;]
+ [-PackageSourceEnvironment &lt;String&gt;] [-OutPath &lt;String&gt;] [-Force] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
+<h3 id="as-json">As Json</h3>
+<pre><code>Export-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Identity &lt;PowerAutomateFlowPipeBind&gt;
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+</code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlets allows you to update an existing task in a Planner plan.</p>
+<p>This cmdlet exports a flow either as a json file or as a zip package.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">Set-PnPPlannerTask -TaskId RSNNbc4HM0e7jt-btAKtTZYAFAf0 -Title &quot;New Title&quot; -StartDateTime 2020-10-01
+<pre><code class="lang-powershell">$environment = Get-PnPFlowEnvironment
+Export-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 </code></pre>
-<p>This updates the task with the specified id and sets the title to &quot;New Title&quot; and sets the start date to the first of October 2020.</p>
-<h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">Set-PnPPlannerTask -TaskId RSNNbc4HM0e7jt-btAKtTZYAFAf0 -Title &quot;New Title&quot; -Bucket &quot;To do&quot;
-</code></pre>
-<p>This updates the task with the specified id and moves to the bucket &quot;To do&quot;</p>
+<p>This will export the specified flow as an output to the current output of PowerShell</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-bucket">-Bucket</h3>
-<p>Specify the bucket name or ID to move the task to.</p>
-<pre><code class="lang-yaml">Type: PlannerBucketPipeBind
+<h3 id="-aszippackage">-AsZipPackage</h3>
+<p>If specified the flow will be exported as a zip package</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: As ZIP Package
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet.
+Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 Aliases:
 
@@ -118,45 +130,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-duedatetime">-DueDateTime</h3>
-<p>Specify the due date.</p>
-<pre><code class="lang-yaml">Type: DateTime
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-percentcomplete">-PercentComplete</h3>
-<p>Defines the percentage of completeness of the task.</p>
-<pre><code class="lang-yaml">Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-startdatetime">-StartDateTime</h3>
-<p>Defines the start date of the task.</p>
-<pre><code class="lang-yaml">Type: DateTime
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-taskid">-TaskId</h3>
-<p>The Id of the task to update.</p>
-<pre><code class="lang-yaml">Type: String
+<h3 id="-environment">-Environment</h3>
+<p>The environment which contains the flow.</p>
+<pre><code class="lang-yaml">Type: PowerAutomateEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
@@ -166,10 +142,22 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-title">-Title</h3>
-<p>Sets the new title of the task.</p>
-<pre><code class="lang-yaml">Type: String
+<h3 id="-identity">-Identity</h3>
+<p>The name/id of flow or a flow object to export</p>
+<pre><code class="lang-yaml">Type: PowerAutomateFlowPipeBind
 Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-force">-Force</h3>
+<p>If specified and the file exported already exists it will be overwritten without confirmation.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: As ZIP Package
 Aliases:
 
 Required: False
@@ -178,8 +166,66 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="commonparameters">CommonParameters</h3>
-<p>This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see <a href="http://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
+<h3 id="-outpath">-OutPath</h3>
+<p>Optional file name of the file to export to.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: As ZIP Package
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-packagecreatedby">-PackageCreatedBy</h3>
+<p>The name of the person to be used as the creator of the exported package</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: As ZIP Package
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-packagedescription">-PackageDescription</h3>
+<p>The description to use in the exported package</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: As ZIP Package
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-packagedisplayname">-PackageDisplayName</h3>
+<p>The display name to use in the exported package</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: As ZIP Package
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-packagesourceenvironment">-PackageSourceEnvironment</h3>
+<p>The name of the source environment from which the exported package was taken</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: As ZIP Package
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
