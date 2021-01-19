@@ -90,33 +90,20 @@
 </ul>
 <p>Adds a tab to an existing Channel</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Add-PnPTeamsTab -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; -DisplayName &lt;String&gt;
- -Type &lt;TeamTabType&gt; [-ByPassPermissionCheck] -ContentUrl &lt;String&gt; [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPTeamsTab -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; -DisplayName &lt;String&gt;
+ -Type &lt;TeamTabType&gt; -ContentUrl &lt;String&gt; [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPTeamsTab -Team &quot;My Team&quot; -Channel &quot;My Channel&quot; -DisplayName &quot;My Channel&quot; -Type WebSite -ContentUrl &quot;https://aka.ms/sppnp
+<pre><code class="lang-powershell">Add-PnPTeamsTab -Team &quot;My Team&quot; -Channel &quot;My Channel&quot; -DisplayName &quot;My Channel&quot; -Type WebSite -ContentUrl &quot;https://aka.ms/m365pnp
 </code></pre>
 <p>Adds a web site tab to the specified channel.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
-<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-channel">-Channel</h3>
-<p>Specify the channel id of the team to retrieve.</p>
+<p>Specify the channel id or name of the team to retrieve.</p>
 <pre><code class="lang-yaml">Type: TeamsChannelPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -128,7 +115,6 @@ Accept wildcard characters: False
 <p>Specifies the title of the new site collection</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -140,7 +126,6 @@ Accept wildcard characters: False
 <p>Specify the tab type</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -152,7 +137,6 @@ Accept wildcard characters: False
 <p>Specify the group id, mailNickname or display name of the team to use.</p>
 <pre><code class="lang-yaml">Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -164,7 +148,6 @@ Accept wildcard characters: False
 <p>Specify the tab type</p>
 <pre><code class="lang-yaml">Type: TeamTabType
 Parameter Sets: (All)
-Aliases:
 Accepted values: WebSite, DocumentLibrary, Wiki, Planner, MicrosoftStream, MicrosoftForms, Word, Excel, PowerPoint, PDF, OneNote, PowerBI, SharePointPageAndList, Custom
 
 Required: True
@@ -174,7 +157,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

@@ -87,14 +87,14 @@
 <p>Returns all SharePoint Framework client side extension application customizers</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="custom-action-id">Custom Action Id</h3>
-<pre><code>Get-PnPApplicationCustomizer [-Identity &lt;Guid&gt;] [-Scope &lt;CustomActionScope&gt;]
- [-ThrowExceptionIfCustomActionNotFound] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [-WhatIf]
- [-Confirm] [-Includes &lt;String[]&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPApplicationCustomizer [-Identity &lt;Guid&gt;] [-Scope &lt;CustomActionScope&gt;]
+ [-ThrowExceptionIfCustomActionNotFound] [-Connection &lt;PnPConnection&gt;] 
+  [-Includes &lt;String[]&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="client-side-component-id">Client Side Component Id</h3>
-<pre><code>Get-PnPApplicationCustomizer -ClientSideComponentId &lt;Guid&gt; [-Scope &lt;CustomActionScope&gt;]
- [-ThrowExceptionIfCustomActionNotFound] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [-WhatIf]
- [-Confirm] [-Includes &lt;String[]&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPApplicationCustomizer -ClientSideComponentId &lt;Guid&gt; [-Scope &lt;CustomActionScope&gt;]
+ [-ThrowExceptionIfCustomActionNotFound] [-Connection &lt;PnPConnection&gt;] 
+  [-Includes &lt;String[]&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Returns all SharePoint Framework client side extension application customizers registered on the current web and/or site</p>
@@ -114,10 +114,8 @@
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-clientsidecomponentid">-ClientSideComponentId</h3>
 <p>The Client Side Component Id of the SharePoint Framework client side extension application customizer found in the manifest for which existing custom action(s) should be removed</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: Client Side Component Id
-Aliases:
 
 Required: True
 Position: Named
@@ -139,10 +137,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -152,10 +148,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>Identity of the SharePoint Framework client side extension application customizer to return. Omit to return all SharePoint Frameworkclient side extension application customizer.</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: Custom Action Id
-Aliases:
 
 Required: False
 Position: Named
@@ -165,10 +159,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-scope">-Scope</h3>
 <p>Scope of the SharePoint Framework client side extension application customizer, either Web, Site or All to return both (all is the default)</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: CustomActionScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site, All
 
 Required: False
@@ -179,23 +171,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-throwexceptionifcustomactionnotfound">-ThrowExceptionIfCustomActionNotFound</h3>
 <p>Switch parameter if an exception should be thrown if the requested SharePoint Frameworkclient side extension application customizer does not exist (true) or if omitted, nothing will be returned in case the SharePoint Framework client side extension application customizer does not exist</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-web">-Web</h3>
-<p>The web to apply the command to. Omit this parameter to use the current web.</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -216,7 +193,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

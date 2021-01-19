@@ -90,8 +90,8 @@
 </ul>
 <p>Updates Teams Tab settings</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Set-PnPTeamsTab -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; [-Identity &lt;TeamsTabPipeBind&gt;]
- [-DisplayName &lt;String&gt;] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPTeamsTab -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; [-Identity &lt;TeamsTabPipeBind&gt;]
+ [-DisplayName &lt;String&gt;]  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -100,23 +100,10 @@
 </code></pre>
 <p>Updates the tab named 'Wiki' and changes the display name of the tab to 'Channel Wiki'</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
-<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-channel">-Channel</h3>
-<p>Specify the channel id of the team to retrieve.</p>
+<p>Specify the channel id or display name of the channel to use.</p>
 <pre><code class="lang-yaml">Type: TeamsChannelPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -128,7 +115,6 @@ Accept wildcard characters: False
 <p>The new name of the tab.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -140,7 +126,6 @@ Accept wildcard characters: False
 <p>Identity of the tab.</p>
 <pre><code class="lang-yaml">Type: TeamsTabPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -149,10 +134,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-team">-Team</h3>
-<p>Specify the group id of the team to retrieve.</p>
+<p>Specify the group id, mailNickname or display name of the team to use.</p>
 <pre><code class="lang-yaml">Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -161,7 +145,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

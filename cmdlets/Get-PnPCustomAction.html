@@ -86,8 +86,8 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Return user custom actions</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Get-PnPCustomAction [-Identity &lt;Guid&gt;] [-Scope &lt;CustomActionScope&gt;]
- [-ThrowExceptionIfCustomActionNotFound] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Get-PnPCustomAction [-Identity &lt;Guid&gt;] [-Scope &lt;CustomActionScope&gt;]
+ [-ThrowExceptionIfCustomActionNotFound] [-Connection &lt;PnPConnection&gt;]
  [-Includes &lt;String[]&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -110,7 +110,6 @@
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -122,7 +121,6 @@ Accept wildcard characters: False
 <p>Identity of the CustomAction to return. Omit to return all CustomActions.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -134,7 +132,6 @@ Accept wildcard characters: False
 <p>Scope of the CustomAction, either Web, Site or All to return both</p>
 <pre><code class="lang-yaml">Type: CustomActionScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site, All
 
 Required: False
@@ -147,19 +144,6 @@ Accept wildcard characters: False
 <p>Switch parameter if an exception should be thrown if the requested CustomAction does not exist (true) or if omitted, nothing will be returned in case the CustomAction does not exist</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-web">-Web</h3>
-<p>The web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -168,7 +152,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

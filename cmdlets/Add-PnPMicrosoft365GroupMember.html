@@ -90,8 +90,7 @@
 </ul>
 <p>Adds members to a particular Microsoft 365 Group</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Add-PnPMicrosoft365GroupMember -Identity &lt;Microsoft365GroupPipeBind&gt; -Users &lt;String[]&gt; [-RemoveExisting]
- [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPMicrosoft365GroupMember -Identity &lt;Microsoft365GroupPipeBind&gt; -Users &lt;String[]&gt; [-RemoveExisting] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -104,23 +103,10 @@
 </code></pre>
 <p>Sets the provided two users as the only members of the Microsoft 365 Group named &quot;Project Team&quot; by removing any current existing members first</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
-<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>The Identity of the Microsoft 365 Group to add members to</p>
 <pre><code class="lang-yaml">Type: Microsoft365GroupPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -132,7 +118,6 @@ Accept wildcard characters: False
 <p>If provided, all existing members will be removed and only those provided through Users will become members</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -144,7 +129,6 @@ Accept wildcard characters: False
 <p>The UPN(s) of the user(s) to add to the Microsoft 365 Group as a member</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -153,7 +137,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a><a href="https://docs.microsoft.com/graph/api/group-post-members">Documentation</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a><a href="https://docs.microsoft.com/graph/api/group-post-members">Documentation</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

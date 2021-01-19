@@ -90,28 +90,27 @@
 <p>Certificate contains the PEM encoded certificate.</p>
 <p>PrivateKey contains the PEM encoded private key of the certificate.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Get-PnPAzureCertificate -CertificatePath &lt;String&gt; [-CertificatePassword &lt;SecureString&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPAzureCertificate -Path &lt;String&gt; [-Password &lt;SecureString&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPAzureCertificate -CertificatePath &quot;mycert.pfx&quot;
+<pre><code class="lang-powershell">Get-PnPAzureCertificate -Path &quot;mycert.pfx&quot;
 </code></pre>
 <p>This will output PEM values and ADAL app manifest settings for the certificate mycert.pfx.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPAzureCertificate -CertificatePath &quot;mycert.pfx&quot; -CertificatePassword (ConvertTo-SecureString -String &quot;YourPassword&quot; -AsPlainText -Force)
+<pre><code class="lang-powershell">Get-PnPAzureCertificate -Path &quot;mycert.pfx&quot; -Password (ConvertTo-SecureString -String &quot;YourPassword&quot; -AsPlainText -Force)
 </code></pre>
 <p>This will output PEM values and ADAL app manifest settings for the certificate mycert.pfx which has the password YourPassword.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPAzureCertificate -CertificatePath &quot;mycert.cer&quot; | clip
+<pre><code class="lang-powershell">Get-PnPAzureCertificate -Path &quot;mycert.cer&quot; | clip
 </code></pre>
 <p>Output the JSON snippet which needs to be replaced in the application manifest file and copies it to the clipboard</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-certificatepassword">-CertificatePassword</h3>
+<h3 id="-password">-Password</h3>
 <p>Password to the certificate (*.pfx)</p>
 <pre><code class="lang-yaml">Type: SecureString
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -119,11 +118,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-certificatepath">-CertificatePath</h3>
+<h3 id="-path">-Path</h3>
 <p>Path to the certificate (*.pfx)</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -132,7 +130,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

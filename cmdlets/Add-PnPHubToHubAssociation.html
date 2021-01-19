@@ -92,24 +92,19 @@
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-id">By Id</h3>
 <pre><code class="lang-powershell">Add-PnPHubToHubAssociation -Source &lt;Guid&gt; -Target &lt;Guid&gt; [-Connection &lt;PnPConnection&gt;]
- [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="by-url">By Url</h3>
 <pre><code class="lang-powershell">Add-PnPHubToHubAssociation -SourceUrl &lt;string&gt; -TargetUrl &lt;string&gt; [-Connection &lt;PnPConnection&gt;]
- [&lt;CommonParameters&gt;]
-
-## DESCRIPTION
-Use this cmdlet to associate a hub site to a hub site.
-
-## EXAMPLES
-
-### EXAMPLE 1
-```powershell
-Add-PnPHubToHubAssociation -Source 6638bd4c-d88d-447c-9eb2-c84f28ba8b15 -Target 0b70f9de-2b98-46e9-862f-ba5700aa2443
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Use this cmdlet to associate a hub site to a hub site.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Add-PnPHubToHubAssociation -Source 6638bd4c-d88d-447c-9eb2-c84f28ba8b15 -Target 0b70f9de-2b98-46e9-862f-ba5700aa2443
 </code></pre>
 <p>This example associates the source hub site with the HubSiteId 6638bd4c-d88d-447c-9eb2-c84f28ba8b15 with the target hub site with the HubSiteId 0b70f9de-2b98-46e9-862f-ba5700aa2443.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPHubToHubAssociation -SourceUrl https://yourtenant.sharepoint.com/sites/sourcehub -TargetUrl https://yourtenant.sharepoint.com/sites/targethub
+<pre><code class="lang-powershell">Add-PnPHubToHubAssociation -SourceUrl &quot;https://yourtenant.sharepoint.com/sites/sourcehub&quot; -TargetUrl &quot;https://yourtenant.sharepoint.com/sites/targethub&quot;
 </code></pre>
 <p>This example associates the source hub site with the url <a href="https://yourtenant.sharepoint.com/sites/sourcehub">https://yourtenant.sharepoint.com/sites/sourcehub</a> with the target hub site with the url <a href="https://yourtenant.sharepoint.com/sites/targethub">https://yourtenant.sharepoint.com/sites/targethub</a>.</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -117,7 +112,6 @@ Add-PnPHubToHubAssociation -Source 6638bd4c-d88d-447c-9eb2-c84f28ba8b15 -Target 
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -129,7 +123,6 @@ Accept wildcard characters: False
 <p>HubSiteId of the Source Hub site to be associated with the Target Hub Site.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: By Id
-Aliases:
 
 Required: True
 Position: Named
@@ -141,7 +134,6 @@ Accept wildcard characters: False
 <p>HubSiteId of the Target Hub to associate the source Hub to.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: By Id
-Aliases:
 
 Required: True
 Position: Named
@@ -151,9 +143,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-sourceurl">-SourceUrl</h3>
 <p>URL of the Source Hub site to be associated with the Target Hub Site.</p>
-<pre><code class="lang-yaml">Type: Guid
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: By Url
-Aliases:
 
 Required: True
 Position: Named
@@ -161,11 +152,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-target-1">-Target</h3>
+<h3 id="-targeturl">-TargetUrl</h3>
 <p>URL of the Target Hub to associate the source Hub to.</p>
-<pre><code class="lang-yaml">Type: Guid
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: By Url
-Aliases:
 
 Required: True
 Position: Named
@@ -174,7 +164,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

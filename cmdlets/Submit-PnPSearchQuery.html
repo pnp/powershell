@@ -87,22 +87,22 @@
 <p>Executes an arbitrary search query against the SharePoint search index</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="limit-default">Limit (Default)</h3>
-<pre><code>Submit-PnPSearchQuery [-Query] &lt;String&gt; [-StartRow &lt;Int32&gt;] [-MaxResults &lt;Int32&gt;] [-TrimDuplicates &lt;Boolean&gt;]
+<pre><code class="lang-powershell">Submit-PnPSearchQuery [-Query] &lt;String&gt; [-StartRow &lt;Int32&gt;] [-MaxResults &lt;Int32&gt;] [-TrimDuplicates &lt;Boolean&gt;]
  [-Properties &lt;Hashtable&gt;] [-Refiners &lt;String&gt;] [-Culture &lt;Int32&gt;] [-QueryTemplate &lt;String&gt;]
  [-SelectProperties &lt;String[]&gt;] [-RefinementFilters &lt;String[]&gt;] [-SortList &lt;Hashtable&gt;]
  [-RankingModelId &lt;String&gt;] [-ClientType &lt;String&gt;] [-CollapseSpecification &lt;String&gt;]
  [-HiddenConstraints &lt;String&gt;] [-TimeZoneId &lt;Int32&gt;] [-EnablePhonetic &lt;Boolean&gt;] [-EnableStemming &lt;Boolean&gt;]
  [-EnableQueryRules &lt;Boolean&gt;] [-SourceId &lt;Guid&gt;] [-ProcessBestBets &lt;Boolean&gt;]
- [-ProcessPersonalFavorites &lt;Boolean&gt;] [-RelevantResults] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-ProcessPersonalFavorites &lt;Boolean&gt;] [-RelevantResults] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="all">All</h3>
-<pre><code>Submit-PnPSearchQuery [-Query] &lt;String&gt; [-All] [-TrimDuplicates &lt;Boolean&gt;] [-Properties &lt;Hashtable&gt;]
+<pre><code class="lang-powershell">Submit-PnPSearchQuery [-Query] &lt;String&gt; [-All] [-TrimDuplicates &lt;Boolean&gt;] [-Properties &lt;Hashtable&gt;]
  [-Refiners &lt;String&gt;] [-Culture &lt;Int32&gt;] [-QueryTemplate &lt;String&gt;] [-SelectProperties &lt;String[]&gt;]
  [-RefinementFilters &lt;String[]&gt;] [-SortList &lt;Hashtable&gt;] [-RankingModelId &lt;String&gt;] [-ClientType &lt;String&gt;]
  [-CollapseSpecification &lt;String&gt;] [-HiddenConstraints &lt;String&gt;] [-TimeZoneId &lt;Int32&gt;]
  [-EnablePhonetic &lt;Boolean&gt;] [-EnableStemming &lt;Boolean&gt;] [-EnableQueryRules &lt;Boolean&gt;] [-SourceId &lt;Guid&gt;]
- [-ProcessBestBets &lt;Boolean&gt;] [-ProcessPersonalFavorites &lt;Boolean&gt;] [-RelevantResults] [-Web &lt;WebPipeBind&gt;]
+ [-ProcessBestBets &lt;Boolean&gt;] [-ProcessPersonalFavorites &lt;Boolean&gt;] [-RelevantResults] 
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -128,7 +128,6 @@
 <p>Automatically page results until the end to get more than 500. Use with caution!</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: All
-Aliases:
 
 Required: False
 Position: Named
@@ -140,7 +139,6 @@ Accept wildcard characters: False
 <p>Specifies the name of the client which issued the query.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -152,7 +150,6 @@ Accept wildcard characters: False
 <p>Limit the number of items per the collapse specification. See <a href="https://docs.microsoft.com/en-us/sharepoint/dev/general-development/customizing-search-results-in-sharepoint#collapse-similar-search-results-using-the-collapsespecification-property">https://docs.microsoft.com/en-us/sharepoint/dev/general-development/customizing-search-results-in-sharepoint#collapse-similar-search-results-using-the-collapsespecification-property</a> for more information.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -164,7 +161,6 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -176,7 +172,6 @@ Accept wildcard characters: False
 <p>The locale for the query.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -188,7 +183,6 @@ Accept wildcard characters: False
 <p>Specifies whether the phonetic forms of the query terms are used to find matches.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -200,7 +194,6 @@ Accept wildcard characters: False
 <p>Specifies whether Query Rules are enabled for this query.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -212,7 +205,6 @@ Accept wildcard characters: False
 <p>Specifies whether stemming is enabled.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -224,7 +216,6 @@ Accept wildcard characters: False
 <p>The keyword query's hidden constraints.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -236,7 +227,6 @@ Accept wildcard characters: False
 <p>Maximum amount of search results to return. Default and max per page is 500 search results.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: Limit
-Aliases:
 
 Required: False
 Position: Named
@@ -248,7 +238,6 @@ Accept wildcard characters: False
 <p>Determines whether Best Bets are enabled.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -260,7 +249,6 @@ Accept wildcard characters: False
 <p>Determines whether personal favorites data is processed or not.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -272,7 +260,6 @@ Accept wildcard characters: False
 <p>Extra query properties. Can for example be used for Office Graph queries.</p>
 <pre><code class="lang-yaml">Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -284,7 +271,6 @@ Accept wildcard characters: False
 <p>Search query in Keyword Query Language (KQL).</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -296,7 +282,6 @@ Accept wildcard characters: False
 <p>Specifies the query template that is used at run time to transform the query based on user input.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -308,7 +293,6 @@ Accept wildcard characters: False
 <p>The identifier (ID) of the ranking model to use for the query.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -320,7 +304,6 @@ Accept wildcard characters: False
 <p>The set of refinement filters used.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -332,7 +315,6 @@ Accept wildcard characters: False
 <p>The list of refiners to be returned in a search result.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -344,7 +326,6 @@ Accept wildcard characters: False
 <p>Specifies whether only relevant results are returned</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -356,7 +337,6 @@ Accept wildcard characters: False
 <p>The list of properties to return in the search results.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -368,7 +348,6 @@ Accept wildcard characters: False
 <p>The list of properties by which the search results are ordered.</p>
 <pre><code class="lang-yaml">Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -380,7 +359,6 @@ Accept wildcard characters: False
 <p>Specifies the identifier (ID or name) of the result source to be used to run the query.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -392,7 +370,6 @@ Accept wildcard characters: False
 <p>Search result item to start returning the results from. Useful for paging. Leave at 0 to return all results.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: Limit
-Aliases:
 
 Required: False
 Position: Named
@@ -404,7 +381,6 @@ Accept wildcard characters: False
 <p>The identifier for the search query time zone.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -416,19 +392,6 @@ Accept wildcard characters: False
 <p>Specifies whether near duplicate items should be removed from the search results.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -437,7 +400,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

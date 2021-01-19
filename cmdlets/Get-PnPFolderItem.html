@@ -87,12 +87,12 @@
 <p>List content in folder</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="folder-via-url">Folder via url</h3>
-<pre><code>Get-PnPFolderItem [[-FolderSiteRelativeUrl] &lt;String&gt;] [-ItemType &lt;String&gt;] [-ItemName &lt;String&gt;] [-Recursive]
- [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPFolderItem [[-FolderSiteRelativeUrl] &lt;String&gt;] [-ItemType &lt;String&gt;] [-ItemName &lt;String&gt;] [-Recursive]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="folder-via-pipebind">Folder via pipebind</h3>
-<pre><code>Get-PnPFolderItem [[-Identity] &lt;FolderPipeBind&gt;] [-ItemType &lt;String&gt;] [-ItemName &lt;String&gt;] [-Recursive]
- [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPFolderItem [[-Identity] &lt;FolderPipeBind&gt;] [-ItemType &lt;String&gt;] [-ItemName &lt;String&gt;] [-Recursive]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -121,7 +121,6 @@
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -133,7 +132,6 @@ Accept wildcard characters: False
 <p>The site relative URL of the folder to retrieve</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Folder via url
-Aliases:
 
 Required: False
 Position: 0
@@ -145,7 +143,6 @@ Accept wildcard characters: False
 <p>A folder instance to the folder to retrieve</p>
 <pre><code class="lang-yaml">Type: FolderPipeBind
 Parameter Sets: Folder via pipebind
-Aliases:
 
 Required: False
 Position: 0
@@ -157,7 +154,6 @@ Accept wildcard characters: False
 <p>Optional name of the item to retrieve</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -169,7 +165,6 @@ Accept wildcard characters: False
 <p>The type of contents to retrieve, either File, Folder or All (default)</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 Accepted values: Folder, File, All
 
 Required: False
@@ -182,7 +177,6 @@ Accept wildcard characters: False
 <p>A switch parameter to include contents of all subfolders in the specified folder</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 4
@@ -190,20 +184,8 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

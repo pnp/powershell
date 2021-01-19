@@ -90,22 +90,22 @@
 </ul>
 <p>Adds a given document library as a organizational asset source</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Add-PnPOrgAssetsLibrary -LibraryUrl &lt;String&gt; [-ThumbnailUrl &lt;String&gt;] [-CdnType &lt;SPOTenantCdnType&gt;]
+<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl &lt;String&gt; [-ThumbnailUrl &lt;String&gt;] [-CdnType &lt;SPOTenantCdnType&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Adds a given document library as an organizational asset source in your Sharepoint Online Tenant. All organizational asset sources you add must reside in the same site collection. Document libraries specified as organizational asset must be enabled as an Office 365 CDN source, either as private or public. It may take some time before this change will be reflected in the webinterface.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl https://yourtenant.sharepoint.com/sites/branding/logos
+<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos&quot;
 </code></pre>
 <p>Adds the document library with the url &quot;logos&quot; located in the sitecollection at &quot;https://yourtenant.sharepoint.com/sites/branding&quot; as an organizational asset not specifying a thumbnail image for it and enabling the document library as a public Office 365 CDN source</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl https://yourtenant.sharepoint.com/sites/branding/logos -ThumbnailUrl https://yourtenant.sharepoint.com/sites/branding/logos/thumbnail.jpg
+<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos&quot; -ThumbnailUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos/thumbnail.jpg&quot;
 </code></pre>
 <p>Adds the document library with the url &quot;logos&quot; located in the sitecollection at &quot;https://yourtenant.sharepoint.com/sites/branding&quot; as an organizational asset specifying the thumbnail image &quot;thumbnail.jpg&quot; residing in the same document library for it and enabling the document library as a public Office 365 CDN source</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl https://yourtenant.sharepoint.com/sites/branding/logos -CdnType Private
+<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos&quot; -CdnType Private
 </code></pre>
 <p>Adds the document library with the url &quot;logos&quot; located in the sitecollection at &quot;https://yourtenant.sharepoint.com/sites/branding&quot; as an organizational asset not specifying a thumbnail image for it and enabling the document library as a private Office 365 CDN source</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -113,7 +113,6 @@
 <p>Indicates what type of Office 365 CDN source the document library will be added to</p>
 <pre><code class="lang-yaml">Type: SPOTenantCdnType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Public, Private
 
 Required: False
@@ -126,7 +125,6 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -138,7 +136,6 @@ Accept wildcard characters: False
 <p>The full url of the document library to be marked as one of organization's assets sources</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -150,7 +147,6 @@ Accept wildcard characters: False
 <p>The full url to an image that should be used as a thumbnail for showing this source. The image must reside in the same site as the document library you specify.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -159,7 +155,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

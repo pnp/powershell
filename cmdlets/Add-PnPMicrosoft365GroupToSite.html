@@ -90,7 +90,7 @@
 </ul>
 <p>Groupifies a classic team site by creating a Microsoft 365 group for it and connecting the site with the newly created group</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Add-PnPMicrosoft365GroupToSite -Url &lt;String&gt; -Alias &lt;String&gt; [-Description &lt;String&gt;] -DisplayName &lt;String&gt;
+<pre><code class="lang-powershell">Add-PnPMicrosoft365GroupToSite -Url &lt;String&gt; -Alias &lt;String&gt; -DisplayName &lt;String&gt; [-Description &lt;String&gt;]
  [-Classification &lt;String&gt;] [-IsPublic] [-KeepOldHomePage] [-HubSiteId &lt;Guid&gt;] [-Owners &lt;String[]&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
@@ -98,7 +98,7 @@
 <p>This command allows you to add a Microsoft 365 Unified group to an existing classic site collection, also known as groupifying.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPOffice365GroupToSite -Url &quot;https://contoso.sharepoint.com/sites/FinanceTeamsite&quot; -Alias &quot;FinanceTeamsite&quot; -DisplayName = &quot;My finance team site group&quot;
+<pre><code class="lang-powershell">Add-PnPMicrosoft365GroupToSite -Url &quot;https://contoso.sharepoint.com/sites/FinanceTeamsite&quot; -Alias &quot;FinanceTeamsite&quot; -DisplayName &quot;My finance team site group&quot;
 </code></pre>
 <p>This will groupify the FinanceTeamsite</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -106,7 +106,6 @@
 <p>Specifies the alias of the group. Cannot contain spaces.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -118,7 +117,6 @@ Accept wildcard characters: False
 <p>Specifies the classification of the group</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -130,7 +128,6 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -142,7 +139,6 @@ Accept wildcard characters: False
 <p>The optional description of the group</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -154,7 +150,6 @@ Accept wildcard characters: False
 <p>The display name of the group</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -166,7 +161,6 @@ Accept wildcard characters: False
 <p>If specified the site will be associated to the hubsite as identified by this id</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -178,7 +172,6 @@ Accept wildcard characters: False
 <p>Specifies if the group is public. Defaults to false.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -190,7 +183,6 @@ Accept wildcard characters: False
 <p>Specifies if the current site home page is kept. Defaults to false.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -202,7 +194,6 @@ Accept wildcard characters: False
 <p>The array UPN values of the group's owners</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -214,7 +205,6 @@ Accept wildcard characters: False
 <p>Url of the site to be connected to an Microsoft 365 Group</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -223,7 +213,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

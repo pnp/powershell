@@ -87,12 +87,12 @@
 <p>Adds a web part to a wiki page in a specified table row and column</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="xml">XML</h3>
-<pre><code>Add-PnPWebPartToWikiPage -ServerRelativePageUrl &lt;String&gt; -Xml &lt;String&gt; -Row &lt;Int32&gt; -Column &lt;Int32&gt; [-AddSpace]
- [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPWebPartToWikiPage -ServerRelativePageUrl &lt;String&gt; -Xml &lt;String&gt; -Row &lt;Int32&gt; -Column &lt;Int32&gt; [-AddSpace]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="file">FILE</h3>
-<pre><code>Add-PnPWebPartToWikiPage -ServerRelativePageUrl &lt;String&gt; -Path &lt;String&gt; -Row &lt;Int32&gt; -Column &lt;Int32&gt;
- [-AddSpace] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPWebPartToWikiPage -ServerRelativePageUrl &lt;String&gt; -Path &lt;String&gt; -Row &lt;Int32&gt; -Column &lt;Int32&gt;
+ [-AddSpace] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -109,7 +109,6 @@
 <p>Must there be a extra space between the web part</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -121,7 +120,6 @@ Accept wildcard characters: False
 <p>Column number where the web part must be placed</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -133,7 +131,6 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -145,7 +142,6 @@ Accept wildcard characters: False
 <p>A path to a web part file on a the file system.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: FILE
-Aliases:
 
 Required: True
 Position: Named
@@ -157,7 +153,6 @@ Accept wildcard characters: False
 <p>Row number where the web part must be placed</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -177,23 +172,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-xml">-Xml</h3>
 <p>A string containing the XML for the web part.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: XML
-Aliases:
 
 Required: True
 Position: Named
@@ -202,7 +184,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Saves a PnP provisioning hierarchy to the file system</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Save-PnPTenantTemplate -Template &lt;ProvisioningHierarchyPipeBind&gt; [-Out] &lt;String&gt;
+<pre><code class="lang-powershell">Save-PnPTenantTemplate -Template &lt;ProvisioningHierarchyPipeBind&gt; [-Out] &lt;String&gt;
  [-Schema &lt;XMLPnPSchemaVersion&gt;] [-Force] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -114,7 +114,6 @@ Save-PnPTenantTemplate -Template $template -Out .\template.pnp -Schema V202002
 <p>Specifying the Force parameter will skip the confirmation question.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -126,7 +125,6 @@ Accept wildcard characters: False
 <p>Filename to write to, optionally including full path.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -138,7 +136,6 @@ Accept wildcard characters: False
 <p>The optional schema to use when creating the PnP file. Always defaults to the latest schema.</p>
 <pre><code class="lang-yaml">Type: XMLPnPSchemaVersion
 Parameter Sets: (All)
-Aliases:
 Accepted values: LATEST, V201503, V201505, V201508, V201512, V201605, V201705, V201801, V201805, V201807, V201903, V201909, V202002
 
 Required: False
@@ -151,7 +148,6 @@ Accept wildcard characters: False
 <p>Allows you to provide an in-memory instance of a Tenant Template or a filename of a template file in XML format. When using this parameter, the -Out parameter refers to the path for saving the template and storing any supporting file for the template.</p>
 <pre><code class="lang-yaml">Type: ProvisioningHierarchyPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -160,7 +156,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

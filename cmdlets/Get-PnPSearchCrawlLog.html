@@ -86,9 +86,9 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Returns entries from the SharePoint search crawl log. Make sure you are granted access to the crawl log via the SharePoint search admin center at https://<tenant>-admin.sharepoint.com/_layouts/15/searchadmin/crawllogreadpermission.aspx in order to run this cmdlet.<p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Get-PnPSearchCrawlLog [-LogLevel &lt;LogLevel&gt;] [-RowLimit &lt;Int32&gt;] [-Filter &lt;String&gt;]
+<pre><code class="lang-powershell">Get-PnPSearchCrawlLog [-LogLevel &lt;LogLevel&gt;] [-RowLimit &lt;Int32&gt;] [-Filter &lt;String&gt;]
  [-ContentSource &lt;ContentSource&gt;] [-StartDate &lt;DateTime&gt;] [-EndDate &lt;DateTime&gt;] [-RawFormat]
- [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -97,7 +97,7 @@
 </code></pre>
 <p>Returns the last 100 crawl log entries for site content.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPSearchCrawlLog -Filter &quot;https://&lt;tenant&gt;-my.sharepoint.com/personal&quot;
+<pre><code class="lang-powershell">Get-PnPSearchCrawlLog -Filter &quot;https://contoso-my.sharepoint.com/personal&quot;
 </code></pre>
 <p>Returns the last 100 crawl log entries for OneDrive content.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
@@ -125,7 +125,6 @@
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -137,7 +136,6 @@ Accept wildcard characters: False
 <p>Content to retrieve (Sites, User Profiles). Defaults to Sites.</p>
 <pre><code class="lang-yaml">Type: ContentSource
 Parameter Sets: (All)
-Aliases:
 Accepted values: Sites, UserProfiles
 
 Required: False
@@ -150,7 +148,6 @@ Accept wildcard characters: False
 <p>End date to stop getting entries from. Default to current time.</p>
 <pre><code class="lang-yaml">Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -162,7 +159,6 @@ Accept wildcard characters: False
 <p>Filter to limit what is being returned. Has to be a URL prefix for SharePoint content, and part of a user principal name for user profiles. Wildcard characters are not supported.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -174,7 +170,6 @@ Accept wildcard characters: False
 <p>Filter what log entries to return (All, Success, Warning, Error). Defaults to All</p>
 <pre><code class="lang-yaml">Type: LogLevel
 Parameter Sets: (All)
-Aliases:
 Accepted values: Success, Warning, Error, All
 
 Required: False
@@ -187,7 +182,6 @@ Accept wildcard characters: False
 <p>Show raw crawl log data</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -199,7 +193,6 @@ Accept wildcard characters: False
 <p>Number of entries to return. Defaults to 100.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -211,19 +204,6 @@ Accept wildcard characters: False
 <p>Start date to start getting entries from. Defaults to start of time.</p>
 <pre><code class="lang-yaml">Type: DateTime
 Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -232,7 +212,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </tenant></article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

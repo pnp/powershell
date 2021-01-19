@@ -90,22 +90,22 @@
 </ul>
 <p>Removes a site collection</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Remove-PnPTenantSite [-Url] &lt;String&gt; [-SkipRecycleBin] [-Force] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Remove-PnPTenantSite [-Url] &lt;String&gt; [-SkipRecycleBin] [-Force] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Removes a site collection which is listed in your tenant administration site.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso
+<pre><code class="lang-powershell">Remove-PnPTenantSite -Url &quot;https://tenant.sharepoint.com/sites/contoso&quot;
 </code></pre>
 <p>This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso'  and put it in the recycle bin.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin
+<pre><code class="lang-powershell">Remove-PnPTenantSite -Url &quot;https://tenant.sharepoint.com/sites/contoso&quot; -Force -SkipRecycleBin
 </code></pre>
 <p>This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' with force and it will skip the recycle bin.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -FromRecycleBin
+<pre><code class="lang-powershell">Remove-PnPTenantSite -Url &quot;https://tenant.sharepoint.com/sites/contoso&quot; -FromRecycleBin
 </code></pre>
 <p>This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin.</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -113,7 +113,6 @@
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -125,7 +124,6 @@ Accept wildcard characters: False
 <p>Do not ask for confirmation.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -135,7 +133,6 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-skiprecyclebin">-SkipRecycleBin</h3>
 <p>Do not add to the tenant scoped recycle bin when selected.</p>
-<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: SkipTrash
@@ -150,7 +147,6 @@ Accept wildcard characters: False
 <p>Specifies the full URL of the site collection that needs to be deleted</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -159,7 +155,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

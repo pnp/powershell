@@ -87,11 +87,11 @@
 <p>Executes a search query to retrieve indexed site collections</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="limit-default">Limit (Default)</h3>
-<pre><code>Get-PnPSiteSearchQueryResults [[-Query] &lt;String&gt;] [-StartRow &lt;Int32&gt;] [-MaxResults &lt;Int32&gt;]
- [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPSiteSearchQueryResults [[-Query] &lt;String&gt;] [-StartRow &lt;Int32&gt;] [-MaxResults &lt;Int32&gt;]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="all">All</h3>
-<pre><code>Get-PnPSiteSearchQueryResults [[-Query] &lt;String&gt;] [-All] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Get-PnPSiteSearchQueryResults [[-Query] &lt;String&gt;] [-All] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -125,7 +125,6 @@
 <p>Automatically page results until the end to get more than 500 sites. Use with caution!</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: All
-Aliases:
 
 Required: False
 Position: Named
@@ -137,7 +136,6 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -149,7 +147,6 @@ Accept wildcard characters: False
 <p>Maximum amount of search results to return. Default and max is 500 search results.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: Limit
-Aliases:
 
 Required: False
 Position: Named
@@ -161,7 +158,6 @@ Accept wildcard characters: False
 <p>Search query in Keyword Query Language (KQL) to execute to refine the returned sites. If omitted, all indexed sites will be returned.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -173,19 +169,6 @@ Accept wildcard characters: False
 <p>Search result item to start returning the results from. Useful for paging. Leave at 0 to return all results.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: Limit
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -194,7 +177,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

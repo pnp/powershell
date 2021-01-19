@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Adds a Role Defintion (Permission Level) to the site collection in the current context</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Add-PnPRoleDefinition -RoleName &lt;String&gt; [-Clone &lt;RoleDefinitionPipeBind&gt;] [-Include &lt;PermissionKind[]&gt;]
+<pre><code class="lang-powershell">Add-PnPRoleDefinition -RoleName &lt;String&gt; [-Clone &lt;RoleDefinitionPipeBind&gt;] [-Include &lt;PermissionKind[]&gt;]
  [-Exclude &lt;PermissionKind[]&gt;] [-Description &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -114,7 +114,6 @@ Add-PnPRoleDefinition -RoleName &quot;AddOnly&quot; -Clone $roleDefinition -Excl
 <p>An existing permission level or the name of an permission level to clone as base template.</p>
 <pre><code class="lang-yaml">Type: RoleDefinitionPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -126,7 +125,6 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -138,7 +136,6 @@ Accept wildcard characters: False
 <p>Optional description for the new permission level.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -150,7 +147,6 @@ Accept wildcard characters: False
 <p>Specifies permission flags(s) to disable. Please visit <a href="https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)">https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)</a> for the PermissionKind enum</p>
 <pre><code class="lang-yaml">Type: PermissionKind[]
 Parameter Sets: (All)
-Aliases:
 Accepted values: EmptyMask, ViewListItems, AddListItems, EditListItems, DeleteListItems, ApproveItems, OpenItems, ViewVersions, DeleteVersions, CancelCheckout, ManagePersonalViews, ManageLists, ViewFormPages, AnonymousSearchAccessList, Open, ViewPages, AddAndCustomizePages, ApplyThemeAndBorder, ApplyStyleSheets, ViewUsageData, CreateSSCSite, ManageSubwebs, CreateGroups, ManagePermissions, BrowseDirectories, BrowseUserInfo, AddDelPrivateWebParts, UpdatePersonalWebParts, ManageWeb, AnonymousSearchAccessWebLists, UseClientIntegration, UseRemoteAPIs, ManageAlerts, CreateAlerts, EditMyUserInfo, EnumeratePermissions, FullMask
 
 Required: False
@@ -163,7 +159,6 @@ Accept wildcard characters: False
 <p>Specifies permission flags(s) to enable. Please visit <a href="https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)">https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)</a> for the PermissionKind enum</p>
 <pre><code class="lang-yaml">Type: PermissionKind[]
 Parameter Sets: (All)
-Aliases:
 Accepted values: EmptyMask, ViewListItems, AddListItems, EditListItems, DeleteListItems, ApproveItems, OpenItems, ViewVersions, DeleteVersions, CancelCheckout, ManagePersonalViews, ManageLists, ViewFormPages, AnonymousSearchAccessList, Open, ViewPages, AddAndCustomizePages, ApplyThemeAndBorder, ApplyStyleSheets, ViewUsageData, CreateSSCSite, ManageSubwebs, CreateGroups, ManagePermissions, BrowseDirectories, BrowseUserInfo, AddDelPrivateWebParts, UpdatePersonalWebParts, ManageWeb, AnonymousSearchAccessWebLists, UseClientIntegration, UseRemoteAPIs, ManageAlerts, CreateAlerts, EditMyUserInfo, EnumeratePermissions, FullMask
 
 Required: False
@@ -176,7 +171,6 @@ Accept wildcard characters: False
 <p>Name of new permission level.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -185,7 +179,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

@@ -90,53 +90,44 @@
 </ul>
 <p>Gets one Microsoft 365 Group or a list of Microsoft 365 Groups</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Get-PnPMicrosoft365Group [-Identity &lt;Microsoft365GroupPipeBind&gt;] [-ExcludeSiteUrl] [-IncludeClassification]
- [-IncludeHasTeam] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPMicrosoft365Group [-Identity &lt;Microsoft365GroupPipeBind&gt;] [-IncludeSiteUrl] [-IncludeClassification]
+ [-IncludeHasTeam] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-Microsoft365Group
+<pre><code class="lang-powershell">Get-PnPMicrosoft365Group
 </code></pre>
 <p>Retrieves all the Microsoft 365 Groups</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-Microsoft365Group -Identity $groupId
+<pre><code class="lang-powershell">Get-PnPMicrosoft365Group -Identity $groupId
 </code></pre>
 <p>Retrieves a specific Microsoft 365 Group based on its ID</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-Microsoft365Group -Identity $groupDisplayName
+<pre><code class="lang-powershell">Get-PnPMicrosoft365Group -Identity $groupDisplayName
 </code></pre>
 <p>Retrieves a specific or list of Microsoft 365 Groups that start with the given DisplayName</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Get-Microsoft365Group -Identity $groupSiteMailNickName
+<pre><code class="lang-powershell">Get-PnPMicrosoft365Group -Identity $groupSiteMailNickName
 </code></pre>
 <p>Retrieves a specific or list of Microsoft 365 Groups for which the email starts with the provided mail nickName</p>
 <h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Get-Microsoft365Group -Identity $group
+<pre><code class="lang-powershell">Get-PnPMicrosoft365Group -Identity $group
 </code></pre>
 <p>Retrieves a specific Microsoft 365 Group based on its object instance</p>
 <h3 id="example-6">EXAMPLE 6</h3>
-<pre><code class="lang-powershell">Get-Microsoft365Group -IncludeIfHasTeam
+<pre><code class="lang-powershell">Get-PnPMicrosoft365Group -IncludeHasTeam
 </code></pre>
 <p>Retrieves all the Microsoft 365 Groups and checks for each of them if it has a Microsoft Team provisioned for it</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
-<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Get-PnPMicrosoft365Group -IncludeSiteUrl
 </code></pre>
-<h3 id="-excludesiteurl">-ExcludeSiteUrl</h3>
-<p>Exclude fetching the site URL for Microsoft 365 Groups. This speeds up large listings.</p>
+<p>Retrieves all Microsoft 365 Groups in this tenant and includes the URL property for the underlying SharePoint site.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-includesiteurl">-IncludeSiteUrl</h3>
+<p>Include fetching the site URL for Microsoft 365 Groups. This slows down large listings.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -148,7 +139,6 @@ Accept wildcard characters: False
 <p>The Identity of the Microsoft 365 Group</p>
 <pre><code class="lang-yaml">Type: Microsoft365GroupPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -160,7 +150,6 @@ Accept wildcard characters: False
 <p>Include Classification value of Microsoft 365 Groups</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -172,7 +161,6 @@ Accept wildcard characters: False
 <p>Include a flag for every Microsoft 365 Group if it has a Microsoft Team provisioned for it. This will slow down the retrieval of Microsoft 365 Groups so only use it if you need it.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -181,7 +169,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

@@ -86,8 +86,8 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Checks in a file</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Set-PnPFileCheckedIn [-Url] &lt;String&gt; [-CheckinType &lt;CheckinType&gt;] [-Comment &lt;String&gt;] [-Approve]
- [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPFileCheckedIn [-Url] &lt;String&gt; [-CheckinType &lt;CheckinType&gt;] [-Comment &lt;String&gt;] [-Approve]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -104,7 +104,6 @@
 <p>Approve file</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -116,7 +115,6 @@ Accept wildcard characters: False
 <p>The check in type to use. Defaults to Major</p>
 <pre><code class="lang-yaml">Type: CheckinType
 Parameter Sets: (All)
-Aliases:
 Accepted values: MinorCheckIn, MajorCheckIn, OverwriteCheckIn
 
 Required: False
@@ -129,7 +127,6 @@ Accept wildcard characters: False
 <p>The check in comment</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -141,7 +138,6 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -153,7 +149,6 @@ Accept wildcard characters: False
 <p>The server relative url of the file to check in</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -161,20 +156,8 @@ Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

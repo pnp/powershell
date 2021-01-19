@@ -86,12 +86,13 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Adds an alert for a user to a list</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Add-PnPAlert [-List] &lt;ListPipeBind&gt; [-Title &lt;String&gt;] [-User &lt;UserPipeBind&gt;]
+<pre><code class="lang-powershell">Add-PnPAlert [-List] &lt;ListPipeBind&gt; [-Title &lt;String&gt;] [-User &lt;UserPipeBind&gt;]
  [-DeliveryMethod &lt;AlertDeliveryChannel&gt;] [-ChangeType &lt;AlertEventType&gt;] [-Frequency &lt;AlertFrequency&gt;]
- [-Filter &lt;AlertFilter&gt;] [-Time &lt;DateTime&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-Filter &lt;AlertFilter&gt;] [-Time &lt;DateTime&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlets allows to add an alert for a user to a list.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPAlert -List &quot;Demo List&quot;
@@ -108,10 +109,8 @@
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-changetype">-ChangeType</h3>
 <p>Alert change type</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: AlertEventType
 Parameter Sets: (All)
-Aliases:
 Accepted values: AddObject, ModifyObject, DeleteObject, Discussion, All
 
 Required: False
@@ -122,10 +121,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -135,10 +132,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-deliverymethod">-DeliveryMethod</h3>
 <p>Alert delivery method</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: AlertDeliveryChannel
 Parameter Sets: (All)
-Aliases:
 Accepted values: Email, Sms
 
 Required: False
@@ -149,10 +144,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-filter">-Filter</h3>
 <p>Alert filter</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: AlertFilter
 Parameter Sets: (All)
-Aliases:
 Accepted values: AnythingChanges, SomeoneElseChangesAnItem, SomeoneElseChangesItemCreatedByMe, SomeoneElseChangesItemLastModifiedByMe
 
 Required: False
@@ -163,10 +156,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-frequency">-Frequency</h3>
 <p>Alert frequency</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: AlertFrequency
 Parameter Sets: (All)
-Aliases:
 Accepted values: Immediate, Daily, Weekly
 
 Required: False
@@ -177,10 +168,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-list">-List</h3>
 <p>The ID, Title or Url of the list.</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -190,10 +179,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-time">-Time</h3>
 <p>Alert time (if frequency is not immediate)</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -203,10 +190,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-title">-Title</h3>
 <p>Alert title</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -216,23 +201,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-user">-User</h3>
 <p>User to create the alert for (User ID, login name or actual User object). Skip this parameter to create an alert for the current user. Note: Only site owners can create alerts for other users.</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: UserPipeBind
 Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -241,7 +211,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

@@ -87,18 +87,18 @@
 <p>Moves a file or folder to a different location</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="site-relative-default">Site Relative (Default)</h3>
-<pre><code>Move-PnPFile [-SiteRelativeUrl] &lt;String&gt; [-TargetUrl] &lt;String&gt; [-OverwriteIfAlreadyExists] [-Force]
- [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Move-PnPFile [-SiteRelativeUrl] &lt;String&gt; [-TargetUrl] &lt;String&gt; [-OverwriteIfAlreadyExists] [-Force]
+ [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="server-relative">Server Relative</h3>
-<pre><code>Move-PnPFile [-ServerRelativeUrl] &lt;String&gt; [-TargetUrl] &lt;String&gt; [-OverwriteIfAlreadyExists] [-Force]
- [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Move-PnPFile [-ServerRelativeUrl] &lt;String&gt; [-TargetUrl] &lt;String&gt; [-OverwriteIfAlreadyExists] [-Force]
+ [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="other-site-collection">Other Site Collection</h3>
-<pre><code>Move-PnPFile [[-ServerRelativeUrl] &lt;String&gt;] [[-SiteRelativeUrl] &lt;String&gt;]
+<pre><code class="lang-powershell">Move-PnPFile [[-ServerRelativeUrl] &lt;String&gt;] [[-SiteRelativeUrl] &lt;String&gt;]
  [-TargetServerRelativeLibrary] &lt;String&gt; [-OverwriteIfAlreadyExists] [-AllowSchemaMismatch]
- [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-Force] [-Web &lt;WebPipeBind&gt;]
- [-Connection &lt;PnPConnection&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
+ [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-Force] 
+ [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows moving a file or folder to a different location inside the same document library, such as in a subfolder, to a different document library on the same site collection or to a document library on another site collection</p>
@@ -122,10 +122,8 @@
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-allowschemamismatch">-AllowSchemaMismatch</h3>
 <p>If provided and the target document library specified using TargetServerRelativeLibrary has different fields than the document library where the document is being moved from, the move will succeed. If not provided, it will fail to protect against data loss of metadata stored in fields that cannot be moved along.</p>
-<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: False
 Position: Named
@@ -135,10 +133,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-allowsmallerversionlimitondestination">-AllowSmallerVersionLimitOnDestination</h3>
 <p>If provided and the target document library specified using TargetServerRelativeLibrary is configured to keep less historical versions of documents than the document library where the document is being moved from, the move will succeed. If not provided, it will fail to protect against data loss of historical versions that cannot be moved along.</p>
-<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: False
 Position: Named
@@ -162,7 +158,6 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -174,7 +169,6 @@ Accept wildcard characters: False
 <p>If provided, no confirmation will be requested and the action will be performed</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -184,10 +178,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-ignoreversionhistory">-IgnoreVersionHistory</h3>
 <p>If provided, only the latest version of the document will be moved and its history will be discared. If not provided, all historical versions will be moved along.</p>
-<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: False
 Position: Named
@@ -199,7 +191,6 @@ Accept wildcard characters: False
 <p>If provided, if a file or folder already exists at the TargetUrl, it will be overwritten. If omitted, the move operation will be canceled if the file or folder already exists at the TargetUrl location.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -211,7 +202,6 @@ Accept wildcard characters: False
 <p>Server relative Url specifying the file to move. Must include the file name.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Server Relative
-Aliases:
 
 Required: True
 Position: 0
@@ -221,7 +211,6 @@ Accept wildcard characters: False
 </code></pre>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: False
 Position: 0
@@ -233,7 +222,6 @@ Accept wildcard characters: False
 <p>Site relative Url specifying the file or folder to move. Must include the file or folder name.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Site Relative
-Aliases:
 
 Required: True
 Position: 0
@@ -243,7 +231,6 @@ Accept wildcard characters: False
 </code></pre>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: False
 Position: 0
@@ -253,10 +240,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-targetserverrelativelibrary">-TargetServerRelativeLibrary</h3>
 <p>Server relative url of a document library where to move the fileor folder to. Must not include the file or folder name.</p>
-<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: True
 Position: 1
@@ -268,22 +253,9 @@ Accept wildcard characters: False
 <p>Server relative Url where to move the file or folder to. Must include the file or folder name.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Site Relative, Server Relative
-Aliases:
 
 Required: True
 Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -301,7 +273,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

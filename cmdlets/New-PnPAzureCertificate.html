@@ -90,9 +90,9 @@
 <p>Certificate contains the PEM encoded certificate.</p>
 <p>PrivateKey contains the PEM encoded private key of the certificate.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>New-PnPAzureCertificate [[-CommonName] &lt;String&gt;] [[-Country] &lt;String&gt;] [[-State] &lt;String&gt;]
- [[-Locality] &lt;String&gt;] [[-Organization] &lt;String&gt;] [[-OrganizationUnit] &lt;String&gt;] [[-OutPfx] &lt;String&gt;]
- [[-OutCert] &lt;String&gt;] [[-ValidYears] &lt;Int32&gt;] [[-CertificatePassword] &lt;SecureString&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">New-PnPAzureCertificate [-CommonName &lt;String&gt;] [-Country &lt;String&gt;] [-State &lt;String&gt;]
+ [-Locality &lt;String&gt;] [-Organization &lt;String&gt;] [-OrganizationUnit &lt;String&gt;] [-OutPfx &lt;String&gt;]
+ [-OutCert &lt;String&gt;] [-ValidYears &lt;Int32&gt;] [-CertificatePassword &lt;SecureString&gt;] [-Store &lt;StoreLocation&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -104,15 +104,18 @@
 <pre><code class="lang-powershell">New-PnPAzureCertificate -CommonName &quot;My Certificate&quot; -ValidYears 30
 </code></pre>
 <p>This will output a certificate named &quot;My Certificate&quot; which expires in 30 years from now.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">New-PnPAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer -CertificatePassword (ConvertTo-SecureString -String &quot;pass@word1&quot; -AsPlainText -Force)
+</code></pre>
+<p>This will generate a default self-signed certificate named &quot;pnp.contoso.com&quot; valid for 10 years and output a pfx and cer file. The pfx file will have the password pass@word1 set on it.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-certificatepassword">-CertificatePassword</h3>
 <p>Optional certificate password</p>
 <pre><code class="lang-yaml">Type: SecureString
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 8
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -121,10 +124,9 @@ Accept wildcard characters: False
 <p>Common Name (e.g. server FQDN or YOUR name) [pnp.contoso.com]</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 0
+Position: 0Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -133,10 +135,9 @@ Accept wildcard characters: False
 <p>Country Name (2 letter code)</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -145,10 +146,9 @@ Accept wildcard characters: False
 <p>Locality Name (eg, city)</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -157,10 +157,9 @@ Accept wildcard characters: False
 <p>Organization Name (eg, company)</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -169,10 +168,9 @@ Accept wildcard characters: False
 <p>Organizational Unit Name (eg, section)</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -181,10 +179,9 @@ Accept wildcard characters: False
 <p>Filename to write to, optionally including full path (.cer)</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -193,10 +190,9 @@ Accept wildcard characters: False
 <p>Filename to write to, optionally including full path (.pfx)</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -205,10 +201,9 @@ Accept wildcard characters: False
 <p>State or Province Name (full name)</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -217,16 +212,24 @@ Accept wildcard characters: False
 <p>Number of years until expiration (default is 10, max is 30)</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 7
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-store">-Store</h3>
+<p>Local Certificate Store to add the certificate to. Only works on Microsoft Windows.</p>
+<pre><code class="lang-yaml">Type: StoreLocation
+Parameter Sets: Generate Certificate
+
+Required: False
+Position: Named
+Accept pipeline input: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

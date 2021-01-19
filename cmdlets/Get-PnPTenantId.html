@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Returns the Tenant ID</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Get-PnPTenantId [-TenantUrl &lt;String&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPTenantId [-TenantUrl &lt;String&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -95,14 +95,13 @@
 </code></pre>
 <p>Returns the current Tenant Id. A valid connection with Connect-PnPOnline is required.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPTenantId -TenantUrl https://contoso.sharepoint.com
+<pre><code class="lang-powershell">Get-PnPTenantId -TenantUrl &quot;https://contoso.sharepoint.com&quot;
 </code></pre>
 <p>Returns the Tenant ID for the specified tenant. Can be executed without a connecting first with Connect-PnPOnline</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-tenanturl">-TenantUrl</h3>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -111,7 +110,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

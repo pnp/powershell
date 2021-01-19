@@ -87,14 +87,14 @@
 <p>Updates a SharePoint Framework client side extension application customizer</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="custom-action-id">Custom Action Id</h3>
-<pre><code>Set-PnPApplicationCustomizer [[-Identity] &lt;UserCustomActionPipeBind&gt;] [-Scope &lt;CustomActionScope&gt;]
- [-Title &lt;String&gt;] [-Description &lt;String&gt;] [-Sequence &lt;Int32&gt;] [-ClientSideComponentProperties &lt;String&gt;]
- [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPApplicationCustomizer [[-Identity] &lt;UserCustomActionPipeBind&gt;] [-Scope &lt;CustomActionScope&gt;]
+ [-Title &lt;String&gt;] [-Description &lt;String&gt;] [-Sequence &lt;Int32&gt;] [-ClientSideComponentProperties &lt;String&gt;] [-ClientSideHostProperties&gt; &lt;String&gt;]
+ [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="client-side-component-id">Client Side Component Id</h3>
-<pre><code>Set-PnPApplicationCustomizer [-ClientSideComponentId &lt;Guid&gt;] [-Scope &lt;CustomActionScope&gt;]
- [-Title &lt;String&gt;] [-Description &lt;String&gt;] [-Sequence &lt;Int32&gt;] [-ClientSideComponentProperties &lt;String&gt;]
- [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPApplicationCustomizer [-ClientSideComponentId &lt;Guid&gt;] [-Scope &lt;CustomActionScope&gt;]
+ [-Title &lt;String&gt;] [-Description &lt;String&gt;] [-Sequence &lt;Int32&gt;] [-ClientSideComponentProperties &lt;String&gt;] [-ClientSideHostProperties&gt; &lt;String&gt;]
+ [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Updates a SharePoint Framework client side extension application customizer by updating its custom action. Only the properties that will be provided will be updated. Others will remain as they are.</p>
@@ -110,10 +110,8 @@
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-clientsidecomponentid">-ClientSideComponentId</h3>
 <p>The Client Side Component Id of the SharePoint Framework client side extension application customizer found in the manifest for which existing custom action(s) should be updated</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: Client Side Component Id
-Aliases:
 
 Required: False
 Position: Named
@@ -123,10 +121,19 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-clientsidecomponentproperties">-ClientSideComponentProperties</h3>
 <p>The Client Side Component Properties of the application customizer to update. Specify values as a json string : &quot;{Property1 : 'Value1', Property2: 'Value2'}&quot;. Omit to not update this property.</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-clientsidehostproperties">-ClientSideHostProperties</h3>
+<p>The Client Side Host Properties of the application customizer to update. Omit to not update this property.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -148,10 +155,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -161,10 +166,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-description">-Description</h3>
 <p>The description of the application customizer. Omit to not update this property.</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -174,10 +177,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>The id or name of the CustomAction representing the client side extension registration that needs to be updated or a CustomAction instance itself</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: UserCustomActionPipeBind
 Parameter Sets: Custom Action Id
-Aliases:
 
 Required: False
 Position: 0
@@ -187,10 +188,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-scope">-Scope</h3>
 <p>Define if the CustomAction representing the client side extension registration is to be found at the web or site collection scope. Specify All to update the component on both web and site collection level.</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: CustomActionScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site, All
 
 Required: False
@@ -201,10 +200,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-sequence">-Sequence</h3>
 <p>Sequence of this application customizer being injected. Use when you have a specific sequence with which to have multiple application customizers being added to the page. Omit to not update this property.</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -214,23 +211,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-title">-Title</h3>
 <p>The title of the application customizer. Omit to not update this property.</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -251,7 +233,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

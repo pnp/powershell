@@ -90,9 +90,9 @@
 </ul>
 <p>Creates a new Microsoft 365 Group</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>New-PnPMicrosoft365Group -DisplayName &lt;String&gt; -Description &lt;String&gt; -MailNickname &lt;String&gt;
+<pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName &lt;String&gt; -Description &lt;String&gt; -MailNickname &lt;String&gt;
  [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-GroupLogoPath &lt;String&gt;] [-CreateTeam] [-Force]
- [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -113,23 +113,10 @@
 </code></pre>
 <p>Creates a private Microsoft 365 Group with all the required properties, and with a custom list of Owners and a custom list of Members</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
-<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-createteam">-CreateTeam</h3>
 <p>Creates a Microsoft Teams team associated with created group</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -141,7 +128,6 @@ Accept wildcard characters: False
 <p>The Description of the Microsoft 365 Group</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -153,7 +139,6 @@ Accept wildcard characters: False
 <p>The Display Name of the Microsoft 365 Group</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -165,7 +150,6 @@ Accept wildcard characters: False
 <p>Specifying the Force parameter will skip the confirmation question.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -177,7 +161,6 @@ Accept wildcard characters: False
 <p>The path to the logo file of to set</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -189,7 +172,6 @@ Accept wildcard characters: False
 <p>Makes the group private when selected</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -201,7 +183,6 @@ Accept wildcard characters: False
 <p>The Mail Nickname of the Microsoft 365 Group. Cannot contain spaces.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -213,7 +194,6 @@ Accept wildcard characters: False
 <p>The array UPN values of the group's members</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -225,7 +205,6 @@ Accept wildcard characters: False
 <p>The array UPN values of the group's owners</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -234,7 +213,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a><a href="https://docs.microsoft.com/graph/api/group-post-groups">Documentation</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a><a href="https://docs.microsoft.com/graph/api/group-post-groups">Documentation</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

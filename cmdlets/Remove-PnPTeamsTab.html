@@ -90,37 +90,28 @@
 </ul>
 <p>Removes a Microsoft Teams tab in a channel.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Remove-PnPTeamsTab -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; -Identity &lt;TeamsTabPipeBind&gt;
- [-Force] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPTeamsTab -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; -Identity &lt;TeamsTabPipeBind&gt;
+ [-Force]  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity Wiki
+<pre><code class="lang-powershell">Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Channel &quot;General&quot; -Identity Wiki
 </code></pre>
-<p>Removes the tab with the display name 'Wiki' from the channel</p>
+<p>Removes the tab with the display name 'Wiki' from the General channel using diaply name.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity fcef815d-2e8e-47a5-b06b-9bebba5c7852
+<pre><code class="lang-powershell">Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Channel 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity Wiki
+</code></pre>
+<p>Removes the tab with the display name 'Wiki' from the channel using id.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Channel 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity fcef815d-2e8e-47a5-b06b-9bebba5c7852
 </code></pre>
 <p>Removes a tab with the specified id from the channel</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
-<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-channel">-Channel</h3>
 <p>Specify the channel id or display name of the channel to use.</p>
 <pre><code class="lang-yaml">Type: TeamsChannelPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -132,7 +123,6 @@ Accept wildcard characters: False
 <p>Specifying the Force parameter will skip the confirmation question.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -144,7 +134,6 @@ Accept wildcard characters: False
 <p>Specify the id of the tab</p>
 <pre><code class="lang-yaml">Type: TeamsTabPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -156,7 +145,6 @@ Accept wildcard characters: False
 <p>Specify the group id, mailNickname or display name of the team to use.</p>
 <pre><code class="lang-yaml">Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -165,7 +153,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

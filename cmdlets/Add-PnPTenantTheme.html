@@ -90,7 +90,7 @@
 </ul>
 <p>Adds or updates a theme to the tenant.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Add-PnPTenantTheme [-Overwrite] -Identity &lt;ThemePipeBind&gt; -Palette &lt;ThemePalettePipeBind&gt; -IsInverted &lt;Boolean&gt;
+<pre><code class="lang-powershell">Add-PnPTenantTheme [-Overwrite] -Identity &lt;ThemePipeBind&gt; -Palette &lt;ThemePalettePipeBind&gt; -IsInverted &lt;Boolean&gt;
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -132,7 +132,6 @@ PS:&gt;Add-PnPTenantTheme -Identity &quot;MyCompanyTheme&quot; -Palette $themepa
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -144,7 +143,6 @@ Accept wildcard characters: False
 <p>The name of the theme to add or update</p>
 <pre><code class="lang-yaml">Type: ThemePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -156,7 +154,6 @@ Accept wildcard characters: False
 <p>If the theme is inverted or not</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -168,7 +165,6 @@ Accept wildcard characters: False
 <p>{{ Fill Overwrite Description }}</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -180,7 +176,6 @@ Accept wildcard characters: False
 <p>The palette to add. See examples for more information.</p>
 <pre><code class="lang-yaml">Type: ThemePalettePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -189,7 +184,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

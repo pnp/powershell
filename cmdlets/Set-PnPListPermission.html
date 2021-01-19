@@ -87,12 +87,12 @@
 <p>Sets list permissions</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="group">Group</h3>
-<pre><code>Set-PnPListPermission -Identity &lt;ListPipeBind&gt; -Group &lt;GroupPipeBind&gt; [-AddRole &lt;String&gt;]
- [-RemoveRole &lt;String&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPListPermission -Identity &lt;ListPipeBind&gt; -Group &lt;GroupPipeBind&gt; [-AddRole &lt;String&gt;]
+ [-RemoveRole &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="user">User</h3>
-<pre><code>Set-PnPListPermission -Identity &lt;ListPipeBind&gt; -User &lt;String&gt; [-AddRole &lt;String&gt;] [-RemoveRole &lt;String&gt;]
- [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPListPermission -Identity &lt;ListPipeBind&gt; -User &lt;String&gt; [-AddRole &lt;String&gt;] [-RemoveRole &lt;String&gt;]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -109,7 +109,6 @@
 <p>The role that must be assigned to the group or user</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -121,7 +120,6 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -132,7 +130,6 @@ Accept wildcard characters: False
 <h3 id="-group">-Group</h3>
 <pre><code class="lang-yaml">Type: GroupPipeBind
 Parameter Sets: Group
-Aliases:
 
 Required: True
 Position: Named
@@ -144,7 +141,6 @@ Accept wildcard characters: False
 <p>The ID or Title of the list.</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -156,7 +152,6 @@ Accept wildcard characters: False
 <p>The role that must be removed from the group or user</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -167,7 +162,6 @@ Accept wildcard characters: False
 <h3 id="-user">-User</h3>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: User
-Aliases:
 
 Required: True
 Position: Named
@@ -175,20 +169,8 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

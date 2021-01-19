@@ -84,13 +84,17 @@
                     <h1 id="get-pnpgraphsubscription">Get-PnPGraphSubscription</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Gets subscriptions from Microsoft Graph. Requires the Azure Active Directory application permission 'Subscription.Read.All'.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API : Subscription.Read.All</li>
+</ul>
+<p>Gets subscriptions from Microsoft Graph.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="return-a-list-default">Return a list (Default)</h3>
-<pre><code>Get-PnPGraphSubscription [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPGraphSubscription [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="return-by-specific-id">Return by specific ID</h3>
-<pre><code>Get-PnPGraphSubscription [-Identity &lt;String&gt;] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPGraphSubscription [-Identity &lt;String&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -103,23 +107,10 @@
 </code></pre>
 <p>Retrieves the subscription from Microsoft Graph with the id 328c7693-5524-44ac-a946-73e02d6b0f98</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
-<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>Returns the subscription with the provided subscription id</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Return by specific ID
-Aliases:
 
 Required: False
 Position: Named
@@ -128,7 +119,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

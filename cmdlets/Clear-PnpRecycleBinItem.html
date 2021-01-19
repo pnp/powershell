@@ -87,17 +87,17 @@
 <p>Permanently deletes all or a specific recycle bin item</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="all-default">All (Default)</h3>
-<pre><code>Clear-PnPRecycleBinItem [-All] [-SecondStageOnly] [-Force] [-RowLimit &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Clear-PnPRecycleBinItem [-All] [-SecondStageOnly] [-Force] [-RowLimit &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="identity">Identity</h3>
-<pre><code>Clear-PnPRecycleBinItem -Identity &lt;RecycleBinItemPipeBind&gt; [-Force] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Clear-PnPRecycleBinItem -Identity &lt;RecycleBinItemPipeBind&gt; [-Force] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPRecycleBinItem | ? FileLeafName -like &quot;*.docx&quot; | Clear-PnpRecycleBinItem
+<pre><code class="lang-powershell">Get-PnPRecycleBinItem | Where-Object LeafName -like &quot;*.docx&quot; | Clear-PnpRecycleBinItem
 </code></pre>
 <p>Permanently deletes all the items in the first and second stage recycle bins of which the file names have the .docx extension</p>
 <h3 id="example-2">EXAMPLE 2</h3>
@@ -117,7 +117,6 @@
 <p>Clears all items</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: All
-Aliases:
 
 Required: False
 Position: Named
@@ -129,7 +128,6 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -141,7 +139,6 @@ Accept wildcard characters: False
 <p>If provided, no confirmation will be asked to restore the recycle bin item</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -153,7 +150,6 @@ Accept wildcard characters: False
 <p>Id of the recycle bin item or the recycle bin item itself to permanently delete</p>
 <pre><code class="lang-yaml">Type: RecycleBinItemPipeBind
 Parameter Sets: Identity
-Aliases:
 
 Required: True
 Position: Named
@@ -163,10 +159,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-rowlimit">-RowLimit</h3>
 <p>Limits deletion to specified number of items</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: All
-Aliases:
 
 Required: False
 Position: Named
@@ -176,10 +170,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-secondstageonly">-SecondStageOnly</h3>
 <p>If provided, only all the items in the second stage recycle bin will be cleared</p>
-<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: All
-Aliases:
 
 Required: False
 Position: Named
@@ -188,7 +180,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

@@ -87,16 +87,16 @@
 <p>Adds a custom action</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="default">Default</h3>
-<pre><code>Add-PnPCustomAction -Name &lt;String&gt; -Title &lt;String&gt; -Description &lt;String&gt; -Group &lt;String&gt; -Location &lt;String&gt;
+<pre><code class="lang-powershell">Add-PnPCustomAction -Name &lt;String&gt; -Title &lt;String&gt; -Description &lt;String&gt; -Group &lt;String&gt; -Location &lt;String&gt;
  [-Sequence &lt;Int32&gt;] [-Url &lt;String&gt;] [-ImageUrl &lt;String&gt;] [-CommandUIExtension &lt;String&gt;]
  [-RegistrationId &lt;String&gt;] [-Rights &lt;PermissionKind[]&gt;] [-RegistrationType &lt;UserCustomActionRegistrationType&gt;]
- [-Scope &lt;CustomActionScope&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-Scope &lt;CustomActionScope&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="client-side-component-id">Client Side Component Id</h3>
-<pre><code>Add-PnPCustomAction -Name &lt;String&gt; -Title &lt;String&gt; -Location &lt;String&gt; [-Sequence &lt;Int32&gt;]
+<pre><code class="lang-powershell">Add-PnPCustomAction -Name &lt;String&gt; -Title &lt;String&gt; -Location &lt;String&gt; [-Sequence &lt;Int32&gt;]
  [-RegistrationId &lt;String&gt;] [-RegistrationType &lt;UserCustomActionRegistrationType&gt;] [-Scope &lt;CustomActionScope&gt;]
  -ClientSideComponentId &lt;Guid&gt; [-ClientSideComponentProperties &lt;String&gt;]
- [-ClientSideHostProperties &lt;String&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-ClientSideHostProperties &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Adds a user custom action to a web or sitecollection.</p>
@@ -108,16 +108,14 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
 </code></pre>
 <p>Adds a new custom action to the custom list template, and sets the Title, Name and other fields with the specified values. On click it shows the number of items in that list. Notice: escape quotes in CommandUIExtension.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPCustomAction -Title &quot;CollabFooter&quot; -Name &quot;CollabFooter&quot; -Location &quot;ClientSideExtension.ApplicationCustomizer&quot; -ClientSideComponentId c0ab3b94-8609-40cf-861e-2a1759170b43 -ClientSideComponentProperties &quot;{`&quot;sourceTermSet`&quot;:`&quot;PnP-CollabFooter-SharedLinks`&quot;,`&quot;personalItemsStorageProperty`&quot;:`&quot;PnP-CollabFooter-MyLinks`&quot;}
+<pre><code class="lang-powershell">Add-PnPCustomAction -Title &quot;CollabFooter&quot; -Name &quot;CollabFooter&quot; -Location &quot;ClientSideExtension.ApplicationCustomizer&quot; -ClientSideComponentId c0ab3b94-8609-40cf-861e-2a1759170b43 -ClientSideComponentProperties &quot;{`&quot;sourceTermSet`&quot;:`&quot;PnP-CollabFooter-SharedLinks`&quot;,`&quot;personalItemsStorageProperty`&quot;:`&quot;PnP-CollabFooter-MyLinks`&quot;}&quot;
 </code></pre>
 <p>Adds a new application customizer to the site. This requires that an SPFX solution has been deployed containing the application customizer specified. Be sure to run Install-PnPApp before trying this cmdlet on a site.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-clientsidecomponentid">-ClientSideComponentId</h3>
 <p>The Client Side Component Id of the custom action</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: Client Side Component Id
-Aliases:
 
 Required: True
 Position: Named
@@ -127,10 +125,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-clientsidecomponentproperties">-ClientSideComponentProperties</h3>
 <p>The Client Side Component Properties of the custom action. Specify values as a json string : &quot;{Property1 : 'Value1', Property2: 'Value2'}&quot;</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Client Side Component Id
-Aliases:
 
 Required: False
 Position: Named
@@ -140,10 +136,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-clientsidehostproperties">-ClientSideHostProperties</h3>
 <p>The Client Side Host Properties of the custom action. Specify values as a json string : &quot;{'preAllocatedApplicationCustomizerTopHeight': '50', 'preAllocatedApplicationCustomizerBottomHeight': '50'}&quot;</p>
-<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Client Side Component Id
-Aliases:
 
 Required: False
 Position: Named
@@ -155,7 +149,6 @@ Accept wildcard characters: False
 <p>XML fragment that determines user interface properties of the custom action</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Default
-Aliases:
 
 Required: False
 Position: Named
@@ -167,7 +160,6 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -179,7 +171,6 @@ Accept wildcard characters: False
 <p>The description of the custom action</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Default
-Aliases:
 
 Required: True
 Position: Named
@@ -191,7 +182,6 @@ Accept wildcard characters: False
 <p>The group where this custom action needs to be added like 'SiteActions'</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Default
-Aliases:
 
 Required: True
 Position: Named
@@ -203,7 +193,6 @@ Accept wildcard characters: False
 <p>The URL of the image associated with the custom action</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Default
-Aliases:
 
 Required: False
 Position: Named
@@ -215,7 +204,6 @@ Accept wildcard characters: False
 <p>The actual location where this custom action need to be added like 'CommandUI.Ribbon'</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -227,7 +215,6 @@ Accept wildcard characters: False
 <p>The name of the custom action</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -239,7 +226,6 @@ Accept wildcard characters: False
 <p>The identifier of the object associated with the custom action.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -251,7 +237,6 @@ Accept wildcard characters: False
 <p>Specifies the type of object associated with the custom action</p>
 <pre><code class="lang-yaml">Type: UserCustomActionRegistrationType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, List, ContentType, ProgId, FileType
 
 Required: False
@@ -264,7 +249,6 @@ Accept wildcard characters: False
 <p>A string array that contain the permissions needed for the custom action</p>
 <pre><code class="lang-yaml">Type: PermissionKind[]
 Parameter Sets: Default
-Aliases:
 Accepted values: EmptyMask, ViewListItems, AddListItems, EditListItems, DeleteListItems, ApproveItems, OpenItems, ViewVersions, DeleteVersions, CancelCheckout, ManagePersonalViews, ManageLists, ViewFormPages, AnonymousSearchAccessList, Open, ViewPages, AddAndCustomizePages, ApplyThemeAndBorder, ApplyStyleSheets, ViewUsageData, CreateSSCSite, ManageSubwebs, CreateGroups, ManagePermissions, BrowseDirectories, BrowseUserInfo, AddDelPrivateWebParts, UpdatePersonalWebParts, ManageWeb, AnonymousSearchAccessWebLists, UseClientIntegration, UseRemoteAPIs, ManageAlerts, CreateAlerts, EditMyUserInfo, EnumeratePermissions, FullMask
 
 Required: False
@@ -277,7 +261,6 @@ Accept wildcard characters: False
 <p>The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.</p>
 <pre><code class="lang-yaml">Type: CustomActionScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site, All
 
 Required: False
@@ -290,7 +273,6 @@ Accept wildcard characters: False
 <p>Sequence of this CustomAction being injected. Use when you have a specific sequence with which to have multiple CustomActions being added to the page.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -302,7 +284,6 @@ Accept wildcard characters: False
 <p>The title of the custom action</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -314,19 +295,6 @@ Accept wildcard characters: False
 <p>The URL, URI or ECMAScript (JScript, JavaScript) function associated with the action</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Default
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -335,7 +303,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a><a href="https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee539583(v=office.15)">UserCustomAction</a><a href="https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee543321(v=office.15)">BasePermissions</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a><a href="https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee539583(v=office.15)">UserCustomAction</a><a href="https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee543321(v=office.15)">BasePermissions</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

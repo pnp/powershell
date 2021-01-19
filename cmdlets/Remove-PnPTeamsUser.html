@@ -88,9 +88,9 @@
 <ul>
 <li>Microsoft Graph API: Group.ReadWrite.All</li>
 </ul>
-<p>Removes users from a team.</p>
+<p>Removes a user from a team.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Remove-PnPTeamsUser -Team &lt;TeamsTeamPipeBind&gt; -User &lt;String&gt; [-Role &lt;String&gt;] [-Force] [-ByPassPermissionCheck]
+<pre><code class="lang-powershell">Remove-PnPTeamsUser -Team &lt;TeamsTeamPipeBind&gt; -User &lt;String&gt; [-Role &lt;String&gt;] [-Force] 
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -100,27 +100,14 @@
 </code></pre>
 <p>Removes the user specified from both owners and members of the team.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPTeamsUser -Team MyTeam -User john@doe.com -Owner
+<pre><code class="lang-powershell">Remove-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Owner
 </code></pre>
 <p>Removes the user john@doe.com from the owners of the team, but retains the user as a member.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
-<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-force">-Force</h3>
 <p>Specifying the Force parameter will skip the confirmation question.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -134,7 +121,6 @@ If specified as &quot;Member&quot; then the specified user is removed from the T
 specified user is removed as an owner of the team but stays as a team member. Defaults to &quot;Member&quot;. Note: The last owner cannot be removed from the team.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -146,7 +132,6 @@ Accept wildcard characters: False
 <p>Specify the group id, mailNickname or display name of the team to use.</p>
 <pre><code class="lang-yaml">Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -158,7 +143,6 @@ Accept wildcard characters: False
 <p>Specify the UPN (e.g. john@doe.com)</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -167,7 +151,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

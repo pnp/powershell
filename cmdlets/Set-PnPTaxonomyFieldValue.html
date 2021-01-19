@@ -87,15 +87,15 @@
 <p>Sets a taxonomy term value in a listitem field</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="item-default">ITEM (Default)</h3>
-<pre><code>Set-PnPTaxonomyFieldValue -ListItem &lt;ListItem&gt; -InternalFieldName &lt;String&gt; -TermId &lt;Guid&gt;
+<pre><code class="lang-powershell">Set-PnPTaxonomyFieldValue -ListItem &lt;ListItem&gt; -InternalFieldName &lt;String&gt; -TermId &lt;Guid&gt;
  [-Label &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="path">PATH</h3>
-<pre><code>Set-PnPTaxonomyFieldValue -ListItem &lt;ListItem&gt; -InternalFieldName &lt;String&gt; -TermPath &lt;String&gt;
+<pre><code class="lang-powershell">Set-PnPTaxonomyFieldValue -ListItem &lt;ListItem&gt; -InternalFieldName &lt;String&gt; -TermPath &lt;String&gt;
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="items">ITEMS</h3>
-<pre><code>Set-PnPTaxonomyFieldValue -ListItem &lt;ListItem&gt; -InternalFieldName &lt;String&gt; [-Terms &lt;Hashtable&gt;]
+<pre><code class="lang-powershell">Set-PnPTaxonomyFieldValue -ListItem &lt;ListItem&gt; -InternalFieldName &lt;String&gt; [-Terms &lt;Hashtable&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -117,7 +117,6 @@
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -129,7 +128,6 @@ Accept wildcard characters: False
 <p>The internal name of the field</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -141,7 +139,6 @@ Accept wildcard characters: False
 <p>The Label value of the term</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: ITEM
-Aliases:
 
 Required: False
 Position: Named
@@ -153,7 +150,6 @@ Accept wildcard characters: False
 <p>The list item to set the field value to</p>
 <pre><code class="lang-yaml">Type: ListItem
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -165,7 +161,6 @@ Accept wildcard characters: False
 <p>The Id of the Term</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: ITEM
-Aliases:
 
 Required: True
 Position: Named
@@ -177,7 +172,6 @@ Accept wildcard characters: False
 <p>A path in the form of GROUPLABEL|TERMSETLABEL|TERMLABEL</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: PATH
-Aliases:
 
 Required: True
 Position: Named
@@ -189,7 +183,6 @@ Accept wildcard characters: False
 <p>Allows you to specify terms with key value pairs that can be referred to in the template by means of the {id:label} token. See examples on how to use this parameter.</p>
 <pre><code class="lang-yaml">Type: Hashtable
 Parameter Sets: ITEMS
-Aliases:
 
 Required: False
 Position: Named
@@ -198,7 +191,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

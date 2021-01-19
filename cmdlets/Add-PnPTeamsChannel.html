@@ -91,12 +91,10 @@
 <p>Adds a channel to an existing Microsoft Teams instance.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="public-channel">Public channel</h3>
-<pre><code>Add-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; -DisplayName &lt;String&gt; [-Description &lt;String&gt;]
- [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; -DisplayName &lt;String&gt; [-Description &lt;String&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="private-channel">Private channel</h3>
-<pre><code>Add-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; -DisplayName &lt;String&gt; [-Description &lt;String&gt;] [-Private]
- -OwnerUPN &lt;String&gt; [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; -DisplayName &lt;String&gt; -OwnerUPN &lt;String&gt; [-Description &lt;String&gt;] [-Private] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -109,27 +107,14 @@
 </code></pre>
 <p>Adds a new channel to the specified Teams instance</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team MyTeam -DisplayName &quot;My Channel&quot; -Private
+<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team MyTeam -DisplayName &quot;My Channel&quot; -Private -OwnerUPN user1@domain.com
 </code></pre>
 <p>Adds a new private channel to the specified Teams instance</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
-<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-description">-Description</h3>
 <p>An optional description of the channel.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -141,7 +126,6 @@ Accept wildcard characters: False
 <p>The display name of the new channel. Letters, numbers and spaces are allowed.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -150,10 +134,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-ownerupn">-OwnerUPN</h3>
-<p>{{ Fill OwnerUPN Description }}</p>
+<p>The User Principal Name (email) of the owner of the channel.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Private channel
-Aliases:
 
 Required: True
 Position: Named
@@ -165,7 +148,6 @@ Accept wildcard characters: False
 <p>Specify to mark the channel as private.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Private channel
-Aliases:
 
 Required: True
 Position: Named
@@ -177,7 +159,6 @@ Accept wildcard characters: False
 <p>Specify the group id, mailNickname or display name of the team to use.</p>
 <pre><code class="lang-yaml">Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -186,7 +167,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

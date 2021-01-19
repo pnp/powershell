@@ -86,8 +86,8 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Returns one ore more sites from a tenant template</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Get-PnPTenantSequenceSite -Sequence &lt;ProvisioningSequence&gt; [-Identity &lt;ProvisioningSitePipeBind&gt;] [-WhatIf]
- [-Confirm] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPTenantSequenceSite -Sequence &lt;ProvisioningSequence&gt; [-Identity &lt;ProvisioningSitePipeBind&gt;] 
+  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -114,10 +114,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>Optional Id of the site</p>
-<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: ProvisioningSitePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -127,10 +125,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-sequence">-Sequence</h3>
 <p>The sequence to retrieve the site from</p>
-<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: ProvisioningSequence
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -151,7 +147,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

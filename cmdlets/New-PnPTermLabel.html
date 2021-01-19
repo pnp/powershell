@@ -86,9 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Creates a localized label for a taxonomy term</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>New-PnPTermLabel
- [-Term] &lt;PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.Term]&gt;
- -Name &lt;String&gt; -Lcid &lt;Int32&gt; [-IsDefault] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">New-PnPTermLabel -Term &lt;TaxonomyTermPipeBind&gt; -Name &lt;String&gt; -Lcid &lt;Int32&gt; [-IsDefault] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Creates a localized label for a taxonomy term. Use Get-PnPTerm -Include Labels to request the current labels on a taxonomy term.</p>
@@ -102,23 +100,10 @@
 </code></pre>
 <p>Creates a new localized taxonomy label in German (LCID 1031) named &quot;Finanzwesen&quot; for the term &quot;Finance&quot; in the termset Departments which is located in the &quot;Corporate&quot; termgroup</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-isdefault">-IsDefault</h3>
 <p>Makes this new label the default label</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -130,7 +115,6 @@ Accept wildcard characters: False
 <p>The locale id to use for the localized term</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -142,7 +126,6 @@ Accept wildcard characters: False
 <p>The localized name of the term</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -151,10 +134,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-term">-Term</h3>
-<p>The term to add the localized label to</p>
-<pre><code class="lang-yaml">Type: PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.Term]
+<p>The term to add the localized label to.</p>
+<pre><code class="lang-yaml">Type: TaxonomyTermPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -163,7 +145,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

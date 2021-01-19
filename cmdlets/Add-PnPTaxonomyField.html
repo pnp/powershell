@@ -87,15 +87,15 @@
 <p>Add a taxonomy field</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="path">Path</h3>
-<pre><code>Add-PnPTaxonomyField [-List &lt;ListPipeBind&gt;] -DisplayName &lt;String&gt; -InternalName &lt;String&gt; -TermSetPath &lt;String&gt;
+<pre><code class="lang-powershell">Add-PnPTaxonomyField [-List &lt;ListPipeBind&gt;] -DisplayName &lt;String&gt; -InternalName &lt;String&gt; -TermSetPath &lt;String&gt;
  [-TermPathDelimiter &lt;String&gt;] [-Group &lt;String&gt;] [-Id &lt;Guid&gt;] [-AddToDefaultView] [-MultiValue]
- [-Required] [-FieldOptions &lt;AddFieldOptions&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-Required] [-FieldOptions &lt;AddFieldOptions&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="id">Id</h3>
-<pre><code>Add-PnPTaxonomyField [-List &lt;ListPipeBind&gt;] -DisplayName &lt;String&gt; -InternalName &lt;String&gt;
+<pre><code class="lang-powershell">Add-PnPTaxonomyField [-List &lt;ListPipeBind&gt;] -DisplayName &lt;String&gt; -InternalName &lt;String&gt;
  [-TaxonomyItemId &lt;Guid&gt;] [-Group &lt;String&gt;] [-Id &lt;Guid&gt;] [-AddToDefaultView] [-MultiValue]
- [-Required] [-FieldOptions &lt;AddFieldOptions&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-Required] [-FieldOptions &lt;AddFieldOptions&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -110,7 +110,6 @@
 <p>Switch Parameter if this field must be added to the default view</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -122,7 +121,6 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -134,7 +132,6 @@ Accept wildcard characters: False
 <p>The display name of the field</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -146,7 +143,6 @@ Accept wildcard characters: False
 <p>Specifies the control settings while adding a field. See <a href="https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.addfieldoptions.aspx">https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.addfieldoptions.aspx</a> for details</p>
 <pre><code class="lang-yaml">Type: AddFieldOptions
 Parameter Sets: (All)
-Aliases:
 Accepted values: DefaultValue, AddToDefaultContentType, AddToNoContentType, AddToAllContentTypes, AddFieldInternalNameHint, AddFieldToDefaultView, AddFieldCheckDisplayName
 
 Required: False
@@ -159,7 +155,6 @@ Accept wildcard characters: False
 <p>The group name to where this field belongs to</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -171,7 +166,6 @@ Accept wildcard characters: False
 <p>The ID for the field, must be unique</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -183,7 +177,6 @@ Accept wildcard characters: False
 <p>The internal name of the field</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -195,7 +188,6 @@ Accept wildcard characters: False
 <p>The list object or name where this field needs to be added</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -207,7 +199,6 @@ Accept wildcard characters: False
 <p>Switch Parameter if this Taxonomy field can hold multiple values</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -219,7 +210,6 @@ Accept wildcard characters: False
 <p>Switch Parameter if the field is a required field</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -231,7 +221,6 @@ Accept wildcard characters: False
 <p>The ID of the Taxonomy item</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: Id
-Aliases:
 
 Required: False
 Position: Named
@@ -243,7 +232,6 @@ Accept wildcard characters: False
 <p>The path delimiter to be used, by default this is '|'</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Path
-Aliases:
 
 Required: False
 Position: Named
@@ -255,7 +243,6 @@ Accept wildcard characters: False
 <p>The path to the term that this needs to be bound</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Path
-Aliases:
 
 Required: True
 Position: Named
@@ -263,20 +250,8 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

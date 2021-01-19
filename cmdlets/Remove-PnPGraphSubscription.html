@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Removes an existing Microsoft Graph subscription. Required Azure Active Directory application permission depends on the resource the subscription exists on, see <a href="https://docs.microsoft.com/graph/api/subscription-delete#permissions">https://docs.microsoft.com/graph/api/subscription-delete#permissions</a>.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Remove-PnPGraphSubscription -Identity &lt;GraphSubscriptionPipeBind&gt; [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPGraphSubscription -Identity &lt;GraphSubscriptionPipeBind&gt;  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -95,23 +95,10 @@
 </code></pre>
 <p>Removes the Microsoft Graph subscription with the id 'bc204397-1128-4911-9d70-1d8bceee39da'</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
-<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>The unique id or an instance of a Microsoft Graph Subscription</p>
 <pre><code class="lang-yaml">Type: GraphSubscriptionPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -120,7 +107,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

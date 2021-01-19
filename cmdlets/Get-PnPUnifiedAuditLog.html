@@ -90,8 +90,8 @@
 </ul>
 <p>Gets unified audit logs from the Office 365 Management API. Requires the Azure Active Directory application permission 'ActivityFeed.Read'.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Get-PnPUnifiedAuditLog [-ContentType &lt;AuditContentType&gt;] [-StartTime &lt;DateTime&gt;] [-EndTime &lt;DateTime&gt;]
- [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPUnifiedAuditLog [-ContentType &lt;AuditContentType&gt;] [-StartTime &lt;DateTime&gt;] [-EndTime &lt;DateTime&gt;]
+  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -100,23 +100,10 @@
 </code></pre>
 <p>Retrieves the audit logs of SharePoint happening between the current time yesterday and the current time the day before yesterday</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
-<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-contenttype">-ContentType</h3>
 <p>Content type of logs to be retrieved, should be one of the following: AzureActiveDirectory, Exchange, SharePoint, General, DLP.</p>
 <pre><code class="lang-yaml">Type: AuditContentType
 Parameter Sets: (All)
-Aliases:
 Accepted values: AzureActiveDirectory, Exchange, SharePoint, General, DLP
 
 Required: False
@@ -129,7 +116,6 @@ Accept wildcard characters: False
 <p>End time of logs to be retrieved. Start time and end time must both be specified (or both omitted) and must be less than or equal to 24 hours apart.</p>
 <pre><code class="lang-yaml">Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -141,7 +127,6 @@ Accept wildcard characters: False
 <p>Start time of logs to be retrieved. Start time and end time must both be specified (or both omitted) and must be less than or equal to 24 hours apart, with the start time prior to end time and start time no more than 7 days in the past.</p>
 <pre><code class="lang-yaml">Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -150,7 +135,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

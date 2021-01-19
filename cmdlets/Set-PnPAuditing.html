@@ -87,14 +87,14 @@
 <p>Set Auditing setting for a site</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="enable-all">Enable all</h3>
-<pre><code>Set-PnPAuditing [-EnableAll] [-RetentionTime &lt;Int32&gt;] [-TrimAuditLog] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Set-PnPAuditing [-EnableAll] [-RetentionTime &lt;Int32&gt;] [-TrimAuditLog] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="disable-all">Disable All</h3>
-<pre><code>Set-PnPAuditing [-DisableAll] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPAuditing [-DisableAll] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="specific-flags">Specific flags</h3>
-<pre><code>Set-PnPAuditing [-RetentionTime &lt;Int32&gt;] [-TrimAuditLog] [-EditItems] [-CheckOutCheckInItems] [-MoveCopyItems]
+<pre><code class="lang-powershell">Set-PnPAuditing [-RetentionTime &lt;Int32&gt;] [-TrimAuditLog] [-EditItems] [-CheckOutCheckInItems] [-MoveCopyItems]
  [-DeleteRestoreItems] [-EditContentTypesColumns] [-SearchContent] [-EditUsersPermissions]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
@@ -131,7 +131,6 @@
 <p>Audit checking out or checking in items</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -143,7 +142,6 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -155,7 +153,6 @@ Accept wildcard characters: False
 <p>Audit deleting or restoring items</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -167,7 +164,6 @@ Accept wildcard characters: False
 <p>Disable all audit flags</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Disable All
-Aliases:
 
 Required: True
 Position: Named
@@ -179,7 +175,6 @@ Accept wildcard characters: False
 <p>Audit editing content types and columns</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -191,7 +186,6 @@ Accept wildcard characters: False
 <p>Audit editing items</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -203,7 +197,6 @@ Accept wildcard characters: False
 <p>Audit editing users and permissions</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -215,7 +208,6 @@ Accept wildcard characters: False
 <p>Enable all audit flags</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Enable all
-Aliases:
 
 Required: True
 Position: Named
@@ -227,7 +219,6 @@ Accept wildcard characters: False
 <p>Audit moving or copying items to another location in the site.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -239,7 +230,6 @@ Accept wildcard characters: False
 <p>Set the retention time</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: Enable all, Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -251,7 +241,6 @@ Accept wildcard characters: False
 <p>Audit searching site content</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -263,7 +252,6 @@ Accept wildcard characters: False
 <p>Trim the audit log</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Enable all, Specific flags
-Aliases:
 
 Required: False
 Position: Named
@@ -272,7 +260,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

@@ -90,18 +90,18 @@
 </ul>
 <p>Restores a site collection from the tenant scoped recycle bin</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Restore-PnPTenantRecycleBinItem -Url &lt;String&gt; [-Wait] [-Force] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Restore-PnPTenantRecycleBinItem -Url &lt;String&gt; [-Wait] [-Force] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>The Restore-PnPTenantRecycleBinItem cmdlet allows a site collection that has been deleted and still exists in the tenant recycle bin to be restored to its original location.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Restore-PnPTenantRecycleBinItem -Url https://tenant.sharepoint.com/sites/contoso
+<pre><code class="lang-powershell">Restore-PnPTenantRecycleBinItem -Url &quot;https://tenant.sharepoint.com/sites/contoso&quot;
 </code></pre>
 <p>This will restore the deleted site collection with the url 'https://tenant.sharepoint.com/sites/contoso' to its original location</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Restore-PnPTenantRecycleBinItem -Url https://tenant.sharepoint.com/sites/contoso -Wait
+<pre><code class="lang-powershell">Restore-PnPTenantRecycleBinItem -Url &quot;https://tenant.sharepoint.com/sites/contoso&quot; -Wait
 </code></pre>
 <p>This will restore the deleted site collection with the url 'https://tenant.sharepoint.com/sites/contoso' to its original location and will wait with executing further PowerShell commands until the site collection restore has completed</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -109,7 +109,6 @@
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -121,7 +120,6 @@ Accept wildcard characters: False
 <p>If provided, no confirmation will be asked to restore the site collection from the tenant recycle bin</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -133,7 +131,6 @@ Accept wildcard characters: False
 <p>Url of the site collection to restore from the tenant recycle bin</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -145,7 +142,6 @@ Accept wildcard characters: False
 <p>If provided, the PowerShell execution will halt until the site restore process has completed</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -154,7 +150,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

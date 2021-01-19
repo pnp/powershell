@@ -86,8 +86,11 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Deletes an item from a list</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Remove-PnPListItem [-List] &lt;ListPipeBind&gt; -Identity &lt;ListItemPipeBind&gt; [-Recycle] [-Force] [-Web &lt;WebPipeBind&gt;]
- [-Connection &lt;PnPConnection&gt;] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
+<h3 id="single">Single</h3>
+<pre><code class="lang-powershell">Remove-PnPListItem [-List] &lt;ListPipeBind&gt; -Identity &lt;ListItemPipeBind&gt; [-Recycle] [-Force] 
+</code></pre>
+<h3 id="batched">Batched</h3>
+<pre><code class="lang-powershell">Remove-PnPListItem [-List] &lt;ListPipeBind&gt; -Identity &lt;ListItemPipeBind&gt; -Batch &lt;PnPBatch&gt; [-Recycle]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -99,24 +102,17 @@
 <pre><code class="lang-powershell">Remove-PnPListItem -List &quot;Demo List&quot; -Identity &quot;1&quot; -Force -Recycle
 </code></pre>
 <p>Removes the listitem with id &quot;1&quot; from the &quot;Demo List&quot; list and saves it in the Recycle Bin</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-confirm">-Confirm</h3>
-<p>Prompts you for confirmation before running the cmdlet.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">$batch = New-PnPBatch
+1..50 | Foreach-Object{Remove-PnPListItem -List &quot;DemoList&quot; -Identity $_ -Batch $batch}
+Invoke-PnPBatch -Batch $batch
 </code></pre>
+<p>This will delete all the items with Id 1 to Id 50 in the specified list.</p>
+<h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -128,7 +124,6 @@ Accept wildcard characters: False
 <p>Specifying the Force parameter will skip the confirmation question</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -140,7 +135,6 @@ Accept wildcard characters: False
 <p>The ID of the listitem, or actual ListItem object</p>
 <pre><code class="lang-yaml">Type: ListItemPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -152,7 +146,6 @@ Accept wildcard characters: False
 <p>The ID, Title or Url of the list</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -164,7 +157,6 @@ Accept wildcard characters: False
 <p>When provided, items will be sent to the recycle bin. When omitted, items will permanently be deleted.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -172,32 +164,19 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
+<h3 id="-batch">-Batch</h3>
+<p>Batch object used to add items in a batched manner. See examples on how to use this.</p>
+<pre><code class="lang-yaml">Type: PnPBatch
+Parameter Sets: Batched
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

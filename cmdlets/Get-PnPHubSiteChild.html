@@ -90,13 +90,13 @@
 </ul>
 <p>Retrieves all sites linked to a specific hub site</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Get-PnPHubSiteChild -Identity &lt;HubSitePipeBind&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPHubSiteChild -Identity &lt;HubSitePipeBind&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Retrieves all sites linked to a specific hub site</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPHubSiteChild -Identity https://contoso.sharepoint.com/sites/myhubsite
+<pre><code class="lang-powershell">Get-PnPHubSiteChild -Identity &quot;https://contoso.sharepoint.com/sites/myhubsite&quot;
 </code></pre>
 <p>Returns the sites having configured the provided hub site as their hub site</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -104,7 +104,6 @@
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -116,7 +115,6 @@ Accept wildcard characters: False
 <p>The URL of the hubsite for which to receive the sites refering to it</p>
 <pre><code class="lang-yaml">Type: HubSitePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -125,7 +123,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

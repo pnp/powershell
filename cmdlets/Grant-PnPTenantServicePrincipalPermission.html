@@ -87,24 +87,46 @@
 <p><strong>Required Permissions</strong></p>
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
+<li>Microsoft Graph API : Directory.ReadWrite.All</li>
 </ul>
-<p>Explicitly grants a specified permission to the &quot;SharePoint Online Client&quot; service principal</p>
+<p>Explicitly grants a specified permission to the &quot;SharePoint Online Client Extensibility Web Application Principal&quot; service principal for SPFx solutions.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Grant-PnPTenantServicePrincipalPermission -Scope &lt;String&gt; -Resource &lt;String&gt; [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Grant-PnPTenantServicePrincipalPermission -Scope &lt;String&gt; [-Resource &lt;String&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Grant-PnPTenantServicePrincipalPermission -Scope &quot;Group.Read.All&quot; -Resource &quot;Microsoft Graph&quot;
+<pre><code class="lang-powershell">Grant-PnPTenantServicePrincipalPermission -Scope &quot;Group.Read.All&quot;
 </code></pre>
 <p>This will explicitly grant the Group.Read.All permission on the Microsoft Graph resource</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-scope">-Scope</h3>
+<p>The scope to grant the permission for</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-resource">-Resource</h3>
+<p>The resource to grant the permission for. Defaults to &quot;Microsoft Graph&quot;</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: Microsoft Graph
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -112,32 +134,8 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-resource">-Resource</h3>
-<p>The resource to grant the permission for</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-scope">-Scope</h3>
-<p>The scope to grant the permission for</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

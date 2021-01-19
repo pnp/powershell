@@ -87,13 +87,13 @@
 <p>Proxy cmdlet for using Move-Item between SharePoint provider and FileSystem provider</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="path-default">Path (Default)</h3>
-<pre><code>Move-PnPItemProxy [-Path] &lt;String[]&gt; [[-Destination] &lt;String&gt;] [-Container] [-Force] [-Filter &lt;String&gt;]
- [-Include &lt;String[]&gt;] [-Exclude &lt;String[]&gt;] [-PassThru] [-Credential &lt;PSCredential&gt;] [-WhatIf] [-Confirm]
+<pre><code class="lang-powershell">Move-PnPItemProxy [-Path] &lt;String[]&gt; [[-Destination] &lt;String&gt;] [-Container] [-Force] [-Filter &lt;String&gt;]
+ [-Include &lt;String[]&gt;] [-Exclude &lt;String[]&gt;] [-PassThru] [-Credential &lt;PSCredential&gt;]  
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="literalpath">LiteralPath</h3>
-<pre><code>Move-PnPItemProxy [-LiteralPath] &lt;String[]&gt; [[-Destination] &lt;String&gt;] [-Container] [-Force] [-Filter &lt;String&gt;]
- [-Include &lt;String[]&gt;] [-Exclude &lt;String[]&gt;] [-PassThru] [-Credential &lt;PSCredential&gt;] [-WhatIf] [-Confirm]
+<pre><code class="lang-powershell">Move-PnPItemProxy [-LiteralPath] &lt;String[]&gt; [[-Destination] &lt;String&gt;] [-Container] [-Force] [-Filter &lt;String&gt;]
+ [-Include &lt;String[]&gt;] [-Exclude &lt;String[]&gt;] [-PassThru] [-Credential &lt;PSCredential&gt;]  
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -115,7 +115,6 @@ Accept wildcard characters: False
 <p>{{ Fill Container Description }}</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -127,7 +126,6 @@ Accept wildcard characters: False
 <p>{{ Fill Credential Description }}</p>
 <pre><code class="lang-yaml">Type: PSCredential
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -139,7 +137,6 @@ Accept wildcard characters: False
 <p>{{ Fill Destination Description }}</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 1
@@ -151,7 +148,6 @@ Accept wildcard characters: False
 <p>{{ Fill Exclude Description }}</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -163,7 +159,6 @@ Accept wildcard characters: False
 <p>{{ Fill Filter Description }}</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -175,7 +170,6 @@ Accept wildcard characters: False
 <p>{{ Fill Force Description }}</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -187,7 +181,6 @@ Accept wildcard characters: False
 <p>{{ Fill Include Description }}</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -211,7 +204,6 @@ Accept wildcard characters: False
 <p>{{ Fill PassThru Description }}</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -223,7 +215,6 @@ Accept wildcard characters: False
 <p>{{ Fill Path Description }}</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: Path
-Aliases:
 
 Required: True
 Position: 0
@@ -244,7 +235,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

@@ -86,8 +86,8 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Adds a view to a list</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Add-PnPView [-List] &lt;ListPipeBind&gt; -Title &lt;String&gt; [-Query &lt;String&gt;] -Fields &lt;String[]&gt; [-ViewType &lt;ViewType&gt;]
- [-RowLimit &lt;UInt32&gt;] [-Personal] [-SetAsDefault] [-Paged] [-Aggregations &lt;String&gt;] [-Web &lt;WebPipeBind&gt;]
+<pre><code class="lang-powershell">Add-PnPView [-List] &lt;ListPipeBind&gt; -Title &lt;String&gt; [-Query &lt;String&gt;] -Fields &lt;String[]&gt; [-ViewType &lt;ViewType&gt;]
+ [-RowLimit &lt;UInt32&gt;] [-Personal] [-SetAsDefault] [-Paged] [-Aggregations &lt;String&gt;] 
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -109,7 +109,6 @@
 <p>A valid XML fragment containing one or more Aggregations</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -121,7 +120,6 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -133,7 +131,6 @@ Accept wildcard characters: False
 <p>A list of fields to add.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -145,7 +142,6 @@ Accept wildcard characters: False
 <p>The ID or Url of the list.</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -157,7 +153,6 @@ Accept wildcard characters: False
 <p>If specified, the view will have paging.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -169,7 +164,6 @@ Accept wildcard characters: False
 <p>If specified, a personal view will be created.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -181,7 +175,6 @@ Accept wildcard characters: False
 <p>A valid CAML Query.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -193,7 +186,6 @@ Accept wildcard characters: False
 <p>The row limit for the view. Defaults to 30.</p>
 <pre><code class="lang-yaml">Type: UInt32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -205,7 +197,6 @@ Accept wildcard characters: False
 <p>If specified, the view will be set as the default view for the list.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -217,7 +208,6 @@ Accept wildcard characters: False
 <p>The title of the view.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -229,7 +219,6 @@ Accept wildcard characters: False
 <p>The type of view to add.</p>
 <pre><code class="lang-yaml">Type: ViewType
 Parameter Sets: (All)
-Aliases:
 Accepted values: None, Html, Grid, Recurrence, Chart, Calendar, Gantt
 
 Required: False
@@ -238,20 +227,8 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

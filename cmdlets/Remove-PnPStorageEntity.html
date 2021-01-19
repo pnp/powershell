@@ -86,8 +86,8 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Remove Storage Entities / Farm Properties from either the tenant scoped app catalog or the current site collection if the site has a site collection scoped app catalog</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Remove-PnPStorageEntity -Key &lt;String&gt; [-Scope &lt;StorageEntityScope&gt;] [-Connection &lt;PnPConnection&gt;] [-WhatIf]
- [-Confirm] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPStorageEntity -Key &lt;String&gt; [-Scope &lt;StorageEntityScope&gt;] [-Connection &lt;PnPConnection&gt;] 
+  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -116,7 +116,6 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -128,7 +127,6 @@ Accept wildcard characters: False
 <p>The key of the value to remove.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -140,7 +138,6 @@ Accept wildcard characters: False
 <p>Defines the scope of the storage entity. Defaults to Tenant.</p>
 <pre><code class="lang-yaml">Type: StorageEntityScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Site, Tenant
 
 Required: False
@@ -162,7 +159,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

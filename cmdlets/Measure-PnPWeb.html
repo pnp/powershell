@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Returns statistics on the web object</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Measure-PnPWeb [[-Identity] &lt;WebPipeBind&gt;] [-Recursive] [-IncludeHiddenList] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Measure-PnPWeb [[-Identity] &lt;WebPipeBind&gt;] [-Recursive] [-IncludeHiddenList] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -102,10 +102,8 @@
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -114,10 +112,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016</p>
 <pre><code class="lang-yaml">Type: WebPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -127,10 +123,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-includehiddenlist">-IncludeHiddenList</h3>
 <p>Include hidden lists in statistics calculation</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -140,10 +134,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-recursive">-Recursive</h3>
 <p>Iterate all sub webs recursively</p>
-<p>Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -152,7 +144,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

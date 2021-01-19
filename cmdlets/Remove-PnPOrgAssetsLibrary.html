@@ -90,7 +90,7 @@
 </ul>
 <p>Removes a given document library as a organizational asset source</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Remove-PnPOrgAssetsLibrary -LibraryUrl &lt;String&gt; [-ShouldRemoveFromCdn &lt;Boolean&gt;] [-CdnType &lt;SPOTenantCdnType&gt;]
+<pre><code class="lang-powershell">Remove-PnPOrgAssetsLibrary -LibraryUrl &lt;String&gt; [-ShouldRemoveFromCdn &lt;Boolean&gt;] [-CdnType &lt;SPOTenantCdnType&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -113,7 +113,6 @@
 <p>Indicates what type of Office 365 CDN source the document library that will no longer be flagged as an organizational asset was of</p>
 <pre><code class="lang-yaml">Type: SPOTenantCdnType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Public, Private
 
 Required: False
@@ -126,7 +125,6 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -138,7 +136,6 @@ Accept wildcard characters: False
 <p>The server relative url of the document library flagged as organizational asset which you want to remove, i.e. &quot;sites/branding/logos&quot;</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -150,7 +147,6 @@ Accept wildcard characters: False
 <p>Boolean indicating if the document library that will no longer be flagged as an organizational asset also needs to be removed as an Office 365 CDN source</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -159,7 +155,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Creates an ExtensibilityHandler Object, to be used by the Get-PnPSiteTemplate cmdlet</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>New-PnPExtensibilityHandlerObject [-Assembly] &lt;String&gt; -Type &lt;String&gt; [-Configuration &lt;String&gt;] [-Disabled]
+<pre><code class="lang-powershell">New-PnPExtensibilityHandlerObject [-Assembly] &lt;String&gt; -Type &lt;String&gt; [-Configuration &lt;String&gt;] [-Disabled]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -101,7 +101,6 @@ Get-PnPSiteTemplate -Out NewTemplate.xml -ExtensibilityHandlers $handler
 <p>The full assembly name of the handler</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -113,7 +112,6 @@ Accept wildcard characters: False
 <p>Any configuration data you want to send to the handler</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -125,7 +123,6 @@ Accept wildcard characters: False
 <p>If set, the handler will be disabled</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -137,7 +134,6 @@ Accept wildcard characters: False
 <p>The type of the handler</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -146,7 +142,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

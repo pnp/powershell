@@ -90,6 +90,8 @@
 </ul>
 <p>Removes all current members from a particular Microsoft 365 Group</p>
 <h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Clear-PnPMicrosoft365GroupMember -Identity &lt;Microsoft365GroupPipeBind&gt; [&lt;CommonParameters&gt;]
+</code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
@@ -97,8 +99,19 @@
 </code></pre>
 <p>Removes all the current members from the Microsoft 365 Group named &quot;Project Team&quot;</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-identity">-Identity</h3>
+<p>The Identity of the Microsoft 365 Group to remove all members from</p>
+<pre><code class="lang-yaml">Type: Microsoft365GroupPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a><a href="https://docs.microsoft.com/graph/api/group-delete-members">Documentation</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a><a href="https://docs.microsoft.com/graph/api/group-delete-members">Documentation</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

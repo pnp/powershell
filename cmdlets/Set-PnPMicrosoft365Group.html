@@ -90,9 +90,9 @@
 </ul>
 <p>Sets Microsoft 365 Group properties</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Set-PnPMicrosoft365Group -Identity &lt;Microsoft365GroupPipeBind&gt; [-DisplayName &lt;String&gt;] [-Description &lt;String&gt;]
+<pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity &lt;Microsoft365GroupPipeBind&gt; [-DisplayName &lt;String&gt;] [-Description &lt;String&gt;]
  [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-GroupLogoPath &lt;String&gt;] [-CreateTeam]
- [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-ByPassPermissionCheck]
+ [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] 
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -118,23 +118,10 @@
 </code></pre>
 <p>Sets demo@contoso.com as owner of the group</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
-<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-createteam">-CreateTeam</h3>
 <p>Creates a Microsoft Teams team associated with created group</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -146,7 +133,6 @@ Accept wildcard characters: False
 <p>The Description of the group to set</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -158,7 +144,6 @@ Accept wildcard characters: False
 <p>The DisplayName of the group to set</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -170,7 +155,6 @@ Accept wildcard characters: False
 <p>The path to the logo file of to set. Logo must be at least 48 pixels wide and may be at most 4 MB in size. Requires Site.ReadWrite.All permissions.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -179,10 +163,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-hidefromaddresslists">-HideFromAddressLists</h3>
-<p>{{ Fill HideFromAddressLists Description }}</p>
+<p>Controls whether the group is hidden or shown in the Global Address List (GAL).</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -191,10 +174,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-hidefromoutlookclients">-HideFromOutlookClients</h3>
-<p>{{ Fill HideFromOutlookClients Description }}</p>
+<p>Controls whether the group shows in the Outlook left-hand navigation.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -206,7 +188,6 @@ Accept wildcard characters: False
 <p>The Identity of the Microsoft 365 Group</p>
 <pre><code class="lang-yaml">Type: Microsoft365GroupPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -218,7 +199,6 @@ Accept wildcard characters: False
 <p>Makes the group private when selected</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -230,7 +210,6 @@ Accept wildcard characters: False
 <p>The array UPN values of members to set to the group. Note: Will replace members.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -242,7 +221,6 @@ Accept wildcard characters: False
 <p>The array UPN values of owners to set to the group. Note: Will replace owners.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -251,7 +229,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a><a href="https://docs.microsoft.com/graph/api/group-update">Documentation</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a><a href="https://docs.microsoft.com/graph/api/group-update">Documentation</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

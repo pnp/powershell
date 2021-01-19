@@ -90,38 +90,23 @@
 </ul>
 <p>Enables Site Classifications for the tenant</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Enable-PnPSiteClassification -Classifications &lt;System.Collections.Generic.List`1[System.String]&gt;
- -DefaultClassification &lt;String&gt; [-UsageGuidelinesUrl &lt;String&gt;] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Enable-PnPSiteClassification -Classifications &lt;System.Collections.Generic.List`1[System.String]&gt;
+ -DefaultClassification &lt;String&gt; [-UsageGuidelinesUrl &lt;String&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Scopes &quot;Directory.ReadWrite.All&quot;
-Enable-PnPSiteClassification -Classifications &quot;HBI&quot;,&quot;LBI&quot;,&quot;Top Secret&quot; -DefaultClassification &quot;LBI&quot;
+<pre><code class="lang-powershell">Enable-PnPSiteClassification -Classifications &quot;HBI&quot;,&quot;LBI&quot;,&quot;Top Secret&quot; -DefaultClassification &quot;LBI&quot;
 </code></pre>
 <p>Enables Site Classifications for your tenant and provides three classification values. The default value will be set to &quot;LBI&quot;</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Scopes &quot;Directory.ReadWrite.All&quot;
-Enable-PnPSiteClassification -Classifications &quot;HBI&quot;,&quot;LBI&quot;,&quot;Top Secret&quot; -UsageGuidelinesUrl https://aka.ms/sppnp
+<pre><code class="lang-powershell">Enable-PnPSiteClassification -Classifications &quot;HBI&quot;,&quot;LBI&quot;,&quot;Top Secret&quot; -UsageGuidelinesUrl https://aka.ms/m365pnp
 </code></pre>
 <p>Enables Site Classifications for your tenant and provides three classification values. The usage guideliness will be set to the specified URL.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
-<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-classifications">-Classifications</h3>
 <pre><code class="lang-yaml">Type: System.Collections.Generic.List`1[System.String]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -132,7 +117,6 @@ Accept wildcard characters: False
 <h3 id="-defaultclassification">-DefaultClassification</h3>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -143,7 +127,6 @@ Accept wildcard characters: False
 <h3 id="-usageguidelinesurl">-UsageGuidelinesUrl</h3>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -152,7 +135,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

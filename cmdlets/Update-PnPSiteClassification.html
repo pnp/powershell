@@ -91,12 +91,12 @@
 <p>Updates Site Classifications for the tenant</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="settings">Settings</h3>
-<pre><code>Update-PnPSiteClassification -Settings &lt;SiteClassificationsSettings&gt; [-ByPassPermissionCheck]
+<pre><code class="lang-powershell">Update-PnPSiteClassification -Settings &lt;SiteClassificationsSettings&gt; 
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="specific">Specific</h3>
-<pre><code>Update-PnPSiteClassification [-Classifications &lt;System.Collections.Generic.List`1[System.String]&gt;]
- [-DefaultClassification &lt;String&gt;] [-UsageGuidelinesUrl &lt;String&gt;] [-ByPassPermissionCheck] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Update-PnPSiteClassification [-Classifications &lt;System.Collections.Generic.List`1[System.String]&gt;]
+ [-DefaultClassification &lt;String&gt;] [-UsageGuidelinesUrl &lt;String&gt;]  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -109,27 +109,14 @@
 </code></pre>
 <p>Sets the default classification value to &quot;LBI&quot;. This value needs to be present in the list of classification values.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/sppnp
+<pre><code class="lang-powershell">Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/m365pnp
 </code></pre>
 <p>sets the usage guideliness URL to the specified URL</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
-<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-classifications">-Classifications</h3>
 <p>A list of classifications, separated by commas. E.g. &quot;HBI&quot;,&quot;LBI&quot;,&quot;Top Secret&quot;</p>
 <pre><code class="lang-yaml">Type: System.Collections.Generic.List`1[System.String]
 Parameter Sets: Specific
-Aliases:
 
 Required: False
 Position: Named
@@ -141,7 +128,6 @@ Accept wildcard characters: False
 <p>The default classification to be used. The value needs to be present in the list of possible classifications</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Specific
-Aliases:
 
 Required: False
 Position: Named
@@ -153,7 +139,6 @@ Accept wildcard characters: False
 <p>A settings object retrieved by Get-PnPSiteClassification</p>
 <pre><code class="lang-yaml">Type: SiteClassificationsSettings
 Parameter Sets: Settings
-Aliases:
 
 Required: True
 Position: Named
@@ -165,7 +150,6 @@ Accept wildcard characters: False
 <p>The UsageGuidelinesUrl. Set to &quot;&quot; to clear.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Specific
-Aliases:
 
 Required: False
 Position: Named
@@ -174,7 +158,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

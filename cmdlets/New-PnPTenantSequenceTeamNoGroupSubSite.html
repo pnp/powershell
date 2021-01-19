@@ -86,9 +86,9 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Creates a team site subsite with no Microsoft 365 group object</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>New-PnPTenantSequenceTeamNoGroupSubSite -Url &lt;String&gt; -Title &lt;String&gt; -TimeZoneId &lt;UInt32&gt; [-Language &lt;UInt32&gt;]
+<pre><code class="lang-powershell">New-PnPTenantSequenceTeamNoGroupSubSite -Url &lt;String&gt; -Title &lt;String&gt; -TimeZoneId &lt;UInt32&gt; [-Language &lt;UInt32&gt;]
  [-Description &lt;String&gt;] [-TemplateIds &lt;String[]&gt;] [-QuickLaunchDisabled]
- [-UseDifferentPermissionsFromParentSite] [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
+ [-UseDifferentPermissionsFromParentSite]   [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -112,7 +112,6 @@ Accept wildcard characters: False
 <h3 id="-description">-Description</h3>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -123,7 +122,6 @@ Accept wildcard characters: False
 <h3 id="-language">-Language</h3>
 <pre><code class="lang-yaml">Type: UInt32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -134,7 +132,6 @@ Accept wildcard characters: False
 <h3 id="-quicklaunchdisabled">-QuickLaunchDisabled</h3>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -145,7 +142,6 @@ Accept wildcard characters: False
 <h3 id="-templateids">-TemplateIds</h3>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -156,7 +152,6 @@ Accept wildcard characters: False
 <h3 id="-timezoneid">-TimeZoneId</h3>
 <pre><code class="lang-yaml">Type: UInt32
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -167,7 +162,6 @@ Accept wildcard characters: False
 <h3 id="-title">-Title</h3>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -178,7 +172,6 @@ Accept wildcard characters: False
 <h3 id="-url">-Url</h3>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -189,7 +182,6 @@ Accept wildcard characters: False
 <h3 id="-usedifferentpermissionsfromparentsite">-UseDifferentPermissionsFromParentSite</h3>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -210,7 +202,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

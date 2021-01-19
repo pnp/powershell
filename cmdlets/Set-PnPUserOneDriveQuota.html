@@ -90,7 +90,7 @@
 </ul>
 <p>Sets the quota on the OneDrive for Business site for a specific user</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Set-PnPUserOneDriveQuota [-Account] &lt;String&gt; [-Quota] &lt;Int64&gt; [-QuotaWarning] &lt;Int64&gt;
+<pre><code class="lang-powershell">Set-PnPUserOneDriveQuota [-Account] &lt;String&gt; [-Quota] &lt;Int64&gt; [-QuotaWarning] &lt;Int64&gt;
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -103,10 +103,8 @@
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-account">-Account</h3>
 <p>The account of the user, formatted either as a login name, or as a claims identity, e.g. i:0#.f|membership|user@domain.com</p>
-<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -116,10 +114,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -129,10 +125,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-quota">-Quota</h3>
 <p>The quota to set on the OneDrive for Business site of the user, in bytes</p>
-<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: Int64
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 1
@@ -142,10 +136,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-quotawarning">-QuotaWarning</h3>
 <p>The quota to set on the OneDrive for Business site of the user when to start showing warnings about the drive nearing being full, in bytes</p>
-<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: Int64
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 2
@@ -154,7 +146,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </tenant></article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

@@ -86,8 +86,13 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Adds an item to the list and sets the creation time to the current date and time. The author is set to the current authenticated user executing the cmdlet. In order to set the author to a different user, please refer to Set-PnPListItem.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Add-PnPListItem [-List] &lt;ListPipeBind&gt; [-ContentType &lt;ContentTypePipeBind&gt;] [-Values &lt;Hashtable&gt;]
- [-Folder &lt;String&gt;] [-Label &lt;String&gt;] [-Web &lt;WebPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<h3 id="single">Single</h3>
+<pre><code class="lang-powershell">Add-PnPListItem [-List] &lt;ListPipeBind&gt; [-ContentType &lt;ContentTypePipeBind&gt;] [-Values &lt;Hashtable&gt;]
+ [-Folder &lt;String&gt;] [-Label &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+</code></pre>
+<h3 id="batched">Batched</h3>
+<pre><code class="lang-powershell">Add-PnPListItem [-List] &lt;ListPipeBind&gt; -Batch &lt;PnPBatch&gt; [-ContentType &lt;ContentTypePipeBind&gt;] [-Values &lt;Hashtable&gt;]
+ [-Folder &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -111,12 +116,30 @@
 <pre><code class="lang-powershell">Add-PnPListItem -List &quot;Demo List&quot; -Values @{&quot;Title&quot;=&quot;Sales Report&quot;} -Label &quot;Public&quot;
 </code></pre>
 <p>Adds a new list item to the &quot;Demo List&quot;. Sets the retention label to &quot;Public&quot; if it exists on the site.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">$batch = New-PnPBatch
+for($i=0;$i -lt 10;$i++)
+{
+    Add-PnPListItem -List &quot;Demo List&quot; -Values @{&quot;Title&quot;=&quot;Report $i&quot;} -Batch $batch
+}
+Invoke-PnPBatch -Batch $batch
+</code></pre>
+<p>This creates 10 list items by using a batched approach.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-batch">-Batch</h3>
+<p>Optional batch object used to add items in a batched manner. See examples on how to use this.</p>
+<pre><code class="lang-yaml">Type: PnPBatch
+Parameter Sets: Batched
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -128,7 +151,6 @@ Accept wildcard characters: False
 <p>Specify either the name, ID or an actual content type.</p>
 <pre><code class="lang-yaml">Type: ContentTypePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -140,7 +162,6 @@ Accept wildcard characters: False
 <p>The list relative URL of a folder. E.g. &quot;MyFolder&quot; for a folder located in the root of the list, or &quot;MyFolder/SubFolder&quot; for a folder located in the MyFolder folder which is located in the root of the list.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -150,10 +171,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-label">-Label</h3>
 <p>The name of the retention label.</p>
-<p>Only applicable to: SharePoint Online</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-Aliases:
+Parameter Sets: Single
 
 Required: False
 Position: Named
@@ -165,7 +184,6 @@ Accept wildcard characters: False
 <p>The ID, Title or Url of the list.</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -196,19 +214,6 @@ Accept wildcard characters: False
 <p>Hyperlink or Picture: -Values @{&quot;Hyperlink&quot; = &quot;https://github.com/OfficeDev/, OfficePnp&quot;}</p>
 <pre><code class="lang-yaml">Type: Hashtable
 Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-web">-Web</h3>
-<p>This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -217,7 +222,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

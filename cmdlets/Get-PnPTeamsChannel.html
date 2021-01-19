@@ -90,7 +90,7 @@
 </ul>
 <p>Gets the channels for a specified Team.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Get-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; [-Identity &lt;TeamsChannelPipeBind&gt;] [-ByPassPermissionCheck]
+<pre><code class="lang-powershell">Get-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; [-Identity &lt;TeamsChannelPipeBind&gt;] 
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -108,23 +108,10 @@
 </code></pre>
 <p>Retrieves the channel specified by its channel id</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-bypasspermissioncheck">-ByPassPermissionCheck</h3>
-<p>Allows the check for required permissions in the access token to be bypassed when set to $true</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The identity of the channel to retrieve.</p>
+<p>The id or name of the channel to retrieve.</p>
 <pre><code class="lang-yaml">Type: TeamsChannelPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -136,7 +123,6 @@ Accept wildcard characters: False
 <p>Specify the group id, mailNickname or display name of the team to use.</p>
 <pre><code class="lang-yaml">Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -145,7 +131,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/sppnp">SharePoint Developer Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
