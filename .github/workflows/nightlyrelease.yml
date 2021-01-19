@@ -23,7 +23,7 @@ jobs:
         POWERSHELLGALLERY_API_KEY: ${{ secrets.POWERSHELLGALLERY_API_KEY }}
       shell: pwsh
       run: |
-        ./build/Build-Release.ps1
+        ./build/Build-Nightly.ps1
     - name: Set variables
       shell: pwsh
       run: |
