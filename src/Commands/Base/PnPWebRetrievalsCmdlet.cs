@@ -14,20 +14,21 @@ namespace PnP.PowerShell.Commands
     /// <typeparam name="TType">Type of object which will be returned in the output</typeparam>
     public abstract class PnPWebRetrievalsCmdlet<TType> : PnPRetrievalsCmdlet<TType> where TType : ClientObject
     {
-        private Web _selectedWeb;
+        private Web _currentWeb;
 
         [Parameter(Mandatory = false)]
+        [Obsolete("The -Web parameter will be removed in a future release. Use Connect-PnPOnline -Url [subweburl] instead to connect to a subweb.")]
         public WebPipeBind Web = new WebPipeBind();
 
-        protected Web SelectedWeb
+        protected Web CurrentWeb
         {
             get
             {
-                if (_selectedWeb == null)
+                if (_currentWeb == null)
                 {
-                    _selectedWeb = GetWeb();
+                    _currentWeb = GetWeb();
                 }
-                return _selectedWeb;
+                return _currentWeb;
             }
         }
 
@@ -35,28 +36,15 @@ namespace PnP.PowerShell.Commands
         {
             Web web = ClientContext.Web;
 
-            if (Web.Id != Guid.Empty)
+#pragma warning disable CS0618
+            if (ParameterSpecified(nameof(Web)))
             {
-                web = web.GetWebById(Web.Id);
-                PnPConnection.CurrentConnection.CloneContext(web.Url);
-
+                var subWeb = Web.GetWeb(ClientContext);
+                subWeb.EnsureProperty(w => w.Url);
+                PnPConnection.CurrentConnection.CloneContext(subWeb.Url);
                 web = PnPConnection.CurrentConnection.Context.Web;
             }
-            else if (!string.IsNullOrEmpty(Web.Url))
-            {
-                web = web.GetWebByUrl(Web.Url);
-                PnPConnection.CurrentConnection.CloneContext(web.Url);
-                web = PnPConnection.CurrentConnection.Context.Web;
-            }
-            else if (Web.Web != null)
-            {
-                web = Web.Web;
-
-                web.EnsureProperty(w => w.Url);
-
-                PnPConnection.CurrentConnection.CloneContext(web.Url);
-                web = PnPConnection.CurrentConnection.Context.Web;
-            }
+#pragma warning restore CS0618
             else
             {
                 if (PnPConnection.CurrentConnection.Context.Url != PnPConnection.CurrentConnection.Url)

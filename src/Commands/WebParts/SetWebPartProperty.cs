@@ -5,7 +5,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
-    [Cmdlet(VerbsCommon.Set, "WebPartProperty")]
+    [Cmdlet(VerbsCommon.Set, "PnPWebPartProperty")]
     public class SetWebPartProperty : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.WebParts
 
         protected override void ExecuteCmdlet()
         {
-            var serverRelativeWebUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var serverRelativeWebUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             if (!ServerRelativePageUrl.ToLowerInvariant().StartsWith(serverRelativeWebUrl.ToLowerInvariant()))
             {
@@ -32,14 +32,14 @@ namespace PnP.PowerShell.Commands.WebParts
 
             if (Value.BaseObject is string)
             {
-                SelectedWeb.SetWebPartProperty(Key, Value.ToString(), Identity, ServerRelativePageUrl);
+                CurrentWeb.SetWebPartProperty(Key, Value.ToString(), Identity, ServerRelativePageUrl);
             }
             else if (Value.BaseObject is int)
             {
-                SelectedWeb.SetWebPartProperty(Key, (int)Value.BaseObject, Identity, ServerRelativePageUrl);
+                CurrentWeb.SetWebPartProperty(Key, (int)Value.BaseObject, Identity, ServerRelativePageUrl);
             } else if (Value.BaseObject is bool)
             {
-                SelectedWeb.SetWebPartProperty(Key, (bool)Value.BaseObject, Identity, ServerRelativePageUrl);
+                CurrentWeb.SetWebPartProperty(Key, (bool)Value.BaseObject, Identity, ServerRelativePageUrl);
             }
             else
             {

@@ -4,7 +4,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
-    [Cmdlet(VerbsCommunications.Send, "Mail")]
+    [Cmdlet(VerbsCommunications.Send, "PnPMail")]
     public class SendMail : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

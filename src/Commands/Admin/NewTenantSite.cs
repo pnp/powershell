@@ -9,7 +9,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.New, "TenantSite")]
+    [Cmdlet(VerbsCommon.New, "PnPTenantSite")]
     public class NewTenantSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

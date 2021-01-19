@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/new-pnptenantsequence
+online version: https://pnp.github.io/powershell/cmdlets/new-pnptenantsequence
 schema: 2.0.0
 title: New-PnPTenantSequence
 ---
@@ -14,8 +14,8 @@ Creates a new tenant sequence object
 
 ## SYNTAX
 
-```
-New-PnPTenantSequence [-Id <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```powershell
+New-PnPTenantSequence [-Id <String>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -59,7 +59,6 @@ Optional Id of the sequence
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -85,4 +84,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

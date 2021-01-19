@@ -1,0 +1,63 @@
+{
+  "build": {
+    "content": [
+      {
+        "files": [
+          "articles/**.md",
+          "articles/**/toc.yml",
+          "toc.yml",
+          "*.md"
+        ]
+      },
+      {
+        "files": [
+          "cmdlets/**.md",
+          "cmdlets/**/toc.yml",
+          "toc.yml",
+          "*.md"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      }
+    ],
+    "dest": "_site",
+    "globalMetadataFiles": [],
+    "fileMetadataFiles": [],
+    "template": [
+      "default",
+      "templates/material"
+    ],
+    "postProcessors": [],
+    "markdownEngineName": "markdig",
+    "noLangKeyword": false,
+    "keepFileLink": false,
+    "cleanupCacheHistory": false,
+    "disableGitFeatures": false,
+    "globalMetadata": {
+      "_appTitle": "PnP PowerShell",
+      "_gitContribute": {
+        "repo": "https://github.com/pnp/powershell",
+        "branch": "dev"
+      },
+      "_appFaviconPath": "https://c.s-microsoft.com/favicon.ico?v2",
+      "_description": "PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.",
+      "_appLogoPath": "images/logo.svg",
+      "_enableSearch": true,
+      "_enableNewTab": true
+    },
+    "fileMetadata": {
+      "_gitContribute": {
+        "cmdlets/**.md": {
+          "repo": "https://github.com/pnp/powershell",
+          "branch": "dev",
+          "path":"documentation"
+        }
+      }
+    }
+  }
+}

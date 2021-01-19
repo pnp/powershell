@@ -8,16 +8,14 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Get, "TermGroup")]
+    [Cmdlet(VerbsCommon.Get, "PnPTermGroup")]
     public class GetTermGroup : PnPRetrievalsCmdlet<TermGroup>
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
-        [Alias("GroupName")]
-        public TaxonomyItemPipeBind<TermGroup> Identity;
+        public TaxonomyTermGroupPipeBind Identity;
 
         [Parameter(Mandatory = false)]
-        [Alias("TermStoreName")]
-        public GenericObjectNameIdPipeBind<TermStore> TermStore;
+        public TaxonomyTermStorePipeBind TermStore;
 
         protected override void ExecuteCmdlet()
         {
@@ -31,53 +29,23 @@ namespace PnP.PowerShell.Commands.Taxonomy
             }
             else
             {
-                if (TermStore.StringValue != null)
-                {
-                    termStore = taxonomySession.TermStores.GetByName(TermStore.StringValue);
-                }
-                else if (TermStore.IdValue != Guid.Empty)
-                {
-                    termStore = taxonomySession.TermStores.GetById(TermStore.IdValue);
-                }
-                else
-                {
-                    if (TermStore.Item != null)
-                    {
-                        termStore = TermStore.Item;
-                    }
-                }
+                termStore = TermStore.GetTermStore(taxonomySession);
             }
-            // Get Group
-            if (termStore != null)
-            {
 
-                if (Identity != null)
-                {
-                    TermGroup group = null;
-                    if (Identity.Id != Guid.Empty)
-                    {
-                        group = termStore.Groups.GetById(Identity.Id);
-                    }
-                    else
-                    {
-                        group = termStore.Groups.GetByName(Identity.Title);
-                    }
-                    group.EnsureProperties(RetrievalExpressions);
-                    WriteObject(group);
-                }
-                else
-                {
-                    var query = termStore.Groups.IncludeWithDefaultProperties(RetrievalExpressions);
-                    var termGroups = ClientContext.LoadQuery(query);
-                    ClientContext.ExecuteQueryRetry();
-                    WriteObject(termGroups, true);
-                }
+            // Get Group
+            if (Identity != null)
+            {
+                var group = Identity.GetGroup(termStore);
+                group.EnsureProperties(RetrievalExpressions);
+                WriteObject(group);
             }
             else
             {
-                WriteError(new ErrorRecord(new ArgumentException("Cannot find termstore"), "INCORRECTTERMSTORE", ErrorCategory.ObjectNotFound, TermStore));
+                var query = termStore.Groups.IncludeWithDefaultProperties(RetrievalExpressions);
+                var termGroups = ClientContext.LoadQuery(query);
+                ClientContext.ExecuteQueryRetry();
+                WriteObject(termGroups, true);
             }
         }
-
     }
 }

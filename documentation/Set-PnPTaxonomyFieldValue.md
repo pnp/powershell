@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnptaxonomyfieldvalue
+online version: https://pnp.github.io/powershell/cmdlets/set-pnptaxonomyfieldvalue
 schema: 2.0.0
 title: Set-PnPTaxonomyFieldValue
 ---
@@ -15,19 +15,19 @@ Sets a taxonomy term value in a listitem field
 ## SYNTAX
 
 ### ITEM (Default)
-```
+```powershell
 Set-PnPTaxonomyFieldValue -ListItem <ListItem> -InternalFieldName <String> -TermId <Guid>
  [-Label <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### PATH
-```
+```powershell
 Set-PnPTaxonomyFieldValue -ListItem <ListItem> -InternalFieldName <String> -TermPath <String>
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### ITEMS
-```
+```powershell
 Set-PnPTaxonomyFieldValue -ListItem <ListItem> -InternalFieldName <String> [-Terms <Hashtable>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
@@ -65,7 +65,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -80,7 +79,6 @@ The internal name of the field
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -95,7 +93,6 @@ The Label value of the term
 ```yaml
 Type: String
 Parameter Sets: ITEM
-Aliases:
 
 Required: False
 Position: Named
@@ -110,7 +107,6 @@ The list item to set the field value to
 ```yaml
 Type: ListItem
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -125,7 +121,6 @@ The Id of the Term
 ```yaml
 Type: Guid
 Parameter Sets: ITEM
-Aliases:
 
 Required: True
 Position: Named
@@ -140,7 +135,6 @@ A path in the form of GROUPLABEL|TERMSETLABEL|TERMLABEL
 ```yaml
 Type: String
 Parameter Sets: PATH
-Aliases:
 
 Required: True
 Position: Named
@@ -155,7 +149,6 @@ Allows you to specify terms with key value pairs that can be referred to in the 
 ```yaml
 Type: Hashtable
 Parameter Sets: ITEMS
-Aliases:
 
 Required: False
 Position: Named
@@ -166,4 +159,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

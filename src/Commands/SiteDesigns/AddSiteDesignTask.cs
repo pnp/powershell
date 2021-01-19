@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.SiteDesigns
 {
-    [Cmdlet(VerbsCommon.Add, "SiteDesignTask")]
+    [Cmdlet(VerbsCommon.Add, "PnPSiteDesignTask")]
     public class AddSiteDesignTask : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.SiteDesigns
 
         protected override void ExecuteCmdlet()
         {
-            var url = SelectedWeb.EnsureProperty(w => w.Url);
+            var url = CurrentWeb.EnsureProperty(w => w.Url);
             var tenantUrl = UrlUtilities.GetTenantAdministrationUrl(ClientContext.Url);
             using (var tenantContext = ClientContext.Clone(tenantUrl))
             {

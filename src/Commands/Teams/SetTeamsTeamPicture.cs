@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Set, "TeamsTeamPicture")]
-    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
-    [PnPManagementShellScopes("Group.ReadWrite.All")]
+    [Cmdlet(VerbsCommon.Set, "PnPTeamsTeamPicture")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
 
     public class SetTeamsTeamPicture : PnPGraphCmdlet
     {

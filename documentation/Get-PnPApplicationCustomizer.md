@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpapplicationcustomizer
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpapplicationcustomizer
 schema: 2.0.0
 title: Get-PnPApplicationCustomizer
 ---
@@ -15,17 +15,17 @@ Returns all SharePoint Framework client side extension application customizers
 ## SYNTAX
 
 ### Custom Action Id
-```
+```powershell
 Get-PnPApplicationCustomizer [-Identity <Guid>] [-Scope <CustomActionScope>]
- [-ThrowExceptionIfCustomActionNotFound] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf]
- [-Confirm] [-Includes <String[]>] [<CommonParameters>]
+ [-ThrowExceptionIfCustomActionNotFound] [-Connection <PnPConnection>] 
+  [-Includes <String[]>] [<CommonParameters>]
 ```
 
 ### Client Side Component Id
-```
+```powershell
 Get-PnPApplicationCustomizer -ClientSideComponentId <Guid> [-Scope <CustomActionScope>]
- [-ThrowExceptionIfCustomActionNotFound] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf]
- [-Confirm] [-Includes <String[]>] [<CommonParameters>]
+ [-ThrowExceptionIfCustomActionNotFound] [-Connection <PnPConnection>] 
+  [-Includes <String[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -59,12 +59,9 @@ Returns the custom action(s) being registered for a SharePoint Framework solutio
 ### -ClientSideComponentId
 The Client Side Component Id of the SharePoint Framework client side extension application customizer found in the manifest for which existing custom action(s) should be removed
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: Guid
 Parameter Sets: Client Side Component Id
-Aliases:
 
 Required: True
 Position: Named
@@ -91,12 +88,9 @@ Accept wildcard characters: False
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -108,12 +102,9 @@ Accept wildcard characters: False
 ### -Identity
 Identity of the SharePoint Framework client side extension application customizer to return. Omit to return all SharePoint Frameworkclient side extension application customizer.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: Guid
 Parameter Sets: Custom Action Id
-Aliases:
 
 Required: False
 Position: Named
@@ -125,12 +116,9 @@ Accept wildcard characters: False
 ### -Scope
 Scope of the SharePoint Framework client side extension application customizer, either Web, Site or All to return both (all is the default)
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: CustomActionScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site, All
 
 Required: False
@@ -143,12 +131,9 @@ Accept wildcard characters: False
 ### -ThrowExceptionIfCustomActionNotFound
 Switch parameter if an exception should be thrown if the requested SharePoint Frameworkclient side extension application customizer does not exist (true) or if omitted, nothing will be returned in case the SharePoint Framework client side extension application customizer does not exist
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -157,22 +142,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-The web to apply the command to. Omit this parameter to use the current web.
 
-Only applicable to: SharePoint Online, SharePoint Server 2019
-
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -WhatIf
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
@@ -191,4 +161,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

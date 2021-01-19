@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Add, "HubSiteAssociation")]
+    [Cmdlet(VerbsCommon.Add, "PnPHubSiteAssociation")]
     public class AddHubSiteAssociation : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpsitedesign
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpsitedesign
 schema: 2.0.0
 title: Get-PnPSiteDesign
 ---
@@ -19,8 +19,8 @@ Retrieve Site Designs that have been registered on the current tenant.
 
 ## SYNTAX
 
-```
-Get-PnPSiteDesign [[-Identity] <TenantSiteDesignPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
+```powershell
+Get-PnPSiteDesign [[-Identity] <TenantSiteDesignPipeBind>] [-Connection <PnPConnection>]  
  [<CommonParameters>]
 ```
 
@@ -65,7 +65,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -80,7 +79,6 @@ If specified will retrieve the specified site design
 ```yaml
 Type: TenantSiteDesignPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -106,4 +104,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

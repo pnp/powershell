@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpview
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpview
 schema: 2.0.0
 title: Get-PnPView
 ---
@@ -14,8 +14,8 @@ Returns one or all views from a list
 
 ## SYNTAX
 
-```
-Get-PnPView [-List] <ListPipeBind> [-Identity <ViewPipeBind>] [-Web <WebPipeBind>]
+```powershell
+Get-PnPView [-List] <ListPipeBind> [-Identity <ViewPipeBind>] 
  [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```
 
@@ -52,7 +52,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -67,7 +66,6 @@ The ID or name of the view
 ```yaml
 Type: ViewPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -82,7 +80,6 @@ The ID or Url of the list.
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -91,21 +88,8 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Web
-The web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Management.Automation;
 using System.Reflection;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -16,6 +17,18 @@ namespace PnP.PowerShell.Commands.Base
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
+            if (MyInvocation.MyCommand.Name.ToLower() != MyInvocation.InvocationName.ToLower())
+            {
+                var attribute = Attribute.GetCustomAttribute(this.GetType(), typeof(WriteAliasWarningAttribute));
+                if (attribute != null)
+                {
+                    var warningAttribute = attribute as WriteAliasWarningAttribute;
+                    if (!string.IsNullOrEmpty(warningAttribute?.DeprecationMessage))
+                    {
+                        WriteWarning(warningAttribute.DeprecationMessage);
+                    }
+                }
+            }
         }
 
         protected override void EndProcessing()
@@ -38,7 +51,26 @@ namespace PnP.PowerShell.Commands.Base
 
         protected override void ProcessRecord()
         {
-            ExecuteCmdlet();
+            try
+            {
+                ExecuteCmdlet();
+            }
+            catch (PnP.PowerShell.Commands.Model.Graph.GraphException gex)
+            {
+                if (gex.Error.Code == "Authorization_RequestDenied")
+                {
+                    if (!string.IsNullOrEmpty(gex.AccessToken))
+                    {
+                        TokenHandler.ValidateTokenForPermissions(GetType(), gex.AccessToken);
+                    }
+                }
+                throw new PSInvalidOperationException(gex.Error.Message);
+            }
+        }
+
+        protected override void StopProcessing()
+        {
+            base.StopProcessing();
         }
     }
 }

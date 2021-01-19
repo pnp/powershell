@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/export-pnptaxonomy
+online version: https://pnp.github.io/powershell/cmdlets/export-pnptaxonomy
 schema: 2.0.0
 title: Export-PnPTaxonomy
 ---
@@ -14,10 +14,10 @@ Exports a taxonomy to either the output or to a file.
 
 ## SYNTAX
 
-```
+```powershell
 Export-PnPTaxonomy [-TermSetId <Guid>] [-IncludeID] [-Path <String>] [-TermStoreName <String>] [-Force]
- [-Delimiter <String>] [-Lcid <Int32>] [-Encoding <Encoding>] [-Connection <PnPConnection>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+ [-Delimiter <String>] [-Lcid <Int32>] [-Encoding <Encoding>] [-Connection <PnPConnection>] 
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -75,7 +75,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -90,7 +89,6 @@ The path delimiter to be used, by default this is '|'
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -105,7 +103,6 @@ Defaults to Unicode
 ```yaml
 Type: Encoding
 Parameter Sets: (All)
-Aliases:
 Accepted values: Unicode, ASCII, BigEndianUnicode, UTF32, UTF7, UTF8
 
 Required: False
@@ -121,7 +118,6 @@ Overwrites the output file if it exists.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -136,7 +132,6 @@ If specified will include the ids of the taxonomy items in the output. Format: &
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -151,7 +146,6 @@ Specify the language code for the exported terms
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -166,7 +160,6 @@ File to export the data to.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -181,7 +174,6 @@ If specified, will export the specified termset only
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -196,7 +188,6 @@ Term store to export; if not specified the default term store is used.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -222,4 +213,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

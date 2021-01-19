@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnptermgroup
+online version: https://pnp.github.io/powershell/cmdlets/get-pnptermgroup
 schema: 2.0.0
 title: Get-PnPTermGroup
 ---
@@ -14,10 +14,10 @@ Returns a taxonomy term group
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTermGroup
- [[-Identity] <PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermGroup]>]
- [-TermStore <PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]>]
+ [-Identity <TaxonomyTermGroupPipeBind>]
+ [-TermStore <TaxonomyTermStorePipeBind>]
  [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```
 
@@ -48,26 +48,11 @@ Returns the termgroup with the given ID from the site collection termstore
 
 ## PARAMETERS
 
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Identity
 Name of the taxonomy term group to retrieve.
 
 ```yaml
-Type: PnP.PowerShell.Commands.Base.PipeBinds.TaxonomyItemPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermGroup]
+Type: TaxonomyTermGroupPipeBind
 Parameter Sets: (All)
 Aliases: GroupName
 
@@ -79,10 +64,10 @@ Accept wildcard characters: False
 ```
 
 ### -TermStore
-Term store to check; if not specified the default term store is used.
+Term store to use; if not specified the default term store is used.
 
 ```yaml
-Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]
+Type: TaxonomyTermStorePipeBind
 Parameter Sets: (All)
 Aliases: TermStoreName
 
@@ -95,4 +80,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

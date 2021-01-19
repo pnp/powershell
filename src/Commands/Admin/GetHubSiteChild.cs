@@ -9,7 +9,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "HubSiteChild")]
+    [Cmdlet(VerbsCommon.Get, "PnPHubSiteChild")]
     public class GetHubSiteChild : PnPAdminCmdlet
     {
         [Parameter(ValueFromPipeline = true, Mandatory = true)]
@@ -30,8 +30,7 @@ namespace PnP.PowerShell.Commands.Admin
                 {
                     throw new ArgumentException(Resources.SiteNotFound, nameof(Identity));
                 }
-
-                throw ex;
+                throw;
             }
 
             // Get the ID of the hubsite for which we need to find child sites

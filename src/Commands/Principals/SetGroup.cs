@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Set, "Group")]
+    [Cmdlet(VerbsCommon.Set, "PnPGroup")]
     
     public class SetGroup : PnPWebCmdlet
     {
@@ -49,7 +49,7 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(SelectedWeb);
+            var group = Identity.GetGroup(CurrentWeb);
 
             ClientContext.Load(group,
                 g => g.AllowMembersEditMembership,
@@ -65,34 +65,34 @@ namespace PnP.PowerShell.Commands.Principals
                 {
                     case AssociatedGroupType.Visitors:
                         {
-                            SelectedWeb.AssociateDefaultGroups(null, null, group);
+                            CurrentWeb.AssociateDefaultGroups(null, null, group);
                             break;
                         }
                     case AssociatedGroupType.Members:
                         {
-                            SelectedWeb.AssociateDefaultGroups(null, group, null);
+                            CurrentWeb.AssociateDefaultGroups(null, group, null);
                             break;
                         }
                     case AssociatedGroupType.Owners:
                         {
-                            SelectedWeb.AssociateDefaultGroups(group, null, null);
+                            CurrentWeb.AssociateDefaultGroups(group, null, null);
                             break;
                         }
                 }
             }
             if (!string.IsNullOrEmpty(AddRole))
             {
-                var roleDefinition = SelectedWeb.RoleDefinitions.GetByName(AddRole);
+                var roleDefinition = CurrentWeb.RoleDefinitions.GetByName(AddRole);
                 var roleDefinitionBindings = new RoleDefinitionBindingCollection(ClientContext);
                 roleDefinitionBindings.Add(roleDefinition);
-                var roleAssignments = SelectedWeb.RoleAssignments;
+                var roleAssignments = CurrentWeb.RoleAssignments;
                 roleAssignments.Add(group, roleDefinitionBindings);
                 ClientContext.Load(roleAssignments);
                 ClientContext.ExecuteQueryRetry();
             }
             if (!string.IsNullOrEmpty(RemoveRole))
             {
-                var roleAssignment = SelectedWeb.RoleAssignments.GetByPrincipal(group);
+                var roleAssignment = CurrentWeb.RoleAssignments.GetByPrincipal(group);
                 var roleDefinitionBindings = roleAssignment.RoleDefinitionBindings;
                 ClientContext.Load(roleDefinitionBindings);
                 ClientContext.ExecuteQueryRetry();
@@ -113,9 +113,9 @@ namespace PnP.PowerShell.Commands.Principals
             }
             if (!string.IsNullOrEmpty(Description))
             {
-                var groupItem = SelectedWeb.SiteUserInfoList.GetItemById(group.Id);
-                SelectedWeb.Context.Load(groupItem, g => g["Notes"]);
-                SelectedWeb.Context.ExecuteQueryRetry();
+                var groupItem = CurrentWeb.SiteUserInfoList.GetItemById(group.Id);
+                CurrentWeb.Context.Load(groupItem, g => g["Notes"]);
+                CurrentWeb.Context.ExecuteQueryRetry();
 
                 var groupDescription = groupItem["Notes"]?.ToString();
 
@@ -173,14 +173,14 @@ namespace PnP.PowerShell.Commands.Principals
 
                 try
                 {
-                    groupOwner = SelectedWeb.EnsureUser(Owner);
+                    groupOwner = CurrentWeb.EnsureUser(Owner);
                     group.Owner = groupOwner;
                     group.Update();
                     ClientContext.ExecuteQueryRetry();
                 }
                 catch
                 {
-                    groupOwner = SelectedWeb.SiteGroups.GetByName(Owner);
+                    groupOwner = CurrentWeb.SiteGroups.GetByName(Owner);
                     group.Owner = groupOwner;
                     group.Update();
                     ClientContext.ExecuteQueryRetry();

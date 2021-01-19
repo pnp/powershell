@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "TenantTemplate")]
+    [Cmdlet(VerbsLifecycle.Invoke, "PnPTenantTemplate")]
     public class InvokeTenantTemplate : PnPAdminCmdlet
     {
         private const string ParameterSet_PATH = "By Path";
@@ -282,7 +282,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             {
                 consentRequired = true;
             }
-            if(hierarchyToApply.AzureActiveDirectory != null)
+            if (hierarchyToApply.AzureActiveDirectory != null)
             {
                 consentRequired = true;
             }
@@ -290,52 +290,19 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             {
                 // try to retrieve an access token for the Microsoft Graph:
 
-                var accessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
-                if (accessToken == null)
+                try
                 {
-                    if (PnPConnection.CurrentConnection.PSCredential != null)
-                    {
-                        // Using normal credentials
-                        accessToken = TokenHandler.AcquireToken("graph.microsoft.com", null);
-                    }
-                    if (accessToken == null)
-                    {
-                        throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
-                    }
+                    var accessToken = GetGraphAccessToken(new string[] { "Group.ReadWrite.All" });
+                }
+                catch
+                {
+                    throw new PSInvalidOperationException("Your template contains artifacts that require an access token for https://graph.microsoft.com. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
                 }
             }
 
-            using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
+            using (var provisioningContext = new PnPProvisioningContext(async (resource, scope) =>
             {
-                if(resource.ToLower().StartsWith("https://"))
-                {
-                    var uri = new Uri(resource);
-                    resource = uri.Authority;
-                }
-                // Get Azure AD Token
-                if (PnPConnection.CurrentConnection != null)
-                {
-                    if (resource.Equals("graph.microsoft.com", StringComparison.OrdinalIgnoreCase))
-                    {
-                        var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
-                        if (graphAccessToken != null)
-                        {
-                            // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                            return Task.FromResult(graphAccessToken);
-                        }
-                    }
-                }
-
-                if (PnPConnection.CurrentConnection.PSCredential != null)
-                {
-                    // Using normal credentials
-                    return Task.FromResult(TokenHandler.AcquireToken(resource, null));
-                }
-                else
-                {
-                    // No token...
-                    throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
-                 }
+                return await TokenRetrieval.GetAccessTokenAsync(resource, scope);
             }))
             {
                 if (!string.IsNullOrEmpty(SequenceId))
@@ -370,7 +337,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             }
             if (System.IO.File.Exists(Path))
             {
-                return ReadTenantTemplate.LoadProvisioningHierarchyFromFile(Path, TemplateProviderExtensions, (e) =>
+                return ReadTenantTemplate.LoadProvisioningHierarchyFromFile(Path, (e) =>
                  {
                      WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
                  });

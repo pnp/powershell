@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/copy-pnpitemproxy
+online version: https://pnp.github.io/powershell/cmdlets/copy-pnpitemproxy
 schema: 2.0.0
 title: Copy-PnPItemProxy
 ---
@@ -15,17 +15,17 @@ Proxy cmdlet for using Copy-Item between SharePoint provider and FileSystem prov
 ## SYNTAX
 
 ### Path (Default)
-```
+```powershell
 Copy-PnPItemProxy [-Recurse] [-Path] <String[]> [[-Destination] <String>] [-Container] [-Force]
  [-Filter <String>] [-Include <String[]>] [-Exclude <String[]>] [-PassThru] [-Credential <PSCredential>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+   [<CommonParameters>]
 ```
 
 ### LiteralPath
-```
+```powershell
 Copy-PnPItemProxy [-Recurse] [-LiteralPath] <String[]> [[-Destination] <String>] [-Container] [-Force]
  [-Filter <String>] [-Include <String[]>] [-Exclude <String[]>] [-PassThru] [-Credential <PSCredential>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+   [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -55,7 +55,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -70,7 +69,6 @@ Accept wildcard characters: False
 ```yaml
 Type: PSCredential
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -85,7 +83,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 1
@@ -100,7 +97,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -115,7 +111,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -130,7 +125,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -145,7 +139,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -175,7 +168,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -190,7 +182,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String[]
 Parameter Sets: Path
-Aliases:
 
 Required: True
 Position: 0
@@ -205,7 +196,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -231,4 +221,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

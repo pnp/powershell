@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/save-pnptenanttemplate
+online version: https://pnp.github.io/powershell/cmdlets/save-pnptenanttemplate
 schema: 2.0.0
 title: Save-PnPTenantTemplate
 ---
@@ -14,7 +14,7 @@ Saves a PnP provisioning hierarchy to the file system
 
 ## SYNTAX
 
-```
+```powershell
 Save-PnPTenantTemplate -Template <ProvisioningHierarchyPipeBind> [-Out] <String>
  [-Schema <XMLPnPSchemaVersion>] [-Force] [<CommonParameters>]
 ```
@@ -61,7 +61,6 @@ Specifying the Force parameter will skip the confirmation question.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -76,7 +75,6 @@ Filename to write to, optionally including full path.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -91,7 +89,6 @@ The optional schema to use when creating the PnP file. Always defaults to the la
 ```yaml
 Type: XMLPnPSchemaVersion
 Parameter Sets: (All)
-Aliases:
 Accepted values: LATEST, V201503, V201505, V201508, V201512, V201605, V201705, V201801, V201805, V201807, V201903, V201909, V202002
 
 Required: False
@@ -107,7 +104,6 @@ Allows you to provide an in-memory instance of a Tenant Template or a filename o
 ```yaml
 Type: ProvisioningHierarchyPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -118,4 +114,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

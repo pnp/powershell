@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/import-pnptermgroupfromxml
+online version: https://pnp.github.io/powershell/cmdlets/import-pnptermgroupfromxml
 schema: 2.0.0
 title: Import-PnPTermGroupFromXml
 ---
@@ -15,14 +15,14 @@ Imports a taxonomy TermGroup from either the input or from an XML file.
 ## SYNTAX
 
 ### XML
-```
-Import-PnPTermGroupFromXml [[-Xml] <String>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
+```powershell
+Import-PnPTermGroupFromXml [[-Xml] <String>] [-Connection <PnPConnection>]  
  [<CommonParameters>]
 ```
 
 ### File
-```
-Import-PnPTermGroupFromXml [-Path <String>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
+```powershell
+Import-PnPTermGroupFromXml [-Path <String>] [-Connection <PnPConnection>]  
  [<CommonParameters>]
 ```
 
@@ -67,7 +67,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -82,7 +81,6 @@ The XML File to import the data from
 ```yaml
 Type: String
 Parameter Sets: File
-Aliases:
 
 Required: False
 Position: Named
@@ -112,7 +110,6 @@ The XML to process
 ```yaml
 Type: String
 Parameter Sets: XML
-Aliases:
 
 Required: False
 Position: 0
@@ -123,4 +120,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

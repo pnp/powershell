@@ -2,20 +2,16 @@
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.Providers;
 using PnP.Framework.Provisioning.Providers.Xml;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsData.Save, "SiteTemplate")]
+    [Cmdlet(VerbsData.Save, "PnPSiteTemplate")]
     public class SaveSiteTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -91,7 +87,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                 var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
 
                 provider.SaveAs(templateObject, templateFileName, formatter, TemplateProviderExtensions);
-                ProcessFiles(templateObject, Out, fileSystemConnector, provider.Connector);
+                ProcessFiles(templateObject, Out, fileSystemConnector);
             }
             else
             {
@@ -100,9 +96,9 @@ namespace PnP.PowerShell.Commands.Provisioning
             }
         }
 
-        private void ProcessFiles(ProvisioningTemplate template, string templateFileName, FileConnectorBase fileSystemConnector, FileConnectorBase connector)
+        private void ProcessFiles(ProvisioningTemplate template, string templateFileName, FileConnectorBase fileSystemConnector)
         {
-            var templateFile = ReadSiteTemplate.LoadSiteTemplateFromFile(templateFileName, null, (e) =>
+            var templateFile = ProvisioningHelper.LoadSiteTemplateFromFile(templateFileName, null, (e) =>
             {
                 WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
             });

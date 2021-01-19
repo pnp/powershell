@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Add, "PublishingPage")]
+    [Cmdlet(VerbsCommon.Add, "PnPPublishingPage")]
     public class AddPublishingPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -29,19 +29,19 @@ namespace PnP.PowerShell.Commands.Publishing
             Folder pageFolder = null;
             if(!string.IsNullOrEmpty(FolderPath))
             {
-                pageFolder = SelectedWeb.EnsureFolderPath(FolderPath);
+                pageFolder = CurrentWeb.EnsureFolderPath(FolderPath);
             }
 
             switch (ParameterSetName)
             {
                 case "WithTitle":
                     {
-                        SelectedWeb.AddPublishingPage(PageName, PageTemplateName, Title, publish: Publish, folder: pageFolder);
+                        CurrentWeb.AddPublishingPage(PageName, PageTemplateName, Title, publish: Publish, folder: pageFolder);
                         break;
                     }
                 default:
                     {
-                        SelectedWeb.AddPublishingPage(PageName, PageTemplateName, publish: Publish, folder: pageFolder);
+                        CurrentWeb.AddPublishingPage(PageName, PageTemplateName, publish: Publish, folder: pageFolder);
                         break;
                     }
             }

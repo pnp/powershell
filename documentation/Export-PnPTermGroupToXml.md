@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/export-pnptermgrouptoxml
+online version: https://pnp.github.io/powershell/cmdlets/export-pnptermgrouptoxml
 schema: 2.0.0
 title: Export-PnPTermGroupToXml
 ---
@@ -14,9 +14,9 @@ Exports a taxonomy TermGroup to either the output or to an XML file.
 
 ## SYNTAX
 
-```
+```powershell
 Export-PnPTermGroupToXml [-Identity <TermGroupPipeBind>] [-Out <String>] [-FullTemplate] [-Encoding <Encoding>]
- [-Force] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Force] [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -75,7 +75,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -90,7 +89,6 @@ Defaults to Unicode
 ```yaml
 Type: Encoding
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -105,7 +103,6 @@ Overwrites the output file if it exists.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -120,7 +117,6 @@ If specified, a full provisioning template structure will be returned
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -135,7 +131,6 @@ The ID or name of the termgroup
 ```yaml
 Type: TermGroupPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -150,7 +145,6 @@ File to export the data to.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -176,4 +170,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

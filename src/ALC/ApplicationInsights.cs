@@ -2,6 +2,7 @@
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.ApplicationInsights;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PnP.PowerShell.ALC
 {
@@ -10,7 +11,7 @@ namespace PnP.PowerShell.ALC
         private TelemetryClient telemetryClient;
         private Dictionary<string, string> telemetryProperties;
 
-        public void Initialize(string serverLibraryVersion, string serverVersion, string initializationType, string assemblyVersion)
+        public void Initialize(string serverLibraryVersion, string serverVersion, string initializationType, string assemblyVersion, string operatingSystem)
         {
             TelemetryConfiguration config = TelemetryConfiguration.CreateDefault();
             telemetryClient = new TelemetryClient(config);
@@ -19,18 +20,27 @@ namespace PnP.PowerShell.ALC
             telemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
             telemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
 
-            telemetryProperties = new Dictionary<string, string>(10)
+            telemetryProperties = new Dictionary<string, string>
             {
                 { "ServerLibraryVersion", serverLibraryVersion },
                 { "ServerVersion", serverVersion },
                 { "ConnectionMethod", initializationType.ToString() },
                 { "Version", assemblyVersion },
-                { "Platform", "SPO" }
+                { "Platform", "SPO" },
+                { "OperatingSystem", operatingSystem}
             };
         }
-        public void TrackEvent(string cmdletName)
+        public void TrackEvent(string cmdletName, Dictionary<string, string> properties = null)
         {
-            telemetryClient.TrackEvent(cmdletName, telemetryProperties);
+            var localProps = telemetryProperties;
+            if (properties != null)
+            {
+                foreach (var prop in properties)
+                {
+                    localProps.Add(prop.Key, prop.Value);
+                }
+            }
+            telemetryClient.TrackEvent(cmdletName, localProps);
         }
     }
 }

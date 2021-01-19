@@ -3,8 +3,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Get, "AccessToken")]
-    [Obsolete("Use Get-PnPGraphAccessToken instead")]
+    [Cmdlet(VerbsCommon.Get, "PnPAccessToken")]
     public class GetPnPAccessToken : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -14,7 +13,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             if (Decoded.IsPresent)
             {
-                WriteObject(Token.ParsedToken);
+                WriteObject(new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(AccessToken));
             }
             else
             {

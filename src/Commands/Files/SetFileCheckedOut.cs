@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Set, "FileCheckedOut")]
+    [Cmdlet(VerbsCommon.Set, "PnPFileCheckedOut")]
     public class SetFileCheckedOut : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true)]
@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.CheckOutFile(Url);
+            CurrentWeb.CheckOutFile(Url);
         }
     }
 }

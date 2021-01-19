@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpexception
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpexception
 schema: 2.0.0
 title: Get-PnPException
 ---
@@ -14,7 +14,7 @@ Returns the last exception that occurred
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPException [-All] [<CommonParameters>]
 ```
 
@@ -45,7 +45,6 @@ Show all exceptions
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -56,4 +55,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

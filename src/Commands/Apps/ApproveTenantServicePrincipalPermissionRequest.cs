@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsLifecycle.Approve, "TenantServicePrincipalPermissionRequest")]
+    [Cmdlet(VerbsLifecycle.Approve, "PnPTenantServicePrincipalPermissionRequest")]
     public class ApproveTenantServicePrincipalPermissionRequests : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

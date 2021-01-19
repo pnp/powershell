@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/new-pnplist
+online version: https://pnp.github.io/powershell/cmdlets/new-pnplist
 schema: 2.0.0
 title: New-PnPList
 ---
@@ -14,9 +14,9 @@ Creates a new list
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPList -Title <String> -Template <ListTemplateType> [-Url <String>] [-Hidden] [-EnableVersioning]
- [-EnableContentTypes] [-OnQuickLaunch] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-EnableContentTypes] [-OnQuickLaunch] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -52,7 +52,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -67,7 +66,6 @@ Switch parameter if content types should be enabled on this list
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -82,7 +80,6 @@ Switch parameter if versioning should be enabled
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -97,7 +94,6 @@ Switch parameter if list should be hidden from the SharePoint UI
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -112,7 +108,6 @@ Switch parameter if this list should be visible on the QuickLaunch
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -127,7 +122,6 @@ The type of list to create.
 ```yaml
 Type: ListTemplateType
 Parameter Sets: (All)
-Aliases:
 Accepted values: NoListTemplate, GenericList, DocumentLibrary, Survey, Links, Announcements, Contacts, Events, Tasks, DiscussionBoard, PictureLibrary, DataSources, WebTemplateCatalog, UserInformation, WebPartCatalog, ListTemplateCatalog, XMLForm, MasterPageCatalog, NoCodeWorkflows, WorkflowProcess, WebPageLibrary, CustomGrid, SolutionCatalog, NoCodePublic, ThemeCatalog, DesignCatalog, AppDataCatalog, AppFilesCatalog, DataConnectionLibrary, WorkflowHistory, GanttTasks, HelpLibrary, AccessRequest, PromotedLinks, TasksWithTimelineAndHierarchy, MaintenanceLogs, Meetings, Agenda, MeetingUser, Decision, MeetingObjective, TextBox, ThingsToBring, HomePageLibrary, Posts, Comments, Categories, Facility, Whereabouts, CallTrack, Circulation, Timecard, Holidays, IMEDic, ExternalList, MySiteDocumentLibrary, IssueTracking, AdminTasks, HealthRules, HealthReports, DeveloperSiteDraftApps, ContentCenterModelLibrary, ContentCenterPrimeLibrary, ContentCenterSampleLibrary, AccessApp, AlchemyMobileForm, AlchemyApprovalWorkflow, SharingLinks, HashtagStore, RecipesTable, FormulasTable, WebTemplateExtensionsList, ItemReferenceCollection, ItemReferenceReference, ItemReferenceReferenceCollection, InvalidType
 
 Required: True
@@ -143,7 +137,6 @@ The Title of the list
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -158,7 +151,6 @@ If set, will override the url of the list.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -167,21 +159,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

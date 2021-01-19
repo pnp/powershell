@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Add, "TeamsTeam")]
+    [Cmdlet(VerbsCommon.Add, "PnPTeamsTeam")]
     public class AddTeamsTeam : PnPSharePointCmdlet
     {
 

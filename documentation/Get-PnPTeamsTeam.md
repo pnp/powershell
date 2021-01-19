@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpteamsteam
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpteamsteam
 schema: 2.0.0
 title: Get-PnPTeamsTeam
 ---
@@ -19,8 +19,8 @@ Gets one Microsoft Teams Team or a list of Teams.
 
 ## SYNTAX
 
-```
-Get-PnPTeamsTeam [-Identity <TeamsTeamPipeBind>] [-ByPassPermissionCheck] [<CommonParameters>]
+```powershell
+Get-PnPTeamsTeam [-Identity <TeamsTeamPipeBind>]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,35 +36,26 @@ Retrieves all the Microsoft Teams instances
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPTeamsTeam -Identity $groupId
+Get-PnPTeamsTeam -Identity "PnP PowerShell"
 ```
 
-Retrieves a specific Microsoft Teams instance
+Retrieves a specific Microsoft Teams instance using display name.
+
+### EXAMPLE 3
+```powershell
+Get-PnPTeamsTeam -Identity "baba9192-55be-488a-9fb7-2e2e76edbef2"
+```
+
+Retrieves a specific Microsoft Teams instance using group id.
 
 ## PARAMETERS
 
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Identity
-Specify the group id of the team to retrieve.
+Specify the group id, mailNickname or display name of the team to use.
 
 ```yaml
 Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -75,4 +66,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

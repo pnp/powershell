@@ -1,0 +1,9 @@
+- name: Articles
+  href: articles/
+  topicHref: articles/index.md
+- name: Cmdlets
+  href: cmdlets/
+- name: GitHub
+  href: https://github.com/pnp/powershell
+- name: Changelog
+  href: https://github.com/pnp/powershell/blob/dev/CHANGELOG.md

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/move-pnpfile
+online version: https://pnp.github.io/powershell/cmdlets/move-pnpfile
 schema: 2.0.0
 title: Move-PnPFile
 ---
@@ -15,23 +15,23 @@ Moves a file or folder to a different location
 ## SYNTAX
 
 ### Site Relative (Default)
-```
+```powershell
 Move-PnPFile [-SiteRelativeUrl] <String> [-TargetUrl] <String> [-OverwriteIfAlreadyExists] [-Force]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ### Server Relative
-```
+```powershell
 Move-PnPFile [-ServerRelativeUrl] <String> [-TargetUrl] <String> [-OverwriteIfAlreadyExists] [-Force]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ### Other Site Collection
-```
+```powershell
 Move-PnPFile [[-ServerRelativeUrl] <String>] [[-SiteRelativeUrl] <String>]
  [-TargetServerRelativeLibrary] <String> [-OverwriteIfAlreadyExists] [-AllowSchemaMismatch]
- [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-Force] [-Web <WebPipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-Force] 
+ [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -72,12 +72,9 @@ Moves a folder named Archive located in the document library named "Shared Docum
 ### -AllowSchemaMismatch
 If provided and the target document library specified using TargetServerRelativeLibrary has different fields than the document library where the document is being moved from, the move will succeed. If not provided, it will fail to protect against data loss of metadata stored in fields that cannot be moved along.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: False
 Position: Named
@@ -89,12 +86,9 @@ Accept wildcard characters: False
 ### -AllowSmallerVersionLimitOnDestination
 If provided and the target document library specified using TargetServerRelativeLibrary is configured to keep less historical versions of documents than the document library where the document is being moved from, the move will succeed. If not provided, it will fail to protect against data loss of historical versions that cannot be moved along.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: False
 Position: Named
@@ -124,7 +118,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -139,7 +132,6 @@ If provided, no confirmation will be requested and the action will be performed
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -151,12 +143,9 @@ Accept wildcard characters: False
 ### -IgnoreVersionHistory
 If provided, only the latest version of the document will be moved and its history will be discared. If not provided, all historical versions will be moved along.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: False
 Position: Named
@@ -171,7 +160,6 @@ If provided, if a file or folder already exists at the TargetUrl, it will be ove
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -186,7 +174,6 @@ Server relative Url specifying the file to move. Must include the file name.
 ```yaml
 Type: String
 Parameter Sets: Server Relative
-Aliases:
 
 Required: True
 Position: 0
@@ -198,7 +185,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: False
 Position: 0
@@ -213,7 +199,6 @@ Site relative Url specifying the file or folder to move. Must include the file o
 ```yaml
 Type: String
 Parameter Sets: Site Relative
-Aliases:
 
 Required: True
 Position: 0
@@ -225,7 +210,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: False
 Position: 0
@@ -237,12 +221,9 @@ Accept wildcard characters: False
 ### -TargetServerRelativeLibrary
 Server relative url of a document library where to move the fileor folder to. Must not include the file or folder name.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: Other Site Collection
-Aliases:
 
 Required: True
 Position: 1
@@ -257,7 +238,6 @@ Server relative Url where to move the file or folder to. Must include the file o
 ```yaml
 Type: String
 Parameter Sets: Site Relative, Server Relative
-Aliases:
 
 Required: True
 Position: 1
@@ -266,20 +246,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -WhatIf
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
@@ -298,4 +265,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -2,10 +2,11 @@
 using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Set, "List")]
+    [Cmdlet(VerbsCommon.Set, "PnPList")]
     public class SetList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -22,7 +23,7 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false)]
         public
             SwitchParameter ResetRoleInheritance;
-        
+
         [Parameter(Mandatory = false)]
         public
             SwitchParameter CopyRoleAssignments;
@@ -66,14 +67,20 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false)]
         public bool EnableModeration;
 
+        [Parameter(Mandatory = false)]
+        public ListReadSecurity ReadSecurity;
+
+        [Parameter(Mandatory = false)]
+        public ListWriteSecurity WriteSecurity;
+
         protected override void ExecuteCmdlet()
         {
-            var list = Identity.GetList(SelectedWeb);
+            var list = Identity.GetList(CurrentWeb);
 
             if (list != null)
             {
                 list.EnsureProperties(l => l.EnableAttachments, l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType, l => l.HasUniqueRoleAssignments, l => l.ContentTypesEnabled);
-                
+
                 var enableVersioning = list.EnableVersioning;
                 var enableMinorVersions = list.EnableMinorVersions;
                 var hidden = list.Hidden;
@@ -155,6 +162,18 @@ namespace PnP.PowerShell.Commands.Lists
                 if (ParameterSpecified(nameof(ListExperience)))
                 {
                     list.ListExperienceOptions = ListExperience;
+                    updateRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(ReadSecurity)))
+                {
+                    list.ReadSecurity = (int)ReadSecurity;
+                    updateRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(WriteSecurity)))
+                {
+                    list.WriteSecurity = (int)WriteSecurity;
                     updateRequired = true;
                 }
 

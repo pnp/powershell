@@ -7,49 +7,42 @@ using System.Linq;
 
 namespace PnP.PowerShell.Commands.DocumentSets
 {
-    [Cmdlet(VerbsCommon.Add, "DocumentSet")]
+    [Cmdlet(VerbsCommon.Add, "PnPDocumentSet")]
     public class AddDocumentSet : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
+        [ValidateNotNullOrEmpty]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true)]
+        [ValidateNotNullOrEmpty]
         public string Name;
 
         [Parameter(Mandatory = true)]
+        [ValidateNotNullOrEmpty]
         public ContentTypePipeBind ContentType;
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(SelectedWeb);
-            if (list == null)
-                throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
-            list.EnsureProperties(l => l.RootFolder, l => l.ContentTypes);
+            var list = List.GetListOrThrow(nameof(List), CurrentWeb, l => l.RootFolder, l => l.ContentTypes);
+            
+            var listContentType = ContentType.GetContentType(list);
 
-            // Try getting the content type from the Web
-            var contentType = ContentType.GetContentType(SelectedWeb);
-
-            // If content type could not be found but a content type ID has been passed in, try looking for the content type ID on the list instead
-            if (contentType == null && !string.IsNullOrEmpty(ContentType.Id))
+            if (listContentType is null)
             {
-                contentType = list.ContentTypes.FirstOrDefault(ct => ct.StringId.Equals(ContentType.Id));
-            }
-            else
-            {
-                // Content type has been found on the web, check if it also exists on the list
-                if (list.ContentTypes.All(ct => !ct.StringId.Equals(contentType.Id.StringValue, System.StringComparison.InvariantCultureIgnoreCase)))
-                {
-                    contentType = list.ContentTypes.FirstOrDefault(ct => ct.Name.Equals(ContentType.Name));
-                }
+                var siteContentType = ContentType.GetContentTypeOrThrow(nameof(ContentType), CurrentWeb);
+                listContentType = new ContentTypePipeBind(siteContentType.Name).GetContentTypeOrThrow(nameof(ContentType), list);
             }
 
-            if (contentType == null)
+            listContentType.EnsureProperty(ct => ct.StringId);
+
+            if (!listContentType.StringId.StartsWith("0x0120D520"))
             {
-                throw new PSArgumentException("The provided contenttype has not been found", "ContentType");
+                throw new PSArgumentException($"Content type '{ContentType}' does not inherit from the base Document Set content type. Document Set content type IDs start with 0x120D520");
             }
 
             // Create the document set
-            var result = DocumentSet.Create(ClientContext, list.RootFolder, Name, contentType.Id);
+            var result = DocumentSet.Create(ClientContext, list.RootFolder, Name, listContentType.Id);
             ClientContext.ExecuteQueryRetry();
 
             WriteObject(result.Value);

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpfeature
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpfeature
 schema: 2.0.0
 title: Get-PnPFeature
 ---
@@ -14,8 +14,8 @@ Returns all activated or a specific activated feature
 
 ## SYNTAX
 
-```
-Get-PnPFeature [[-Identity] <FeaturePipeBind>] [-Scope <FeatureScope>] [-Web <WebPipeBind>]
+```powershell
+Get-PnPFeature [[-Identity] <FeaturePipeBind>] [-Scope <FeatureScope>] 
  [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```
 
@@ -59,7 +59,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -74,7 +73,6 @@ The feature ID or name to query for, Querying by name is not supported in versio
 ```yaml
 Type: FeaturePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -89,7 +87,6 @@ The scope of the feature. Defaults to Web.
 ```yaml
 Type: FeatureScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Web, Site
 
 Required: False
@@ -99,21 +96,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-The web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

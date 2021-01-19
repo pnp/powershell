@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Get, "Exception")]
+    [Cmdlet(VerbsCommon.Get, "PnPException")]
     public class GetException : PSCmdlet
     {
         [Parameter(Mandatory = false)]

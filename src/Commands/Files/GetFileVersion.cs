@@ -6,7 +6,7 @@ using File = Microsoft.SharePoint.Client.File;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Get, "FileVersion", DefaultParameterSetName = "Return as file object")]
+    [Cmdlet(VerbsCommon.Get, "PnPFileVersion", DefaultParameterSetName = "Return as file object")]
  
     public class GetFileVersion : PnPWebCmdlet
     {
@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.Files
         {
             var serverRelativeUrl = string.Empty;
 
-            var webUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             if (!Url.ToLower().StartsWith(webUrl.ToLower()))
             {
@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Files
 
             File file;
 
-            file = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+            file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
 
             ClientContext.Load(file, f => f.Exists, f => f.Versions.IncludeWithDefaultProperties(i => i.CreatedBy));
             ClientContext.ExecuteQueryRetry();

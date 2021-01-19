@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/unregister-pnphubsite
+online version: https://pnp.github.io/powershell/cmdlets/unregister-pnphubsite
 schema: 2.0.0
 title: Unregister-PnPHubSite
 ---
@@ -19,7 +19,7 @@ Unregisters a site as a hubsite
 
 ## SYNTAX
 
-```
+```powershell
 Unregister-PnPHubSite -Site <SitePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -30,7 +30,7 @@ Registers a site as a hubsite
 
 ### EXAMPLE 1
 ```powershell
-Unregister-PnPHubSite -Site https://tenant.sharepoint.com/sites/myhubsite
+Unregister-PnPHubSite -Site "https://tenant.sharepoint.com/sites/myhubsite"
 ```
 
 This example unregisters the specified site as a hubsite
@@ -43,7 +43,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -58,7 +57,6 @@ The site to unregister as a hubsite
 ```yaml
 Type: SitePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -69,4 +67,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

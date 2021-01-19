@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Add, "JavaScriptLink")]
+    [Cmdlet(VerbsCommon.Add, "PnPJavaScriptLink")]
     public class AddJavaScriptLink : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Branding
             switch (Scope)
             {
                 case CustomActionScope.Web:
-                    SelectedWeb.AddJsLink(Name, Url, Sequence);
+                    CurrentWeb.AddJsLink(Name, Url, Sequence);
                     break;
 
                 case CustomActionScope.Site:

@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Move, "ListItemToRecycleBin")]
+    [Cmdlet(VerbsCommon.Move, "PnPListItemToRecycleBin")]
     public class MoveListItemToRecycleBin : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(SelectedWeb);
+            var list = List.GetList(CurrentWeb);
             if (list == null)
                 throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
             if (Identity != null)

@@ -8,95 +8,61 @@ using System;
 
 namespace PnP.PowerShell.Commands.ContentTypes
 {
-    [Cmdlet(VerbsCommon.Get, "ContentType")]
+    [Cmdlet(VerbsCommon.Get, "PnPContentType")]
     public class GetContentType : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
+        [ValidateNotNullOrEmpty]
         public ContentTypePipeBind Identity;
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [ValidateNotNullOrEmpty]
         public ListPipeBind List;
         [Parameter(Mandatory = false, ValueFromPipeline = false)]
         public SwitchParameter InSiteHierarchy;
 
         protected override void ExecuteCmdlet()
         {
-
-            if (Identity != null)
+            if (List != null)
             {
-                if (List == null)
-                {
-                    ContentType ct;
-                    if (!string.IsNullOrEmpty(Identity.Id))
-                    {
-                        ct = SelectedWeb.GetContentTypeById(Identity.Id, InSiteHierarchy.IsPresent);
-                    }
-                    else
-                    {
-                        ct = SelectedWeb.GetContentTypeByName(Identity.Name, InSiteHierarchy.IsPresent);
-                    }
-                    if (ct != null)
-                    {
+                var list = List?.GetListOrThrow(nameof(List), CurrentWeb);
 
-                        WriteObject(ct);
+                if (Identity != null)
+                {
+
+                    var ct = Identity.GetContentTypeOrError(this, nameof(Identity), list);
+
+                    if (ct is null)
+                    {
+                        return;
                     }
+
+                    WriteObject(ct, false);
+
                 }
                 else
                 {
-                    List list = List.GetList(SelectedWeb);
-                    if (list == null)
-                        throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
-
+                    var cts = ClientContext.LoadQuery(list.ContentTypes.Include(ct => ct.Id, ct => ct.Name, ct => ct.StringId, ct => ct.Group));
                     ClientContext.ExecuteQueryRetry();
-
-                    if (!string.IsNullOrEmpty(Identity.Id))
-                    {
-                        if(list.ContentTypeExistsById(Identity.Id))
-                        {
-                            var cts = list.GetContentTypeById(Identity.Id);
-                            ClientContext.Load(cts);
-                            ClientContext.ExecuteQueryRetry();
-                            WriteObject(cts, false);
-                        }
-                        else
-                        {
-                            WriteError(new ErrorRecord(new ArgumentException(String.Format("Content Type Id: {0} does not exist in the list: {1}", Identity.Id, list.Title)), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
-                            
-                        }
-                    }
-                    else if (!string.IsNullOrEmpty(Identity.Name))
-                    {
-                        if (list.ContentTypeExistsByName(Identity.Name))
-                        {
-                            var cts = list.GetContentTypeByName(Identity.Name);
-                            ClientContext.Load(cts);
-                            ClientContext.ExecuteQueryRetry();
-                            WriteObject(cts, false);
-                        }
-                        else
-                        {
-                            WriteError(new ErrorRecord(new ArgumentException(String.Format("Content Type Name: {0} does not exist in the list: {1}", Identity.Name, list.Title)), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
-                        
-                        }
-                     
-                    }
+                    WriteObject(cts, true);
                 }
             }
             else
             {
-                if (List == null)
+                if (Identity != null)
                 {
-                    var cts = (InSiteHierarchy.IsPresent) ? ClientContext.LoadQuery(SelectedWeb.AvailableContentTypes) : ClientContext.LoadQuery(SelectedWeb.ContentTypes);
-                    ClientContext.ExecuteQueryRetry();
-
-                    WriteObject(cts, true);
+                    var ct = Identity.GetContentTypeOrError(this, nameof(Identity), CurrentWeb, InSiteHierarchy);
+                    if (ct is null)
+                    {
+                        return;
+                    }
+                    WriteObject(ct, false);
                 }
                 else
                 {
-                    List list = List.GetList(SelectedWeb);
-                    if (list == null)
-                        throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
-                    var cts = ClientContext.LoadQuery(list.ContentTypes.Include(ct => ct.Id, ct => ct.Name, ct => ct.StringId, ct => ct.Group));
+                    var cts = InSiteHierarchy ? ClientContext.LoadQuery(CurrentWeb.AvailableContentTypes) : ClientContext.LoadQuery(CurrentWeb.ContentTypes);
+
                     ClientContext.ExecuteQueryRetry();
+
                     WriteObject(cts, true);
                 }
             }

@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsLifecycle.Disable, "TenantServicePrincipal", ConfirmImpact = ConfirmImpact.High)]
+    [Cmdlet(VerbsLifecycle.Disable, "PnPTenantServicePrincipal", ConfirmImpact = ConfirmImpact.High)]
     public class DisableTenantServicePrincipal : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false)]

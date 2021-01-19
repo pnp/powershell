@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpteamsteamarchivedstate
+online version: https://pnp.github.io/powershell/cmdlets/set-pnpteamsteamarchivedstate
 schema: 2.0.0
 title: Set-PnPTeamsTeamArchivedState
 ---
@@ -19,9 +19,9 @@ Sets the archived state of a team.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTeamsTeamArchivedState -Identity <TeamsTeamPipeBind> -Archived <Boolean>
- [-SetSiteReadOnlyForMembers <Boolean>] [-ByPassPermissionCheck] [<CommonParameters>]
+ [-SetSiteReadOnlyForMembers <Boolean>]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -52,11 +52,11 @@ Archives the team as identified and sets the underlying SharePoint Online Site C
 ## PARAMETERS
 
 ### -Archived
+Setting that determines whether the Team is archived.
 
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -65,28 +65,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Identity
-Specify the name, id or external id of the app.
+Specify the group id, mailNickname or display name of the team to use.
 
 ```yaml
 Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -96,11 +80,11 @@ Accept wildcard characters: False
 ```
 
 ### -SetSiteReadOnlyForMembers
+Setting that determines whether the connected SharePoint site is set to read only.
 
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -111,4 +95,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/clear-pnprecyclebinitem
+online version: https://pnp.github.io/powershell/cmdlets/clear-pnprecyclebinitem
 schema: 2.0.0
 title: Clear-PnPRecycleBinItem
 ---
@@ -15,13 +15,13 @@ Permanently deletes all or a specific recycle bin item
 ## SYNTAX
 
 ### All (Default)
-```
+```powershell
 Clear-PnPRecycleBinItem [-All] [-SecondStageOnly] [-Force] [-RowLimit <Int32>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Identity
-```
+```powershell
 Clear-PnPRecycleBinItem -Identity <RecycleBinItemPipeBind> [-Force] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -32,7 +32,7 @@ Clear-PnPRecycleBinItem -Identity <RecycleBinItemPipeBind> [-Force] [-Connection
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPRecycleBinItem | ? FileLeafName -like "*.docx" | Clear-PnpRecycleBinItem
+Get-PnPRecycleBinItem | Where-Object LeafName -like "*.docx" | Clear-PnpRecycleBinItem
 ```
 
 Permanently deletes all the items in the first and second stage recycle bins of which the file names have the .docx extension
@@ -66,7 +66,6 @@ Clears all items
 ```yaml
 Type: SwitchParameter
 Parameter Sets: All
-Aliases:
 
 Required: False
 Position: Named
@@ -81,7 +80,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -96,7 +94,6 @@ If provided, no confirmation will be asked to restore the recycle bin item
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -111,7 +108,6 @@ Id of the recycle bin item or the recycle bin item itself to permanently delete
 ```yaml
 Type: RecycleBinItemPipeBind
 Parameter Sets: Identity
-Aliases:
 
 Required: True
 Position: Named
@@ -123,12 +119,9 @@ Accept wildcard characters: False
 ### -RowLimit
 Limits deletion to specified number of items
 
-Only applicable to: SharePoint Online, SharePoint Server 2019, SharePoint Server 2016
-
 ```yaml
 Type: Int32
 Parameter Sets: All
-Aliases:
 
 Required: False
 Position: Named
@@ -140,12 +133,9 @@ Accept wildcard characters: False
 ### -SecondStageOnly
 If provided, only all the items in the second stage recycle bin will be cleared
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: All
-Aliases:
 
 Required: False
 Position: Named
@@ -156,4 +146,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

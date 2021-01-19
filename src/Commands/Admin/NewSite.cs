@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.New, "Site")]
+    [Cmdlet(VerbsCommon.New, "PnPSite")]
     public class NewSite : PnPSharePointCmdlet, IDynamicParameters
     {
         private const string ParameterSet_COMMUNICATIONBUILTINDESIGN = "Communication Site with Built-In Site Design";
@@ -80,8 +80,6 @@ namespace PnP.PowerShell.Commands
                 creationInformation.SensitivityLabel = _communicationSiteParameters.SensitivityLabel;
 
                 var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
-                //var results = ClientContext.CreateSiteAsync(creationInformation);
-                //var returnedContext = results.GetAwaiter().GetResult();
                 WriteObject(returnedContext.Url);
             }
             else
@@ -101,9 +99,7 @@ namespace PnP.PowerShell.Commands
                 creationInformation.PreferredDataLocation = _teamSiteParameters.PreferredDataLocation;
                 creationInformation.SensitivityLabel = _teamSiteParameters.SensitivityLabel;
 
-                var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: PnPConnection.CurrentConnection.TryGetAccessToken(TokenAudience.MicrosoftGraph));
-                //var results = ClientContext.CreateSiteAsync(creationInformation);
-                //var returnedContext = results.GetAwaiter().GetResult();
+                var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GetGraphAccessToken(new[] { "Group.ReadWrite.All" }));
                 WriteObject(returnedContext.Url);
             }
         }

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpfolderitem
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpfolderitem
 schema: 2.0.0
 title: Get-PnPFolderItem
 ---
@@ -15,15 +15,15 @@ List content in folder
 ## SYNTAX
 
 ### Folder via url
-```
+```powershell
 Get-PnPFolderItem [[-FolderSiteRelativeUrl] <String>] [-ItemType <String>] [-ItemName <String>] [-Recursive]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Folder via pipebind
-```
+```powershell
 Get-PnPFolderItem [[-Identity] <FolderPipeBind>] [-ItemType <String>] [-ItemName <String>] [-Recursive]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -73,7 +73,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -88,7 +87,6 @@ The site relative URL of the folder to retrieve
 ```yaml
 Type: String
 Parameter Sets: Folder via url
-Aliases:
 
 Required: False
 Position: 0
@@ -103,7 +101,6 @@ A folder instance to the folder to retrieve
 ```yaml
 Type: FolderPipeBind
 Parameter Sets: Folder via pipebind
-Aliases:
 
 Required: False
 Position: 0
@@ -118,7 +115,6 @@ Optional name of the item to retrieve
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -133,7 +129,6 @@ The type of contents to retrieve, either File, Folder or All (default)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 Accepted values: Folder, File, All
 
 Required: False
@@ -149,7 +144,6 @@ A switch parameter to include contents of all subfolders in the specified folder
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 4
@@ -158,21 +152,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

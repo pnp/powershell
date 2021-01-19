@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.DocumentSets
 {
-    [Cmdlet(VerbsCommon.Set, "DocumentSetField")]
+    [Cmdlet(VerbsCommon.Set, "PnPDocumentSetField")]
     public class SetFieldInDocumentSet : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.DocumentSets
                 return;
             }
          
-            var docSetTemplate = DocumentSet.GetDocumentSetTemplate(SelectedWeb);
+            var docSetTemplate = DocumentSet.GetDocumentSetTemplate(CurrentWeb);
             
 
             ClientContext.Load(docSetTemplate, dt => dt.AllowedContentTypes, dt => dt.SharedFields, dt => dt.WelcomePageFields);
@@ -52,11 +52,11 @@ namespace PnP.PowerShell.Commands.DocumentSets
             {
                 if (Field.Id != Guid.Empty)
                 {
-                    field = SelectedWeb.Fields.GetById(Field.Id);
+                    field = CurrentWeb.Fields.GetById(Field.Id);
                 }
                 else if (!string.IsNullOrEmpty(Field.Name))
                 {
-                    field = SelectedWeb.Fields.GetByInternalNameOrTitle(Field.Name);
+                    field = CurrentWeb.Fields.GetByInternalNameOrTitle(Field.Name);
                 }
                 ClientContext.Load(field);
                 ClientContext.ExecuteQueryRetry();
@@ -67,7 +67,7 @@ namespace PnP.PowerShell.Commands.DocumentSets
                 Field existingField = null;
                 foreach (var allowedCtId in docSetTemplate.AllowedContentTypes)
                 {
-                    var allowedCt = SelectedWeb.GetContentTypeById(allowedCtId.StringValue, true);
+                    var allowedCt = CurrentWeb.GetContentTypeById(allowedCtId.StringValue, true);
 
                     var fields = allowedCt.Fields;
                     ClientContext.Load(fields, fs => fs.Include(f => f.Id));

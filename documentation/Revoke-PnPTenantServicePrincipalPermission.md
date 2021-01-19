@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/revoke-pnptenantserviceprincipalpermission
+online version: https://pnp.github.io/powershell/cmdlets/revoke-pnptenantserviceprincipalpermission
 schema: 2.0.0
 title: Revoke-PnPTenantServicePrincipalPermission
 ---
@@ -14,34 +14,55 @@ title: Revoke-PnPTenantServicePrincipalPermission
 **Required Permissions**
 
 * SharePoint: Access to the SharePoint Tenant Administration site
+* Microsoft Graph API : Directory.ReadWrite.All
 
-Revokes a permission that was previously granted to the "SharePoint Online Client" service principal.
+Revokes a permission that was previously granted to the "SharePoint Online Client Extensibility Web Application Service Principal" service principal.
 
 ## SYNTAX
 
-```
-Revoke-PnPTenantServicePrincipalPermission -ObjectId <String> [-Force] [-Connection <PnPConnection>]
+```powershell
+Revoke-PnPTenantServicePrincipalPermission -Scope <String> [-Resource <String>] [-Force] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Revokes a permission that was previously granted to the "SharePoint Online Client" service principal.
+Revokes a permission that was previously granted to the "SharePoint Online Client Extensibility Web Application Service Principal" service principal.
 
 ## EXAMPLES
 
+### EXAMPLE 1
+```powershell
+Revoke-PnPTenantServicePrincipalPermission -Scope "Group.Read.All"
+```
+
+Removes the Group.Read.All permission scope from the service principal.
+
 ## PARAMETERS
 
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+### -Scope
+The scope to grant the permission for
 
 ```yaml
-Type: PnPConnection
+Type: String
 Parameter Sets: (All)
-Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Resource
+The resource to grant the permission for. Defaults to "Microsoft Graph"
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: Microsoft Graph
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -52,7 +73,6 @@ Specifying the Force parameter will skip the confirmation question.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -61,14 +81,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ObjectId
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
-Type: String
+Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -77,4 +97,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

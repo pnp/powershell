@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Search
         ManagedPropertyMappings = 1
     }
 
-    [Cmdlet(VerbsCommon.Get, "SearchConfiguration", DefaultParameterSetName = "Xml")]
+    [Cmdlet(VerbsCommon.Get, "PnPSearchConfiguration", DefaultParameterSetName = "Xml")]
     public class GetSearchConfiguration : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Search
             {
                 case SearchConfigurationScope.Web:
                     {
-                        configOutput = SelectedWeb.GetSearchConfiguration();
+                        configOutput = CurrentWeb.GetSearchConfiguration();
                         break;
                     }
                 case SearchConfigurationScope.Site:
@@ -58,7 +58,7 @@ namespace PnP.PowerShell.Commands.Search
                         SearchObjectOwner owningScope = new SearchObjectOwner(ClientContext, SearchObjectLevel.SPSiteSubscription);
                         var config = new SearchConfigurationPortability(ClientContext);
                         ClientResult<string> configuration = config.ExportSearchConfiguration(owningScope);
-                        ClientContext.ExecuteQueryRetry(10, 60 * 5 * 1000);
+                        ClientContext.ExecuteQueryRetry();
 
                         configOutput = configuration.Value;
                     }
@@ -132,7 +132,7 @@ namespace PnP.PowerShell.Commands.Search
  */
             int p;
             if (!int.TryParse(pid, out p)) return pid;
-            if (p <= 1000000000) return pid;
+            if (p < 1000000000) return pid;
 
             var autoMpNum = pid.Substring(pid.Length - 2);
             var mpName = pid;

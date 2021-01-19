@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpfolderpermission
+online version: https://pnp.github.io/powershell/cmdlets/set-pnpfolderpermission
 schema: 2.0.0
 title: Set-PnPFolderPermission
 ---
@@ -15,23 +15,23 @@ Sets folder permissions. Use Get-PnPRoleDefinition to retrieve all available rol
 ## SYNTAX
 
 ### User (Default)
-```
+```powershell
 Set-PnPFolderPermission [-List] <ListPipeBind> -Identity <FolderPipeBind> -User <String> [-AddRole <String>]
- [-RemoveRole <String>] [-ClearExisting] [-SystemUpdate] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+ [-RemoveRole <String>] [-ClearExisting] [-SystemUpdate] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Group
-```
+```powershell
 Set-PnPFolderPermission [-List] <ListPipeBind> -Identity <FolderPipeBind> -Group <GroupPipeBind>
- [-AddRole <String>] [-RemoveRole <String>] [-ClearExisting] [-SystemUpdate] [-Web <WebPipeBind>]
+ [-AddRole <String>] [-RemoveRole <String>] [-ClearExisting] [-SystemUpdate] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Inherit
-```
+```powershell
 Set-PnPFolderPermission [-List] <ListPipeBind> -Identity <FolderPipeBind> [-InheritPermissions] [-SystemUpdate]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -74,7 +74,6 @@ The role that must be assigned to the group or user
 ```yaml
 Type: String
 Parameter Sets: User, Group
-Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +88,6 @@ Clear all existing permissions
 ```yaml
 Type: SwitchParameter
 Parameter Sets: User, Group
-Aliases:
 
 Required: False
 Position: Named
@@ -104,7 +102,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -118,7 +115,6 @@ Accept wildcard characters: False
 ```yaml
 Type: GroupPipeBind
 Parameter Sets: Group
-Aliases:
 
 Required: True
 Position: Named
@@ -133,7 +129,6 @@ The ID of the folder, the server relative URL to the folder or actual Folder obj
 ```yaml
 Type: FolderPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -148,7 +143,6 @@ Inherit permissions from the parent, removing unique permissions
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Inherit
-Aliases:
 
 Required: False
 Position: Named
@@ -163,7 +157,6 @@ The ID, Title or Url of the list the folder is part of
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -178,7 +171,6 @@ The role that must be removed from the group or user
 ```yaml
 Type: String
 Parameter Sets: User, Group
-Aliases:
 
 Required: False
 Position: Named
@@ -190,12 +182,9 @@ Accept wildcard characters: False
 ### -SystemUpdate
 Update the folder permissions without creating a new version or triggering MS Flow.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -209,7 +198,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: User
-Aliases:
 
 Required: True
 Position: Named
@@ -218,21 +206,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

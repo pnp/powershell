@@ -2,20 +2,23 @@
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
 
-
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Get, "SiteCollectionTermStore")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteCollectionTermStore")]
     public class GetPnPSiteCollectionTermStore : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()
         {
-            TaxonomySession session = TaxonomySession.GetTaxonomySession(ClientContext);
+            TaxonomySession session = ClientContext.Site.GetTaxonomySession();
             var termStore = session.GetDefaultSiteCollectionTermStore();
-            ClientContext.Load(termStore, t => t.Id, t => t.Name, t => t.Groups, t => t.KeywordsTermSet);
+            var termGroup = termStore.GetSiteCollectionGroup(ClientContext.Site, false);
+            ClientContext.Load(termGroup, g => g.Id, g => g.Name);
             ClientContext.ExecuteQueryRetry();
-            WriteObject(termStore);
-        }
 
+            if(!termGroup.ServerObjectIsNull.GetValueOrDefault(true))
+            {
+                WriteObject(termGroup);
+            }
+        }
     }
 }

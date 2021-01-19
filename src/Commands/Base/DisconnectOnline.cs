@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommunications.Disconnect, "Online")]
+    [Cmdlet(VerbsCommunications.Disconnect, "PnPOnline")]
     public class DisconnectOnline : PSCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -60,16 +60,12 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static bool DisconnectProvidedService(PnPConnection connection)
         {
-            //connection.ClearTokens();
             Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
             Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
             if (connection == null)
             {
                 return false;
             }
-            //GraphToken.ClearCaches();
-            //OfficeManagementApiToken.ClearCaches();
-            GenericToken.ClearCaches();
             connection.Context = null;
             connection = null;
             return true;
@@ -86,11 +82,8 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                PnPConnection.CurrentConnection.ClearTokens();
                 PnPConnection.CurrentConnection.Context = null;
                 PnPConnection.CurrentConnection = null;
-
-
                 return true;
             }
         }

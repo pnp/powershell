@@ -8,7 +8,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "SiteDesign")]
+    [Cmdlet(VerbsLifecycle.Invoke, "PnPSiteDesign")]
     public class InvokeSiteDesign : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            var url = SelectedWeb.EnsureProperty(w => w.Url);
+            var url = CurrentWeb.EnsureProperty(w => w.Url);
             var tenantUrl = UrlUtilities.GetTenantAdministrationUrl(ClientContext.Url);
             using (var tenantContext = ClientContext.Clone(tenantUrl))
             {

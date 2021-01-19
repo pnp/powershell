@@ -1,6 +1,4 @@
 ﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
@@ -9,7 +7,7 @@ using System.Linq;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Remove, "CustomAction")]
+    [Cmdlet(VerbsCommon.Remove, "PnPCustomAction")]
     public class RemoveCustomAction : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
@@ -23,51 +21,15 @@ namespace PnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-            List<UserCustomAction> actions = new List<UserCustomAction>();
-
-            if (Identity != null && Identity.UserCustomAction != null)
+            var customActions = Identity.GetCustomActions(PnPContext, Scope);
+            if (customActions != null && customActions.Any())
             {
-                actions.Add(Identity.UserCustomAction);
-            }
-            else
-            {
-                if (Scope == CustomActionScope.All || Scope == CustomActionScope.Web)
+                foreach (var customAction in customActions)
                 {
-                    actions.AddRange(SelectedWeb.GetCustomActions());
-                }
-                if (Scope == CustomActionScope.All || Scope == CustomActionScope.Site)
-                {
-                    actions.AddRange(ClientContext.Site.GetCustomActions());
-                }
-
-                if (Identity != null)
-                {
-                    actions = actions.Where(action => Identity.Id.HasValue ? Identity.Id.Value == action.Id : Identity.Name == action.Name).ToList();
-
-                    if (!actions.Any())
+                    if (Force || ShouldContinue($"Remove custom action '{customAction.Name}' with ID {customAction.Id} at scope {customAction.Scope}?", Resources.Confirm))
                     {
-                        throw new PSArgumentException($"No CustomAction found with the {(Identity.Id.HasValue ? "Id" : "name")} '{(Identity.Id.HasValue ? Identity.Id.Value.ToString() : Identity.Name)}' within the scope '{Scope}'", "Identity");
+                        customAction.Delete();
                     }
-                }
-
-                if (!actions.Any())
-                {
-                    WriteVerbose($"No CustomAction found within the scope '{Scope}'");
-                    return;
-                }
-            }
-
-            foreach (var action in actions.Where(action => Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Resources.RemoveCustomAction, action.Name, action.Id, action.Scope), Resources.Confirm)))
-            {
-                switch (action.Scope)
-                {
-                    case UserCustomActionScope.Web:
-                        SelectedWeb.DeleteCustomAction(action.Id);
-                        break;
-
-                    case UserCustomActionScope.Site:
-                        ClientContext.Site.DeleteCustomAction(action.Id);
-                        break;
                 }
             }
         }

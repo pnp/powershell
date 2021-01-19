@@ -10,14 +10,11 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommunications.Read, "TenantTemplate")]
+    [Cmdlet(VerbsCommunications.Read, "PnPTenantTemplate")]
     public class ReadTenantTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Path;
-
-        [Parameter(Mandatory = false)]
-        public ITemplateProviderExtension[] TemplateProviderExtensions;
 
         protected override void ProcessRecord()
         {
@@ -25,13 +22,13 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
-            WriteObject(LoadProvisioningHierarchyFromFile(Path, TemplateProviderExtensions, (e) =>
+            WriteObject(LoadProvisioningHierarchyFromFile(Path, (e) =>
             {
                 WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
             }));
         }
 
-        internal static ProvisioningHierarchy LoadProvisioningHierarchyFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler)
+        internal static ProvisioningHierarchy LoadProvisioningHierarchyFromFile(string templatePath, Action<Exception> exceptionHandler)
         {
             // Prepare the File Connector
             string templateFileName = System.IO.Path.GetFileName(templatePath);

@@ -2,17 +2,16 @@
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Management.Automation;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Set, "TeamsTeam")]
-    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
-    [PnPManagementShellScopes("Group.ReadWrite.All")]
+    [Cmdlet(VerbsCommon.Set, "PnPTeamsTeam")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class SetTeamsTeam : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -152,7 +151,7 @@ namespace PnP.PowerShell.Commands.Graph
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
 

@@ -5,14 +5,14 @@
         Unknown,
         Credentials,
         Token,
-        SPClientSecret,
+        ClientIDSecret,
+        ClientIDCertificate,
         AADNativeApp,
         AADAppOnly,
         InteractiveLogin,
-        ADFS,
         DeviceLogin,
         Graph,
         GraphDeviceLogin,
-        HighTrust
+        SPOManagementShell
     }
 }

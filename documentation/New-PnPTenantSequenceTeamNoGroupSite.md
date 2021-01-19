@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/new-pnptenantsequenceteamnogroupsite
+online version: https://pnp.github.io/powershell/cmdlets/new-pnptenantsequenceteamnogroupsite
 schema: 2.0.0
 title: New-PnPTenantSequenceTeamNoGroupSite
 ---
@@ -14,9 +14,9 @@ Creates a new team site without a Microsoft 365 group in-memory object
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPTenantSequenceTeamNoGroupSite -Url <String> -Title <String> -TimeZoneId <UInt32> [-Language <UInt32>]
- [-Owner <String>] [-Description <String>] [-HubSite] [-TemplateIds <String[]>] [-WhatIf] [-Confirm]
+ [-Owner <String>] [-Description <String>] [-HubSite] [-TemplateIds <String[]>]  
  [<CommonParameters>]
 ```
 
@@ -53,7 +53,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -67,7 +66,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -81,7 +79,6 @@ Accept wildcard characters: False
 ```yaml
 Type: UInt32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -95,7 +92,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -109,7 +105,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -123,7 +118,6 @@ Accept wildcard characters: False
 ```yaml
 Type: UInt32
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -137,7 +131,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -151,7 +144,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -177,4 +169,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnplistitem
+online version: https://pnp.github.io/powershell/cmdlets/set-pnplistitem
 schema: 2.0.0
 title: Set-PnPListItem
 ---
@@ -14,11 +14,18 @@ Updates a list item
 
 ## SYNTAX
 
-```
+### Single
+```powershell
 Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-ContentType <ContentTypePipeBind>]
- [-Values <Hashtable>] [-SystemUpdate] [-Label <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ [-Values <Hashtable>] [-SystemUpdate] [-Label <String>] [-ClearLabel] [-Connection <PnPConnection>]
 ```
+
+### Batched
+```powershell
+Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> -Batch <PnPBatch> [-ContentType <ContentTypePipeBind>]
+ [-Values <Hashtable>] [-SystemUpdate] [-Connection <PnPConnection>]
+```
+
 
 ## DESCRIPTION
 
@@ -52,7 +59,32 @@ Set-PnPListItem -List "Demo List" -Identity 1 -Label "Public"
 
 Sets the retention label in the list item with ID 1 in the "Demo List".
 
+### EXAMPLE 5
+```powershell
+$batch = New-PnPBatch
+for($i=0;$i -lt 100;$i++)
+{
+    Set-PnPListItem -List "Demo List" -Identity $i -Values @{"Title"="Updated Title"} -Batch $batch
+}
+Invoke-PnPBatch -Batch $batch
+```
+
+This example updates the items with ids 0 to 100 with a new title in a batched manner.
+
 ## PARAMETERS
+
+### -Batch
+Optional batch object used to add items in a batched manner. See examples on how to use this.
+
+```yaml
+Type: PnPBatch
+Parameter Sets: Batched
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
@@ -60,7 +92,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -75,7 +106,6 @@ Specify either the name, ID or an actual content type
 ```yaml
 Type: ContentTypePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -90,7 +120,6 @@ The ID of the listitem, or actual ListItem object
 ```yaml
 Type: ListItemPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -102,12 +131,9 @@ Accept wildcard characters: False
 ### -Label
 The name of the retention label.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
+Parameter Sets: Single
 
 Required: False
 Position: Named
@@ -122,7 +148,6 @@ The ID, Title or Url of the list.
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -134,12 +159,23 @@ Accept wildcard characters: False
 ### -SystemUpdate
 Update the item without creating a new version.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ClearLabel
+Clears the retention label of the item.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Single
 
 Required: False
 Position: Named
@@ -153,7 +189,7 @@ Use the internal names of the fields when specifying field names.
 
 Single line of text: -Values @{"TextField" = "Title New"}
 
-Multiple lines of text: -Values @{"MultiTextField" = "New text\n\nMore text"}
+Multiple lines of text: -Values @{"MultiTextField" = "New text\`n\`nMore text"}
 
 Rich text: -Values @{"MultiTextField" = "&lt;strong&gt;New&lt;/strong&gt; text"}
 
@@ -187,12 +223,11 @@ Managed Metadata (multiple values with paths to terms): -Values @{"MetadataField
 
 Managed Metadata (multiple values with ids of terms): -Values @{"MetadataField" = ("fe40a95b-2144-4fa2-b82a-0b3d0299d818","52d88107-c2a8-4bf0-adfa-04bc2305b593")}
 
-Hyperlink or Picture: -Values @{"HyperlinkField" = "https://github.com/OfficeDev/, OfficePnp"}
+Hyperlink or Picture: -Values @{"HyperlinkField" = "https://pnp.github.com/powershell, PnP PowerShell Home"}
 
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -201,21 +236,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

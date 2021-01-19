@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Get, "JavaScriptLink")]
+    [Cmdlet(VerbsCommon.Get, "PnPJavaScriptLink")]
     public class GetJavaScriptLink : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Branding
 
             if (Scope == CustomActionScope.All || Scope == CustomActionScope.Web)
             {
-                actions.AddRange(SelectedWeb.GetCustomActions().Where(c => c.Location == "ScriptLink"));
+                actions.AddRange(CurrentWeb.GetCustomActions().Where(c => c.Location == "ScriptLink"));
             }
             if (Scope == CustomActionScope.All || Scope == CustomActionScope.Site)
             {

@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommon.Get, "TenantSequence")]
+    [Cmdlet(VerbsCommon.Get, "PnPTenantSequence")]
     public class GetTenantSequence : BasePSCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]

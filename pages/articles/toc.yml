@@ -1,0 +1,24 @@
+- name: Installation
+  href: installation.md
+- name: Update notifications
+  href: updatenotifications.md
+- name: Authentication
+  href: authentication.md
+- name: Credential Management
+  href: credentialmanagement.md
+- name: Connecting to SharePoint
+  href: connecting.md
+- name: Configure PnP PowerShell
+  href: configuration.md
+- name: Batching in PnP PowerShell
+  href: batching.md
+- name: Upgrading from the Legacy version
+  href: upgrading.md
+- name: Using PnP PowerShell in Azure Functions
+  href: azurefunctions.md
+- name: For Developers
+  items:
+    - name: Building the project
+      href: buildingsource.md
+    - name: Running the tests
+      href: runningtests.md

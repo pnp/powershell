@@ -4,19 +4,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
+using PnP.Core.Services;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 
 // IMPORTANT: If you make changes to this cmdlet, also make the similar/same changes to the Set-PnPListItem Cmdlet
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Add, "ListItem")]
+    [Cmdlet(VerbsCommon.Add, "PnPListItem")]
     public class AddListItem : PnPWebCmdlet
     {
+        private const string ParameterSet_SINGLE = "Single";
+        private const string ParameterSet_BATCHED = "Batched";
+
+
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ValidateNotNull]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false)]
@@ -28,69 +34,61 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false)]
         public string Folder;
 
-        [Parameter(Mandatory = false)]
-        public String Label;
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        public string Label;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BATCHED)]
+        [ValidateNotNull]
+        public PnPBatch Batch;
 
         protected override void ExecuteCmdlet()
         {
-            List list = null;
-            if (List != null)
+            if (ParameterSpecified(nameof(Batch)))
             {
-                list = List.GetList(SelectedWeb);
+                var list = List.GetList(Batch);
+                list.EnsureProperties(l => l.Id, l => l.Fields.LoadProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
+
+                var values = ListItemHelper.GetFieldValues(list, Values, ClientContext);
+                if (ContentType != null)
+                {
+                    var contentType = ContentType.GetContentType(Batch, list);
+                    values.Add("ContentTypeId", contentType.StringId);
+                }
+                list.Items.AddBatch(Batch.Batch, values, Folder);
             }
-            if (list != null)
+            else
             {
+                List list = List.GetList(CurrentWeb);
                 ListItemCreationInformation liCI = new ListItemCreationInformation();
                 if (Folder != null)
                 {
                     // Create the folder if it doesn't exist
                     var rootFolder = list.EnsureProperty(l => l.RootFolder);
                     var targetFolder =
-                        SelectedWeb.EnsureFolder(rootFolder, Folder);
+                        CurrentWeb.EnsureFolder(rootFolder, Folder);
 
                     liCI.FolderUrl = targetFolder.ServerRelativeUrl;
                 }
                 var item = list.AddItem(liCI);
 
+                bool systemUpdate = false;
                 if (ContentType != null)
                 {
-                    ContentType ct = null;
-                    if (ContentType.ContentType == null)
-                    {
-                        if (ContentType.Id != null)
-                        {
-                            ct = SelectedWeb.GetContentTypeById(ContentType.Id, true);
-                        }
-                        else if (ContentType.Name != null)
-                        {
-                            ct = SelectedWeb.GetContentTypeByName(ContentType.Name, true);
-                        }
-                    }
-                    else
-                    {
-                        ct = ContentType.ContentType;
-                    }
+                    var ct = ContentType.GetContentType(list);
+
                     if (ct != null)
                     {
-                        ct.EnsureProperty(w => w.StringId);
 
-                        item["ContentTypeId"] = ct.StringId;
+                        item["ContentTypeId"] = ct.EnsureProperty(w => w.StringId);
                         item.Update();
+                        systemUpdate = true;
                         ClientContext.ExecuteQueryRetry();
                     }
                 }
 
-                if (Values != null)
+                if (Values?.Count > 0)
                 {
-                    item = ListItemHelper.UpdateListItem(item, Values, ListItemUpdateType.Update,
-                        (warning) =>
-                        {
-                            WriteWarning(warning);
-                        },
-                        (terminatingErrorMessage, terminatingErrorCode) =>
-                        {
-                            ThrowTerminatingError(new ErrorRecord(new Exception(terminatingErrorMessage), terminatingErrorCode, ErrorCategory.InvalidData, this));
-                        });
+                    ListItemHelper.SetFieldValues(item, Values, this);
                 }
 
                 if (!String.IsNullOrEmpty(Label))
@@ -110,7 +108,14 @@ namespace PnP.PowerShell.Commands.Lists
                     }
                 }
 
-                item.Update();
+                if (systemUpdate)
+                {
+                    item.SystemUpdate();
+                }
+                else
+                {
+                    item.Update();
+                }
                 ClientContext.Load(item);
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(item);

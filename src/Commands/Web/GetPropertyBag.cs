@@ -6,7 +6,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PropertyBag")]
+    [Cmdlet(VerbsCommon.Get, "PnPPropertyBag")]
     public class GetPropertyBag : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
@@ -21,13 +21,13 @@ namespace PnP.PowerShell.Commands
             {
                 if (!string.IsNullOrEmpty(Key))
                 {
-                    WriteObject(SelectedWeb.GetPropertyBagValueString(Key, string.Empty));
+                    WriteObject(CurrentWeb.GetPropertyBagValueString(Key, string.Empty));
                 }
                 else
                 {
-                    SelectedWeb.EnsureProperty(w => w.AllProperties);
+                    CurrentWeb.EnsureProperty(w => w.AllProperties);
                     
-                    var values = SelectedWeb.AllProperties.FieldValues.Select(x => new PropertyBagValue() { Key = x.Key, Value = x.Value });
+                    var values = CurrentWeb.AllProperties.FieldValues.Select(x => new PropertyBagValue() { Key = x.Key, Value = x.Value });
                     WriteObject(values, true);
                 }
             }
@@ -35,10 +35,10 @@ namespace PnP.PowerShell.Commands
             {
                 // Folder Property Bag
 
-                SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
                 
-                var folderUrl = UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder);
-                var folder = SelectedWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
+                var folderUrl = UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, Folder);
+                var folder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
                 folder.EnsureProperty(f => f.Properties);
                 
                 if (!string.IsNullOrEmpty(Key))

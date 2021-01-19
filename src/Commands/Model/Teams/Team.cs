@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PnP.PowerShell.Commands.Model.Graph;
 
 namespace PnP.PowerShell.Commands.Model.Teams
 {
@@ -82,13 +83,6 @@ namespace PnP.PowerShell.Commands.Model.Teams
 
         #endregion
 
-    }
-
-    public enum GroupVisibility
-    {
-        NotSpecified,
-        Private,
-        Public
     }
 
     /// <summary>

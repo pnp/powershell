@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpfooter
+online version: https://pnp.github.io/powershell/cmdlets/set-pnpfooter
 schema: 2.0.0
 title: Set-PnPFooter
 ---
@@ -14,9 +14,9 @@ Configures the footer of the current web
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPFooter [-Enabled] [-Layout <FooterLayoutType>] [-BackgroundTheme <FooterVariantThemeType>]
- [-Title <String>] [-LogoUrl <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Title <String>] [-LogoUrl <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -60,7 +60,6 @@ Defines the background emphasis of the content in the footer
 ```yaml
 Type: FooterVariantThemeType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Strong, Neutral, Soft, None
 
 Required: False
@@ -76,7 +75,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -91,7 +89,6 @@ Indicates if the footer should be shown on the current web ($true) or if it shou
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -106,7 +103,6 @@ Defines how the footer should look like
 ```yaml
 Type: FooterLayoutType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Simple, Extended, Stacked
 
 Required: False
@@ -122,7 +118,6 @@ Defines the server relative URL to the logo to be displayed in the footer. Provi
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -137,7 +132,6 @@ Defines the title displayed in the footer
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -146,21 +140,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

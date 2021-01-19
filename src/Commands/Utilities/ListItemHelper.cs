@@ -4,7 +4,9 @@ using PnP.PowerShell.Commands.Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,8 +33,10 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static ListItem UpdateListItem(ListItem item, Hashtable valuesToSet, ListItemUpdateType updateType, Action<string> warningCallback, Action<string, string> terminatingError)
+        public static void SetFieldValues(this ListItem item, Hashtable valuesToSet, Cmdlet cmdlet)
         {
+            // xxx: return early if hashtable is empty to save getting fields?
+
             var itemValues = new List<FieldUpdateValue>();
 
             var context = item.Context as ClientContext;
@@ -63,7 +67,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
                                 var value = values[key];
                                 if (value == null) goto default;
-                                if (value is string && string.IsNullOrWhiteSpace(value+"")) goto default;
+                                if (value is string && string.IsNullOrWhiteSpace(value + "")) goto default;
                                 if (value.GetType().IsArray)
                                 {
                                     foreach (var arrayItem in (value as IEnumerable))
@@ -143,7 +147,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                     }
                                     else
                                     {
-                                        warningCallback?.Invoke($@"You are trying to set multiple values in a single value field. Skipping values for field ""{field.InternalName}""");
+                                        cmdlet.WriteWarning(@"You are trying to set multiple values in a single value field. Skipping values for field ""{field.InternalName}""");
                                     }
                                 }
                                 else
@@ -223,7 +227,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 else
                 {
-                    terminatingError?.Invoke($"Field {key} not present in list.", "FIELDNOTINLIST");
+                    throw new PSInvalidOperationException($"Field {key} not present in list.");
                 }
             }
             foreach (var itemValue in itemValues)
@@ -243,7 +247,8 @@ namespace PnP.PowerShell.Commands.Utilities
                                 if (itemValue.Value is TaxonomyFieldValueCollection)
                                 {
                                     taxField.SetFieldValueByValueCollection(item, itemValue.Value as TaxonomyFieldValueCollection);
-                                } else
+                                }
+                                else
                                 {
                                     taxField.SetFieldValueByValue(item, itemValue.Value as TaxonomyFieldValue);
                                 }
@@ -259,8 +264,195 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                 }
             }
-            switch(updateType)
+        }
+
+        public static Dictionary<string, object> GetFieldValues(PnP.Core.Model.SharePoint.IList list, Hashtable valuesToSet, ClientContext clientContext)
+        {
+            var item = new Dictionary<string, object>();
+
+            // xxx: return early if hashtable is empty to save getting fields?
+
+            var fields = list.Fields;
+
+            Hashtable values = valuesToSet ?? new Hashtable();
+
+            foreach (var key in values.Keys)
             {
+                var field = fields.FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
+                if (field != null)
+                {
+                    switch (field.TypeAsString)
+                    {
+                        case "User":
+                        case "UserMulti":
+                            {
+                                var userValueCollection = field.NewFieldValueCollection();
+
+                                var value = values[key];
+                                if (value == null) goto default;
+                                if (value is string && string.IsNullOrWhiteSpace(value + "")) goto default;
+                                if (value.GetType().IsArray)
+                                {
+                                    foreach (var arrayItem in (value as IEnumerable))
+                                    {
+                                        int userId;
+                                        if (!int.TryParse(arrayItem.ToString(), out userId))
+                                        {
+                                            var user = list.PnPContext.Web.EnsureUser(arrayItem as string);
+                                            userValueCollection.Values.Add(field.NewFieldUserValue(user));
+                                        }
+                                        else
+                                        {
+                                            userValueCollection.Values.Add(field.NewFieldUserValue(userId));
+                                        }
+                                    }
+                                    item[key as string] = userValueCollection;
+                                }
+                                else
+                                {
+                                    int userId;
+                                    if (!int.TryParse(value as string, out userId))
+                                    {
+                                        var user = list.PnPContext.Web.EnsureUser(value as string);
+                                        item[key as string] = field.NewFieldUserValue(user);
+                                    }
+                                    else
+                                    {
+                                        item[key as string] = field.NewFieldUserValue(userId);
+                                    }
+                                }
+                                break;
+                            }
+                        case "TaxonomyFieldType":
+                        case "TaxonomyFieldTypeMulti":
+                            {
+                                var value = values[key];
+                                if (value != null && value.GetType().IsArray)
+                                {
+                                    var fieldValueCollection = field.NewFieldValueCollection();
+
+                                    var taxSession = clientContext.Site.GetTaxonomySession();
+                                    foreach (var arrayItem in value as object[])
+                                    {
+                                        Term taxonomyItem;
+                                        Guid termGuid;
+                                        var label = string.Empty;
+                                        if (!Guid.TryParse(arrayItem as string, out termGuid))
+                                        {
+                                            // Assume it's a TermPath
+                                            taxonomyItem = clientContext.Site.GetTaxonomyItemByPath(arrayItem as string) as Term;
+                                            if (taxonomyItem == null)
+                                            {
+                                                throw new PSInvalidOperationException($"Cannot find term {arrayItem}");
+                                            }
+                                            var labelResult = taxonomyItem.GetDefaultLabel(CultureInfo.CurrentCulture.LCID);
+                                            clientContext.ExecuteQueryRetry();
+                                            label = labelResult.Value;
+                                        }
+                                        else
+                                        {
+                                            taxonomyItem = taxSession.GetTerm(termGuid);
+                                            if (taxonomyItem == null)
+                                            {
+                                                throw new PSInvalidOperationException($"Cannot find term {arrayItem}");
+                                            }
+                                            var labelResult = taxonomyItem.GetDefaultLabel(CultureInfo.CurrentCulture.LCID);
+                                            clientContext.Load(taxonomyItem);
+                                            clientContext.ExecuteQueryRetry();
+                                            label = labelResult.Value;
+                                        }
+                                        fieldValueCollection.Values.Add(field.NewFieldTaxonomyValue(taxonomyItem.Id, label));
+                                    }
+                                    item[key as string] = fieldValueCollection;
+                                }
+                                else
+                                {
+                                    Guid termGuid = Guid.Empty;
+
+                                    var taxSession = clientContext.Site.GetTaxonomySession();
+                                    Term taxonomyItem = null;
+                                    var label = string.Empty;
+                                    if (value != null && !Guid.TryParse(value as string, out termGuid))
+                                    {
+                                        // Assume it's a TermPath
+                                        taxonomyItem = clientContext.Site.GetTaxonomyItemByPath(value as string) as Term;
+                                        var labelResult = taxonomyItem.GetDefaultLabel(CultureInfo.CurrentCulture.LCID);
+                                        clientContext.ExecuteQueryRetry();
+                                        label = labelResult.Value;
+                                    }
+                                    else
+                                    {
+                                        if (value != null)
+                                        {
+                                            taxonomyItem = taxSession.GetTerm(termGuid);
+                                            var labelResult = taxonomyItem.GetDefaultLabel(CultureInfo.CurrentCulture.LCID);
+                                            clientContext.Load(taxonomyItem);
+                                            clientContext.ExecuteQueryRetry();
+                                            label = labelResult.Value;
+                                        }
+                                    }
+
+                                    item[key as string] = field.NewFieldTaxonomyValue(taxonomyItem.Id, label);
+                                }
+                                break;
+                            }
+                        case "Lookup":
+                        case "LookupMulti":
+                            {
+                                var value = values[key];
+                                if (value == null) goto default;
+                                int[] multiValue;
+                                if (value is Array)
+                                {
+                                    var fieldValueCollection = field.NewFieldValueCollection();
+                                    var arr = (object[])values[key];
+                                    for (int i = 0; i < arr.Length; i++)
+                                    {
+                                        var arrayValue = arr[i].ToString();
+                                        fieldValueCollection.Values.Add(field.NewFieldLookupValue(int.Parse(arrayValue)));
+                                    }
+                                    item[key as string] = fieldValueCollection;
+                                }
+                                else
+                                {
+                                    var fieldValueCollection = field.NewFieldValueCollection();
+                                    string valStr = values[key].ToString();
+                                    multiValue = valStr.Split(',', ';').Select(int.Parse).ToArray();
+                                    if (multiValue.Length > 1)
+                                    {
+                                        for (int i = 0; i < multiValue.Length; i++)
+                                        {
+                                            fieldValueCollection.Values.Add(field.NewFieldLookupValue(multiValue[i]));
+                                        }
+                                        item[key as string] = fieldValueCollection;
+                                    }
+                                    else
+                                    {
+                                        item[key as string] = field.NewFieldLookupValue(multiValue[0]);
+                                    }
+                                }
+                                break;
+                            }
+                        default:
+                            {
+                                item[key as string] = values[key];
+                                break;
+                            }
+                    }
+                }
+                else
+                {
+                    throw new PSInvalidOperationException($"Field {key} not present in list.");
+                }
+            }
+            return item;
+        }
+
+        public static void UpdateListItem(this ListItem item, ListItemUpdateType updateType)
+        {
+            switch (updateType)
+            {
+                default:
                 case ListItemUpdateType.Update:
                     {
                         item.Update();
@@ -277,9 +469,6 @@ namespace PnP.PowerShell.Commands.Utilities
                         break;
                     }
             }
-            context.Load(item);
-            context.ExecuteQueryRetry();
-            return item;
         }
     }
 }

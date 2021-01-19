@@ -11,7 +11,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.New, "TermSet")]
+    [Cmdlet(VerbsCommon.New, "PnPTermSet")]
     public class NewTermSet : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
         public int Lcid = CultureInfo.CurrentCulture.LCID;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public TermGroupPipeBind TermGroup;
+        public TaxonomyTermGroupPipeBind TermGroup;
 
         [Parameter(Mandatory = false)]
         public string Contact;
@@ -48,46 +48,24 @@ namespace PnP.PowerShell.Commands.Taxonomy
         public Hashtable CustomProperties;
 
         [Parameter(Mandatory = false)]
-        [Alias("TermStoreName")]
-        public GenericObjectNameIdPipeBind<TermStore> TermStore;
+        public TaxonomyTermStorePipeBind TermStore;
 
         protected override void ExecuteCmdlet()
         {
             var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
             // Get Term Store
-            var termStore = default(TermStore);
-            if (TermStore != null)
-            {
-                if (TermStore.IdValue != Guid.Empty)
-                {
-                    termStore = taxonomySession.TermStores.GetById(TermStore.IdValue);
-                }
-                else if (!string.IsNullOrEmpty(TermStore.StringValue))
-                {
-                    termStore = taxonomySession.TermStores.GetByName(TermStore.StringValue);
-                }
-                else
-                {
-                    termStore = TermStore.Item;
-                }
-            }
-            else
+           TermStore termStore = null;
+            if (TermStore == null)
             {
                 termStore = taxonomySession.GetDefaultSiteCollectionTermStore();
             }
-
-            var termGroup = default(TermGroup);
-            if (TermGroup != null)
+            else
             {
-                if (!string.IsNullOrEmpty(TermGroup.Name))
-                {
-                    termGroup = termStore.Groups.GetByName(TermGroup.Name);
-                }
-                else if (TermGroup.Id != Guid.Empty)
-                {
-                    termGroup = termStore.Groups.GetById(TermGroup.Id);
-                }
+                termStore = TermStore.GetTermStore(taxonomySession);
             }
+
+            var termGroup = TermGroup.GetGroup(termStore);
+            
             if (Id == Guid.Empty)
             {
                 Id = Guid.NewGuid();

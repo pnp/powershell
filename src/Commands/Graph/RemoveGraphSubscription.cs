@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Remove, "GraphSubscription")]
+    [Cmdlet(VerbsCommon.Remove, "PnPGraphSubscription")]
     // Deliberately omitting the CmdletMicrosoftGraphApiPermission attribute as permissions vary largely by the subscription type being used
     public class RemoveGraphSubscription : PnPGraphCmdlet
     {

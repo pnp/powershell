@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "AvailableLanguage")]
+    [Cmdlet(VerbsCommon.Get, "PnPAvailableLanguage")]
     public class GetAvailableLanguage : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()

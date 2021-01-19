@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/enable-pnpcommsite
+online version: https://pnp.github.io/powershell/cmdlets/enable-pnpcommsite
 schema: 2.0.0
 title: Enable-PnPCommSite
 ---
@@ -14,7 +14,7 @@ Enables the modern communication site experience on a classic team site.
 
 ## SYNTAX
 
-```
+```powershell
 Enable-PnPCommSite [[-DesignPackageId] <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -45,7 +45,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -60,7 +59,6 @@ The id (guid) of the design package to apply: 96c933ac-3698-44c7-9f4a-5fd17d71af
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -71,4 +69,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

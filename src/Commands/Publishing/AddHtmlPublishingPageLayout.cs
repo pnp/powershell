@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Add, "HtmlPublishingPageLayout")]
+    [Cmdlet(VerbsCommon.Add, "PnPHtmlPublishingPageLayout")]
     public class AddHtmlPublishingPageLayout : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Publishing
             {
                 SourceFilePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, SourceFilePath);
             }
-            SelectedWeb.DeployHtmlPageLayout(SourceFilePath, Title, Description, AssociatedContentTypeID, DestinationFolderHierarchy);
+            CurrentWeb.DeployHtmlPageLayout(SourceFilePath, Title, Description, AssociatedContentTypeID, DestinationFolderHierarchy);
         }
     }
 }

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/new-pnpazurecertificate
+online version: https://pnp.github.io/powershell/cmdlets/new-pnpazurecertificate
 schema: 2.0.0
 title: New-PnPAzureCertificate
 ---
@@ -22,10 +22,10 @@ PrivateKey contains the PEM encoded private key of the certificate.
 
 ## SYNTAX
 
-```
-New-PnPAzureCertificate [[-CommonName] <String>] [[-Country] <String>] [[-State] <String>]
- [[-Locality] <String>] [[-Organization] <String>] [[-OrganizationUnit] <String>] [[-OutPfx] <String>]
- [[-OutCert] <String>] [[-ValidYears] <Int32>] [[-CertificatePassword] <SecureString>] [<CommonParameters>]
+```powershell
+New-PnPAzureCertificate [-CommonName <String>] [-Country <String>] [-State <String>]
+ [-Locality <String>] [-Organization <String>] [-OrganizationUnit <String>] [-OutPfx <String>]
+ [-OutCert <String>] [-ValidYears <Int32>] [-CertificatePassword <SecureString>] [-Store <StoreLocation>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -46,6 +46,13 @@ New-PnPAzureCertificate -CommonName "My Certificate" -ValidYears 30
 
 This will output a certificate named "My Certificate" which expires in 30 years from now.
 
+### EXAMPLE 3
+```powershell
+New-PnPAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer -CertificatePassword (ConvertTo-SecureString -String "pass@word1" -AsPlainText -Force)
+```
+
+This will generate a default self-signed certificate named "pnp.contoso.com" valid for 10 years and output a pfx and cer file. The pfx file will have the password pass@word1 set on it.
+
 ## PARAMETERS
 
 ### -CertificatePassword
@@ -54,10 +61,9 @@ Optional certificate password
 ```yaml
 Type: SecureString
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 8
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -69,10 +75,9 @@ Common Name (e.g. server FQDN or YOUR name) [pnp.contoso.com]
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 0
+Position: 0Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -84,10 +89,9 @@ Country Name (2 letter code)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -99,10 +103,9 @@ Locality Name (eg, city)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -114,10 +117,9 @@ Organization Name (eg, company)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -129,10 +131,9 @@ Organizational Unit Name (eg, section)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -144,10 +145,9 @@ Filename to write to, optionally including full path (.cer)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -159,10 +159,9 @@ Filename to write to, optionally including full path (.pfx)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -174,10 +173,9 @@ State or Province Name (full name)
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -189,15 +187,26 @@ Number of years until expiration (default is 10, max is 30)
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
-Position: 7
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Store
+Local Certificate Store to add the certificate to. Only works on Microsoft Windows.
+
+```yaml
+Type: StoreLocation
+Parameter Sets: Generate Certificate
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

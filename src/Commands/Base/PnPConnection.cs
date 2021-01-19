@@ -1,7 +1,7 @@
-﻿using Microsoft.ApplicationInsights;
-using Microsoft.Identity.Client;
+﻿using Microsoft.Identity.Client;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Extensions;
+using PnP.Core.Services;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
@@ -9,18 +9,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using System.Management.Automation.Host;
-using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
-using System.Web;
 using TextCopy;
-
 using PnP.Framework;
-using Microsoft.ApplicationInsights.Extensibility;
 using PnP.PowerShell.ALC;
 using PnP.PowerShell.Commands.Attributes;
+using System.Threading;
+using System.Text.Json;
+using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -40,6 +39,8 @@ namespace PnP.PowerShell.Commands.Base
 
         private HttpClient httpClient;
 
+        private PnPContext pnpContext { get; set; }
+
         public HttpClient HttpClient
         {
             get
@@ -51,11 +52,24 @@ namespace PnP.PowerShell.Commands.Base
                 return httpClient;
             }
         }
+
+        internal PnPContext PnPContext
+        {
+            get
+            {
+                if (pnpContext == null && Context != null)
+                {
+                    pnpContext = PnP.Framework.PnPCoreSdk.Instance.GetPnPContext(Context);
+                }
+                return pnpContext;
+            }
+        }
         /// <summary>
         /// User Agent identifier to use on all connections being made to the APIs
         /// </summary>
         internal string UserAgent { get; set; }
 
+        internal static AuthenticationManager CachedAuthenticationManager { get; set; }
 
         internal ConnectionMethod ConnectionMethod { get; set; }
 
@@ -115,6 +129,10 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public string Tenant { get; set; }
 
+        /// <summary>
+        /// Defines if this is a managed identity connection for use in cloud shell
+        /// </summary>
+        internal bool ManagedIdentity { get; set; }
         public AzureEnvironment AzureEnvironment { get; set; } = AzureEnvironment.Production;
 
         #endregion
@@ -124,209 +142,124 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// Collection with all available access tokens in the current session to access APIs. Key is the token audience, value is the JWT token itself.
         /// </summary>
-        private readonly Dictionary<TokenAudience, GenericToken> AccessTokens = new Dictionary<TokenAudience, GenericToken>();
+        // private readonly Dictionary<TokenAudience, GenericToken> AccessTokens = new Dictionary<TokenAudience, GenericToken>();
 
         #endregion
 
         #region Methods
 
+        // internal ReadOnlyDictionary<TokenAudience, GenericToken> GetAllStoredTokens()
+        // {
+        //     return new ReadOnlyDictionary<TokenAudience, GenericToken>(AccessTokens);
+        // }
+
         /// <summary>
         /// Tries to get an access token for the provided audience
         /// </summary>
         /// <param name="tokenAudience">Audience to try to get an access token for</param>
-        /// <param name="roles">The specific roles to request access to (i.e. Group.ReadWrite.All). Optional, will use default roles assigned to clientId if not specified.</param>
+        /// <param name="permissionScopes">The specific permission scopes to request access to (i.e. Group.ReadWrite.All). Optional, will use default permission scopes assigned to clientId if not specified.</param>
         /// <returns>AccessToken for the audience or NULL if unable to retrieve an access token for the audience on the current connection</returns>
-        internal string TryGetAccessToken(TokenAudience tokenAudience, string[] roles = null)
-        {
-            return TryGetToken(tokenAudience, AzureEnvironment, roles)?.AccessToken;
-        }
+        // internal async Task<string> TryGetAccessTokenAsync(TokenAudience tokenAudience, string[] permissionScopes = null)
+        // {
+        //     var token = await TryGetTokenAsync(tokenAudience, AzureEnvironment, permissionScopes);
+        //     return token?.AccessToken;
+        // }
 
-        internal static Action<DeviceCodeResult> DeviceLoginCallback(PSHost host, bool launchBrowser)
-        {
-            return deviceCodeResult =>
-            {
+        // internal static Action<DeviceCodeResult> DeviceLoginCallback(CmdletMessageWriter messageWriter, bool launchBrowser)
+        // {
+        //     return deviceCodeResult =>
+        //     {
 
-                if (launchBrowser)
-                {
-                    ClipboardService.SetText(deviceCodeResult.UserCode);
-                    host?.UI.WriteLine($"Code {deviceCodeResult.UserCode} has been copied to clipboard");
-                    BrowserHelper.LaunchBrowser(deviceCodeResult.VerificationUrl);
-                }
-                else
-                {
-                    host?.UI.WriteLine(deviceCodeResult.Message);
-                }
-            };
-        }
-        /// <summary>
-        /// Tries to get a token for the provided audience
-        /// </summary>
-        /// <param name="tokenAudience">Audience to try to get a token for</param>
-        /// <param name="orRoles">The specific roles to request access to (i.e. Group.ReadWrite.All). Optional, will use default groups assigned to clientId if not specified.</param>
-        /// <returns><see cref="GenericToken"/> for the audience or NULL if unable to retrieve a token for the audience on the current connection</returns>
-        internal GenericToken TryGetToken(TokenAudience tokenAudience, AzureEnvironment azureEnvironment, string[] orRoles = null, string[] andRoles = null, TokenType tokenType = TokenType.All, string[] managementShellScopes = null)
-        {
-            GenericToken token = null;
-
-            switch (tokenAudience)
-            {
-                case TokenAudience.MicrosoftGraph:
-
-                    if (ConnectionMethod == ConnectionMethod.DeviceLogin || ConnectionMethod == ConnectionMethod.GraphDeviceLogin)
-                    {
-                        var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
-                        // Take the remaining scopes and try requesting them from the Microsoft Graph API
-                        var scopes = Scopes.Except(officeManagementApiScopes).ToArray();
-                        token = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, scopes, DeviceLoginCallback(null, false), AzureEnvironment);
-                    }
-                    else
-                    {
-                        if (!string.IsNullOrEmpty(Tenant))
-                        {
-                            if (Certificate != null)
-                            {
-                                token = GraphToken.AcquireApplicationToken(Tenant, ClientId, Certificate, AzureEnvironment);
-                            }
-                            else if (ClientSecret != null)
-                            {
-                                token = GraphToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret, AzureEnvironment);
-                            }
-                            else if (Scopes != null || managementShellScopes != null)
-                            {
-                                var scopesToParse = managementShellScopes ?? Scopes;
-                                var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopesToParse).ToArray();
-                                // Take the remaining scopes and try requesting them from the Microsoft Graph API
-                                var scopes = scopesToParse.Except(officeManagementApiScopes).ToArray();
-                                if (scopes.Length > 0)
-                                {
-                                    token = PSCredential == null ? GraphToken.AcquireApplicationTokenInteractive(PnPManagementShellClientId, scopes, azureEnvironment) : GraphToken.AcquireDelegatedTokenWithCredentials(PnPManagementShellClientId, scopes, PSCredential.UserName, PSCredential.Password, azureEnvironment);
-                                }
-                                else
-                                {
-                                    throw new PSSecurityException($"Access to {tokenAudience} failed because you did not connect with any permission scopes related to this service (for instance 'Group.Read.All').");
-                                }
-                            }
-                        }
-                    }
-                    break;
-
-                case TokenAudience.OfficeManagementApi:
-                    if (!string.IsNullOrEmpty(Tenant))
-                    {
-                        if (Certificate != null)
-                        {
-                            token = OfficeManagementApiToken.AcquireApplicationToken(Tenant, ClientId, Certificate, AzureEnvironment);
-                        }
-                        else if (ClientSecret != null)
-                        {
-                            token = OfficeManagementApiToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret, AzureEnvironment);
-                        }
-                        else if (Scopes != null || managementShellScopes != null)
-                        {
-                            var scopesToParse = managementShellScopes ?? Scopes;
-                            var scopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopesToParse).ToArray();
-                            // Take the remaining scopes and try requesting them from the Microsoft Graph API
-                            if (scopes.Length > 0)
-                            {
-                                token = PSCredential == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(PnPManagementShellClientId, scopes, azureEnvironment) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPManagementShellClientId, scopes, PSCredential.UserName, PSCredential.Password, azureEnvironment);
-                            }
-                            else
-                            {
-                                throw new PSSecurityException($"Access to {tokenAudience} failed because you did not connect with any permission scopes related to this service (for instance 'ServiceHealth.Read').");
-                            }
-                        }
-
-                    }
-                    break;
-
-                case TokenAudience.SharePointOnline:
-                    // This is not a token type we can request on demand
-                    return null;
-            }
-
-            if (token != null)
-            {
-                var (valid, message) = ValidateTokenForPermissions(token, tokenAudience, orRoles, andRoles, tokenType);
-                if (!valid)
-                {
-                    throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {message}");
-                }
-                return token;
-            }
-
-            // Didn't have a token yet and unable to retrieve one
-            return null;
-        }
+        //         if (launchBrowser)
+        //         {
+        //             if (Utilities.OperatingSystem.IsWindows())
+        //             {
+        //                 ClipboardService.SetText(deviceCodeResult.UserCode);
+        //                 messageWriter.WriteMessage($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard\n\n");
+        //                 BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in");
+        //             }
+        //             else
+        //             {
+        //                 messageWriter.WriteMessage($"\n\n{deviceCodeResult.Message}\n\n");
+        //             }
+        //         }
+        //         else
+        //         {
+        //             messageWriter.WriteMessage($"\n\n{deviceCodeResult.Message}\n\n");
+        //         }
+        //     };
+        // }
+        
 
         /// <summary>
         /// Adds the provided token to the available tokens in the current connection
         /// </summary>
         /// <param name="tokenAudience">Audience the token is for</param>
         /// <param name="token">The token to add</param>
-        internal void AddToken(TokenAudience tokenAudience, GenericToken token)
-        {
-            AccessTokens[tokenAudience] = token;
-        }
+        // internal void AddToken(TokenAudience tokenAudience, GenericToken token)
+        // {
+        //     AccessTokens[tokenAudience] = token;
+        // }
 
         /// <summary>
         /// Clears all available tokens on the current connection
         /// </summary>
-        internal void ClearTokens()
-        {
-            AccessTokens.Clear();
-        }
+        // internal void ClearTokens()
+        // {
+        //     AccessTokens.Clear();
+        // }
 
-        private (bool valid, string message) ValidateTokenForPermissions(GenericToken token, TokenAudience tokenAudience, string[] orRoles = null, string[] andRoles = null, TokenType tokenType = TokenType.All)
-        {
-            bool valid = false;
-            var message = string.Empty;
-            if (tokenType != TokenType.All && token.TokenType != tokenType)
-            {
-                throw new PSSecurityException($"Access to {tokenAudience} failed because the API requires {(tokenType == TokenType.Application ? "an" : "a")} {tokenType} token while you currently use {(token.TokenType == TokenType.Application ? "an" : "a")} {token.TokenType} token.");
-            }
-            var andRolesMatched = false;
-            if (andRoles != null && andRoles.Length != 0)
-            {
-                // we have explicitely required roles
-                andRolesMatched = andRoles.All(r => token.Roles.Contains(r));
-            }
-            else
-            {
-                andRolesMatched = true;
-            }
+        // private (bool valid, string message) ValidateTokenForPermissions(GenericToken token, TokenAudience tokenAudience, string[] orPermissionScopes = null, string[] andPermissionScopes = null, TokenType tokenType = TokenType.All)
+        // {
+        //     bool valid = false;
+        //     var message = string.Empty;
+        //     if (tokenType != TokenType.All && token.TokenType != tokenType)
+        //     {
+        //         throw new PSSecurityException($"Access to {tokenAudience} failed because the API requires {(tokenType == TokenType.Application ? "an" : "a")} {tokenType} token while you currently use {(token.TokenType == TokenType.Application ? "an" : "a")} {token.TokenType} token.");
+        //     }
+        //     var andScopesMatched = false;
+        //     if (andPermissionScopes != null && andPermissionScopes.Length != 0)
+        //     {
+        //         // we have explicitely required permission scopes
+        //         andScopesMatched = andPermissionScopes.All(r => token.Roles.Contains(r));
+        //     }
+        //     else
+        //     {
+        //         andScopesMatched = true;
+        //     }
 
-            var orRolesMatched = false;
-            if (orRoles != null && orRoles.Length != 0)
-            {
-                orRolesMatched = orRoles.Any(r => token.Roles.Contains(r));
-            }
-            else
-            {
-                orRolesMatched = true;
-            }
+        //     var orScopesMatched = false;
+        //     if (orPermissionScopes != null && orPermissionScopes.Length != 0)
+        //     {
+        //         orScopesMatched = orPermissionScopes.Any(r => token.Roles.Contains(r));
+        //     }
+        //     else
+        //     {
+        //         orScopesMatched = true;
+        //     }
 
-            if (orRolesMatched && andRolesMatched)
-            {
-                valid = true;
-            }
+        //     if (orScopesMatched && andScopesMatched)
+        //     {
+        //         valid = true;
+        //     }
 
-            if (orRoles != null || andRoles != null)
-            {
-                if (!valid)
-                {                // Requested role was not part of the access token, throw an exception explaining which application registration is missing which role
-                    if (!orRolesMatched)
-                    {
-                        message += "for one of the following roles: " + string.Join(", ", orRoles);
-                    }
-                    if (!andRolesMatched)
-                    {
-                        message += (message != string.Empty ? ", and " : ", ") + "for all of the following roles: " + string.Join(", ", andRoles);
-                    }
-                    throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {message}");
-                }
-            }
-            return (valid, message);
-        }
+        //     if (orPermissionScopes != null || andPermissionScopes != null)
+        //     {
+        //         if (!valid)
+        //         {                // Requested role was not part of the access token, throw an exception explaining which application registration is missing which role
+        //             if (!orScopesMatched)
+        //             {
+        //                 message += "for one of the following permission scopes: " + string.Join(", ", orPermissionScopes);
+        //             }
+        //             if (!andScopesMatched)
+        //             {
+        //                 message += (message != string.Empty ? ", and " : ", ") + "for all of the following permission scopes: " + string.Join(", ", andPermissionScopes);
+        //             }
+        //             throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {message}");
+        //         }
+        //     }
+        //     return (valid, message);
+        // }
 
         #endregion
 
@@ -340,54 +273,49 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="url">Url of the SharePoint environment to connect to, if applicable. Leave NULL not to connect to a SharePoint environment.</param>
         /// <param name="clientContext">A SharePoint ClientContext to make available within this connection. Leave NULL to not connect to a SharePoint environment.</param>
         /// <param name="pnpVersionTag">Identifier set on the SharePoint ClientContext as the ClientTag to identify the source of the requests to SharePoint. Leave NULL not to set it.</param>
-        /// <param name="disableTelemetry">Boolean indicating if telemetry on the commands being executed should be disabled. Telemetry is enabled by default.</param>
-        private PnPConnection(InitializationType initializationType,
-                              string url = null,
-                              ClientContext clientContext = null,
-                              Dictionary<TokenAudience, GenericToken> tokens = null,
-                              string pnpVersionTag = null,
-                              bool disableTelemetry = false)
-        {
-            if (!disableTelemetry)
-            {
-                InitializeTelemetry(clientContext, initializationType);
-            }
+        // private PnPConnection(InitializationType initializationType,
+        //                       string url = null,
+        //                       ClientContext clientContext = null,
+        //                       Dictionary<TokenAudience, GenericToken> tokens = null,
+        //                       string pnpVersionTag = null)
+        // {
+        //     InitializeTelemetry(clientContext, initializationType);
 
-            UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
-            Context = clientContext;
+        //     UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
+        //     Context = clientContext;
 
-            // Enrich the AccessTokens collection with the token(s) passed in
-            if (tokens != null)
-            {
-                AccessTokens.AddRange(tokens);
-            }
+        //     // Enrich the AccessTokens collection with the token(s) passed in
+        //     if (tokens != null)
+        //     {
+        //         AccessTokens.AddRange(tokens);
+        //     }
 
-            // Validate if we have a SharePoint Context
-            if (Context != null)
-            {
-                // We have a SharePoint Context, configure the context
-                ContextCache = new List<ClientContext> { Context };
+        //     // Validate if we have a SharePoint Context
+        //     if (Context != null)
+        //     {
+        //         // We have a SharePoint Context, configure the context
+        //         ContextCache = new List<ClientContext> { Context };
 
-                // If we have a SharePoint or a Graph Access Token, use it for the SharePoint connection
-                var accessToken = AccessTokens.ContainsKey(TokenAudience.SharePointOnline) ? TryGetAccessToken(TokenAudience.SharePointOnline) : TryGetAccessToken(TokenAudience.MicrosoftGraph);
-                if (accessToken != null)
-                {
-                    Context.ExecutingWebRequest += (sender, args) =>
-                    {
-                        args.WebRequestExecutor.WebRequest.UserAgent = UserAgent;
-                        args.WebRequestExecutor.RequestHeaders["Authorization"] = "Bearer " + accessToken;
-                    };
-                }
-            }
-            else
-            {
-                // We do not have a SharePoint Context
-                ContextCache = null;
-            }
+        //         // If we have a SharePoint or a Graph Access Token, use it for the SharePoint connection
+        //         var accessToken = AccessTokens.ContainsKey(TokenAudience.SharePointOnline) ? TryGetAccessTokenAsync(TokenAudience.SharePointOnline).GetAwaiter().GetResult() : TryGetAccessTokenAsync(TokenAudience.MicrosoftGraph).GetAwaiter().GetResult();
+        //         if (accessToken != null)
+        //         {
+        //             Context.ExecutingWebRequest += (sender, args) =>
+        //             {
+        //                 args.WebRequestExecutor.WebRequest.UserAgent = UserAgent;
+        //                 args.WebRequestExecutor.RequestHeaders["Authorization"] = "Bearer " + accessToken;
+        //             };
+        //         }
+        //     }
+        //     else
+        //     {
+        //         // We do not have a SharePoint Context
+        //         ContextCache = null;
+        //     }
 
-            PnPVersionTag = pnpVersionTag;
-            Url = url;
-        }
+        //     PnPVersionTag = pnpVersionTag;
+        //     Url = url;
+        // }
 
         #endregion
 
@@ -404,25 +332,23 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="url">Url of the SharePoint environment to connect to, if applicable. Leave NULL not to connect to a SharePoint environment.</param>
         /// <param name="clientContext">A SharePoint ClientContext to make available within this connection. Leave NULL to not connect to a SharePoint environment.</param>
         /// <param name="pnpVersionTag">Identifier set on the SharePoint ClientContext as the ClientTag to identify the source of the requests to SharePoint. Leave NULL not to set it.</param>
-        /// <param name="disableTelemetry">Boolean indicating if telemetry on the commands being executed should be disabled. Telemetry is enabled by default.</param>
         /// <returns><see cref="PnPConnection"/ instance which can be used to communicate with one of the supported APIs</returns>
-        public static PnPConnection GetConnectionWithClientIdAndClientSecret(string clientId,
-                                                                             string clientSecret,
-                                                                             InitializationType initializationType,
-                                                                             string url = null,
-                                                                             string aadDomain = null,
-                                                                             ClientContext clientContext = null,
-                                                                             string pnpVersionTag = null,
-                                                                             bool disableTelemetry = false)
-        {
-            return new PnPConnection(initializationType, url, clientContext, null, pnpVersionTag, disableTelemetry)
-            {
-                ClientId = clientId,
-                ClientSecret = clientSecret,
-                ConnectionMethod = ConnectionMethod.AzureADAppOnly,
-                Tenant = aadDomain
-            };
-        }
+        // public static PnPConnection GetConnectionWithClientIdAndClientSecret(string clientId,
+        //                                                                      string clientSecret,
+        //                                                                      InitializationType initializationType,
+        //                                                                      string url = null,
+        //                                                                      string aadDomain = null,
+        //                                                                      ClientContext clientContext = null,
+        //                                                                      string pnpVersionTag = null)
+        // {
+        //     return new PnPConnection(initializationType, url, clientContext, null, pnpVersionTag)
+        //     {
+        //         ClientId = clientId,
+        //         ClientSecret = clientSecret,
+        //         ConnectionMethod = ConnectionMethod.AzureADAppOnly,
+        //         Tenant = aadDomain
+        //     };
+        // }
 
         /// <summary>
         /// Returns a PnPConnection based on connecting using a ClientId and Certificate
@@ -435,25 +361,23 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="url">Url of the SharePoint environment to connect to, if applicable. Leave NULL not to connect to a SharePoint environment.</param>
         /// <param name="clientContext">A SharePoint ClientContext to make available within this connection. Leave NULL to not connect to a SharePoint environment.</param>
         /// <param name="pnpVersionTag">Identifier set on the SharePoint ClientContext as the ClientTag to identify the source of the requests to SharePoint. Leave NULL not to set it.</param>
-        /// <param name="disableTelemetry">Boolean indicating if telemetry on the commands being executed should be disabled. Telemetry is enabled by default.</param>
         /// <returns><see cref="PnPConnection"/ instance which can be used to communicate with one of the supported APIs</returns>
-        public static PnPConnection GetConnectionWithClientIdAndCertificate(string clientId,
-                                                                            X509Certificate2 certificate,
-                                                                            InitializationType initializationType,
-                                                                            string url = null,
-                                                                            string aadDomain = null,
-                                                                            ClientContext clientContext = null,
-                                                                            string pnpVersionTag = null,
-                                                                            bool disableTelemetry = false)
-        {
-            return new PnPConnection(initializationType, url, clientContext, null, pnpVersionTag, disableTelemetry)
-            {
-                ClientId = clientId,
-                Certificate = certificate,
-                ConnectionMethod = ConnectionMethod.AzureADAppOnly,
-                Tenant = aadDomain
-            };
-        }
+        // public static PnPConnection GetConnectionWithClientIdAndCertificate(string clientId,
+        //                                                                     X509Certificate2 certificate,
+        //                                                                     InitializationType initializationType,
+        //                                                                     string url = null,
+        //                                                                     string aadDomain = null,
+        //                                                                     ClientContext clientContext = null,
+        //                                                                     string pnpVersionTag = null)
+        // {
+        //     return new PnPConnection(initializationType, url, clientContext, null, pnpVersionTag)
+        //     {
+        //         ClientId = clientId,
+        //         Certificate = certificate,
+        //         ConnectionMethod = ConnectionMethod.AzureADAppOnly,
+        //         Tenant = aadDomain
+        //     };
+        // }
 
         /// <summary>
         /// Returns a PnPConnection based on connecting using an username and password
@@ -464,16 +388,14 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="url">Url of the SharePoint environment to connect to, if applicable. Leave NULL not to connect to a SharePoint environment.</param>
         /// <param name="clientContext">A SharePoint ClientContext to make available within this connection. Leave NULL to not connect to a SharePoint environment.</param>
         /// <param name="pnpVersionTag">Identifier set on the SharePoint ClientContext as the ClientTag to identify the source of the requests to SharePoint. Leave NULL not to set it.</param>
-        /// <param name="disableTelemetry">Boolean indicating if telemetry on the commands being executed should be disabled. Telemetry is enabled by default.</param>
         /// <returns><see cref="PnPConnection"/ instance which can be used to communicate with one of the supported APIs</returns>
         //public static PnPConnection GetConnectionWithPsCredential(PSCredential credential,
         //                                                          InitializationType initializationType,
         //                                                          string url = null,
         //                                                          ClientContext clientContext = null,
-        //                                                          string pnpVersionTag = null,
-        //                                                          bool disableTelemetry = false)
+        //                                                          string pnpVersionTag = null)
         //{
-        //    return new PnPConnection(initializationType, url, clientContext, null, pnpVersionTag, disableTelemetry)
+        //    return new PnPConnection(initializationType, url, clientContext, null, pnpVersionTag)
         //    {
         //        PSCredential = credential,
         //        ConnectionMethod = ConnectionMethod.Credentials
@@ -490,33 +412,40 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="url">Url of the SharePoint environment to connect to, if applicable. Leave NULL not to connect to a SharePoint environment.</param>
         /// <param name="clientContext">A SharePoint ClientContext to make available within this connection. Leave NULL to not connect to a SharePoint environment.</param>
         /// <param name="pnpVersionTag">Identifier set on the SharePoint ClientContext as the ClientTag to identify the source of the requests to SharePoint. Leave NULL not to set it.</param>
-        /// <param name="disableTelemetry">Boolean indicating if telemetry on the commands being executed should be disabled. Telemetry is enabled by default.</param>
         /// <returns><see cref="PnPConnection"/ instance which can be used to communicate with one of the supported APIs</returns>
-        public static PnPConnection GetConnectionWithToken(GenericToken token,
-                                                           TokenAudience tokenAudience,
-                                                           InitializationType initializationType,
-                                                           PSCredential credentials,
-                                                           string url = null,
-                                                           ClientContext clientContext = null,
-                                                           string pnpVersionTag = null,
-                                                           bool disableTelemetry = false,
-                                                           AzureEnvironment azureEnvironment = AzureEnvironment.Production)
-        {
-            var connection = new PnPConnection(initializationType, url, clientContext, new Dictionary<TokenAudience, GenericToken>(1) { { tokenAudience, token } }, pnpVersionTag, disableTelemetry)
-            {
-                ConnectionMethod = ConnectionMethod.AccessToken,
-                Tenant = token.ParsedToken.Claims.FirstOrDefault(c => c.Type.Equals("tid", StringComparison.InvariantCultureIgnoreCase))?.Value,
-                ClientId = token.ParsedToken.Claims.FirstOrDefault(c => c.Type.Equals("appid", StringComparison.InvariantCultureIgnoreCase))?.Value,
-                AzureEnvironment = azureEnvironment
-            };
-            connection.PSCredential = credentials;
-            return connection;
-        }
+        // public static PnPConnection GetConnectionWithToken(GenericToken token,
+        //                                                    TokenAudience tokenAudience,
+        //                                                    InitializationType initializationType,
+        //                                                    PSCredential credentials,
+        //                                                    string url = null,
+        //                                                    ClientContext clientContext = null,
+        //                                                    string pnpVersionTag = null,
+        //                                                    AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        // {
+        //     var connection = new PnPConnection(initializationType, url, clientContext, new Dictionary<TokenAudience, GenericToken>(1) { { tokenAudience, token } }, pnpVersionTag)
+        //     {
+        //         ConnectionMethod = ConnectionMethod.AccessToken,
+        //         Tenant = token.ParsedToken.Claims.FirstOrDefault(c => c.Type.Equals("tid", StringComparison.InvariantCultureIgnoreCase))?.Value,
+        //         ClientId = token.ParsedToken.Claims.FirstOrDefault(c => c.Type.Equals("appid", StringComparison.InvariantCultureIgnoreCase))?.Value,
+        //         AzureEnvironment = azureEnvironment
+        //     };
+        //     connection.PSCredential = credentials;
+        //     if (clientContext != null)
+        //     {
+        //         clientContext.ExecutingWebRequest += (sender, args) =>
+        //         {
+        //             args.WebRequestExecutor.WebRequest.UserAgent = connection.UserAgent;
+        //             args.WebRequestExecutor.RequestHeaders["Authorization"] = "Bearer " + token.AccessToken;
+        //         };
+        //         connection.Context = clientContext;
+        //     }
+        //     return connection;
+        // }
 
         #endregion
 
-        internal PnPConnection(ClientContext context, ConnectionType connectionType, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, bool disableTelemetry, InitializationType initializationType)
-        : this(context, connectionType, credential, url, tenantAdminUrl, pnpVersionTag, disableTelemetry, initializationType)
+        internal PnPConnection(ClientContext context, ConnectionType connectionType, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, InitializationType initializationType)
+        : this(context, connectionType, credential, url, tenantAdminUrl, pnpVersionTag, initializationType)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -528,13 +457,9 @@ namespace PnP.PowerShell.Commands.Base
                                     string url,
                                     string tenantAdminUrl,
                                     string pnpVersionTag,
-                                    bool disableTelemetry,
                                     InitializationType initializationType)
         {
-            if (!disableTelemetry)
-            {
-                InitializeTelemetry(context, initializationType);
-            }
+            InitializeTelemetry(context, initializationType);
             var coreAssembly = Assembly.GetExecutingAssembly();
             UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             //if (context == null)
@@ -553,51 +478,42 @@ namespace PnP.PowerShell.Commands.Base
             ClientId = PnPManagementShellClientId;
         }
 
-        internal PnPConnection(ClientContext context, GenericToken tokenResult, ConnectionType connectionType, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, bool disableTelemetry, InitializationType initializationType)
-        {
-            if (!disableTelemetry)
-            {
-                InitializeTelemetry(context, initializationType);
-            }
+        // internal PnPConnection(ClientContext context, GenericToken tokenResult, ConnectionType connectionType, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, InitializationType initializationType)
+        // {
+        //     InitializeTelemetry(context, initializationType);
+        //     var coreAssembly = Assembly.GetExecutingAssembly();
+        //     UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
+        //     Context = context ?? throw new ArgumentNullException(nameof(context));
+        //     ConnectionType = connectionType;
+        //     PSCredential = credential;
+        //     TenantAdminUrl = tenantAdminUrl;
+        //     ContextCache = new List<ClientContext> { context };
+        //     PnPVersionTag = pnpVersionTag;
+        //     Url = (new Uri(url)).AbsoluteUri;
+        //     ConnectionMethod = ConnectionMethod.AccessToken;
+        //     ClientId = PnPManagementShellClientId;
+        //     Tenant = tokenResult.ParsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
+        //     context.ExecutingWebRequest += (sender, args) =>
+        //     {
+        //         args.WebRequestExecutor.WebRequest.UserAgent = UserAgent;
+        //         args.WebRequestExecutor.RequestHeaders["Authorization"] = "Bearer " + tokenResult.AccessToken;
+        //     };
+        // }
 
-            var coreAssembly = Assembly.GetExecutingAssembly();
-            UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
-            Context = context ?? throw new ArgumentNullException(nameof(context));
-            ConnectionType = connectionType;
-            PSCredential = credential;
-            TenantAdminUrl = tenantAdminUrl;
-            ContextCache = new List<ClientContext> { context };
-            PnPVersionTag = pnpVersionTag;
-            Url = (new Uri(url)).AbsoluteUri;
-            ConnectionMethod = ConnectionMethod.AccessToken;
-            ClientId = PnPManagementShellClientId;
-            Tenant = tokenResult.ParsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
-            context.ExecutingWebRequest += (sender, args) =>
-            {
-                args.WebRequestExecutor.WebRequest.UserAgent = UserAgent;
-                args.WebRequestExecutor.RequestHeaders["Authorization"] = "Bearer " + tokenResult.AccessToken;
-            };
-        }
+        // internal PnPConnection(ConnectionMethod connectionMethod, ConnectionType connectionType, string pnpVersionTag, InitializationType initializationType)
+        // {
+        //     Context = new ClientContext("https://localhost"); // dummy context
+        //     InitializeTelemetry(null, initializationType);
+        //     var coreAssembly = Assembly.GetExecutingAssembly();
+        //     UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
+        //     ConnectionType = connectionType;
+        //     PnPVersionTag = pnpVersionTag;
+        //     ConnectionMethod = connectionMethod;
+        // }
 
-        internal PnPConnection(GenericToken tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, string pnpVersionTag, bool disableTelemetry, InitializationType initializationType)
-        {
-            if (!disableTelemetry)
-            {
-                InitializeTelemetry(null, initializationType);
-            }
-            var coreAssembly = Assembly.GetExecutingAssembly();
-            UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
-            ConnectionType = connectionType;
-            PnPVersionTag = pnpVersionTag;
-            ConnectionMethod = connectionMethod;
-        }
-
-        //internal PnPConnection(ConnectionMethod connectionMethod, ConnectionType connectionType, string pnpVersionTag, bool disableTelemetry, InitializationType initializationType)
+        //internal PnPConnection(ConnectionMethod connectionMethod, ConnectionType connectionType, string pnpVersionTag, InitializationType initializationType)
         //{
-        //    if (!disableTelemetry)
-        //    {
         //        InitializeTelemetry(null, initializationType);
-        //    }
         //    var coreAssembly = Assembly.GetExecutingAssembly();
         //    UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
         //    ConnectionType = connectionType;
@@ -613,6 +529,7 @@ namespace PnP.PowerShell.Commands.Base
         internal void RestoreCachedContext(string url)
         {
             Context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
+            pnpContext = null;
         }
 
         internal void CacheContext()
@@ -633,7 +550,7 @@ namespace PnP.PowerShell.Commands.Base
                 context.ExecuteQueryRetry();
                 ContextCache.Add(context);
             }
-            Context = context;
+            pnpContext = null;
             return context;
         }
 
@@ -647,12 +564,30 @@ namespace PnP.PowerShell.Commands.Base
         //    ContextCache.Clear();
         //}
 
+        internal PnPConnection(string pnpVersionTag, InitializationType initializationType)
+        {
+            InitializeTelemetry(null, initializationType);
+            var coreAssembly = Assembly.GetExecutingAssembly();
+            UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
+            //if (context == null)
+            //    throw new ArgumentNullException(nameof(context));
+            ConnectionType = ConnectionType.O365;
+            PnPVersionTag = pnpVersionTag;
+
+            ConnectionMethod = ConnectionMethod.ManagedIdentity;
+            ManagedIdentity = true;
+        }
+
         internal void InitializeTelemetry(ClientContext context, InitializationType initializationType)
         {
 
             var enableTelemetry = false;
             var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             var telemetryFile = System.IO.Path.Combine(userProfile, ".pnppowershelltelemetry");
+            if (Environment.GetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY") != null)
+            {
+                enableTelemetry = Environment.GetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY").ToLower().Equals("false");
+            }
 
             if (!System.IO.File.Exists(telemetryFile))
             {
@@ -665,6 +600,7 @@ namespace PnP.PowerShell.Commands.Base
                     enableTelemetry = true;
                 }
             }
+
             if (enableTelemetry)
             {
                 var serverLibraryVersion = "";
@@ -687,38 +623,10 @@ namespace PnP.PowerShell.Commands.Base
 
                 ApplicationInsights = new ApplicationInsights();
                 var coreAssembly = Assembly.GetExecutingAssembly();
-                ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
+                var operatingSystem = Utilities.OperatingSystem.GetOSString();
+
+                ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString(), operatingSystem);
                 ApplicationInsights.TrackEvent("Connect-PnPOnline");
-
-                //TelemetryConfiguration config = TelemetryConfiguration.CreateDefault();
-                //TelemetryClient = new TelemetryClient(config);
-                //config.InstrumentationKey = "a301024a-9e21-4273-aca5-18d0ef5d80fb";
-                ////config..Context.Session.Id = Guid.NewGuid().ToString();
-                //TelemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
-                //TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
-
-                //TelemetryProperties = new Dictionary<string, string>(10);
-                //TelemetryProperties.Add("ServerLibraryVersion", serverLibraryVersion);
-                //TelemetryProperties.Add("ServerVersion", serverVersion);
-                //TelemetryProperties.Add("ConnectionMethod", initializationType.ToString());
-                //var coreAssembly = Assembly.GetExecutingAssembly();
-                //TelemetryProperties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
-                //TelemetryProperties.Add("Platform", "SPO");
-                //TelemetryClient.TrackEvent("Connect-PnPOnline", TelemetryProperties);
-
-
-                //TelemetryClient = new TelemetryClient(;
-                //TelemetryClient.InstrumentationKey = "a301024a-9e21-4273-aca5-18d0ef5d80fb";
-                //TelemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
-                //TelemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
-                //TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
-                //TelemetryClient.Context.Properties.Add("ServerLibraryVersion", serverLibraryVersion);
-                //TelemetryClient.Context.Properties.Add("ServerVersion", serverVersion);
-                //TelemetryClient.Context.Properties.Add("ConnectionMethod", initializationType.ToString());
-                //var coreAssembly = Assembly.GetExecutingAssembly();
-                //TelemetryClient.Context.Properties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
-                //TelemetryClient.Context.Properties.Add("Platform", "SPO");
-                //TelemetryClient.TrackEvent("Connect-PnPOnline");
             }
         }
     }

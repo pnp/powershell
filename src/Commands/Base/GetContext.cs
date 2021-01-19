@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Properties;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Get, "Context")]
+    [Cmdlet(VerbsCommon.Get, "PnPContext")]
     public class GetSPOContext : PSCmdlet
     {
 

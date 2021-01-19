@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/disable-pnpsharingfornonownersofsite
+online version: https://pnp.github.io/powershell/cmdlets/disable-pnpsharingfornonownersofsite
 schema: 2.0.0
 title: Disable-PnPSharingForNonOwnersOfSite
 ---
@@ -14,7 +14,7 @@ Configures the site to only allow sharing of the site and items in the site by o
 
 ## SYNTAX
 
-```
+```powershell
 Disable-PnPSharingForNonOwnersOfSite [-Identity <SitePipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -39,7 +39,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -64,4 +63,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

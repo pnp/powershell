@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpnavigationnode
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpnavigationnode
 schema: 2.0.0
 title: Get-PnPNavigationNode
 ---
@@ -15,14 +15,14 @@ Returns all or a specific navigation node
 ## SYNTAX
 
 ### All nodes by location (Default)
-```
-Get-PnPNavigationNode [-Location <NavigationType>] [-Tree] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+```powershell
+Get-PnPNavigationNode [-Location <NavigationType>] [-Tree] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### A single node by ID
-```
-Get-PnPNavigationNode [-Id <Int32>] [-Tree] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+```powershell
+Get-PnPNavigationNode [-Id <Int32>] [-Tree] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -67,7 +67,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -82,7 +81,6 @@ The Id of the node to retrieve
 ```yaml
 Type: Int32
 Parameter Sets: A single node by ID
-Aliases:
 
 Required: False
 Position: Named
@@ -97,7 +95,6 @@ The location of the nodes to retrieve. Either TopNavigationBar, QuickLaunch, Sea
 ```yaml
 Type: NavigationType
 Parameter Sets: All nodes by location
-Aliases:
 Accepted values: TopNavigationBar, QuickLaunch, SearchNav, Footer
 
 Required: False
@@ -113,7 +110,6 @@ Show a tree view of all navigation nodes
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -122,21 +118,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

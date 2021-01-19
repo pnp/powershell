@@ -9,7 +9,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Add, "Microsoft365GroupToSite")]
+    [Cmdlet(VerbsCommon.Add, "PnPMicrosoft365GroupToSite")]
     public class AddMicrosoft365GroupToSite: PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

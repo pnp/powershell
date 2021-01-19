@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpaaduser
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpaaduser
 schema: 2.0.0
 title: Get-PnPAADUser
 ---
@@ -20,20 +20,18 @@ Retrieves users from Azure Active Directory
 ## SYNTAX
 
 ### Return a list (Default)
-```
-Get-PnPAADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-ByPassPermissionCheck]
- [<CommonParameters>]
+```powershell
+Get-PnPAADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [<CommonParameters>]
 ```
 
 ### Return by specific ID
-```
-Get-PnPAADUser [-Identity <String>] [-Select <String[]>] [-ByPassPermissionCheck] [<CommonParameters>]
+```powershell
+Get-PnPAADUser [-Identity <String>] [-Select <String[]>] [<CommonParameters>]
 ```
 
 ### Return the delta
-```
-Get-PnPAADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-Delta] [-DeltaToken <String>]
- [-ByPassPermissionCheck] [<CommonParameters>]
+```powershell
+Get-PnPAADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-Delta] [-DeltaToken <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -98,28 +96,12 @@ Retrieves all the users from Azure Active Directory which have had changes since
 
 ## PARAMETERS
 
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Delta
 Retrieves all users and provides a SkipToken delta token to allow to query for changes since this run when querying again by adding -DeltaToken to the command
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Return the delta
-Aliases:
 
 Required: True
 Position: Named
@@ -134,7 +116,6 @@ The change token provided during the previous run with -Delta to query for the c
 ```yaml
 Type: String
 Parameter Sets: Return the delta
-Aliases:
 
 Required: False
 Position: Named
@@ -149,7 +130,6 @@ Includes a filter to the retrieval of the users. Use OData instructions to const
 ```yaml
 Type: String
 Parameter Sets: Return a list, Return the delta
-Aliases:
 
 Required: False
 Position: Named
@@ -164,7 +144,6 @@ Returns the user with the provided user id
 ```yaml
 Type: String
 Parameter Sets: Return by specific ID
-Aliases:
 
 Required: False
 Position: Named
@@ -179,7 +158,6 @@ Includes a custom sorting instruction to the retrieval of the users. Use OData s
 ```yaml
 Type: String
 Parameter Sets: Return a list, Return the delta
-Aliases:
 
 Required: False
 Position: Named
@@ -194,7 +172,6 @@ Allows providing an array with the property names of specific properties to retu
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -205,4 +182,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

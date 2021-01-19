@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpgroup
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpgroup
 schema: 2.0.0
 title: Get-PnPGroup
 ---
@@ -15,31 +15,31 @@ Returns a specific SharePoint group or all SharePoint groups in site.
 ## SYNTAX
 
 ### All (Default)
-```
-Get-PnPGroup [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
+```powershell
+Get-PnPGroup [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```
 
 ### ByName
-```
-Get-PnPGroup [[-Identity] <GroupPipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+```powershell
+Get-PnPGroup [[-Identity] <GroupPipeBind>] [-Connection <PnPConnection>]
  [-Includes <String[]>] [<CommonParameters>]
 ```
 
 ### Members
-```
-Get-PnPGroup [-AssociatedMemberGroup] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
+```powershell
+Get-PnPGroup [-AssociatedMemberGroup] [-Connection <PnPConnection>] [-Includes <String[]>]
  [<CommonParameters>]
 ```
 
 ### Visitors
-```
-Get-PnPGroup [-AssociatedVisitorGroup] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+```powershell
+Get-PnPGroup [-AssociatedVisitorGroup] [-Connection <PnPConnection>]
  [-Includes <String[]>] [<CommonParameters>]
 ```
 
 ### Owners
-```
-Get-PnPGroup [-AssociatedOwnerGroup] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
+```powershell
+Get-PnPGroup [-AssociatedOwnerGroup] [-Connection <PnPConnection>] [-Includes <String[]>]
  [<CommonParameters>]
 ```
 
@@ -76,7 +76,6 @@ Retrieve the associated member group
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Members
-Aliases:
 
 Required: False
 Position: Named
@@ -91,7 +90,6 @@ Retrieve the associated owner group
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Owners
-Aliases:
 
 Required: False
 Position: Named
@@ -106,7 +104,6 @@ Retrieve the associated visitor group
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Visitors
-Aliases:
 
 Required: False
 Position: Named
@@ -121,7 +118,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -145,21 +141,8 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Web
-The web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

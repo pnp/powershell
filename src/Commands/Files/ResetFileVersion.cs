@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Reset, "FileVersion")]
+    [Cmdlet(VerbsCommon.Reset, "PnPFileVersion")]
     
     
     
@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.ResetFileToPreviousVersion(ServerRelativeUrl,CheckinType,CheckInComment);
+            CurrentWeb.ResetFileToPreviousVersion(ServerRelativeUrl,CheckinType,CheckInComment);
         }
     }
 }

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnptenantsequence
+online version: https://pnp.github.io/powershell/cmdlets/add-pnptenantsequence
 schema: 2.0.0
 title: Add-PnPTenantSequence
 ---
@@ -14,8 +14,8 @@ Adds a tenant sequence object to a tenant template
 
 ## SYNTAX
 
-```
-Add-PnPTenantSequence -Template <ProvisioningHierarchy> -Sequence <ProvisioningSequence> [-WhatIf] [-Confirm]
+```powershell
+Add-PnPTenantSequence -Template <ProvisioningHierarchy> -Sequence <ProvisioningSequence>  
  [<CommonParameters>]
 ```
 
@@ -60,7 +60,6 @@ Optional Id of the sequence
 ```yaml
 Type: ProvisioningSequence
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -75,7 +74,6 @@ The template to add the sequence to
 ```yaml
 Type: ProvisioningHierarchy
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -101,4 +99,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

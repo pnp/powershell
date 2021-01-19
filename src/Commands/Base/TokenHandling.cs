@@ -1,96 +1,74 @@
 ﻿using Microsoft.SharePoint.Client;
+using Newtonsoft.Json.Linq;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Model;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Management.Automation;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace PnP.PowerShell.Commands.Base
 {
     internal static class TokenHandler
     {
-        internal static string AcquireToken(string resource, string scope = null)
+        internal static void ValidateTokenForPermissions(Type cmdletType, string token)
         {
-            GenericToken token = null;
-            if (PnPConnection.CurrentConnection == null)
+            string[] requiredScopes = null;
+            var requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdletType, typeof(RequiredMinimalApiPermissions));
+            if (requiredScopesAttribute != null)
             {
-                return null;
+                requiredScopes = requiredScopesAttribute.PermissionScopes;
             }
-            var tenantId = TenantExtensions.GetTenantIdByUrl(PnPConnection.CurrentConnection.Url);
-            if (PnPConnection.CurrentConnection.PSCredential != null)
+            if (requiredScopes.Length > 0)
             {
-                if (scope == null)
+                var decodedToken = new JwtSecurityToken(token);
+                var roles = decodedToken.Claims.FirstOrDefault(c => c.Type == "roles");
+                if (roles != null)
                 {
-                    // SharePoint or Graph V1 resource
-                    var scopes = new[] { $"https://{resource.Replace("https://", "").TrimEnd('/')}/.default" };
-                    token = GenericToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, scopes, "https://login.microsoftonline.com/organizations/", PnPConnection.CurrentConnection.PSCredential.UserName, PnPConnection.CurrentConnection.PSCredential.Password);
+                    foreach (var permission in requiredScopes)
+                    {
+                        if (!roles.Value.ToLower().Contains(permission.ToLower()))
+                        {
+                            throw new PSArgumentException($"Authorization Denied: Token used does not contain permission scope '{permission}'");
+                        }
+                    }
                 }
-                else
+                roles = decodedToken.Claims.FirstOrDefault(c => c.Type == "scp");
+                if (roles != null)
                 {
-                    token = GenericToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, new[] { scope }, "https://login.microsoftonline.com/organizations/", PnPConnection.CurrentConnection.PSCredential.UserName, PnPConnection.CurrentConnection.PSCredential.Password);
-                }
-            }
-            else if (!string.IsNullOrEmpty(PnPConnection.CurrentConnection.ClientId) && !string.IsNullOrEmpty(PnPConnection.CurrentConnection.ClientSecret))
-            {
-                var clientId = PnPConnection.CurrentConnection.ClientId;
-                var clientSecret = System.Net.WebUtility.UrlEncode(PnPConnection.CurrentConnection.ClientSecret);
-                if (scope == null && !resource.Equals("graph.microsoft.com", System.StringComparison.OrdinalIgnoreCase))
-                {
-                    // SharePoint token
-                    var scopes = new[] { $"https://{resource}//.default" };
-                    token = GenericToken.AcquireApplicationToken(tenantId, clientId, "https://login.microsoftonline/organizations/", scopes, clientSecret);
-                }
-                else
-                {
-                    token = GenericToken.AcquireApplicationToken(tenantId, clientId, "https://login.microsoftonline.com/organizations/", new[] { scope }, clientSecret);
+                    foreach (var permission in requiredScopes)
+                    {
+                        if (!roles.Value.ToLower().Contains(permission.ToLower()))
+                        {
+                            throw new PSArgumentException($"Authorization Denied: Token used does not contain permission scope '{permission}'");
+                        }
+                    }
                 }
             }
-            if (token != null)
+        }
+
+        internal static string GetAccessToken(Type cmdletType, string appOnlyDefaultScope)
+        {
+            var contextSettings = PnPConnection.CurrentConnection.Context.GetContextSettings();
+            var authManager = contextSettings.AuthenticationManager;
+            if (authManager != null)
             {
-                return token.AccessToken;
+                string[] requiredScopes = null;
+                var requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdletType, typeof(RequiredMinimalApiPermissions));
+                if (requiredScopesAttribute != null)
+                {
+                    requiredScopes = requiredScopesAttribute.PermissionScopes;
+                }
+                if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
+                {
+                    requiredScopes = new[] { appOnlyDefaultScope }; // override for app only
+                }
+                var accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
+                return accessToken;
             }
             return null;
         }
-
-        //internal static string AcquireToken(string resource, string scope = null)
-        //{
-        //    if (PnPConnection.CurrentConnection == null)
-        //    {
-        //        return null;
-        //    }
-
-        //    var tenantId = TenantExtensions.GetTenantIdByUrl(PnPConnection.CurrentConnection.Url);
-
-        //    if (tenantId == null) return null;
-
-        //    string body = "";
-        //    if (PnPConnection.CurrentConnection.PSCredential != null)
-        //    {
-        //        var clientId = "31359c7f-bd7e-475c-86db-fdb8c937548e";
-        //        var username = PnPConnection.CurrentConnection.PSCredential.UserName;
-        //        var password = EncryptionUtility.ToInsecureString(PnPConnection.CurrentConnection.PSCredential.Password);
-        //        body = $"grant_type=password&client_id={clientId}&username={username}&password={password}&resource=https://{resource}";
-        //    }
-        //    else if (!string.IsNullOrEmpty(PnPConnection.CurrentConnection.ClientId) && !string.IsNullOrEmpty(PnPConnection.CurrentConnection.ClientSecret))
-        //    {
-        //        var clientId = PnPConnection.CurrentConnection.ClientId;
-        //        var clientSecret = HttpUtility.UrlEncode(PnPConnection.CurrentConnection.ClientSecret);
-        //        body = $"grant_type=client_credentials&client_id={clientId}&client_secret={clientSecret}&resource=https://{resource}";
-        //    }
-        //    else
-        //    {
-        //        throw new System.UnauthorizedAccessException("Specify PowerShell Credentials or AppId and AppSecret");
-        //    }
-
-        //    var response = HttpHelper.MakePostRequestForString($"https://login.microsoftonline.com/{tenantId}/oauth2/token", body, "application/x-www-form-urlencoded");
-        //    try
-        //    {
-        //        using (var jdoc = JsonDocument.Parse(response))
-        //        {
-        //            return jdoc.RootElement.GetProperty("access_token").GetString();
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        return null;
-        //    }
-        //}
     }
 }

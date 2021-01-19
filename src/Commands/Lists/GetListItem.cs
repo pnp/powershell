@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "ListItem", DefaultParameterSetName = ParameterSet_ALLITEMS)]
+    [Cmdlet(VerbsCommon.Get, "PnPListItem", DefaultParameterSetName = ParameterSet_ALLITEMS)]
     public class GetListItem : PnPWebCmdlet
     {
         private const string ParameterSet_BYID = "By Id";
@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Lists
 
 		protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(SelectedWeb);
+            var list = List.GetList(CurrentWeb);
             if (list == null)
                 throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 
@@ -81,7 +81,7 @@ namespace PnP.PowerShell.Commands.Lists
                     }
                     viewFieldsStringBuilder.Append("</ViewFields>");
                 }
-                query.ViewXml = $"<View><Query><Where><Eq><FieldRef Name='GUID'/><Value Type='Guid'>{UniqueId}</Value></Eq></Where></Query>{viewFieldsStringBuilder}</View>";
+                query.ViewXml = $"<View><Query><Where><Or><Eq><FieldRef Name='GUID'/><Value Type='Guid'>{UniqueId}</Value></Eq><Eq><FieldRef Name='UniqueId' /><Value Type='Guid'>{UniqueId}</Value></Eq></Or></Where></Query>{viewFieldsStringBuilder}</View>";
                 var listItem = list.GetItems(query);
                 ClientContext.Load(listItem);
                 ClientContext.ExecuteQueryRetry();

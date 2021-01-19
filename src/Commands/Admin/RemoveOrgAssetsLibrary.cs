@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Remove, "OrgAssetsLibrary")]
+    [Cmdlet(VerbsCommon.Remove, "PnPOrgAssetsLibrary")]
     public class RemoveOrgAssetsLibrary : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

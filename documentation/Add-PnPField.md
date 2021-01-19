@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpfield
+online version: https://pnp.github.io/powershell/cmdlets/add-pnpfield
 schema: 2.0.0
 title: Add-PnPField
 ---
@@ -15,29 +15,29 @@ Add a field
 ## SYNTAX
 
 ### Add field to list (Default)
-```
+```powershell
 Add-PnPField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> -Type <FieldType>
  [-Id <Guid>] [-AddToDefaultView] [-Required] [-Group <String>] [-ClientSideComponentId <Guid>]
- [-ClientSideComponentProperties <String>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+ [-ClientSideComponentProperties <String>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Add field reference to list
-```
-Add-PnPField -List <ListPipeBind> -Field <FieldPipeBind> [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+```powershell
+Add-PnPField -List <ListPipeBind> -Field <FieldPipeBind> [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Add field to web
-```
+```powershell
 Add-PnPField -DisplayName <String> -InternalName <String> -Type <FieldType> [-Id <Guid>]
- [-ClientSideComponentId <Guid>] [-ClientSideComponentProperties <String>] [-Web <WebPipeBind>]
+ [-ClientSideComponentId <Guid>] [-ClientSideComponentProperties <String>] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Add field by XML to list
-```
-Add-PnPField [-AddToDefaultView] [-Required] [-Group <String>] [-Web <WebPipeBind>]
+```powershell
+Add-PnPField [-AddToDefaultView] [-Required] [-Group <String>] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -75,7 +75,6 @@ Switch Parameter if this field must be added to the default view
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Add field to list, Add field by XML to list
-Aliases:
 
 Required: False
 Position: Named
@@ -87,12 +86,9 @@ Accept wildcard characters: False
 ### -ClientSideComponentId
 The Client Side Component Id to set to the field
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: Guid
 Parameter Sets: Add field to list, Add field to web
-Aliases:
 
 Required: False
 Position: Named
@@ -104,12 +100,9 @@ Accept wildcard characters: False
 ### -ClientSideComponentProperties
 The Client Side Component Properties to set to the field
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: Add field to list, Add field to web
-Aliases:
 
 Required: False
 Position: Named
@@ -124,7 +117,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -139,7 +131,6 @@ The display name of the field
 ```yaml
 Type: String
 Parameter Sets: Add field to list, Add field to web
-Aliases:
 
 Required: True
 Position: Named
@@ -154,7 +145,6 @@ The name of the field, its ID or an actual field object that needs to be added
 ```yaml
 Type: FieldPipeBind
 Parameter Sets: Add field reference to list
-Aliases:
 
 Required: True
 Position: Named
@@ -169,7 +159,6 @@ The group name to where this field belongs to
 ```yaml
 Type: String
 Parameter Sets: Add field to list, Add field by XML to list
-Aliases:
 
 Required: False
 Position: Named
@@ -184,7 +173,6 @@ The ID of the field, must be unique
 ```yaml
 Type: Guid
 Parameter Sets: Add field to list, Add field to web
-Aliases:
 
 Required: False
 Position: Named
@@ -199,7 +187,6 @@ The internal name of the field
 ```yaml
 Type: String
 Parameter Sets: Add field to list, Add field to web
-Aliases:
 
 Required: True
 Position: Named
@@ -214,7 +201,6 @@ The name of the list, its ID or an actual list object where this field needs to 
 ```yaml
 Type: ListPipeBind
 Parameter Sets: Add field to list
-Aliases:
 
 Required: False
 Position: Named
@@ -226,7 +212,6 @@ Accept wildcard characters: False
 ```yaml
 Type: ListPipeBind
 Parameter Sets: Add field reference to list
-Aliases:
 
 Required: True
 Position: Named
@@ -241,7 +226,6 @@ Switch Parameter if the field is a required field
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Add field to list, Add field by XML to list
-Aliases:
 
 Required: False
 Position: Named
@@ -256,7 +240,6 @@ The type of the field like Choice, Note, MultiChoice. For a complete list of fie
 ```yaml
 Type: FieldType
 Parameter Sets: Add field to list, Add field to web
-Aliases:
 Accepted values: Invalid, Integer, Text, Note, DateTime, Counter, Choice, Lookup, Boolean, Number, Currency, URL, Computed, Threading, Guid, MultiChoice, GridChoice, Calculated, File, Attachments, User, Recurrence, CrossProjectLink, ModStat, Error, ContentTypeId, PageSeparator, ThreadIndex, WorkflowStatus, AllDayEvent, WorkflowEventType, Geolocation, OutcomeChoice, Location, Thumbnail, MaxItems
 
 Required: True
@@ -266,21 +249,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

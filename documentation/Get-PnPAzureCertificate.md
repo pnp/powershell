@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpazurecertificate
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpazurecertificate
 schema: 2.0.0
 title: Get-PnPAzureCertificate
 ---
@@ -22,8 +22,8 @@ PrivateKey contains the PEM encoded private key of the certificate.
 
 ## SYNTAX
 
-```
-Get-PnPAzureCertificate -CertificatePath <String> [-CertificatePassword <SecureString>] [<CommonParameters>]
+```powershell
+Get-PnPAzureCertificate -Path <String> [-Password <SecureString>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -32,34 +32,33 @@ Get-PnPAzureCertificate -CertificatePath <String> [-CertificatePassword <SecureS
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPAzureCertificate -CertificatePath "mycert.pfx"
+Get-PnPAzureCertificate -Path "mycert.pfx"
 ```
 
 This will output PEM values and ADAL app manifest settings for the certificate mycert.pfx.
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAzureCertificate -CertificatePath "mycert.pfx" -CertificatePassword (ConvertTo-SecureString -String "YourPassword" -AsPlainText -Force)
+Get-PnPAzureCertificate -Path "mycert.pfx" -Password (ConvertTo-SecureString -String "YourPassword" -AsPlainText -Force)
 ```
 
 This will output PEM values and ADAL app manifest settings for the certificate mycert.pfx which has the password YourPassword.
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPAzureCertificate -CertificatePath "mycert.cer" | clip
+Get-PnPAzureCertificate -Path "mycert.cer" | clip
 ```
 
 Output the JSON snippet which needs to be replaced in the application manifest file and copies it to the clipboard
 
 ## PARAMETERS
 
-### -CertificatePassword
+### -Password
 Password to the certificate (*.pfx)
 
 ```yaml
 Type: SecureString
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -68,13 +67,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -CertificatePath
+### -Path
 Path to the certificate (*.pfx)
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -85,4 +83,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

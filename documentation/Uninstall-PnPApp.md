@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/uninstall-pnpapp
+online version: https://pnp.github.io/powershell/cmdlets/uninstall-pnpapp
 schema: 2.0.0
 title: Uninstall-PnPApp
 ---
@@ -14,7 +14,7 @@ Uninstalls an available add-in from the site
 
 ## SYNTAX
 
-```
+```powershell
 Uninstall-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -42,12 +42,9 @@ This will uninstall the specified app from the current site. Notice that the app
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -59,12 +56,9 @@ Accept wildcard characters: False
 ### -Identity
 Specifies the Id of the Addin Instance
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: AppMetadataPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -76,12 +70,9 @@ Accept wildcard characters: False
 ### -Scope
 Defines which app catalog to use. Defaults to Tenant
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: AppCatalogScope
 Parameter Sets: (All)
-Aliases:
 Accepted values: Tenant, Site
 
 Required: False
@@ -93,4 +84,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

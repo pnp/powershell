@@ -10,7 +10,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
-    [Cmdlet(VerbsCommon.Get, "WebPart")]
+    [Cmdlet(VerbsCommon.Get, "PnPWebPart")]
     public class GetWebPart : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -18,11 +18,11 @@ namespace PnP.PowerShell.Commands.WebParts
         public string ServerRelativePageUrl = string.Empty;
 
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
-        public WebPartPipeBind Identity;
+        public ClassicWebPartPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
-            var serverRelativeWebUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var serverRelativeWebUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             if (!ServerRelativePageUrl.ToLowerInvariant().StartsWith(serverRelativeWebUrl.ToLowerInvariant()))
             {
@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.WebParts
             }
 
 
-            var definitions = SelectedWeb.GetWebParts(ServerRelativePageUrl);
+            var definitions = CurrentWeb.GetWebParts(ServerRelativePageUrl);
 
             if (Identity != null)
             {

@@ -5,7 +5,7 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Remove, "WikiPage", ConfirmImpact = ConfirmImpact.High)]
+    [Cmdlet(VerbsCommon.Remove, "PnPWikiPage", ConfirmImpact = ConfirmImpact.High)]
     public class RemoveWikiPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position=0,ValueFromPipeline=true, ParameterSetName = "SERVER")]
@@ -19,10 +19,10 @@ namespace PnP.PowerShell.Commands.Publishing
         {
             if (ParameterSetName == "SITE")
             {
-                var serverUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                var serverUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
                 ServerRelativePageUrl = UrlUtility.Combine(serverUrl, SiteRelativePageUrl);
             }
-            var file = SelectedWeb.GetFileByServerRelativeUrl(ServerRelativePageUrl);
+            var file = CurrentWeb.GetFileByServerRelativeUrl(ServerRelativePageUrl);
             file.DeleteObject();
 
             ClientContext.ExecuteQueryRetry();

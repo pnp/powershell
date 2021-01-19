@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/import-pnptaxonomy
+online version: https://pnp.github.io/powershell/cmdlets/import-pnptaxonomy
 schema: 2.0.0
 title: Import-PnPTaxonomy
 ---
@@ -15,15 +15,15 @@ Imports a taxonomy from either a string array or a file
 ## SYNTAX
 
 ### Direct
-```
+```powershell
 Import-PnPTaxonomy [-Terms <String[]>] [-Lcid <Int32>] [-TermStoreName <String>] [-Delimiter <String>]
- [-SynchronizeDeletions] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-SynchronizeDeletions] [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ### File
-```
+```powershell
 Import-PnPTaxonomy -Path <String> [-Lcid <Int32>] [-TermStoreName <String>] [-Delimiter <String>]
- [-SynchronizeDeletions] [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-SynchronizeDeletions] [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -74,7 +74,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +88,6 @@ The path delimiter to be used, by default this is '|'
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -103,7 +101,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -118,7 +115,6 @@ Specifies a file containing terms per line, in the format as required by the Ter
 ```yaml
 Type: String
 Parameter Sets: File
-Aliases:
 
 Required: True
 Position: Named
@@ -133,7 +129,6 @@ If specified, terms that exist in the termset, but are not in the imported data,
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -148,7 +143,6 @@ Term store to import to; if not specified the default term store is used.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -163,7 +157,6 @@ An array of strings describing termgroup, termset, term, subterms using a defaul
 ```yaml
 Type: String[]
 Parameter Sets: Direct
-Aliases:
 
 Required: False
 Position: Named
@@ -189,4 +182,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnplistitem
+online version: https://pnp.github.io/powershell/cmdlets/get-pnplistitem
 schema: 2.0.0
 title: Get-PnPListItem
 ---
@@ -15,28 +15,28 @@ Retrieves list items
 ## SYNTAX
 
 ### All Items (Default)
-```
+```powershell
 Get-PnPListItem [-List] <ListPipeBind> [-FolderServerRelativeUrl <String>] [-Fields <String[]>]
- [-PageSize <Int32>] [-ScriptBlock <ScriptBlock>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+ [-PageSize <Int32>] [-ScriptBlock <ScriptBlock>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### By Id
-```
-Get-PnPListItem [-List] <ListPipeBind> [-Id <Int32>] [-Fields <String[]>] [-Web <WebPipeBind>]
+```powershell
+Get-PnPListItem [-List] <ListPipeBind> [-Id <Int32>] [-Fields <String[]>] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### By Unique Id
-```
-Get-PnPListItem [-List] <ListPipeBind> [-UniqueId <Guid>] [-Fields <String[]>] [-Web <WebPipeBind>]
+```powershell
+Get-PnPListItem [-List] <ListPipeBind> [-UniqueId <Guid>] [-Fields <String[]>] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### By Query
-```
+```powershell
 Get-PnPListItem [-List] <ListPipeBind> [-Query <String>] [-FolderServerRelativeUrl <String>]
- [-PageSize <Int32>] [-ScriptBlock <ScriptBlock>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+ [-PageSize <Int32>] [-ScriptBlock <ScriptBlock>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -63,7 +63,7 @@ Retrieves the list item with ID 1 from the Tasks list
 Get-PnPListItem -List Tasks -UniqueId bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3
 ```
 
-Retrieves the list item with unique id bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from the tasks lists
+Retrieves the list item with UniqueId or GUID bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from the tasks lists
 
 ### EXAMPLE 4
 ```powershell
@@ -115,7 +115,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -130,7 +129,6 @@ The fields to retrieve. If not specified all fields will be loaded in the return
 ```yaml
 Type: String[]
 Parameter Sets: All Items, By Id, By Unique Id
-Aliases:
 
 Required: False
 Position: Named
@@ -145,7 +143,6 @@ The server relative URL of a list folder from which results will be returned.
 ```yaml
 Type: String
 Parameter Sets: All Items, By Query
-Aliases:
 
 Required: False
 Position: Named
@@ -160,7 +157,6 @@ The ID of the item to retrieve
 ```yaml
 Type: Int32
 Parameter Sets: By Id
-Aliases:
 
 Required: False
 Position: Named
@@ -175,7 +171,6 @@ The list to query
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -190,7 +185,6 @@ The number of items to retrieve per page request.
 ```yaml
 Type: Int32
 Parameter Sets: All Items, By Query
-Aliases:
 
 Required: False
 Position: Named
@@ -205,7 +199,6 @@ The CAML query to execute against the list
 ```yaml
 Type: String
 Parameter Sets: By Query
-Aliases:
 
 Required: False
 Position: Named
@@ -220,7 +213,6 @@ The script block to run after every page request.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: All Items, By Query
-Aliases:
 
 Required: False
 Position: Named
@@ -230,12 +222,11 @@ Accept wildcard characters: False
 ```
 
 ### -UniqueId
-The unique id (GUID) of the item to retrieve
+The UniqueId or GUID of the item to retrieve
 
 ```yaml
 Type: Guid
 Parameter Sets: By Unique Id
-Aliases:
 
 Required: False
 Position: Named
@@ -244,21 +235,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

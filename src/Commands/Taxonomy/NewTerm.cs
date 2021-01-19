@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.New, "Term")]
+    [Cmdlet(VerbsCommon.New, "PnPTerm")]
     public class NewTerm : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -21,11 +21,11 @@ namespace PnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false)]
         public int Lcid = CultureInfo.CurrentCulture.LCID;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public TaxonomyItemPipeBind<TermSet> TermSet;
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        public TaxonomyTermSetPipeBind TermSet;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public TermGroupPipeBind TermGroup;
+        public TaxonomyTermGroupPipeBind TermGroup;
 
         [Parameter(Mandatory = false)]
         public string Description;
@@ -38,69 +38,44 @@ namespace PnP.PowerShell.Commands.Taxonomy
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         [Alias("TermStoreName")]
-        public GenericObjectNameIdPipeBind<TermStore> TermStore;
+        public TaxonomyTermStorePipeBind TermStore;
 
         protected override void ExecuteCmdlet()
         {
             var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
             // Get Term Store
-            var termStore = default(TermStore);
-            if (TermStore != null)
-            {
-                if (TermStore.IdValue != Guid.Empty)
-                {
-                    termStore = taxonomySession.TermStores.GetById(TermStore.IdValue);
-                }
-                else if (!string.IsNullOrEmpty(TermStore.StringValue))
-                {
-                    termStore = taxonomySession.TermStores.GetByName(TermStore.StringValue);
-                }
-                else
-                {
-                    termStore = TermStore.Item;
-                }
-            }
-            else
+            TermStore termStore = null;
+            if (TermStore == null)
             {
                 termStore = taxonomySession.GetDefaultSiteCollectionTermStore();
             }
-
-            TermGroup termGroup = null;
-
-            if (TermGroup.Id != Guid.Empty)
-            {
-                termGroup = termStore.Groups.GetById(TermGroup.Id);
-            }
-            else if (!string.IsNullOrEmpty(TermGroup.Name))
-            {
-                termGroup = termStore.Groups.GetByName(TermGroup.Name);
-            }
-
-            TermSet termSet;
-            if (TermSet.Id != Guid.Empty)
-            {
-                termSet = termGroup.TermSets.GetById(TermSet.Id);
-            }
-            else if (!string.IsNullOrEmpty(TermSet.Title))
-            {
-                termSet = termGroup.TermSets.GetByName(TermSet.Title);
-            }
             else
             {
-                termSet = TermSet.Item;
+                termStore = TermStore.GetTermStore(taxonomySession);
             }
+            termStore.EnsureProperty(ts => ts.DefaultLanguage);
+
+            TermGroup termGroup = TermGroup.GetGroup(termStore);
+
+            TermSet termSet = TermSet.GetTermSet(termGroup);
 
             if (Id == Guid.Empty)
             {
                 Id = Guid.NewGuid();
             }
             var termName = TaxonomyExtensions.NormalizeName(Name);
+
+            if(!ParameterSpecified(nameof(Lcid)))
+            {
+                Lcid = termStore.EnsureProperty(ts => ts.DefaultLanguage);
+            }
+
             var term = termSet.CreateTerm(termName, Lcid, Id);
             ClientContext.Load(term);
             ClientContext.ExecuteQueryRetry();
             term.SetDescription(Description, Lcid);
-            
-            var customProperties  = CustomProperties ?? new Hashtable();
+
+            var customProperties = CustomProperties ?? new Hashtable();
             foreach (var key in customProperties.Keys)
             {
                 term.SetCustomProperty(key as string, customProperties[key] as string);

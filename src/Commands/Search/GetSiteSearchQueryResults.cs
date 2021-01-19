@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Search
 {
-    [Cmdlet(VerbsCommon.Get, "SiteSearchQueryResults", DefaultParameterSetName = "Limit")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteSearchQueryResults", DefaultParameterSetName = "Limit")]
     public class GetSiteSearchQueryResults : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpteamsuser
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpteamsuser
 schema: 2.0.0
 title: Get-PnPTeamsUser
 ---
@@ -19,9 +19,9 @@ Returns owners, members or guests from a team.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTeamsUser -Team <TeamsTeamPipeBind> [-Channel <TeamsChannelPipeBind>] [-Role <String>]
- [-ByPassPermissionCheck] [<CommonParameters>]
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -54,32 +54,16 @@ Returns all members from the specified team.
 Get-PnPTeamsUser -Team MyTeam -Role Guest
 ```
 
-Returns all guestss from the specified team.
+Returns all guests from the specified team.
 
 ## PARAMETERS
 
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Channel
-{{ Fill Channel Description }}
+Specify the channel id or display name of the channel to use.
 
 ```yaml
 Type: TeamsChannelPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -94,7 +78,6 @@ Specify to filter on the role of the user
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 Accepted values: Owner, Member, Guest
 
 Required: False
@@ -110,7 +93,6 @@ Specify the group id, mailNickname or display name of the team to use.
 ```yaml
 Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -121,4 +103,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

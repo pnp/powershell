@@ -3,19 +3,21 @@ using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Remove, "TermGroup")]
+    [Cmdlet(VerbsCommon.Remove, "PnPTermGroup", SupportsShouldProcess = true)]
     public class RemoveTermGroup : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-        public string GroupName;
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [Alias("GroupName")]
+        public TaxonomyTermGroupPipeBind Identity;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
-        public string TermStoreName;
+        [Parameter(Mandatory = false)]
+        public TaxonomyTermStorePipeBind TermStore;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
@@ -25,45 +27,38 @@ namespace PnP.PowerShell.Commands.Taxonomy
             var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
             // Get Term Store
             TermStore termStore;
-            if (string.IsNullOrEmpty(TermStoreName))
+            if (TermStore == null)
             {
                 termStore = taxonomySession.GetDefaultSiteCollectionTermStore();
             }
             else
             {
-                termStore = taxonomySession.TermStores.GetByName(TermStoreName);
+                termStore = TermStore.GetTermStore(taxonomySession);
             }
-            // Get Group
-            if (termStore != null)
-            {
-                var group = termStore.GetTermGroupByName(GroupName);
-                if (group != null)
-                {
-                    if (Force || ShouldContinue(string.Format(Resources.RemoveTermGroup0AndAllUnderlyingTermSetsAndTerms, group.Name), Resources.Confirm))
-                    {
-                        group.EnsureProperty(g => group.TermSets);
-                        if (group.TermSets.Any())
-                        {
-                            foreach (var termSet in group.TermSets)
-                            {
-                                termSet.DeleteObject();
-                            }
-                        }
-                        group.DeleteObject();
-                        ClientContext.ExecuteQueryRetry();
-                    }
-                }
-                else
-                {
-                    ThrowTerminatingError(new ErrorRecord(new Exception("Cannot find group"), "INCORRECTGROUPNAME", ErrorCategory.ObjectNotFound, GroupName));
 
+            // Get Group
+            var group = Identity.GetGroup(termStore);
+            group.EnsureProperties(g => g.Name);
+            if (group != null)
+            {
+                if (Force || ShouldContinue(string.Format(Resources.RemoveTermGroup0AndAllUnderlyingTermSetsAndTerms, group.Name), Resources.Confirm))
+                {
+                    group.EnsureProperty(g => group.TermSets);
+                    if (group.TermSets.Any())
+                    {
+                        foreach (var termSet in group.TermSets)
+                        {
+                            termSet.DeleteObject();
+                        }
+                    }
+                    group.DeleteObject();
+                    ClientContext.ExecuteQueryRetry();
                 }
             }
             else
             {
-                ThrowTerminatingError(new ErrorRecord(new Exception("Cannot find termstore"),"INCORRECTTERMSTORE",ErrorCategory.ObjectNotFound,TermStoreName));
+                throw new PSArgumentException("Cannot find group");
             }
         }
-
     }
 }

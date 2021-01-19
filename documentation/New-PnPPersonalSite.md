@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/new-pnppersonalsite
+online version: https://pnp.github.io/powershell/cmdlets/new-pnppersonalsite
 schema: 2.0.0
 title: New-PnPPersonalSite
 ---
@@ -19,7 +19,7 @@ Office365 only: Creates a personal / OneDrive For Business site
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPPersonalSite [-Email] <String[]> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -43,7 +43,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -58,7 +57,6 @@ The UserPrincipalName (UPN) of the users
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -69,4 +67,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

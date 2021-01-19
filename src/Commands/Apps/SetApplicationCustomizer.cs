@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "ApplicationCustomizer")]
+    [Cmdlet(VerbsCommon.Set, "PnPApplicationCustomizer")]
     public class SetApplicationCustomizer : PnPWebCmdlet
     {
         private const string ParameterSet_CUSTOMACTIONID = "Custom Action Id";
@@ -35,79 +35,52 @@ namespace PnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false)]
         public string ClientSideComponentProperties = null;
 
+        [Parameter(Mandatory = false)]
+        public string ClientSideHostProperties;
         protected override void ExecuteCmdlet()
         {
-            List<UserCustomAction> actions = new List<UserCustomAction>();
+            var actions = Identity.GetCustomActions(PnPContext, Scope);
 
-            if (Identity != null && Identity.UserCustomAction != null)
-            {
-                actions.Add(Identity.UserCustomAction);
-            }
-            else
-            {
-                if (Scope == CustomActionScope.All || Scope == CustomActionScope.Web)
-                {
-                    actions.AddRange(SelectedWeb.GetCustomActions());
-                }
-                if (Scope == CustomActionScope.All || Scope == CustomActionScope.Site)
-                {
-                    actions.AddRange(ClientContext.Site.GetCustomActions());
-                }
-
-                if (Identity != null)
-                {
-                    actions = actions.Where(action => Identity.Id.HasValue ? Identity.Id.Value == action.Id : Identity.Name == action.Name).ToList();
-
-                    if (!actions.Any())
-                    {
-                        throw new PSArgumentException($"No CustomAction representing the client side extension registration found with the {(Identity.Id.HasValue ? "Id" : "name")} '{(Identity.Id.HasValue ? Identity.Id.Value.ToString() : Identity.Name)}' within the scope '{Scope}'", "Identity");
-                    }
-                }
-            }
-            
             // If a ClientSideComponentId has been provided, only leave those who have a matching client side component id
-            if(ParameterSetName == ParameterSet_CLIENTSIDECOMPONENTID)
+            if (ParameterSetName == ParameterSet_CLIENTSIDECOMPONENTID)
             {
                 actions = actions.Where(a => a.ClientSideComponentId == ClientSideComponentId && a.Location == "ClientSideExtension.ApplicationCustomizer").ToList();
             }
 
             if (!actions.Any())
             {
-                WriteVerbose($"No CustomAction representing the client side extension registration found within the scope '{Scope}'");
+                WriteVerbose($"No Application Customizers representing the client side extension registration found within the scope '{Scope}'");
                 return;
             }
 
             // Update each of the matched custom actions
             foreach (var action in actions)
             {
-                bool isDirty = false;
-
-                if(Title != null)
+                if (ParameterSpecified(nameof(Title)))
                 {
                     action.Title = Title;
-                    isDirty = true;
                 }
-                if(Description != null)
+                if (ParameterSpecified(nameof(Description)))
                 {
                     action.Description = Description;
-                    isDirty = true;
                 }
-                if (Sequence.HasValue)
+                if (ParameterSpecified(nameof(ClientSideComponentId)))
                 {
-                    action.Sequence = Sequence.Value;
-                    isDirty = true;
+                    action.ClientSideComponentId = ClientSideComponentId;
                 }
-                if (ClientSideComponentProperties != null)
+                if (ParameterSpecified(nameof(ClientSideComponentProperties)))
                 {
                     action.ClientSideComponentProperties = ClientSideComponentProperties;
-                    isDirty = true;
                 }
-
-                if (isDirty)
+                if (ParameterSpecified(nameof(ClientSideHostProperties)))
                 {
-                    action.Update();
-                    ClientContext.ExecuteQueryRetry();
+                    action.HostProperties = ClientSideHostProperties;
                 }
+                if (ParameterSpecified(nameof(Sequence)))
+                {
+                    action.Sequence = Sequence.Value;
+                }
+                action.Update();
             }
         }
     }

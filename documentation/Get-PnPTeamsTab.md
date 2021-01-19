@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpteamstab
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpteamstab
 schema: 2.0.0
 title: Get-PnPTeamsTab
 ---
@@ -19,9 +19,9 @@ Gets one or all tabs in a channel.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> [-Identity <TeamsTabPipeBind>]
- [-ByPassPermissionCheck] [<CommonParameters>]
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,42 +44,33 @@ Retrieves a tab with the display name 'Wiki' from the specified team and channel
 
 ### EXAMPLE 3
 ```powershell
+Get-PnPTeamsTab -Team 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Channel 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity d8740a7a-e44e-46c5-8f13-e699f964fc25
+```
+
+Retrieves a tab with an id from the specified team and channel
+
+### EXAMPLE 4
+```powershell
 Get-PnPTeamsTab -Team "My Team" -Channel "My Channel"
 ```
 
 Retrieves the tabs for the specified Microsoft Teams instance and channel
 
-### EXAMPLE 4
+### EXAMPLE 5
 ```powershell
-Get-PnPTeamsTab "My Team" -Channel "My Channel" -Identity "Wiki"
+Get-PnPTeamsTab -Team "My Team" -Channel "My Channel" -Identity "Wiki"
 ```
 
 Retrieves a tab with the display name 'Wiki' from the specified team and channel
 
 ## PARAMETERS
 
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Channel
-Specify the channel id of the team to retrieve.
+Specify the channel id or display name of the channel to use.
 
 ```yaml
 Type: TeamsChannelPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -89,12 +80,11 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Identity
+Specify the id or display name of the tab
 
 ```yaml
 Type: TeamsTabPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -104,12 +94,11 @@ Accept wildcard characters: False
 ```
 
 ### -Team
-Specify the group id of the team to retrieve.
+Specify the group id, mailNickname or display name of the team to use.
 
 ```yaml
 Type: TeamsTeamPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -120,4 +109,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Remove, "View")]
+    [Cmdlet(VerbsCommon.Remove, "PnPView")]
     public class RemoveView : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Lists
         {
             if (List != null)
             {
-                var list = List.GetList(SelectedWeb);
+                var list = List.GetList(CurrentWeb);
 
                 if (list != null)
                 {

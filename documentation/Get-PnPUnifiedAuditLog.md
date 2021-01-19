@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpunifiedauditlog
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpunifiedauditlog
 schema: 2.0.0
 title: Get-PnPUnifiedAuditLog
 ---
@@ -19,9 +19,9 @@ Gets unified audit logs from the Office 365 Management API. Requires the Azure A
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPUnifiedAuditLog [-ContentType <AuditContentType>] [-StartTime <DateTime>] [-EndTime <DateTime>]
- [-ByPassPermissionCheck] [<CommonParameters>]
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -37,28 +37,12 @@ Retrieves the audit logs of SharePoint happening between the current time yester
 
 ## PARAMETERS
 
-### -ByPassPermissionCheck
-Allows the check for required permissions in the access token to be bypassed when set to $true
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -ContentType
 Content type of logs to be retrieved, should be one of the following: AzureActiveDirectory, Exchange, SharePoint, General, DLP.
 
 ```yaml
 Type: AuditContentType
 Parameter Sets: (All)
-Aliases:
 Accepted values: AzureActiveDirectory, Exchange, SharePoint, General, DLP
 
 Required: False
@@ -74,7 +58,6 @@ End time of logs to be retrieved. Start time and end time must both be specified
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +72,6 @@ Start time of logs to be retrieved. Start time and end time must both be specifi
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -100,4 +82,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

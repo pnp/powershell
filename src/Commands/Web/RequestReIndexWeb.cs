@@ -4,13 +4,13 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsLifecycle.Request, "ReIndexWeb")]
+    [Cmdlet(VerbsLifecycle.Request, "PnPReIndexWeb")]
     public class RequestReIndexWeb : PnPWebCmdlet
     {
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.ReIndexWeb();
+            CurrentWeb.ReIndexWeb();
         }
     }
 }

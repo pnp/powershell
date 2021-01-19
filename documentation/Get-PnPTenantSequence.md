@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnptenantsequence
+online version: https://pnp.github.io/powershell/cmdlets/get-pnptenantsequence
 schema: 2.0.0
 title: Get-PnPTenantSequence
 ---
@@ -14,9 +14,9 @@ Returns one ore more provisioning sequence object(s) from a tenant template
 
 ## SYNTAX
 
-```
-Get-PnPTenantSequence -Template <ProvisioningHierarchy> [-Identity <ProvisioningSequencePipeBind>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+```powershell
+Get-PnPTenantSequence -Template <ProvisioningHierarchy> [-Identity <ProvisioningSequencePipeBind>] 
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -57,12 +57,9 @@ Accept wildcard characters: False
 ### -Identity
 Optional Id of the sequence
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: ProvisioningSequencePipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -74,12 +71,9 @@ Accept wildcard characters: False
 ### -Template
 The template to retrieve the sequence from
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: ProvisioningHierarchy
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -105,4 +99,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

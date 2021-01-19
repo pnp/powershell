@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Set, "FolderPermission", DefaultParameterSetName = "User")]
+    [Cmdlet(VerbsCommon.Set, "PnPFolderPermission", DefaultParameterSetName = "User")]
     public class SetFolderPermission : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -45,12 +45,12 @@ namespace PnP.PowerShell.Commands.Files
             List list = null;
             if (List != null)
             {
-                list = List.GetList(SelectedWeb);
+                list = List.GetList(CurrentWeb);
             }
             if (list != null)
             {
                 // Try to get an instance to the folder
-                var folder = Identity.GetFolder(SelectedWeb);
+                var folder = Identity.GetFolder(CurrentWeb);
 
                 // Ensure the folder has been found
                 if (folder == null)
@@ -106,11 +106,11 @@ namespace PnP.PowerShell.Commands.Files
                 {
                     if (Group.Id != -1)
                     {
-                        principal = SelectedWeb.SiteGroups.GetById(Group.Id);
+                        principal = CurrentWeb.SiteGroups.GetById(Group.Id);
                     }
                     else if (!string.IsNullOrEmpty(Group.Name))
                     {
-                        principal = SelectedWeb.SiteGroups.GetByName(Group.Name);
+                        principal = CurrentWeb.SiteGroups.GetByName(Group.Name);
                     }
                     else if (Group.Group != null)
                     {
@@ -119,14 +119,14 @@ namespace PnP.PowerShell.Commands.Files
                 }
                 else
                 {
-                    principal = SelectedWeb.EnsureUser(User);
+                    principal = CurrentWeb.EnsureUser(User);
                     ClientContext.ExecuteQueryRetry();
                 }
                 if (principal != null)
                 {
                     if (!string.IsNullOrEmpty(AddRole))
                     {
-                        var roleDefinition = SelectedWeb.RoleDefinitions.GetByName(AddRole);
+                        var roleDefinition = CurrentWeb.RoleDefinitions.GetByName(AddRole);
                         var roleDefinitionBindings = new RoleDefinitionBindingCollection(ClientContext)
                             {
                                 roleDefinition

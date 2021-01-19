@@ -7,7 +7,7 @@ using File = System.IO.File;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Set, "WikiPageContent")]
+    [Cmdlet(VerbsCommon.Set, "PnPWikiPageContent")]
     public class SetWikiPageContent : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "STRING")]
@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Publishing
                     var fileStream = new StreamReader(Path);
                     var contentString = fileStream.ReadToEnd();
                     fileStream.Close();
-                    SelectedWeb.AddHtmlToWikiPage(ServerRelativePageUrl, contentString);
+                    CurrentWeb.AddHtmlToWikiPage(ServerRelativePageUrl, contentString);
                 }
                 else
                 {
@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Publishing
             }
             else
             {
-                SelectedWeb.AddHtmlToWikiPage(ServerRelativePageUrl, Content);
+                CurrentWeb.AddHtmlToWikiPage(ServerRelativePageUrl, Content);
             }
         }
     }

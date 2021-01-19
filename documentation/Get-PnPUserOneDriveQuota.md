@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpuseronedrivequota
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpuseronedrivequota
 schema: 2.0.0
 title: Get-PnPUserOneDriveQuota
 ---
@@ -19,7 +19,7 @@ Retrieves the current quota set on the OneDrive for Business site for a specific
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPUserOneDriveQuota [-Account] <String> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -40,12 +40,9 @@ Returns the quota set on the OneDrive for Business site for the specified user
 ### -Account
 The account of the user, formatted either as a login name, or as a claims identity, e.g. i:0#.f|membership|user@domain.com
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -57,12 +54,9 @@ Accept wildcard characters: False
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -73,4 +67,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

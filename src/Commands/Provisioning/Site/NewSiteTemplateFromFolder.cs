@@ -15,7 +15,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsCommon.New, "SiteTemplateFromFolder")]
+    [Cmdlet(VerbsCommon.New, "PnPSiteTemplateFromFolder")]
     public class NewSiteTemplateFromFolder : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]
@@ -65,7 +65,7 @@ namespace PnP.PowerShell.Commands.Provisioning
             }
             if (ContentType != null)
             {
-                ct = ContentType.GetContentType(SelectedWeb);
+                ct = ContentType.GetContentType(CurrentWeb);
             }
             if (TargetFolder == null)
             {

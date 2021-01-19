@@ -8,6 +8,8 @@ using System.Text;
 using SecureString = System.Security.SecureString;
 using RuntimeHelpers = System.Runtime.CompilerServices.RuntimeHelpers;
 using System.Management.Automation;
+using System.Collections;
+using System.Linq;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -19,9 +21,28 @@ namespace PnP.PowerShell.Commands.Utilities
             RsaPrivateKey
         }
 
+
         internal static string PrivateKeyToBase64(X509Certificate2 certificate, bool useLineBreaks = false)
         {
+#if NETFRAMEWORK
             var param = ((RSACryptoServiceProvider)certificate.PrivateKey).ExportParameters(true);
+#else
+            RSAParameters param = new RSAParameters();
+            switch (certificate.PrivateKey)
+            {
+                case RSACng rsaCNGKey:
+                    {
+                        param = rsaCNGKey.ExportParameters(true);
+                        break;
+                    }
+                case System.Security.Cryptography.RSAOpenSsl rsaOpenSslKey:
+                    {
+                        param = rsaOpenSslKey.ExportParameters(true);
+                        break;
+                    }
+            }
+            //var param = ((RSACng)certificate.PrivateKey).ExportParameters(true);
+#endif
             string base64String;
             using (var stream = new MemoryStream())
             {
@@ -84,7 +105,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return sb.ToString();
         }
 
-        internal static X509Certificate2 GetCertificatFromStore(string thumbprint)
+        internal static X509Certificate2 GetCertificateFromStore(string thumbprint)
         {
             List<StoreLocation> locations = new List<StoreLocation>
             {
@@ -112,33 +133,6 @@ namespace PnP.PowerShell.Commands.Utilities
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// Converts a public key certificate stored in Base64 encoding such as retrieved from Azure KeyVault to a X509Certificate2
-        /// </summary>
-        /// <param name="publicCert">Public key certificate endoded with Base64</param>
-        /// <returns>X509Certificate2 certificate</returns>
-        internal static X509Certificate2 GetCertificateFromBase64Encodedstring(string publicCert)
-        {
-            var certificateBytes = Convert.FromBase64String(publicCert);
-            var certificate = new X509Certificate2(certificateBytes);
-
-            return certificate;
-        }
-
-        internal static X509Certificate2 GetCertificateFromPEMstring(string publicCert, string privateKey, string password)
-        {
-            if (string.IsNullOrWhiteSpace(password)) password = "";
-            var certBuffer = GetBytesFromPEM(publicCert, PemStringType.Certificate);
-            var keyBuffer = GetBytesFromPEM(privateKey, PemStringType.RsaPrivateKey);
-
-            var certificate = new X509Certificate2(certBuffer, password, X509KeyStorageFlags.MachineKeySet);
-
-            var prov = CertificateCrypto.DecodeRsaPrivateKey(keyBuffer);
-            certificate.PrivateKey = prov;
-
-            return certificate;
         }
 
         internal static X509Certificate2 GetCertificateFromPath(string certificatePath, SecureString certificatePassword)
@@ -196,6 +190,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             }
         }
+
         private static void EncodeIntegerBigEndian(BinaryWriter stream, byte[] value, bool forceUnsigned = true)
         {
             stream.Write((byte)0x02); // INTEGER
@@ -227,30 +222,6 @@ namespace PnP.PowerShell.Commands.Utilities
                     stream.Write(value[i]);
                 }
             }
-        }
-
-        private static byte[] GetBytesFromPEM(string pemString, PemStringType type)
-        {
-            string header;
-            string footer;
-
-            switch (type)
-            {
-                case PemStringType.Certificate:
-                    header = "-----BEGIN CERTIFICATE-----";
-                    footer = "-----END CERTIFICATE-----";
-                    break;
-                case PemStringType.RsaPrivateKey:
-                    header = "-----BEGIN RSA PRIVATE KEY-----";
-                    footer = "-----END RSA PRIVATE KEY-----";
-                    break;
-                default:
-                    return null;
-            }
-
-            int start = pemString.IndexOf(header, StringComparison.Ordinal) + header.Length;
-            int end = pemString.IndexOf(footer, start, StringComparison.Ordinal) - start;
-            return Convert.FromBase64String(pemString.Substring(start, end));
         }
 
         private static IEnumerable<string> SplitText(string text, int length)
@@ -315,6 +286,52 @@ namespace PnP.PowerShell.Commands.Utilities
 
             return pfxData;
         }
+
+
+#if !NETFRAMEWORK
+        internal static X509Certificate2 CreateSelfSignedCertificate(string commonName, string country, string state, string locality, string organization, string organizationUnit, SecureString password, string friendlyName, DateTimeOffset from, DateTimeOffset to)
+        {
+            SubjectAlternativeNameBuilder sanBuilder = new SubjectAlternativeNameBuilder();
+            sanBuilder.AddDnsName("localhost");
+            sanBuilder.AddDnsName(Environment.MachineName);
+
+            var x500Values = new List<string>();
+            if (!string.IsNullOrWhiteSpace(commonName)) x500Values.Add($"CN={commonName}");
+            if (!string.IsNullOrWhiteSpace(country)) x500Values.Add($"C={country}");
+            if (!string.IsNullOrWhiteSpace(state)) x500Values.Add($"S={state}");
+            if (!string.IsNullOrWhiteSpace(locality)) x500Values.Add($"L={locality}");
+            if (!string.IsNullOrWhiteSpace(organization)) x500Values.Add($"O={organization}");
+            if (!string.IsNullOrWhiteSpace(organizationUnit)) x500Values.Add($"OU={organizationUnit}");
+
+            string distinguishedNameString = string.Join("; ", x500Values);
+
+            X500DistinguishedName distinguishedName = new X500DistinguishedName(distinguishedNameString);
+
+            using (RSA rsa = RSA.Create(2048))
+            {
+                var request = new CertificateRequest(distinguishedName, rsa, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+
+                request.CertificateExtensions.Add(
+                    new X509KeyUsageExtension(X509KeyUsageFlags.DataEncipherment | X509KeyUsageFlags.KeyEncipherment | X509KeyUsageFlags.DigitalSignature, false));
+
+
+                request.CertificateExtensions.Add(
+                   new X509EnhancedKeyUsageExtension(
+                       new OidCollection { new Oid("1.3.6.1.5.5.7.3.1") }, false));
+
+                request.CertificateExtensions.Add(sanBuilder.Build());
+
+                var certificate = request.CreateSelfSigned(from, to);
+
+                if (Platform.IsWindows)
+                {
+                    certificate.FriendlyName = friendlyName;
+                }
+
+                return new X509Certificate2(certificate.Export(X509ContentType.Pfx, password), password, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
+            }
+        }
+#endif
 
         internal static byte[] CreateSelfSignCertificatePfx(
             string x500,
@@ -606,7 +623,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 IntPtr x500,
                 int strType,
                 IntPtr reserved,
-                [MarshalAs(UnmanagedType.LPArray)] [Out] byte[] encoded,
+                [MarshalAs(UnmanagedType.LPArray)][Out] byte[] encoded,
                 ref int encodedLength,
                 out IntPtr errorString);
 
@@ -667,6 +684,91 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         #endregion
+    }
+
+    internal class CertificateDistinguishedName
+    {
+        // Name of a person or an object host name
+        public string CommonName;
+
+        // 2-character ISO country code 
+        public string Country;
+
+        // The state or province where the owner is physically located
+        public string StateOrProvince;
+
+        // The city where the owner is located
+        public string Locality;
+
+        // The name of the registering organization
+        public string Organization;
+
+        // The division of the organization owning the certificate
+        public string OrganizationalUnit;
+
+        // Format the distinguished name like 'CN="com.contoso"; C="US"; S="Nebraska"'
+        public string Format()
+        {
+            return this.Format(';', true);
+        }
+
+        // Format the distinguished name with the given separator and quote usage setting
+        public string Format(char Separator, bool useQuotes)
+        {
+            var sb = new StringBuilder();
+
+            if (useQuotes)
+            {
+                sb.Append($@"CN=""{CommonName}""");
+            }
+            else
+            {
+                sb.Append($"CN={CommonName}");
+            }
+
+            var fields = new Hashtable() {
+                {"OU",OrganizationalUnit},
+                {"O",Organization},
+                {"L",Locality},
+                {"S",StateOrProvince},
+                {"C",Country}
+            };
+
+            foreach (var field in new[] { "OU", "O", "L", "S", "C" })
+            {
+                var val = fields[field];
+                if (val != null)
+                {
+                    sb.Append(Separator);
+                    sb.Append(" ");
+                    if (useQuotes)
+                    {
+                        sb.Append($@"{field}=""{val}""");
+                    }
+                    else
+                    {
+                        sb.Append($"{field}={val}");
+                    }
+                }
+            }
+            return sb.ToString();
+        }
+
+        public override string ToString()
+        {
+            return Format(',', false);
+        }
+
+        public X500DistinguishedName AsX500DistinguishedName()
+        {
+            return new X500DistinguishedName(Format());
+        }
+    }
+
+    internal enum EnhancedKeyUsageEnum
+    {
+        ServerAuthentication,
+        ClientAuthentication
     }
 
 }

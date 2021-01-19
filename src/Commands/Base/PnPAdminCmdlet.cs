@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Management.Automation;
+using System.Net.Http;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Enums;
@@ -101,5 +102,6 @@ namespace PnP.PowerShell.Commands.Base
             base.EndProcessing();
             PnPConnection.CurrentConnection.RestoreCachedContext(PnPConnection.CurrentConnection.Url);
         }
+
     }
 }

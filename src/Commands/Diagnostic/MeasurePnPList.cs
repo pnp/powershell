@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Diagnostic
 {
-    [Cmdlet(VerbsDiagnostic.Measure, "List")]
+    [Cmdlet(VerbsDiagnostic.Measure, "PnPList")]
     public class MeasurePnPList : PnPWebRetrievalsCmdlet<List>
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Diagnostic
 
         protected override void ExecuteCmdlet()
         {
-            var list = Identity.GetList(SelectedWeb);
+            var list = Identity.GetList(CurrentWeb);
             if (list == null)
                 throw new PSArgumentException($"No list found with id, title or url '{Identity}'", "Identity");
             var retrievalExpressions = new Expression<Func<List, object>>[] {

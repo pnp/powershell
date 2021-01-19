@@ -1,6 +1,7 @@
 ﻿using PnP.Framework.Provisioning.Model.Teams;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System;
@@ -8,9 +9,8 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.New, "TeamsTeam")]
-    [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
-    [PnPManagementShellScopes("Group.ReadWrite.All")]
+    [Cmdlet(VerbsCommon.New, "PnPTeamsTeam")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class NewTeamsTeam : PnPGraphCmdlet
     {
         private const string ParameterSet_EXISTINGGROUP = "For an existing group";

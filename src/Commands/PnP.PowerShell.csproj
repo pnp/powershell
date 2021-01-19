@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project>
+  <Import Project="WindowsSdk.targets" Condition="'$(OS)' == 'Windows_NT'" />
+  <Import Project="Sdk.targets" Condition="'$(OS)' != 'Windows_NT'" />
 
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp3.1;net461</TargetFrameworks>
-    <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">netcoreapp3.1</TargetFrameworks>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <AssemblyName>PnP.PowerShell</AssemblyName>
     <RootNamespace>PnP.PowerShell.Commands</RootNamespace>
@@ -10,34 +10,71 @@
     <CopyRefAssembliesToPublishDirectory>true</CopyRefAssembliesToPublishDirectory>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <Authors>PnP.PowerShell</Authors>
-    <Configurations>Debug;Release;LocalDebug</Configurations>
+    <Configurations>Debug;Release</Configurations>
+    <PnPFrameworkPath Condition="'$(PnPFrameworkPath)' == ''"></PnPFrameworkPath>
+    <PnPCoreSdkPath Condition="'$(PnPCoreSdkPath)' == ''"></PnPCoreSdkPath>
+    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
+    <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
+    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsWindows)'=='true'">
+    <DefineConstants>Windows</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IsOSX)'=='true'">
+    <DefineConstants>OSX</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IsLinux)'=='true'">
+    <DefineConstants>Linux</DefineConstants>
   </PropertyGroup>
 
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net461'">
     <DefineConstants>$(DefineConstants);NETFRAMEWORK</DefineConstants>
   </PropertyGroup>
-  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.14.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Graph" Version="3.15.0" />
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.19.0" />
-    <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.20518.12000" />
+    <PackageReference Include="Microsoft.Graph" Version="3.19.0" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.21.0" />
+    <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="PnP.Framework" Version="0.1.1-preview" Condition="'$(ConfigurationName)' != 'LocalDebug'" />
+    <PackageReference Include="PnP.Framework" Version="1.0.0" Condition="'$(PnPFrameworkPath)' == ''" />
+    <PackageReference Include="PnP.Core" Version="0.5.*-*" Condition="'$(PnPCoreSdkPath)' == ''" />
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
+    <PackageReference Include="System.Security.Cryptography.OpenSsl" Version="4.7.0" />
     <PackageReference Include="System.Text.Encodings.Web" Version="4.7.1" />
     <PackageReference Include="System.Text.Json" Version="4.7.2" />
     <PackageReference Include="TextCopy" Version="4.2.0" />
     <ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
-    <Reference Include="PnP.Framework" Condition="'$(ConfigurationName)' == 'LocalDebug'">
-      <HintPath>..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll</HintPath>
+
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(PnPCoreSdkPath)' != ''">
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
+    <Reference Include="PnP.Core">
+      <HintPath>$(PnPCoreSdkPath)</HintPath>
+      <Private>true</Private>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(PnPFrameworkPath)' != ''">
+    <Reference Include="PnP.Framework" Condition="'$(PnPFrameworkPath)' != ''">
+      <HintPath>$(PnPFrameworkPath)</HintPath>
+      <Private>true</Private>
     </Reference>
   </ItemGroup>
 
@@ -53,7 +90,7 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <Compile Remove="Base\DependencyAssemblyLoadContext.cs" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -61,18 +98,12 @@
       <CustomToolNamespace></CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="ModuleFiles\PnP.PowerShell.Format.ps1xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>

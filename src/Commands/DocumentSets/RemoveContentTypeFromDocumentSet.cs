@@ -5,7 +5,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.DocumentSets
 {
-    [Cmdlet(VerbsCommon.Remove, "ContentTypeFromDocumentSet")]
+    [Cmdlet(VerbsCommon.Remove, "PnPContentTypeFromDocumentSet")]
     public class RemoveContentTypeFromDocumentSet : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -15,8 +15,8 @@ namespace PnP.PowerShell.Commands.DocumentSets
         public DocumentSetPipeBind DocumentSet;
         protected override void ExecuteCmdlet()
         {
-            var ct = ContentType.GetContentType(SelectedWeb);
-            var docSetTemplate = DocumentSet.GetDocumentSetTemplate(SelectedWeb);
+            var ct = ContentType.GetContentType(CurrentWeb);
+            var docSetTemplate = DocumentSet.GetDocumentSetTemplate(CurrentWeb);
 
             docSetTemplate.AllowedContentTypes.Remove(ct.Id);
 

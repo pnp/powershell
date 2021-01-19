@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.DocumentSets
 {
-    [Cmdlet(VerbsCommon.Get,"DocumentSetTemplate")]
+    [Cmdlet(VerbsCommon.Get,"PnPDocumentSetTemplate")]
     public class GetDocumentSetTemplate : PnPWebRetrievalsCmdlet<DocumentSetTemplate>
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.DocumentSets
         { 
             DefaultRetrievalExpressions = new Expression<Func<DocumentSetTemplate, object>>[] { t => t.AllowedContentTypes, t => t.DefaultDocuments, t => t.SharedFields, t => t.WelcomePageFields };
 
-            var docSetTemplate = Identity.GetDocumentSetTemplate(SelectedWeb);
+            var docSetTemplate = Identity.GetDocumentSetTemplate(CurrentWeb);
 
             ClientContext.Load(docSetTemplate, RetrievalExpressions);
 

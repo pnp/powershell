@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Add, "Alert")]
+    [Cmdlet(VerbsCommon.Add, "PnPAlert")]
     public class AddAlert : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Principals
             List list = null;
             if (List != null)
             {
-                list = List.GetList(SelectedWeb);
+                list = List.GetList(CurrentWeb);
             }
             if (list != null)
             {
@@ -57,7 +57,7 @@ namespace PnP.PowerShell.Commands.Principals
                 }
                 else
                 {
-                    user = SelectedWeb.CurrentUser;
+                    user = CurrentWeb.CurrentUser;
                 }
 
                 alert.AlertFrequency = Frequency;

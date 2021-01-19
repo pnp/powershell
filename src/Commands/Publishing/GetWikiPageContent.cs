@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Get, "WikiPageContent")]
+    [Cmdlet(VerbsCommon.Get, "PnPWikiPageContent")]
     public class GetWikiPageContent : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, Position=0)]
@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Publishing
 
         protected override void ExecuteCmdlet()
         {
-            WriteObject(SelectedWeb.GetWikiPageContent(ServerRelativePageUrl));
+            WriteObject(CurrentWeb.GetWikiPageContent(ServerRelativePageUrl));
         }
     }
 }

@@ -8,7 +8,7 @@ using File = System.IO.File;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
-    [Cmdlet(VerbsCommon.Add, "WebPartToWikiPage")]
+    [Cmdlet(VerbsCommon.Add, "PnPWebPartToWikiPage")]
     public class AddWebPartToWikiPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.WebParts
 
         protected override void ExecuteCmdlet()
         {
-            var serverRelativeWebUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var serverRelativeWebUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             if (!ServerRelativePageUrl.ToLowerInvariant().StartsWith(serverRelativeWebUrl.ToLowerInvariant()))
             {
@@ -64,7 +64,7 @@ namespace PnP.PowerShell.Commands.WebParts
             }
             if (wp != null)
             {
-                SelectedWeb.AddWebPartToWikiPage(ServerRelativePageUrl, wp, Row, Column, AddSpace);
+                CurrentWeb.AddWebPartToWikiPage(ServerRelativePageUrl, wp, Row, Column, AddSpace);
             }
         }
     }

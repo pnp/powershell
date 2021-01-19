@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpwebhooksubscription
+online version: https://pnp.github.io/powershell/cmdlets/set-pnpwebhooksubscription
 schema: 2.0.0
 title: Set-PnPWebhookSubscription
 ---
@@ -14,9 +14,9 @@ Updates a Webhook subscription
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPWebhookSubscription [-Subscription] <WebhookSubscriptionPipeBind> [-List <ListPipeBind>]
- [-NotificationUrl <String>] [-ExpirationDate <DateTime>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+ [-NotificationUrl <String>] [-ExpirationDate <DateTime>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -57,7 +57,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -72,7 +71,6 @@ The date at which the Webhook subscription will expire. (Default: 6 months from 
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -87,7 +85,6 @@ The list object or name from which the Webhook subscription will be modified
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -102,7 +99,6 @@ The URL of the Webhook endpoint that will be notified of the change
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -117,7 +113,6 @@ The identity of the Webhook subscription to update
 ```yaml
 Type: WebhookSubscriptionPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: 0
@@ -126,21 +121,8 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

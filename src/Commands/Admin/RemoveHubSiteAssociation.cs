@@ -9,7 +9,7 @@ using System;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Remove, "HubSiteAssociation")]
+    [Cmdlet(VerbsCommon.Remove, "PnPHubSiteAssociation")]
     public class RemoveHubSiteAssociation : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

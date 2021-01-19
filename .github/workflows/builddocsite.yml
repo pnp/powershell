@@ -1,0 +1,48 @@
+name: Build Documentation Site
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: '0 2 * * *'
+jobs:
+  documentation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for actions to finish
+        uses: softprops/turnstyle@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout master branch
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          path: master
+      - name: Checkout dev branch
+        uses: actions/checkout@v2
+        with:
+          ref: dev
+          path: dev
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          path: gh-pages
+      - name : Install dependencies
+        run: |
+          wget https://github.com/dotnet/docfx/releases/download/v2.51/docfx.zip
+          sudo unzip docfx.zip -d /usr/local/lib/docfx
+          rm docfx.zip
+          echo '#!/bin/sh' | sudo tee -a /usr/local/bin/docfx > /dev/null
+          echo 'exec `which mono` $MONO_OPTIONS /usr/local/lib/docfx/docfx.exe "$@"' | sudo tee -a /usr/local/bin/docfx > /dev/null
+          sudo chmod +x /usr/local/bin/docfx
+      - name: Build docs
+        shell: pwsh
+        run: |
+          ./dev/pages/Build-Site.ps1
+      - name: Add & Commit & Push
+        uses: EndBug/add-and-commit@v6
+        with:
+          cwd: ./gh-pages
+          branch: gh-pages
+          push: true
+          token: ${{ secrets.GITHUB_TOKEN }}

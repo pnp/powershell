@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpsitesearchqueryresults
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpsitesearchqueryresults
 schema: 2.0.0
 title: Get-PnPSiteSearchQueryResults
 ---
@@ -15,14 +15,14 @@ Executes a search query to retrieve indexed site collections
 ## SYNTAX
 
 ### Limit (Default)
-```
+```powershell
 Get-PnPSiteSearchQueryResults [[-Query] <String>] [-StartRow <Int32>] [-MaxResults <Int32>]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### All
-```
-Get-PnPSiteSearchQueryResults [[-Query] <String>] [-All] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+```powershell
+Get-PnPSiteSearchQueryResults [[-Query] <String>] [-All] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -80,7 +80,6 @@ Automatically page results until the end to get more than 500 sites. Use with ca
 ```yaml
 Type: SwitchParameter
 Parameter Sets: All
-Aliases:
 
 Required: False
 Position: Named
@@ -95,7 +94,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -110,7 +108,6 @@ Maximum amount of search results to return. Default and max is 500 search result
 ```yaml
 Type: Int32
 Parameter Sets: Limit
-Aliases:
 
 Required: False
 Position: Named
@@ -125,7 +122,6 @@ Search query in Keyword Query Language (KQL) to execute to refine the returned s
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: 0
@@ -140,7 +136,6 @@ Search result item to start returning the results from. Useful for paging. Leave
 ```yaml
 Type: Int32
 Parameter Sets: Limit
-Aliases:
 
 Required: False
 Position: Named
@@ -149,21 +144,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

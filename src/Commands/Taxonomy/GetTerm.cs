@@ -1,36 +1,34 @@
 ﻿using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Get, "Term")]
+    [Cmdlet(VerbsCommon.Get, "PnPTerm")]
     public class GetTerm : PnPRetrievalsCmdlet<Term>
     {
-        private const string ParameterSet_TERM = "By Term Id";
-        private const string ParameterSet_TERMSET = "By Termset";
+        private const string ParameterSet_TERMID = "By Term Id";
+        private const string ParameterSet_TERMNAME = "By Term Name";
         private Term term;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TERM)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TERMSET)]
-        public GenericObjectNameIdPipeBind<TermSet> Identity;
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TERMID)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TERMNAME)]
+        public TaxonomyTermPipeBind Identity;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_TERMSET)]
-        public TaxonomyItemPipeBind<TermSet> TermSet;
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_TERMNAME)]
+        public TaxonomyTermSetPipeBind TermSet;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_TERMSET)]
-        public TermGroupPipeBind TermGroup;
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_TERMNAME)]
+        public TaxonomyTermGroupPipeBind TermGroup;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TERM)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TERMSET)]
-        public GenericObjectNameIdPipeBind<TermStore> TermStore;
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TERMID)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TERMNAME)]
+        public TaxonomyTermStorePipeBind TermStore;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TERMSET)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TERMNAME)]
         public SwitchParameter Recursive;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -48,28 +46,14 @@ namespace PnP.PowerShell.Commands.Taxonomy
             }
             else
             {
-                if (TermStore.StringValue != null)
-                {
-                    termStore = taxonomySession.TermStores.GetByName(TermStore.StringValue);
-                }
-                else if (TermStore.IdValue != Guid.Empty)
-                {
-                    termStore = taxonomySession.TermStores.GetById(TermStore.IdValue);
-                }
-                else
-                {
-                    if (TermStore.Item != null)
-                    {
-                        termStore = TermStore.Item;
-                    }
-                }
+                termStore = TermStore.GetTermStore(taxonomySession);
             }
 
-            if (ParameterSetName == ParameterSet_TERM)
+            if (ParameterSetName == ParameterSet_TERMID)
             {
-                if (Identity.IdValue != Guid.Empty)
+                if (Identity.Id != Guid.Empty)
                 {
-                    term = termStore.GetTerm(Identity.IdValue);
+                    term = termStore.GetTerm(Identity.Id);
                     ClientContext.Load(term, RetrievalExpressions);
                     ClientContext.ExecuteQueryRetry();
                     if (IncludeChildTerms.IsPresent && term.TermsCount > 0)
@@ -77,74 +61,22 @@ namespace PnP.PowerShell.Commands.Taxonomy
                         LoadChildTerms(term);
                     }
                     WriteObject(term);
-                } else
+                }
+                else
                 {
-                    WriteError(new ErrorRecord(new Exception("Insufficient parameters"), "INSUFFICIENTPARAMETERS", ErrorCategory.SyntaxError, this));
+                    throw new PSArgumentException("Insufficient Parameters specified to determine the term to retrieve");
                 }
             }
             else
             {
-                TermGroup termGroup = null;
+                TermGroup termGroup = TermGroup.GetGroup(termStore);
+                TermSet termSet = TermSet.GetTermSet(termGroup);
 
-                if (TermGroup != null && TermGroup.Id != Guid.Empty)
-                {
-                    termGroup = termStore.Groups.GetById(TermGroup.Id);
-                }
-                else if (TermGroup != null && !string.IsNullOrEmpty(TermGroup.Name))
-                {
-                    termGroup = termStore.Groups.GetByName(TermGroup.Name);
-                }
 
-                TermSet termSet = null;
-                if (TermSet != null)
-                {
-                    if (TermSet.Id != Guid.Empty)
-                    {
-                        termSet = termGroup.TermSets.GetById(TermSet.Id);
-                    }
-                    else if (!string.IsNullOrEmpty(TermSet.Title))
-                    {
-                        termSet = termGroup.TermSets.GetByName(TermSet.Title);
-                    }
-                    else
-                    {
-                        termSet = TermSet.Item;
-                    }
-                }
                 if (Identity != null)
                 {
-                    term = null;
-                    if (Identity.IdValue != Guid.Empty)
-                    {
-                        term = termStore.GetTerm(Identity.IdValue);
-                    }
-                    else
-                    {
-                        var termName = TaxonomyExtensions.NormalizeName(Identity.StringValue);
-                        if (!Recursive)
-                        {
-                            term = termSet.Terms.GetByName(termName);
-                        }
-                        else
-                        {
-                            var lmi = new LabelMatchInformation(ClientContext)
-                            {
-                                TrimUnavailable = true,
-                                TermLabel = termName
-                            };
+                    var term = Identity.GetTerm(ClientContext, termStore, termSet, Recursive, RetrievalExpressions);
 
-                            var termMatches = termSet.GetTerms(lmi);
-                            ClientContext.Load(termMatches);
-                            ClientContext.ExecuteQueryRetry();
-
-                            if (termMatches.AreItemsAvailable)
-                            {
-                                term = termMatches.FirstOrDefault();
-                            }
-                        }
-                    }
-                    ClientContext.Load(term, RetrievalExpressions);
-                    ClientContext.ExecuteQueryRetry();
                     if (IncludeChildTerms.IsPresent && term.TermsCount > 0)
                     {
                         LoadChildTerms(term);

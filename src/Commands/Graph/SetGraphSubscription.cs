@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Set, "GraphSubscription")]
+    [Cmdlet(VerbsCommon.Set, "PnPGraphSubscription")]
     public class SetGraphSubscription : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

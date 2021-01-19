@@ -1,81 +1,45 @@
-using System;
+using Microsoft.SharePoint.Client;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
 namespace PnP.PowerShell.Tests.Lists
 {
     [TestClass]
-    public class GetViewTests
+    public class GetViewTests : PnPTest
     {
-        #region Test Setup/CleanUp
+        private static string listTitle;
+        private static string viewTitle;
+
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
         {
-            // This runs on class level once before all tests run
-            //using (var ctx = TestCommon.CreateClientContext())
-            //{
-            //}
-        }
-
-        [ClassCleanup]
-        public static void Cleanup(TestContext testContext)
-        {
-            // This runs on class level once
-            //using (var ctx = TestCommon.CreateClientContext())
-            //{
-            //}
-        }
-
-        [TestInitialize]
-        public void Initialize()
-        {
-            using (var scope = new PSTestScope())
+            using (var ctx = TestCommon.CreateClientContext())
             {
-                // Example
-                // scope.ExecuteCommand("cmdlet", new CommandParameter("param1", prop));
+                ctx.Load(ctx.Web.Lists);
+                ctx.ExecuteQueryRetry();
+                listTitle = ctx.Web.Lists[0].Title;
+                var views = ctx.Web.Lists[0].EnsureProperty(l => l.Views);
+                viewTitle = views[0].Title;
             }
         }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            using (var scope = new PSTestScope())
-            {
-                try
-                {
-                    // Do Test Setup - Note, this runs PER test
-                }
-                catch (Exception)
-                {
-                    // Describe Exception
-                }
-            }
-        }
-        #endregion
 
         #region Scaffolded Cmdlet Tests
-        //TODO: This is a scaffold of the cmdlet - complete the unit test
-        //[TestMethod]
+        [TestMethod]
         public void GetPnPViewTest()
         {
-            using (var scope = new PSTestScope(true))
-            {
-                // Complete writing cmd parameters
+            var results = TestScope.ExecuteCommand("Get-PnPView",
+                new CommandParameter("List", listTitle));
+            Assert.IsTrue(results.Count > 0);
+        }
 
-				// This is a mandatory parameter
-				// From Cmdlet Help: The ID or Url of the list.
-				var list = "";
-				// From Cmdlet Help: The ID or name of the view
-				var identity = "";
-
-                var results = scope.ExecuteCommand("Get-PnPView",
-					new CommandParameter("List", list),
-					new CommandParameter("Identity", identity));
-                
-                Assert.IsNotNull(results);
-            }
+        [TestMethod]
+        public void GetPnPSpecifiedViewTest()
+        {
+            var results = TestScope.ExecuteCommand("Get-PnPView",
+                new CommandParameter("List", listTitle),
+                new CommandParameter("Identity", viewTitle));
+            Assert.AreEqual(results.Count, 1);
         }
         #endregion
     }
 }
-            

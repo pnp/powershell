@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/add-pnpstoredcredential
+online version: https://pnp.github.io/powershell/cmdlets/add-pnpstoredcredential
 schema: 2.0.0
 title: Add-PnPStoredCredential
 ---
@@ -14,7 +14,7 @@ Adds a credential to the Windows Credential Manager
 
 ## SYNTAX
 
-```
+```powershell
 Add-PnPStoredCredential -Name <String> -Username <String> [-Password <SecureString>] [-Overwrite]
  [<CommonParameters>]
 ```
@@ -28,22 +28,22 @@ If you add a Credential with a name of "https://yourtenant.sharepoint.com" it wi
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPStoredCredential -Name https://tenant.sharepoint.com -Username yourname@tenant.onmicrosoft.com
+Add-PnPStoredCredential -Name "https://tenant.sharepoint.com" -Username yourname@tenant.onmicrosoft.com
 ```
 
 You will be prompted to specify the password and a new entry will be added with the specified values
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPStoredCredential -Name https://tenant.sharepoint.com -Username yourname@tenant.onmicrosoft.com -Password (ConvertTo-SecureString -String "YourPassword" -AsPlainText -Force)
+Add-PnPStoredCredential -Name "https://tenant.sharepoint.com" -Username yourname@tenant.onmicrosoft.com -Password (ConvertTo-SecureString -String "YourPassword" -AsPlainText -Force)
 ```
 
 A new entry will be added with the specified values
 
 ### EXAMPLE 3
 ```powershell
-Add-PnPStoredCredential -Name https://tenant.sharepoint.com -Username yourname@tenant.onmicrosoft.com -Password (ConvertTo-SecureString -String "YourPassword" -AsPlainText -Force)
-Connect-PnPOnline -Url https://tenant.sharepoint.com/sites/mydemosite
+Add-PnPStoredCredential -Name "https://tenant.sharepoint.com" -Username yourname@tenant.onmicrosoft.com -Password (ConvertTo-SecureString -String "YourPassword" -AsPlainText -Force)
+Connect-PnPOnline -Url "https://tenant.sharepoint.com/sites/mydemosite"
 ```
 
 A new entry will be added with the specified values, and a subsequent connection to a sitecollection starting with the entry name will be made. Notice that no password prompt will occur.
@@ -56,7 +56,6 @@ The credential to set
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -71,7 +70,6 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -87,7 +85,6 @@ If you want to specify this value use ConvertTo-SecureString -String 'YourPasswo
 ```yaml
 Type: SecureString
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -101,7 +98,6 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -112,4 +108,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

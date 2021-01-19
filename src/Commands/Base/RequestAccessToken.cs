@@ -1,16 +1,16 @@
-﻿using PnP.Framework.Utilities;
-
-using PnP.PowerShell.Commands.Model;
+﻿using PnP.Framework;
 using System;
-using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
+using System.Security;
+using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsLifecycle.Request, "AccessToken")]
-    public class RequestAccessToken : BasePSCmdlet
+    [Cmdlet(VerbsLifecycle.Request, "PnPAccessToken")]
+    public class RequestAccessToken : PnPConnectedCmdlet
     {
 
         [Parameter(Mandatory = false)]
@@ -20,19 +20,19 @@ namespace PnP.PowerShell.Commands.Base
         public string Resource;
 
         [Parameter(Mandatory = false)]
-        public List<string> Scopes = new List<string> { "AllSites.FullControl" };
+        public string[] Scopes = new string[] { "AllSites.FullControl" };
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Decoded;
-
-        [Parameter(Mandatory = false)]
-        public SwitchParameter SetAsCurrent;
 
         [Parameter(Mandatory = false)]
         public PSCredential Credentials;
 
         [Parameter(Mandatory = false)]
         public string TenantUrl;
+
+        [Parameter(Mandatory = false)]
+        public AzureEnvironment AzureEnvironment;
 
         protected override void ProcessRecord()
         {
@@ -65,58 +65,46 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             var tenantId = Microsoft.SharePoint.Client.TenantExtensions.GetTenantIdByUrl(tenantUri.ToString());
-            string password;
+            SecureString password;
             string username;
+            AuthenticationManager authManager = null;
             if (ParameterSpecified(nameof(Credentials)))
             {
-                password = EncryptionUtility.ToInsecureString(Credentials.Password);
+                password = Credentials.Password;
                 username = Credentials.UserName;
+                authManager = new AuthenticationManager(ClientId, username, password, azureEnvironment: AzureEnvironment);
             }
             else if (PnPConnection.CurrentConnection != null)
             {
-                password = EncryptionUtility.ToInsecureString(PnPConnection.CurrentConnection.PSCredential.Password);
-                username = PnPConnection.CurrentConnection.PSCredential.UserName;
+                authManager = PnPConnection.CurrentConnection.Context.GetContextSettings().AuthenticationManager;
             }
             else
             {
                 throw new InvalidOperationException("Either a connection needs to be made by Connect-PnPOnline or Credentials needs to be specified");
             }
 
-            GenericToken token = null;
-            if (ParameterSpecified(nameof(Resource)) && !string.IsNullOrEmpty(Resource))
-            {
-                token = GenericToken.AcquireV1Token(tenantId, ClientId, username, password, Resource);
-            }
+            var token = string.Empty;
 
-            if (ParameterSpecified(nameof(Scopes)) && Scopes.Count > 0)
+            using (authManager)
             {
-                token = GenericToken.AcquireV2Token(tenantId, ClientId, username, password, Scopes.ToArray());
-            }
-
-            if (SetAsCurrent.IsPresent)
-            {
-                if (PnPConnection.CurrentConnection != null)
+                if (ParameterSpecified(nameof(Scopes)))
                 {
-                    if(token == null)
-                    {
-                        throw new InvalidOperationException($"-{nameof(SetAsCurrent)} can't be performed as no valid token could be retrieved");
-                    }
-
-                    PnPConnection.CurrentConnection.AddToken(Enums.TokenAudience.Other, token);
+                    token = authManager.GetAccessTokenAsync(Scopes).GetAwaiter().GetResult();
                 }
                 else
                 {
-                    throw new InvalidOperationException($"-{nameof(SetAsCurrent)} can only be used when having an active connection using Connect-PnPOnline");
+                    token = authManager.GetAccessTokenAsync(PnPConnection.CurrentConnection.Url).GetAwaiter().GetResult();
                 }
             }
 
             if (Decoded.IsPresent)
             {
-                WriteObject(token.ParsedToken);
+
+                WriteObject(new JwtSecurityToken(token));
             }
             else
             {
-                WriteObject(token.AccessToken);
+                WriteObject(token);
             }
         }
     }

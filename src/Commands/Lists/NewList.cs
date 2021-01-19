@@ -5,7 +5,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.New, "List")]
+    [Cmdlet(VerbsCommon.New, "PnPList")]
     public class NewList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -31,10 +31,10 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            var list = SelectedWeb.CreateList(Template, Title, EnableVersioning, true, Url, EnableContentTypes, Hidden);
+            var list = CurrentWeb.CreateList(Template, Title, EnableVersioning, true, Url, EnableContentTypes, Hidden);
             if (Hidden)
             {
-                SelectedWeb.DeleteNavigationNode(Title, "Recent", PnP.Framework.Enums.NavigationType.QuickLaunch);
+                CurrentWeb.DeleteNavigationNode(Title, "Recent", PnP.Framework.Enums.NavigationType.QuickLaunch);
             }
             if (OnQuickLaunch)
             {

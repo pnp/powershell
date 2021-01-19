@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "TenantCdnPolicies")]
+    [Cmdlet(VerbsCommon.Get, "PnPTenantCdnPolicies")]
     public class GetTenantCdnPolicies : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

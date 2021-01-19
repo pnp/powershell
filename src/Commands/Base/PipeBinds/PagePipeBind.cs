@@ -1,167 +1,65 @@
 ﻿using Microsoft.SharePoint.Client;
-using PnP.Framework.Utilities;
-using PnP.PowerShell.Commands.ClientSidePages;
+using PnP.Core.Model.SharePoint;
+using PnP.Core.Services;
+using PnP.PowerShell.Commands.Pages;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public sealed class PagePipeBind
     {
-        private const string CAMLQueryByExtensionAndName = @"
-                <View Scope='Recursive'>
-                  <Query>
-                    <Where>
-                      <Eq>
-                        <FieldRef Name='FileLeafRef'/>
-                        <Value Type='text'>{0}</Value>
-                      </Eq>
-                    </Where>
-                  </Query>
-                </View>";
+        private readonly IPage _page;
+        private string _name;
 
-        private const string CAMLQueryForBlogByTitle = @"
-                <View Scope='Recursive'>
-                  <Query>
-                    <Where>
-                      <BeginsWith>
-                        <FieldRef Name='Title'/>
-                        <Value Type='text'>{0}</Value>
-                      </BeginsWith>
-                    </Where>
-                  </Query>
-                </View>";
-
-        private ListItem pageListItem;
-        private string name;
-
-        public PagePipeBind(ListItem pageListItem)
+        public PagePipeBind(IPage page)
         {
-            this.pageListItem = pageListItem;
-            this.name = null;
+            _page = page;
+            _name = page.PageTitle;
         }
 
         public PagePipeBind(string name)
         {
-            this.name = name;
-            this.pageListItem = null;
+            _page = null;
+            _name = name;
         }
 
-        public ListItem PageListItem => this.pageListItem;
+        public IPage Page => _page;
 
-        public string Name => this.name;
+        public string Name => PageUtilities.EnsureCorrectPageName(_name);
 
-        public string Library { get; set; }
+        public override string ToString() => Name;
 
-        public string Folder { get; set; }
-
-        public bool BlogPage { get; set; }
-
-        public bool DelveBlogPage { get; set; }
-
-        internal ListItem GetPage(Web web, string listToLoad)
+        internal IPage GetPage()
         {
-            bool loadViaId = false;
-            int idToLoad = -1;
-
-            // Check what we got via the pagepipebind constructor and prep for getting the page
-            if (!string.IsNullOrEmpty(this.name))
+            var ctx = PnPConnection.CurrentConnection.PnPContext;
+            if (_page != null)
             {
-                if (int.TryParse(this.Name, out int pageId))
+                return _page;
+            }
+            else if (!string.IsNullOrEmpty(_name))
+            {
+                try
                 {
-                    idToLoad = pageId;
-                    loadViaId = true;
-                }
-                else
-                {
-                    if (!this.BlogPage && !this.DelveBlogPage)
+                    var pages = ctx.Web.GetPages(Name);
+                    if (pages != null && pages.Any())
                     {
-                        this.name = ClientSidePageUtilities.EnsureCorrectPageName(this.name);
+                        return pages.First();
                     }
-                    this.pageListItem = null;
+                    return null;
                 }
-            }
-            else if (this.pageListItem != null)
-            {
-                if (this.pageListItem != null)
+                catch (ArgumentException)
                 {
-                    if (this.BlogPage || this.DelveBlogPage)
-                    {
-                        this.name = this.pageListItem.FieldValues["Title"].ToString();
-                    }
-                    else
-                    {
-                        this.name = this.pageListItem.FieldValues["FileLeafRef"].ToString();
-                    }
+                    return null;
                 }
             }
-
-            if (!string.IsNullOrEmpty(this.Library))
+            else
             {
-                listToLoad = this.Library;
+                return null;
             }
-
-            // Blogs live in a list, not in a library
-            if (this.BlogPage && !listToLoad.StartsWith("lists/", StringComparison.InvariantCultureIgnoreCase))
-            {
-                listToLoad = $"lists/{listToLoad}";
-            }
-
-            web.EnsureProperty(w => w.ServerRelativeUrl);
-            var listServerRelativeUrl = UrlUtility.Combine(web.ServerRelativeUrl, listToLoad);
-
-            List libraryContainingPage = null;
-
-            libraryContainingPage = web.GetList(listServerRelativeUrl);
-
-            if (libraryContainingPage != null)
-            {
-                if (loadViaId)
-                {
-                    var page = libraryContainingPage.GetItemById(idToLoad);
-                    web.Context.Load(page);
-                    web.Context.ExecuteQueryRetry();
-                    return page;
-                }
-                else
-                {
-                    CamlQuery query = null;
-                    if (!string.IsNullOrEmpty(this.name))
-                    {
-                        if (this.BlogPage || this.DelveBlogPage)
-                        {
-                            query = new CamlQuery
-                            {
-                                ViewXml = string.Format(CAMLQueryForBlogByTitle, System.Text.Encodings.Web.HtmlEncoder.Default.Encode(this.name))
-                            };
-                        }
-                        else
-                        {
-                            query = new CamlQuery
-                            {
-                                ViewXml = string.Format(CAMLQueryByExtensionAndName, System.Text.Encodings.Web.HtmlEncoder.Default.Encode(this.name))
-                            };
-                        }
-
-                        if (!string.IsNullOrEmpty(this.Folder))
-                        {
-                            libraryContainingPage.EnsureProperty(p => p.RootFolder);
-                            query.FolderServerRelativeUrl = $"{libraryContainingPage.RootFolder.ServerRelativeUrl}/{Folder}";
-                        }
-
-                        var page = libraryContainingPage.GetItems(query);
-                        web.Context.Load(page);
-                        web.Context.ExecuteQueryRetry();
-
-                        if (page.Count >= 1)
-                        {
-                            // Return the first match
-                            return page[0];
-                        }
-                    }
-                }
-            }
-
-            return null;
         }
     }
 }

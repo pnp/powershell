@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpsitescriptfromlist
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpsitescriptfromlist
 schema: 2.0.0
 title: Get-PnPSiteScriptFromList
 ---
@@ -19,8 +19,8 @@ Generates a Site Script from an existing list
 
 ## SYNTAX
 
-```
-Get-PnPSiteScriptFromList -Url <String> [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+```powershell
+Get-PnPSiteScriptFromList -Url <String> [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,7 +30,7 @@ This command allows a Site Script to be generated off of an existing list on you
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPSiteScriptFromList -Url https://contoso.sharepoint.com/sites/teamsite/lists/MyList
+Get-PnPSiteScriptFromList -Url "https://contoso.sharepoint.com/sites/teamsite/lists/MyList"
 ```
 
 Returns the generated Site Script JSON from the list "MyList" at the provided Url
@@ -65,7 +65,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -80,7 +79,6 @@ Specifies the URL of the list to generate a Site Script from
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -106,4 +104,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/remove-pnporgassetslibrary
+online version: https://pnp.github.io/powershell/cmdlets/remove-pnporgassetslibrary
 schema: 2.0.0
 title: Remove-PnPOrgAssetsLibrary
 ---
@@ -19,7 +19,7 @@ Removes a given document library as a organizational asset source
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPOrgAssetsLibrary -LibraryUrl <String> [-ShouldRemoveFromCdn <Boolean>] [-CdnType <SPOTenantCdnType>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
@@ -58,7 +58,6 @@ Indicates what type of Office 365 CDN source the document library that will no l
 ```yaml
 Type: SPOTenantCdnType
 Parameter Sets: (All)
-Aliases:
 Accepted values: Public, Private
 
 Required: False
@@ -74,7 +73,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +87,6 @@ The server relative url of the document library flagged as organizational asset 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -104,7 +101,6 @@ Boolean indicating if the document library that will no longer be flagged as an 
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -115,4 +111,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

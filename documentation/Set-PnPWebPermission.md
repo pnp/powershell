@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name:
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpwebpermission
+online version: https://pnp.github.io/powershell/cmdlets/set-pnpwebpermission
 schema: 2.0.0
 title: Set-PnPWebPermission
 ---
@@ -10,14 +10,18 @@ title: Set-PnPWebPermission
 # Set-PnPWebPartProperty
 
 ## SYNOPSIS
-Sets a web part property
+Sets a web permissions
 
 ## SYNTAX
 
+```powershell
+ Set-PnPWebPermission -Group <GroupPipeBind> [-Identity <WebPipeBind>] [-AddRole <String[]>] [-RemoveRole <String[]>]
 ```
-Set-PnPWebPartProperty -ServerRelativePageUrl <String> -Identity <Guid> -Key <String> -Value <PSObject>
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+
+```powershell
+Set-PnPWebPermission -User <String> [-Identity <WebPipeBind>]  [-AddRole <String[]>] [-RemoveRole <String[]>]
 ```
+
 
 ## DESCRIPTION
 
@@ -25,20 +29,81 @@ Set-PnPWebPartProperty -ServerRelativePageUrl <String> -Identity <Guid> -Key <St
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPWebPartProperty -ServerRelativePageUrl /sites/demo/sitepages/home.aspx -Identity ccd2c98a-c9ae-483b-ae72-19992d583914 -Key "Title" -Value "New Title"
+Set-PnPWebPermission -User "user@contoso.com" -AddRole "Contribute"
 ```
 
-Sets the title property of the web part.
+Adds the "Contribute" permission role to the specified user in the current web.
+
+### EXAMPLE 2
+```powershell
+Set-PnPWebPermission -Group "Project Managers" -AddRole "Contribute"
+```
+
+Adds the "Contribute" permission role to the "Project Managers" group in the current web.
+
+### EXAMPLE 3
+```powershell
+Set-PnPWebPermission -Identity projectA -User "user@contoso.com" -AddRole "Contribute"
+```
+
+Adds the "Contribute" permission role to the user "user@contoso.com" in the subweb of the current web with site relative url "projectA"
+
+### EXAMPLE 4
+```powershell
+Set-PnPWebPermission -User "user@contoso.com" -AddRole "Custom Role 1","Custom Role 2"
+```
+
+Adds the specified permission roles to the user "user@contoso.com" in the current web
 
 ## PARAMETERS
 
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+### -User
+The name of the user to modify
 
 ```yaml
-Type: PnPConnection
+Type: String
+Parameter Sets: Set user permissions
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Group
+The name of the group to modify
+
+```yaml
+Type: String
+Parameter Sets: Set group permissions
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AddRole
+The name of the role to add to the specified user or group
+
+```yaml
+Type: String
 Parameter Sets: (All)
-Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RemoveRole
+
+```yaml
+Type: String
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -48,72 +113,11 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The Guid of the web part
+The guid or site relative url of the web to use
 
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Key
-Name of a single property to be set
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ServerRelativePageUrl
-Full server relative url of the web part page, e.g. /sites/demo/sitepages/home.aspx
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: PageUrl
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Value
-Value of the property to be set
-
-```yaml
-Type: PSObject
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -122,6 +126,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

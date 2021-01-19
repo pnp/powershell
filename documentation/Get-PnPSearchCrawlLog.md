@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpsearchcrawllog
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpsearchcrawllog
 schema: 2.0.0
 title: Get-PnPSearchCrawlLog
 ---
@@ -14,10 +14,10 @@ Returns entries from the SharePoint search crawl log. Make sure you are granted 
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPSearchCrawlLog [-LogLevel <LogLevel>] [-RowLimit <Int32>] [-Filter <String>]
  [-ContentSource <ContentSource>] [-StartDate <DateTime>] [-EndDate <DateTime>] [-RawFormat]
- [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -33,7 +33,7 @@ Returns the last 100 crawl log entries for site content.
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPSearchCrawlLog -Filter "https://<tenant>-my.sharepoint.com/personal"
+Get-PnPSearchCrawlLog -Filter "https://contoso-my.sharepoint.com/personal"
 ```
 
 Returns the last 100 crawl log entries for OneDrive content.
@@ -81,7 +81,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -96,7 +95,6 @@ Content to retrieve (Sites, User Profiles). Defaults to Sites.
 ```yaml
 Type: ContentSource
 Parameter Sets: (All)
-Aliases:
 Accepted values: Sites, UserProfiles
 
 Required: False
@@ -112,7 +110,6 @@ End date to stop getting entries from. Default to current time.
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -127,7 +124,6 @@ Filter to limit what is being returned. Has to be a URL prefix for SharePoint co
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -142,7 +138,6 @@ Filter what log entries to return (All, Success, Warning, Error). Defaults to Al
 ```yaml
 Type: LogLevel
 Parameter Sets: (All)
-Aliases:
 Accepted values: Success, Warning, Error, All
 
 Required: False
@@ -158,7 +153,6 @@ Show raw crawl log data
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -173,7 +167,6 @@ Number of entries to return. Defaults to 100.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -188,7 +181,6 @@ Start date to start getting entries from. Defaults to start of time.
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -197,21 +189,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

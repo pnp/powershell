@@ -5,8 +5,8 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.InformationManagement
 {
-    [Cmdlet(VerbsCommon.Reset, "Label")]
-    public class ResetLabel : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Reset, "PnPLabel")]
+    public class ResetLabel : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ListPipeBind List;
@@ -16,20 +16,10 @@ namespace PnP.PowerShell.Commands.InformationManagement
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(SelectedWeb);
+            var list = List.GetList(PnPContext);
             if (list != null)
             {
-                var listUrl = list.RootFolder.ServerRelativeUrl;
-                Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetListComplianceTag(ClientContext, listUrl, string.Empty, false, false, SyncToItems);
-
-                try
-                {
-                    ClientContext.ExecuteQueryRetry();
-                }
-                catch (System.Exception error)
-                {
-                    WriteWarning(error.Message.ToString());
-                }
+                list.SetComplianceTag(string.Empty, false, false, SyncToItems);
             }
             else
             {

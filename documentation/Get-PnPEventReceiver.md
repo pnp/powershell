@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpeventreceiver
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpeventreceiver
 schema: 2.0.0
 title: Get-PnPEventReceiver
 ---
@@ -14,8 +14,8 @@ Return registered eventreceivers
 
 ## SYNTAX
 
-```
-Get-PnPEventReceiver [-List <ListPipeBind>] [-Identity <EventReceiverPipeBind>] [-Web <WebPipeBind>]
+```powershell
+Get-PnPEventReceiver [-List <ListPipeBind>] [-Identity <EventReceiverPipeBind>] 
  [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```
 
@@ -74,7 +74,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +88,6 @@ The Guid of the event receiver
 ```yaml
 Type: EventReceiverPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -104,7 +102,6 @@ The list object from which to get the event receiver object
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -113,21 +110,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-The web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

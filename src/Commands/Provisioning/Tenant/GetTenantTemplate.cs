@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Get, "TenantTemplate")]
+    [Cmdlet(VerbsCommon.Get, "PnPTenantTemplate")]
     public class GetTenantTemplate : PnPAdminCmdlet
     {
         const string PARAMETERSET_ASFILE = "Extract a template to a file";
@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         protected override void ExecuteCmdlet()
         {
-            
+
             ExtractConfiguration extractConfiguration;
 
             if (ParameterSpecified(nameof(Configuration)))
@@ -72,7 +72,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 {
                     Out = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Out);
                 }
-                if(Out.ToLower().EndsWith(".pnp"))
+                if (Out.ToLower().EndsWith(".pnp"))
                 {
                     WriteWarning("This cmdlet does not save a tenant template as a PnP file.");
                 }
@@ -168,29 +168,64 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                         }
                 }
             };
-            using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
+            using (var provisioningContext = new PnPProvisioningContext(async (resource, scope) =>
             {
-                // Get Azure AD Token
-                if (PnPConnection.CurrentConnection != null)
-                {
-                    var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
-                    if (graphAccessToken != null)
-                    {
-                        // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                        return Task.FromResult(graphAccessToken);
-                    }
-                }
+                return await TokenRetrieval.GetAccessTokenAsync(resource, scope);
+//                 if (resource.ToLower().StartsWith("https://"))
+//                 {
+//                     var uri = new Uri(resource);
+//                     resource = uri.Authority;
+//                 }
+//                 // Get Azure AD Token
+//                 if (PnPConnection.CurrentConnection != null)
+//                 {
+//                     if (resource.Equals("graph.microsoft.com", StringComparison.OrdinalIgnoreCase))
+//                     {
+//                         var graphAccessToken = await PnPConnection.CurrentConnection.TryGetAccessTokenAsync(Enums.TokenAudience.MicrosoftGraph);
+//                         if (graphAccessToken != null)
+//                         {
+//                             // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline\
+//                             return graphAccessToken;
+//                         }
+//                     }
+// #if NETFRAMEWORK
+//                     else if (resource.ToLower().Contains(".sharepoint."))
+// #else
+//                     else if (resource.Contains(".sharepoint.", StringComparison.OrdinalIgnoreCase))
+// #endif
+//                     {
+//                         using (var clientContext = PnPConnection.CurrentConnection.CloneContext($"https://{resource}"))
+//                         {
+//                             string accessToken = null;
+//                             EventHandler<WebRequestEventArgs> handler = (s, e) =>
+//                             {
+//                                 string authorization = e.WebRequestExecutor.RequestHeaders["Authorization"];
+//                                 if (!string.IsNullOrEmpty(authorization))
+//                                 {
+//                                     accessToken = authorization.Replace("Bearer ", string.Empty);
+//                                 }
+//                             };
 
-                if (PnPConnection.CurrentConnection.PSCredential != null)
-                {
-                    // Using normal credentials
-                    return Task.FromResult(TokenHandler.AcquireToken(resource, null));
-                }
-                else
-                {
-                    // No token...
-                    return null;
-                }
+//                             // Issue a dummy request to get it from the Authorization header
+//                             clientContext.ExecutingWebRequest += handler;
+//                             clientContext.ExecuteQueryRetry();
+//                             clientContext.ExecutingWebRequest -= handler;
+
+//                             return accessToken;
+//                         }
+//                     }
+//                 }
+
+//                 if (PnPConnection.CurrentConnection.PSCredential != null || PnPConnection.CurrentConnection.ClientId != null)
+//                 {
+//                     // Using normal credentials
+//                     return await TokenHandler.AcquireTokenAsync(resource, null);
+//                 }
+//                 else
+//                 {
+//                     // No token...
+//                     throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
+//                 }
             }))
             {
                 return Tenant.GetTenantTemplate(configuration);

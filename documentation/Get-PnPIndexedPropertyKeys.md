@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpindexedpropertykeys
+online version: https://pnp.github.io/powershell/cmdlets/get-pnpindexedpropertykeys
 schema: 2.0.0
 title: Get-PnPIndexedPropertyKeys
 ---
@@ -14,8 +14,8 @@ Returns the keys of the property bag values that have been marked for indexing b
 
 ## SYNTAX
 
-```
-Get-PnPIndexedPropertyKeys [-List <ListPipeBind>] [-Web <WebPipeBind>] [-Connection <PnPConnection>]
+```powershell
+Get-PnPIndexedPropertyKeys [-List <ListPipeBind>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -31,7 +31,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -46,7 +45,6 @@ The list object or name from where to get the indexed properties
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -55,21 +53,8 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

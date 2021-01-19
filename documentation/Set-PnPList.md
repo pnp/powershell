@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnplist
+online version: https://pnp.github.io/powershell/cmdlets/set-pnplist
 schema: 2.0.0
 title: Set-PnPList
 ---
@@ -14,13 +14,14 @@ Updates list settings
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRoleInheritance]
  [-ResetRoleInheritance] [-CopyRoleAssignments] [-ClearSubscopes] [-Title <String>] [-Description <String>]
  [-Hidden <Boolean>] [-ForceCheckout <Boolean>] [-ListExperience <ListExperience>]
  [-EnableAttachments <Boolean>] [-EnableFolderCreation <Boolean>] [-EnableVersioning <Boolean>]
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
- [-EnableModeration <Boolean>] [-Web <WebPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-EnableModeration <Boolean>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -77,7 +78,6 @@ If used the security inheritance is broken for this list
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -92,7 +92,6 @@ If used the unique permissions are cleared from child objects and they can inher
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -107,7 +106,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -122,7 +120,6 @@ If used the roles are copied from the parent web
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -137,7 +134,6 @@ The description of the list
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -152,7 +148,6 @@ Enable or disable attachments. Set to $true to enable, $false to disable.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -167,7 +162,6 @@ Set to $true to enable content types, set to $false to disable content types
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -182,7 +176,6 @@ Enable or disable folder creation. Set to $true to enable, $false to disable.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -197,7 +190,6 @@ Enable or disable minor versions versioning. Set to $true to enable, $false to d
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -212,7 +204,6 @@ Enable or disable whether content approval is enabled for the list. Set to $true
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -227,7 +218,6 @@ Enable or disable versioning. Set to $true to enable, $false to disable.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -242,7 +232,6 @@ Enable or disable force checkout. Set to $true to enable, $false to disable.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -257,7 +246,6 @@ Hide the list from the SharePoint UI. Set to $true to hide, $false to show.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -272,7 +260,6 @@ The ID, Title or Url of the list.
 ```yaml
 Type: ListPipeBind
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -284,12 +271,9 @@ Accept wildcard characters: False
 ### -ListExperience
 Set the list experience: Auto, NewExperience or ClassicExperience
 
-Only applicable to: SharePoint Online
-
 ```yaml
 Type: ListExperience
 Parameter Sets: (All)
-Aliases:
 Accepted values: Auto, NewExperience, ClassicExperience
 
 Required: False
@@ -305,7 +289,6 @@ Maximum major versions to keep
 ```yaml
 Type: UInt32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -320,7 +303,6 @@ Maximum minor versions to keep
 ```yaml
 Type: UInt32
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -335,8 +317,36 @@ If used the security inheritance is reset for this list (inherited from parent)
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+
+### -ReadSecurity
+Sets the read security for the list
+
+```yaml
+Type: ListReadSecurity
+Parameter Sets: (All)
+Accepted values: AllUsersReadAccess, AllUsersReadAccessOnItemsTheyCreate
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WriteSecurity
+Sets the write security for the list
+
+```yaml
+Type: ListWriteSecurity
+Parameter Sets: (All)
+Accepted values: WriteAllItems, WriteOnlyMyItems, WriteNoItems
 Required: False
 Position: Named
 Default value: None
@@ -350,7 +360,6 @@ The title of the list
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -359,21 +368,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

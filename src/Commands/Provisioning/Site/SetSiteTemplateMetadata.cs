@@ -12,7 +12,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Set, "SiteTemplateMetadata")]
+    [Cmdlet(VerbsCommon.Set, "PnPSiteTemplateMetadata")]
     public class SetSiteTemplateMetadata : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true)]
@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.EnsureProperty(w => w.Url);
+            CurrentWeb.EnsureProperty(w => w.Url);
             bool templateFromFileSystem = !Path.ToLower().StartsWith("http");
             FileConnectorBase fileConnector;
             string templateFileName = System.IO.Path.GetFileName(Path);

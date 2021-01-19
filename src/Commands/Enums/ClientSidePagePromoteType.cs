@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PnP.PowerShell.Commands.ClientSidePages
+namespace PnP.PowerShell.Commands.Pages
 {
-    public enum ClientSidePagePromoteType
+    public enum PagePromoteType
     {
         None = 0,
         HomePage = 1,

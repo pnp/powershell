@@ -2,7 +2,7 @@
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/deny-pnptenantserviceprincipalpermissionrequest
+online version: https://pnp.github.io/powershell/cmdlets/deny-pnptenantserviceprincipalpermissionrequest
 schema: 2.0.0
 title: Deny-PnPTenantServicePrincipalPermissionRequest
 ---
@@ -19,7 +19,7 @@ Denies a permission request for the current tenant's "SharePoint Online Client" 
 
 ## SYNTAX
 
-```
+```powershell
 Deny-PnPTenantServicePrincipalPermissionRequest -RequestId <Guid> [-Force]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
@@ -39,7 +39,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -54,7 +53,6 @@ Specifying the Force parameter will skip the confirmation question.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -68,7 +66,6 @@ Accept wildcard characters: False
 ```yaml
 Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: True
 Position: Named
@@ -79,4 +76,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

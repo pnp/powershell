@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Set, "HideDefaultThemes")]
+    [Cmdlet(VerbsCommon.Set, "PnPHideDefaultThemes")]
     public class SetHideDefaultThemes : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

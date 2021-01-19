@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
-    [Cmdlet(VerbsCommon.New, "PersonalSite")]
+    [Cmdlet(VerbsCommon.New, "PnPPersonalSite")]
     public class NewPersonalSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

@@ -6,7 +6,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Set, "RequestAccessEmails")]
+    [Cmdlet(VerbsCommon.Set, "PnPRequestAccessEmails")]
     public class SetRequestAccessEmails : PnPWebCmdlet
     {
         // Parameter must remain a string array for backwards compatibility, even though only one e-mail address can be provided
@@ -18,10 +18,10 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.EnsureProperty(w => w.HasUniqueRoleAssignments);
+            CurrentWeb.EnsureProperty(w => w.HasUniqueRoleAssignments);
 
             // Can only set the Request Access Emails if the web has unique permissions
-            if (SelectedWeb.HasUniqueRoleAssignments)
+            if (CurrentWeb.HasUniqueRoleAssignments)
             {
                 if (Emails != null && Emails.Length > 0 && !Disabled)
                 {
@@ -33,8 +33,8 @@ namespace PnP.PowerShell.Commands
                     else
                     {
                         // Configure the one e-mail address to receive the access requests
-                        SelectedWeb.SetUseAccessRequestDefaultAndUpdate(false);
-                        SelectedWeb.EnableRequestAccess(Emails[0]);
+                        CurrentWeb.SetUseAccessRequestDefaultAndUpdate(false);
+                        CurrentWeb.EnableRequestAccess(Emails[0]);
                     }
                 }
                 else
@@ -42,12 +42,12 @@ namespace PnP.PowerShell.Commands
                     if (Disabled)
                     {
                         // Disable requesting access
-                        SelectedWeb.DisableRequestAccess();
+                        CurrentWeb.DisableRequestAccess();
                     }
                     else
                     {
                         // Enable requesting access and set it to the default owners group
-                        SelectedWeb.EnableRequestAccess();
+                        CurrentWeb.EnableRequestAccess();
                     }
                 }
             }
