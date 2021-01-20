@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [1.1.1]
+## [1.1.2-nightly]
+
+### Changed
+
+- Fixed issue with tenant admin site detection on environment with vanity domains
+
+
+## [1.1.1-nightly]
 
 - Fixed issues with `Copy-PnPFile` and `Move-PnPFile`
 - Updated `Get-PnPTenantSite` to support `-DisableSharingForNonOwnersStatus`
