@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Receive-PnPCopyMoveJobStatus` cmdlet which works in combination with the `-NoWait` parameter on `Copy-PnPFile` and `Move-PnPFile`. See the documentation for usage.
 
 ### Changed
+- Fixed issue with `Invoke-PnPSPRestMethod` to throw an non authorized exception in certain scenarios.
 - Fixed issue with using `-UseWebLogin` and site names longer than the length of the managed path it resides in.
 
 ## [1.1.2-nightly]
