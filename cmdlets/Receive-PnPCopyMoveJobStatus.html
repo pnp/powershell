@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPTenantSite | PnP PowerShell </title>
+    <title>Receive-PnPCopyMoveJobStatus | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPTenantSite | PnP PowerShell ">
+    <meta name="title" content="Receive-PnPCopyMoveJobStatus | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -81,59 +81,32 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="get-pnptenantsite">Get-PnPTenantSite</h1>
+                    <h1 id="receive-pnpcopymovejobstatus">Receive-PnPCopyMoveJobStatus</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
-</ul>
-<p>Retrieve site information.</p>
+<p>This cmdlets receives Copy or Move job status which is being returned by Copy-PnPFile or Move-PnPFile when using the -NoWait parameter</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="by-site">By Site</h3>
-<pre><code class="lang-powershell">Get-PnPTenantSite [-Url] &lt;string&gt; [-Detailed] [-DisableSharingForNonOwnersStatus] [-Connection &lt;PnPConnection&gt;]
-    [&lt;CommonParameters&gt;]
-</code></pre>
-<h3 id="all-sites">All Sites</h3>
-<pre><code class="lang-powershell">Get-PnPTenantSite [-Template &lt;string&gt;] [-Detailed] [-IncludeOneDriveSites] [-Filter &lt;string&gt;] [-Connection
-    &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code>Receive-PnPCopyMoveJobStatus -Job &lt;CopyMigrationInfo&gt; [-Wait]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Use this cmdlet to retrieve site information from your tenant administration.</p>
+<p>This cmdlets outputs the results of a pending/finished copy or move job.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPTenantSite
+<h3 id="example-1">Example 1</h3>
+<pre><code class="lang-powershell">$job = Copy-PnPFile -SourceUrl &quot;Shared Documents/company.docx&quot; -TargetUrl &quot;SubSite2/Shared Documents&quot; -NoWait
+$jobStatus = Receive-PnPCopyMoveJobStatus -Job $result
+if($jobStatus.JobState == 0)
+{
+  Write-Host &quot;Job finished&quot;
+}
 </code></pre>
-<p>Returns all site collections</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPTenantSite -Url &quot;http://tenant.sharepoint.com/sites/projects&quot;
-</code></pre>
-<p>Returns information about the project site</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPTenantSite -Detailed
-</code></pre>
-<p>Returns all sites with the full details of these sites</p>
-<h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Get-PnPTenantSite -IncludeOneDriveSites
-</code></pre>
-<p>Returns all sites including all OneDrive for Business sites</p>
-<h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Get-PnPTenantSite -IncludeOneDriveSites -Filter &quot;Url -like '-my.sharepoint.com/personal/'&quot;
-</code></pre>
-<p>Returns all OneDrive for Business sites</p>
-<h3 id="example-6">EXAMPLE 6</h3>
-<pre><code class="lang-powershell">Get-PnPTenantSite -Template SITEPAGEPUBLISHING#0
-</code></pre>
-<p>Returns all Communication sites</p>
-<h3 id="example-7">EXAMPLE 7</h3>
-<pre><code class="lang-powershell">Get-PnPTenantSite -Filter &quot;Url -like 'sales'&quot;
-</code></pre>
-<p>Returns all sites including 'sales' in the url</p>
+<p>Copies a file named company.docx from the current document library to the documents library in SubSite2. It will not wait for the action to return but returns job information instead. The Receive-PnPCopyMoveJobStatus cmdlet will return the job status.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<p>Optional connection to be used by the cmdlet.
+Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -141,71 +114,28 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-detailed">-Detailed</h3>
-<p>By default, not all returned attributes are populated. This switch populates all attributes. It can take several seconds to run. Without this, some attributes will show default values that may not be correct.</p>
+<h3 id="-job">-Job</h3>
+<p>The job which is returned from Copy-PnPFile or Move-PnPFile</p>
+<pre><code class="lang-yaml">Type: CopyMigrationInfo
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-wait">-Wait</h3>
+<p>If specified the cmdlet will continue to poll the job to be finished.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-disablesharingfornonownersstatus">-DisableSharingForNonOwnersStatus</h3>
-<p>This parameter will include the status for non owners sharing on the returned object. By default the value for this property is null.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: By Site
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-filter">-Filter</h3>
-<p>Specifies the script block of the server-side filter to apply. See <a href="https://technet.microsoft.com/en-us/library/fp161380.aspx">https://technet.microsoft.com/en-us/library/fp161380.aspx</a></p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: All sites
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-includeonedrivesites">-IncludeOneDriveSites</h3>
-<p>By default, the OneDrives are not returned. This switch includes all OneDrives.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: All Sites
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-template">-Template</h3>
-<p>By default, all sites will be returned. Specify a template value alike &quot;STS#0&quot; here to filter on the template</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: All Sites
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-url">-Url</h3>
-<p>The URL of the site</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: By Site
-Aliases: Identity
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>

@@ -1134,7 +1134,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Copy-PnPFile.html",
-          "hash": "0QVflbH4YIyJy69nIlz4eA=="
+          "hash": "LAbeGk7Au0AGp2gP4SNyvw=="
         }
       },
       "is_incremental": false,
@@ -2982,7 +2982,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPTenantSite.html",
-          "hash": "jdI7lLwgUv7ph1ZJ/jeMqw=="
+          "hash": "jqKqKup7nq1DvBt7CTOksA=="
         }
       },
       "is_incremental": false,
@@ -3462,7 +3462,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Move-PnPFile.html",
-          "hash": "DJ0X7gV86zWVVPKhfNaJbw=="
+          "hash": "DzgeRDhWW7SEGPPu1h4dmw=="
         }
       },
       "is_incremental": false,
@@ -3931,6 +3931,18 @@
         ".html": {
           "relative_path": "cmdlets/Read-PnPTenantTemplate.html",
           "hash": "eWtrXDeX2Q92plVriOfhcg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Receive-PnPCopyMoveJobStatus.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Receive-PnPCopyMoveJobStatus.html",
+          "hash": "OfDAQ8E724yognQThreAHg=="
         }
       },
       "is_incremental": false,
@@ -6366,7 +6378,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "CgDLfHSaMKzmNvHlX+5y9w=="
+          "hash": "7bEWbD6LJBFy2PfrvIGo6A=="
         }
       },
       "is_incremental": false,
@@ -6445,7 +6457,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 530,
+          "total_file_count": 531,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
