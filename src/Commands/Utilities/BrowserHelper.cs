@@ -128,7 +128,8 @@ namespace PnP.PowerShell.Commands.Utilities
                         if (requestUri.LocalPath.Contains("/sites/") || requestUri.LocalPath.Contains("/teams/"))
                         {
                             var managedPath = requestUri.LocalPath.Substring(0, requestUri.LocalPath.IndexOf('/', 2));
-                            var siteName = requestUri.LocalPath.Substring(managedPath.Length + 1, requestUri.LocalPath.IndexOf('/', managedPath.Length) - 1);
+                            var siteName = requestUri.LocalPath.Substring(managedPath.Length + 1);
+                            siteName = siteName.Substring(0, siteName.IndexOf('/'));
                             hostUrl = $"{hostUrl}{managedPath}/{siteName}";
                         }
                         if (requestDigestInfos.TryGetValue(hostUrl, out requestDigestInfo))
@@ -197,7 +198,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     form.Text = title;
                     form.Controls.Add(browser);
                     form.ResumeLayout(false);
-                  
+
                     browser.Navigate(siteUrl);
 
                     browser.Navigated += (sender, args) =>
