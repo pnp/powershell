@@ -2,15 +2,18 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Identity.Client.Extensibility;
 using Microsoft.SharePoint.Client;
 using PnP.Framework;
 
@@ -172,7 +175,7 @@ namespace PnP.PowerShell.Commands.Utilities
             Contains
         }
 
-        internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls = null)
+        internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls = null, bool noThreadJoin = false)
         {
             bool success = false;
 #if Windows
@@ -222,7 +225,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                         break;
                                     case UrlMatchType.Contains:
 #if NETFRAMEWORK
-                                    matched = navigatedUrl.Contains(closeUrl.url);
+                                        matched = navigatedUrl.Contains(closeUrl.url);
 #else
                                         matched = navigatedUrl.Contains(closeUrl.url, StringComparison.OrdinalIgnoreCase);
 #endif
@@ -248,7 +251,10 @@ namespace PnP.PowerShell.Commands.Utilities
 
                 thread.SetApartmentState(ApartmentState.STA);
                 thread.Start();
-                thread.Join();
+                if (!noThreadJoin)
+                {
+                    thread.Join();
+                }
             }
 #endif
             return success;
@@ -363,6 +369,290 @@ namespace PnP.PowerShell.Commands.Utilities
                     IntPtr pReserved);
 
             }
+        }
+    }
+
+
+    internal class DefaultOsBrowserWebUi : ICustomWebUi
+    {
+        private const string CloseWindowSuccessHtml = @"<html><head><title>Authentication Complete</title><style>body{font-family: sans-serif;}.title{font-size: 1.2em;}.message{font-size: 1.0em;margin-top: 10px;}</style></head><body><div class=""title"">Authentication complete</div><div class=""message"">You can return to the application. Feel free to close this window.</div></body></html>";
+        private const string CloseWindowFailureHtml = @"<html><head><title>Authentication Failed</title><style>body{font-family: sans-serif;}.title{font-size: 1.2em;}.message{font-size: 1.0em;margin-top: 10px;}</style></head><body><div class=""title"">Authentication Failed</div><div class=""message"">You can return to the application. Feel free to close this browser tab.</br></br></br></br>Error details: error {0} error_description:{1}</div></body></html>";
+
+        public async Task<Uri> AcquireAuthorizationCodeAsync(
+            Uri authorizationUri,
+            Uri redirectUri,
+            CancellationToken cancellationToken)
+        {
+            if (!redirectUri.IsLoopback)
+            {
+                throw new ArgumentException("Only loopback redirect uri is supported with this WebUI. Configure http://localhost or http://localhost:port during app registration. ");
+            }
+
+            Uri result = await InterceptAuthorizationUriAsync(
+                authorizationUri,
+                redirectUri,
+                cancellationToken)
+                .ConfigureAwait(true);
+
+            return result;
+        }
+
+        public static string FindFreeLocalhostRedirectUri()
+        {
+            TcpListener listener = new TcpListener(IPAddress.Loopback, 0);
+            try
+            {
+                listener.Start();
+                int port = ((IPEndPoint)listener.LocalEndpoint).Port;
+                return "http://localhost:" + port;
+            }
+            finally
+            {
+                listener?.Stop();
+            }
+        }
+
+        private static void OpenBrowser(string url, int port)
+        {
+            try
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    BrowserHelper.GetWebBrowserPopup(url, "Please login", new[] { ($"http://localhost:{port}/?code=", BrowserHelper.UrlMatchType.StartsWith) }, noThreadJoin: true);
+                }
+                else
+                {
+
+                    ProcessStartInfo psi = new ProcessStartInfo
+                    {
+                        FileName = url,
+                        UseShellExecute = true
+                    };
+                    Process.Start(psi);
+                }
+            }
+            catch
+            {
+                // hack because of this: https://github.com/dotnet/corefx/issues/10361
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    url = url.Replace("&", "^&");
+                    BrowserHelper.GetWebBrowserPopup(url, "Please login");
+                    //Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    Process.Start("xdg-open", url);
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    Process.Start("open", url);
+                }
+                else
+                {
+                    throw new PlatformNotSupportedException(RuntimeInformation.OSDescription);
+                }
+            }
+        }
+
+        private async Task<Uri> InterceptAuthorizationUriAsync(
+            Uri authorizationUri,
+            Uri redirectUri,
+            CancellationToken cancellationToken)
+        {
+            OpenBrowser(authorizationUri.ToString(), redirectUri.Port);
+            using (var listener = new SingleMessageTcpListener(redirectUri.Port))
+            {
+                Uri authCodeUri = null;
+                await listener.ListenToSingleRequestAndRespondAsync(
+                    (uri) =>
+                    {
+                        Trace.WriteLine("Intercepted an auth code url: " + uri.ToString());
+                        authCodeUri = uri;
+
+                        return GetMessageToShowInBrowserAfterAuth(uri);
+                    },
+                    cancellationToken)
+                .ConfigureAwait(false);
+
+                return authCodeUri;
+            }
+        }
+
+        private static string GetMessageToShowInBrowserAfterAuth(Uri uri)
+        {
+#if !NETFRAMEWORK
+            // Parse the uri to understand if an error was returned. This is done just to show the user a nice error message in the browser.
+            var authCodeQueryKeyValue = System.Web.HttpUtility.ParseQueryString(uri.Query);
+
+            string errorString = authCodeQueryKeyValue.Get("error");
+#else
+            Dictionary<string, string> dicQueryString = uri.Query.Split('&').ToDictionary(c => c.Split('=')[0], c => Uri.UnescapeDataString(c.Split('=')[1]));
+            var errorString = dicQueryString.ContainsKey("error") ? dicQueryString["error"] : null;
+
+#endif
+            if (!string.IsNullOrEmpty(errorString))
+            {
+#if !NETFRAMEWORK
+                string errorDescription = authCodeQueryKeyValue.Get("error_description");
+#else
+                string errorDescription = dicQueryString.ContainsKey("error_description") ? dicQueryString["error_description"] : null;
+#endif
+                return string.Format(
+                    CultureInfo.InvariantCulture,
+                    CloseWindowFailureHtml,
+                    errorString,
+                    errorDescription);
+            }
+
+            return CloseWindowSuccessHtml;
+        }
+    }
+
+    internal class SingleMessageTcpListener : IDisposable
+    {
+        private readonly int _port;
+        private readonly TcpListener _tcpListener;
+
+        public SingleMessageTcpListener(int port)
+        {
+            if (port < 1 || port == 80)
+            {
+                throw new ArgumentOutOfRangeException("Expected a valid port number, > 0, not 80");
+            }
+
+            _port = port;
+            _tcpListener = new TcpListener(IPAddress.Loopback, _port);
+
+
+        }
+
+        public async Task ListenToSingleRequestAndRespondAsync(
+            Func<Uri, string> responseProducer,
+            CancellationToken cancellationToken)
+        {
+            cancellationToken.Register(() => _tcpListener.Stop());
+            _tcpListener.Start();
+
+            TcpClient tcpClient = null;
+            try
+            {
+                tcpClient =
+                    await AcceptTcpClientAsync(cancellationToken)
+                    .ConfigureAwait(false);
+
+                await ExtractUriAndRespondAsync(tcpClient, responseProducer, cancellationToken).ConfigureAwait(false);
+
+            }
+            finally
+            {
+                tcpClient?.Close();
+            }
+        }
+
+        /// <summary>
+        /// AcceptTcpClientAsync does not natively support cancellation, so use this wrapper. Make sure
+        /// the cancellation token is registered to stop the listener.
+        /// </summary>
+        /// <remarks>See https://stackoverflow.com/questions/19220957/tcplistener-how-to-stop-listening-while-awaiting-accepttcpclientasync</remarks>
+        private async Task<TcpClient> AcceptTcpClientAsync(CancellationToken token)
+        {
+            try
+            {
+                return await _tcpListener.AcceptTcpClientAsync().ConfigureAwait(false);
+            }
+            catch (Exception ex) when (token.IsCancellationRequested)
+            {
+                throw new OperationCanceledException("Cancellation was requested while awaiting TCP client connection.", ex);
+            }
+        }
+
+        private async Task ExtractUriAndRespondAsync(
+            TcpClient tcpClient,
+            Func<Uri, string> responseProducer,
+            CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            string httpRequest = await GetTcpResponseAsync(tcpClient, cancellationToken).ConfigureAwait(false);
+            Uri uri = ExtractUriFromHttpRequest(httpRequest);
+
+            // write an "OK, please close the browser message" 
+            await WriteResponseAsync(responseProducer(uri), tcpClient.GetStream(), cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+#pragma warning disable CS1570 // XML comment has badly formed XML
+        /// <summary>
+        /// Example TCP response:
+        /// 
+        /// {GET /?code=OAQABAAIAAAC5una0EUFgTIF8ElaxtWjTl5wse5YHycjcaO_qJukUUexKz660btJtJSiQKz1h4b5DalmXspKis-bS6Inu8lNs4CpoE4FITrLv00Mr3MEYEQzgrn6JiNoIwDFSl4HBzHG8Kjd4Ho65QGUMVNyTjhWyQDf_12E8Gw9sll_sbOU51FIreZlVuvsqIWBMIJ8mfmExZBSckofV6LbcKJTeEZKaqjC09x3k1dpsCNJAtYTQIus5g1DyhAW8viDpWDpQJlT55_0W4rrNKY3CSD5AhKd3Ng4_ePPd7iC6qObfmMBlCcldX688vR2IghV0GoA0qNalzwqP7lov-yf38uVZ3ir6VlDNpbzCoV-drw0zhlMKgSq6LXT7QQYmuA4RVy_7TE9gjQpW-P0_ZXUHirpgdsblaa3JUq4cXpbMU8YCLQm7I2L0oCkBTupYXKLoM2gHSYPJ5HChhj1x0pWXRzXdqbx_TPTujBLsAo4Skr_XiLQ4QPJZpkscmXezpPa5Z87gDenUBRBI9ppROhOksekMbvPataF0qBaM38QzcnzeOCFyih1OjIKsq3GeryChrEtfY9CL9lBZ6alIIQB4thD__Tc24OUmr04hX34PjMyt1Z9Qvr76Pw0r7A52JvqQLWupx8bqok6AyCwqUGfLCPjwylSLA7NYD7vScAbfkOOszfoCC3ff14Dqm3IAB1tUJfCZoab61c6Mozls74c2Ujr3roHw4NdPuo-re5fbpSw5RVu8MffWYwXrO3GdmgcvIMkli2uperucLldNVIp6Pc3MatMYSBeAikuhtaZiZAhhl3uQxzoMhU-MO9WXuG2oIkqSvKjghxi1NUhfTK4-du7I5h1r0lFh9b3h8kvE1WBhAIxLdSAA&state=b380f309-7d24-4793-b938-e4a512b2c7f6&session_state=a442c3cd-a25e-4b88-8b33-36d194ba11b2 HTTP/1.1
+        /// Host: localhost:9001
+        /// Accept-Language: en-GB,en;q=0.9,en-US;q=0.8,ro;q=0.7,fr;q=0.6
+        /// Connection: keep-alive
+        /// Upgrade-Insecure-Requests: 1
+        /// User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36
+        /// Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+        /// Accept-Encoding: gzip, deflate, br
+        /// </summary>
+        /// <returns>http://localhost:9001/?code=foo&session_state=bar</returns>
+        private Uri ExtractUriFromHttpRequest(string httpRequest)
+#pragma warning restore CS1570 // XML comment has badly formed XML
+        {
+            string regexp = @"GET \/\?(.*) HTTP";
+            string getQuery = null;
+            Regex r1 = new Regex(regexp);
+            Match match = r1.Match(httpRequest);
+            if (!match.Success)
+            {
+                throw new InvalidOperationException("Not a GET query");
+            }
+
+            getQuery = match.Groups[1].Value;
+            UriBuilder uriBuilder = new UriBuilder();
+            uriBuilder.Query = getQuery;
+            uriBuilder.Port = _port;
+
+            return uriBuilder.Uri;
+        }
+
+        private static async Task<string> GetTcpResponseAsync(TcpClient client, CancellationToken cancellationToken)
+        {
+            NetworkStream networkStream = client.GetStream();
+
+            byte[] readBuffer = new byte[1024];
+            StringBuilder stringBuilder = new StringBuilder();
+            int numberOfBytesRead = 0;
+
+            // Incoming message may be larger than the buffer size. 
+            do
+            {
+                numberOfBytesRead = await networkStream.ReadAsync(readBuffer, 0, readBuffer.Length, cancellationToken)
+                    .ConfigureAwait(false);
+
+                string s = Encoding.ASCII.GetString(readBuffer, 0, numberOfBytesRead);
+                stringBuilder.Append(s);
+
+            }
+            while (networkStream.DataAvailable);
+
+            return stringBuilder.ToString();
+        }
+
+        private async Task WriteResponseAsync(
+            string message,
+            NetworkStream stream,
+            CancellationToken cancellationToken)
+        {
+            string fullResponse = $"HTTP/1.1 200 OK\r\n\r\n{message}";
+            var response = Encoding.ASCII.GetBytes(fullResponse);
+            await stream.WriteAsync(response, 0, response.Length, cancellationToken).ConfigureAwait(false);
+            await stream.FlushAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        public void Dispose()
+        {
+            _tcpListener?.Stop();
         }
     }
 }

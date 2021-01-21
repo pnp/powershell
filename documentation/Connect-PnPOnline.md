@@ -71,6 +71,11 @@ Connect-PnPOnline [-Url] <String> -PnPManagementShell [-ReturnConnection] [-Laun
 Connect-PnPOnline -Url <String> -UseWebLogin [-ForceAuthentication]
 ```
 
+### Interactive login for Multi-Factor authentication
+```powershell
+Connect-PnPOnline -Url <String> -Interactive [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>]
+```
+
 ## DESCRIPTION
 Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets. See https://pnp.github.io/powershell/articles/connecting.html for more information on the options to connect.
 
@@ -138,7 +143,16 @@ Connects using an Azure Active Directory registered application using a certific
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -UseWebLogin
 ```
 
-Connects to SharePoint using legacy cookie based authentication. Notice this type of authentication is limited in its functionality. We will for instance not be able to acquire an access token for the Graph, and as a result none of the Graph related cmdlets will work. Also some of the functionality of the provisioning engine (Get-PnPSiteTemplate, Get-PnPTenantTemplate, Invoke-PnPSiteTemplate, Invoke-PnPTenantTemplate) will not work because of this reason. The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will dissappear immediately, this is expected. Use -ForceAuthentication to reset the authentication cookies and force a new login.
+Note: See Example 10 as this is a preferred option over using -UseWebLogin. 
+
+Connects to SharePoint using legacy cookie based authentication. Notice this type of authentication is limited in its functionality. We will for instance not be able to acquire an access token for the Graph, and as a result none of the Graph related cmdlets will work. Also some of the functionality of the provisioning engine (Get-PnPSiteTemplate, Get-PnPTenantTemplate, Invoke-PnPSiteTemplate, Invoke-PnPTenantTemplate) will not work because of this reason. The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will dissappear immediately, this is expected. Use -ForceAuthentication to reset the authentication cookies and force a new login. See example 10 for a full support for interactive logins using MFA and the ability to acquire Graph tokens.
+
+### EXAMPLE 10
+```powershell
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -Interactive
+```
+
+Connects to the Azure AD, acquires an access token and allows PnP PowerShell to access both SharePoint and the Microsoft Graph. By default it will use the PnP Management Shell multi-tenant application behind the scenes, so make sure to run `Register-PnPManagementShellAccess` first.
 
 ## PARAMETERS
 
@@ -436,6 +450,20 @@ Windows only: Connects to SharePoint using legacy cookie based authentication. N
 ```yaml
 Type: SwitchParameter
 Parameter Sets: WebLogin
+
+Required: True
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Interactive
+Connects to the Azure AD using interactive login, allowing you to authenticate using multi-factor authentication. This parameter has preference over `-UseWebLogin`.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Interactive
 
 Required: True
 Position: Named

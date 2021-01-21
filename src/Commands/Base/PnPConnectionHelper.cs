@@ -294,6 +294,39 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
+        internal static PnPConnection InstantiateInteractiveConnection(Uri uri, string clientId, string tenantAdminUrl, AzureEnvironment azureEnvironment)
+        {
+            PnP.Framework.AuthenticationManager authManager = null;
+            if (PnPConnection.CachedAuthenticationManager != null)
+            {
+                authManager = PnPConnection.CachedAuthenticationManager;
+                PnPConnection.CachedAuthenticationManager = null;
+            }
+            else
+            {
+                authManager = new PnP.Framework.AuthenticationManager(clientId, DefaultOsBrowserWebUi.FindFreeLocalhostRedirectUri(), customWebUi: new DefaultOsBrowserWebUi());
+            }
+            using (authManager)
+            {
+                var clientContext = authManager.GetContext(uri.ToString());
+                var context = PnPClientContext.ConvertFrom(clientContext);
+
+                var connectionType = ConnectionType.O365;
+
+                if (IsTenantAdminSite(context))
+                {
+                    connectionType = ConnectionType.TenantAdmin;
+                }
+
+                var spoConnection = new PnPConnection(context, connectionType, null, clientId, null, uri.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.ClientIDCertificate)
+                {
+                    ConnectionMethod = ConnectionMethod.Credentials,
+                    AzureEnvironment = azureEnvironment
+                };
+                return spoConnection;
+            }
+        }
+
         #endregion
 
         #region Helper Methods
