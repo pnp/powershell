@@ -379,7 +379,24 @@ namespace PnP.PowerShell.Commands.Base
 
         private static bool IsTenantAdminSite(ClientRuntimeContext clientContext)
         {
-            return clientContext.Url.ToLower().Contains("-admin.sharepoint.");
+            if (clientContext.Url.ToLower().Contains(".sharepoint."))
+            {
+                return clientContext.Url.ToLower().Contains("-admin.sharepoint.");
+            }
+            else
+            {
+                // fall back to old code in case of vanity domains
+                try
+                {
+                    var tenant = new Microsoft.Online.SharePoint.TenantAdministration.Tenant(clientContext);
+                    clientContext.ExecuteQueryRetry();
+                    return true;
+                }
+                catch (ServerException)
+                {
+                    return false;
+                }
+            }
         }
 
         private static string PnPPSVersionTag => (PnPPSVersionTagLazy.Value);

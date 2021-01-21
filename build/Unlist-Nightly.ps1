@@ -8,12 +8,13 @@ function CleanPackage {
 
     $result = [xml] $xml
 
-    $entries = $result.feed.entry | ?{$_.properties.Id -eq "PnP.PowerShell"} # There are other packages not owned by us that contain this string.
+    $entries = $result.feed.entry | Where-Object{$_.properties.Id -eq "PnP.PowerShell"} # There are other packages not owned by us that contain this string.
 
     $sortedEntries = $entries | Sort-Object -Property @{Expression = {[System.Management.Automation.SemanticVersion]::Parse($_.properties.version)}; Descending=$false} | Where-Object {[System.Management.Automation.SemanticVersion]::Parse($_.properties.version).PreReleaseLabel -eq "nightly"} 
+    $releasedEntries = $entries.Where({[System.Management.Automation.SemanticVersion]::Parse($_.properties.version).PreReleaseLabel -ne "nightly"} );
 
     # keep last 10
-    $entriesToKeep = $sortedEntries | Select-Object -Last 10
+    $entriesToKeep = ($sortedEntries | Select-Object -Last 10) + $releasedEntries
     
     foreach($entry in $entries)
     {

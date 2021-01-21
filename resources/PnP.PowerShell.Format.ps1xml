@@ -505,6 +505,42 @@
       </TableControl>
     </View>
     <View>
+      <Name>SPOSite</Name>
+      <ViewSelectedBy>
+        <TypeName>PnP.PowerShell.Commands.Model.SPOSite</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>20</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Width>5</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Url</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Template</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LocaleId</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
       <Name>ListItem</Name>
       <ViewSelectedBy>
         <TypeName>Microsoft.SharePoint.Client.ListItem</TypeName>
@@ -2616,7 +2652,7 @@
           <TableColumnHeader>
             <Label>Properties.DisplayName</Label>
           </TableColumnHeader>
-           <TableColumnHeader>
+          <TableColumnHeader>
             <Label>Properties.State</Label>
           </TableColumnHeader>
         </TableHeaders>
@@ -2631,10 +2667,44 @@
                 $_.Properties.DisplayName
                 </ScriptBlock>
               </TableColumnItem>
-               <TableColumnItem>
+              <TableColumnItem>
                 <ScriptBlock>
                 $_.Properties.State
                 </ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>CopyJobLog</Name>
+      <ViewSelectedBy>
+        <TypeName>PnP.PowerShell.Commands.Model.CopyJobLog</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Url</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Message</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>ItemId</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Url</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Message</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ItemId</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>

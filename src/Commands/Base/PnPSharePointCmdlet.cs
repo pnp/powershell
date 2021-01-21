@@ -76,8 +76,8 @@ namespace PnP.PowerShell.Commands
             catch (Exception ex)
             {
                 PnPConnection.CurrentConnection.RestoreCachedContext(PnPConnection.CurrentConnection.Url);
-                ex.Data.Add("CorrelationId", PnPConnection.CurrentConnection.Context.TraceCorrelationId);
-                ex.Data.Add("TimeStampUtc", DateTime.UtcNow);
+                ex.Data["CorrelationId"] = PnPConnection.CurrentConnection.Context.TraceCorrelationId;
+                ex.Data["TimeStampUtc"] = DateTime.UtcNow;
                 var errorDetails = new ErrorDetails(ex.Message);
 
                 errorDetails.RecommendedAction = "Use Get-PnPException for more details.";

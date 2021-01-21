@@ -1,0 +1,114 @@
+using System;
+using Microsoft.Online.SharePoint.TenantAdministration;
+
+namespace PnP.PowerShell.Commands.Model
+{
+    public class SPOSite
+    {
+        public bool AllowDownloadingNonWebViewableFiles { get; set; }
+        public bool AllowEditing { get; set; }
+        public bool AllowSelfServiceUpgrade { get; set; }
+        public int AnonymousLinkExpirationInDays { get; set; }
+        public Microsoft.Online.SharePoint.TenantManagement.BlockDownloadLinksFileTypes BlockDownloadLinksFileType { get; set; }
+
+        public bool CommentsOnSitePagesDisabled { get; set; }
+        public int CompatibilityLevel { get; set; }
+        public Microsoft.Online.SharePoint.TenantManagement.SPOConditionalAccessPolicyType ConditionalAccessPolicy { get; set; }
+        public Microsoft.Online.SharePoint.TenantManagement.SharingPermissionType DefaultLinkPermission { get; set; }
+        public bool DefaultLinkToExistingAccess { get; set; }
+        public Microsoft.Online.SharePoint.TenantManagement.SharingLinkType DefaultSharingLinkType { get; set; }
+        public Microsoft.Online.SharePoint.TenantAdministration.DenyAddAndCustomizePagesStatus DenyAddAndCustomizePages { get; set; }
+        public Microsoft.Online.SharePoint.TenantAdministration.AppViewsPolicy DisableAppViews { get; set; }
+        public Microsoft.Online.SharePoint.TenantAdministration.CompanyWideSharingLinksPolicy DisableCompanyWideSharingLinks { get; set; }
+        public Microsoft.Online.SharePoint.TenantAdministration.FlowsPolicy DisableFlows { get; set; }
+        public bool? DisableSharingForNonOwnersStatus { get; set; }
+        public int ExternalUserExpirationInDays { get; set; }
+        public Guid GroupId { get; set; }
+        public Guid HubSiteId { get; }
+        public Guid[] InformationSegment { get; set; }
+        public bool IsHubSite { get; }
+        public DateTime LastContentModifiedDate { get; }
+        public Microsoft.Online.SharePoint.TenantManagement.SPOLimitedAccessFileType LimitedAccessFileType { get; set; }
+        public UInt32 LocaleId { get; set; }
+        public string LockIssue { get; }
+        public string LockState { get; set; }
+        public bool OverrideTenantAnonymousLinkExpirationPolicy { get; set; }
+        public bool OverrideTenantExternalUserExpirationPolicy { get; set; }
+        public string Owner { get; set; }
+        public string ProtectionLevelName { get; set; }
+        public Microsoft.Online.SharePoint.TenantAdministration.PWAEnabledStatus PWAEnabled { get; set; }
+        public Guid RelatedGroupId { get; }
+        public double ResourceQuota { get; set; }
+        public double ResourceQuotaWarningLevel { get; set; }
+        public double ResourceUsageAverage { get; set; }
+        public double ResourceUsageCurrent { get; set; }
+        public Microsoft.Online.SharePoint.TenantAdministration.RestrictedToRegion RestrictedToGeo { get; set; }
+        public Microsoft.Online.SharePoint.TenantAdministration.SandboxedCodeActivationCapabilities SandboxedCodeActivationCapability { get; set; }
+        public string SensitivityLabel { get; set; }
+        public string SharingAllowedDomainList { get; set; }
+        public string SharingBlockedDomainList { get; set; }
+        public Microsoft.Online.SharePoint.TenantManagement.SharingCapabilities SharingCapability { get; set; }
+        public Microsoft.Online.SharePoint.TenantManagement.SharingDomainRestrictionModes SharingDomainRestrictionMode { get; set; }
+        public bool ShowPeoplePickerSuggestionsForGuestUsers { get; set; }
+        public Microsoft.Online.SharePoint.TenantManagement.SharingCapabilities SiteDefinedSharingCapability { get; set; }
+        public bool SocialBarOnSitePagesDisabled { get; set; }
+        public string Status { get; set; }
+        public long StorageQuota { get; set; }
+        public string StorageQuotaType { get; set; }
+        public long StorageQuotaWarningLevel { get; set; }
+        public long StorageUsageCurrent { get; set; }
+        public string Template { get; set; }
+        public string Title { get; set; }
+        public string Url { get; set; }
+        public int WebsCount { get; set; }
+        public SPOSite(SiteProperties props, bool? disableSharingForNonOwnersStatus)
+        {
+            AllowDownloadingNonWebViewableFiles = props.AllowDownloadingNonWebViewableFiles;
+            AllowEditing = props.AllowEditing;
+            AllowSelfServiceUpgrade = props.AllowSelfServiceUpgrade;
+            AnonymousLinkExpirationInDays = props.AnonymousLinkExpirationInDays;
+            BlockDownloadLinksFileType = props.BlockDownloadLinksFileType;
+            CommentsOnSitePagesDisabled = props.CommentsOnSitePagesDisabled;
+            CompatibilityLevel = props.CompatibilityLevel;
+            ConditionalAccessPolicy = props.ConditionalAccessPolicy;
+            DefaultLinkPermission = props.DefaultLinkPermission;
+            DefaultLinkToExistingAccess = props.DefaultLinkToExistingAccess;
+            DefaultSharingLinkType = props.DefaultSharingLinkType;
+            DenyAddAndCustomizePages = props.DenyAddAndCustomizePages;
+            DisableAppViews = props.DisableAppViews;
+            DisableCompanyWideSharingLinks = props.DisableCompanyWideSharingLinks;
+            DisableFlows = props.DisableFlows;
+            DisableSharingForNonOwnersStatus = disableSharingForNonOwnersStatus;
+            ExternalUserExpirationInDays = props.ExternalUserExpirationInDays;
+            GroupId = props.GroupId;
+            ProtectionLevelName = props.AuthContextStrength;
+            PWAEnabled = props.PWAEnabled;
+            RelatedGroupId = props.RelatedGroupId;
+            ResourceQuota = props.UserCodeMaximumLevel;
+            ResourceQuotaWarningLevel = props.UserCodeWarningLevel;
+            ResourceUsageAverage = props.AverageResourceUsage;
+            ResourceUsageCurrent = props.CurrentResourceUsage;
+            RestrictedToGeo = props.RestrictedToRegion;
+            SandboxedCodeActivationCapability = props.SandboxedCodeActivationCapability;
+            SensitivityLabel = props.SensitivityLabel2;
+            SharingAllowedDomainList = props.SharingAllowedDomainList;
+            SharingBlockedDomainList = props.SharingBlockedDomainList;
+            SharingCapability = props.SharingCapability;
+            SharingDomainRestrictionMode = props.SharingDomainRestrictionMode;
+            ShowPeoplePickerSuggestionsForGuestUsers = props.ShowPeoplePickerSuggestionsForGuestUsers;
+            SiteDefinedSharingCapability = props.SiteDefinedSharingCapability;
+            SocialBarOnSitePagesDisabled = props.SocialBarOnSitePagesDisabled;
+            Status = props.Status;
+            StorageQuota = props.StorageMaximumLevel;
+            StorageQuotaType = props.StorageQuotaType;
+            StorageQuotaWarningLevel = props.StorageWarningLevel;
+            StorageUsageCurrent = props.StorageUsage;
+            Template = props.Template;
+            Title = props.Title;
+            WebsCount = props.WebsCount;
+            LocaleId = props.Lcid;
+            Url = props.Url;
+        }
+
+    }
+}

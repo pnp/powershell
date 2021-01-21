@@ -7,35 +7,54 @@ using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
 using System.Collections.Generic;
+using Microsoft.Online.SharePoint.TenantManagement;
 
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantSite")]
     public class GetTenantSite : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
+        private const string ParameterSet_BYURL = "By URL";
+        private const string ParameterSet_ALL = "All Sites";
+
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYURL)]
         public string Url;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
         public string Template;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Detailed;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
         public SwitchParameter IncludeOneDriveSites;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
         public string Filter;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYURL)]
+        public SwitchParameter DisableSharingForNonOwnersStatus;
 
         protected override void ExecuteCmdlet()
         {
             if (!string.IsNullOrEmpty(Url))
             {
-                var list = Tenant.GetSitePropertiesByUrl(Url, Detailed);
-                list.Context.Load(list);
-                list.Context.ExecuteQueryRetry();
-                WriteObject(list, true);
+                var siteProperties = Tenant.GetSitePropertiesByUrl(Url, Detailed);
+                ClientContext.Load(siteProperties);
+                ClientContext.ExecuteQueryRetry();
+                Model.SPOSite site = null;
+                if (ParameterSpecified(nameof(DisableSharingForNonOwnersStatus)))
+                {
+                    var office365Tenant = new Office365Tenant(ClientContext);
+                    var clientResult = office365Tenant.IsSharingDisabledForNonOwnersOfSite(Url);
+                    ClientContext.ExecuteQuery();
+                    site = new Model.SPOSite(siteProperties, clientResult.Value);
+                }
+                else
+                {
+                    site = new Model.SPOSite(siteProperties, null);
+                }
+                WriteObject(site, true);
             }
             else
             {
@@ -57,6 +76,7 @@ namespace PnP.PowerShell.Commands
                     Tenant.Context.ExecuteQueryRetry();
                     sites.AddRange(sitesList.ToList());
                     filter.StartIndex = sitesList.NextStartIndexFromSharePoint;
+
                 } while (!string.IsNullOrWhiteSpace(sitesList.NextStartIndexFromSharePoint));
 
                 if (Template != null)

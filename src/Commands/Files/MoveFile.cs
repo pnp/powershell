@@ -3,6 +3,7 @@ using Microsoft.SharePoint.Client;
 
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.Framework.Utilities;
+using System;
 
 namespace PnP.PowerShell.Commands.Files
 {
@@ -13,86 +14,114 @@ namespace PnP.PowerShell.Commands.Files
         private const string ParameterSet_SITE = "Site Relative";
         private const string ParameterSet_OTHERSITE = "Other Site Collection";
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_SERVER)]
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_OTHERSITE)]
-        public string ServerRelativeUrl = string.Empty;
+        [Parameter(Mandatory = true)]
+        [Alias("ServerRelativeUrl", "SiteRelativeUrl")]
+        public string SourceUrl = string.Empty;
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_SITE)]
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_OTHERSITE)]
-        public string SiteRelativeUrl = string.Empty;
-
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SITE, Position = 1)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SERVER, Position = 1)]
+        [Parameter(Mandatory = true, Position = 1)]
+        [Alias("TargetServerRelativeLibrary")]
         public string TargetUrl = string.Empty;
 
-        [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_OTHERSITE)]
-        public string TargetServerRelativeLibrary = string.Empty;
+        [Parameter(Mandatory = false)]
+        [Alias("OverwriteIfAlreadyExists")]
+        public SwitchParameter Overwrite;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SERVER)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SITE)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OTHERSITE)]
-        public SwitchParameter OverwriteIfAlreadyExists;
-
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OTHERSITE)]
+        [Parameter(Mandatory = false)]
         public SwitchParameter AllowSchemaMismatch;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OTHERSITE)]
+        [Parameter(Mandatory = false)]
         public SwitchParameter AllowSmallerVersionLimitOnDestination;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OTHERSITE)]
+        [Parameter(Mandatory = false)]
         public SwitchParameter IgnoreVersionHistory;
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter NoWait;
+
         protected override void ExecuteCmdlet()
         {
-            // Ensure that with ParameterSet_OTHERSITE we either receive a ServerRelativeUrl or SiteRelativeUrl
-            if (ParameterSetName == ParameterSet_OTHERSITE && !ParameterSpecified(nameof(ServerRelativeUrl)) && !ParameterSpecified(nameof(SiteRelativeUrl)))
+
+            var webServerRelativeUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
+
+            if (!SourceUrl.StartsWith("/"))
             {
-                throw new PSArgumentException($"Either provide {nameof(ServerRelativeUrl)} or {nameof(SiteRelativeUrl)}");
+                SourceUrl = UrlUtility.Combine(webServerRelativeUrl, SourceUrl);
+            }
+            if (!TargetUrl.StartsWith("/"))
+            {
+                TargetUrl = UrlUtility.Combine(webServerRelativeUrl, TargetUrl);
             }
 
-            if (ParameterSpecified(nameof(SiteRelativeUrl)))
+            string sourceFolder = SourceUrl.Substring(0, SourceUrl.LastIndexOf('/'));
+
+            Uri currentContextUri = new Uri(ClientContext.Url);
+            Uri sourceUri = new Uri(currentContextUri, sourceFolder);
+            Uri sourceWebUri = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, sourceUri);
+            Uri targetUri = new Uri(currentContextUri, TargetUrl);
+            Uri targetWebUri = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, targetUri);
+
+            if (Force || ShouldContinue(string.Format(Resources.MoveFile0To1, SourceUrl, TargetUrl), Resources.Confirm))
             {
-                var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
-                ServerRelativeUrl = UrlUtility.Combine(webUrl, SiteRelativeUrl);
-            }
-
-            var file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(ServerRelativeUrl));
-
-            ClientContext.Load(file, f => f.Name, f => f.ServerRelativeUrl);
-            ClientContext.ExecuteQueryRetry();
-
-            if (Force || ShouldContinue(string.Format(Resources.MoveFile0To1, ServerRelativeUrl, TargetUrl), Resources.Confirm))
-            {
-                switch(ParameterSetName)
+                if (sourceWebUri != targetWebUri)
                 {
-                    case ParameterSet_SITE:
-                    case ParameterSet_SERVER:
-                        file.MoveToUsingPath(ResourcePath.FromDecodedUrl(TargetUrl), OverwriteIfAlreadyExists.ToBool() ? MoveOperations.Overwrite : MoveOperations.None);
-                        break;
-
-                    case ParameterSet_OTHERSITE:
-                        CurrentWeb.EnsureProperties(w => w.Url, w => w.ServerRelativeUrl);
-
-                        // Create full URLs including the SharePoint domain to the source and destination
-                        var source = UrlUtility.Combine(CurrentWeb.Url.Remove(CurrentWeb.Url.Length - CurrentWeb.ServerRelativeUrl.Length + 1, CurrentWeb.ServerRelativeUrl.Length - 1), file.ServerRelativeUrl);
-                        var destination = UrlUtility.Combine(CurrentWeb.Url.Remove(CurrentWeb.Url.Length - CurrentWeb.ServerRelativeUrl.Length + 1, CurrentWeb.ServerRelativeUrl.Length - 1), TargetServerRelativeLibrary);
-
-                        ClientContext.Site.CreateCopyJobs(new[] { source }, destination, new CopyMigrationOptions { IsMoveMode = true, 
-                                                                                                                    AllowSchemaMismatch = AllowSchemaMismatch.ToBool(), 
-                                                                                                                    AllowSmallerVersionLimitOnDestination = AllowSmallerVersionLimitOnDestination.ToBool(), 
-                                                                                                                    IgnoreVersionHistory = IgnoreVersionHistory.ToBool(), 
-                                                                                                                    NameConflictBehavior = OverwriteIfAlreadyExists.ToBool() ? MigrationNameConflictBehavior.Replace : MigrationNameConflictBehavior.Fail });
-                        break;
-
-                    default:
-                        throw new PSInvalidOperationException(string.Format(Resources.ParameterSetNotImplemented, ParameterSetName));
+                    Move(currentContextUri, sourceUri, targetUri, SourceUrl, TargetUrl, false);
                 }
+                else
+                {
+                    var isFolder = false;
+                    try
+                    {
+                        var folder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(TargetUrl));
+                        var folderServerRelativePath = folder.EnsureProperty(f => f.ServerRelativePath);
+                        isFolder = folderServerRelativePath.DecodedUrl == ResourcePath.FromDecodedUrl(TargetUrl).DecodedUrl;
+                    }
+                    catch
+                    {
+                    }
+                    if (isFolder)
+                    {
+                        Move(currentContextUri, sourceUri, targetUri, SourceUrl, TargetUrl, true);
+                    }
+                    else
+                    {
 
-                ClientContext.ExecuteQueryRetry();
+                        var file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(SourceUrl));
+                        file.MoveToUsingPath(ResourcePath.FromDecodedUrl(TargetUrl), Overwrite ? MoveOperations.Overwrite : MoveOperations.None);
+                        ClientContext.ExecuteQueryRetry();
+                    }
+                }
+            }
+
+        }
+
+        private void Move(Uri currentContextUri, Uri source, Uri destination, string sourceUrl, string targetUrl, bool sameWebCopyMoveOptimization)
+        {
+            if (!sourceUrl.StartsWith(source.ToString()))
+            {
+                sourceUrl = $"{source.Scheme}://{source.Host}/{sourceUrl.TrimStart('/')}";
+            }
+            if (!targetUrl.StartsWith(destination.ToString()))
+            {
+                targetUrl = $"{destination.Scheme}://{destination.Host}/{targetUrl.TrimStart('/')}";
+            }
+            var results = Utilities.CopyMover.MoveAsync(HttpClient, AccessToken, currentContextUri, sourceUrl, targetUrl, IgnoreVersionHistory, Overwrite, AllowSchemaMismatch, sameWebCopyMoveOptimization, AllowSmallerVersionLimitOnDestination, NoWait).GetAwaiter().GetResult();
+            if (NoWait)
+            {
+                WriteObject(results.jobInfo);
+            }
+            else
+            {
+                foreach (var log in results.logs)
+                {
+                    if (log.Event == "JobError")
+                    {
+                        WriteObject(log);
+                    }
+                }
             }
         }
     }
 }
- 

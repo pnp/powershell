@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Admin
                 Url = UrlUtility.Combine(ClientContext.Url, Url);
             }
 
-            var accessToken = this.ClientContext.GetAccessToken();
+            var accessToken = this.AccessToken;
             var method = new HttpMethod(Method.ToString());
 
             using (var handler = new HttpClientHandler())
@@ -73,6 +73,7 @@ namespace PnP.PowerShell.Commands.Admin
                     if (!string.IsNullOrEmpty(accessToken))
                     {
                         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                        request.Headers.Add("X-RequestDigest", ClientContext.GetRequestDigestAsync().GetAwaiter().GetResult());
                     }
                     else
                     {
@@ -80,8 +81,9 @@ namespace PnP.PowerShell.Commands.Admin
                         {
                             handler.Credentials = networkCredential;
                         }
+                        request.Headers.Add("X-RequestDigest", ClientContext.GetRequestDigestAsync(handler.CookieContainer).GetAwaiter().GetResult());
                     }
-                    request.Headers.Add("X-RequestDigest", ClientContext.GetRequestDigestAsync().GetAwaiter().GetResult());
+                    
 
                     if (Method == HttpRequestMethod.Post)
                     {
