@@ -56,6 +56,19 @@ You will be prompted to provide a password. After that you can login using:
 ```powershell
 Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials "yourlabel"
 ```
+When you create the stored credentials (with Add-PnPStoredCredential or any other tool) if the Name you give it is the URL for your tenant you can omit the -Credentials parameter with Connect-PnPOnline. Using the example above create your stored credential with this command:
+
+```powershell
+Add-PnPStoredCredential -Name "https://contoso.sharepoint.com" -Username youruser@contoso.com
+```
+When connecting to https://contoso.sharepoint.com you can use this command:
+```powershell
+Connect-PnPOnline -Url https://contoso.sharepoint.com 
+```
+Connect-PnPOnline will look through the Windows Credential Manager for a credential matching the URL. If it finds one it will use it. It will also match that credential with deeper connection URLs like https://contoso.sharepoint.com/sites/IT. You can create additional stored crednetials for deeper sites if you routinely connect to them with different credentials. If you want to connect with a different set of credentials you can use the -Credentials parameter to specify them. A stored credential can be used for other URLs, like the Admin site:
+```powershell
+Connect-PnPOnline -Url https://contoso-admin.sharepoint.com -Credentials https://contoso.sharepoint.com 
+```
 
 ## Authenticating with pre-stored credentials using the Secrets Management Module from Microsoft (Multi-Platform)
 
