@@ -34,8 +34,12 @@ namespace PnP.PowerShell.Commands.Files
 
         [Parameter(Mandatory = false)]
         public SwitchParameter IgnoreVersionHistory;
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter NoWait;
 
         protected override void ExecuteCmdlet()
         {
@@ -103,12 +107,19 @@ namespace PnP.PowerShell.Commands.Files
             {
                 targetUrl = $"{destination.Scheme}://{destination.Host}/{targetUrl.TrimStart('/')}";
             }
-            var logs = Utilities.CopyMover.MoveAsync(HttpClient, AccessToken, currentContextUri, sourceUrl, targetUrl, IgnoreVersionHistory, Overwrite, AllowSchemaMismatch, sameWebCopyMoveOptimization, AllowSmallerVersionLimitOnDestination).GetAwaiter().GetResult();
-            foreach (var log in logs)
+            var results = Utilities.CopyMover.MoveAsync(HttpClient, AccessToken, currentContextUri, sourceUrl, targetUrl, IgnoreVersionHistory, Overwrite, AllowSchemaMismatch, sameWebCopyMoveOptimization, AllowSmallerVersionLimitOnDestination, NoWait).GetAwaiter().GetResult();
+            if (NoWait)
             {
-                if (log.Event == "JobError")
+                WriteObject(results.jobInfo);
+            }
+            else
+            {
+                foreach (var log in results.logs)
                 {
-                    WriteObject(log);
+                    if (log.Event == "JobError")
+                    {
+                        WriteObject(log);
+                    }
                 }
             }
         }

@@ -1,6 +1,6 @@
 namespace PnP.PowerShell.Commands.Model
 {
-    internal class CopyMigrationInfo
+    public class CopyMigrationInfo
     {
         public string EncryptionKey { get; set; }
         public string JobId { get; set; }

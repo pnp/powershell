@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [1.1.3-nightly]
+
+### Added
+- Added `-NoWait` switch to `Copy-PnPFile` and `Move-PnPFile`
+- Added `Receive-PnPCopyMoveJobStatus` cmdlet which works in combination with the `-NoWait` parameter on `Copy-PnPFile` and `Move-PnPFile`. See the documentation for usage.
+
+
 ## [1.1.2-nightly]
 
 ### Changed

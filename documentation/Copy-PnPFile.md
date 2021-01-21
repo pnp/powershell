@@ -15,7 +15,7 @@ Copies a file or folder to a different location. This location can be within the
 ## SYNTAX
 
 ```powershell
-Copy-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-OverwriteIfAlreadyExists] [-Force] [-IgnoreVersionHistory] [-Connection <PnPConnection>]  
+Copy-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-OverwriteIfAlreadyExists] [-Force] [-IgnoreVersionHistory] [-NoWait] [-Connection <PnPConnection>]  
   [<CommonParameters>]
 ```
 
@@ -25,104 +25,87 @@ Copy-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-OverwriteIfAlreadyExi
 
 ### EXAMPLE 1
 ```powershell
-PS:>Copy-PnPFile -SourceUrl "Shared Documents/MyProjectfiles" -TargetUrl "/sites/otherproject/Shared Documents" -OverwriteIfAlreadyExists
+Copy-PnPFile -SourceUrl "Shared Documents/MyProjectfiles" -TargetUrl "/sites/otherproject/Shared Documents" -OverwriteIfAlreadyExists
 ```
 
 Copies a folder named MyDocs in the document library called Documents located in the current site to the root folder of the library named Documents in the site collection otherproject.
 
 ### EXAMPLE 2
 ```powershell
-PS:>Copy-PnPFile -SourceUrl "/sites/project/Shared Documents/company.docx" -TargetUrl "/sites/otherproject/Shared Documents"
+Copy-PnPFile -SourceUrl "/sites/project/Shared Documents/company.docx" -TargetUrl "/sites/otherproject/Shared Documents"
 ```
 
 Copies a file named company.docx located in a document library called Shared Documents in the site collection project to the Shared Documents library in the site collection otherproject. If a file named company.docx already exists, it won't perform the copy.
 
 ### EXAMPLE 3
 ```powershell
-PS:>Copy-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "/sites/otherproject/Shared Documents"
+Copy-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "/sites/otherproject/Shared Documents"
 ```
 
 Copies a file named company.docx located in a document library called Documents in the current site to the site collection otherproject. If a file named company.docx already exists, it won't perform the copy.
 
 ### EXAMPLE 4
 ```powershell
-PS:>Copy-PnPFile -SourceUrl "/sites/project/Shared Documents/Archive" -TargetUrl "/sites/otherproject/Shared Documents" -Overwrite
+Copy-PnPFile -SourceUrl "/sites/project/Shared Documents/Archive" -TargetUrl "/sites/otherproject/Shared Documents" -Overwrite
 ```
 
 Copies a folder named Archive located in a document library called Shared Documents in the site collection project to the Shared Documents library in the site collection otherproject. If a folder named Archive already exists, it will overwrite it.
 
 ### EXAMPLE 5
 ```powershell
-PS:>Copy-PnPFile -SourceUrl "Documents/company.docx" -TargetUrl "Documents/company2.docx"
+Copy-PnPFile -SourceUrl "Documents/company.docx" -TargetUrl "Documents/company2.docx"
 ```
 
 Copies a file named company.docx located in a document library called Documents to a new document named company2.docx in the same library.
 
 ### EXAMPLE 6
 ```powershell
-PS:>Copy-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "Shared Documents2/company.docx"
+Copy-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "Shared Documents2/company.docx"
 ```
 
 Copies a file named company.docx located in a document library called Documents to a document library called Documents2 in the same site. 
 
 ### EXAMPLE 7
 ```powershell
-PS:>Copy-PnPFile -SourceUrl "Shared DocuDocuments/company.docx" -TargetUrl "Subsite/Shared Documents"
+Copy-PnPFile -SourceUrl "Shared DocuDocuments/company.docx" -TargetUrl "Subsite/Shared Documents"
 ```
 
 Copies a file named company.docx located in a document library called Documents to the document library named Document in a subsite named Subsite keeping the file name.
 
 ### EXAMPLE 8
 ```powershell
-PS:>Copy-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "/sites/otherproject/Shared Documents" -Overwrite
+Copy-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "/sites/otherproject/Shared Documents" -Overwrite
 ```
 
 Copies a file named company.docx located in a document library called Documents in the current site to the site collection otherproject. If a file named company.docx already exists, it will still perform the copy and replace the original company.docx file.
 
 ### EXAMPLE 9
 ```powershell
-PS:>Copy-PnPFile -SourceUrl "Shared Documents/MyDocs" -TargetUrl "/sites/otherproject/Documents" -Overwrite
+Copy-PnPFile -SourceUrl "Shared Documents/MyDocs" -TargetUrl "/sites/otherproject/Documents" -Overwrite
 ```
 
 Copies a folder named MyDocs in the document library called Documents located in the current site to the site collection otherproject. If the MyDocs folder exist it will copy into it, if not it will be created.
 
 ### EXAMPLE 10
 ```powershell
-PS:>Copy-PnPFile -SourceUrl "SubSite1/Documents/company.docx" -TargetUrl "SubSite2/Documents"
+Copy-PnPFile -SourceUrl "SubSite1/Documents/company.docx" -TargetUrl "SubSite2/Documents"
 ```
 
 Copies a file named company.docx in the library named Documents in SubSite1 to the library named Documents in SubSite2.
 
+### EXAMPLE 11
+```powershell
+$job = Copy-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "SubSite2/Shared Documents" -NoWait
+$jobStatus = Receive-PnPCopyMoveJobStatus -Job $result
+if($jobStatus.JobState == 0)
+{
+  Write-Host "Job finished"
+}
+```
+
+Copies a file named company.docx from the current document library to the documents library in SubSite2. It will not wait for the action to return but returns job information instead. The Receive-PnPCopyMoveJobStatus cmdlet will return the job status.
+
 ## PARAMETERS
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Force
 If provided, no confirmation will be requested and the action will be performed
@@ -175,7 +158,7 @@ Parameter Sets: (All)
 Aliases: SiteRelativeUrl, ServerRelativeUrl
 
 Required: True
-Position: 0
+Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
@@ -191,6 +174,20 @@ Aliases: TargetServerRelativeLibrary
 
 Required: True
 Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NoWait
+If specified the task will return immediately after creating the copy job. The cmdlet will return a job object which can be used with Receive-PnPCopyMoveJobStatus to retrieve the status of the job.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -15,8 +15,7 @@ Moves a file or folder to a different location
 ## SYNTAX
 
 ```powershell
-Move-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-Force]
- [-Connection <PnPConnection>]   [<CommonParameters>]
+Move-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-NoWait] [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -51,6 +50,18 @@ Move-PnPFile -SourceUrl "/sites/project/Shared Documents/Archive" -TargetUrl "/s
 ```
 
 Moves a folder named Archive located in the document library named "Shared Documents" in the current site to the document library named "Project" in another site collection "archive" not allowing it to overwrite an existing folder named "Archive" in the destination, allowing the fields to be different on the destination document library from the source document library and allowing a lower document version limit on the destination compared to the source.
+
+### EXAMPLE 5
+```powershell
+$job = Move-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "SubSite2/Shared Documents" -NoWait
+$jobStatus = Receive-PnPCopyMoveJobStatus -Job $result
+if($jobStatus.JobState == 0)
+{
+  Write-Host "Job finished"
+}
+```
+
+Moves a file named company.docx from the current document library to the documents library in SubSite2. It will not wait for the action to return but returns job information instead. The Receive-PnPCopyMoveJobStatus cmdlet will return the job status.
 
 ## PARAMETERS
 
@@ -161,6 +172,20 @@ Parameter Sets: (All)
 
 Required: True
 Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NoWait
+If specified the task will return immediately after creating the move job. The cmdlet will return a job object which can be used with Receive-PnPCopyMoveJobStatus to retrieve the status of the job.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
