@@ -103,6 +103,7 @@ namespace PnP.PowerShell.Commands.Base
         public SwitchParameter PnPManagementShell;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         public SwitchParameter LaunchBrowser;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
@@ -548,7 +549,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 ClientId = PnPConnection.PnPManagementShellClientId;
             }
-            return PnPConnectionHelper.InstantiateInteractiveConnection(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment);
+            return PnPConnectionHelper.InstantiateInteractiveConnection(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment);
         }
 
         #endregion

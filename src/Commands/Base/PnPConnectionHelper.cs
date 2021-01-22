@@ -4,6 +4,7 @@ using PnP.Framework;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.Auth;
 using System;
 using System.Linq;
 using System.Management.Automation;
@@ -294,7 +295,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection InstantiateInteractiveConnection(Uri uri, string clientId, string tenantAdminUrl, AzureEnvironment azureEnvironment)
+        internal static PnPConnection InstantiateInteractiveConnection(Uri uri, string clientId, string tenantAdminUrl, bool launchBrowser, AzureEnvironment azureEnvironment)
         {
             PnP.Framework.AuthenticationManager authManager = null;
             if (PnPConnection.CachedAuthenticationManager != null)
@@ -304,7 +305,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                authManager = new PnP.Framework.AuthenticationManager(clientId, DefaultOsBrowserWebUi.FindFreeLocalhostRedirectUri(), customWebUi: new DefaultOsBrowserWebUi());
+                authManager = new PnP.Framework.AuthenticationManager(clientId, DefaultOsBrowserWebUi.FindFreeLocalhostRedirectUri(), customWebUi: new DefaultOsBrowserWebUi(!launchBrowser));
             }
             using (authManager)
             {
