@@ -114,6 +114,15 @@ You are not creating a new application in the sense of something that runs in yo
 <p>You will be prompted to provide a password. After that you can login using:</p>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials &quot;yourlabel&quot;
 </code></pre>
+<p>When you create the stored credentials (with Add-PnPStoredCredential or any other tool) if the Name you give it is the URL for your tenant you can omit the -Credentials parameter with Connect-PnPOnline. Using the example above create your stored credential with this command:</p>
+<pre><code class="lang-powershell">Add-PnPStoredCredential -Name &quot;https://contoso.sharepoint.com&quot; -Username youruser@contoso.com
+</code></pre>
+<p>When connecting to <a href="https://contoso.sharepoint.com">https://contoso.sharepoint.com</a> you can use this command:</p>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com 
+</code></pre>
+<p>Connect-PnPOnline will look through the Windows Credential Manager for a credential matching the URL. If it finds one it will use it. It will also match that credential with deeper connection URLs like <a href="https://contoso.sharepoint.com/sites/IT">https://contoso.sharepoint.com/sites/IT</a>. You can create additional stored crednetials for deeper sites if you routinely connect to them with different credentials. If you want to connect with a different set of credentials you can use the -Credentials parameter to specify them. A stored credential can be used for other URLs, like the Admin site:</p>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso-admin.sharepoint.com -Credentials https://contoso.sharepoint.com 
+</code></pre>
 <h2 id="authenticating-with-pre-stored-credentials-using-the-secrets-management-module-from-microsoft-multi-platform">Authenticating with pre-stored credentials using the Secrets Management Module from Microsoft (Multi-Platform)</h2>
 <pre><code class="lang-powershell">Install-Module -Name Microsoft.PowerShell.SecretManagement -AllowPrerelease
 Install-Module -Name Microsoft.PowerShell.SecretStore -AllowPrerelease
