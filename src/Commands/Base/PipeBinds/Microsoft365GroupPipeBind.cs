@@ -39,23 +39,23 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public String GroupId => (_groupId);
 
-        public UnifiedGroupEntity GetGroup(string accessToken, bool includeClassification = false)
+        public UnifiedGroupEntity GetGroup(string accessToken, bool includeSite, bool includeClassification = false)
         {
             UnifiedGroupEntity group = null;
             if (Group != null)
             {
-                group = UnifiedGroupsUtility.GetUnifiedGroup(Group.GroupId, accessToken, includeClassification:includeClassification);
+                group = UnifiedGroupsUtility.GetUnifiedGroup(Group.GroupId, accessToken, includeSite: includeSite, includeClassification:includeClassification);
             }
             else if (!String.IsNullOrEmpty(GroupId))
             {
-                group = UnifiedGroupsUtility.GetUnifiedGroup(GroupId, accessToken, includeClassification:includeClassification);
+                group = UnifiedGroupsUtility.GetUnifiedGroup(GroupId, accessToken, includeSite:includeSite, includeClassification:includeClassification);
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                var groups = UnifiedGroupsUtility.GetUnifiedGroups(accessToken, DisplayName, includeSite: true, includeClassification:includeClassification);
+                var groups = UnifiedGroupsUtility.GetUnifiedGroups(accessToken, DisplayName, includeSite: includeSite, includeClassification:includeClassification);
                 if (groups == null || groups.Count == 0)
                 {
-                    groups = UnifiedGroupsUtility.GetUnifiedGroups(accessToken, mailNickname: DisplayName, includeSite: true, includeClassification:includeClassification);
+                    groups = UnifiedGroupsUtility.GetUnifiedGroups(accessToken, mailNickname: DisplayName, includeSite: includeSite, includeClassification:includeClassification);
                 }
                 if (groups != null && groups.Any())
                 {

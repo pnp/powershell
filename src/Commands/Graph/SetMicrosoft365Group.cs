@@ -49,7 +49,7 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(AccessToken);
+                group = Identity.GetGroup(AccessToken, false);
             }
 
             Stream groupLogoStream = null;
