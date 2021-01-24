@@ -14,7 +14,7 @@ Get the structural navigation caching state for a web.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPStructuralNavigationCacheWebState [-WebUrl <String>]
 ```
 
