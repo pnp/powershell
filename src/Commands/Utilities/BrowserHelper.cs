@@ -2,18 +2,14 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Sockets;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Identity.Client.Extensibility;
 using Microsoft.SharePoint.Client;
 using PnP.Framework;
 using PnP.PowerShell.Commands.Utilities.Auth;
@@ -101,7 +97,6 @@ namespace PnP.PowerShell.Commands.Utilities
                             }
                         }
                     };
-
                     form.Focus();
                     form.ShowDialog();
                     browser.Dispose();
@@ -110,7 +105,6 @@ namespace PnP.PowerShell.Commands.Utilities
                 thread.SetApartmentState(ApartmentState.STA);
                 thread.Start();
                 thread.Join();
-
                 if (authCookiesContainer.Count > 0)
                 {
                     var ctx = new ClientContext(siteUrl);
@@ -305,6 +299,45 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        
+        internal static void OpenBrowserForInteractiveLogin(string url, int port, bool usePopup)
+        {
+            try
+            {
+                if (OperatingSystem.IsWindows() && usePopup)
+                {
+                    BrowserHelper.GetWebBrowserPopup(url, "Please login", new[] { ($"http://localhost:{port}/?code=", BrowserHelper.UrlMatchType.StartsWith) }, noThreadJoin: true);
+                }
+                else
+                {
+                    ProcessStartInfo psi = new ProcessStartInfo
+                    {
+                        FileName = url,
+                        UseShellExecute = true
+                    };
+                    Process.Start(psi);
+                }
+            }
+            catch
+            {
+                // hack because of this: https://github.com/dotnet/corefx/issues/10361
+                if (OperatingSystem.IsWindows())
+                {
+                    Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+                }
+                else if (OperatingSystem.IsLinux())
+                {
+                    Process.Start("xdg-open", url);
+                }
+                else if (OperatingSystem.IsMacOS())
+                {
+                    Process.Start("open", url);
+                }
+                else
+                {
+                    throw new PlatformNotSupportedException(RuntimeInformation.OSDescription);
+                }
+            }
+        }
+
     }
 }

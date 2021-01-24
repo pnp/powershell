@@ -1,15 +1,16 @@
-﻿using Microsoft.Identity.Client;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using PnP.Framework;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.Auth;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Management.Automation;
 using System.Net;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -90,7 +91,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                Func<DeviceCodeResult, Task> deviceCodeCallback = (deviceCodeResult) =>
+                authManager = new PnP.Framework.AuthenticationManager(PnPConnection.PnPManagementShellClientId, (deviceCodeResult) =>
                  {
                      if (launchBrowser)
                      {
@@ -110,10 +111,7 @@ namespace PnP.PowerShell.Commands.Base
                          messageWriter.WriteMessage($"\n\n{deviceCodeResult.Message}\n\n");
                      }
                      return Task.FromResult(0);
-                 };
-
-                authManager = new PnP.Framework.AuthenticationManager(PnPConnection.PnPManagementShellClientId, deviceCodeCallback, azureEnvironment);
-
+                 }, azureEnvironment);
             }
             using (authManager)
             {
@@ -295,7 +293,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection InstantiateInteractiveConnection(Uri uri, string clientId, string tenantAdminUrl, bool launchBrowser, AzureEnvironment azureEnvironment)
+        internal static PnPConnection InstantiateInteractiveConnection(Uri uri, string clientId, string tenantAdminUrl, bool launchBrowser, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
         {
             PnP.Framework.AuthenticationManager authManager = null;
             if (PnPConnection.CachedAuthenticationManager != null)
@@ -305,11 +303,15 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                authManager = new PnP.Framework.AuthenticationManager(clientId, DefaultOsBrowserWebUi.FindFreeLocalhostRedirectUri(), customWebUi: new DefaultOsBrowserWebUi(!launchBrowser));
+                authManager = new PnP.Framework.AuthenticationManager(clientId, (url,port) => {
+                    BrowserHelper.OpenBrowserForInteractiveLogin(url,port, !launchBrowser);
+                }, 
+                successMessageHtml: $"You successfully authenticated with PnP PowerShell. Feel free to close this {(launchBrowser ? "tab":"window")}.",
+                failureMessageHtml: $"You did not authenticate with PnP PowerShell. Feel free to close this browser {(launchBrowser ? "tab": "window")}.");
             }
             using (authManager)
             {
-                var clientContext = authManager.GetContext(uri.ToString());
+                var clientContext = authManager.GetContext(uri.ToString(), cancellationToken);
                 var context = PnPClientContext.ConvertFrom(clientContext);
 
                 var connectionType = ConnectionType.O365;
@@ -446,6 +448,7 @@ namespace PnP.PowerShell.Commands.Base
             },
             true);
 
+        
         #endregion
 
     }

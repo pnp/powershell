@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [1.2.3-nightly]
+
+### Changed
+- Added `-Interactive` login option to Register-PnPManagementApp which allows for an interactive authentication flow not using device login.
+
 ## [1.2.2-nightly]
 
 ### Changed

@@ -1,10 +1,7 @@
-﻿using Microsoft.Identity.Client;
-using Microsoft.SharePoint.Client;
-using PnP.Framework.Extensions;
+﻿using Microsoft.SharePoint.Client;
 using PnP.Core.Services;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
-using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +9,8 @@ using System.Management.Automation;
 using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
-using TextCopy;
 using PnP.Framework;
 using PnP.PowerShell.ALC;
-using PnP.PowerShell.Commands.Attributes;
-using System.Threading;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
 
 namespace PnP.PowerShell.Commands.Base
 {

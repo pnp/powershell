@@ -88,6 +88,9 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false)]
         public SwitchParameter NoPopup;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Interactive;
+
         protected override void ProcessRecord()
         {
             if (ParameterSpecified(nameof(Store)) && !OperatingSystem.IsWindows())
@@ -113,16 +116,16 @@ namespace PnP.PowerShell.Commands.Base
             cancellationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = cancellationTokenSource.Token;
 
-            WriteVerbose(ParameterSetName);
-
             var loginEndPoint = string.Empty;
-            var record = new PSObject();
+
             using (var authenticationManager = new AuthenticationManager())
             {
                 loginEndPoint = authenticationManager.GetAzureADLoginEndPoint(AzureEnvironment);
             }
 
-            string token = GetAuthToken(messageWriter, loginEndPoint);
+            var record = new PSObject();
+            
+            string token = GetAuthToken(messageWriter);
 
             if (!string.IsNullOrEmpty(token))
             {
@@ -211,17 +214,30 @@ namespace PnP.PowerShell.Commands.Base
             return parameterDictionary;
         }
 
-        private string GetAuthToken(CmdletMessageWriter messageWriter, string loginEndPoint)
+        private string GetAuthToken(CmdletMessageWriter messageWriter)
         {
             var token = string.Empty;
             if (DeviceLogin.IsPresent)
             {
                 Task.Factory.StartNew(() =>
                 {
-                    token = AzureAuthHelper.AuthenticateDeviceLogin(Tenant, cancellationTokenSource, messageWriter, NoPopup, loginEndPoint);
+                    token = AzureAuthHelper.AuthenticateDeviceLogin(Tenant, cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment);
                     if (token == null)
                     {
-                        messageWriter.WriteError("Operation cancelled or not token retrieved.");
+                        messageWriter.WriteError("Operation cancelled or no token retrieved.");
+                    }
+                    messageWriter.Stop();
+                });
+                messageWriter.Start();
+            }
+            else if (Interactive.IsPresent)
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    token = AzureAuthHelper.AuthenticateInteractive(Tenant, cancellationTokenSource, messageWriter, !NoPopup, AzureEnvironment);
+                    if (token == null)
+                    {
+                        messageWriter.WriteError("Operation cancelled or no token retrieved.");
                     }
                     messageWriter.Stop();
                 });
@@ -242,7 +258,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     throw new PSArgumentException("Password is required or use -DeviceLogin");
                 }
-                token = AzureAuthHelper.AuthenticateAsync(Tenant, Username, Password, loginEndPoint).GetAwaiter().GetResult();
+                token = AzureAuthHelper.AuthenticateAsync(Tenant, Username, Password, AzureEnvironment).GetAwaiter().GetResult();
             }
 
             return token;

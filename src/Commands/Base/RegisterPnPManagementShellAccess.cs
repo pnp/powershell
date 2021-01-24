@@ -1,10 +1,5 @@
-﻿using Microsoft.Identity.Client;
-using PnP.Framework;
-
-using PnP.PowerShell.Commands.Model;
+﻿using PnP.Framework;
 using PnP.PowerShell.Commands.Utilities;
-using System;
-using System.Diagnostics;
 using System.Management.Automation;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,9 +29,7 @@ namespace PnP.PowerShell.Commands.Base
 
             Task.Factory.StartNew(() =>
             {
-
-                var deviceCodeApplication = PublicClientApplicationBuilder.Create(PnPConnection.PnPManagementShellClientId).WithAuthority($"{endPoint}/organizations/").WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient").Build();
-                deviceCodeApplication.AcquireTokenWithDeviceCode(new[] { "https://graph.microsoft.com/.default" }, codeResult =>
+                using(var authManager = new PnP.Framework.AuthenticationManager(PnPConnection.PnPManagementShellClientId, codeResult =>
                 {
                     if (Utilities.OperatingSystem.IsWindows())
                     {
@@ -49,7 +42,25 @@ namespace PnP.PowerShell.Commands.Base
                         messageWriter.WriteMessage($"Please provide consent for the PnP Management Shell application by navigating to\n\n{codeResult.VerificationUrl}\n\nEnter code: {codeResult.UserCode}.");
                     }
                     return Task.FromResult(0);
-                }).ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
+                }, AzureEnvironment))
+                {
+                    authManager.GetAccessTokenAsync(new[] { "https://graph.microsoft.com/.default" }, cancellationToken).GetAwaiter().GetResult();
+                }
+                // var deviceCodeApplication = PublicClientApplicationBuilder.Create(PnPConnection.PnPManagementShellClientId).WithAuthority($"{endPoint}/organizations/").WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient").Build();
+                // deviceCodeApplication.AcquireTokenWithDeviceCode(new[] { "https://graph.microsoft.com/.default" }, codeResult =>
+                // {
+                //     if (Utilities.OperatingSystem.IsWindows())
+                //     {
+                //         ClipboardService.SetText(codeResult.UserCode);
+                //         messageWriter.WriteMessage($"Provide consent for the PnP Management Shell application to access SharePoint.\n\nWe opened a browser and navigated to {codeResult.VerificationUrl}\n\nEnter code: {codeResult.UserCode} (we copied this code to your clipboard)");
+                //         BrowserHelper.GetWebBrowserPopup(codeResult.VerificationUrl, "Provide consent for the PnP Management Shell application");
+                //     }
+                //     else
+                //     {
+                //         messageWriter.WriteMessage($"Please provide consent for the PnP Management Shell application by navigating to\n\n{codeResult.VerificationUrl}\n\nEnter code: {codeResult.UserCode}.");
+                //     }
+                //     return Task.FromResult(0);
+                // }).ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
                 messageWriter.Finished = true;
             }, cancellationToken);
             messageWriter.Start();

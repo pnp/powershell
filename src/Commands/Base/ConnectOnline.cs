@@ -249,12 +249,6 @@ namespace PnP.PowerShell.Commands.Base
                 case ParameterSet_ACSAPPONLY:
                     connection = ConnectACSAppOnly();
                     break;
-                // case ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL:
-                //     connection = ConnectAppOnlyClientIdClientSecretUrl();
-                //     break;
-                // case ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN:
-                //     connection = ConnectAppOnlyClientIdClientSecretAadDomain();
-                //     break;
                 case ParameterSet_MAIN:
                     connection = ConnectCredentials(credentials);
                     break;
@@ -265,7 +259,7 @@ namespace PnP.PowerShell.Commands.Base
                     connection = ConnectWebLogin();
                     break;
                 case ParameterSet_INTERACTIVE:
-                    connection = ConnectInteractive();
+                    connection = ConnectInteractive(cancellationToken);
                     break;
             }
 
@@ -543,13 +537,13 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        private PnPConnection ConnectInteractive()
+        private PnPConnection ConnectInteractive(CancellationToken cancellationToken)
         {
             if (ClientId == null)
             {
                 ClientId = PnPConnection.PnPManagementShellClientId;
             }
-            return PnPConnectionHelper.InstantiateInteractiveConnection(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment);
+            return PnPConnectionHelper.InstantiateInteractiveConnection(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment, cancellationToken);
         }
 
         #endregion

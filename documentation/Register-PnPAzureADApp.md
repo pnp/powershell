@@ -20,6 +20,7 @@ Register-PnPAzureADApp -ApplicationName <String>
                                        [-Username <String>]
                                        [-Password <SecureString>]
                                        [-DeviceLogin]
+                                       [-Interactive]
                                        [-CommonName <String>]
                                        [-OutPath <String>]
                                        [-Store <StoreLocation>]
@@ -42,6 +43,7 @@ Register-PnPAzureADApp -CertificatePath <String>
                                        [-Username <String>]
                                        [-Password <SecureString>]
                                        [-DeviceLogin]
+                                       [-Interactive]
                                        [-Scopes <String[]>]
                                        [-CertificatePassword <SecureString>]
                                        [-NoPopup]
@@ -86,6 +88,13 @@ Register-PnPAzureADApp -DeviceLogin -ApplicationName TestApp -Tenant yourtenant.
 ```
 
 Creates a new Azure AD Application registration and asks you to authenticate using device login methods, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All
+
+### ------------------EXAMPLE 6------------------
+```powershell
+Register-PnPAzureADApp -Interactive -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force) 
+```
+
+Creates a new Azure AD Application registration and asks you to authenticate using username and password, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All
 
 ## PARAMETERS
 
