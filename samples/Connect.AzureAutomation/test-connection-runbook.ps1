@@ -39,7 +39,7 @@ try {
     Write-Verbose "Running Script..."
    
     # Export the certificate and convert into base 64 string
-    $base64Cert = [System.Convert]::ToBase64String($appCert.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Pkcs12))
+    $base64Cert = [System.Convert]::ToBase64String($appCert.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Pkcs12, $azureAutomateCreds.Password))
 
     # Connect to the standard SharePoint Site
     $siteConn = Connect-PnPOnline -ClientId $appId -CertificateBase64Encoded $base64Cert `
