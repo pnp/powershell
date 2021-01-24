@@ -30,7 +30,7 @@ Searches against all stored sharing links on a Site and retrieves the email invi
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPiteUserInvitations -Site "https://contoso.sharepoint.com/sites/ContosoWeb1/" -EmailAddress someone@example.com
+Get-PnPSiteUserInvitations -Site "https://contoso.sharepoint.com/sites/ContosoWeb1/" -EmailAddress someone@example.com
 ```
 
 This example retrieves email invites stored in the ContosoWeb1 site to the user with email address someone@example.com.
