@@ -234,7 +234,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 Task.Factory.StartNew(() =>
                 {
-                    token = AzureAuthHelper.AuthenticateInteractive(Tenant, cancellationTokenSource, messageWriter, !NoPopup, AzureEnvironment);
+                    token = AzureAuthHelper.AuthenticateInteractive(Tenant, cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment);
                     if (token == null)
                     {
                         messageWriter.WriteError("Operation cancelled or no token retrieved.");
