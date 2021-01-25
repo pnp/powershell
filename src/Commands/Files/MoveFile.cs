@@ -56,11 +56,16 @@ namespace PnP.PowerShell.Commands.Files
             }
 
             string sourceFolder = SourceUrl.Substring(0, SourceUrl.LastIndexOf('/'));
-
+            string targetFolder = TargetUrl;
+            if (System.IO.Path.HasExtension(TargetUrl))
+            {
+                targetFolder = TargetUrl.Substring(0, TargetUrl.LastIndexOf('/'));
+            }
+            
             Uri currentContextUri = new Uri(ClientContext.Url);
             Uri sourceUri = new Uri(currentContextUri, sourceFolder);
             Uri sourceWebUri = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, sourceUri);
-            Uri targetUri = new Uri(currentContextUri, TargetUrl);
+            Uri targetUri = new Uri(currentContextUri, targetFolder);
             Uri targetWebUri = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, targetUri);
 
             if (Force || ShouldContinue(string.Format(Resources.MoveFile0To1, SourceUrl, TargetUrl), Resources.Confirm))
