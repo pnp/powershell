@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                     {
                         if (settings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
                         {
-                            scope = $"{resource}/.default";
+                            scope = $"https://{resource}/.default";
                         }
                         return await authManager.GetAccessTokenAsync(new string[] { scope });
                     }
