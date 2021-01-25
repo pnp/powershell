@@ -32,21 +32,21 @@ Remove-PnPFile [-SiteRelativeUrl] <String> [-Recycle] [-Force]
 
 ### EXAMPLE 1
 ```powershell
-PS:>Remove-PnPFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor
+Remove-PnPFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor
 ```
 
 Removes the file company.spcolor
 
 ### EXAMPLE 2
 ```powershell
-PS:>Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor
+Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor
 ```
 
 Removes the file company.spcolor
 
 ### EXAMPLE 3
 ```powershell
-PS:>Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor -Recycle
+Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor -Recycle
 ```
 
 Removes the file company.spcolor and saves it to the Recycle Bin

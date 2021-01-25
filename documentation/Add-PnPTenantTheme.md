@@ -58,7 +58,7 @@ $themepalette = @{
   "primaryBackground" = "#fff";
   "primaryText" = "#333"
  }
-PS:>Add-PnPTenantTheme -Identity "MyCompanyTheme" -Palette $themepalette -IsInverted $false
+Add-PnPTenantTheme -Identity "MyCompanyTheme" -Palette $themepalette -IsInverted $false
 ```
 
 This example adds a theme to the current tenant.
