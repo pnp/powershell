@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [1.2.5-nightly]
+
+### Changed
+- `Register-PnPAzureADApp` now outputs the base64 encoded version of the certificate which can be used with `Connect-PnPOnline -ClientId -CertificateBase64Encoded`
+- Fixed issue with moving and copying files to subfolder, Issue #165. 
+- fixed issue where Get-PnPTenantSite was not returning all properties correct, Issue #151
+
 ## [1.2.4-nightly]
 
 ### Changed

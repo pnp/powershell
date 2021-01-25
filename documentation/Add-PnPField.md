@@ -62,7 +62,7 @@ This will add a field of type Choice to the list "Demo List".
 
 ### EXAMPLE 3
 ```powershell
-PS:>Add-PnPField -List "Demo list" -DisplayName "Speakers" -InternalName "SPSSpeakers" -Type MultiChoice -Group "Demo Group" -AddToDefaultView -Choices "Obiwan Kenobi","Darth Vader", "Anakin Skywalker"
+Add-PnPField -List "Demo list" -DisplayName "Speakers" -InternalName "SPSSpeakers" -Type MultiChoice -Group "Demo Group" -AddToDefaultView -Choices "Obiwan Kenobi","Darth Vader", "Anakin Skywalker"
 ```
 
 This will add a field of type Multiple Choice to the list "Demo List". (you can pick several choices for the same item)

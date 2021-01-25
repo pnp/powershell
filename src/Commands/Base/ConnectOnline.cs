@@ -319,6 +319,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectACSAppOnly()
         {
+            CmdletMessageWriter.WriteFormattedWarning(this, "Connecting with Client Secret uses legacy authentication and provides limited functionality. We can for instance not execute requests towards the Microsoft Graph, which limits cmdlets related to Microsoft Teams, Microsoft Planner, Microsoft Flow and Microsoft 365 Groups. You can hide this warning by using Connect-PnPOnline [your parameters] -WarningAction Ignore");
             if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
                 PnPConnection.CurrentConnection?.ClientSecret == ClientSecret &&
                 PnPConnection.CurrentConnection?.Tenant == AADDomain)

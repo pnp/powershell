@@ -104,26 +104,28 @@ namespace PnP.PowerShell.Commands.Utilities
                 var wrappedText = new List<string>();
                 foreach (var messageLine in messageLines.Select(l => l == "\n" ? " \n" : l))
                 {
-                    wrappedText.AddRange(WordWrap(messageLine, cmdlet.Host.UI.RawUI.MaxWindowSize.Width - 4));
+                    wrappedText.AddRange(WordWrap(messageLine, cmdlet.Host.UI.RawUI.MaxWindowSize.Width - 8));
                 }
 
                 var notificationColor = "\x1B[7m";
                 var resetColor = "\x1B[0m";
 
                 var outMessage = string.Empty;
-               
+
                 foreach (var wrappedLine in wrappedText)
                 {
+                    var lineToAdd = string.Empty;
                     if (wrappedLine == "")
                     {
-                        outMessage += $" \x00A0\n".PadRight(cmdlet.Host.UI.RawUI.MaxWindowSize.Width - 4);
-                    } else
-                    {
-                        var lineToAdd = wrappedLine.PadRight(cmdlet.Host.UI.RawUI.MaxWindowSize.Width - 4);
-                        outMessage += $" {lineToAdd}\n";
+                        lineToAdd = "\x00A0".PadRight(cmdlet.Host.UI.RawUI.MaxWindowSize.Width - 8);
                     }
+                    else
+                    {
+                        lineToAdd = wrappedLine.PadRight(cmdlet.Host.UI.RawUI.MaxWindowSize.Width - 8);
+                    }
+                    outMessage += $" {lineToAdd}\n";
                 }
-                cmdlet.Host.UI.WriteWarningLine($"{notificationColor}\n{outMessage}{resetColor}\n");
+                cmdlet.WriteWarning($"{notificationColor}\n{outMessage}{resetColor}\n");
                 //cmdlet.Host.UI.WriteLine($"{notificationColor}\n{outMessage}{resetColor}\n");
             }
             else

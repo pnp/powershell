@@ -25,14 +25,14 @@ Set-PnPFileCheckedIn [-Url] <String> [-CheckinType <CheckinType>] [-Comment <Str
 
 ### EXAMPLE 1
 ```powershell
-PS:>Set-PnPFileCheckedIn -Url "/Documents/Contract.docx"
+Set-PnPFileCheckedIn -Url "/Documents/Contract.docx"
 ```
 
 Checks in the file "Contract.docx" in the "Documents" library
 
 ### EXAMPLE 2
 ```powershell
-PS:>Set-PnPFileCheckedIn -Url "/Documents/Contract.docx" -CheckinType MinorCheckin -Comment "Smaller changes"
+Set-PnPFileCheckedIn -Url "/Documents/Contract.docx" -CheckinType MinorCheckin -Comment "Smaller changes"
 ```
 
 Checks in the file "Contract.docx" in the "Documents" library as a minor version and adds the check in comment "Smaller changes"

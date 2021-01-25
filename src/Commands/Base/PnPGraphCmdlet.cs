@@ -33,9 +33,11 @@ namespace PnP.PowerShell.Commands.Base
             base.BeginProcessing();
             if (PnPConnection.CurrentConnection?.Context != null)
             {
-                if (PnPConnection.CurrentConnection.Context.GetContextSettings().Type == Framework.Utilities.Context.ClientContextType.Cookie)
+                var contextSettings = PnPConnection.CurrentConnection.Context.GetContextSettings();
+                if (contextSettings?.Type == Framework.Utilities.Context.ClientContextType.Cookie || contextSettings?.Type == Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
                 {
-                    throw new PSInvalidOperationException("This cmdlet not work with a WebLogin/Cookie based connection towards SharePoint.");
+                    var typeString = contextSettings?.Type == Framework.Utilities.Context.ClientContextType.Cookie ? "WebLogin/Cookie" : "Sharepoint ACS";
+                    throw new PSInvalidOperationException($"This cmdlet does not work with a {typeString} based connection towards SharePoint.");
                 }
             }
         }

@@ -24,7 +24,7 @@ Set-PnPFileCheckedOut [-Url] <String> [-Connection <PnPConnection>] [<CommonPara
 
 ### EXAMPLE 1
 ```powershell
-PS:>Set-PnPFileCheckedOut -Url "/sites/testsite/subsite/Documents/Contract.docx"
+Set-PnPFileCheckedOut -Url "/sites/testsite/subsite/Documents/Contract.docx"
 ```
 
 Checks out the file "Contract.docx" in the "Documents" library.
