@@ -3,6 +3,7 @@
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantAdministration;
+using Microsoft.SharePoint.Administration;
 
 namespace PnP.PowerShell.Commands.Admin
 {
@@ -18,9 +19,12 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public SPOTenantCdnType CdnType = SPOTenantCdnType.Public;
 
+        [Parameter(Mandatory = false)]
+        public OrgAssetType OrgAssetType = OrgAssetType.ImageDocumentLibrary;
+
         protected override void ExecuteCmdlet()
         {
-            Tenant.AddToOrgAssetsLibAndCdn(CdnType, LibraryUrl, ThumbnailUrl);
+            Tenant.AddToOrgAssetsLibAndCdnWithType(CdnType, LibraryUrl, ThumbnailUrl, OrgAssetType);
             ClientContext.ExecuteQueryRetry();
         }
     }
