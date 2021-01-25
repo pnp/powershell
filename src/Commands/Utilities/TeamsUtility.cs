@@ -89,7 +89,7 @@ namespace PnP.PowerShell.Commands.Utilities
             // Get Settings
             try
             {
-                var team = await GraphHelper.GetAsync<Team>(httpClient, $"v1.0/teams/{groupId}", accessToken);
+                var team = await GraphHelper.GetAsync<Team>(httpClient, $"v1.0/teams/{groupId}", accessToken, false);
                 if (team != null)
                 {
                     team.GroupId = groupId;
