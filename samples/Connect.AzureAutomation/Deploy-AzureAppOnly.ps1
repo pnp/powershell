@@ -42,7 +42,7 @@ param (
     [string] $AppName = "PnP.PowerShell Automation",
 
     [Parameter(Mandatory = $true)]
-    [string] $CertificatePassword, # <-- Use a nice a super complex password
+    [securestring] $CertificatePassword, # <-- Use a nice a super complex password
 
     [Parameter(Mandatory = $false)]
     [int] $ValidForYears = 2, 
@@ -57,19 +57,10 @@ begin{
   
     # Get the location of the script to copy the script locally
     $location = Get-Location 
-
-    if(!$CertificatePassword){
-        Write-Host " - Password generated for you..."
-        $CertificatePassword = [System.Guid]::NewGuid()
-    }
     
     if(!$CertCommonName){
         $CertCommonName = "pnp.$($Tenant)"
     }
-
-    # This cna be a one-time setup - no one needs to know the password, it can be easily replaced
-    # in the App and Automation Service if required
-    $securePassword = (ConvertTo-SecureString -String $CertificatePassword -AsPlainText -Force)
     
 }
 process {
@@ -79,9 +70,11 @@ process {
     # ----------------------------------------------------------------------------------
     Write-Host " - Registering AD app and creating certificate..." -ForegroundColor Cyan
 
-    Register-PnPAzureADApp -ApplicationName $AppName -Tenant $Tenant -OutPath $location `
-        -CertificatePassword $securePassword -ValidYears $ValidForYears `
-        -CommonName $CertCommonName
+    $result = Register-PnPAzureADApp -ApplicationName $AppName -Tenant $Tenant -OutPath $location `
+        -CertificatePassword $CertificatePassword -ValidYears $ValidForYears `
+        -CommonName $CertCommonName -DeviceLogin
+
+    $result | Format-List
 
     # Example Output:
     # Pfx file               : C:\Git\tfs\Script-Library\Azure\Automation\Deploy\PnP-PowerShell Automation.pfx

@@ -40,7 +40,7 @@ param (
     [string] $AppName = "PnP.PowerShell Automation",
 
     [Parameter(Mandatory = $true)]
-    [string] $CertificatePassword, # <-- Use a nice a super complex password
+    [securestring] $CertificatePassword, # <-- Use a nice a super complex password
     
     [Parameter(Mandatory = $false)]
     [int] $ValidForYears = 2, 
@@ -56,6 +56,9 @@ param (
     
     [Parameter(Mandatory = $false)]
     [string] $AzureAutomationName = "pnp-dot-powershell-auto",
+
+    [Parameter(Mandatory = $true)]
+    [string] $SubscriptionId,
     
     [Parameter(Mandatory = $false)]
     [switch] $CreateResourceGroup
@@ -68,19 +71,9 @@ begin{
     # Get the location of the script to copy the script locally
     $location = Get-Location 
 
-    if(!$CertificatePassword){
-        Write-Host " - Password generated for you..."
-        $CertificatePassword = [System.Guid]::NewGuid()
-    }
-    
     if(!$CertCommonName){
         $CertCommonName = "pnp.$($Tenant)"
     }
-
-    # This cna be a one-time setup - no one needs to know the password, it can be easily replaced
-    # in the App and Automation Service if required
-    $securePassword = (ConvertTo-SecureString -String $CertificatePassword -AsPlainText -Force)
-    
 }
 process {
 
@@ -90,23 +83,26 @@ process {
     Write-Host " - Registering AD app and creating certificate..." -ForegroundColor Cyan
 
     $result = Register-PnPAzureADApp -ApplicationName $AppName -Tenant $Tenant -OutPath $location `
-        -CertificatePassword $securePassword -ValidYears $ValidForYears `
-        -CommonName $CertCommonName
+        -CertificatePassword $CertificatePassword -ValidYears $ValidForYears `
+        -CommonName $CertCommonName -DeviceLogin
 
+    $result | fl
     
     # Pfx file               : C:\Git\tfs\Script-Library\Azure\Automation\Deploy\PnP-PowerShell Automation.pfx
     # Cer file               : C:\Git\tfs\Script-Library\Azure\Automation\Deploy\PnP-PowerShell Automation.cer
     # AzureAppId             : c5beca65-bb78-414b-bd95-8a02cbbf4c4d
     # Certificate Thumbprint : 78D0F76D907FB9C8B9F77E64903B6D7AEF55D233
 
-    $generatedAppId = $result.AzureAppId
-    $generatedPfxCertPath = "$($location)\$($CertCommonName).pfx"
+    $newApp = Get-AzADApplication -DisplayName "SampleTest-App-Full"
+
+    $generatedAppId = $newApp.ApplicationId
+    $generatedPfxCertPath = "$($location)\$($AppName).pfx"
     
     # ----------------------------------------------------------------------------------
     #   Azure - Connect to Azure
     # ----------------------------------------------------------------------------------
     Write-Host " - Connecting to Azure..." -ForegroundColor Cyan
-    Connect-AzAccount
+    Connect-AzAccount -Subscription $SubscriptionId
 
      # ----------------------------------------------------------------------------------
     #   Azure - Resource Group
@@ -146,7 +142,7 @@ process {
     New-AzAutomationModule `
         -AutomationAccountName $AzureAutomationName `
         -Name "PnP.PowerShell" `
-        -ContentLink "https://devopsgallerystorage.blob.core.windows.net/packages/pnp.powershell.0.2.24-nightly.nupkg" `
+        -ContentLink "https://devopsgallerystorage.blob.core.windows.net/packages/pnp.powershell.1.2.0.nupkg" `
         -ResourceGroupName $AzureResourceGroupName
 
     
@@ -177,7 +173,7 @@ process {
     New-AzAutomationCertificate `
         -Name "AzureAppCertificate" `
         -Description "Certificate for PnP PowerShell automation" `
-        -Password $securePassword `
+        -Password $CertificatePassword `
         -Path $generatedPfxCertPath `
         -Exportable `
         -ResourceGroupName $AzureResourceGroupName `
@@ -185,7 +181,7 @@ process {
 
     # In this example, we do not use the UserName part
     $User = "IAamNotUsed"
-    $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $securePassword
+    $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $CertificatePassword
     New-AzAutomationCredential `
         -Name "AzureAppCertPassword" `
         -Description "Contains the password for the certificate" `
