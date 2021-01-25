@@ -496,6 +496,7 @@ namespace PnP.PowerShell.Commands.Base
                     }
                 }
             }
+            
             if (ClientId == null)
             {
                 ClientId = PnPConnection.PnPManagementShellClientId;
@@ -503,14 +504,16 @@ namespace PnP.PowerShell.Commands.Base
 
             if (PnPConnection.CurrentConnection?.ClientId == ClientId)
             {
-                if (PnPConnection.CurrentConnection?.PSCredential?.UserName == credentials.UserName &&
+                if (credentials != null && PnPConnection.CurrentConnection?.PSCredential?.UserName == credentials.UserName &&
                    PnPConnection.CurrentConnection?.PSCredential.GetNetworkCredential().Password == credentials.GetNetworkCredential().Password)
                 {
                     ReuseAuthenticationManager();
                 }
             }
+
             return PnPConnectionHelper.InstantiateConnectionWithCredentials(new Uri(Url),
                                                                credentials,
+                                                               CurrentCredentials,
                                                                TenantAdminUrl,
                                                                AzureEnvironment,
                                                                ClientId,

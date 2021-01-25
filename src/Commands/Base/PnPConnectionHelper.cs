@@ -165,7 +165,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection InstantiateConnectionWithCredentials(Uri url, PSCredential credentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials)
+        internal static PnPConnection InstantiateConnectionWithCredentials(Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials)
         {
             var context = new PnPClientContext(url.AbsoluteUri)
             {
@@ -249,7 +249,27 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
+                PnP.Framework.AuthenticationManager authManager = null;
+                if (PnPConnection.CachedAuthenticationManager != null)
+                {
+                    authManager = PnPConnection.CachedAuthenticationManager;
+                }
+                else
+                {
+                    authManager = new PnP.Framework.AuthenticationManager();
+                }
+                using (authManager)
+                {
+                    if (currentCredentials)
+                    {
+                        context = PnPClientContext.ConvertFrom(authManager.GetOnPremisesContext(url.ToString()));
+                    }
+                    else
+                    {
+                        context = PnPClientContext.ConvertFrom(authManager.GetOnPremisesContext(url.ToString(), credentials.UserName, credentials.Password));
+                    }
+                }
+
                 spoConnection = new PnPConnection(context, ConnectionType.O365, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, initializationType)
                 {
                     ConnectionMethod = Model.ConnectionMethod.Credentials,
