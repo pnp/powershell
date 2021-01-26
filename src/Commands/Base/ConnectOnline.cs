@@ -55,8 +55,8 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true)]
         // [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
-        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
-        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
         public string Url;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
@@ -110,16 +110,13 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACSAPPONLY)]
-        // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
-        // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         public string ClientId;
 
-        //[Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
         public string RedirectUri;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
-        // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         public string Tenant;
 
@@ -138,16 +135,12 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
-        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
         // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         public string AADDomain;
-
-        // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACCESSTOKEN)]
-        // public string AccessToken;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
