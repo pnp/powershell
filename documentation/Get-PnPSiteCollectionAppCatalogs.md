@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Get-PnPSiteCollectionAppCatalogs
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/get-pnpsitecollectionappcatalogs
-schema: 2.0.0
-title: Get-PnPSiteCollectionAppCatalogs
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteCollectionAppCatalogs.html
 ---
-
+ 
 # Get-PnPSiteCollectionAppCatalogs
 
 ## SYNOPSIS
@@ -35,3 +35,4 @@ Will return the site collection app catalogs
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

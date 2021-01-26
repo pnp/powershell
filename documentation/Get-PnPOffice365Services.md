@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Get-PnPOffice365Services
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/get-pnpoffice365services
-schema: 2.0.0
-title: Get-PnPOffice365Services
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPOffice365Services.html
 ---
-
+ 
 # Get-PnPOffice365Services
 
 ## SYNOPSIS
@@ -39,3 +39,4 @@ Retrieves the current services available in Office 365
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

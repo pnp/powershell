@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Set-PnPPageTextPart
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/set-pnppagetextpart
-schema: 2.0.0
-title: Set-PnPPageTextPart
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPageTextPart.html
 ---
-
+ 
 # Set-PnPPageTextPart
 
 ## SYNOPSIS
@@ -94,3 +94,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

@@ -1,12 +1,12 @@
 ---
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/get-pnpconnection
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPConnection.html
+external help file: PnP.PowerShell.dll-Help.xml
 title: Get-PnPConnection
 ---
-
+  
 # Get-PnPConnection
 
 ## SYNOPSIS
@@ -35,3 +35,5 @@ This will put the current connection for use with the -Connection parameter on o
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
+

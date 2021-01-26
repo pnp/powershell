@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Set-PnPBuiltInDesignPackageVisibility
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/set-pnpbuiltindesignpackagevisibility
-schema: 2.0.0
-title: Set-PnPBuiltInDesignPackageVisibility
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPBuiltInDesignPackageVisibility.html
 ---
-
+ 
 # Get-PnPBuiltInDesignPackageVisibility
 
 ## SYNOPSIS
@@ -76,3 +76,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

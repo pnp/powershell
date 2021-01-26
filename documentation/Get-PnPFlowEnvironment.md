@@ -1,10 +1,10 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPFlowEnvironment.html
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/get-pnpflowenvironment
+external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
 ---
-
+  
 # Get-PnPFlowEnvironment
 
 ## SYNOPSIS
@@ -49,3 +49,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
+

@@ -1,11 +1,11 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/register-pnpazureadapp
-applicable: SharePoint Online
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Register-PnPAzureADApp.html
+external help file: PnP.PowerShell.dll-Help.xml
 title: Register-PnPAzureADApp
 ---
-
+ 
 # Register-PnPAzureADApp
 
 ## SYNOPSIS
@@ -319,3 +319,4 @@ Accept pipeline input: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

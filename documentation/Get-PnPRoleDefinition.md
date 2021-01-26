@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Get-PnPRoleDefinition
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/get-pnproledefinition
-schema: 2.0.0
-title: Get-PnPRoleDefinition
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPRoleDefinition.html
 ---
-
+ 
 # Get-PnPRoleDefinition
 
 ## SYNOPSIS
@@ -69,3 +69,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

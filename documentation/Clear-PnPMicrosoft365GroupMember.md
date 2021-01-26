@@ -1,12 +1,12 @@
 ---
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/clear-pnpmicrosoft365groupmember
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Clear-PnPMicrosoft365GroupMember.html
+external help file: PnP.PowerShell.dll-help.xml
 title: Clear-PnPMicrosoft365GroupMember
 ---
-
+  
 # Clear-PnPMicrosoft365GroupMember
 
 ## SYNOPSIS
@@ -53,3 +53,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[Documentation](https://docs.microsoft.com/graph/api/group-delete-members)
+
+

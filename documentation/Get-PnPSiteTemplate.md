@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Get-PnPSiteTemplate
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/get-pnpSiteTemplate
-schema: 2.0.0
-title: Get-PnPSiteTemplate
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteTemplate.html
 ---
-
+ 
 # Get-PnPSiteTemplate
 
 ## SYNOPSIS
@@ -623,3 +623,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[Encoding](https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx)
+

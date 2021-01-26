@@ -1,12 +1,12 @@
 ---
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/get-pnpavailableclientsidecomponents
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAvailableClientSideComponents.html
+external help file: PnP.PowerShell.dll-Help.xml
 title: Get-PnPAvailableClientSideComponents
 ---
-
+  
 # Get-PnPAvailableClientSideComponents
 
 ## SYNOPSIS
@@ -118,3 +118,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+
+

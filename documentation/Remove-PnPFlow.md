@@ -1,10 +1,10 @@
 ---
 external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPFlow.html
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/remove-pnpflow
 schema: 2.0.0
 ---
-
+ 
 # Remove-PnPFlow
 
 ## SYNOPSIS
@@ -112,3 +112,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

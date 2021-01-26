@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Set-PnPStructuralNavigationCacheSiteState
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/set-pnpstructuralnavigationcachesitestate
-schema: 2.0.0
-title: Set-PnPStructuralNavigationCacheSiteState
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPStructuralNavigationCacheWebState.html
 ---
-
+ 
 # Set-PnPStructuralNavigationCacheWebState
 
 ## SYNOPSIS
@@ -70,3 +70,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
