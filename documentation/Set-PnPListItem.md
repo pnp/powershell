@@ -17,13 +17,13 @@ Updates a list item
 ### Single
 ```powershell
 Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-ContentType <ContentTypePipeBind>]
- [-Values <Hashtable>] [-SystemUpdate] [-Label <String>] [-ClearLabel] [-Connection <PnPConnection>]
+ [-Values <Hashtable>] [-UpdateType <UpdateType>] [-Label <String>] [-ClearLabel] [-Connection <PnPConnection>]
 ```
 
 ### Batched
 ```powershell
 Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> -Batch <PnPBatch> [-ContentType <ContentTypePipeBind>]
- [-Values <Hashtable>] [-SystemUpdate] [-Connection <PnPConnection>]
+ [-Values <Hashtable>] [-UpdateType <UpdateType> [-UpdateOverwriteVersion] [-Connection <PnPConnection>]
 ```
 
 
@@ -70,6 +70,13 @@ Invoke-PnPBatch -Batch $batch
 ```
 
 This example updates the items with ids 0 to 100 with a new title in a batched manner.
+
+### EXAMPLE 6
+```powershell
+Set-PnPListItem -List "Demo List" -Identity 1 -Values @{"Editor"="testuser@domain.com"} -UpdateType UpdateOverwriteVersoin
+```
+
+This example updates the modified by value of the list item and does not increase the version number.
 
 ## PARAMETERS
 
@@ -156,8 +163,11 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -SystemUpdate
-Update the item without creating a new version.
+### -UpdateType
+Specifies the update type to use when updating the listitem. Possible values are "Update", "SystemUpdate", "UpdateOverwriteVersion". 
+* Update: Sets field values and creates a new version if versioning is enabled for the list
+* SystemUpdate: Sets field values and does not create a new version. Any events on the list will trigger.
+* UpdateOverwriteVersion: Sets field values and does not create a new version. No events on the list will trigger.
 
 ```yaml
 Type: SwitchParameter
@@ -166,6 +176,20 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UpdateOverwriteVersion
+Update the item without creating a new version. It will not trigger events registered on the list.
+
+```yaml
+Type: UpdateType
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: Update
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

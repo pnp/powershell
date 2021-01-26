@@ -33,6 +33,7 @@ namespace PnP.PowerShell.Commands.Lists
         public Hashtable Values;
 
         [Parameter(Mandatory = false)]
+        [Obsolete("Use '-UpdateType SystemUpdate' instead.")]
         public SwitchParameter SystemUpdate;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
@@ -43,10 +44,18 @@ namespace PnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = true, ParameterSetName = Parameterset_BATCHED)]
         [ValidateNotNull]
+
+        [Parameter(Mandatory = false)]
+        public ListItemUpdateType UpdateType;
+
         public PnPBatch Batch;
 
         protected override void ExecuteCmdlet()
         {
+            if (ParameterSpecified(nameof(SystemUpdate)))
+            {
+                UpdateType = ListItemUpdateType.SystemUpdate;
+            }
             if (ParameterSpecified(nameof(Batch)))
             {
                 var list = List.GetList(Batch);
@@ -57,7 +66,7 @@ namespace PnP.PowerShell.Commands.Lists
                     {
                         throw new PSArgumentException($"Cannot find item with Identity {Identity}");
                     }
-                    var values = ListItemHelper.GetFieldValues(list, Values, ClientContext);
+                    var values = ListItemHelper.GetFieldValues(list, item, Values, ClientContext);
                     if (values == null)
                     {
                         values = new Dictionary<string, object>();
@@ -74,13 +83,23 @@ namespace PnP.PowerShell.Commands.Lists
                     {
                         item[value.Key] = values[value.Key];
                     }
-                    if (SystemUpdate)
+                    switch (UpdateType)
                     {
-                        item.SystemUpdateBatch(Batch.Batch);
-                    }
-                    else
-                    {
-                        item.UpdateBatch(Batch.Batch);
+                        case ListItemUpdateType.SystemUpdate:
+                            {
+                                item.SystemUpdateBatch(Batch.Batch);
+                                break;
+                            }
+                        case ListItemUpdateType.UpdateOverwriteVersion:
+                            {
+                                item.UpdateOverwriteVersionBatch(Batch.Batch);
+                                break;
+                            }
+                        case ListItemUpdateType.Update:
+                            {
+                                item.UpdateBatch(Batch.Batch);
+                                break;
+                            }
                     }
                 }
             }
@@ -143,12 +162,7 @@ namespace PnP.PowerShell.Commands.Lists
 
                     if (updateRequired)
                     {
-                        var updateType = ListItemUpdateType.Update;
-                        if (SystemUpdate.IsPresent)
-                        {
-                            updateType = ListItemUpdateType.SystemUpdate;
-                        }
-                        ListItemHelper.UpdateListItem(item, updateType);
+                        ListItemHelper.UpdateListItem(item, UpdateType);
                     }
                     ClientContext.ExecuteQueryRetry();
                     ClientContext.Load(item);
