@@ -76,6 +76,11 @@ Connect-PnPOnline -Url <String> -UseWebLogin [-ForceAuthentication]
 Connect-PnPOnline -Url <String> -Interactive [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>]
 ```
 
+### On-premises login for page transformation from on-premises SharePoint to SharePoint Online
+```powershell
+Connect-PnPOnline -Url <String> -TransformationOnPrem [-CurrentCredential]
+```
+
 ## DESCRIPTION
 Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets. See https://pnp.github.io/powershell/articles/connecting.html for more information on the options to connect.
 
@@ -153,6 +158,13 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com" -Interactive
 ```
 
 Connects to the Azure AD, acquires an access token and allows PnP PowerShell to access both SharePoint and the Microsoft Graph. By default it will use the PnP Management Shell multi-tenant application behind the scenes, so make sure to run `Register-PnPManagementShellAccess` first.
+
+### EXAMPLE 11
+```powershell
+Connect-PnPOnline -Url "https://portal.contoso.com" -TransformationOnPrem -CurrentCredential
+```
+
+Connects to on-premises SharePoint 2013, 2016 or 2019 site with the current user's on-premises Windows credential (e.g. domain\user). This option is only supported for being able to transform on-premises classic wiki, webpart, blog and publishing pages into modern pages in a SharePoint Online site. Although other PnP cmdlets might work as well, they're officially not supported for being used in an on-premises context. See http://aka.ms/sharepoint/modernization/pages for more details on page transformation.
 
 ## PARAMETERS
 
