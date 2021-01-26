@@ -18,6 +18,7 @@ namespace PnP.PowerShell.Commands.Model
         public bool DefaultLinkToExistingAccess { get; set; }
         public Microsoft.Online.SharePoint.TenantManagement.SharingLinkType DefaultSharingLinkType { get; set; }
         public Microsoft.Online.SharePoint.TenantAdministration.DenyAddAndCustomizePagesStatus DenyAddAndCustomizePages { get; set; }
+        public string Description { get; set; }
         public Microsoft.Online.SharePoint.TenantAdministration.AppViewsPolicy DisableAppViews { get; set; }
         public Microsoft.Online.SharePoint.TenantAdministration.CompanyWideSharingLinksPolicy DisableCompanyWideSharingLinks { get; set; }
         public Microsoft.Online.SharePoint.TenantAdministration.FlowsPolicy DisableFlows { get; set; }
@@ -78,6 +79,7 @@ namespace PnP.PowerShell.Commands.Model
             DefaultLinkToExistingAccess = props.DefaultLinkToExistingAccess;
             DefaultSharingLinkType = props.DefaultSharingLinkType;
             DenyAddAndCustomizePages = props.DenyAddAndCustomizePages;
+            Description = props.Description;
             DisableAppViews = props.DisableAppViews;
             DisableCompanyWideSharingLinks = props.DisableCompanyWideSharingLinks;
             DisableFlows = props.DisableFlows;
