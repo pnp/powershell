@@ -23,9 +23,9 @@ namespace PnP.PowerShell.Commands.Site
         [Alias("Url")]
         public string Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public string Classification;
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter? DisableFlows;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
