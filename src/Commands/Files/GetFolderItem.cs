@@ -11,12 +11,6 @@ using File = Microsoft.SharePoint.Client.File;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Get, "PnPFolderItem")]
-    
-    
-    
-    
-    
-    
     public class GetFolderItem : PnPWebCmdlet
     {
         private const string ParameterSet_FOLDERSBYPIPE = "Folder via pipebind";
@@ -37,6 +31,12 @@ namespace PnP.PowerShell.Commands.Files
 
         [Parameter(Mandatory = false, Position = 4)]
         public SwitchParameter Recursive;
+
+        protected override void ExecuteCmdlet()
+        {
+            var contents = GetContents(FolderSiteRelativeUrl);
+            WriteObject(contents, true);
+        }
 
         private IEnumerable<object> GetContents(string FolderSiteRelativeUrl)
         {
@@ -77,12 +77,12 @@ namespace PnP.PowerShell.Commands.Files
                 }
             }
             ClientContext.ExecuteQueryRetry();
-            
+
             IEnumerable<object> folderContent = null;
             switch (ItemType)
             {
                 case "All":
-                    folderContent = folders.Concat<object>(files);                    
+                    folderContent = folders.Concat<object>(files);
                     break;
                 case "Folder":
                     folderContent = folders;
@@ -91,24 +91,20 @@ namespace PnP.PowerShell.Commands.Files
                     folderContent = files;
                     break;
             }
-            
-            if(Recursive && folders.Count() > 0)
+
+            if (Recursive && folders.Count() > 0)
             {
-                foreach(var folder in folders)
+                foreach (var folder in folders)
                 {
                     var relativeUrl = folder.ServerRelativeUrl.Replace(CurrentWeb.ServerRelativeUrl, "");
                     var subFolderContents = GetContents(relativeUrl);
                     folderContent = folderContent.Concat<object>(subFolderContents);
-                }                
+                }
             }
 
             return folderContent;
         }
 
-        protected override void ExecuteCmdlet()
-        {
-            var contents = GetContents(FolderSiteRelativeUrl);
-            WriteObject(contents, true);
-        }
+
     }
 }
