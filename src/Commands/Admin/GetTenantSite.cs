@@ -35,6 +35,9 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYURL)]
         public SwitchParameter DisableSharingForNonOwnersStatus;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
+        public bool? GroupIdDefined;
+
         protected override void ExecuteCmdlet()
         {
             if (!string.IsNullOrEmpty(Url))
@@ -67,6 +70,18 @@ namespace PnP.PowerShell.Commands
 #pragma warning restore CS0618 // Type or member is obsolete
                     Filter = Filter,
                 };
+                if (ClientContext.ServerVersion >= new Version(16, 0, 7708, 1200))
+                {
+                    if (ParameterSpecified(nameof(GroupIdDefined)))
+                    {
+                        filter.GroupIdDefined = GroupIdDefined.Value == true ? 1 : 2;
+                    }
+                }
+                else if(ParameterSpecified(nameof(GroupIdDefined)))
+                {
+                    throw new PSArgumentException("Filtering by Group Id is not yet available for this tenant.");
+                }
+
                 SPOSitePropertiesEnumerable sitesList = null;
                 var sites = new List<SiteProperties>();
                 do

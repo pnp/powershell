@@ -7,6 +7,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [1.2.7-nightly]
 
+## Added
+- Added `-GroupIdDefined` boolean parameter to Get-PnPTenantSite to allow filtering on sites which belong to a Microsoft 365 Group
+
 ### Changed
 - Invoke-PnPSPRestMethod now returns usable objects
 

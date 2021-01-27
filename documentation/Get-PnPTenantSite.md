@@ -27,7 +27,7 @@ Get-PnPTenantSite [-Url] <string> [-Detailed] [-DisableSharingForNonOwnersStatus
 
 ### All Sites
 ```powershell
-Get-PnPTenantSite [-Template <string>] [-Detailed] [-IncludeOneDriveSites] [-Filter <string>] [-Connection
+Get-PnPTenantSite [-Template <string>] [-Detailed] [-IncludeOneDriveSites] [-GroupIdDefined <Boolean>] [-Filter <string>] [-Connection
     <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -85,6 +85,13 @@ Get-PnPTenantSite -Filter "Url -like 'sales'"
 
 Returns all sites including 'sales' in the url
 
+### EXAMPLE 8
+```powershell
+Get-PnPTenantSite -GroupIdDefined $true
+```
+
+Returns all sites which have an underlying Microsoft 365 Group
+
 ## PARAMETERS
 
 ### -Connection
@@ -134,6 +141,20 @@ Specifies the script block of the server-side filter to apply. See https://techn
 
 ```yaml
 Type: String
+Parameter Sets: All sites
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -GroupIdDefined
+If specified allows you to filter on sites that have an underlying Microsoft 365 group defined.
+
+```yaml
+Type: Boolean
 Parameter Sets: All sites
 
 Required: False
