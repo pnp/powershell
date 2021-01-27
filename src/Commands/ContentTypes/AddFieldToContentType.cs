@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
             var ct = ContentType.GetContentTypeOrWarn(this, CurrentWeb);
             if (ct != null)
             {
-                CurrentWeb.AddFieldToContentType(ct, field, Required, Hidden);
+                CurrentWeb.AddFieldToContentType(ct, field, Required, Hidden, true, true, false);
             }
         }
     }
