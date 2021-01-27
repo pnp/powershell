@@ -55,6 +55,12 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SharingLinkType DefaultSharingLinkType;
 
+        [Parameter(Mandatory= false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? DefaultLinkToExistingAccess;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter DefaultLinkToExistingAccessReset;
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public string SharingAllowedDomainList;
 
@@ -171,7 +177,16 @@ namespace PnP.PowerShell.Commands
                 props.DefaultSharingLinkType = DefaultSharingLinkType;
                 updateRequired = true;
             }
-
+            if (ParameterSpecified(nameof(DefaultLinkToExistingAccess)))
+            {
+                props.DefaultLinkToExistingAccess = DefaultLinkToExistingAccess.Value;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(DefaultLinkToExistingAccessReset)))
+            {
+                props.DefaultLinkToExistingAccessReset = true;
+                updateRequired = true;
+            }
             if (ParameterSpecified(nameof(BlockDownloadOfNonViewableFiles)))
             {
                 props.AllowDownloadingNonWebViewableFiles = !BlockDownloadOfNonViewableFiles;

@@ -24,7 +24,7 @@ Updates settings of a site collection
 Set-PnPTenantSite [-Url] <String> [-Title <String>] [-LocaleId <UInt32>] [-AllowSelfServiceUpgrade]
  [-Owners <System.Collections.Generic.List`1[System.String]>] [-DenyAddAndCustomizePages]
  [-SharingCapability <SharingCapabilities>] [-StorageMaximumLevel <Int64>] [-StorageWarningLevel <Int64>]
- [-DefaultLinkPermission <SharingPermissionType>] [-DefaultSharingLinkType <SharingLinkType>]
+ [-DefaultLinkPermission <SharingPermissionType>] [-DefaultSharingLinkType <SharingLinkType>] [-DefaultLinkToExistingAccess <Boolean>]
  [-SharingAllowedDomainList <String>] [-SharingBlockedDomainList <String>] [-BlockDownloadOfNonViewableFiles]
  [-SharingDomainRestrictionMode <SharingDomainRestrictionModes>] [-CommentsOnSitePagesDisabled]
  [-DisableAppViews <AppViewsPolicy>] [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>]
@@ -176,6 +176,19 @@ Accepted values: None, Direct, Internal, AnonymousAccess
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultLinkToExistingAccess
+When set to $true, the DefaultSharingLinkType will be overriden and the default sharing link will be All People with Existing Access link (which does not modify permissions). When set to $false (the default), the default sharing link type is controlled by the DefaultSharingLinkType parameter
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
