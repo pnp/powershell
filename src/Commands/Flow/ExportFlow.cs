@@ -14,7 +14,7 @@ using System.Text.Json;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsData.Export, "PnPFlow")]
-    [RequiredMinimalApiPermissions("https://management.azure.com/.default")]
+    [RequiredMinimalApiPermissions("https://management.azure.com//.default")]
     public class ExportFlow : PnPGraphCmdlet
     {
         private const string ParameterSet_ASJSON = "As Json";
@@ -92,7 +92,7 @@ namespace PnP.PowerShell.Commands.Graph
                     $"/providers/Microsoft.Flow/flows/{flowName}"
                 }
                 };
-                var wrapper = RestHelper.PostAsync<PackageResourceWrapper>(HttpClient, $"https://management.azure.com/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/listPackageResources?api-version=2016-11-01", AccessToken, payload: postData).GetAwaiter().GetResult();
+                var wrapper = RestHelper.PostAsync<PackageResourceWrapper>(HttpClient, $"https://api.bap.microsoft.com/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/listPackageResources?api-version=2016-11-01", AccessToken, payload: postData).GetAwaiter().GetResult();
 
                 if (wrapper.Status == "Succeeded")
                 {
@@ -124,7 +124,7 @@ namespace PnP.PowerShell.Commands.Graph
                         resources = wrapper.Resources
                     };
 
-                    var resultElement = RestHelper.PostAsync<JsonElement>(HttpClient, $"https://management.azure.com/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/exportPackage?api-version=2016-11-01", AccessToken, payload: exportPostData).GetAwaiter().GetResult();
+                    var resultElement = RestHelper.PostAsync<JsonElement>(HttpClient, $"https://api.bap.microsoft.com/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/exportPackage?api-version=2016-11-01", AccessToken, payload: exportPostData).GetAwaiter().GetResult();
                     if (resultElement.TryGetProperty("status", out JsonElement statusElement))
                     {
                         if (statusElement.GetString() == "Succeeded")
@@ -147,14 +147,6 @@ namespace PnP.PowerShell.Commands.Graph
                                                 OutPath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, OutPath);
                                             }
                                             fileName = OutPath;
-                                            if (System.IO.Directory.Exists(fileName))
-                                            {
-
-                                            }
-                                            if (System.IO.File.Exists(fileName))
-                                            {
-
-                                            }
                                         }
                                         else
                                         {
