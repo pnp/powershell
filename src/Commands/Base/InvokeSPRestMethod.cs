@@ -83,7 +83,7 @@ namespace PnP.PowerShell.Commands.Admin
                         }
                         request.Headers.Add("X-RequestDigest", ClientContext.GetRequestDigestAsync(handler.CookieContainer).GetAwaiter().GetResult());
                     }
-                    
+
 
                     if (Method == HttpRequestMethod.Post)
                     {
@@ -104,7 +104,15 @@ namespace PnP.PowerShell.Commands.Admin
                         if (responseString != null)
                         {
 
-                            WriteObject(JsonSerializer.Deserialize<Hashtable>(responseString));
+                            var jsonElement = JsonSerializer.Deserialize<JsonElement>(responseString);
+                            if (jsonElement.TryGetProperty("value", out JsonElement valueProperty))
+                            {
+                                WriteObject(ConvertToPSObject(valueProperty),true);
+                            }
+                            else
+                            {
+                                WriteObject(ConvertToPSObject(jsonElement),true);
+                            }
                         }
                     }
                     else
@@ -145,6 +153,54 @@ namespace PnP.PowerShell.Commands.Admin
             }
             handler.CookieContainer = authCookiesContainer;
             //}
+        }
+
+        private List<PSObject> ConvertToPSObject(JsonElement element)
+        {
+            var list = new List<PSObject>();
+            if (element.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var subelement in element.EnumerateArray())
+                {
+                    list.AddRange(ConvertToPSObject(subelement));
+                }
+            }
+            else
+            {
+                var pso = new PSObject();
+                foreach (var prop in element.EnumerateObject())
+                {
+                    object value = null;
+                    switch (prop.Value.ValueKind)
+                    {
+
+                        case JsonValueKind.Array:
+                            {
+                                value = ConvertToPSObject(prop.Value);
+                                break;
+                            }
+                        case JsonValueKind.True:
+                        case JsonValueKind.False:
+                            {
+                                value = prop.Value.GetBoolean();
+                                break;
+                            }
+                        case JsonValueKind.String:
+                            {
+                                value = prop.Value.GetString();
+                                break;
+                            }
+                        case JsonValueKind.Object:
+                            {
+                                value = ConvertToPSObject(prop.Value).First();
+                                break;
+                            }
+                    }
+                    pso.Properties.Add(new PSNoteProperty(prop.Name, value));
+                }
+                list.Add(pso);
+            }
+            return list;
         }
     }
 
