@@ -327,7 +327,8 @@ namespace PnP.PowerShell.Commands.Base
                     BrowserHelper.OpenBrowserForInteractiveLogin(url,port, !launchBrowser);
                 }, 
                 successMessageHtml: $"You successfully authenticated with PnP PowerShell. Feel free to close this {(launchBrowser ? "tab":"window")}.",
-                failureMessageHtml: $"You did not authenticate with PnP PowerShell. Feel free to close this browser {(launchBrowser ? "tab": "window")}.");
+                failureMessageHtml: $"You did not authenticate with PnP PowerShell. Feel free to close this browser {(launchBrowser ? "tab" : "window")}.",
+                azureEnvironment: azureEnvironment);
             }
             using (authManager)
             {
