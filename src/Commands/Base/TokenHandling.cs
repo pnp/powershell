@@ -97,20 +97,20 @@ namespace PnP.PowerShell.Commands.Base
 
             var endPoint = Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT");
             var identityHeader = Environment.GetEnvironmentVariable("IDENTITY_HEADER");
-
             if (string.IsNullOrEmpty(endPoint))
             {
-                endPoint = Environment.GetEnvironmentVariable("MSI_ENDPOINT"); 
+                endPoint = Environment.GetEnvironmentVariable("MSI_ENDPOINT");
                 identityHeader = Environment.GetEnvironmentVariable("MSI_SECRET");
             }
             if (!string.IsNullOrEmpty(endPoint))
             {
-                using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"{endPoint}?resource={requiredScope}"))
+                using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"{endPoint}?resource={requiredScope}&api-version=2019-08-01"))
                 {
                     requestMessage.Headers.Add("Metadata", "true");
-                    if(!string.IsNullOrEmpty(identityHeader))
+                    if (!string.IsNullOrEmpty(identityHeader))
                     {
                         requestMessage.Headers.Add("X-IDENTITY-HEADER", identityHeader);
+
                     }
                     var response = await httpClient.SendAsync(requestMessage).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
