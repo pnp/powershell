@@ -49,9 +49,16 @@ namespace PnP.PowerShell.Commands.Base
         {
             get
             {
-                if (PnPConnection.CurrentConnection?.Context != null)
+                if (PnPConnection.CurrentConnection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
                 {
-                    return TokenHandler.GetAccessToken(GetType(), "https://graph.microsoft.com/.default");
+                    return TokenHandler.GetManagedIdentityTokenAsync(this,HttpClient, "https://graph.microsoft.com/").GetAwaiter().GetResult();
+                }
+                else
+                {
+                    if (PnPConnection.CurrentConnection?.Context != null)
+                    {
+                        return TokenHandler.GetAccessToken(GetType(), "https://graph.microsoft.com/.default");
+                    }
                 }
 
                 return null;

@@ -6,6 +6,8 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Management.Automation;
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -67,6 +69,69 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 var accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
                 return accessToken;
+            }
+            return null;
+        }
+
+        internal static async Task<string> GetManagedIdentityTokenAsync(Cmdlet cmdlet, HttpClient httpClient, string defaultResource)
+        {
+            string requiredScope = null;
+            var requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdlet.GetType(), typeof(RequiredMinimalApiPermissions));
+            if (requiredScopesAttribute != null)
+            {
+                requiredScope = requiredScopesAttribute.PermissionScopes.First();
+                if (requiredScope.ToLower().StartsWith("https://"))
+                {
+                    var uri = new Uri(requiredScope);
+                    requiredScope = $"https://{uri.Host}/";
+                }
+                else
+                {
+                    requiredScope = defaultResource;
+                }
+            }
+            else
+            {
+                requiredScope = defaultResource;
+            }
+
+            var endPoint = Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT");
+            var identityHeader = Environment.GetEnvironmentVariable("IDENTITY_HEADER");
+
+            if (string.IsNullOrEmpty(endPoint))
+            {
+                endPoint = Environment.GetEnvironmentVariable("MSI_ENDPOINT"); 
+                identityHeader = Environment.GetEnvironmentVariable("MSI_SECRET");
+            }
+            if (!string.IsNullOrEmpty(endPoint))
+            {
+                using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"{endPoint}?resource={requiredScope}"))
+                {
+                    requestMessage.Headers.Add("Metadata", "true");
+                    if(!string.IsNullOrEmpty(identityHeader))
+                    {
+                        requestMessage.Headers.Add("X-IDENTITY-HEADER", identityHeader);
+                    }
+                    var response = await httpClient.SendAsync(requestMessage).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        var responseElement = JsonSerializer.Deserialize<JsonElement>(responseContent);
+                        if (responseElement.TryGetProperty("access_token", out JsonElement accessTokenElement))
+                        {
+                            return accessTokenElement.GetString();
+                        }
+                    }
+                    else
+                    {
+                        var errorMessage = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        throw new PSInvalidOperationException(errorMessage);
+                    }
+                }
+            }
+            else
+            {
+                throw new PSInvalidOperationException("Cannot determine Managed Identity Endpoint URL to acquire token.");
             }
             return null;
         }

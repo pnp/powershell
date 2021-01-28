@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Management.Automation;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
@@ -163,6 +164,16 @@ namespace PnP.PowerShell.Commands.Base
                 };
                 return spoConnection;
             }
+        }
+
+        internal static PnPConnection InstantiateManagedIdentityConnection(Cmdlet cmdlet)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var accesstoken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet,httpClient,"https://graph.microsoft.com/").GetAwaiter().GetResult();
+            }
+            var connection = new PnPConnection(PnPPSVersionTag, InitializationType.Graph);
+            return connection;
         }
 
         internal static PnPConnection InstantiateConnectionWithCredentials(Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials)
@@ -323,10 +334,11 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                authManager = new PnP.Framework.AuthenticationManager(clientId, (url,port) => {
-                    BrowserHelper.OpenBrowserForInteractiveLogin(url,port, !launchBrowser);
-                }, 
-                successMessageHtml: $"You successfully authenticated with PnP PowerShell. Feel free to close this {(launchBrowser ? "tab":"window")}.",
+                authManager = new PnP.Framework.AuthenticationManager(clientId, (url, port) =>
+                {
+                    BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !launchBrowser);
+                },
+                successMessageHtml: $"You successfully authenticated with PnP PowerShell. Feel free to close this {(launchBrowser ? "tab" : "window")}.",
                 failureMessageHtml: $"You did not authenticate with PnP PowerShell. Feel free to close this browser {(launchBrowser ? "tab" : "window")}.",
                 azureEnvironment: azureEnvironment);
             }
@@ -469,7 +481,7 @@ namespace PnP.PowerShell.Commands.Base
             },
             true);
 
-        
+
         #endregion
 
     }

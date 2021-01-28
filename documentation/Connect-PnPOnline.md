@@ -81,6 +81,13 @@ Connect-PnPOnline -Url <String> -Interactive [-ClientId <String>] [-AzureEnviron
 Connect-PnPOnline -Url <String> -TransformationOnPrem [-CurrentCredential]
 ```
 
+### Managed Identity for use with Azure Cloud Shell and Azure Functions
+```powershell
+Connect-PnPOnline -ManagedIdentity
+```
+
+Using this way connecting only works with environments that support managed identies: Azure Functions and the Azure Cloud Shell. You cannot access SharePoint artifacts using this connection method: only the cmdlets that use the Microsoft Graph behind the scenes will work: Teams cmdlets, Flow cmdlets, Planner cmdlets and the Microsoft 365 Group cmdlets.
+
 ## DESCRIPTION
 Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets. See https://pnp.github.io/powershell/articles/connecting.html for more information on the options to connect.
 
@@ -165,6 +172,14 @@ Connect-PnPOnline -Url "https://portal.contoso.com" -TransformationOnPrem -Curre
 ```
 
 Connects to on-premises SharePoint 2013, 2016 or 2019 site with the current user's on-premises Windows credential (e.g. domain\user). This option is only supported for being able to transform on-premises classic wiki, webpart, blog and publishing pages into modern pages in a SharePoint Online site. Although other PnP cmdlets might work as well, they're officially not supported for being used in an on-premises context. See http://aka.ms/sharepoint/modernization/pages for more details on page transformation.
+
+### EXAMPLE 12 
+```powershell
+Connect-PnPOnline -ManagedIdentity
+Get-PnPTeamsTeam
+```
+
+The above example shows how to retrieve the teams for a tenant when running in the Azure Cloud Shell.
 
 ## PARAMETERS
 
@@ -490,6 +505,20 @@ Windows only: will clear the stored authentication cookies when using -UseWebLog
 ```yaml
 Type: SwitchParameter
 Parameter Sets: WebLogin
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ManagedIdentity
+Azure Functions or Azure Cloud Shell only. This method will acquire a token using the built-in endpoints in the Azure Cloud Shell and Azure Functions. Notice that using this connection method will not allow you to access SharePoint artifacts due to limitations of token acquisition. It will however allow you to use the Teams cmdlets, Flow cmdlets, Planner cmdlets and Microsoft 365 Group cmdlets.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Managed Identity for use with Azure Cloud Shell and Azure Functions
 
 Required: False
 Position: Named

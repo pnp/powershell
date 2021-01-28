@@ -265,9 +265,9 @@ namespace PnP.PowerShell.Commands.Base
 
             // Connection has been established
 #if !NETFRAMEWORK
-            WriteVerbose($"PnP PowerShell Cmdlets ({new SemanticVersion(Assembly.GetExecutingAssembly().GetName().Version)}): Connected to {Url}");
+            WriteVerbose($"PnP PowerShell Cmdlets ({new SemanticVersion(Assembly.GetExecutingAssembly().GetName().Version)})");
 #else
-            WriteVerbose($"PnP PowerShell Cmdlets ({Assembly.GetExecutingAssembly().GetName().Version}): Connected to {Url}");
+            WriteVerbose($"PnP PowerShell Cmdlets ({Assembly.GetExecutingAssembly().GetName().Version})");
 #endif
             PnPConnection.CurrentConnection = connection;
             if (CreateDrive && PnPConnection.CurrentConnection.Context != null)
@@ -517,8 +517,7 @@ namespace PnP.PowerShell.Commands.Base
         private PnPConnection ConnectManagedIdentity()
         {
             WriteVerbose("Connecting to the Graph with the current Managed Identity");
-            var connection = new PnPConnection(null, InitializationType.Graph);
-            return connection;
+            return PnPConnectionHelper.InstantiateManagedIdentityConnection(this);
         }
 
         private PnPConnection ConnectWebLogin()
