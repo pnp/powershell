@@ -8,7 +8,7 @@ using TextCopy;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsLifecycle.Register, "PnPManagementShellAccess")]
-    public class RegisterPnPManagementShellAccess : PSCmdlet
+    public class RegisterManagementShellAccess : PSCmdlet
     {
         CancellationTokenSource source;
 
@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Base
 
             Task.Factory.StartNew(() =>
             {
-                using(var authManager = new PnP.Framework.AuthenticationManager(PnPConnection.PnPManagementShellClientId, codeResult =>
+                using(var authManager = new AuthenticationManager(PnPConnection.PnPManagementShellClientId, codeResult =>
                 {
                     if (Utilities.OperatingSystem.IsWindows())
                     {

@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Base
     [Cmdlet(VerbsLifecycle.Register, "PnPAzureADApp")]
     [Alias("Initialize-PnPPowerShellAuthentication")]
     [WriteAliasWarning("Please use 'Register-PnPAzureADApp'. The alias 'Initialize-PnPPowerShellAuthentication' will be removed in the 1.5.0 release")]
-    public class InitializePowerShellAuthentication : BasePSCmdlet, IDynamicParameters
+    public class RegisterAzureADApp : BasePSCmdlet, IDynamicParameters
     {
         private const string ParameterSet_EXISTINGCERT = "Existing Certificate";
         private const string ParameterSet_NEWCERT = "Generate Certificate";
