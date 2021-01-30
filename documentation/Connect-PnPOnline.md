@@ -86,8 +86,6 @@ Connect-PnPOnline -Url <String> -TransformationOnPrem [-CurrentCredential]
 Connect-PnPOnline -ManagedIdentity
 ```
 
-Using this way connecting only works with environments that support managed identies: Azure Functions and the Azure Cloud Shell. You cannot access SharePoint artifacts using this connection method: only the cmdlets that use the Microsoft Graph behind the scenes will work: Teams cmdlets, Flow cmdlets, Planner cmdlets and the Microsoft 365 Group cmdlets.
-
 ## DESCRIPTION
 Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets. See https://pnp.github.io/powershell/articles/connecting.html for more information on the options to connect.
 
@@ -179,7 +177,8 @@ Connect-PnPOnline -ManagedIdentity
 Get-PnPTeamsTeam
 ```
 
-The above example shows how to retrieve the teams for a tenant when running in the Azure Cloud Shell.
+Using this way of connecting only works with environments that support managed identies: Azure Functions and the Azure Cloud Shell. You cannot access SharePoint artifacts using this connection method: only the cmdlets that use the Microsoft Graph or Azure AD resources behind the scenes will work: Teams cmdlets, Flow cmdlets, Planner cmdlets and the Microsoft 365 Group cmdlets.
+
 
 ## PARAMETERS
 
@@ -514,7 +513,7 @@ Accept wildcard characters: False
 ```
 
 ### -ManagedIdentity
-Azure Functions or Azure Cloud Shell only. This method will acquire a token using the built-in endpoints in the Azure Cloud Shell and Azure Functions. Notice that using this connection method will not allow you to access SharePoint artifacts due to limitations of token acquisition. It will however allow you to use the Teams cmdlets, Flow cmdlets, Planner cmdlets and Microsoft 365 Group cmdlets.
+For use with Azure Functions (if configured to use a managed identity) or Azure Cloud Shell only. This method will acquire a token using the built-in endpoints in the Azure Cloud Shell and Azure Functions. Notice that using this connection method will not allow you to access SharePoint artifacts due to limitations of token acquisition. It will however allow you to use the Teams cmdlets, Flow cmdlets, Planner cmdlets and Microsoft 365 Group cmdlets.
 
 ```yaml
 Type: SwitchParameter
