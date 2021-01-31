@@ -5,9 +5,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [1.2.10-nightly]
+
+### Changed
+- Fixed issue where retrieving a single site with Get-PnPTenantSite vs retrieving all sites showed different properties.
+ 
 ## [1.2.7-nightly]
 
-## Added
+### Added
 - Added `-GroupIdDefined` boolean parameter to Get-PnPTenantSite to allow filtering on sites which belong to a Microsoft 365 Group
 
 ### Changed
