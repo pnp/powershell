@@ -96,11 +96,11 @@ namespace PnP.PowerShell.Commands
 
                 if (Template != null)
                 {
-                    WriteObject(sites.Where(t => t.Template == Template).OrderBy(x => x.Url), true);
+                    WriteObject(sites.Where(t => t.Template == Template).OrderBy(x => x.Url).Select(s => new Model.SPOSite(s, null)), true);
                 }
                 else
                 {
-                    WriteObject(sites.OrderBy(x => x.Url), true);
+                    WriteObject(sites.OrderBy(x => x.Url).Select(s => new Model.SPOSite(s,null)), true);
                 }
             }
         }
