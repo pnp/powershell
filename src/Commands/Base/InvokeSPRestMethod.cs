@@ -1,6 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
-
 using PnP.PowerShell.Commands.Enums;
 using System;
 using System.Collections;
@@ -51,7 +50,7 @@ namespace PnP.PowerShell.Commands.Admin
                     SetAuthenticationCookies(handler, ClientContext);
                 }
 
-                using (var httpClient = new PnPHttpProvider(handler))
+                using (var httpClient = new HttpClient(handler))
                 {
                     var requestUrl = Url;
 
