@@ -16,30 +16,7 @@ namespace PnP.PowerShell.Commands.Site
         {
             foreach (var owner in Owners)
             {
-                User user = null;
-                if (owner.Id > 0)
-                {
-                    WriteVerbose($"Adding user with Id \"{owner.Id}\" as site collection administrator");
-                    user = ClientContext.Web.GetUserById(owner.Id);
-                }
-                else if (owner.User != null && owner.User.Id > 0)
-                {
-                    WriteVerbose($"Adding user provided in pipeline as site collection administrator");
-                    user = owner.User;
-
-                }
-                else if (!string.IsNullOrWhiteSpace(owner.Login))
-                {
-                    WriteVerbose($"Adding user with loginname \"{owner.Login}\" as site collection administrator");
-                    if (owner.Login.StartsWith("i:"))
-                    {
-                        user = ClientContext.Web.SiteUsers.GetByLoginName(owner.Login);
-                    }
-                    else
-                    {
-                        user = ClientContext.Web.EnsureUser(owner.Login);
-                    }
-                }
+                User user = owner.GetUser(ClientContext);
                 if (user != null)
                 {
                     user.IsSiteAdmin = true;
