@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Principals
         private const string PARAMETERSET_WITHRIGHTSASSIGNED = "With rights assigned";
         private const string PARAMETERSET_WITHRIGHTSASSIGNEDDETAILED = "With rights assigned detailed";
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = PARAMETERSET_IDENTITY)]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = PARAMETERSET_IDENTITY)]
         public UserPipeBind Identity;
 
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_WITHRIGHTSASSIGNED)]
@@ -279,25 +279,7 @@ namespace PnP.PowerShell.Commands.Principals
             }
             else
             {
-                User user = null;
-                if (Identity.Id > 0)
-                {
-                    user = CurrentWeb.GetUserById(Identity.Id);
-                }
-                else if (Identity.User != null && Identity.User.Id > 0)
-                {
-                    user = CurrentWeb.GetUserById(Identity.User.Id);
-                }
-                else if (!string.IsNullOrWhiteSpace(Identity.Login))
-                {
-                    user = CurrentWeb.SiteUsers.GetByLoginName(Identity.Login);
-                }
-                if (user != null)
-                {
-                    CurrentWeb.Context.Load(user, RetrievalExpressions);
-                    CurrentWeb.Context.ExecuteQueryRetry();
-                }
-                WriteObject(user);
+                WriteObject(Identity.GetUser(ClientContext));
             }
         }
 

@@ -28,27 +28,7 @@ namespace PnP.PowerShell.Commands.Principals
                 u => u.Email
             };
 
-            User user = null;
-            if (Identity.User != null)
-            {
-                WriteVerbose($"Received user instance {Identity.Login}");
-                user = Identity.User;
-            }
-            else if (Identity.Id > 0)
-            {
-                WriteVerbose($"Retrieving user by Id {Identity.Id}");
-                user = ClientContext.Web.GetUserById(Identity.Id);
-            }
-            else if (!string.IsNullOrWhiteSpace(Identity.Login))
-            {
-                WriteVerbose($"Retrieving user by LoginName {Identity.Login}");
-                user = ClientContext.Web.SiteUsers.GetByLoginName(Identity.Login);
-            }
-            if (ClientContext.HasPendingRequest)
-            {
-                ClientContext.Load(user, retrievalExpressions);
-                ClientContext.ExecuteQueryRetry();
-            }
+            User user = Identity.GetUser(ClientContext);
 
             if (user != null)
             {

@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [1.2.11-nightly]
+
+### Changed
+- Get-PnPUser and any other cmdlet that takes a UserPipeBind parameter as input now allows users to be specified by name besides loginname or id.
+
 ## [1.2.10-nightly]
 
 ### Changed
