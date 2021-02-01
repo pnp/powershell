@@ -1,4 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
+using PnP.Framework.Http;
 using PnP.Framework.Utilities;
 
 using PnP.PowerShell.Commands.Enums;

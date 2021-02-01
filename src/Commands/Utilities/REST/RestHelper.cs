@@ -49,7 +49,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             {
                 url += $"?{string.Join("&", restparams)}";
             }
-            var client = new HttpClient();
+            var client = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.GetAccessToken());
@@ -116,7 +116,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 url += $"?{string.Join("&", restparams)}";
             }
 
-            var client = new HttpClient();
+            var client = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.GetAccessToken());
@@ -261,7 +261,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 url += $"?{string.Join("&", restparams)}";
             }
 
-            var client = new HttpClient();
+            var client = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.GetAccessToken());
@@ -327,7 +327,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 url += $"?{string.Join("&", restparams)}";
             }
 
-            var client = new HttpClient();
+            var client = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.GetAccessToken());
@@ -406,7 +406,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 url += $"?{string.Join("&", restparams)}";
             }
 
-            var client = new HttpClient();
+            var client = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.GetAccessToken());

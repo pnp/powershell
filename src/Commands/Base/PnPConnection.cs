@@ -26,23 +26,8 @@ namespace PnP.PowerShell.Commands.Base
 
         #region Properties
 
-        internal Dictionary<string, string> TelemetryProperties { get; set; }
-
-        private HttpClient httpClient;
 
         private PnPContext pnpContext { get; set; }
-
-        public HttpClient HttpClient
-        {
-            get
-            {
-                if (httpClient == null)
-                {
-                    httpClient = new HttpClient();
-                }
-                return httpClient;
-            }
-        }
 
         internal PnPContext PnPContext
         {

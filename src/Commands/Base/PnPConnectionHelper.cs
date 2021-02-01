@@ -168,10 +168,8 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static PnPConnection InstantiateManagedIdentityConnection(Cmdlet cmdlet)
         {
-            using (var httpClient = new HttpClient())
-            {
-                var accesstoken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet,httpClient,"https://graph.microsoft.com/").GetAwaiter().GetResult();
-            }
+            var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+            var accesstoken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, "https://graph.microsoft.com/").GetAwaiter().GetResult();
             var connection = new PnPConnection(PnPPSVersionTag, InitializationType.Graph);
             return connection;
         }

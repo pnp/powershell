@@ -10,23 +10,21 @@ namespace PnP.PowerShell.Commands
         public SwitchParameter Nightly;
         protected override void ProcessRecord()
         {
-            using (var client = new HttpClient())
+            var client = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+            var url = "https://raw.githubusercontent.com/pnp/powershell/master/CHANGELOG.md";
+            if (Nightly)
             {
-                var url = "https://raw.githubusercontent.com/pnp/powershell/master/CHANGELOG.md";
-                if (Nightly)
-                {
-                    url = "https://raw.githubusercontent.com/pnp/powershell/dev/CHANGELOG.md";
-                }
-                var response = client.GetAsync(url).GetAwaiter().GetResult();
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                    WriteObject(content);
-                }
-                else
-                {
-                    throw new PSInvalidOperationException("Cannot retrieve changelog");
-                }
+                url = "https://raw.githubusercontent.com/pnp/powershell/dev/CHANGELOG.md";
+            }
+            var response = client.GetAsync(url).GetAwaiter().GetResult();
+            if (response.IsSuccessStatusCode)
+            {
+                var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                WriteObject(content);
+            }
+            else
+            {
+                throw new PSInvalidOperationException("Cannot retrieve changelog");
             }
         }
     }

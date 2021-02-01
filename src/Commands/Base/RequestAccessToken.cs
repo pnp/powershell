@@ -41,7 +41,6 @@ namespace PnP.PowerShell.Commands.Base
             if (string.IsNullOrEmpty(TenantUrl) && PnPConnection.CurrentConnection != null)
             {
 
-                HttpClient client = new HttpClient();
                 var uri = new Uri(PnPConnection.CurrentConnection.Url);
                 var uriParts = uri.Host.Split('.');
                 if (uriParts[0].ToLower().EndsWith("-admin"))
