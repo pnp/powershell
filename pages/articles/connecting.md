@@ -34,7 +34,7 @@ This will launch a authentication dialog where need to authenticate. After closi
 
 You can add permissions by using the `-Scope` parameter. The cmdlet will output the Azure AppId/client id, the name and location of the certificates created (if any) and the thumbprint of the certificate. It is possible to add the certificate created to the certificate management store in Windows by adding the `-Store` parameter.
 
-Before connecting using the Connect-PnPOnline cmdlet, make sure to go to the app registration. Select Manifest under the Manage section, then change the "allowPublicClient" property to true. 
+Note if you are using Credential Based Authentication, you will need to make a change to the app registration manifest file. Go to the app registration, select Manifest under the Manage section, then change the "allowPublicClient" property to true and click save.
 
 ```powershell
 Connect-PnPOnline -Url "https://[yourtenant.sharepoint.com] -Credentials (Get-Credential) -ClientId [clientid]
