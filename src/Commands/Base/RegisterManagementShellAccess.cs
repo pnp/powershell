@@ -1,5 +1,6 @@
 ﻿using PnP.Framework;
 using PnP.PowerShell.Commands.Utilities;
+using System.Collections.Generic;
 using System.Management.Automation;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,9 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false)]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter LaunchBrowser;
+
         protected override void ProcessRecord()
         {
             source = new CancellationTokenSource();
@@ -29,38 +33,16 @@ namespace PnP.PowerShell.Commands.Base
 
             Task.Factory.StartNew(() =>
             {
-                using(var authManager = new AuthenticationManager(PnPConnection.PnPManagementShellClientId, codeResult =>
+                using(var authManager = AuthenticationManager.CreateWithInteractiveLogin(PnPConnection.PnPManagementShellClientId, (url, port) =>
                 {
-                    if (Utilities.OperatingSystem.IsWindows())
-                    {
-                        ClipboardService.SetText(codeResult.UserCode);
-                        messageWriter.WriteMessage($"Provide consent for the PnP Management Shell application to access SharePoint.\n\nWe opened a browser and navigated to {codeResult.VerificationUrl}\n\nEnter code: {codeResult.UserCode} (we copied this code to your clipboard)");
-                        BrowserHelper.GetWebBrowserPopup(codeResult.VerificationUrl, "Provide consent for the PnP Management Shell application");
-                    }
-                    else
-                    {
-                        messageWriter.WriteMessage($"Please provide consent for the PnP Management Shell application by navigating to\n\n{codeResult.VerificationUrl}\n\nEnter code: {codeResult.UserCode}.");
-                    }
-                    return Task.FromResult(0);
-                }, AzureEnvironment))
+                    BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !LaunchBrowser);
+                },
+                successMessageHtml: $"You successfully consented the PnP Management Shell Application for use by PnP PowerShell. Feel free to close this window.",
+                failureMessageHtml: $"You did not consent for the PnP Management Shell Application for use by PnP PowerShell. Feel free to close this browser window.",
+                azureEnvironment: AzureEnvironment))
                 {
-                    authManager.GetAccessTokenAsync(new[] { "https://graph.microsoft.com/.default" }, cancellationToken).GetAwaiter().GetResult();
+                    authManager.GetAccessTokenAsync(new[] {"https://graph.microsoft.com/.default"}, cancellationToken, Microsoft.Identity.Client.Prompt.Consent).GetAwaiter().GetResult();
                 }
-                // var deviceCodeApplication = PublicClientApplicationBuilder.Create(PnPConnection.PnPManagementShellClientId).WithAuthority($"{endPoint}/organizations/").WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient").Build();
-                // deviceCodeApplication.AcquireTokenWithDeviceCode(new[] { "https://graph.microsoft.com/.default" }, codeResult =>
-                // {
-                //     if (Utilities.OperatingSystem.IsWindows())
-                //     {
-                //         ClipboardService.SetText(codeResult.UserCode);
-                //         messageWriter.WriteMessage($"Provide consent for the PnP Management Shell application to access SharePoint.\n\nWe opened a browser and navigated to {codeResult.VerificationUrl}\n\nEnter code: {codeResult.UserCode} (we copied this code to your clipboard)");
-                //         BrowserHelper.GetWebBrowserPopup(codeResult.VerificationUrl, "Provide consent for the PnP Management Shell application");
-                //     }
-                //     else
-                //     {
-                //         messageWriter.WriteMessage($"Please provide consent for the PnP Management Shell application by navigating to\n\n{codeResult.VerificationUrl}\n\nEnter code: {codeResult.UserCode}.");
-                //     }
-                //     return Task.FromResult(0);
-                // }).ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
                 messageWriter.Finished = true;
             }, cancellationToken);
             messageWriter.Start();

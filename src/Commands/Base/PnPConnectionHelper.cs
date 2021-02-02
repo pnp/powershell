@@ -92,7 +92,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                authManager = new PnP.Framework.AuthenticationManager(PnPConnection.PnPManagementShellClientId, (deviceCodeResult) =>
+                authManager = PnP.Framework.AuthenticationManager.CreateWithDeviceLogin(PnPConnection.PnPManagementShellClientId, (deviceCodeResult) =>
                  {
                      if (launchBrowser)
                      {
@@ -140,7 +140,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                authManager = new PnP.Framework.AuthenticationManager(clientId, certificate, tenant, azureEnvironment: azureEnvironment);
+                authManager = PnP.Framework.AuthenticationManager.CreateWithCertificate(clientId, certificate, tenant, azureEnvironment: azureEnvironment);
             }
             using (authManager)
             {
@@ -197,7 +197,7 @@ namespace PnP.PowerShell.Commands.Base
                         }
                         else
                         {
-                            authManager = new PnP.Framework.AuthenticationManager(clientId, credentials.UserName, credentials.Password, redirectUrl, azureEnvironment);
+                            authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(clientId, credentials.UserName, credentials.Password, redirectUrl, azureEnvironment);
                         }
                         using (authManager)
                         {
@@ -217,7 +217,7 @@ namespace PnP.PowerShell.Commands.Base
                         }
                         else
                         {
-                            authManager = new PnP.Framework.AuthenticationManager(credentials.UserName, credentials.Password, azureEnvironment);
+                            authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(credentials.UserName, credentials.Password, azureEnvironment);
                         }
                         using (authManager)
                         {
@@ -322,17 +322,17 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection InstantiateInteractiveConnection(Uri uri, string clientId, string tenantAdminUrl, bool launchBrowser, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
+        internal static PnPConnection InstantiateInteractiveConnection(Uri uri, string clientId, string tenantAdminUrl, bool launchBrowser, AzureEnvironment azureEnvironment, CancellationToken cancellationToken, bool forceAuthentication)
         {
             PnP.Framework.AuthenticationManager authManager = null;
-            if (PnPConnection.CachedAuthenticationManager != null)
+            if (PnPConnection.CachedAuthenticationManager != null && !forceAuthentication)
             {
                 authManager = PnPConnection.CachedAuthenticationManager;
                 PnPConnection.CachedAuthenticationManager = null;
             }
             else
             {
-                authManager = new PnP.Framework.AuthenticationManager(clientId, (url, port) =>
+                authManager = PnP.Framework.AuthenticationManager.CreateWithInteractiveLogin(clientId, (url, port) =>
                 {
                     BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !launchBrowser);
                 },

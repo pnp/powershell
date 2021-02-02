@@ -167,6 +167,7 @@ namespace PnP.PowerShell.Commands.Base
         public SwitchParameter UseWebLogin;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         public SwitchParameter ForceAuthentication;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_INTERACTIVE)]
@@ -488,7 +489,7 @@ namespace PnP.PowerShell.Commands.Base
                     }
                 }
             }
-            
+
             if (ClientId == null)
             {
                 ClientId = PnPConnection.PnPManagementShellClientId;
@@ -537,7 +538,14 @@ namespace PnP.PowerShell.Commands.Base
             {
                 ClientId = PnPConnection.PnPManagementShellClientId;
             }
-            return PnPConnectionHelper.InstantiateInteractiveConnection(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment, cancellationToken);
+            if (PnPConnection.CurrentConnection?.ClientId == ClientId)
+            {
+                if (new Uri(Url.ToLower()).Host == new Uri(PnPConnection.CurrentConnection.Url).Host)
+                {
+                    ReuseAuthenticationManager();
+                }
+            }
+            return PnPConnectionHelper.InstantiateInteractiveConnection(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment, cancellationToken, ForceAuthentication);
         }
 
         #endregion

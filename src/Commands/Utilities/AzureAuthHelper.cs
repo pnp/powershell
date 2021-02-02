@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 throw new ArgumentException($"{nameof(tenantId)} is required");
             }
 
-            using (var authManager = new PnP.Framework.AuthenticationManager(username, password, azureEnvironment))
+            using (var authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(username, password, azureEnvironment))
             {
                 return await authManager.GetAccessTokenAsync(new[] { "https://graph.microsoft.com/.default" });
             }
@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             try
             {
-                using (var authManager = new PnP.Framework.AuthenticationManager(CLIENTID, (result) =>
+                using (var authManager = PnP.Framework.AuthenticationManager.CreateWithDeviceLogin(CLIENTID, (result) =>
                 {
                     if (Utilities.OperatingSystem.IsWindows() && !noPopup)
                     {
@@ -61,7 +61,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             try
             {
-                using (var authManager = new PnP.Framework.AuthenticationManager(CLIENTID, (url, port) =>
+                using (var authManager = PnP.Framework.AuthenticationManager.CreateWithInteractiveLogin(CLIENTID, (url, port) =>
                 {
                     BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !noPopup);
                 },

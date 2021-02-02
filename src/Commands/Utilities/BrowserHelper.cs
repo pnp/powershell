@@ -169,7 +169,7 @@ namespace PnP.PowerShell.Commands.Utilities
             Contains
         }
 
-        internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls = null, bool noThreadJoin = false)
+        internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls = null, bool noThreadJoin = false, CancellationToken cancellationToken = default)
         {
             bool success = false;
 #if Windows

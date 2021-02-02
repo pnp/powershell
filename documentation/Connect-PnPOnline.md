@@ -73,7 +73,7 @@ Connect-PnPOnline -Url <String> -UseWebLogin [-ForceAuthentication]
 
 ### Interactive login for Multi-Factor authentication
 ```powershell
-Connect-PnPOnline -Url <String> -Interactive [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>]
+Connect-PnPOnline -Url <String> -Interactive [-ClientId <String>] [-ForceAuthentication <SwitchParameter>] [-AzureEnvironment <AzureEnvironment>]
 ```
 
 ### On-premises login for page transformation from on-premises SharePoint to SharePoint Online
@@ -499,11 +499,11 @@ Accept wildcard characters: False
 ```
 
 ### -ForceAuthentication
-Windows only: will clear the stored authentication cookies when using -UseWebLogin and allows you to authenticate again towards a site with different credentials bypassing the existing stored cookies.
+Will clear the stored authentication information when using -UseWebLogin (Windows Only) or -Interactive (all platforms) and allows you to authenticate again towards a site with different credentials.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: WebLogin
+Parameter Sets: WebLogin, Interactive
 
 Required: False
 Position: Named

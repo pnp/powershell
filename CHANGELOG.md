@@ -5,50 +5,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [1.2.11-nightly]
-
-### Changed
-- Get-PnPUser and any other cmdlet that takes a UserPipeBind parameter as input now allows users to be specified by name besides loginname or id.
-
-## [1.2.10-nightly]
-
-### Changed
-- Fixed issue where retrieving a single site with Get-PnPTenantSite vs retrieving all sites showed different properties.
- 
-## [1.2.7-nightly]
+## [Current Nightly]
 
 ### Added
 - Added `-GroupIdDefined` boolean parameter to Get-PnPTenantSite to allow filtering on sites which belong to a Microsoft 365 Group
+- Added `-Interactive` login option to `Connect-PnPOnline` which is similar to `-UseWebLogin` but without the limitations of the latter. The `-UseWebLogin` is using cookie based authentication towards SharePoint and cannot access Graph tokens. Using `-Interactive` we use Azure AD Authentication and as a result we are able to acquire Graph tokens.
 
 ### Changed
+- Fixed issue where `-Interactive` on `Connect-PnPOnline` would prompt for credentials when connecting to new site within same tenant. Added -ForceLogin parameter to force
+- Get-PnPUser and any other cmdlet that takes a UserPipeBind parameter as input now allows users to be specified by name besides loginname or id.
+- Fixed issue where retrieving a single site with Get-PnPTenantSite vs retrieving all sites showed different properties.
 - Invoke-PnPSPRestMethod now returns usable objects
-
-## [1.2.6-nightly]
-
-### Changed
 - Updated `Set-PnPListItem` to have an `UpdateType` parameter. Obsoleted `SystemUpdate`. Also updated the backend logic so can now also specify `UpdateOverwriteVersion` to update the editor, author, modified and created fields. 
-
-## [1.2.5-nightly]
-
-### Changed
 - `Register-PnPAzureADApp` now outputs the base64 encoded version of the certificate which can be used with `Connect-PnPOnline -ClientId -CertificateBase64Encoded`
 - Fixed issue with moving and copying files to subfolder, Issue #165. 
 - fixed issue where Get-PnPTenantSite was not returning all properties correct, Issue #151
-
-## [1.2.4-nightly]
-
-### Changed
 - Added `-Interactive` login option to Register-PnPManagementApp which allows for an interactive authentication flow not using device login.
-
-## [1.2.2-nightly]
-
-### Changed
 - Updated all Microsoft365Group cmdlets to only load the SiteUrl of the underlying M365Group where required. This means that `Get-PnPMicrosoft365Group -Identity` will not by default load the site url. Specify `-IncludeSiteUrl` to include it.
-
-## [1.2.1-nightly]
-
-### Added
-- Added `-Interactive` login option to `Connect-PnPOnline` which is similar to `-UseWebLogin` but without the limitations of the latter. The `-UseWebLogin` is using cookie based authentication towards SharePoint and cannot access Graph tokens. Using `-Interactive` we use Azure AD Authentication and as a result we are able to acquire Graph tokens.
 
 ## [1.2.0]
 

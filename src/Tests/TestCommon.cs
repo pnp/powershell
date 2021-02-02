@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Tests
         private static ClientContext CreateContext(string contextUrl, PSCredential credentials)
         {
             ClientContext context = null;
-            using (var am = new PnP.Framework.AuthenticationManager(credentials.UserName, credentials.Password))
+            using (var am = PnP.Framework.AuthenticationManager.CreateWithCredentials(credentials.UserName, credentials.Password))
             {
                 context = am.GetContext(contextUrl);
             }
