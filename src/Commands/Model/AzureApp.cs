@@ -236,6 +236,12 @@ namespace PnP.PowerShell.Commands.Model
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = ResourceAppID_SPO,
+                Id = "56680e0d-d2a3-4ae1-80d8-3c4f2100e3d0",
+                Identifier = "SPO.AllSites.FullControl"
+            });
+            scopes.Add(new PermissionScope()
+            {
+                resourceAppId = ResourceAppID_SPO,
                 Id = "678536fe-1083-478a-9c59-b99265e6b0d3",
                 Identifier = "SPO.Sites.FullControl.All"
             });

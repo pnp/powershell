@@ -37,20 +37,22 @@ Register-PnPAzureADApp -ApplicationName <String>
 
 ### Existing Certificate
 ```powershell
-Register-PnPAzureADApp -CertificatePath <String>
-                                       -ApplicationName <String>
-                                       -Tenant <String>
-                                       [-Username <String>]
-                                       [-Password <SecureString>]
-                                       [-DeviceLogin]
-                                       [-Interactive]
-                                       [-Scopes <String[]>]
-                                       [-CertificatePassword <SecureString>]
-                                       [-NoPopup]
+Register-PnPAzureADApp  -CertificatePath <String>
+                        -ApplicationName <String>
+                        -Tenant <String>
+                        [-Username <String>]
+                        [-Password <SecureString>]
+                        [-DeviceLogin]
+                        [-Interactive]
+                        [-Scopes <String[]>]
+                        [-CertificatePassword <SecureString>]
+                        [-NoPopup]
 ```
 
 ## DESCRIPTION
-Registers an Azure AD App and optionally creates a new self-signed certificate to use with the application registration. You can login either with username/password or you can use the -DeviceLogin option if your tenant has been configured for Multi-Factor Authentication.
+Registers an Azure AD App and optionally creates a new self-signed certificate to use with the application registration. You can login either with username/password or you can use the -DeviceLogin option if your tenant has been configured for Multi-Factor Authentication. 
+
+Note: if you want to use the newly created app to authentication with username/password you will have to make a modification to the app. Navigate to the application registration in your Azure AD, select the Authentication section, and set `Allow public client flows` to `yes`. Alternatively, navigate to the `Manifest` section and set `allowPublicClient` to `true`.
 
 ## EXAMPLES
 

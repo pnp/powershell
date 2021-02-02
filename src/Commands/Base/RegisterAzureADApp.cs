@@ -254,11 +254,11 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 if (string.IsNullOrEmpty(Username))
                 {
-                    throw new PSArgumentException("Username is required or use -DeviceLogin");
+                    throw new PSArgumentException("Username is required or use -DeviceLogin or -Interactive");
                 }
                 if (Password == null || Password.Length == 0)
                 {
-                    throw new PSArgumentException("Password is required or use -DeviceLogin");
+                    throw new PSArgumentException("Password is required or use -DeviceLogin or -Interactive");
                 }
                 token = AzureAuthHelper.AuthenticateAsync(Tenant, Username, Password, AzureEnvironment).GetAwaiter().GetResult();
             }
@@ -412,14 +412,14 @@ namespace PnP.PowerShell.Commands.Base
                         type= "AsymmetricX509Cert",
                         usage= "Verify",
                         key = Convert.ToBase64String(cert.GetRawCertData()),
-                        displayName = cert.Subject
+                        displayName = cert.Subject,
                     }
                 },
                 publicClient = new
                 {
                     redirectUris = new[] {
+                        "http://localhost",
                         $"{loginEndPoint}/common/oauth2/nativeclient",
-                        redirectUri
                     }
                 },
                 requiredResourceAccess = scopesPayload
@@ -441,7 +441,7 @@ namespace PnP.PowerShell.Commands.Base
             if (OperatingSystem.IsWindows() && !NoPopup)
             {
                 var waitTime = 60;
-                CmdletMessageWriter.WriteFormattedWarning(this, $"Waiting {waitTime} seconds to launch consent flow in a popup window.\n\nThis wait is required to make sure that Azure AD is able to initialize all required artifacts. You can always navigate to the consent page manually:\n\n{consentUrl}");
+                CmdletMessageWriter.WriteFormattedWarning(this, $"Waiting {waitTime} seconds to launch the consent flow in a popup window.\n\nThis wait is required to make sure that Azure AD is able to initialize all required artifacts. You can always navigate to the consent page manually:\n\n{consentUrl}");
 
                 for (var i = 0; i < waitTime; i++)
                 {
@@ -468,22 +468,13 @@ namespace PnP.PowerShell.Commands.Base
 
                     Host.UI.WriteLine();
 
-                    BrowserHelper.GetWebBrowserPopup(consentUrl, "Please provide consent", new[] { (redirectUri, BrowserHelper.UrlMatchType.StartsWith) });
-
-                    // remove redirectUri from app
-                    var patchPayload = new
+                    using (var authManager = AuthenticationManager.CreateWithInteractiveLogin(azureApp.AppId, (url, port) =>
+                     {
+                         BrowserHelper.OpenBrowserForInteractiveLogin(url, port, true);
+                     }, Tenant, "You successfully provided consent", "You failed to provide consent.", AzureEnvironment))
                     {
-                        publicClient = new
-                        {
-                            redirectUris = new[] {
-                                        $"{loginEndPoint}/common/oauth2/nativeclient",
-                                    }
-                        }
-                    };
-                    var patchContent = new StringContent(JsonSerializer.Serialize(patchPayload));
-                    patchContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-
-                    GraphHelper.PatchAsync(httpClient, $"/v1.0/applications{azureApp.Id}", patchContent, token).GetAwaiter().GetResult();
+                        authManager.GetAccessToken("https://graph.microsoft.com/.default", Microsoft.Identity.Client.Prompt.Consent);
+                    }
 
                     // Write results
                     WriteObject(record);
