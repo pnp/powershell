@@ -140,7 +140,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -BlockDownloadOfNonViewableFiles
+### -AllowDownloadOfNonViewableFiles
 Specifies if non web viewable files can be downloaded.
 
 ```yaml
@@ -501,7 +501,7 @@ Specifies the storage quota for this site collection in megabytes. This value mu
 ```yaml
 Type: Int64
 Parameter Sets: Set Properties
-Alias: StorageMaximumLevel
+Aliases: StorageMaximumLevel
 Required: False
 Position: Named
 Default value: None
@@ -515,7 +515,7 @@ Specifies the warning level for the storage quota in megabytes. This value must 
 ```yaml
 Type: Int64
 Parameter Sets: Set Properties
-Alias: StorageQuotaMaximumLevel
+Aliases: StorageQuotaMaximumLevel
 Required: False
 Position: Named
 Default value: None
@@ -597,7 +597,7 @@ Specifies the URL of the site
 ```yaml
 Type: String
 Parameter Sets: (All)
-Alias: Url
+Aliases: Url
 Required: True
 Position: 0
 Default value: None

@@ -8,6 +8,7 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
 using System.Collections.Generic;
 using Microsoft.Online.SharePoint.TenantManagement;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands
 {
@@ -18,7 +19,8 @@ namespace PnP.PowerShell.Commands
         private const string ParameterSet_ALL = "All Sites";
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYURL)]
-        public string Url;
+        [Alias("Url")]
+        public SPOSitePipeBind Identity;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
         public string Template;
@@ -40,16 +42,16 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            if (!string.IsNullOrEmpty(Url))
+            if(ParameterSpecified(nameof(Identity)))
             {
-                var siteProperties = Tenant.GetSitePropertiesByUrl(Url, Detailed);
+                var siteProperties = Tenant.GetSitePropertiesByUrl(Identity.Url, Detailed);
                 ClientContext.Load(siteProperties);
                 ClientContext.ExecuteQueryRetry();
                 Model.SPOSite site = null;
                 if (ParameterSpecified(nameof(DisableSharingForNonOwnersStatus)))
                 {
                     var office365Tenant = new Office365Tenant(ClientContext);
-                    var clientResult = office365Tenant.IsSharingDisabledForNonOwnersOfSite(Url);
+                    var clientResult = office365Tenant.IsSharingDisabledForNonOwnersOfSite(Identity.Url);
                     ClientContext.ExecuteQuery();
                     site = new Model.SPOSite(siteProperties, clientResult.Value);
                 }

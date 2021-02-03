@@ -21,7 +21,7 @@ Retrieve site information.
 
 ### By Site
 ```powershell
-Get-PnPTenantSite [-Url] <string> [-Detailed] [-DisableSharingForNonOwnersStatus] [-Connection <PnPConnection>]
+Get-PnPTenantSite [-Identity] <string> [-Detailed] [-DisableSharingForNonOwnersStatus] [-Connection <PnPConnection>]
     [<CommonParameters>]
 ```
 
@@ -45,7 +45,7 @@ Returns all site collections
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPTenantSite -Url "http://tenant.sharepoint.com/sites/projects"
+Get-PnPTenantSite -Identity "http://tenant.sharepoint.com/sites/projects"
 ```
 
 Returns information about the project site
@@ -192,13 +192,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Url
+### -Identity
 The URL of the site
 
 ```yaml
 Type: String
 Parameter Sets: By Site
-Aliases: Identity
+Aliases: Url
 
 Required: False
 Position: 0
