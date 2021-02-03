@@ -10,6 +10,7 @@ using PnP.Framework.Entities;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using System.Net;
 using System.Threading;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands
 {
@@ -20,7 +21,8 @@ namespace PnP.PowerShell.Commands
         private const string ParameterSet_PROPERTIES = "Set Properties";
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
-        public string Url;
+        [Alias("Url")]
+        public SPOSitePipeBind Identity;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public string Title;
@@ -38,13 +40,33 @@ namespace PnP.PowerShell.Commands
         public SwitchParameter DenyAddAndCustomizePages;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter DisableSharingForNonOwners;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SharingCapabilities SharingCapability;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public long StorageMaximumLevel;
+        [Alias("StorageMaximumLevel")]
+        public long StorageQuota;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public long StorageWarningLevel;
+        [Alias("StorageWarningLevel")]
+        public long StorageQuotaWarningLevel;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter StorageQuotaReset;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public double ResourceQuota;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public double ResourceQuotaWarningLevel;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool EnablePWA;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool ShowPeoplePickerSuggestionsForGuestUsers;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
         public SiteLockState? LockState;
@@ -55,7 +77,7 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SharingLinkType DefaultSharingLinkType;
 
-        [Parameter(Mandatory= false, ParameterSetName = ParameterSet_PROPERTIES)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public bool? DefaultLinkToExistingAccess;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
@@ -68,7 +90,11 @@ namespace PnP.PowerShell.Commands
         public string SharingBlockedDomainList;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        [Obsolete("Use AllowDownloadingNonWebViewableFiles")]
         public SwitchParameter BlockDownloadOfNonViewableFiles;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool AllowDownloadingNonWebViewableFiles;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SharingDomainRestrictionModes SharingDomainRestrictionMode = SharingDomainRestrictionModes.None;
@@ -91,15 +117,58 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter OverrideTenantAnonymousLinkExpirationPolicy;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter RemoveLabel;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public string SensitivityLabel;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SPOConditionalAccessPolicyType ConditionalAccessPolicy;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public string ProtectionLevelName;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SPOLimitedAccessFileType LimitedAccessFileType;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool AllowEditing;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public RestrictedToRegion RestrictedToGeo;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Guid HubSiteId;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public int ExternalUserExpirationInDays;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool OverrideTenantExternalUserExpirationPolicy;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Guid[] AddInformationSegment;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Guid[] RemoveInformationSegment;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public BlockDownloadLinksFileTypes BlockDownloadLinksFileType;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility { get; set; }
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
+
         protected override void ExecuteCmdlet()
         {
             Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
             if (LockState.HasValue)
             {
-                Tenant.SetSiteLockState(Url, LockState.Value, Wait, Wait ? timeoutFunction : null);
+                Tenant.SetSiteLockState(Identity.Url, LockState.Value, Wait, Wait ? timeoutFunction : null);
                 WriteWarning("You changed the lockstate of a site. This change is not guaranteed to be effective immediately. Please wait a few minutes for this to take effect.");
             }
             if (!LockState.HasValue)
@@ -110,7 +179,7 @@ namespace PnP.PowerShell.Commands
 
         private void SetSiteProperties(Func<TenantOperationMessage, bool> timeoutFunction)
         {
-            var props = GetSiteProperties(Url);
+            var props = GetSiteProperties(Identity.Url);
             var updateRequired = false;
 
             if (ParameterSpecified(nameof(Title)))
@@ -152,14 +221,29 @@ namespace PnP.PowerShell.Commands
                 props.SharingDomainRestrictionMode = SharingDomainRestrictionMode;
                 updateRequired = true;
             }
-            if (ParameterSpecified(nameof(StorageMaximumLevel)))
+            if (ParameterSpecified(nameof(StorageQuota)))
             {
-                props.StorageMaximumLevel = StorageMaximumLevel;
+                props.StorageMaximumLevel = StorageQuota;
                 updateRequired = true;
             }
-            if (ParameterSpecified(nameof(StorageWarningLevel)))
+            if (ParameterSpecified(nameof(StorageQuotaWarningLevel)))
             {
-                props.StorageWarningLevel = StorageWarningLevel;
+                props.StorageWarningLevel = StorageQuotaWarningLevel;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(StorageQuotaReset)))
+            {
+                props.StorageMaximumLevel = 0;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(ResourceQuota)))
+            {
+                props.UserCodeMaximumLevel = ResourceQuota;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(ResourceQuotaWarningLevel)))
+            {
+                props.UserCodeWarningLevel = ResourceQuotaWarningLevel;
                 updateRequired = true;
             }
             if (ParameterSpecified(nameof(SharingCapability)))
@@ -170,6 +254,16 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(DefaultLinkPermission)))
             {
                 props.DefaultLinkPermission = DefaultLinkPermission;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(ShowPeoplePickerSuggestionsForGuestUsers)))
+            {
+                Tenant.EnsureProperty(t => t.ShowPeoplePickerSuggestionsForGuestUsers);
+                if (!Tenant.ShowPeoplePickerSuggestionsForGuestUsers)
+                {
+                    WriteWarning("ShowPeoplePickerSuggestionsForGuests users has been disabled for this tenant. See Set-PnPTenant");
+                }
+                props.ShowPeoplePickerSuggestionsForGuestUsers = ShowPeoplePickerSuggestionsForGuestUsers;
                 updateRequired = true;
             }
             if (ParameterSpecified(nameof(DefaultSharingLinkType)))
@@ -187,11 +281,34 @@ namespace PnP.PowerShell.Commands
                 props.DefaultLinkToExistingAccessReset = true;
                 updateRequired = true;
             }
-            if (ParameterSpecified(nameof(BlockDownloadOfNonViewableFiles)))
+#pragma warning disable CS0618
+            if (ParameterSpecified(nameof(BlockDownloadOfNonViewableFiles)) || ParameterSpecified(nameof(AllowDownloadingNonWebViewableFiles)))
             {
-                props.AllowDownloadingNonWebViewableFiles = !BlockDownloadOfNonViewableFiles;
-                updateRequired = true;
+                var value = ParameterSpecified(nameof(BlockDownloadLinksFileTypes)) ? !BlockDownloadOfNonViewableFiles : AllowDownloadingNonWebViewableFiles;
+                if (ConditionalAccessPolicy == SPOConditionalAccessPolicyType.AllowLimitedAccess)
+                {
+                    props.AllowDownloadingNonWebViewableFiles = value;
+                    updateRequired = true;
+                    if (!value)
+                    {
+                        WriteWarning("Users will not be able to download files that cannot be viewed on the web. To allow download of files that cannot be viewed on the web run the cmdlet again and set AllowDownloadingNonWebViewableFiles to true.");
+                    }
+                }
+                else
+                {
+                    if (ShouldContinue("To set AllowDownloadingNonWebViewableFiles parameter you need to set the -ConditionalAccessPolicy parameter to AllowLimitedAccess. We can set the Conditional Access Policy of this site to AllowLimitedAccess. Would you like to continue?", string.Empty))
+                    {
+                        ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
+                        props.ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
+                        props.AllowDownloadingNonWebViewableFiles = value;
+                        if (!value)
+                        {
+                            WriteWarning("Users will not be able to download files that cannot be viewed on the web. To allow download of files that cannot be viewed on the web run the cmdlet again and set AllowDownloadingNonWebViewableFiles to true.");
+                        }
+                    }
+                }
             }
+#pragma warning restore CS0618
 
             if (ParameterSpecified(nameof(CommentsOnSitePagesDisabled)))
             {
@@ -217,6 +334,12 @@ namespace PnP.PowerShell.Commands
                 updateRequired = true;
             }
 
+            if (ParameterSpecified(nameof(EnablePWA)))
+            {
+                props.PWAEnabled = EnablePWA ? PWAEnabledStatus.Enabled : PWAEnabledStatus.Disabled;
+                updateRequired = true;
+            }
+
             if (ParameterSpecified(nameof(OverrideTenantAnonymousLinkExpirationPolicy)))
             {
                 props.OverrideTenantAnonymousLinkExpirationPolicy = OverrideTenantAnonymousLinkExpirationPolicy.ToBool();
@@ -227,6 +350,153 @@ namespace PnP.PowerShell.Commands
             {
                 props.AnonymousLinkExpirationInDays = AnonymousLinkExpirationInDays.Value;
                 updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(DisableSharingForNonOwners)))
+            {
+                var office365Tenant = new Office365Tenant(ClientContext);
+                ClientContext.Load(office365Tenant);
+                ClientContext.ExecuteQueryRetry();
+                office365Tenant.DisableSharingForNonOwnersOfSite(Identity.Url);
+            }
+
+            if (ParameterSpecified(nameof(ConditionalAccessPolicy)) && ConditionalAccessPolicy == SPOConditionalAccessPolicyType.ProtectionLevel)
+            {
+                if (IsRootSite(Identity.Url))
+                {
+                    throw new PSInvalidOperationException("You cannot set the conditional access policy 'ProtectionLevel' on the root site.");
+                }
+                if (string.IsNullOrEmpty(ProtectionLevelName))
+                {
+                    props.AuthContextStrength = null;
+                }
+                else
+                {
+                    props.AuthContextStrength = ProtectionLevelName;
+                }
+                updateRequired = true;
+            }
+            else
+            {
+                if (ParameterSpecified(nameof(ProtectionLevelName)))
+                {
+                    throw new PSArgumentException("ConditionalAccessPolicy has to be set too when using this parameter.");
+                }
+                if (ParameterSpecified(nameof(ConditionalAccessPolicy)))
+                {
+                    props.AuthContextStrength = null;
+                    updateRequired = true;
+                }
+            }
+
+            if (ClientContext.ServerVersion >= new Version(16, 0, 8715, 1200)) // ServerSupportsIpLabelId2
+            {
+                if (ParameterSpecified(nameof(SensitivityLabel)))
+                {
+                    props.SensitivityLabel2 = SensitivityLabel;
+                    updateRequired = true;
+                }
+                if (ParameterSpecified(nameof(RemoveLabel)))
+                {
+                    props.SensitivityLabel2 = null;
+                    updateRequired = true;
+                }
+            }
+            else
+            {
+                WriteWarning("Server does not support setting sensitity label");
+            }
+
+            if (ParameterSpecified(nameof(LimitedAccessFileType)))
+            {
+                if (ConditionalAccessPolicy == SPOConditionalAccessPolicyType.AllowLimitedAccess)
+                {
+                    props.LimitedAccessFileType = LimitedAccessFileType;
+                    updateRequired = true;
+                }
+                else if (ShouldContinue("To set LimitedAccessFileType you need to set the -ConditionalAccessPolicy parameter to AllowLimitedAccess. We can set the Conditional Access Policy of this site to AllowLimitedAccess. Would you like to continue?", string.Empty))
+                {
+                    ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
+                    props.ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
+                    props.LimitedAccessFileType = LimitedAccessFileType;
+                    updateRequired = true;
+                }
+            }
+
+            if (ParameterSpecified(nameof(AllowEditing)))
+            {
+                if (ConditionalAccessPolicy == SPOConditionalAccessPolicyType.AllowLimitedAccess)
+                {
+                    props.AllowEditing = AllowEditing;
+                }
+                else if (ShouldContinue("To set AllowEditing you need to set the -ConditionalAccessPolicy parameter to AllowLimitedAccess. We can set the Conditional Access Policy of this site to AllowLimitedAccess. Would you like to continue?", string.Empty))
+                {
+                    ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
+                    props.ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
+                    props.AllowEditing = AllowEditing;
+                }
+            }
+
+            if (ParameterSpecified(nameof(RestrictedToGeo)))
+            {
+                props.RestrictedToRegion = RestrictedToGeo;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ExternalUserExpirationInDays)))
+            {
+                props.ExternalUserExpirationInDays = ExternalUserExpirationInDays;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(OverrideTenantExternalUserExpirationPolicy)))
+            {
+                props.OverrideTenantExternalUserExpirationPolicy = OverrideTenantExternalUserExpirationPolicy;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(AddInformationSegment)) && AddInformationSegment.Length > 0)
+            {
+                props.IBSegmentsToAdd = AddInformationSegment;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(RemoveInformationSegment)) && RemoveInformationSegment.Length > 0)
+            {
+                props.IBSegmentsToRemove = RemoveInformationSegment;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(BlockDownloadLinksFileType)))
+            {
+                props.BlockDownloadLinksFileType = BlockDownloadLinksFileType;
+                updateRequired = true;
+            }
+
+            if(ParameterSpecified(nameof(OverrideBlockUserInfoVisibility)))
+            {
+                props.OverrideBlockUserInfoVisibility = OverrideBlockUserInfoVisibility;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(HubSiteId)))
+            {
+                var hubsiteProperties = Tenant.GetHubSitePropertiesById(HubSiteId);
+                ClientContext.Load(hubsiteProperties);
+                ClientContext.ExecuteQueryRetry();
+                if (hubsiteProperties == null || string.IsNullOrEmpty(hubsiteProperties.SiteUrl))
+                {
+                    throw new PSArgumentException("Hubsite not found with the ID specified");
+                }
+                if (hubsiteProperties.ID != Guid.Empty)
+                {
+                    Tenant.ConnectSiteToHubSiteById(Identity.Url, hubsiteProperties.ID);
+                }
+                else
+                {
+                    Tenant.ConnectSiteToHubSite(Identity.Url, hubsiteProperties.SiteUrl);
+                }
+                ClientContext.ExecuteQueryRetry();
             }
 
             if (updateRequired)
@@ -249,7 +519,7 @@ namespace PnP.PowerShell.Commands
                     var userEntity = new UserEntity { LoginName = owner };
                     admins.Add(userEntity);
                 }
-                Tenant.AddAdministrators(admins, new Uri(Url));
+                Tenant.AddAdministrators(admins, new Uri(Identity.Url));
             }
         }
 
@@ -294,6 +564,15 @@ namespace PnP.PowerShell.Commands
                 }
             }
             return succeeded;
+        }
+
+        private bool IsRootSite(string url)
+        {
+            if (Uri.TryCreate(url, UriKind.Absolute, out var result))
+            {
+                return result.AbsolutePath.TrimEnd('/').Length == 0;
+            }
+            return false;
         }
     }
 }

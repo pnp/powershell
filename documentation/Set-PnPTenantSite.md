@@ -21,20 +21,22 @@ Updates settings of a site collection
 
 ### Set Properties
 ```powershell
-Set-PnPTenantSite [-Url] <String> [-Title <String>] [-LocaleId <UInt32>] [-AllowSelfServiceUpgrade]
- [-Owners <System.Collections.Generic.List`1[System.String]>] [-DenyAddAndCustomizePages]
- [-SharingCapability <SharingCapabilities>] [-StorageMaximumLevel <Int64>] [-StorageWarningLevel <Int64>]
- [-DefaultLinkPermission <SharingPermissionType>] [-DefaultSharingLinkType <SharingLinkType>] [-DefaultLinkToExistingAccess <Boolean>]
- [-SharingAllowedDomainList <String>] [-SharingBlockedDomainList <String>] [-BlockDownloadOfNonViewableFiles]
+Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-AllowSelfServiceUpgrade]
+ [-Owners <String[]>] [-DenyAddAndCustomizePages]
+ [-SharingCapability <SharingCapabilities>] [-StorageQuota <Int64>] [-StorageQuotaWarningLevel <Int64>] [-StorageQuotaReset] [-BlockDownloadLinksFileType <BlockDownloadLinksFileTypes>]
+ [-ResourceQuota <Double>] [-ResourceQuotaWarningLevel <Double>] [-EnablePWA <Boolean>]
+ [-DefaultLinkPermission <SharingPermissionType>] [-DefaultSharingLinkType <SharingLinkType>] [-DefaultLinkToExistingAccess <Boolean>] [-ExternalUserExpirationInDays <Int32>]
+ [-SharingAllowedDomainList <String>] [-SharingBlockedDomainList <String>] [-ShowPeoplePickerSuggestionsForGuestUsers <Boolean>] [-AllowDownloadingOfNonWebViewableFiles]
+ [-LimitedAccessFileType <SPOLimitedAccessFileType>] [-AllowEditing <Boolean>]
  [-SharingDomainRestrictionMode <SharingDomainRestrictionModes>] [-CommentsOnSitePagesDisabled]
  [-DisableAppViews <AppViewsPolicy>] [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>]
- [-DisableFlows <FlowsPolicy>] [-AnonymousLinkExpirationInDays <Int32>]
+ [-DisableFlows <FlowsPolicy>] [-AnonymousLinkExpirationInDays <Int32>] [-SensitivityLabel <String>] [-RemoveLabel] [-AddInformationSegment <Guid[]>] [-RemoveInformationSegment <Guid[]>]
  [-OverrideTenantAnonymousLinkExpirationPolicy] [-Wait] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Set Lock State
 ```powershell
-Set-PnPTenantSite [-Url] <String> [-LockState <SiteLockState>] [-Wait] [-Connection <PnPConnection>]
+Set-PnPTenantSite [-Identity] <String> [-LockState <SiteLockState>] [-Wait] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -45,40 +47,54 @@ Allows settings of a site collection to be updated
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPTenantSite -Url "https://contoso.sharepoint.com" -Title "Contoso Website" -Sharing Disabled
+Set-PnPTenantSite -Identity "https://contoso.sharepoint.com" -Title "Contoso Website" -Sharing Disabled
 ```
 
 This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website' and disable sharing on this site collection.
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPTenantSite -Url "https://contoso.sharepoint.com" -Title "Contoso Website" -StorageWarningLevel 8000 -StorageMaximumLevel 10000
+Set-PnPTenantSite -Identity "https://contoso.sharepoint.com" -Title "Contoso Website" -StorageWarningLevel 8000 -StorageMaximumLevel 10000
 ```
 
 This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website', set the storage warning level to 8GB and set the storage maximum level to 10GB.
 
 ### EXAMPLE 3
 ```powershell
-Set-PnPTenantSite -Url "https://contoso.sharepoint.com/sites/sales" -Owners "user@contoso.onmicrosoft.com"
+Set-PnPTenantSite -Identity "https://contoso.sharepoint.com/sites/sales" -Owners "user@contoso.onmicrosoft.com"
 ```
 
 This will add user@contoso.onmicrosoft.com as an additional site collection owner at 'https://contoso.sharepoint.com/sites/sales'.
 
 ### EXAMPLE 4
 ```powershell
-Set-PnPTenantSite -Url "https://contoso.sharepoint.com/sites/sales" -Owners @("user1@contoso.onmicrosoft.com", "user2@contoso.onmicrosoft.com")
+Set-PnPTenantSite -Identity "https://contoso.sharepoint.com/sites/sales" -Owners @("user1@contoso.onmicrosoft.com", "user2@contoso.onmicrosoft.com")
 ```
 
 This will add user1@contoso.onmicrosoft.com and user2@contoso.onmicrosoft.com as additional site collection owners at 'https://contoso.sharepoint.com/sites/sales'.
 
 ### EXAMPLE 5
 ```powershell
-Set-PnPTenantSite -Url "https://contoso.sharepoint.com/sites/sales" -NoScriptSite:$false
+Set-PnPTenantSite -Identity "https://contoso.sharepoint.com/sites/sales" -NoScriptSite:$false
 ```
 
 This will enable script support for the site 'https://contoso.sharepoint.com/sites/sales' if disabled.
 
 ## PARAMETERS
+
+### -AddInformationSegment
+This parameter allows you to add a segment to a SharePoint site. This parameter is only applicable for tenants who have enabled Microsoft 365 Information barriers capability. Please read https://docs.microsoft.com/sharepoint/information-barriers documentation to understand Information barriers in SharePoint Online.
+
+```yaml
+Type: Guid[]
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -AllowSelfServiceUpgrade
 Specifies if the site administrator can upgrade the site collection
@@ -94,8 +110,24 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -AllowEditing
+Prevents users from editing Office files in the browser and copying and pasting Office file contents out of the browser window.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -AnonymousLinkExpirationInDays
-{{ Fill AnonymousLinkExpirationInDays Description }}
+Specifies all anonymous/anyone links that have been created (or will be created) will expire after the set number of days. Only applies if OverrideTenantAnonymousLinkExpirationPolicy is set to true.
+
+To remove the expiration requirement, set the value to zero (0).
 
 ```yaml
 Type: Int32
@@ -113,6 +145,27 @@ Specifies if non web viewable files can be downloaded.
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BlockDownloadLinksFileType
+The valid values are:
+
+WebPreviewableFiles
+ServerRenderedFilesOnly
+
+Note: ServerRendered (Office Only) and WebPreviewable (All supported files).
+
+The site value is compared with the tenant level setting and the stricter one wins. For example, if the tenant is set to ServerRenderedFilesOnly then that will be used even if the site is set to WebPreviewableFiles.
+
+```yaml
+Type: BlockDownloadLinksFileTypes
 Parameter Sets: Set Properties
 
 Required: False
@@ -253,6 +306,38 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EnablePWA
+Determines whether site can include Project Web App. For more information about Project Web App, see Plan SharePoint groups in Project Server.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LimitedAccessFileType
+The following parameters can be used with -ConditionalAccessPolicy AllowLimitedAccess for both the organization-wide setting and the site-level setting.
+
+OfficeOnlineFilesOnly: Allows users to preview only Office files in the browser. This option increases security but may be a barrier to user productivity.
+
+WebPreviewableFiles (default): Allows users to preview Office files and other file types (such as PDF files and images) in the browser. Note that the contents of file types other than Office files are handled in the browser. This option optimizes for user productivity but offers less security for files that aren't Office files.
+
+OtherFiles: Allows users to download files that can't be previewed, such as .zip and .exe. This option offers less security.
+
+```yaml
+Type: SPOLimitedAccessFileType
+Parameter Sets: Set Properties
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -LocaleId
 Specifies the language of this site collection. For more information, see Locale IDs supported by SharePoint at https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint. To get the list of supported languages on a SharePoint environment use: (Get-PnPWeb -Includes RegionalSettings.InstalledLanguages).RegionalSettings.InstalledLanguages.
 
@@ -301,6 +386,34 @@ Specifies owner(s) to add as site collection administrators. They will be added 
 
 ```yaml
 Type: System.Collections.Generic.List`1[System.String]
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SensitivityLabel
+Set the sensitivity label.
+
+```yaml
+Type: String
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RemoveLabel
+Remove the assigned sensitivity label of a site.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: Set Properties
 
 Required: False
@@ -369,11 +482,78 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -StorageMaximumLevel
+### -ShowPeoplePickerSuggestionsForGuestUsers
+To enable the option to search for existing guest users at Site Collection Level, set this parameter to $true.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -StorageQuota
 Specifies the storage quota for this site collection in megabytes. This value must not exceed the company's available quota.
 
 ```yaml
 Type: Int64
+Parameter Sets: Set Properties
+Alias: StorageMaximumLevel
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -StorageQuotaWarningLevel
+Specifies the warning level for the storage quota in megabytes. This value must not exceed the values set for the StorageQuota parameter.
+
+```yaml
+Type: Int64
+Parameter Sets: Set Properties
+Alias: StorageQuotaMaximumLevel
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -StorageQuotaReset
+Resets the OneDrive for Business storage quota to the tenant's new default storage space
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Properties
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RemoveInformationSegment
+This parameter allows you to remove a segment from a SharePoint site. This parameter is only applicable for tenants who have enabled Microsoft 365 Information barriers capability. Please read https://docs.microsoft.com/sharepoint/information-barriers documentation to understand Information barriers with SharePoint Online.
+
+```yaml
+Type: Guid[]
+Parameter Sets: Set Properties
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResourceQuota
+Specifies the resource quota in megabytes of the site collection. The default value is 0.
+
+```yaml
+Type: Double
 Parameter Sets: Set Properties
 
 Required: False
@@ -383,11 +563,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -StorageWarningLevel
-Specifies the warning level for the storage quota in megabytes. This value must not exceed the values set for the StorageMaximumLevel parameter
+### -ResourceQuotaWarningLevel
+Specifies the warning level in megabytes of the site collection to warn the site collection administrator that the site is approaching the resource quota.
 
 ```yaml
-Type: Int64
+Type: Double
 Parameter Sets: Set Properties
 
 Required: False
@@ -411,13 +591,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Url
+### -Identity
 Specifies the URL of the site
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-
+Alias: Url
 Required: True
 Position: 0
 Default value: None
