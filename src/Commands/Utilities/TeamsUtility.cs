@@ -468,7 +468,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return await GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}", accessToken);
         }
 
-        public static async Task<TeamChannel> AddChannelAsync(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, bool isPrivate, string ownerUPN)
+        public static async Task<TeamChannel> AddChannelAsync(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, bool isPrivate, string ownerUPN, bool isFavoriteByDefault)
         {
             var channel = new TeamChannel()
             {
@@ -489,6 +489,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             else
             {
+                channel.IsFavoriteByDefault = isFavoriteByDefault;
                 return await GraphHelper.PostAsync<TeamChannel>(httpClient, $"v1.0/teams/{groupId}/channels", channel, accessToken);
             }
         }

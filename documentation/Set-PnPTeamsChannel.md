@@ -20,8 +20,8 @@ Updates an existing Teams Channel
 ## SYNTAX
 
 ```powershell
-Set-PnPTeamsChannel -Team <TeamsTeamPipeBind> -Identity <TeamsChannelPipeBind> [-DisplayName <String>]
- [-Description <String>]  [<CommonParameters>]
+Set-PnPTeamsChannel -Team <TeamsTeamPipeBind> -Identity <TeamsChannelPipeBind> [-DisplayName <String>] [-Description <String>] [-IsFavoriteByDefault <Boolean>]
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -34,6 +34,13 @@ Set-PnPTeamsChannel -Team "MyTeam" -Channel "MyChannel" -DisplayName "My Channel
 ```
 
 Updates the channel called 'MyChannel' to have the display name set to 'My Channel'
+
+### EXAMPLE 2
+```powershell
+Set-PnPTeamsChannel -Team "MyTeam" -Channel "MyChannel" -IsFavoriteByDefault $true
+```
+
+Updates the channel called 'MyChannel' to make it visible to members.
 
 ## PARAMETERS
 
@@ -76,6 +83,20 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -IsFavoriteByDefault
+Allows you to specify if the channel is by default visible for members
+
+```yaml
+Type: Boolean
+Parameter Sets: Public channel
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

@@ -33,6 +33,9 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = true, ParameterSetName = ParameterSET_PRIVATE)]
         public string OwnerUPN;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSET_PUBLIC)]
+        public bool IsFavoriteByDefault;
+
         protected override void ExecuteCmdlet()
         {
             var groupId = Team.GetGroupId(HttpClient, AccessToken);
@@ -40,7 +43,7 @@ namespace PnP.PowerShell.Commands.Graph
             {
                 try
                 {
-                    var channel = TeamsUtility.AddChannelAsync(AccessToken, HttpClient, groupId, DisplayName, Description, Private, OwnerUPN).GetAwaiter().GetResult();
+                    var channel = TeamsUtility.AddChannelAsync(AccessToken, HttpClient, groupId, DisplayName, Description, Private, OwnerUPN, IsFavoriteByDefault).GetAwaiter().GetResult();
                     WriteObject(channel);
                 }
                 catch (GraphException ex)
