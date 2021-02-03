@@ -73,7 +73,7 @@ Connect-PnPOnline -Url <String> -UseWebLogin [-ForceAuthentication]
 
 ### Interactive login for Multi-Factor authentication
 ```powershell
-Connect-PnPOnline -Url <String> -Interactive [-ClientId <String>] [-ForceAuthentication <SwitchParameter>] [-AzureEnvironment <AzureEnvironment>]
+Connect-PnPOnline -Url <String> -Interactive [-ClientId <String>] [-ForceAuthentication <SwitchParameter>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
 ```
 
 ### On-premises login for page transformation from on-premises SharePoint to SharePoint Online

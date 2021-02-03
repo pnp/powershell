@@ -23,7 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - `Register-PnPAzureADApp` now outputs the base64 encoded version of the certificate which can be used with `Connect-PnPOnline -ClientId -CertificateBase64Encoded`
 - Fixed issue with moving and copying files to subfolder, Issue #165. 
 - fixed issue where Get-PnPTenantSite was not returning all properties correct, Issue #151
-- Added `-Interactive` login option to Register-PnPManagementApp which allows for an interactive authentication flow not using device login.
+- Added `-Interactive` login option to Register-PnPManagementApp which allows for an interactive authentication flow not using device login for environments that require Multi-Factor Authentication.
 - Updated all Microsoft365Group cmdlets to only load the SiteUrl of the underlying Microsoft 365 Group where required. This means that `Get-PnPMicrosoft365Group -Identity` will not by default load the site url. Specify `-IncludeSiteUrl` to include it.
 
 ## [1.2.0]

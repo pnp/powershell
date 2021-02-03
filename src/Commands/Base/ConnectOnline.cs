@@ -147,6 +147,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         public string TenantAdminUrl;
 
         [Parameter(Mandatory = false)]
