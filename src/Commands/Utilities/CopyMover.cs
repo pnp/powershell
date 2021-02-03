@@ -5,22 +5,23 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using PnP.PowerShell.Commands.Model;
 using System.Linq;
+using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class CopyMover
     {
-        internal static async Task<(List<CopyJobLog> logs, CopyMigrationInfo jobInfo)> CopyAsync(HttpClient httpClient, string accessToken, Uri currentContextUri, string fullyQualifiedSourceUrl, string fullyQualifiedDestinationUrl, bool ignoreVersionHistory, bool overwrite, bool allowSchemaMismatch, bool sameWebCopyMoveOptimization, bool allowSmallerVersionLimitOnDestination, bool noWait)
+        internal static async Task<(List<CopyJobLog> logs, Model.CopyMigrationInfo jobInfo)> CopyAsync(HttpClient httpClient, ClientContext clientContext, Uri currentContextUri, string fullyQualifiedSourceUrl, string fullyQualifiedDestinationUrl, bool ignoreVersionHistory, bool overwrite, bool allowSchemaMismatch, bool sameWebCopyMoveOptimization, bool allowSmallerVersionLimitOnDestination, bool noWait)
         {
-            return await BaseRequestAsync(httpClient, accessToken, false, currentContextUri, fullyQualifiedSourceUrl, fullyQualifiedDestinationUrl, ignoreVersionHistory, overwrite, allowSchemaMismatch, sameWebCopyMoveOptimization, allowSmallerVersionLimitOnDestination, noWait);
+            return await BaseRequestAsync(httpClient, clientContext, false, currentContextUri, fullyQualifiedSourceUrl, fullyQualifiedDestinationUrl, ignoreVersionHistory, overwrite, allowSchemaMismatch, sameWebCopyMoveOptimization, allowSmallerVersionLimitOnDestination, noWait);
         }
 
-        internal static async Task<(List<CopyJobLog> logs, CopyMigrationInfo jobInfo)> MoveAsync(HttpClient httpClient, string accessToken, Uri currentContextUri, string fullyQualifiedSourceUrl, string fullyQualifiedDestinationUrl, bool ignoreVersionHistory, bool overwrite, bool allowSchemaMismatch, bool sameWebCopyMoveOptimization, bool allowSmallerVersionLimitOnDestination, bool noWait)
+        internal static async Task<(List<CopyJobLog> logs, Model.CopyMigrationInfo jobInfo)> MoveAsync(HttpClient httpClient, ClientContext clientContext, Uri currentContextUri, string fullyQualifiedSourceUrl, string fullyQualifiedDestinationUrl, bool ignoreVersionHistory, bool overwrite, bool allowSchemaMismatch, bool sameWebCopyMoveOptimization, bool allowSmallerVersionLimitOnDestination, bool noWait)
         {
-            return await BaseRequestAsync(httpClient, accessToken, true, currentContextUri, fullyQualifiedSourceUrl, fullyQualifiedDestinationUrl, ignoreVersionHistory, overwrite, allowSchemaMismatch, sameWebCopyMoveOptimization, allowSmallerVersionLimitOnDestination, noWait);
+            return await BaseRequestAsync(httpClient, clientContext, true, currentContextUri, fullyQualifiedSourceUrl, fullyQualifiedDestinationUrl, ignoreVersionHistory, overwrite, allowSchemaMismatch, sameWebCopyMoveOptimization, allowSmallerVersionLimitOnDestination, noWait);
         }
 
-        private static async Task<(List<CopyJobLog> logs, CopyMigrationInfo jobInfo)> BaseRequestAsync(HttpClient httpClient, string accessToken, bool isMove, Uri currentContextUri, string fullyQualifiedSourceUrl, string fullyQualifiedDestinationUrl, bool ignoreVersionHistory, bool overwrite, bool allowSchemaMismatch, bool sameWebCopyMoveOptimization, bool allowSmallerVersionLimitOnDestination, bool noWait)
+        private static async Task<(List<CopyJobLog> logs, Model.CopyMigrationInfo jobInfo)> BaseRequestAsync(HttpClient httpClient, ClientContext clientContext, bool isMove, Uri currentContextUri, string fullyQualifiedSourceUrl, string fullyQualifiedDestinationUrl, bool ignoreVersionHistory, bool overwrite, bool allowSchemaMismatch, bool sameWebCopyMoveOptimization, bool allowSmallerVersionLimitOnDestination, bool noWait)
         {
             var logs = new List<CopyJobLog>();
 
@@ -41,7 +42,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             };
 
-            var results = await REST.RestHelper.PostAsync<REST.RestResultCollection<Model.CopyMigrationInfo>>(httpClient, $"{currentContextUri}/_api/site/CreateCopyJobs", accessToken, body, false);
+            var results = await REST.RestHelper.PostAsync<REST.RestResultCollection<Model.CopyMigrationInfo>>(httpClient, $"{currentContextUri}/_api/site/CreateCopyJobs", clientContext, body, false);
 
             if (results != null && results.Items.Any())
             {
@@ -51,7 +52,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     copyJobInfo = result
                 };
-                var copyJob = await Utilities.REST.RestHelper.PostAsync<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", accessToken, copyJobInfo, false);
+                var copyJob = await Utilities.REST.RestHelper.PostAsync<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", clientContext, copyJobInfo, false);
                 if (copyJob != null)
                 {
                     if (noWait)
@@ -62,7 +63,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     {
                         // sleep 5 seconds
                         System.Threading.Thread.Sleep(1000);
-                        copyJob = await Utilities.REST.RestHelper.PostAsync<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", accessToken, copyJobInfo, false);
+                        copyJob = await Utilities.REST.RestHelper.PostAsync<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", clientContext, copyJobInfo, false);
                     }
                     foreach (var log in copyJob.Logs)
                     {
@@ -74,7 +75,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return (logs, null);
         }
 
-        public static async Task<CopyMigrationJob> GetCopyMigrationJobStatusAsync(HttpClient httpClient, Uri currentContextUri, string accessToken, CopyMigrationInfo jobInfo, bool noWait)
+        public static async Task<CopyMigrationJob> GetCopyMigrationJobStatusAsync(HttpClient httpClient, Uri currentContextUri, ClientContext clientContext, Model.CopyMigrationInfo jobInfo, bool noWait)
         {
             var logs = new List<CopyJobLog>();
 
@@ -82,7 +83,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 copyJobInfo = jobInfo
             };
-            var copyJob = await Utilities.REST.RestHelper.PostAsync<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", accessToken, copyJobInfo, false);
+            var copyJob = await Utilities.REST.RestHelper.PostAsync<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", clientContext, copyJobInfo, false);
             if (copyJob != null)
             {
                 if (!noWait)
@@ -91,7 +92,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     {
                         // sleep 5 seconds
                         System.Threading.Thread.Sleep(1000);
-                        copyJob = await Utilities.REST.RestHelper.PostAsync<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", accessToken, copyJobInfo, false);
+                        copyJob = await Utilities.REST.RestHelper.PostAsync<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", clientContext, copyJobInfo, false);
                     }
                 }
             }

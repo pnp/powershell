@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Management.Automation;
+using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using Microsoft.Online.SharePoint.TenantAdministration;
@@ -25,6 +26,8 @@ namespace PnP.PowerShell.Commands
 
         public PnPContext PnPContext => Connection?.PnPContext ?? PnPConnection.CurrentConnection.PnPContext;
 
+        public new HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient(ClientContext);
+        
         // do not remove '#!#99'
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")]
         public PnPConnection Connection = null;

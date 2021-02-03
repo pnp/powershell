@@ -119,7 +119,7 @@ namespace PnP.PowerShell.Commands.Files
             {
                 targetUrl = $"{destination.Scheme}://{destination.Host}/{targetUrl.TrimStart('/')}";
             }
-            var results = Utilities.CopyMover.MoveAsync(HttpClient, AccessToken, currentContextUri, sourceUrl, targetUrl, IgnoreVersionHistory, Overwrite, AllowSchemaMismatch, sameWebCopyMoveOptimization, AllowSmallerVersionLimitOnDestination, NoWait).GetAwaiter().GetResult();
+            var results = Utilities.CopyMover.MoveAsync(HttpClient, ClientContext, currentContextUri, sourceUrl, targetUrl, IgnoreVersionHistory, Overwrite, AllowSchemaMismatch, sameWebCopyMoveOptimization, AllowSmallerVersionLimitOnDestination, NoWait).GetAwaiter().GetResult();
             if (NoWait)
             {
                 WriteObject(results.jobInfo);
