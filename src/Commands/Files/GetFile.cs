@@ -23,16 +23,16 @@ namespace PnP.PowerShell.Commands.Files
         [Alias("ServerRelativeUrl", "SiteRelativeUrl")]
         public string Url;
 
-        [Parameter(Mandatory = false, ParameterSetName = URLTOPATH)]
+        [Parameter(Mandatory = true, ParameterSetName = URLTOPATH)]
         public string Path = string.Empty;
 
-        [Parameter(Mandatory = false, ParameterSetName = URLTOPATH)]
+        [Parameter(Mandatory = true, ParameterSetName = URLTOPATH)]
         public string Filename = string.Empty;
 
         [Parameter(Mandatory = true, ParameterSetName = URLTOPATH)]
         public SwitchParameter AsFile;
 
-        [Parameter(Mandatory = false, ParameterSetName = URLASLISTITEM)]
+        [Parameter(Mandatory = true, ParameterSetName = URLASLISTITEM)]
         public SwitchParameter AsListItem;
 
         [Parameter(Mandatory = false, ParameterSetName = URLASLISTITEM)]
@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Files
 
         [Parameter(Mandatory = false, ParameterSetName = URLTOPATH)]
         public SwitchParameter Force;
-        
+
         [Parameter(Mandatory = false, ParameterSetName = URLASFILEOBJECT)]
         public SwitchParameter AsFileObject;
 
@@ -94,15 +94,14 @@ namespace PnP.PowerShell.Commands.Files
                     {
                         ClientContext.Load(file, f => f.Author, f => f.Length, f => f.ModifiedBy, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
                         ClientContext.ExecuteQueryRetry();
-                    }                    
+                    }
                     catch (ServerException)
                     {
                         // Assume the cause of the exception is that a principal cannot be found and try again without:
                         // Fallback in case the creator or person having last modified the file no longer exists in the environment such that the file can still be downloaded
                         ClientContext.Load(file, f => f.Length, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
                         ClientContext.ExecuteQueryRetry();
-                    }                    
-
+                    }
                     WriteObject(file);
                     break;
                 case URLASLISTITEM:
@@ -131,9 +130,7 @@ namespace PnP.PowerShell.Commands.Files
 
         private void SaveFileToLocal(Web web, string serverRelativeUrl, string localPath, string localFileName = null, Func<string, bool> fileExistsCallBack = null)
         {
-
             var file = web.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
-
             var clientContext = web.Context as ClientContext;
             clientContext.Load(file);
             clientContext.ExecuteQueryRetry();
