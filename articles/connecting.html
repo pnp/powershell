@@ -96,10 +96,11 @@
 </code></pre>
 <h3 id="connect-by-using-your-own-azure-ad-application">Connect by using your own Azure AD Application</h3>
 <p>You will have to create your own Azure AD Application registration, or you can create one:</p>
-<pre><code class="lang-powershell">Register-PnPAzureADApp -Name &quot;YourApplicationName&quot; -Tenant [yourtenant.onmicrosoft.com] -DeviceLogin
+<pre><code class="lang-powershell">Register-PnPAzureADApp -ApplicationName &quot;YourApplicationName&quot; -Tenant [yourtenant.onmicrosoft.com] -DeviceLogin
 </code></pre>
 <p>This will launch a authentication dialog where need to authenticate. After closing this window the cmdlet will continue to register a new application with a set of default permissions. By default a certificate will be generated and stored in the current folder, named after the application you want to create. You can specify your own certificate by using the <code>-CertificatePath</code> parameter and optional <code>-CertificatePassword</code> parameter.</p>
 <p>You can add permissions by using the <code>-Scope</code> parameter. The cmdlet will output the Azure AppId/client id, the name and location of the certificates created (if any) and the thumbprint of the certificate. It is possible to add the certificate created to the certificate management store in Windows by adding the <code>-Store</code> parameter.</p>
+<p>Note if you are using Credential Based Authentication, you will need to make a change to the app registration manifest file. Go to the app registration, select Manifest under the Manage section, then change the &quot;allowPublicClient&quot; property to true and click save.</p>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://[yourtenant.sharepoint.com] -Credentials (Get-Credential) -ClientId [clientid]
 </code></pre>
 <h2 id="connect-interactively-using-weblogin-supporting-mfa">Connect interactively using WebLogin supporting MFA</h2>
