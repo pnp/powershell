@@ -226,7 +226,7 @@ namespace PnP.PowerShell.Commands.Base
                     token = AzureAuthHelper.AuthenticateDeviceLogin(Tenant, cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment);
                     if (token == null)
                     {
-                        messageWriter.WriteError("Operation cancelled or no token retrieved.");
+                        messageWriter.WriteWarning("Operation cancelled or no token retrieved.");
                     }
                     messageWriter.Stop();
                 });
@@ -239,7 +239,7 @@ namespace PnP.PowerShell.Commands.Base
                     token = AzureAuthHelper.AuthenticateInteractive(Tenant, cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment);
                     if (token == null)
                     {
-                        messageWriter.WriteError("Operation cancelled or no token retrieved.");
+                        messageWriter.WriteWarning("Operation cancelled or no token retrieved.");
                     }
                     messageWriter.Stop();
                 });
@@ -470,7 +470,7 @@ namespace PnP.PowerShell.Commands.Base
 
                     using (var authManager = AuthenticationManager.CreateWithInteractiveLogin(azureApp.AppId, (url, port) =>
                      {
-                         BrowserHelper.OpenBrowserForInteractiveLogin(url, port, true);
+                         BrowserHelper.OpenBrowserForInteractiveLogin(url, port, true, cancellationTokenSource);
                      }, Tenant, "You successfully provided consent", "You failed to provide consent.", AzureEnvironment))
                     {
                         authManager.GetAccessToken("https://graph.microsoft.com/.default", Microsoft.Identity.Client.Prompt.Consent);

@@ -169,7 +169,7 @@ namespace PnP.PowerShell.Commands.Utilities
             Contains
         }
 
-        internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls = null, bool noThreadJoin = false, CancellationToken cancellationToken = default)
+        internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls = null, bool noThreadJoin = false, CancellationTokenSource cancellationTokenSource = null)
         {
             bool success = false;
 #if Windows
@@ -179,6 +179,12 @@ namespace PnP.PowerShell.Commands.Utilities
                 var thread = new Thread(() =>
                 {
                     var form = new System.Windows.Forms.Form();
+
+                    cancellationTokenSource.Token.Register(() =>
+                    {
+                        form.Invoke((System.Windows.Forms.MethodInvoker)(() => form.Close()));
+                        //form.Close();
+                    });
 
                     var browser = new System.Windows.Forms.WebBrowser
                     {
@@ -196,8 +202,14 @@ namespace PnP.PowerShell.Commands.Utilities
                     form.Controls.Add(browser);
                     form.ResumeLayout(false);
 
+                    form.FormClosed += (a,b) => {
+                        if(!success)
+                        {
+                            cancellationTokenSource.Cancel();
+                        }
+                    };
                     browser.Navigate(siteUrl);
-
+                    
                     browser.Navigated += (sender, args) =>
                     {
                         var navigatedUrl = args.Url.ToString();
@@ -233,8 +245,9 @@ namespace PnP.PowerShell.Commands.Utilities
                         }
                         if (matched)
                         {
-                            form.Close();
                             success = true;
+                            form.Close();
+
                         }
                     };
 
@@ -299,13 +312,13 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        internal static void OpenBrowserForInteractiveLogin(string url, int port, bool usePopup)
+        internal static void OpenBrowserForInteractiveLogin(string url, int port, bool usePopup, CancellationTokenSource cancellationTokenSource)
         {
             try
             {
                 if (OperatingSystem.IsWindows() && usePopup)
                 {
-                    BrowserHelper.GetWebBrowserPopup(url, "Please login", new[] { ($"http://localhost:{port}/?code=", BrowserHelper.UrlMatchType.StartsWith) }, noThreadJoin: true);
+                    BrowserHelper.GetWebBrowserPopup(url, "Please login", new[] { ($"http://localhost:{port}/?code=", BrowserHelper.UrlMatchType.StartsWith) }, noThreadJoin: true, cancellationTokenSource: cancellationTokenSource);
                 }
                 else
                 {

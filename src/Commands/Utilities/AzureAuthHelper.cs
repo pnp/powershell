@@ -32,17 +32,24 @@ namespace PnP.PowerShell.Commands.Utilities
                     if (Utilities.OperatingSystem.IsWindows() && !noPopup)
                     {
                         ClipboardService.SetText(result.UserCode);
-                        messageWriter.WriteMessage($"Please login.\n\nWe opened a browser and navigated to {result.VerificationUrl}\n\nEnter code: {result.UserCode} (we copied this code to your clipboard)\n\nNOTICE: close the popup after you authenticated successfully to continue the process.");
+                        messageWriter.WriteWarning($"Please login.\n\nWe opened a browser and navigated to {result.VerificationUrl}\n\nEnter code: {result.UserCode} (we copied this code to your clipboard)\n\nNOTICE: close the popup after you authenticated successfully to continue the process.");
                         BrowserHelper.GetWebBrowserPopup(result.VerificationUrl, "Please login");
                     }
                     else
                     {
-                        messageWriter.WriteMessage(result.Message);
+                        messageWriter.WriteWarning(result.Message);
                     }
                     return Task.FromResult(0);
                 }, azureEnvironment))
                 {
-                    return authManager.GetAccessTokenAsync(new string[] { "https://graph.microsoft.com/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
+                    try
+                    {
+                        return authManager.GetAccessTokenAsync(new string[] { "https://graph.microsoft.com/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
+                    }
+                    catch (Microsoft.Identity.Client.MsalException)
+                    {
+                        return null;
+                    }
                 }
             }
             catch (OperationCanceledException)
@@ -63,12 +70,19 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 using (var authManager = PnP.Framework.AuthenticationManager.CreateWithInteractiveLogin(CLIENTID, (url, port) =>
                 {
-                    BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !noPopup);
+                    BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !noPopup, cancellationTokenSource);
                 },
                 successMessageHtml: $"You successfully authenticated with PnP PowerShell. Feel free to close this {(noPopup ? "tab" : "window")}.",
                 failureMessageHtml: $"You did not authenticate with PnP PowerShell. Feel free to close this browser {(noPopup ? "tab" : "window")}."))
                 {
-                    return authManager.GetAccessTokenAsync(new string[] { "https://graph.microsoft.com/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
+                    try
+                    {
+                        return authManager.GetAccessTokenAsync(new string[] { "https://graph.microsoft.com/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
+                    }
+                    catch (Microsoft.Identity.Client.MsalException)
+                    {
+                        return null;
+                    }
                 }
             }
             catch (OperationCanceledException)
