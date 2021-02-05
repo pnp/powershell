@@ -42,6 +42,7 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
+            ClientContext.ExecuteQueryRetry();
             if(ParameterSpecified(nameof(Identity)))
             {
                 var siteProperties = Tenant.GetSitePropertiesByUrl(Identity.Url, Detailed);
@@ -72,6 +73,7 @@ namespace PnP.PowerShell.Commands
 #pragma warning restore CS0618 // Type or member is obsolete
                     Filter = Filter,
                 };
+                
                 if (ClientContext.ServerVersion >= new Version(16, 0, 7708, 1200))
                 {
                     if (ParameterSpecified(nameof(GroupIdDefined)))
