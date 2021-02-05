@@ -48,16 +48,12 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
 
+        [Obsolete("The Force parameter has been deprecated and is no longer required to be provided. It will be removed in a future version.")] 
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSpecified(nameof(Force)))
-            {
-                WriteWarning("The Force parameter has been deprecated and is no longer required to be provided. It will be removed in a future version.");
-            }
-
             if (!Url.ToLower().StartsWith("https://") && !Url.ToLower().StartsWith("http://"))
             {
                 Uri uri = BaseUri;
