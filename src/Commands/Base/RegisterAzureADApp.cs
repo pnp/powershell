@@ -142,7 +142,7 @@ namespace PnP.PowerShell.Commands.Base
                         record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
                         byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
                         var base64String = Convert.ToBase64String(certPfxData);
-                        record.Properties.Add(new PSVariableProperty(new PSVariable("Base64 Encoded", base64String)));
+                        record.Properties.Add(new PSVariableProperty(new PSVariable("Base64Encoded", base64String)));
                         StartConsentFlow(loginEndPoint, azureApp, redirectUri, token, httpClient, record);
                     }
                     else
