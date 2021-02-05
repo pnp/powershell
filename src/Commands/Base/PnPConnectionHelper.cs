@@ -174,7 +174,7 @@ namespace PnP.PowerShell.Commands.Base
             return connection;
         }
 
-        internal static PnPConnection InstantiateConnectionWithCredentials(Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials)
+        internal static PnPConnection InstantiateConnectionWithCredentials(Cmdlet cmdlet, Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials)
         {
             var context = new PnPClientContext(url.AbsoluteUri)
             {
@@ -203,7 +203,9 @@ namespace PnP.PowerShell.Commands.Base
                         {
                             context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                             context.ExecuteQueryRetry();
+                            cmdlet.WriteVerbose("Acquiring token");
                             var accesstoken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
+                            cmdlet.WriteVerbose("Token acquired");
                             var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accesstoken);
                             tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
                         }

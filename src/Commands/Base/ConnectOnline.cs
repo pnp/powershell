@@ -19,11 +19,11 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommunications.Connect, "PnPOnline", DefaultParameterSetName = ParameterSet_MAIN)]
+    [Cmdlet(VerbsCommunications.Connect, "PnPOnline", DefaultParameterSetName = ParameterSet_CREDENTIALS)]
     public class ConnectOnline : BasePSCmdlet
     {
         private CancellationTokenSource cancellationTokenSource;
-        private const string ParameterSet_MAIN = "Main";
+        private const string ParameterSet_CREDENTIALS = "Credentials";
         private const string ParameterSet_ACSAPPONLY = "SharePoint ACS (Legacy) App Only";
         private const string ParameterSet_APPONLYAADCERTIFICATE = "App-Only with Azure Active Directory";
         private const string ParameterSet_APPONLYAADTHUMBPRINT = "App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint";
@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_INTERACTIVE = "Interactive";
 
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT, ValueFromPipeline = true)]
@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
         public SwitchParameter ReturnConnection;
 
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ACSAPPONLY, ValueFromPipeline = true)]
         // [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE, ValueFromPipeline = true)]
@@ -59,10 +59,10 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
         public string Url;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         public CredentialPipeBind Credentials;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         public SwitchParameter CurrentCredentials;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
@@ -73,7 +73,7 @@ namespace PnP.PowerShell.Commands.Base
 
         public string ClientSecret;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
@@ -83,7 +83,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         public SwitchParameter CreateDrive;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
@@ -104,14 +104,14 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         public SwitchParameter LaunchBrowser;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACSAPPONLY)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         public string ClientId;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         public string RedirectUri;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
@@ -140,7 +140,7 @@ namespace PnP.PowerShell.Commands.Base
         // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         public string AADDomain;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
         // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
@@ -161,7 +161,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MANAGEDIDENTITY)]
         public SwitchParameter ManagedIdentity;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         public SwitchParameter TransformationOnPrem;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_WEBLOGIN)]
@@ -190,6 +190,8 @@ namespace PnP.PowerShell.Commands.Base
             }
 #pragma warning restore CS6018            
 
+            
+            
             VersionChecker.CheckVersion(this);
             try
             {
@@ -242,7 +244,7 @@ namespace PnP.PowerShell.Commands.Base
                 case ParameterSet_ACSAPPONLY:
                     connection = ConnectACSAppOnly();
                     break;
-                case ParameterSet_MAIN:
+                case ParameterSet_CREDENTIALS:
                     connection = ConnectCredentials(credentials);
                     break;
                 case ParameterSet_MANAGEDIDENTITY:
@@ -490,7 +492,6 @@ namespace PnP.PowerShell.Commands.Base
                     }
                 }
             }
-
             if (ClientId == null)
             {
                 ClientId = PnPConnection.PnPManagementShellClientId;
@@ -505,7 +506,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
 
-            return PnPConnectionHelper.InstantiateConnectionWithCredentials(new Uri(Url),
+            return PnPConnectionHelper.InstantiateConnectionWithCredentials(this, new Uri(Url),
                                                                credentials,
                                                                CurrentCredentials,
                                                                TenantAdminUrl,
