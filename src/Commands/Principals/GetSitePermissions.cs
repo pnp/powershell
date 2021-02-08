@@ -7,22 +7,15 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Linq;
 using System.Collections.Generic;
 using System.Xml.Linq;
-using System.Data;
-using System.Text;
 using PnP.Framework.Graph;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSitePermissions", DefaultParameterSetName = PARAMETERSET_IDENTITY)]
+    [Cmdlet(VerbsCommon.Get, "PnPSitePermissions")]
     public class GetSitePermissions : PnPWebCmdlet
     {
-        private const string PARAMETERSET_IDENTITY = "Specific user request";
-
-        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = PARAMETERSET_IDENTITY)]
-        public UserPipeBind Identity;
-
         /// <summary>
         /// Enumerator with the types of securable items this cmdlet reports on
         /// </summary>
@@ -51,7 +44,12 @@ namespace PnP.PowerShell.Commands.Principals
             /// <summary>
             /// A SharePoint List Item
             /// </summary>
-            ListItem
+            ListItem,
+
+            /// <summary>
+            /// A SharePoint document in a document library
+            /// </summary>
+            Document       
         }
 
         /// <summary>
@@ -72,7 +70,22 @@ namespace PnP.PowerShell.Commands.Principals
             /// <summary>
             /// Permissions granted via SharePoint Group membership
             /// </summary>
-            SharePointGroup
+            SharePointGroup,
+
+            /// <summary>
+            /// Permissions granted via an Azure Active Directory security group
+            /// </summary>
+            SecurityGroup,
+
+            /// <summary>
+            /// Permissions granted via an Azure Active Directory distribution list
+            /// </summary>
+            DistributionList,
+
+            /// <summary>
+            /// Permissions granted via a sharing link
+            /// </summary>
+            SharingLink                   
         }
 
         /// <summary>
@@ -93,7 +106,12 @@ namespace PnP.PowerShell.Commands.Principals
             /// <summary>
             /// How the rights have been assigned
             /// </summary>
-            public UserRightsGivenThroughType  UserRightsGivenThrough{ get; set;}
+            public UserRightsGivenThroughType UserRightsGivenThrough { get; set; }
+
+            /// <summary>
+            /// Name of the group through which permissions have been given, if applicable
+            /// </summary>
+            public string GroupName { get; set; }            
 
             /// <summary>
             /// The type of permission assigned
@@ -128,7 +146,7 @@ namespace PnP.PowerShell.Commands.Principals
             {
                 if (PnPConnection.CurrentConnection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
                 {
-                    return TokenHandler.GetManagedIdentityTokenAsync(this,HttpClient, "https://graph.microsoft.com/").GetAwaiter().GetResult();
+                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, "https://graph.microsoft.com/").GetAwaiter().GetResult();
                 }
                 else
                 {
@@ -155,11 +173,7 @@ namespace PnP.PowerShell.Commands.Principals
                 u => u.IsShareByEmailGuestUser,
                 u => u.IsSiteAdmin,
                 u => u.UserId,
-                u => u.IsHiddenInUI,
                 u => u.PrincipalType,
-                u => u.Alerts.Include(
-                    a => a.Title,
-                    a => a.Status),
                 u => u.Groups.Include(
                     g => g.Id,
                     g => g.Title,
@@ -171,11 +185,9 @@ namespace PnP.PowerShell.Commands.Principals
             var results = new List<UserRightItem>();
 
             // Get all the role assignments and role definition bindings to be able to see which users have been given rights directly on the site level
+            WriteVerbose("Retrieving permissions of current site");
             CurrentWeb.Context.Load(CurrentWeb.RoleAssignments, ac => ac.Include(a => a.RoleDefinitionBindings, a => a.Member.LoginName, a => a.Member.PrincipalType));
-            CurrentWeb.Context.Load(CurrentWeb.SiteGroups, sg => sg.Include(u => u.LoginName, u => u.Users.Include(userExpressions)));
-            //CurrentWeb.Context.Load(CurrentWeb, w => w.ServerRelativeUrl);
-            CurrentWeb.Context.ExecuteQueryRetry();
-
+            CurrentWeb.Context.Load(CurrentWeb.SiteGroups, sg => sg.Include(u => u.Id, u => u.Title, u => u.LoginName, u => u.Users.Include(userExpressions)));
             CurrentWeb.Context.Load(CurrentWeb, w => w.Url);
             CurrentWeb.Context.ExecuteQueryRetry();
 
@@ -213,10 +225,14 @@ namespace PnP.PowerShell.Commands.Principals
                 {
                     foreach (var roleDefinition in roleAssignment.RoleDefinitionBindings)
                     {
+                        // Skip the Limited Access role in the reports as they merely mean specific roles are defined at a lower level
                         if (roleDefinition.Name == "Limited Access") continue;
 
                         foreach (var groupUser in group.Users)
                         {
+                            // Skip the SharePoint System user in the reports
+                            if (groupUser.LoginName == "SHAREPOINT\\system") continue;
+
                             switch (roleAssignment.Member.PrincipalType)
                             {
                                 case Microsoft.SharePoint.Client.Utilities.PrincipalType.User:
@@ -225,6 +241,7 @@ namespace PnP.PowerShell.Commands.Principals
                                         ResourcePath = CurrentWeb.Url,
                                         UserRightsGivenThrough = UserRightsGivenThroughType.DirectAssignment,
                                         ResourceType = UserRightsResourceType.Web,
+                                        GroupName = group.Title,
                                         Upn = groupUser.UserPrincipalName,
                                         Email = groupUser.Email,
                                         Name = groupUser.Title,
@@ -234,12 +251,14 @@ namespace PnP.PowerShell.Commands.Principals
                                     break;
 
                                 case Microsoft.SharePoint.Client.Utilities.PrincipalType.SharePointGroup:
-                                    if (groupUser.AadObjectId != null)
+                                    if (groupUser.AadObjectId != null && groupUser.LoginName.Contains("|federateddirectoryclaimprovider|"))
                                     {
-                                        var microsoft365Group = UnifiedGroupsUtility.GetUnifiedGroup(groupUser.AadObjectId.NameId, GraphAccessToken);
+                                        // Microsoft 365 Group
+                                        var microsoft365Group = UnifiedGroupsUtility.GetUnifiedGroup(groupUser.AadObjectId.NameId, GraphAccessToken, includeSite: false);
 
                                         if (groupUser.Title.EndsWith("Members"))
                                         {
+                                            // Microsoft 365 Group Members
                                             var microsoft365GroupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(microsoft365Group, GraphAccessToken);
 
                                             foreach (var microsoft365GroupMember in microsoft365GroupMembers)
@@ -249,8 +268,9 @@ namespace PnP.PowerShell.Commands.Principals
                                                     ResourcePath = CurrentWeb.Url,
                                                     UserRightsGivenThrough = UserRightsGivenThroughType.Microsoft365Group,
                                                     ResourceType = UserRightsResourceType.Web,
+                                                    GroupName = microsoft365Group.DisplayName,
                                                     Upn = microsoft365GroupMember.UserPrincipalName,
-                                                    Email = null,
+                                                    Email = microsoft365GroupMember.Email,
                                                     Name = microsoft365GroupMember.DisplayName,
                                                     Permission = "Member",
                                                     IsGuest = microsoft365GroupMember.UserPrincipalName.Contains("#EXT#")
@@ -259,6 +279,7 @@ namespace PnP.PowerShell.Commands.Principals
                                         }
                                         else
                                         {
+                                            // Microsoft 365 Group Owners
                                             var microsoft365GroupOwners = UnifiedGroupsUtility.GetUnifiedGroupOwners(microsoft365Group, GraphAccessToken);
 
                                             foreach (var microsoft365GroupOwner in microsoft365GroupOwners)
@@ -268,14 +289,31 @@ namespace PnP.PowerShell.Commands.Principals
                                                     ResourcePath = CurrentWeb.Url,
                                                     UserRightsGivenThrough = UserRightsGivenThroughType.Microsoft365Group,
                                                     ResourceType = UserRightsResourceType.Web,
+                                                    GroupName = microsoft365Group.DisplayName,
                                                     Upn = microsoft365GroupOwner.UserPrincipalName,
-                                                    Email = null,
+                                                    Email = microsoft365GroupOwner.Email,
                                                     Name = microsoft365GroupOwner.DisplayName,
                                                     Permission = "Owner",
                                                     IsGuest = microsoft365GroupOwner.UserPrincipalName.Contains("#EXT#")
                                                 });
                                             }
                                         }
+                                    }
+                                    else
+                                    {
+                                        // User in a SharePoint Group
+                                        results.Add(new UserRightItem
+                                        {
+                                            ResourcePath = CurrentWeb.Url,
+                                            UserRightsGivenThrough = UserRightsGivenThroughType.SharePointGroup,
+                                            ResourceType = UserRightsResourceType.Web,
+                                            GroupName = group.Title,
+                                            Upn = groupUser.UserPrincipalName,
+                                            Email = groupUser.LoginName,
+                                            Name = groupUser.Title,
+                                            Permission = groupUser.IsSiteAdmin ? "Site collection administrator" : roleDefinition.Name,
+                                            IsGuest = groupUser.IsShareByEmailGuestUser
+                                        });
                                     }
                                     break;
                             }
@@ -284,231 +322,474 @@ namespace PnP.PowerShell.Commands.Principals
                 }
             }
 
-            //var usersWithDirectPermissions = CurrentWeb.SiteUsers.Where(u => CurrentWeb.RoleAssignments.Any(ra => ra.Member.LoginName == u.LoginName));
+            // SharePoint Lists
+            WriteVerbose("Retrieving permissions of the lists in the current site");
+            CurrentWeb.Context.Load(CurrentWeb.Lists, l => l.Include(li => li.ItemCount, li => li.IsSystemList, li => li.BaseType, li => li.IsCatalog, li => li.RoleAssignments.Include(ra => ra.RoleDefinitionBindings, ra => ra.Member), li => li.Title, li => li.HasUniqueRoleAssignments));
+            CurrentWeb.Context.ExecuteQueryRetry();
 
-            //GetPermissions(CurrentWeb.RoleAssignments, CurrentWeb.Url, UserRightsResourceType.Web, UserRightsGivenThroughType.DirectAssignment);
+            foreach (var list in CurrentWeb.Lists)
+            {
+                // Ignoring the system lists
+                if (list.IsSystemList || list.IsCatalog) continue;
 
-            // Get all the users contained in SharePoint Groups
-            
-            
+                // If a list or a library does not have unique permissions, thus inherits from its parent, then proceed with the next list
+                if (!list.HasUniqueRoleAssignments) continue;
 
-            // Get all SharePoint groups that have been assigned access
-            // var usersWithGroupPermissions = new List<User>();
-            // foreach (var group in CurrentWeb.SiteGroups.Where(g => CurrentWeb.RoleAssignments.Any(ra => ra.Member.LoginName == g.LoginName)))
-            // {
-            //     usersWithGroupPermissions.AddRange(group.Users);
-            // }
+                // Construct the full URL to the SharePoint List
+                var fullListUrl = $"{CurrentWeb.Context.Url}/{list.GetWebRelativeUrl()}";
 
-            // // Merge the users with rights directly on the site level and those assigned rights through SharePoint Groups
-            // var allUsersWithPermissions = new List<User>(usersWithDirectPermissions.Count() + usersWithGroupPermissions.Count());
-            // allUsersWithPermissions.AddRange(usersWithDirectPermissions);
-            // allUsersWithPermissions.AddRange(usersWithGroupPermissions);
+                WriteVerbose($"Retrieving permissions for the list at {fullListUrl}");
 
-            // // Add the found users and add them to the custom object
-            // CurrentWeb.Context.Load(CurrentWeb, s => s.ServerRelativeUrl);
-            // CurrentWeb.Context.ExecuteQueryRetry();
+                foreach (var roleAssignment in list.RoleAssignments)
+                {
+                    switch (roleAssignment.Member.PrincipalType)
+                    {
+                        case Microsoft.SharePoint.Client.Utilities.PrincipalType.User:
+                            var user = roleAssignment.Member as User;
+                            foreach (var roleDefinition in roleAssignment.RoleDefinitionBindings)
+                            {
+                                if (roleDefinition.Name == "Limited Access") continue;
 
-            // results.AddRange(GetPermissions(CurrentWeb.RoleAssignments, CurrentWeb.Url, UserRightsResourceType.Web, UserRightsGivenThroughType.DirectAssignment));
+                                // User with direct assignments
+                                results.Add(new UserRightItem
+                                {
+                                    ResourcePath = fullListUrl,
+                                    UserRightsGivenThrough = UserRightsGivenThroughType.DirectAssignment,
+                                    ResourceType = list.BaseType == BaseType.DocumentLibrary ? UserRightsResourceType.DocumentLibrary : UserRightsResourceType.List,
+                                    Upn = user.UserPrincipalName,
+                                    Email = user.LoginName,
+                                    Name = user.Title,
+                                    Permission = user.IsSiteAdmin ? "Site collection administrator" : roleDefinition.Name,
+                                    IsGuest = user.IsShareByEmailGuestUser
+                                });
+                            }
+                            break;
+
+                            case Microsoft.SharePoint.Client.Utilities.PrincipalType.SharePointGroup:
+                                var group = roleAssignment.Member as Group;
+                                if (group.LoginName.Contains("|federateddirectoryclaimprovider|"))
+                                {
+                                    // Microsoft 365 Group
+                                    var groupGuid = group.LoginName.Remove(0, group.LoginName.LastIndexOf('|') + 1);
+
+                                    var microsoft365Group = UnifiedGroupsUtility.GetUnifiedGroup(groupGuid, GraphAccessToken, includeSite: false);
+
+                                    if (group.Title.EndsWith("Members"))
+                                    {
+                                        // Microsoft 365 Group Members
+                                        var microsoft365GroupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(microsoft365Group, GraphAccessToken);
+
+                                        foreach (var microsoft365GroupMember in microsoft365GroupMembers)
+                                        {
+                                            results.Add(new UserRightItem
+                                            {
+                                                ResourcePath = fullListUrl,
+                                                UserRightsGivenThrough = UserRightsGivenThroughType.Microsoft365Group,
+                                                ResourceType = list.BaseType == BaseType.DocumentLibrary ? UserRightsResourceType.DocumentLibrary : UserRightsResourceType.List,
+                                                GroupName = microsoft365Group.DisplayName,
+                                                Upn = microsoft365GroupMember.UserPrincipalName,
+                                                Email = microsoft365GroupMember.Email,
+                                                Name = microsoft365GroupMember.DisplayName,
+                                                Permission = "Member",
+                                                IsGuest = microsoft365GroupMember.UserPrincipalName.Contains("#EXT#")
+                                            });
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // Microsoft 365 Group Owners
+                                        var microsoft365GroupOwners = UnifiedGroupsUtility.GetUnifiedGroupOwners(microsoft365Group, GraphAccessToken);
+
+                                        foreach (var microsoft365GroupOwner in microsoft365GroupOwners)
+                                        {
+                                            results.Add(new UserRightItem
+                                            {
+                                                ResourcePath = fullListUrl,
+                                                UserRightsGivenThrough = UserRightsGivenThroughType.Microsoft365Group,
+                                                ResourceType = list.BaseType == BaseType.DocumentLibrary ? UserRightsResourceType.DocumentLibrary : UserRightsResourceType.List,
+                                                GroupName = microsoft365Group.DisplayName,
+                                                Upn = microsoft365GroupOwner.UserPrincipalName,
+                                                Email = microsoft365GroupOwner.Email,
+                                                Name = microsoft365GroupOwner.DisplayName,
+                                                Permission = "Owner",
+                                                IsGuest = microsoft365GroupOwner.UserPrincipalName.Contains("#EXT#")
+                                            });
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    // User in a SharePoint Group
+                                    foreach (var roleDefinition in roleAssignment.RoleDefinitionBindings)
+                                    {
+                                        if (roleDefinition.Name == "Limited Access") continue;
+
+                                        // Get the SharePoint Group
+                                        var siteGroup = CurrentWeb.SiteGroups.FirstOrDefault(sg => sg.Id == group.Id);
+                                        if(siteGroup == null) continue;
+
+                                        foreach(var groupUser in siteGroup.Users)
+                                        {
+                                            // Skip the SharePoint System user in the reports
+                                            if (groupUser.LoginName == "SHAREPOINT\\system") continue;
+                                           
+                                            if (groupUser.AadObjectId != null && groupUser.LoginName.Contains("|federateddirectoryclaimprovider|"))
+                                            {
+                                                // Microsoft 365 Group
+                                                var microsoft365Group = UnifiedGroupsUtility.GetUnifiedGroup(groupUser.AadObjectId.NameId, GraphAccessToken, includeSite: false);
+
+                                                if (groupUser.Title.EndsWith("Members"))
+                                                {
+                                                    // Microsoft 365 Group Members
+                                                    var microsoft365GroupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(microsoft365Group, GraphAccessToken);
+
+                                                    foreach (var microsoft365GroupMember in microsoft365GroupMembers)
+                                                    {
+                                                        results.Add(new UserRightItem
+                                                        {
+                                                            ResourcePath = fullListUrl,
+                                                            UserRightsGivenThrough = UserRightsGivenThroughType.Microsoft365Group,
+                                                            ResourceType = list.BaseType == BaseType.DocumentLibrary ? UserRightsResourceType.DocumentLibrary : UserRightsResourceType.List,
+                                                            GroupName = microsoft365Group.DisplayName,
+                                                            Upn = microsoft365GroupMember.UserPrincipalName,
+                                                            Email = microsoft365GroupMember.Email,
+                                                            Name = microsoft365GroupMember.DisplayName,
+                                                            Permission = "Member",
+                                                            IsGuest = microsoft365GroupMember.UserPrincipalName.Contains("#EXT#")
+                                                        });
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    // Microsoft 365 Group Owners
+                                                    var microsoft365GroupOwners = UnifiedGroupsUtility.GetUnifiedGroupOwners(microsoft365Group, GraphAccessToken);
+
+                                                    foreach (var microsoft365GroupOwner in microsoft365GroupOwners)
+                                                    {
+                                                        results.Add(new UserRightItem
+                                                        {
+                                                            ResourcePath = fullListUrl,
+                                                            UserRightsGivenThrough = UserRightsGivenThroughType.Microsoft365Group,
+                                                            ResourceType = list.BaseType == BaseType.DocumentLibrary ? UserRightsResourceType.DocumentLibrary : UserRightsResourceType.List,
+                                                            GroupName = microsoft365Group.DisplayName,
+                                                            Upn = microsoft365GroupOwner.UserPrincipalName,
+                                                            Email = microsoft365GroupOwner.Email,
+                                                            Name = microsoft365GroupOwner.DisplayName,
+                                                            Permission = "Owner",
+                                                            IsGuest = microsoft365GroupOwner.UserPrincipalName.Contains("#EXT#")
+                                                        });
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                // User in a SharePoint Group
+                                                results.Add(new UserRightItem
+                                                {
+                                                    ResourcePath = fullListUrl,
+                                                    UserRightsGivenThrough = UserRightsGivenThroughType.SharePointGroup,
+                                                    ResourceType = list.BaseType == BaseType.DocumentLibrary ? UserRightsResourceType.DocumentLibrary : UserRightsResourceType.List,
+                                                    GroupName = group.Title,
+                                                    Upn = groupUser.UserPrincipalName,
+                                                    Email = groupUser.LoginName,
+                                                    Name = groupUser.Title,
+                                                    Permission = groupUser.IsSiteAdmin ? "Site collection administrator" : roleDefinition.Name,
+                                                    IsGuest = groupUser.IsShareByEmailGuestUser
+                                                });
+                                            }                                            
+                                        }
+                                    }
+                                }
+                                break;
+                        case Microsoft.SharePoint.Client.Utilities.PrincipalType.SecurityGroup:
+                        case Microsoft.SharePoint.Client.Utilities.PrincipalType.DistributionList:
+                            var groupId = roleAssignment.Member.LoginName.Remove(0, roleAssignment.Member.LoginName.LastIndexOf('|') + 1);
+
+                            // Group
+                            var securityGroup = UnifiedGroupsUtility.GetUnifiedGroup(groupId, GraphAccessToken, includeSite: false);
+
+                            // Group Members
+                            var groupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(securityGroup, GraphAccessToken);
+
+                            foreach (var groupMember in groupMembers)
+                            {
+                                foreach (var roleDefinition in roleAssignment.RoleDefinitionBindings)
+                                {
+                                    if (roleDefinition.Name == "Limited Access") continue;
+
+                                    results.Add(new UserRightItem
+                                    {
+                                        ResourcePath = fullListUrl,
+                                        UserRightsGivenThrough = roleAssignment.Member.PrincipalType == Microsoft.SharePoint.Client.Utilities.PrincipalType.SecurityGroup ? UserRightsGivenThroughType.SecurityGroup : UserRightsGivenThroughType.DistributionList,
+                                        ResourceType = list.BaseType == BaseType.DocumentLibrary ? UserRightsResourceType.DocumentLibrary : UserRightsResourceType.List,
+                                        GroupName = securityGroup.DisplayName,
+                                        Upn = groupMember.UserPrincipalName,
+                                        Email = groupMember.Email,
+                                        Name = groupMember.DisplayName,
+                                        Permission = roleDefinition.Name,
+                                        IsGuest = groupMember.UserPrincipalName.Contains("#EXT#")
+                                    });
+                                }
+                            }
+                            break;
+
+                    }
+                }
+
+                // List Item Permissions
+                if (list.ItemCount == 0) continue;
+
+                CamlQuery query = CamlQuery.CreateAllItemsQuery();
+                var queryElement = XElement.Parse(query.ViewXml);
+
+                var rowLimit = queryElement.Descendants("RowLimit").FirstOrDefault();
+                if (rowLimit != null)
+                {
+                    rowLimit.RemoveAll();
+                }
+                else
+                {
+                    rowLimit = new XElement("RowLimit");
+                    queryElement.Add(rowLimit);
+                }
+
+                rowLimit.SetAttributeValue("Paged", "TRUE");
+                rowLimit.SetValue(1000);
+
+                query.ViewXml = queryElement.ToString();
+
+                var items = new List<ListItemCollection>();
+
+                do
+                {
+                    var listItems = list.GetItems(query);
+                    CurrentWeb.Context.Load(listItems);
+                    CurrentWeb.Context.ExecuteQueryRetry();
+                    query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
+
+                    items.Add(listItems);
+
+                } while (query.ListItemCollectionPosition != null);
+
+                foreach (var item in items)
+                {
+                    foreach (var listItem in item)
+                    {
+                        listItem.EnsureProperty(i => i.HasUniqueRoleAssignments);
+
+                        if (listItem.HasUniqueRoleAssignments)
+                        {
+                            // Construct the full URL to the DispForm of the list item or to the document in a document library
+                            var listItemUrl = $"{fullListUrl}/{(list.BaseType == BaseType.DocumentLibrary ? listItem["FileRef"].ToString().Remove(0, listItem["FileRef"].ToString().LastIndexOf('/') + 1) : $"DispForm.aspx?ID={listItem.Id}")}";
+                            
+                            WriteVerbose($"Retrieving permissions for list item at {listItemUrl}");
+
+                            CurrentWeb.Context.Load(listItem, li => li["EncodedAbsUrl"]);
+                            CurrentWeb.Context.Load(listItem.RoleAssignments, r => r.Include(ra => ra.RoleDefinitionBindings, ra => ra.Member));
+                            CurrentWeb.Context.ExecuteQueryRetry();
+
+                            foreach (var roleAssignment in listItem.RoleAssignments)
+                            {
+                                switch (roleAssignment.Member.PrincipalType)
+                                {
+                                    case Microsoft.SharePoint.Client.Utilities.PrincipalType.User:
+                                        var user = roleAssignment.Member as User;
+                                        foreach (var roleDefinition in roleAssignment.RoleDefinitionBindings)
+                                        {
+                                            if (roleDefinition.Name == "Limited Access") continue;
+
+                                            // User with direct assignments
+                                            results.Add(new UserRightItem
+                                            {
+                                                ResourcePath = listItemUrl,
+                                                UserRightsGivenThrough = UserRightsGivenThroughType.DirectAssignment,
+                                                ResourceType = list.BaseType == BaseType.DocumentLibrary ? UserRightsResourceType.Document : UserRightsResourceType.ListItem,
+                                                Upn = user.UserPrincipalName,
+                                                Email = user.LoginName,
+                                                Name = user.Title,
+                                                Permission = user.IsSiteAdmin ? "Site collection administrator" : roleDefinition.Name,
+                                                IsGuest = user.IsShareByEmailGuestUser
+                                            });
+                                        }
+                                        break;
+
+                                        case Microsoft.SharePoint.Client.Utilities.PrincipalType.SharePointGroup:
+                                            var group = roleAssignment.Member as Group;
+                                            if (group.LoginName.Contains("|federateddirectoryclaimprovider|"))
+                                            {
+                                                // Microsoft 365 Group
+                                                var groupGuid = group.LoginName.Remove(0, group.LoginName.LastIndexOf('|') + 1);
+
+                                                var microsoft365Group = UnifiedGroupsUtility.GetUnifiedGroup(groupGuid, GraphAccessToken, includeSite: false);
+
+                                                if (group.Title.EndsWith("Members"))
+                                                {
+                                                    // Microsoft 365 Group Members
+                                                    var microsoft365GroupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(microsoft365Group, GraphAccessToken);
+
+                                                    foreach (var microsoft365GroupMember in microsoft365GroupMembers)
+                                                    {
+                                                        results.Add(new UserRightItem
+                                                        {
+                                                            ResourcePath = listItemUrl,
+                                                            UserRightsGivenThrough = UserRightsGivenThroughType.Microsoft365Group,
+                                                            ResourceType = list.BaseType == BaseType.DocumentLibrary ? UserRightsResourceType.Document : UserRightsResourceType.ListItem,
+                                                            GroupName = microsoft365Group.DisplayName,
+                                                            Upn = microsoft365GroupMember.UserPrincipalName,
+                                                            Email = microsoft365GroupMember.Email,
+                                                            Name = microsoft365GroupMember.DisplayName,
+                                                            Permission = "Member",
+                                                            IsGuest = microsoft365GroupMember.UserPrincipalName.Contains("#EXT#")
+                                                        });
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    // Microsoft 365 Group Owners
+                                                    var microsoft365GroupOwners = UnifiedGroupsUtility.GetUnifiedGroupOwners(microsoft365Group, GraphAccessToken);
+
+                                                    foreach (var microsoft365GroupOwner in microsoft365GroupOwners)
+                                                    {
+                                                        results.Add(new UserRightItem
+                                                        {
+                                                            ResourcePath = listItemUrl,
+                                                            UserRightsGivenThrough = UserRightsGivenThroughType.Microsoft365Group,
+                                                            ResourceType = list.BaseType == BaseType.DocumentLibrary ? UserRightsResourceType.Document : UserRightsResourceType.ListItem,
+                                                            GroupName = microsoft365Group.DisplayName,
+                                                            Upn = microsoft365GroupOwner.UserPrincipalName,
+                                                            Email = microsoft365GroupOwner.Email,
+                                                            Name = microsoft365GroupOwner.DisplayName,
+                                                            Permission = "Owner",
+                                                            IsGuest = microsoft365GroupOwner.UserPrincipalName.Contains("#EXT#")
+                                                        });
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                // User in a SharePoint Group
+                                                foreach (var roleDefinition in roleAssignment.RoleDefinitionBindings)
+                                                {
+                                                    if (roleDefinition.Name == "Limited Access") continue;
+
+                                                    // Get the SharePoint Group
+                                                    var siteGroup = CurrentWeb.SiteGroups.FirstOrDefault(sg => sg.Id == group.Id);
+                                                    if(siteGroup == null) continue;
+
+                                                    foreach(var groupUser in siteGroup.Users)
+                                                    {
+                                                        // Skip the SharePoint System user in the reports
+                                                        if (groupUser.LoginName == "SHAREPOINT\\system") continue;
+                                                    
+                                                        if (groupUser.AadObjectId != null && groupUser.LoginName.Contains("|federateddirectoryclaimprovider|"))
+                                                        {
+                                                            // Microsoft 365 Group
+                                                            var microsoft365Group = UnifiedGroupsUtility.GetUnifiedGroup(groupUser.AadObjectId.NameId, GraphAccessToken, includeSite: false);
+
+                                                            if (groupUser.Title.EndsWith("Members"))
+                                                            {
+                                                                // Microsoft 365 Group Members
+                                                                var microsoft365GroupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(microsoft365Group, GraphAccessToken);
+
+                                                                foreach (var microsoft365GroupMember in microsoft365GroupMembers)
+                                                                {
+                                                                    results.Add(new UserRightItem
+                                                                    {
+                                                                        ResourcePath = listItemUrl,
+                                                                        UserRightsGivenThrough = UserRightsGivenThroughType.Microsoft365Group,
+                                                                        ResourceType = list.BaseType == BaseType.DocumentLibrary ? UserRightsResourceType.Document : UserRightsResourceType.ListItem,
+                                                                        GroupName = microsoft365Group.DisplayName,
+                                                                        Upn = microsoft365GroupMember.UserPrincipalName,
+                                                                        Email = microsoft365GroupMember.Email,
+                                                                        Name = microsoft365GroupMember.DisplayName,
+                                                                        Permission = "Member",
+                                                                        IsGuest = microsoft365GroupMember.UserPrincipalName.Contains("#EXT#")
+                                                                    });
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                // Microsoft 365 Group Owners
+                                                                var microsoft365GroupOwners = UnifiedGroupsUtility.GetUnifiedGroupOwners(microsoft365Group, GraphAccessToken);
+
+                                                                foreach (var microsoft365GroupOwner in microsoft365GroupOwners)
+                                                                {
+                                                                    results.Add(new UserRightItem
+                                                                    {
+                                                                        ResourcePath = listItemUrl,
+                                                                        UserRightsGivenThrough = UserRightsGivenThroughType.Microsoft365Group,
+                                                                        ResourceType = list.BaseType == BaseType.DocumentLibrary ? UserRightsResourceType.Document : UserRightsResourceType.ListItem,
+                                                                        GroupName = microsoft365Group.DisplayName,
+                                                                        Upn = microsoft365GroupOwner.UserPrincipalName,
+                                                                        Email = microsoft365GroupOwner.Email,
+                                                                        Name = microsoft365GroupOwner.DisplayName,
+                                                                        Permission = "Owner",
+                                                                        IsGuest = microsoft365GroupOwner.UserPrincipalName.Contains("#EXT#")
+                                                                    });
+                                                                }
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            // User in a SharePoint Group
+                                                            results.Add(new UserRightItem
+                                                            {
+                                                                ResourcePath = listItemUrl,
+                                                                UserRightsGivenThrough = group.Title.StartsWith("SharingLink") ? UserRightsGivenThroughType.SharingLink : UserRightsGivenThroughType.SharePointGroup,
+                                                                ResourceType = list.BaseType == BaseType.DocumentLibrary ? UserRightsResourceType.Document : UserRightsResourceType.ListItem,
+                                                                GroupName = group.Title,
+                                                                Upn = groupUser.UserPrincipalName,
+                                                                Email = groupUser.Email,
+                                                                Name = groupUser.Title,
+                                                                Permission = groupUser.IsSiteAdmin ? "Site collection administrator" : roleDefinition.Name,
+                                                                IsGuest = groupUser.IsShareByEmailGuestUser
+                                                            });
+                                                        }                                            
+                                                    }
+                                                }
+                                            }
+                                            break;
+                                    case Microsoft.SharePoint.Client.Utilities.PrincipalType.SecurityGroup:
+                                    case Microsoft.SharePoint.Client.Utilities.PrincipalType.DistributionList:
+                                        var groupId = roleAssignment.Member.LoginName.Remove(0, roleAssignment.Member.LoginName.LastIndexOf('|') + 1);
+                                        
+                                        // Group
+                                        var securityGroup = UnifiedGroupsUtility.GetUnifiedGroup(groupId, GraphAccessToken, includeSite: false);
+
+                                        // Group Members
+                                        var groupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(securityGroup, GraphAccessToken);
+
+                                        foreach (var groupMember in groupMembers)
+                                        {
+                                            foreach (var roleDefinition in roleAssignment.RoleDefinitionBindings)
+                                            {
+                                                if (roleDefinition.Name == "Limited Access") continue;
+
+                                                results.Add(new UserRightItem
+                                                {
+                                                    ResourcePath = listItemUrl,
+                                                    UserRightsGivenThrough = roleAssignment.Member.PrincipalType == Microsoft.SharePoint.Client.Utilities.PrincipalType.SecurityGroup ? UserRightsGivenThroughType.SecurityGroup : UserRightsGivenThroughType.DistributionList,
+                                                    ResourceType = list.BaseType == BaseType.DocumentLibrary ? UserRightsResourceType.Document : UserRightsResourceType.ListItem,
+                                                    GroupName = securityGroup.DisplayName,
+                                                    Upn = groupMember.UserPrincipalName,
+                                                    Email = groupMember.Email,
+                                                    Name = groupMember.DisplayName,
+                                                    Permission = roleDefinition.Name,
+                                                    IsGuest = groupMember.UserPrincipalName.Contains("#EXT#")
+                                                });
+                                            }
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+                //itemProgress.RecordType = ProgressRecordType.Completed;
+                //WriteProgress(itemProgress);
+            }
 
             WriteObject(results, true);
-            // foreach (var user in allUsersWithPermissions)
-            // {
-            //     results.Add(new UserRightItem
-            //     {
-            //         Groups = user.Groups,
-            //         User = user,
-            //         Url = CurrentWeb.ServerRelativeUrl
-            //     });
-            // }
-
-            //     CurrentWeb.Context.Load(CurrentWeb.Lists, l => l.Include(li => li.ItemCount, li => li.IsSystemList, li=>li.IsCatalog, li => li.RootFolder.ServerRelativeUrl, li => li.RoleAssignments, li => li.Title, li => li.HasUniqueRoleAssignments));
-            //     CurrentWeb.Context.ExecuteQueryRetry();
-
-            //     var progress = new ProgressRecord(0, $"Getting lists for {CurrentWeb.ServerRelativeUrl}", "Enumerating through lists");
-            //     var progressCounter = 0;
-
-            //     foreach (var list in CurrentWeb.Lists)
-            //     {
-            //         WriteProgress(progress, $"Getting list {list.RootFolder.ServerRelativeUrl}", progressCounter++, CurrentWeb.Lists.Count);
-
-            //         // ignoring the system lists
-            //         if (list.IsSystemList || list.IsCatalog)
-            //         {
-            //             continue;
-            //         }
-
-            //         // if a list or a library has unique permissions then proceed
-            //         if (list.HasUniqueRoleAssignments)
-            //         {
-            //             WriteVerbose(string.Format("List found with HasUniqueRoleAssignments {0}", list.RootFolder.ServerRelativeUrl));
-            //             string url = list.RootFolder.ServerRelativeUrl;
-
-            //             CurrentWeb.Context.Load(list.RoleAssignments, r => r.Include(
-            //                 ra => ra.RoleDefinitionBindings,
-            //                 ra => ra.Member.LoginName,
-            //                 ra => ra.Member.Title,
-            //                 ra => ra.Member.PrincipalType));
-            //             CurrentWeb.Context.ExecuteQueryRetry();
-
-            //             results.AddRange(GetPermissions(list.RoleAssignments, url));
-
-            //             // if the list with unique permissions also has items, check every item which is uniquely permissioned
-            //             if (list.ItemCount > 0)
-            //             {
-            //                 WriteVerbose(string.Format("Enumerating through all listitems of {0}", list.RootFolder.ServerRelativeUrl));
-
-            //                 CamlQuery query = CamlQuery.CreateAllItemsQuery();
-            //                 var queryElement = XElement.Parse(query.ViewXml);
-
-            //                 var rowLimit = queryElement.Descendants("RowLimit").FirstOrDefault();
-            //                 if (rowLimit != null)
-            //                 {
-            //                     rowLimit.RemoveAll();
-            //                 }
-            //                 else
-            //                 {
-            //                     rowLimit = new XElement("RowLimit");
-            //                     queryElement.Add(rowLimit);
-            //                 }
-
-            //                 rowLimit.SetAttributeValue("Paged", "TRUE");
-            //                 rowLimit.SetValue(1000);
-
-            //                 query.ViewXml = queryElement.ToString();
-
-            //                 List<ListItemCollection> items = new List<ListItemCollection>();
-
-            //                 do
-            //                 {
-            //                     var listItems = list.GetItems(query);
-            //                     CurrentWeb.Context.Load(listItems);
-            //                     CurrentWeb.Context.ExecuteQueryRetry();
-            //                     query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
-
-            //                     items.Add(listItems);
-
-            //                 } while (query.ListItemCollectionPosition != null);
-
-            //                 // Progress bar for item enumerations
-            //                 var itemProgress = new ProgressRecord(0, $"Getting items for {list.RootFolder.ServerRelativeUrl}", "Enumerating through items");
-            //                 var itemProgressCounter = 0;
-
-            //                 foreach (var item in items)
-            //                 {
-            //                     WriteProgress(itemProgress, $"Retrieving items", itemProgressCounter++, items.Count);
-
-            //                     WriteVerbose(string.Format("Enumerating though listitemcollections"));
-            //                     foreach (var listItem in item)
-            //                     {
-            //                         WriteVerbose(string.Format("Enumerating though listitems"));
-            //                         listItem.EnsureProperty(i => i.HasUniqueRoleAssignments);
-
-            //                         if (listItem.HasUniqueRoleAssignments)
-            //                         {
-            //                             string listItemUrl = listItem["FileRef"].ToString();
-            //                             WriteVerbose(string.Format("List item {0} HasUniqueRoleAssignments", listItemUrl));
-
-            //                             CurrentWeb.Context.Load(listItem.RoleAssignments, r => r.Include(
-            //                                 ra => ra.RoleDefinitionBindings,
-            //                                 ra => ra.Member.LoginName,
-            //                                 ra => ra.Member.Title,
-            //                                 ra => ra.Member.PrincipalType));
-            //                             CurrentWeb.Context.ExecuteQueryRetry();
-
-            //                             results.AddRange(GetPermissions(listItem.RoleAssignments, listItemUrl));
-            //                         }
-            //                     }
-            //                 }
-            //                 itemProgress.RecordType = ProgressRecordType.Completed;
-            //                 WriteProgress(itemProgress);
-            //             }
-            //         }
-            //         progress.RecordType = ProgressRecordType.Completed;
-            //         WriteProgress(progress);
-            //     }
-
-            //     // Fetch all the unique users from everything that has been collected
-            //     var uniqueUsers = (from u in results
-            //                         select u.User.LoginName).Distinct();
-
-            //     // Looping through each user, getting all the details like specific permissions and groups an user belongs to
-            //     foreach (var uniqueUser in uniqueUsers)
-            //     {
-            //         // Getting all the assigned permissions per user
-            //         var userPermissions = (from u in results
-            //                             where u.User.LoginName == uniqueUser && u.Permissions != null
-            //                             select u).ToList();
-
-            //         // Making the permissions readable by getting the name of the permission and the URL of the artifact
-            //         Dictionary<string, string> Permissions = new Dictionary<string, string>();
-            //         foreach (var userPermission in userPermissions)
-            //         {
-            //             StringBuilder stringBuilder = new StringBuilder();
-            //             foreach (var permissionMask in userPermission.Permissions)
-            //             {
-            //                 stringBuilder.Append(permissionMask);
-            //             }
-            //             Permissions.Add(userPermission.Url, stringBuilder.ToString());
-            //         }
-
-            //         // Getting all the groups where the user is added to
-            //         var groupsMemberships = (from u in results
-            //                         where u.User.LoginName == uniqueUser && u.Groups != null
-            //                         select u.Groups).ToList();
-
-            //         // Getting the titles of the all the groups
-            //         List<string> Groups = new List<string>();
-            //         foreach (var groupMembership in groupsMemberships)
-            //         {
-            //             foreach (var group in groupMembership)
-            //             {
-            //                 Groups.Add(group.Title);
-            //             }
-            //         }
-
-            //         // Getting the User object of the user so we can get to the title, loginname, etc
-            //         var userInformation = (from u in results
-            //                                 where u.Upn == uniqueUser
-            //                                 select u.User).FirstOrDefault();
-
-            //         WriteObject(new { userInformation.Title, userInformation.LoginName, userInformation.Email, Groups, Permissions }, true);
-            //     }
-        }
-
-        private void WriteProgress(ProgressRecord record, string message, int step, int count)
-        {
-            var percentage = Convert.ToInt32((100 / Convert.ToDouble(count)) * Convert.ToDouble(step));
-            record.StatusDescription = message;
-            record.PercentComplete = percentage;
-            record.RecordType = ProgressRecordType.Processing;
-            WriteProgress(record);
-        }
-
-        private static IEnumerable<UserRightItem> GetPermissions(RoleAssignmentCollection roleAssignments, string url, UserRightsResourceType resourceType, UserRightsGivenThroughType rightsGivenThrough)
-        {
-            List<UserRightItem> userRightItems = new List<UserRightItem>();
-            foreach (var roleAssignment in roleAssignments)
-            {
-                if (roleAssignment.Member.PrincipalType != Microsoft.SharePoint.Client.Utilities.PrincipalType.User) continue;
-
-                var user = roleAssignment.Member as User;
-                foreach (var roleDefinition in roleAssignment.RoleDefinitionBindings)
-                {
-                    if (roleDefinition.Name == "Limited Access") continue;
-
-                    userRightItems.Add(new UserRightItem
-                    {
-                        ResourcePath = url,
-                        UserRightsGivenThrough = rightsGivenThrough,
-                        ResourceType = resourceType,
-                        Upn = user.UserPrincipalName,
-                        Email = user.Email,
-                        Name = user.Title,
-                        Permission = roleDefinition.Name
-                    });
-                }
-            }
-            return userRightItems;
         }
     }
 }
