@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Site
         public SwitchParameter? AllowSelfServiceUpgrade = null;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        [Alias("DenyAddAndCustomizePages")]
+        [Alias("DenyAndAddCustomizePages", "DenyAddAndCustomizePages")]
         public SwitchParameter? NoScriptSite;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
