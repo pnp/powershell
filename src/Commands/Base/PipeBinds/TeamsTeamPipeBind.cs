@@ -80,7 +80,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 if (!string.IsNullOrEmpty(_id))
                 {
-                    return GraphHelper.GetAsync<Team>(httpClient, $"v1.0/teams/{_id}", accessToken).GetAwaiter().GetResult();
+                    return GraphHelper.GetAsync<Team>(httpClient, $"v1.0/teams/{_id}", accessToken, false).GetAwaiter().GetResult();
                 }
                 else
                 {
@@ -89,7 +89,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                     {
                         if (collection.Items.Count() == 1)
                         {
-                            return GraphHelper.GetAsync<Team>(httpClient, $"v1.0/teams/{collection.Items.First().Id}", accessToken).GetAwaiter().GetResult();
+                            return GraphHelper.GetAsync<Team>(httpClient, $"v1.0/teams/{collection.Items.First().Id}", accessToken, false).GetAwaiter().GetResult();
                         }
                         else
                         {
@@ -101,7 +101,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                         collection = GraphHelper.GetAsync<RestResultCollection<Model.Graph.Group>>(httpClient, $"beta/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and mailNickname eq '{_stringValue}')&$select=Id", accessToken).GetAwaiter().GetResult();
                         if (collection != null && collection.Items.Count() == 1)
                         {
-                            return GraphHelper.GetAsync<Team>(httpClient, $"v1.0/teams/{collection.Items.First().Id}", accessToken).GetAwaiter().GetResult();
+                            return GraphHelper.GetAsync<Team>(httpClient, $"v1.0/teams/{collection.Items.First().Id}", accessToken, false).GetAwaiter().GetResult();
                         }
                     }
                 }
