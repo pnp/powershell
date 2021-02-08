@@ -118,12 +118,11 @@ namespace PnP.PowerShell.Commands.Lists
                     if (ContentType != null)
                     {
                         ContentType ct = ContentType.GetContentType(list);
-
                         if (ct != null)
                         {
-
                             item["ContentTypeId"] = ct.EnsureProperty(w => w.StringId); ;
-                            updateRequired = true;
+                            ListItemHelper.UpdateListItem(item, UpdateType);
+                            ClientContext.ExecuteQueryRetry();
                         }
                     }
                     if (Values != null)
