@@ -110,7 +110,11 @@ namespace PnP.PowerShell.Commands.Base
                 OutPath = SessionState.Path.CurrentFileSystemLocation.Path;
             }
 
-            var redirectUri = "https://pnp.github.io/powershell/consent.html";
+            var redirectUri = "http://localhost";
+            if(ParameterSpecified(nameof(DeviceLogin)))
+            {
+                redirectUri = "https://pnp.github.io/powershell/consent.html";
+            }
 
             var messageWriter = new CmdletMessageWriter(this);
             cancellationTokenSource = new CancellationTokenSource();
@@ -376,6 +380,7 @@ namespace PnP.PowerShell.Commands.Base
             Host.UI.WriteLine(ConsoleColor.Green, Host.UI.RawUI.BackgroundColor, $"Success. Application '{appName}' can be registered.");
             return false;
         }
+        
         private AzureApp CreateApp(string loginEndPoint, HttpClient httpClient, string token, X509Certificate2 cert, string redirectUri)
         {
             var expirationDate = DateTime.Parse(cert.GetExpirationDateString()).ToUniversalTime();
@@ -418,12 +423,13 @@ namespace PnP.PowerShell.Commands.Base
                 publicClient = new
                 {
                     redirectUris = new[] {
-                        "http://localhost",
                         $"{loginEndPoint}/common/oauth2/nativeclient",
+                        redirectUri
                     }
                 },
                 requiredResourceAccess = scopesPayload
             };
+
             var requestContent = new StringContent(JsonSerializer.Serialize(payload));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 

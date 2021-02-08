@@ -100,7 +100,7 @@ namespace PnP.PowerShell.Commands.Base
                          {
                              ClipboardService.SetText(deviceCodeResult.UserCode);
                              messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard\n\n");
-                             BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in", cancellationTokenSource: cancellationTokenSource);
+                             BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in", cancellationTokenSource: cancellationTokenSource, cancelOnClose: false);
                          }
                          else
                          {
