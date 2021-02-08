@@ -205,7 +205,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     form.FormClosed += (a,b) => {
                         if(!success)
                         {
-                            cancellationTokenSource.Cancel();
+                            cancellationTokenSource?.Cancel();
                         }
                     };
                     browser.Navigate(siteUrl);

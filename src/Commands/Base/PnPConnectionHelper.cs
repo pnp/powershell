@@ -80,7 +80,7 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
+        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource)
         {
             var connectionUri = new Uri(url);
             var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
@@ -100,7 +100,7 @@ namespace PnP.PowerShell.Commands.Base
                          {
                              ClipboardService.SetText(deviceCodeResult.UserCode);
                              messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard\n\n");
-                             BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in");
+                             BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in", cancellationTokenSource: cancellationTokenSource);
                          }
                          else
                          {
@@ -116,7 +116,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             using (authManager)
             {
-                var clientContext = authManager.GetContext(url.ToString(), cancellationToken);
+                var clientContext = authManager.GetContext(url.ToString(), cancellationTokenSource.Token);
                 var context = PnPClientContext.ConvertFrom(clientContext);
 
                 var connectionType = ConnectionType.O365;

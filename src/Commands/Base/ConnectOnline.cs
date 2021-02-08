@@ -230,7 +230,7 @@ namespace PnP.PowerShell.Commands.Base
                     connection = ConnectSpoManagement();
                     break;
                 case ParameterSet_DEVICELOGIN:
-                    connection = ConnectDeviceLogin(cancellationToken);
+                    connection = ConnectDeviceLogin();
                     break;
                 case ParameterSet_APPONLYAADCERTIFICATE:
                     connection = ConnectAppOnlyWithCertificate();
@@ -254,7 +254,7 @@ namespace PnP.PowerShell.Commands.Base
                     connection = ConnectWebLogin();
                     break;
                 case ParameterSet_INTERACTIVE:
-                    connection = ConnectInteractive(cancellationToken);
+                    connection = ConnectInteractive();
                     break;
             }
 
@@ -340,7 +340,7 @@ namespace PnP.PowerShell.Commands.Base
         /// Connect using the parameter set DEVICELOGIN
         /// </summary>
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        private PnPConnection ConnectDeviceLogin(CancellationToken cancellationToken)
+        private PnPConnection ConnectDeviceLogin()
         {
             var messageWriter = new CmdletMessageWriter(this);
             PnPConnection connection = null;
@@ -365,10 +365,10 @@ namespace PnP.PowerShell.Commands.Base
                     ReuseAuthenticationManager();
                 }
 
-                var returnedConnection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, messageWriter, AzureEnvironment, cancellationToken);
+                var returnedConnection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, messageWriter, AzureEnvironment, cancellationTokenSource);
                 connection = returnedConnection;
                 messageWriter.Finished = true;
-            }, cancellationToken);
+            }, cancellationTokenSource.Token);
             messageWriter.Start();
             return connection;
         }
@@ -534,7 +534,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        private PnPConnection ConnectInteractive(CancellationToken cancellationToken)
+        private PnPConnection ConnectInteractive()
         {
             if (ClientId == null)
             {
