@@ -3,18 +3,16 @@ using Microsoft.SharePoint.Client;
 
 using System.Linq.Expressions;
 using System;
-using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Linq;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using PnP.Framework.Graph;
 using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPSitePermissions")]
-    public class GetSitePermissions : PnPWebCmdlet
+    public class GetSitePermissions : PnPGraphCmdlet 
     {
         /// <summary>
         /// Enumerator with the types of securable items this cmdlet reports on
@@ -139,27 +137,6 @@ namespace PnP.PowerShell.Commands.Principals
             public string Upn { get; set; }
         }
 
-        // TODO: fix to better way to get a Graph token without having to make it a graph cmdlet
-        public string GraphAccessToken
-        {
-            get
-            {
-                if (PnPConnection.CurrentConnection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
-                {
-                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, "https://graph.microsoft.com/").GetAwaiter().GetResult();
-                }
-                else
-                {
-                    if (PnPConnection.CurrentConnection?.Context != null)
-                    {
-                        return TokenHandler.GetAccessToken(GetType(), "https://graph.microsoft.com/.default");
-                    }
-                }
-
-                return null;
-            }
-        }
-
         protected override void ExecuteCmdlet()
         {
             var userExpressions = new Expression<Func<User, object>>[]
@@ -180,21 +157,21 @@ namespace PnP.PowerShell.Commands.Principals
                     g => g.LoginName)
             };
 
-            CurrentWeb.Context.Load(CurrentWeb.SiteUsers, u => u.Include(userExpressions));
+            ClientContext.Load(ClientContext.Web.SiteUsers, u => u.Include(userExpressions));
 
             var results = new List<UserRightItem>();
 
             // Get all the role assignments and role definition bindings to be able to see which users have been given rights directly on the site level
             WriteVerbose("Retrieving permissions of current site");
-            CurrentWeb.Context.Load(CurrentWeb.RoleAssignments, ac => ac.Include(a => a.RoleDefinitionBindings, a => a.Member.LoginName, a => a.Member.PrincipalType));
-            CurrentWeb.Context.Load(CurrentWeb.SiteGroups, sg => sg.Include(u => u.Id, u => u.Title, u => u.LoginName, u => u.Users.Include(userExpressions)));
-            CurrentWeb.Context.Load(CurrentWeb, w => w.Url);
-            CurrentWeb.Context.ExecuteQueryRetry();
+            ClientContext.Load(ClientContext.Web.RoleAssignments, ac => ac.Include(a => a.RoleDefinitionBindings, a => a.Member.LoginName, a => a.Member.PrincipalType));
+            ClientContext.Load(ClientContext.Web.SiteGroups, sg => sg.Include(u => u.Id, u => u.Title, u => u.LoginName, u => u.Users.Include(userExpressions)));
+            ClientContext.Load(ClientContext.Web, w => w.Url);
+            ClientContext.ExecuteQueryRetry();
 
             // Direct rights assignments
-            foreach (var siteUser in CurrentWeb.SiteUsers)
+            foreach (var siteUser in ClientContext.Web.SiteUsers)
             {
-                var roleAssignment = CurrentWeb.RoleAssignments.FirstOrDefault(ra => ra.Member.LoginName == siteUser.LoginName);
+                var roleAssignment = ClientContext.Web.RoleAssignments.FirstOrDefault(ra => ra.Member.LoginName == siteUser.LoginName);
                 if (roleAssignment != null)
                 {
                     var user = roleAssignment.Member as User;
@@ -204,7 +181,7 @@ namespace PnP.PowerShell.Commands.Principals
 
                         results.Add(new UserRightItem
                         {
-                            ResourcePath = CurrentWeb.Url,
+                            ResourcePath = ClientContext.Web.Url,
                             UserRightsGivenThrough = UserRightsGivenThroughType.DirectAssignment,
                             ResourceType = UserRightsResourceType.Web,
                             Upn = siteUser.UserPrincipalName,
@@ -218,15 +195,16 @@ namespace PnP.PowerShell.Commands.Principals
             }
 
             // SharePoint Group memberships
-            foreach (var group in CurrentWeb.SiteGroups)
+            foreach (var group in ClientContext.Web.SiteGroups)
             {
-                var roleAssignment = CurrentWeb.RoleAssignments.FirstOrDefault(ra => ra.Member.LoginName == group.LoginName);
+                var roleAssignment = ClientContext.Web.RoleAssignments.FirstOrDefault(ra => ra.Member.LoginName == group.LoginName);
                 if (roleAssignment != null)
                 {
                     foreach (var roleDefinition in roleAssignment.RoleDefinitionBindings)
                     {
                         // Skip the Limited Access role in the reports as they merely mean specific roles are defined at a lower level
                         if (roleDefinition.Name == "Limited Access") continue;
+                        if (roleDefinition.Name == "Web-Only Limited Access") continue;
 
                         foreach (var groupUser in group.Users)
                         {
@@ -238,7 +216,7 @@ namespace PnP.PowerShell.Commands.Principals
                                 case Microsoft.SharePoint.Client.Utilities.PrincipalType.User:
                                     results.Add(new UserRightItem
                                     {
-                                        ResourcePath = CurrentWeb.Url,
+                                        ResourcePath = ClientContext.Web.Url,
                                         UserRightsGivenThrough = UserRightsGivenThroughType.DirectAssignment,
                                         ResourceType = UserRightsResourceType.Web,
                                         GroupName = group.Title,
@@ -254,18 +232,18 @@ namespace PnP.PowerShell.Commands.Principals
                                     if (groupUser.AadObjectId != null && groupUser.LoginName.Contains("|federateddirectoryclaimprovider|"))
                                     {
                                         // Microsoft 365 Group
-                                        var microsoft365Group = UnifiedGroupsUtility.GetUnifiedGroup(groupUser.AadObjectId.NameId, GraphAccessToken, includeSite: false);
+                                        var microsoft365Group = UnifiedGroupsUtility.GetUnifiedGroup(groupUser.AadObjectId.NameId, AccessToken, includeSite: false);
 
                                         if (groupUser.Title.EndsWith("Members"))
                                         {
                                             // Microsoft 365 Group Members
-                                            var microsoft365GroupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(microsoft365Group, GraphAccessToken);
+                                            var microsoft365GroupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(microsoft365Group, AccessToken);
 
                                             foreach (var microsoft365GroupMember in microsoft365GroupMembers)
                                             {
                                                 results.Add(new UserRightItem
                                                 {
-                                                    ResourcePath = CurrentWeb.Url,
+                                                    ResourcePath = ClientContext.Web.Url,
                                                     UserRightsGivenThrough = UserRightsGivenThroughType.Microsoft365Group,
                                                     ResourceType = UserRightsResourceType.Web,
                                                     GroupName = microsoft365Group.DisplayName,
@@ -280,13 +258,13 @@ namespace PnP.PowerShell.Commands.Principals
                                         else
                                         {
                                             // Microsoft 365 Group Owners
-                                            var microsoft365GroupOwners = UnifiedGroupsUtility.GetUnifiedGroupOwners(microsoft365Group, GraphAccessToken);
+                                            var microsoft365GroupOwners = UnifiedGroupsUtility.GetUnifiedGroupOwners(microsoft365Group, AccessToken);
 
                                             foreach (var microsoft365GroupOwner in microsoft365GroupOwners)
                                             {
                                                 results.Add(new UserRightItem
                                                 {
-                                                    ResourcePath = CurrentWeb.Url,
+                                                    ResourcePath = ClientContext.Web.Url,
                                                     UserRightsGivenThrough = UserRightsGivenThroughType.Microsoft365Group,
                                                     ResourceType = UserRightsResourceType.Web,
                                                     GroupName = microsoft365Group.DisplayName,
@@ -304,7 +282,7 @@ namespace PnP.PowerShell.Commands.Principals
                                         // User in a SharePoint Group
                                         results.Add(new UserRightItem
                                         {
-                                            ResourcePath = CurrentWeb.Url,
+                                            ResourcePath = ClientContext.Web.Url,
                                             UserRightsGivenThrough = UserRightsGivenThroughType.SharePointGroup,
                                             ResourceType = UserRightsResourceType.Web,
                                             GroupName = group.Title,
@@ -324,10 +302,10 @@ namespace PnP.PowerShell.Commands.Principals
 
             // SharePoint Lists
             WriteVerbose("Retrieving permissions of the lists in the current site");
-            CurrentWeb.Context.Load(CurrentWeb.Lists, l => l.Include(li => li.ItemCount, li => li.IsSystemList, li => li.BaseType, li => li.IsCatalog, li => li.RoleAssignments.Include(ra => ra.RoleDefinitionBindings, ra => ra.Member), li => li.Title, li => li.HasUniqueRoleAssignments));
-            CurrentWeb.Context.ExecuteQueryRetry();
+            ClientContext.Web.Context.Load(ClientContext.Web.Lists, l => l.Include(li => li.ItemCount, li => li.IsSystemList, li => li.BaseType, li => li.IsCatalog, li => li.RoleAssignments.Include(ra => ra.RoleDefinitionBindings, ra => ra.Member), li => li.Title, li => li.HasUniqueRoleAssignments));
+            ClientContext.Web.Context.ExecuteQueryRetry();
 
-            foreach (var list in CurrentWeb.Lists)
+            foreach (var list in ClientContext.Web.Lists)
             {
                 // Ignoring the system lists
                 if (list.IsSystemList || list.IsCatalog) continue;
@@ -336,7 +314,7 @@ namespace PnP.PowerShell.Commands.Principals
                 if (!list.HasUniqueRoleAssignments) continue;
 
                 // Construct the full URL to the SharePoint List
-                var fullListUrl = $"{CurrentWeb.Context.Url}/{list.GetWebRelativeUrl()}";
+                var fullListUrl = $"{ClientContext.Web.Context.Url}/{list.GetWebRelativeUrl()}";
 
                 WriteVerbose($"Retrieving permissions for the list at {fullListUrl}");
 
@@ -372,12 +350,12 @@ namespace PnP.PowerShell.Commands.Principals
                                     // Microsoft 365 Group
                                     var groupGuid = group.LoginName.Remove(0, group.LoginName.LastIndexOf('|') + 1);
 
-                                    var microsoft365Group = UnifiedGroupsUtility.GetUnifiedGroup(groupGuid, GraphAccessToken, includeSite: false);
+                                    var microsoft365Group = UnifiedGroupsUtility.GetUnifiedGroup(groupGuid, AccessToken, includeSite: false);
 
                                     if (group.Title.EndsWith("Members"))
                                     {
                                         // Microsoft 365 Group Members
-                                        var microsoft365GroupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(microsoft365Group, GraphAccessToken);
+                                        var microsoft365GroupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(microsoft365Group, AccessToken);
 
                                         foreach (var microsoft365GroupMember in microsoft365GroupMembers)
                                         {
@@ -398,7 +376,7 @@ namespace PnP.PowerShell.Commands.Principals
                                     else
                                     {
                                         // Microsoft 365 Group Owners
-                                        var microsoft365GroupOwners = UnifiedGroupsUtility.GetUnifiedGroupOwners(microsoft365Group, GraphAccessToken);
+                                        var microsoft365GroupOwners = UnifiedGroupsUtility.GetUnifiedGroupOwners(microsoft365Group, AccessToken);
 
                                         foreach (var microsoft365GroupOwner in microsoft365GroupOwners)
                                         {
@@ -425,7 +403,7 @@ namespace PnP.PowerShell.Commands.Principals
                                         if (roleDefinition.Name == "Limited Access") continue;
 
                                         // Get the SharePoint Group
-                                        var siteGroup = CurrentWeb.SiteGroups.FirstOrDefault(sg => sg.Id == group.Id);
+                                        var siteGroup = ClientContext.Web.SiteGroups.FirstOrDefault(sg => sg.Id == group.Id);
                                         if(siteGroup == null) continue;
 
                                         foreach(var groupUser in siteGroup.Users)
@@ -436,12 +414,12 @@ namespace PnP.PowerShell.Commands.Principals
                                             if (groupUser.AadObjectId != null && groupUser.LoginName.Contains("|federateddirectoryclaimprovider|"))
                                             {
                                                 // Microsoft 365 Group
-                                                var microsoft365Group = UnifiedGroupsUtility.GetUnifiedGroup(groupUser.AadObjectId.NameId, GraphAccessToken, includeSite: false);
+                                                var microsoft365Group = UnifiedGroupsUtility.GetUnifiedGroup(groupUser.AadObjectId.NameId, AccessToken, includeSite: false);
 
                                                 if (groupUser.Title.EndsWith("Members"))
                                                 {
                                                     // Microsoft 365 Group Members
-                                                    var microsoft365GroupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(microsoft365Group, GraphAccessToken);
+                                                    var microsoft365GroupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(microsoft365Group, AccessToken);
 
                                                     foreach (var microsoft365GroupMember in microsoft365GroupMembers)
                                                     {
@@ -462,7 +440,7 @@ namespace PnP.PowerShell.Commands.Principals
                                                 else
                                                 {
                                                     // Microsoft 365 Group Owners
-                                                    var microsoft365GroupOwners = UnifiedGroupsUtility.GetUnifiedGroupOwners(microsoft365Group, GraphAccessToken);
+                                                    var microsoft365GroupOwners = UnifiedGroupsUtility.GetUnifiedGroupOwners(microsoft365Group, AccessToken);
 
                                                     foreach (var microsoft365GroupOwner in microsoft365GroupOwners)
                                                     {
@@ -506,10 +484,10 @@ namespace PnP.PowerShell.Commands.Principals
                             var groupId = roleAssignment.Member.LoginName.Remove(0, roleAssignment.Member.LoginName.LastIndexOf('|') + 1);
 
                             // Group
-                            var securityGroup = UnifiedGroupsUtility.GetUnifiedGroup(groupId, GraphAccessToken, includeSite: false);
+                            var securityGroup = UnifiedGroupsUtility.GetUnifiedGroup(groupId, AccessToken, includeSite: false);
 
                             // Group Members
-                            var groupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(securityGroup, GraphAccessToken);
+                            var groupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(securityGroup, AccessToken);
 
                             foreach (var groupMember in groupMembers)
                             {
@@ -563,8 +541,8 @@ namespace PnP.PowerShell.Commands.Principals
                 do
                 {
                     var listItems = list.GetItems(query);
-                    CurrentWeb.Context.Load(listItems);
-                    CurrentWeb.Context.ExecuteQueryRetry();
+                    ClientContext.Web.Context.Load(listItems);
+                    ClientContext.Web.Context.ExecuteQueryRetry();
                     query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
 
                     items.Add(listItems);
@@ -584,9 +562,9 @@ namespace PnP.PowerShell.Commands.Principals
                             
                             WriteVerbose($"Retrieving permissions for list item at {listItemUrl}");
 
-                            CurrentWeb.Context.Load(listItem, li => li["EncodedAbsUrl"]);
-                            CurrentWeb.Context.Load(listItem.RoleAssignments, r => r.Include(ra => ra.RoleDefinitionBindings, ra => ra.Member));
-                            CurrentWeb.Context.ExecuteQueryRetry();
+                            ClientContext.Web.Context.Load(listItem, li => li["EncodedAbsUrl"]);
+                            ClientContext.Web.Context.Load(listItem.RoleAssignments, r => r.Include(ra => ra.RoleDefinitionBindings, ra => ra.Member));
+                            ClientContext.Web.Context.ExecuteQueryRetry();
 
                             foreach (var roleAssignment in listItem.RoleAssignments)
                             {
@@ -620,12 +598,12 @@ namespace PnP.PowerShell.Commands.Principals
                                                 // Microsoft 365 Group
                                                 var groupGuid = group.LoginName.Remove(0, group.LoginName.LastIndexOf('|') + 1);
 
-                                                var microsoft365Group = UnifiedGroupsUtility.GetUnifiedGroup(groupGuid, GraphAccessToken, includeSite: false);
+                                                var microsoft365Group = UnifiedGroupsUtility.GetUnifiedGroup(groupGuid, AccessToken, includeSite: false);
 
                                                 if (group.Title.EndsWith("Members"))
                                                 {
                                                     // Microsoft 365 Group Members
-                                                    var microsoft365GroupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(microsoft365Group, GraphAccessToken);
+                                                    var microsoft365GroupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(microsoft365Group, AccessToken);
 
                                                     foreach (var microsoft365GroupMember in microsoft365GroupMembers)
                                                     {
@@ -646,7 +624,7 @@ namespace PnP.PowerShell.Commands.Principals
                                                 else
                                                 {
                                                     // Microsoft 365 Group Owners
-                                                    var microsoft365GroupOwners = UnifiedGroupsUtility.GetUnifiedGroupOwners(microsoft365Group, GraphAccessToken);
+                                                    var microsoft365GroupOwners = UnifiedGroupsUtility.GetUnifiedGroupOwners(microsoft365Group, AccessToken);
 
                                                     foreach (var microsoft365GroupOwner in microsoft365GroupOwners)
                                                     {
@@ -673,7 +651,7 @@ namespace PnP.PowerShell.Commands.Principals
                                                     if (roleDefinition.Name == "Limited Access") continue;
 
                                                     // Get the SharePoint Group
-                                                    var siteGroup = CurrentWeb.SiteGroups.FirstOrDefault(sg => sg.Id == group.Id);
+                                                    var siteGroup = ClientContext.Web.SiteGroups.FirstOrDefault(sg => sg.Id == group.Id);
                                                     if(siteGroup == null) continue;
 
                                                     foreach(var groupUser in siteGroup.Users)
@@ -684,12 +662,12 @@ namespace PnP.PowerShell.Commands.Principals
                                                         if (groupUser.AadObjectId != null && groupUser.LoginName.Contains("|federateddirectoryclaimprovider|"))
                                                         {
                                                             // Microsoft 365 Group
-                                                            var microsoft365Group = UnifiedGroupsUtility.GetUnifiedGroup(groupUser.AadObjectId.NameId, GraphAccessToken, includeSite: false);
+                                                            var microsoft365Group = UnifiedGroupsUtility.GetUnifiedGroup(groupUser.AadObjectId.NameId, AccessToken, includeSite: false);
 
                                                             if (groupUser.Title.EndsWith("Members"))
                                                             {
                                                                 // Microsoft 365 Group Members
-                                                                var microsoft365GroupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(microsoft365Group, GraphAccessToken);
+                                                                var microsoft365GroupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(microsoft365Group, AccessToken);
 
                                                                 foreach (var microsoft365GroupMember in microsoft365GroupMembers)
                                                                 {
@@ -710,7 +688,7 @@ namespace PnP.PowerShell.Commands.Principals
                                                             else
                                                             {
                                                                 // Microsoft 365 Group Owners
-                                                                var microsoft365GroupOwners = UnifiedGroupsUtility.GetUnifiedGroupOwners(microsoft365Group, GraphAccessToken);
+                                                                var microsoft365GroupOwners = UnifiedGroupsUtility.GetUnifiedGroupOwners(microsoft365Group, AccessToken);
 
                                                                 foreach (var microsoft365GroupOwner in microsoft365GroupOwners)
                                                                 {
@@ -754,10 +732,10 @@ namespace PnP.PowerShell.Commands.Principals
                                         var groupId = roleAssignment.Member.LoginName.Remove(0, roleAssignment.Member.LoginName.LastIndexOf('|') + 1);
                                         
                                         // Group
-                                        var securityGroup = UnifiedGroupsUtility.GetUnifiedGroup(groupId, GraphAccessToken, includeSite: false);
+                                        var securityGroup = UnifiedGroupsUtility.GetUnifiedGroup(groupId, AccessToken, includeSite: false);
 
                                         // Group Members
-                                        var groupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(securityGroup, GraphAccessToken);
+                                        var groupMembers = UnifiedGroupsUtility.GetUnifiedGroupMembers(securityGroup, AccessToken);
 
                                         foreach (var groupMember in groupMembers)
                                         {
