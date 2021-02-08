@@ -98,7 +98,8 @@ namespace PnP.PowerShell.Commands.Base
 
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN)]
-        public SwitchParameter PnPManagementShell;
+        [Alias("PnPManagementShell", "PnPO365ManagementShell")]
+        public SwitchParameter DeviceLogin;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
@@ -109,6 +110,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACSAPPONLY)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         public string ClientId;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
@@ -365,7 +367,13 @@ namespace PnP.PowerShell.Commands.Base
                     ReuseAuthenticationManager();
                 }
 
-                var returnedConnection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, messageWriter, AzureEnvironment, cancellationTokenSource);
+                var clientId = PnPConnection.PnPManagementShellClientId;
+                if(ParameterSpecified(nameof(ClientId)))
+                {
+                    clientId = ClientId;
+                }
+
+                var returnedConnection = PnPConnectionHelper.InstantiateDeviceLoginConnection(clientId, Url, LaunchBrowser, messageWriter, AzureEnvironment, cancellationTokenSource);
                 connection = returnedConnection;
                 messageWriter.Finished = true;
             }, cancellationTokenSource.Token);

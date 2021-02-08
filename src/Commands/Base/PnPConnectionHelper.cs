@@ -80,7 +80,7 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource)
+        internal static PnPConnection InstantiateDeviceLoginConnection(string clientId, string url, bool launchBrowser, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource)
         {
             var connectionUri = new Uri(url);
             var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
@@ -92,26 +92,26 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                authManager = PnP.Framework.AuthenticationManager.CreateWithDeviceLogin(PnPConnection.PnPManagementShellClientId, (deviceCodeResult) =>
+                authManager = PnP.Framework.AuthenticationManager.CreateWithDeviceLogin(clientId, (deviceCodeResult) =>
                  {
-                     if (launchBrowser)
-                     {
-                         if (Utilities.OperatingSystem.IsWindows())
-                         {
-                             ClipboardService.SetText(deviceCodeResult.UserCode);
-                             messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard\n\n");
-                             BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in", cancellationTokenSource: cancellationTokenSource, cancelOnClose: false);
-                         }
-                         else
-                         {
-                             messageWriter.WriteWarning($"\n\n{deviceCodeResult.Message}\n\n");
-                         }
-                     }
-                     else
-                     {
-                         messageWriter.WriteWarning($"\n\n{deviceCodeResult.Message}\n\n");
-                     }
-                     return Task.FromResult(0);
+                    if (launchBrowser)
+                    {
+                        if (Utilities.OperatingSystem.IsWindows())
+                        {
+                            ClipboardService.SetText(deviceCodeResult.UserCode);
+                            messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard\n\n");
+                            BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in", cancellationTokenSource: cancellationTokenSource, cancelOnClose: false);
+                        }
+                        else
+                        {
+                            messageWriter.WriteWarning($"\n\n{deviceCodeResult.Message}\n\n");
+                        }
+                    }
+                    else
+                    {
+                        messageWriter.WriteWarning($"\n\n{deviceCodeResult.Message}\n\n");
+                    }
+                    return Task.FromResult(0);
                  }, azureEnvironment);
             }
             using (authManager)
@@ -121,7 +121,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 var connectionType = ConnectionType.O365;
 
-                var spoConnection = new PnPConnection(context, connectionType, null, PnPConnection.PnPManagementShellClientId, null, url.ToString(), null, PnPPSVersionTag, InitializationType.DeviceLogin)
+                var spoConnection = new PnPConnection(context, connectionType, null, clientId, null, url.ToString(), null, PnPPSVersionTag, InitializationType.DeviceLogin)
                 {
                     ConnectionMethod = ConnectionMethod.DeviceLogin,
                     AzureEnvironment = azureEnvironment
