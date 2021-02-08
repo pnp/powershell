@@ -99,17 +99,17 @@ namespace PnP.PowerShell.Commands.Base
                          if (Utilities.OperatingSystem.IsWindows())
                          {
                              ClipboardService.SetText(deviceCodeResult.UserCode);
-                             messageWriter.WriteMessage($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard\n\n");
+                             messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard\n\n");
                              BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in");
                          }
                          else
                          {
-                             messageWriter.WriteMessage($"\n\n{deviceCodeResult.Message}\n\n");
+                             messageWriter.WriteWarning($"\n\n{deviceCodeResult.Message}\n\n");
                          }
                      }
                      else
                      {
-                         messageWriter.WriteMessage($"\n\n{deviceCodeResult.Message}\n\n");
+                         messageWriter.WriteWarning($"\n\n{deviceCodeResult.Message}\n\n");
                      }
                      return Task.FromResult(0);
                  }, azureEnvironment);
@@ -174,7 +174,7 @@ namespace PnP.PowerShell.Commands.Base
             return connection;
         }
 
-        internal static PnPConnection InstantiateConnectionWithCredentials(Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials)
+        internal static PnPConnection InstantiateConnectionWithCredentials(Cmdlet cmdlet, Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials)
         {
             var context = new PnPClientContext(url.AbsoluteUri)
             {
@@ -203,7 +203,9 @@ namespace PnP.PowerShell.Commands.Base
                         {
                             context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                             context.ExecuteQueryRetry();
+                            cmdlet.WriteVerbose("Acquiring token");
                             var accesstoken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
+                            cmdlet.WriteVerbose("Token acquired");
                             var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accesstoken);
                             tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
                         }
@@ -322,7 +324,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection InstantiateInteractiveConnection(Uri uri, string clientId, string tenantAdminUrl, bool launchBrowser, AzureEnvironment azureEnvironment, CancellationToken cancellationToken, bool forceAuthentication)
+        internal static PnPConnection InstantiateInteractiveConnection(Uri uri, string clientId, string tenantAdminUrl, bool launchBrowser, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool forceAuthentication)
         {
             PnP.Framework.AuthenticationManager authManager = null;
             if (PnPConnection.CachedAuthenticationManager != null && !forceAuthentication)
@@ -334,7 +336,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 authManager = PnP.Framework.AuthenticationManager.CreateWithInteractiveLogin(clientId, (url, port) =>
                 {
-                    BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !launchBrowser);
+                    BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !launchBrowser, cancellationTokenSource);
                 },
                 successMessageHtml: $"You successfully authenticated with PnP PowerShell. Feel free to close this {(launchBrowser ? "tab" : "window")}.",
                 failureMessageHtml: $"You did not authenticate with PnP PowerShell. Feel free to close this browser {(launchBrowser ? "tab" : "window")}.",
@@ -342,7 +344,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             using (authManager)
             {
-                var clientContext = authManager.GetContext(uri.ToString(), cancellationToken);
+                var clientContext = authManager.GetContext(uri.ToString(), cancellationTokenSource.Token);
                 var context = PnPClientContext.ConvertFrom(clientContext);
 
                 var connectionType = ConnectionType.O365;

@@ -22,6 +22,8 @@ namespace PnP.PowerShell.Commands.Base
         /// ClientId of the application registered in Azure Active Directory which should be used for the device oAuth flow
         /// </summary>
         internal const string PnPManagementShellClientId = "31359c7f-bd7e-475c-86db-fdb8c937548e";
+        internal const string AzureManagementShellClientId = "1950a258-227b-4e31-a9cf-717495945fc2";
+        
         #endregion
 
         #region Properties

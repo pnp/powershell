@@ -142,7 +142,7 @@ namespace PnP.PowerShell.Commands.Base
                         record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
                         byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
                         var base64String = Convert.ToBase64String(certPfxData);
-                        record.Properties.Add(new PSVariableProperty(new PSVariable("Base64 Encoded", base64String)));
+                        record.Properties.Add(new PSVariableProperty(new PSVariable("Base64Encoded", base64String)));
                         StartConsentFlow(loginEndPoint, azureApp, redirectUri, token, httpClient, record);
                     }
                     else
@@ -226,7 +226,7 @@ namespace PnP.PowerShell.Commands.Base
                     token = AzureAuthHelper.AuthenticateDeviceLogin(Tenant, cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment);
                     if (token == null)
                     {
-                        messageWriter.WriteError("Operation cancelled or no token retrieved.");
+                        messageWriter.WriteWarning("Operation cancelled or no token retrieved.");
                     }
                     messageWriter.Stop();
                 });
@@ -239,7 +239,7 @@ namespace PnP.PowerShell.Commands.Base
                     token = AzureAuthHelper.AuthenticateInteractive(Tenant, cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment);
                     if (token == null)
                     {
-                        messageWriter.WriteError("Operation cancelled or no token retrieved.");
+                        messageWriter.WriteWarning("Operation cancelled or no token retrieved.");
                     }
                     messageWriter.Stop();
                 });
@@ -470,7 +470,7 @@ namespace PnP.PowerShell.Commands.Base
 
                     using (var authManager = AuthenticationManager.CreateWithInteractiveLogin(azureApp.AppId, (url, port) =>
                      {
-                         BrowserHelper.OpenBrowserForInteractiveLogin(url, port, true);
+                         BrowserHelper.OpenBrowserForInteractiveLogin(url, port, true, cancellationTokenSource);
                      }, Tenant, "You successfully provided consent", "You failed to provide consent.", AzureEnvironment))
                     {
                         authManager.GetAccessToken("https://graph.microsoft.com/.default", Microsoft.Identity.Client.Prompt.Consent);

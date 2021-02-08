@@ -48,30 +48,22 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
 
+        [Obsolete("The Force parameter has been deprecated and is no longer required to be provided. It will be removed in a future version.")] 
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
         {
-            bool shouldContinue = true;
             if (!Url.ToLower().StartsWith("https://") && !Url.ToLower().StartsWith("http://"))
             {
                 Uri uri = BaseUri;
                 Url = $"{uri.ToString().TrimEnd('/')}/{Url.TrimStart('/')}";
-                if (!Force)
-                {
-                    shouldContinue = ShouldContinue(string.Format(Resources.CreateSiteWithUrl0, Url), Resources.Confirm);
-                }
             }
-            if (shouldContinue)
-            {
+            Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
-                Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
-
-                Tenant.CreateSiteCollection(Url, Title, Owner, Template, (int)StorageQuota,
-                    (int)StorageQuotaWarningLevel, TimeZone, (int)ResourceQuota, (int)ResourceQuotaWarningLevel, Lcid,
-                    RemoveDeletedSite, Wait, Wait == true ? timeoutFunction : null);
-            }
+            Tenant.CreateSiteCollection(Url, Title, Owner, Template, (int)StorageQuota,
+                (int)StorageQuotaWarningLevel, TimeZone, (int)ResourceQuota, (int)ResourceQuotaWarningLevel, Lcid,
+                RemoveDeletedSite, Wait, Wait == true ? timeoutFunction : null);
         }
 
         private bool TimeoutFunction(TenantOperationMessage message)

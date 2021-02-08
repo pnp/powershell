@@ -41,7 +41,6 @@ namespace PnP.PowerShell.Commands.Base
                 throw new InvalidOperationException(Resources.NoSharePointConnection);
             }
 
-
             PnPConnection.CurrentConnection.CacheContext();
 
             if (PnPConnection.CurrentConnection.TenantAdminUrl != null &&
@@ -51,9 +50,7 @@ namespace PnP.PowerShell.Commands.Base
                 var uriParts = uri.Host.Split('.');
                 if (uriParts[0].ToLower().EndsWith("-admin"))
                 {
-                    _baseUri =
-                        new Uri(
-                            $"{uri.Scheme}://{uriParts[0].ToLower().Replace("-admin", "")}.{string.Join(".", uriParts.Skip(1))}{(!uri.IsDefaultPort ? ":" + uri.Port : "")}");
+                    _baseUri = new Uri($"{uri.Scheme}://{uriParts[0].ToLower().Replace("-admin", "")}.{string.Join(".", uriParts.Skip(1))}{(!uri.IsDefaultPort ? ":" + uri.Port : "")}");
                 }
                 else
                 {
@@ -76,12 +73,9 @@ namespace PnP.PowerShell.Commands.Base
                     PnPConnection.CurrentConnection.Context =
                         PnPConnection.CurrentConnection.CloneContext(adminUrl);
                 }
-                else if (PnPConnection.CurrentConnection.ConnectionType == ConnectionType.TenantAdmin)
+                else
                 {
-                    _baseUri =
-                       new Uri(
-                           $"{uri.Scheme}://{uriParts[0].ToLower().Replace("-admin", "")}{(uriParts.Length > 1 ? $".{string.Join(".", uriParts.Skip(1))}" : string.Empty)}{(!uri.IsDefaultPort ? ":" + uri.Port : "")}");
-
+                    _baseUri = new Uri($"{uri.Scheme}://{uriParts[0].ToLower().Replace("-admin", "")}{(uriParts.Length > 1 ? $".{string.Join(".", uriParts.Skip(1))}" : string.Empty)}{(!uri.IsDefaultPort ? ":" + uri.Port : "")}");
                 }
             }
         }
@@ -102,6 +96,5 @@ namespace PnP.PowerShell.Commands.Base
             base.EndProcessing();
             PnPConnection.CurrentConnection.RestoreCachedContext(PnPConnection.CurrentConnection.Url);
         }
-
     }
 }

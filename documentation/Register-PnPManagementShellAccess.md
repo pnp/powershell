@@ -14,12 +14,18 @@ Registers access to the tenant for the PnP Management Shell Multi-Tenant Azure A
 
 ## SYNTAX
 
+### Main
 ```powershell
 Register-PnPManagementShellAccess [-AzureEnvironment <AzureEnvironment>] [<CommonParameters>]
 ```
 
+### Show Consent Url
+```powershell
+Register-PnPManagementShellAccess -ShowConsentUrl [-AzureEnvironment]
+```
+
 ## DESCRIPTION
-This cmdlet grants access to the tenant for the PnP Management Shell Multi-Tenant Azure AD Application which simplifies the use of OAuth based access for PnP PowerShell when using credentials to authenticate.
+This cmdlet grants access to the tenant for the PnP Management Shell Multi-Tenant Azure AD Application which simplifies the use of OAuth based access for PnP PowerShell when using credentials to authenticate. If you are not an administrator that can consent Azure AD Applications, use the -ShowConsentUrl option. It will ask you to log in and provides you with an URL you can share with a person with appropriate access rights to provide consent for the organization.
 
 ## EXAMPLES
 
@@ -31,6 +37,19 @@ Register-PnPManagementShellAccess
 Launches the consent flow to grant the PnP Management Shell Azure AD Application delegate access to the tenant.
 
 ## PARAMETERS
+
+### -ShowConsentUrl
+If specified you will be asked to authenticate to acquire the tenant id. An url that can be used to provide consent will be returned.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Show Consent Url
+
+Required: False
+Position: Named
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -AzureEnvironment
 The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.

@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current Nightly]
 
 ### Added
+- Added `-ShowContentUrl` parameter to `Register-PnPManagementShellAccess` retrieve the url to consent to the PnP Management Shell application by an administrator.
 - Added `-IsFavoriteByDefault` parameter on Set-PnPTeamsChannel and Add-PnPTeamsChannel
 - Added `-GroupIdDefined` boolean parameter to Get-PnPTenantSite to allow filtering on sites which belong to a Microsoft 365 Group
 - Added `-Interactive` login option to `Connect-PnPOnline` which is similar to `-UseWebLogin` but without the limitations of the latter. The `-UseWebLogin` is using cookie based authentication towards SharePoint and cannot access Graph tokens. Using `-Interactive` we use Azure AD Authentication and as a result we are able to acquire Graph tokens.
