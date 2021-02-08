@@ -169,7 +169,7 @@ namespace PnP.PowerShell.Commands.Utilities
             Contains
         }
 
-        internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls = null, bool noThreadJoin = false, CancellationTokenSource cancellationTokenSource = null)
+        internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls = null, bool noThreadJoin = false, CancellationTokenSource cancellationTokenSource = null, bool cancelOnClose = true)
         {
             bool success = false;
 #if Windows
@@ -180,7 +180,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     var form = new System.Windows.Forms.Form();
 
-                    cancellationTokenSource.Token.Register(() =>
+                    cancellationTokenSource?.Token.Register(() =>
                     {
                         form.Invoke((System.Windows.Forms.MethodInvoker)(() => form.Close()));
                         //form.Close();
@@ -203,9 +203,9 @@ namespace PnP.PowerShell.Commands.Utilities
                     form.ResumeLayout(false);
 
                     form.FormClosed += (a,b) => {
-                        if(!success)
+                        if(!success && cancelOnClose)
                         {
-                            cancellationTokenSource.Cancel();
+                            cancellationTokenSource?.Cancel();
                         }
                     };
                     browser.Navigate(siteUrl);

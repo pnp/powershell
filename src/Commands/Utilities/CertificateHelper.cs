@@ -32,7 +32,10 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 case RSACng rsaCNGKey:
                     {
-                        param = rsaCNGKey.ExportParameters(true);
+                        using (var rsa = MakeExportable(rsaCNGKey))
+                        {
+                            param = rsa.ExportParameters(true);
+                        }
                         break;
                     }
                 case System.Security.Cryptography.RSAOpenSsl rsaOpenSslKey:
@@ -307,7 +310,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             X500DistinguishedName distinguishedName = new X500DistinguishedName(distinguishedNameString);
 
-            using (RSA rsa = RSA.Create(2048))
+            using (RSA rsa = MakeExportable(new RSACng(2048)))
             {
                 var request = new CertificateRequest(distinguishedName, rsa, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
 
@@ -331,7 +334,36 @@ namespace PnP.PowerShell.Commands.Utilities
                 return new X509Certificate2(certificate.Export(X509ContentType.Pfx, password), password, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
             }
         }
+
+        internal static RSA MakeExportable(RSA rsa)
+        {
+            if (rsa is RSACng rsaCng)
+            {
+                const CngExportPolicies Exportability =
+                    CngExportPolicies.AllowExport |
+                    CngExportPolicies.AllowPlaintextExport;
+
+                if ((rsaCng.Key.ExportPolicy & Exportability) == CngExportPolicies.AllowExport)
+                {
+                    RSA copy = RSA.Create();
+
+                    copy.ImportEncryptedPkcs8PrivateKey(
+                        nameof(MakeExportable),
+                        rsa.ExportEncryptedPkcs8PrivateKey(
+                            nameof(MakeExportable),
+                            new PbeParameters(
+                                PbeEncryptionAlgorithm.TripleDes3KeyPkcs12,
+                                HashAlgorithmName.SHA1,
+                                2048)),
+                        out _);
+                    return copy;
+                }
+            }
+
+            return rsa;
+        }
 #endif
+
 
         internal static byte[] CreateSelfSignCertificatePfx(
             string x500,

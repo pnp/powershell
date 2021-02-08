@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Site
         public SwitchParameter? AllowSelfServiceUpgrade = null;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        [Alias("DenyAndAddCustomizePages")]
+        [Alias("DenyAndAddCustomizePages", "DenyAddAndCustomizePages")]
         public SwitchParameter? NoScriptSite;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
@@ -216,7 +216,7 @@ namespace PnP.PowerShell.Commands.Site
                 }
                 if (NoScriptSite.HasValue)
                 {
-                    siteProperties.DenyAddAndCustomizePages = (NoScriptSite == true ? DenyAddAndCustomizePagesStatus.Enabled : DenyAddAndCustomizePagesStatus.Disabled);
+                    siteProperties.DenyAddAndCustomizePages = NoScriptSite == true ? DenyAddAndCustomizePagesStatus.Enabled : DenyAddAndCustomizePagesStatus.Disabled;
                     executeQueryRequired = true;
                 }
                 if (CommentsOnSitePagesDisabled.HasValue)

@@ -98,7 +98,8 @@ namespace PnP.PowerShell.Commands.Base
 
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN)]
-        public SwitchParameter PnPManagementShell;
+        [Alias("PnPManagementShell", "PnPO365ManagementShell")]
+        public SwitchParameter DeviceLogin;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
@@ -109,6 +110,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACSAPPONLY)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         public string ClientId;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
@@ -230,7 +232,7 @@ namespace PnP.PowerShell.Commands.Base
                     connection = ConnectSpoManagement();
                     break;
                 case ParameterSet_DEVICELOGIN:
-                    connection = ConnectDeviceLogin(cancellationToken);
+                    connection = ConnectDeviceLogin();
                     break;
                 case ParameterSet_APPONLYAADCERTIFICATE:
                     connection = ConnectAppOnlyWithCertificate();
@@ -254,7 +256,7 @@ namespace PnP.PowerShell.Commands.Base
                     connection = ConnectWebLogin();
                     break;
                 case ParameterSet_INTERACTIVE:
-                    connection = ConnectInteractive(cancellationToken);
+                    connection = ConnectInteractive();
                     break;
             }
 
@@ -340,7 +342,7 @@ namespace PnP.PowerShell.Commands.Base
         /// Connect using the parameter set DEVICELOGIN
         /// </summary>
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        private PnPConnection ConnectDeviceLogin(CancellationToken cancellationToken)
+        private PnPConnection ConnectDeviceLogin()
         {
             var messageWriter = new CmdletMessageWriter(this);
             PnPConnection connection = null;
@@ -365,10 +367,16 @@ namespace PnP.PowerShell.Commands.Base
                     ReuseAuthenticationManager();
                 }
 
-                var returnedConnection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, messageWriter, AzureEnvironment, cancellationToken);
+                var clientId = PnPConnection.PnPManagementShellClientId;
+                if(ParameterSpecified(nameof(ClientId)))
+                {
+                    clientId = ClientId;
+                }
+
+                var returnedConnection = PnPConnectionHelper.InstantiateDeviceLoginConnection(clientId, Url, LaunchBrowser, messageWriter, AzureEnvironment, cancellationTokenSource);
                 connection = returnedConnection;
                 messageWriter.Finished = true;
-            }, cancellationToken);
+            }, cancellationTokenSource.Token);
             messageWriter.Start();
             return connection;
         }
@@ -534,7 +542,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        private PnPConnection ConnectInteractive(CancellationToken cancellationToken)
+        private PnPConnection ConnectInteractive()
         {
             if (ClientId == null)
             {
