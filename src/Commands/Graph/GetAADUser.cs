@@ -37,6 +37,14 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DELTA)]
         public string DeltaToken;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DELTA)]
+        public int StartIndex = 0;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DELTA)]
+        public int? EndIndex = 999;
+
         protected override void ExecuteCmdlet()
         {
             if (PnPConnection.CurrentConnection.ClientId == PnPConnection.PnPManagementShellClientId)
@@ -58,12 +66,12 @@ namespace PnP.PowerShell.Commands.Graph
             }
             else if (ParameterSpecified(nameof(Delta)))
             {
-                PnP.Framework.Graph.Model.UserDelta userDelta = PnP.Framework.Graph.UsersUtility.ListUserDelta(AccessToken, DeltaToken, Filter, OrderBy, Select);
+                PnP.Framework.Graph.Model.UserDelta userDelta = PnP.Framework.Graph.UsersUtility.ListUserDelta(AccessToken, DeltaToken, Filter, OrderBy, Select, StartIndex, EndIndex);
                 WriteObject(userDelta);
             } 
             else
             {
-                List<PnP.Framework.Graph.Model.User> users = PnP.Framework.Graph.UsersUtility.ListUsers(AccessToken, Filter, OrderBy, Select);
+                List<PnP.Framework.Graph.Model.User> users = PnP.Framework.Graph.UsersUtility.ListUsers(AccessToken, Filter, OrderBy, Select, StartIndex, EndIndex);
                 WriteObject(users, true);
             }
         }
