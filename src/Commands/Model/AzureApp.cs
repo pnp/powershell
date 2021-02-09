@@ -26,9 +26,9 @@ namespace PnP.PowerShell.Commands.Model
 
     public class PermissionScopes
     {
-        private const string ResourceAppId_Graph = "00000003-0000-0000-c000-000000000000";
-        private const string ResourceAppID_SPO = "00000003-0000-0ff1-ce00-000000000000";
-        private const string ResourceAppID_O365Management = "c5393580-f805-4401-95e8-94b7a6ef2fc2";
+        public const string ResourceAppId_Graph = "00000003-0000-0000-c000-000000000000";
+        public const string ResourceAppID_SPO = "00000003-0000-0ff1-ce00-000000000000";
+        public const string ResourceAppID_O365Management = "c5393580-f805-4401-95e8-94b7a6ef2fc2";
         private List<PermissionScope> scopes = new List<PermissionScope>();
         public PermissionScopes()
         {

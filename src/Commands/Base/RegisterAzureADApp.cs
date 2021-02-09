@@ -127,6 +127,23 @@ namespace PnP.PowerShell.Commands.Base
                 loginEndPoint = authenticationManager.GetAzureADLoginEndPoint(AzureEnvironment);
             }
 
+            var permissionScopes = new PermissionScopes();
+            var scopes = new List<PermissionScope>();
+            if (this.Scopes != null)
+            {
+                foreach (var scopeIdentifier in this.Scopes)
+                {
+                    scopes.Add(permissionScopes.GetScope(scopeIdentifier));
+                }
+            }
+            else
+            {
+                scopes.Add(permissionScopes.GetScope("SPO.Sites.FullControl.All"));
+                scopes.Add(permissionScopes.GetScope("MSGraph.Group.ReadWrite.All"));
+                scopes.Add(permissionScopes.GetScope("SPO.User.Read.All"));
+                scopes.Add(permissionScopes.GetScope("MSGraph.User.Read.All"));
+            }
+
             var record = new PSObject();
 
             string token = GetAuthToken(messageWriter);
@@ -139,14 +156,14 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     if (!AppExists(ApplicationName, httpClient, token))
                     {
-                        var azureApp = CreateApp(loginEndPoint, httpClient, token, cert, redirectUri);
+                        var azureApp = CreateApp(loginEndPoint, httpClient, token, cert, redirectUri, scopes);
 
                         record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId/ClientId", azureApp.AppId)));
                         record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
                         byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
                         var base64String = Convert.ToBase64String(certPfxData);
                         record.Properties.Add(new PSVariableProperty(new PSVariable("Base64Encoded", base64String)));
-                        StartConsentFlow(loginEndPoint, azureApp, redirectUri, token, httpClient, record, messageWriter);
+                        StartConsentFlow(loginEndPoint, azureApp, redirectUri, token, httpClient, record, messageWriter, scopes);
                     }
                     else
                     {
@@ -380,27 +397,11 @@ namespace PnP.PowerShell.Commands.Base
             return false;
         }
 
-        private AzureApp CreateApp(string loginEndPoint, HttpClient httpClient, string token, X509Certificate2 cert, string redirectUri)
+        private AzureApp CreateApp(string loginEndPoint, HttpClient httpClient, string token, X509Certificate2 cert, string redirectUri, List<PermissionScope> scopes)
         {
             var expirationDate = DateTime.Parse(cert.GetExpirationDateString()).ToUniversalTime();
             var startDate = DateTime.Parse(cert.GetEffectiveDateString()).ToUniversalTime();
 
-            var permissionScopes = new PermissionScopes();
-            var scopes = new List<PermissionScope>();
-            if (this.Scopes != null)
-            {
-                foreach (var scopeIdentifier in this.Scopes)
-                {
-                    scopes.Add(permissionScopes.GetScope(scopeIdentifier));
-                }
-            }
-            else
-            {
-                scopes.Add(permissionScopes.GetScope("SPO.Sites.FullControl.All"));
-                scopes.Add(permissionScopes.GetScope("MSGraph.Group.ReadWrite.All"));
-                scopes.Add(permissionScopes.GetScope("SPO.User.Read.All"));
-                scopes.Add(permissionScopes.GetScope("MSGraph.User.Read.All"));
-            }
 
             var scopesPayload = GetScopesPayload(scopes);
             var payload = new
@@ -440,11 +441,13 @@ namespace PnP.PowerShell.Commands.Base
             return azureApp;
         }
 
-        private void StartConsentFlow(string loginEndPoint, AzureApp azureApp, string redirectUri, string token, HttpClient httpClient, PSObject record, CmdletMessageWriter messageWriter)
+        private void StartConsentFlow(string loginEndPoint, AzureApp azureApp, string redirectUri, string token, HttpClient httpClient, PSObject record, CmdletMessageWriter messageWriter, List<PermissionScope> scopes)
         {
             Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Starting consent flow.");
 
-            var consentUrl = $"{loginEndPoint}/{Tenant}/v2.0/adminconsent?client_id={azureApp.AppId}&scope=https://microsoft.sharepoint-df.com/.default&redirect_uri={redirectUri}";
+            var resource = scopes.FirstOrDefault(s => s.resourceAppId == PermissionScopes.ResourceAppId_Graph) != null ? "https://graph.microsoft.com/.default" : "https://microsoft.sharepoint-df.com/.default";
+
+            var consentUrl = $"{loginEndPoint}/{Tenant}/v2.0/adminconsent?client_id={azureApp.AppId}&scope={resource}&redirect_uri={redirectUri}";
 
 
             if (OperatingSystem.IsWindows() && !NoPopup)
@@ -484,7 +487,7 @@ namespace PnP.PowerShell.Commands.Base
                              BrowserHelper.OpenBrowserForInteractiveLogin(url, port, true, cancellationTokenSource);
                          }, Tenant, "You successfully provided consent", "You failed to provide consent.", AzureEnvironment))
                         {
-                            authManager.GetAccessToken("https://graph.microsoft.com/.default", Microsoft.Identity.Client.Prompt.Consent);
+                            authManager.GetAccessToken(resource, Microsoft.Identity.Client.Prompt.Consent);
                         }
                     }
                     else
