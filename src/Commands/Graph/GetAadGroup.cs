@@ -8,28 +8,34 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365GroupMembers")]
+    [Cmdlet(VerbsCommon.Get, "PnPAadGroup")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
-    [Alias("Get-PnPAadGroupMembers")]
-    public class GetMicrosoft365GroupMembers : PnPGraphCmdlet
+    public class GetAadGroup : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false)]
         public Microsoft365GroupPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
             UnifiedGroupEntity group = null;
+            List<UnifiedGroupEntity> groups = null;
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(AccessToken, false);
+                group = Identity.GetGroup(AccessToken, includeSite: false);
+            }
+            else
+            {
+                groups = UnifiedGroupsUtility.GetUnifiedGroups(AccessToken, includeSite: false, includeClassification: false, includeHasTeam: false);
             }
 
             if (group != null)
             {
-                // Get members of the group
-                List<UnifiedGroupUser> members = UnifiedGroupsUtility.GetUnifiedGroupMembers(group, AccessToken);
-                WriteObject(members);
+                WriteObject(group);
+            }
+            else if (groups != null)
+            {
+                WriteObject(groups, true);
             }
         }
     }
