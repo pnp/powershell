@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_APPONLYAADTHUMBPRINT = "App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint";
         private const string ParameterSet_SPOMANAGEMENT = "SPO Management Shell Credentials";
         private const string ParameterSet_DEVICELOGIN = "PnP Management Shell / DeviceLogin";
-        // private const string ParameterSet_ACCESSTOKEN = "Access Token";
+        private const string ParameterSet_ACCESSTOKEN = "Access Token";
         private const string ParameterSet_WEBLOGIN = "Web Login";
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
         private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
@@ -45,15 +45,15 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
         public SwitchParameter ReturnConnection;
 
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ACSAPPONLY, ValueFromPipeline = true)]
-        // [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true)]
-        // [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
@@ -176,6 +176,9 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_INTERACTIVE)]
         public SwitchParameter Interactive;
 
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACCESSTOKEN)]
+        public string AccessToken;
+
         protected override void ProcessRecord()
         {
             cancellationTokenSource = new CancellationTokenSource();
@@ -190,10 +193,10 @@ namespace PnP.PowerShell.Commands.Base
             {
                 Environment.SetEnvironmentVariable("PNPPOWERSHELL_UPDATECHECK", "false");
             }
-#pragma warning restore CS6018            
+#pragma warning restore CS6018
 
-            
-            
+
+
             VersionChecker.CheckVersion(this);
             try
             {
@@ -240,9 +243,9 @@ namespace PnP.PowerShell.Commands.Base
                 case ParameterSet_APPONLYAADTHUMBPRINT:
                     connection = ConnectAppOnlyWithCertificate();
                     break;
-                // case ParameterSet_ACCESSTOKEN:
-                //     connection = ConnectAccessToken();
-                //     break;
+                case ParameterSet_ACCESSTOKEN:
+                    connection = ConnectAccessToken();
+                    break;
                 case ParameterSet_ACSAPPONLY:
                     connection = ConnectACSAppOnly();
                     break;
@@ -368,7 +371,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 var clientId = PnPConnection.PnPManagementShellClientId;
-                if(ParameterSpecified(nameof(ClientId)))
+                if (ParameterSpecified(nameof(ClientId)))
                 {
                     clientId = ClientId;
                 }
@@ -452,32 +455,10 @@ namespace PnP.PowerShell.Commands.Base
         /// Connect using the parameter set ACCESSTOKEN
         /// </summary>
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        // private PnPConnection ConnectAccessToken()
-        // {
-        //     var handler = new JwtSecurityTokenHandler();
-        //     var jwtToken = handler.ReadJwtToken(AccessToken);
-        //     var aud = jwtToken.Audiences.FirstOrDefault();
-        //     var url = Url ?? aud ?? throw new PSArgumentException(Resources.AccessTokenConnectFailed);
-
-        //     switch (url.ToLower())
-        //     {
-        //         case GraphToken.ResourceIdentifier:
-        //             return PnPConnection.GetConnectionWithToken(new GraphToken(AccessToken), TokenAudience.MicrosoftGraph, InitializationType.Token, null);
-
-        //         case OfficeManagementApiToken.ResourceIdentifier:
-        //             return PnPConnection.GetConnectionWithToken(new OfficeManagementApiToken(AccessToken), TokenAudience.OfficeManagementApi, InitializationType.Token, null);
-
-        //         default:
-        //             {
-        //                 ClientContext clientContext = null;
-        //                 if (ParameterSpecified(nameof(Url)))
-        //                 {
-        //                     clientContext = new ClientContext(Url);
-        //                 }
-        //                 return PnPConnection.GetConnectionWithToken(new SharePointToken(AccessToken), TokenAudience.SharePointOnline, InitializationType.Token, null, Url, clientContext: clientContext);
-        //             }
-        //     }
-        // }
+        private PnPConnection ConnectAccessToken()
+        {
+            return PnPConnectionHelper.InstantiateWithAccessToken(!string.IsNullOrEmpty(Url) ? new Uri(Url) : null,AccessToken, TenantAdminUrl);
+        }
 
         /// <summary>
         /// Connect using provided credentials or the current credentials
@@ -526,7 +507,7 @@ namespace PnP.PowerShell.Commands.Base
         private PnPConnection ConnectManagedIdentity()
         {
             WriteVerbose("Connecting to the Graph with the current Managed Identity");
-            return PnPConnectionHelper.InstantiateManagedIdentityConnection(this);
+            return PnPConnectionHelper.InstantiateManagedIdentityConnection(this, TenantAdminUrl);
         }
 
         private PnPConnection ConnectWebLogin()
