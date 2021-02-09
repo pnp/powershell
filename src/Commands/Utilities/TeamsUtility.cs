@@ -140,7 +140,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     catch (Exception)
                     {
                         // In case of exception wait for 5 secs
-                        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+                        await Task.Delay(TimeSpan.FromSeconds(5));
                     }
 
                     // Don't wait more than 1 minute
@@ -179,7 +179,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
                     catch (Exception)
                     {
-                        System.Threading.Thread.Sleep(5000);
+                        await Task.Delay(5000);
                         iteration++;
                     }
 
