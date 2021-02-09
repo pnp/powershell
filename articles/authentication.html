@@ -107,7 +107,7 @@ You are not creating a new application in the sense of something that runs in yo
 <p>Enter</p>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials (Get-Credential)
 </code></pre>
-<p>and you will be prompted for credentials.</p>
+<p>and you will be prompted for credentials. Using this method you're required to have granted the PnP Management Shell multi-tenant application access rights. You can however register your own application using <code>Register-PnPAzureAzureApp</code> and then provide the <code>-ClientId</code> parameter with the client id/app id of your custom application.</p>
 <h2 id="authenticating-with-pre-stored-credentials-using-the-windows-credential-manager-windows-only">Authenticating with pre-stored credentials using the Windows Credential Manager (Windows only)</h2>
 <pre><code class="lang-powershell">Add-PnPStoredCredential -Name &quot;yourlabel&quot; -Username youruser@domain.com
 </code></pre>
@@ -136,6 +136,10 @@ Set-Secret -Name &quot;yourlabel&quot; -Secret (Get-Credential)
 <p>After you set up the vault and you added a credential</p>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials (Get-Secret -Name &quot;yourlabel&quot;)
 </code></pre>
+<h2 id="authentication-in-case-you-have-multi-factor-authentication-enabled">Authentication in case you have Multi-Factor authentication enabled</h2>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -Interactive
+</code></pre>
+<p>This will show a popup window which will allow to authenticate and step through the multi-factor authentication flow.</p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
