@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Interactive` login option to `Connect-PnPOnline` which is similar to `-UseWebLogin` but without the limitations of the latter. The `-UseWebLogin` is using cookie based authentication towards SharePoint and cannot access Graph tokens. Using `-Interactive` we use Azure AD Authentication and as a result we are able to acquire Graph tokens.
 
 ### Changed
+- Fixed issues with `Register-PnPAzureADApp` when using the various auth options (-DeviceLogin / -Interactive)
 - Renamed the `-PnPManagementShell` option to `-DeviceLogin` on `Connect-PnPOnline`. `-PnPManagementShell` is still available as an alias.
 - Added `-ClientId` option to `-DeviceLogin` allowing device code authentication with custom app registrations.
 - Changed `-Url` parameter on Get-PnPTenantSite and Set-PnPTenantSite to `-Identity`. Made `-Url` available as an alias.
@@ -29,6 +30,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - fixed issue where Get-PnPTenantSite was not returning all properties correct, Issue #151
 - Added `-Interactive` login option to Register-PnPManagementApp which allows for an interactive authentication flow not using device login for environments that require Multi-Factor Authentication.
 - Updated all Microsoft365Group cmdlets to only load the SiteUrl of the underlying Microsoft 365 Group where required. This means that `Get-PnPMicrosoft365Group -Identity` will not by default load the site url. Specify `-IncludeSiteUrl` to include it.
+
+### Contributors
+- Koen Zomers [koenzomers]
+- Gautam Sheth [gautamdsheth]
+- Todd Klindt [ToddKlindt]
+- Giacomo Pozzoni [jackpoz]
+
 
 ## [1.2.0]
 
