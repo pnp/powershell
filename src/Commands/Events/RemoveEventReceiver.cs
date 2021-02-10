@@ -15,8 +15,8 @@ namespace PnP.PowerShell.Commands.Events
         [Parameter(Mandatory = false, ParameterSetName="List")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, ParameterSetName = "Site")]
-        public SitePipeBind Site;
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Site;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
@@ -59,13 +59,10 @@ namespace PnP.PowerShell.Commands.Events
                     ClientContext.ExecuteQueryRetry();
                 }
             }
-            else if (ParameterSetName == "Site")
+            else if (Site)
             {
-                var site = ClientContext.Site;
-                if (site == null)
-                    throw new PSArgumentException($"No site found with id, title or url '{Site}'", "Site");
-
-                if (ParameterSpecified(nameof(Identity)))
+               var site = ClientContext.Site;
+               if (ParameterSpecified(nameof(Identity)))
                 {
                     var eventReceiver = Identity.GetEventReceiverOnSite(site);
                     if (eventReceiver != null)
