@@ -457,7 +457,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAccessToken()
         {
-            return PnPConnectionHelper.InstantiateWithAccessToken(!string.IsNullOrEmpty(Url) ? new Uri(Url) : null,AccessToken, TenantAdminUrl);
+            return PnPConnectionHelper.InstantiateWithAccessToken(!string.IsNullOrEmpty(Url) ? new Uri(Url) : null, AccessToken, TenantAdminUrl);
         }
 
         /// <summary>
@@ -531,10 +531,15 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (PnPConnection.CurrentConnection?.ClientId == ClientId)
             {
-                if (new Uri(Url.ToLower()).Host == new Uri(PnPConnection.CurrentConnection.Url).Host)
+                if (IsSameOrAdminHost(new Uri(Url), new Uri(PnPConnection.CurrentConnection.Url)))
                 {
                     ReuseAuthenticationManager();
                 }
+
+                // if (new Uri(Url.ToLower()).Host == new Uri(PnPConnection.CurrentConnection.Url).Host )
+                // {
+                //     ReuseAuthenticationManager();
+                // }
             }
             return PnPConnectionHelper.InstantiateInteractiveConnection(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment, cancellationTokenSource, ForceAuthentication);
         }
@@ -590,9 +595,27 @@ namespace PnP.PowerShell.Commands.Base
             return credentials;
         }
 
-        private void MatchesTenantAdminUrl(string url)
+        private bool IsSameOrAdminHost(Uri currentUri, Uri previousUri)
         {
-            var uri = new Uri(url);
+            var tenantAdminUrl = string.Empty;
+            if (!previousUri.Host.Contains("-admin"))
+            {
+                tenantAdminUrl = string.IsNullOrEmpty(TenantAdminUrl) ? previousUri.Host.Replace(".sharepoint.", "-admin.sharepoint.") : TenantAdminUrl;
+            }
+            if (currentUri.Host == tenantAdminUrl)
+            {
+                return true;
+            }
+
+            if (!currentUri.Host.Contains("-admin"))
+            {
+                tenantAdminUrl = string.IsNullOrEmpty(TenantAdminUrl) ? currentUri.Host.Replace(".sharepoint.", "-admin.sharepoint.") : TenantAdminUrl;
+            }
+            if (previousUri.Host == tenantAdminUrl)
+            {
+                return true;
+            }
+            return currentUri.Host == previousUri.Host;
         }
 
 
