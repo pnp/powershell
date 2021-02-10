@@ -15,7 +15,7 @@ title: Get-PnPAADUser
 
   * Microsoft Graph API : One of Directory.Read.All, Directory.ReadWrite.All, User.Read.All, User.ReadWrite.All
 
-Retrieves users from Azure Active Directory
+Retrieves users from Azure Active Directory. By default the following properties will be loaded: BusinessPhones, DisplayName, GivenName, JobTitle, Mail, MobilePhone, OfficeLocation, PreferredLanguage, Surname, UserPrincipalName, Id, AccountEnabled 
 
 ## SYNTAX
 
