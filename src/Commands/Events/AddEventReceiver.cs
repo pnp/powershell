@@ -11,6 +11,9 @@ namespace PnP.PowerShell.Commands.Events
         [Parameter(Mandatory = false)]
         public ListPipeBind List;
 
+        [Parameter(Mandatory = false)]
+        public SitePipeBind Site;
+
         [Parameter(Mandatory = true)]
         public string Name;
 
@@ -35,6 +38,11 @@ namespace PnP.PowerShell.Commands.Events
             {
                 var list = List.GetList(CurrentWeb);
                 WriteObject(list.AddRemoteEventReceiver(Name, Url, EventReceiverType, Synchronization, SequenceNumber, Force));
+            }
+            else if (ParameterSpecified(nameof(Site)))
+            {
+                //WriteObject(list.AddRemoteEventReceiver(Name, Url, EventReceiverType, Synchronization, SequenceNumber, Force));
+                WriteObject(ClientContext.Site.AddRemoteEventReceiver(Name, Url, EventReceiverType, Synchronization, SequenceNumber, Force));
             }
             else
             {

@@ -36,6 +36,24 @@ namespace PnP.PowerShell.Commands.Events
                     }
                 }
             }
+            else if (ParameterSetName == "Site")
+            {
+                var site = ClientContext.Site;
+
+                if (site != null)
+                {
+                    if (!ParameterSpecified(nameof(Identity)))
+                    {
+                        var query = ClientContext.LoadQuery(site.EventReceivers);
+                        ClientContext.ExecuteQueryRetry();
+                        WriteObject(query, true);
+                    }
+                    else
+                    {
+                        WriteObject(Identity.GetEventReceiverOnSite(site));
+                    }
+                }
+            }
             else
             {
                 if (!ParameterSpecified(nameof(Identity)))
