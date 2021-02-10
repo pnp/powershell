@@ -400,27 +400,29 @@ namespace PnP.PowerShell.Commands.Base
                 // If somehow a public key certificate was passed in, we can't clean it up, thus we have nothing to do here
                 return;
             }
-
-            var privateKey = (RSACryptoServiceProvider)certificate.PrivateKey;
-            string uniqueKeyContainerName = privateKey.CspKeyContainerInfo.UniqueKeyContainerName;
-            certificate.Reset();
-
-            var programDataPath = Environment.GetEnvironmentVariable("ProgramData");
-            if (string.IsNullOrEmpty(programDataPath))
+            if (Utilities.OperatingSystem.IsWindows())
             {
-                programDataPath = @"C:\ProgramData";
-            }
-            try
-            {
-                var temporaryCertificateFilePath = $@"{programDataPath}\Microsoft\Crypto\RSA\MachineKeys\{uniqueKeyContainerName}";
-                if (System.IO.File.Exists(temporaryCertificateFilePath))
+                var privateKey = (RSACryptoServiceProvider)certificate.PrivateKey;
+                string uniqueKeyContainerName = privateKey.CspKeyContainerInfo.UniqueKeyContainerName;
+                certificate.Reset();
+
+                var programDataPath = Environment.GetEnvironmentVariable("ProgramData");
+                if (string.IsNullOrEmpty(programDataPath))
                 {
-                    System.IO.File.Delete(temporaryCertificateFilePath);
+                    programDataPath = @"C:\ProgramData";
                 }
-            }
-            catch (Exception)
-            {
-                // best effort cleanup
+                try
+                {
+                    var temporaryCertificateFilePath = $@"{programDataPath}\Microsoft\Crypto\RSA\MachineKeys\{uniqueKeyContainerName}";
+                    if (System.IO.File.Exists(temporaryCertificateFilePath))
+                    {
+                        System.IO.File.Delete(temporaryCertificateFilePath);
+                    }
+                }
+                catch (Exception)
+                {
+                    // best effort cleanup
+                }
             }
         }
 
