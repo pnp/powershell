@@ -18,7 +18,7 @@ Sets properties on a web
 Set-PnPWeb [-SiteLogoUrl <String>] [-AlternateCssUrl <String>] [-Title <String>] [-Description <String>]
  [-MasterUrl <String>] [-CustomMasterUrl <String>] [-QuickLaunchEnabled] [-MembersCanShare] [-NoCrawl]
  [-HeaderLayout <HeaderLayoutType>] [-HeaderEmphasis <SPVariantThemeType>] [-NavAudienceTargetingEnabled]
- [-MegaMenuEnabled] [-DisablePowerAutomate] [-CommentsOnSitePagesDisabled] 
+ [-MegaMenuEnabled] [-DisablePowerAutomate] [-CommentsOnSitePagesDisabled] [-HideTitleInHeader]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -274,7 +274,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -HideTitleInHeader
+Toggle the title visiblity in the header.
 
+Set -HideTitleInHeader:$false to show the header
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 

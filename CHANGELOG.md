@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current Nightly]
 
 ### Added
+- Added `-HideTitleInHeader` parameter to `Set-PnPWeb` to hide or show the title in the header. Use `-HideTitleInHeader` to hide it and `-HideTitleInHeader:$false` to show it.
 - Added `-ShowContentUrl` parameter to `Register-PnPManagementShellAccess` retrieve the url to consent to the PnP Management Shell application by an administrator.
 - Added `-IsFavoriteByDefault` parameter on Set-PnPTeamsChannel and Add-PnPTeamsChannel
 - Added `-GroupIdDefined` boolean parameter to Get-PnPTenantSite to allow filtering on sites which belong to a Microsoft 365 Group
