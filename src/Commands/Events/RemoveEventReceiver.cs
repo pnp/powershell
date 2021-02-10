@@ -15,6 +15,9 @@ namespace PnP.PowerShell.Commands.Events
         [Parameter(Mandatory = false, ParameterSetName="List")]
         public ListPipeBind List;
 
+        [Parameter(Mandatory = false, ParameterSetName = "Site")]
+        public SitePipeBind Site;
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
@@ -54,6 +57,39 @@ namespace PnP.PowerShell.Commands.Events
                         }
                     }
                     ClientContext.ExecuteQueryRetry();
+                }
+            }
+            else if (ParameterSetName == "Site")
+            {
+                var site = ClientContext.Site;
+                if (site == null)
+                    throw new PSArgumentException($"No site found with id, title or url '{Site}'", "Site");
+
+                if (ParameterSpecified(nameof(Identity)))
+                {
+                    var eventReceiver = Identity.GetEventReceiverOnSite(site);
+                    if (eventReceiver != null)
+                    {
+                        if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
+                        {
+                            eventReceiversToDelete.Add(eventReceiver);
+                        }
+                    }
+                }
+                else
+                {
+                    var eventReceivers = site.EventReceivers;
+                    site.Context.Load(eventReceivers);
+                    site.Context.ExecuteQueryRetry();
+
+                    foreach (var eventReceiver in eventReceivers)
+                    {
+                        if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
+                        {
+                            eventReceiversToDelete.Add(eventReceiver);
+                        }
+                    }
+                    site.Context.ExecuteQueryRetry();
                 }
             }
             else
