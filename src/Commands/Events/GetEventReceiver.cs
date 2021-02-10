@@ -16,6 +16,9 @@ namespace PnP.PowerShell.Commands.Events
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public EventReceiverPipeBind Identity;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Site;
+        
         protected override void ExecuteCmdlet()
         {
             if (ParameterSetName == "List")
@@ -36,10 +39,9 @@ namespace PnP.PowerShell.Commands.Events
                     }
                 }
             }
-            else if (ParameterSetName == "Site")
+            else if (Site)
             {
                 var site = ClientContext.Site;
-
                 if (site != null)
                 {
                     if (!ParameterSpecified(nameof(Identity)))
@@ -47,11 +49,11 @@ namespace PnP.PowerShell.Commands.Events
                         var query = ClientContext.LoadQuery(site.EventReceivers);
                         ClientContext.ExecuteQueryRetry();
                         WriteObject(query, true);
-                    }
+                    } 
                     else
                     {
                         WriteObject(Identity.GetEventReceiverOnSite(site));
-                    }
+                    }                 
                 }
             }
             else
