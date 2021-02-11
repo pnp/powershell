@@ -8,6 +8,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current Nightly]
 
 ### Added
+
+### Changed
+
+
+## [1.3.0]
+
+### Added
 - Added `-HideTitleInHeader` parameter to `Set-PnPWeb` to hide or show the title in the header. Use `-HideTitleInHeader` to hide it and `-HideTitleInHeader:$false` to show it.
 - Added `-ShowContentUrl` parameter to `Register-PnPManagementShellAccess` retrieve the url to consent to the PnP Management Shell application by an administrator.
 - Added `-IsFavoriteByDefault` parameter on Set-PnPTeamsChannel and Add-PnPTeamsChannel
@@ -21,7 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-ClientId` option to `-DeviceLogin` allowing device code authentication with custom app registrations.
 - Changed `-Url` parameter on Get-PnPTenantSite and Set-PnPTenantSite to `-Identity`. Made `-Url` available as an alias.
 - Updated `Set-PnPTenantSite` to support same parameters as `Set-SPOSite`
-- Updated `Get-SPOTenantSite` to return same properties as `Get-SPOSite`
+- Updated `Get-PnPTenantSite` to return same properties as `Get-SPOSite`
 - Fixed issue where `-Interactive` on `Connect-PnPOnline` would prompt for credentials when connecting to new site within same tenant. Added -ForceLogin parameter to force
 - Get-PnPUser and any other cmdlet that takes a UserPipeBind parameter as input now allows users to be specified by name besides loginname or id.
 - Fixed issue where retrieving a single site with Get-PnPTenantSite vs retrieving all sites showed different properties.
