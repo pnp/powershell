@@ -1,12 +1,12 @@
 ---
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/add-pnporgassetslibrary
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPOrgAssetsLibrary.html
+external help file: PnP.PowerShell.dll-Help.xml
 title: Add-PnPOrgAssetsLibrary
 ---
-
+  
 # Add-PnPOrgAssetsLibrary
 
 ## SYNOPSIS
@@ -20,7 +20,7 @@ Adds a given document library as a organizational asset source
 ## SYNTAX
 
 ```powershell
-Add-PnPOrgAssetsLibrary -LibraryUrl <String> [-ThumbnailUrl <String>] [-CdnType <SPOTenantCdnType>]
+Add-PnPOrgAssetsLibrary -LibraryUrl <String> [-ThumbnailUrl <String>] [-CdnType <SPOTenantCdnType>] [-OrgAssetType <OrgAssetType>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -62,7 +62,7 @@ Accepted values: Public, Private
 
 Required: False
 Position: Named
-Default value: None
+Default value: Public
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -95,6 +95,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -OrgAssetType
+Indicates the type of content in this library. Currently supported values are "ImageDocumentLibrary" and "OfficeTemplateLibrary".
+
+ImageDocumentLibrary is the default OrgAssetType and is best used for images. You can access the contents of this library from any site or page in the SharePoint filepicker. OfficeTemplateLibrary is the suggested type for Office files and will show up in the UI of all Office desktop apps and Office online in the templates section.
+
+```yaml
+Type: OrgAssetType
+Parameter Sets: (All)
+Accepted values: ImageDocumentLibrary, OfficeTemplateLibrary
+
+Required: False
+Position: Named
+Default value: ImageDocumentLibrary
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ThumbnailUrl
 The full url to an image that should be used as a thumbnail for showing this source. The image must reside in the same site as the document library you specify.
 
@@ -112,3 +129,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
+

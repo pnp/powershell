@@ -1,11 +1,11 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
-online version: https://docs.microsoft.com/powershell/module/sharepoint-pnp/convertto-pnpclientsidepage
-applicable: SharePoint Online
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/ConvertTo-PnPClientSidePage.html
+external help file: PnP.PowerShell.dll-Help.xml
 title: ConvertTo-PnPClientSidePage
 ---
-
+  
 # ConvertTo-PnPClientSidePage
 
 ## SYNOPSIS
@@ -706,3 +706,5 @@ Accept pipeline input: False
 ## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](https://aka.ms/sppnp)
+
+

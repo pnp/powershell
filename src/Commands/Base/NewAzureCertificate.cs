@@ -130,7 +130,9 @@ namespace PnP.PowerShell.Commands.Base
             record.Properties.Add(new PSVariableProperty(new PSVariable("ValidFrom", certificate.NotBefore)));
             record.Properties.Add(new PSVariableProperty(new PSVariable("ValidTo", certificate.NotAfter)));
             record.Properties.Add(new PSVariableProperty(new PSVariable("Thumbprint", certificate.Thumbprint)));
-
+            var pfxBytes = certificate.Export(X509ContentType.Pfx, CertificatePassword);
+            var base64string = Convert.ToBase64String(pfxBytes);
+            record.Properties.Add(new PSVariableProperty(new PSVariable("PfxBase64", base64string)));
             record.Properties.Add(new PSVariableProperty(new PSVariable("KeyCredentials", manifestEntry)));
             record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate", CertificateHelper.CertificateToBase64(certificate))));
             record.Properties.Add(new PSVariableProperty(new PSVariable("PrivateKey", CertificateHelper.PrivateKeyToBase64(certificate))));

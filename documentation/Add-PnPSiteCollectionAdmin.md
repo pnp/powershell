@@ -1,12 +1,12 @@
 ---
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/add-pnpsitecollectionadmin
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPSiteCollectionAdmin.html
+external help file: PnP.PowerShell.dll-Help.xml
 title: Add-PnPSiteCollectionAdmin
 ---
-
+  
 # Add-PnPSiteCollectionAdmin
 
 ## SYNOPSIS
@@ -21,7 +21,7 @@ Add-PnPSiteCollectionAdmin
 ```
 
 ## DESCRIPTION
-This command allows adding one to many users as site collection administrators to the site collection in the current context. It does not replace or remove existing site collection administrators.
+This command allows adding one to many users as site collection administrators to the site collection in the current context. It does not replace or remove existing site collection administrators. You must be a Site Collection Admin to run this command. Use `Set-PnPTenantSite -Owners` if you are not an Admin for the site but have the SharePoint admin role. 
 
 ## EXAMPLES
 
@@ -41,7 +41,7 @@ This will add user1@contoso.onmicrosoft.com and user2@contoso.onmicrosoft.com as
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPUser | ? Title -Like "*Doe" | Add-PnPSiteCollectionAdmin
+Get-PnPUser | Where-Object Title -Like "*Doe" | Add-PnPSiteCollectionAdmin
 ```
 
 This will add all users with their title ending with "Doe" as additional site collection owners to the site collection in the current context
@@ -79,3 +79,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
+

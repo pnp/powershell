@@ -89,15 +89,13 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static string GetAvailableVersion()
         {
-            using (var httpClient = new HttpClient())
+            var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+            var response = httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, VersionCheckUrl)).GetAwaiter().GetResult();
+            if (response.IsSuccessStatusCode)
             {
-                var response = httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, VersionCheckUrl)).GetAwaiter().GetResult();
-                if (response.IsSuccessStatusCode)
-                {
-                    var onlineVersion = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                    onlineVersion = onlineVersion.Trim(new char[] { '\t', '\r', '\n' });
-                    return onlineVersion;
-                }
+                var onlineVersion = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                onlineVersion = onlineVersion.Trim(new char[] { '\t', '\r', '\n' });
+                return onlineVersion;
             }
             return null;
         }

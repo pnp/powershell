@@ -33,16 +33,16 @@ namespace PnP.PowerShell.Commands.Graph
         {
             UnifiedGroupEntity group = null;
             List<UnifiedGroupEntity> groups = null;
+#pragma warning disable 0618
+            var includeSiteUrl = ParameterSpecified(nameof(ExcludeSiteUrl)) ? !ExcludeSiteUrl.ToBool() : IncludeSiteUrl.ToBool();
+#pragma warning restore 0618
+
             if (Identity != null)
             {
-                group = Identity.GetGroup(AccessToken);
+                group = Identity.GetGroup(AccessToken, includeSite: includeSiteUrl);
             }
             else
             {
-#pragma warning disable 0618
-                var includeSiteUrl = ParameterSpecified(nameof(ExcludeSiteUrl)) ? !ExcludeSiteUrl.ToBool() : IncludeSiteUrl.ToBool();
-#pragma warning restore 0618
-                // Retrieve all the groups
                 groups = UnifiedGroupsUtility.GetUnifiedGroups(AccessToken, includeSite: IncludeSiteUrl, includeClassification: IncludeClassification.IsPresent, includeHasTeam: IncludeHasTeam.IsPresent);
             }
 

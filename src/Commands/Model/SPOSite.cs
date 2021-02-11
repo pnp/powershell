@@ -18,6 +18,7 @@ namespace PnP.PowerShell.Commands.Model
         public bool DefaultLinkToExistingAccess { get; set; }
         public Microsoft.Online.SharePoint.TenantManagement.SharingLinkType DefaultSharingLinkType { get; set; }
         public Microsoft.Online.SharePoint.TenantAdministration.DenyAddAndCustomizePagesStatus DenyAddAndCustomizePages { get; set; }
+        public string Description { get; set; }
         public Microsoft.Online.SharePoint.TenantAdministration.AppViewsPolicy DisableAppViews { get; set; }
         public Microsoft.Online.SharePoint.TenantAdministration.CompanyWideSharingLinksPolicy DisableCompanyWideSharingLinks { get; set; }
         public Microsoft.Online.SharePoint.TenantAdministration.FlowsPolicy DisableFlows { get; set; }
@@ -34,7 +35,10 @@ namespace PnP.PowerShell.Commands.Model
         public string LockState { get; set; }
         public bool OverrideTenantAnonymousLinkExpirationPolicy { get; set; }
         public bool OverrideTenantExternalUserExpirationPolicy { get; set; }
-        public string Owner { get; set; }
+        public string Owner { get; }
+        public string OwnerEmail { get; }
+        public string OwnerLoginName { get; }
+        public string OwnerName { get; }
         public string ProtectionLevelName { get; set; }
         public Microsoft.Online.SharePoint.TenantAdministration.PWAEnabledStatus PWAEnabled { get; set; }
         public Guid RelatedGroupId { get; }
@@ -75,12 +79,26 @@ namespace PnP.PowerShell.Commands.Model
             DefaultLinkToExistingAccess = props.DefaultLinkToExistingAccess;
             DefaultSharingLinkType = props.DefaultSharingLinkType;
             DenyAddAndCustomizePages = props.DenyAddAndCustomizePages;
+            Description = props.Description;
             DisableAppViews = props.DisableAppViews;
             DisableCompanyWideSharingLinks = props.DisableCompanyWideSharingLinks;
             DisableFlows = props.DisableFlows;
             DisableSharingForNonOwnersStatus = disableSharingForNonOwnersStatus;
             ExternalUserExpirationInDays = props.ExternalUserExpirationInDays;
             GroupId = props.GroupId;
+            HubSiteId = props.HubSiteId;
+            IsHubSite = props.IsHubSite;
+            LastContentModifiedDate = props.LastContentModifiedDate;
+            LimitedAccessFileType = props.LimitedAccessFileType;
+            LocaleId = props.Lcid;
+            LockIssue = props.LockIssue;
+            LockState = props.LockState;
+            Owner = props.Owner;
+            OwnerEmail = props.OwnerEmail;
+            OwnerLoginName = props.OwnerLoginName;
+            OwnerName = props.OwnerName;
+            OverrideTenantAnonymousLinkExpirationPolicy = props.OverrideTenantAnonymousLinkExpirationPolicy;
+            OverrideTenantExternalUserExpirationPolicy = props.OverrideTenantExternalUserExpirationPolicy;
             ProtectionLevelName = props.AuthContextStrength;
             PWAEnabled = props.PWAEnabled;
             RelatedGroupId = props.RelatedGroupId;
@@ -106,7 +124,6 @@ namespace PnP.PowerShell.Commands.Model
             Template = props.Template;
             Title = props.Title;
             WebsCount = props.WebsCount;
-            LocaleId = props.Lcid;
             Url = props.Url;
         }
 

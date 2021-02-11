@@ -46,6 +46,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             ISharePointGroup group = null;
             if (Group != null)
             {
+                Group.EnsureProperty(g => g.Id);
                 group = context.Web.SiteGroups.GetFirstOrDefault(g => g.Id == Group.Id);
             }
             if(_sharePointGroup != null)

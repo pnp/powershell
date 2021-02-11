@@ -1,12 +1,12 @@
 ---
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/add-pnpcustomaction
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPCustomAction.html
+external help file: PnP.PowerShell.dll-Help.xml
 title: Add-PnPCustomAction
 ---
-
+  
 # Add-PnPCustomAction
 
 ## SYNOPSIS
@@ -299,3 +299,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[UserCustomAction](https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee539583(v=office.15))[BasePermissions](https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee543321(v=office.15))
+
+

@@ -5,6 +5,49 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [Current Nightly]
+
+### Added
+
+### Changed
+
+
+## [1.3.0]
+
+### Added
+- Added `-HideTitleInHeader` parameter to `Set-PnPWeb` to hide or show the title in the header. Use `-HideTitleInHeader` to hide it and `-HideTitleInHeader:$false` to show it.
+- Added `-ShowContentUrl` parameter to `Register-PnPManagementShellAccess` retrieve the url to consent to the PnP Management Shell application by an administrator.
+- Added `-IsFavoriteByDefault` parameter on Set-PnPTeamsChannel and Add-PnPTeamsChannel
+- Added `-GroupIdDefined` boolean parameter to Get-PnPTenantSite to allow filtering on sites which belong to a Microsoft 365 Group
+- Added `-Interactive` login option to `Connect-PnPOnline` which is similar to `-UseWebLogin` but without the limitations of the latter. The `-UseWebLogin` is using cookie based authentication towards SharePoint and cannot access Graph tokens. Using `-Interactive` we use Azure AD Authentication and as a result we are able to acquire Graph tokens.
+
+### Changed
+- Fixed certificate clean up issue on Windows platform when using `Connect-PnPOnline` with a certificate.
+- Fixed issues with `Register-PnPAzureADApp` when using the various auth options (-DeviceLogin / -Interactive)
+- Renamed the `-PnPManagementShell` option to `-DeviceLogin` on `Connect-PnPOnline`. `-PnPManagementShell` is still available as an alias.
+- Added `-ClientId` option to `-DeviceLogin` allowing device code authentication with custom app registrations.
+- Changed `-Url` parameter on Get-PnPTenantSite and Set-PnPTenantSite to `-Identity`. Made `-Url` available as an alias.
+- Updated `Set-PnPTenantSite` to support same parameters as `Set-SPOSite`
+- Updated `Get-PnPTenantSite` to return same properties as `Get-SPOSite`
+- Fixed issue where `-Interactive` on `Connect-PnPOnline` would prompt for credentials when connecting to new site within same tenant. Added -ForceLogin parameter to force
+- Get-PnPUser and any other cmdlet that takes a UserPipeBind parameter as input now allows users to be specified by name besides loginname or id.
+- Fixed issue where retrieving a single site with Get-PnPTenantSite vs retrieving all sites showed different properties.
+- Invoke-PnPSPRestMethod now returns usable objects
+- Updated `Set-PnPListItem` to have an `UpdateType` parameter. Obsoleted `SystemUpdate`. Also updated the backend logic so can now also specify `UpdateOverwriteVersion` to update the editor, author, modified and created fields. 
+- `Register-PnPAzureADApp` now outputs the base64 encoded version of the certificate which can be used with `Connect-PnPOnline -ClientId -CertificateBase64Encoded`
+- Fixed issue with moving and copying files to subfolder, Issue #165. 
+- fixed issue where Get-PnPTenantSite was not returning all properties correct, Issue #151
+- Added `-Interactive` login option to Register-PnPManagementApp which allows for an interactive authentication flow not using device login for environments that require Multi-Factor Authentication.
+- Updated all Microsoft365Group cmdlets to only load the SiteUrl of the underlying Microsoft 365 Group where required. This means that `Get-PnPMicrosoft365Group -Identity` will not by default load the site url. Specify `-IncludeSiteUrl` to include it.
+
+### Contributors
+- Mike Jensen [michael-jensen]
+- Koen Zomers [koenzomers]
+- Gautam Sheth [gautamdsheth]
+- Todd Klindt [ToddKlindt]
+- Giacomo Pozzoni [jackpoz]
+
+
 ## [1.2.0]
 
 ### Added

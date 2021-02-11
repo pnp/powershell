@@ -8,6 +8,7 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
 using System.Collections.Generic;
 using Microsoft.Online.SharePoint.TenantManagement;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands
 {
@@ -18,7 +19,8 @@ namespace PnP.PowerShell.Commands
         private const string ParameterSet_ALL = "All Sites";
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYURL)]
-        public string Url;
+        [Alias("Url")]
+        public SPOSitePipeBind Identity;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
         public string Template;
@@ -35,18 +37,22 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYURL)]
         public SwitchParameter DisableSharingForNonOwnersStatus;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
+        public bool? GroupIdDefined;
+
         protected override void ExecuteCmdlet()
         {
-            if (!string.IsNullOrEmpty(Url))
+            ClientContext.ExecuteQueryRetry();
+            if(ParameterSpecified(nameof(Identity)))
             {
-                var siteProperties = Tenant.GetSitePropertiesByUrl(Url, Detailed);
+                var siteProperties = Tenant.GetSitePropertiesByUrl(Identity.Url, Detailed);
                 ClientContext.Load(siteProperties);
                 ClientContext.ExecuteQueryRetry();
                 Model.SPOSite site = null;
                 if (ParameterSpecified(nameof(DisableSharingForNonOwnersStatus)))
                 {
                     var office365Tenant = new Office365Tenant(ClientContext);
-                    var clientResult = office365Tenant.IsSharingDisabledForNonOwnersOfSite(Url);
+                    var clientResult = office365Tenant.IsSharingDisabledForNonOwnersOfSite(Identity.Url);
                     ClientContext.ExecuteQuery();
                     site = new Model.SPOSite(siteProperties, clientResult.Value);
                 }
@@ -67,6 +73,19 @@ namespace PnP.PowerShell.Commands
 #pragma warning restore CS0618 // Type or member is obsolete
                     Filter = Filter,
                 };
+                
+                if (ClientContext.ServerVersion >= new Version(16, 0, 7708, 1200))
+                {
+                    if (ParameterSpecified(nameof(GroupIdDefined)))
+                    {
+                        filter.GroupIdDefined = GroupIdDefined.Value == true ? 1 : 2;
+                    }
+                }
+                else if(ParameterSpecified(nameof(GroupIdDefined)))
+                {
+                    throw new PSArgumentException("Filtering by Group Id is not yet available for this tenant.");
+                }
+
                 SPOSitePropertiesEnumerable sitesList = null;
                 var sites = new List<SiteProperties>();
                 do
@@ -81,11 +100,11 @@ namespace PnP.PowerShell.Commands
 
                 if (Template != null)
                 {
-                    WriteObject(sites.Where(t => t.Template == Template).OrderBy(x => x.Url), true);
+                    WriteObject(sites.Where(t => t.Template == Template).OrderBy(x => x.Url).Select(s => new Model.SPOSite(s, null)), true);
                 }
                 else
                 {
-                    WriteObject(sites.OrderBy(x => x.Url), true);
+                    WriteObject(sites.OrderBy(x => x.Url).Select(s => new Model.SPOSite(s,null)), true);
                 }
             }
         }

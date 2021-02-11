@@ -1,12 +1,12 @@
 ---
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/convert-pnpsitetemplatetomarkdown.md
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Convert-PnPSiteTemplateToMarkdown.html
+external help file: PnP.PowerShell.dll-Help.xml
 title: convert-pnpsitetemplatetomarkdown
 ---
-
+  
 # Convert-PnPSiteTemplateToMarkdown
 
 ## SYNOPSIS
@@ -15,7 +15,7 @@ Converts an existing PnP Site Template to a markdown report
 ## SYNTAX
 
 ```powershell
-Convert-PnPSiteTemplate -TemplatePath <String> [-Out <String>] [-Force <SwitchParameter>]
+Convert-PnPSiteTemplateToMarkdown -TemplatePath <String> [-Out <String>] [-Force <SwitchParameter>]
 ```
 
 ## DESCRIPTION
@@ -60,7 +60,7 @@ The output file name to write the report to in markdown format.
 Type: String
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -84,3 +84,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
+

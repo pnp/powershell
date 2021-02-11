@@ -1,12 +1,12 @@
 ---
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/get-pnpfile
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPFile.html
+external help file: PnP.PowerShell.dll-Help.xml
 title: Get-PnPFile
 ---
-
+  
 # Get-PnPFile
 
 ## SYNOPSIS
@@ -16,25 +16,25 @@ Downloads a file.
 
 ### Return as file object (Default)
 ```powershell
-Get-PnPFile [-Url] <String> [-AsFileObject] [-Connection <PnPConnection>]
+Get-PnPFile [-Url] <String> -AsFileObject [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Return as list item
 ```powershell
-Get-PnPFile [-Url] <String> [-AsListItem] [-ThrowExceptionIfFileNotFound] 
+Get-PnPFile [-Url] <String> -AsListItem [-ThrowExceptionIfFileNotFound] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Save to local path
 ```powershell
-Get-PnPFile [-Url] <String> [-Path <String>] [-Filename <String>] [-AsFile] [-Force] 
+Get-PnPFile [-Url] <String> -AsFile [-Path <String>] [-Filename <String>] [-Force] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Return as string
 ```powershell
-Get-PnPFile [-Url] <String> [-AsString] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPFile [-Url] <String> -AsString [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -230,3 +230,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
+

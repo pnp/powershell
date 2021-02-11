@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Set-PnPWeb
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/set-pnpweb
-schema: 2.0.0
-title: Set-PnPWeb
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPWeb.html
 ---
-
+ 
 # Set-PnPWeb
 
 ## SYNOPSIS
@@ -18,7 +18,7 @@ Sets properties on a web
 Set-PnPWeb [-SiteLogoUrl <String>] [-AlternateCssUrl <String>] [-Title <String>] [-Description <String>]
  [-MasterUrl <String>] [-CustomMasterUrl <String>] [-QuickLaunchEnabled] [-MembersCanShare] [-NoCrawl]
  [-HeaderLayout <HeaderLayoutType>] [-HeaderEmphasis <SPVariantThemeType>] [-NavAudienceTargetingEnabled]
- [-MegaMenuEnabled] [-DisablePowerAutomate] [-CommentsOnSitePagesDisabled] 
+ [-MegaMenuEnabled] [-DisablePowerAutomate] [-CommentsOnSitePagesDisabled] [-HideTitleInHeader]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -274,8 +274,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -HideTitleInHeader
+Toggle the title visiblity in the header.
 
+Set -HideTitleInHeader:$false to show the header
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

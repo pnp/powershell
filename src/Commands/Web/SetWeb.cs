@@ -52,6 +52,9 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false)]
         public SwitchParameter CommentsOnSitePagesDisabled;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter HideTitleInHeader;
+
         protected override void ExecuteCmdlet()
         {
             var dirty = false;
@@ -61,78 +64,101 @@ namespace PnP.PowerShell.Commands
                 switch (key)
                 {
                     case nameof(SiteLogoUrl):
-                        CurrentWeb.SiteLogoUrl = SiteLogoUrl;
-                        dirty = true;
-                        break;
-
+                        {
+                            CurrentWeb.SiteLogoUrl = SiteLogoUrl;
+                            dirty = true;
+                            break;
+                        }
                     case nameof(AlternateCssUrl):
-                        CurrentWeb.AlternateCssUrl = AlternateCssUrl;
-                        dirty = true;
-                        break;
-
+                        {
+                            CurrentWeb.AlternateCssUrl = AlternateCssUrl;
+                            dirty = true;
+                            break;
+                        }
                     case nameof(Title):
-                        CurrentWeb.Title = Title;
-                        dirty = true;
-                        break;
-
+                        {
+                            CurrentWeb.Title = Title;
+                            dirty = true;
+                            break;
+                        }
                     case nameof(Description):
-                        CurrentWeb.Description = Description;
-                        dirty = true;
-                        break;
-
+                        {
+                            CurrentWeb.Description = Description;
+                            dirty = true;
+                            break;
+                        }
                     case nameof(MasterUrl):
-                        CurrentWeb.MasterUrl = MasterUrl;
-                        dirty = true;
-                        break;
-
+                        {
+                            CurrentWeb.MasterUrl = MasterUrl;
+                            dirty = true;
+                            break;
+                        }
                     case nameof(CustomMasterUrl):
-                        CurrentWeb.CustomMasterUrl = CustomMasterUrl;
-                        dirty = true;
-                        break;
-
+                        {
+                            CurrentWeb.CustomMasterUrl = CustomMasterUrl;
+                            dirty = true;
+                            break;
+                        }
                     case nameof(QuickLaunchEnabled):
-                        CurrentWeb.QuickLaunchEnabled = QuickLaunchEnabled.ToBool();
-                        dirty = true;
-                        break;
+                        {
+                            CurrentWeb.QuickLaunchEnabled = QuickLaunchEnabled.ToBool();
+                            dirty = true;
+                            break;
+                        }
                     case nameof(MembersCanShare):
-                        CurrentWeb.MembersCanShare = MembersCanShare.ToBool();
-                        dirty = true;
-                        break;
-
+                        {
+                            CurrentWeb.MembersCanShare = MembersCanShare.ToBool();
+                            dirty = true;
+                            break;
+                        }
                     case nameof(NoCrawl):
-                        CurrentWeb.NoCrawl = NoCrawl.ToBool();
-                        dirty = true;
-                        break;
-
+                        {
+                            CurrentWeb.NoCrawl = NoCrawl.ToBool();
+                            dirty = true;
+                            break;
+                        }
                     case nameof(HeaderLayout):
-                        CurrentWeb.HeaderLayout = HeaderLayout;
-                        dirty = true;
-                        break;
-
+                        {
+                            CurrentWeb.HeaderLayout = HeaderLayout;
+                            dirty = true;
+                            break;
+                        }
                     case nameof(HeaderEmphasis):
-                        CurrentWeb.HeaderEmphasis = HeaderEmphasis;
-                        dirty = true;
-                        break;
-
+                        {
+                            CurrentWeb.HeaderEmphasis = HeaderEmphasis;
+                            dirty = true;
+                            break;
+                        }
                     case nameof(NavAudienceTargetingEnabled):
-                        CurrentWeb.NavAudienceTargetingEnabled = NavAudienceTargetingEnabled.ToBool();
-                        dirty = true;
-                        break;
-
+                        {
+                            CurrentWeb.NavAudienceTargetingEnabled = NavAudienceTargetingEnabled.ToBool();
+                            dirty = true;
+                            break;
+                        }
                     case nameof(MegaMenuEnabled):
-                        CurrentWeb.MegaMenuEnabled = MegaMenuEnabled.ToBool();
-                        dirty = true;
-                        break;
-
+                        {
+                            CurrentWeb.MegaMenuEnabled = MegaMenuEnabled.ToBool();
+                            dirty = true;
+                            break;
+                        }
                     case nameof(DisablePowerAutomate):
-                        CurrentWeb.DisableFlows = DisablePowerAutomate.ToBool();
-                        dirty = true;
-                        break;
-
+                        {
+                            CurrentWeb.DisableFlows = DisablePowerAutomate.ToBool();
+                            dirty = true;
+                            break;
+                        }
                     case nameof(CommentsOnSitePagesDisabled):
-                        CurrentWeb.CommentsOnSitePagesDisabled = CommentsOnSitePagesDisabled.ToBool();
-                        dirty = true;
-                        break;
+                        {
+                            CurrentWeb.CommentsOnSitePagesDisabled = CommentsOnSitePagesDisabled.ToBool();
+                            dirty = true;
+                            break;
+                        }
+                    case nameof(HideTitleInHeader):
+                        {
+                            CurrentWeb.HideTitleInHeader = HideTitleInHeader.ToBool();
+                            dirty = true;
+                            break;
+                        }
                 }
             }
 

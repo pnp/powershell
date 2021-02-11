@@ -63,6 +63,13 @@ namespace PnP.PowerShell.Commands.Lists
                     }
                     if (field != null)
                     {
+                        if (!string.IsNullOrEmpty(Folder))
+                        {
+                            if (Folder.IndexOfAny(new[] { '#', '%' }) > -1)
+                            {
+                                throw new PSArgumentException("Due to limitations of SharePoint Online, setting a default column value on a folder with special characters is not supported");
+                            }
+                        }
                         IDefaultColumnValue defaultColumnValue = field.GetDefaultColumnValueFromField(ClientContext, Folder, Value);
                         list.SetDefaultColumnValues(new List<IDefaultColumnValue>() { defaultColumnValue });
                     }

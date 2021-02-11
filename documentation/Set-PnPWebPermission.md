@@ -1,12 +1,12 @@
 ---
+Module Name: 
+title: Set-PnPWebPermission
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name:
-online version: https://pnp.github.io/powershell/cmdlets/set-pnpwebpermission
-schema: 2.0.0
-title: Set-PnPWebPermission
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPWebPermission.html
 ---
-
+ 
 # Set-PnPWebPartProperty
 
 ## SYNOPSIS
@@ -130,3 +130,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

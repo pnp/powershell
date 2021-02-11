@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Get-PnPSiteUserInvitations
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/get-pnpsiteuserinvitations
-schema: 2.0.0
-title: Get-PnPSiteUserInvitations
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteUserInvitations.html
 ---
-
+ 
 # Get-PnPSiteUserInvitations
 
 ## SYNOPSIS
@@ -30,7 +30,7 @@ Searches against all stored sharing links on a Site and retrieves the email invi
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPiteUserInvitations -Site "https://contoso.sharepoint.com/sites/ContosoWeb1/" -EmailAddress someone@example.com
+Get-PnPSiteUserInvitations -Site "https://contoso.sharepoint.com/sites/ContosoWeb1/" -EmailAddress someone@example.com
 ```
 
 This example retrieves email invites stored in the ContosoWeb1 site to the user with email address someone@example.com.
@@ -68,3 +68,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

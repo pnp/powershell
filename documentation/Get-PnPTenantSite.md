@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Get-PnPTenantSite
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/get-pnptenantsite
-schema: 2.0.0
-title: Get-PnPTenantSite
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantSite.html
 ---
-
+ 
 # Get-PnPTenantSite
 
 ## SYNOPSIS
@@ -21,13 +21,13 @@ Retrieve site information.
 
 ### By Site
 ```powershell
-Get-PnPTenantSite [-Url] <string> [-Detailed] [-DisableSharingForNonOwnersStatus] [-Connection <PnPConnection>]
+Get-PnPTenantSite [-Identity] <string> [-Detailed] [-DisableSharingForNonOwnersStatus] [-Connection <PnPConnection>]
     [<CommonParameters>]
 ```
 
 ### All Sites
 ```powershell
-Get-PnPTenantSite [-Template <string>] [-Detailed] [-IncludeOneDriveSites] [-Filter <string>] [-Connection
+Get-PnPTenantSite [-Template <string>] [-Detailed] [-IncludeOneDriveSites] [-GroupIdDefined <Boolean>] [-Filter <string>] [-Connection
     <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -45,7 +45,7 @@ Returns all site collections
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPTenantSite -Url "http://tenant.sharepoint.com/sites/projects"
+Get-PnPTenantSite -Identity "http://tenant.sharepoint.com/sites/projects"
 ```
 
 Returns information about the project site
@@ -84,6 +84,13 @@ Get-PnPTenantSite -Filter "Url -like 'sales'"
 ```
 
 Returns all sites including 'sales' in the url
+
+### EXAMPLE 8
+```powershell
+Get-PnPTenantSite -GroupIdDefined $true
+```
+
+Returns all sites which have an underlying Microsoft 365 Group
 
 ## PARAMETERS
 
@@ -143,6 +150,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -GroupIdDefined
+If specified allows you to filter on sites that have an underlying Microsoft 365 group defined.
+
+```yaml
+Type: Boolean
+Parameter Sets: All sites
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -IncludeOneDriveSites
 By default, the OneDrives are not returned. This switch includes all OneDrives.
 
@@ -171,13 +192,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Url
+### -Identity
 The URL of the site
 
 ```yaml
 Type: String
 Parameter Sets: By Site
-Aliases: Identity
+Aliases: Url
 
 Required: False
 Position: 0
@@ -189,3 +210,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

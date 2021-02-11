@@ -23,9 +23,9 @@ namespace PnP.PowerShell.Commands.Site
         [Alias("Url")]
         public string Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public string Classification;
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter? DisableFlows;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Site
         public SwitchParameter? AllowSelfServiceUpgrade = null;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        [Alias("DenyAndAddCustomizePages")]
+        [Alias("DenyAndAddCustomizePages", "DenyAddAndCustomizePages")]
         public SwitchParameter? NoScriptSite;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
@@ -61,6 +61,12 @@ namespace PnP.PowerShell.Commands.Site
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SharingLinkType? DefaultSharingLinkType;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? DefaultLinkToExistingAccess;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter DefaultLinkToExistingAccessReset;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public AppViewsPolicy? DisableAppViews;
@@ -123,15 +129,15 @@ namespace PnP.PowerShell.Commands.Site
                         var bytes = System.IO.File.ReadAllBytes(LogoFilePath);
 
                         var mimeType = "";
-                        if(LogoFilePath.EndsWith("gif",StringComparison.InvariantCultureIgnoreCase))
+                        if (LogoFilePath.EndsWith("gif", StringComparison.InvariantCultureIgnoreCase))
                         {
                             mimeType = "image/gif";
                         }
-                        if(LogoFilePath.EndsWith("jpg", StringComparison.InvariantCultureIgnoreCase))
+                        if (LogoFilePath.EndsWith("jpg", StringComparison.InvariantCultureIgnoreCase))
                         {
                             mimeType = "image/jpeg";
                         }
-                        if(LogoFilePath.EndsWith("png", StringComparison.InvariantCultureIgnoreCase))
+                        if (LogoFilePath.EndsWith("png", StringComparison.InvariantCultureIgnoreCase))
                         {
                             mimeType = "image/png";
                         }
@@ -210,7 +216,7 @@ namespace PnP.PowerShell.Commands.Site
                 }
                 if (NoScriptSite.HasValue)
                 {
-                    siteProperties.DenyAddAndCustomizePages = (NoScriptSite == true ? DenyAddAndCustomizePagesStatus.Enabled : DenyAddAndCustomizePagesStatus.Disabled);
+                    siteProperties.DenyAddAndCustomizePages = NoScriptSite == true ? DenyAddAndCustomizePagesStatus.Enabled : DenyAddAndCustomizePagesStatus.Disabled;
                     executeQueryRequired = true;
                 }
                 if (CommentsOnSitePagesDisabled.HasValue)
@@ -226,6 +232,16 @@ namespace PnP.PowerShell.Commands.Site
                 if (DefaultSharingLinkType.HasValue)
                 {
                     siteProperties.DefaultSharingLinkType = DefaultSharingLinkType.Value;
+                    executeQueryRequired = true;
+                }
+                if (ParameterSpecified(nameof(DefaultLinkToExistingAccess)))
+                {
+                    siteProperties.DefaultLinkToExistingAccess = DefaultLinkToExistingAccess.Value;
+                    executeQueryRequired = true;
+                }
+                if (ParameterSpecified(nameof(DefaultLinkToExistingAccessReset)))
+                {
+                    siteProperties.DefaultLinkToExistingAccessReset = true;
                     executeQueryRequired = true;
                 }
                 if (DisableAppViews.HasValue)
@@ -295,6 +311,8 @@ namespace PnP.PowerShell.Commands.Site
                 CommentsOnSitePagesDisabled.HasValue ||
                 DefaultLinkPermission.HasValue ||
                 DefaultSharingLinkType.HasValue ||
+                ParameterSpecified(nameof(DefaultLinkToExistingAccess)) ||
+                ParameterSpecified(nameof(DefaultLinkToExistingAccessReset)) ||
                 DisableAppViews.HasValue ||
                 DisableFlows.HasValue ||
                 DisableSharingForNonOwners.IsPresent ||

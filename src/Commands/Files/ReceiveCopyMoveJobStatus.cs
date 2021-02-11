@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Files
         protected override void ExecuteCmdlet()
         {
             Uri currentContextUri = new Uri(ClientContext.Url);
-            var result = Utilities.CopyMover.GetCopyMigrationJobStatusAsync(HttpClient, currentContextUri, AccessToken, Job, !Wait).GetAwaiter().GetResult();
+            var result = Utilities.CopyMover.GetCopyMigrationJobStatusAsync(HttpClient, currentContextUri, ClientContext, Job, !Wait).GetAwaiter().GetResult();
             WriteObject(result,true);
         }
     }

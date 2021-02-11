@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Set-PnPFileCheckedIn
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/set-pnpfilecheckedin
-schema: 2.0.0
-title: Set-PnPFileCheckedIn
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPFileCheckedIn.html
 ---
-
+ 
 # Set-PnPFileCheckedIn
 
 ## SYNOPSIS
@@ -25,14 +25,14 @@ Set-PnPFileCheckedIn [-Url] <String> [-CheckinType <CheckinType>] [-Comment <Str
 
 ### EXAMPLE 1
 ```powershell
-PS:>Set-PnPFileCheckedIn -Url "/Documents/Contract.docx"
+Set-PnPFileCheckedIn -Url "/Documents/Contract.docx"
 ```
 
 Checks in the file "Contract.docx" in the "Documents" library
 
 ### EXAMPLE 2
 ```powershell
-PS:>Set-PnPFileCheckedIn -Url "/Documents/Contract.docx" -CheckinType MinorCheckin -Comment "Smaller changes"
+Set-PnPFileCheckedIn -Url "/Documents/Contract.docx" -CheckinType MinorCheckin -Comment "Smaller changes"
 ```
 
 Checks in the file "Contract.docx" in the "Documents" library as a minor version and adds the check in comment "Smaller changes"
@@ -115,3 +115,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

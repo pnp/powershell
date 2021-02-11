@@ -1,12 +1,12 @@
 ---
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/add-pnpmicrosoft365groupowner
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPMicrosoft365GroupOwner.html
+external help file: PnP.PowerShell.dll-Help.xml
 title: Add-PnPMicrosoft365GroupOwner
 ---
-
+  
 # Add-PnPMicrosoft365GroupOwner
 
 ## SYNOPSIS
@@ -89,3 +89,5 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Documentation](https://docs.microsoft.com/graph/api/group-post-members)
+
+

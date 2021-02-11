@@ -1,12 +1,12 @@
 ---
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/convert-pnpSiteTemplate
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Convert-PnPSiteTemplate.html
+external help file: PnP.PowerShell.dll-Help.xml
 title: Convert-PnPSiteTemplate
 ---
-
+  
 # Convert-PnPSiteTemplate
 
 ## SYNOPSIS
@@ -120,3 +120,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[Encoding](https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx)
+
+

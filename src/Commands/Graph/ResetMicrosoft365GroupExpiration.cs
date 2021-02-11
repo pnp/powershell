@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(AccessToken);
+            var group = Identity.GetGroup(AccessToken, false);
             UnifiedGroupsUtility.RenewUnifiedGroup(group.GroupId, AccessToken);
         }
     }

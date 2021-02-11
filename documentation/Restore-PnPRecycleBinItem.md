@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Restore-PnPRecycleBinItem
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/restore-pnprecyclebinitem
-schema: 2.0.0
-title: Restore-PnPRecycleBinItem
+online version: https://pnp.github.io/powershell/cmdlets/Restore-PnPRecycleBinItem.html
 ---
-
+ 
 # Restore-PnPRecycleBinItem
 
 ## SYNOPSIS
@@ -105,3 +105,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

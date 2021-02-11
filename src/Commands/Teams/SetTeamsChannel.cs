@@ -23,6 +23,9 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false)]
         public string Description;
 
+        [Parameter(Mandatory = false)]
+        public bool IsFavoriteByDefault;
+
         protected override void ExecuteCmdlet()
         {
             var groupId = Team.GetGroupId(HttpClient, AccessToken);
@@ -44,6 +47,15 @@ namespace PnP.PowerShell.Commands.Graph
                     } else
                     {
                         teamChannel.Description = null;
+                    }
+
+                    if (teamChannel.MembershipType.ToLower() == "standard" && ParameterSpecified(nameof(IsFavoriteByDefault)) && teamChannel.IsFavoriteByDefault.Value != IsFavoriteByDefault)
+                    {
+                        teamChannel.IsFavoriteByDefault = IsFavoriteByDefault;
+                    }
+                    else
+                    {
+                        teamChannel.IsFavoriteByDefault = null;
                     }
                     teamChannel.MembershipType = null;
                     try 

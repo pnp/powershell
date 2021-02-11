@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Remove-PnPFile
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/remove-pnpfile
-schema: 2.0.0
-title: Remove-PnPFile
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPFile.html
 ---
-
+ 
 # Remove-PnPFile
 
 ## SYNOPSIS
@@ -32,21 +32,21 @@ Remove-PnPFile [-SiteRelativeUrl] <String> [-Recycle] [-Force]
 
 ### EXAMPLE 1
 ```powershell
-PS:>Remove-PnPFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor
+Remove-PnPFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor
 ```
 
 Removes the file company.spcolor
 
 ### EXAMPLE 2
 ```powershell
-PS:>Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor
+Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor
 ```
 
 Removes the file company.spcolor
 
 ### EXAMPLE 3
 ```powershell
-PS:>Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor -Recycle
+Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor -Recycle
 ```
 
 Removes the file company.spcolor and saves it to the Recycle Bin
@@ -156,3 +156,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

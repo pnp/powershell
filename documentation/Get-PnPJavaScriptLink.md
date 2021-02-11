@@ -1,12 +1,12 @@
 ---
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/get-pnpjavascriptlink
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPJavaScriptLink.html
+external help file: PnP.PowerShell.dll-Help.xml
 title: Get-PnPJavaScriptLink
 ---
-
+  
 # Get-PnPJavaScriptLink
 
 ## SYNOPSIS
@@ -123,3 +123,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
+

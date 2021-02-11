@@ -1,11 +1,11 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/register-pnpazureadapp
-applicable: SharePoint Online
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Register-PnPAzureADApp.html
+external help file: PnP.PowerShell.dll-Help.xml
 title: Register-PnPAzureADApp
 ---
-
+ 
 # Register-PnPAzureADApp
 
 ## SYNOPSIS
@@ -20,6 +20,7 @@ Register-PnPAzureADApp -ApplicationName <String>
                                        [-Username <String>]
                                        [-Password <SecureString>]
                                        [-DeviceLogin]
+                                       [-Interactive]
                                        [-CommonName <String>]
                                        [-OutPath <String>]
                                        [-Store <StoreLocation>]
@@ -36,19 +37,22 @@ Register-PnPAzureADApp -ApplicationName <String>
 
 ### Existing Certificate
 ```powershell
-Register-PnPAzureADApp -CertificatePath <String>
-                                       -ApplicationName <String>
-                                       -Tenant <String>
-                                       [-Username <String>]
-                                       [-Password <SecureString>]
-                                       [-DeviceLogin]
-                                       [-Scopes <String[]>]
-                                       [-CertificatePassword <SecureString>]
-                                       [-NoPopup]
+Register-PnPAzureADApp  -CertificatePath <String>
+                        -ApplicationName <String>
+                        -Tenant <String>
+                        [-Username <String>]
+                        [-Password <SecureString>]
+                        [-DeviceLogin]
+                        [-Interactive]
+                        [-Scopes <String[]>]
+                        [-CertificatePassword <SecureString>]
+                        [-NoPopup]
 ```
 
 ## DESCRIPTION
-Registers an Azure AD App and optionally creates a new self-signed certificate to use with the application registration. You can login either with username/password or you can use the -DeviceLogin option if your tenant has been configured for Multi-Factor Authentication.
+Registers an Azure AD App and optionally creates a new self-signed certificate to use with the application registration. You can login either with username/password or you can use the -DeviceLogin option if your tenant has been configured for Multi-Factor Authentication. 
+
+Note: if you want to use the newly created app to authentication with username/password you will have to make a modification to the app. Navigate to the application registration in your Azure AD, select the Authentication section, and set `Allow public client flows` to `yes`. Alternatively, navigate to the `Manifest` section and set `allowPublicClient` to `true`.
 
 ## EXAMPLES
 
@@ -86,6 +90,13 @@ Register-PnPAzureADApp -DeviceLogin -ApplicationName TestApp -Tenant yourtenant.
 ```
 
 Creates a new Azure AD Application registration and asks you to authenticate using device login methods, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All
+
+### ------------------EXAMPLE 6------------------
+```powershell
+Register-PnPAzureADApp -Interactive -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force) 
+```
+
+Creates a new Azure AD Application registration and asks you to authenticate using username and password, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All
 
 ## PARAMETERS
 
@@ -310,3 +321,4 @@ Accept pipeline input: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

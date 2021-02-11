@@ -35,7 +35,7 @@ param (
     [string] $SPTenant, # https://[thispart].sharepoint.com
 
     [Parameter(Mandatory = $true)]
-    [string] $CertificatePassword, # <-- Use a nice a super complex password
+    [securestring] $CertificatePassword, # <-- Use a nice a super complex password
 
     [Parameter(Mandatory = $true)]
     [string] $AzureAppId,
@@ -62,11 +62,7 @@ begin{
 
 
     Write-Host "Let's get started..."
-  
-    # This cna be a one-time setup - no one needs to know the password, it can be easily replaced
-    # in the App and Automation Service if required
-    $securePassword = (ConvertTo-SecureString -String $CertificatePassword -AsPlainText -Force)
-    
+      
 }
 process {
 
@@ -86,7 +82,6 @@ process {
         New-AzResourceGroup -Name $AzureResourceGroupName -Location $AzureRegion
     }
         
-
     # ----------------------------------------------------------------------------------
     #   Azure Automation - Creation
     # ----------------------------------------------------------------------------------
@@ -115,7 +110,7 @@ process {
     New-AzAutomationModule `
         -AutomationAccountName $AzureAutomationName `
         -Name "PnP.PowerShell" `
-        -ContentLink "https://devopsgallerystorage.blob.core.windows.net/packages/pnp.powershell.0.2.24-nightly.nupkg" `
+        -ContentLink "https://devopsgallerystorage.blob.core.windows.net/packages/pnp.powershell.1.2.0.nupkg" `
         -ResourceGroupName $AzureResourceGroupName
 
     
@@ -146,7 +141,7 @@ process {
     New-AzAutomationCertificate `
         -Name "AzureAppCertificate" `
         -Description "Certificate for PnP PowerShell automation" `
-        -Password $securePassword `
+        -Password $CertificatePassword `
         -Path $CertificatePath `
         -Exportable `
         -ResourceGroupName $AzureResourceGroupName `
@@ -154,7 +149,7 @@ process {
 
     # In this example, we do not use the UserName part
     $User = "IAamNotUsed"
-    $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $securePassword
+    $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User, $CertificatePassword
     New-AzAutomationCredential `
         -Name "AzureAppCertPassword" `
         -Description "Contains the password for the certificate" `

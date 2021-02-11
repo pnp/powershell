@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Set-PnPSite
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/set-pnpsite
-schema: 2.0.0
-title: Set-PnPSite
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPSite.html
 ---
-
+ 
 # Set-PnPSite
 
 ## SYNOPSIS
@@ -20,7 +20,7 @@ Set-PnPSite [-Identity <String>] [-Classification <String>] [-DisableFlows] [-Lo
  [-Sharing <SharingCapabilities>] [-StorageMaximumLevel <Int64>] [-StorageWarningLevel <Int64>]
  [-AllowSelfServiceUpgrade] [-NoScriptSite] [-Owners <System.Collections.Generic.List`1[System.String]>]
  [-CommentsOnSitePagesDisabled] [-DefaultLinkPermission <SharingPermissionType>]
- [-DefaultSharingLinkType <SharingLinkType>] [-DisableAppViews <AppViewsPolicy>]
+ [-DefaultSharingLinkType <SharingLinkType>] [-DefaultLinkToExistingAccess <Boolean>] [-DefaultLinkToExistingAccessReset] [-DisableAppViews <AppViewsPolicy>]
  [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>] [-DisableSharingForNonOwners]
  [-LocaleId <UInt32>] [-RestrictedToGeo <RestrictedToRegion>] [-SocialBarOnSitePagesDisabled]
  [-AnonymousLinkExpirationInDays <Int32>] [-OverrideTenantAnonymousLinkExpirationPolicy]
@@ -170,6 +170,19 @@ Accepted values: None, Direct, Internal, AnonymousAccess
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultLinkToExistingAccess
+When set to $true, the DefaultSharingLinkType will be overriden and the default sharing link will be All People with Existing Access link (which does not modify permissions). When set to $false (the default), the default sharing link type is controlled by the DefaultSharingLinkType parameter
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -419,3 +432,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

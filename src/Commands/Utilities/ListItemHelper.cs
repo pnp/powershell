@@ -230,6 +230,25 @@ namespace PnP.PowerShell.Commands.Utilities
                     throw new PSInvalidOperationException($"Field {key} not present in list.");
                 }
             }
+            if (item != null && !item.ServerObjectIsNull.Value)
+            {
+                var specialFields = new[] { "Author", "Editor", "Created", "Modified" };
+                // check if we are setting editor or author fields  
+                if (itemValues.Any(i => specialFields.Contains(i.Key)))
+                {
+                    foreach (var field in specialFields)
+                    {
+                        if (itemValues.FirstOrDefault(i => i.Key == field) == null)
+                        {
+                            if (item.FieldValues.TryGetValue(field, out object fieldValue))
+                            {
+                                itemValues.Add(new FieldUpdateValue(field, fieldValue));
+                            }
+                        }
+                    }
+                }
+            }
+
             foreach (var itemValue in itemValues)
             {
                 if (string.IsNullOrEmpty(itemValue.FieldTypeString))
@@ -264,9 +283,10 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                 }
             }
+
         }
 
-        public static Dictionary<string, object> GetFieldValues(PnP.Core.Model.SharePoint.IList list, Hashtable valuesToSet, ClientContext clientContext)
+        public static Dictionary<string, object> GetFieldValues(PnP.Core.Model.SharePoint.IList list, PnP.Core.Model.SharePoint.IListItem existingItem, Hashtable valuesToSet, ClientContext clientContext)
         {
             var item = new Dictionary<string, object>();
 
@@ -443,6 +463,21 @@ namespace PnP.PowerShell.Commands.Utilities
                 else
                 {
                     throw new PSInvalidOperationException($"Field {key} not present in list.");
+                }
+            }
+            if (existingItem != null && existingItem.Requested)
+            {
+                var specialFields = new[] { "Author", "Editor", "Created", "Modified" };
+                // check if we are setting editor or author fields  
+                if (item.Any(i => specialFields.Contains(i.Key)))
+                {
+                    foreach (var field in specialFields)
+                    {
+                        if (!item.ContainsKey(field))
+                        {
+                            item[field] = existingItem[field];
+                        }
+                    }
                 }
             }
             return item;

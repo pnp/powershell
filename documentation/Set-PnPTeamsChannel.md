@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Set-PnPTeamsChannel
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/set-pnpteamschannel
-schema: 2.0.0
-title: Set-PnPTeamsChannel
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTeamsChannel.html
 ---
-
+ 
 # Set-PnPTeamsChannel
 
 ## SYNOPSIS
@@ -20,8 +20,8 @@ Updates an existing Teams Channel
 ## SYNTAX
 
 ```powershell
-Set-PnPTeamsChannel -Team <TeamsTeamPipeBind> -Identity <TeamsChannelPipeBind> [-DisplayName <String>]
- [-Description <String>]  [<CommonParameters>]
+Set-PnPTeamsChannel -Team <TeamsTeamPipeBind> -Identity <TeamsChannelPipeBind> [-DisplayName <String>] [-Description <String>] [-IsFavoriteByDefault <Boolean>]
+  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -34,6 +34,13 @@ Set-PnPTeamsChannel -Team "MyTeam" -Channel "MyChannel" -DisplayName "My Channel
 ```
 
 Updates the channel called 'MyChannel' to have the display name set to 'My Channel'
+
+### EXAMPLE 2
+```powershell
+Set-PnPTeamsChannel -Team "MyTeam" -Channel "MyChannel" -IsFavoriteByDefault $true
+```
+
+Updates the channel called 'MyChannel' to make it visible to members.
 
 ## PARAMETERS
 
@@ -79,6 +86,20 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### -IsFavoriteByDefault
+Allows you to specify if the channel is by default visible for members
+
+```yaml
+Type: Boolean
+Parameter Sets: Public channel
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Team
 Specify the group id, mailNickname or display name of the team to use.
 
@@ -96,3 +117,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

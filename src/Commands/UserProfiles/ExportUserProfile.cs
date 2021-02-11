@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 hostUrl = hostUrl.Substring(0, hostUrl.Length - 1);
             }
             var normalizedUserName = UrlUtilities.UrlEncode($"i:0#.f|membership|{LoginName}");
-            var results = RestHelper.GetAsync<RestResultCollection<ExportEntity>>(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/GetUserProfileProperties(accountName=@a)?@a='{normalizedUserName}'", this.AccessToken, false).GetAwaiter().GetResult();
+            var results = RestHelper.GetAsync<RestResultCollection<ExportEntity>>(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/GetUserProfileProperties(accountName=@a)?@a='{normalizedUserName}'", ClientContext, false).GetAwaiter().GetResult();
             var record = new PSObject();
             foreach (var item in results.Items)
             {

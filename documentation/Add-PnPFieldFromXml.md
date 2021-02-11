@@ -1,12 +1,12 @@
 ---
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/add-pnpfieldfromxml
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPFieldFromXml.html
+external help file: PnP.PowerShell.dll-Help.xml
 title: Add-PnPFieldFromXml
 ---
-
+  
 # Add-PnPFieldFromXml
 
 ## SYNOPSIS
@@ -88,3 +88,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[Field CAML](http://msdn.microsoft.com/en-us/library/office/ms437580(v=office.15).aspx)
+
+

@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Get-PnPStructuralNavigationCacheWebState
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/get-pnpstructuralnavigationcachewebstate
-schema: 2.0.0
-title: Get-PnPStructuralNavigationCacheWebState
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPStructuralNavigationCacheWebState.html
 ---
-
+ 
 # Get-PnPStructuralNavigationCacheWebState
 
 ## SYNOPSIS
@@ -14,7 +14,7 @@ Get the structural navigation caching state for a web.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPStructuralNavigationCacheWebState [-WebUrl <String>]
 ```
 
@@ -49,3 +49,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

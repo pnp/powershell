@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: New-PnPTenantSite
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/new-pnptenantsite
-schema: 2.0.0
-title: New-PnPTenantSite
+online version: https://pnp.github.io/powershell/cmdlets/New-PnPTenantSite.html
 ---
-
+ 
 # New-PnPTenantSite
 
 ## SYNOPSIS
@@ -22,13 +22,12 @@ Creates a new (classic) site collection for the current tenant
 ```powershell
 New-PnPTenantSite -Title <String> -Url <String> -Owner <String> [-Lcid <UInt32>] [-Template <String>]
  -TimeZone <Int32> [-ResourceQuota <Double>] [-ResourceQuotaWarningLevel <Double>] [-StorageQuota <Int64>]
- [-StorageQuotaWarningLevel <Int64>] [-RemoveDeletedSite] [-Wait] [-Force] [-Connection <PnPConnection>]
+ [-StorageQuotaWarningLevel <Int64>] [-RemoveDeletedSite] [-Wait] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-The New-PnPTenantSite cmdlet creates a new site collection for the current company. However, creating a new SharePoint
-Online site collection fails if a deleted site with the same URL exists in the Recycle Bin. If you want to use this command for an on-premises farm, please refer to http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx 
+The New-PnPTenantSite cmdlet creates a new site collection for the current company. However, creating a new SharePoint Online site collection fails if a deleted site with the same URL exists in the Recycle Bin
 
 ## EXAMPLES
 
@@ -53,20 +52,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Force
-Do not ask for confirmation.
-
-```yaml
-Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
@@ -246,3 +231,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

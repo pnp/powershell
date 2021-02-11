@@ -1,12 +1,12 @@
 ---
-applicable: SharePoint Online
-external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/add-pnpteamschannel
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPTeamsChannel.html
+external help file: PnP.PowerShell.dll-Help.xml
 title: Add-PnPTeamsChannel
 ---
-
+  
 # Add-PnPTeamsChannel
 
 ## SYNOPSIS
@@ -21,7 +21,7 @@ Adds a channel to an existing Microsoft Teams instance.
 
 ### Public channel
 ```powershell
-Add-PnPTeamsChannel -Team <TeamsTeamPipeBind> -DisplayName <String> [-Description <String>] [<CommonParameters>]
+Add-PnPTeamsChannel -Team <TeamsTeamPipeBind> -DisplayName <String> [-Description <String>] [-IsFavoriteByDefault <Boolean>] [<CommonParameters>]
 ```
 
 ### Private channel
@@ -35,10 +35,10 @@ Add-PnPTeamsChannel -Team <TeamsTeamPipeBind> -DisplayName <String> -OwnerUPN <S
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPTeamsChannel -Team 4efdf392-8225-4763-9e7f-4edeb7f721aa -DisplayName "My Channel"
+Add-PnPTeamsChannel -Team 4efdf392-8225-4763-9e7f-4edeb7f721aa -DisplayName "My Channel" -IsFavoriteByDefault $true
 ```
 
-Adds a new channel to the specified Teams instance
+Adds a new channel to the specified Teams instance and marks the channel as by default visible for members.
 
 ### EXAMPLE 2
 ```powershell
@@ -78,6 +78,20 @@ Type: String
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsFavoriteByDefault
+Allows you to specify if the channel is by default visible for members
+
+```yaml
+Type: Boolean
+Parameter Sets: Public channel
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -129,3 +143,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
+

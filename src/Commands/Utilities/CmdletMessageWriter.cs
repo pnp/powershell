@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 using System.Threading;
 
@@ -31,24 +32,26 @@ namespace PnP.PowerShell.Commands.Utilities
                 while (Queue.Count > 0)
                 {
                     var message = Queue.Dequeue();
-                    if (!message.IsError)
+                    if (message.Formatted)
                     {
-                        if (message.Formatted)
-                        {
-                            WriteFormattedWarning(Cmdlet, message.Text);
-                        }
-                        else
-                        {
-                            Cmdlet.Host.UI.WriteLine(message.Text);
-                        }
+                        WriteFormattedMessage(Cmdlet, message);
                     }
                     else
                     {
-                        Cmdlet.Host.UI.WriteErrorLine(message.Text);
+                        Cmdlet.Host.UI.WriteLine(message.Text);
                     }
+                    break;
                 }
+            }
 
-                Thread.Sleep(100);
+            Thread.Sleep(100);
+        }
+
+        public void WriteWarning(string message, bool formatted = true)
+        {
+            lock (LockToken)
+            {
+                Queue.Enqueue(new Message() { Formatted = formatted, Text = message, Type = MessageType.Warning });
             }
         }
 
@@ -56,23 +59,21 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             lock (LockToken)
             {
-                Queue.Enqueue(new Message() { Formatted = formatted, Text = message });
+                Queue.Enqueue(new Message() { Formatted = formatted, Text = message, Type = MessageType.Message });
             }
         }
 
-        public void WriteError(string message)
-        {
-            lock (LockToken)
-            {
-                Queue.Enqueue(new Message() { Formatted = false, Text = message, IsError = true });
-            }
-        }
-
-        private class Message
+        internal class Message
         {
             public string Text { get; set; }
             public bool Formatted { get; set; }
-            public bool IsError { get; set; }
+            public MessageType Type { get; set; }
+        }
+
+        internal enum MessageType
+        {
+            Message,
+            Warning
         }
 
         private static List<string> WordWrap(string text, int maxLineLength)
@@ -96,30 +97,68 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static void WriteFormattedWarning(PSCmdlet cmdlet, string message)
         {
+            WriteFormattedMessage(cmdlet, new Message { Text = message, Type = MessageType.Warning, Formatted = true });
+        }
+        
+        internal static void WriteFormattedMessage(PSCmdlet cmdlet, Message message)
+        {
             if (cmdlet.Host.Name == "ConsoleHost")
             {
                 var messageLines = new List<string>();
-                messageLines.AddRange(message.Split(new[] { '\n' }));
+                messageLines.AddRange(message.Text.Split(new[] { '\n' }));
                 var wrappedText = new List<string>();
-                foreach (var messageLine in messageLines)
+                foreach (var messageLine in messageLines.Select(l => l == "\n" ? " \n" : l))
                 {
-                    wrappedText.AddRange(WordWrap(messageLine, cmdlet.Host.UI.RawUI.MaxWindowSize.Width - 2));
+                    wrappedText.AddRange(WordWrap(messageLine, cmdlet.Host.UI.RawUI.MaxWindowSize.Width - 8));
                 }
 
                 var notificationColor = "\x1B[7m";
                 var resetColor = "\x1B[0m";
 
                 var outMessage = string.Empty;
+
                 foreach (var wrappedLine in wrappedText)
                 {
-                    var lineToAdd = wrappedLine.PadRight(cmdlet.Host.UI.RawUI.MaxWindowSize.Width - 2);
-                    outMessage += $"{notificationColor} {lineToAdd} {resetColor}\n";
+                    var lineToAdd = string.Empty;
+                    if (wrappedLine == "")
+                    {
+                        lineToAdd = "\x00A0".PadRight(cmdlet.Host.UI.RawUI.MaxWindowSize.Width - 8);
+                    }
+                    else
+                    {
+                        lineToAdd = wrappedLine.PadRight(cmdlet.Host.UI.RawUI.MaxWindowSize.Width - 8);
+                    }
+                    outMessage += $" {lineToAdd}\n";
                 }
-                cmdlet.Host.UI.WriteLine($"{notificationColor}\n{outMessage}{resetColor}\n");
+                switch (message.Type)
+                {
+                    case MessageType.Message:
+                        {
+                            cmdlet.WriteObject($"{notificationColor}\n{outMessage}{resetColor}\n");
+                            break;
+                        }
+                    case MessageType.Warning:
+                        {
+                            cmdlet.WriteWarning($"{notificationColor}\n{outMessage}{resetColor}\n");
+                            break;
+                        }
+                }
             }
             else
             {
-                cmdlet.WriteWarning(message);
+                switch (message.Type)
+                {
+                    case MessageType.Message:
+                        {
+                            cmdlet.WriteObject(message.Text);
+                            break;
+                        }
+                    case MessageType.Warning:
+                        {
+                            cmdlet.WriteWarning(message.Text);
+                            break;
+                        }
+                }
             }
         }
     }

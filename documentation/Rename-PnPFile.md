@@ -1,12 +1,12 @@
 ---
+Module Name: PnP.PowerShell
+title: Rename-PnPFile
+schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/rename-pnpfile
-schema: 2.0.0
-title: Rename-PnPFile
+online version: https://pnp.github.io/powershell/cmdlets/Rename-PnPFile.html
 ---
-
+ 
 # Rename-PnPFile
 
 ## SYNOPSIS
@@ -32,21 +32,21 @@ Rename-PnPFile [-SiteRelativeUrl] <String> [-TargetFileName] <String> [-Overwrit
 
 ### EXAMPLE 1
 ```powershell
-PS:>Rename-PnPFile -ServerRelativeUrl /sites/project/Documents/company.docx -TargetFileName mycompany.docx
+Rename-PnPFile -ServerRelativeUrl /sites/project/Documents/company.docx -TargetFileName mycompany.docx
 ```
 
 Renames a file named company.docx located in the document library called Documents located in the projects sitecollection under the managed path sites to mycompany.docx. If a file named mycompany.aspx already exists, it won't perform the rename.
 
 ### EXAMPLE 2
 ```powershell
-PS:>Rename-PnPFile -SiteRelativeUrl Documents/company.aspx -TargetFileName mycompany.docx
+Rename-PnPFile -SiteRelativeUrl Documents/company.aspx -TargetFileName mycompany.docx
 ```
 
 Renames a file named company.docx located in the document library called Documents located in the current site to mycompany.aspx. If a file named mycompany.aspx already exists, it won't perform the rename.
 
 ### EXAMPLE 3
 ```powershell
-PS:>Rename-PnPFile -ServerRelativeUrl /sites/project/Documents/company.docx -TargetFileName mycompany.docx -OverwriteIfAlreadyExists
+Rename-PnPFile -ServerRelativeUrl /sites/project/Documents/company.docx -TargetFileName mycompany.docx -OverwriteIfAlreadyExists
 ```
 
 Renames a file named company.docx located in the document library called Documents located in the projects sitecollection under the managed path sites to mycompany.aspx. If a file named mycompany.aspx already exists, it will still perform the rename and replace the original mycompany.aspx file.
@@ -172,3 +172,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+

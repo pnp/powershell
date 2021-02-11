@@ -6,13 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.SharePoint.Client;
 using PnP.Framework;
+using PnP.PowerShell.Commands.Utilities.Auth;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -27,7 +27,6 @@ namespace PnP.PowerShell.Commands.Utilities
         internal static ClientContext GetWebLoginClientContext(string siteUrl, bool clearCookies, bool scriptErrorsSuppressed = true, Uri loginRequestUri = null, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
 #if Windows
-
             if (OperatingSystem.IsWindows())
             {
                 var authCookiesContainer = new CookieContainer();
@@ -98,7 +97,6 @@ namespace PnP.PowerShell.Commands.Utilities
                             }
                         }
                     };
-
                     form.Focus();
                     form.ShowDialog();
                     browser.Dispose();
@@ -107,7 +105,6 @@ namespace PnP.PowerShell.Commands.Utilities
                 thread.SetApartmentState(ApartmentState.STA);
                 thread.Start();
                 thread.Join();
-
                 if (authCookiesContainer.Count > 0)
                 {
                     var ctx = new ClientContext(siteUrl);
@@ -172,7 +169,7 @@ namespace PnP.PowerShell.Commands.Utilities
             Contains
         }
 
-        internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls = null)
+        internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls = null, bool noThreadJoin = false, CancellationTokenSource cancellationTokenSource = null, bool cancelOnClose = true)
         {
             bool success = false;
 #if Windows
@@ -182,6 +179,12 @@ namespace PnP.PowerShell.Commands.Utilities
                 var thread = new Thread(() =>
                 {
                     var form = new System.Windows.Forms.Form();
+
+                    cancellationTokenSource?.Token.Register(() =>
+                    {
+                        form.Invoke((System.Windows.Forms.MethodInvoker)(() => form.Close()));
+                        //form.Close();
+                    });
 
                     var browser = new System.Windows.Forms.WebBrowser
                     {
@@ -199,8 +202,14 @@ namespace PnP.PowerShell.Commands.Utilities
                     form.Controls.Add(browser);
                     form.ResumeLayout(false);
 
+                    form.FormClosed += (a,b) => {
+                        if(!success && cancelOnClose)
+                        {
+                            cancellationTokenSource?.Cancel();
+                        }
+                    };
                     browser.Navigate(siteUrl);
-
+                    
                     browser.Navigated += (sender, args) =>
                     {
                         var navigatedUrl = args.Url.ToString();
@@ -222,7 +231,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                         break;
                                     case UrlMatchType.Contains:
 #if NETFRAMEWORK
-                                    matched = navigatedUrl.Contains(closeUrl.url);
+                                        matched = navigatedUrl.Contains(closeUrl.url);
 #else
                                         matched = navigatedUrl.Contains(closeUrl.url, StringComparison.OrdinalIgnoreCase);
 #endif
@@ -236,8 +245,9 @@ namespace PnP.PowerShell.Commands.Utilities
                         }
                         if (matched)
                         {
-                            form.Close();
                             success = true;
+                            form.Close();
+
                         }
                     };
 
@@ -248,7 +258,10 @@ namespace PnP.PowerShell.Commands.Utilities
 
                 thread.SetApartmentState(ApartmentState.STA);
                 thread.Start();
-                thread.Join();
+                if (!noThreadJoin)
+                {
+                    thread.Join();
+                }
             }
 #endif
             return success;
@@ -299,70 +312,45 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        internal static class CookieReader
+        internal static void OpenBrowserForInteractiveLogin(string url, int port, bool usePopup, CancellationTokenSource cancellationTokenSource)
         {
-            /// <summary>
-            /// Enables the retrieval of cookies that are marked as "HTTPOnly". 
-            /// Do not use this flag if you expose a scriptable interface, 
-            /// because this has security implications. It is imperative that 
-            /// you use this flag only if you can guarantee that you will never 
-            /// expose the cookie to third-party code by way of an 
-            /// extensibility mechanism you provide. 
-            /// Version:  Requires Internet Explorer 8.0 or later.
-            /// </summary>
-            private const int INTERNET_COOKIE_HTTPONLY = 0x00002000;
-
-            /// <summary>
-            /// Returns cookie contents as a string
-            /// </summary>
-            /// <param name="url">Url to get cookie</param>
-            /// <returns>Returns Cookie contents as a string</returns>
-            public static string GetCookie(string url)
+            try
             {
-
-                int size = 512;
-                StringBuilder sb = new StringBuilder(size);
-                if (!NativeMethods.InternetGetCookieEx(url, null, sb, ref size, INTERNET_COOKIE_HTTPONLY, IntPtr.Zero))
+                if (OperatingSystem.IsWindows() && usePopup)
                 {
-                    if (size < 0)
-                    {
-                        return null;
-                    }
-                    sb = new StringBuilder(size);
-                    if (!NativeMethods.InternetGetCookieEx(url, null, sb, ref size, INTERNET_COOKIE_HTTPONLY, IntPtr.Zero))
-                    {
-                        return null;
-                    }
+                    BrowserHelper.GetWebBrowserPopup(url, "Please login", new[] { ($"http://localhost:{port}/?code=", BrowserHelper.UrlMatchType.StartsWith) }, noThreadJoin: true, cancellationTokenSource: cancellationTokenSource, cancelOnClose: true);
                 }
-                return sb.ToString();
+                else
+                {
+                    ProcessStartInfo psi = new ProcessStartInfo
+                    {
+                        FileName = url,
+                        UseShellExecute = true
+                    };
+                    Process.Start(psi);
+                }
             }
-
-            public static void SetCookie(string url, string cookiename, string cookiedata)
+            catch
             {
-                NativeMethods.InternetSetCookieEx(url, cookiename, cookiedata, INTERNET_COOKIE_HTTPONLY, IntPtr.Zero);
-            }
-
-            private static class NativeMethods
-            {
-
-                [DllImport("wininet.dll", EntryPoint = "InternetGetCookieEx", CharSet = CharSet.Unicode, SetLastError = true)]
-                public static extern bool InternetGetCookieEx(
-                    string url,
-                    string cookieName,
-                    StringBuilder cookieData,
-                    ref int size,
-                    int flags,
-                    IntPtr pReserved);
-
-                [DllImport("wininet.dll", EntryPoint = "InternetSetCookieEx", CharSet = CharSet.Unicode, SetLastError = true)]
-                public static extern bool InternetSetCookieEx(
-                    string url,
-                    string cookieName,
-                    string cookieData,
-                    int flags,
-                    IntPtr pReserved);
-
+                // hack because of this: https://github.com/dotnet/corefx/issues/10361
+                if (OperatingSystem.IsWindows())
+                {
+                    Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+                }
+                else if (OperatingSystem.IsLinux())
+                {
+                    Process.Start("xdg-open", url);
+                }
+                else if (OperatingSystem.IsMacOS())
+                {
+                    Process.Start("open", url);
+                }
+                else
+                {
+                    throw new PlatformNotSupportedException(RuntimeInformation.OSDescription);
+                }
             }
         }
+
     }
 }

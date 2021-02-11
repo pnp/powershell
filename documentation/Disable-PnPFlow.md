@@ -1,11 +1,11 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Disable-PnPFlow.html
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/disable-pnpflow
+external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
 ---
-
-# Enable-PnPFlow
+  
+# Disable-PnPFlow
 
 ## SYNOPSIS
 Disables a specific flow
@@ -13,7 +13,7 @@ Disables a specific flow
 ## SYNTAX
 
 ```
-Disables-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerAutomateFlowPipeBind> [-AsAdmin] [-Connection <PnPConnection>] [<CommonParameters>]
+Disable-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerAutomateFlowPipeBind> [-AsAdmin] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -27,7 +27,7 @@ $environment = Get-PnPFlowEnvironment
 Disable-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
 
-Enables the specified flow
+Disables the specified flow
 
 ## PARAMETERS
 
@@ -96,3 +96,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
+

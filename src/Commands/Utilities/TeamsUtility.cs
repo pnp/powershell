@@ -89,7 +89,7 @@ namespace PnP.PowerShell.Commands.Utilities
             // Get Settings
             try
             {
-                var team = await GraphHelper.GetAsync<Team>(httpClient, $"v1.0/teams/{groupId}", accessToken);
+                var team = await GraphHelper.GetAsync<Team>(httpClient, $"v1.0/teams/{groupId}", accessToken, false);
                 if (team != null)
                 {
                     team.GroupId = groupId;
@@ -140,7 +140,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     catch (Exception)
                     {
                         // In case of exception wait for 5 secs
-                        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+                        await Task.Delay(TimeSpan.FromSeconds(5));
                     }
 
                     // Don't wait more than 1 minute
@@ -179,7 +179,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
                     catch (Exception)
                     {
-                        System.Threading.Thread.Sleep(5000);
+                        await Task.Delay(5000);
                         iteration++;
                     }
 
@@ -468,7 +468,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return await GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}", accessToken);
         }
 
-        public static async Task<TeamChannel> AddChannelAsync(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, bool isPrivate, string ownerUPN)
+        public static async Task<TeamChannel> AddChannelAsync(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, bool isPrivate, string ownerUPN, bool isFavoriteByDefault)
         {
             var channel = new TeamChannel()
             {
@@ -489,6 +489,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             else
             {
+                channel.IsFavoriteByDefault = isFavoriteByDefault;
                 return await GraphHelper.PostAsync<TeamChannel>(httpClient, $"v1.0/teams/{groupId}/channels", channel, accessToken);
             }
         }

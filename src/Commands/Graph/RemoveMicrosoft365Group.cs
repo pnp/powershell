@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Graph
         {
             if (Identity != null)
             {
-                UnifiedGroupEntity group = Identity.GetGroup(AccessToken);
+                UnifiedGroupEntity group = Identity.GetGroup(AccessToken, false);
                 
                 if (group != null)
                 {

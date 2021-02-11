@@ -26,9 +26,9 @@ namespace PnP.PowerShell.Commands.Model
 
     public class PermissionScopes
     {
-        private const string ResourceAppId_Graph = "00000003-0000-0000-c000-000000000000";
-        private const string ResourceAppID_SPO = "00000003-0000-0ff1-ce00-000000000000";
-        private const string ResourceAppID_O365Management = "c5393580-f805-4401-95e8-94b7a6ef2fc2";
+        public const string ResourceAppId_Graph = "00000003-0000-0000-c000-000000000000";
+        public const string ResourceAppID_SPO = "00000003-0000-0ff1-ce00-000000000000";
+        public const string ResourceAppID_O365Management = "c5393580-f805-4401-95e8-94b7a6ef2fc2";
         private List<PermissionScope> scopes = new List<PermissionScope>();
         public PermissionScopes()
         {
@@ -233,6 +233,12 @@ namespace PnP.PowerShell.Commands.Model
             });
             #endregion
             #region SPO
+            scopes.Add(new PermissionScope()
+            {
+                resourceAppId = ResourceAppID_SPO,
+                Id = "56680e0d-d2a3-4ae1-80d8-3c4f2100e3d0",
+                Identifier = "SPO.AllSites.FullControl"
+            });
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = ResourceAppID_SPO,

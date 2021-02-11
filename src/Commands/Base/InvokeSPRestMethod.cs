@@ -1,4 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
+using PnP.Framework.Http;
 using PnP.Framework.Utilities;
 
 using PnP.PowerShell.Commands.Enums;
@@ -40,78 +41,63 @@ namespace PnP.PowerShell.Commands.Admin
                 Url = UrlUtility.Combine(ClientContext.Url, Url);
             }
 
-            var accessToken = this.AccessToken;
             var method = new HttpMethod(Method.ToString());
 
-            using (var handler = new HttpClientHandler())
+            var httpClient = PnPHttpClient.Instance.GetHttpClient(ClientContext);
+
+            var requestUrl = Url;
+
+            using (HttpRequestMessage request = new HttpRequestMessage(method, requestUrl))
             {
-                // we're not in app-only or user + app context, so let's fall back to cookie based auth
-                if (string.IsNullOrEmpty(accessToken))
+                request.Headers.Add("accept", "application/json;odata=nometadata");
+
+                if (Method == HttpRequestMethod.Merge)
                 {
-                    SetAuthenticationCookies(handler, ClientContext);
+                    method = HttpMethod.Post;
+                    request.Headers.Add("X-HTTP-Method", "MERGE");
                 }
 
-                using (var httpClient = new PnPHttpProvider(handler))
+                if (Method == HttpRequestMethod.Merge || Method == HttpRequestMethod.Delete)
                 {
-                    var requestUrl = Url;
+                    request.Headers.Add("IF-MATCH", "*");
+                }
 
-                    HttpRequestMessage request = new HttpRequestMessage(method, requestUrl);
+                PnPHttpClient.AuthenticateRequestAsync(request, ClientContext).GetAwaiter().GetResult();
 
-                    request.Headers.Add("accept", "application/json;odata=nometadata");
-
-                    if (Method == HttpRequestMethod.Merge)
+                if (Method == HttpRequestMethod.Post)
+                {
+                    if (string.IsNullOrEmpty(ContentType))
                     {
-                        method = HttpMethod.Post;
-                        request.Headers.Add("X-HTTP-Method", "MERGE");
+                        ContentType = "application/json";
                     }
+                    var contentString = Content is string ? Content.ToString() :
+                        JsonSerializer.Serialize(Content);
+                    request.Content = new StringContent(contentString, System.Text.Encoding.UTF8);
+                    request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(ContentType);
+                }
+                HttpResponseMessage response = httpClient.SendAsync(request, new System.Threading.CancellationToken()).Result;
 
-                    if (Method == HttpRequestMethod.Merge || Method == HttpRequestMethod.Delete)
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    if (responseString != null)
                     {
-                        request.Headers.Add("IF-MATCH", "*");
-                    }
 
-                    if (!string.IsNullOrEmpty(accessToken))
-                    {
-                        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-                        request.Headers.Add("X-RequestDigest", ClientContext.GetRequestDigestAsync().GetAwaiter().GetResult());
-                    }
-                    else
-                    {
-                        if (ClientContext.Credentials is NetworkCredential networkCredential)
+                        var jsonElement = JsonSerializer.Deserialize<JsonElement>(responseString);
+                        if (jsonElement.TryGetProperty("value", out JsonElement valueProperty))
                         {
-                            handler.Credentials = networkCredential;
+                            WriteObject(ConvertToPSObject(valueProperty), true);
                         }
-                        request.Headers.Add("X-RequestDigest", ClientContext.GetRequestDigestAsync(handler.CookieContainer).GetAwaiter().GetResult());
-                    }
-                    
-
-                    if (Method == HttpRequestMethod.Post)
-                    {
-                        if (string.IsNullOrEmpty(ContentType))
+                        else
                         {
-                            ContentType = "application/json";
-                        }
-                        var contentString = Content is string ? Content.ToString() :
-                            JsonSerializer.Serialize(Content);
-                        request.Content = new StringContent(contentString, System.Text.Encoding.UTF8);
-                        request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(ContentType);
-                    }
-                    HttpResponseMessage response = httpClient.SendAsync(request, new System.Threading.CancellationToken()).Result;
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                        if (responseString != null)
-                        {
-
-                            WriteObject(JsonSerializer.Deserialize<Hashtable>(responseString));
+                            WriteObject(ConvertToPSObject(jsonElement), true);
                         }
                     }
-                    else
-                    {
-                        // Something went wrong...
-                        throw new Exception(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
-                    }
+                }
+                else
+                {
+                    // Something went wrong...
+                    throw new Exception(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
                 }
             }
         }
@@ -145,6 +131,54 @@ namespace PnP.PowerShell.Commands.Admin
             }
             handler.CookieContainer = authCookiesContainer;
             //}
+        }
+
+        private List<PSObject> ConvertToPSObject(JsonElement element)
+        {
+            var list = new List<PSObject>();
+            if (element.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var subelement in element.EnumerateArray())
+                {
+                    list.AddRange(ConvertToPSObject(subelement));
+                }
+            }
+            else
+            {
+                var pso = new PSObject();
+                foreach (var prop in element.EnumerateObject())
+                {
+                    object value = null;
+                    switch (prop.Value.ValueKind)
+                    {
+
+                        case JsonValueKind.Array:
+                            {
+                                value = ConvertToPSObject(prop.Value);
+                                break;
+                            }
+                        case JsonValueKind.True:
+                        case JsonValueKind.False:
+                            {
+                                value = prop.Value.GetBoolean();
+                                break;
+                            }
+                        case JsonValueKind.String:
+                            {
+                                value = prop.Value.GetString();
+                                break;
+                            }
+                        case JsonValueKind.Object:
+                            {
+                                value = ConvertToPSObject(prop.Value).First();
+                                break;
+                            }
+                    }
+                    pso.Properties.Add(new PSNoteProperty(prop.Name, value));
+                }
+                list.Add(pso);
+            }
+            return list;
         }
     }
 

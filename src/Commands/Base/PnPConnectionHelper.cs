@@ -1,14 +1,17 @@
-﻿using Microsoft.Identity.Client;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using PnP.Framework;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.Auth;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Management.Automation;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -22,6 +25,29 @@ namespace PnP.PowerShell.Commands.Base
     {
 
         #region Connection Creation
+
+        internal static PnPConnection InstantiateWithAccessToken(Uri url, string accessToken, string tenantAdminUrl)
+        {
+            using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
+            {
+                PnPClientContext context = null;
+                ConnectionType connectionType = ConnectionType.O365;
+                if (url != null)
+                {
+                    context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
+                    context.ApplicationName = Resources.ApplicationName;
+                    context.DisableReturnValueCache = true;
+                    if (IsTenantAdminSite(context))
+                    {
+                        connectionType = ConnectionType.TenantAdmin;
+                    }
+                }
+
+                var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.Token);
+                return connection;
+            }
+
+        }
         internal static PnPConnection InstantiateACSAppOnlyConnection(Uri url, string realm, string clientId, string clientSecret, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             ConnectionType connectionType;
@@ -77,7 +103,7 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationToken cancellationToken)
+        internal static PnPConnection InstantiateDeviceLoginConnection(string clientId, string url, bool launchBrowser, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource)
         {
             var connectionUri = new Uri(url);
             var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
@@ -89,39 +115,36 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                Func<DeviceCodeResult, Task> deviceCodeCallback = (deviceCodeResult) =>
+                authManager = PnP.Framework.AuthenticationManager.CreateWithDeviceLogin(clientId, (deviceCodeResult) =>
                  {
                      if (launchBrowser)
                      {
                          if (Utilities.OperatingSystem.IsWindows())
                          {
                              ClipboardService.SetText(deviceCodeResult.UserCode);
-                             messageWriter.WriteMessage($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard\n\n");
-                             BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in");
+                             messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard\n\n");
+                             BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in", cancellationTokenSource: cancellationTokenSource, cancelOnClose: false);
                          }
                          else
                          {
-                             messageWriter.WriteMessage($"\n\n{deviceCodeResult.Message}\n\n");
+                             messageWriter.WriteWarning($"\n\n{deviceCodeResult.Message}\n\n");
                          }
                      }
                      else
                      {
-                         messageWriter.WriteMessage($"\n\n{deviceCodeResult.Message}\n\n");
+                         messageWriter.WriteWarning($"\n\n{deviceCodeResult.Message}\n\n");
                      }
                      return Task.FromResult(0);
-                 };
-
-                authManager = new PnP.Framework.AuthenticationManager(PnPConnection.PnPManagementShellClientId, deviceCodeCallback, azureEnvironment);
-
+                 }, azureEnvironment);
             }
             using (authManager)
             {
-                var clientContext = authManager.GetContext(url.ToString(), cancellationToken);
+                var clientContext = authManager.GetContext(url.ToString(), cancellationTokenSource.Token);
                 var context = PnPClientContext.ConvertFrom(clientContext);
 
                 var connectionType = ConnectionType.O365;
 
-                var spoConnection = new PnPConnection(context, connectionType, null, PnPConnection.PnPManagementShellClientId, null, url.ToString(), null, PnPPSVersionTag, InitializationType.DeviceLogin)
+                var spoConnection = new PnPConnection(context, connectionType, null, clientId, null, url.ToString(), null, PnPPSVersionTag, InitializationType.DeviceLogin)
                 {
                     ConnectionMethod = ConnectionMethod.DeviceLogin,
                     AzureEnvironment = azureEnvironment
@@ -140,7 +163,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                authManager = new PnP.Framework.AuthenticationManager(clientId, certificate, tenant, azureEnvironment: azureEnvironment);
+                authManager = PnP.Framework.AuthenticationManager.CreateWithCertificate(clientId, certificate, tenant, azureEnvironment: azureEnvironment);
             }
             using (authManager)
             {
@@ -166,7 +189,15 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection InstantiateConnectionWithCredentials(Uri url, PSCredential credentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials)
+        internal static PnPConnection InstantiateManagedIdentityConnection(Cmdlet cmdlet, string tenantAdminUrl)
+        {
+            var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+            var accesstoken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, "https://graph.microsoft.com/").GetAwaiter().GetResult();
+            var connection = new PnPConnection(PnPPSVersionTag, InitializationType.Graph, tenantAdminUrl);
+            return connection;
+        }
+
+        internal static PnPConnection InstantiateConnectionWithCredentials(Cmdlet cmdlet, Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials)
         {
             var context = new PnPClientContext(url.AbsoluteUri)
             {
@@ -189,13 +220,15 @@ namespace PnP.PowerShell.Commands.Base
                         }
                         else
                         {
-                            authManager = new PnP.Framework.AuthenticationManager(clientId, credentials.UserName, credentials.Password, redirectUrl, azureEnvironment);
+                            authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(clientId, credentials.UserName, credentials.Password, redirectUrl, azureEnvironment);
                         }
                         using (authManager)
                         {
                             context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                             context.ExecuteQueryRetry();
+                            cmdlet.WriteVerbose("Acquiring token");
                             var accesstoken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
+                            cmdlet.WriteVerbose("Token acquired");
                             var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accesstoken);
                             tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
                         }
@@ -209,7 +242,7 @@ namespace PnP.PowerShell.Commands.Base
                         }
                         else
                         {
-                            authManager = new PnP.Framework.AuthenticationManager(credentials.UserName, credentials.Password, azureEnvironment);
+                            authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(credentials.UserName, credentials.Password, azureEnvironment);
                         }
                         using (authManager)
                         {
@@ -250,7 +283,27 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
+                PnP.Framework.AuthenticationManager authManager = null;
+                if (PnPConnection.CachedAuthenticationManager != null)
+                {
+                    authManager = PnPConnection.CachedAuthenticationManager;
+                }
+                else
+                {
+                    authManager = new PnP.Framework.AuthenticationManager();
+                }
+                using (authManager)
+                {
+                    if (currentCredentials)
+                    {
+                        context = PnPClientContext.ConvertFrom(authManager.GetOnPremisesContext(url.ToString()));
+                    }
+                    else
+                    {
+                        context = PnPClientContext.ConvertFrom(authManager.GetOnPremisesContext(url.ToString(), credentials.UserName, credentials.Password));
+                    }
+                }
+
                 spoConnection = new PnPConnection(context, ConnectionType.O365, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, initializationType)
                 {
                     ConnectionMethod = Model.ConnectionMethod.Credentials,
@@ -294,6 +347,45 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
+        internal static PnPConnection InstantiateInteractiveConnection(Uri uri, string clientId, string tenantAdminUrl, bool launchBrowser, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool forceAuthentication)
+        {
+            PnP.Framework.AuthenticationManager authManager = null;
+            if (PnPConnection.CachedAuthenticationManager != null && !forceAuthentication)
+            {
+                authManager = PnPConnection.CachedAuthenticationManager;
+                PnPConnection.CachedAuthenticationManager = null;
+            }
+            else
+            {
+                authManager = PnP.Framework.AuthenticationManager.CreateWithInteractiveLogin(clientId, (url, port) =>
+                {
+                    BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !launchBrowser, cancellationTokenSource);
+                },
+                successMessageHtml: $"You successfully authenticated with PnP PowerShell. Feel free to close this {(launchBrowser ? "tab" : "window")}.",
+                failureMessageHtml: $"You did not authenticate with PnP PowerShell. Feel free to close this browser {(launchBrowser ? "tab" : "window")}.",
+                azureEnvironment: azureEnvironment);
+            }
+            using (authManager)
+            {
+                var clientContext = authManager.GetContext(uri.ToString(), cancellationTokenSource.Token);
+                var context = PnPClientContext.ConvertFrom(clientContext);
+
+                var connectionType = ConnectionType.O365;
+
+                if (IsTenantAdminSite(context))
+                {
+                    connectionType = ConnectionType.TenantAdmin;
+                }
+
+                var spoConnection = new PnPConnection(context, connectionType, null, clientId, null, uri.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.ClientIDCertificate)
+                {
+                    ConnectionMethod = ConnectionMethod.Credentials,
+                    AzureEnvironment = azureEnvironment
+                };
+                return spoConnection;
+            }
+        }
+
         #endregion
 
         #region Helper Methods
@@ -308,27 +400,29 @@ namespace PnP.PowerShell.Commands.Base
                 // If somehow a public key certificate was passed in, we can't clean it up, thus we have nothing to do here
                 return;
             }
-
-            var privateKey = (RSACryptoServiceProvider)certificate.PrivateKey;
-            string uniqueKeyContainerName = privateKey.CspKeyContainerInfo.UniqueKeyContainerName;
-            certificate.Reset();
-
-            var programDataPath = Environment.GetEnvironmentVariable("ProgramData");
-            if (string.IsNullOrEmpty(programDataPath))
+            if (Utilities.OperatingSystem.IsWindows())
             {
-                programDataPath = @"C:\ProgramData";
-            }
-            try
-            {
-                var temporaryCertificateFilePath = $@"{programDataPath}\Microsoft\Crypto\RSA\MachineKeys\{uniqueKeyContainerName}";
-                if (System.IO.File.Exists(temporaryCertificateFilePath))
+                var privateKey = (RSACryptoServiceProvider)certificate.PrivateKey;
+                string uniqueKeyContainerName = privateKey.CspKeyContainerInfo.UniqueKeyContainerName;
+                certificate.Reset();
+
+                var programDataPath = Environment.GetEnvironmentVariable("ProgramData");
+                if (string.IsNullOrEmpty(programDataPath))
                 {
-                    System.IO.File.Delete(temporaryCertificateFilePath);
+                    programDataPath = @"C:\ProgramData";
                 }
-            }
-            catch (Exception)
-            {
-                // best effort cleanup
+                try
+                {
+                    var temporaryCertificateFilePath = $@"{programDataPath}\Microsoft\Crypto\RSA\MachineKeys\{uniqueKeyContainerName}";
+                    if (System.IO.File.Exists(temporaryCertificateFilePath))
+                    {
+                        System.IO.File.Delete(temporaryCertificateFilePath);
+                    }
+                }
+                catch (Exception)
+                {
+                    // best effort cleanup
+                }
             }
         }
 
@@ -411,6 +505,7 @@ namespace PnP.PowerShell.Commands.Base
                 return (result);
             },
             true);
+
 
         #endregion
 

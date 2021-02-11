@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Principals
             ClientContext.Load(site);
             ClientContext.ExecuteQueryRetry();
             var normalizedUserName = UrlUtilities.UrlEncode($"i:0#.f|membership|{LoginName}");
-            var results = RestHelper.GetAsync<RestResultCollection<ExportEntity>>(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/GetSPUserInformation(accountName=@a,siteId=@b)?@a='{normalizedUserName}'&@b='{site.Id}'", this.AccessToken, false).GetAwaiter().GetResult();
+            var results = RestHelper.GetAsync<RestResultCollection<ExportEntity>>(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/GetSPUserInformation(accountName=@a,siteId=@b)?@a='{normalizedUserName}'&@b='{site.Id}'", ClientContext, false).GetAwaiter().GetResult();
             var record = new PSObject();
             foreach (var item in results.Items)
             {

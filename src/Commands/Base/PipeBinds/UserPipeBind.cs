@@ -1,5 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
@@ -7,13 +8,13 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
     public sealed class UserPipeBind
     {
         private readonly int _id;
-        private readonly string _login;
+        private readonly string _loginOrName;
         private readonly User _user;
 
         public UserPipeBind()
         {
             _id = 0;
-            _login = null;
+            _loginOrName = null;
             _user = null;
         }
 
@@ -26,7 +27,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         {
             if (!int.TryParse(id, out _id))
             {
-                _login = id;
+                _loginOrName = id;
             }
         }
 
@@ -35,11 +36,6 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _user = user;
         }
 
-        public int Id => _id;
-
-        public string Login => _login;
-
-        public User User => _user;
 
         public User GetUser(ClientContext context)
         {
@@ -48,26 +44,37 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 u => u.Id,
                 u => u.LoginName,
-                u => u.Email
+                u => u.Email,
+                u => u.Title
             };
 
             User user = null;
-            if (User != null)
+            if (_user != null)
             {
-                user = User;
-            }
-            else if (Id > 0)
-            {
-                user = context.Web.GetUserById(Id);
-            }
-            else if (!string.IsNullOrWhiteSpace(Login))
-            {
-                user = context.Web.SiteUsers.GetByLoginName(Login);
-            }
-            if (context.HasPendingRequest)
-            {
+                user = _user;
                 context.Load(user, retrievalExpressions);
                 context.ExecuteQueryRetry();
+            }
+            else if (_id > 0)
+            {
+                user = context.Web.GetUserById(_id);
+                context.Load(user, retrievalExpressions);
+                context.ExecuteQueryRetry();
+            }
+            else if (!string.IsNullOrWhiteSpace(_loginOrName))
+            {
+                try
+                {
+                    user = context.Web.SiteUsers.GetByLoginName(_loginOrName);
+                    context.Load(user, retrievalExpressions);
+                    context.ExecuteQueryRetry();
+                }
+                catch
+                {
+                    var userQuery = context.LoadQuery(context.Web.SiteUsers.Where(u => u.Title == _loginOrName).IncludeWithDefaultProperties(retrievalExpressions));
+                    context.ExecuteQueryRetry();
+                    user = userQuery.FirstOrDefault();
+                }
             }
             return user;
         }
