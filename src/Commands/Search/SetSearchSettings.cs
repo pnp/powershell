@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Search
 
         protected override void ExecuteCmdlet()
         {
-            if(this.ClientContext.Url.ToLower().Contains("-my."))
+            if (this.ClientContext.Url.ToLower().Contains("-my."))
             {
                 throw new InvalidOperationException("This cmdlet does not work for OneDrive for Business sites");
             }
@@ -71,9 +71,10 @@ namespace PnP.PowerShell.Commands.Search
                 }
             }
 
-            ClientContext.Web.EnsureProperty(w => w.SearchScope);
             if (this.Scope == SearchSettingsScope.Site)
-            {
+            {            
+                ClientContext.Site.RootWeb.EnsureProperty(w => w.SearchScope);
+
                 if (this.SearchBoxInNavBar.HasValue)
                 {
                     ClientContext.Site.SearchBoxInNavBar = this.SearchBoxInNavBar.Value;
@@ -94,6 +95,7 @@ namespace PnP.PowerShell.Commands.Search
             }
             else
             {
+                ClientContext.Web.EnsureProperty(w => w.SearchScope);
                 if (this.SearchBoxInNavBar.HasValue)
                 {
                     ClientContext.Web.SearchBoxInNavBar = this.SearchBoxInNavBar.Value;
