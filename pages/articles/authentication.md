@@ -43,7 +43,7 @@ Enter
 Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials (Get-Credential)
 ```
 
-and you will be prompted for credentials. 
+and you will be prompted for credentials. Using this method you're required to have granted the PnP Management Shell multi-tenant application access rights. You can however register your own application using `Register-PnPAzureAzureApp` and then provide the `-ClientId` parameter with the client id/app id of your custom application.
 
 ## Authenticating with pre-stored credentials using the Windows Credential Manager (Windows only)
 
@@ -93,5 +93,10 @@ After you set up the vault and you added a credential
 Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials (Get-Secret -Name "yourlabel")
 ```
 
+## Authentication in case you have Multi-Factor authentication enabled
 
+```powershell
+Connect-PnPOnline -Url https://contoso.sharepoint.com -Interactive
+```
 
+This will show a popup window which will allow to authenticate and step through the multi-factor authentication flow.

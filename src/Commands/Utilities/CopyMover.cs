@@ -61,8 +61,8 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                     while (copyJob.JobState != 0)
                     {
-                        // sleep 5 seconds
-                        System.Threading.Thread.Sleep(1000);
+                        // sleep 1 second
+                        await Task.Delay(1000);
                         copyJob = await Utilities.REST.RestHelper.PostAsync<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", clientContext, copyJobInfo, false);
                     }
                     foreach (var log in copyJob.Logs)
@@ -90,8 +90,8 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     while (copyJob.JobState != 0)
                     {
-                        // sleep 5 seconds
-                        System.Threading.Thread.Sleep(1000);
+                        // sleep 1 second
+                        await Task.Delay(1000);
                         copyJob = await Utilities.REST.RestHelper.PostAsync<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", clientContext, copyJobInfo, false);
                     }
                 }

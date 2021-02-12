@@ -20,12 +20,6 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Credentials <CredentialP
  [-CreateDrive] [-DriveName <String>] [-TenantAdminUrl <String>] [<CommonParameters>]
 ```
 
-### Token
-```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Realm <String>] -ClientSecret <String> [-CreateDrive]
- [-DriveName <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [<CommonParameters>]
-```
-
 ### ACS (Legacy) App-Only using a clientId and clientSecret and an URL
 ```powershell
 Connect-PnPOnline [-Url] <String> -ClientId <String> -ClientSecret <String> [-ReturnConnection] [-Realm <String>]  [-CreateDrive] [-DriveName <String>]  [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
@@ -41,15 +35,13 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName
 
 ### App-Only with Azure Active Directory with a certificate file
 ```powershell
-Connect-PnPOnline [-Url] <String> -ClientId <String> -Tenant <String> -CertificatePath <String> [-CertificatePassword <SecureString>] [-ReturnConnection]  [-CreateDrive] [-DriveName <String>] 
- [-AzureEnvironment <AzureEnvironment>]
+Connect-PnPOnline [-Url] <String> -ClientId <String> -Tenant <String> -CertificatePath <String> [-CertificatePassword <SecureString>] [-ReturnConnection]  [-CreateDrive] [-DriveName <String>] [-AzureEnvironment <AzureEnvironment>]
  [-TenantAdminUrl <String>] [<CommonParameters>]
 ```
 
 ### App-Only with Azure Active Directory with a certificate file
 ```powershell
-Connect-PnPOnline [-Url] <String> -ClientId <String> -Tenant <String> -CertificateBase64Encoded <String> [-CertificatePassword <SecureString>] [-ReturnConnection]  [-CreateDrive] [-DriveName <String>] 
- [-AzureEnvironment <AzureEnvironment>]
+Connect-PnPOnline [-Url] <String> -ClientId <String> -Tenant <String> -CertificateBase64Encoded <String> [-CertificatePassword <SecureString>] [-ReturnConnection]  [-CreateDrive] [-DriveName <String>] [-AzureEnvironment <AzureEnvironment>]
  [-TenantAdminUrl <String>] [<CommonParameters>]
 ```
 
@@ -60,10 +52,9 @@ Connect-PnPOnline [-Url] <String> -ClientId <String> -Tenant <String> -Thumbprin
  [<CommonParameters>]
 ```
 
-### PnP Management Shell / DeviceLogin
+### DeviceLogin
 ```powershell
-Connect-PnPOnline [-Url] <String> -PnPManagementShell [-ReturnConnection] [-LaunchBrowser]
- [-AzureEnvironment <AzureEnvironment>] [<CommonParameters>]
+Connect-PnPOnline [-Url] <String> -DeviceLogin [-ClientId <String>] [-ReturnConnection] [-LaunchBrowser] [-AzureEnvironment <AzureEnvironment>] [<CommonParameters>]
 ```
 
 ### WebLogin for Multi-Factor authentication
@@ -84,6 +75,11 @@ Connect-PnPOnline -Url <String> -TransformationOnPrem [-CurrentCredential]
 ### Managed Identity for use with Azure Cloud Shell and Azure Functions
 ```powershell
 Connect-PnPOnline -ManagedIdentity
+```
+
+### Access Token
+```powershell
+Connect-PnPOnline -Url <String> -AccessToken <String> [-TenantAdminUrl <String>]
 ```
 
 ## DESCRIPTION
@@ -114,17 +110,17 @@ This will authenticate you to the site using Legacy ACS authentication
 
 ### EXAMPLE 4
 ```powershell
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -PnPManagementShell
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -DeviceLogin
 ```
 
-This will authenticate you using the PnP O365 Management Shell Multi-Tenant application. A browser window will have to be opened where you have to enter a code that is shown in your PowerShell window.
+This will authenticate you using the PnP Management Shell Multi-Tenant application. A browser window will have to be opened where you have to enter a code that is shown in your PowerShell window.
 
 ### EXAMPLE 5
 ```powershell
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -PnPManagementShell -LaunchBrowser
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -DeviceLogin -LaunchBrowser
 ```
 
-This will authenticate you using the PnP O365 Management Shell Multi-Tenant application. A browser window will automatically open and the code you need to enter will be automatically copied to your clipboard.
+This will authenticate you using the PnP Management Shell Multi-Tenant application. A browser window will automatically open and the code you need to enter will be automatically copied to your clipboard.
 
 ### EXAMPLE 6
 ```powershell
@@ -179,19 +175,26 @@ Get-PnPTeamsTeam
 
 Using this way of connecting only works with environments that support managed identies: Azure Functions and the Azure Cloud Shell. You cannot access SharePoint artifacts using this connection method: only the cmdlets that use the Microsoft Graph or Azure AD resources behind the scenes will work: Teams cmdlets, Flow cmdlets, Planner cmdlets and the Microsoft 365 Group cmdlets.
 
+### EXAMPLE 13
+```powershell
+Connect-PnPOnline -Url https://contoso.sharepoint.com -AccessToken $token
+```
+
+This method assumes you have acquired a valid OAuth2 access token from Azure AD with the correct audience and permissions set. Using this method PnP PowerShell will not acquire tokens dynamically and if the token expires (typically after 1 hour) cmdlets will fail to work using this method. 
+
 
 ## PARAMETERS
 
-### -AADDomain
-The AAD where the O365 app is registered. Eg.: contoso.com, or contoso.onmicrosoft.com.
+### -AccessToken
+Using this parameter you can provide your own access token. Notice that it is recommend to use one of the other connection methods as this will limits the offered functionality on PnP PowerShell. For instance if the token expires (typically after 1 hour) will not be able to acquire a new valid token, which the other connection methods do allow. You are fully responsible for providing your own valid token, for the correct audience, with the correct permissions scopes.
 
 ```yaml
 Type: String
-Parameter Sets: App-Only using a clientId and clientSecret and an AAD Domain, Microsoft Graph using Azure Active Directory
+Parameter Sets: Access Token
 
-Required: True
+Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -201,7 +204,7 @@ The Azure environment to use for authentication, the defaults to 'Production' wh
 
 ```yaml
 Type: AzureEnvironment
-Parameter Sets: Token, App-Only using a clientId and clientSecret and an URL, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, PnP Management Shell / DeviceLogin, Azure Active Directory using Scopes, PnP Management Shell to the Microsoft Graph
+Parameter Sets: App-Only using a clientId and clientSecret and an URL, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, DeviceLogin, Azure Active Directory using Scopes, PnP Management Shell to the Microsoft Graph
 Accepted values: Production, PPE, China, Germany, USGovernment
 
 Required: False
@@ -244,7 +247,7 @@ The Client ID of the Azure AD Application
 
 ```yaml
 Type: String
-Parameter Sets: App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates
+Parameter Sets: App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, DeviceLogin
 
 Required: True
 Position: Named
@@ -258,7 +261,7 @@ The client secret to use.
 
 ```yaml
 Type: String
-Parameter Sets: Token, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain
+Parameter Sets: App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain
 
 Required: True
 Position: Named
@@ -272,7 +275,7 @@ If you want to create a PSDrive connected to the URL
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Main, Token, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, Access Token
+Parameter Sets: Main, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, Access Token
 
 Required: False
 Position: Named
@@ -300,7 +303,7 @@ Name of the PSDrive to create (default: SPO)
 
 ```yaml
 Type: String
-Parameter Sets: Main, Token, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, Access Token
+Parameter Sets: Main, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, Access Token
 
 Required: False
 Position: Named
@@ -314,7 +317,7 @@ Launch a browser automatically and copy the code to enter to the clipboard
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: PnP Management Shell / DeviceLogin, PnP Management Shell to the Microsoft Graph
+Parameter Sets: DeviceLogin
 
 Required: False
 Position: Named
@@ -323,8 +326,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PnPManagementShell
-Log in using the PnP O365 Management Shell application. You will be asked to consent to:
+### -DeviceLogin
+Log in using the Device Code flow. By default it will use the PnP Management Shell multi-tenant Azure AD application registration. You will be asked to consent to:
 
 * Read and write managed metadata
 * Have full control of all site collections
@@ -337,8 +340,8 @@ Log in using the PnP O365 Management Shell application. You will be asked to con
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: PnP Management Shell / DeviceLogin
-Aliases: PnPO365ManagementShell
+Parameter Sets: DeviceLogin
+Aliases: PnPManagementShell
 
 Required: True
 Position: Named
@@ -352,7 +355,7 @@ Authentication realm. If not specified will be resolved from the url specified.
 
 ```yaml
 Type: String
-Parameter Sets: Token, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain
+Parameter Sets: App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain
 
 Required: False
 Position: Named
@@ -380,7 +383,7 @@ Returns the connection for use with the -Connection parameter on cmdlets.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Main, Token, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, Access Token, PnP Management Shell / DeviceLogin
+Parameter Sets: Main, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, Access Token, DeviceLogin
 
 Required: False
 Position: Named
@@ -408,7 +411,7 @@ The url to the Tenant Admin site. If not specified, the cmdlets will assume to c
 
 ```yaml
 Type: String
-Parameter Sets: Main, Token, App-Only using a clientId and clientSecret and an URL, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials
+Parameter Sets: Main, App-Only using a clientId and clientSecret and an URL, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials
 
 Required: False
 Position: Named
@@ -436,7 +439,7 @@ The Url of the site collection to connect to
 
 ```yaml
 Type: String
-Parameter Sets: Main, Token, App-Only using a clientId and clientSecret and an URL, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin
+Parameter Sets: Main, App-Only using a clientId and clientSecret and an URL, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, DeviceLogin
 
 Required: True
 Position: 0

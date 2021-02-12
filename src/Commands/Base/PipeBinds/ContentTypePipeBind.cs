@@ -160,7 +160,10 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             var id = GetId();
             if (!string.IsNullOrEmpty(id))
             {
-                return list.ContentTypes.GetById(id);
+                var ct = list.ContentTypes.GetById(id);
+                list.Context.Load(ct, c => c.Id, c => c.Name, c => c.Group, c => c.Description);
+                list.Context.ExecuteQueryRetry();
+                return ct;
             }
 
             return list.GetContentTypeByName(_idOrName);

@@ -48,11 +48,13 @@ namespace PnP.PowerShell.Commands.Graph
                     {
                         teamChannel.Description = null;
                     }
-                    
-                    if(teamChannel.MembershipType.ToLower() == "public" && ParameterSpecified(nameof(IsFavoriteByDefault)) && teamChannel.IsFavoriteByDefault.Value != IsFavoriteByDefault)
+
+                    if (teamChannel.MembershipType.ToLower() == "standard" && ParameterSpecified(nameof(IsFavoriteByDefault)) && teamChannel.IsFavoriteByDefault.Value != IsFavoriteByDefault)
                     {
                         teamChannel.IsFavoriteByDefault = IsFavoriteByDefault;
-                    } else {
+                    }
+                    else
+                    {
                         teamChannel.IsFavoriteByDefault = null;
                     }
                     teamChannel.MembershipType = null;

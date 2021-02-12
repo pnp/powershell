@@ -1,5 +1,6 @@
 ﻿using Microsoft.Graph;
 using Microsoft.SharePoint.Client;
+using PnP.Core.Services;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Properties;
@@ -21,6 +22,9 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public ClientContext ClientContext => Connection?.Context ?? PnPConnection.CurrentConnection.Context;
 
+        public PnPContext PnPContext => Connection?.PnPContext ?? PnPConnection.CurrentConnection.PnPContext;
+
+
         // do not remove '#!#99'
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")]
         public PnPConnection Connection = null;
@@ -36,7 +40,7 @@ namespace PnP.PowerShell.Commands.Base
                 var contextSettings = PnPConnection.CurrentConnection.Context.GetContextSettings();
                 if (contextSettings?.Type == Framework.Utilities.Context.ClientContextType.Cookie || contextSettings?.Type == Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
                 {
-                    var typeString = contextSettings?.Type == Framework.Utilities.Context.ClientContextType.Cookie ? "WebLogin/Cookie" : "Sharepoint ACS";
+                    var typeString = contextSettings?.Type == Framework.Utilities.Context.ClientContextType.Cookie ? "WebLogin/Cookie" : "ACS";
                     throw new PSInvalidOperationException($"This cmdlet does not work with a {typeString} based connection towards SharePoint.");
                 }
             }
@@ -51,7 +55,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (PnPConnection.CurrentConnection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
                 {
-                    return TokenHandler.GetManagedIdentityTokenAsync(this,HttpClient, "https://graph.microsoft.com/").GetAwaiter().GetResult();
+                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, "https://graph.microsoft.com/").GetAwaiter().GetResult();
                 }
                 else
                 {

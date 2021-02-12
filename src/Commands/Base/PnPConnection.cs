@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         internal const string PnPManagementShellClientId = "31359c7f-bd7e-475c-86db-fdb8c937548e";
         internal const string AzureManagementShellClientId = "1950a258-227b-4e31-a9cf-717495945fc2";
-        
+
         #endregion
 
         #region Properties
@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (pnpContext == null && Context != null)
                 {
-                    pnpContext = PnP.Framework.PnPCoreSdk.Instance.GetPnPContext(Context);
+                    pnpContext = PnP.Framework.PnPCoreSdk.Instance.GetPnPContext(Context, UserAgent);
                 }
                 return pnpContext;
             }
@@ -137,21 +137,26 @@ namespace PnP.PowerShell.Commands.Base
             UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             //if (context == null)
             //    throw new ArgumentNullException(nameof(context));
-            Context = context;
-            Context.ExecutingWebRequest += Context_ExecutingWebRequest;
-
+            if (context != null)
+            {
+                Context = context;
+                Context.ExecutingWebRequest += Context_ExecutingWebRequest;
+            }
             ConnectionType = connectionType;
             TenantAdminUrl = tenantAdminUrl;
 
             PSCredential = credential;
             PnPVersionTag = pnpVersionTag;
             ContextCache = new List<ClientContext> { context };
-            Url = (new Uri(url)).AbsoluteUri;
+            if (!string.IsNullOrEmpty(url))
+            {
+                Url = (new Uri(url)).AbsoluteUri;
+            }
             ConnectionMethod = ConnectionMethod.Credentials;
             ClientId = PnPManagementShellClientId;
         }
 
-        internal PnPConnection(string pnpVersionTag, InitializationType initializationType)
+        internal PnPConnection(string pnpVersionTag, InitializationType initializationType, string tenantAdminUrl)
         {
             InitializeTelemetry(null, initializationType);
             var coreAssembly = Assembly.GetExecutingAssembly();
@@ -160,7 +165,7 @@ namespace PnP.PowerShell.Commands.Base
             //    throw new ArgumentNullException(nameof(context));
             ConnectionType = ConnectionType.O365;
             PnPVersionTag = pnpVersionTag;
-
+            TenantAdminUrl = tenantAdminUrl;
             ConnectionMethod = ConnectionMethod.ManagedIdentity;
             ManagedIdentity = true;
         }

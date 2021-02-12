@@ -23,17 +23,18 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        internal static string AuthenticateDeviceLogin(string tenantId, CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment)
+        internal static string AuthenticateDeviceLogin(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment, string clientId = "1950a258-227b-4e31-a9cf-717495945fc2")
         {
             try
             {
-                using (var authManager = PnP.Framework.AuthenticationManager.CreateWithDeviceLogin(CLIENTID, (result) =>
+                using (var authManager = PnP.Framework.AuthenticationManager.CreateWithDeviceLogin(clientId, (result) =>
                 {
+
                     if (Utilities.OperatingSystem.IsWindows() && !noPopup)
                     {
                         ClipboardService.SetText(result.UserCode);
                         messageWriter.WriteWarning($"Please login.\n\nWe opened a browser and navigated to {result.VerificationUrl}\n\nEnter code: {result.UserCode} (we copied this code to your clipboard)\n\nNOTICE: close the popup after you authenticated successfully to continue the process.");
-                        BrowserHelper.GetWebBrowserPopup(result.VerificationUrl, "Please login");
+                        BrowserHelper.GetWebBrowserPopup(result.VerificationUrl, "Please login", cancellationTokenSource: cancellationTokenSource, cancelOnClose: false);
                     }
                     else
                     {
@@ -42,6 +43,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     return Task.FromResult(0);
                 }, azureEnvironment))
                 {
+                    authManager.ClearTokenCache();
                     try
                     {
                         return authManager.GetAccessTokenAsync(new string[] { "https://graph.microsoft.com/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
@@ -59,13 +61,8 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        internal static string AuthenticateInteractive(string tenantId, CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment)
+        internal static string AuthenticateInteractive(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment)
         {
-            if (string.IsNullOrEmpty(tenantId))
-            {
-                throw new ArgumentException($"{nameof(tenantId)} is required");
-            }
-
             try
             {
                 using (var authManager = PnP.Framework.AuthenticationManager.CreateWithInteractiveLogin(CLIENTID, (url, port) =>
@@ -75,6 +72,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 successMessageHtml: $"You successfully authenticated with PnP PowerShell. Feel free to close this {(noPopup ? "tab" : "window")}.",
                 failureMessageHtml: $"You did not authenticate with PnP PowerShell. Feel free to close this browser {(noPopup ? "tab" : "window")}."))
                 {
+                    authManager.ClearTokenCache();
                     try
                     {
                         return authManager.GetAccessTokenAsync(new string[] { "https://graph.microsoft.com/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
