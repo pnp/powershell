@@ -303,7 +303,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             {
                 // throttled
                 var retryAfter = response.Headers.RetryAfter;
-                Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
+                await Task.Delay(retryAfter.Delta.Value.Seconds * 1000);
                 response = await httpClient.SendAsync(CloneMessage(message));
             }
             if (response.IsSuccessStatusCode)
@@ -328,7 +328,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             {
                 // throttled
                 var retryAfter = response.Headers.RetryAfter;
-                Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
+                await Task.Delay(retryAfter.Delta.Value.Seconds * 1000);
                 response = await httpClient.SendAsync(CloneMessage(message));
             }
             return response;

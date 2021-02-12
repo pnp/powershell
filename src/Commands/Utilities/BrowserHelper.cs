@@ -318,7 +318,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 if (OperatingSystem.IsWindows() && usePopup)
                 {
-                    BrowserHelper.GetWebBrowserPopup(url, "Please login", new[] { ($"http://localhost:{port}/?code=", BrowserHelper.UrlMatchType.StartsWith) }, noThreadJoin: true, cancellationTokenSource: cancellationTokenSource);
+                    BrowserHelper.GetWebBrowserPopup(url, "Please login", new[] { ($"http://localhost:{port}/?code=", BrowserHelper.UrlMatchType.StartsWith) }, noThreadJoin: true, cancellationTokenSource: cancellationTokenSource, cancelOnClose: true);
                 }
                 else
                 {
