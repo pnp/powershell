@@ -8,34 +8,27 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAadGroup")]
+    [Cmdlet(VerbsCommon.Get, "PnPAadGroupOwners")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
-    public class GetAadGroup : PnPGraphCmdlet
+    public class GetAadGroupOwners : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public AadGroupPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
             GroupEntity group = null;
-            List<GroupEntity> groups = null;
 
             if (Identity != null)
             {
                 group = Identity.GetGroup(AccessToken);
             }
-            else
-            {
-                groups = GroupsUtility.GetGroups(AccessToken);
-            }
 
             if (group != null)
             {
-                WriteObject(group);
-            }
-            else if (groups != null)
-            {
-                WriteObject(groups, true);
+                // Get Owners of the group
+                List<GroupUser> owners = GroupsUtility.GetGroupOwners(group, AccessToken);
+                WriteObject(owners);
             }
         }
     }

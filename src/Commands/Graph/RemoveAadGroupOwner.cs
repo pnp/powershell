@@ -3,39 +3,32 @@ using PnP.Framework.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System.Collections.Generic;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAadGroup")]
-    [RequiredMinimalApiPermissions("Group.Read.All")]
-    public class GetAadGroup : PnPGraphCmdlet
+    [Cmdlet(VerbsCommon.Remove, "PnPAadGroupOwner")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    public class RemoveAadGroupOwner : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public AadGroupPipeBind Identity;
+
+        [Parameter(Mandatory = true)]
+        public string[] Users;
 
         protected override void ExecuteCmdlet()
         {
             GroupEntity group = null;
-            List<GroupEntity> groups = null;
 
             if (Identity != null)
             {
                 group = Identity.GetGroup(AccessToken);
             }
-            else
-            {
-                groups = GroupsUtility.GetGroups(AccessToken);
-            }
 
             if (group != null)
             {
-                WriteObject(group);
-            }
-            else if (groups != null)
-            {
-                WriteObject(groups, true);
+                GroupsUtility.RemoveGroupOwners(group.GroupId, Users, AccessToken);
             }
         }
     }

@@ -10,7 +10,6 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365GroupMembers")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
-    [Alias("Get-PnPAadGroupMembers")]
     public class GetMicrosoft365GroupMembers : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
