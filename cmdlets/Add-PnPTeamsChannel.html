@@ -91,7 +91,7 @@
 <p>Adds a channel to an existing Microsoft Teams instance.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="public-channel">Public channel</h3>
-<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; -DisplayName &lt;String&gt; [-Description &lt;String&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; -DisplayName &lt;String&gt; [-Description &lt;String&gt;] [-IsFavoriteByDefault &lt;Boolean&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="private-channel">Private channel</h3>
 <pre><code class="lang-powershell">Add-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; -DisplayName &lt;String&gt; -OwnerUPN &lt;String&gt; [-Description &lt;String&gt;] [-Private] [&lt;CommonParameters&gt;]
@@ -99,9 +99,9 @@
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team 4efdf392-8225-4763-9e7f-4edeb7f721aa -DisplayName &quot;My Channel&quot;
+<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team 4efdf392-8225-4763-9e7f-4edeb7f721aa -DisplayName &quot;My Channel&quot; -IsFavoriteByDefault $true
 </code></pre>
-<p>Adds a new channel to the specified Teams instance</p>
+<p>Adds a new channel to the specified Teams instance and marks the channel as by default visible for members.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Add-PnPTeamsChannel -Team MyTeam -DisplayName &quot;My Channel&quot;
 </code></pre>
@@ -128,6 +128,17 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-isfavoritebydefault">-IsFavoriteByDefault</h3>
+<p>Allows you to specify if the channel is by default visible for members</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Public channel
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

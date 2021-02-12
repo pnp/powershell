@@ -91,11 +91,11 @@
 <p>Retrieve site information.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-site">By Site</h3>
-<pre><code class="lang-powershell">Get-PnPTenantSite [-Url] &lt;string&gt; [-Detailed] [-DisableSharingForNonOwnersStatus] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Get-PnPTenantSite [-Identity] &lt;string&gt; [-Detailed] [-DisableSharingForNonOwnersStatus] [-Connection &lt;PnPConnection&gt;]
     [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="all-sites">All Sites</h3>
-<pre><code class="lang-powershell">Get-PnPTenantSite [-Template &lt;string&gt;] [-Detailed] [-IncludeOneDriveSites] [-Filter &lt;string&gt;] [-Connection
+<pre><code class="lang-powershell">Get-PnPTenantSite [-Template &lt;string&gt;] [-Detailed] [-IncludeOneDriveSites] [-GroupIdDefined &lt;Boolean&gt;] [-Filter &lt;string&gt;] [-Connection
     &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -106,7 +106,7 @@
 </code></pre>
 <p>Returns all site collections</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPTenantSite -Url &quot;http://tenant.sharepoint.com/sites/projects&quot;
+<pre><code class="lang-powershell">Get-PnPTenantSite -Identity &quot;http://tenant.sharepoint.com/sites/projects&quot;
 </code></pre>
 <p>Returns information about the project site</p>
 <h3 id="example-3">EXAMPLE 3</h3>
@@ -129,6 +129,10 @@
 <pre><code class="lang-powershell">Get-PnPTenantSite -Filter &quot;Url -like 'sales'&quot;
 </code></pre>
 <p>Returns all sites including 'sales' in the url</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Get-PnPTenantSite -GroupIdDefined $true
+</code></pre>
+<p>Returns all sites which have an underlying Microsoft 365 Group</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -174,6 +178,17 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-groupiddefined">-GroupIdDefined</h3>
+<p>If specified allows you to filter on sites that have an underlying Microsoft 365 group defined.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: All sites
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-includeonedrivesites">-IncludeOneDriveSites</h3>
 <p>By default, the OneDrives are not returned. This switch includes all OneDrives.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
@@ -196,11 +211,11 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-url">-Url</h3>
+<h3 id="-identity">-Identity</h3>
 <p>The URL of the site</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: By Site
-Aliases: Identity
+Aliases: Url
 
 Required: False
 Position: 0

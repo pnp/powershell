@@ -92,12 +92,11 @@
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">New-PnPTenantSite -Title &lt;String&gt; -Url &lt;String&gt; -Owner &lt;String&gt; [-Lcid &lt;UInt32&gt;] [-Template &lt;String&gt;]
  -TimeZone &lt;Int32&gt; [-ResourceQuota &lt;Double&gt;] [-ResourceQuotaWarningLevel &lt;Double&gt;] [-StorageQuota &lt;Int64&gt;]
- [-StorageQuotaWarningLevel &lt;Int64&gt;] [-RemoveDeletedSite] [-Wait] [-Force] [-Connection &lt;PnPConnection&gt;]
+ [-StorageQuotaWarningLevel &lt;Int64&gt;] [-RemoveDeletedSite] [-Wait] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>The New-PnPTenantSite cmdlet creates a new site collection for the current company. However, creating a new SharePoint
-Online site collection fails if a deleted site with the same URL exists in the Recycle Bin. If you want to use this command for an on-premises farm, please refer to <a href="http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx">http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx</a></p>
+<p>The New-PnPTenantSite cmdlet creates a new site collection for the current company. However, creating a new SharePoint Online site collection fails if a deleted site with the same URL exists in the Recycle Bin</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">New-PnPTenantSite -Title Contoso -Url &quot;https://tenant.sharepoint.com/sites/contoso&quot; -Owner user@example.org -TimeZone 4 -Template STS#0
@@ -111,17 +110,6 @@ Online site collection fails if a deleted site with the same URL exists in the R
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-force">-Force</h3>
-<p>Do not ask for confirmation.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

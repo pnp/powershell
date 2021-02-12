@@ -91,7 +91,7 @@
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This command allows adding one to many users as site collection administrators to the site collection in the current context. It does not replace or remove existing site collection administrators.</p>
+<p>This command allows adding one to many users as site collection administrators to the site collection in the current context. It does not replace or remove existing site collection administrators. You must be a Site Collection Admin to run this command. Use <code>Set-PnPTenantSite -Owners</code> if you are not an Admin for the site but have the SharePoint admin role.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPSiteCollectionAdmin -Owners &quot;user@contoso.onmicrosoft.com&quot;
@@ -102,7 +102,7 @@
 </code></pre>
 <p>This will add user1@contoso.onmicrosoft.com and user2@contoso.onmicrosoft.com as additional site collection owners to the site collection in the current context</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPUser | ? Title -Like &quot;*Doe&quot; | Add-PnPSiteCollectionAdmin
+<pre><code class="lang-powershell">Get-PnPUser | Where-Object Title -Like &quot;*Doe&quot; | Add-PnPSiteCollectionAdmin
 </code></pre>
 <p>This will add all users with their title ending with &quot;Doe&quot; as additional site collection owners to the site collection in the current context</p>
 <h2 id="parameters">PARAMETERS</h2>

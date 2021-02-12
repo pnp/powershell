@@ -92,6 +92,7 @@
                                        [-Username &lt;String&gt;]
                                        [-Password &lt;SecureString&gt;]
                                        [-DeviceLogin]
+                                       [-Interactive]
                                        [-CommonName &lt;String&gt;]
                                        [-OutPath &lt;String&gt;]
                                        [-Store &lt;StoreLocation&gt;]
@@ -106,18 +107,20 @@
                                        [-NoPopup]
 </code></pre>
 <h3 id="existing-certificate">Existing Certificate</h3>
-<pre><code class="lang-powershell">Register-PnPAzureADApp -CertificatePath &lt;String&gt;
-                                       -ApplicationName &lt;String&gt;
-                                       -Tenant &lt;String&gt;
-                                       [-Username &lt;String&gt;]
-                                       [-Password &lt;SecureString&gt;]
-                                       [-DeviceLogin]
-                                       [-Scopes &lt;String[]&gt;]
-                                       [-CertificatePassword &lt;SecureString&gt;]
-                                       [-NoPopup]
+<pre><code class="lang-powershell">Register-PnPAzureADApp  -CertificatePath &lt;String&gt;
+                        -ApplicationName &lt;String&gt;
+                        -Tenant &lt;String&gt;
+                        [-Username &lt;String&gt;]
+                        [-Password &lt;SecureString&gt;]
+                        [-DeviceLogin]
+                        [-Interactive]
+                        [-Scopes &lt;String[]&gt;]
+                        [-CertificatePassword &lt;SecureString&gt;]
+                        [-NoPopup]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Registers an Azure AD App and optionally creates a new self-signed certificate to use with the application registration. You can login either with username/password or you can use the -DeviceLogin option if your tenant has been configured for Multi-Factor Authentication.</p>
+<p>Note: if you want to use the newly created app to authentication with username/password you will have to make a modification to the app. Navigate to the application registration in your Azure AD, select the Authentication section, and set <code>Allow public client flows</code> to <code>yes</code>. Alternatively, navigate to the <code>Manifest</code> section and set <code>allowPublicClient</code> to <code>true</code>.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="------------------example-1------------------">------------------EXAMPLE 1------------------</h3>
 <pre><code class="lang-powershell">Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -Username &quot;yourname@domain.com&quot; -Password (Read-Host -AsSecureString -Prompt &quot;Enter Password&quot;)
@@ -139,6 +142,10 @@
 <pre><code class="lang-powershell">Register-PnPAzureADApp -DeviceLogin -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String &quot;password&quot; -AsPlainText -Force) 
 </code></pre>
 <p>Creates a new Azure AD Application registration and asks you to authenticate using device login methods, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All</p>
+<h3 id="------------------example-6------------------">------------------EXAMPLE 6------------------</h3>
+<pre><code class="lang-powershell">Register-PnPAzureADApp -Interactive -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String &quot;password&quot; -AsPlainText -Force) 
+</code></pre>
+<p>Creates a new Azure AD Application registration and asks you to authenticate using username and password, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-username">-Username</h3>
 <p>The username to use when logging into the Microsoft Graph. Notice that this user account needs to have write access to the Azure AD</p>

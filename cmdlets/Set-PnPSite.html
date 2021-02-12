@@ -91,7 +91,7 @@
  [-Sharing &lt;SharingCapabilities&gt;] [-StorageMaximumLevel &lt;Int64&gt;] [-StorageWarningLevel &lt;Int64&gt;]
  [-AllowSelfServiceUpgrade] [-NoScriptSite] [-Owners &lt;System.Collections.Generic.List`1[System.String]&gt;]
  [-CommentsOnSitePagesDisabled] [-DefaultLinkPermission &lt;SharingPermissionType&gt;]
- [-DefaultSharingLinkType &lt;SharingLinkType&gt;] [-DisableAppViews &lt;AppViewsPolicy&gt;]
+ [-DefaultSharingLinkType &lt;SharingLinkType&gt;] [-DefaultLinkToExistingAccess &lt;Boolean&gt;] [-DefaultLinkToExistingAccessReset] [-DisableAppViews &lt;AppViewsPolicy&gt;]
  [-DisableCompanyWideSharingLinks &lt;CompanyWideSharingLinksPolicy&gt;] [-DisableSharingForNonOwners]
  [-LocaleId &lt;UInt32&gt;] [-RestrictedToGeo &lt;RestrictedToRegion&gt;] [-SocialBarOnSitePagesDisabled]
  [-AnonymousLinkExpirationInDays &lt;Int32&gt;] [-OverrideTenantAnonymousLinkExpirationPolicy]
@@ -200,6 +200,16 @@ Accepted values: None, Direct, Internal, AnonymousAccess
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-defaultlinktoexistingaccess">-DefaultLinkToExistingAccess</h3>
+<p>When set to $true, the DefaultSharingLinkType will be overriden and the default sharing link will be All People with Existing Access link (which does not modify permissions). When set to $false (the default), the default sharing link type is controlled by the DefaultSharingLinkType parameter</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Properties
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

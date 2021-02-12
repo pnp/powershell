@@ -86,16 +86,30 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Registers access to the tenant for the PnP Management Shell Multi-Tenant Azure AD Application</p>
 <h2 id="syntax">SYNTAX</h2>
+<h3 id="main">Main</h3>
 <pre><code class="lang-powershell">Register-PnPManagementShellAccess [-AzureEnvironment &lt;AzureEnvironment&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
+<h3 id="show-consent-url">Show Consent Url</h3>
+<pre><code class="lang-powershell">Register-PnPManagementShellAccess -ShowConsentUrl [-AzureEnvironment]
+</code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet grants access to the tenant for the PnP Management Shell Multi-Tenant Azure AD Application which simplifies the use of OAuth based access for PnP PowerShell when using credentials to authenticate.</p>
+<p>This cmdlet grants access to the tenant for the PnP Management Shell Multi-Tenant Azure AD Application which simplifies the use of OAuth based access for PnP PowerShell when using credentials to authenticate. If you are not an administrator that can consent Azure AD Applications, use the -ShowConsentUrl option. It will ask you to log in and provides you with an URL you can share with a person with appropriate access rights to provide consent for the organization.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Register-PnPManagementShellAccess
 </code></pre>
 <p>Launches the consent flow to grant the PnP Management Shell Azure AD Application delegate access to the tenant.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-showconsenturl">-ShowConsentUrl</h3>
+<p>If specified you will be asked to authenticate to acquire the tenant id. An url that can be used to provide consent will be returned.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Show Consent Url
+
+Required: False
+Position: Named
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-azureenvironment">-AzureEnvironment</h3>
 <p>The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.</p>
 <pre><code class="lang-yaml">Type: AzureEnvironment
