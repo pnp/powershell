@@ -3,6 +3,7 @@ using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections.Generic;
+using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Events
 {
@@ -12,10 +13,10 @@ namespace PnP.PowerShell.Commands.Events
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public EventReceiverPipeBind Identity;
 
-        [Parameter(Mandatory = false, ParameterSetName="List")]
+        [Parameter(Mandatory = true, ParameterSetName="List")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = "Scope")]
         public SwitchParameter Site;
 
         [Parameter(Mandatory = false)]
@@ -59,65 +60,67 @@ namespace PnP.PowerShell.Commands.Events
                     ClientContext.ExecuteQueryRetry();
                 }
             }
-            else if (Site)
-            {
-               var site = ClientContext.Site;
-               if (ParameterSpecified(nameof(Identity)))
-                {
-                    var eventReceiver = Identity.GetEventReceiverOnSite(site);
-                    if (eventReceiver != null)
-                    {
-                        if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
-                        {
-                            eventReceiversToDelete.Add(eventReceiver);
-                        }
-                    }
-                }
-                else
-                {
-                    var eventReceivers = site.EventReceivers;
-                    site.Context.Load(eventReceivers);
-                    site.Context.ExecuteQueryRetry();
-
-                    foreach (var eventReceiver in eventReceivers)
-                    {
-                        if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
-                        {
-                            eventReceiversToDelete.Add(eventReceiver);
-                        }
-                    }
-                    site.Context.ExecuteQueryRetry();
-                }
-            }
             else
             {
-                if (ParameterSpecified(nameof(Identity)))
+                if (Site)
                 {
-                    var eventReceiver = Identity.GetEventReceiverOnWeb(CurrentWeb);
-                    if (eventReceiver != null)
+                    var site = ClientContext.Site;
+                    if (ParameterSpecified(nameof(Identity)))
                     {
-                        if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
+                        var eventReceiver = Identity.GetEventReceiverOnSite(site);
+                        if (eventReceiver != null)
                         {
-                            eventReceiversToDelete.Add(eventReceiver);
+                            if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
+                            {
+                                eventReceiversToDelete.Add(eventReceiver);
+                            }
                         }
+                    }
+                    else
+                    {
+                        var eventReceivers = site.EventReceivers;
+                        site.Context.Load(eventReceivers);
+                        site.Context.ExecuteQueryRetry();
+
+                        foreach (var eventReceiver in eventReceivers)
+                        {
+                            if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
+                            {
+                                eventReceiversToDelete.Add(eventReceiver);
+                            }
+                        }
+                        site.Context.ExecuteQueryRetry();
                     }
                 }
                 else
                 {
-                    var eventReceivers = CurrentWeb.EventReceivers;
-                    CurrentWeb.Context.Load(eventReceivers);
-                    CurrentWeb.Context.ExecuteQueryRetry();
-
-                    foreach (var eventReceiver in eventReceivers)
+                    if (ParameterSpecified(nameof(Identity)))
                     {
-                        if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
+                        var eventReceiver = Identity.GetEventReceiverOnWeb(CurrentWeb);
+                        if (eventReceiver != null)
                         {
-                            eventReceiversToDelete.Add(eventReceiver);
+                            if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
+                            {
+                                eventReceiversToDelete.Add(eventReceiver);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var eventReceivers = CurrentWeb.EventReceivers;
+                        CurrentWeb.Context.Load(eventReceivers);
+                        CurrentWeb.Context.ExecuteQueryRetry();
+
+                        foreach (var eventReceiver in eventReceivers)
+                        {
+                            if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
+                            {
+                                eventReceiversToDelete.Add(eventReceiver);
+                            }
                         }
                     }
                 }
             }
-
             if (eventReceiversToDelete.Count == 0)
             {
                 WriteVerbose("No Event Receivers to remove");

@@ -2,13 +2,14 @@
 using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Events
 {
     [Cmdlet(VerbsCommon.Add, "PnPEventReceiver")]
     public class AddEventReceiver : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = true, ParameterSetName = "List")]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true)]
@@ -25,30 +26,41 @@ namespace PnP.PowerShell.Commands.Events
 
         [Parameter(Mandatory = false)]
         public int SequenceNumber = 1000;
-        
-        [Parameter(Mandatory = false)]
-        public SwitchParameter Site;
-        
+
+        [Parameter(Mandatory = false, ParameterSetName = "Scope")]
+        public SwitchParameter Site;        
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSpecified(nameof(List)))
+            if (ParameterSetName == "List")
             {
-                var list = List.GetList(CurrentWeb);
-                WriteObject(list.AddRemoteEventReceiver(Name, Url, EventReceiverType, Synchronization, SequenceNumber, Force));
-            }
-            else if (Site)
-            {
-                var site = ClientContext.Site;
-                if(site!=null){
-                    WriteObject(site.AddRemoteEventReceiver(Name, Url, EventReceiverType, Synchronization, SequenceNumber, Force));
+                if (ParameterSpecified(nameof(List)))
+                {
+                    var list = List.GetList(CurrentWeb);
+                    WriteObject(list.AddRemoteEventReceiver(Name, Url, EventReceiverType, Synchronization, SequenceNumber, Force));
+                }
+                else
+                {
+                    WriteWarning("Provide a list");
                 }
             }
             else
             {
-                WriteObject(CurrentWeb.AddRemoteEventReceiver(Name, Url, EventReceiverType, Synchronization, SequenceNumber, Force));
+                if (Site)
+                {
+                    var site = ClientContext.Site;
+                    if (site != null)
+                    {
+                        WriteObject(site.AddRemoteEventReceiver(Name, Url, EventReceiverType, Synchronization, SequenceNumber, Force));
+                    }
+                }
+                else
+                {
+                    WriteObject(CurrentWeb.AddRemoteEventReceiver(Name, Url, EventReceiverType, Synchronization, SequenceNumber, Force));
+                }
             }
         }
     }
