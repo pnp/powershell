@@ -3,6 +3,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Events
 {
@@ -10,15 +11,14 @@ namespace PnP.PowerShell.Commands.Events
   
     public class GetEventReceiver : PnPWebRetrievalsCmdlet<EventReceiverDefinition>
     {
-        [Parameter(Mandatory = false, ParameterSetName = "List")]
+        [Parameter(Mandatory = true, ParameterSetName = "List")]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public EventReceiverPipeBind Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = "Scope")]
         public SwitchParameter Site;
-        
         protected override void ExecuteCmdlet()
         {
             if (ParameterSetName == "List")
@@ -38,35 +38,38 @@ namespace PnP.PowerShell.Commands.Events
                         WriteObject(Identity.GetEventReceiverOnList(list));
                     }
                 }
-            }
-            else if (Site)
-            {
-                var site = ClientContext.Site;
-                if (site != null)
-                {
-                    if (!ParameterSpecified(nameof(Identity)))
-                    {
-                        var query = ClientContext.LoadQuery(site.EventReceivers);
-                        ClientContext.ExecuteQueryRetry();
-                        WriteObject(query, true);
-                    } 
-                    else
-                    {
-                        WriteObject(Identity.GetEventReceiverOnSite(site));
-                    }                 
-                }
-            }
+            }            
             else
             {
-                if (!ParameterSpecified(nameof(Identity)))
+                if (Site)
                 {
-                    var query = ClientContext.LoadQuery(CurrentWeb.EventReceivers);
-                    ClientContext.ExecuteQueryRetry();
-                    WriteObject(query, true);
+                    var site = ClientContext.Site;
+                    if (site != null)
+                    {
+                        if (!ParameterSpecified(nameof(Identity)))
+                        {
+                            var query = ClientContext.LoadQuery(site.EventReceivers);
+                            ClientContext.ExecuteQueryRetry();
+                            WriteObject(query, true);
+                        }
+                        else
+                        {
+                            WriteObject(Identity.GetEventReceiverOnSite(site));
+                        }
+                    }
                 }
                 else
-                {
-                    WriteObject(Identity.GetEventReceiverOnWeb(CurrentWeb));
+                {   
+                    if (!ParameterSpecified(nameof(Identity)))
+                    {
+                        var query = ClientContext.LoadQuery(CurrentWeb.EventReceivers);
+                        ClientContext.ExecuteQueryRetry();
+                        WriteObject(query, true);
+                    }
+                    else
+                    {
+                        WriteObject(Identity.GetEventReceiverOnWeb(CurrentWeb));
+                    }
                 }
             }
         }
