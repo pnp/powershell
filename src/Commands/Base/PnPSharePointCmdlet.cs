@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Management.Automation;
 using System.Net.Http;
-using System.Reflection;
 using System.Threading;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using PnP.Core.Services;
-using PnP.Framework;
-using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Model;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
-
+using TokenHandler = PnP.PowerShell.Commands.Base.TokenHandler;
 
 namespace PnP.PowerShell.Commands
 {
@@ -120,30 +118,50 @@ namespace PnP.PowerShell.Commands
             }
         }
 
-        protected string GetGraphAccessToken(string[] scopes)
+        public string GraphAccessToken
         {
-            if (PnPConnection.CurrentConnection != null)
+            get
             {
-                if (PnPConnection.CurrentConnection.Context != null)
+                if (PnPConnection.CurrentConnection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
                 {
-                    var settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(PnPConnection.CurrentConnection.Context);
-
-                    if (settings != null)
+                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, "https://graph.microsoft.com/").GetAwaiter().GetResult();
+                }
+                else
+                {
+                    if (PnPConnection.CurrentConnection?.Context != null)
                     {
-                        var authManager = settings.AuthenticationManager;
-                        if (authManager != null)
-                        {
-                            if (settings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
-                            {
-                                scopes = new[] { "https://graph.microsoft.com/.default" };
-                            }
-                            return authManager.GetAccessTokenAsync(scopes).GetAwaiter().GetResult();
-                        }
+                        return TokenHandler.GetAccessToken(GetType(), "https://graph.microsoft.com/.default");
                     }
                 }
+
+                return null;
             }
-            return null;
         }
+
+        // protected string GetGraphAccessToken(string[] scopes)
+        // {
+        //     if (PnPConnection.CurrentConnection != null)
+        //     {
+        //         if (PnPConnection.CurrentConnection.Context != null)
+        //         {
+        //             var settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(PnPConnection.CurrentConnection.Context);
+
+        //             if (settings != null)
+        //             {
+        //                 var authManager = settings.AuthenticationManager;
+        //                 if (authManager != null)
+        //                 {
+        //                     if (settings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
+        //                     {
+        //                         scopes = new[] { "https://graph.microsoft.com/.default" };
+        //                     }
+        //                     return authManager.GetAccessTokenAsync(scopes).GetAwaiter().GetResult();
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     return null;
+        // }
 
         protected void PollOperation(SpoOperation spoOperation)
         {

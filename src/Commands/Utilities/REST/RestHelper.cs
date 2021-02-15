@@ -140,7 +140,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return await SendMessageAsync(httpClient, message);
         }
 
-         public static async Task<string> GetAsync(HttpClient httpClient, string url, ClientContext clientContext, string accept = "application/json")
+        public static async Task<string> GetAsync(HttpClient httpClient, string url, ClientContext clientContext, string accept = "application/json")
         {
             var message = GetMessage(url, HttpMethod.Get, clientContext, accept);
             return await SendMessageAsync(httpClient, message);
@@ -168,7 +168,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return default(T);
         }
 
-         public static async Task<T> GetAsync<T>(HttpClient httpClient, string url, ClientContext clientContext, bool camlCasePolicy = true)
+        public static async Task<T> GetAsync<T>(HttpClient httpClient, string url, ClientContext clientContext, bool camlCasePolicy = true)
         {
             var stringContent = await GetAsync(httpClient, url, clientContext);
             if (stringContent != null)
@@ -260,6 +260,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return default(T);
         }
 
+
+
         public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, ClientContext clientContext, object payload, bool camlCasePolicy = true)
         {
             var stringContent = await PostAsync(httpClient, url, clientContext, payload);
@@ -283,6 +285,54 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         }
 
 
+        #endregion
+
+        #region PATCH
+        public static async Task<T> PatchAsync<T>(HttpClient httpClient, string url, string accessToken, object payload, bool camlCasePolicy = true)
+        {
+            var stringContent = await PatchAsync(httpClient, url, accessToken, payload);
+            if (stringContent != null)
+            {
+                var options = new JsonSerializerOptions() { IgnoreNullValues = true };
+                if (camlCasePolicy)
+                {
+                    options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                }
+                try
+                {
+                    return JsonSerializer.Deserialize<T>(stringContent, options);
+                }
+                catch (Exception)
+                {
+                    return default(T);
+                }
+            }
+            return default(T);
+        }
+
+        public static async Task<string> PatchAsync(HttpClient httpClient, string url, string accessToken, object payload, string accept = "application/json")
+        {
+            HttpRequestMessage message = null;
+            if (payload != null)
+            {
+                var content = new StringContent(JsonSerializer.Serialize(payload, new JsonSerializerOptions() { IgnoreNullValues = true }));
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+#if NETFRAMEWORK
+                message= GetMessage(url, new HttpMethod("PATCH"), accessToken, accept, content);
+#else
+                message = GetMessage(url, HttpMethod.Patch, accessToken, accept, content);
+#endif
+            }
+            else
+            {
+#if NETFRAMEWORK
+                message = GetMessage(url, new HttpMethod("PATCH"), accessToken, accept);
+#else
+                message = GetMessage(url, HttpMethod.Patch, accessToken, accept);
+#endif
+            }
+            return await SendMessageAsync(httpClient, message);
+        }
         #endregion
 
         #region PUT

@@ -28,10 +28,12 @@ namespace PnP.PowerShell.Commands.Base
 
         public Uri BaseUri => _baseUri;
 
+        internal ClientContext SiteContext;
+
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-
+            
             if (PnPConnection.CurrentConnection == null)
             {
                 throw new InvalidOperationException(Resources.NoSharePointConnection);
@@ -40,7 +42,8 @@ namespace PnP.PowerShell.Commands.Base
             {
                 throw new InvalidOperationException(Resources.NoSharePointConnection);
             }
-
+            SiteContext = PnPConnection.CurrentConnection.Context;
+            
             PnPConnection.CurrentConnection.CacheContext();
 
             if (PnPConnection.CurrentConnection.TenantAdminUrl != null &&

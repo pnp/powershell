@@ -231,6 +231,18 @@ namespace PnP.PowerShell.Commands.Model
                 Id = "63dd7cd9-b489-4adf-a28c-ac38b9a0f962",
                 Identifier = "MSGraph.User.Invite.All"
             });
+            scopes.Add(new PermissionScope()
+            {
+                resourceAppId = ResourceAppId_Graph,
+                Id = "883ea226-0bf2-4a8f-9f9d-92c9162a727d",
+                Identifier = "MSGraph.Sites.Selected"
+            });
+            scopes.Add(new PermissionScope()
+            {
+                resourceAppId = ResourceAppId_Graph,
+                Id = "a82116e5-55eb-4c41-a434-62fe8a61c773",
+                Identifier = "MSGraph.Sites.FullControl.All"
+            });
             #endregion
             #region SPO
             scopes.Add(new PermissionScope()
