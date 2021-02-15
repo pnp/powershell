@@ -39,10 +39,10 @@ Restores all the items in the first and second stage recycle bins to their origi
 
 ### EXAMPLE 3
 ```powershell
-Restore-PnPRecycleBinItem -All -RowLimit 10000
+Get-PnPRecycleBinItem -RowLimit 10000 | Restore-PnPRecycleBinItem -Force
 ```
 
-Permanently restores up to 10,000 items in the recycle bin
+Permanently restores up to 10,000 items in the recycle bin without asking for confirmation.
 
 ## PARAMETERS
 
