@@ -55,9 +55,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-Clear-PnPRecycleBinItem
-Clear-PnPTenantRecycleBinItem
-Get-PnPRecycleBinItem
-Move-PnPRecycleBinItem
-Restore-PnPRecycleBinItem
-Restore-PnPTenantRecycleBinItem
+
