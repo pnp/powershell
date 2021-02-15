@@ -402,8 +402,11 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (Utilities.OperatingSystem.IsWindows())
             {
-                var privateKey = (RSACryptoServiceProvider)certificate.PrivateKey;
-                string uniqueKeyContainerName = privateKey.CspKeyContainerInfo.UniqueKeyContainerName;
+                var privateKey = (certificate.PrivateKey as RSACng)?.Key;
+                if (privateKey == null)
+                    return;
+
+                string uniqueKeyContainerName = privateKey.UniqueName;
                 certificate.Reset();
 
                 var programDataPath = Environment.GetEnvironmentVariable("ProgramData");
