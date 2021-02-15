@@ -19,7 +19,7 @@ Set-PnPStructuralNavigationCacheSiteState -IsEnabled <Boolean> [-SiteUrl <String
 ```
 
 ## DESCRIPTION
-The Set-PnPStructuralNavigationCacheSiteState cmdlet can be used to enable or disable caching for all webs in a site collection. If the SiteUrl parameter has not been specified the currently connected to site will be used. [Learn more](https://support.office.com/article/structural-navigation-and-performance-f163053f-8eca-4b9c-b973-36b395093b43). 
+The Set-PnPStructuralNavigationCacheSiteState cmdlet can be used to enable or disable caching for all webs in a site collection. If the SiteUrl parameter has not been specified the currently connected to site will be used. 
 
 ## EXAMPLES
 
