@@ -535,11 +535,6 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     ReuseAuthenticationManager();
                 }
-
-                // if (new Uri(Url.ToLower()).Host == new Uri(PnPConnection.CurrentConnection.Url).Host )
-                // {
-                //     ReuseAuthenticationManager();
-                // }
             }
             return PnPConnectionHelper.InstantiateInteractiveConnection(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment, cancellationTokenSource, ForceAuthentication);
         }

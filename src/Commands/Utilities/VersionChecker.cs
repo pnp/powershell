@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Management.Automation;
 using System.Net.Http;
 using System.Reflection;
@@ -8,11 +9,8 @@ namespace PnP.PowerShell.Commands.Utilities
     public static class VersionChecker
     {
 
-#if DEBUG
-        private static readonly Uri VersionCheckUrl = new Uri("https://raw.githubusercontent.com/pnp/powershell/dev/version.txt");
-#else
-        private static readonly Uri VersionCheckUrl = new Uri("https://raw.githubusercontent.com/pnp/powershell/master/version.txt");
-#endif
+        private static readonly Uri NightlyVersionCheckUrl = new Uri("https://raw.githubusercontent.com/pnp/powershell/dev/version.txt");
+        private static readonly Uri ReleaseVersionCheckUrl = new Uri("https://raw.githubusercontent.com/pnp/powershell/master/version.txt");
         private static bool VersionChecked;
 
         public static void CheckVersion(PSCmdlet cmdlet)
@@ -31,15 +29,16 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 if (!VersionChecked)
                 {
-                    var onlineVersion = GetAvailableVersion();
+                    var assembly = Assembly.GetExecutingAssembly();
+                    var versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+                    var productVersion = versionInfo.ProductVersion;
+                    var isNightly = productVersion.Contains("-");
 
-                    if (isNewer(onlineVersion) && cmdlet != null)
+                    var onlineVersion = GetAvailableVersion(isNightly);
+
+                    if (IsNewer(onlineVersion) && cmdlet != null)
                     {
-#if DEBUG
-                        var updateMessage = $"\nA newer version of PnP PowerShell is available: {onlineVersion}.\n\nUse 'Update-Module -Name PnP.PowerShell -AllowPrerelease' to update.\n\nYou can turn this check off by setting the 'PNPPOWERSHELL_UPDATECHECK' environment variable to 'Off'.\n";
-#else
-                        var updateMessage = $"\nA newer version of PnP PowerShell is available: {onlineVersion}.\n\nUse 'Update-Module -Name PnP.PowerShell' to update.\n\nYou can turn this check off by setting the 'PNPPOWERSHELL_UPDATECHECK' environment variable to 'Off'.\n";
-#endif
+                        var updateMessage = $"\nA newer version of PnP PowerShell is available: {onlineVersion}.\n\nUse 'Update-Module -Name PnP.PowerShell {(isNightly ? "-AllowPrerelease" : "")}' to update.\nUse 'Get-PnPChangeLog {(!isNightly ? $"-Release {onlineVersion}" : "-Nightly")}' to list changes.\n\nYou can turn this check off by setting the 'PNPPOWERSHELL_UPDATECHECK' environment variable to 'Off'.\n";
                         CmdletMessageWriter.WriteFormattedWarning(cmdlet, updateMessage);
                     }
                     VersionChecked = true;
@@ -49,48 +48,78 @@ namespace PnP.PowerShell.Commands.Utilities
             { }
         }
 
-        public static bool isNewer(string availableVersionString)
+        public static bool IsNewer(string availableVersionString)
         {
             var assembly = Assembly.GetExecutingAssembly();
-#if !NETFRAMEWORK
-            var currentVersion = new SemanticVersion(assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);
-            if (SemanticVersion.TryParse(availableVersionString, out SemanticVersion availableVersion))
-#else
-            var currentVersion = new Version(((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version);
+            var versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            var productVersion = versionInfo.ProductVersion;
+
+
             if (Version.TryParse(availableVersionString, out Version availableVersion))
-#endif
             {
-                if (availableVersion.Major > currentVersion.Major)
+                if (availableVersion.Major > versionInfo.ProductMajorPart)
                 {
                     return true;
                 }
                 else
                 {
-                    if (availableVersion.Major == currentVersion.Major && availableVersion.Minor > currentVersion.Minor)
+                    if (versionInfo.ProductMajorPart == availableVersion.Major && availableVersion.Minor > versionInfo.ProductMinorPart)
                     {
                         return true;
                     }
-#if !NETFRAMEWORK
                     else
                     {
-                        if (!string.IsNullOrEmpty(currentVersion.PreReleaseLabel))
+                        if (productVersion.Contains("-"))
                         {
-                            if (availableVersion.Major == currentVersion.Major && availableVersion.Minor == currentVersion.Minor && availableVersion.Patch > currentVersion.Patch)
+                            if (versionInfo.ProductMajorPart == availableVersion.Major && versionInfo.ProductMinorPart == availableVersion.Minor && availableVersion.Build > versionInfo.ProductBuildPart)
                             {
                                 return true;
                             }
                         }
                     }
-#endif
                 }
             }
             return false;
         }
+        // #if !NETFRAMEWORK
+        //             var currentVersion = new SemanticVersion(assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);
+        //             if (SemanticVersion.TryParse(availableVersionString, out SemanticVersion availableVersion))
+        // #else
+        //             var currentVersion = new Version(((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version);
+        //             if (Version.TryParse(availableVersionString, out Version availableVersion))
+        // #endif
+        //             {
+        //                 if (availableVersion.Major > currentVersion.Major)
+        //                 {
+        //                     return true;
+        //                 }
+        //                 else
+        //                 {
+        //                     if (availableVersion.Major == currentVersion.Major && availableVersion.Minor > currentVersion.Minor)
+        //                     {
+        //                         return true;
+        //                     }
+        // #if !NETFRAMEWORK
+        //                     else
+        //                     {
+        //                         if (!string.IsNullOrEmpty(currentVersion.PreReleaseLabel))
+        //                         {
+        //                             if (availableVersion.Major == currentVersion.Major && availableVersion.Minor == currentVersion.Minor && availableVersion.Patch > currentVersion.Patch)
+        //                             {
+        //                                 return true;
+        //                             }
+        //                         }
+        //                     }
+        // #endif
+        //                 }
+        //             }
+        //     return false;
+        // }
 
-        public static string GetAvailableVersion()
+        internal static string GetAvailableVersion(bool isNightly)
         {
             var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-            var response = httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, VersionCheckUrl)).GetAwaiter().GetResult();
+            var response = httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, isNightly ? NightlyVersionCheckUrl : ReleaseVersionCheckUrl)).GetAwaiter().GetResult();
             if (response.IsSuccessStatusCode)
             {
                 var onlineVersion = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
@@ -98,6 +127,14 @@ namespace PnP.PowerShell.Commands.Utilities
                 return onlineVersion;
             }
             return null;
+        }
+        public static string GetAvailableVersion()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            var productVersion = versionInfo.ProductVersion;
+            var isNightly = productVersion.Contains("-");
+            return GetAvailableVersion(isNightly);
         }
     }
 }
