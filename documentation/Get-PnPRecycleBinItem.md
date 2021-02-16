@@ -46,7 +46,6 @@ This command will return all the items in the recycle bin for the SharePoint sit
 
 ### EXAMPLE 1
 ```powershell
-Connect-PnPOnline -Url https://contoso.sharepoint.com/sites/askhr
 Get-PnPRecycleBinItem
 ```
 
