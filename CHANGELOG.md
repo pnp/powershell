@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Fixed warning showing to use -Interactive instead of -UseWebLogin to show correct url.
+- Documentation updates
+
+### Contributors
+- Todd Klindt [ToddKlindt]
 
 ## [1.3.0]
 
