@@ -65,7 +65,7 @@ namespace PnP.PowerShell.Commands.Base
         void FillNewerVersionAvailable(PSObject result)
         {
             var versionAvailable = VersionChecker.GetAvailableVersion();
-            if (versionAvailable != null && VersionChecker.isNewer(versionAvailable))
+            if (versionAvailable != null && VersionChecker.IsNewer(versionAvailable))
             {
                 AddProperty(result, "NewerVersionAvailable", versionAvailable.ToString());
             }

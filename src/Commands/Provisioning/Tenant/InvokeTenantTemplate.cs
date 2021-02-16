@@ -4,7 +4,7 @@ using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.Model.Configuration;
 using PnP.Framework.Provisioning.ObjectHandlers;
 using PnP.Framework.Provisioning.Providers;
-
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
@@ -19,6 +19,8 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPTenantTemplate")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+
     public class InvokeTenantTemplate : PnPAdminCmdlet
     {
         private const string ParameterSet_PATH = "By Path";
@@ -292,7 +294,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
 
                 try
                 {
-                    var accessToken = GetGraphAccessToken(new string[] { "Group.ReadWrite.All" });
+                    var accessToken = GraphAccessToken;
                 }
                 catch
                 {

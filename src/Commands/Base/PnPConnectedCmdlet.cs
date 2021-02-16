@@ -20,6 +20,7 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         public HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+
     }
 
 

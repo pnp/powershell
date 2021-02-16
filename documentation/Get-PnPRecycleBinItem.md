@@ -10,6 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPRecycleBinItem.h
 # Get-PnPRecycleBinItem
 
 ## SYNOPSIS
+Required Permissions * SharePoint: Site Collection Administrator. SharePoint Tenant Admin alone is not enough
 Returns the items in the recycle bin from the context
 
 ## SYNTAX
@@ -39,6 +40,7 @@ Get-PnPRecycleBinItem [-SecondStage] [-RowLimit <Int32>] [-Connection <PnPConnec
 ```
 
 ## DESCRIPTION
+This command will return all the items in the recycle bin for the SharePoint site you connected to with Connect-PnPOnline. You must connect as a Site Collection Owner or Administrator. The SharePoint Admin Role in the tenant alone will not work. If you are not a Site Collection Admin connect to the Tenant Admin URL with Connect-PnPOnline and use Get-PnPTenantRecycleBinItem. 
 
 ## EXAMPLES
 
@@ -152,4 +154,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
 

@@ -512,7 +512,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private PnPConnection ConnectWebLogin()
         {
-            WriteWarning("Consider using -Interactive instead, which provides better functionality. See the documentation at https://pnp.github.io/powershell/cmdlets/connect-pnponline.html#interactive-login-for-multi-factor-authentication");
+            WriteWarning("Consider using -Interactive instead, which provides better functionality. See the documentation at https://pnp.github.io/powershell/cmdlets/Connect-PnPOnline.html#interactive-login-for-multi-factor-authentication");
             if (Utilities.OperatingSystem.IsWindows())
             {
                 return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication);
@@ -535,11 +535,6 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     ReuseAuthenticationManager();
                 }
-
-                // if (new Uri(Url.ToLower()).Host == new Uri(PnPConnection.CurrentConnection.Url).Host )
-                // {
-                //     ReuseAuthenticationManager();
-                // }
             }
             return PnPConnectionHelper.InstantiateInteractiveConnection(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment, cancellationTokenSource, ForceAuthentication);
         }

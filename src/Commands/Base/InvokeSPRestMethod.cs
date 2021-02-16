@@ -133,14 +133,46 @@ namespace PnP.PowerShell.Commands.Admin
             //}
         }
 
-        private List<PSObject> ConvertToPSObject(JsonElement element)
+        private List<PSObject> ConvertToPSObject(JsonElement element, JsonProperty jsonProperty = default)
         {
             var list = new List<PSObject>();
+
             if (element.ValueKind == JsonValueKind.Array)
             {
                 foreach (var subelement in element.EnumerateArray())
                 {
-                    list.AddRange(ConvertToPSObject(subelement));
+                    object arrayValue = null;
+                    switch (subelement.ValueKind)
+                    {
+                        case JsonValueKind.Array:
+                            {
+                                arrayValue = ConvertToPSObject(subelement);
+                                break;
+                            }
+                        case JsonValueKind.True:
+                        case JsonValueKind.False:
+                            {
+                                arrayValue = subelement.GetBoolean();
+                                break;
+                            }
+                        case JsonValueKind.String:
+                            {
+                                arrayValue = subelement.GetString();
+                                break;
+                            }
+                        case JsonValueKind.Object:
+                            {
+                                arrayValue = ConvertToPSObject(subelement);
+                                break;
+                            }
+                        case JsonValueKind.Number:
+                            {
+                                arrayValue = subelement.GetInt64();
+                                break;
+                            }
+                    }
+                    var pso = new PSObject();
+                    pso.Properties.Add(new PSNoteProperty(jsonProperty.Name, arrayValue));
                 }
             }
             else
@@ -154,7 +186,7 @@ namespace PnP.PowerShell.Commands.Admin
 
                         case JsonValueKind.Array:
                             {
-                                value = ConvertToPSObject(prop.Value);
+                                value = ConvertToPSObject(prop.Value, prop);
                                 break;
                             }
                         case JsonValueKind.True:
@@ -173,11 +205,17 @@ namespace PnP.PowerShell.Commands.Admin
                                 value = ConvertToPSObject(prop.Value).First();
                                 break;
                             }
+                        case JsonValueKind.Number:
+                            {
+                                value = prop.Value.GetInt64();
+                                break;
+                            }
                     }
                     pso.Properties.Add(new PSNoteProperty(prop.Name, value));
                 }
                 list.Add(pso);
             }
+
             return list;
         }
     }

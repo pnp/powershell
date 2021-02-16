@@ -5,10 +5,12 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using System;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "PnPSite")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class NewSite : PnPSharePointCmdlet, IDynamicParameters
     {
         private const string ParameterSet_COMMUNICATIONBUILTINDESIGN = "Communication Site with Built-In Site Design";
@@ -99,7 +101,7 @@ namespace PnP.PowerShell.Commands
                 creationInformation.PreferredDataLocation = _teamSiteParameters.PreferredDataLocation;
                 creationInformation.SensitivityLabel = _teamSiteParameters.SensitivityLabel;
 
-                var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GetGraphAccessToken(new[] { "Group.ReadWrite.All" }));
+                var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GraphAccessToken);
                 WriteObject(returnedContext.Url);
             }
         }

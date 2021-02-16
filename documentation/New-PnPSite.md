@@ -14,9 +14,15 @@ Creates either a communication site or a Microsoft 365 group-connected team site
 
 ## SYNTAX
 
+### TeamSite
 ```powershell
-New-PnPSite -Type <SiteType> [-HubSiteId <Guid>] [-Wait] [-Connection <PnPConnection>]
+New-PnPSite -Type TeamSite -Title <String> -Alias <String> [-Description <String>] [-Classification <String>] [-IsPublic] [-Lcid <UInt>] [-Owners <String[][]>] [-PreferredDataLocation <Office365Geography>] [-SensitivityLabel <String>] [-HubSiteId <Guid>] [-Wait] [-Connection <PnPConnection>]
  [<CommonParameters>]
+```
+
+### CommunicationSite
+```powershell
+New-PnPSite -Type CommunicationSite -Title <String> -Url <String> [-HubSiteId <Guid>] [-Classification <String>] [-SiteDesign <SiteDesign>] [-SiteDesignId <Guid>] [-Lcid <UInt>] [-Owner <String>] [-PreferredDataLocation <Office365Geography>] [-SensitivityLabel <String>]
 ```
 
 ## DESCRIPTION
@@ -89,12 +95,67 @@ This will create a new Modern Team Site collection with the title 'Team Contoso'
 
 ## PARAMETERS
 
+### -Alias
+The alias to use for the team site.
+
+```yaml
+Type: String
+Parameter Sets: TeamSite
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Classification
+The classification to use for the new site.
+
+```yaml
+Type: String
+Parameter Sets: CommunicationSite, TeamSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Description
+The description of the site to create
+
+```yaml
+Type: String
+Parameter Sets: CommunicationSite, TeamSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Description
+The description of the site to create
+```yaml
+Type: String
+Parameter Sets: CommunicationSite, TeamSite
 
 Required: False
 Position: Named
@@ -111,6 +172,148 @@ Type: Guid
 Parameter Sets: (All)
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsPublic
+Specifies if the site is public.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: TeamSite
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Lcid
+The language to use for the site.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: CommunicationSite, TeamSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Owners
+One or more owners to specify for the site. Defaults to the current user. Required if you use an app-only connection.
+
+```yaml
+Type: String[]
+Parameter Sets: TeamSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Owner
+The owner to specify for the site. Defaults to the current user. Required if you use an app-only connection.
+
+```yaml
+Type: String
+Parameter Sets: CommunicationSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PreferredDataLocation
+In case of a multi-geo environment you can specify the preferred data location
+
+```yaml
+Type: String
+Parameter Sets: CommunicationSite, TeamSite
+Accepted values: APC, ARE, AUS, CAN, CHE, DEU, EUR, FRA, GBR, IND, JPN, KOR, NAM, NOR, ZAF
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SensitivityLabel
+The sensitivity label to specify for the new site.
+
+```yaml
+Type: String
+Parameter Sets: CommunicationSite, TeamSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ShareByEmailEnabled
+If specified sharing content by email will be enabled.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: CommunicationSite
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SiteDesign
+Allows to specify an OOTB site design
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: CommunicationSite
+Accepted values: Blank, Topic, Showcase
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SiteDesignId
+Allows to specify a custom site design
+
+```yaml
+Type: Guid
+Parameter Sets: CommunicationSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Title
+Specifies the title of the site to create
+
+```yaml
+Type: String
+Parameter Sets: CommunicationSite, TeamSite
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

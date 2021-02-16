@@ -8,9 +8,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current Nightly]
 
 ### Added
+- Added `Grant-PnPAzureADAppSitePermission`, `Get-PnPAzureADAppSitePermission`, `Set-PnPAzureADAppSitePermission` and `Revoke-PnPAzureADAppSitePermission`
 
 ### Changed
+- Fixed warning showing to use -Interactive instead of -UseWebLogin to show correct url.
+- Documentation updates
 
+### Contributors
+- Todd Klindt [ToddKlindt]
 
 ## [1.3.0]
 
