@@ -53,7 +53,6 @@ namespace PnP.PowerShell.Commands.Admin
 
                 if (Method == HttpRequestMethod.Merge)
                 {
-                    method = HttpMethod.Post;
                     request.Headers.Add("X-HTTP-Method", "MERGE");
                 }
 
@@ -64,7 +63,7 @@ namespace PnP.PowerShell.Commands.Admin
 
                 PnPHttpClient.AuthenticateRequestAsync(request, ClientContext).GetAwaiter().GetResult();
 
-                if (Method == HttpRequestMethod.Post)
+                if (Method == HttpRequestMethod.Post || Method == HttpRequestMethod.Merge || Method == HttpRequestMethod.Put || Method == HttpRequestMethod.Patch)
                 {
                     if (string.IsNullOrEmpty(ContentType))
                     {
