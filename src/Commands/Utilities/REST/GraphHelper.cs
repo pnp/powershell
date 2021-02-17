@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Model.Graph;
+﻿using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Teams;
 using System;
 using System.Collections.Generic;
@@ -46,7 +47,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
             var message = new HttpRequestMessage();
             message.Method = method;
-            message.RequestUri = !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ? new Uri($"https://graph.microsoft.com/{url}") : new Uri(url);
+            message.RequestUri = !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ? new Uri($"https://{PnPConnection.CurrentConnection.GetGraphEndPoint()}/{url}") : new Uri(url);
             message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
             if (additionalHeaders != null)
             {

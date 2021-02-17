@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Apps
             {
                 if (Force || ShouldContinue("Are you sure you want to revoke the permissions?", string.Empty))
                 {
-                    var results = PnP.PowerShell.Commands.Utilities.REST.RestHelper.DeleteAsync(HttpClient, $"https://graph.microsoft.com/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken).GetAwaiter().GetResult();
+                    var results = PnP.PowerShell.Commands.Utilities.REST.RestHelper.DeleteAsync(HttpClient, $"https://{PnPConnection.CurrentConnection.GetGraphEndPoint()}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken).GetAwaiter().GetResult();
                 }
             }
         }

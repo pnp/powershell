@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Apps
                 if (!ParameterSpecified(nameof(PermissionId)))
                 {
                     // all permissions
-                    var results = Utilities.REST.RestHelper.GetAsync<RestResultCollection<AzureADAppPermissionInternal>>(HttpClient, $"https://graph.microsoft.com/v1.0/sites/{siteId}/permissions", AccessToken).GetAwaiter().GetResult();
+                    var results = Utilities.REST.RestHelper.GetAsync<RestResultCollection<AzureADAppPermissionInternal>>(HttpClient, $"https://{PnPConnection.CurrentConnection.GetGraphEndPoint()}/v1.0/sites/{siteId}/permissions", AccessToken).GetAwaiter().GetResult();
                     if (results.Items.Any())
                     {
                         var convertedResults = results.Items.Select(i => i.Convert());
@@ -64,7 +64,7 @@ namespace PnP.PowerShell.Commands.Apps
                 }
                 else
                 {
-                    var results = Utilities.REST.RestHelper.GetAsync<AzureADAppPermissionInternal>(HttpClient, $"https://graph.microsoft.com/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken).GetAwaiter().GetResult();
+                    var results = Utilities.REST.RestHelper.GetAsync<AzureADAppPermissionInternal>(HttpClient, $"https://{PnPConnection.CurrentConnection.GetGraphEndPoint()}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken).GetAwaiter().GetResult();
                     WriteObject(results.Convert());
                 }
             }

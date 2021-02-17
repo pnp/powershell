@@ -298,7 +298,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                 }
                 catch
                 {
-                    throw new PSInvalidOperationException("Your template contains artifacts that require an access token for https://graph.microsoft.com. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
+                    throw new PSInvalidOperationException($"Your template contains artifacts that require an access token for https://{PnPConnection.CurrentConnection.GetGraphEndPoint()}. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
                 }
             }
 

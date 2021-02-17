@@ -206,6 +206,19 @@ namespace PnP.PowerShell.Commands.Base
             return context;
         }
 
+        internal string GetGraphEndPoint()
+        {
+            if(Context != null)
+            {
+                var settings = Context.GetContextSettings();
+                if(settings.AuthenticationManager != null)
+                {
+                    return settings.AuthenticationManager.GetGraphEndPoint();
+                }
+            }
+            return "graph.microsoft.com";
+        }
+
 
         internal void InitializeTelemetry(ClientContext context, InitializationType initializationType)
         {

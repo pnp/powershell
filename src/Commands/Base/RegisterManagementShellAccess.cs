@@ -88,7 +88,7 @@ namespace PnP.PowerShell.Commands.Base
                         {
                             using (var httpClient = new HttpClient())
                             {
-                                using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/organization"))
+                                using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"https://{GetGraphEndPoint()}/v1.0/organization"))
                                 {
                                     requestMessage.Headers.Add("Authorization", $"Bearer {accessToken}");
                                     requestMessage.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
@@ -124,6 +124,33 @@ namespace PnP.PowerShell.Commands.Base
         protected override void StopProcessing()
         {
             source.Cancel();
+        }
+
+        private string GetGraphEndPoint()
+        {
+            switch(AzureEnvironment)
+            {
+                case AzureEnvironment.Production:
+                {
+                    return "graph.microsoft.com";
+                }
+                case AzureEnvironment.Germany:
+                {
+                    return "graph.microsoft.de";
+                }
+                case AzureEnvironment.China:
+                {
+                    return "microsoftgraph.chinacloudapi.cn";
+                }
+                case AzureEnvironment.USGovernment:
+                {
+                    return "graph.microsoft.us";
+                }
+                default:
+                {
+                    return "graph.microsoft.com";
+                }
+            }
         }
     }
 }
