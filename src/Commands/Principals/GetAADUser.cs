@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPAADUser", DefaultParameterSetName = ParameterSet_LIST)]
     [RequiredMinimalApiPermissions("User.Read.All")]
