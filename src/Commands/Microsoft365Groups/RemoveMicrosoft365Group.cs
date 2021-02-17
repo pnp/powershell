@@ -5,30 +5,25 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPMicrosoft365GroupOwner")]
+    [Cmdlet(VerbsCommon.Remove, "PnPMicrosoft365Group")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
-    public class RemoveMicrosoft365GroupOwner : PnPGraphCmdlet
+    public class RemoveMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public Microsoft365GroupPipeBind Identity;
 
-        [Parameter(Mandatory = true)]
-        public string[] Users;
-
         protected override void ExecuteCmdlet()
         {
-            UnifiedGroupEntity group = null;
-
             if (Identity != null)
             {
-                group = Identity.GetGroup(AccessToken, false);
-            }
-
-            if (group != null)
-            {
-                UnifiedGroupsUtility.RemoveUnifiedGroupOwners(group.GroupId, Users, AccessToken);
+                UnifiedGroupEntity group = Identity.GetGroup(AccessToken, false);
+                
+                if (group != null)
+                {
+                    UnifiedGroupsUtility.DeleteUnifiedGroup(group.GroupId, AccessToken);
+                }
             }
         }
     }

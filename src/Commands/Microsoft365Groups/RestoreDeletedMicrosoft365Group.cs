@@ -4,11 +4,11 @@ using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPDeletedMicrosoft365Group")]
+    [Cmdlet(VerbsData.Restore, "PnPDeletedMicrosoft365Group")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
-    public class RemoveDeletedMicrosoft365Group : PnPGraphCmdlet
+    public class RestoreDeletedMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public Microsoft365GroupPipeBind Identity;
@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (group != null)
             {
-                UnifiedGroupsUtility.PermanentlyDeleteUnifiedGroup(group.GroupId, AccessToken);
+                UnifiedGroupsUtility.RestoreDeletedUnifiedGroup(group.GroupId, AccessToken);
             }
         }
     }

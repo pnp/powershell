@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.New, "PnPMicrosoft365Group")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]

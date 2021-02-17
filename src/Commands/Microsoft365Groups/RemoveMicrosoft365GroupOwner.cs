@@ -5,11 +5,11 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
-    [Cmdlet(VerbsCommon.Add, "PnPMicrosoft365GroupMember")]
+    [Cmdlet(VerbsCommon.Remove, "PnPMicrosoft365GroupOwner")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
-    public class AddMicrosoft365GroupMember : PnPGraphCmdlet
+    public class RemoveMicrosoft365GroupOwner : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public Microsoft365GroupPipeBind Identity;
@@ -17,26 +17,18 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = true)]
         public string[] Users;
 
-        [Parameter(Mandatory = false)]
-        public SwitchParameter RemoveExisting;
-
         protected override void ExecuteCmdlet()
         {
-            if (PnPConnection.CurrentConnection.ClientId == PnPConnection.PnPManagementShellClientId)
-            {
-                PnPConnection.CurrentConnection.Scopes = new[] { "Group.ReadWrite.All" };
-            }
-
             UnifiedGroupEntity group = null;
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(AccessToken,false);
+                group = Identity.GetGroup(AccessToken, false);
             }
 
             if (group != null)
             {
-                UnifiedGroupsUtility.AddUnifiedGroupMembers(group.GroupId, Users, AccessToken, RemoveExisting.ToBool());
+                UnifiedGroupsUtility.RemoveUnifiedGroupOwners(group.GroupId, Users, AccessToken);
             }
         }
     }

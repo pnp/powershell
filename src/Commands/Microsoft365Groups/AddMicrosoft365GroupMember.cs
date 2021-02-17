@@ -5,11 +5,11 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
-    [Cmdlet(VerbsCommon.Add, "PnPMicrosoft365GroupOwner")]
+    [Cmdlet(VerbsCommon.Add, "PnPMicrosoft365GroupMember")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
-    public class AddMicrosoft365GroupOwner : PnPGraphCmdlet
+    public class AddMicrosoft365GroupMember : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public Microsoft365GroupPipeBind Identity;
@@ -22,16 +22,21 @@ namespace PnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
+            if (PnPConnection.CurrentConnection.ClientId == PnPConnection.PnPManagementShellClientId)
+            {
+                PnPConnection.CurrentConnection.Scopes = new[] { "Group.ReadWrite.All" };
+            }
+
             UnifiedGroupEntity group = null;
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(AccessToken, false);
+                group = Identity.GetGroup(AccessToken,false);
             }
 
             if (group != null)
             {
-                UnifiedGroupsUtility.AddUnifiedGroupOwners(group.GroupId, Users, AccessToken, RemoveExisting.ToBool());
+                UnifiedGroupsUtility.AddUnifiedGroupMembers(group.GroupId, Users, AccessToken, RemoveExisting.ToBool());
             }
         }
     }

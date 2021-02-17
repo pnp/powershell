@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections.Generic;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365GroupOwners")]
     [RequiredMinimalApiPermissions("Group.Read.All")]

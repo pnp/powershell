@@ -5,14 +5,17 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
-    [Cmdlet(VerbsCommon.Clear, "PnPMicrosoft365GroupMember")]
+    [Cmdlet(VerbsCommon.Remove, "PnPMicrosoft365GroupMember")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
-    public class ClearMicrosoft365GroupMember : PnPGraphCmdlet
+    public class RemoveMicrosoft365GroupMember : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public Microsoft365GroupPipeBind Identity;
+
+        [Parameter(Mandatory = true)]
+        public string[] Users;
 
         protected override void ExecuteCmdlet()
         {
@@ -25,7 +28,7 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (group != null)
             {
-                UnifiedGroupsUtility.ClearUnifiedGroupMembers(group.GroupId, AccessToken);
+                UnifiedGroupsUtility.RemoveUnifiedGroupMembers(group.GroupId, Users, AccessToken);
             }
         }
     }

@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPDeletedMicrosoft365Group")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
