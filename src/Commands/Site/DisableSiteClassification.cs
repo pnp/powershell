@@ -3,7 +3,7 @@ using PnP.PowerShell.Commands.Base;
 using System;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsLifecycle.Disable, "PnPSiteClassification")]
     [RequiredMinimalApiPermissions("Directory.ReadWrite.All")]

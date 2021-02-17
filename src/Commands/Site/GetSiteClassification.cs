@@ -4,7 +4,7 @@ using PnP.PowerShell.Commands.Base;
 using System;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteClassification")]
     [RequiredMinimalApiPermissions("Directory.Read.All")]
