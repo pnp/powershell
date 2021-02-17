@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Grant-PnPAzureADAppSitePermission`, `Get-PnPAzureADAppSitePermission`, `Set-PnPAzureADAppSitePermission` and `Revoke-PnPAzureADAppSitePermission`
 
 ### Changed
+- Re-enabled Console Logging with Set-PnPTraceLog -On
 - Fixed warning showing to use -Interactive instead of -UseWebLogin to show correct url.
 - Documentation updates
 
