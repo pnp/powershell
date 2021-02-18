@@ -77,7 +77,7 @@ namespace PnP.PowerShell.Commands.Base
                         var accessToken = string.Empty;
                         try
                         {
-                            accessToken = authManager.GetAccessTokenAsync(new[] { "https://{GetGraphEndPoint()}/.default" }, cancellationToken).GetAwaiter().GetResult();
+                            accessToken = authManager.GetAccessTokenAsync(new[] { $"https://{GetGraphEndPoint()}/.default" }, cancellationToken).GetAwaiter().GetResult();
                         }
                         catch (Microsoft.Identity.Client.MsalException)
                         {
