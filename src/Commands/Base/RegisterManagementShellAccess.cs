@@ -69,8 +69,8 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !LaunchBrowser, source);
                     },
-                    successMessageHtml: $"You successfully consented the PnP Management Shell Application for use by PnP PowerShell. Feel free to close this window.",
-                    failureMessageHtml: $"You did not consent for the PnP Management Shell Application for use by PnP PowerShell. Feel free to close this browser window.",
+                    successMessageHtml: $"You successfully logged in. Feel free to close this window.",
+                    failureMessageHtml: $"You failed to login succesfully. Feel free to close this browser window.",
                                         azureEnvironment: AzureEnvironment))
                     {
                         var tenantId = "{azure-tenant-id}";
