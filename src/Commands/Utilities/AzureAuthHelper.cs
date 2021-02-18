@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             using (var authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(username, password, azureEnvironment))
             {
-                return await authManager.GetAccessTokenAsync(new[] { "https://graph.microsoft.com/.default" });
+                return await authManager.GetAccessTokenAsync(new[] { $"https://{GetGraphEndPoint(azureEnvironment)}/.default" });
             }
         }
 
@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     authManager.ClearTokenCache();
                     try
                     {
-                        return authManager.GetAccessTokenAsync(new string[] { "https://graph.microsoft.com/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
+                        return authManager.GetAccessTokenAsync(new string[] { $"https://{GetGraphEndPoint(azureEnvironment)}/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
                     }
                     catch (Microsoft.Identity.Client.MsalException)
                     {
@@ -75,7 +75,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     authManager.ClearTokenCache();
                     try
                     {
-                        return authManager.GetAccessTokenAsync(new string[] { "https://graph.microsoft.com/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
+                        return authManager.GetAccessTokenAsync(new string[] { $"https://{GetGraphEndPoint(azureEnvironment)}/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
                     }
                     catch (Microsoft.Identity.Client.MsalException)
                     {
@@ -88,6 +88,11 @@ namespace PnP.PowerShell.Commands.Utilities
                 cancellationTokenSource.Cancel();
             }
             return null;
+        }
+
+        internal static string GetGraphEndPoint(AzureEnvironment azureEnvironment)
+        {
+            return PnP.Framework.AuthenticationManager.GetGraphEndPoint(azureEnvironment);
         }
     }
 }

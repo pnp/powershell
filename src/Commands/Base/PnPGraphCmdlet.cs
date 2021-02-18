@@ -54,13 +54,13 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (PnPConnection.CurrentConnection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
                 {
-                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, "https://graph.microsoft.com/").GetAwaiter().GetResult();
+                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, $"https://{PnPConnection.CurrentConnection.GraphEndPoint}/").GetAwaiter().GetResult();
                 }
                 else
                 {
                     if (PnPConnection.CurrentConnection?.Context != null)
                     {
-                        return TokenHandler.GetAccessToken(GetType(), "https://graph.microsoft.com/.default");
+                        return TokenHandler.GetAccessToken(GetType(), $"https://{PnPConnection.CurrentConnection.GraphEndPoint}/.default");
                     }
                 }
 

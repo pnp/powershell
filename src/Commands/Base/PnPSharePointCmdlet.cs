@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands
         public PnPContext PnPContext => Connection?.PnPContext ?? PnPConnection.CurrentConnection.PnPContext;
 
         public new HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient(ClientContext);
-        
+
         // do not remove '#!#99'
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")]
         public PnPConnection Connection = null;
@@ -124,44 +124,19 @@ namespace PnP.PowerShell.Commands
             {
                 if (PnPConnection.CurrentConnection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
                 {
-                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, "https://graph.microsoft.com/").GetAwaiter().GetResult();
+                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, $"https://graph.microsoft.com/").GetAwaiter().GetResult();
                 }
                 else
                 {
                     if (PnPConnection.CurrentConnection?.Context != null)
                     {
-                        return TokenHandler.GetAccessToken(GetType(), "https://graph.microsoft.com/.default");
+                        return TokenHandler.GetAccessToken(GetType(), $"https://{PnPConnection.CurrentConnection.GraphEndPoint}/.default");
                     }
                 }
 
                 return null;
             }
         }
-
-        // protected string GetGraphAccessToken(string[] scopes)
-        // {
-        //     if (PnPConnection.CurrentConnection != null)
-        //     {
-        //         if (PnPConnection.CurrentConnection.Context != null)
-        //         {
-        //             var settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(PnPConnection.CurrentConnection.Context);
-
-        //             if (settings != null)
-        //             {
-        //                 var authManager = settings.AuthenticationManager;
-        //                 if (authManager != null)
-        //                 {
-        //                     if (settings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
-        //                     {
-        //                         scopes = new[] { "https://graph.microsoft.com/.default" };
-        //                     }
-        //                     return authManager.GetAccessTokenAsync(scopes).GetAwaiter().GetResult();
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     return null;
-        // }
 
         protected void PollOperation(SpoOperation spoOperation)
         {

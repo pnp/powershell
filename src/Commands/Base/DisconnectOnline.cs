@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (Connection != null && Connection.DeleteCertificateFromCacheOnDisconnect)
                 {
-                    PnPConnectionHelper.CleanupCryptoMachineKey(Connection.Certificate);
+                    PnPConnection.CleanupCryptoMachineKey(Connection.Certificate);
                 }
                 Connection.Certificate = null;
             }

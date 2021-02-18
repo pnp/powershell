@@ -55,7 +55,7 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         try
                         {
-                            authManager.GetAccessTokenAsync(new[] { "https://graph.microsoft.com/.default" }, cancellationToken, Microsoft.Identity.Client.Prompt.Consent).GetAwaiter().GetResult();
+                            authManager.GetAccessTokenAsync(new[] { $"https://{GetGraphEndPoint()}/.default" }, cancellationToken, Microsoft.Identity.Client.Prompt.Consent).GetAwaiter().GetResult();
                         }
                         catch (Microsoft.Identity.Client.MsalException)
                         {
@@ -77,7 +77,7 @@ namespace PnP.PowerShell.Commands.Base
                         var accessToken = string.Empty;
                         try
                         {
-                            accessToken = authManager.GetAccessTokenAsync(new[] { "https://graph.microsoft.com/.default" }, cancellationToken).GetAwaiter().GetResult();
+                            accessToken = authManager.GetAccessTokenAsync(new[] { "https://{GetGraphEndPoint()}/.default" }, cancellationToken).GetAwaiter().GetResult();
                         }
                         catch (Microsoft.Identity.Client.MsalException)
                         {
@@ -128,29 +128,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private string GetGraphEndPoint()
         {
-            switch(AzureEnvironment)
-            {
-                case AzureEnvironment.Production:
-                {
-                    return "graph.microsoft.com";
-                }
-                case AzureEnvironment.Germany:
-                {
-                    return "graph.microsoft.de";
-                }
-                case AzureEnvironment.China:
-                {
-                    return "microsoftgraph.chinacloudapi.cn";
-                }
-                case AzureEnvironment.USGovernment:
-                {
-                    return "graph.microsoft.us";
-                }
-                default:
-                {
-                    return "graph.microsoft.com";
-                }
-            }
+            return PnP.Framework.AuthenticationManager.GetGraphEndPoint(AzureEnvironment);
         }
     }
 }

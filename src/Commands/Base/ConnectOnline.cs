@@ -326,7 +326,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 ReuseAuthenticationManager();
             }
-            return PnPConnectionHelper.InstantiateACSAppOnlyConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, TenantAdminUrl, AzureEnvironment);
+            return PnPConnection.CreateWithACSAppOnly(new Uri(Url), AADDomain, ClientId, ClientSecret, TenantAdminUrl, AzureEnvironment);
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace PnP.PowerShell.Commands.Base
                     clientId = ClientId;
                 }
 
-                var returnedConnection = PnPConnectionHelper.InstantiateDeviceLoginConnection(clientId, Url, LaunchBrowser, messageWriter, AzureEnvironment, cancellationTokenSource);
+                var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, LaunchBrowser, messageWriter, AzureEnvironment, cancellationTokenSource);
                 connection = returnedConnection;
                 messageWriter.Finished = true;
             }, cancellationTokenSource.Token);
@@ -408,7 +408,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     ReuseAuthenticationManager();
                 }
-                return PnPConnectionHelper.InstantiateConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
+                return PnPConnection.CreateWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
             }
             else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
             {
@@ -421,7 +421,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     ReuseAuthenticationManager();
                 }
-                return PnPConnectionHelper.InstantiateConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
+                return PnPConnection.CreateWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
             }
             else if (ParameterSpecified(nameof(Thumbprint)))
             {
@@ -443,7 +443,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     ReuseAuthenticationManager();
                 }
-                return PnPConnectionHelper.InstantiateConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
+                return PnPConnection.CreateWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
             }
             else
             {
@@ -457,7 +457,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAccessToken()
         {
-            return PnPConnectionHelper.InstantiateWithAccessToken(!string.IsNullOrEmpty(Url) ? new Uri(Url) : null, AccessToken, TenantAdminUrl);
+            return PnPConnection.CreateWithAccessToken(!string.IsNullOrEmpty(Url) ? new Uri(Url) : null, AccessToken, TenantAdminUrl);
         }
 
         /// <summary>
@@ -495,7 +495,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
 
-            return PnPConnectionHelper.InstantiateConnectionWithCredentials(this, new Uri(Url),
+            return PnPConnection.CreateWithCredentials(this, new Uri(Url),
                                                                credentials,
                                                                CurrentCredentials,
                                                                TenantAdminUrl,
@@ -507,7 +507,7 @@ namespace PnP.PowerShell.Commands.Base
         private PnPConnection ConnectManagedIdentity()
         {
             WriteVerbose("Connecting to the Graph with the current Managed Identity");
-            return PnPConnectionHelper.InstantiateManagedIdentityConnection(this, TenantAdminUrl);
+            return PnPConnection.CreateWithManagedIdentity(this, TenantAdminUrl);
         }
 
         private PnPConnection ConnectWebLogin()
@@ -515,7 +515,7 @@ namespace PnP.PowerShell.Commands.Base
             WriteWarning("Consider using -Interactive instead, which provides better functionality. See the documentation at https://pnp.github.io/powershell/cmdlets/Connect-PnPOnline.html#interactive-login-for-multi-factor-authentication");
             if (Utilities.OperatingSystem.IsWindows())
             {
-                return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication);
+                return PnPConnection.CreateWithWeblogin(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication);
             }
             else
             {
@@ -536,7 +536,7 @@ namespace PnP.PowerShell.Commands.Base
                     ReuseAuthenticationManager();
                 }
             }
-            return PnPConnectionHelper.InstantiateInteractiveConnection(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment, cancellationTokenSource, ForceAuthentication);
+            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment, cancellationTokenSource, ForceAuthentication);
         }
 
         #endregion

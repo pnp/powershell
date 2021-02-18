@@ -445,7 +445,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Starting consent flow.");
 
-            var resource = scopes.FirstOrDefault(s => s.resourceAppId == PermissionScopes.ResourceAppId_Graph) != null ? "https://graph.microsoft.com/.default" : "https://microsoft.sharepoint-df.com/.default";
+            var resource = scopes.FirstOrDefault(s => s.resourceAppId == PermissionScopes.ResourceAppId_Graph) != null ? $"https://{AzureAuthHelper.GetGraphEndPoint(AzureEnvironment)}/.default" : "https://microsoft.sharepoint-df.com/.default";
 
             var consentUrl = $"{loginEndPoint}/{Tenant}/v2.0/adminconsent?client_id={azureApp.AppId}&scope={resource}&redirect_uri={redirectUri}";
 
@@ -504,5 +504,7 @@ namespace PnP.PowerShell.Commands.Base
                 WriteObject(record);
             }
         }
+
+       
     }
 }
