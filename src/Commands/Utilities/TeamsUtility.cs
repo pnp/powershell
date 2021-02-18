@@ -231,8 +231,8 @@ namespace PnP.PowerShell.Commands.Utilities
             group.MailNickname = mailNickname ?? await CreateAliasAsync(httpClient, accessToken);
             group.GroupTypes = new List<string>() { "Unified" };
             group.SecurityEnabled = false;
-            group.Owners = new List<string>() { $"https://{PnPConnection.CurrentConnection.GraphEndPoint}/v1.0/users/{ownerId}" };
-            group.Members = new List<string>() { $"https://{PnPConnection.CurrentConnection.GraphEndPoint}/v1.0/users/{ownerId}" };
+            group.Owners = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
+            group.Members = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
             group.Visibility = visibility == GroupVisibility.NotSpecified ? GroupVisibility.Private : visibility;
 
             return await GraphHelper.PostAsync<Group>(httpClient, "v1.0/groups", group, accessToken);
@@ -321,7 +321,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 {
                     "@odata.id",
-                    $"https://{PnPConnection.CurrentConnection.GraphEndPoint}/v1.0/directoryObjects/{user.Id}"
+                    $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/directoryObjects/{user.Id}"
                 }
             };
             var stringContent = new StringContent(JsonSerializer.Serialize(value));
@@ -485,7 +485,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 channel.Type = "#Microsoft.Teams.Core.channel";
                 var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{ownerUPN}", accessToken);
                 channel.Members = new List<TeamChannelMember>();
-                channel.Members.Add(new TeamChannelMember() { Roles = new List<string> { "owner" }, UserIdentifier = $"https://{PnPConnection.CurrentConnection.GraphEndPoint}/v1.0/users('{user.Id}')" });
+                channel.Members.Add(new TeamChannelMember() { Roles = new List<string> { "owner" }, UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{user.Id}')" });
                 return await GraphHelper.PostAsync<TeamChannel>(httpClient, $"v1.0/teams/{groupId}/channels", channel, accessToken);
             }
             else
@@ -671,7 +671,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
             }
             tab.DisplayName = displayName;
-            tab.TeamsApp = $"https://{PnPConnection.CurrentConnection.GraphEndPoint}/v1.0/appCatalogs/teamsApps/{tab.TeamsAppId}";
+            tab.TeamsApp = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/appCatalogs/teamsApps/{tab.TeamsAppId}";
             return await GraphHelper.PostAsync<TeamTab>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs", tab, accessToken);
         }
         #endregion

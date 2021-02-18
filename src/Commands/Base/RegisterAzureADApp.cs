@@ -267,10 +267,10 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                if (PnPConnection.CurrentConnection?.PSCredential != null)
+                if (PnPConnection.Current?.PSCredential != null)
                 {
-                    Username = PnPConnection.CurrentConnection.PSCredential.UserName;
-                    Password = PnPConnection.CurrentConnection.PSCredential.Password;
+                    Username = PnPConnection.Current.PSCredential.UserName;
+                    Password = PnPConnection.Current.PSCredential.Password;
                 }
                 if (string.IsNullOrEmpty(Username))
                 {

@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
             var message = new HttpRequestMessage();
             message.Method = method;
-            message.RequestUri = !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ? new Uri($"https://{PnPConnection.CurrentConnection.GraphEndPoint}/{url}") : new Uri(url);
+            message.RequestUri = !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ? new Uri($"https://{PnPConnection.Current.GraphEndPoint}/{url}") : new Uri(url);
             message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
             if (additionalHeaders != null)
             {

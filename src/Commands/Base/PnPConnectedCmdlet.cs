@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Base
             base.BeginProcessing();
 
             // Ensure there is an active connection
-            if (PnPConnection.CurrentConnection == null)
+            if (PnPConnection.Current == null)
             {
                 throw new InvalidOperationException(Properties.Resources.NoConnection);
             }

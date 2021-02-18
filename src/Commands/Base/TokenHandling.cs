@@ -53,7 +53,7 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static string GetAccessToken(Type cmdletType, string appOnlyDefaultScope)
         {
-            var contextSettings = PnPConnection.CurrentConnection.Context.GetContextSettings();
+            var contextSettings = PnPConnection.Current.Context.GetContextSettings();
             var authManager = contextSettings.AuthenticationManager;
             if (authManager != null)
             {

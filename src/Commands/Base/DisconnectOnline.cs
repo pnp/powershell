@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Base
             // If no specific connection has been passed in, take the connection from the current context
             if (Connection == null)
             {
-                Connection = PnPConnection.CurrentConnection;
+                Connection = PnPConnection.Current;
             }
             if (Connection?.Certificate != null)
             {
@@ -44,7 +44,7 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             // clear credentials
-            PnPConnection.CurrentConnection = null;
+            PnPConnection.Current = null;
 
             var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals(SPOProvider.PSProviderName, StringComparison.InvariantCultureIgnoreCase));
             if (provider != null)
@@ -76,14 +76,14 @@ namespace PnP.PowerShell.Commands.Base
             Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
             Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
 
-            if (PnPConnection.CurrentConnection == null)
+            if (PnPConnection.Current == null)
             {
                 return false;
             }
             else
             {
-                PnPConnection.CurrentConnection.Context = null;
-                PnPConnection.CurrentConnection = null;
+                PnPConnection.Current.Context = null;
+                PnPConnection.Current = null;
                 return true;
             }
         }

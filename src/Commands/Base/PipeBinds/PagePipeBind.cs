@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         internal IPage GetPage()
         {
-            var ctx = PnPConnection.CurrentConnection.PnPContext;
+            var ctx = PnPConnection.Current.PnPContext;
             if (_page != null)
             {
                 return _page;

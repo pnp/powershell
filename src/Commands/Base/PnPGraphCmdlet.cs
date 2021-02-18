@@ -20,9 +20,9 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// Reference the the SharePoint context on the current connection. If NULL it means there is no SharePoint context available on the current connection.
         /// </summary>
-        public ClientContext ClientContext => Connection?.Context ?? PnPConnection.CurrentConnection.Context;
+        public ClientContext ClientContext => Connection?.Context ?? PnPConnection.Current.Context;
 
-        public PnPContext PnPContext => Connection?.PnPContext ?? PnPConnection.CurrentConnection.PnPContext;
+        public PnPContext PnPContext => Connection?.PnPContext ?? PnPConnection.Current.PnPContext;
 
         // do not remove '#!#99'
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")]
@@ -34,9 +34,9 @@ namespace PnP.PowerShell.Commands.Base
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-            if (PnPConnection.CurrentConnection?.Context != null)
+            if (PnPConnection.Current?.Context != null)
             {
-                var contextSettings = PnPConnection.CurrentConnection.Context.GetContextSettings();
+                var contextSettings = PnPConnection.Current.Context.GetContextSettings();
                 if (contextSettings?.Type == Framework.Utilities.Context.ClientContextType.Cookie || contextSettings?.Type == Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
                 {
                     var typeString = contextSettings?.Type == Framework.Utilities.Context.ClientContextType.Cookie ? "WebLogin/Cookie" : "ACS";
@@ -52,15 +52,15 @@ namespace PnP.PowerShell.Commands.Base
         {
             get
             {
-                if (PnPConnection.CurrentConnection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
+                if (PnPConnection.Current?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
                 {
-                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, $"https://{PnPConnection.CurrentConnection.GraphEndPoint}/").GetAwaiter().GetResult();
+                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, $"https://{PnPConnection.Current.GraphEndPoint}/").GetAwaiter().GetResult();
                 }
                 else
                 {
-                    if (PnPConnection.CurrentConnection?.Context != null)
+                    if (PnPConnection.Current?.Context != null)
                     {
-                        return TokenHandler.GetAccessToken(GetType(), $"https://{PnPConnection.CurrentConnection.GraphEndPoint}/.default");
+                        return TokenHandler.GetAccessToken(GetType(), $"https://{PnPConnection.Current.GraphEndPoint}/.default");
                     }
                 }
 
@@ -74,7 +74,8 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (serviceClient == null)
                 {
-                    serviceClient = new GraphServiceClient(new DelegateAuthenticationProvider(
+                    var baseUrl = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0";
+                    serviceClient = new GraphServiceClient(baseUrl, new DelegateAuthenticationProvider(
                             async (requestMessage) =>
                             {
                                 await Task.Run(() =>

@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Site
 
         protected override void ExecuteCmdlet()
         {
-            var url = PnPConnection.CurrentConnection.Url;
+            var url = PnPConnection.Current.Url;
             if (ParameterSpecified(nameof(WebUrl)))
             {
                 url = WebUrl;

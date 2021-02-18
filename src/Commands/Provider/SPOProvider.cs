@@ -54,10 +54,10 @@ namespace PnP.PowerShell.Commands.Provider
                 var webUrl = spoParametes.Url ?? spoParametes.Web.EnsureProperty(w => w.Url);
                 web = spoParametes.Web.Context.Clone(webUrl).Web;
             }
-            else if (PnPConnection.CurrentConnection != null)
+            else if (PnPConnection.Current != null)
             {
-                var webUrl = spoParametes?.Url ?? PnPConnection.CurrentConnection.Context.Web.EnsureProperty(w => w.Url);
-                web = PnPConnection.CurrentConnection.Context.Clone(webUrl).Web;
+                var webUrl = spoParametes?.Url ?? PnPConnection.Current.Context.Web.EnsureProperty(w => w.Url);
+                web = PnPConnection.Current.Context.Clone(webUrl).Web;
             }
             else
             {

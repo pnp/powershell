@@ -22,9 +22,9 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            if (PnPConnection.CurrentConnection.ClientId == PnPConnection.PnPManagementShellClientId)
+            if (PnPConnection.Current.ClientId == PnPConnection.PnPManagementShellClientId)
             {
-                PnPConnection.CurrentConnection.Scopes = new[] { "Group.ReadWrite.All" };
+                PnPConnection.Current.Scopes = new[] { "Group.ReadWrite.All" };
             }
 
             UnifiedGroupEntity group = null;

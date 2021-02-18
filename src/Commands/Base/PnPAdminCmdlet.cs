@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             base.BeginProcessing();
             
-            if (PnPConnection.CurrentConnection == null)
+            if (PnPConnection.Current == null)
             {
                 throw new InvalidOperationException(Resources.NoSharePointConnection);
             }
@@ -42,14 +42,14 @@ namespace PnP.PowerShell.Commands.Base
             {
                 throw new InvalidOperationException(Resources.NoSharePointConnection);
             }
-            SiteContext = PnPConnection.CurrentConnection.Context;
+            SiteContext = PnPConnection.Current.Context;
             
-            PnPConnection.CurrentConnection.CacheContext();
+            PnPConnection.Current.CacheContext();
 
-            if (PnPConnection.CurrentConnection.TenantAdminUrl != null &&
-                (PnPConnection.CurrentConnection.ConnectionType == ConnectionType.O365))
+            if (PnPConnection.Current.TenantAdminUrl != null &&
+                (PnPConnection.Current.ConnectionType == ConnectionType.O365))
             {
-                var uri = new Uri(PnPConnection.CurrentConnection.Url);
+                var uri = new Uri(PnPConnection.Current.Url);
                 var uriParts = uri.Host.Split('.');
                 if (uriParts[0].ToLower().EndsWith("-admin"))
                 {
@@ -59,22 +59,22 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     _baseUri = new Uri($"{uri.Scheme}://{uri.Authority}");
                 }
-                IsDeviceLogin(PnPConnection.CurrentConnection.TenantAdminUrl);
-                PnPConnection.CurrentConnection.CloneContext(PnPConnection.CurrentConnection.TenantAdminUrl);
+                IsDeviceLogin(PnPConnection.Current.TenantAdminUrl);
+                PnPConnection.Current.CloneContext(PnPConnection.Current.TenantAdminUrl);
             }
             else
             {
                 Uri uri = new Uri(ClientContext.Url);
                 var uriParts = uri.Host.Split('.');
                 if (!uriParts[0].EndsWith("-admin") &&
-                    PnPConnection.CurrentConnection.ConnectionType == ConnectionType.O365)
+                    PnPConnection.Current.ConnectionType == ConnectionType.O365)
                 {
                     _baseUri = new Uri($"{uri.Scheme}://{uri.Authority}");
 
                     var adminUrl = $"https://{uriParts[0]}-admin.{string.Join(".", uriParts.Skip(1))}";
                     IsDeviceLogin(adminUrl);
-                    PnPConnection.CurrentConnection.Context =
-                        PnPConnection.CurrentConnection.CloneContext(adminUrl);
+                    PnPConnection.Current.Context =
+                        PnPConnection.Current.CloneContext(adminUrl);
                 }
                 else
                 {
@@ -85,9 +85,9 @@ namespace PnP.PowerShell.Commands.Base
 
         private void IsDeviceLogin(string tenantAdminUrl)
         {
-            if (PnPConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.DeviceLogin)
+            if (PnPConnection.Current.ConnectionMethod == Model.ConnectionMethod.DeviceLogin)
             {
-                if (tenantAdminUrl != PnPConnection.CurrentConnection.Url)
+                if (tenantAdminUrl != PnPConnection.Current.Url)
                 {
                     throw new PSInvalidOperationException($"You used a device login connection to authenticate to SharePoint. We do not support automatically switching context to the tenant administration site which is required to execute this cmdlet. Please use Connect-PnPOnline and connect to '{tenantAdminUrl}' with the appropriate connection parameters");
                 }
@@ -97,7 +97,7 @@ namespace PnP.PowerShell.Commands.Base
         protected override void EndProcessing()
         {
             base.EndProcessing();
-            PnPConnection.CurrentConnection.RestoreCachedContext(PnPConnection.CurrentConnection.Url);
+            PnPConnection.Current.RestoreCachedContext(PnPConnection.Current.Url);
         }
     }
 }

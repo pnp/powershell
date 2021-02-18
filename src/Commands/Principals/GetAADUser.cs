@@ -47,9 +47,9 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            if (PnPConnection.CurrentConnection.ClientId == PnPConnection.PnPManagementShellClientId)
+            if (PnPConnection.Current.ClientId == PnPConnection.PnPManagementShellClientId)
             {
-                PnPConnection.CurrentConnection.Scopes = new[] { "Directory.ReadWrite.All" };
+                PnPConnection.Current.Scopes = new[] { "Directory.ReadWrite.All" };
             }
             if (ParameterSpecified(nameof(Identity)))
             {

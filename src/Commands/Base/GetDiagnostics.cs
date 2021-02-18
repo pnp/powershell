@@ -54,12 +54,12 @@ namespace PnP.PowerShell.Commands.Base
 
         void FillConnectionMethod(PSObject result)
         {
-            AddProperty(result, "ConnectionMethod", PnPConnection.CurrentConnection?.ConnectionMethod);
+            AddProperty(result, "ConnectionMethod", PnPConnection.Current?.ConnectionMethod);
         }
 
         void FillCurrentSite(PSObject result)
         {
-            AddProperty(result, "CurrentSite", PnPConnection.CurrentConnection?.Url);
+            AddProperty(result, "CurrentSite", PnPConnection.Current?.Url);
         }
 
         void FillNewerVersionAvailable(PSObject result)

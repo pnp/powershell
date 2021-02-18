@@ -15,9 +15,9 @@ namespace PnP.PowerShell.Commands.Provisioning
                 var uri = new Uri(resource);
                 resource = uri.Authority;
             }
-            if (PnPConnection.CurrentConnection?.Context != null)
+            if (PnPConnection.Current?.Context != null)
             {
-                var settings = PnPConnection.CurrentConnection.Context.GetContextSettings();
+                var settings = PnPConnection.Current.Context.GetContextSettings();
                 var authManager = settings.AuthenticationManager;
                 if (authManager != null)
                 {

@@ -276,8 +276,8 @@ namespace PnP.PowerShell.Commands.Base
 #else
             WriteVerbose($"PnP PowerShell Cmdlets ({Assembly.GetExecutingAssembly().GetName().Version})");
 #endif
-            PnPConnection.CurrentConnection = connection;
-            if (CreateDrive && PnPConnection.CurrentConnection.Context != null)
+            PnPConnection.Current = connection;
+            if (CreateDrive && PnPConnection.Current.Context != null)
             {
                 var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals(SPOProvider.PSProviderName, StringComparison.InvariantCultureIgnoreCase));
                 if (provider != null)
@@ -292,9 +292,9 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
 
-            if (PnPConnection.CurrentConnection.Url != null)
+            if (PnPConnection.Current.Url != null)
             {
-                var hostUri = new Uri(PnPConnection.CurrentConnection.Url);
+                var hostUri = new Uri(PnPConnection.Current.Url);
                 Environment.SetEnvironmentVariable("PNPPSHOST", hostUri.Host);
                 Environment.SetEnvironmentVariable("PNPPSSITE", hostUri.LocalPath);
             }
@@ -320,9 +320,9 @@ namespace PnP.PowerShell.Commands.Base
         private PnPConnection ConnectACSAppOnly()
         {
             CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with Client Secret uses legacy authentication and provides limited functionality. We can for instance not execute requests towards the Microsoft Graph, which limits cmdlets related to Microsoft Teams, Microsoft Planner, Microsoft Flow and Microsoft 365 Groups. You can hide this warning by using Connect-PnPOnline [your parameters] -WarningAction Ignore", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
-            if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
-                PnPConnection.CurrentConnection?.ClientSecret == ClientSecret &&
-                PnPConnection.CurrentConnection?.Tenant == AADDomain)
+            if (PnPConnection.Current?.ClientId == ClientId &&
+                PnPConnection.Current?.ClientSecret == ClientSecret &&
+                PnPConnection.Current?.Tenant == AADDomain)
             {
                 ReuseAuthenticationManager();
             }
@@ -358,14 +358,14 @@ namespace PnP.PowerShell.Commands.Base
             {
                 Uri oldUri = null;
 
-                if (PnPConnection.CurrentConnection != null)
+                if (PnPConnection.Current != null)
                 {
-                    if (PnPConnection.CurrentConnection.Url != null)
+                    if (PnPConnection.Current.Url != null)
                     {
-                        oldUri = new Uri(PnPConnection.CurrentConnection.Url);
+                        oldUri = new Uri(PnPConnection.Current.Url);
                     }
                 }
-                if (oldUri != null && oldUri.Host == new Uri(Url).Host && PnPConnection.CurrentConnection?.ConnectionMethod == ConnectionMethod.DeviceLogin)
+                if (oldUri != null && oldUri.Host == new Uri(Url).Host && PnPConnection.Current?.ConnectionMethod == ConnectionMethod.DeviceLogin)
                 {
                     ReuseAuthenticationManager();
                 }
@@ -402,9 +402,9 @@ namespace PnP.PowerShell.Commands.Base
                     throw new FileNotFoundException("Certificate not found");
                 }
                 X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(CertificatePath, CertificatePassword);
-                if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
-                    PnPConnection.CurrentConnection?.Tenant == Tenant &&
-                    PnPConnection.CurrentConnection?.Certificate.Thumbprint == certificate.Thumbprint)
+                if (PnPConnection.Current?.ClientId == ClientId &&
+                    PnPConnection.Current?.Tenant == Tenant &&
+                    PnPConnection.Current?.Certificate.Thumbprint == certificate.Thumbprint)
                 {
                     ReuseAuthenticationManager();
                 }
@@ -415,9 +415,9 @@ namespace PnP.PowerShell.Commands.Base
                 var certificateBytes = Convert.FromBase64String(CertificateBase64Encoded);
                 var certificate = new X509Certificate2(certificateBytes, CertificatePassword);
 
-                if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
-                    PnPConnection.CurrentConnection?.Tenant == Tenant &&
-                    PnPConnection.CurrentConnection?.Certificate.Thumbprint == certificate.Thumbprint)
+                if (PnPConnection.Current?.ClientId == ClientId &&
+                    PnPConnection.Current?.Tenant == Tenant &&
+                    PnPConnection.Current?.Certificate.Thumbprint == certificate.Thumbprint)
                 {
                     ReuseAuthenticationManager();
                 }
@@ -437,9 +437,9 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     throw new PSArgumentException("The certificate specified does not have a private key.", nameof(Thumbprint));
                 }
-                if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
-                                    PnPConnection.CurrentConnection?.Tenant == Tenant &&
-                                    PnPConnection.CurrentConnection?.Certificate.Thumbprint == certificate.Thumbprint)
+                if (PnPConnection.Current?.ClientId == ClientId &&
+                                    PnPConnection.Current?.Tenant == Tenant &&
+                                    PnPConnection.Current?.Certificate.Thumbprint == certificate.Thumbprint)
                 {
                     ReuseAuthenticationManager();
                 }
@@ -486,10 +486,10 @@ namespace PnP.PowerShell.Commands.Base
                 ClientId = PnPConnection.PnPManagementShellClientId;
             }
 
-            if (PnPConnection.CurrentConnection?.ClientId == ClientId)
+            if (PnPConnection.Current?.ClientId == ClientId)
             {
-                if (credentials != null && PnPConnection.CurrentConnection?.PSCredential?.UserName == credentials.UserName &&
-                   PnPConnection.CurrentConnection?.PSCredential.GetNetworkCredential().Password == credentials.GetNetworkCredential().Password)
+                if (credentials != null && PnPConnection.Current?.PSCredential?.UserName == credentials.UserName &&
+                   PnPConnection.Current?.PSCredential.GetNetworkCredential().Password == credentials.GetNetworkCredential().Password)
                 {
                     ReuseAuthenticationManager();
                 }
@@ -529,9 +529,9 @@ namespace PnP.PowerShell.Commands.Base
             {
                 ClientId = PnPConnection.PnPManagementShellClientId;
             }
-            if (PnPConnection.CurrentConnection?.ClientId == ClientId)
+            if (PnPConnection.Current?.ClientId == ClientId)
             {
-                if (IsSameOrAdminHost(new Uri(Url), new Uri(PnPConnection.CurrentConnection.Url)))
+                if (IsSameOrAdminHost(new Uri(Url), new Uri(PnPConnection.Current.Url)))
                 {
                     ReuseAuthenticationManager();
                 }
@@ -621,7 +621,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private void ReuseAuthenticationManager()
         {
-            var contextSettings = PnPConnection.CurrentConnection.Context.GetContextSettings();
+            var contextSettings = PnPConnection.Current.Context.GetContextSettings();
             PnPConnection.CachedAuthenticationManager = contextSettings.AuthenticationManager;
         }
         #endregion

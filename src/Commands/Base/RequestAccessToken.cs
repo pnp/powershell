@@ -38,10 +38,10 @@ namespace PnP.PowerShell.Commands.Base
         {
 
             Uri tenantUri = null;
-            if (string.IsNullOrEmpty(TenantUrl) && PnPConnection.CurrentConnection != null)
+            if (string.IsNullOrEmpty(TenantUrl) && PnPConnection.Current != null)
             {
 
-                var uri = new Uri(PnPConnection.CurrentConnection.Url);
+                var uri = new Uri(PnPConnection.Current.Url);
                 var uriParts = uri.Host.Split('.');
                 if (uriParts[0].ToLower().EndsWith("-admin"))
                 {
@@ -73,9 +73,9 @@ namespace PnP.PowerShell.Commands.Base
                 username = Credentials.UserName;
                 authManager = new AuthenticationManager(ClientId, username, password, azureEnvironment: AzureEnvironment);
             }
-            else if (PnPConnection.CurrentConnection != null)
+            else if (PnPConnection.Current != null)
             {
-                authManager = PnPConnection.CurrentConnection.Context.GetContextSettings().AuthenticationManager;
+                authManager = PnPConnection.Current.Context.GetContextSettings().AuthenticationManager;
             }
             else
             {
@@ -92,7 +92,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    token = authManager.GetAccessTokenAsync(PnPConnection.CurrentConnection.Url).GetAwaiter().GetResult();
+                    token = authManager.GetAccessTokenAsync(PnPConnection.Current.Url).GetAwaiter().GetResult();
                 }
             }
 

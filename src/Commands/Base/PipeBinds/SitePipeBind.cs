@@ -71,7 +71,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 var uri = new Uri(_url);
 
-                var result = Utilities.REST.RestHelper.GetAsync(httpClient, $"https://{PnPConnection.CurrentConnection.GraphEndPoint}/v1.0/sites/{uri.Host}:{uri.LocalPath}", accesstoken).GetAwaiter().GetResult();
+                var result = Utilities.REST.RestHelper.GetAsync(httpClient, $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/sites/{uri.Host}:{uri.LocalPath}", accesstoken).GetAwaiter().GetResult();
                 if (!string.IsNullOrEmpty(result))
                 {
                     var resultElement = JsonSerializer.Deserialize<JsonElement>(result);

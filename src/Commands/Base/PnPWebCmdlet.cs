@@ -48,20 +48,20 @@ namespace PnP.PowerShell.Commands
             {
                 var subWeb = Web.GetWeb(ClientContext);
                 subWeb.EnsureProperty(w => w.Url);
-                PnPConnection.CurrentConnection.CloneContext(subWeb.Url);
-                web = PnPConnection.CurrentConnection.Context.Web;
+                PnPConnection.Current.CloneContext(subWeb.Url);
+                web = PnPConnection.Current.Context.Web;
             }
 #pragma warning restore CS0618
             else
             {
-                if (PnPConnection.CurrentConnection.Context.Url != PnPConnection.CurrentConnection.Url)
+                if (PnPConnection.Current.Context.Url != PnPConnection.Current.Url)
                 {
-                    PnPConnection.CurrentConnection.RestoreCachedContext(PnPConnection.CurrentConnection.Url);
+                    PnPConnection.Current.RestoreCachedContext(PnPConnection.Current.Url);
                 }
                 web = ClientContext.Web;
             }
 
-            PnPConnection.CurrentConnection.Context.ExecuteQueryRetry();
+            PnPConnection.Current.Context.ExecuteQueryRetry();
 
             return web;
         }
@@ -69,16 +69,16 @@ namespace PnP.PowerShell.Commands
         protected override void EndProcessing()
         {
             base.EndProcessing();
-            if (PnPConnection.CurrentConnection.Context.Url != PnPConnection.CurrentConnection.Url)
+            if (PnPConnection.Current.Context.Url != PnPConnection.Current.Url)
             {
-                PnPConnection.CurrentConnection.RestoreCachedContext(PnPConnection.CurrentConnection.Url);
+                PnPConnection.Current.RestoreCachedContext(PnPConnection.Current.Url);
             }
         }
 
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-            PnPConnection.CurrentConnection.CacheContext();
+            PnPConnection.Current.CacheContext();
         }
     }
 }

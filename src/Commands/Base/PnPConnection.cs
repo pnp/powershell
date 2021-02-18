@@ -64,7 +64,7 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static List<ClientContext> ContextCache { get; set; }
 
-        public static PnPConnection CurrentConnection { get; internal set; }
+        public static PnPConnection Current { get; internal set; }
         public ConnectionType ConnectionType { get; protected set; }
 
         /// <summary>

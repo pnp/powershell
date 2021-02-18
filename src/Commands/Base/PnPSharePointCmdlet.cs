@@ -20,9 +20,9 @@ namespace PnP.PowerShell.Commands
         /// <summary>
         /// Reference the the SharePoint context on the current connection. If NULL it means there is no SharePoint context available on the current connection.
         /// </summary>
-        public ClientContext ClientContext => Connection?.Context ?? PnPConnection.CurrentConnection.Context;
+        public ClientContext ClientContext => Connection?.Context ?? PnPConnection.Current.Context;
 
-        public PnPContext PnPContext => Connection?.PnPContext ?? PnPConnection.CurrentConnection.PnPContext;
+        public PnPContext PnPContext => Connection?.PnPContext ?? PnPConnection.Current.PnPContext;
 
         public new HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient(ClientContext);
 
@@ -35,9 +35,9 @@ namespace PnP.PowerShell.Commands
         {
             base.BeginProcessing();
 
-            if (PnPConnection.CurrentConnection != null && PnPConnection.CurrentConnection.ApplicationInsights != null)
+            if (PnPConnection.Current != null && PnPConnection.Current.ApplicationInsights != null)
             {
-                PnPConnection.CurrentConnection.ApplicationInsights.TrackEvent(MyInvocation.MyCommand.Name);
+                PnPConnection.Current.ApplicationInsights.TrackEvent(MyInvocation.MyCommand.Name);
             }
 
             if (Connection == null && ClientContext == null)
@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands
         {
             try
             {
-                var tag = PnPConnection.CurrentConnection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name;
+                var tag = PnPConnection.Current.PnPVersionTag + ":" + MyInvocation.MyCommand.Name;
                 if (tag.Length > 32)
                 {
                     tag = tag.Substring(0, 32);
@@ -76,8 +76,8 @@ namespace PnP.PowerShell.Commands
 
             catch (Exception ex)
             {
-                PnPConnection.CurrentConnection.RestoreCachedContext(PnPConnection.CurrentConnection.Url);
-                ex.Data["CorrelationId"] = PnPConnection.CurrentConnection.Context.TraceCorrelationId;
+                PnPConnection.Current.RestoreCachedContext(PnPConnection.Current.Url);
+                ex.Data["CorrelationId"] = PnPConnection.Current.Context.TraceCorrelationId;
                 ex.Data["TimeStampUtc"] = DateTime.UtcNow;
                 var errorDetails = new ErrorDetails(ex.Message);
 
@@ -99,17 +99,17 @@ namespace PnP.PowerShell.Commands
         {
             get
             {
-                if (PnPConnection.CurrentConnection != null)
+                if (PnPConnection.Current != null)
                 {
-                    if (PnPConnection.CurrentConnection.Context != null)
+                    if (PnPConnection.Current.Context != null)
                     {
-                        var settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(PnPConnection.CurrentConnection.Context);
+                        var settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(PnPConnection.Current.Context);
                         if (settings != null)
                         {
                             var authManager = settings.AuthenticationManager;
                             if (authManager != null)
                             {
-                                return authManager.GetAccessTokenAsync(PnPConnection.CurrentConnection.Context.Url).GetAwaiter().GetResult();
+                                return authManager.GetAccessTokenAsync(PnPConnection.Current.Context.Url).GetAwaiter().GetResult();
                             }
                         }
                     }
@@ -122,15 +122,15 @@ namespace PnP.PowerShell.Commands
         {
             get
             {
-                if (PnPConnection.CurrentConnection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
+                if (PnPConnection.Current?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
                 {
                     return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, $"https://graph.microsoft.com/").GetAwaiter().GetResult();
                 }
                 else
                 {
-                    if (PnPConnection.CurrentConnection?.Context != null)
+                    if (PnPConnection.Current?.Context != null)
                     {
-                        return TokenHandler.GetAccessToken(GetType(), $"https://{PnPConnection.CurrentConnection.GraphEndPoint}/.default");
+                        return TokenHandler.GetAccessToken(GetType(), $"https://{PnPConnection.Current.GraphEndPoint}/.default");
                     }
                 }
 
