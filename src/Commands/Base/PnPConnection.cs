@@ -488,14 +488,14 @@ namespace PnP.PowerShell.Commands.Base
 
         #region Constructors
 
-        internal PnPConnection(ClientContext context, ConnectionType connectionType, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, InitializationType initializationType)
+        private PnPConnection(ClientContext context, ConnectionType connectionType, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, InitializationType initializationType)
         : this(context, connectionType, credential, url, tenantAdminUrl, pnpVersionTag, initializationType)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
         }
 
-        internal PnPConnection(ClientContext context,
+        private PnPConnection(ClientContext context,
                                     ConnectionType connectionType,
                                     PSCredential credential,
                                     string url,
@@ -527,7 +527,7 @@ namespace PnP.PowerShell.Commands.Base
             ClientId = PnPManagementShellClientId;
         }
 
-        internal PnPConnection(string pnpVersionTag, InitializationType initializationType, string tenantAdminUrl)
+        private PnPConnection(string pnpVersionTag, InitializationType initializationType, string tenantAdminUrl)
         {
             InitializeTelemetry(null, initializationType);
             var coreAssembly = Assembly.GetExecutingAssembly();
