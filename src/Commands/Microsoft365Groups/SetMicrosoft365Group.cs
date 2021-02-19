@@ -80,7 +80,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                         members: Members,
                         groupLogo: groupLogoStream,
                         isPrivate: isPrivateGroup,
-                        createTeam: CreateTeam);
+                        createTeam: CreateTeam, azureEnvironment: PnPConnection.Current.AzureEnvironment);
 
                     if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                     {
@@ -88,7 +88,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                         UnifiedGroupsUtility.SetUnifiedGroupVisibility(group.GroupId, AccessToken, HideFromAddressLists, HideFromOutlookClients);
                     }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     while (e.InnerException != null) e = e.InnerException;
                     WriteError(new ErrorRecord(e, "GROUPUPDATEFAILED", ErrorCategory.InvalidOperation, this));

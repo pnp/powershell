@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             }
             else
             {
-                groups = UnifiedGroupsUtility.GetUnifiedGroups(AccessToken, includeSite: IncludeSiteUrl, includeClassification: IncludeClassification.IsPresent, includeHasTeam: IncludeHasTeam.IsPresent);
+                groups = UnifiedGroupsUtility.GetUnifiedGroups(AccessToken, includeSite: IncludeSiteUrl, includeClassification: IncludeClassification.IsPresent, includeHasTeam: IncludeHasTeam.IsPresent, azureEnvironment: PnPConnection.Current.AzureEnvironment);
             }
 
             if (group != null)

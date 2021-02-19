@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 
                 if (group != null)
                 {
-                    UnifiedGroupsUtility.DeleteUnifiedGroup(group.GroupId, AccessToken);
+                    UnifiedGroupsUtility.DeleteUnifiedGroup(group.GroupId, AccessToken, azureEnvironment: PnPConnection.Current.AzureEnvironment);
                 }
             }
         }

@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
             if (group != null)
             {
-                UnifiedGroupsUtility.AddUnifiedGroupOwners(group.GroupId, Users, AccessToken, RemoveExisting.ToBool());
+                UnifiedGroupsUtility.AddUnifiedGroupOwners(group.GroupId, Users, AccessToken, RemoveExisting.ToBool(), azureEnvironment: PnPConnection.Current.AzureEnvironment);
             }
         }
     }

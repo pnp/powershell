@@ -256,7 +256,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 Task.Factory.StartNew(() =>
                 {
-                    token = AzureAuthHelper.AuthenticateInteractive(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment);
+                    token = AzureAuthHelper.AuthenticateInteractive(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment, Tenant);
                     if (token == null)
                     {
                         messageWriter.WriteWarning("Operation cancelled or no token retrieved.");
@@ -387,7 +387,7 @@ namespace PnP.PowerShell.Commands.Base
         private bool AppExists(string appName, HttpClient httpClient, string token)
         {
             Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Checking if application '{appName}' does not exist yet...");
-            var azureApps = GraphHelper.GetAsync<RestResultCollection<AzureApp>>(httpClient, $@"/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token).GetAwaiter().GetResult();
+            var azureApps = GraphHelper.GetAsync<RestResultCollection<AzureApp>>(httpClient, $@"https://{PnP.Framework.AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token).GetAwaiter().GetResult();
             if (azureApps != null && azureApps.Items.Any())
             {
                 Host.UI.WriteLine();
@@ -433,7 +433,7 @@ namespace PnP.PowerShell.Commands.Base
             var requestContent = new StringContent(JsonSerializer.Serialize(payload));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-            var azureApp = GraphHelper.PostAsync<AzureApp>(httpClient, "/v1.0/applications", requestContent, token).GetAwaiter().GetResult();
+            var azureApp = GraphHelper.PostAsync<AzureApp>(httpClient, $"https://{PnP.Framework.AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications", requestContent, token).GetAwaiter().GetResult();
             if (azureApp != null)
             {
                 Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"App {azureApp.DisplayName} with id {azureApp.AppId} created.");
@@ -505,6 +505,6 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-       
+
     }
 }

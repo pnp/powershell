@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             }
             else
             {
-                groups = UnifiedGroupsUtility.ListDeletedUnifiedGroups(AccessToken);
+                groups = UnifiedGroupsUtility.ListDeletedUnifiedGroups(AccessToken, azureEnvironment: PnPConnection.Current.AzureEnvironment);
             }
 
             if (group != null)

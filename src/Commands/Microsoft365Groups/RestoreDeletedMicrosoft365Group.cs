@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
             if (group != null)
             {
-                UnifiedGroupsUtility.RestoreDeletedUnifiedGroup(group.GroupId, AccessToken);
+                UnifiedGroupsUtility.RestoreDeletedUnifiedGroup(group.GroupId, AccessToken, azureEnvironment: PnPConnection.Current.AzureEnvironment);
             }
         }
     }

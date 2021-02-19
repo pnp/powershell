@@ -445,7 +445,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection CreateWithInteractiveLogin(Uri uri, string clientId, string tenantAdminUrl, bool launchBrowser, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool forceAuthentication)
+        internal static PnPConnection CreateWithInteractiveLogin(Uri uri, string clientId, string tenantAdminUrl, bool launchBrowser, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool forceAuthentication, string tenant)
         {
             PnP.Framework.AuthenticationManager authManager = null;
             if (PnPConnection.CachedAuthenticationManager != null && !forceAuthentication)
@@ -459,6 +459,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !launchBrowser, cancellationTokenSource);
                 },
+                tenant,
                 successMessageHtml: $"You successfully authenticated with PnP PowerShell. Feel free to close this {(launchBrowser ? "tab" : "window")}.",
                 failureMessageHtml: $"You did not authenticate with PnP PowerShell. Feel free to close this browser {(launchBrowser ? "tab" : "window")}.",
                 azureEnvironment: azureEnvironment);
@@ -591,7 +592,10 @@ namespace PnP.PowerShell.Commands.Base
                             _graphEndPoint = settings.AuthenticationManager.GetGraphEndPoint();
                         }
                     }
-                    _graphEndPoint = "graph.microsoft.com";
+                    else
+                    {
+                        _graphEndPoint = "graph.microsoft.com";
+                    }
                 }
                 return _graphEndPoint;
             }

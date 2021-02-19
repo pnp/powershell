@@ -61,7 +61,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        internal static string AuthenticateInteractive(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment)
+        internal static string AuthenticateInteractive(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment, string tenantId)
         {
             try
             {
@@ -69,8 +69,11 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !noPopup, cancellationTokenSource);
                 },
-                successMessageHtml: $"You successfully authenticated with PnP PowerShell. Feel free to close this {(noPopup ? "tab" : "window")}.",
-                failureMessageHtml: $"You did not authenticate with PnP PowerShell. Feel free to close this browser {(noPopup ? "tab" : "window")}."))
+                tenantId,
+                $"You successfully authenticated with PnP PowerShell. Feel free to close this {(noPopup ? "tab" : "window")}.",
+                $"You did not authenticate with PnP PowerShell. Feel free to close this browser {(noPopup ? "tab" : "window")}.",
+                azureEnvironment)
+                )
                 {
                     authManager.ClearTokenCache();
                     try

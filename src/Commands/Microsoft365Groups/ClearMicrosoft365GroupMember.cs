@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
             if (group != null)
             {
-                UnifiedGroupsUtility.ClearUnifiedGroupMembers(group.GroupId, AccessToken);
+                UnifiedGroupsUtility.ClearUnifiedGroupMembers(group.GroupId, AccessToken, azureEnvironment: PnPConnection.Current.AzureEnvironment);
             }
         }
     }

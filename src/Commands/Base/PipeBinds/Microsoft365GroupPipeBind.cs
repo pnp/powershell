@@ -71,11 +71,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
             if (Group != null)
             {
-                group = UnifiedGroupsUtility.GetDeletedUnifiedGroup(Group.GroupId, accessToken);
+                group = UnifiedGroupsUtility.GetDeletedUnifiedGroup(Group.GroupId, accessToken, azureEnvironment: PnPConnection.Current.AzureEnvironment);
             }
             else if (!string.IsNullOrEmpty(GroupId))
             {
-                group = UnifiedGroupsUtility.GetDeletedUnifiedGroup(GroupId, accessToken);
+                group = UnifiedGroupsUtility.GetDeletedUnifiedGroup(GroupId, accessToken, azureEnvironment: PnPConnection.Current.AzureEnvironment);
             }
 
             return group;

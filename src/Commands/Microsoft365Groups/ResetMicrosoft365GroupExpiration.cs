@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         protected override void ExecuteCmdlet()
         {
             var group = Identity.GetGroup(AccessToken, false);
-            UnifiedGroupsUtility.RenewUnifiedGroup(group.GroupId, AccessToken);
+            UnifiedGroupsUtility.RenewUnifiedGroup(group.GroupId, AccessToken, azureEnvironment: PnPConnection.Current.AzureEnvironment);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             if (group != null)
             {
                 // Get members of the group
-                List<UnifiedGroupUser> members = UnifiedGroupsUtility.GetUnifiedGroupMembers(group, AccessToken);
+                List<UnifiedGroupUser> members = UnifiedGroupsUtility.GetUnifiedGroupMembers(group, AccessToken, azureEnvironment: PnPConnection.Current.AzureEnvironment);
                 WriteObject(members);
             }
         }

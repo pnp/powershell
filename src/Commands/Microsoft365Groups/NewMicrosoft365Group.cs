@@ -51,7 +51,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             {
                 var candidates = UnifiedGroupsUtility.GetUnifiedGroups(AccessToken,
                     mailNickname: MailNickname,
-                    endIndex: 1);
+                    endIndex: 1, azureEnvironment: PnPConnection.Current.AzureEnvironment);
                 // ListUnifiedGroups retrieves groups with starts-with, so need another check
                 var existingGroup = candidates.Any(g => g.MailNickname.Equals(MailNickname, StringComparison.CurrentCultureIgnoreCase));
 
@@ -73,7 +73,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     members: Members,
                     groupLogoPath: GroupLogoPath,
                     isPrivate: IsPrivate,
-                    createTeam: CreateTeam);
+                    createTeam: CreateTeam, azureEnvironment: PnPConnection.Current.AzureEnvironment);
 
                 WriteObject(group);
             }

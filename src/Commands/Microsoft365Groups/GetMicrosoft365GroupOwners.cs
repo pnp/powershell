@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             if (group != null)
             {
                 // Get Owners of the group
-                List<UnifiedGroupUser> owners = UnifiedGroupsUtility.GetUnifiedGroupOwners(group, AccessToken);
+                List<UnifiedGroupUser> owners = UnifiedGroupsUtility.GetUnifiedGroupOwners(group, AccessToken, azureEnvironment: PnPConnection.Current.AzureEnvironment);
                 WriteObject(owners);
             }
         }
