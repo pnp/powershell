@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current Nightly]
 
 ### Added
+- Added fixes for authentication to GCC, GCC High and GCC DoD environments using certificate or interactive login.
 - Added `Grant-PnPAzureADAppSitePermission`, `Get-PnPAzureADAppSitePermission`, `Set-PnPAzureADAppSitePermission` and `Revoke-PnPAzureADAppSitePermission`
 
 ### Changed
