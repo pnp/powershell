@@ -68,10 +68,13 @@ namespace PnP.PowerShell.Commands.Base
                 var uriParts = uri.Host.Split('.');
                 if (!uriParts[0].EndsWith("-admin") &&
                     PnPConnection.Current.ConnectionType == ConnectionType.O365)
-                {
+                {                    
                     _baseUri = new Uri($"{uri.Scheme}://{uri.Authority}");
 
-                    var adminUrl = $"https://{uriParts[0]}-admin.{string.Join(".", uriParts.Skip(1))}";
+                    // Remove -my postfix from the tenant name, if present, to allow elevation to the admin context even when being connected to the MySite
+                    var tenantName = uriParts[0].EndsWith("-my") ? uriParts[0].Remove(uriParts[0].Length - 3, 3) : uriParts[0];
+
+                    var adminUrl = $"https://{tenantName}-admin.{string.Join(".", uriParts.Skip(1))}";
                     IsDeviceLogin(adminUrl);
                     PnPConnection.Current.Context =
                         PnPConnection.Current.CloneContext(adminUrl);
