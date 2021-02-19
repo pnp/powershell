@@ -36,7 +36,6 @@ Returns True if the the SharePoint Online App Bar is hidden or False if it is no
 
 ## PARAMETERS
 
-None
 
 ## RELATED LINKS
 
