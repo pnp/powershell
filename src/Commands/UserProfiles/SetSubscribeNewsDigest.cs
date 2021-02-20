@@ -76,6 +76,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 WriteVerbose("Adding notification subscription blocker");
 
                 var item = notificationsList.AddItem(new ListItemCreationInformation());
+                
                 item["SubscriptionId"] = "email_unsubscribe_AutoNewsDigest";
                 item["NotificationScenarios"] = "AutoNewsDigest";
                 item["SubmissionDateTime"] = System.DateTime.UtcNow;
@@ -84,6 +85,8 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 item["SecondaryShard"] = "0";
                 item["SecondsToExpiry"] = "0";
                 item["NotificationCounter"] = "0";
+                item["NotificationHandle"] = "8fc46031-b625-4e8c-809d-06ee823971b0";
+
                 item.Update();
                 oneDriveContext.ExecuteQueryRetry();
                 subscriptionEnabled = false;
