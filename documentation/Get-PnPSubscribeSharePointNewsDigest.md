@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Set-PnPSubscribeNewsDigest
+title: Get-PnPSubscribeSharePointNewsDigest
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPSubscribeNewsDigest.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSubscribeSharePointNewsDigest.html
 ---
  
-# Set-PnPSubscribeNewsDigest
+# Get-PnPSubscribeSharePointNewsDigest
 
 ## SYNOPSIS
 
@@ -17,34 +17,27 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPSubscribeNewsDig
 
 You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet.
 
-Enables or disabled the SharePoint News Digest mails for a particular user.
+Retrieves if the SharePoint News Digest mails are enabled or disabled for a particular user.
 
 ## SYNTAX
 
 ```powershell
-Set-PnPSubscribeNewsDigest -Account <String> -Enabled <Boolean> [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPSubscribeSharePointNewsDigest -Account <String> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 Requires a connection to a SharePoint Tenant Admin site.
 
-Enables or disabled the SharePoint News Digest mails for a particular user.
+Retrieves if the SharePoint News Digest mails are enabled or disabled for a particular user.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPSubscribeNewsDigest -Account 'user@domain.com' -Enabled:$true
+Get-PnPSubscribeSharePointNewsDigest -Account 'user@domain.com'
 ```
 
-Enables the user user@domain.com for receiving the SharePoint News Digest e-mails.
-
-### EXAMPLE 2
-```powershell
-Set-PnPSubscribeNewsDigest -Account 'user@domain.com' -Enabled:$false
-```
-
-Stops the user user@domain.com for receiving the SharePoint News Digest e-mails.
+Returns if this user will receive the SharePoint News digest mails
 
 ## PARAMETERS
 
@@ -57,20 +50,6 @@ Parameter Sets: (All)
 
 Required: True
 Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Enabled
-Boolean indicating if the user should receive the SharePoint News Digest e-mails
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-
-Required: True
-Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

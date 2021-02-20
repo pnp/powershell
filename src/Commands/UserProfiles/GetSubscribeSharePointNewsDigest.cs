@@ -7,14 +7,11 @@ using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
-    [Cmdlet(VerbsCommon.Set, "PnPSubscribeNewsDigest")]
-    public class SetSubscribeNewsDigest : PnPAdminCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPSubscribeSharePointNewsDigest")]
+    public class GetSubscribeSharePointNewsDigest : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Account;
-
-        [Parameter(Mandatory = true)]
-        public SwitchParameter Enabled;
 
         protected override void ExecuteCmdlet()
         {
@@ -61,40 +58,9 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
             WriteVerbose($"{listItems.Count} item{(listItems.Count != 1 ? "s" : "")} returned");
 
-            var subscriptionEnabled = listItems.Count > 0;
-
-            if(Enabled.ToBool() && listItems.Count > 0)
-            {
-                WriteVerbose("Removing notification subscription blocker");
-
-                listItems[0].DeleteObject();
-                oneDriveContext.ExecuteQueryRetry();
-                subscriptionEnabled = true;
-            }
-            if(!Enabled.ToBool() && listItems.Count == 0)
-            {
-                WriteVerbose("Adding notification subscription blocker");
-
-                var item = notificationsList.AddItem(new ListItemCreationInformation());
-                
-                item["SubscriptionId"] = "email_unsubscribe_AutoNewsDigest";
-                item["NotificationScenarios"] = "AutoNewsDigest";
-                item["SubmissionDateTime"] = System.DateTime.UtcNow;
-                item["ExpirationDateTime"] = new System.DateTime(9999, 12, 31).ToUniversalTime();
-                item["Shard"] = "0";
-                item["SecondaryShard"] = "0";
-                item["SecondsToExpiry"] = "0";
-                item["NotificationCounter"] = "0";
-                item["NotificationHandle"] = "8fc46031-b625-4e8c-809d-06ee823971b0";
-
-                item.Update();
-                oneDriveContext.ExecuteQueryRetry();
-                subscriptionEnabled = false;
-            }            
-
             var record = new PSObject();
             record.Properties.Add(new PSVariableProperty(new PSVariable("Account", Account)));
-            record.Properties.Add(new PSVariableProperty(new PSVariable("Enabled", subscriptionEnabled)));
+            record.Properties.Add(new PSVariableProperty(new PSVariable("Enabled", listItems.Count == 0)));
 
             WriteObject(record);
         }
