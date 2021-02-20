@@ -37,6 +37,7 @@ namespace PnP.PowerShell.Commands
         public List<string> Owners;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        [Alias("NoScriptSite")]
         public SwitchParameter DenyAddAndCustomizePages;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
