@@ -746,6 +746,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPSiteScriptPackage.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPSiteScriptPackage.html",
+          "hash": "9byNLUdO98WCysFhaTPwJg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPSiteTemplate.md",
       "output": {
         ".html": {
@@ -2851,6 +2863,18 @@
         ".html": {
           "relative_path": "cmdlets/Get-PnPTeamsUser.html",
           "hash": "ij0virt4JNNdW3XO6jYcIw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPTemporarilyDisableAppBar.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPTemporarilyDisableAppBar.html",
+          "hash": "Ebf1J3uPnpZOB7i4HCOOww=="
         }
       },
       "is_incremental": false,
@@ -5906,6 +5930,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPSiteScriptPackage.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPSiteScriptPackage.html",
+          "hash": "62SBSgyk6hhFKL0PY9vmZA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPSiteTemplateMetadata.md",
       "output": {
         ".html": {
@@ -6031,6 +6067,18 @@
         ".html": {
           "relative_path": "cmdlets/Set-PnPTeamsTeamPicture.html",
           "hash": "QoOFepl2Hc50mDC47/H8Fg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPTemporarilyDisableAppBar.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPTemporarilyDisableAppBar.html",
+          "hash": "CqebCCSaQAHftf4l83dCKw=="
         }
       },
       "is_incremental": false,
@@ -6450,7 +6498,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "vx21u8iU9t2ZwQvem3CHMA=="
+          "hash": "kHwDXvSJDoqo6SAdLxmTfQ=="
         }
       },
       "is_incremental": false,
@@ -6529,7 +6577,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 537,
+          "total_file_count": 541,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
