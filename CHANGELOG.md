@@ -18,6 +18,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 - Todd Klindt [ToddKlindt]
+- Koen Zomers [koenzomers]
+- Veronique Lengelle [veronicageek]
+- Mike Jensen [michael-jensen]
+- Leon Armston [leonarmston]
 
 ## [1.3.0]
 
