@@ -100,3 +100,52 @@ Connect-PnPOnline -Url https://contoso.sharepoint.com -Interactive
 ```
 
 This will show a popup window which will allow to authenticate and step through the multi-factor authentication flow.
+
+## Authentication to GCC environments
+
+In order to authentication to a GCC environment you have to take a few steps. Notice that this will work as of release 1.3.9-nightly or later.
+
+### Register your own Azure AD App
+You are required to register your own Azure AD App in order to authentication
+
+```powershell
+Register-PnPAzureADApp -ApplicationName "PnP PowerShell" -Tenant [yourtenant].onmicrosoft.com -Interactive -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD] -Scopes SPO.AllSites.FullControl, SPO.Sites.FullControl.All, MSGraph.Group.ReadWrite.All
+```
+
+The AzureEnvironment parameter only allows one value. Select the correct one that matches your cloud deployment.
+
+The above statement grants a few permission scopes. You might want to add more if you want to. Alternatively, after registering the application, navigate to the Azure AD, locate the app registration, and grant more permissions and consent to them.
+
+### Optionally modify the manifest for the app
+There is a limitation in the Azure AD for GCC environments where you cannot select permission scopes for SharePoint Online. In order to add specific SharePoint rights you will have to manually add them to the manifest that you can edit in Azure AD:
+
+Locate the `requiredResourceAccess` section and add to or modify the existing entries. See the example below (notice, this is an example, do not copy and paste this as is as it will limit the permissions to only AllSites.FullControl):
+
+```json
+"requiredResourceAccess": [
+{
+    "resourceAppId": "00000003-0000-0ff1-ce00-000000000000",
+    "resourceAccess": [
+		{
+			"id": "56680e0d-d2a3-4ae1-80d8-3c4f2100e3d0",
+			"type": "Scope"
+		}
+      ]
+}
+```
+
+You can add more permissions by using the following values:
+
+The resourceAppId for SharePoint = "00000003-0000-0ff1-ce00-000000000000" 
+
+Permission | Permission type | Id | Type
+| -------| ----------- | ------ | ----- |
+| Sites.FullControl.All | Application | 678536fe-1083-478a-9c59-b99265e6b0d3 | Role |
+| AllSites.FullControl | Delegate | 56680e0d-d2a3-4ae1-80d8-3c4f2100e3d0 | Scope |
+
+
+### Connect
+```powershell
+Connect-PnPOnline -Url [yoursite] -Interactive -ClientId [clientid of the app] -Tenant [yourtenant].onmicrosoft.com -AzureGovernment [USGovernment|USGovernmentHigh|USGovernmentDoD]
+```
+The AzureEnvironment parameter only allows one value. Select the correct one that matches your cloud deployment.
