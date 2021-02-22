@@ -22,6 +22,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Veronique Lengelle [veronicageek]
 - Mike Jensen [michael-jensen]
 - Leon Armston [leonarmston]
+- Ganesh Sanap [ganesh-sanap]
+- vin-ol [vin-ol]
 
 ## [1.3.0]
 
