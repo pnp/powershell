@@ -79,3 +79,7 @@ You will be asked to authenticate. After that the cmdlet will generate a certifi
 ```PowerShell
 Connect-PnPOnline -ClientId fa1a81f1-e729-44d8-bb71-0a0c339c0f62 -Url "https://tenant.sharepoint.com" -Tenant tenant.onmicrosoft.com -Thumbprint $thumbprint
 ```
+
+## Connect to a National Cloud Deployment (GCC/Germany/China)
+
+If you are on a National Cloud instance, read the [authentication](authentication.md) article for more information
