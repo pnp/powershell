@@ -7,7 +7,7 @@ external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTemporarilyDisableAppBar.html
 ---
  
-# Set-PnPHomeSite
+# Get-PnPTemporarilyDisableAppBar
 
 ## SYNOPSIS
 
@@ -29,7 +29,7 @@ Get-PnPTemporarilyDisableAppBar [<CommonParameters>]
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPTemporarilyDisableAppBar
+Get-PnPTemporarilyDisableAppBar
 ```
 
 Returns True if the the SharePoint Online App Bar is hidden or False if it is not.
