@@ -1,5 +1,6 @@
 ﻿using PnP.Framework.Entities;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Principals;
@@ -116,14 +117,14 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static async Task<Team> NewTeamAsync(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, TeamCreationInformation teamCI)
+        public static async Task<Team> NewTeamAsync(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, TeamCreationInformation teamCI, TeamsTemplateType templateType = TeamsTemplateType.None)
         {
             Group group = null;
             Team returnTeam = null;
             // Create group
             if (string.IsNullOrEmpty(groupId))
             {
-                group = await CreateGroupAsync(accessToken, httpClient, displayName, description, classification, mailNickname, owner, visibility);
+                group = await CreateGroupAsync(accessToken, httpClient, displayName, description, classification, mailNickname, owner, visibility, templateType);
                 bool wait = true;
                 int iterations = 0;
                 while (wait)
@@ -193,7 +194,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return returnTeam;
         }
 
-        private static async Task<Group> CreateGroupAsync(string accessToken, HttpClient httpClient, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility)
+        private static async Task<Group> CreateGroupAsync(string accessToken, HttpClient httpClient, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, TeamsTemplateType templateType = TeamsTemplateType.None)
         {
             Group group = new Group();
             // get the owner if no owner was specified
@@ -235,7 +236,38 @@ namespace PnP.PowerShell.Commands.Utilities
             group.Members = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
             group.Visibility = visibility == GroupVisibility.NotSpecified ? GroupVisibility.Private : visibility;
 
-            return await GraphHelper.PostAsync<Group>(httpClient, "v1.0/groups", group, accessToken);
+            switch (templateType)
+            {
+                case TeamsTemplateType.EDU_Class:
+                    {
+                        group.Visibility = GroupVisibility.HiddenMembership;
+                        group.CreationOptions = new List<string> { "ExchangeProvisioningFlags:461", "classAssignments" };
+                        group.EducationObjectType = "Section";
+                        break;
+                    }
+                case TeamsTemplateType.EDU_PLC:
+                    {
+                        group.CreationOptions = new List<string> { "PLC" };
+                        break;
+                    }
+                default:
+                    {
+                        group.CreationOptions = new List<string> { "ExchangeProvisioningFlags:3552" };
+                        break;
+                    }
+            }
+            try
+            {
+                return await GraphHelper.PostAsync<Group>(httpClient, "v1.0/groups", group, accessToken);
+            } catch (GraphException ex)
+            {
+                if(ex.Error.Message.Contains("extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType"))
+                {
+                    throw new PSInvalidOperationException("Invalid EDU license type");
+                } else {
+                    throw;
+                }
+            }
 
         }
 

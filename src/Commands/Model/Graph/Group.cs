@@ -26,13 +26,19 @@ namespace PnP.PowerShell.Commands.Model.Graph
         public List<string> GroupTypes { get; set; }
 
         public bool? SecurityEnabled { get; set; }
+
+        public List<string> CreationOptions { get; set; }
+        
+        [JsonPropertyName("extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType")]
+        public string EducationObjectType { get; set; }
     }
 
     public enum GroupVisibility
     {
         NotSpecified,
         Private,
-        Public
+        Public,
+        HiddenMembership
     }
 
 }
