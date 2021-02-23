@@ -120,7 +120,7 @@ You are not creating a new application in the sense of something that runs in yo
 <p>When connecting to <a href="https://contoso.sharepoint.com">https://contoso.sharepoint.com</a> you can use this command:</p>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com 
 </code></pre>
-<p>Connect-PnPOnline will look through the Windows Credential Manager for a credential matching the URL. If it finds one it will use it. It will also match that credential with deeper connection URLs like <a href="https://contoso.sharepoint.com/sites/IT">https://contoso.sharepoint.com/sites/IT</a>. You can create additional stored crednetials for deeper sites if you routinely connect to them with different credentials. If you want to connect with a different set of credentials you can use the -Credentials parameter to specify them. A stored credential can be used for other URLs, like the Admin site:</p>
+<p>Connect-PnPOnline will look through the Windows Credential Manager for a credential matching the URL. If it finds one it will use it. It will also match that credential with deeper connection URLs like <a href="https://contoso.sharepoint.com/sites/IT">https://contoso.sharepoint.com/sites/IT</a>. You can create additional stored credentials for deeper sites if you routinely connect to them with different credentials. If you want to connect with a different set of credentials you can use the -Credentials parameter to specify them. A stored credential can be used for other URLs, like the Admin site:</p>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso-admin.sharepoint.com -Credentials https://contoso.sharepoint.com 
 </code></pre>
 <h2 id="authenticating-with-pre-stored-credentials-using-the-secrets-management-module-from-microsoft-multi-platform">Authenticating with pre-stored credentials using the Secrets Management Module from Microsoft (Multi-Platform)</h2>
@@ -140,6 +140,58 @@ Set-Secret -Name &quot;yourlabel&quot; -Secret (Get-Credential)
 <pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -Interactive
 </code></pre>
 <p>This will show a popup window which will allow to authenticate and step through the multi-factor authentication flow.</p>
+<h2 id="authentication-to-gcc-or-national-cloud-environments">Authentication to GCC or National Cloud environments</h2>
+<p>In order to authentication to a GCC or a national cloud environment you have to take a few steps. Notice that this will work as of release 1.3.9-nightly or later.</p>
+<h3 id="register-your-own-azure-ad-app">Register your own Azure AD App</h3>
+<p>You are required to register your own Azure AD App in order to authentication</p>
+<pre><code class="lang-powershell">Register-PnPAzureADApp -ApplicationName &quot;PnP PowerShell&quot; -Tenant [yourtenant].onmicrosoft.com -Interactive -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China] -Scopes SPO.AllSites.FullControl, SPO.Sites.FullControl.All, MSGraph.Group.ReadWrite.All
+</code></pre>
+<p>The AzureEnvironment parameter only allows one value. Select the correct one that matches your cloud deployment.</p>
+<p>The above statement grants a few permission scopes. You might want to add more if you want to. Alternatively, after registering the application, navigate to the Azure AD, locate the app registration, and grant more permissions and consent to them.</p>
+<h3 id="optionally-modify-the-manifest-for-the-app">Optionally modify the manifest for the app</h3>
+<p>There is a limitation in the Azure AD for national cloud environments where you cannot select permission scopes for SharePoint Online. In order to add specific SharePoint rights you will have to manually add them to the manifest that you can edit in Azure AD:</p>
+<p>Locate the <code>requiredResourceAccess</code> section and add to or modify the existing entries. See the example below (notice, this is an example, do not copy and paste this as is as it will limit the permissions to only AllSites.FullControl):</p>
+<pre><code class="lang-json">&quot;requiredResourceAccess&quot;: [
+{
+    &quot;resourceAppId&quot;: &quot;00000003-0000-0ff1-ce00-000000000000&quot;,
+    &quot;resourceAccess&quot;: [
+		{
+			&quot;id&quot;: &quot;56680e0d-d2a3-4ae1-80d8-3c4f2100e3d0&quot;,
+			&quot;type&quot;: &quot;Scope&quot;
+		}
+      ]
+}
+</code></pre>
+<p>You can add more permissions by using the following values:</p>
+<p>The resourceAppId for SharePoint = &quot;00000003-0000-0ff1-ce00-000000000000&quot;</p>
+<table>
+<thead>
+<tr>
+<th>Permission</th>
+<th>Permission type</th>
+<th>Id</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sites.FullControl.All</td>
+<td>Application</td>
+<td>678536fe-1083-478a-9c59-b99265e6b0d3</td>
+<td>Role</td>
+</tr>
+<tr>
+<td>AllSites.FullControl</td>
+<td>Delegate</td>
+<td>56680e0d-d2a3-4ae1-80d8-3c4f2100e3d0</td>
+<td>Scope</td>
+</tr>
+</tbody>
+</table>
+<h3 id="connect">Connect</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url [yoursite] -Interactive -ClientId [clientid of the app] -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
+</code></pre>
+<p>The AzureEnvironment parameter only allows one value. Select the correct one that matches your cloud deployment.</p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

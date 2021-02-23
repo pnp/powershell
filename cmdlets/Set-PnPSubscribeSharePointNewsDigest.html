@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPTemporarilyDisableAppBar | PnP PowerShell </title>
+    <title>Set-PnPSubscribeSharePointNewsDigest | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPTemporarilyDisableAppBar | PnP PowerShell ">
+    <meta name="title" content="Set-PnPSubscribeSharePointNewsDigest | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -81,27 +81,67 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="get-pnptemporarilydisableappbar">Get-PnPTemporarilyDisableAppBar</h1>
+                    <h1 id="set-pnpsubscribesharepointnewsdigest">Set-PnPSubscribeSharePointNewsDigest</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Returns the disabled state of the SharePoint Online App Bar. It may take some time after changing this setting for the change to be reflected in SharePoint Online and for this cmdlet to return the updated value. Support for this may be dropped after October 31st, 2021 after which the SharePoint Online App Bar will become visible anyway. See [https://admin.microsoft.com/#/MessageCenter/:/messages/MC240066] for more information.</p>
+<p>You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet.<p>
+<p>Enables or disabled the SharePoint News Digest mails for a particular user.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPTemporarilyDisableAppBar [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPSubscribeSharePointNewsDigest -Account &lt;String&gt; -Enabled &lt;Boolean&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Requires a connection to a SharePoint Tenant Admin site.</p>
+<p>Enables or disabled the SharePoint News Digest mails for a particular user.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPTemporarilyDisableAppBar
+<pre><code class="lang-powershell">Set-PnPSubscribeSharePointNewsDigest -Account 'user@domain.com' -Enabled:$true
 </code></pre>
-<p>Returns True if the the SharePoint Online App Bar is hidden or False if it is not.</p>
+<p>Enables the user user@domain.com for receiving the SharePoint News Digest e-mails.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Set-PnPSubscribeSharePointNewsDigest -Account 'user@domain.com' -Enabled:$false
+</code></pre>
+<p>Stops the user user@domain.com for receiving the SharePoint News Digest e-mails.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-account">-Account</h3>
+<p>The account of the user, formatted either as a login name, or as a claims identity, e.g. i:0#.f|membership|user@domain.com</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-enabled">-Enabled</h3>
+<p>Boolean indicating if the user should receive the SharePoint News Digest e-mails</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
-</article>
+</tenant></article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">

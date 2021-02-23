@@ -18,7 +18,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/authentication.html",
-          "hash": "QG3r+/fbFrgg3FCvesokfw=="
+          "hash": "fxDPN+mzfI9MAO+axjeVRw=="
         }
       },
       "is_incremental": false,
@@ -78,7 +78,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/connecting.html",
-          "hash": "OFzQWDFWqCvkvhzqK2PnGA=="
+          "hash": "JD3IWOzfjSV7Kpbwb4AjAw=="
         }
       },
       "is_incremental": false,
@@ -2774,6 +2774,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPSubscribeSharePointNewsDigest.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPSubscribeSharePointNewsDigest.html",
+          "hash": "2U4WD06bVYjol9lSbiGRvA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPTaxonomyItem.md",
       "output": {
         ".html": {
@@ -2874,7 +2886,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPTemporarilyDisableAppBar.html",
-          "hash": "Ebf1J3uPnpZOB7i4HCOOww=="
+          "hash": "Q/t9yPCF9bF5BDCAXbposA=="
         }
       },
       "is_incremental": false,
@@ -5990,6 +6002,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPSubscribeSharePointNewsDigest.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPSubscribeSharePointNewsDigest.html",
+          "hash": "J+zp1hkPR9WmTXtRc9Whww=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPTaxonomyFieldValue.md",
       "output": {
         ".html": {
@@ -6498,7 +6522,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "kHwDXvSJDoqo6SAdLxmTfQ=="
+          "hash": "2s/9fa9yudOpVpgvvXG0BQ=="
         }
       },
       "is_incremental": false,
@@ -6577,7 +6601,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 541,
+          "total_file_count": 543,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
