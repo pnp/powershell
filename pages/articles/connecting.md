@@ -27,12 +27,12 @@ Connect-PnPOnline -Url "https://[yourtenant].sharepoint.com" -Credentials (Get-C
 You will have to create your own Azure AD Application registration, or you can create one:
 
 ```powershell
-Register-PnPAzureADApp -ApplicationName "YourApplicationName" -Tenant [yourtenant.onmicrosoft.com] -DeviceLogin
+Register-PnPAzureADApp -ApplicationName "YourApplicationName" -Tenant [yourtenant.onmicrosoft.com] -Interactive
 ```
 
-This will launch a authentication dialog where need to authenticate. After closing this window the cmdlet will continue to register a new application with a set of default permissions. By default a certificate will be generated and stored in the current folder, named after the application you want to create. You can specify your own certificate by using the `-CertificatePath` parameter and optional `-CertificatePassword` parameter.
+This will launch a authentication dialog where you need to authenticate. After closing this window the cmdlet will continue to register a new application with a set of default permissions. By default a certificate will be generated and stored in the current folder, named after the application you want to create. You can specify your own certificate by using the `-CertificatePath` parameter and optional `-CertificatePassword` parameter.
 
-You can add permissions by using the `-Scope` parameter. The cmdlet will output the Azure AppId/client id, the name and location of the certificates created (if any) and the thumbprint of the certificate. It is possible to add the certificate created to the certificate management store in Windows by adding the `-Store` parameter.
+You can add permissions by using the `-GraphApplicationPermissions`, `-GraphDelegatePermissions`, `-SharePointApplicationPermissions` or `-SharePointDelegatePermissions` parameters. The cmdlet will output the Azure AppId/client id, the name and location of the certificates created (if any) and the thumbprint of the certificate. It is possible to add the certificate created to the certificate management store in Windows by adding the `-Store` parameter.
 
 Note if you are using Credential Based Authentication, you will need to make a change to the app registration manifest file. Go to the app registration, select Manifest under the Manage section, then change the "allowPublicClient" property to true and click save.
 

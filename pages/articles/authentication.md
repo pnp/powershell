@@ -26,7 +26,7 @@ PnP PowerShell has a cmdlet that allows you to register a new Azure AD App, and 
 Register-PnPAzureADApp -ApplicationName PnPRocks -Tenant mytenant.onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin
 ```
 
-When you run the cmdlet above you will be asked to navigate to the shown url and enter the code shown. After that a new app will be registerd in the Azure AD (make sure you have the rights to do this), and a certificate will be generated and uploaded to that app. After this a URL will be shown which you have to navigate to to provide consent for this application. By default a limited set of permissions scopes is added, but you can provide the -Scopes parameter to provide your own permission scopes.
+When you run the cmdlet above you will be asked to navigate to the shown url and enter the code shown. After that a new app will be registerd in the Azure AD (make sure you have the rights to do this), and a certificate will be generated and uploaded to that app. After this a URL will be shown which you have to navigate to to provide consent for this application. By default a limited set of permissions scopes is added, but you can provide the one of the permission parameters (`GraphApplicationPermissions`, `GraphDelegatePermissions`, `SharePointApplicationPermissions`, `SharePointDelegatePermissions`) to provide your own permission scopes.
 
 The cmdlet will save both the CER and PFX files to the specified location with the -Outpath parameter. The names of the files will be matching the -ApplicationName parameter, e.g. in the example above the files will be called PnPRocks.cer and PnPRocks.pfx. The output of the cmdlet will show the clientid. After all is set up and consent has been provided you can login using:
 
@@ -109,7 +109,7 @@ In order to authentication to a GCC or a national cloud environment you have to 
 You are required to register your own Azure AD App in order to authentication
 
 ```powershell
-Register-PnPAzureADApp -ApplicationName "PnP PowerShell" -Tenant [yourtenant].onmicrosoft.com -Interactive -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China] -Scopes SPO.AllSites.FullControl, SPO.Sites.FullControl.All, MSGraph.Group.ReadWrite.All
+Register-PnPAzureADApp -ApplicationName "PnP PowerShell" -Tenant [yourtenant].onmicrosoft.com -Interactive -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China] -SharePointDelegatePermissions AllSites.FullControl -SharePointApplicationPermissions Sites.FullControl.All -GraphApplicationPermissions Group.ReadWrite.All -GraphDelegatePermissions Group.ReadWrite.All
 ```
 
 The AzureEnvironment parameter only allows one value. Select the correct one that matches your cloud deployment.
