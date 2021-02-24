@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             if (Group != null)
             {
                 Group.EnsureProperty(g => g.Id);
-                group = context.Web.SiteGroups.GetFirstOrDefault(g => g.Id == Group.Id);
+                group = context.Web.SiteGroups.Where(g => g.Id == Group.Id).FirstOrDefault();
             }
             if(_sharePointGroup != null)
             {
@@ -55,11 +55,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (Id != -1)
             {
-                group = context.Web.SiteGroups.GetFirstOrDefault(g => g.Id == Id);
+                group = context.Web.SiteGroups.Where(g => g.Id == Id).FirstOrDefault();
             }
             else if (!string.IsNullOrEmpty(Name))
             {
-                group = context.Web.SiteGroups.GetFirstOrDefault(g => g.Title == Name && g.LoginName == Name);
+                group = context.Web.SiteGroups.Where(g => g.Title == Name && g.LoginName == Name).FirstOrDefault();
             }
             return group;
         }
