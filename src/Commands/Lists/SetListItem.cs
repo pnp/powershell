@@ -42,12 +42,11 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
         public SwitchParameter ClearLabel;
 
-        [Parameter(Mandatory = true, ParameterSetName = Parameterset_BATCHED)]
-        [ValidateNotNull]
-
         [Parameter(Mandatory = false)]
         public ListItemUpdateType UpdateType;
 
+        [Parameter(Mandatory = true, ParameterSetName = Parameterset_BATCHED)]
+        [ValidateNotNull]
         public PnPBatch Batch;
 
         protected override void ExecuteCmdlet()
