@@ -73,7 +73,7 @@ This example updates the items with ids 0 to 100 with a new title in a batched m
 
 ### EXAMPLE 6
 ```powershell
-Set-PnPListItem -List "Demo List" -Identity 1 -Values @{"Editor"="testuser@domain.com"} -UpdateType UpdateOverwriteVersoin
+Set-PnPListItem -List "Demo List" -Identity 1 -Values @{"Editor"="testuser@domain.com"} -UpdateType UpdateOverwriteVersion
 ```
 
 This example updates the modified by value of the list item and does not increase the version number.
