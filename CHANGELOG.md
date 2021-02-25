@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Documentation updates
 
 ### Contributors
+- John Bontjer [JohnBontjer]
 - Todd Klindt [ToddKlindt]
 - Koen Zomers [koenzomers]
 - Veronique Lengelle [veronicageek]
