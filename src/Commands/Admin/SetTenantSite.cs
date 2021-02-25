@@ -359,7 +359,7 @@ namespace PnP.PowerShell.Commands
                 ClientContext.Load(office365Tenant);
                 ClientContext.ExecuteQueryRetry();
                 office365Tenant.DisableSharingForNonOwnersOfSite(Identity.Url);
-            }
+            }            
 
             if (ParameterSpecified(nameof(ConditionalAccessPolicy)) && ConditionalAccessPolicy == SPOConditionalAccessPolicyType.ProtectionLevel)
             {
@@ -386,6 +386,7 @@ namespace PnP.PowerShell.Commands
                 if (ParameterSpecified(nameof(ConditionalAccessPolicy)))
                 {
                     props.AuthContextStrength = null;
+                    props.ConditionalAccessPolicy = ConditionalAccessPolicy;
                     updateRequired = true;
                 }
             }
