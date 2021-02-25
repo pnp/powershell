@@ -3,6 +3,7 @@ using PnP.Framework.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
@@ -19,17 +20,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            UnifiedGroupEntity group = null;
-
-            if (Identity != null)
-            {
-                group = Identity.GetGroup(AccessToken, false);
-            }
-
-            if (group != null)
-            {
-                UnifiedGroupsUtility.RemoveUnifiedGroupMembers(group.GroupId, Users, AccessToken, azureEnvironment: PnPConnection.Current.AzureEnvironment);
-            }
+            Microsoft365GroupsUtility.RemoveMembersAsync(HttpClient, Identity.GetGroupId(HttpClient, AccessToken), Users, AccessToken).GetAwaiter().GetResult();
         }
     }
 }

@@ -2,25 +2,25 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPMicrosoft365GroupMembers.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPMicrosoft365GroupMember.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPMicrosoft365GroupMembers
+title: Get-PnPMicrosoft365GroupMember
 ---
   
-# Get-PnPMicrosoft365GroupMembers
+# Get-PnPMicrosoft365GroupMember
 
 ## SYNOPSIS
 
 **Required Permissions**
 
-  * Microsoft Graph API : One of Directory.Read.All, Directory.ReadWrite.All, Group.Read.All, Group.ReadWrite.All, GroupMember.Read.All, GroupMember.ReadWrite.All, User.Read.All, User.ReadWrite.All
+  * Microsoft Graph API : at least Group.Read.All
 
 Gets members of a particular Microsoft 365 Group (aka Unified Group).
 
 ## SYNTAX
 
 ```powershell
-Get-PnPMicrosoft365GroupMembers -Identity <Microsoft365GroupPipeBind> [<CommonParameters>]
+Get-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,14 +29,14 @@ Get-PnPMicrosoft365GroupMembers -Identity <Microsoft365GroupPipeBind> [<CommonPa
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPMicrosoft365GroupMembers -Identity $groupId
+Get-PnPMicrosoft365GroupMember -Identity $groupId
 ```
 
 Retrieves all the members of a specific Microsoft 365 Group based on its ID
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPMicrosoft365GroupMembers -Identity $group
+Get-PnPMicrosoft365GroupMember -Identity $group
 ```
 
 Retrieves all the members of a specific Microsoft 365 Group based on the group's object instance

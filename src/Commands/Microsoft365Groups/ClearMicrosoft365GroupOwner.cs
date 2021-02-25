@@ -1,8 +1,8 @@
-﻿using PnP.Framework.Entities;
-using PnP.Framework.Graph;
+﻿using System.Linq;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
@@ -16,16 +16,13 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            UnifiedGroupEntity group = null;
-
-            if (Identity != null)
+            var groupId = Identity.GetGroupId(HttpClient, AccessToken);
+            Microsoft365GroupsUtility.ClearOwnersAsync(HttpClient, groupId, AccessToken).GetAwaiter().GetResult();
+            var owners = Microsoft365GroupsUtility.GetOwnersAsync(HttpClient, groupId, AccessToken).GetAwaiter().GetResult();
+            if (owners != null && owners.Any())
             {
-                group = Identity.GetGroup(AccessToken, false);
-            }
-
-            if (group != null)
-            {
-                UnifiedGroupsUtility.ClearUnifiedGroupOwners(group.GroupId, AccessToken, azureEnvironment: PnPConnection.Current.AzureEnvironment);
+                WriteWarning($"Clearing all owners is not possible as there will always have to be at least one owner. To changed the owners with new owners use Set-PnPMicrosoft365GroupOwner -Identity {groupId} -Owners \"newowner@domain.com\"");
+                WriteWarning($"Current owner is: {owners.First().UserPrincipalName}");
             }
         }
     }

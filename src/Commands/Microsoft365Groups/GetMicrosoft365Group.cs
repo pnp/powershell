@@ -1,10 +1,9 @@
-﻿using PnP.Framework.Entities;
-using PnP.Framework.Graph;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
@@ -17,42 +16,36 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         public Microsoft365GroupPipeBind Identity;
 
         [Parameter(Mandatory = false)]
-        [Obsolete("ExcludeSiteUrl is now the default behaviour. Use IncludeSiteUrl instead to include the site url of the underlying SharePoint site.")]
+        [Obsolete("The site url is now excluded by default. Use IncludeSiteUrl instead to include the site url of the underlying SharePoint site.")]
         public SwitchParameter ExcludeSiteUrl;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter IncludeSiteUrl;
 
         [Parameter(Mandatory = false)]
+        [Obsolete("Classification is always included")]
         public SwitchParameter IncludeClassification;
 
         [Parameter(Mandatory = false)]
+        [Obsolete("HasTeam is always included")]
         public SwitchParameter IncludeHasTeam;
 
         protected override void ExecuteCmdlet()
         {
-            UnifiedGroupEntity group = null;
-            List<UnifiedGroupEntity> groups = null;
 #pragma warning disable 0618
             var includeSiteUrl = ParameterSpecified(nameof(ExcludeSiteUrl)) ? !ExcludeSiteUrl.ToBool() : IncludeSiteUrl.ToBool();
 #pragma warning restore 0618
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(AccessToken, includeSite: includeSiteUrl);
+                var group = Identity.GetGroup(HttpClient, AccessToken, includeSite: includeSiteUrl);
+                WriteObject(group);
             }
             else
             {
-                groups = UnifiedGroupsUtility.GetUnifiedGroups(AccessToken, includeSite: IncludeSiteUrl, includeClassification: IncludeClassification.IsPresent, includeHasTeam: IncludeHasTeam.IsPresent, azureEnvironment: PnPConnection.Current.AzureEnvironment);
-            }
+                var groups = Microsoft365GroupsUtility.GetGroupsAsync(HttpClient, AccessToken, includeSiteUrl).GetAwaiter().GetResult();
 
-            if (group != null)
-            {
-                WriteObject(group);
-            }
-            else if (groups != null)
-            {
-                WriteObject(groups, true);
+                WriteObject(groups.OrderBy(p => p.DisplayName), true);
             }
         }
     }

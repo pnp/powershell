@@ -1,31 +1,35 @@
 ﻿using PnP.Framework.Entities;
 using PnP.Framework.Graph;
+using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Linq;
+using System.Management.Automation;
+using System.Net.Http;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public class Microsoft365GroupPipeBind
     {
-        private readonly UnifiedGroupEntity _group;
-        private readonly String _groupId;
-        private readonly String _displayName;
+        private readonly Microsoft365Group _group;
+        private readonly Guid _groupId;
+        private readonly string _displayName;
 
         public Microsoft365GroupPipeBind()
         {
         }
 
-        public Microsoft365GroupPipeBind(UnifiedGroupEntity group)
+        public Microsoft365GroupPipeBind(Microsoft365Group group)
         {
             _group = group;
         }
 
-        public Microsoft365GroupPipeBind(String input)
+        public Microsoft365GroupPipeBind(string input)
         {
             Guid idValue;
             if (Guid.TryParse(input, out idValue))
             {
-                _groupId = input;
+                _groupId = idValue;
             }
             else
             {
@@ -33,52 +37,89 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        public UnifiedGroupEntity Group => (_group);
+        public Microsoft365Group Group => _group;
 
-        public String DisplayName => (_displayName);
+        public String DisplayName => _displayName;
 
-        public String GroupId => (_groupId);
+        public Guid GroupId => _groupId;
 
-        public UnifiedGroupEntity GetGroup(string accessToken, bool includeSite, bool includeClassification = false)
+        public Microsoft365Group GetGroup(HttpClient httpClient, string accessToken, bool includeSite)
         {
-            UnifiedGroupEntity group = null;
+            Microsoft365Group group = null;
             if (Group != null)
             {
-                group = UnifiedGroupsUtility.GetUnifiedGroup(Group.GroupId, accessToken, includeSite: includeSite, includeClassification:includeClassification);
+                group = Microsoft365GroupsUtility.GetGroupAsync(httpClient, _group.Id.Value, accessToken, includeSite).GetAwaiter().GetResult();
             }
-            else if (!String.IsNullOrEmpty(GroupId))
+            else if (_groupId != Guid.Empty)
             {
-                group = UnifiedGroupsUtility.GetUnifiedGroup(GroupId, accessToken, includeSite:includeSite, includeClassification:includeClassification);
+                group = Microsoft365GroupsUtility.GetGroupAsync(httpClient, _groupId, accessToken, includeSite).GetAwaiter().GetResult();
+                //group = UnifiedGroupsUtility.GetUnifiedGroup(GroupId, accessToken, includeSite: includeSite, includeClassification: includeClassification);
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                var groups = UnifiedGroupsUtility.GetUnifiedGroups(accessToken, DisplayName, includeSite: includeSite, includeClassification:includeClassification);
-                if (groups == null || groups.Count == 0)
-                {
-                    groups = UnifiedGroupsUtility.GetUnifiedGroups(accessToken, mailNickname: DisplayName, includeSite: includeSite, includeClassification:includeClassification);
-                }
-                if (groups != null && groups.Any())
-                {
-                    group = groups.FirstOrDefault();
-                }
+                group = Microsoft365GroupsUtility.GetGroupAsync(httpClient, DisplayName, accessToken, includeSite).GetAwaiter().GetResult();
             }
             return group;
         }
 
-        public UnifiedGroupEntity GetDeletedGroup(string accessToken)
+        public Guid GetGroupId(HttpClient httpClient, string accessToken)
         {
-            UnifiedGroupEntity group = null;
-
             if (Group != null)
             {
-                group = UnifiedGroupsUtility.GetDeletedUnifiedGroup(Group.GroupId, accessToken, azureEnvironment: PnPConnection.Current.AzureEnvironment);
+                return _group.Id.Value;
             }
-            else if (!string.IsNullOrEmpty(GroupId))
+            else if (_groupId != Guid.Empty)
             {
-                group = UnifiedGroupsUtility.GetDeletedUnifiedGroup(GroupId, accessToken, azureEnvironment: PnPConnection.Current.AzureEnvironment);
+                return _groupId;
             }
+            else if (!string.IsNullOrEmpty(DisplayName))
+            {
+                var group = Microsoft365GroupsUtility.GetGroupAsync(httpClient, DisplayName, accessToken, false).GetAwaiter().GetResult();
+                if (group != null)
+                {
+                    return group.Id.Value;
+                }
+            }
+            throw new PSInvalidOperationException("Group not found");
+            //return Guid.Empty;
+        }
 
-            return group;
+        public Microsoft365Group GetDeletedGroup(HttpClient httpClient, string accessToken)
+        {
+            if (_group != null)
+            {
+                return Microsoft365GroupsUtility.GetDeletedGroupAsync(httpClient, _group.Id.Value, accessToken).GetAwaiter().GetResult();
+            }
+            else if (_groupId != Guid.Empty)
+            {
+                return Microsoft365GroupsUtility.GetDeletedGroupAsync(httpClient, _groupId, accessToken).GetAwaiter().GetResult();
+            }
+            else if (!string.IsNullOrEmpty(_displayName))
+            {
+                return Microsoft365GroupsUtility.GetDeletedGroupAsync(httpClient, _displayName, accessToken).GetAwaiter().GetResult();
+            }
+            return null;
+        }
+
+        public Guid GetDeletedGroupId(HttpClient httpClient, string accessToken)
+        {
+            if (_group != null)
+            {
+                return _group.Id.Value;
+            }
+            else if (_groupId != Guid.Empty)
+            {
+                return _groupId;
+            }
+            else if (!string.IsNullOrEmpty(_displayName))
+            {
+                var group = Microsoft365GroupsUtility.GetDeletedGroupAsync(httpClient, _displayName, accessToken).GetAwaiter().GetResult();
+                if (group != null)
+                {
+                    return group.Id.Value;
+                }
+            }
+            throw new PSInvalidOperationException("Deleted group not found");
         }
     }
 }

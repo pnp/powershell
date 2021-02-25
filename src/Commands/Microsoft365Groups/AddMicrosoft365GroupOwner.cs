@@ -3,6 +3,7 @@ using PnP.Framework.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
@@ -22,17 +23,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            UnifiedGroupEntity group = null;
-
-            if (Identity != null)
-            {
-                group = Identity.GetGroup(AccessToken, false);
-            }
-
-            if (group != null)
-            {
-                UnifiedGroupsUtility.AddUnifiedGroupOwners(group.GroupId, Users, AccessToken, RemoveExisting.ToBool(), azureEnvironment: PnPConnection.Current.AzureEnvironment);
-            }
+            Microsoft365GroupsUtility.AddOwnersAsync(HttpClient, Identity.GetGroupId(HttpClient, AccessToken), Users, AccessToken, RemoveExisting).GetAwaiter().GetResult();
         }
     }
 }

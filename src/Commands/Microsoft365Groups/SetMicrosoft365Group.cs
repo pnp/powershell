@@ -1,10 +1,11 @@
-﻿using PnP.Framework.Entities;
-using PnP.Framework.Graph;
+﻿using PnP.Framework.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.IO;
+using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
@@ -32,7 +33,9 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         public SwitchParameter IsPrivate;
 
         [Parameter(Mandatory = false)]
-        public string GroupLogoPath;
+        [ValidateNotNullOrEmpty]
+        [Alias("GroupLogoPath")]
+        public string LogoPath;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter CreateTeam;
@@ -45,58 +48,68 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            UnifiedGroupEntity group = null;
+            var group = Identity.GetGroup(HttpClient, AccessToken, false);
 
-            if (Identity != null)
-            {
-                group = Identity.GetGroup(AccessToken, false);
-            }
-
-            Stream groupLogoStream = null;
 
             if (group != null)
             {
-                if (GroupLogoPath != null)
+                bool changed = false;
+                if (ParameterSpecified(nameof(DisplayName)))
                 {
-                    if (!Path.IsPathRooted(GroupLogoPath))
-                    {
-                        GroupLogoPath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, GroupLogoPath);
-                    }
-                    groupLogoStream = new FileStream(GroupLogoPath, FileMode.Open, FileAccess.Read);
+                    group.DisplayName = DisplayName;
+                    changed = true;
                 }
-                bool? isPrivateGroup = null;
-                if (IsPrivate.IsPresent)
+                if (ParameterSpecified(nameof(Description)))
                 {
-                    isPrivateGroup = IsPrivate.ToBool();
+                    group.Description = Description;
+                    changed = true;
                 }
-                try
+                if (ParameterSpecified(nameof(IsPrivate)))
                 {
-                    UnifiedGroupsUtility.UpdateUnifiedGroup(
-                        groupId: group.GroupId,
-                        accessToken: AccessToken,
-                        displayName: DisplayName,
-                        description: Description,
-                        owners: Owners,
-                        members: Members,
-                        groupLogo: groupLogoStream,
-                        isPrivate: isPrivateGroup,
-                        createTeam: CreateTeam, azureEnvironment: PnPConnection.Current.AzureEnvironment);
+                    group.Visibility = IsPrivate ? "Private" : "Public";
+                    changed = true;
+                }
+                if (changed)
+                {
+                    group = Microsoft365GroupsUtility.UpdateAsync(HttpClient, AccessToken, group).GetAwaiter().GetResult();
+                }
 
-                    if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
+                if (ParameterSpecified(nameof(Owners)))
+                {
+                    Microsoft365GroupsUtility.UpdateOwnersAsync(HttpClient, group.Id.Value, AccessToken, Owners).GetAwaiter().GetResult();
+                }
+
+                if (ParameterSpecified(nameof(Members)))
+                {
+                    Microsoft365GroupsUtility.UpdateMembersAsync(HttpClient, group.Id.Value, AccessToken, Members).GetAwaiter().GetResult();
+                }
+
+                if (ParameterSpecified(nameof(LogoPath)))
+                {
+                    if (!Path.IsPathRooted(LogoPath))
                     {
-                        // For this scenario a separate call needs to be made
-                        UnifiedGroupsUtility.SetUnifiedGroupVisibility(group.GroupId, AccessToken, HideFromAddressLists, HideFromOutlookClients);
+                        LogoPath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogoPath);
+                    }
+                    Microsoft365GroupsUtility.UploadLogoAsync(HttpClient, AccessToken, group.Id.Value, LogoPath).GetAwaiter().GetResult();
+                }
+
+                if (ParameterSpecified(nameof(CreateTeam)))
+                {
+                    if (!group.ResourceProvisioningOptions.Contains("Team"))
+                    {
+                        Microsoft365GroupsUtility.CreateTeamAsync(HttpClient, AccessToken, group.Id.Value).GetAwaiter().GetResult();
+                    }
+                    else
+                    {
+                        WriteWarning("There is already a provisioned Team for this group. Skipping Team creation.");
                     }
                 }
-                catch (Exception e)
+
+                if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                 {
-                    while (e.InnerException != null) e = e.InnerException;
-                    WriteError(new ErrorRecord(e, "GROUPUPDATEFAILED", ErrorCategory.InvalidOperation, this));
+                    // For this scenario a separate call needs to be made
+                    Microsoft365GroupsUtility.SetVisibilityAsync(HttpClient, AccessToken, group.Id.Value, HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
                 }
-            }
-            else
-            {
-                WriteError(new ErrorRecord(new Exception("Group not found"), "GROUPNOTFOUND", ErrorCategory.ObjectNotFound, this));
             }
         }
     }

@@ -1,7 +1,9 @@
 ﻿using PnP.Framework.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Properties;
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Linq;
 using System.Management.Automation;
@@ -31,10 +33,17 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         public SwitchParameter IsPrivate;
 
         [Parameter(Mandatory = false)]
-        public string GroupLogoPath;
+        [Alias("GroupLogoPath")]
+        public string LogoPath;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter CreateTeam;
+
+        [Parameter(Mandatory = false)]
+        public bool? HideFromAddressLists;
+
+        [Parameter(Mandatory = false)]
+        public bool? HideFromOutlookClients;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
@@ -49,13 +58,8 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
             if (!Force)
             {
-                var candidates = UnifiedGroupsUtility.GetUnifiedGroups(AccessToken,
-                    mailNickname: MailNickname,
-                    endIndex: 1, azureEnvironment: PnPConnection.Current.AzureEnvironment);
-                // ListUnifiedGroups retrieves groups with starts-with, so need another check
-                var existingGroup = candidates.Any(g => g.MailNickname.Equals(MailNickname, StringComparison.CurrentCultureIgnoreCase));
-
-                forceCreation = !existingGroup || ShouldContinue(string.Format(Resources.ForceCreationOfExistingGroup0, MailNickname), Resources.Confirm);
+                var candidate = Microsoft365GroupsUtility.GetGroupAsync(HttpClient, MailNickname, AccessToken, false).GetAwaiter().GetResult();
+                forceCreation = candidate == null || ShouldContinue($"The Microsoft 365 Group '{MailNickname} already exists. Do you want to create a new one?", Resources.Confirm);
             }
             else
             {
@@ -64,16 +68,33 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
             if (forceCreation)
             {
-                var group = UnifiedGroupsUtility.CreateUnifiedGroup(
-                    displayName: DisplayName,
-                    description: Description,
-                    mailNickname: MailNickname,
-                    accessToken: AccessToken,
-                    owners: Owners,
-                    members: Members,
-                    groupLogoPath: GroupLogoPath,
-                    isPrivate: IsPrivate,
-                    createTeam: CreateTeam, azureEnvironment: PnPConnection.Current.AzureEnvironment);
+                if (ParameterSpecified(nameof(LogoPath)))
+                {
+                    if (System.IO.Path.IsPathRooted(LogoPath))
+                    {
+                        LogoPath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogoPath);
+                    }
+                    if (!System.IO.File.Exists(LogoPath))
+                    {
+                        throw new PSArgumentException("File specified for logo does not exist.");
+                    }
+                }
+                var newGroup = new Microsoft365Group()
+                {
+                    DisplayName = DisplayName,
+                    Description = Description,
+                    MailNickname = MailNickname,
+                    Visibility = IsPrivate ? "Private" : "Public",
+                    MailEnabled = true,
+                    SecurityEnabled = false,
+                    GroupTypes = new string[] { "Unified" }
+                };
+                var group = Microsoft365GroupsUtility.CreateAsync(HttpClient, AccessToken, newGroup, CreateTeam, LogoPath, Owners, Members, HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
+
+                if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
+                {
+                    Microsoft365GroupsUtility.SetVisibilityAsync(HttpClient, AccessToken, group.Id.Value, HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
+                }
 
                 WriteObject(group);
             }

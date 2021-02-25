@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Management.Automation;
-using PnP.Framework.Entities;
-using PnP.Framework.Graph;
+﻿using System.Management.Automation;
+using System.Linq;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
@@ -17,25 +16,14 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            UnifiedGroupEntity group = null;
-            List<UnifiedGroupEntity> groups = null;
-
             if (Identity != null)
             {
-                group = Identity.GetDeletedGroup(AccessToken);
+                WriteObject(Identity.GetDeletedGroup(HttpClient, AccessToken));
             }
             else
             {
-                groups = UnifiedGroupsUtility.ListDeletedUnifiedGroups(AccessToken, azureEnvironment: PnPConnection.Current.AzureEnvironment);
-            }
-
-            if (group != null)
-            {
-                WriteObject(group);
-            }
-            else if (groups != null)
-            {
-                WriteObject(groups, true);
+                var groups = Microsoft365GroupsUtility.GetDeletedGroupsAsync(HttpClient, AccessToken).GetAwaiter().GetResult();
+                WriteObject(groups.OrderBy(g => g.DisplayName), true);
             }
         }
     }
