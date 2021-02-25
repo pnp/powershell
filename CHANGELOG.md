@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Grant-PnPAzureADAppSitePermission`, `Get-PnPAzureADAppSitePermission`, `Set-PnPAzureADAppSitePermission` and `Revoke-PnPAzureADAppSitePermission`
 
 ### Changed
+- Improved batching speed when creating or updating multiple items that set similar values for taxonomy fields.
 - Changed `Register-PnPAzureADApp` registration to by default turn on the ability to authenticate with credentials for a newly created Azure App registration (`allowPublicClient: true`).
 - Refactored `Register-PnPAzureADApp`. Marked `-Scopes` as obsolete and introduced `-GraphApplicationPermissions`, `-GraphDelegatePermissions`, `-SharePointApplicationPermissions` and `-SharePointDelegatePermissions`. Added additional permission scopes.
 - Re-enabled Console Logging with Set-PnPTraceLog -On
