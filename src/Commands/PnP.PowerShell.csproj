@@ -64,6 +64,12 @@
 
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\GraphPermissions.json" />
+    <EmbeddedResource Include="Resources\SharePointPermissions.json" />
+    <EmbeddedResource Include="Resources\O365ManagementPermissions.json" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(PnPCoreSdkPath)' != ''">
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
     <Reference Include="PnP.Core">

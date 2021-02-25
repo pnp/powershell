@@ -8,12 +8,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current Nightly]
 
 ### Added
+- Added All Graph permissions and all SharePoint permissions for selection to Register-PnPAzureADApp.
 - Added `-Template` parameter to New-PnPTeamsTeam to create teams with EDU templates (your tenant needs an EDU license)
 - Added fixes for authentication to GCC, GCC High and GCC DoD environments using certificate or interactive login.
 - Added `Grant-PnPAzureADAppSitePermission`, `Get-PnPAzureADAppSitePermission`, `Set-PnPAzureADAppSitePermission` and `Revoke-PnPAzureADAppSitePermission`
 
 ### Changed
-- Changed `Register-PnPAzureApp` registration to by default turn on the ability to authenticate with credentials for a newly created Azure App registration (`allowPublicClient: true`).
+- Changed `Register-PnPAzureADApp` registration to by default turn on the ability to authenticate with credentials for a newly created Azure App registration (`allowPublicClient: true`).
 - Refactored `Register-PnPAzureADApp`. Marked `-Scopes` as obsolete and introduced `-GraphApplicationPermissions`, `-GraphDelegatePermissions`, `-SharePointApplicationPermissions` and `-SharePointDelegatePermissions`. Added additional permission scopes.
 - Re-enabled Console Logging with Set-PnPTraceLog -On
 - Fixed warning showing to use -Interactive instead of -UseWebLogin to show correct url.

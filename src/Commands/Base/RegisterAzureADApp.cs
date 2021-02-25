@@ -312,6 +312,36 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
+        protected IEnumerable<string> O365ManagementApplicationPermissions
+        {
+            get
+            {
+                if (ParameterSpecified(nameof(O365ManagementApplicationPermissions)) && MyInvocation.BoundParameters[nameof(O365ManagementApplicationPermissions)] != null)
+                {
+                    return MyInvocation.BoundParameters[nameof(O365ManagementApplicationPermissions)] as string[];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        protected IEnumerable<string> O365ManagementDelegatePermissions
+        {
+            get
+            {
+                if (ParameterSpecified(nameof(O365ManagementDelegatePermissions)) && MyInvocation.BoundParameters[nameof(O365ManagementDelegatePermissions)] != null)
+                {
+                    return MyInvocation.BoundParameters[nameof(O365ManagementDelegatePermissions)] as string[];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
         public object GetDynamicParameters()
         {
             // var classAttribute = this.GetType().GetCustomAttributes(false).FirstOrDefault(a => a is PropertyLoadingAttribute);
@@ -347,6 +377,10 @@ namespace PnP.PowerShell.Commands.Base
             // SharePoint
             parameterDictionary.Add("SharePointApplicationPermissions", GetParameter("SharePointApplicationPermissions", PermissionScopes.ResourceAppId_SPO, "Role"));
             parameterDictionary.Add("SharePointDelegatePermissions", GetParameter("SharePointDelegatePermissions", PermissionScopes.ResourceAppId_SPO, "Scope"));
+
+            // O365 Management
+            parameterDictionary.Add("O365ManagementApplicationPermissions", GetParameter("O365ManagementApplicationPermissions", PermissionScopes.ResourceAppID_O365Management, "Role"));
+            parameterDictionary.Add("O365ManagementDelegatePermissions", GetParameter("O365ManagementDelegatePermissions", PermissionScopes.ResourceAppID_O365Management, "Scope"));
 
             return parameterDictionary;
         }
