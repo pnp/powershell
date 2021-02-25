@@ -67,7 +67,7 @@ namespace PnP.PowerShell.Commands.Lists
                     {
                         throw new PSArgumentException($"Cannot find item with Identity {Identity}");
                     }
-                    var values = ListItemHelper.GetFieldValues(list, item, Values, ClientContext);
+                    var values = ListItemHelper.GetFieldValues(list, item, Values, ClientContext, Batch);
                     if (values == null)
                     {
                         values = new Dictionary<string, object>();
