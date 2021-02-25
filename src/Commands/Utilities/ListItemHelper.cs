@@ -288,6 +288,9 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static Dictionary<string, object> GetFieldValues(PnP.Core.Model.SharePoint.IList list, PnP.Core.Model.SharePoint.IListItem existingItem, Hashtable valuesToSet, ClientContext clientContext)
         {
+            TermStore store = null;
+            TaxonomySession taxSession = null;
+            int defaultLanguage = CultureInfo.CurrentCulture.LCID;
             var item = new Dictionary<string, object>();
 
             // xxx: return early if hashtable is empty to save getting fields?
@@ -350,8 +353,14 @@ namespace PnP.PowerShell.Commands.Utilities
                                 if (value != null && value.GetType().IsArray)
                                 {
                                     var fieldValueCollection = field.NewFieldValueCollection();
-
-                                    var taxSession = clientContext.Site.GetTaxonomySession();
+                                    if (store == null)
+                                    {
+                                        taxSession = clientContext.Site.GetTaxonomySession();
+                                        store = taxSession.GetDefaultSiteCollectionTermStore();
+                                        clientContext.Load(store, s => s.DefaultLanguage);
+                                        clientContext.ExecuteQueryRetry();
+                                        defaultLanguage = store.DefaultLanguage;
+                                    }
                                     foreach (var arrayItem in value as object[])
                                     {
                                         Term taxonomyItem;
@@ -365,7 +374,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                             {
                                                 throw new PSInvalidOperationException($"Cannot find term {arrayItem}");
                                             }
-                                            var labelResult = taxonomyItem.GetDefaultLabel(CultureInfo.CurrentCulture.LCID);
+                                            var labelResult = taxonomyItem.GetDefaultLabel(defaultLanguage);
                                             clientContext.ExecuteQueryRetry();
                                             label = labelResult.Value;
                                         }
@@ -376,12 +385,12 @@ namespace PnP.PowerShell.Commands.Utilities
                                             {
                                                 throw new PSInvalidOperationException($"Cannot find term {arrayItem}");
                                             }
-                                            var labelResult = taxonomyItem.GetDefaultLabel(CultureInfo.CurrentCulture.LCID);
+                                            var labelResult = taxonomyItem.GetDefaultLabel(defaultLanguage);
                                             clientContext.Load(taxonomyItem);
                                             clientContext.ExecuteQueryRetry();
                                             label = labelResult.Value;
                                         }
-                                        fieldValueCollection.Values.Add(field.NewFieldTaxonomyValue(taxonomyItem.Id, label));
+                                        fieldValueCollection.Values.Add(field.NewFieldTaxonomyValue(taxonomyItem.Id, "-"));
                                     }
                                     item[key as string] = fieldValueCollection;
                                 }
@@ -389,14 +398,13 @@ namespace PnP.PowerShell.Commands.Utilities
                                 {
                                     Guid termGuid = Guid.Empty;
 
-                                    var taxSession = clientContext.Site.GetTaxonomySession();
                                     Term taxonomyItem = null;
                                     var label = string.Empty;
                                     if (value != null && !Guid.TryParse(value as string, out termGuid))
                                     {
                                         // Assume it's a TermPath
                                         taxonomyItem = clientContext.Site.GetTaxonomyItemByPath(value as string) as Term;
-                                        var labelResult = taxonomyItem.GetDefaultLabel(CultureInfo.CurrentCulture.LCID);
+                                        var labelResult = taxonomyItem.GetDefaultLabel(defaultLanguage);
                                         clientContext.ExecuteQueryRetry();
                                         label = labelResult.Value;
                                     }
@@ -405,7 +413,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                         if (value != null)
                                         {
                                             taxonomyItem = taxSession.GetTerm(termGuid);
-                                            var labelResult = taxonomyItem.GetDefaultLabel(CultureInfo.CurrentCulture.LCID);
+                                            var labelResult = taxonomyItem.GetDefaultLabel(defaultLanguage);
                                             clientContext.Load(taxonomyItem);
                                             clientContext.ExecuteQueryRetry();
                                             label = labelResult.Value;
