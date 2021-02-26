@@ -2186,11 +2186,35 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPMicrosoft365GroupMember.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPMicrosoft365GroupMember.html",
+          "hash": "IiQs8QclMUCQTbWQYafRvg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPMicrosoft365GroupMembers.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPMicrosoft365GroupMembers.html",
           "hash": "ocdLHuqr9FtnEMaZDYWl9Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPMicrosoft365GroupOwner.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPMicrosoft365GroupOwner.html",
+          "hash": "/mPPnapeMiw6Fd94WrYREg=="
         }
       },
       "is_incremental": false,
@@ -6522,7 +6546,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "2s/9fa9yudOpVpgvvXG0BQ=="
+          "hash": "NK3fU539tFYPhLi23gtK6w=="
         }
       },
       "is_incremental": false,
@@ -6601,7 +6625,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 543,
+          "total_file_count": 545,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
