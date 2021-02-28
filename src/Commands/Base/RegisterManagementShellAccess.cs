@@ -73,7 +73,7 @@ namespace PnP.PowerShell.Commands.Base
                     failureMessageHtml: $"You failed to login succesfully. Feel free to close this browser window.",
                                         azureEnvironment: AzureEnvironment))
                     {
-                        var tenantId = "{azure-tenant-id}";
+                        var tenantId = "{M365-Tenant-Id}";
                         var accessToken = string.Empty;
                         try
                         {
@@ -114,6 +114,10 @@ namespace PnP.PowerShell.Commands.Base
                             }
                         }
                         messageWriter.WriteMessage($"Share the following URL with a person that has appropriate access rights on the Azure AD to grant consent for Application Registrations:\n\nhttps://login.microsoftonline.com/{tenantId}/adminconsent?client_id={PnPConnection.PnPManagementShellClientId}");
+                        if (tenantId == "{M365-Tenant-Id}")
+                        {
+                            messageWriter.WriteMessage($"To get M365-Tenant-Id value, use the Get-PnPTenantId cmdlet:\nhttps://pnp.github.io/powershell/cmdlets/Get-PnPTenantId.html");
+                        }
                     }
                 }
                 messageWriter.Finished = true;
