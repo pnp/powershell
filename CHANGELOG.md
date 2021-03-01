@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Template` parameter to New-PnPTeamsTeam to create teams with EDU templates (your tenant needs an EDU license)
 - Added fixes for authentication to GCC, GCC High and GCC DoD environments using certificate or interactive login.
 - Added `Grant-PnPAzureADAppSitePermission`, `Get-PnPAzureADAppSitePermission`, `Set-PnPAzureADAppSitePermission` and `Revoke-PnPAzureADAppSitePermission`
+- Added `-SkipHiddenWebParts` parameter to the `ConvertTo-PnPPage` cmdlet that allows to skip hidden webparts during page transformation
 
 ### Changed
 - Improved batching speed when creating or updating multiple items that set similar values for taxonomy fields.
@@ -31,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Leon Armston [leonarmston]
 - Ganesh Sanap [ganesh-sanap]
 - vin-ol [vin-ol]
+- Bert Jansen [jansenbe]
 
 ## [1.3.0]
 
