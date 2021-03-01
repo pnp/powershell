@@ -11,6 +11,7 @@ using Microsoft.Online.SharePoint.TenantAdministration;
 using System.Net;
 using System.Threading;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands
 {
@@ -125,7 +126,7 @@ namespace PnP.PowerShell.Commands
         public string SensitivityLabel;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public SPOConditionalAccessPolicyType ConditionalAccessPolicy;
+        public PnPConditionalAccessPolicyType ConditionalAccessPolicy;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public string ProtectionLevelName;
@@ -286,7 +287,7 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(BlockDownloadOfNonViewableFiles)) || ParameterSpecified(nameof(AllowDownloadingNonWebViewableFiles)))
             {
                 var value = ParameterSpecified(nameof(BlockDownloadLinksFileTypes)) ? !BlockDownloadOfNonViewableFiles : AllowDownloadingNonWebViewableFiles;
-                if (ConditionalAccessPolicy == SPOConditionalAccessPolicyType.AllowLimitedAccess)
+                if (ConditionalAccessPolicy == PnPConditionalAccessPolicyType.AllowLimitedAccess)
                 {
                     props.AllowDownloadingNonWebViewableFiles = value;
                     updateRequired = true;
@@ -299,7 +300,7 @@ namespace PnP.PowerShell.Commands
                 {
                     if (ShouldContinue("To set AllowDownloadingNonWebViewableFiles parameter you need to set the -ConditionalAccessPolicy parameter to AllowLimitedAccess. We can set the Conditional Access Policy of this site to AllowLimitedAccess. Would you like to continue?", string.Empty))
                     {
-                        ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
+                        ConditionalAccessPolicy = PnPConditionalAccessPolicyType.AllowLimitedAccess;
                         props.ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
                         props.AllowDownloadingNonWebViewableFiles = value;
                         if (!value)
@@ -359,9 +360,9 @@ namespace PnP.PowerShell.Commands
                 ClientContext.Load(office365Tenant);
                 ClientContext.ExecuteQueryRetry();
                 office365Tenant.DisableSharingForNonOwnersOfSite(Identity.Url);
-            }            
+            }
 
-            if (ParameterSpecified(nameof(ConditionalAccessPolicy)) && ConditionalAccessPolicy == SPOConditionalAccessPolicyType.ProtectionLevel)
+            if (ParameterSpecified(nameof(ConditionalAccessPolicy)) && ConditionalAccessPolicy == PnPConditionalAccessPolicyType.ProtectionLevel || ConditionalAccessPolicy == PnPConditionalAccessPolicyType.AuthenticationContext)
             {
                 if (IsRootSite(Identity.Url))
                 {
@@ -386,7 +387,14 @@ namespace PnP.PowerShell.Commands
                 if (ParameterSpecified(nameof(ConditionalAccessPolicy)))
                 {
                     props.AuthContextStrength = null;
-                    props.ConditionalAccessPolicy = ConditionalAccessPolicy;
+                    if (ConditionalAccessPolicy == PnPConditionalAccessPolicyType.AllowFullAccess || ConditionalAccessPolicy == PnPConditionalAccessPolicyType.ProtectionLevel)
+                    {
+                        props.ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AuthenticationContext;
+                    }
+                    else
+                    {
+                        props.ConditionalAccessPolicy = (SPOConditionalAccessPolicyType)Enum.Parse(typeof(SPOConditionalAccessPolicyType), ConditionalAccessPolicy.ToString());
+                    }
                     updateRequired = true;
                 }
             }
@@ -411,14 +419,14 @@ namespace PnP.PowerShell.Commands
 
             if (ParameterSpecified(nameof(LimitedAccessFileType)))
             {
-                if (ConditionalAccessPolicy == SPOConditionalAccessPolicyType.AllowLimitedAccess)
+                if (ConditionalAccessPolicy == PnPConditionalAccessPolicyType.AllowLimitedAccess)
                 {
                     props.LimitedAccessFileType = LimitedAccessFileType;
                     updateRequired = true;
                 }
                 else if (ShouldContinue("To set LimitedAccessFileType you need to set the -ConditionalAccessPolicy parameter to AllowLimitedAccess. We can set the Conditional Access Policy of this site to AllowLimitedAccess. Would you like to continue?", string.Empty))
                 {
-                    ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
+                    ConditionalAccessPolicy = PnPConditionalAccessPolicyType.AllowLimitedAccess;
                     props.ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
                     props.LimitedAccessFileType = LimitedAccessFileType;
                     updateRequired = true;
@@ -427,13 +435,13 @@ namespace PnP.PowerShell.Commands
 
             if (ParameterSpecified(nameof(AllowEditing)))
             {
-                if (ConditionalAccessPolicy == SPOConditionalAccessPolicyType.AllowLimitedAccess)
+                if (ConditionalAccessPolicy == PnPConditionalAccessPolicyType.AllowLimitedAccess)
                 {
                     props.AllowEditing = AllowEditing;
                 }
                 else if (ShouldContinue("To set AllowEditing you need to set the -ConditionalAccessPolicy parameter to AllowLimitedAccess. We can set the Conditional Access Policy of this site to AllowLimitedAccess. Would you like to continue?", string.Empty))
                 {
-                    ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
+                    ConditionalAccessPolicy = PnPConditionalAccessPolicyType.AllowLimitedAccess;
                     props.ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
                     props.AllowEditing = AllowEditing;
                 }
@@ -475,7 +483,7 @@ namespace PnP.PowerShell.Commands
                 updateRequired = true;
             }
 
-            if(ParameterSpecified(nameof(OverrideBlockUserInfoVisibility)))
+            if (ParameterSpecified(nameof(OverrideBlockUserInfoVisibility)))
             {
                 props.OverrideBlockUserInfoVisibility = OverrideBlockUserInfoVisibility;
                 updateRequired = true;
