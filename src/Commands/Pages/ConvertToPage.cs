@@ -151,6 +151,9 @@ namespace PnP.PowerShell.Commands.Pages
         public SwitchParameter SkipTermStoreMapping = false;
 
         [Parameter(Mandatory = false)]
+        public SwitchParameter SkipHiddenWebParts = false;
+
+        [Parameter(Mandatory = false)]
         public string LDAPConnectionString = "";
 
         protected override void ExecuteCmdlet()
@@ -372,7 +375,8 @@ namespace PnP.PowerShell.Commands.Pages
                     TargetPageFolderOverridesDefaultFolder = this.TargetPageFolderOverridesDefaultFolder,
                     TermMappingFile = TermMappingFile,
                     SkipTermStoreMapping = SkipTermStoreMapping,
-                    RemoveEmptySectionsAndColumns = this.RemoveEmptySectionsAndColumns
+                    RemoveEmptySectionsAndColumns = this.RemoveEmptySectionsAndColumns,
+                    SkipHiddenWebParts = this.SkipHiddenWebParts,
                 };
 
                 // Set mapping properties
@@ -434,7 +438,8 @@ namespace PnP.PowerShell.Commands.Pages
                     },
                     TermMappingFile = TermMappingFile,
                     SkipTermStoreMapping = SkipTermStoreMapping,
-                    RemoveEmptySectionsAndColumns = this.RemoveEmptySectionsAndColumns
+                    RemoveEmptySectionsAndColumns = this.RemoveEmptySectionsAndColumns,
+                    SkipHiddenWebParts = this.SkipHiddenWebParts,
                 };
 
                 // Set mapping properties
