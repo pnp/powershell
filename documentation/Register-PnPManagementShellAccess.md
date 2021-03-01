@@ -39,14 +39,14 @@ Register-PnPManagementShellAccess
 Register-PnPManagementShellAccess -ShowConsentUrl
 ```
 
-Launches the consent flow to grant the PnP Management Shell Azure AD Application delegate access to the tenant and also displays the consent URL which can be shared with Azure AD administrators, Global administrators or folks with necessary permissions.
+Launches the consent flow to grant the PnP Management Shell Azure AD Application delegate access to the tenant and also displays the consent URL which can be shared with Azure AD administrators or Global administrators.
 
 ### EXAMPLE 3
 ```powershell
 Register-PnPManagementShellAccess -ShowConsentUrl -TenantName yourtenant.onmicrosoft.com
 ```
 
-Displays the consent URL which can be shared with Azure AD admininstrators, Global administrators or folks with necessary permissions.
+Displays the consent URL which can be shared with Azure AD administrators or Global administrators.
 
 ## PARAMETERS
 
@@ -78,7 +78,7 @@ Accept wildcard characters: False
 ```
 
 ### -TenantName
-The name of the tenant.
+The name of the tenant. Example - ( yourtenant.onmicrosoft.com)
 
 ```yaml
 Type: SwitchParameter
