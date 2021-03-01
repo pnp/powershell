@@ -202,14 +202,15 @@ namespace PnP.PowerShell.Commands.Utilities
                     form.Controls.Add(browser);
                     form.ResumeLayout(false);
 
-                    form.FormClosed += (a,b) => {
-                        if(!success && cancelOnClose)
+                    form.FormClosed += (a, b) =>
+                    {
+                        if (!success && cancelOnClose)
                         {
-                            cancellationTokenSource?.Cancel();
+                            cancellationTokenSource?.Cancel(false);
                         }
                     };
                     browser.Navigate(siteUrl);
-                    
+
                     browser.Navigated += (sender, args) =>
                     {
                         var navigatedUrl = args.Url.ToString();

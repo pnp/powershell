@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.Model
         public PermissionScopes()
         {
             // Graph Permissions source: https://github.com/microsoftgraph/microsoft-graph-devx-content/tree/dev/permissions
-            
+
             var assembly = Assembly.GetExecutingAssembly();
             var graphResourceName = "PnP.PowerShell.Commands.Resources.GraphPermissions.json";
             using (var stream = assembly.GetManifestResourceStream(graphResourceName))
@@ -90,6 +90,16 @@ namespace PnP.PowerShell.Commands.Model
         public PermissionScope GetScope(string resourceAppId, string identifier, string type)
         {
             return this.scopes.FirstOrDefault(s => s.resourceAppId == resourceAppId && s.Identifier == identifier && s.Type == type);
+        }
+
+        public string GetIdentifier(string resourceAppId, string id, string type)
+        {
+            var permission = this.scopes.FirstOrDefault(s => s.resourceAppId == resourceAppId && s.Id == id && s.Type == type);
+            if (permission != null)
+            {
+                return permission.Identifier;
+            }
+            return null;
         }
     }
 }

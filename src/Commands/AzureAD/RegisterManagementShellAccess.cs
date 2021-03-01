@@ -1,4 +1,5 @@
 ﻿using PnP.Framework;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -8,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TextCopy;
 
-namespace PnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsLifecycle.Register, "PnPManagementShellAccess")]
     public class RegisterManagementShellAccess : PSCmdlet

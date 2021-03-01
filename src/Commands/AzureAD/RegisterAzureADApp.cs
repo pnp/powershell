@@ -20,8 +20,9 @@ using System.Threading.Tasks;
 using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Base;
 
-namespace PnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsLifecycle.Register, "PnPAzureADApp")]
     [Alias("Initialize-PnPPowerShellAuthentication")]
@@ -552,7 +553,7 @@ namespace PnP.PowerShell.Commands.Base
         private bool AppExists(string appName, HttpClient httpClient, string token)
         {
             Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Checking if application '{appName}' does not exist yet...");
-            var azureApps = GraphHelper.GetAsync<RestResultCollection<AzureApp>>(httpClient, $@"https://{PnP.Framework.AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token).GetAwaiter().GetResult();
+            var azureApps = GraphHelper.GetAsync<RestResultCollection<AzureADApp>>(httpClient, $@"https://{PnP.Framework.AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token).GetAwaiter().GetResult();
             if (azureApps != null && azureApps.Items.Any())
             {
                 Host.UI.WriteLine();
@@ -562,7 +563,7 @@ namespace PnP.PowerShell.Commands.Base
             return false;
         }
 
-        private AzureApp CreateApp(string loginEndPoint, HttpClient httpClient, string token, X509Certificate2 cert, string redirectUri, List<PermissionScope> scopes)
+        private AzureADApp CreateApp(string loginEndPoint, HttpClient httpClient, string token, X509Certificate2 cert, string redirectUri, List<PermissionScope> scopes)
         {
             var expirationDate = DateTime.Parse(cert.GetExpirationDateString()).ToUniversalTime();
             var startDate = DateTime.Parse(cert.GetEffectiveDateString()).ToUniversalTime();
@@ -599,7 +600,7 @@ namespace PnP.PowerShell.Commands.Base
             var requestContent = new StringContent(JsonSerializer.Serialize(payload));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-            var azureApp = GraphHelper.PostAsync<AzureApp>(httpClient, $"https://{PnP.Framework.AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications", requestContent, token).GetAwaiter().GetResult();
+            var azureApp = GraphHelper.PostAsync<AzureADApp>(httpClient, $"https://{PnP.Framework.AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications", requestContent, token).GetAwaiter().GetResult();
             if (azureApp != null)
             {
                 Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"App {azureApp.DisplayName} with id {azureApp.AppId} created.");
@@ -607,7 +608,7 @@ namespace PnP.PowerShell.Commands.Base
             return azureApp;
         }
 
-        private void StartConsentFlow(string loginEndPoint, AzureApp azureApp, string redirectUri, string token, HttpClient httpClient, PSObject record, CmdletMessageWriter messageWriter, List<PermissionScope> scopes)
+        private void StartConsentFlow(string loginEndPoint, AzureADApp azureApp, string redirectUri, string token, HttpClient httpClient, PSObject record, CmdletMessageWriter messageWriter, List<PermissionScope> scopes)
         {
             Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Starting consent flow.");
 
@@ -619,32 +620,40 @@ namespace PnP.PowerShell.Commands.Base
             if (OperatingSystem.IsWindows() && !NoPopup)
             {
                 var waitTime = 60;
-                CmdletMessageWriter.WriteFormattedWarning(this, $"Waiting {waitTime} seconds to launch the consent flow in a popup window.\n\nThis wait is required to make sure that Azure AD is able to initialize all required artifacts. You can always navigate to the consent page manually:\n\n{consentUrl}");
+                // CmdletMessageWriter.WriteFormattedWarning(this, $"Waiting {waitTime} seconds to launch the consent flow in a popup window.\n\nThis wait is required to make sure that Azure AD is able to initialize all required artifacts. You can always navigate to the consent page manually:\n\n{consentUrl}");
+
+                var progressRecord = new ProgressRecord(1, "Please wait...", $"Waiting {waitTime} seconds to launch the consent flow in a popup window. This wait is required to make sure that Azure AD is able to initialize all required artifacts.");
 
                 for (var i = 0; i < waitTime; i++)
                 {
-                    if (Convert.ToDouble(i) % Convert.ToDouble(10) > 0)
-                    {
-                        Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, "-");
-                    }
-                    else
-                    {
-                        Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"[{i}]");
-                    }
+                    progressRecord.PercentComplete = Convert.ToInt32((Convert.ToDouble(i) / Convert.ToDouble(waitTime)) * 100);
+                    WriteProgress(progressRecord);
+                    // if (Convert.ToDouble(i) % Convert.ToDouble(10) > 0)
+                    // {
+                    //     Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, "-");
+                    // }
+                    // else
+                    // {
+                    //     Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"[{i}]");
+                    // }
                     System.Threading.Thread.Sleep(1000);
 
                     // Check if CTRL+C has been pressed and if so, abort the wait
                     if (Stopping)
                     {
+                        Host.UI.WriteLine("Wait cancelled. You can provide consent manually by navigating to");
+                        Host.UI.WriteLine(consentUrl);
                         break;
                     }
                 }
+                progressRecord.RecordType = ProgressRecordType.Completed;
+                WriteProgress(progressRecord);
 
                 if (!Stopping)
                 {
-                    Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"[{waitTime}]");
+                    // Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"[{waitTime}]");
 
-                    Host.UI.WriteLine();
+                    // Host.UI.WriteLine();
 
                     if (ParameterSpecified(nameof(Interactive)))
                     {
