@@ -29,6 +29,9 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SHOWURL)]
         public SwitchParameter ShowConsentUrl;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SHOWURL)]
+        public string TenantName;
+
         protected override void ProcessRecord()
         {
             source = new CancellationTokenSource();
@@ -65,58 +68,65 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    using (var authManager = AuthenticationManager.CreateWithInteractiveLogin(PnPConnection.AzureManagementShellClientId, (url, port) =>
+                    if (!string.IsNullOrEmpty(TenantName))
                     {
-                        BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !LaunchBrowser, source);
-                    },
+                        messageWriter.WriteMessage($"Share the following URL with a person that has appropriate access rights on the Azure AD to grant consent for Application Registrations:\n\nhttps://login.microsoftonline.com/{TenantName}/adminconsent?client_id={PnPConnection.PnPManagementShellClientId}");
+                    }
+                    else
+                    {
+                        using (var authManager = AuthenticationManager.CreateWithInteractiveLogin(PnPConnection.AzureManagementShellClientId, (url, port) =>
+                        {
+                            BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !LaunchBrowser, source);
+                        },
                     successMessageHtml: $"You successfully logged in. Feel free to close this window.",
                     failureMessageHtml: $"You failed to login succesfully. Feel free to close this browser window.",
                                         azureEnvironment: AzureEnvironment))
-                    {
-                        var tenantId = "{M365-Tenant-Id}";
-                        var accessToken = string.Empty;
-                        try
                         {
-                            accessToken = authManager.GetAccessTokenAsync(new[] { $"https://{GetGraphEndPoint()}/.default" }, cancellationToken).GetAwaiter().GetResult();
-                        }
-                        catch (Microsoft.Identity.Client.MsalException)
-                        {
-
-                        }
-
-                        if (!string.IsNullOrEmpty(accessToken))
-                        {
-                            using (var httpClient = new HttpClient())
+                            var tenantId = "{M365-Tenant-Id}";
+                            var accessToken = string.Empty;
+                            try
                             {
-                                using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"https://{GetGraphEndPoint()}/v1.0/organization"))
-                                {
-                                    requestMessage.Headers.Add("Authorization", $"Bearer {accessToken}");
-                                    requestMessage.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                                    var response = httpClient.SendAsync(requestMessage).GetAwaiter().GetResult();
-                                    if (response.IsSuccessStatusCode)
-                                    {
-                                        var responseContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                                        var responseJson = JsonSerializer.Deserialize<JsonElement>(responseContent);
-                                        if (responseJson.TryGetProperty("value", out JsonElement valueElement))
-                                        {
-                                            foreach (var organization in valueElement.EnumerateArray())
-                                            {
-                                                if (organization.TryGetProperty("id", out JsonElement idElement))
-                                                {
-                                                    tenantId = idElement.GetString();
+                                accessToken = authManager.GetAccessTokenAsync(new[] { $"https://{GetGraphEndPoint()}/.default" }, cancellationToken).GetAwaiter().GetResult();
+                            }
+                            catch (Microsoft.Identity.Client.MsalException)
+                            {
 
-                                                    break;
+                            }
+
+                            if (!string.IsNullOrEmpty(accessToken))
+                            {
+                                using (var httpClient = new HttpClient())
+                                {
+                                    using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"https://{GetGraphEndPoint()}/v1.0/organization"))
+                                    {
+                                        requestMessage.Headers.Add("Authorization", $"Bearer {accessToken}");
+                                        requestMessage.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                                        var response = httpClient.SendAsync(requestMessage).GetAwaiter().GetResult();
+                                        if (response.IsSuccessStatusCode)
+                                        {
+                                            var responseContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                                            var responseJson = JsonSerializer.Deserialize<JsonElement>(responseContent);
+                                            if (responseJson.TryGetProperty("value", out JsonElement valueElement))
+                                            {
+                                                foreach (var organization in valueElement.EnumerateArray())
+                                                {
+                                                    if (organization.TryGetProperty("id", out JsonElement idElement))
+                                                    {
+                                                        tenantId = idElement.GetString();
+
+                                                        break;
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
-                        messageWriter.WriteMessage($"Share the following URL with a person that has appropriate access rights on the Azure AD to grant consent for Application Registrations:\n\nhttps://login.microsoftonline.com/{tenantId}/adminconsent?client_id={PnPConnection.PnPManagementShellClientId}");
-                        if (tenantId == "{M365-Tenant-Id}")
-                        {
-                            messageWriter.WriteMessage($"To get M365-Tenant-Id value, use the Get-PnPTenantId cmdlet:\nhttps://pnp.github.io/powershell/cmdlets/Get-PnPTenantId.html");
+                            messageWriter.WriteMessage($"Share the following URL with a person that has appropriate access rights on the Azure AD to grant consent for Application Registrations:\n\nhttps://login.microsoftonline.com/{tenantId}/adminconsent?client_id={PnPConnection.PnPManagementShellClientId}");
+                            if (tenantId == "{M365-Tenant-Id}")
+                            {
+                                messageWriter.WriteMessage($"To get M365-Tenant-Id value, use the Get-PnPTenantId cmdlet:\nhttps://pnp.github.io/powershell/cmdlets/Get-PnPTenantId.html");
+                            }
                         }
                     }
                 }
