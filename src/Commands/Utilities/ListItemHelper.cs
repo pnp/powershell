@@ -1,5 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
+using PnP.Core.QueryModel;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using System;
@@ -303,7 +304,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             foreach (var key in values.Keys)
             {
-                var field = fields.FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
+                var field = fields.AsRequested().FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
                 if (field != null)
                 {
                     switch (field.TypeAsString)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnPCore = PnP.Core.Model.SharePoint;
+using PnP.Core.QueryModel;
 using System;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Model;
@@ -130,7 +131,8 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             if (returnList != null)
             {
-                returnList.EnsureProperties(l => l.Id, l => l.OnQuickLaunch, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder);
+                //returnList.EnsureProperties(l => l.Fields.QueryProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
+                returnList.EnsureProperties(l => l.Id, l => l.OnQuickLaunch, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder, l => l.Fields.QueryProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
                 batch.CacheList(returnList);
             }
             return returnList;

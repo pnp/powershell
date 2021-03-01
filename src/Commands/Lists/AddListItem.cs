@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.Lists
             {
                 
                 var list = List.GetList(Batch);
-                list.EnsureProperties(l => l.Id, l => l.Fields.QueryProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
+                //list.EnsureProperties(l => l.Id, l => l.Fields.QueryProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
 
                 var values = ListItemHelper.GetFieldValues(list, null, Values, ClientContext, Batch);
                 if (ContentType != null)
