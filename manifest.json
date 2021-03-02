@@ -1586,6 +1586,30 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPAzureADApp.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPAzureADApp.html",
+          "hash": "4DsuH3FGprcS50gfAS/vig=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPAzureADAppPermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPAzureADAppPermission.html",
+          "hash": "6HbqzSn0GfOqFhPSVXE4dQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPAzureADAppSitePermission.md",
       "output": {
         ".html": {
@@ -4130,6 +4154,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPAzureADApp.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPAzureADApp.html",
+          "hash": "9u3v9cPHW2m2Xfus+V7XTA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPAzureADAppSitePermission.md",
       "output": {
         ".html": {
@@ -6546,7 +6582,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "NK3fU539tFYPhLi23gtK6w=="
+          "hash": "xcEASoqnga590K4dCdJyEA=="
         }
       },
       "is_incremental": false,
@@ -6625,7 +6661,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 545,
+          "total_file_count": 548,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
