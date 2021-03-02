@@ -18,7 +18,7 @@ Updates a term
 ```
 Set-PnPTerm -Identity <Guid> [-Name <String>] [-Lcid <Int32>] [-Description <String>]
  [-CustomProperties <Hashtable>] [-LocalCustomProperties <Hashtable>] [-DeleteAllCustomProperties]
- [-DeleteAllLocalCustomProperties] [-TermStore <TaxonomyTermStorePipeBind>]
+ [-DeleteAllLocalCustomProperties] [-Deprecated <bool>] [-TermStore <TaxonomyTermStorePipeBind>]
  [<CommonParameters>]
 ```
 
@@ -26,7 +26,7 @@ Set-PnPTerm -Identity <Guid> [-Name <String>] [-Lcid <Int32>] [-Description <Str
 ```
 Set-PnPTerm -Identity <String> [-Name <String>] [-Lcid <Int32>] [-Description <String>]
  [-CustomProperties <Hashtable>] [-LocalCustomProperties <Hashtable>] [-DeleteAllCustomProperties]
- [-DeleteAllLocalCustomProperties] -TermSet <TaxonomyTermSetPipeBind> -TermGroup <TaxonomyTermGroupPipeBind>
+ [-DeleteAllLocalCustomProperties] [-Deprecated <bool>] -TermSet <TaxonomyTermSetPipeBind> -TermGroup <TaxonomyTermGroupPipeBind>
  [-TermStore <TaxonomyTermStorePipeBind>] [<CommonParameters>]
 ```
 
@@ -37,24 +37,31 @@ This cmdlet allows you to update an existing term.
 
 ### Example 1
 ```powershell
-Update-PnPTerm -Identity 3d9e60e8-d89c-4cd4-af61-a010cf93b380 -Name "New Name"
+Set-PnPTerm -Identity 3d9e60e8-d89c-4cd4-af61-a010cf93b380 -Name "New Name"
 ```
 
 Replaces the name of an existing term.
 
 ### Example 2
 ```powershell
-Update-TermSet -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Name "Finance" -CustomProperties @{"IsCorporate"="True"}
+Set-TermSet -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Name "Finance" -CustomProperties @{"IsCorporate"="True"}
 ```
 
 Adds a new custom property to an existing term.
 
-### Example 2
+### Example 3
 ```powershell
-Update-TermSet -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Name "Finance" -DeleteAllCustomProperties -CustomProperties @{"IsCorporate"="True"}
+Set-TermSet -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Name "Finance" -DeleteAllCustomProperties -CustomProperties @{"IsCorporate"="True"}
 ```
 
 Removes all custom properties and adds a new custom property to an existing term.
+
+### Example 4
+```powershell
+Set-TermSet -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Deprecated $true
+```
+
+Marks an existing term as deprecated, hiding it from users.
 
 ## PARAMETERS
 
@@ -108,6 +115,20 @@ Sets the description for a term.
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+### -Deprecated
+Sets a term as deprecated or not.
+
+```yaml
+Type: boolean
 Parameter Sets: (All)
 Aliases:
 
