@@ -193,10 +193,27 @@ namespace PnP.PowerShell.Commands.Utilities
             return task;
         }
 
-        public static async Task<PlannerTask> AddTaskAsync(HttpClient httpClient, string accessToken, string planId, string bucketId, string title)
+        public static async Task<PlannerTask> AddTaskAsync(HttpClient httpClient, string accessToken, string planId, string bucketId, string title, string[] assignedTo = null)
         {
-
-            var stringContent = new StringContent(JsonSerializer.Serialize(new { planId = planId, bucketId = bucketId, title = title }));
+            StringContent stringContent = null;
+            if (assignedTo != null)
+            {
+                var assignments = new Dictionary<string, object>();
+                var chunks = BatchUtility.Chunk(assignedTo, 20);
+                foreach (var chunk in chunks)
+                {
+                    var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/users/{0}", "id");
+                    foreach (var userid in results.Select(r => r.Value))
+                    {
+                        assignments.Add(userid, new Model.Planner.PlannerAssignedToUser());
+                    }
+                }
+                stringContent = new StringContent(JsonSerializer.Serialize(new { planId = planId, bucketId = bucketId, title = title, assignments = assignments }));
+            }
+            else
+            {
+                stringContent = new StringContent(JsonSerializer.Serialize(new { planId = planId, bucketId = bucketId, title = title }));
+            }
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             return await GraphHelper.PostAsync<PlannerTask>(httpClient, "v1.0/planner/tasks", stringContent, accessToken);
         }
@@ -212,6 +229,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static async Task<PlannerTask> UpdateTaskAsync(HttpClient httpClient, string accessToken, PlannerTask taskToUpdate, PlannerTask task)
         {
+            
             return await GraphHelper.PatchAsync<PlannerTask>(httpClient, accessToken, $"v1.0/planner/tasks/{taskToUpdate.Id}", task, new Dictionary<string, string>() { { "IF-MATCH", taskToUpdate.ETag } });
         }
         #endregion

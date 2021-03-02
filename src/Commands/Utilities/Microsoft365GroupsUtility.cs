@@ -32,10 +32,11 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             if (includeSiteUrl)
             {
-                var chunks = Chunk(items.Select(g => g.Id.ToString()), 20);
+                var chunks = BatchUtility.Chunk(items.Select(g => g.Id.ToString()), 20);
                 foreach (var chunk in chunks)
                 {
-                    var results = await GetSiteUrlBatchedAsync(httpClient, accessToken, chunk.ToArray());
+                    var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/groups/{0}/sites/root","webUrl");
+                    //var results = await GetSiteUrlBatchedAsync(httpClient, accessToken, chunk.ToArray());
                     foreach (var batchResult in results)
                     {
                         items.First(i => i.Id.ToString() == batchResult.Key).SiteUrl = batchResult.Value;
@@ -257,17 +258,17 @@ namespace PnP.PowerShell.Commands.Utilities
             Dictionary<string, string> returnValue = new Dictionary<string, string>();
 
             Dictionary<string, string> requests = new Dictionary<string, string>();
-            var batch = new Batch();
+            var batch = new GraphBatch();
             int id = 0;
             foreach (var groupId in groupIds)
             {
                 id++;
-                batch.Requests.Add(new BatchRequest() { Id = id.ToString(), Method = "GET", Url = $"/groups/{groupId}/sites/root?$select=webUrl" });
+                batch.Requests.Add(new GraphBatchRequest() { Id = id.ToString(), Method = "GET", Url = $"/groups/{groupId}/sites/root?$select=webUrl" });
                 requests.Add(id.ToString(), groupId);
             }
             var stringContent = new StringContent(JsonSerializer.Serialize(batch));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var result = await GraphHelper.PostAsync<BatchResponse>(httpClient, "v1.0/$batch", stringContent, accessToken);
+            var result = await GraphHelper.PostAsync<GraphBatchResponse>(httpClient, "v1.0/$batch", stringContent, accessToken);
             if (result.Responses != null && result.Responses.Any())
             {
                 foreach (var response in result.Responses)
@@ -288,17 +289,17 @@ namespace PnP.PowerShell.Commands.Utilities
             Dictionary<string, string> returnValue = new Dictionary<string, string>();
 
             Dictionary<string, string> requests = new Dictionary<string, string>();
-            var batch = new Batch();
+            var batch = new GraphBatch();
             int id = 0;
             foreach (var upn in userPrincipalNames)
             {
                 id++;
-                batch.Requests.Add(new BatchRequest() { Id = id.ToString(), Method = "GET", Url = $"/users/{upn}?$select=Id" });
+                batch.Requests.Add(new GraphBatchRequest() { Id = id.ToString(), Method = "GET", Url = $"/users/{upn}?$select=Id" });
                 requests.Add(id.ToString(), upn);
             }
             var stringContent = new StringContent(JsonSerializer.Serialize(batch));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var result = await GraphHelper.PostAsync<BatchResponse>(httpClient, "v1.0/$batch", stringContent, accessToken);
+            var result = await GraphHelper.PostAsync<GraphBatchResponse>(httpClient, "v1.0/$batch", stringContent, accessToken);
             if (result.Responses != null && result.Responses.Any())
             {
                 foreach (var response in result.Responses)
@@ -447,14 +448,7 @@ namespace PnP.PowerShell.Commands.Utilities
             await GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/renew", new { }, accessToken);
         }
 
-        internal static IEnumerable<IEnumerable<T>> Chunk<T>(this IEnumerable<T> source, int chunksize)
-        {
-            while (source.Any())
-            {
-                yield return source.Take(chunksize);
-                source = source.Skip(chunksize);
-            }
-        }
+        
 
         internal static async Task<Microsoft365Group> UpdateAsync(HttpClient httpClient, string accessToken, Microsoft365Group group)
         {
@@ -470,36 +464,5 @@ namespace PnP.PowerShell.Commands.Utilities
             };
             await GraphHelper.PatchAsync(httpClient, accessToken, $"v1.0/groups/{groupId}", patchData);
         }
-
-        private class Batch
-        {
-            [JsonPropertyName("requests")]
-            public List<BatchRequest> Requests { get; set; } = new List<BatchRequest>();
-        }
-
-        private class BatchRequest
-        {
-            [JsonPropertyName("id")]
-            public string Id { get; set; }
-            [JsonPropertyName("method")]
-            public string Method { get; set; }
-            [JsonPropertyName("url")]
-            public string Url { get; set; }
-        }
-
-        private class BatchResponse
-        {
-            public List<BatchResponseItem> Responses { get; set; }
-        }
-        private class BatchResponseItem
-        {
-            public string Id { get; set; }
-            public int Status { get; set; }
-            public Dictionary<string, string> Headers { get; set; }
-            public Dictionary<string, object> Body { get; set; }
-        }
-
-
-
     }
 }
