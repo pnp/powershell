@@ -15,7 +15,7 @@ Install-Module -Name "PnP.PowerShell"
 
 The way PnP PowerShell authenticates you to your tenant has changed. We now use OAuth behind the scenes to authenticate you. We support username/password auth, device code auth and app-only authentication.
 
-If you where using `Connect-PnPOnline` with the `-Credentials` you will have to register first an Azure AD application on your tenant. This is very straightfoward and simple:
+If you were using `Connect-PnPOnline` with the `-Credentials` you will have to register first an Azure AD application on your tenant. This is very straightfoward and simple:
 
 ```powershell
 Register-PnPManagementShellAccess
