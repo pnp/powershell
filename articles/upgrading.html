@@ -91,7 +91,7 @@
 </code></pre>
 <h2 id="setup-authentication">Setup authentication.</h2>
 <p>The way PnP PowerShell authenticates you to your tenant has changed. We now use OAuth behind the scenes to authenticate you. We support username/password auth, device code auth and app-only authentication.</p>
-<p>If you where using <code>Connect-PnPOnline</code> with the <code>-Credentials</code> you will have to register first an Azure AD application on your tenant. This is very straightfoward and simple:</p>
+<p>If you were using <code>Connect-PnPOnline</code> with the <code>-Credentials</code> you will have to register first an Azure AD application on your tenant. This is very straightfoward and simple:</p>
 <pre><code class="lang-powershell">Register-PnPManagementShellAccess
 </code></pre>
 <p>This cmdlet will ask you to authenticate, and then provide consent to the PnP Management Shell application. A registration will be added to the Azure AD of your tenant. This is a one-time action per tenant. After you provided consent you will be able to authenticate using:</p>
