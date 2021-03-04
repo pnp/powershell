@@ -33,6 +33,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public string ContentType = "application/json";
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Raw;
+
         protected override void ExecuteCmdlet()
         {
             if (Url.StartsWith("/"))
@@ -81,15 +84,21 @@ namespace PnP.PowerShell.Commands.Admin
                     var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                     if (responseString != null)
                     {
-
-                        var jsonElement = JsonSerializer.Deserialize<JsonElement>(responseString);
-                        if (jsonElement.TryGetProperty("value", out JsonElement valueProperty))
+                        if (!Raw)
                         {
-                            WriteObject(ConvertToPSObject(valueProperty, "value"), true);
+                            var jsonElement = JsonSerializer.Deserialize<JsonElement>(responseString);
+                            if (jsonElement.TryGetProperty("value", out JsonElement valueProperty))
+                            {
+                                WriteObject(ConvertToPSObject(valueProperty, "value"), true);
+                            }
+                            else
+                            {
+                                WriteObject(ConvertToPSObject(jsonElement, null), true);
+                            }
                         }
                         else
                         {
-                            WriteObject(ConvertToPSObject(jsonElement,null), true);
+                            WriteObject(responseString);
                         }
                     }
                 }

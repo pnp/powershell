@@ -18,6 +18,7 @@ Invoke-PnPSPRestMethod -Url <String>
                        [-Method <HttpRequestMethod>]
                        [-Content <Object>]
                        [-ContentType <String>]
+                       [-Raw]
                        [-Connection <PnPConnection>]
 ```
 
@@ -108,6 +109,18 @@ The url to execute
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Accept pipeline input: False
+```
+
+### -Raw
+If specified the returned data will not be converted to an object but returned as a JSON string.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: True
