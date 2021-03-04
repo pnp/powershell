@@ -126,7 +126,14 @@ namespace PnP.PowerShell.Commands.Branding
                     lines.AddRange(GetTree(node.Children.AsEnumerable(), level + 1));
                 }
                 index++;
-                line = "";
+                if (level > 0)
+                {
+                    line = string.Join("", Enumerable.Repeat("  ", level));
+                }
+                else
+                {
+                    line = "";
+                }
             }
             return lines;
         }
