@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 var chunks = BatchUtility.Chunk(items.Select(g => g.Id.ToString()), 20);
                 foreach (var chunk in chunks)
                 {
-                    var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/groups/{0}/sites/root","webUrl");
+                    var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/groups/{0}/sites/root", "webUrl");
                     //var results = await GetSiteUrlBatchedAsync(httpClient, accessToken, chunk.ToArray());
                     foreach (var batchResult in results)
                     {
@@ -48,15 +48,36 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static async Task<Microsoft365Group> GetGroupAsync(HttpClient httpClient, Guid groupId, string accessToken, bool includeSiteUrl)
         {
-            return await GraphHelper.GetAsync<Microsoft365Group>(httpClient, $"v1.0/groups/{groupId}", accessToken);
+            var group = await GraphHelper.GetAsync<Microsoft365Group>(httpClient, $"v1.0/groups/{groupId}", accessToken);
+            if (includeSiteUrl)
+            {
+                var siteUrlResult = await GraphHelper.GetAsync(httpClient, $"v1.0/groups/{group.Id}/sites/root?$select=webUrl", accessToken);
+                var resultElement = JsonSerializer.Deserialize<JsonElement>(siteUrlResult);
+                if (resultElement.TryGetProperty("webUrl", out JsonElement webUrlElement))
+                {
+                    group.SiteUrl = webUrlElement.GetString();
+                }
+            }
+            return group;
         }
+
 
         internal static async Task<Microsoft365Group> GetGroupAsync(HttpClient httpClient, string displayName, string accessToken, bool includeSiteUrl)
         {
             var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(httpClient, $"v1.0/groups?$filter=displayName eq '{displayName}' or mailNickName eq '{displayName}'", accessToken);
             if (results != null && results.Items.Any())
             {
-                return results.Items.First();
+                var group = results.Items.First();
+                if (includeSiteUrl)
+                {
+                    var siteUrlResult = await GraphHelper.GetAsync(httpClient, $"v1.0/groups/{group.Id}/sites/root?$select=webUrl", accessToken);
+                    var resultElement = JsonSerializer.Deserialize<JsonElement>(siteUrlResult);
+                    if (resultElement.TryGetProperty("webUrl", out JsonElement webUrlElement))
+                    {
+                        group.SiteUrl = webUrlElement.GetString();
+                    }
+                }
+                return group;
             }
             return null;
         }
@@ -234,7 +255,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-         internal static async Task UpdateMembersAsync(HttpClient httpClient, Guid groupId, string accessToken, string[] members)
+        internal static async Task UpdateMembersAsync(HttpClient httpClient, Guid groupId, string accessToken, string[] members)
         {
             var existingMembers = await GetMembersAsync(httpClient, groupId, accessToken);
             foreach (var member in members)
@@ -448,7 +469,7 @@ namespace PnP.PowerShell.Commands.Utilities
             await GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/renew", new { }, accessToken);
         }
 
-        
+
 
         internal static async Task<Microsoft365Group> UpdateAsync(HttpClient httpClient, string accessToken, Microsoft365Group group)
         {
