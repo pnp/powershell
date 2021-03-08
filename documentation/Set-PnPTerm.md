@@ -37,21 +37,21 @@ This cmdlet allows you to update an existing term.
 
 ### Example 1
 ```powershell
-Update-PnPTerm -Identity 3d9e60e8-d89c-4cd4-af61-a010cf93b380 -Name "New Name"
+Set-PnPTerm -Identity 3d9e60e8-d89c-4cd4-af61-a010cf93b380 -Name "New Name"
 ```
 
 Replaces the name of an existing term.
 
 ### Example 2
 ```powershell
-Update-TermSet -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Name "Finance" -CustomProperties @{"IsCorporate"="True"}
+Set-PnPTerm -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Name "Finance" -CustomProperties @{"IsCorporate"="True"}
 ```
 
 Adds a new custom property to an existing term.
 
-### Example 2
+### Example 3
 ```powershell
-Update-TermSet -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Name "Finance" -DeleteAllCustomProperties -CustomProperties @{"IsCorporate"="True"}
+Set-PnPTerm -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Name "Finance" -DeleteAllCustomProperties -CustomProperties @{"IsCorporate"="True"}
 ```
 
 Removes all custom properties and adds a new custom property to an existing term.
