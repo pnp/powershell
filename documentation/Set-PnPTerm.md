@@ -44,14 +44,14 @@ Replaces the name of an existing term.
 
 ### Example 2
 ```powershell
-Set-TermSet -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Name "Finance" -CustomProperties @{"IsCorporate"="True"}
+Set-PnPTerm -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Name "Finance" -CustomProperties @{"IsCorporate"="True"}
 ```
 
 Adds a new custom property to an existing term.
 
 ### Example 3
 ```powershell
-Set-TermSet -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Name "Finance" -DeleteAllCustomProperties -CustomProperties @{"IsCorporate"="True"}
+Set-PnPTerm -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Name "Finance" -DeleteAllCustomProperties -CustomProperties @{"IsCorporate"="True"}
 ```
 
 Removes all custom properties and adds a new custom property to an existing term.

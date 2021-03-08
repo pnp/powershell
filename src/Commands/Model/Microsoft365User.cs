@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace PnP.PowerShell.Commands.Model
 {
     public class Microsoft365User
@@ -22,6 +24,8 @@ namespace PnP.PowerShell.Commands.Model
         /// <summary>
         /// Group user's e-mail address
         /// </summary>
+
+        [JsonPropertyName("mail")]
         public string Email { get; set; }
         /// <summary>
         /// Group user's mobile phone number

@@ -37,6 +37,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
+        public Microsoft365GroupPipeBind(Guid guid)
+        {
+            _groupId = guid;
+        }
+
         public Microsoft365Group Group => _group;
 
         public String DisplayName => _displayName;

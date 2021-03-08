@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Model.Planner
 
         [JsonConverter(typeof(DateTimeISO8601Converter))]
         public DateTime? CompletedDateTime { get; set; }
-        
+
         public string CompletedBy { get; set; }
         public int? ReferenceCount { get; set; }
         public int? CheckListItemCount { get; set; }
@@ -46,8 +46,11 @@ namespace PnP.PowerShell.Commands.Model.Planner
     }
     public class TaskAssignment
     {
-        public DateTime AssignedDateTime { get; set; }
-        public string OrderHint { get; set; }
+        [JsonPropertyName("@odata.type")]
+        public string Type { get; set; } = "#microsoft.graph.plannerAssignment";
+    
+        public DateTime? AssignedDateTime { get; set; }
+        public string OrderHint { get; set; } = " !";
         public IdentitySet AssignedBy { get; set; }
     }
 
