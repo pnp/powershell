@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands.Principals
     [Cmdlet(VerbsCommon.Get, "PnPGroupPermissions")]
     public class GetGroupPermissions : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByName")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public GroupPipeBind Identity = new GroupPipeBind();
 
         protected override void ExecuteCmdlet()
