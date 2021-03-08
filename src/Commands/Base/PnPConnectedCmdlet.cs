@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Management.Automation;
 using System.Net.Http;
 
 namespace PnP.PowerShell.Commands.Base
@@ -20,6 +21,7 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         public HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+
 
     }
 

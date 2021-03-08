@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         protected override void ExecuteCmdlet()
         {
-            var app = Identity.GetApp(HttpClient, AccessToken);
+            var app = Identity.GetApp(this, HttpClient, AccessToken);
 
             if (Force || ShouldContinue($"Remove app '{app.DisplayName}' with id '{app.Id}'", string.Empty))
             {

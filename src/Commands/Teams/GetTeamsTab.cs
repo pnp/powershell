@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Graph
                 {
                     if (ParameterSpecified(nameof(Identity)))
                     {
-                        WriteObject(Identity.GetTab(HttpClient, AccessToken, groupId, channelId));
+                        WriteObject(Identity.GetTab(this,HttpClient, AccessToken, groupId, channelId));
                     }
                     else
                     {
@@ -40,12 +40,12 @@ namespace PnP.PowerShell.Commands.Graph
                 }
                 else
                 {
-                    throw new PSArgumentException("Channel not found");
+                    this.WriteError(new PSArgumentException("Channel not found"), ErrorCategory.ObjectNotFound);
                 }
             }
             else
             {
-                throw new PSArgumentException("Team not found");
+                this.WriteError(new PSArgumentException("Team not found"), ErrorCategory.ObjectNotFound);
             }
         }
     }

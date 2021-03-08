@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        public AzureADApp GetApp(HttpClient httpClient, string accessToken)
+        public AzureADApp GetApp(BasePSCmdlet cmdlet, HttpClient httpClient, string accessToken)
         {
             if (_id != Guid.Empty)
             {
@@ -52,7 +52,8 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                     return results.Items.First();
                 }
             }
-            throw new PSArgumentException("Azure AD App not found");
+            cmdlet.WriteError(new PSArgumentException("Azure AD App not found"), ErrorCategory.ObjectNotFound);
+            return null;
         }
     }
 }

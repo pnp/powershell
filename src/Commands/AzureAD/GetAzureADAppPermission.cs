@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.AzureAD
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(ConvertToPSObject(Identity.GetApp(HttpClient, AccessToken)));
+                WriteObject(ConvertToPSObject(Identity.GetApp(this, HttpClient, AccessToken)));
             }
             else
             {

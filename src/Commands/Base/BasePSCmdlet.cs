@@ -72,5 +72,10 @@ namespace PnP.PowerShell.Commands.Base
         {
             base.StopProcessing();
         }
+
+        internal void WriteError(Exception exception, ErrorCategory errorCategory, object target = null)
+        {
+            this.WriteError(new ErrorRecord(exception, string.Empty, errorCategory, target));
+        }
     }
 }
