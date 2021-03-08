@@ -18,7 +18,7 @@ Updates a term
 ```
 Set-PnPTerm -Identity <Guid> [-Name <String>] [-Lcid <Int32>] [-Description <String>]
  [-CustomProperties <Hashtable>] [-LocalCustomProperties <Hashtable>] [-DeleteAllCustomProperties]
- [-DeleteAllLocalCustomProperties] [-TermStore <TaxonomyTermStorePipeBind>]
+ [-DeleteAllLocalCustomProperties] [-Deprecated <bool>] [-TermStore <TaxonomyTermStorePipeBind>]
  [<CommonParameters>]
 ```
 
@@ -26,7 +26,7 @@ Set-PnPTerm -Identity <Guid> [-Name <String>] [-Lcid <Int32>] [-Description <Str
 ```
 Set-PnPTerm -Identity <String> [-Name <String>] [-Lcid <Int32>] [-Description <String>]
  [-CustomProperties <Hashtable>] [-LocalCustomProperties <Hashtable>] [-DeleteAllCustomProperties]
- [-DeleteAllLocalCustomProperties] -TermSet <TaxonomyTermSetPipeBind> -TermGroup <TaxonomyTermGroupPipeBind>
+ [-DeleteAllLocalCustomProperties] [-Deprecated <bool>] -TermSet <TaxonomyTermSetPipeBind> -TermGroup <TaxonomyTermGroupPipeBind>
  [-TermStore <TaxonomyTermStorePipeBind>] [<CommonParameters>]
 ```
 
@@ -55,6 +55,13 @@ Set-PnPTerm -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" 
 ```
 
 Removes all custom properties and adds a new custom property to an existing term.
+
+### Example 4
+```powershell
+Set-TermSet -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Deprecated $true
+```
+
+Marks an existing term as deprecated, hiding it from users.
 
 ## PARAMETERS
 
@@ -108,6 +115,20 @@ Sets the description for a term.
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+### -Deprecated
+Sets a term as deprecated or not.
+
+```yaml
+Type: boolean
 Parameter Sets: (All)
 Aliases:
 
