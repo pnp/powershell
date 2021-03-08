@@ -15,7 +15,10 @@ namespace PnP.PowerShell.Commands.Principals
         {
             var g = Identity.GetGroup(PnPContext);
             var r = g.GetRoleDefinitions();
-            WriteObject(r.RequestedItems,true);
+            if (r != null)
+            {
+                WriteObject(r.RequestedItems, true);
+            }
         }
     }
 }
