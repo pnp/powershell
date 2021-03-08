@@ -48,21 +48,20 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public Guid GroupId => _groupId;
 
-        public Microsoft365Group GetGroup(HttpClient httpClient, string accessToken, bool includeSite)
+        public Microsoft365Group GetGroup(HttpClient httpClient, string accessToken, bool includeSite, bool includeOwners)
         {
             Microsoft365Group group = null;
             if (Group != null)
             {
-                group = Microsoft365GroupsUtility.GetGroupAsync(httpClient, _group.Id.Value, accessToken, includeSite).GetAwaiter().GetResult();
+                group = Microsoft365GroupsUtility.GetGroupAsync(httpClient, _group.Id.Value, accessToken, includeSite, includeOwners).GetAwaiter().GetResult();
             }
             else if (_groupId != Guid.Empty)
             {
-                group = Microsoft365GroupsUtility.GetGroupAsync(httpClient, _groupId, accessToken, includeSite).GetAwaiter().GetResult();
-                //group = UnifiedGroupsUtility.GetUnifiedGroup(GroupId, accessToken, includeSite: includeSite, includeClassification: includeClassification);
+                group = Microsoft365GroupsUtility.GetGroupAsync(httpClient, _groupId, accessToken, includeSite, includeOwners).GetAwaiter().GetResult();
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                group = Microsoft365GroupsUtility.GetGroupAsync(httpClient, DisplayName, accessToken, includeSite).GetAwaiter().GetResult();
+                group = Microsoft365GroupsUtility.GetGroupAsync(httpClient, DisplayName, accessToken, includeSite, includeOwners).GetAwaiter().GetResult();
             }
             return group;
         }
@@ -79,7 +78,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                var group = Microsoft365GroupsUtility.GetGroupAsync(httpClient, DisplayName, accessToken, false).GetAwaiter().GetResult();
+                var group = Microsoft365GroupsUtility.GetGroupAsync(httpClient, DisplayName, accessToken, false, false).GetAwaiter().GetResult();
                 if (group != null)
                 {
                     return group.Id.Value;

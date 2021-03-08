@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using PnP.PowerShell.Commands.Model.Graph;
@@ -8,7 +10,6 @@ namespace PnP.PowerShell.Commands.Model
 {
     public class Microsoft365Group
     {
-
         [JsonPropertyName("owners@odata.bind")]
         public string[] OwnersODataBind { get; set; }
         [JsonPropertyName("members@odata.bind")]
@@ -55,6 +56,7 @@ namespace PnP.PowerShell.Commands.Model
         public string Visibility { get; set; }
         public string SiteUrl { get; set; }
         public string[] GroupTypes { get; set; }
+        public IEnumerable<Microsoft365User> Owners {get;set;}
 
         [JsonIgnore]
         public bool HasTeam

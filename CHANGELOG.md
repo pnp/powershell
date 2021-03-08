@@ -8,7 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current Nightly]
 
 ### Added
-- Added `-AssignedTo` to Add-PnPPlannerTask and Set-PnPPlannerTask allowing you to assign users to a task.
+- Added `-IncludeOwners` to `Get-PnPMicrosoft365Group`.
+- Added `-AssignedTo` to `Add-PnPPlannerTask` and `Set-PnPPlannerTask` allowing you to assign users to a task.
 - Added `Get-PnPAzureADApp`, `Get-PnPAzureADAppPermission` and `Remove-PnPAzureADApp` to manage Azure AD apps.
 - Added All Graph permissions and all SharePoint permissions for selection to `Register-PnPAzureADApp`.
 - Added `-Template` parameter to New-PnPTeamsTeam to create teams with EDU templates (your tenant needs an EDU license)

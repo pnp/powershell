@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class Microsoft365GroupsUtility
     {
-        internal static async Task<IEnumerable<Microsoft365Group>> GetGroupsAsync(HttpClient httpClient, string accessToken, bool includeSiteUrl)
+        internal static async Task<IEnumerable<Microsoft365Group>> GetGroupsAsync(HttpClient httpClient, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
             var items = new List<Microsoft365Group>();
             var result = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(httpClient, "v1.0/groups", accessToken);
@@ -30,23 +30,38 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                 }
             }
-            if (includeSiteUrl)
+            if (includeSiteUrl || includeOwners)
             {
                 var chunks = BatchUtility.Chunk(items.Select(g => g.Id.ToString()), 20);
-                foreach (var chunk in chunks)
+                if (includeOwners)
                 {
-                    var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/groups/{0}/sites/root", "webUrl");
-                    //var results = await GetSiteUrlBatchedAsync(httpClient, accessToken, chunk.ToArray());
-                    foreach (var batchResult in results)
+                    foreach (var chunk in chunks)
                     {
-                        items.First(i => i.Id.ToString() == batchResult.Key).SiteUrl = batchResult.Value;
+                        var ownerResults = await BatchUtility.GetObjectCollectionBatchedAsync<Microsoft365User>(httpClient, accessToken, chunk.ToArray(), "/groups/{0}/owners");
+                        foreach (var ownerResult in ownerResults)
+                        {
+                            items.First(i => i.Id.ToString() == ownerResult.Key).Owners = ownerResult.Value;
+                        }
+                    }
+                }
+
+                if (includeSiteUrl)
+                {
+                    foreach (var chunk in chunks)
+                    {
+                        var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/groups/{0}/sites/root", "webUrl");
+                        //var results = await GetSiteUrlBatchedAsync(httpClient, accessToken, chunk.ToArray());
+                        foreach (var batchResult in results)
+                        {
+                            items.First(i => i.Id.ToString() == batchResult.Key).SiteUrl = batchResult.Value;
+                        }
                     }
                 }
             }
             return items;
         }
 
-        internal static async Task<Microsoft365Group> GetGroupAsync(HttpClient httpClient, Guid groupId, string accessToken, bool includeSiteUrl)
+        internal static async Task<Microsoft365Group> GetGroupAsync(HttpClient httpClient, Guid groupId, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
             var group = await GraphHelper.GetAsync<Microsoft365Group>(httpClient, $"v1.0/groups/{groupId}", accessToken);
             if (includeSiteUrl)
@@ -58,11 +73,15 @@ namespace PnP.PowerShell.Commands.Utilities
                     group.SiteUrl = webUrlElement.GetString();
                 }
             }
+            if (includeOwners)
+            {
+                group.Owners = await GetGroupMembersAsync("owners", httpClient, group.Id.Value, accessToken);
+            }
             return group;
         }
 
 
-        internal static async Task<Microsoft365Group> GetGroupAsync(HttpClient httpClient, string displayName, string accessToken, bool includeSiteUrl)
+        internal static async Task<Microsoft365Group> GetGroupAsync(HttpClient httpClient, string displayName, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
             var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(httpClient, $"v1.0/groups?$filter=displayName eq '{displayName}' or mailNickName eq '{displayName}'", accessToken);
             if (results != null && results.Items.Any())
@@ -76,6 +95,10 @@ namespace PnP.PowerShell.Commands.Utilities
                     {
                         group.SiteUrl = webUrlElement.GetString();
                     }
+                }
+                if (includeOwners)
+                {
+                    group.Owners = await GetGroupMembersAsync("owners", httpClient, group.Id.Value, accessToken);
                 }
                 return group;
             }
@@ -189,20 +212,21 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static async Task<IEnumerable<Microsoft365User>> GetOwnersAsync(HttpClient httpClient, Guid groupId, string accessToken)
         {
-            return await GetGroupMembers("owners", httpClient, groupId, accessToken);
+            return await GetGroupMembersAsync("owners", httpClient, groupId, accessToken);
         }
 
         internal static async Task<IEnumerable<Microsoft365User>> GetMembersAsync(HttpClient httpClient, Guid groupId, string accessToken)
         {
-            return await GetGroupMembers("members", httpClient, groupId, accessToken);
+            return await GetGroupMembersAsync("members", httpClient, groupId, accessToken);
         }
 
-        private static async Task<IEnumerable<Microsoft365User>> GetGroupMembers(string groupName, HttpClient httpClient, Guid groupId, string accessToken)
+        private static async Task<IEnumerable<Microsoft365User>> GetGroupMembersAsync(string groupName, HttpClient httpClient, Guid groupId, string accessToken)
         {
-            var returnValue = new List<Microsoft365User>();
+            List<Microsoft365User> returnValue = null;
             var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365User>>(httpClient, $"v1.0/groups/{groupId}/{groupName}", accessToken);
             if (results != null && results.Items.Any())
             {
+                returnValue = new List<Microsoft365User>();
                 returnValue.AddRange(results.Items);
                 while (!string.IsNullOrEmpty(results.NextLink))
                 {

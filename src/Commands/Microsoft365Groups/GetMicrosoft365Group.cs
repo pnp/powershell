@@ -23,6 +23,9 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         public SwitchParameter IncludeSiteUrl;
 
         [Parameter(Mandatory = false)]
+        public SwitchParameter IncludeOwners;
+
+        [Parameter(Mandatory = false)]
         [Obsolete("Classification is always included")]
         public SwitchParameter IncludeClassification;
 
@@ -38,12 +41,12 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
             if (Identity != null)
             {
-                var group = Identity.GetGroup(HttpClient, AccessToken, includeSite: includeSiteUrl);
+                var group = Identity.GetGroup(HttpClient, AccessToken, includeSiteUrl, IncludeOwners);
                 WriteObject(group);
             }
             else
             {
-                var groups = Microsoft365GroupsUtility.GetGroupsAsync(HttpClient, AccessToken, includeSiteUrl).GetAwaiter().GetResult();
+                var groups = Microsoft365GroupsUtility.GetGroupsAsync(HttpClient, AccessToken, includeSiteUrl, IncludeOwners).GetAwaiter().GetResult();
 
                 WriteObject(groups.OrderBy(p => p.DisplayName), true);
             }
