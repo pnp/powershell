@@ -14,7 +14,8 @@ namespace PnP.PowerShell.Commands.Principals
         protected override void ExecuteCmdlet()
         {
             var g = Identity.GetGroup(PnPContext);
-            WriteObject(g.GetRoleDefinitions(),true);
+            var r = g.GetRoleDefinitions();
+            WriteObject(r.RequestedItems,true);
         }
     }
 }
