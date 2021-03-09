@@ -1,0 +1,62 @@
+---
+Module Name: PnP.PowerShell
+schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAadGroupMembers.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPAadGroupMembers
+---
+  
+# Get-PnPAadGroupMembers
+
+## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API : One of Directory.Read.All, Directory.ReadWrite.All, Group.Read.All, Group.ReadWrite.All, GroupMember.Read.All, GroupMember.ReadWrite.All, User.Read.All, User.ReadWrite.All
+
+Gets members of a particular Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
+
+## SYNTAX
+
+```powershell
+Get-PnPAadGroupMembers -Identity <AadGroupPipeBind> [<CommonParameters>]
+```
+
+## DESCRIPTION
+
+## EXAMPLES
+
+### EXAMPLE 1
+```powershell
+Get-PnPAadGroupMembers -Identity $groupId
+```
+
+Retrieves all the members of a specific Azure Active Directory group based on its ID
+
+### EXAMPLE 2
+```powershell
+Get-PnPAadGroupMembers -Identity $group
+```
+
+Retrieves all the members of a specific Azure Active Directory group based on the group's object instance
+
+## PARAMETERS
+
+### -Identity
+The Identity of the Azure Active Directory group
+
+```yaml
+Type: AadGroupPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+## RELATED LINKS
+
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
