@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Remove-PnPAadGroupMember
+title: Remove-PnPAzureADGroupMember
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPAadGroupMember.html
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPAzureADGroupMember.html
 ---
  
-# Remove-PnPAadGroupMember
+# Remove-PnPAzureADGroupMember
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Removes members from a particular Azure Active Directory group. This can be a se
 ## SYNTAX
 
 ```powershell
-Remove-PnPAadGroupMember -Identity <AadGroupPipeBind> -Users <String[]> [<CommonParameters>]
+Remove-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> -Users <String[]> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,7 +29,7 @@ Remove-PnPAadGroupMember -Identity <AadGroupPipeBind> -Users <String[]> [<Common
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPAadGroupMember -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com"
+Remove-PnPAzureADGroupMember -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com"
 ```
 
 Removes the provided two users as members from the Azure Active Directory group named "Project Team"
@@ -40,7 +40,7 @@ Removes the provided two users as members from the Azure Active Directory group 
 The Identity of the Azure Active Directory group to remove members from
 
 ```yaml
-Type: AadGroupPipeBind
+Type: AzureADGroupPipeBind
 Parameter Sets: (All)
 
 Required: True

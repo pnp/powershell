@@ -8,9 +8,9 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.New, "PnPAadGroup")]
+    [Cmdlet(VerbsCommon.New, "PnPAzureADGroup")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
-    public class NewAadGroup : PnPGraphCmdlet
+    public class NewAzureADGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
         public String DisplayName;

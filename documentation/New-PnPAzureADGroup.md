@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: New-PnPAadGroup
+title: New-PnPAzureADGroup
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/New-PnPAadGroup.html
+online version: https://pnp.github.io/powershell/cmdlets/New-PnPAzureADGroup.html
 ---
  
-# New-PnPAadGroup
+# New-PnPAzureADGroup
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Creates a new Azure Active Directory group. This can be a security or distributi
 ## SYNTAX
 
 ```powershell
-New-PnPAadGroup -DisplayName <String> -Description <String> -MailNickname <String> [-Owners <String[]>] [-Members <String[]>] [-IsSecurityEnabled <SwitchParameter>] [-IsMailEnabled <SwitchParameter>] [-Force] [<CommonParameters>]
+New-PnPAzureADGroup -DisplayName <String> -Description <String> -MailNickname <String> [-Owners <String[]>] [-Members <String[]>] [-IsSecurityEnabled <SwitchParameter>] [-IsMailEnabled <SwitchParameter>] [-Force] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,21 +29,21 @@ New-PnPAadGroup -DisplayName <String> -Description <String> -MailNickname <Strin
 
 ### EXAMPLE 1
 ```powershell
-New-PnPAadGroup -DisplayName $displayName -Description $description -MailNickname $nickname
+New-PnPAzureADGroup -DisplayName $displayName -Description $description -MailNickname $nickname
 ```
 
 Creates an Azure Active Directory group with all the required properties
 
 ### EXAMPLE 2
 ```powershell
-New-PnPAadGroup -DisplayName $displayName -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers
+New-PnPAzureADGroup -DisplayName $displayName -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers
 ```
 
 Creates a new Azure Active Directory group with all the required properties, and with a custom list of Owners and a custom list of Members
 
 ### EXAMPLE 3
 ```powershell
-New-PnPAadGroup -DisplayName $displayName -Description $description -MailNickname $nickname -IsSecurityEnabled -IsMailEnabled
+New-PnPAzureADGroup -DisplayName $displayName -Description $description -MailNickname $nickname -IsSecurityEnabled -IsMailEnabled
 ```
 
 Creates a new Azure Active Directory group which is mail and security enabled

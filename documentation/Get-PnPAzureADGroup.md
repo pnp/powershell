@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAadGroup.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAzureADGroup.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPAadGroup
+title: Get-PnPAzureADGroup
 ---
   
-# Get-PnPAadGroup
+# Get-PnPAzureADGroup
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Gets one Azure Active Directory group or a list of Azure Active Directory groups
 ## SYNTAX
 
 ```powershell
-Get-PnPAadGroup [-Identity <AadGroupPipeBind>] [<CommonParameters>]
+Get-PnPAzureADGroup [-Identity <AzureADGroupPipeBind>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,35 +29,35 @@ Get-PnPAadGroup [-Identity <AadGroupPipeBind>] [<CommonParameters>]
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPAadGroup
+Get-PnPAzureADGroup
 ```
 
 Retrieves all the Azure Active Directory groups
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAadGroup -Identity $groupId
+Get-PnPAzureADGroup -Identity $groupId
 ```
 
 Retrieves a specific Azure Active Directory group based on its ID
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPAadGroup -Identity $groupDisplayName
+Get-PnPAzureADGroup -Identity $groupDisplayName
 ```
 
 Retrieves a specific Azure Active Directory group that has the given DisplayName
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPAadGroup -Identity $groupSiteMailNickName
+Get-PnPAzureADGroup -Identity $groupSiteMailNickName
 ```
 
 Retrieves a specific Azure Active Directory group for which the email address equals the provided mail nickName
 
 ### EXAMPLE 5
 ```powershell
-Get-PnPAadGroup -Identity $group
+Get-PnPAzureADGroup -Identity $group
 ```
 
 Retrieves a specific Azure Active Directory group based on its group object instance
@@ -68,7 +68,7 @@ Retrieves a specific Azure Active Directory group based on its group object inst
 The Identity of the Azure Active Directory group
 
 ```yaml
-Type: AadGroupPipeBind
+Type: AzureADGroupPipeBind
 Parameter Sets: (All)
 
 Required: False

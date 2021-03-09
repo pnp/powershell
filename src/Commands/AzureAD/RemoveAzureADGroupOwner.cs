@@ -1,25 +1,25 @@
-﻿using PnP.Framework.Entities;
-using PnP.Framework.Graph;
+﻿using PnP.Framework.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.AzureAD;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPAadGroupOwner")]
+    [Cmdlet(VerbsCommon.Remove, "PnPAzureADGroupOwner")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
-    public class RemoveAadGroupOwner : PnPGraphCmdlet
+    public class RemoveAzureADGroupOwner : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public AadGroupPipeBind Identity;
+        public AzureADGroupPipeBind Identity;
 
         [Parameter(Mandatory = true)]
         public string[] Users;
 
         protected override void ExecuteCmdlet()
         {
-            GroupEntity group = null;
+            AzureADGroup group = null;
 
             if (Identity != null)
             {
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (group != null)
             {
-                GroupsUtility.RemoveGroupOwners(group.GroupId, Users, AccessToken);
+                GroupsUtility.RemoveGroupOwners(group.Id, Users, AccessToken);
             }
         }
     }

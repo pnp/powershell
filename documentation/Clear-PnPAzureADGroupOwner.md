@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Clear-PnPAadGroupOwner.html
+online version: https://pnp.github.io/powershell/cmdlets/Clear-PnPAzureADGroupOwner.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Clear-PnPAadGroupOwner
+title: Clear-PnPAzureADGroupOwner
 ---
   
-# Clear-PnPAadGroupOwner
+# Clear-PnPAzureADGroupOwner
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Removes all current owners from a particular Azure Active Directory group. This 
 ## SYNTAX
 
 ```powershell
-Clear-PnPAadGroupOwner -Identity <AadGroupPipeBind> [<CommonParameters>]
+Clear-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,7 +29,7 @@ Clear-PnPAadGroupOwner -Identity <AadGroupPipeBind> [<CommonParameters>]
 
 ### EXAMPLE 1
 ```powershell
-Clear-PnPAadGroupOwner -Identity "Project Team"
+Clear-PnPAzureADGroupOwner -Identity "Project Team"
 ```
 
 Removes all the current owners from the Azure Active Directory group named "Project Team"
@@ -40,7 +40,7 @@ Removes all the current owners from the Azure Active Directory group named "Proj
 The Identity of the Azure Active Directory group to remove all owners from
 
 ```yaml
-Type: AadGroupPipeBind
+Type: AzureADGroupPipeBind
 Parameter Sets: (All)
 
 Required: True

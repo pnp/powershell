@@ -3,18 +3,19 @@ using PnP.Framework.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.AzureAD;
 using System;
 using System.IO;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Set, "PnPAadGroup")]
+    [Cmdlet(VerbsCommon.Set, "PnPAzureADGroup")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
-    public class SetAadGroup : PnPGraphCmdlet
+    public class SetAzureADGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public AadGroupPipeBind Identity;
+        public AzureADGroupPipeBind Identity;
 
         [Parameter(Mandatory = false)]
         public string DisplayName;
@@ -42,7 +43,7 @@ namespace PnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
-            GroupEntity group = null;
+            AzureADGroup group = null;
 
             if (Identity != null)
             {
@@ -54,7 +55,7 @@ namespace PnP.PowerShell.Commands.Graph
                 try
                 {
                     GroupsUtility.UpdateGroup(
-                        groupId: group.GroupId,
+                        groupId: group.Id,
                         accessToken: AccessToken,
                         displayName: DisplayName,
                         description: Description,
@@ -67,7 +68,7 @@ namespace PnP.PowerShell.Commands.Graph
                     if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                     {
                         // For this scenario a separate call needs to be made
-                        GroupsUtility.SetGroupVisibility(group.GroupId, AccessToken, HideFromAddressLists, HideFromOutlookClients);
+                        GroupsUtility.SetGroupVisibility(group.Id, AccessToken, HideFromAddressLists, HideFromOutlookClients);
                     }
                 }
                 catch(Exception e)

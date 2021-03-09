@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Set-PnPAadGroup
+title: Set-PnPAzureADGroup
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPAadGroup.html
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPAzureADGroup.html
 ---
  
-# Set-PnPAadGroup
+# Set-PnPAzureADGroup
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Sets the properties of a specicic Azure Active Directory group. This can be a se
 ## SYNTAX
 
 ```powershell
-Set-PnPAadGroup -Identity <AadGroupPipeBind> [-DisplayName <String>] [-Description <String>]
+Set-PnPAzureADGroup -Identity <AzureADGroupPipeBind> [-DisplayName <String>] [-Description <String>]
  [-Owners <String[]>] [-Members <String[]>] [-SecurityEnabled] [-MailEnabled] 
  [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] 
  [<CommonParameters>]
@@ -32,21 +32,21 @@ Set-PnPAadGroup -Identity <AadGroupPipeBind> [-DisplayName <String>] [-Descripti
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPAadGroup -Identity $group -DisplayName "My Displayname"
+Set-PnPAzureADGroup -Identity $group -DisplayName "My Displayname"
 ```
 
 Sets the display name of the group where $group is a Group entity
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPAadGroup -Identity $groupId -Descriptions "My Description" -DisplayName "My DisplayName"
+Set-PnPAzureADGroup -Identity $groupId -Descriptions "My Description" -DisplayName "My DisplayName"
 ```
 
 Sets the display name and description of a group based upon its ID
 
 ### EXAMPLE 3
 ```powershell
-Set-PnPAadGroup -Identity $group -Owners demo@contoso.com
+Set-PnPAzureADGroup -Identity $group -Owners demo@contoso.com
 ```
 
 Sets demo@contoso.com as owner of the group
@@ -141,7 +141,7 @@ Accept wildcard characters: False
 The Identity of the Azure Active Directory group
 
 ```yaml
-Type: AadGroupPipeBind
+Type: AzureADGroupPipeBind
 Parameter Sets: (All)
 
 Required: True

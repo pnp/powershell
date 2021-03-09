@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Remove-PnPAadGroupOwner
+title: Remove-PnPAzureADGroupOwner
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPAadGroupOwner.html
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPAzureADGroupOwner.html
 ---
  
-# Remove-PnPAadGroupOwner
+# Remove-PnPAzureADGroupOwner
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Removes owners from a particular Azure Active Directory group. This can be a sec
 ## SYNTAX
 
 ```powershell
-Remove-PnPAadGroupOwner -Identity <AadGroupPipeBind> -Users <String[]>
+Remove-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> -Users <String[]>
   [<CommonParameters>]
 ```
 
@@ -30,7 +30,7 @@ Remove-PnPAadGroupOwner -Identity <AadGroupPipeBind> -Users <String[]>
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPAadGroupOwner -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com"
+Remove-PnPAzureADGroupOwner -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com"
 ```
 
 Removes the provided two users as owners from the Azure Active Directory group named "Project Team"
@@ -41,7 +41,7 @@ Removes the provided two users as owners from the Azure Active Directory group n
 The Identity of the zure Active Directory group to remove owners from
 
 ```yaml
-Type: AadGroupPipeBind
+Type: AzureADGroupPipeBind
 Parameter Sets: (All)
 
 Required: True

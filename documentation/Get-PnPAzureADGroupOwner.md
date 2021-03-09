@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAadGroupOwners.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAzureADGroupOwner.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPAadGroupOwners
+title: Get-PnPAzureADGroupOwner
 ---
   
-# Get-PnPAadGroupOwners
+# Get-PnPAzureADGroupOwner
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Gets owners of a particular Azure Active Directory group. This can be a security
 ## SYNTAX
 
 ```powershell
-Get-PnPAadGroupOwners -Identity <AadGroupPipeBind> [<CommonParameters>]
+Get-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,14 +29,14 @@ Get-PnPAadGroupOwners -Identity <AadGroupPipeBind> [<CommonParameters>]
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPAadGroupOwners -Identity $groupId
+Get-PnPAzureADGroupOwner -Identity $groupId
 ```
 
 Retrieves all the owners of a specific Azure Active Directory group based on its ID
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAadGroupOwners -Identity $group
+Get-PnPAzureADGroupOwner -Identity $group
 ```
 
 Retrieves all the owners of a specific Azure Active Directory group based on the group's object instance
@@ -47,7 +47,7 @@ Retrieves all the owners of a specific Azure Active Directory group based on the
 The Identity of the Azure Active Directory group.
 
 ```yaml
-Type: AadGroupPipeBind
+Type: AzureADGroupPipeBind
 Parameter Sets: (All)
 
 Required: True

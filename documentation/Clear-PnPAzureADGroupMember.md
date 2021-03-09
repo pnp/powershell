@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Clear-PnPAadGroupMember.html
+online version: https://pnp.github.io/powershell/cmdlets/Clear-PnPAzureADGroupMember.html
 external help file: PnP.PowerShell.dll-help.xml
-title: Clear-PnPAadGroupMember
+title: Clear-PnPAzureADGroupMember
 ---
   
-# Clear-PnPAadGroupMember
+# Clear-PnPAzureADGroupMember
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Removes all current members from a particular Azure Active Directory group. This
 ## SYNTAX
 
 ```powershell
-Clear-PnPAadGroupMember -Identity <AadGroupPipeBind> [<CommonParameters>]
+Clear-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,7 +29,7 @@ Clear-PnPAadGroupMember -Identity <AadGroupPipeBind> [<CommonParameters>]
 
 ### EXAMPLE 1
 ```powershell
-Clear-PnPAadGroupMember -Identity "Project Team"
+Clear-PnPAzureADGroupMember -Identity "Project Team"
 ```
 
 Removes all the current members from the Azure Active Directory group named "Project Team"
@@ -40,7 +40,7 @@ Removes all the current members from the Azure Active Directory group named "Pro
 The Identity of the Azure Active Directory group to remove all members from
 
 ```yaml
-Type: AadGroupPipeBind
+Type: AzureADGroupPipeBind
 Parameter Sets: (All)
 
 Required: True

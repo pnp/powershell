@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPAadGroupMember.html
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPAzureADGroupOwner.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Add-PnPAadGroupMember
+title: Add-PnPAzureADGroupOwner
 ---
   
-# Add-PnPAadGroupMember
+# Add-PnPAzureADGroupOwner
 
 ## SYNOPSIS
 
@@ -15,12 +15,12 @@ title: Add-PnPAadGroupMember
 
   *  Microsoft Graph API: All of Group.ReadWrite.All, User.ReadWrite.All
 
-Adds members to a particular Azure Active Directory Group. This can be a security, distribution or Microsoft 365 group.
+Adds users to the owners of an Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
 
 ## SYNTAX
 
 ```powershell
-Add-PnPAadGroupMember -Identity <AadGroupPipeBind> -Users <String[]> [-RemoveExisting] [<CommonParameters>]
+Add-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> -Users <String[]> [-RemoveExisting] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,25 +29,25 @@ Add-PnPAadGroupMember -Identity <AadGroupPipeBind> -Users <String[]> [-RemoveExi
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPAadGroupMember -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com"
+Add-PnPAzureADGroupOwner -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com"
 ```
 
-Adds the provided two users as additional members to the Azure Active Directory Group named "Project Team"
+Adds the provided two users as additional owners to the Azure Active Directory group named "Project Team"
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPAadGroupMember -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com" -RemoveExisting
+Add-PnPAzureADGroupOwner -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com" -RemoveExisting
 ```
 
-Sets the provided two users as the only members of the Azure Active Directory group named "Project Team" by removing any current existing members first
+Sets the provided two users as the only owners of the Azure Active Directory group named "Project Team" by removing any current existing members first
 
 ## PARAMETERS
 
 ### -Identity
-The Identity of the Azure Active Directory group to add members to
+The Identity of the Azure Active Directory group to add owners to
 
 ```yaml
-Type: AadGroupPipeBind
+Type: AzureADGroupPipeBind
 Parameter Sets: (All)
 
 Required: True
@@ -87,6 +87,7 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[Documentation](https://docs.microsoft.com/graph/api/group-post-members)
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+[Documentation](https://docs.microsoft.com/graph/api/group-post-members)
 
 

@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAadGroupMembers.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAzureADGroupMember.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPAadGroupMembers
+title: Get-PnPAzureADGroupMember
 ---
   
-# Get-PnPAadGroupMembers
+# Get-PnPAzureADGroupMember
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Gets members of a particular Azure Active Directory group. This can be a securit
 ## SYNTAX
 
 ```powershell
-Get-PnPAadGroupMembers -Identity <AadGroupPipeBind> [<CommonParameters>]
+Get-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,14 +29,14 @@ Get-PnPAadGroupMembers -Identity <AadGroupPipeBind> [<CommonParameters>]
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPAadGroupMembers -Identity $groupId
+Get-PnPAzureADGroupMember -Identity $groupId
 ```
 
 Retrieves all the members of a specific Azure Active Directory group based on its ID
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAadGroupMembers -Identity $group
+Get-PnPAzureADGroupMember -Identity $group
 ```
 
 Retrieves all the members of a specific Azure Active Directory group based on the group's object instance
@@ -47,7 +47,7 @@ Retrieves all the members of a specific Azure Active Directory group based on th
 The Identity of the Azure Active Directory group
 
 ```yaml
-Type: AadGroupPipeBind
+Type: AzureADGroupPipeBind
 Parameter Sets: (All)
 
 Required: True

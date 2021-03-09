@@ -7,9 +7,10 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAADUser", DefaultParameterSetName = ParameterSet_LIST)]
+    [Cmdlet(VerbsCommon.Get, "PnPAzureADUser", DefaultParameterSetName = ParameterSet_LIST)]
     [RequiredMinimalApiPermissions("User.Read.All")]
-    public class GetAADUser : PnPGraphCmdlet
+    [Alias("Get-PnPAADUser")]
+    public class GetAzureADUser : PnPGraphCmdlet
     {
         const string ParameterSet_BYID = "Return by specific ID";
         const string ParameterSet_LIST = "Return a list";
@@ -47,6 +48,11 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
+            if(MyInvocation.InvocationName.ToLower().Equals("get-pnpaaduser"))
+            {
+                WriteWarning("Get-PnPAADUser is obsolete. Use Get-PnPAzureADUser instead which has the same parameters.");
+            }
+
             if (PnPConnection.Current.ClientId == PnPConnection.PnPManagementShellClientId)
             {
                 PnPConnection.Current.Scopes = new[] { "Directory.ReadWrite.All" };

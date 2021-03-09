@@ -3,21 +3,23 @@ using PnP.Framework.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.AzureAD;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAadGroupMembers")]
+    [Cmdlet(VerbsCommon.Get, "PnPAzureADGroupMember")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
-    public class GetAadGroupMembers : PnPGraphCmdlet
+    public class GetAzureADGroupMember : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public AadGroupPipeBind Identity;
+        public AzureADGroupPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
-            GroupEntity group = null;
+            AzureADGroup group = null;
 
             if (Identity != null)
             {
@@ -27,8 +29,11 @@ namespace PnP.PowerShell.Commands.Graph
             if (group != null)
             {
                 // Get members of the group
-                List<GroupUser> members = GroupsUtility.GetGroupMembers(group, AccessToken);
-                WriteObject(members);
+                List<GroupUser> members = GroupsUtility.GetGroupMembers(group.Convert(), AccessToken);
+                if (members.Any())
+                {
+                    WriteObject(members.Select(m => AzureADGroupUser.CreateFrom(m)),true);
+                }
             }
         }
     }
