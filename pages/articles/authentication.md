@@ -23,17 +23,23 @@ During execution of the cmdlet you will be talked through the consent flow. This
 PnP PowerShell has a cmdlet that allows you to register a new Azure AD App, and optionally generate the certificates for you to use to login with that app. 
 
 ```powershell
-Register-PnPAzureADApp -ApplicationName PnPRocks -Tenant mytenant.onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin
+$result = Register-PnPAzureADApp -ApplicationName "PnP Rocks" -Tenant mytenant.onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin
+$result
 ```
 
 When you run the cmdlet above you will be asked to navigate to the shown url and enter the code shown. After that a new app will be registerd in the Azure AD (make sure you have the rights to do this), and a certificate will be generated and uploaded to that app. After this a URL will be shown which you have to navigate to to provide consent for this application. By default a limited set of permissions scopes is added, but you can provide the one of the permission parameters (`GraphApplicationPermissions`, `GraphDelegatePermissions`, `SharePointApplicationPermissions`, `SharePointDelegatePermissions`) to provide your own permission scopes.
 
-The cmdlet will save both the CER and PFX files to the specified location with the -Outpath parameter. The names of the files will be matching the -ApplicationName parameter, e.g. in the example above the files will be called PnPRocks.cer and PnPRocks.pfx. The output of the cmdlet will show the clientid. After all is set up and consent has been provided you can login using:
+It also returns the private key certificate encoded in base64 encoding. As it spans multiple lines, it is recommended to assign the outcome of `Register-PnPAzureAdApp` to a variable so you have access to this value more easily. The Base64 encoded private key certificate can be used in your Connect-PnPOnline voiding the need to have access to the physical file:
 
 ```powershell
-Connect-PnPOnline -Url "https://yourtenant.sharepoint.com" -ClientId [clientid] -Tenant [yourtenant.onmicrosoft.com] -CertificatePath certificate.pfx
+Connect-PnPOnline -Url "https://yourtenant.sharepoint.com" -ClientId [clientid] -Tenant [yourtenant.onmicrosoft.com] -CertificateBase64Encoded [pfx base64 encoded]
 ```
 
+The cmdlet will also save both the CER and PFX files to the location specified with the -Outpath parameter. The names of the files will be matching the -ApplicationName parameter, e.g. in the example above the files will be called `PnP Rocks.cer` and `PnP Rocks.pfx`. The output of the cmdlet will show the clientid. After all is set up and consent has been provided you can login using:
+
+```powershell
+Connect-PnPOnline -Url "https://yourtenant.sharepoint.com" -ClientId [clientid] -Tenant [yourtenant.onmicrosoft.com] -CertificatePath [certificate.pfx]
+```
 
 ## Authenticating with Credentials
 
