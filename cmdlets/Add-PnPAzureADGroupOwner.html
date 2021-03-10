@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Installing PnP PowerShell | PnP PowerShell </title>
+    <title>Add-PnPAzureADGroupOwner | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Installing PnP PowerShell | PnP PowerShell ">
+    <meta name="title" content="Add-PnPAzureADGroupOwner | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,26 +77,68 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/installation.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="installing-pnp-powershell">Installing PnP PowerShell</h1>
+                    <h1 id="add-pnpazureadgroupowner">Add-PnPAzureADGroupOwner</h1>
 
-<p>You can run the following commands to install the PowerShell cmdlets:</p>
-<pre><code class="lang-powershell">Install-Module -Name &quot;PnP.PowerShell&quot;
+<h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: All of Group.ReadWrite.All, User.ReadWrite.All</li>
+</ul>
+<p>Adds users to the owners of an Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Add-PnPAzureADGroupOwner -Identity &lt;AzureADGroupPipeBind&gt; -Users &lt;String[]&gt; [-RemoveExisting] [&lt;CommonParameters&gt;]
 </code></pre>
-<p>This will work on Windows / Linux / MacOS.</p>
-<h1 id="uninstalling-pnp-powershell">Uninstalling PnP PowerShell</h1>
-<p>In case you would like to remove PnP PowerShell again, you can run:</p>
-<pre><code class="lang-powershell">Uninstall-Module -Name &quot;PnP.PowerShell&quot;
+<h2 id="description">DESCRIPTION</h2>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Add-PnPAzureADGroupOwner -Identity &quot;Project Team&quot; -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot;
 </code></pre>
-<h2 id="using-pnp-powershell-in-the-azure-cloud-shell">Using PnP PowerShell in the Azure Cloud Shell</h2>
-<p>Open the Azure Cloud Shell at <a href="https://shell.azure.com">https://shell.azure.com</a></p>
-<p>Select PowerShell as your shell and enter</p>
-<pre><code class="lang-powershell">Install-Module -Name &quot;PnP.PowerShell&quot;
+<p>Adds the provided two users as additional owners to the Azure Active Directory group named &quot;Project Team&quot;</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Add-PnPAzureADGroupOwner -Identity &quot;Project Team&quot; -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot; -RemoveExisting
 </code></pre>
-<p>As the Azure Cloud Shell retains its settings and installed modules, the next time you open the Azure Cloud Shell PnP PowerShell will be available for you to use.</p>
+<p>Sets the provided two users as the only owners of the Azure Active Directory group named &quot;Project Team&quot; by removing any current existing members first</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-identity">-Identity</h3>
+<p>The Identity of the Azure Active Directory group to add owners to</p>
+<pre><code class="lang-yaml">Type: AzureADGroupPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-removeexisting">-RemoveExisting</h3>
+<p>If provided, all existing members will be removed and only those provided through Users will become members</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-users">-Users</h3>
+<p>The UPN(s) of the user(s) to add to the Azure Active Directory group as a member</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
+<a href="https://docs.microsoft.com/graph/api/group-post-members">Documentation</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

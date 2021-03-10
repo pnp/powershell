@@ -18,7 +18,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/authentication.html",
-          "hash": "LrhSjv1+8HIbDC3bgZdFXg=="
+          "hash": "Vg4qmeTE+UycRYmvD2iTow=="
         }
       },
       "is_incremental": false,
@@ -114,7 +114,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/installation.html",
-          "hash": "DIlT0LvEnQy1U4RqtgA/GQ=="
+          "hash": "NHT24R/HvsL5+bqSWMTyvA=="
         }
       },
       "is_incremental": false,
@@ -199,6 +199,30 @@
         ".html": {
           "relative_path": "cmdlets/Add-PnPApplicationCustomizer.html",
           "hash": "jeeSUvRb4VQfLTiXwEE37A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPAzureADGroupMember.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPAzureADGroupMember.html",
+          "hash": "mkeJPymKDr6Kq3fkmDh2gQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPAzureADGroupOwner.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPAzureADGroupOwner.html",
+          "hash": "0BmDtRLdPZd6enDe7Q1VkA=="
         }
       },
       "is_incremental": false,
@@ -986,6 +1010,30 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Clear-PnPAzureADGroupMember.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Clear-PnPAzureADGroupMember.html",
+          "hash": "fMu0+npDbFOqBNiiGAdS9g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Clear-PnPAzureADGroupOwner.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Clear-PnPAzureADGroupOwner.html",
+          "hash": "M5WA+q26uae5iSrPLPfWPQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Clear-PnPDefaultColumnValues.md",
       "output": {
         ".html": {
@@ -1615,6 +1663,42 @@
         ".html": {
           "relative_path": "cmdlets/Get-PnPAzureADAppSitePermission.html",
           "hash": "ZlFO3YNR7Zabk0KjITfpcQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPAzureADGroup.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPAzureADGroup.html",
+          "hash": "CpH0vu1WNv6n3/L7jvOtew=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPAzureADGroupMember.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPAzureADGroupMember.html",
+          "hash": "FnGmSJYJW2dLGlppI5NI3w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPAzureADGroupOwner.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPAzureADGroupOwner.html",
+          "hash": "YXhR8NOSLT9LTInv59Hb/A=="
         }
       },
       "is_incremental": false,
@@ -3650,6 +3734,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPAzureADGroup.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPAzureADGroup.html",
+          "hash": "nqJmg//0/9ubpW+InAVMXw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/New-PnPAzureCertificate.md",
       "output": {
         ".html": {
@@ -4111,6 +4207,42 @@
         ".html": {
           "relative_path": "cmdlets/Register-PnPManagementShellAccess.html",
           "hash": "EHNlT8JW3q+HgeCDLN5nUA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPAadGroup.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPAadGroup.html",
+          "hash": "ppvNbzwfa+m2vcL8S2NIJA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPAadGroupMember.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPAadGroupMember.html",
+          "hash": "KDdBtZ3vFYRXDP25W2gPjg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPAadGroupOwner.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPAadGroupOwner.html",
+          "hash": "2Q82rEu4nhU7VwEXMZ20Qg=="
         }
       },
       "is_incremental": false,
@@ -5335,6 +5467,18 @@
         ".html": {
           "relative_path": "cmdlets/Send-PnPMail.html",
           "hash": "0p+AGfvXjWvfLR9eZRcZVA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPAadGroup.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPAadGroup.html",
+          "hash": "6WvC28bMNvxv7jf8E+/kgg=="
         }
       },
       "is_incremental": false,
@@ -6582,7 +6726,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "xcEASoqnga590K4dCdJyEA=="
+          "hash": "Wx2nJEjKFryod7E43G9fxw=="
         }
       },
       "is_incremental": false,
@@ -6661,7 +6805,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 548,
+          "total_file_count": 560,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
