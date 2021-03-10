@@ -49,7 +49,8 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="PnP.Framework" Version="1.2.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
     <PackageReference Include="PnP.Framework" Version="*" Condition="'$(IsRelease)' == '1'" />
-    <PackageReference Include="PnP.Core" Version="0.6.*-*" Condition="'$(PnPCoreSdkPath)' == ''" />
+    <PackageReference Include="PnP.Core" Version="0.6.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
+    <PackageReference Include="PnP.Core" Version="*" Condition="'$(IsRelease)' == '1'" />
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
@@ -70,7 +71,7 @@
     <EmbeddedResource Include="Resources\O365ManagementPermissions.json" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(PnPCoreSdkPath)' != ''">
+  <ItemGroup Condition="'$(PnPCoreSdkPath)' != '' and '$(IsRelease)' != '1'">
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
     <Reference Include="PnP.Core">
       <HintPath>$(PnPCoreSdkPath)</HintPath>
