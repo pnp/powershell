@@ -3,6 +3,8 @@ using PnP.Core.Services;
 using PnP.Core.Model.SharePoint;
 using System.Collections.Generic;
 using System.Linq;
+using System.Globalization;
+using Microsoft.SharePoint.Client.Taxonomy;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -15,11 +17,15 @@ namespace PnP.PowerShell.Commands.Model
 
         internal List<IList> Lists { get; set; } = new List<IList>();
         internal List<IContentType> ContentTypes { get; set; } = new List<IContentType>();
+        internal List<(string key, Guid id, string label)> Terms { get; set; } = new List<(string key, Guid id, string label)>();
 
+        internal int? DefaultTermStoreLanguage { get; set; }
+        internal TaxonomySession TaxonomySession { get; set; }
+        internal TermStore TermStore { get; set; }
         public bool Executed => Batch.Executed;
 
         public int RequestCount => Requests.Count;
-        
+
         internal SortedList<int, PnP.Core.Services.BatchRequest> Requests => Batch.Requests;
 
         public PnPBatch(PnPContext context, bool retainRequestsAfterExecute)
@@ -95,6 +101,16 @@ namespace PnP.PowerShell.Commands.Model
                 ContentTypes.Remove(existingCT);
             }
             ContentTypes.Add(contentType);
+        }
+
+        internal void CacheTerm(string key, Guid id, string label)
+        {
+            this.Terms.Add((key, id, label));
+        }
+
+        internal (string key, Guid id, string label) GetCachedTerm(string key)
+        {
+            return this.Terms.FirstOrDefault(t => t.key == key);
         }
     }
 }

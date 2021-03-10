@@ -18,9 +18,9 @@ namespace PnP.PowerShell.Commands.Admin
         {
             try
             {
-                if (string.IsNullOrEmpty(TenantUrl) && PnPConnection.CurrentConnection != null)
+                if (string.IsNullOrEmpty(TenantUrl) && PnPConnection.Current != null)
                 {
-                    WriteObject(TenantExtensions.GetTenantIdByUrl(PnPConnection.CurrentConnection.Url));
+                    WriteObject(TenantExtensions.GetTenantIdByUrl(PnPConnection.Current.Url));
                 }
                 else if (!string.IsNullOrEmpty(TenantUrl))
                 {

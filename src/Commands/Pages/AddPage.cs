@@ -46,7 +46,10 @@ namespace PnP.PowerShell.Commands.Pages
             try
             {
                 var pages = PnPContext.Web.GetPages(name);
-                pageExists = pages != null && pages.Any();
+                if (pages != null && pages.FirstOrDefault(p=>p.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)) != null)
+                {
+                    pageExists = true;
+                }
             }
             catch { }
 

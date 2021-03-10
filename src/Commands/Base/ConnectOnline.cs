@@ -30,11 +30,12 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_SPOMANAGEMENT = "SPO Management Shell Credentials";
         private const string ParameterSet_DEVICELOGIN = "PnP Management Shell / DeviceLogin";
         private const string ParameterSet_ACCESSTOKEN = "Access Token";
-        private const string ParameterSet_WEBLOGIN = "Web Login";
+        private const string ParameterSet_WEBLOGIN = "Web Login for Multi Factor Authentication";
+        private const string ParameterSet_MANAGEDIDENTITY = "Managed Identity";
+        private const string ParameterSet_INTERACTIVE = "Interactive login for Multi Factor Authentication";
+
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
         private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
-        private const string ParameterSet_MANAGEDIDENTITY = "Managed Identity";
-        private const string ParameterSet_INTERACTIVE = "Interactive";
 
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
@@ -118,6 +119,7 @@ namespace PnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         public string Tenant;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
@@ -132,11 +134,13 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         public string Thumbprint;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
         // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
@@ -276,8 +280,8 @@ namespace PnP.PowerShell.Commands.Base
 #else
             WriteVerbose($"PnP PowerShell Cmdlets ({Assembly.GetExecutingAssembly().GetName().Version})");
 #endif
-            PnPConnection.CurrentConnection = connection;
-            if (CreateDrive && PnPConnection.CurrentConnection.Context != null)
+            PnPConnection.Current = connection;
+            if (CreateDrive && PnPConnection.Current.Context != null)
             {
                 var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals(SPOProvider.PSProviderName, StringComparison.InvariantCultureIgnoreCase));
                 if (provider != null)
@@ -292,9 +296,9 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
 
-            if (PnPConnection.CurrentConnection.Url != null)
+            if (PnPConnection.Current.Url != null)
             {
-                var hostUri = new Uri(PnPConnection.CurrentConnection.Url);
+                var hostUri = new Uri(PnPConnection.Current.Url);
                 Environment.SetEnvironmentVariable("PNPPSHOST", hostUri.Host);
                 Environment.SetEnvironmentVariable("PNPPSSITE", hostUri.LocalPath);
             }
@@ -320,13 +324,13 @@ namespace PnP.PowerShell.Commands.Base
         private PnPConnection ConnectACSAppOnly()
         {
             CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with Client Secret uses legacy authentication and provides limited functionality. We can for instance not execute requests towards the Microsoft Graph, which limits cmdlets related to Microsoft Teams, Microsoft Planner, Microsoft Flow and Microsoft 365 Groups. You can hide this warning by using Connect-PnPOnline [your parameters] -WarningAction Ignore", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
-            if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
-                PnPConnection.CurrentConnection?.ClientSecret == ClientSecret &&
-                PnPConnection.CurrentConnection?.Tenant == AADDomain)
+            if (PnPConnection.Current?.ClientId == ClientId &&
+                PnPConnection.Current?.ClientSecret == ClientSecret &&
+                PnPConnection.Current?.Tenant == AADDomain)
             {
                 ReuseAuthenticationManager();
             }
-            return PnPConnectionHelper.InstantiateACSAppOnlyConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, TenantAdminUrl, AzureEnvironment);
+            return PnPConnection.CreateWithACSAppOnly(new Uri(Url), AADDomain, ClientId, ClientSecret, TenantAdminUrl, AzureEnvironment);
         }
 
         /// <summary>
@@ -358,14 +362,14 @@ namespace PnP.PowerShell.Commands.Base
             {
                 Uri oldUri = null;
 
-                if (PnPConnection.CurrentConnection != null)
+                if (PnPConnection.Current != null)
                 {
-                    if (PnPConnection.CurrentConnection.Url != null)
+                    if (PnPConnection.Current.Url != null)
                     {
-                        oldUri = new Uri(PnPConnection.CurrentConnection.Url);
+                        oldUri = new Uri(PnPConnection.Current.Url);
                     }
                 }
-                if (oldUri != null && oldUri.Host == new Uri(Url).Host && PnPConnection.CurrentConnection?.ConnectionMethod == ConnectionMethod.DeviceLogin)
+                if (oldUri != null && oldUri.Host == new Uri(Url).Host && PnPConnection.Current?.ConnectionMethod == ConnectionMethod.DeviceLogin)
                 {
                     ReuseAuthenticationManager();
                 }
@@ -376,7 +380,7 @@ namespace PnP.PowerShell.Commands.Base
                     clientId = ClientId;
                 }
 
-                var returnedConnection = PnPConnectionHelper.InstantiateDeviceLoginConnection(clientId, Url, LaunchBrowser, messageWriter, AzureEnvironment, cancellationTokenSource);
+                var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, LaunchBrowser, messageWriter, AzureEnvironment, cancellationTokenSource);
                 connection = returnedConnection;
                 messageWriter.Finished = true;
             }, cancellationTokenSource.Token);
@@ -402,26 +406,26 @@ namespace PnP.PowerShell.Commands.Base
                     throw new FileNotFoundException("Certificate not found");
                 }
                 X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(CertificatePath, CertificatePassword);
-                if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
-                    PnPConnection.CurrentConnection?.Tenant == Tenant &&
-                    PnPConnection.CurrentConnection?.Certificate.Thumbprint == certificate.Thumbprint)
+                if (PnPConnection.Current?.ClientId == ClientId &&
+                    PnPConnection.Current?.Tenant == Tenant &&
+                    PnPConnection.Current?.Certificate.Thumbprint == certificate.Thumbprint)
                 {
                     ReuseAuthenticationManager();
                 }
-                return PnPConnectionHelper.InstantiateConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
+                return PnPConnection.CreateWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
             }
             else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
             {
                 var certificateBytes = Convert.FromBase64String(CertificateBase64Encoded);
                 var certificate = new X509Certificate2(certificateBytes, CertificatePassword);
 
-                if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
-                    PnPConnection.CurrentConnection?.Tenant == Tenant &&
-                    PnPConnection.CurrentConnection?.Certificate.Thumbprint == certificate.Thumbprint)
+                if (PnPConnection.Current?.ClientId == ClientId &&
+                    PnPConnection.Current?.Tenant == Tenant &&
+                    PnPConnection.Current?.Certificate.Thumbprint == certificate.Thumbprint)
                 {
                     ReuseAuthenticationManager();
                 }
-                return PnPConnectionHelper.InstantiateConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
+                return PnPConnection.CreateWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
             }
             else if (ParameterSpecified(nameof(Thumbprint)))
             {
@@ -437,13 +441,13 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     throw new PSArgumentException("The certificate specified does not have a private key.", nameof(Thumbprint));
                 }
-                if (PnPConnection.CurrentConnection?.ClientId == ClientId &&
-                                    PnPConnection.CurrentConnection?.Tenant == Tenant &&
-                                    PnPConnection.CurrentConnection?.Certificate.Thumbprint == certificate.Thumbprint)
+                if (PnPConnection.Current?.ClientId == ClientId &&
+                                    PnPConnection.Current?.Tenant == Tenant &&
+                                    PnPConnection.Current?.Certificate.Thumbprint == certificate.Thumbprint)
                 {
                     ReuseAuthenticationManager();
                 }
-                return PnPConnectionHelper.InstantiateConnectionWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
+                return PnPConnection.CreateWithCert(new Uri(Url), ClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate);
             }
             else
             {
@@ -457,7 +461,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAccessToken()
         {
-            return PnPConnectionHelper.InstantiateWithAccessToken(!string.IsNullOrEmpty(Url) ? new Uri(Url) : null, AccessToken, TenantAdminUrl);
+            return PnPConnection.CreateWithAccessToken(!string.IsNullOrEmpty(Url) ? new Uri(Url) : null, AccessToken, TenantAdminUrl);
         }
 
         /// <summary>
@@ -486,16 +490,16 @@ namespace PnP.PowerShell.Commands.Base
                 ClientId = PnPConnection.PnPManagementShellClientId;
             }
 
-            if (PnPConnection.CurrentConnection?.ClientId == ClientId)
+            if (PnPConnection.Current?.ClientId == ClientId)
             {
-                if (credentials != null && PnPConnection.CurrentConnection?.PSCredential?.UserName == credentials.UserName &&
-                   PnPConnection.CurrentConnection?.PSCredential.GetNetworkCredential().Password == credentials.GetNetworkCredential().Password)
+                if (credentials != null && PnPConnection.Current?.PSCredential?.UserName == credentials.UserName &&
+                   PnPConnection.Current?.PSCredential.GetNetworkCredential().Password == credentials.GetNetworkCredential().Password)
                 {
                     ReuseAuthenticationManager();
                 }
             }
 
-            return PnPConnectionHelper.InstantiateConnectionWithCredentials(this, new Uri(Url),
+            return PnPConnection.CreateWithCredentials(this, new Uri(Url),
                                                                credentials,
                                                                CurrentCredentials,
                                                                TenantAdminUrl,
@@ -507,15 +511,15 @@ namespace PnP.PowerShell.Commands.Base
         private PnPConnection ConnectManagedIdentity()
         {
             WriteVerbose("Connecting to the Graph with the current Managed Identity");
-            return PnPConnectionHelper.InstantiateManagedIdentityConnection(this, TenantAdminUrl);
+            return PnPConnection.CreateWithManagedIdentity(this, TenantAdminUrl);
         }
 
         private PnPConnection ConnectWebLogin()
         {
-            WriteWarning("Consider using -Interactive instead, which provides better functionality. See the documentation at https://pnp.github.io/powershell/cmdlets/connect-pnponline.html#interactive-login-for-multi-factor-authentication");
+            WriteWarning("Consider using -Interactive instead, which provides better functionality. See the documentation at https://pnp.github.io/powershell/cmdlets/Connect-PnPOnline.html#interactive-login-for-multi-factor-authentication");
             if (Utilities.OperatingSystem.IsWindows())
             {
-                return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication);
+                return PnPConnection.CreateWithWeblogin(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication);
             }
             else
             {
@@ -529,19 +533,14 @@ namespace PnP.PowerShell.Commands.Base
             {
                 ClientId = PnPConnection.PnPManagementShellClientId;
             }
-            if (PnPConnection.CurrentConnection?.ClientId == ClientId)
+            if (PnPConnection.Current?.ClientId == ClientId)
             {
-                if (IsSameOrAdminHost(new Uri(Url), new Uri(PnPConnection.CurrentConnection.Url)))
+                if (IsSameOrAdminHost(new Uri(Url), new Uri(PnPConnection.Current.Url)))
                 {
                     ReuseAuthenticationManager();
                 }
-
-                // if (new Uri(Url.ToLower()).Host == new Uri(PnPConnection.CurrentConnection.Url).Host )
-                // {
-                //     ReuseAuthenticationManager();
-                // }
             }
-            return PnPConnectionHelper.InstantiateInteractiveConnection(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment, cancellationTokenSource, ForceAuthentication);
+            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant);
         }
 
         #endregion
@@ -626,7 +625,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private void ReuseAuthenticationManager()
         {
-            var contextSettings = PnPConnection.CurrentConnection.Context.GetContextSettings();
+            var contextSettings = PnPConnection.Current.Context.GetContextSettings();
             PnPConnection.CachedAuthenticationManager = contextSettings.AuthenticationManager;
         }
         #endregion

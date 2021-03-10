@@ -43,11 +43,10 @@ namespace PnP.PowerShell.Commands.Base
                 if (WriteToConsole.IsPresent || string.IsNullOrEmpty(LogFile))
                 {
                     RemoveListener(ConsoleListenername);
-                    //                    ConsoleTraceListener consoleListener = new ConsoleTraceListener(false);
-                    //                    consoleListener.Name = ConsoleListenername;
-                    //                    Trace.Listeners.Add(consoleListener);
-                    //                    PnP.Framework.Diagnostics.Log.LogLevel = Level;
-                    WriteWarning("Console logging not supported");
+                    ConsoleTraceListener consoleListener = new ConsoleTraceListener(false);
+                    consoleListener.Name = ConsoleListenername;
+                    Trace.Listeners.Add(consoleListener);
+                    PnP.Framework.Diagnostics.Log.LogLevel = Level;
                 }
 
                 // Setup File Listener

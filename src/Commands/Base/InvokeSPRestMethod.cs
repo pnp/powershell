@@ -33,6 +33,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public string ContentType = "application/json";
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Raw;
+
         protected override void ExecuteCmdlet()
         {
             if (Url.StartsWith("/"))
@@ -53,7 +56,6 @@ namespace PnP.PowerShell.Commands.Admin
 
                 if (Method == HttpRequestMethod.Merge)
                 {
-                    method = HttpMethod.Post;
                     request.Headers.Add("X-HTTP-Method", "MERGE");
                 }
 
@@ -64,7 +66,7 @@ namespace PnP.PowerShell.Commands.Admin
 
                 PnPHttpClient.AuthenticateRequestAsync(request, ClientContext).GetAwaiter().GetResult();
 
-                if (Method == HttpRequestMethod.Post)
+                if (Method == HttpRequestMethod.Post || Method == HttpRequestMethod.Merge || Method == HttpRequestMethod.Put || Method == HttpRequestMethod.Patch)
                 {
                     if (string.IsNullOrEmpty(ContentType))
                     {
@@ -82,15 +84,21 @@ namespace PnP.PowerShell.Commands.Admin
                     var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                     if (responseString != null)
                     {
-
-                        var jsonElement = JsonSerializer.Deserialize<JsonElement>(responseString);
-                        if (jsonElement.TryGetProperty("value", out JsonElement valueProperty))
+                        if (!Raw)
                         {
-                            WriteObject(ConvertToPSObject(valueProperty), true);
+                            var jsonElement = JsonSerializer.Deserialize<JsonElement>(responseString);
+                            if (jsonElement.TryGetProperty("value", out JsonElement valueProperty))
+                            {
+                                WriteObject(ConvertToPSObject(valueProperty, "value"), true);
+                            }
+                            else
+                            {
+                                WriteObject(ConvertToPSObject(jsonElement, null), true);
+                            }
                         }
                         else
                         {
-                            WriteObject(ConvertToPSObject(jsonElement), true);
+                            WriteObject(responseString);
                         }
                     }
                 }
@@ -133,19 +141,18 @@ namespace PnP.PowerShell.Commands.Admin
             //}
         }
 
-        private List<PSObject> ConvertToPSObject(JsonElement element)
+        private PSObject ConvertToPSObject(JsonElement element, string jsonPropertyName)
         {
             var list = new List<PSObject>();
+            var pso = new PSObject();
+
             if (element.ValueKind == JsonValueKind.Array)
             {
-                foreach (var subelement in element.EnumerateArray())
-                {
-                    list.AddRange(ConvertToPSObject(subelement));
-                }
+                var array = ConvertToPSObjectArray(element);
+                pso.Properties.Add(new PSNoteProperty(jsonPropertyName, array));
             }
             else
             {
-                var pso = new PSObject();
                 foreach (var prop in element.EnumerateObject())
                 {
                     object value = null;
@@ -154,7 +161,7 @@ namespace PnP.PowerShell.Commands.Admin
 
                         case JsonValueKind.Array:
                             {
-                                value = ConvertToPSObject(prop.Value);
+                                value = ConvertToPSObjectArray(prop.Value);
                                 break;
                             }
                         case JsonValueKind.True:
@@ -170,13 +177,30 @@ namespace PnP.PowerShell.Commands.Admin
                             }
                         case JsonValueKind.Object:
                             {
-                                value = ConvertToPSObject(prop.Value).First();
+                                value = ConvertToPSObject(prop.Value, prop.Name);
+                                break;
+                            }
+                        case JsonValueKind.Number:
+                            {
+                                value = prop.Value.GetInt64();
                                 break;
                             }
                     }
                     pso.Properties.Add(new PSNoteProperty(prop.Name, value));
                 }
-                list.Add(pso);
+            }
+
+            return pso;
+        }
+
+        private List<PSObject> ConvertToPSObjectArray(JsonElement element)
+        {
+            var list = new List<PSObject>();
+
+            foreach (var subelement in element.EnumerateArray())
+            {
+                var value = ConvertToPSObject(subelement, null);
+                list.Add(value);
             }
             return list;
         }

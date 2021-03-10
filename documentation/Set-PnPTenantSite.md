@@ -75,10 +75,10 @@ This will add user1@contoso.onmicrosoft.com and user2@contoso.onmicrosoft.com as
 
 ### EXAMPLE 5
 ```powershell
-Set-PnPTenantSite -Identity "https://contoso.sharepoint.com/sites/sales" -NoScriptSite:$false
+Set-PnPTenantSite -Identity "https://contoso.sharepoint.com/sites/sales" -DenyAddAndCustomizePages:$false
 ```
 
-This will enable script support for the site 'https://contoso.sharepoint.com/sites/sales' if disabled.
+This will enable script support for the site 'https://contoso.sharepoint.com/sites/sales'
 
 ## PARAMETERS
 

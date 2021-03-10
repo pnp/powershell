@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            var siteUrl = PnPConnection.CurrentConnection.Url;
+            var siteUrl = PnPConnection.Current.Url;
             if(ParameterSpecified(Site))
             {
                 siteUrl = Site;

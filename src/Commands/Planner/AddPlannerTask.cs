@@ -27,6 +27,9 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Title;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public string[] AssignedTo;
         protected override void ExecuteCmdlet()
         {
 
@@ -43,7 +46,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                         var bucket = Bucket.GetBucket(HttpClient, AccessToken, planId);
                         if (bucket != null)
                         {
-                            PlannerUtility.AddTaskAsync(HttpClient, AccessToken, planId, bucket.Id, Title).GetAwaiter().GetResult();
+                            PlannerUtility.AddTaskAsync(HttpClient, AccessToken, planId, bucket.Id, Title, AssignedTo).GetAwaiter().GetResult();
                         }
                         else
                         {

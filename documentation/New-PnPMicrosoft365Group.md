@@ -21,7 +21,7 @@ Creates a new Microsoft 365 Group
 
 ```powershell
 New-PnPMicrosoft365Group -DisplayName <String> -Description <String> -MailNickname <String>
- [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-GroupLogoPath <String>] [-CreateTeam] [-Force]
+ [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam] [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-Force]
   [<CommonParameters>]
 ```
 
@@ -38,7 +38,7 @@ Creates a public Microsoft 365 Group with all the required properties
 
 ### EXAMPLE 2
 ```powershell
-New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers
+New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname -Owners "owner1@domain.com" -Members "member1@domain.com"
 ```
 
 Creates a public Microsoft 365 Group with all the required properties, and with a custom list of Owners and a custom list of Members
@@ -115,8 +115,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -GroupLogoPath
-The path to the logo file of to set
+### -LogoPath
+The path to the logo file of to set. Supported formats are .png, .gif and .jpg
 
 ```yaml
 Type: String
@@ -158,7 +158,7 @@ Accept wildcard characters: False
 ```
 
 ### -Members
-The array UPN values of the group's members
+The array UserPrincipalName values of the group's members
 
 ```yaml
 Type: String[]
@@ -172,10 +172,38 @@ Accept wildcard characters: False
 ```
 
 ### -Owners
-The array UPN values of the group's owners
+The array UserPrincipalName values of the group's owners
 
 ```yaml
 Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HideFromAddressLists
+Controls whether the group is hidden or shown in the Global Address List (GAL).
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HideFromOutlookClients
+Controls whether the group shows in the Outlook left-hand navigation.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False

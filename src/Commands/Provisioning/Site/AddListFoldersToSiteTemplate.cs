@@ -51,7 +51,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
             if (template == null)
             {
-                throw new ApplicationException("Invalid template file!");
+                throw new ApplicationException("Invalid template file.");
             }
 
 
@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             ListInstance listInstance = template.Lists.Find(l => l.Title == spList.Title);
             if (listInstance == null)
             {
-                throw new ApplicationException("List does not exist in the template file!");
+                throw new ApplicationException("List does not exist in the template file.");
             }
 
 
@@ -86,7 +86,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             var extension = new FileInfo(Path).Extension.ToLowerInvariant();
             if (extension == ".pnp")
             {
-                XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(outPath, fileSystemConnector));
+                XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(Path, fileSystemConnector));
                 var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
 
                 provider.SaveAs(template, templateFileName, formatter, TemplateProviderExtensions);

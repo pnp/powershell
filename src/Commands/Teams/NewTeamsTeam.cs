@@ -1,6 +1,7 @@
 ﻿using PnP.Framework.Provisioning.Model.Teams;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
@@ -16,7 +17,7 @@ namespace PnP.PowerShell.Commands.Graph
         private const string ParameterSet_EXISTINGGROUP = "For an existing group";
         private const string ParameterSet_NEWGROUP = "For a new group";
 
-        [Parameter(Mandatory = true, ParameterSetName =ParameterSet_EXISTINGGROUP)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_EXISTINGGROUP)]
         public string GroupId;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NEWGROUP)]
@@ -45,7 +46,7 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowCreateUpdateRemoveConnectors;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets) ]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowCreateUpdateRemoveTabs;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -90,6 +91,8 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Classification;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NEWGROUP)]
+        public TeamsTemplateType Template = TeamsTemplateType.None;
 
         protected override void ExecuteCmdlet()
         {
@@ -118,7 +121,7 @@ namespace PnP.PowerShell.Commands.Graph
                 ShowInTeamsSearchAndSuggestions = ShowInTeamsSearchAndSuggestions,
                 Visibility = (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()),
             };
-            WriteObject(TeamsUtility.NewTeamAsync(AccessToken, HttpClient, GroupId, DisplayName, Description, Classification, MailNickName, Owner, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI).GetAwaiter().GetResult());
+            WriteObject(TeamsUtility.NewTeamAsync(AccessToken, HttpClient, GroupId, DisplayName, Description, Classification, MailNickName, Owner, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI, Template).GetAwaiter().GetResult());
         }
     }
 }

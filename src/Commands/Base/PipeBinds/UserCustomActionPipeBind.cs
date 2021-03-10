@@ -62,11 +62,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 {
                     case Microsoft.SharePoint.Client.UserCustomActionScope.Web:
                         {
-                            return new List<IUserCustomAction> { context.Web.UserCustomActions.GetFirstOrDefault(ca => ca.Id == _userCustomAction.Id) };
+                            return new List<IUserCustomAction> { context.Web.UserCustomActions.Where(ca => ca.Id == _userCustomAction.Id).FirstOrDefault() };
                         }
                         case Microsoft.SharePoint.Client.UserCustomActionScope.Site:
                         {
-                            return new List<IUserCustomAction> { context.Site.UserCustomActions.GetFirstOrDefault(ca => ca.Id == _userCustomAction.Id) };
+                            return new List<IUserCustomAction> { context.Site.UserCustomActions.Where(ca => ca.Id == _userCustomAction.Id).FirstOrDefault() };
                         }
 
                 }
@@ -75,11 +75,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
             if (scope == CustomActionScope.Web || scope == CustomActionScope.All)
             {
-                customActions.AddRange(context.Web.UserCustomActions.Get());
+                customActions.AddRange(context.Web.UserCustomActions.ToList());
             }
             if (scope == CustomActionScope.Site || scope == CustomActionScope.All)
             {
-                customActions.AddRange(context.Site.UserCustomActions.Get());
+                customActions.AddRange(context.Site.UserCustomActions.ToList());
             }
             if (_id != null)
             {

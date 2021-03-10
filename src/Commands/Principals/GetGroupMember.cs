@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Principals
                 var g = Group.GetGroup(PnPContext);
                 if (g != null)
                 {
-                    WriteObject(g.Users.GetFirstOrDefault(u => u.LoginName == User || u.Mail == User));
+                    WriteObject(g.Users.Where(u => u.LoginName == User || u.Mail == User).FirstOrDefault());
                 }
                 else
                 {

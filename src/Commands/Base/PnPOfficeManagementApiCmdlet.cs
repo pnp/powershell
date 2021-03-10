@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             get
             {
-                if (PnPConnection.CurrentConnection?.Context != null)
+                if (PnPConnection.Current?.Context != null)
                 {
                     return TokenHandler.GetAccessToken(GetType(), "https://manage.office.com/.default");
                 }
@@ -32,9 +32,9 @@ namespace PnP.PowerShell.Commands.Base
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-            if (PnPConnection.CurrentConnection?.Context != null)
+            if (PnPConnection.Current?.Context != null)
             {
-                if (PnPConnection.CurrentConnection.Context.GetContextSettings().Type == Framework.Utilities.Context.ClientContextType.Cookie)
+                if (PnPConnection.Current.Context.GetContextSettings().Type == Framework.Utilities.Context.ClientContextType.Cookie)
                 {
                     throw new PSInvalidOperationException("This cmdlet not work with a WebLogin/Cookie based connection towards SharePoint.");
                 }

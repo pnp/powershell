@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Base
 
         protected override void ProcessRecord()
         {
-            PnPConnection.CurrentConnection.Context = Context;
+            PnPConnection.Current.Context = Context;
         }
     }
 }

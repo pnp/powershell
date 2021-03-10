@@ -23,17 +23,23 @@ During execution of the cmdlet you will be talked through the consent flow. This
 PnP PowerShell has a cmdlet that allows you to register a new Azure AD App, and optionally generate the certificates for you to use to login with that app. 
 
 ```powershell
-Register-PnPAzureADApp -ApplicationName PnPRocks -Tenant mytenant.onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin
+$result = Register-PnPAzureADApp -ApplicationName "PnP Rocks" -Tenant mytenant.onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin
+$result
 ```
 
-When you run the cmdlet above you will be asked to navigate to the shown url and enter the code shown. After that a new app will be registerd in the Azure AD (make sure you have the rights to do this), and a certificate will be generated and uploaded to that app. After this a URL will be shown which you have to navigate to to provide consent for this application. By default a limited set of permissions scopes is added, but you can provide the -Scopes parameter to provide your own permission scopes.
+When you run the cmdlet above you will be asked to navigate to the shown url and enter the code shown. After that a new app will be registerd in the Azure AD (make sure you have the rights to do this), and a certificate will be generated and uploaded to that app. After this a URL will be shown which you have to navigate to to provide consent for this application. By default a limited set of permissions scopes is added, but you can provide the one of the permission parameters (`GraphApplicationPermissions`, `GraphDelegatePermissions`, `SharePointApplicationPermissions`, `SharePointDelegatePermissions`) to provide your own permission scopes.
 
-The cmdlet will save both the CER and PFX files to the specified location with the -Outpath parameter. The names of the files will be matching the -ApplicationName parameter, e.g. in the example above the files will be called PnPRocks.cer and PnPRocks.pfx. The output of the cmdlet will show the clientid. After all is set up and consent has been provided you can login using:
+It also returns the private key certificate encoded in base64 encoding. As it spans multiple lines, it is recommended to assign the outcome of `Register-PnPAzureAdApp` to a variable so you have access to this value more easily. The Base64 encoded private key certificate can be used in your Connect-PnPOnline voiding the need to have access to the physical file:
 
 ```powershell
-Connect-PnPOnline -Url "https://yourtenant.sharepoint.com" -ClientId [clientid] -Tenant [yourtenant.onmicrosoft.com] -CertificatePath certificate.pfx
+Connect-PnPOnline -Url "https://yourtenant.sharepoint.com" -ClientId [clientid] -Tenant [yourtenant.onmicrosoft.com] -CertificateBase64Encoded [pfx base64 encoded]
 ```
 
+The cmdlet will also save both the CER and PFX files to the location specified with the -Outpath parameter. The names of the files will be matching the -ApplicationName parameter, e.g. in the example above the files will be called `PnP Rocks.cer` and `PnP Rocks.pfx`. The output of the cmdlet will show the clientid. After all is set up and consent has been provided you can login using:
+
+```powershell
+Connect-PnPOnline -Url "https://yourtenant.sharepoint.com" -ClientId [clientid] -Tenant [yourtenant.onmicrosoft.com] -CertificatePath [certificate.pfx]
+```
 
 ## Authenticating with Credentials
 
@@ -65,7 +71,7 @@ When connecting to https://contoso.sharepoint.com you can use this command:
 ```powershell
 Connect-PnPOnline -Url https://contoso.sharepoint.com 
 ```
-Connect-PnPOnline will look through the Windows Credential Manager for a credential matching the URL. If it finds one it will use it. It will also match that credential with deeper connection URLs like https://contoso.sharepoint.com/sites/IT. You can create additional stored crednetials for deeper sites if you routinely connect to them with different credentials. If you want to connect with a different set of credentials you can use the -Credentials parameter to specify them. A stored credential can be used for other URLs, like the Admin site:
+Connect-PnPOnline will look through the Windows Credential Manager for a credential matching the URL. If it finds one it will use it. It will also match that credential with deeper connection URLs like https://contoso.sharepoint.com/sites/IT. You can create additional stored credentials for deeper sites if you routinely connect to them with different credentials. If you want to connect with a different set of credentials you can use the -Credentials parameter to specify them. A stored credential can be used for other URLs, like the Admin site:
 ```powershell
 Connect-PnPOnline -Url https://contoso-admin.sharepoint.com -Credentials https://contoso.sharepoint.com 
 ```
@@ -100,3 +106,52 @@ Connect-PnPOnline -Url https://contoso.sharepoint.com -Interactive
 ```
 
 This will show a popup window which will allow to authenticate and step through the multi-factor authentication flow.
+
+## Authentication to GCC or National Cloud environments
+
+In order to authentication to a GCC or a national cloud environment you have to take a few steps. Notice that this will work as of release 1.3.9-nightly or later.
+
+### Register your own Azure AD App
+You are required to register your own Azure AD App in order to authentication
+
+```powershell
+Register-PnPAzureADApp -ApplicationName "PnP PowerShell" -Tenant [yourtenant].onmicrosoft.com -Interactive -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China] -SharePointDelegatePermissions AllSites.FullControl -SharePointApplicationPermissions Sites.FullControl.All -GraphApplicationPermissions Group.ReadWrite.All -GraphDelegatePermissions Group.ReadWrite.All
+```
+
+The AzureEnvironment parameter only allows one value. Select the correct one that matches your cloud deployment.
+
+The above statement grants a few permission scopes. You might want to add more if you want to. Alternatively, after registering the application, navigate to the Azure AD, locate the app registration, and grant more permissions and consent to them.
+
+### Optionally modify the manifest for the app
+There is a limitation in the Azure AD for national cloud environments where you cannot select permission scopes for SharePoint Online. In order to add specific SharePoint rights you will have to manually add them to the manifest that you can edit in Azure AD:
+
+Locate the `requiredResourceAccess` section and add to or modify the existing entries. See the example below (notice, this is an example, do not copy and paste this as is as it will limit the permissions to only AllSites.FullControl):
+
+```json
+"requiredResourceAccess": [
+{
+    "resourceAppId": "00000003-0000-0ff1-ce00-000000000000",
+    "resourceAccess": [
+		{
+			"id": "56680e0d-d2a3-4ae1-80d8-3c4f2100e3d0",
+			"type": "Scope"
+		}
+      ]
+}
+```
+
+You can add more permissions by using the following values:
+
+The resourceAppId for SharePoint = "00000003-0000-0ff1-ce00-000000000000" 
+
+Permission | Permission type | Id | Type
+| -------| ----------- | ------ | ----- |
+| Sites.FullControl.All | Application | 678536fe-1083-478a-9c59-b99265e6b0d3 | Role |
+| AllSites.FullControl | Delegate | 56680e0d-d2a3-4ae1-80d8-3c4f2100e3d0 | Scope |
+
+
+### Connect
+```powershell
+Connect-PnPOnline -Url [yoursite] -Interactive -ClientId [clientid of the app] -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
+```
+The AzureEnvironment parameter only allows one value. Select the correct one that matches your cloud deployment.

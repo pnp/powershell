@@ -1,10 +1,12 @@
 using System;
+using System.Linq;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Planner;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.Graph
 {
@@ -29,6 +31,9 @@ namespace PnP.PowerShell.Commands.Graph
 
         [Parameter(Mandatory = false)]
         public DateTime StartDateTime;
+
+        [Parameter(Mandatory = false)]
+        public string[] AssignedTo;
 
         protected override void ExecuteCmdlet()
         {
@@ -60,6 +65,28 @@ namespace PnP.PowerShell.Commands.Graph
                 {
                     plannerTask.StartDateTime = StartDateTime.ToUniversalTime();
                 }
+                if (ParameterSpecified(nameof(AssignedTo)))
+                {
+                    plannerTask.Assignments = new System.Collections.Generic.Dictionary<string, TaskAssignment>();
+                    var chunks = BatchUtility.Chunk(AssignedTo, 20);
+                    foreach (var chunk in chunks)
+                    {
+                        var userIds = BatchUtility.GetPropertyBatchedAsync(HttpClient, AccessToken, chunk.ToArray(), "/users/{0}", "id").GetAwaiter().GetResult();
+                        foreach (var userId in userIds)
+                        {
+                            plannerTask.Assignments.Add(userId.Value, new TaskAssignment());
+                        }
+                    }
+                    foreach (var existingAssignment in existingTask.Assignments)
+                    {
+                        if (plannerTask.Assignments.FirstOrDefault(t => t.Key == existingAssignment.Key).Key == null)
+                        {
+                            plannerTask.Assignments.Add(existingAssignment.Key, null);
+                        }
+                    }
+                }
+
+
                 PlannerUtility.UpdateTaskAsync(HttpClient, AccessToken, existingTask, plannerTask).GetAwaiter().GetResult();
             }
             else

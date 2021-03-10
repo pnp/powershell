@@ -44,7 +44,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public string Id => _id;
 
-        public TeamTab GetTab(HttpClient httpClient, string accessToken, string groupId, string channelId)
+        public TeamTab GetTab(BasePSCmdlet cmdlet, HttpClient httpClient, string accessToken, string groupId, string channelId)
         {
             if (_tab != null)
             {
@@ -68,7 +68,8 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 }
                 else
                 {
-                    throw new PSArgumentException("Cannot find tab");
+                    cmdlet.WriteError(new PSArgumentException("Cannot find tab"), ErrorCategory.ObjectNotFound);
+                    return  null;
                 }
             }
         }

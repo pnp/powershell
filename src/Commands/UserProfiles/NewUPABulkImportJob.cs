@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 throw new InvalidEnumArgumentException(@"IdProperty cannot be empty.");
             }
             
-            var webCtx = ClientContext.Clone(PnPConnection.CurrentConnection.Url);
+            var webCtx = ClientContext.Clone(PnPConnection.Current.Url);
             var web = webCtx.Web;
             var webServerRelativeUrl = web.EnsureProperty(w => w.ServerRelativeUrl);
             if (!Folder.ToLower().StartsWith(webServerRelativeUrl))

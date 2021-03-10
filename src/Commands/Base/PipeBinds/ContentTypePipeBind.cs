@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using PnP.Core.QueryModel;
 using PnP.PowerShell.Commands.Model;
 using PnPCore = PnP.Core.Model.SharePoint;
 
@@ -63,14 +64,14 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public string GetId(PnP.Core.Services.PnPContext context, bool searchInSiteHierarchy = true)
             => GetId()
-            ?? (searchInSiteHierarchy ? context.Web.AvailableContentTypes : context.Web.ContentTypes).GetFirstOrDefault(ct => ct.Name == _idOrName)?.StringId;
+            ?? (searchInSiteHierarchy ? context.Web.AvailableContentTypes : context.Web.ContentTypes).Where(ct => ct.Name == _idOrName).FirstOrDefault()?.StringId;
         public string GetId(List list)
             => GetId()
             ?? list.GetContentTypeByName(_idOrName)?.StringId;
 
         public string GetId(PnPCore.IList list)
             => GetId()
-            ?? list.ContentTypes.GetFirstOrDefault(ct => ct.Name == _idOrName)?.StringId;
+            ?? list.ContentTypes.Where(ct => ct.Name == _idOrName).FirstOrDefault()?.StringId;
 
         internal string GetIdOrThrow(string paramName, Web web, bool searchInSiteHierarchy = true)
             => GetId(web, searchInSiteHierarchy)
@@ -141,11 +142,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
                 if (_idOrName.ToLower().StartsWith("0x0"))
                 {
-                    return collection.GetFirstOrDefault(ct => ct.StringId == _idOrName);
+                    return collection.Where(ct => ct.StringId == _idOrName).FirstOrDefault();
                 }
                 else
                 {
-                    return collection.GetFirstOrDefault(ct => ct.Name == _idOrName);
+                    return collection.Where(ct => ct.Name == _idOrName).FirstOrDefault();
                 }
             }
             return null;

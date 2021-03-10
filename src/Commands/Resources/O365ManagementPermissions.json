@@ -1,0 +1,66 @@
+{
+    "delegatedScopesList": [
+        {
+            "adminConsentDescription": "Allows the application to read activity data for your organization.",
+            "adminConsentDisplayName": "Read activity data for your organization",
+            "id": "594c1fb6-4f81-4475-ae41-0c394909246c",
+            "isEnabled": true,
+            "isAdmin": true,
+            "consentDescription": "Allows the application to read activity data for your organization.",
+            "consentDisplayName": "Read activity data for your organization",
+            "value": "ActivityFeed.Read"
+        },
+        {
+            "adminConsentDescription": "Allows the application to read DLP policy events, including detected sensitive data, for your organization.",
+            "adminConsentDisplayName": "Read DLP policy events including detected sensitive data",
+            "id": "4807a72c-ad38-4250-94c9-4eabfe26cd55",
+            "isEnabled": true,
+            "isAdmin": true,
+            "consentDescription": "Allows the application to read DLP policy events, including detected sensitive data, for your organization.",
+            "consentDisplayName": "Read DLP policy events including detected sensitive data",
+            "value": "ActivityFeed.ReadDlp"
+        },
+        {
+            "adminConsentDescription": "Allows the application to read service health information for your organization.",
+            "adminConsentDisplayName": "Read service health information for your organization",
+            "id": "e2cea78f-e743-4d8f-a16a-75b629a038ae",
+            "isEnabled": true,
+            "isAdmin": true,
+            "consentDescription": "Allows the application to read service health information for your organization.",
+            "consentDisplayName": "Read service health information for your organization",
+            "value": "ServiceHealth.Read"
+        }
+    ],
+    "applicationScopesList": [
+        {
+            "adminConsentDescription": "Allows the application to read activity data for your organization.",
+            "adminConsentDisplayName": "Read activity data for your organization",
+            "id": "594c1fb6-4f81-4475-ae41-0c394909246c",
+            "isEnabled": true,
+            "isAdmin": true,
+            "consentDescription": "Allows the application to read activity data for your organization.",
+            "consentDisplayName": "Read activity data for your organization",
+            "value": "ActivityFeed.Read"
+        },
+        {
+            "adminConsentDescription": "Allows the application to read DLP policy events, including detected sensitive data, for your organization.",
+            "adminConsentDisplayName": "Read DLP policy events including detected sensitive data",
+            "id": "4807a72c-ad38-4250-94c9-4eabfe26cd55",
+            "isEnabled": true,
+            "isAdmin": true,
+            "consentDescription": "Allows the application to read DLP policy events, including detected sensitive data, for your organization.",
+            "consentDisplayName": "Read DLP policy events including detected sensitive data",
+            "value": "ActivityFeed.ReadDlp"
+        },
+        {
+            "adminConsentDescription": "Allows the application to read service health information for your organization.",
+            "adminConsentDisplayName": "Read service health information for your organization",
+            "id": "e2cea78f-e743-4d8f-a16a-75b629a038ae",
+            "isEnabled": true,
+            "isAdmin": true,
+            "consentDescription": "Allows the application to read service health information for your organization.",
+            "consentDisplayName": "Read service health information for your organization",
+            "value": "ServiceHealth.Read"
+        }
+    ]
+}

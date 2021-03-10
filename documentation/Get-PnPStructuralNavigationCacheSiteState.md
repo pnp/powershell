@@ -19,7 +19,7 @@ Get-PnPStructuralNavigationCacheSiteState [-SiteUrl <String>]
 ```
 
 ## DESCRIPTION
-The Get-PnPStructuralNavigationCacheSiteState cmdlet can be used to determine if structural navigation caching is enabled or disabled for a site collection. If the SiteUrl parameter has not been specified the currently connected to site will be used. [Learn more](https://support.office.com/article/structural-navigation-and-performance-f163053f-8eca-4b9c-b973-36b395093b43). 
+The Get-PnPStructuralNavigationCacheSiteState cmdlet can be used to determine if structural navigation caching is enabled or disabled for a site collection. If the SiteUrl parameter has not been specified the currently connected to site will be used.
 
 ## EXAMPLES
 

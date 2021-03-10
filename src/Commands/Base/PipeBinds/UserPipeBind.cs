@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         }
 
 
-        public User GetUser(ClientContext context)
+        public User GetUser(ClientContext context, bool ensure = false)
         {
             // note: the following code to get the user is copied from Remove-PnPUser - it could be put into a utility class
             var retrievalExpressions = new Expression<Func<User, object>>[]
@@ -74,6 +74,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                     var userQuery = context.LoadQuery(context.Web.SiteUsers.Where(u => u.Title == _loginOrName).IncludeWithDefaultProperties(retrievalExpressions));
                     context.ExecuteQueryRetry();
                     user = userQuery.FirstOrDefault();
+                    if(user == null && ensure)
+                    {
+                        user = context.Web.EnsureUser(_loginOrName);
+                        context.ExecuteQueryRetry();
+                    }
                 }
             }
             return user;

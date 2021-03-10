@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using PnP.Core.QueryModel;
 using PnP.Core.Services;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
@@ -45,10 +46,11 @@ namespace PnP.PowerShell.Commands.Lists
         {
             if (ParameterSpecified(nameof(Batch)))
             {
+                
                 var list = List.GetList(Batch);
-                list.EnsureProperties(l => l.Id, l => l.Fields.LoadProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
+                //list.EnsureProperties(l => l.Id, l => l.Fields.QueryProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
 
-                var values = ListItemHelper.GetFieldValues(list, null, Values, ClientContext);
+                var values = ListItemHelper.GetFieldValues(list, null, Values, ClientContext, Batch);
                 if (ContentType != null)
                 {
                     var contentType = ContentType.GetContentType(Batch, list);

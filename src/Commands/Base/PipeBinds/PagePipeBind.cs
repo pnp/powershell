@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         internal IPage GetPage()
         {
-            var ctx = PnPConnection.CurrentConnection.PnPContext;
+            var ctx = PnPConnection.Current.PnPContext;
             if (_page != null)
             {
                 return _page;
@@ -45,9 +45,14 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 try
                 {
                     var pages = ctx.Web.GetPages(Name);
-                    if (pages != null && pages.Any())
+                    if (pages != null)
                     {
-                        return pages.First();
+                        var page = pages.FirstOrDefault(p => p.Name.Equals(Name, StringComparison.InvariantCultureIgnoreCase));
+
+                        if (page != null)
+                        {
+                            return page;
+                        }
                     }
                     return null;
                 }

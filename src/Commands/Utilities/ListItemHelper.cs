@@ -1,6 +1,8 @@
 ﻿using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
+using PnP.Core.QueryModel;
 using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -286,8 +288,12 @@ namespace PnP.PowerShell.Commands.Utilities
 
         }
 
-        public static Dictionary<string, object> GetFieldValues(PnP.Core.Model.SharePoint.IList list, PnP.Core.Model.SharePoint.IListItem existingItem, Hashtable valuesToSet, ClientContext clientContext)
+        public static Dictionary<string, object> GetFieldValues(PnP.Core.Model.SharePoint.IList list, PnP.Core.Model.SharePoint.IListItem existingItem, Hashtable valuesToSet, ClientContext clientContext, PnPBatch batch)
         {
+
+            TermStore store = null;
+            TaxonomySession taxSession = null;
+            int defaultLanguage = CultureInfo.CurrentCulture.LCID;
             var item = new Dictionary<string, object>();
 
             // xxx: return early if hashtable is empty to save getting fields?
@@ -298,7 +304,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             foreach (var key in values.Keys)
             {
-                var field = fields.FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
+                var field = fields.AsRequested().FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
                 if (field != null)
                 {
                     switch (field.TypeAsString)
@@ -350,65 +356,122 @@ namespace PnP.PowerShell.Commands.Utilities
                                 if (value != null && value.GetType().IsArray)
                                 {
                                     var fieldValueCollection = field.NewFieldValueCollection();
-
-                                    var taxSession = clientContext.Site.GetTaxonomySession();
+                                    if (batch.TermStore == null)
+                                    {
+                                        taxSession = clientContext.Site.GetTaxonomySession();
+                                        store = taxSession.GetDefaultSiteCollectionTermStore();
+                                        clientContext.Load(store, s => s.DefaultLanguage);
+                                        clientContext.ExecuteQueryRetry();
+                                        defaultLanguage = store.DefaultLanguage;
+                                        batch.TermStore = store;
+                                        batch.TaxonomySession = taxSession;
+                                        batch.DefaultTermStoreLanguage = defaultLanguage;
+                                    }
+                                    else
+                                    {
+                                        taxSession = batch.TaxonomySession;
+                                        store = batch.TermStore;
+                                        defaultLanguage = batch.DefaultTermStoreLanguage.Value;
+                                    }
                                     foreach (var arrayItem in value as object[])
                                     {
                                         Term taxonomyItem;
                                         Guid termGuid;
                                         var label = string.Empty;
+                                        var itemId = Guid.Empty;
+
                                         if (!Guid.TryParse(arrayItem as string, out termGuid))
                                         {
-                                            // Assume it's a TermPath
-                                            taxonomyItem = clientContext.Site.GetTaxonomyItemByPath(arrayItem as string) as Term;
-                                            if (taxonomyItem == null)
+                                            var batchedTerm = batch.GetCachedTerm(termGuid.ToString());
+                                            if (batchedTerm.key == null)
                                             {
-                                                throw new PSInvalidOperationException($"Cannot find term {arrayItem}");
+                                                taxonomyItem = clientContext.Site.GetTaxonomyItemByPath(arrayItem as string) as Term;
+                                                if (taxonomyItem == null)
+                                                {
+                                                    throw new PSInvalidOperationException($"Cannot find term {arrayItem}");
+                                                }
+                                                var labelResult = taxonomyItem.GetDefaultLabel(defaultLanguage);
+                                                clientContext.ExecuteQueryRetry();
+                                                label = labelResult.Value;
+                                                itemId = taxonomyItem.Id;
+                                                batch.CacheTerm(termGuid.ToString(), termGuid, label);
                                             }
-                                            var labelResult = taxonomyItem.GetDefaultLabel(CultureInfo.CurrentCulture.LCID);
-                                            clientContext.ExecuteQueryRetry();
-                                            label = labelResult.Value;
+                                            else
+                                            {
+                                                itemId = batchedTerm.id;
+                                                label = batchedTerm.label;
+                                            }
                                         }
                                         else
                                         {
-                                            taxonomyItem = taxSession.GetTerm(termGuid);
-                                            if (taxonomyItem == null)
+                                            var batchedTerm = batch.GetCachedTerm(termGuid.ToString());
+                                            if (batchedTerm.key == null)
                                             {
-                                                throw new PSInvalidOperationException($"Cannot find term {arrayItem}");
+                                                taxonomyItem = taxSession.GetTerm(termGuid);
+                                                if (taxonomyItem == null)
+                                                {
+                                                    throw new PSInvalidOperationException($"Cannot find term {arrayItem}");
+                                                }
+                                                var labelResult = taxonomyItem.GetDefaultLabel(defaultLanguage);
+                                                clientContext.Load(taxonomyItem);
+                                                clientContext.ExecuteQueryRetry();
+                                                itemId = taxonomyItem.Id;
+                                                label = labelResult.Value;
+                                                batch.CacheTerm(termGuid.ToString(), termGuid, label);
                                             }
-                                            var labelResult = taxonomyItem.GetDefaultLabel(CultureInfo.CurrentCulture.LCID);
-                                            clientContext.Load(taxonomyItem);
-                                            clientContext.ExecuteQueryRetry();
-                                            label = labelResult.Value;
+                                            else
+                                            {
+                                                itemId = batchedTerm.id;
+                                                label = batchedTerm.label;
+                                            }
+                                            fieldValueCollection.Values.Add(field.NewFieldTaxonomyValue(itemId, label));
                                         }
-                                        fieldValueCollection.Values.Add(field.NewFieldTaxonomyValue(taxonomyItem.Id, label));
+                                        item[key as string] = fieldValueCollection;
                                     }
-                                    item[key as string] = fieldValueCollection;
                                 }
                                 else
                                 {
                                     Guid termGuid = Guid.Empty;
 
-                                    var taxSession = clientContext.Site.GetTaxonomySession();
                                     Term taxonomyItem = null;
                                     var label = string.Empty;
+                                    var itemId = Guid.Empty;
                                     if (value != null && !Guid.TryParse(value as string, out termGuid))
                                     {
-                                        // Assume it's a TermPath
-                                        taxonomyItem = clientContext.Site.GetTaxonomyItemByPath(value as string) as Term;
-                                        var labelResult = taxonomyItem.GetDefaultLabel(CultureInfo.CurrentCulture.LCID);
-                                        clientContext.ExecuteQueryRetry();
-                                        label = labelResult.Value;
+                                        var batchedTerm = batch.GetCachedTerm(termGuid.ToString());
+                                        if (batchedTerm.key == null)
+                                        {
+                                            // Assume it's a TermPath
+                                            taxonomyItem = clientContext.Site.GetTaxonomyItemByPath(value as string) as Term;
+                                            var labelResult = taxonomyItem.GetDefaultLabel(defaultLanguage);
+                                            clientContext.ExecuteQueryRetry();
+                                            itemId = taxonomyItem.Id;
+                                            label = labelResult.Value;
+                                        }
+                                        else
+                                        {
+                                            itemId = batchedTerm.id;
+                                            label = batchedTerm.label;
+                                        }
                                     }
                                     else
                                     {
                                         if (value != null)
                                         {
-                                            taxonomyItem = taxSession.GetTerm(termGuid);
-                                            var labelResult = taxonomyItem.GetDefaultLabel(CultureInfo.CurrentCulture.LCID);
-                                            clientContext.Load(taxonomyItem);
-                                            clientContext.ExecuteQueryRetry();
-                                            label = labelResult.Value;
+                                            var batchedTerm = batch.GetCachedTerm(termGuid.ToString());
+                                            if (batchedTerm.key == null)
+                                            {
+                                                taxonomyItem = taxSession.GetTerm(termGuid);
+                                                var labelResult = taxonomyItem.GetDefaultLabel(defaultLanguage);
+                                                clientContext.Load(taxonomyItem);
+                                                clientContext.ExecuteQueryRetry();
+                                                label = labelResult.Value;
+                                            }
+                                            else
+                                            {
+                                                itemId = batchedTerm.id;
+                                                label = batchedTerm.label;
+                                            }
                                         }
                                     }
 

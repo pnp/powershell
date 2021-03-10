@@ -50,6 +50,8 @@ namespace PnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public TaxonomyTermStorePipeBind TermStore;
 
+        [Parameter(Mandatory = false)]
+        public bool Deprecated;
 
         protected override void ExecuteCmdlet()
         {
@@ -105,6 +107,10 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 {
                     term.SetCustomProperty(key as string, localCustomProperties[key] as string);
                 }
+            }
+            if (ParameterSpecified(nameof(Deprecated)))
+            {
+                term.Deprecate(Deprecated);
             }
             ClientContext.Load(term);
             termStore.CommitAll();

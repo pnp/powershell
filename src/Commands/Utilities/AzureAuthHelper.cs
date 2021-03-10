@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             using (var authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(username, password, azureEnvironment))
             {
-                return await authManager.GetAccessTokenAsync(new[] { "https://graph.microsoft.com/.default" });
+                return await authManager.GetAccessTokenAsync(new[] { $"https://{GetGraphEndPoint(azureEnvironment)}/.default" });
             }
         }
 
@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     authManager.ClearTokenCache();
                     try
                     {
-                        return authManager.GetAccessTokenAsync(new string[] { "https://graph.microsoft.com/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
+                        return authManager.GetAccessTokenAsync(new string[] { $"https://{GetGraphEndPoint(azureEnvironment)}/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
                     }
                     catch (Microsoft.Identity.Client.MsalException)
                     {
@@ -61,7 +61,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        internal static string AuthenticateInteractive(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment)
+        internal static string AuthenticateInteractive(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment, string tenantId)
         {
             try
             {
@@ -69,13 +69,16 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !noPopup, cancellationTokenSource);
                 },
-                successMessageHtml: $"You successfully authenticated with PnP PowerShell. Feel free to close this {(noPopup ? "tab" : "window")}.",
-                failureMessageHtml: $"You did not authenticate with PnP PowerShell. Feel free to close this browser {(noPopup ? "tab" : "window")}."))
+                tenantId,
+                $"You successfully authenticated with PnP PowerShell. Feel free to close this {(noPopup ? "tab" : "window")}.",
+                $"You did not authenticate with PnP PowerShell. Feel free to close this browser {(noPopup ? "tab" : "window")}.",
+                azureEnvironment)
+                )
                 {
                     authManager.ClearTokenCache();
                     try
                     {
-                        return authManager.GetAccessTokenAsync(new string[] { "https://graph.microsoft.com/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
+                        return authManager.GetAccessTokenAsync(new string[] { $"https://{GetGraphEndPoint(azureEnvironment)}/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
                     }
                     catch (Microsoft.Identity.Client.MsalException)
                     {
@@ -88,6 +91,11 @@ namespace PnP.PowerShell.Commands.Utilities
                 cancellationTokenSource.Cancel();
             }
             return null;
+        }
+
+        internal static string GetGraphEndPoint(AzureEnvironment azureEnvironment)
+        {
+            return PnP.Framework.AuthenticationManager.GetGraphEndPoint(azureEnvironment);
         }
     }
 }

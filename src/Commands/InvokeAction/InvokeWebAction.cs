@@ -89,7 +89,7 @@ namespace PnP.PowerShell.Commands.InvokeAction
 			_result = new InvokeWebActionResult();
 			_result.StartDate = DateTime.Now;
 
-			ClientContext previousContext = PnPConnection.CurrentConnection.Context;
+			ClientContext previousContext = PnPConnection.Current.Context;
 
 			UpdatePropertiesToLoad();
 
@@ -107,7 +107,7 @@ namespace PnP.PowerShell.Commands.InvokeAction
 			UpdateResult();
 
 			//Reset context to where the user were before.
-			PnPConnection.CurrentConnection.Context = previousContext;
+			PnPConnection.Current.Context = previousContext;
 
 			return _result;
 		}
@@ -205,7 +205,7 @@ namespace PnP.PowerShell.Commands.InvokeAction
 
 				//Update current connection context to the web that is beeing process
 				//So commands like Get-PnPList returns the correct list for the current web beeing proccess
-				PnPConnection.CurrentConnection.Context = (ClientContext) currentWeb.Context;
+				PnPConnection.Current.Context = (ClientContext) currentWeb.Context;
 
 				currentWeb.LoadProperties(_webActions.Properties);
 

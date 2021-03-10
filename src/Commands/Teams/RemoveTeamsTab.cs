@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Graph
                 var channelId = Channel.GetId(HttpClient, AccessToken, groupId);
                 if (channelId != null)
                 {
-                    var tab = Identity.GetTab(HttpClient, AccessToken, groupId, channelId);
+                    var tab = Identity.GetTab(this, HttpClient, AccessToken, groupId, channelId);
                     if (tab != null)
                     {
                         if (Force || ShouldContinue("Removing the tab will remove the settings of this tab too.", Properties.Resources.Confirm))

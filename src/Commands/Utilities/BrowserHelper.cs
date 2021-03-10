@@ -108,6 +108,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 if (authCookiesContainer.Count > 0)
                 {
                     var ctx = new ClientContext(siteUrl);
+                    
                     ctx.DisableReturnValueCache = true;
 #if !NETFRAMEWORK
                     // We only have to add a request digest when running in dotnet core
@@ -151,6 +152,8 @@ namespace PnP.PowerShell.Commands.Utilities
 
                     var settings = new PnP.Framework.Utilities.Context.ClientContextSettings();
                     settings.Type = PnP.Framework.Utilities.Context.ClientContextType.Cookie;
+                    settings.AuthenticationManager = new PnP.Framework.AuthenticationManager();
+                    settings.AuthenticationManager.CookieContainer = authCookiesContainer;
                     settings.SiteUrl = siteUrl;
 
                     ctx.AddContextSettings(settings);
@@ -202,20 +205,22 @@ namespace PnP.PowerShell.Commands.Utilities
                     form.Controls.Add(browser);
                     form.ResumeLayout(false);
 
-                    form.FormClosed += (a,b) => {
-                        if(!success && cancelOnClose)
+                    form.FormClosed += (a, b) =>
+                    {
+                        if (!success && cancelOnClose)
                         {
-                            cancellationTokenSource?.Cancel();
+                            cancellationTokenSource?.Cancel(false);
                         }
                     };
                     browser.Navigate(siteUrl);
-                    
+
                     browser.Navigated += (sender, args) =>
                     {
                         var navigatedUrl = args.Url.ToString();
                         var matched = false;
                         if (null != closeUrls && closeUrls.Length > 0)
                         {
+
                             foreach (var closeUrl in closeUrls)
                             {
                                 switch (closeUrl.matchType)
