@@ -47,7 +47,7 @@
     <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="PnP.Framework" Version="1.2.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
+    <PackageReference Include="PnP.Framework" Version="1.3.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
     <PackageReference Include="PnP.Framework" Version="*" Condition="'$(IsRelease)' == '1'" />
     <PackageReference Include="PnP.Core" Version="1.0.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
     <PackageReference Include="PnP.Core" Version="*" Condition="'$(IsRelease)' == '1'" />
