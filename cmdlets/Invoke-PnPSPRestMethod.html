@@ -90,6 +90,7 @@
                        [-Method &lt;HttpRequestMethod&gt;]
                        [-Content &lt;Object&gt;]
                        [-ContentType &lt;String&gt;]
+                       [-Raw]
                        [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -150,6 +151,15 @@ Accept pipeline input: False
 <h3 id="-url">-Url</h3>
 <p>The url to execute</p>
 <pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Accept pipeline input: False
+</code></pre>
+<h3 id="-raw">-Raw</h3>
+<p>If specified the returned data will not be converted to an object but returned as a JSON string.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: True

@@ -91,7 +91,7 @@
 <p>Sets Microsoft 365 Group properties</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity &lt;Microsoft365GroupPipeBind&gt; [-DisplayName &lt;String&gt;] [-Description &lt;String&gt;]
- [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-GroupLogoPath &lt;String&gt;] [-CreateTeam]
+ [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam]
  [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] 
  [&lt;CommonParameters&gt;]
 </code></pre>
@@ -151,7 +151,7 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-grouplogopath">-GroupLogoPath</h3>
+<h3 id="-logopath">-LogoPath</h3>
 <p>The path to the logo file of to set. Logo must be at least 48 pixels wide and may be at most 4 MB in size. Requires Site.ReadWrite.All permissions.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)

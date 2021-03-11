@@ -100,9 +100,9 @@
 </code></pre>
 <p>Restores all the items in the first and second stage recycle bins to their original location of which the filename ends with the .docx extension</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Restore-PnPRecycleBinItem -All -RowLimit 10000
+<pre><code class="lang-powershell">Get-PnPRecycleBinItem -RowLimit 10000 | Restore-PnPRecycleBinItem -Force
 </code></pre>
-<p>Permanently restores up to 10,000 items in the recycle bin</p>
+<p>Permanently restores up to 10,000 items in the recycle bin without asking for confirmation.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>

@@ -86,115 +86,141 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Connect to a SharePoint site</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="main-default">Main (Default)</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-Credentials &lt;CredentialPipeBind&gt;] [-CurrentCredentials]
- [-CreateDrive] [-DriveName &lt;String&gt;] [-TenantAdminUrl &lt;String&gt;] [&lt;CommonParameters&gt;]
-</code></pre>
-<h3 id="acs-legacy-app-only-using-a-clientid-and-clientsecret-and-an-url">ACS (Legacy) App-Only using a clientId and clientSecret and an URL</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline [-Url] &lt;String&gt; -ClientId &lt;String&gt; -ClientSecret &lt;String&gt; [-ReturnConnection] [-Realm &lt;String&gt;]  [-CreateDrive] [-DriveName &lt;String&gt;]  [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
- [&lt;CommonParameters&gt;]
-</code></pre>
-<h3 id="azure-active-directory">Azure Active Directory</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] -ClientId &lt;String&gt;
- -RedirectUri &lt;String&gt; [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
- [&lt;CommonParameters&gt;]
-</code></pre>
-<h3 id="app-only-with-azure-active-directory-with-a-certificate-file">App-Only with Azure Active Directory with a certificate file</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline [-Url] &lt;String&gt; -ClientId &lt;String&gt; -Tenant &lt;String&gt; -CertificatePath &lt;String&gt; [-CertificatePassword &lt;SecureString&gt;] [-ReturnConnection]  [-CreateDrive] [-DriveName &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;]
- [-TenantAdminUrl &lt;String&gt;] [&lt;CommonParameters&gt;]
-</code></pre>
-<h3 id="app-only-with-azure-active-directory-with-a-certificate-file-1">App-Only with Azure Active Directory with a certificate file</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline [-Url] &lt;String&gt; -ClientId &lt;String&gt; -Tenant &lt;String&gt; -CertificateBase64Encoded &lt;String&gt; [-CertificatePassword &lt;SecureString&gt;] [-ReturnConnection]  [-CreateDrive] [-DriveName &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;]
- [-TenantAdminUrl &lt;String&gt;] [&lt;CommonParameters&gt;]
-</code></pre>
-<h3 id="app-only-with-azure-active-directory-using-certificate-from-certificate-store-by-thumbprint">App-Only with Azure Active Directory using certificate from certificate store by thumbprint</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline [-Url] &lt;String&gt; -ClientId &lt;String&gt; -Tenant &lt;String&gt; -Thumbprint &lt;String&gt; [-ReturnConnection]  [-CreateDrive] [-DriveName &lt;String&gt;] 
+<h3 id="credentials-default">Credentials (Default)</h3>
+<pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-Credentials &lt;CredentialPipeBind&gt;] [-CurrentCredentials]
+ [-CreateDrive] [-DriveName &lt;String&gt;] [-ClientId &lt;String&gt;] [-RedirectUri &lt;String&gt;]
  [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
+ [-TransformationOnPrem] [&lt;CommonParameters&gt;]
+</code></pre>
+<h3 id="sharepoint-acs-legacy-app-only">SharePoint ACS (Legacy) App Only</h3>
+<pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-Realm &lt;String&gt;] -ClientSecret &lt;String&gt; [-CreateDrive]
+ [-DriveName &lt;String&gt;] -ClientId &lt;String&gt; [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
-<h3 id="devicelogin">DeviceLogin</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline [-Url] &lt;String&gt; -DeviceLogin [-ClientId &lt;String&gt;] [-ReturnConnection] [-LaunchBrowser] [-AzureEnvironment &lt;AzureEnvironment&gt;] [&lt;CommonParameters&gt;]
+<h3 id="app-only-with-azure-active-directory">App-Only with Azure Active Directory</h3>
+<pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] -ClientId &lt;String&gt;
+ -Tenant &lt;String&gt; [-CertificatePath &lt;String&gt;] [-CertificateBase64Encoded &lt;String&gt;]
+ [-CertificatePassword &lt;SecureString&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
+ [&lt;CommonParameters&gt;]
 </code></pre>
-<h3 id="weblogin-for-multi-factor-authentication">WebLogin for Multi-Factor authentication</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url &lt;String&gt; -UseWebLogin [-ForceAuthentication]
+<h3 id="app-only-with-azure-active-directory-using-a-certificate-from-the-windows-certificate-management-store-by-thumbprint">App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint</h3>
+<pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] -ClientId &lt;String&gt;
+ -Tenant &lt;String&gt; -Thumbprint &lt;String&gt; [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
+ [&lt;CommonParameters&gt;]
 </code></pre>
-<h3 id="interactive-login-for-multi-factor-authentication">Interactive login for Multi-Factor authentication</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url &lt;String&gt; -Interactive [-ClientId &lt;String&gt;] [-ForceAuthentication &lt;SwitchParameter&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
+<h3 id="pnp-management-shell--devicelogin">PnP Management Shell / DeviceLogin</h3>
+<pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] [-DeviceLogin]
+ [-LaunchBrowser] [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] 
+ [&lt;CommonParameters&gt;]
+</code></pre>
+<h3 id="web-login-for-multi-factor-authentication">Web Login for Multi Factor Authentication</h3>
+<pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;]
+ [-TenantAdminUrl &lt;String&gt;] [-UseWebLogin] [-ForceAuthentication]
+ [&lt;CommonParameters&gt;]
+</code></pre>
+<h3 id="interactive-for-multi-factor-authentication">Interactive for Multi Factor Authentication</h3>
+<pre><code>Connect-PnPOnline -Interactive [-ReturnConnection] -Url &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] [-LaunchBrowser]
+ [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ForceAuthentication]  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="on-premises-login-for-page-transformation-from-on-premises-sharepoint-to-sharepoint-online">On-premises login for page transformation from on-premises SharePoint to SharePoint Online</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &lt;String&gt; -TransformationOnPrem [-CurrentCredential]
 </code></pre>
-<h3 id="managed-identity-for-use-with-azure-cloud-shell-and-azure-functions">Managed Identity for use with Azure Cloud Shell and Azure Functions</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -ManagedIdentity
-</code></pre>
 <h3 id="access-token">Access Token</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url &lt;String&gt; -AccessToken &lt;String&gt; [-TenantAdminUrl &lt;String&gt;]
+<pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-AzureEnvironment &lt;AzureEnvironment&gt;] -AccessToken &lt;String&gt; [&lt;CommonParameters&gt;]
+</code></pre>
+<h3 id="managed-identity">Managed Identity</h3>
+<pre><code>Connect-PnPOnline [-NoTelemetry] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets. See <a href="https://pnp.github.io/powershell/articles/connecting.html">https://pnp.github.io/powershell/articles/connecting.html</a> for more information on the options to connect.</p>
+<p>Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets.
+See <a href="https://pnp.github.io/powershell/articles/connecting.html">https://pnp.github.io/powershell/articles/connecting.html</a> for more information on the options to connect.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot;
+<pre><code>Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot;
 </code></pre>
-<p>Connect to SharePoint prompting for the username and password. When a generic credential is added to the Windows Credential Manager with <a href="https://contoso.sharepoint.com">https://contoso.sharepoint.com</a>, PowerShell will not prompt for username and password and use those stored credentials instead.</p>
+<p>Connect to SharePoint prompting for the username and password.
+When a generic credential is added to the Windows Credential Manager with <a href="https://contoso.sharepoint.com">https://contoso.sharepoint.com</a>, PowerShell will not prompt for username and password and use those stored credentials instead.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -Credentials (Get-Credential)
+<pre><code>Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -Credentials (Get-Credential)
 </code></pre>
 <p>Connect to SharePoint prompting for the username and password to use to authenticate</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.de&quot; -ClientId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -ClientSecret $clientSecret
+<pre><code>Connect-PnPOnline -Url &quot;https://contoso.sharepoint.de&quot; -ClientId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -ClientSecret $clientSecret
 </code></pre>
 <p>This will authenticate you to the site using Legacy ACS authentication</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -DeviceLogin
+<pre><code>Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -DeviceLogin
 </code></pre>
-<p>This will authenticate you using the PnP Management Shell Multi-Tenant application. A browser window will have to be opened where you have to enter a code that is shown in your PowerShell window.</p>
+<p>This will authenticate you using the PnP Management Shell Multi-Tenant application.
+A browser window will have to be opened where you have to enter a code that is shown in your PowerShell window.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -DeviceLogin -LaunchBrowser
+<pre><code>Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -DeviceLogin -LaunchBrowser
 </code></pre>
-<p>This will authenticate you using the PnP Management Shell Multi-Tenant application. A browser window will automatically open and the code you need to enter will be automatically copied to your clipboard.</p>
+<p>This will authenticate you using the PnP Management Shell Multi-Tenant application.
+A browser window will automatically open and the code you need to enter will be automatically copied to your clipboard.</p>
 <h3 id="example-6">EXAMPLE 6</h3>
-<pre><code class="lang-powershell">$password = (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force)
+<pre><code>$password = (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force)
 Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificatePath 'c:\mycertificate.pfx' -CertificatePassword $password  -Tenant 'contoso.onmicrosoft.com'
 </code></pre>
-<p>Connects using an Azure Active Directory registered application using a locally available certificate containing a private key. See <a href="https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread">https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread</a> for a sample on how to get started.</p>
+<p>Connects using an Azure Active Directory registered application using a locally available certificate containing a private key.
+See <a href="https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread">https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread</a> for a sample on how to get started.</p>
 <h3 id="example-7">EXAMPLE 7</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -Thumbprint 34CFAA860E5FB8C44335A38A097C1E41EEA206AA
+<pre><code>Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -Thumbprint 34CFAA860E5FB8C44335A38A097C1E41EEA206AA
 </code></pre>
-<p>Connects to SharePoint using app-only tokens via an app's declared permission scopes. See <a href="https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions">https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions</a> for a sample on how to get started. Ensure you have imported the private key certificate, typically the .pfx file, into the Windows Certificate Store for the certificate with the provided thumbprint.</p>
+<p>Connects to SharePoint using app-only tokens via an app's declared permission scopes.
+See <a href="https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions">https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions</a> for a sample on how to get started.
+Ensure you have imported the private key certificate, typically the .pfx file, into the Windows Certificate Store for the certificate with the provided thumbprint.</p>
 <h3 id="example-8">EXAMPLE 8</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificateBase64Encoded $base64encodedstring -Tenant 'contoso.onmicrosoft.com'
+<pre><code>Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificateBase64Encoded $base64encodedstring -Tenant 'contoso.onmicrosoft.com'
 </code></pre>
-<p>Connects using an Azure Active Directory registered application using a certificate with a private key that has been base64 encoded. See <a href="https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread">https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread</a> for a sample on how to get started.</p>
+<p>Connects using an Azure Active Directory registered application using a certificate with a private key that has been base64 encoded.
+See <a href="https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread">https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread</a> for a sample on how to get started.</p>
 <h3 id="example-9">EXAMPLE 9</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -UseWebLogin
+<pre><code>Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -UseWebLogin
 </code></pre>
 <p>Note: See Example 10 as this is a preferred option over using -UseWebLogin.</p>
-<p>Connects to SharePoint using legacy cookie based authentication. Notice this type of authentication is limited in its functionality. We will for instance not be able to acquire an access token for the Graph, and as a result none of the Graph related cmdlets will work. Also some of the functionality of the provisioning engine (Get-PnPSiteTemplate, Get-PnPTenantTemplate, Invoke-PnPSiteTemplate, Invoke-PnPTenantTemplate) will not work because of this reason. The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will dissappear immediately, this is expected. Use -ForceAuthentication to reset the authentication cookies and force a new login. See example 10 for a full support for interactive logins using MFA and the ability to acquire Graph tokens.</p>
+<p>Connects to SharePoint using legacy cookie based authentication.
+Notice this type of authentication is limited in its functionality.
+We will for instance not be able to acquire an access token for the Graph, and as a result none of the Graph related cmdlets will work.
+Also some of the functionality of the provisioning engine (Get-PnPSiteTemplate, Get-PnPTenantTemplate, Invoke-PnPSiteTemplate, Invoke-PnPTenantTemplate) will not work because of this reason.
+The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will dissappear immediately, this is expected.
+Use -ForceAuthentication to reset the authentication cookies and force a new login.
+See example 10 for a full support for interactive logins using MFA and the ability to acquire Graph tokens.</p>
 <h3 id="example-10">EXAMPLE 10</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -Interactive
+<pre><code>Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -Interactive
 </code></pre>
-<p>Connects to the Azure AD, acquires an access token and allows PnP PowerShell to access both SharePoint and the Microsoft Graph. By default it will use the PnP Management Shell multi-tenant application behind the scenes, so make sure to run <code>Register-PnPManagementShellAccess</code> first.</p>
+<p>Connects to the Azure AD, acquires an access token and allows PnP PowerShell to access both SharePoint and the Microsoft Graph.
+By default it will use the PnP Management Shell multi-tenant application behind the scenes, so make sure to run `Register-PnPManagementShellAccess` first.</p>
 <h3 id="example-11">EXAMPLE 11</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://portal.contoso.com&quot; -TransformationOnPrem -CurrentCredential
+<pre><code>Connect-PnPOnline -Url &quot;https://portal.contoso.com&quot; -TransformationOnPrem -CurrentCredential
 </code></pre>
-<p>Connects to on-premises SharePoint 2013, 2016 or 2019 site with the current user's on-premises Windows credential (e.g. domain\user). This option is only supported for being able to transform on-premises classic wiki, webpart, blog and publishing pages into modern pages in a SharePoint Online site. Although other PnP cmdlets might work as well, they're officially not supported for being used in an on-premises context. See <a href="http://aka.ms/sharepoint/modernization/pages">http://aka.ms/sharepoint/modernization/pages</a> for more details on page transformation.</p>
+<p>Connects to on-premises SharePoint 2013, 2016 or 2019 site with the current user's on-premises Windows credential (e.g.
+domain\user).
+This option is only supported for being able to transform on-premises classic wiki, webpart, blog and publishing pages into modern pages in a SharePoint Online site.
+Although other PnP cmdlets might work as well, they're officially not supported for being used in an on-premises context.
+See <a href="http://aka.ms/sharepoint/modernization/pages">http://aka.ms/sharepoint/modernization/pages</a> for more details on page transformation.</p>
 <h3 id="example-12">EXAMPLE 12</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -ManagedIdentity
+<pre><code>Connect-PnPOnline -ManagedIdentity
 Get-PnPTeamsTeam
 </code></pre>
-<p>Using this way of connecting only works with environments that support managed identies: Azure Functions and the Azure Cloud Shell. You cannot access SharePoint artifacts using this connection method: only the cmdlets that use the Microsoft Graph or Azure AD resources behind the scenes will work: Teams cmdlets, Flow cmdlets, Planner cmdlets and the Microsoft 365 Group cmdlets.</p>
+<p>Using this way of connecting only works with environments that support managed identies: Azure Functions and the Azure Cloud Shell.
+You cannot access SharePoint artifacts using this connection method: only the cmdlets that use the Microsoft Graph or Azure AD resources behind the scenes will work: Teams cmdlets, Flow cmdlets, Planner cmdlets and the Microsoft 365 Group cmdlets.</p>
 <h3 id="example-13">EXAMPLE 13</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url https://contoso.sharepoint.com -AccessToken $token
+<pre><code>Connect-PnPOnline -Url https://contoso.sharepoint.com -AccessToken $token
 </code></pre>
-<p>This method assumes you have acquired a valid OAuth2 access token from Azure AD with the correct audience and permissions set. Using this method PnP PowerShell will not acquire tokens dynamically and if the token expires (typically after 1 hour) cmdlets will fail to work using this method.</p>
+<p>This method assumes you have acquired a valid OAuth2 access token from Azure AD with the correct audience and permissions set.
+Using this method PnP PowerShell will not acquire tokens dynamically and if the token expires (typically after 1 hour) cmdlets will fail to work using this method.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-accesstoken">-AccessToken</h3>
-<p>Using this parameter you can provide your own access token. Notice that it is recommend to use one of the other connection methods as this will limits the offered functionality on PnP PowerShell. For instance if the token expires (typically after 1 hour) will not be able to acquire a new valid token, which the other connection methods do allow. You are fully responsible for providing your own valid token, for the correct audience, with the correct permissions scopes.</p>
+<p>Using this parameter you can provide your own access token.
+Notice that it is recommend to use one of the other connection methods as this will limits the offered functionality on PnP PowerShell.
+For instance if the token expires (typically after 1 hour) will not be able to acquire a new valid token, which the other connection methods do allow.
+You are fully responsible for providing your own valid token, for the correct audience, with the correct permissions scopes.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Access Token
+Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: False
 Accept pipeline input: False
@@ -203,8 +229,9 @@ Accept wildcard characters: False
 <h3 id="-azureenvironment">-AzureEnvironment</h3>
 <p>The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.</p>
 <pre><code class="lang-yaml">Type: AzureEnvironment
-Parameter Sets: App-Only using a clientId and clientSecret and an URL, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, DeviceLogin, Azure Active Directory using Scopes, PnP Management Shell to the Microsoft Graph
-Accepted values: Production, PPE, China, Germany, USGovernment
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, PnP Management Shell / DeviceLogin, Interactive, Access Token
+Aliases:
+Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD
 
 Required: False
 Position: Named
@@ -215,7 +242,8 @@ Accept wildcard characters: False
 <h3 id="-certificatepassword">-CertificatePassword</h3>
 <p>Password to the certificate (*.pfx)</p>
 <pre><code class="lang-yaml">Type: SecureString
-Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings
+Parameter Sets: App-Only with Azure Active Directory
+Aliases:
 
 Required: False
 Position: Named
@@ -227,6 +255,7 @@ Accept wildcard characters: False
 <p>Path to the certificate containing the private key (*.pfx)</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: App-Only with Azure Active Directory
+Aliases:
 
 Required: False
 Position: Named
@@ -237,7 +266,18 @@ Accept wildcard characters: False
 <h3 id="-clientid">-ClientId</h3>
 <p>The Client ID of the Azure AD Application</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, DeviceLogin
+Parameter Sets: Credentials, PnP Management Shell / DeviceLogin, Interactive
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint
+Aliases:
 
 Required: True
 Position: Named
@@ -248,7 +288,8 @@ Accept wildcard characters: False
 <h3 id="-clientsecret">-ClientSecret</h3>
 <p>The client secret to use.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain
+Parameter Sets: SharePoint ACS (Legacy) App Only
+Aliases:
 
 Required: True
 Position: Named
@@ -259,18 +300,22 @@ Accept wildcard characters: False
 <h3 id="-createdrive">-CreateDrive</h3>
 <p>If you want to create a PSDrive connected to the URL</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Main, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, Access Token
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication
+Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-credentials">-Credentials</h3>
-<p>Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Generic Credentials section of the Windows Credentials in the Windows Credential Manager for the correct credentials.</p>
+<p>Credentials of the user to connect with.
+Either specify a PSCredential object or a string.
+In case of a string value a lookup will be done to the Generic Credentials section of the Windows Credentials in the Windows Credential Manager for the correct credentials.</p>
 <pre><code class="lang-yaml">Type: CredentialPipeBind
-Parameter Sets: Main, ADFS with user credentials, Azure Active Directory using Scopes
+Parameter Sets: Credentials
+Aliases:
 
 Required: False
 Position: Named
@@ -281,7 +326,8 @@ Accept wildcard characters: False
 <h3 id="-drivename">-DriveName</h3>
 <p>Name of the PSDrive to create (default: SPO)</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: Main, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, Access Token
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication
+Aliases:
 
 Required: False
 Position: Named
@@ -292,16 +338,19 @@ Accept wildcard characters: False
 <h3 id="-launchbrowser">-LaunchBrowser</h3>
 <p>Launch a browser automatically and copy the code to enter to the clipboard</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: DeviceLogin
+Parameter Sets: PnP Management Shell / DeviceLogin, Interactive
+Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-devicelogin">-DeviceLogin</h3>
-<p>Log in using the Device Code flow. By default it will use the PnP Management Shell multi-tenant Azure AD application registration. You will be asked to consent to:</p>
+<p>Log in using the Device Code flow.
+By default it will use the PnP Management Shell multi-tenant Azure AD application registration.
+You will be asked to consent to:</p>
 <ul>
 <li>Read and write managed metadata</li>
 <li>Have full control of all site collections</li>
@@ -313,19 +362,21 @@ Accept wildcard characters: False
 <li>Access the directory as you</li>
 </ul>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: DeviceLogin
-Aliases: PnPManagementShell
+Parameter Sets: PnP Management Shell / DeviceLogin
+Aliases: PnPManagementShell, PnPO365ManagementShell
 
 Required: True
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-realm">-Realm</h3>
-<p>Authentication realm. If not specified will be resolved from the url specified.</p>
+<p>Authentication realm.
+If not specified will be resolved from the url specified.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain
+Parameter Sets: SharePoint ACS (Legacy) App Only
+Aliases:
 
 Required: False
 Position: Named
@@ -336,9 +387,10 @@ Accept wildcard characters: False
 <h3 id="-redirecturi">-RedirectUri</h3>
 <p>The Redirect URI of the Azure AD Application</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: Azure Active Directory
+Parameter Sets: Credentials
+Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -347,18 +399,21 @@ Accept wildcard characters: False
 <h3 id="-returnconnection">-ReturnConnection</h3>
 <p>Returns the connection for use with the -Connection parameter on cmdlets.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Main, App-Only using a clientId and clientSecret and an URL, App-Only using a clientId and clientSecret and an AAD Domain, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, Access Token, DeviceLogin
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token
+Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-tenant">-Tenant</h3>
-<p>The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com</p>
+<p>The Azure AD Tenant name,e.g.
+mycompany.onmicrosoft.com</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates
+Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint
+Aliases:
 
 Required: True
 Position: Named
@@ -367,9 +422,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-tenantadminurl">-TenantAdminUrl</h3>
-<p>The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://[tenantname]-admin.sharepoint.com where appropriate.</p>
+<p>The url to the Tenant Admin site.
+If not specified, the cmdlets will assume to connect automatically to https://[tenantname]-admin.sharepoint.com where appropriate.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: Main, App-Only using a clientId and clientSecret and an URL, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication
+Aliases:
 
 Required: False
 Position: Named
@@ -380,7 +437,8 @@ Accept wildcard characters: False
 <h3 id="-thumbprint">-Thumbprint</h3>
 <p>The thumbprint of the certificate containing the private key registered with the application in Azure Active Directory</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: App-Only with Azure Active Directory using certificate from certificate store by thumbprint
+Parameter Sets: App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint
+Aliases:
 
 Required: True
 Position: Named
@@ -391,7 +449,8 @@ Accept wildcard characters: False
 <h3 id="-url">-Url</h3>
 <p>The Url of the site collection to connect to</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: Main, App-Only using a clientId and clientSecret and an URL, WebLogin, ADFS with client Certificate, ADFS with user credentials, Azure Active Directory, App-Only with Azure Active Directory, App-Only with Azure Active Directory using certificate as PEM strings, App-Only with Azure Active Directory using certificate from certificate store by thumbprint, App-Only with Azure Active Directory using X502 certificates, SPO Management Shell Credentials, DeviceLogin
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token
+Aliases:
 
 Required: True
 Position: 0
@@ -399,19 +458,12 @@ Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: Access Token
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-transformationonprem">-TransformationOnPrem</h3>
-<p>If you want to the use page transformation cmdlets, setting this switch will allow you to connect to an on-prem server. Notice that this -only- applies to Transformation cmdlets.</p>
+<p>If you want to the use page transformation cmdlets, setting this switch will allow you to connect to an on-prem server.
+Notice that this -only- applies to Transformation cmdlets.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Main
+Parameter Sets: Credentials
+Aliases:
 
 Required: False
 Position: Named
@@ -420,9 +472,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-useweblogin">-UseWebLogin</h3>
-<p>Windows only: Connects to SharePoint using legacy cookie based authentication. Notice this type of authentication is limited in its functionality. We will for instance not be able to acquire an access token for the Graph, and as a result none of the Graph related cmdlets will work. Also some of the functionality of the provisioning engine (Get-PnPSiteTemplate, Get-PnPTenantTemplate, Invoke-PnPSiteTemplate, Invoke-PnPTenantTemplate) will not work because of this reason. The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will dissappear immediately, this is expected. Use -ForceAuthentication to reset the authentication cookies and force a new login.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: WebLogin
+<p>Windows only: Connects to SharePoint using legacy cookie based authentication.
+Notice this type of authentication is limited in its functionality.
+We will for instance not be able to acquire an access token for the Graph, and as a result none of the Graph related cmdlets will work.
+Also some of the functionality of the provisioning engine (Get-PnPSiteTemplate, Get-PnPTenantTemplate, Invoke-PnPSiteTemplate, Invoke-PnPTenantTemplate) will not work because of this reason.
+The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will dissappear immediately, this is expected.
+Use -ForceAuthentication to reset the authentication cookies and force a new login.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter 
+Parameter Sets: Web Login for Multi Factor Authentication
+Aliases:
 
 Required: True
 Position: Named
@@ -431,9 +489,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-interactive">-Interactive</h3>
-<p>Connects to the Azure AD using interactive login, allowing you to authenticate using multi-factor authentication. This parameter has preference over <code>-UseWebLogin</code>.</p>
+<p>Connects to the Azure AD using interactive login, allowing you to authenticate using multi-factor authentication.
+This parameter has preference over `-UseWebLogin`.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Interactive
+Parameter Sets: Interactive for Multi Factor Authentication
+Aliases:
 
 Required: True
 Position: Named
@@ -444,7 +504,8 @@ Accept wildcard characters: False
 <h3 id="-forceauthentication">-ForceAuthentication</h3>
 <p>Will clear the stored authentication information when using -UseWebLogin (Windows Only) or -Interactive (all platforms) and allows you to authenticate again towards a site with different credentials.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: WebLogin, Interactive
+Parameter Sets: Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication
+Aliases:
 
 Required: False
 Position: Named
@@ -453,13 +514,29 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-managedidentity">-ManagedIdentity</h3>
-<p>For use with Azure Functions (if configured to use a managed identity) or Azure Cloud Shell only. This method will acquire a token using the built-in endpoints in the Azure Cloud Shell and Azure Functions. Notice that using this connection method will not allow you to access SharePoint artifacts due to limitations of token acquisition. It will however allow you to use the Teams cmdlets, Flow cmdlets, Planner cmdlets and Microsoft 365 Group cmdlets.</p>
+<p>For use with Azure Functions (if configured to use a managed identity) or Azure Cloud Shell only.
+This method will acquire a token using the built-in endpoints in the Azure Cloud Shell and Azure Functions.
+Notice that using this connection method will not allow you to access SharePoint artifacts due to limitations of token acquisition.
+It will however allow you to use the Teams cmdlets, Flow cmdlets, Planner cmdlets and Microsoft 365 Group cmdlets.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Managed Identity for use with Azure Cloud Shell and Azure Functions
+Parameter Sets: Managed Identity
+Aliases:
 
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-certificatebase64encoded">-CertificateBase64Encoded</h3>
+<p>Specify a base64 encoded string as representing the private certificate.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: App-Only with Azure Active Directory
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

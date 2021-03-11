@@ -96,7 +96,10 @@
                                        [-CommonName &lt;String&gt;]
                                        [-OutPath &lt;String&gt;]
                                        [-Store &lt;StoreLocation&gt;]
-                                       [-Scopes &lt;String[]&gt;]
+                                       [-GraphApplicationPermissions &lt;Permission[]&gt;]
+                                       [-GraphDelegatePermissions &lt;Permission[]&gt;]
+                                       [-SharePointApplicationPermissions &lt;Permission[]&gt;]
+                                       [-SharePointDelegatePermissions &lt;Permission[]&gt;]
                                        [-Country &lt;String&gt;]
                                        [-State &lt;String&gt;]
                                        [-Locality &lt;String&gt;]
@@ -114,7 +117,10 @@
                         [-Password &lt;SecureString&gt;]
                         [-DeviceLogin]
                         [-Interactive]
-                        [-Scopes &lt;String[]&gt;]
+                        [-GraphApplicationPermissions &lt;Permission[]&gt;]
+                        [-GraphDelegatePermissions &lt;Permission[]&gt;]
+                        [-SharePointApplicationPermissions &lt;Permission[]&gt;]
+                        [-SharePointDelegatePermissions &lt;Permission[]&gt;]
                         [-CertificatePassword &lt;SecureString&gt;]
                         [-NoPopup]
 </code></pre>
@@ -131,7 +137,7 @@
 </code></pre>
 <p>Creates a new Azure AD Application registration which will use the existing private key certificate at the provided path to allow access. It will upload the provided private key certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All</p>
 <h3 id="------------------example-3------------------">------------------EXAMPLE 3------------------</h3>
-<pre><code class="lang-powershell">Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -Scopes &quot;MSGraph.User.Read.All&quot;,&quot;SPO.Sites.Read.All&quot; -Username &quot;yourname@domain.com&quot; -Password (Read-Host -AsSecureString -Prompt &quot;Enter Password&quot;)
+<pre><code class="lang-powershell">Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -GraphApplicationPermissions &quot;User.Read.All&quot; -SharePointApplicationPermissions &quot;Sites.Read.All&quot; -Username &quot;yourname@domain.com&quot; -Password (Read-Host -AsSecureString -Prompt &quot;Enter Password&quot;)
 </code></pre>
 <p>Creates a new Azure AD Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.Read.All, User.Read.All</p>
 <h3 id="------------------example-4------------------">------------------EXAMPLE 4------------------</h3>
@@ -255,9 +261,36 @@ Required: False
 Position: Named
 Accept pipeline input: False
 </code></pre>
-<h3 id="-scopes">-Scopes</h3>
-<p>Specify which permissions scopes to request.</p>
-<pre><code class="lang-yaml">Type: String[]
+<h3 id="-graphapplicationpermissions">-GraphApplicationPermissions</h3>
+<p>Specify which Microsoft Graph Application permissions to request.</p>
+<pre><code class="lang-yaml">Type: Permission[]
+Parameter Sets: Generate Certificate
+
+Required: False
+Position: 0
+Accept pipeline input: False
+</code></pre>
+<h3 id="-graphdelegatepermissions">-GraphDelegatePermissions</h3>
+<p>Specify which Microsoft Graph Delegate permissions to request.</p>
+<pre><code class="lang-yaml">Type: Permission[]
+Parameter Sets: Generate Certificate
+
+Required: False
+Position: 0
+Accept pipeline input: False
+</code></pre>
+<h3 id="-sharepointapplicationpermissions">-SharePointApplicationPermissions</h3>
+<p>Specify which Microsoft SharePoint Application permissions to request.</p>
+<pre><code class="lang-yaml">Type: Permission[]
+Parameter Sets: Generate Certificate
+
+Required: False
+Position: 0
+Accept pipeline input: False
+</code></pre>
+<h3 id="-sharepointdelegatepermissions">-SharePointDelegatePermissions</h3>
+<p>Specify which Microsoft SharePoint Delegate permissions to request.</p>
+<pre><code class="lang-yaml">Type: Permission[]
 Parameter Sets: Generate Certificate
 
 Required: False

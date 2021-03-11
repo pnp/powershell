@@ -91,11 +91,10 @@
 <p>Adds a new task to a planner bucket</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-group">By Group</h3>
-<pre><code class="lang-powershell">Add-PnPPlannerTask -Group &lt;PlannerGroupPipeBind&gt; -Plan &lt;PlannerPlanPipeBind&gt; -Bucket &lt;PlannerBucketPipeBind&gt;
- -Title &lt;String&gt; [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPPlannerTask -Group &lt;PlannerGroupPipeBind&gt; -Plan &lt;PlannerPlanPipeBind&gt; -Bucket &lt;PlannerBucketPipeBind&gt; -Title &lt;String&gt; [-AssignedTo &lt;String[]&gt;]
 </code></pre>
 <h3 id="by-plan-id">By Plan Id</h3>
-<pre><code class="lang-powershell">Add-PnPPlannerTask -Bucket &lt;PlannerBucketPipeBind&gt; -PlanId &lt;String&gt; -Title &lt;String&gt; [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPPlannerTask -Bucket &lt;PlannerBucketPipeBind&gt; -PlanId &lt;String&gt; -Title &lt;String&gt; [-AssignedTo &lt;String[]&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet adds a new task to Planner bucket</p>
@@ -108,6 +107,10 @@
 <pre><code class="lang-powershell">Add-PnPPlannerTask -PlanId &quot;QvfkTd1mc02gwxHjHC_43JYABhAy&quot; -Bucket &quot;Todos&quot; -Title &quot;Design booth layout&quot;
 </code></pre>
 <p>This cmdlet adds a new task.</p>
+<h3 id="example-3">Example 3</h3>
+<pre><code class="lang-powershell">Add-PnPPlannerTask -Group &quot;Marketing&quot; -Plan &quot;Conference Plan&quot; -Bucket &quot;Todos&quot; -Title &quot;Design booth layout&quot; -AssignedTo &quot;user@contoso.com&quot;,&quot;manager@contoso.com&quot;
+</code></pre>
+<p>This cmdlet adds a new task and assigns to user@contoso.com and manager@contoso.com</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-bucket">-Bucket</h3>
 <p>The bucket to add the task too</p>
@@ -160,6 +163,18 @@ Accept wildcard characters: False
 <h3 id="-title">-Title</h3>
 <p>Specify the title of the task</p>
 <pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-assignedto">-AssignedTo</h3>
+<p>Specify the email(s) of the user to assign the task to.</p>
+<pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 Aliases:
 

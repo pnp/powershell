@@ -98,7 +98,14 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Register-PnPManagementShellAccess
 </code></pre>
-<p>Launches the consent flow to grant the PnP Management Shell Azure AD Application delegate access to the tenant.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Register-PnPManagementShellAccess -ShowConsentUrl
+</code></pre>
+<p>Launches the consent flow to grant the PnP Management Shell Azure AD Application delegate access to the tenant and also displays the consent URL which can be shared with Azure AD administrators or Global administrators.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Register-PnPManagementShellAccess -ShowConsentUrl -TenantName yourtenant.onmicrosoft.com
+</code></pre>
+<p>Displays the consent URL which can be shared with Azure AD administrators or Global administrators.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-showconsenturl">-ShowConsentUrl</h3>
 <p>If specified you will be asked to authenticate to acquire the tenant id. An url that can be used to provide consent will be returned.</p>
@@ -118,6 +125,16 @@ Accepted values: Production, PPE, China, Germany, USGovernment
 Required: False
 Position: Named
 Default value: Production
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-tenantname">-TenantName</h3>
+<p>The name of the tenant. Example - ( yourtenant.onmicrosoft.com)</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Show Consent Url
+
+Required: False
+Position: Named
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

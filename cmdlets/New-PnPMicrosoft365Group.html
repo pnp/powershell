@@ -91,7 +91,7 @@
 <p>Creates a new Microsoft 365 Group</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName &lt;String&gt; -Description &lt;String&gt; -MailNickname &lt;String&gt;
- [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-GroupLogoPath &lt;String&gt;] [-CreateTeam] [-Force]
+ [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam] [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-Force]
   [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -101,7 +101,7 @@
 </code></pre>
 <p>Creates a public Microsoft 365 Group with all the required properties</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers
+<pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname -Owners &quot;owner1@domain.com&quot; -Members &quot;member1@domain.com&quot;
 </code></pre>
 <p>Creates a public Microsoft 365 Group with all the required properties, and with a custom list of Owners and a custom list of Members</p>
 <h3 id="example-3">EXAMPLE 3</h3>
@@ -157,8 +157,8 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-grouplogopath">-GroupLogoPath</h3>
-<p>The path to the logo file of to set</p>
+<h3 id="-logopath">-LogoPath</h3>
+<p>The path to the logo file of to set. Supported formats are .png, .gif and .jpg</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -191,7 +191,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-members">-Members</h3>
-<p>The array UPN values of the group's members</p>
+<p>The array UserPrincipalName values of the group's members</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
@@ -202,8 +202,30 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-owners">-Owners</h3>
-<p>The array UPN values of the group's owners</p>
+<p>The array UserPrincipalName values of the group's owners</p>
 <pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-hidefromaddresslists">-HideFromAddressLists</h3>
+<p>Controls whether the group is hidden or shown in the Global Address List (GAL).</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-hidefromoutlookclients">-HideFromOutlookClients</h3>
+<p>Controls whether the group shows in the Outlook left-hand navigation.</p>
+<pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
 Required: False

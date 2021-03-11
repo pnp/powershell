@@ -93,10 +93,11 @@
 <pre><code class="lang-powershell">Get-PnPTenantRecycleBinItem [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This command will return all the items in the tenant recycle bin for the Office 365 tenant you are connected to. Be sure to connect to the SharePoint Online Admin endpoint (<a href="https://yourtenantname-admin.sharepoint.com">https://yourtenantname-admin.sharepoint.com</a>) in order for this command to work.</p>
+<p>This command will return all the items in the tenant recycle bin for the Office 365 tenant you are connected to. If you are not a SharePoint Tenant Admin connect to the site where you want to manage the recycle bin and use Get-PnPRecycleBinItem.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPTenantRecycleBinItem
+<pre><code class="lang-powershell">https://contoso-admin.sharepoint.com
+Get-PnPTenantRecycleBinItem
 </code></pre>
 <p>Returns all modern and classic site collections in the tenant scoped recycle bin</p>
 <h2 id="parameters">PARAMETERS</h2>

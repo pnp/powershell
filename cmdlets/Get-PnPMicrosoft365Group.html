@@ -90,8 +90,7 @@
 </ul>
 <p>Gets one Microsoft 365 Group or a list of Microsoft 365 Groups</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPMicrosoft365Group [-Identity &lt;Microsoft365GroupPipeBind&gt;] [-IncludeSiteUrl] [-IncludeClassification]
- [-IncludeHasTeam] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPMicrosoft365Group [-Identity &lt;Microsoft365GroupPipeBind&gt;] [-IncludeSiteUrl] [-IncludeOwners] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -116,13 +115,14 @@
 </code></pre>
 <p>Retrieves a specific Microsoft 365 Group based on its object instance</p>
 <h3 id="example-6">EXAMPLE 6</h3>
-<pre><code class="lang-powershell">Get-PnPMicrosoft365Group -IncludeHasTeam
-</code></pre>
-<p>Retrieves all the Microsoft 365 Groups and checks for each of them if it has a Microsoft Team provisioned for it</p>
-<h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">Get-PnPMicrosoft365Group -IncludeSiteUrl
 </code></pre>
 <p>Retrieves all Microsoft 365 Groups in this tenant and includes the URL property for the underlying SharePoint site.</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">$groups = Get-PnPMicrosoft365Group -IncludeOwners
+$g[0].Owners
+</code></pre>
+<p>Retrieves all Microsoft 365 Groups in this tenant and retrieves the owners for each group. The owners are available in the &quot;Owners&quot; property of the returned objects.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-includesiteurl">-IncludeSiteUrl</h3>
 <p>Include fetching the site URL for Microsoft 365 Groups. This slows down large listings.</p>
@@ -135,31 +135,20 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-includesiteurl-1">-IncludeSiteUrl</h3>
+<p>Include fetching the group owners. This slows down large listings.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>The Identity of the Microsoft 365 Group</p>
 <pre><code class="lang-yaml">Type: Microsoft365GroupPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-includeclassification">-IncludeClassification</h3>
-<p>Include Classification value of Microsoft 365 Groups</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-includehasteam">-IncludeHasTeam</h3>
-<p>Include a flag for every Microsoft 365 Group if it has a Microsoft Team provisioned for it. This will slow down the retrieval of Microsoft 365 Groups so only use it if you need it.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

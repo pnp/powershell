@@ -127,9 +127,9 @@
 </code></pre>
 <p>This will add user1@contoso.onmicrosoft.com and user2@contoso.onmicrosoft.com as additional site collection owners at 'https://contoso.sharepoint.com/sites/sales'.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Set-PnPTenantSite -Identity &quot;https://contoso.sharepoint.com/sites/sales&quot; -NoScriptSite:$false
+<pre><code class="lang-powershell">Set-PnPTenantSite -Identity &quot;https://contoso.sharepoint.com/sites/sales&quot; -DenyAddAndCustomizePages:$false
 </code></pre>
-<p>This will enable script support for the site 'https://contoso.sharepoint.com/sites/sales' if disabled.</p>
+<p>This will enable script support for the site 'https://contoso.sharepoint.com/sites/sales'</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-addinformationsegment">-AddInformationSegment</h3>
 <p>This parameter allows you to add a segment to a SharePoint site. This parameter is only applicable for tenants who have enabled Microsoft 365 Information barriers capability. Please read <a href="https://docs.microsoft.com/sharepoint/information-barriers">https://docs.microsoft.com/sharepoint/information-barriers</a> documentation to understand Information barriers in SharePoint Online.</p>

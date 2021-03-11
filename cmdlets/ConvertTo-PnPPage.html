@@ -129,7 +129,8 @@
                             [-TermMappingFile &lt;String&gt;]
                             [-SkipTermStoreMapping [&lt;SwitchParameter&gt;]]
                             [-LDAPConnectionString &lt;String&gt;]
-                            
+                            [-SkipHiddenWebParts [&lt;SwitchParameter&gt;]]
+
                             [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="examples">EXAMPLES</h2>
@@ -426,6 +427,15 @@ Accept pipeline input: False
 </code></pre>
 <h3 id="-skipdefaulturlrewriting">-SkipDefaultUrlRewriting</h3>
 <p>Set this flag to prevent the default URL rewriting while you still want to do URL rewriting using a custom URL mapping file</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+</code></pre>
+<h3 id="-skiphiddenwebparts">-SkipHiddenWebParts</h3>
+<p>Set this flag to skip hidden webparts during transformation</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
