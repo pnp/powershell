@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Graph
                 }
                 else
                 {
-                    throw new PSArgumentException("Team not found");
+                    WriteError(new PSArgumentException("Team not found"), ErrorCategory.ObjectNotFound);                    
                 }
             }
             else
