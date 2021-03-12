@@ -4286,6 +4286,42 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPAzureADGroup.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPAzureADGroup.html",
+          "hash": "Lehm1xUWwCKZ+D0quB+EVQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPAzureADGroupMember.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPAzureADGroupMember.html",
+          "hash": "tGy3o2doLWYYR0gTqxd1gQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPAzureADGroupOwner.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPAzureADGroupOwner.html",
+          "hash": "cAv0tPgy0x2rXOCmOcuh4w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPContentType.md",
       "output": {
         ".html": {
@@ -5522,6 +5558,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPAzureADGroup.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPAzureADGroup.html",
+          "hash": "hXO/9+zjMXcm81CqgckMyA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPBrowserIdleSignout.md",
       "output": {
         ".html": {
@@ -6702,7 +6750,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "Jrvdegj0+6h68Sz2gcSOrQ=="
+          "hash": "05g0T03ptdxem/uk0dnL6A=="
         }
       },
       "is_incremental": false,
@@ -6781,7 +6829,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 558,
+          "total_file_count": 562,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
