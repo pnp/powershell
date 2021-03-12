@@ -26,7 +26,7 @@ New-PnPSite -Type CommunicationSite -Title <String> -Url <String> [-HubSiteId <G
 ```
 
 ## DESCRIPTION
-The New-PnPSite cmdlet creates a new site collection for the current tenant. Currently only 'modern' sites like Communication Site and the Modern Microsoft 365 group-connected team sites are supported. If you want to create a classic site, use New-PnPTenantSite.
+The New-PnPSite cmdlet creates a new site collection for the current tenant. Currently only 'modern' sites like Communication Site and the Modern Microsoft 365 group-connected team sites are supported. If you want to create a classic site, use New-PnPTenantSite. Note that the -Type parameter is mandatory to be used to indicate which type of site you would like to create. Based on the type of site you specify, you will be able to provide the additional arguments that are valid for that site type, so it is recommended to provide this as the first argument.
 
 ## EXAMPLES
 
@@ -70,7 +70,7 @@ This will create a new Communications Site collection with the title 'Contoso' a
 New-PnPSite -Type CommunicationSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Lcid 1040
 ```
 
-This will create a new Communications Site collection with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the default language to Italian.
+This will create a new Communications Site collection with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the default language to Italian (LCID 1040).
 
 ### EXAMPLE 7
 ```powershell
