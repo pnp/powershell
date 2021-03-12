@@ -90,13 +90,15 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     GroupTypes = new string[] { "Unified" }
                 };
                 var group = Microsoft365GroupsUtility.CreateAsync(HttpClient, AccessToken, newGroup, CreateTeam, LogoPath, Owners, Members, HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
-
+                
                 if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                 {
                     Microsoft365GroupsUtility.SetVisibilityAsync(HttpClient, AccessToken, group.Id.Value, HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
                 }
+                
+                var updatedGroup = Microsoft365GroupsUtility.GetGroupAsync(HttpClient, group.Id.Value, AccessToken, true, false).GetAwaiter().GetResult();
 
-                WriteObject(group);
+                WriteObject(updatedGroup);
             }
         }
     }
