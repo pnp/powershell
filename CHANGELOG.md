@@ -9,6 +9,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added `Get-PnPSyntexModel` cmdlet to list the defined SharePoint Syntex models in a SharePoint Syntex content center site
+- Added `Publish-PnPSyntexModel` cmdlet to publish a SharePoint Syntex model to a library
+- Added `Unpublish-PnPSyntexModel` cmdlet to unpublish a SharePoint Syntex model from a library
+- Added `Get-PnPSyntexModelPublication` cmdlet to list the libraries to which a SharePoint Syntex model was published
+
 ### Changed
 
 ### Contributors
