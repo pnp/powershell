@@ -225,7 +225,7 @@ Currency: -Values @{"NumberField" = "10"}
 
 Currency: -Values @{"CurrencyField" = "10"}
 
-Date and Time: -Values @{"DateAndTimeField" = "03/13/2015 14:16"}
+Date and Time: Values have to be in ISO Time Format: -Values @{"DateAndTimeField" = "2021-03-17T12:00"}
 
 Lookup (id of lookup value): -Values @{"LookupField" = "2"}
 
