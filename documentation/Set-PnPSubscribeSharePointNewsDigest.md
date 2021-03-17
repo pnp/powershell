@@ -15,9 +15,9 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPSubscribeSharePo
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet.
+You must connect to the tenant admin website (https://tenant-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet.
 
-Enables or disabled the SharePoint News Digest mails for a particular user.
+Enables or disables the SharePoint News Digest mails for a particular user. Note that the disabling option is still experimental and may not work and may be removed again in the future.
 
 ## SYNTAX
 
@@ -28,7 +28,7 @@ Set-PnPSubscribeSharePointNewsDigest -Account <String> -Enabled <Boolean> [-Conn
 ## DESCRIPTION
 Requires a connection to a SharePoint Tenant Admin site.
 
-Enables or disabled the SharePoint News Digest mails for a particular user.
+Enables or disables the SharePoint News Digest mails for a particular user.
 
 ## EXAMPLES
 
@@ -49,7 +49,7 @@ Stops the user user@domain.com for receiving the SharePoint News Digest e-mails.
 ## PARAMETERS
 
 ### -Account
-The account of the user, formatted either as a login name, or as a claims identity, e.g. i:0#.f|membership|user@domain.com
+The account of the user, formatted either as a login name, e.g. user@domain.com, or as a claims identity, e.g. i:0#.f|membership|user@domain.com
 
 ```yaml
 Type: String
