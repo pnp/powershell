@@ -4134,7 +4134,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Publish-PnPSyntexModel.html",
-          "hash": "eCFG/typkVsmn+R1lvqNxA=="
+          "hash": "AEdANVMcFwvKYroqkR5eEw=="
         }
       },
       "is_incremental": false,
@@ -5311,6 +5311,18 @@
         ".html": {
           "relative_path": "cmdlets/Request-PnPReIndexWeb.html",
           "hash": "c1DCAgpCDUt2DlEfvO6xmQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Request-PnPSyntexClassifyAndExtract.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Request-PnPSyntexClassifyAndExtract.html",
+          "hash": "7ykiMJF6G8v4n5yg45CKzg=="
         }
       },
       "is_incremental": false,
@@ -6726,7 +6738,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Unpublish-PnPSyntexModel.html",
-          "hash": "I6eHOEdtfRJ382UpCKg+1A=="
+          "hash": "8lmeYbX7hQUmJ0m32EvcSQ=="
         }
       },
       "is_incremental": false,
@@ -6798,7 +6810,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "lJ8KCa4/10Qz9/rc5LOFJQ=="
+          "hash": "joJ2cxbisNoKJmrAWOfwSA=="
         }
       },
       "is_incremental": false,
@@ -6877,7 +6889,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 566,
+          "total_file_count": 567,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

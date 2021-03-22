@@ -84,22 +84,31 @@
                     <h1 id="unpublish-pnpsyntexmodel">Unpublish-PnPSyntexModel</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>unpublishes a SharePoint Syntex models from a list.</p>
+<p>Unpublishes a SharePoint Syntex model from a list.</p>
 <p>This cmdlet only works when you've connected to a SharePoint Syntex Content Center site.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">unpublish-PnPSyntexModel -Model &lt;SyntexModelPipeBind&gt; -ListWebUrl &lt;string&gt; -List &lt;ListPipeBind&gt;  [-Connection &lt;PnPConnection&gt;]
+<h3 id="single">Single</h3>
+<pre><code class="lang-powershell">Unpublish-PnPSyntexModel -Model &lt;SyntexModelPipeBind&gt; -ListWebUrl &lt;string&gt; -List &lt;ListPipeBind&gt; [-Connection &lt;PnPConnection&gt;]
+ [&lt;CommonParameters&gt;]
+</code></pre>
+<h3 id="batched">Batched</h3>
+<pre><code class="lang-powershell">Unpublish-PnPSyntexModel -Model &lt;SyntexModelPipeBind&gt; -TargetSiteUrl &lt;string&gt; -TargetWebServerRelativeUrl &lt;string&gt; -TargetLibraryServerRelativeUrl &lt;string&gt; -Batch &lt;PnPBatch&gt;  [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This command unpublishes a SharePoint Syntex content understanding model from a list.</p>
+<p>This command unpublishes a SharePoint Syntex content understanding models from a list.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Unpublish-PnPSyntexModel -Model &quot;Invoice model&quot; -ListWebUrl &quot;https://contoso.sharepoint.com/sites/finance&quot; -List &quot;Documents&quot;
 </code></pre>
 <p>Unpublishes the content understanding model named &quot;Invoice model&quot; from the list named &quot;Documents&quot; in the /sites/finance web.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Unpublish-PnPSyntexModel -Model &quot;Invoice model&quot; -TargetSiteUrl &quot;https://contoso.sharepoint.com/sites/finance&quot; -TargetWebServerRelativeUrl &quot;/sites/finance&quot; -TargetLibraryServerRelativeUrl &quot;/sites/finance/shared%20documents&quot; -Batch $batch
+</code></pre>
+<p>Adds the unpublishing of the content understanding model named &quot;Invoice model&quot; from the &quot;Shared Documents&quot; library into the PnPBatch $batch. Use <code>Invoke-PnPBatch -Batch $batch</code> to execute the batch, use <code>$batch = New-PnPBatch</code> to create a batch.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection</p>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
@@ -110,7 +119,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-model">-Model</h3>
-<p>The name or id of the SharePoint Syntex model</p>
+<p>The name or id of the SharePoint Syntex model.</p>
 <pre><code class="lang-yaml">Type: SyntexModelPipeBind
 Parameter Sets: (All)
 
@@ -123,7 +132,7 @@ Accept wildcard characters: False
 <h3 id="-listweburl">-ListWebUrl</h3>
 <p>Url of the web hosting the list to unpublish the model from.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+Parameter Sets: Single
 Aliases:
 
 Required: True
@@ -133,12 +142,60 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-list">-List</h3>
-<p>The name or id of the list to unpublish the model from</p>
+<p>The name or id of the list to unpublish the model from.</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
-Parameter Sets: (All)
+Parameter Sets: Single
 
 Required: False
 Position: 0
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-targetsiteurl">-TargetSiteUrl</h3>
+<p>The fully qualified URL of the site collection hosting the library to unpublish the model from.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Batched
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-targetwebserverrelativeurl">-TargetWebServerRelativeUrl</h3>
+<p>The server relative url of the web hosting the library to unpublish the model from.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Batched
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-targetlibraryserverrelativeurl">-TargetLibraryServerRelativeUrl</h3>
+<p>The server relative url of the library to unpublish the model from.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Batched
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-batch">-Batch</h3>
+<p>The batch to add this unpublish request to.</p>
+<pre><code class="lang-yaml">Type: PnPBatch
+Parameter Sets: Batched
+Aliases:
+
+Required: True
+Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
