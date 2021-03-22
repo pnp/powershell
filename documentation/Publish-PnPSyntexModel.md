@@ -16,8 +16,15 @@ This cmdlet only works when you've connected to a SharePoint Syntex Content Cent
 
 ## SYNTAX
 
+### Single
 ```powershell
 Publish-PnPSyntexModel -Model <SyntexModelPipeBind> -ListWebUrl <string> -List <ListPipeBind> [-PublicationViewOption <MachineLearningPublicationViewOption>]  [-Connection <PnPConnection>]
+ [<CommonParameters>]
+```
+
+### Batched
+```powershell
+Publish-PnPSyntexModel -Model <SyntexModelPipeBind> -TargetSiteUrl <string> -TargetWebServerRelativeUrl <string> -TargetLibraryServerRelativeUrl <string> -Batch <PnPBatch>  [-PublicationViewOption <MachineLearningPublicationViewOption>]  [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -32,6 +39,13 @@ Publish-PnPSyntexModel -Model "Invoice model" -ListWebUrl "https://contoso.share
 ```
 
 Publishes the content understanding model named "Invoice model" to the list named "Documents" in the /sites/finance web.
+
+### EXAMPLE 2
+```powershell
+Publish-PnPSyntexModel -Model "Invoice model" -TargetSiteUrl "https://contoso.sharepoint.com/sites/finance" -TargetWebServerRelativeUrl "/sites/finance" -TargetLibraryServerRelativeUrl "/sites/finance/shared%20documents" -Batch $batch
+```
+
+Adds the publishing of the content understanding model named "Invoice model" to the "Shared Documents" library into the PnPBatch $batch. Use `Invoke-PnPBatch -Batch $batch` to execute the batch, use `$batch = New-PnPBatch` to create a batch.
 
 ## PARAMETERS
 
@@ -68,7 +82,7 @@ Url of the web hosting the list to publish the model to.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Single
 Aliases:
 
 Required: True
@@ -83,10 +97,70 @@ The name or id of the list to publish the model to.
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
+Parameter Sets: Single
 
 Required: False
 Position: 0
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -TargetSiteUrl
+The fully qualified URL of the site collection hosting the library to publish the model to.
+
+```yaml
+Type: String
+Parameter Sets: Batched
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -TargetWebServerRelativeUrl
+The server relative url of the web hosting the library to publish the model to.
+
+```yaml
+Type: String
+Parameter Sets: Batched
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -TargetLibraryServerRelativeUrl
+The server relative url of the library to publish the model to.
+
+```yaml
+Type: String
+Parameter Sets: Batched
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Batch
+The batch to add this publish request to.
+
+```yaml
+Type: PnPBatch
+Parameter Sets: Batched
+Aliases:
+
+Required: True
+Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
