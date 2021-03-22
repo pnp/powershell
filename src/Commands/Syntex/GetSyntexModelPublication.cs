@@ -1,7 +1,7 @@
 ﻿using PnP.Core.Model.SharePoint;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System;
+using System.Collections.Generic;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Syntex
@@ -23,10 +23,25 @@ namespace PnP.PowerShell.Commands.Syntex
 
                 if (model == null)
                 {
-                    throw new ArgumentException("Provide a valid model to get publications for");
+                    throw new PSArgumentException("Provide a valid model to get publications for");
                 }
 
-                WriteObject(model.GetModelPublications());
+                var modelPublications = model.GetModelPublications();
+
+                List<Model.Syntex.SyntexModelPublication> modelPublicationsToOutput = new List<Model.Syntex.SyntexModelPublication>();
+
+                foreach(var modelPublication in modelPublications)
+                {
+                    modelPublicationsToOutput.Add(new Model.Syntex.SyntexModelPublication()
+                    {
+                        ModelUniqueId = modelPublication.ModelUniqueId,
+                        TargetLibraryServerRelativeUrl = modelPublication.TargetLibraryServerRelativeUrl,
+                        TargetSiteUrl = modelPublication.TargetSiteUrl,
+                        TargetWebServerRelativeUrl = modelPublication.TargetWebServerRelativeUrl,
+                        ViewOption = modelPublication.ViewOption
+                    });
+                }
+                WriteObject(modelPublicationsToOutput);
             }
             else
             {

@@ -1,4 +1,5 @@
 ﻿using PnP.Core.Model.SharePoint;
+using PnP.PowerShell.Commands.Model;
 using System;
 using System.Linq;
 
@@ -52,6 +53,48 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 var syntexContentCenter = ctx.Web.AsSyntexContentCenter();
                 var models = syntexContentCenter.GetSyntexModels();
                 return models.FirstOrDefault(p => p.Name.Equals(syntexModelName, StringComparison.InvariantCultureIgnoreCase));
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        internal ISyntexModel GetSyntexModel(PnPBatch batch)
+        {
+            if (syntexModel != null)
+            {
+                return syntexModel;
+            }
+            else if (syntexModelId > 0)
+            {
+                var batchedSyntexModel = batch.GetCachedSyntexModel(syntexModelId);
+                if (batchedSyntexModel != null)
+                {
+                    return batchedSyntexModel;
+                }
+
+                var ctx = PnPConnection.Current.PnPContext;
+                var syntexContentCenter = ctx.Web.AsSyntexContentCenter();
+                var models = syntexContentCenter.GetSyntexModels();
+                var syntexModel = models.FirstOrDefault(p => p.Id == syntexModelId);
+                batch.CacheSyntexModel(syntexModel);
+                return syntexModel;
+            }
+            else if (!string.IsNullOrEmpty(syntexModelName))
+            {
+                var batchedSyntexModel = batch.GetCachedSyntexModel(syntexModelName);
+                if (batchedSyntexModel != null)
+                {
+                    return batchedSyntexModel;
+                }
+
+                var ctx = PnPConnection.Current.PnPContext;
+                var syntexContentCenter = ctx.Web.AsSyntexContentCenter();
+                var models = syntexContentCenter.GetSyntexModels();
+                var syntexModel = models.FirstOrDefault(p => p.Name.Equals(syntexModelName, StringComparison.InvariantCultureIgnoreCase));
+                batch.CacheSyntexModel(syntexModel);
+                return syntexModel;
             }
             else
             {

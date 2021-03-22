@@ -19,6 +19,8 @@ namespace PnP.PowerShell.Commands.Model
         internal List<IContentType> ContentTypes { get; set; } = new List<IContentType>();
         internal List<(string key, Guid id, string label)> Terms { get; set; } = new List<(string key, Guid id, string label)>();
 
+        internal List<ISyntexModel> SyntexModels { get; set; } = new List<ISyntexModel>();
+
         internal int? DefaultTermStoreLanguage { get; set; }
         internal TaxonomySession TaxonomySession { get; set; }
         internal TermStore TermStore { get; set; }
@@ -55,6 +57,7 @@ namespace PnP.PowerShell.Commands.Model
         {
             Lists.Clear();
             ContentTypes.Clear();
+            SyntexModels.Clear();
         }
 
         internal IList GetCachedList(Guid id)
@@ -82,6 +85,16 @@ namespace PnP.PowerShell.Commands.Model
             return ct;
         }
 
+        internal ISyntexModel GetCachedSyntexModel(int id)
+        {
+            return SyntexModels.FirstOrDefault(c => c.Id == id);
+        }
+
+        internal ISyntexModel GetCachedSyntexModel(string modelName)
+        {
+            return SyntexModels.FirstOrDefault(c => c.Name == modelName);
+        }
+
         internal void CacheList(IList list)
         {
             var existingList = Lists.FirstOrDefault(l => l.Id == list.Id);
@@ -101,6 +114,17 @@ namespace PnP.PowerShell.Commands.Model
                 ContentTypes.Remove(existingCT);
             }
             ContentTypes.Add(contentType);
+        }
+
+        internal void CacheSyntexModel(ISyntexModel model)
+        {
+            var existingModel = SyntexModels.FirstOrDefault(c => c.UniqueId == model.UniqueId);
+            if (existingModel != null)
+            {
+                SyntexModels.Remove(existingModel);
+            }
+
+            SyntexModels.Add(model);
         }
 
         internal void CacheTerm(string key, Guid id, string label)

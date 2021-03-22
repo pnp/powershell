@@ -1,5 +1,7 @@
 ﻿using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.Syntex;
+using System.Collections.Generic;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Syntex
@@ -17,7 +19,7 @@ namespace PnP.PowerShell.Commands.Syntex
 
             if (ctx.Web.IsSyntexContentCenter())
             {
-                if (Identity != null)
+                if (ParameterSpecified(nameof(Identity)) && Identity != null)
                 {
                     WriteObject(Identity.GetSyntexModel());
                 }
@@ -25,7 +27,21 @@ namespace PnP.PowerShell.Commands.Syntex
                 {
                     var syntexContentCenter = ctx.Web.AsSyntexContentCenter();
                     var models = syntexContentCenter.GetSyntexModels();
-                    WriteObject(models, true);
+
+                    List<SyntexModel> modelsToOutput = new List<SyntexModel>();
+                    foreach(var model in models)
+                    {
+                        modelsToOutput.Add(new SyntexModel()
+                        {
+                            Id = model.Id,
+                            Description = model.Description,
+                            ModelLastTrained = model.ModelLastTrained,
+                            Name = model.Name,
+                            UniqueId = model.UniqueId
+                        }); 
+                    }
+
+                    WriteObject(modelsToOutput, true);
                 }
             }
             else
