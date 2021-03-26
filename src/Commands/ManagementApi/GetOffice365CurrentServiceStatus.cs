@@ -10,7 +10,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPOffice365CurrentServiceStatus")]
-    [RequiredMinimalApiPermissions("ServiceHealth.Read")]
+    [RequiredMinimalApiPermissions("https://manage.office.com/ServiceHealth.Read")]
     public class GetOffice365CurrentServiceStatus : PnPOfficeManagementApiCmdlet
     {
         [Parameter(Mandatory = false)]

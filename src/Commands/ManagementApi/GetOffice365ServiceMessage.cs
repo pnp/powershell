@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPOffice365ServiceMessage")]
-    [RequiredMinimalApiPermissions("ServiceHealth.Read")]
+    [RequiredMinimalApiPermissions("https://manage.office.com/ServiceHealth.Read")]
     public class GetOffice365ServiceMessage : PnPOfficeManagementApiCmdlet
     {
         [Parameter(Mandatory = false)]
