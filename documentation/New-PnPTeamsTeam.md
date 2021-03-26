@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPTeamsTeam.html
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-Creates a new Team in Microsoft Teams. The cmdlet will create a Microsoft 365 group and then add a team to the group.
+Creates a new team in Microsoft Teams or teamifies an existing Microsoft 365 Group. If the Microsoft 365 Group does not exist yet, it will create it first and then add a Microsoft Teams team to the group. If it does already exist, it will use the provided Microsoft 365 Group and just teamify it by adding a Microsoft Teams team to it.
 
 ## SYNTAX
 
@@ -55,14 +55,14 @@ New-PnPTeamsTeam -DisplayName <String> [-MailNickName <String>] [-Description <S
 New-PnPTeamsTeam -DisplayName "myPnPDemo1" -Visibility Private -AllowCreateUpdateRemoveTabs $false -AllowUserDeleteMessages $false
 ```
 
-This will create a newTeam called "myPnPDemo1" and sets the privacy to Private, as we well as preventing users from deleting their messages or update/remove tabs. The user creating the Team will be added as Owner.
+This will create a new Microsoft Teams team called "myPnPDemo1" and sets the privacy to Private, as well as preventing users from deleting their messages or update/remove tabs. The user creating the Microsoft Teams team will be added as Owner.
 
 ### EXAMPLE 2
 ```powershell
 New-PnPTeamsTeam -GroupId $groupId
 ```
 
-This will create a new Team from a Microsoft 365 Group using the Group ID
+This will create a new Microsoft Teams team from an existing Microsoft 365 Group using the Group ID (teamify)
 
 ## PARAMETERS
 
