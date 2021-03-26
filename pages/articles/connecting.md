@@ -42,7 +42,7 @@ Connect-PnPOnline -Url "https://[yourtenant.sharepoint.com] -Credentials (Get-Cr
 
 ## Connect interactively using WebLogin supporting MFA
 
-One of the easiest methods to use. However notice that this connection method will have it's limitation as we will utility cookie based authentication. For instance, we will not be able to make calls to the Microsoft Graph behind the scenes. 
+One of the easiest methods to use. However, notice that this connection method will have its limitation as we will utility cookie based authentication. For instance, we will not be able to make calls to the Microsoft Graph behind the scenes. 
 
 ```powershell
 Connect-PnPOnline -Url https://tenant.sharepoint.com -UseWebLogin
