@@ -104,7 +104,7 @@
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://[yourtenant.sharepoint.com] -Credentials (Get-Credential) -ClientId [clientid]
 </code></pre>
 <h2 id="connect-interactively-using-weblogin-supporting-mfa">Connect interactively using WebLogin supporting MFA</h2>
-<p>One of the easiest methods to use. However notice that this connection method will have it's limitation as we will utility cookie based authentication. For instance, we will not be able to make calls to the Microsoft Graph behind the scenes.</p>
+<p>One of the easiest methods to use. However, notice that this connection method will have its limitation as we will utility cookie based authentication. For instance, we will not be able to make calls to the Microsoft Graph behind the scenes.</p>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url https://tenant.sharepoint.com -UseWebLogin
 </code></pre>
 <h2 id="connect-using-a-clientid-and-pfx-certificate-stored-on-your-local-machine">Connect using a ClientId and PFX certificate stored on your local machine</h2>
