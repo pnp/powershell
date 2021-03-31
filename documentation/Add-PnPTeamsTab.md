@@ -15,7 +15,7 @@ title: Add-PnPTeamsTab
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-Adds a tab to an existing Channel
+Adds a tab to an existing Channel. Note that the `-ContentUrl` is a 'dynamic' parameter and will only be valid for tab types that support it.
 
 ## SYNTAX
 
@@ -30,7 +30,7 @@ Add-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -Displ
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPTeamsTab -Team "My Team" -Channel "My Channel" -DisplayName "My Channel" -Type WebSite -ContentUrl "https://aka.ms/m365pnp
+Add-PnPTeamsTab -Team "My Team" -Channel "My Channel" -DisplayName "My Tab Name" -Type WebSite -ContentUrl "https://aka.ms/m365pnp"
 ```
 
 Adds a web site tab to the specified channel.
@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -ContentUrl
-Specifies the title of the new site collection
+Specifies the Url to add
 
 ```yaml
 Type: String
