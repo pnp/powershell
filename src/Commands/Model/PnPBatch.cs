@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Model
 
         internal int? DefaultTermStoreLanguage { get; set; }
         internal TaxonomySession TaxonomySession { get; set; }
-        internal TermStore TermStore { get; set; }
+        internal Microsoft.SharePoint.Client.Taxonomy.TermStore TermStore { get; set; }
         public bool Executed => Batch.Executed;
 
         public int RequestCount => Requests.Count;
