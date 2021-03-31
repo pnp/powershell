@@ -122,16 +122,21 @@ namespace PnP.PowerShell.Commands
         {
             get
             {
-                if (PnPConnection.Current?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
+                if(PnPConnection.Current == null) return null;
+
+                switch(PnPConnection.Current.ConnectionMethod)
                 {
-                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, $"https://graph.microsoft.com/").GetAwaiter().GetResult();
+                    case ConnectionMethod.ManagedIdentity:
+                        return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, $"https://graph.microsoft.com/").GetAwaiter().GetResult();
+
+                    case ConnectionMethod.ACSAppOnly:
+                        // We can't get a Graph Token on an ACS App Only connection
+                        return null;
                 }
-                else
+
+                if (PnPConnection.Current?.Context != null)
                 {
-                    if (PnPConnection.Current?.Context != null)
-                    {
-                        return TokenHandler.GetAccessToken(GetType(), $"https://{PnPConnection.Current.GraphEndPoint}/.default");
-                    }
+                    return TokenHandler.GetAccessToken(GetType(), $"https://{PnPConnection.Current.GraphEndPoint}/.default");
                 }
 
                 return null;

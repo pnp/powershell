@@ -195,7 +195,8 @@ namespace PnP.PowerShell.Commands.Base
             var spoConnection = new PnPConnection(context, connectionType, null, clientId, clientSecret, url?.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.ClientIDSecret)
             {
                 Tenant = realm,
-                AzureEnvironment = azureEnvironment
+                AzureEnvironment = azureEnvironment,
+                ConnectionMethod = ConnectionMethod.ACSAppOnly
             };
 
             return spoConnection;
