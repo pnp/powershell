@@ -75,14 +75,10 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 throw new ApplicationException("List does not exist in the template file!");
             }
-
-            if (TokenizeUrls.IsPresent)
-            {
-                ClientContext.Load(ClientContext.Web, w => w.Url, w => w.ServerRelativeUrl, w => w.Id);
-                ClientContext.Load(ClientContext.Site, s => s.Url, s => s.ServerRelativeUrl, s => s.Id);
-                ClientContext.Load(ClientContext.Web.Lists, lists => lists.Include(l => l.Title, l => l.RootFolder.ServerRelativeUrl));
-            }
-
+                        
+            ClientContext.Load(ClientContext.Web, w => w.Url, w => w.ServerRelativeUrl, w => w.Id);
+            ClientContext.Load(ClientContext.Site, s => s.Url, s => s.ServerRelativeUrl, s => s.Id);            
+            
             CamlQuery query = new CamlQuery();
 
             var viewFieldsStringBuilder = new StringBuilder();
