@@ -4130,6 +4130,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Publish-PnPCompanyApp.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Publish-PnPCompanyApp.html",
+          "hash": "Tsex8fPWob+bR5wGE9W1Gg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Publish-PnPSyntexModel.md",
       "output": {
         ".html": {
@@ -6810,7 +6822,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "joJ2cxbisNoKJmrAWOfwSA=="
+          "hash": "aRIpkTAseZ/0lgqZpWuBUQ=="
         }
       },
       "is_incremental": false,
@@ -6889,7 +6901,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 567,
+          "total_file_count": 568,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
