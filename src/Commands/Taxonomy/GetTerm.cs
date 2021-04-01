@@ -33,6 +33,9 @@ namespace PnP.PowerShell.Commands.Taxonomy
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter IncludeChildTerms;
+                
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TERMNAME)]
+        public TaxonomyTermPipeBind ParentTerm;
 
         protected override void ExecuteCmdlet()
         {
@@ -61,7 +64,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
                         LoadChildTerms(term);
                     }
                     WriteObject(term);
-                }
+                }                
                 else
                 {
                     throw new PSArgumentException("Insufficient Parameters specified to determine the term to retrieve");
@@ -72,10 +75,19 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 TermGroup termGroup = TermGroup.GetGroup(termStore);
                 TermSet termSet = TermSet.GetTermSet(termGroup);
 
-
-                if (Identity != null)
+                if (Identity != null && ParentTerm == null)
                 {
                     var term = Identity.GetTerm(ClientContext, termStore, termSet, Recursive, RetrievalExpressions);
+
+                    if (IncludeChildTerms.IsPresent && term.TermsCount > 0)
+                    {
+                        LoadChildTerms(term);
+                    }
+                    WriteObject(term);
+                }
+                else if (Identity != null && ParentTerm != null)
+                {
+                    var term = ParentTerm.GetTerm(ClientContext, termStore, termSet, Recursive, RetrievalExpressions);
 
                     if (IncludeChildTerms.IsPresent && term.TermsCount > 0)
                     {

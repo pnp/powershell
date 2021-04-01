@@ -202,6 +202,7 @@ namespace PnP.PowerShell.Commands.Fields
                         list.Update();
                         ClientContext.ExecuteQueryRetry();
                     }
+                    WriteObject(field);
                 }
             }
             else
