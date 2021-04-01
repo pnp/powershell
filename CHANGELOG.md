@@ -9,6 +9,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+## [1.5.0]
+
+### Added
+
 - Added `Request-PnPSyntexClassifyAndExtract` cmdlet to request classification and extraction of a file or all files in a list
 - Added `Get-PnPSyntexModel` cmdlet to list the defined SharePoint Syntex models in a SharePoint Syntex content center site
 - Added `Publish-PnPSyntexModel` cmdlet to publish a SharePoint Syntex model to a library
@@ -19,6 +23,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 - Bert Jansen [jansenbe]
+- Koen Zomers [koenzomers]
+- Gautam Sheth [gautamdsheth]
+- Veronique Lengelle [veronicageek]
   
 ## [1.4.0]
 
