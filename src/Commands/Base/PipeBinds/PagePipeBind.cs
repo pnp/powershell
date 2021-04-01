@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         public PagePipeBind(IPage page)
         {
             _page = page;
-            _name = page.PageTitle;
+            _name = page.Name;
         }
 
         public PagePipeBind(string name)

@@ -100,7 +100,7 @@ namespace PnP.PowerShell.Commands.Graph
                                     break;
                                 }
                         }
-                        TeamsUtility.AddTabAsync(HttpClient, AccessToken, groupId, channelId, DisplayName, Type, teamsAppId, entityId, contentUrl, removeUrl, webSiteUrl).GetAwaiter().GetResult();
+                        WriteObject(TeamsUtility.AddTabAsync(HttpClient, AccessToken, groupId, channelId, DisplayName, Type, teamsAppId, entityId, contentUrl, removeUrl, webSiteUrl).GetAwaiter().GetResult());
                     }
                     catch (GraphException ex)
                     {

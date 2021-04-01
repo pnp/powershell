@@ -101,8 +101,15 @@ namespace PnP.PowerShell.Commands
                 creationInformation.PreferredDataLocation = _teamSiteParameters.PreferredDataLocation;
                 creationInformation.SensitivityLabel = _teamSiteParameters.SensitivityLabel;
 
-                var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GraphAccessToken);
-                WriteObject(returnedContext.Url);
+                if (ClientContext.GetContextSettings()?.Type != Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
+                {
+                    var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GraphAccessToken);
+                    WriteObject(returnedContext.Url);
+                }
+                else
+                {
+                    WriteError(new PSInvalidOperationException("Creating a new teamsite requires an underlying Microsoft 365 group. In order to create this we need to acquire an access token for the Microsoft Graph. This is not possible using ACS App Only connections."), ErrorCategory.SecurityError);
+                }
             }
         }
 

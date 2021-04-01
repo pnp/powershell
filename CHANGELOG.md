@@ -8,6 +8,28 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current Nightly]
 
 ### Added
+
+## [1.5.0]
+
+### Added
+
+- Added `Request-PnPSyntexClassifyAndExtract` cmdlet to request classification and extraction of a file or all files in a list
+- Added `Get-PnPSyntexModel` cmdlet to list the defined SharePoint Syntex models in a SharePoint Syntex content center site
+- Added `Publish-PnPSyntexModel` cmdlet to publish a SharePoint Syntex model to a library
+- Added `Unpublish-PnPSyntexModel` cmdlet to unpublish a SharePoint Syntex model from a library
+- Added `Get-PnPSyntexModelPublication` cmdlet to list the libraries to which a SharePoint Syntex model was published
+
+### Changed
+
+### Contributors
+- Bert Jansen [jansenbe]
+- Koen Zomers [koenzomers]
+- Gautam Sheth [gautamdsheth]
+- Veronique Lengelle [veronicageek]
+  
+## [1.4.0]
+
+### Added
 - Added `-IncludeOwners` to `Get-PnPMicrosoft365Group`.
 - Added `-AssignedTo` to `Add-PnPPlannerTask` and `Set-PnPPlannerTask` allowing you to assign users to a task.
 - Added `Get-PnPAzureADApp`, `Get-PnPAzureADAppPermission` and `Remove-PnPAzureADApp` to manage Azure AD apps.

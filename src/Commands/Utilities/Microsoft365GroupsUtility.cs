@@ -66,11 +66,38 @@ namespace PnP.PowerShell.Commands.Utilities
             var group = await GraphHelper.GetAsync<Microsoft365Group>(httpClient, $"v1.0/groups/{groupId}", accessToken);
             if (includeSiteUrl)
             {
-                var siteUrlResult = await GraphHelper.GetAsync(httpClient, $"v1.0/groups/{group.Id}/sites/root?$select=webUrl", accessToken);
-                var resultElement = JsonSerializer.Deserialize<JsonElement>(siteUrlResult);
-                if (resultElement.TryGetProperty("webUrl", out JsonElement webUrlElement))
+                bool wait = true;
+                var iterations = 0;
+
+                while (wait)
                 {
-                    group.SiteUrl = webUrlElement.GetString();
+                    iterations++;
+                    try
+                    {
+                        var siteUrlResult = await GraphHelper.GetAsync(httpClient, $"v1.0/groups/{group.Id}/sites/root?$select=webUrl", accessToken);
+                        if (!string.IsNullOrEmpty(siteUrlResult))
+                        {
+                            wait = false;
+                            var resultElement = JsonSerializer.Deserialize<JsonElement>(siteUrlResult);
+                            if (resultElement.TryGetProperty("webUrl", out JsonElement webUrlElement))
+                            {
+                                group.SiteUrl = webUrlElement.GetString();
+                            }
+                            break;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        if (iterations * 30 >= 300)
+                        {
+                            wait = false;
+                            throw;
+                        }
+                        else
+                        {
+                            await Task.Delay(TimeSpan.FromSeconds(30));
+                        }
+                    }
                 }
             }
             if (includeOwners)
@@ -396,7 +423,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             if (createTeam)
             {
-                await CreateTeamAsync(httpClient, accessToken, newGroup.Id.Value);
+                await CreateTeamAsync(httpClient, accessToken, newGroup.Id.Value);                
             }
 
             return newGroup;
@@ -462,13 +489,14 @@ namespace PnP.PowerShell.Commands.Utilities
             var createTeamEndPoint = $"v1.0/groups/{groupId}/team";
             bool wait = true;
             var iterations = 0;
+            
             while (wait)
             {
                 iterations++;
                 try
                 {
-                    var teamId = await GraphHelper.PutAsync<string>(httpClient, createTeamEndPoint, string.Empty, accessToken);
-                    if (!string.IsNullOrEmpty(teamId))
+                    var teamId = await GraphHelper.PutAsync<object>(httpClient, createTeamEndPoint, new { }, accessToken);
+                    if (teamId != null)
                     {
                         wait = false;
                     }

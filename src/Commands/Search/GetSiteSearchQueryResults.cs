@@ -23,8 +23,11 @@ namespace PnP.PowerShell.Commands.Search
         protected override void ExecuteCmdlet()
         {
             var queryCmdLet = new SubmitSearchQuery();
+            
             queryCmdLet.StartRow = StartRow;
             queryCmdLet.MaxResults = MaxResults;
+            queryCmdLet.All = All;
+            
             var query = "contentclass:STS_Site";
             if (!string.IsNullOrEmpty(Query))
             {

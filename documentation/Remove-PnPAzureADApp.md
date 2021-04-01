@@ -4,7 +4,7 @@ Module Name: PnP.PowerShell
 online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPAzureADApp.html
 schema: 2.0.0
 applicable: SharePoint Online
-title: Get-PnPAzureADAppPermission
+title: Remove-PnPAzureADAppPermission
 ---
 
 # Remove-PnPAzureADApp

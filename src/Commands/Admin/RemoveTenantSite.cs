@@ -20,6 +20,9 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter FromRecycleBin;
+
         protected override void ExecuteCmdlet()
         {
             if (!Url.ToLower().StartsWith("https://") && !Url.ToLower().StartsWith("http://"))
@@ -42,8 +45,14 @@ namespace PnP.PowerShell.Commands
 
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
-                Tenant.DeleteSiteCollection(Url, !ParameterSpecified(nameof(SkipRecycleBin)), timeoutFunction);
-
+                if (!FromRecycleBin)
+                {
+                    Tenant.DeleteSiteCollection(Url, !ParameterSpecified(nameof(SkipRecycleBin)), timeoutFunction);
+                }
+                else
+                {
+                    Tenant.DeleteSiteCollectionFromRecycleBin(Url, true, timeoutFunction);
+                }
             }
         }
 
