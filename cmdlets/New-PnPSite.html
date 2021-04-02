@@ -94,7 +94,7 @@
 <pre><code class="lang-powershell">New-PnPSite -Type CommunicationSite -Title &lt;String&gt; -Url &lt;String&gt; [-HubSiteId &lt;Guid&gt;] [-Classification &lt;String&gt;] [-SiteDesign &lt;SiteDesign&gt;] [-SiteDesignId &lt;Guid&gt;] [-Lcid &lt;UInt&gt;] [-Owner &lt;String&gt;] [-PreferredDataLocation &lt;Office365Geography&gt;] [-SensitivityLabel &lt;String&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>The New-PnPSite cmdlet creates a new site collection for the current tenant. Currently only 'modern' sites like Communication Site and the Modern Microsoft 365 group-connected team sites are supported. If you want to create a classic site, use New-PnPTenantSite.</p>
+<p>The New-PnPSite cmdlet creates a new site collection for the current tenant. Currently only 'modern' sites like Communication Site and the Modern Microsoft 365 group-connected team sites are supported. If you want to create a classic site, use New-PnPTenantSite. Note that the -Type parameter is mandatory to be used to indicate which type of site you would like to create. Based on the type of site you specify, you will be able to provide the additional arguments that are valid for that site type, so it is recommended to provide this as the first argument.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">New-PnPSite -Type CommunicationSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso
@@ -119,7 +119,7 @@
 <h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">New-PnPSite -Type CommunicationSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Lcid 1040
 </code></pre>
-<p>This will create a new Communications Site collection with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the default language to Italian.</p>
+<p>This will create a new Communications Site collection with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the default language to Italian (LCID 1040).</p>
 <h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">New-PnPSite -Type TeamSite -Title 'Team Contoso' -Alias contoso
 </code></pre>

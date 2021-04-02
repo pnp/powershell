@@ -88,7 +88,7 @@
 <ul>
 <li>Microsoft Graph API: Group.ReadWrite.All</li>
 </ul>
-<p>Creates a new Team in Microsoft Teams. The cmdlet will create a Microsoft 365 group and then add a team to the group.</p>
+<p>Creates a new team in Microsoft Teams or teamifies an existing Microsoft 365 Group. If the Microsoft 365 Group does not exist yet, it will create it first and then add a Microsoft Teams team to the group. If it does already exist, it will use the provided Microsoft 365 Group and just teamify it by adding a Microsoft Teams team to it.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="for-an-existing-group">For an existing group</h3>
 <pre><code class="lang-powershell">New-PnPTeamsTeam -GroupId &lt;String&gt; [-Owner &lt;String&gt;] [-AllowAddRemoveApps &lt;Boolean&gt;]
@@ -118,11 +118,11 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">New-PnPTeamsTeam -DisplayName &quot;myPnPDemo1&quot; -Visibility Private -AllowCreateUpdateRemoveTabs $false -AllowUserDeleteMessages $false
 </code></pre>
-<p>This will create a newTeam called &quot;myPnPDemo1&quot; and sets the privacy to Private, as we well as preventing users from deleting their messages or update/remove tabs. The user creating the Team will be added as Owner.</p>
+<p>This will create a new Microsoft Teams team called &quot;myPnPDemo1&quot; and sets the privacy to Private, as well as preventing users from deleting their messages or update/remove tabs. The user creating the Microsoft Teams team will be added as Owner.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">New-PnPTeamsTeam -GroupId $groupId
 </code></pre>
-<p>This will create a new Team from a Microsoft 365 Group using the Group ID</p>
+<p>This will create a new Microsoft Teams team from an existing Microsoft 365 Group using the Group ID (teamify)</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-allowaddremoveapps">-AllowAddRemoveApps</h3>
 <p>Boolean value that determines whether or not members (not only owners) are allowed to add apps to the team.</p>

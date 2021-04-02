@@ -88,7 +88,7 @@
 <ul>
 <li>Microsoft Graph API: Group.ReadWrite.All</li>
 </ul>
-<p>Adds a tab to an existing Channel</p>
+<p>Adds a tab to an existing Channel. Note that the <code>-ContentUrl</code> is a 'dynamic' parameter and will only be valid for tab types that support it.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Add-PnPTeamsTab -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; -DisplayName &lt;String&gt;
  -Type &lt;TeamTabType&gt; -ContentUrl &lt;String&gt; [&lt;CommonParameters&gt;]
@@ -96,7 +96,7 @@
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPTeamsTab -Team &quot;My Team&quot; -Channel &quot;My Channel&quot; -DisplayName &quot;My Channel&quot; -Type WebSite -ContentUrl &quot;https://aka.ms/m365pnp
+<pre><code class="lang-powershell">Add-PnPTeamsTab -Team &quot;My Team&quot; -Channel &quot;My Channel&quot; -DisplayName &quot;My Tab Name&quot; -Type WebSite -ContentUrl &quot;https://aka.ms/m365pnp&quot;
 </code></pre>
 <p>Adds a web site tab to the specified channel.</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -112,7 +112,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-contenturl">-ContentUrl</h3>
-<p>Specifies the title of the new site collection</p>
+<p>Specifies the Url to add</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
