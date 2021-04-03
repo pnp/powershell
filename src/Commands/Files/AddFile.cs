@@ -175,7 +175,7 @@ namespace PnP.PowerShell.Commands.Files
             try
             {
                 folder = Folder.GetFolder(CurrentWeb);
-                folder.EnsureProperties(f => f.ServerRelativeUrl, f => f.Name);
+                folder.EnsureProperties(f => f.ServerRelativeUrl);
                 return folder;
             }
             // Exception will be thrown if the folder does not exist yet on SharePoint
@@ -183,7 +183,7 @@ namespace PnP.PowerShell.Commands.Files
             {
                 // Try to create the folder
                 folder = CurrentWeb.EnsureFolder(CurrentWeb.RootFolder, Folder.ServerRelativeUrl);
-                folder.EnsureProperties(f => f.ServerRelativeUrl, f => f.Name);
+                folder.EnsureProperties(f => f.ServerRelativeUrl);
                 return folder;
             }
         }
