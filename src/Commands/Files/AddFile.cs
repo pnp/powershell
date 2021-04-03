@@ -88,7 +88,7 @@ namespace PnP.PowerShell.Commands.Files
             // Check to see if the Content Type exists. If it doesn't we are going to throw an exception and block this transaction right here.
             if (ContentType != null)
             {
-                var list = CurrentWeb.GetListByUrl(folder.ServerRelativeUrl);
+                var list = CurrentWeb.GetListByUrl(folder.Name);
                 if (list is null)
                 {
                     throw new PSArgumentException("The folder specified does not have a corresponding list", nameof(Folder));
@@ -174,7 +174,7 @@ namespace PnP.PowerShell.Commands.Files
             try
             {
                 folder = Folder.GetFolder(CurrentWeb);
-                folder.EnsureProperties(f => f.ServerRelativeUrl);
+                folder.EnsureProperties(f => f.ServerRelativeUrl, f => f.Name);
                 return folder;
             }
             // Exception will be thrown if the folder does not exist yet on SharePoint
@@ -182,7 +182,7 @@ namespace PnP.PowerShell.Commands.Files
             {
                 // Try to create the folder
                 folder = CurrentWeb.EnsureFolder(CurrentWeb.RootFolder, Folder.ServerRelativeUrl);
-                folder.EnsureProperties(f => f.ServerRelativeUrl);
+                folder.EnsureProperties(f => f.ServerRelativeUrl, f => f.Name);
                 return folder;
             }
         }
