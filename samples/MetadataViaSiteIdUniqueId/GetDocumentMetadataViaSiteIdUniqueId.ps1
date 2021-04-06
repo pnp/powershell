@@ -1,3 +1,12 @@
+<############################################################################################
+    This script running requires an interactive session to retrieve the data properly,
+    you should use the interactive paramenter with the Connect-PnPOnline, i.e.:
+        Connect-PnPOnline -Url https://contoso.sharepoint.com -Interactive
+    
+    To learn more about usage of this script see:
+    https://github.com/pnp/powershell/blob/f3a46f8b8b3c326b12da56b04ec931fdd65bf30c/samples/MetadataViaSiteIdUniqueId/readme.md
+#############################################################################################>
+
 Param(
     [String] $SiteId,
     [String] $DocId
