@@ -88,7 +88,8 @@ namespace PnP.PowerShell.Commands.Files
             // Check to see if the Content Type exists. If it doesn't we are going to throw an exception and block this transaction right here.
             if (ContentType != null)
             {
-                var list = CurrentWeb.GetListByUrl(folder.ServerRelativeUrl);
+                CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                var list = CurrentWeb.GetListByUrl(folder.ServerRelativeUrl.Substring(CurrentWeb.ServerRelativeUrl.TrimEnd('/').Length + 1));
                 if (list is null)
                 {
                     throw new PSArgumentException("The folder specified does not have a corresponding list", nameof(Folder));
