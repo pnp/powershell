@@ -4,6 +4,7 @@ using PnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
+using System.Net;
 
 namespace PnP.PowerShell.Commands.Principals
 {
@@ -66,7 +67,8 @@ namespace PnP.PowerShell.Commands.Principals
                 }
                 else
                 {
-                    user = PnP.Framework.Graph.UsersUtility.GetUser(AccessToken, Identity, Select);
+                    
+                    user = PnP.Framework.Graph.UsersUtility.GetUser(AccessToken, WebUtility.UrlEncode(Identity), Select);
                 }
                 WriteObject(user);
             }
