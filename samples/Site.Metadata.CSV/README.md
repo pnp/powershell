@@ -1,11 +1,11 @@
 # About
 
-This script allows admins to collect information (metadata) about a given site given its site id.
+This script allows admins to collect information (metadata) about a SPO site given its SiteID GUID.
 
 ## Usage
 
 ```powershell
-.\PnP-SiteIdToUrl.ps1
+.\SiteIdToUrl.ps1
 ```
 
 The script asks for the SPO Admin URL (eg. `https://contoso-admin.sharepoint.com`). 
