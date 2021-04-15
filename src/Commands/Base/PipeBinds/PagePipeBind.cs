@@ -47,7 +47,8 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                     var pages = ctx.Web.GetPages(Name);
                     if (pages != null)
                     {
-                        var page = pages.FirstOrDefault(p => p.Name.Equals(Name, StringComparison.InvariantCultureIgnoreCase));
+                        // Just grab the first returned page, the filtering was already done in the GetPages() call
+                        var page = pages.FirstOrDefault();
 
                         if (page != null)
                         {
