@@ -94,6 +94,24 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+## Output
+PnP.PowerShell.Commands.Diagnostic.WebStatistics
+
+Name                  MemberType Definition
+----                  ---------- ----------
+Equals                Method     bool Equals(System.Object obj)
+GetHashCode           Method     int GetHashCode()
+GetType               Method     type GetType()
+ToString              Method     string ToString()
+BrokenPermissionCount Property   int BrokenPermissionCount {get;set;}
+FileCount             Property   int FileCount {get;set;}
+ItemCount             Property   int ItemCount {get;}
+ListCount             Property   int ListCount {get;set;}
+SiteGroupCount        Property   int SiteGroupCount {get;set;}
+SiteUserCount         Property   int SiteUserCount {get;set;}
+TotalFileSize         Property   long TotalFileSize {get;set;}
+WebCount              Property   int WebCount {get;set;}
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
