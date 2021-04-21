@@ -109,7 +109,7 @@ namespace PnP.PowerShell.Commands.Graph
                         {
                             team.Description = null;
                         }
-                        if((GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()) != team.Visibility)
+                        if (ParameterSpecified(nameof(Visibility)) && (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()) != team.Visibility)
                         {
                             group.Visibility = (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString());
                             updateGroup = true;
