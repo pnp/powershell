@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Move-PnPFolder.html
 # Move-PnPFolder
 
 ## SYNOPSIS
-Move a folder to another location in the current web. If you want to move a folder to a different site collection, use the Move-PnPFile cmdlet instead, which also supports moving folders and also accross site collections.
+Move a folder to another location in the current web. If you want to move a folder to a different site collection, use the Move-PnPFile cmdlet instead, which also supports moving folders and also accross site collections. Move-PnPFolder can be used to move folders that are within the list view threshold, the commandlet will fail if the list view threshold is exceeded. 
 
 ## SYNTAX
 
