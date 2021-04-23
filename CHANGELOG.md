@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Get-PnPPage now can load pages living in a folder by specifying "folder/page.aspx"
 
 ### Contributors
-
+- [thomassmart]
 - Bert Jansen [jansenbe]  
 
 ## [1.5.0]
