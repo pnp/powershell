@@ -8,6 +8,11 @@ schema: 2.0.0
 # Remove-PnPFlow
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+* Azure: management.azure.com
+
 Removes the specified flow
 
 ## SYNTAX

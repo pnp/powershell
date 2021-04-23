@@ -8,6 +8,11 @@ schema: 2.0.0
 # Disable-PnPFlow
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+* Azure: management.azure.com
+
 Disables a specific flow
 
 ## SYNTAX

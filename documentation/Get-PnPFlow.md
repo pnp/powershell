@@ -8,6 +8,11 @@ schema: 2.0.0
 # Get-PnPFlow
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+* Azure: management.azure.com
+
 Returns the flows for a given environment
 
 ## SYNTAX
