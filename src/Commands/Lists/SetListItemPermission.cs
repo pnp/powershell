@@ -10,31 +10,35 @@ namespace PnP.PowerShell.Commands.Lists
     [Cmdlet(VerbsCommon.Set, "PnPListItemPermission", DefaultParameterSetName = "User")]
     public class SetListItemPermission : PnPWebCmdlet
     {
+        private const string ParameterSet_GROUP = "Group";
+        private const string ParameterSet_USER = "User";
+        private const string ParameterSet_INHERIT = "Inherit";
+
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ListItemPipeBind Identity;
 
-        [Parameter(Mandatory = true, ParameterSetName = "Group")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GROUP)]
         public GroupPipeBind Group;
 
-        [Parameter(Mandatory = true, ParameterSetName = "User")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USER)]
         public string User;
 
-        [Parameter(Mandatory = false, ParameterSetName = "User")]
-        [Parameter(Mandatory = false, ParameterSetName = "Group")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USER)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GROUP)]
         public string AddRole = string.Empty;
 
-        [Parameter(Mandatory = false, ParameterSetName = "User")]
-        [Parameter(Mandatory = false, ParameterSetName = "Group")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USER)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GROUP)]
         public string RemoveRole = string.Empty;
 
-        [Parameter(Mandatory = false, ParameterSetName = "User")]
-        [Parameter(Mandatory = false, ParameterSetName = "Group")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USER)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GROUP)]
         public SwitchParameter ClearExisting;
 
-        [Parameter(Mandatory = false, ParameterSetName = "Inherit")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INHERIT)]
         public SwitchParameter InheritPermissions;
 
         [Parameter(Mandatory = false)]
@@ -53,90 +57,100 @@ namespace PnP.PowerShell.Commands.Lists
                 if (item != null)
                 {
                     item.EnsureProperties(i => i.HasUniqueRoleAssignments);
-                    if (item.HasUniqueRoleAssignments && InheritPermissions.IsPresent)
-                    {
-                        item.ResetRoleInheritance();
-                    }
-                    else if (!item.HasUniqueRoleAssignments)
-                    {
-                        item.BreakRoleInheritance(!ClearExisting.IsPresent, true);
-                    }
-                    else if (ClearExisting.IsPresent)
-                    {
-                        item.ResetRoleInheritance();
-                        item.BreakRoleInheritance(!ClearExisting.IsPresent, true);
-                    }
 
-                    if (SystemUpdate.IsPresent)
+                    if (ParameterSetName == ParameterSet_INHERIT)
                     {
-                        item.SystemUpdate();
-                    }
-                    else
-                    {
-                        item.Update();
-                    }
-     
-                    ClientContext.ExecuteQueryRetry();
-
-                    if (ParameterSetName == "Inherit")
-                    {
-                        // no processing of user/group needed
-                        return;
-                    }
-
-                    Principal principal = null;
-                    if (ParameterSetName == "Group")
-                    {
-                        if (Group.Id != -1)
+                        if (item.HasUniqueRoleAssignments && InheritPermissions.IsPresent)
                         {
-                            principal = CurrentWeb.SiteGroups.GetById(Group.Id);
-                        }
-                        else if (!string.IsNullOrEmpty(Group.Name))
-                        {
-                            principal = CurrentWeb.SiteGroups.GetByName(Group.Name);
-                        }
-                        else if (Group.Group != null)
-                        {
-                            principal = Group.Group;
+                            item.ResetRoleInheritance();
+                            if (SystemUpdate)
+                            {
+                                item.SystemUpdate();
+                            }
+                            else
+                            {
+                                item.Update();
+                            }
+                            ClientContext.ExecuteQueryRetry();
                         }
                     }
                     else
                     {
-                        principal = CurrentWeb.EnsureUser(User);
+                        if (!item.HasUniqueRoleAssignments)
+                        {
+                            item.BreakRoleInheritance(!ClearExisting.IsPresent, true);
+                        }
+                        else if (ClearExisting.IsPresent)
+                        {
+                            item.ResetRoleInheritance();
+                            item.BreakRoleInheritance(!ClearExisting.IsPresent, true);
+                        }
+
+                        if (SystemUpdate.IsPresent)
+                        {
+                            item.SystemUpdate();
+                        }
+                        else
+                        {
+                            item.Update();
+                        }
+
                         ClientContext.ExecuteQueryRetry();
-                    }
-                    if (principal != null)
-                    {
-                        if (!string.IsNullOrEmpty(AddRole))
+
+                       Principal principal = null;
+                        if (ParameterSetName == ParameterSet_GROUP)
                         {
-                            var roleDefinition = CurrentWeb.RoleDefinitions.GetByName(AddRole);
-                            var roleDefinitionBindings = new RoleDefinitionBindingCollection(ClientContext)
+                            if (Group.Id != -1)
+                            {
+                                principal = CurrentWeb.SiteGroups.GetById(Group.Id);
+                            }
+                            else if (!string.IsNullOrEmpty(Group.Name))
+                            {
+                                principal = CurrentWeb.SiteGroups.GetByName(Group.Name);
+                            }
+                            else if (Group.Group != null)
+                            {
+                                principal = Group.Group;
+                            }
+                        }
+                        else
+                        {
+                            principal = CurrentWeb.EnsureUser(User);
+                            ClientContext.ExecuteQueryRetry();
+                        }
+                        if (principal != null)
+                        {
+                            if (!string.IsNullOrEmpty(AddRole))
+                            {
+                                var roleDefinition = CurrentWeb.RoleDefinitions.GetByName(AddRole);
+                                var roleDefinitionBindings = new RoleDefinitionBindingCollection(ClientContext)
                             {
                                 roleDefinition
                             };
-                            var roleAssignments = item.RoleAssignments;
-                            roleAssignments.Add(principal, roleDefinitionBindings);
-                            ClientContext.Load(roleAssignments);
-                            ClientContext.ExecuteQueryRetry();
-                        }
-                        if (!string.IsNullOrEmpty(RemoveRole))
-                        {
-                            var roleAssignment = item.RoleAssignments.GetByPrincipal(principal);
-                            var roleDefinitionBindings = roleAssignment.RoleDefinitionBindings;
-                            ClientContext.Load(roleDefinitionBindings);
-                            ClientContext.ExecuteQueryRetry();
-                            foreach (var roleDefinition in roleDefinitionBindings.Where(roleDefinition => roleDefinition.Name == RemoveRole))
-                            {
-                                roleDefinitionBindings.Remove(roleDefinition);
-                                roleAssignment.Update();
+                                var roleAssignments = item.RoleAssignments;
+                                roleAssignments.Add(principal, roleDefinitionBindings);
+                                ClientContext.Load(roleAssignments);
                                 ClientContext.ExecuteQueryRetry();
-                                break;
+                            }
+                            if (!string.IsNullOrEmpty(RemoveRole))
+                            {
+                                var roleAssignment = item.RoleAssignments.GetByPrincipal(principal);
+                                var roleDefinitionBindings = roleAssignment.RoleDefinitionBindings;
+                                ClientContext.Load(roleDefinitionBindings);
+                                ClientContext.ExecuteQueryRetry();
+                                foreach (var roleDefinition in roleDefinitionBindings.Where(roleDefinition => roleDefinition.Name == RemoveRole))
+                                {
+                                    roleDefinitionBindings.Remove(roleDefinition);
+                                    roleAssignment.Update();
+                                    ClientContext.ExecuteQueryRetry();
+                                    break;
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        WriteError(new ErrorRecord(new Exception("Principal not found"), "1", ErrorCategory.ObjectNotFound, null));
+                        else
+                        {
+                            WriteError(new ErrorRecord(new Exception("Principal not found"), "1", ErrorCategory.ObjectNotFound, null));
+                        }
                     }
                 }
             }
