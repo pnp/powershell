@@ -8,12 +8,13 @@ namespace PnP.PowerShell.Commands.Admin
     [Cmdlet(VerbsCommon.Set, "PnPHomeSite")]
     public class SetHomeSite : PnPAdminCmdlet
     {
+        [Alias("Url")]
         [Parameter(Mandatory = true)]
-        public string Url;
+        public string HomeSiteUrl;
 
         protected override void ExecuteCmdlet()
         {
-            Tenant.SetSPHSite(Url);
+            Tenant.SetSPHSite(HomeSiteUrl);
             ClientContext.ExecuteQueryRetry();
         }
     }
