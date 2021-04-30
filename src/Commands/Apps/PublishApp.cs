@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.Apps
         [Parameter(Mandatory = false)]
         public SwitchParameter SkipFeatureDeployment;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public AppCatalogScope Scope = AppCatalogScope.Tenant;
 
         protected override void ExecuteCmdlet()

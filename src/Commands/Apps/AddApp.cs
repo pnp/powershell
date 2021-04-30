@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Apps
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public string Path;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public AppCatalogScope Scope = AppCatalogScope.Tenant;
 
         [Parameter(Mandatory = false, ValueFromPipeline = false)]
