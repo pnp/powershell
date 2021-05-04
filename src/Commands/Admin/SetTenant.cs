@@ -208,6 +208,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? CommentsOnFilesDisabled;
 
         [Parameter(Mandatory = false)]
+        public SensitiveByDefaultState? MarkNewFilesSensitiveByDefault;
+
+        [Parameter(Mandatory = false)]
         public bool? DisableBackToClassic;
         protected override void ExecuteCmdlet()
         {
@@ -801,6 +804,11 @@ namespace PnP.PowerShell.Commands.Admin
             if (CommentsOnFilesDisabled.HasValue)
             {
                 Tenant.CommentsOnFilesDisabled = CommentsOnFilesDisabled.Value;
+                modified = true;
+            }
+            if (MarkNewFilesSensitiveByDefault.HasValue)
+            {
+                Tenant.MarkNewFilesSensitiveByDefault = MarkNewFilesSensitiveByDefault.Value;
                 modified = true;
             }
             if (modified)

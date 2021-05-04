@@ -346,6 +346,7 @@ namespace PnP.PowerShell.Commands.Model
             {
                 this.disableCustomAppAuthentication = false;
             }
+            this.markNewFilesSensitiveByDefault = tenant.MarkNewFilesSensitiveByDefault;
         }
 
         public bool HideDefaultThemes => hideDefaultThemes;
@@ -480,6 +481,8 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool DisableCustomAppAuthentication => disableCustomAppAuthentication;
 
+        public SensitiveByDefaultState MarkNewFilesSensitiveByDefault => markNewFilesSensitiveByDefault;
+
         private bool hideDefaultThemes;
 
         private long storageQuota;
@@ -611,5 +614,7 @@ namespace PnP.PowerShell.Commands.Model
         private Guid[] disabledWebPartIds;
 
         private bool disableCustomAppAuthentication;
+
+        private SensitiveByDefaultState markNewFilesSensitiveByDefault;
     }
 }
