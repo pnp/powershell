@@ -47,7 +47,9 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-AllowDownloadingNonWebViewableFiles <Boolean>] [-AllowEditing <Boolean>]
  [-ApplyAppEnforcedRestrictionsToAdHocRecipients <Boolean>] [-FilePickerExternalImageSearchEnabled <Boolean>]
  [-EmailAttestationRequired <Boolean>] [-EmailAttestationReAuthDays <Int32>] [-HideDefaultThemes <Boolean>]
- [-DisabledWebPartIds <Guid[]>] [-EnableAIPIntegration <Boolean>] [-DisableCustomAppAuthentication <Boolean>] [-EnableAutoNewsDigest <Boolean>][-CommentsOnListItemsDisabled <Boolean>][-CommentsOnFilesDisabled <Boolean>]
+ [-DisabledWebPartIds <Guid[]>] [-EnableAIPIntegration <Boolean>] [-DisableCustomAppAuthentication <Boolean>] 
+ [-EnableAutoNewsDigest <Boolean>] [-CommentsOnListItemsDisabled <Boolean>] [-CommentsOnFilesDisabled <Boolean>]
+ [-DisableBackToClassic <Boolean>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -235,6 +237,20 @@ The values are: None Direct Internal AnonymousAccess
 Type: SharingLinkType
 Parameter Sets: (All)
 Accepted values: None, Direct, Internal, AnonymousAccess
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisableBackToClassic
+Disables the back to classic link for libraries and lists.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
 
 Required: False
 Position: Named
