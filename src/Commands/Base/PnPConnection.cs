@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (pnpContext == null && Context != null)
                 {
-                    pnpContext = PnP.Framework.PnPCoreSdk.Instance.GetPnPContext(Context, UserAgent);
+                    pnpContext = PnP.Framework.PnPCoreSdk.Instance.GetPnPContext(Context);
                 }
                 return pnpContext;
             }
