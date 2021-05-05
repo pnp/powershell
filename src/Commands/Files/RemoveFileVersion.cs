@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false, ParameterSetName = ParameterSetName_BYID)]
         public FileVersionPipeBind Identity;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSetName_BYID)]
         public SwitchParameter Recycle;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -74,12 +74,26 @@ namespace PnP.PowerShell.Commands.Files
                             {
                                 if (!string.IsNullOrEmpty(Identity.Label))
                                 {
-                                    versions.DeleteByLabel(Identity.Label);
+                                    if (Recycle.IsPresent)
+                                    {
+                                        versions.RecycleByLabel(Identity.Label);
+                                    }
+                                    else
+                                    {
+                                        versions.DeleteByLabel(Identity.Label);
+                                    }                                    
                                     ClientContext.ExecuteQueryRetry();
                                 }
                                 else if (Identity.Id != -1)
                                 {
-                                    versions.DeleteByID(Identity.Id);
+                                    if (Recycle.IsPresent)
+                                    {
+                                        versions.RecycleByID(Identity.Id);
+                                    }
+                                    else
+                                    {
+                                        versions.DeleteByID(Identity.Id);
+                                    }                                    
                                     ClientContext.ExecuteQueryRetry();
                                 }
                             }
