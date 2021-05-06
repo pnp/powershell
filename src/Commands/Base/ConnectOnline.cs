@@ -120,6 +120,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         public string Tenant;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
@@ -360,29 +361,38 @@ namespace PnP.PowerShell.Commands.Base
             }
             var task = Task.Factory.StartNew(() =>
             {
-                Uri oldUri = null;
-
-                if (PnPConnection.Current != null)
+                try
                 {
-                    if (PnPConnection.Current.Url != null)
+                    Uri oldUri = null;
+
+                    if (PnPConnection.Current != null)
                     {
-                        oldUri = new Uri(PnPConnection.Current.Url);
+                        if (PnPConnection.Current.Url != null)
+                        {
+                            oldUri = new Uri(PnPConnection.Current.Url);
+                        }
                     }
-                }
-                if (oldUri != null && oldUri.Host == new Uri(Url).Host && PnPConnection.Current?.ConnectionMethod == ConnectionMethod.DeviceLogin)
-                {
-                    ReuseAuthenticationManager();
-                }
+                    if (oldUri != null && oldUri.Host == new Uri(Url).Host && PnPConnection.Current?.ConnectionMethod == ConnectionMethod.DeviceLogin)
+                    {
+                        ReuseAuthenticationManager();
+                    }
 
-                var clientId = PnPConnection.PnPManagementShellClientId;
-                if (ParameterSpecified(nameof(ClientId)))
-                {
-                    clientId = ClientId;
-                }
+                    var clientId = PnPConnection.PnPManagementShellClientId;
+                    if (ParameterSpecified(nameof(ClientId)))
+                    {
+                        clientId = ClientId;
+                    }
 
-                var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, LaunchBrowser, messageWriter, AzureEnvironment, cancellationTokenSource);
-                connection = returnedConnection;
-                messageWriter.Finished = true;
+
+                    var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, Tenant, LaunchBrowser, messageWriter, AzureEnvironment, cancellationTokenSource);
+                    connection = returnedConnection;
+                    messageWriter.Finished = true;
+                }
+                catch (Exception ex)
+                {
+                    messageWriter.WriteWarning(ex.Message,false);
+                    messageWriter.Finished = true;
+                }
             }, cancellationTokenSource.Token);
             messageWriter.Start();
             return connection;
