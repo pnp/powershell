@@ -197,7 +197,7 @@ Accept wildcard characters: False
 ```
 
 ### -SetAssociatedGroup
-One of the associated group types (Visitors, Members, Owners
+One of the associated group types (Visitors, Members, Owners)
 
 ```yaml
 Type: AssociatedGroupType
