@@ -326,49 +326,19 @@ namespace PnP.PowerShell.Commands.Utilities
         #region Users
         public static async Task AddUserAsync(HttpClient httpClient, string accessToken, string groupId, string upn, string role)
         {
-            var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{upn}", accessToken);
+            var userIdResult = await GraphHelper.GetAsync(httpClient, $"v1.0/users/{upn}?$select=Id", accessToken);
+            var resultElement = JsonSerializer.Deserialize<JsonElement>(userIdResult);
+            if (resultElement.TryGetProperty("id", out JsonElement idProperty))
+            {
+                var postData = new Dictionary<string, string>() {
+                    {
+                        "@odata.id", $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{idProperty.GetString()}"
+                    }
+                };
+                var stringContent = new StringContent(JsonSerializer.Serialize(postData));
+                stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-            // check if the user is a member
-            bool isMember = false;
-            try
-            {
-                var members = await GraphHelper.GetAsync<RestResultCollection<User>>(httpClient, $"v1.0/groups/{groupId}/members?$filter=Id eq '{user.Id}'&$select=Id", accessToken);
-                isMember = members.Items.Any();
-            }
-            catch (GraphException)
-            { }
-
-            bool isOwner = false;
-            try
-            {
-                var owners = await GraphHelper.GetAsync<RestResultCollection<User>>(httpClient, $"v1.0/groups/{groupId}/owners?$filter=Id eq '{user.Id}'&$select=Id", accessToken);
-                isOwner = owners.Items.Any();
-            }
-            catch (GraphException)
-            {
-
-            }
-
-            var value = new Dictionary<string, object>
-            {
-                {
-                    "@odata.id",
-                    $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/directoryObjects/{user.Id}"
-                }
-            };
-            var stringContent = new StringContent(JsonSerializer.Serialize(value));
-            stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            if (role == "Owner")
-            {
-                if (!isMember)
-                {
-                    await GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/members/$ref", accessToken, stringContent);
-                }
-                await GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/owners/$ref", accessToken, stringContent);
-            }
-            else
-            {
-                await GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/members/$ref", accessToken, stringContent);
+                await GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/{role.ToLower()}s/$ref", accessToken, stringContent);
             }
         }
 
