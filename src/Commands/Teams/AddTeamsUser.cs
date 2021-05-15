@@ -23,15 +23,12 @@ namespace PnP.PowerShell.Commands.Graph
         public string Role;
         protected override void ExecuteCmdlet()
         {
-            Model.Teams.TeamChannel channel = null;
-
             var groupId = Team.GetGroupId(HttpClient, AccessToken);
             if (groupId != null)
             {
                 try
                 {
-                    TeamsUtility.AddUserAsync(HttpClient, AccessToken, groupId, User, Role).GetAwaiter().GetResult();
-                    WriteObject(channel);
+                    TeamsUtility.AddUserAsync(HttpClient, AccessToken, groupId, User, Role).GetAwaiter().GetResult();                    
                 }
                 catch (GraphException ex)
                 {
