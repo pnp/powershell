@@ -47,7 +47,7 @@ Allows settings of a site collection to be updated
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPTenantSite -Identity "https://contoso.sharepoint.com" -Title "Contoso Website" -Sharing Disabled
+Set-PnPTenantSite -Identity "https://contoso.sharepoint.com" -Title "Contoso Website" -SharingCapability Disabled
 ```
 
 This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website' and disable sharing on this site collection.
