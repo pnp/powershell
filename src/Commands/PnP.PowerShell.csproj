@@ -33,10 +33,10 @@
 
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net461'">
-    <DefineConstants>$(DefineConstants);NETFRAMEWORK</DefineConstants>
+    <DefineConstants>TRACE;$(DefineConstants);NETFRAMEWORK</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+    <DefineConstants>TRACE;$(DefineConstants);DEBUG</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
