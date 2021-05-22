@@ -16,6 +16,7 @@ namespace PnP.PowerShell.Commands
         private const string ParameterSet_COMMUNICATIONBUILTINDESIGN = "Communication Site with Built-In Site Design";
         private const string ParameterSet_COMMUNICATIONCUSTOMDESIGN = "Communication Site with Custom Design";
         private const string ParameterSet_TEAM = "Team Site";
+        private const string ParameterSet_TEAMSITENOGROUP = "Team Site No M365 Group";
 
         [Parameter(Mandatory = true)]
         public SiteType Type;
@@ -25,6 +26,7 @@ namespace PnP.PowerShell.Commands
 
         private CommunicationSiteParameters _communicationSiteParameters;
         private TeamSiteParameters _teamSiteParameters;
+        private TeamSiteNoM365GroupParameters _teamSiteNoM365GroupParameters;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
@@ -42,6 +44,11 @@ namespace PnP.PowerShell.Commands
                     {
                         _teamSiteParameters = new TeamSiteParameters();
                         return _teamSiteParameters;
+                    }
+                case SiteType.TeamSiteNoM365Group:
+                    {
+                        _teamSiteNoM365GroupParameters = new TeamSiteNoM365GroupParameters();
+                        return _teamSiteNoM365GroupParameters;
                     }
             }
             return null;
@@ -84,7 +91,7 @@ namespace PnP.PowerShell.Commands
                 var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
                 WriteObject(returnedContext.Url);
             }
-            else
+            else if (Type == SiteType.TeamSite)
             {
                 var creationInformation = new PnP.Framework.Sites.TeamSiteCollectionCreationInformation();
                 creationInformation.DisplayName = _teamSiteParameters.Title;
@@ -110,6 +117,34 @@ namespace PnP.PowerShell.Commands
                 {
                     WriteError(new PSInvalidOperationException("Creating a new teamsite requires an underlying Microsoft 365 group. In order to create this we need to acquire an access token for the Microsoft Graph. This is not possible using ACS App Only connections."), ErrorCategory.SecurityError);
                 }
+            }
+            else
+            {
+                if (!ParameterSpecified("Lcid"))
+                {
+                    ClientContext.Web.EnsureProperty(w => w.Language);
+                    _teamSiteNoM365GroupParameters.Lcid = ClientContext.Web.Language;
+                }
+                var creationInformation = new PnP.Framework.Sites.TeamNoGroupSiteCollectionCreationInformation();
+                creationInformation.Title = _teamSiteNoM365GroupParameters.Title;
+                creationInformation.Url = _teamSiteNoM365GroupParameters.Url;
+                creationInformation.Description = _teamSiteNoM365GroupParameters.Description;
+                creationInformation.Classification = _teamSiteNoM365GroupParameters.Classification;
+#pragma warning disable CS0618 // Type or member is obsolete
+                creationInformation.ShareByEmailEnabled = _teamSiteNoM365GroupParameters.ShareByEmailEnabled;
+#pragma warning restore CS0618 // Type or member is obsolete
+                creationInformation.Lcid = _teamSiteNoM365GroupParameters.Lcid;
+                if (ParameterSpecified(nameof(HubSiteId)))
+                {
+                    creationInformation.HubSiteId = HubSiteId;
+                }
+                creationInformation.SiteDesignId = _teamSiteNoM365GroupParameters.SiteDesignId;
+                creationInformation.Owner = _teamSiteNoM365GroupParameters.Owner;
+                creationInformation.PreferredDataLocation = _teamSiteNoM365GroupParameters.PreferredDataLocation;
+                creationInformation.SensitivityLabel = _teamSiteNoM365GroupParameters.SensitivityLabel;
+
+                var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
+                WriteObject(returnedContext.Url);
             }
         }
 
@@ -185,6 +220,39 @@ namespace PnP.PowerShell.Commands
             public PnP.Framework.Enums.Office365Geography? PreferredDataLocation;
 
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
+            public string SensitivityLabel;
+        }
+
+        public class TeamSiteNoM365GroupParameters
+        {
+            [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public string Title;
+
+            [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public string Url;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public string Description;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public string Classification;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public SwitchParameter ShareByEmailEnabled;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public Guid SiteDesignId;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public uint Lcid;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public string Owner;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public PnP.Framework.Enums.Office365Geography? PreferredDataLocation;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
             public string SensitivityLabel;
         }
     }

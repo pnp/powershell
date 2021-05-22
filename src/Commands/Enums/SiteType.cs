@@ -9,6 +9,7 @@ namespace PnP.PowerShell.Commands.Enums
     public enum SiteType
     {
         CommunicationSite = 1,
-        TeamSite = 2
+        TeamSite = 2,
+        TeamSiteNoM365Group = 3
     }
 }
