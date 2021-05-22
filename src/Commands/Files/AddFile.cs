@@ -140,7 +140,7 @@ namespace PnP.PowerShell.Commands.Files
 
             if (updateRequired)
             {
-                item.SystemUpdate();
+                item.UpdateOverwriteVersion();
             }
             if (Checkout)
             {
