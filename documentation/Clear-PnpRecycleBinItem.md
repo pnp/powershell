@@ -2,7 +2,7 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Clear-PnpRecycleBinItem.html
+online version: https://pnp.github.io/powershell/cmdlets/Clear-PnPRecycleBinItem.html
 external help file: PnP.PowerShell.dll-Help.xml
 title: Clear-PnPRecycleBinItem
 ---
@@ -39,14 +39,14 @@ Permanently deletes all the items in the first and second stage recycle bins of 
 
 ### EXAMPLE 2
 ```powershell
-Clear-PnpRecycleBinItem -Identity 72e4d749-d750-4989-b727-523d6726e442
+Clear-PnPRecycleBinItem -Identity 72e4d749-d750-4989-b727-523d6726e442
 ```
 
 Permanently deletes the recycle bin item with Id 72e4d749-d750-4989-b727-523d6726e442 from the recycle bin
 
 ### EXAMPLE 3
 ```powershell
-Clear-PnpRecycleBinItem -Identity $item -Force
+Clear-PnPRecycleBinItem -Identity $item -Force
 ```
 
 Permanently deletes the recycle bin item stored under variable $item from the recycle bin without asking for confirmation from the end user first

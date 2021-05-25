@@ -4,7 +4,7 @@ title: Move-PnPRecycleBinItem
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Move-PnpRecycleBinItem.html
+online version: https://pnp.github.io/powershell/cmdlets/Move-PnPRecycleBinItem.html
 ---
  
 # Move-PnPRecycleBinItem
@@ -25,21 +25,21 @@ Move-PnPRecycleBinItem [-Identity <RecycleBinItemPipeBind>] [-Force] [-Connectio
 
 ### EXAMPLE 1
 ```powershell
-Move-PnpRecycleBinItem
+Move-PnPRecycleBinItem
 ```
 
 Moves all the items in the first stage recycle bin of the current site collection to the second stage recycle bin
 
 ### EXAMPLE 2
 ```powershell
-Move-PnpRecycleBinItem -Identity 26ffff29-b526-4451-9b6f-7f0e56ba7125
+Move-PnPRecycleBinItem -Identity 26ffff29-b526-4451-9b6f-7f0e56ba7125
 ```
 
 Moves the item with the provided ID in the first stage recycle bin of the current site collection to the second stage recycle bin without asking for confirmation first
 
 ### EXAMPLE 3
 ```powershell
-Move-PnpRecycleBinItem -Force
+Move-PnPRecycleBinItem -Force
 ```
 
 Moves all the items in the first stage recycle bin of the current context to the second stage recycle bin without asking for confirmation first
