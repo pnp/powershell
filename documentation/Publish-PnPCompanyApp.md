@@ -1,7 +1,6 @@
 ---
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version:
 schema: 2.0.0
 online version: https://pnp.github.io/powershell/cmdlets/Publish-PnPCompanyApp.html
 title: Publish-PnPCompanyApp
