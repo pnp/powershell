@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands
                     ClientContext.Web.EnsureProperty(w => w.Language);
                     _communicationSiteParameters.Lcid = ClientContext.Web.Language;
                 }
-                var creationInformation = new PnP.Framework.Sites.CommunicationSiteCollectionCreationInformation();
+                var creationInformation = new Framework.Sites.CommunicationSiteCollectionCreationInformation();
                 creationInformation.Title = _communicationSiteParameters.Title;
                 creationInformation.Url = _communicationSiteParameters.Url;
                 creationInformation.Description = _communicationSiteParameters.Description;
@@ -88,12 +88,17 @@ namespace PnP.PowerShell.Commands
                 creationInformation.PreferredDataLocation = _communicationSiteParameters.PreferredDataLocation;
                 creationInformation.SensitivityLabel = _communicationSiteParameters.SensitivityLabel;
 
-                var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
+                var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
                 WriteObject(returnedContext.Url);
             }
             else if (Type == SiteType.TeamSite)
             {
-                var creationInformation = new PnP.Framework.Sites.TeamSiteCollectionCreationInformation();
+                if (!ParameterSpecified("Lcid"))
+                {
+                    ClientContext.Web.EnsureProperty(w => w.Language);
+                    _teamSiteParameters.Lcid = ClientContext.Web.Language;
+                }
+                var creationInformation = new Framework.Sites.TeamSiteCollectionCreationInformation();
                 creationInformation.DisplayName = _teamSiteParameters.Title;
                 creationInformation.Alias = _teamSiteParameters.Alias;
                 creationInformation.Classification = _teamSiteParameters.Classification;
@@ -110,7 +115,7 @@ namespace PnP.PowerShell.Commands
 
                 if (ClientContext.GetContextSettings()?.Type != Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
                 {
-                    var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GraphAccessToken);
+                    var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GraphAccessToken);
                     WriteObject(returnedContext.Url);
                 }
                 else
@@ -125,7 +130,7 @@ namespace PnP.PowerShell.Commands
                     ClientContext.Web.EnsureProperty(w => w.Language);
                     _teamSiteNoM365GroupParameters.Lcid = ClientContext.Web.Language;
                 }
-                var creationInformation = new PnP.Framework.Sites.TeamNoGroupSiteCollectionCreationInformation();
+                var creationInformation = new Framework.Sites.TeamNoGroupSiteCollectionCreationInformation();
                 creationInformation.Title = _teamSiteNoM365GroupParameters.Title;
                 creationInformation.Url = _teamSiteNoM365GroupParameters.Url;
                 creationInformation.Description = _teamSiteNoM365GroupParameters.Description;
@@ -143,7 +148,7 @@ namespace PnP.PowerShell.Commands
                 creationInformation.PreferredDataLocation = _teamSiteNoM365GroupParameters.PreferredDataLocation;
                 creationInformation.SensitivityLabel = _teamSiteNoM365GroupParameters.SensitivityLabel;
 
-                var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
+                var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
                 WriteObject(returnedContext.Url);
             }
         }
