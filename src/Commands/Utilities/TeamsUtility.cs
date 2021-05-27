@@ -72,7 +72,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 team.DisplayName = group.DisplayName;
                 team.MailNickname = group.MailNickname;
-                team.Visibility = group.Visibility;
+                team.Visibility = group.Visibility;                
                 return team;
             }
             else
@@ -407,14 +407,14 @@ namespace PnP.PowerShell.Commands.Utilities
             var collection = await GraphHelper.GetAsync<RestResultCollection<TeamChannelMember>>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/members", accessToken);
             if (collection != null && collection.Items.Any())
             {
-                users.AddRange(collection.Items.Select(m => new User() { DisplayName = m.DisplayName, Id = m.UserId, UserPrincipalName = m.email, UserType = m.Roles[0].ToLower() }));
+                users.AddRange(collection.Items.Select(m => new User() { DisplayName = m.DisplayName, Id = m.UserId, UserPrincipalName = m.email, UserType = m.Roles.Count > 0 ? m.Roles[0].ToLower() : "" }));
             }
             while (collection.NextLink != null)
             {
                 collection = await GraphHelper.GetAsync<RestResultCollection<TeamChannelMember>>(httpClient, collection.NextLink, accessToken);
                 if (collection != null && collection.Items.Any())
                 {
-                    users.AddRange(collection.Items.Select(m => new User() { DisplayName = m.DisplayName, Id = m.UserId, UserPrincipalName = m.email, UserType = m.Roles[0].ToLower() }));
+                    users.AddRange(collection.Items.Select(m => new User() { DisplayName = m.DisplayName, Id = m.UserId, UserPrincipalName = m.email, UserType = m.Roles.Count > 0 ? m.Roles[0].ToLower() : "" }));
                 }
             }
             if (selectedRole != null)
