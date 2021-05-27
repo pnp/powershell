@@ -25,9 +25,9 @@ New-PnPSite -Type TeamSite -Title <String> -Alias <String> [-Description <String
 New-PnPSite -Type CommunicationSite -Title <String> -Url <String> [-HubSiteId <Guid>] [-Classification <String>] [-SiteDesign <SiteDesign>] [-SiteDesignId <Guid>] [-Lcid <UInt>] [-Owner <String>] [-PreferredDataLocation <Office365Geography>] [-SensitivityLabel <String>]
 ```
 
-### TeamSiteNoM365Group
+### TeamSiteWithoutMicrosoft365Group
 ```powershell
-New-PnPSite -Type TeamSiteNoM365Group -Title <String> -Url <String> [-HubSiteId <Guid>] [-Classification <String>] [-SiteDesignId <Guid>] [-Lcid <UInt>] [-Owner <String>] [-PreferredDataLocation <Office365Geography>] [-SensitivityLabel <String>]
+New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title <String> -Url <String> [-HubSiteId <Guid>] [-Classification <String>] [-SiteDesignId <Guid>] [-Lcid <UInt>] [-Owner <String>] [-PreferredDataLocation <Office365Geography>] [-SensitivityLabel <String>]
 ```
 
 ## DESCRIPTION
@@ -100,35 +100,35 @@ This will create a new Modern Team Site collection with the title 'Team Contoso'
 
 ### EXAMPLE 10
 ```powershell
-New-PnPSite -Type TeamSiteNoM365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso
+New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso
 ```
 
 This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'
 
 ### EXAMPLE 11
 ```powershell
-New-PnPSite -Type TeamSiteNoM365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -SiteDesignId ae2349d5-97d6-4440-94d1-6516b72449ac
+New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -SiteDesignId ae2349d5-97d6-4440-94d1-6516b72449ac
 ```
 
 This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. It will use the specified custom site design for the site.
 
 ### EXAMPLE 12
 ```powershell
-New-PnPSite -Type TeamSiteNoM365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Classification "HBI"
+New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Classification "HBI"
 ```
 
 This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. The classification for the site will be set to "HBI"
 
 ### EXAMPLE 13
 ```powershell
-New-PnPSite -Type TeamSiteNoM365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -ShareByEmailEnabled
+New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -ShareByEmailEnabled
 ```
 
 This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. Allows owners to invite users outside of the organization.
 
 ### EXAMPLE 14
 ```powershell
-New-PnPSite -Type TeamSiteNoM365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Lcid 1040
+New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Lcid 1040
 ```
 
 This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the default language to Italian (LCID 1040).
@@ -154,7 +154,7 @@ The classification to use for the new site.
 
 ```yaml
 Type: String
-Parameter Sets: CommunicationSite, TeamSite, TeamSiteNoM365Group
+Parameter Sets: CommunicationSite, TeamSite, TeamSiteWithoutMicrosoft365Group
 
 Required: False
 Position: Named
@@ -168,7 +168,7 @@ The description of the site to create
 
 ```yaml
 Type: String
-Parameter Sets: CommunicationSite, TeamSite, TeamSiteNoM365Group
+Parameter Sets: CommunicationSite, TeamSite, TeamSiteWithoutMicrosoft365Group
 
 Required: False
 Position: Named
@@ -195,7 +195,7 @@ Accept wildcard characters: False
 The description of the site to create
 ```yaml
 Type: String
-Parameter Sets: CommunicationSite, TeamSite, TeamSiteNoM365Group
+Parameter Sets: CommunicationSite, TeamSite, TeamSiteWithoutMicrosoft365Group
 
 Required: False
 Position: Named
@@ -237,7 +237,7 @@ The language to use for the site.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: CommunicationSite, TeamSite, TeamSiteNoM365Group
+Parameter Sets: CommunicationSite, TeamSite, TeamSiteWithoutMicrosoft365Group
 
 Required: False
 Position: Named
@@ -265,7 +265,7 @@ The owner to specify for the site. Defaults to the current user. Required if you
 
 ```yaml
 Type: String
-Parameter Sets: CommunicationSite, TeamSiteNoM365Group
+Parameter Sets: CommunicationSite, TeamSiteWithoutMicrosoft365Group
 
 Required: False
 Position: Named
@@ -279,7 +279,7 @@ In case of a multi-geo environment you can specify the preferred data location
 
 ```yaml
 Type: String
-Parameter Sets: CommunicationSite, TeamSite, TeamSiteNoM365Group
+Parameter Sets: CommunicationSite, TeamSite, TeamSiteWithoutMicrosoft365Group
 Accepted values: APC, ARE, AUS, CAN, CHE, DEU, EUR, FRA, GBR, IND, JPN, KOR, NAM, NOR, ZAF
 
 Required: False
@@ -294,7 +294,7 @@ The sensitivity label to specify for the new site.
 
 ```yaml
 Type: String
-Parameter Sets: CommunicationSite, TeamSite, TeamSiteNoM365Group
+Parameter Sets: CommunicationSite, TeamSite, TeamSiteWithoutMicrosoft365Group
 
 Required: False
 Position: Named
@@ -308,7 +308,7 @@ If specified sharing content by email will be enabled.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: CommunicationSite, TeamSiteNoM365Group
+Parameter Sets: CommunicationSite, TeamSiteWithoutMicrosoft365Group
 
 Required: False
 Position: Named
@@ -337,7 +337,7 @@ Allows to specify a custom site design
 
 ```yaml
 Type: Guid
-Parameter Sets: CommunicationSite, TeamSiteNoM365Group
+Parameter Sets: CommunicationSite, TeamSiteWithoutMicrosoft365Group
 
 Required: False
 Position: Named
@@ -351,7 +351,7 @@ Specifies the title of the site to create
 
 ```yaml
 Type: String
-Parameter Sets: CommunicationSite, TeamSiteNoM365Group
+Parameter Sets: CommunicationSite, TeamSiteWithoutMicrosoft365Group
 
 Required: True
 Position: Named
@@ -366,7 +366,7 @@ Specifies with type of site to create.
 ```yaml
 Type: SiteType
 Parameter Sets: (All)
-Accepted values: CommunicationSite, TeamSite, TeamSiteNoM365Group
+Accepted values: CommunicationSite, TeamSite, TeamSiteWithoutMicrosoft365Group
 
 Required: True
 Position: Named
