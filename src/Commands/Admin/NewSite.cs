@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands
 
         private CommunicationSiteParameters _communicationSiteParameters;
         private TeamSiteParameters _teamSiteParameters;
-        private TeamSiteNoM365GroupParameters _teamSiteNoM365GroupParameters;
+        private TeamSiteWithoutMicrosoft365Group _teamSiteWithoutMicrosoft365GroupParameters;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
@@ -45,10 +45,10 @@ namespace PnP.PowerShell.Commands
                         _teamSiteParameters = new TeamSiteParameters();
                         return _teamSiteParameters;
                     }
-                case SiteType.TeamSiteNoM365Group:
+                case SiteType.TeamSiteWithoutMicrosoft365Group:
                     {
-                        _teamSiteNoM365GroupParameters = new TeamSiteNoM365GroupParameters();
-                        return _teamSiteNoM365GroupParameters;
+                        _teamSiteWithoutMicrosoft365GroupParameters = new TeamSiteWithoutMicrosoft365Group();
+                        return _teamSiteWithoutMicrosoft365GroupParameters;
                     }
             }
             return null;
@@ -128,25 +128,25 @@ namespace PnP.PowerShell.Commands
                 if (!ParameterSpecified("Lcid"))
                 {
                     ClientContext.Web.EnsureProperty(w => w.Language);
-                    _teamSiteNoM365GroupParameters.Lcid = ClientContext.Web.Language;
+                    _teamSiteWithoutMicrosoft365GroupParameters.Lcid = ClientContext.Web.Language;
                 }
                 var creationInformation = new Framework.Sites.TeamNoGroupSiteCollectionCreationInformation();
-                creationInformation.Title = _teamSiteNoM365GroupParameters.Title;
-                creationInformation.Url = _teamSiteNoM365GroupParameters.Url;
-                creationInformation.Description = _teamSiteNoM365GroupParameters.Description;
-                creationInformation.Classification = _teamSiteNoM365GroupParameters.Classification;
+                creationInformation.Title = _teamSiteWithoutMicrosoft365GroupParameters.Title;
+                creationInformation.Url = _teamSiteWithoutMicrosoft365GroupParameters.Url;
+                creationInformation.Description = _teamSiteWithoutMicrosoft365GroupParameters.Description;
+                creationInformation.Classification = _teamSiteWithoutMicrosoft365GroupParameters.Classification;
 #pragma warning disable CS0618 // Type or member is obsolete
-                creationInformation.ShareByEmailEnabled = _teamSiteNoM365GroupParameters.ShareByEmailEnabled;
+                creationInformation.ShareByEmailEnabled = _teamSiteWithoutMicrosoft365GroupParameters.ShareByEmailEnabled;
 #pragma warning restore CS0618 // Type or member is obsolete
-                creationInformation.Lcid = _teamSiteNoM365GroupParameters.Lcid;
+                creationInformation.Lcid = _teamSiteWithoutMicrosoft365GroupParameters.Lcid;
                 if (ParameterSpecified(nameof(HubSiteId)))
                 {
                     creationInformation.HubSiteId = HubSiteId;
                 }
-                creationInformation.SiteDesignId = _teamSiteNoM365GroupParameters.SiteDesignId;
-                creationInformation.Owner = _teamSiteNoM365GroupParameters.Owner;
-                creationInformation.PreferredDataLocation = _teamSiteNoM365GroupParameters.PreferredDataLocation;
-                creationInformation.SensitivityLabel = _teamSiteNoM365GroupParameters.SensitivityLabel;
+                creationInformation.SiteDesignId = _teamSiteWithoutMicrosoft365GroupParameters.SiteDesignId;
+                creationInformation.Owner = _teamSiteWithoutMicrosoft365GroupParameters.Owner;
+                creationInformation.PreferredDataLocation = _teamSiteWithoutMicrosoft365GroupParameters.PreferredDataLocation;
+                creationInformation.SensitivityLabel = _teamSiteWithoutMicrosoft365GroupParameters.SensitivityLabel;
 
                 var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
                 WriteObject(returnedContext.Url);
@@ -228,7 +228,7 @@ namespace PnP.PowerShell.Commands
             public string SensitivityLabel;
         }
 
-        public class TeamSiteNoM365GroupParameters
+        public class TeamSiteWithoutMicrosoft365Group
         {
             [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
             public string Title;

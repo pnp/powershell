@@ -10,6 +10,6 @@ namespace PnP.PowerShell.Commands.Enums
     {
         CommunicationSite = 1,
         TeamSite = 2,
-        TeamSiteNoM365Group = 3
+        TeamSiteWithoutMicrosoft365Group = 3
     }
 }
