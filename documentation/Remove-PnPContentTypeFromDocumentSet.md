@@ -4,7 +4,7 @@ title: Remove-PnPContentTypeFromDocumentSet
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPContentTypeFr.htmlocumentSet.html
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPContentTypeFromDocumentSet.html
 ---
  
 # Remove-PnPContentTypeFromDocumentSet
