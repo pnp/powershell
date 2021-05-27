@@ -72,6 +72,13 @@ Set-PnPSite -LogoFilePath c:\images\mylogo.png
 
 Sets the logo if the site is a modern team site
 
+### EXAMPLE 6
+```powershell
+Set-PnPSite -NoScriptSite $false
+```
+
+Allows custom script on a specific site. See [Allow or prevent custom script](https://docs.microsoft.com/en-us/sharepoint/allow-or-prevent-custom-script) for more information.
+
 ## PARAMETERS
 
 ### -AllowSelfServiceUpgrade
@@ -301,7 +308,7 @@ Accept wildcard characters: False
 ```
 
 ### -NoScriptSite
-Specifies if a site allows custom script or not. See https://support.office.com/en-us/article/Turn-scripting-capabilities-on-or-off-1f2c515f-5d7e-448a-9fd7-835da935584f for more information.
+Specifies if a site allows custom script or not. See [Allow or prevent custom script](https://docs.microsoft.com/en-us/sharepoint/allow-or-prevent-custom-script) for more information.
 
 ```yaml
 Type: SwitchParameter
