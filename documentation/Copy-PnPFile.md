@@ -15,7 +15,7 @@ Copies a file or folder to a different location. This location can be within the
 ## SYNTAX
 
 ```powershell
-Copy-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-OverwriteIfAlreadyExists] [-Force] [-IgnoreVersionHistory] [-NoWait] [-Connection <PnPConnection>]  
+Copy-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-Force] [-IgnoreVersionHistory] [-NoWait] [-Connection <PnPConnection>]  
   [<CommonParameters>]
 ```
 
@@ -25,10 +25,10 @@ Copy-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-OverwriteIfAlreadyExi
 
 ### EXAMPLE 1
 ```powershell
-Copy-PnPFile -SourceUrl "Shared Documents/MyProjectfiles" -TargetUrl "/sites/otherproject/Shared Documents" -OverwriteIfAlreadyExists
+Copy-PnPFile -SourceUrl "Shared Documents/MyProjectfiles" -TargetUrl "/sites/otherproject/Shared Documents" -Overwrite
 ```
 
-Copies a folder named MyDocs in the document library called Documents located in the current site to the root folder of the library named Documents in the site collection otherproject.
+Copies a folder named MyProjectFiles in the document library called Documents located in the current site to the root folder of the library named Documents in the site collection otherproject. If a folder named MyProjectFiles already exists, it will overwrite it.
 
 ### EXAMPLE 2
 ```powershell
@@ -39,10 +39,10 @@ Copies a file named company.docx located in a document library called Shared Doc
 
 ### EXAMPLE 3
 ```powershell
-Copy-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "/sites/otherproject/Shared Documents"
+Copy-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "/sites/otherproject/Shared Documents" -IgnoreVersionHistory
 ```
 
-Copies a file named company.docx located in a document library called Documents in the current site to the site collection otherproject. If a file named company.docx already exists, it won't perform the copy.
+Copies a file named company.docx located in a document library called Documents in the current site to the site collection otherproject. If a file named company.docx already exists, it won't perform the copy. Only the latest version of the file will be copied and its history will be discarded.
 
 ### EXAMPLE 4
 ```powershell
@@ -70,7 +70,7 @@ Copies a file named company.docx located in a document library called Documents 
 Copy-PnPFile -SourceUrl "Shared DocuDocuments/company.docx" -TargetUrl "Subsite/Shared Documents"
 ```
 
-Copies a file named company.docx located in a document library called Documents to the document library named Document in a subsite named Subsite keeping the file name.
+Copies a file named company.docx located in a document library called Documents to the document library named Documents in a subsite named Subsite keeping the file name.
 
 ### EXAMPLE 8
 ```powershell
@@ -122,7 +122,7 @@ Accept wildcard characters: False
 ```
 
 ### -IgnoreVersionHistory
-If provided, only the latest version of the document will be copied and its history will be discared. If not provided, all historical versions will be copied along.
+If provided, only the latest version of the document will be copied and its history will be discarded. If not provided, all historical versions will be copied.
 
 ```yaml
 Type: SwitchParameter
