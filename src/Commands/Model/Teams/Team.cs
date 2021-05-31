@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using PnP.PowerShell.Commands.Model.Graph;
 
 namespace PnP.PowerShell.Commands.Model.Teams
@@ -79,6 +80,7 @@ namespace PnP.PowerShell.Commands.Model.Teams
         /// </summary>
         public string Description { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public GroupVisibility? Visibility { get; set; }
 
         #endregion

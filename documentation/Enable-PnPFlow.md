@@ -8,6 +8,11 @@ schema: 2.0.0
 # Enable-PnPFlow
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+* Azure: management.azure.com
+
 Enables a specific flow
 
 ## SYNTAX
