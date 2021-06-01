@@ -91,7 +91,7 @@ namespace PnP.PowerShell.Commands.Utilities
             // Get Settings
             try
             {
-                var team = await GraphHelper.GetAsync<Team>(httpClient, $"v1.0/teams/{groupId}", accessToken, false);
+                var team = await GraphHelper.GetAsync<Team>(httpClient, $"v1.0/teams/{groupId}", accessToken, false, true);
                 if (team != null)
                 {
                     team.GroupId = groupId;
@@ -214,7 +214,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 else
                 {
                     // find the user in the organization
-                    var collection = await GraphHelper.GetAsync<RestResultCollection<User>>(httpClient, "v1.0/myorganization/users?$filter=mail eq '{owner}'&$select=Id", accessToken);
+                    var collection = await GraphHelper.GetAsync<RestResultCollection<User>>(httpClient, $"v1.0/users?$filter=mail eq '{owner}'&$select=Id", accessToken);
                     if (collection != null)
                     {
                         if (collection.Items.Any())

@@ -65,7 +65,7 @@ namespace PnP.PowerShell.Commands.Model.Teams
             GroupId = team.GroupId;
             DisplayName = team.DisplayName;
             Description = team.Description;
-            Visibility = team.Visibility.Value;
+            Visibility = team.Visibility;
             Archived = team.IsArchived;
             Classification = team.Classification;
             AllowGiphy = team.FunSettings.AllowGiphy;

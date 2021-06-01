@@ -77,7 +77,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return await GetResponseMessageAsync(httpClient, message);
         }
 
-        public static async Task<T> GetAsync<T>(HttpClient httpClient, string url, string accessToken, bool camlCasePolicy = true)
+        public static async Task<T> GetAsync<T>(HttpClient httpClient, string url, string accessToken, bool camlCasePolicy = true, bool propertyNameCaseInsensitive = false)
         {
             var stringContent = await GetAsync(httpClient, url, accessToken);
             if (stringContent != null)
@@ -86,6 +86,10 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 if (camlCasePolicy)
                 {
                     options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                }
+                if (propertyNameCaseInsensitive)
+                {
+                    options.PropertyNameCaseInsensitive = true;
                 }
                 try
                 {
