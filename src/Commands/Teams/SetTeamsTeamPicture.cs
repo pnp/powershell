@@ -29,11 +29,11 @@ namespace PnP.PowerShell.Commands.Graph
                     Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
 
                 }
-                if (System.IO.File.Exists(Path))
+                if (File.Exists(Path))
                 {
                     var contentType = "";
                     var fileInfo = new FileInfo(Path);
-                    switch (fileInfo.Extension)
+                    switch (fileInfo.Extension.ToLower())
                     {
                         case ".jpg":
                         case ".jpeg":
@@ -51,7 +51,7 @@ namespace PnP.PowerShell.Commands.Graph
                     {
                         throw new PSArgumentException("File is not of a supported content type (jpg/png)");
                     }
-                    var byteArray = System.IO.File.ReadAllBytes(Path);
+                    var byteArray = File.ReadAllBytes(Path);
                     TeamsUtility.SetTeamPictureAsync(HttpClient, AccessToken, groupId, byteArray, contentType).GetAwaiter().GetResult();
                 }
                 else
