@@ -19,7 +19,6 @@ namespace PnP.PowerShell.Tests.ContentTypes
         }
         #endregion
         #region Scaffolded Cmdlet Tests
-        //TODO: This is a scaffold of the cmdlet - complete the unit test
         [TestMethod]
         public void AddPnPContentTypesFromContentTypeHubTest()
         {
@@ -27,8 +26,6 @@ namespace PnP.PowerShell.Tests.ContentTypes
             {
                 var contentTypes = new List<string>();
                 contentTypes.Add("0x0101");
-                    
-
                 var results = scope.ExecuteCommand("Add-PnPContentTypesFromContentTypeHub",
                     new CommandParameter("ContentTypes", contentTypes));
 

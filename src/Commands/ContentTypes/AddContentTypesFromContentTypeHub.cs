@@ -18,15 +18,10 @@ namespace PnP.PowerShell.Commands.ContentTypes
             Microsoft.SharePoint.Client.Site site = ClientContext.Site;
             ClientContext.Load(site);
             ClientContext.ExecuteQuery();
-            var sub = new Microsoft.SharePoint.Taxonomy.ContentTypeSync.Internal.ContentTypeSubscriber(ClientContext);
+            var sub = new Microsoft.SharePoint.Client.Taxonomy.ContentTypeSync.ContentTypeSubscriber(ClientContext);
             ClientContext.Load(sub);
             ClientContext.ExecuteQuery();
-            var ct = ClientContext.Web.ContentTypes.GetById("0x0101");
-            ClientContext.Load(ct);
-            ClientContext.ExecuteQuery();
-            var list = new List<Microsoft.SharePoint.Client.ContentTypeId>();
-            list.Add(ct.Id);
-            var res = sub.SyncContentTypesFromHubSite(site.Url, list);
+            var res = sub.SyncContentTypesFromHubSite2(site.Url, ContentTypes);
             ClientContext.ExecuteQuery();
             WriteObject(res);
         }
