@@ -10,6 +10,11 @@ title: Add-PnPContentTypesFromContentTypeHub
 # Add-PnPContentTypesFromContentTypeHub
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * ManageLists permission on the current site or the content type hub site.
+
 Adds published content types from content type hub site to current site. If the content type already exists on the current site then the latest published version of the content type will be synced to the site.
 
 ## SYNTAX
