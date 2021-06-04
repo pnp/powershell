@@ -4,9 +4,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Files
 {
@@ -158,7 +156,16 @@ namespace PnP.PowerShell.Commands.Files
             }
 
             ClientContext.Load(file);
-            ClientContext.ExecuteQueryRetry();
+            try
+            {
+                ClientContext.ExecuteQueryRetry();
+            }
+            catch (ServerException)
+            {
+                // Can happen when uploading a file to a location not residing inside a document library, such as to the _cts folder. Switch to fallback option so that the upload doesn't result in an error.
+                ClientContext.Load(file, f => f.Length, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
+                ClientContext.ExecuteQueryRetry();
+            }
             WriteObject(file);
         }
 
