@@ -17,12 +17,15 @@ namespace PnP.PowerShell.Commands.ContentTypes
         {
             Microsoft.SharePoint.Client.Site site = ClientContext.Site;
             ClientContext.Load(site);
-            ClientContext.ExecuteQuery();
+            ClientContext.ExecuteQueryRetry();
+
             var sub = new Microsoft.SharePoint.Client.Taxonomy.ContentTypeSync.ContentTypeSubscriber(ClientContext);
             ClientContext.Load(sub);
-            ClientContext.ExecuteQuery();
+            ClientContext.ExecuteQueryRetry();
+
             var res = sub.SyncContentTypesFromHubSite2(site.Url, ContentTypes);
-            ClientContext.ExecuteQuery();
+            ClientContext.ExecuteQueryRetry();
+            
             WriteObject(res);
         }
 
