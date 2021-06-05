@@ -22,14 +22,22 @@ namespace PnP.PowerShell.Commands.ContentTypes
         [Parameter(Mandatory = false)]
         public ContentType ParentContentType;
 
+        [Parameter(Mandatory = false)]
+        public string DocumentTemplate;        
+
         protected override void ExecuteCmdlet()
         {
             var ct = CurrentWeb.CreateContentType(Name, Description, ContentTypeId, Group, ParentContentType);
+
+            if (ParameterSpecified(nameof(DocumentTemplate)))
+            {
+                ct.DocumentTemplate = DocumentTemplate;
+                ct.Update(true);
+            }
+
             ClientContext.Load(ct);
             ClientContext.ExecuteQueryRetry();
             WriteObject(ct);
         }
-
-
     }
 }
