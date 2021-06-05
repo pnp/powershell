@@ -266,6 +266,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPContentTypesFromContentTypeHub.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPContentTypesFromContentTypeHub.html",
+          "hash": "bYAuFgiZCrUz4HTcL1t8bg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPCustomAction.md",
       "output": {
         ".html": {
@@ -6774,7 +6786,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "GBMYHxA7h1TpPFdVswp6SA=="
+          "hash": "fQwdBjWaZgchOHYpQ8sMqg=="
         }
       },
       "is_incremental": false,
@@ -6853,7 +6865,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 564,
+          "total_file_count": 565,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
