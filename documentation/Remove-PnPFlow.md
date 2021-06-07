@@ -2,12 +2,18 @@
 external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPFlow.html
 Module Name: PnP.PowerShell
+title: Remove-PnPFlow
 schema: 2.0.0
 ---
  
 # Remove-PnPFlow
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+* Azure: management.azure.com
+
 Removes the specified flow
 
 ## SYNTAX

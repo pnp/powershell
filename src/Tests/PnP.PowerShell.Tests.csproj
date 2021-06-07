@@ -28,7 +28,7 @@
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="5.0.0" />
-    <PackageReference Include="System.Text.Encodings.Web" Version="4.7.1" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="4.7.2" />
     <PackageReference Include="System.Text.Json" Version="4.7.2" />
     <PackageReference Include="TextCopy" Version="4.2.0" />
     <ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />

@@ -81,7 +81,8 @@ namespace PnP.PowerShell.Commands.Lists
                     }
                     viewFieldsStringBuilder.Append("</ViewFields>");
                 }
-                query.ViewXml = $"<View><Query><Where><Or><Eq><FieldRef Name='GUID'/><Value Type='Guid'>{UniqueId}</Value></Eq><Eq><FieldRef Name='UniqueId' /><Value Type='Guid'>{UniqueId}</Value></Eq></Or></Where></Query>{viewFieldsStringBuilder}</View>";
+                query.ViewXml = $"<View Scope='RecursiveAll'><Query><Where><Or><Eq><FieldRef Name='GUID'/><Value Type='Guid'>{UniqueId}</Value></Eq><Eq><FieldRef Name='UniqueId' /><Value Type='Guid'>{UniqueId}</Value></Eq></Or></Where></Query>{viewFieldsStringBuilder}</View>";
+                
                 var listItem = list.GetItems(query);
                 ClientContext.Load(listItem);
                 ClientContext.ExecuteQueryRetry();

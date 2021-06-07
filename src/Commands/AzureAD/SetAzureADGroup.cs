@@ -68,7 +68,7 @@ namespace PnP.PowerShell.Commands.Graph
                     if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                     {
                         // For this scenario a separate call needs to be made
-                        GroupsUtility.SetGroupVisibility(group.Id, AccessToken, HideFromAddressLists, HideFromOutlookClients);
+                        Utilities.Microsoft365GroupsUtility.SetVisibilityAsync(HttpClient, AccessToken, new Guid(group.Id), HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
                     }
                 }
                 catch(Exception e)

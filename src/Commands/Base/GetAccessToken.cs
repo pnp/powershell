@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPAccessToken")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/.default")]
     public class GetPnPAccessToken : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]

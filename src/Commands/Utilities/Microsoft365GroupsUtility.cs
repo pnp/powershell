@@ -535,7 +535,28 @@ namespace PnP.PowerShell.Commands.Utilities
                 hideFromAddressLists = hideFromAddressLists,
                 hideFromOutlookClients = hideFromOutlookClients
             };
-            await GraphHelper.PatchAsync(httpClient, accessToken, $"v1.0/groups/{groupId}", patchData);
+
+            var retry = true;
+            var iteration = 0;
+            while (retry)
+            {
+                try
+                {
+                    await GraphHelper.PatchAsync<dynamic>(httpClient, accessToken, $"v1.0/groups/{groupId}", patchData);
+                    retry = false;
+                }
+
+                catch (Exception)
+                {
+                    await Task.Delay(5000);
+                    iteration++;
+                }
+
+                if (iteration > 10) // don't try more than 10 times
+                {
+                    retry = false;
+                }
+            }
         }
     }
 }

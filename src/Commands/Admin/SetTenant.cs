@@ -207,6 +207,11 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public bool? CommentsOnFilesDisabled;
 
+        [Parameter(Mandatory = false)]
+        public SensitiveByDefaultState? MarkNewFilesSensitiveByDefault;
+
+        [Parameter(Mandatory = false)]
+        public bool? DisableBackToClassic;
         protected override void ExecuteCmdlet()
         {
             ClientContext.Load(Tenant);
@@ -240,6 +245,7 @@ namespace PnP.PowerShell.Commands.Admin
             }
             if (SharingCapability != null)
             {
+                
                 Tenant.SharingCapability = SharingCapability.Value;
                 modified = true;
             }
@@ -305,6 +311,13 @@ namespace PnP.PowerShell.Commands.Admin
                     modified = true;
                 }
             }
+
+            if (DisableBackToClassic.HasValue)
+            {
+                Tenant.DisableBackToClassic = DisableBackToClassic.Value;
+                modified = true;
+            }
+
             if (UsePersistentCookiesForExplorerView.HasValue)
             {
                 Tenant.UsePersistentCookiesForExplorerView = UsePersistentCookiesForExplorerView.Value;
@@ -791,6 +804,11 @@ namespace PnP.PowerShell.Commands.Admin
             if (CommentsOnFilesDisabled.HasValue)
             {
                 Tenant.CommentsOnFilesDisabled = CommentsOnFilesDisabled.Value;
+                modified = true;
+            }
+            if (MarkNewFilesSensitiveByDefault.HasValue)
+            {
+                Tenant.MarkNewFilesSensitiveByDefault = MarkNewFilesSensitiveByDefault.Value;
                 modified = true;
             }
             if (modified)

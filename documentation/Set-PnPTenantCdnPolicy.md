@@ -36,6 +36,13 @@ Set-PnPTenantCdnPolicy -CdnType Public -PolicyType IncludeFileExtensions -Policy
 
 This example sets the IncludeFileExtensions policy to the specified value.
 
+### EXAMPLE 2
+```powershell
+Set-PnPTenantCdnPolicy -CdnType Public -PolicyType ExcludeRestrictedSiteClassifications -PolicyValue "Confidential,Restricted"
+```
+
+This example sets the ExcludeRestrictedSiteClassifications policy for the selected CdnType to a policy value of listed excluded site classifications.
+
 ## PARAMETERS
 
 ### -CdnType

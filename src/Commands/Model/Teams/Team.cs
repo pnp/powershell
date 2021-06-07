@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using PnP.PowerShell.Commands.Model.Graph;
 
 namespace PnP.PowerShell.Commands.Model.Teams
@@ -52,7 +53,8 @@ namespace PnP.PowerShell.Commands.Model.Teams
         /// </summary>
         public List<TeamAppInstance> Apps { get; private set; } = new List<TeamAppInstance>();
 
-        public TeamSpecialization? Specialization { get; set; }
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public TeamSpecialization Specialization { get; set; }
 
         /// <summary>
         /// Declares the ID of the targt Group/Team to update, optional attribute. Cannot be used together with CloneFrom.
@@ -79,7 +81,8 @@ namespace PnP.PowerShell.Commands.Model.Teams
         /// </summary>
         public string Description { get; set; }
 
-        public GroupVisibility? Visibility { get; set; }
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public GroupVisibility Visibility { get; set; }
 
         #endregion
 

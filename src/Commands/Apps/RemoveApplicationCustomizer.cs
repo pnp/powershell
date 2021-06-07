@@ -6,6 +6,7 @@ using PnP.PowerShell.Commands.Enums;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using System.Collections.Generic;
 using System.Linq;
+using PnP.Core.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Branding
 {
@@ -29,10 +30,25 @@ namespace PnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-            var rawActions = Identity.GetCustomActions(PnPContext, Scope);
+            var actions = new List<IUserCustomAction>();
+            if (Identity != null)
+            {
+                var rawActions = Identity.GetCustomActions(PnPContext, Scope);
 
-            // Only take the customactions which are application customizers
-            var actions = rawActions.Where(a => a.Location == "ClientSideExtension.ApplicationCustomizer").ToList();
+                // Only take the customactions which are application customizers
+                actions = rawActions.Where(a => a.Location == "ClientSideExtension.ApplicationCustomizer").ToList();
+            }
+            else
+            {
+                if (Scope == CustomActionScope.Web || Scope == CustomActionScope.All)
+                {
+                    actions.AddRange(PnPContext.Web.UserCustomActions.ToList());
+                }
+                if (Scope == CustomActionScope.Site || Scope == CustomActionScope.All)
+                {
+                    actions.AddRange(PnPContext.Site.UserCustomActions.ToList());
+                }                
+            }
 
             // If a ClientSideComponentId has been provided, only leave those who have a matching client side component id
             if (ParameterSetName == ParameterSet_CLIENTSIDECOMPONENTID)

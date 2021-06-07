@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Get-PnPPersonalSite
+title: Request-PnPPersonalSite
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Request-PnPPersonalSite.html
 ---
  
-# Get-PnPPersonalSite
+# Request-PnPPersonalSite
 
 ## SYNOPSIS
 Requests that one or more users be enqueued for a Personal Site to be created.

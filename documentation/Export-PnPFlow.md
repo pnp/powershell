@@ -8,6 +8,11 @@ schema: 2.0.0
 # Export-PnPFlow
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+* Azure: management.azure.com
+
 Exports the Flow
 
 ## SYNTAX

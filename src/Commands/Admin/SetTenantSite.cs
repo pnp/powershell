@@ -166,6 +166,8 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
+            ClientContext.ExecuteQueryRetry(); // fixes issue where ServerLibraryVersion is not available.
+            
             Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
             if (LockState.HasValue)

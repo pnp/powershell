@@ -33,19 +33,19 @@
 
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net461'">
-    <DefineConstants>$(DefineConstants);NETFRAMEWORK</DefineConstants>
+    <DefineConstants>TRACE;$(DefineConstants);NETFRAMEWORK</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+    <DefineConstants>TRACE;$(DefineConstants);DEBUG</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.14.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Graph" Version="3.19.0" />
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.21.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Graph" Version="3.33.0" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.30.1" />
     <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="PnP.Framework" Version="1.4.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
     <PackageReference Include="PnP.Framework" Version="*" Condition="'$(IsRelease)' == '1'" />
@@ -53,14 +53,14 @@
     <PackageReference Include="PnP.Core" Version="*" Condition="'$(IsRelease)' == '1'" />
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.1" />
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
-    <PackageReference Include="System.Security.Cryptography.OpenSsl" Version="4.7.0" />
-    <PackageReference Include="System.Text.Encodings.Web" Version="4.7.1" />
+    <PackageReference Include="System.Security.Cryptography.OpenSsl" Version="5.0.0" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="4.7.2" />
     <PackageReference Include="System.Text.Json" Version="4.7.2" />
-    <PackageReference Include="TextCopy" Version="4.2.0" />
+    <PackageReference Include="TextCopy" Version="4.3.1" />
     <ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
 
   </ItemGroup>

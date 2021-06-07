@@ -16,6 +16,7 @@ namespace PnP.PowerShell.Commands
         private const string ParameterSet_COMMUNICATIONBUILTINDESIGN = "Communication Site with Built-In Site Design";
         private const string ParameterSet_COMMUNICATIONCUSTOMDESIGN = "Communication Site with Custom Design";
         private const string ParameterSet_TEAM = "Team Site";
+        private const string ParameterSet_TEAMSITENOGROUP = "Team Site No M365 Group";
 
         [Parameter(Mandatory = true)]
         public SiteType Type;
@@ -25,6 +26,7 @@ namespace PnP.PowerShell.Commands
 
         private CommunicationSiteParameters _communicationSiteParameters;
         private TeamSiteParameters _teamSiteParameters;
+        private TeamSiteWithoutMicrosoft365Group _teamSiteWithoutMicrosoft365GroupParameters;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
@@ -43,6 +45,11 @@ namespace PnP.PowerShell.Commands
                         _teamSiteParameters = new TeamSiteParameters();
                         return _teamSiteParameters;
                     }
+                case SiteType.TeamSiteWithoutMicrosoft365Group:
+                    {
+                        _teamSiteWithoutMicrosoft365GroupParameters = new TeamSiteWithoutMicrosoft365Group();
+                        return _teamSiteWithoutMicrosoft365GroupParameters;
+                    }
             }
             return null;
         }
@@ -56,7 +63,7 @@ namespace PnP.PowerShell.Commands
                     ClientContext.Web.EnsureProperty(w => w.Language);
                     _communicationSiteParameters.Lcid = ClientContext.Web.Language;
                 }
-                var creationInformation = new PnP.Framework.Sites.CommunicationSiteCollectionCreationInformation();
+                var creationInformation = new Framework.Sites.CommunicationSiteCollectionCreationInformation();
                 creationInformation.Title = _communicationSiteParameters.Title;
                 creationInformation.Url = _communicationSiteParameters.Url;
                 creationInformation.Description = _communicationSiteParameters.Description;
@@ -81,12 +88,17 @@ namespace PnP.PowerShell.Commands
                 creationInformation.PreferredDataLocation = _communicationSiteParameters.PreferredDataLocation;
                 creationInformation.SensitivityLabel = _communicationSiteParameters.SensitivityLabel;
 
-                var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
+                var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
                 WriteObject(returnedContext.Url);
             }
-            else
+            else if (Type == SiteType.TeamSite)
             {
-                var creationInformation = new PnP.Framework.Sites.TeamSiteCollectionCreationInformation();
+                if (!ParameterSpecified("Lcid"))
+                {
+                    ClientContext.Web.EnsureProperty(w => w.Language);
+                    _teamSiteParameters.Lcid = ClientContext.Web.Language;
+                }
+                var creationInformation = new Framework.Sites.TeamSiteCollectionCreationInformation();
                 creationInformation.DisplayName = _teamSiteParameters.Title;
                 creationInformation.Alias = _teamSiteParameters.Alias;
                 creationInformation.Classification = _teamSiteParameters.Classification;
@@ -103,13 +115,41 @@ namespace PnP.PowerShell.Commands
 
                 if (ClientContext.GetContextSettings()?.Type != Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
                 {
-                    var returnedContext = PnP.Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GraphAccessToken);
+                    var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GraphAccessToken);
                     WriteObject(returnedContext.Url);
                 }
                 else
                 {
                     WriteError(new PSInvalidOperationException("Creating a new teamsite requires an underlying Microsoft 365 group. In order to create this we need to acquire an access token for the Microsoft Graph. This is not possible using ACS App Only connections."), ErrorCategory.SecurityError);
                 }
+            }
+            else
+            {
+                if (!ParameterSpecified("Lcid"))
+                {
+                    ClientContext.Web.EnsureProperty(w => w.Language);
+                    _teamSiteWithoutMicrosoft365GroupParameters.Lcid = ClientContext.Web.Language;
+                }
+                var creationInformation = new Framework.Sites.TeamNoGroupSiteCollectionCreationInformation();
+                creationInformation.Title = _teamSiteWithoutMicrosoft365GroupParameters.Title;
+                creationInformation.Url = _teamSiteWithoutMicrosoft365GroupParameters.Url;
+                creationInformation.Description = _teamSiteWithoutMicrosoft365GroupParameters.Description;
+                creationInformation.Classification = _teamSiteWithoutMicrosoft365GroupParameters.Classification;
+#pragma warning disable CS0618 // Type or member is obsolete
+                creationInformation.ShareByEmailEnabled = _teamSiteWithoutMicrosoft365GroupParameters.ShareByEmailEnabled;
+#pragma warning restore CS0618 // Type or member is obsolete
+                creationInformation.Lcid = _teamSiteWithoutMicrosoft365GroupParameters.Lcid;
+                if (ParameterSpecified(nameof(HubSiteId)))
+                {
+                    creationInformation.HubSiteId = HubSiteId;
+                }
+                creationInformation.SiteDesignId = _teamSiteWithoutMicrosoft365GroupParameters.SiteDesignId;
+                creationInformation.Owner = _teamSiteWithoutMicrosoft365GroupParameters.Owner;
+                creationInformation.PreferredDataLocation = _teamSiteWithoutMicrosoft365GroupParameters.PreferredDataLocation;
+                creationInformation.SensitivityLabel = _teamSiteWithoutMicrosoft365GroupParameters.SensitivityLabel;
+
+                var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
+                WriteObject(returnedContext.Url);
             }
         }
 
@@ -185,6 +225,39 @@ namespace PnP.PowerShell.Commands
             public PnP.Framework.Enums.Office365Geography? PreferredDataLocation;
 
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
+            public string SensitivityLabel;
+        }
+
+        public class TeamSiteWithoutMicrosoft365Group
+        {
+            [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public string Title;
+
+            [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public string Url;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public string Description;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public string Classification;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public SwitchParameter ShareByEmailEnabled;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public Guid SiteDesignId;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public uint Lcid;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public string Owner;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
+            public PnP.Framework.Enums.Office365Geography? PreferredDataLocation;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
             public string SensitivityLabel;
         }
     }

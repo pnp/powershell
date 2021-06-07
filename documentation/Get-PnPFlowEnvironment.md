@@ -8,6 +8,11 @@ schema: 2.0.0
 # Get-PnPFlowEnvironment
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+* Azure: management.azure.com
+
 Retrieves the Microsoft Flow environments for the current tenant.
 
 ## SYNTAX

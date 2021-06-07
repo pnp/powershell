@@ -52,6 +52,7 @@ namespace PnP.PowerShell.Commands.Fields
         {
             TaxonomyItem taxItem;
             Field field;
+            
             if (ParameterSetName == "Path")
             {
                 taxItem = ClientContext.Site.GetTaxonomyItemByPath(TermSetPath, TermPathDelimiter);
@@ -94,6 +95,11 @@ namespace PnP.PowerShell.Commands.Fields
                 Required = Required,
                 AddToDefaultView = AddToDefaultView
             };
+
+            if (ParameterSpecified(nameof(FieldOptions)))
+            {
+                fieldCI.FieldOptions = FieldOptions;                
+            }            
 
             if (List != null)
             {

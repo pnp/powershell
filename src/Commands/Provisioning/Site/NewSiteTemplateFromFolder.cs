@@ -173,35 +173,6 @@ namespace PnP.PowerShell.Commands.Provisioning
             XNamespace pnp;
             switch (Schema)
             {
-                case XMLPnPSchemaVersion.V201503:
-#pragma warning disable CS0618 // Type or member is obsolete
-                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_03;
-                    break;
-                case XMLPnPSchemaVersion.V201505:
-                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_05;
-                    break;
-                case XMLPnPSchemaVersion.V201508:
-                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_08;
-                    break;
-                case XMLPnPSchemaVersion.V201512:
-                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12;
-                    break;
-                case XMLPnPSchemaVersion.V201605:
-                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2016_05;
-                    break;
-                case XMLPnPSchemaVersion.V201705:
-                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2017_05;
-                    break;
-                case XMLPnPSchemaVersion.V201801:
-                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_01;
-                    break;
-                case XMLPnPSchemaVersion.V201805:
-                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_05;
-#pragma warning restore CS0618 // Type or member is obsolete
-                    break;
-                case XMLPnPSchemaVersion.V201807:
-                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_07;
-                    break;
                 case XMLPnPSchemaVersion.V201903:
                     pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2019_03;
                     break;
@@ -211,8 +182,11 @@ namespace PnP.PowerShell.Commands.Provisioning
                 case XMLPnPSchemaVersion.V202002:
                     pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2020_02;
                     break;
+                case XMLPnPSchemaVersion.V202103:
+                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2021_03;
+                    break;
                 default:
-                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2020_02;
+                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2021_03;
                     break;
             }
 

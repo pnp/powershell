@@ -5,6 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
+using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
@@ -31,10 +32,19 @@ namespace PnP.PowerShell.Commands.Graph
                 {
                     if (ParameterSpecified(nameof(Channel)))
                     {
+                        var teamChannels = TeamsUtility.GetChannelsAsync(AccessToken, HttpClient, groupId).GetAwaiter().GetResult();
+                        
                         var channelId = Channel.GetId(HttpClient, AccessToken, groupId);
-                        if (!string.IsNullOrEmpty(channelId))
+
+                        var requestedChannel = teamChannels.FirstOrDefault(c => c.Id == channelId);
+
+                        if (!string.IsNullOrEmpty(channelId) && requestedChannel != null && requestedChannel.MembershipType.ToLower() == TeamChannelType.Private.ToString().ToLower())
                         {
                             WriteObject(TeamsUtility.GetUsersAsync(HttpClient, AccessToken, groupId, channelId, Role).GetAwaiter().GetResult(), true);
+                        }
+                        else
+                        {
+                            WriteWarning("Specified channel is not a private channel. Please specify a private channel name to fetch its users.");
                         }
                     }
                     else

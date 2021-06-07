@@ -4,9 +4,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Files
 {
@@ -88,7 +86,8 @@ namespace PnP.PowerShell.Commands.Files
             // Check to see if the Content Type exists. If it doesn't we are going to throw an exception and block this transaction right here.
             if (ContentType != null)
             {
-                var list = CurrentWeb.GetListByUrl(folder.ServerRelativeUrl);
+                CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                var list = CurrentWeb.GetListByUrl(folder.ServerRelativeUrl.Substring(CurrentWeb.ServerRelativeUrl.TrimEnd('/').Length + 1));
                 if (list is null)
                 {
                     throw new PSArgumentException("The folder specified does not have a corresponding list", nameof(Folder));
@@ -139,7 +138,7 @@ namespace PnP.PowerShell.Commands.Files
 
             if (updateRequired)
             {
-                item.SystemUpdate();
+                item.UpdateOverwriteVersion();
             }
             if (Checkout)
             {
@@ -157,7 +156,16 @@ namespace PnP.PowerShell.Commands.Files
             }
 
             ClientContext.Load(file);
-            ClientContext.ExecuteQueryRetry();
+            try
+            {
+                ClientContext.ExecuteQueryRetry();
+            }
+            catch (ServerException)
+            {
+                // Can happen when uploading a file to a location not residing inside a document library, such as to the _cts folder. Switch to fallback option so that the upload doesn't result in an error.
+                ClientContext.Load(file, f => f.Length, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
+                ClientContext.ExecuteQueryRetry();
+            }
             WriteObject(file);
         }
 

@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Principals
     
     public class SetGroup : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public GroupPipeBind Identity = new GroupPipeBind();
 
         [Parameter(Mandatory = false)]

@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (pnpContext == null && Context != null)
                 {
-                    pnpContext = PnP.Framework.PnPCoreSdk.Instance.GetPnPContext(Context, UserAgent);
+                    pnpContext = PnP.Framework.PnPCoreSdk.Instance.GetPnPContext(Context);
                 }
                 return pnpContext;
             }
@@ -201,7 +201,7 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection CreateWithDeviceLogin(string clientId, string url, bool launchBrowser, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource)
+        internal static PnPConnection CreateWithDeviceLogin(string clientId, string url, string tenantId, bool launchBrowser, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource)
         {
             var connectionUri = new Uri(url);
             var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
@@ -213,7 +213,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                authManager = PnP.Framework.AuthenticationManager.CreateWithDeviceLogin(clientId, (deviceCodeResult) =>
+                authManager = PnP.Framework.AuthenticationManager.CreateWithDeviceLogin(clientId, tenantId, (deviceCodeResult) =>
                  {
                      if (launchBrowser)
                      {
@@ -237,7 +237,9 @@ namespace PnP.PowerShell.Commands.Base
             }
             using (authManager)
             {
+                try {
                 var clientContext = authManager.GetContext(url.ToString(), cancellationTokenSource.Token);
+
                 var context = PnPClientContext.ConvertFrom(clientContext);
 
                 var connectionType = ConnectionType.O365;
@@ -248,6 +250,17 @@ namespace PnP.PowerShell.Commands.Base
                     AzureEnvironment = azureEnvironment
                 };
                 return spoConnection;
+                } catch (Microsoft.Identity.Client.MsalServiceException msalServiceException)
+                {
+                    if(msalServiceException.Message.StartsWith("AADSTS50059:"))
+                    {
+                        cancellationTokenSource.Cancel();
+                        throw new Exception("Please specify -Tenant with either the tenant id or hostname.");
+                    } else {
+                        throw;
+                    }
+                    
+                }
             }
         }
 

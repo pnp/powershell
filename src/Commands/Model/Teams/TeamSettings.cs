@@ -54,6 +54,8 @@ namespace PnP.PowerShell.Commands.Model.Teams
 
         public bool? ShowInTeamsSearchAndSuggestions { get; set; }
 
+        public bool? AllowCreatePrivateChannels { get; set; }
+
         public TeamCreationInformation()
         {
         }
@@ -63,7 +65,7 @@ namespace PnP.PowerShell.Commands.Model.Teams
             GroupId = team.GroupId;
             DisplayName = team.DisplayName;
             Description = team.Description;
-            Visibility = team.Visibility.Value;
+            Visibility = team.Visibility;
             Archived = team.IsArchived;
             Classification = team.Classification;
             AllowGiphy = team.FunSettings.AllowGiphy;
@@ -83,6 +85,7 @@ namespace PnP.PowerShell.Commands.Model.Teams
             AllowTeamMentions = team.MessagingSettings.AllowTeamMentions;
             AllowChannelMentions = team.MessagingSettings.AllowChannelMentions;
             ShowInTeamsSearchAndSuggestions = team.DiscoverySettings.ShowInTeamsSearchAndSuggestions;
+            AllowCreatePrivateChannels = team.MemberSettings.AllowCreatePrivateChannels;            
         }
 
         public Team ToTeam()
@@ -107,7 +110,8 @@ namespace PnP.PowerShell.Commands.Model.Teams
                     AllowDeleteChannels = AllowDeleteChannels,
                     AllowAddRemoveApps = AllowAddRemoveApps,
                     AllowCreateUpdateRemoveTabs = AllowCreateUpdateRemoveTabs,
-                    AllowCreateUpdateRemoveConnectors = AllowCreateUpdateRemoveConnectors
+                    AllowCreateUpdateRemoveConnectors = AllowCreateUpdateRemoveConnectors,
+                    AllowCreatePrivateChannels = AllowCreatePrivateChannels
                 },
                 MessagingSettings = new TeamMessagingSettings
                 {

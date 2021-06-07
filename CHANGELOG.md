@@ -5,9 +5,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [Current Nightly]
+## [1.6.0]
 
 ### Added
+
+### Changed
+
+- Get-PnPPage now can load pages living in a folder by specifying "folder/page.aspx"
+- Added `-DisableBackToClassic` option to Set-PnPTenant
+
+### Contributors
+- [thomassmart]
+- Bert Jansen [jansenbe]  
 
 ## [1.5.0]
 
