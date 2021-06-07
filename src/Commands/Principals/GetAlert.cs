@@ -75,6 +75,10 @@ namespace PnP.PowerShell.Commands.Principals
             {
                 // Return alerts for all users
                 ClientContext.Load(CurrentWeb.Alerts);
+                if (list != null)
+                {
+                    ClientContext.Load(CurrentWeb.Alerts, a => a.Include(b => b.ListID));
+                }
                 ClientContext.ExecuteQueryRetry();
 
                 if(list != null)
