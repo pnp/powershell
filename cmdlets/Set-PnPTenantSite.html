@@ -111,7 +111,7 @@
 <p>Allows settings of a site collection to be updated</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPTenantSite -Identity &quot;https://contoso.sharepoint.com&quot; -Title &quot;Contoso Website&quot; -Sharing Disabled
+<pre><code class="lang-powershell">Set-PnPTenantSite -Identity &quot;https://contoso.sharepoint.com&quot; -Title &quot;Contoso Website&quot; -SharingCapability Disabled
 </code></pre>
 <p>This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website' and disable sharing on this site collection.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
@@ -259,7 +259,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-denyaddandcustomizepages">-DenyAddAndCustomizePages</h3>
-<p>Determines whether the Add And Customize Pages right is denied on the site collection. For more information about permission levels, see User permissions and permission levels in SharePoint.</p>
+<p>Determines whether the Add And Customize Pages right is denied in the site collection. For more information about permission levels, see User permissions and permission levels in SharePoint.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
 Aliases: NoScriptSite
@@ -271,9 +271,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-disableappviews">-DisableAppViews</h3>
-<ul>
-<li></li>
-</ul>
+<p>Determines whether the App Views feature is disabled in the site collection.</p>
 <pre><code class="lang-yaml">Type: AppViewsPolicy
 Parameter Sets: Set Properties
 Accepted values: Unknown, Disabled, NotDisabled
@@ -285,9 +283,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-disablecompanywidesharinglinks">-DisableCompanyWideSharingLinks</h3>
-<ul>
-<li></li>
-</ul>
+<p>Determines whether company-wide sharing links are disabled in collection.</p>
 <pre><code class="lang-yaml">Type: CompanyWideSharingLinksPolicy
 Parameter Sets: Set Properties
 Accepted values: Unknown, Disabled, NotDisabled
@@ -299,13 +295,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-disableflows">-DisableFlows</h3>
-<ul>
-<li></li>
-</ul>
+<p>Determines whether flows are disabled in the site collection.</p>
 <pre><code class="lang-yaml">Type: FlowsPolicy
 Parameter Sets: Set Properties
 Accepted values: Unknown, Disabled, NotDisabled
 
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-externaluserexpirationindays">-ExternalUserExpirationInDays</h3>
+<p>Specifies number of days the external users remain active on the site.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: Set Properties
 Required: False
 Position: Named
 Default value: None
@@ -359,7 +363,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-overridetenantanonymouslinkexpirationpolicy">-OverrideTenantAnonymousLinkExpirationPolicy</h3>
-<p>{{ Fill OverrideTenantAnonymousLinkExpirationPolicy Description }}</p>
+<p>Specifies whether to use company-wide or a site collection level anonymous links expiration policy. Set it to true to get advantage of AnonymousLinkExpirationInDays.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
 
@@ -403,7 +407,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-sharingalloweddomainlist">-SharingAllowedDomainList</h3>
-<p>Specifies a list of email domains that is allowed for sharing with the external collaborators. Use the space character as the delimiter for entering multiple values. For example, &quot;contoso.com fabrikam.com&quot;.</p>
+<p>Specifies a list of email domains that is allowed for sharing with the external collaborators. Use the space character as the delimiter for entering multiple values. For example, &quot;contoso.com fabrikam.com&quot;. Effective when SharingDomainRestrictionMode is set to AllowList.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Set Properties
 
@@ -414,7 +418,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-sharingblockeddomainlist">-SharingBlockedDomainList</h3>
-<p>Specifies a list of email domains that is blocked for sharing with the external collaborators. Use the space character as the delimiter for entering multiple values. For example, &quot;contoso.com fabrikam.com&quot;.</p>
+<p>Specifies a list of email domains that is blocked for sharing with the external collaborators. Use the space character as the delimiter for entering multiple values. For example, &quot;contoso.com fabrikam.com&quot;. Effective when SharingDomainRestrictionMode is set to BlockList.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Set Properties
 

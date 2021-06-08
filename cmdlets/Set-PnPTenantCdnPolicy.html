@@ -100,6 +100,10 @@
 <pre><code class="lang-powershell">Set-PnPTenantCdnPolicy -CdnType Public -PolicyType IncludeFileExtensions -PolicyValue &quot;CSS,EOT,GIF,ICO,JPEG,JPG,JS,MAP,PNG,SVG,TTF,WOFF&quot;
 </code></pre>
 <p>This example sets the IncludeFileExtensions policy to the specified value.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Set-PnPTenantCdnPolicy -CdnType Public -PolicyType ExcludeRestrictedSiteClassifications -PolicyValue &quot;Confidential,Restricted&quot;
+</code></pre>
+<p>This example sets the ExcludeRestrictedSiteClassifications policy for the selected CdnType to a policy value of listed excluded site classifications.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-cdntype">-CdnType</h3>
 <p>The type of cdn to retrieve the policies from</p>

@@ -123,6 +123,10 @@
 <pre><code class="lang-powershell">Set-PnPSite -LogoFilePath c:\images\mylogo.png
 </code></pre>
 <p>Sets the logo if the site is a modern team site</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Set-PnPSite -NoScriptSite $false
+</code></pre>
+<p>Allows custom script on a specific site. See <a href="https://docs.microsoft.com/en-us/sharepoint/allow-or-prevent-custom-script">Allow or prevent custom script</a> for more information.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-allowselfserviceupgrade">-AllowSelfServiceUpgrade</h3>
 <p>Specifies if the site administrator can upgrade the site collection</p>
@@ -303,7 +307,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-noscriptsite">-NoScriptSite</h3>
-<p>Specifies if a site allows custom script or not. See <a href="https://support.office.com/en-us/article/Turn-scripting-capabilities-on-or-off-1f2c515f-5d7e-448a-9fd7-835da935584f">https://support.office.com/en-us/article/Turn-scripting-capabilities-on-or-off-1f2c515f-5d7e-448a-9fd7-835da935584f</a> for more information.</p>
+<p>Specifies if a site allows custom script or not. See <a href="https://docs.microsoft.com/en-us/sharepoint/allow-or-prevent-custom-script">Allow or prevent custom script</a> for more information.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
 Aliases: DenyAndAddCustomizePages

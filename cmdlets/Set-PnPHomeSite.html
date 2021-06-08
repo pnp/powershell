@@ -88,14 +88,14 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Sets the home site for your tenant</p>
+<p>Sets the home site for your tenant. The home site needs to be a communication site.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPHomeSite -Url &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPHomeSite -HomeSiteUrl &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPHomeSite -Url &quot;https://yourtenant.sharepoint.com/sites/myhome&quot;
+<pre><code class="lang-powershell">Set-PnPHomeSite -HomeSiteUrl &quot;https://yourtenant.sharepoint.com/sites/myhome&quot;
 </code></pre>
 <p>Sets the home site to the provided site collection url</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -110,7 +110,7 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-url">-Url</h3>
+<h3 id="-homesiteurl">-HomeSiteUrl</h3>
 <p>The url of the site to set as the home site</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
@@ -122,7 +122,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
+<a href="https://docs.microsoft.com/sharepoint/home-site">Set up a home site for your organization</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

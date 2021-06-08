@@ -194,8 +194,7 @@ By default it will use the PnP Management Shell multi-tenant application behind 
 <h3 id="example-11">EXAMPLE 11</h3>
 <pre><code>Connect-PnPOnline -Url &quot;https://portal.contoso.com&quot; -TransformationOnPrem -CurrentCredential
 </code></pre>
-<p>Connects to on-premises SharePoint 2013, 2016 or 2019 site with the current user's on-premises Windows credential (e.g.
-domain\user).
+<p>Connects to on-premises SharePoint 2013, 2016 or 2019 site with the current user's on-premises Windows credential (e.g. domain\user).
 This option is only supported for being able to transform on-premises classic wiki, webpart, blog and publishing pages into modern pages in a SharePoint Online site.
 Although other PnP cmdlets might work as well, they're officially not supported for being used in an on-premises context.
 See <a href="http://aka.ms/sharepoint/modernization/pages">http://aka.ms/sharepoint/modernization/pages</a> for more details on page transformation.</p>
@@ -313,6 +312,19 @@ Accept wildcard characters: False
 <p>Credentials of the user to connect with.
 Either specify a PSCredential object or a string.
 In case of a string value a lookup will be done to the Generic Credentials section of the Windows Credentials in the Windows Credential Manager for the correct credentials.</p>
+<pre><code class="lang-yaml">Type: CredentialPipeBind
+Parameter Sets: Credentials
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-currentcredentials">-CurrentCredentials</h3>
+<p>Use credentials of the currently logged in user. Applicable exclusively when connecting to on premises SharePoint Server via PnP.
+Switch parameter.</p>
 <pre><code class="lang-yaml">Type: CredentialPipeBind
 Parameter Sets: Credentials
 Aliases:

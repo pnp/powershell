@@ -84,7 +84,7 @@
                     <h1 id="new-pnpsite">New-PnPSite</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Creates either a communication site or a Microsoft 365 group-connected team site</p>
+<p>Creates a communication site, Microsoft 365 group-connected team site or Modern team site not connected to M365 group.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="teamsite">TeamSite</h3>
 <pre><code class="lang-powershell">New-PnPSite -Type TeamSite -Title &lt;String&gt; -Alias &lt;String&gt; [-Description &lt;String&gt;] [-Classification &lt;String&gt;] [-IsPublic] [-Lcid &lt;UInt&gt;] [-Owners &lt;String[][]&gt;] [-PreferredDataLocation &lt;Office365Geography&gt;] [-SensitivityLabel &lt;String&gt;] [-HubSiteId &lt;Guid&gt;] [-Wait] [-Connection &lt;PnPConnection&gt;]
@@ -93,8 +93,11 @@
 <h3 id="communicationsite">CommunicationSite</h3>
 <pre><code class="lang-powershell">New-PnPSite -Type CommunicationSite -Title &lt;String&gt; -Url &lt;String&gt; [-HubSiteId &lt;Guid&gt;] [-Classification &lt;String&gt;] [-SiteDesign &lt;SiteDesign&gt;] [-SiteDesignId &lt;Guid&gt;] [-Lcid &lt;UInt&gt;] [-Owner &lt;String&gt;] [-PreferredDataLocation &lt;Office365Geography&gt;] [-SensitivityLabel &lt;String&gt;]
 </code></pre>
+<h3 id="teamsitewithoutmicrosoft365group">TeamSiteWithoutMicrosoft365Group</h3>
+<pre><code class="lang-powershell">New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title &lt;String&gt; -Url &lt;String&gt; [-HubSiteId &lt;Guid&gt;] [-Classification &lt;String&gt;] [-SiteDesignId &lt;Guid&gt;] [-Lcid &lt;UInt&gt;] [-Owner &lt;String&gt;] [-PreferredDataLocation &lt;Office365Geography&gt;] [-SensitivityLabel &lt;String&gt;]
+</code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>The New-PnPSite cmdlet creates a new site collection for the current tenant. Currently only 'modern' sites like Communication Site and the Modern Microsoft 365 group-connected team sites are supported. If you want to create a classic site, use New-PnPTenantSite. Note that the -Type parameter is mandatory to be used to indicate which type of site you would like to create. Based on the type of site you specify, you will be able to provide the additional arguments that are valid for that site type, so it is recommended to provide this as the first argument.</p>
+<p>The New-PnPSite cmdlet creates a new site collection for the current tenant. Currently only 'modern' sites like Communication Site , Modern Microsoft 365 group-connected team sites and Modern Team sites not connected to M365 groups are supported. If you want to create a classic site, use New-PnPTenantSite. Note that the -Type parameter is mandatory to be used to indicate which type of site you would like to create. Based on the type of site you specify, you will be able to provide the additional arguments that are valid for that site type, so it is recommended to provide this as the first argument.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">New-PnPSite -Type CommunicationSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso
@@ -132,6 +135,26 @@
 <pre><code class="lang-powershell">New-PnPSite -Type TeamSite -Title 'Team Contoso' -Alias contoso -Lcid 1040
 </code></pre>
 <p>This will create a new Modern Team Site collection with the title 'Team Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' or 'https://tenant.sharepoint.com/teams/contoso' based on the managed path configuration in the SharePoint Online Admin portal and sets the default language of the site to Italian.</p>
+<h3 id="example-10">EXAMPLE 10</h3>
+<pre><code class="lang-powershell">New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso
+</code></pre>
+<p>This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'</p>
+<h3 id="example-11">EXAMPLE 11</h3>
+<pre><code class="lang-powershell">New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -SiteDesignId ae2349d5-97d6-4440-94d1-6516b72449ac
+</code></pre>
+<p>This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. It will use the specified custom site design for the site.</p>
+<h3 id="example-12">EXAMPLE 12</h3>
+<pre><code class="lang-powershell">New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Classification &quot;HBI&quot;
+</code></pre>
+<p>This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. The classification for the site will be set to &quot;HBI&quot;</p>
+<h3 id="example-13">EXAMPLE 13</h3>
+<pre><code class="lang-powershell">New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -ShareByEmailEnabled
+</code></pre>
+<p>This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. Allows owners to invite users outside of the organization.</p>
+<h3 id="example-14">EXAMPLE 14</h3>
+<pre><code class="lang-powershell">New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Lcid 1040
+</code></pre>
+<p>This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the default language to Italian (LCID 1040).</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-alias">-Alias</h3>
 <p>The alias to use for the team site.</p>
@@ -147,7 +170,7 @@ Accept wildcard characters: False
 <h3 id="-classification">-Classification</h3>
 <p>The classification to use for the new site.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: CommunicationSite, TeamSite
+Parameter Sets: CommunicationSite, TeamSite, TeamSiteWithoutMicrosoft365Group
 
 Required: False
 Position: Named
@@ -158,7 +181,7 @@ Accept wildcard characters: False
 <h3 id="-description">-Description</h3>
 <p>The description of the site to create</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: CommunicationSite, TeamSite
+Parameter Sets: CommunicationSite, TeamSite, TeamSiteWithoutMicrosoft365Group
 
 Required: False
 Position: Named
@@ -180,7 +203,7 @@ Accept wildcard characters: False
 <h3 id="-description-1">-Description</h3>
 <p>The description of the site to create</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: CommunicationSite, TeamSite
+Parameter Sets: CommunicationSite, TeamSite, TeamSiteWithoutMicrosoft365Group
 
 Required: False
 Position: Named
@@ -213,7 +236,7 @@ Accept wildcard characters: False
 <h3 id="-lcid">-Lcid</h3>
 <p>The language to use for the site.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: CommunicationSite, TeamSite
+Parameter Sets: CommunicationSite, TeamSite, TeamSiteWithoutMicrosoft365Group
 
 Required: False
 Position: Named
@@ -235,7 +258,7 @@ Accept wildcard characters: False
 <h3 id="-owner">-Owner</h3>
 <p>The owner to specify for the site. Defaults to the current user. Required if you use an app-only connection.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: CommunicationSite
+Parameter Sets: CommunicationSite, TeamSiteWithoutMicrosoft365Group
 
 Required: False
 Position: Named
@@ -246,7 +269,7 @@ Accept wildcard characters: False
 <h3 id="-preferreddatalocation">-PreferredDataLocation</h3>
 <p>In case of a multi-geo environment you can specify the preferred data location</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: CommunicationSite, TeamSite
+Parameter Sets: CommunicationSite, TeamSite, TeamSiteWithoutMicrosoft365Group
 Accepted values: APC, ARE, AUS, CAN, CHE, DEU, EUR, FRA, GBR, IND, JPN, KOR, NAM, NOR, ZAF
 
 Required: False
@@ -258,7 +281,7 @@ Accept wildcard characters: False
 <h3 id="-sensitivitylabel">-SensitivityLabel</h3>
 <p>The sensitivity label to specify for the new site.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: CommunicationSite, TeamSite
+Parameter Sets: CommunicationSite, TeamSite, TeamSiteWithoutMicrosoft365Group
 
 Required: False
 Position: Named
@@ -269,7 +292,7 @@ Accept wildcard characters: False
 <h3 id="-sharebyemailenabled">-ShareByEmailEnabled</h3>
 <p>If specified sharing content by email will be enabled.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: CommunicationSite
+Parameter Sets: CommunicationSite, TeamSiteWithoutMicrosoft365Group
 
 Required: False
 Position: Named
@@ -292,7 +315,7 @@ Accept wildcard characters: False
 <h3 id="-sitedesignid">-SiteDesignId</h3>
 <p>Allows to specify a custom site design</p>
 <pre><code class="lang-yaml">Type: Guid
-Parameter Sets: CommunicationSite
+Parameter Sets: CommunicationSite, TeamSiteWithoutMicrosoft365Group
 
 Required: False
 Position: Named
@@ -303,7 +326,7 @@ Accept wildcard characters: False
 <h3 id="-title">-Title</h3>
 <p>Specifies the title of the site to create</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: CommunicationSite, TeamSite
+Parameter Sets: CommunicationSite, TeamSiteWithoutMicrosoft365Group
 
 Required: True
 Position: Named
@@ -315,7 +338,7 @@ Accept wildcard characters: False
 <p>Specifies with type of site to create.</p>
 <pre><code class="lang-yaml">Type: SiteType
 Parameter Sets: (All)
-Accepted values: CommunicationSite, TeamSite
+Accepted values: CommunicationSite, TeamSite, TeamSiteWithoutMicrosoft365Group
 
 Required: True
 Position: Named

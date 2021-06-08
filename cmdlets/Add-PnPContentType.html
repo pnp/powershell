@@ -95,6 +95,10 @@
 <pre><code class="lang-powershell">Add-PnPContentType -Name &quot;Project Document&quot; -Description &quot;Use for Contoso projects&quot; -Group &quot;Contoso Content Types&quot; -ParentContentType $ct
 </code></pre>
 <p>This will add a new content type based on the parent content type stored in the $ct variable.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Add-PnPContentType -Name &quot;Project Document&quot; -Description &quot;Use for Contoso projects&quot; -Group &quot;Contoso Content Types&quot; -ParentContentType (Get-PnPContentType -Identity 0x0101) -DocumentTemplate &quot;/_cts/Project Document/template.docx&quot;
+</code></pre>
+<p>This will add a new content type based on the standard document content type and assigns the document template template.docx to it</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -154,6 +158,17 @@ Accept wildcard characters: False
 <h3 id="-parentcontenttype">-ParentContentType</h3>
 <p>Specifies the parent of the new content type</p>
 <pre><code class="lang-yaml">Type: ContentType
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-documenttemplate">-DocumentTemplate</h3>
+<p>Allows providing a server relative path to a file which should be used as the document template for this content type</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False

@@ -117,7 +117,9 @@
  [-AllowDownloadingNonWebViewableFiles &lt;Boolean&gt;] [-AllowEditing &lt;Boolean&gt;]
  [-ApplyAppEnforcedRestrictionsToAdHocRecipients &lt;Boolean&gt;] [-FilePickerExternalImageSearchEnabled &lt;Boolean&gt;]
  [-EmailAttestationRequired &lt;Boolean&gt;] [-EmailAttestationReAuthDays &lt;Int32&gt;] [-HideDefaultThemes &lt;Boolean&gt;]
- [-DisabledWebPartIds &lt;Guid[]&gt;] [-EnableAIPIntegration &lt;Boolean&gt;] [-DisableCustomAppAuthentication &lt;Boolean&gt;] [-EnableAutoNewsDigest &lt;Boolean&gt;][-CommentsOnListItemsDisabled &lt;Boolean&gt;][-CommentsOnFilesDisabled &lt;Boolean&gt;]
+ [-DisabledWebPartIds &lt;Guid[]&gt;] [-EnableAIPIntegration &lt;Boolean&gt;] [-DisableCustomAppAuthentication &lt;Boolean&gt;] 
+ [-EnableAutoNewsDigest &lt;Boolean&gt;] [-CommentsOnListItemsDisabled &lt;Boolean&gt;] [-CommentsOnFilesDisabled &lt;Boolean&gt;]
+ [-DisableBackToClassic &lt;Boolean&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -254,6 +256,17 @@ Setting this value to &quot;none&quot; will default &quot;get a link&quot; to th
 <pre><code class="lang-yaml">Type: SharingLinkType
 Parameter Sets: (All)
 Accepted values: None, Direct, Internal, AnonymousAccess
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-disablebacktoclassic">-DisableBackToClassic</h3>
+<p>Disables the back to classic link for libraries and lists.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -760,7 +773,7 @@ Accept wildcard characters: False
 <p>The valid values are:
 ExternalUserAndGuestSharing (default) - External user sharing (share by email) and guest link sharing are both enabled. Disabled - External user sharing (share by email) and guest link sharing are both disabled.
 ExternalUserSharingOnly - External user sharing (share by email) is enabled, but guest link sharing is disabled.</p>
-<p>For more information about sharing, see Manage external sharing for your SharePoint online environment (<a href="http://office.microsoft.com/en-us/office365-sharepoint-online-enterprise-help/manage-external-sharing-for-your-sharepoint-online-environment-HA102849864.aspx">http://office.microsoft.com/en-us/office365-sharepoint-online-enterprise-help/manage-external-sharing-for-your-sharepoint-online-environment-HA102849864.aspx</a>).</p>
+<p>For more information about sharing, see Manage external sharing for your SharePoint online environment (<a href="https://docs.microsoft.com/en-us/sharepoint/turn-external-sharing-on-or-off">https://docs.microsoft.com/en-us/sharepoint/turn-external-sharing-on-or-off</a>).</p>
 <pre><code class="lang-yaml">Type: SharingCapabilities
 Parameter Sets: (All)
 Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
