@@ -137,7 +137,7 @@ namespace PnP.PowerShell.Commands.Base
                     context.DisableReturnValueCache = true;
                     context.ExecutingWebRequest += (sender, e) =>
                     {
-                        e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion})";
+                        e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
                     };
                     if (IsTenantAdminSite(context))
                     {
@@ -187,7 +187,7 @@ namespace PnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.O365;
                     context.ExecutingWebRequest += (sender, e) =>
                     {
-                        e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion})";
+                        e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
                     };
                     if (IsTenantAdminSite(context))
                     {
@@ -252,7 +252,7 @@ namespace PnP.PowerShell.Commands.Base
                     var context = PnPClientContext.ConvertFrom(clientContext);
                     context.ExecutingWebRequest += (sender, e) =>
                     {
-                        e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion})";
+                        e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
                     };
                     var connectionType = ConnectionType.O365;
 
@@ -297,7 +297,7 @@ namespace PnP.PowerShell.Commands.Base
                 var context = PnPClientContext.ConvertFrom(clientContext);
                 context.ExecutingWebRequest += (sender, e) =>
                 {
-                    e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion})";
+                    e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
                 };
 
                 var connectionType = ConnectionType.O365;
@@ -357,7 +357,7 @@ namespace PnP.PowerShell.Commands.Base
                             context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                             context.ExecutingWebRequest += (sender, e) =>
                             {
-                                e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion})";
+                                e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
                             };
                             context.ExecuteQueryRetry();
                             cmdlet.WriteVerbose("Acquiring token");
@@ -383,7 +383,7 @@ namespace PnP.PowerShell.Commands.Base
                             context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                             context.ExecutingWebRequest += (sender, e) =>
                             {
-                                e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion})";
+                                e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
                             };
                             context.ExecuteQueryRetry();
 
@@ -442,7 +442,7 @@ namespace PnP.PowerShell.Commands.Base
                     }
                     context.ExecutingWebRequest += (sender, e) =>
                     {
-                        e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion})";
+                        e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
                     };
                 }
 
@@ -472,7 +472,7 @@ namespace PnP.PowerShell.Commands.Base
                 var context = PnPClientContext.ConvertFrom(webLoginClientContext);
                 context.ExecutingWebRequest += (sender, e) =>
                 {
-                    e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion})";
+                    e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
                 };
                 if (context != null)
                 {
@@ -517,7 +517,7 @@ namespace PnP.PowerShell.Commands.Base
                 var context = PnPClientContext.ConvertFrom(clientContext);
                 context.ExecutingWebRequest += (sender, e) =>
                 {
-                    e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion})";
+                    e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
                 };
                 var connectionType = ConnectionType.O365;
 
