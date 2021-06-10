@@ -30,9 +30,10 @@ namespace PnP.PowerShell.Commands.Site
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public string LogoFilePath;
-
+                
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public SharingCapabilities? Sharing = null;
+        [Alias("Sharing")]
+        public SharingCapabilities? SharingCapability = null;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public long? StorageMaximumLevel = null;
@@ -194,9 +195,9 @@ namespace PnP.PowerShell.Commands.Site
                     }
                     tenant.AddAdministrators(admins, new Uri(siteUrl));
                 }
-                if (Sharing.HasValue)
+                if (SharingCapability.HasValue)
                 {
-                    siteProperties.SharingCapability = Sharing.Value;
+                    siteProperties.SharingCapability = SharingCapability.Value;
                     executeQueryRequired = true;
                 }
                 if (StorageMaximumLevel.HasValue)
@@ -303,7 +304,7 @@ namespace PnP.PowerShell.Commands.Site
         private bool IsTenantProperty() =>
                 LockState.HasValue ||
                 (Owners != null && Owners.Count > 0) ||
-                Sharing.HasValue ||
+                SharingCapability.HasValue ||
                 StorageMaximumLevel.HasValue ||
                 StorageWarningLevel.HasValue ||
                 AllowSelfServiceUpgrade.HasValue ||
