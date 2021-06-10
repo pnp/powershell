@@ -164,7 +164,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             if (group != null)
             {
-                Team team = teamCI.ToTeam();
+                Team team = teamCI.ToTeam(group.Visibility);
                 var retry = true;
                 var iteration = 0;
                 while (retry)
