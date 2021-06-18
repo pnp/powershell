@@ -10,7 +10,7 @@ title: Add-PnPJavaScriptBlock
 # Add-PnPJavaScriptBlock
 
 ## SYNOPSIS
-Adds a link to a JavaScript snippet/block to a web or site collection
+Adds a link to a JavaScript snippet/block to a web or site collection, valid only for SharePoint classic site experience.
 
 ## SYNTAX
 
