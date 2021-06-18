@@ -40,12 +40,12 @@ Note if you are using Credential Based Authentication, you will need to make a c
 Connect-PnPOnline -Url "https://[yourtenant.sharepoint.com] -Credentials (Get-Credential) -ClientId [clientid]
 ```
 
-## Connect interactively using WebLogin supporting MFA
+## Connect interactively logging in with support for MFA
 
-One of the easiest methods to use. However, notice that this connection method will have its limitation as we will utility cookie based authentication. For instance, we will not be able to make calls to the Microsoft Graph behind the scenes. 
+One of the easiest methods to use supporting MFA and any other potential authentication providers that may be in use. This is ideal if you occasionally want to manually run scripts:
 
 ```powershell
-Connect-PnPOnline -Url https://tenant.sharepoint.com -UseWebLogin
+Connect-PnPOnline -Url https://tenant.sharepoint.com -Interactive
 ```
 
 ## Connect using a ClientId and PFX certificate stored on your local machine
