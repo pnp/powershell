@@ -19,7 +19,7 @@ This will launch a device login flow that will ask you to consent to the applica
 After that you can authenticate using
 
 ```powershell
-Connect-PnPOnline -Url "https://[yourtenant].sharepoint.com" -Credentials (Get-Credential)
+Connect-PnPOnline -Url https://[yourtenant].sharepoint.com -Credentials (Get-Credential)
 ```
 
 or in case the account you would like to use has MFA or any other authentication provider configured for it, instead use:
