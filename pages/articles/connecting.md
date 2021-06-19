@@ -25,7 +25,7 @@ Connect-PnPOnline -Url "https://[yourtenant].sharepoint.com" -Credentials (Get-C
 or in case the account you would like to use has MFA or any other authentication provider configured for it, instead use:
 
 ```powershell
-Connect-PnPOnline -Url https://tenant.sharepoint.com -Interactive
+Connect-PnPOnline -Url https://[yourtenant].sharepoint.com -Interactive
 ```
 
 ### Connect by using your own Azure AD Application
