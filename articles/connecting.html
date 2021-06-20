@@ -92,7 +92,10 @@
 </code></pre>
 <p>This will launch a device login flow that will ask you to consent to the application. Notice that is only required -once- per tenant. You will need to have appropriate access rights to be able to consent applications in your Azure AD.</p>
 <p>After that you can authenticate using</p>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://[yourtenant].sharepoint.com&quot; -Credentials (Get-Credential)
+<pre><code class="lang-powershell">Connect-PnPOnline -Url https://[yourtenant].sharepoint.com -Credentials (Get-Credential)
+</code></pre>
+<p>or in case the account you would like to use has MFA or any other authentication provider configured for it, instead use:</p>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url https://[yourtenant].sharepoint.com -Interactive
 </code></pre>
 <h3 id="connect-by-using-your-own-azure-ad-application">Connect by using your own Azure AD Application</h3>
 <p>You will have to create your own Azure AD Application registration, or you can create one:</p>
@@ -103,9 +106,9 @@
 <p>Note if you are using Credential Based Authentication, you will need to make a change to the app registration manifest file. Go to the app registration, select Manifest under the Manage section, then change the &quot;allowPublicClient&quot; property to true and click save.</p>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://[yourtenant.sharepoint.com] -Credentials (Get-Credential) -ClientId [clientid]
 </code></pre>
-<h2 id="connect-interactively-logging-in-with-support-for-mfa">Connect interactively logging in with support for MFA</h2>
-<p>One of the easiest methods to use supporting MFA and any other potential authentication providers that may be in use. This is ideal if you occasionally want to manually run scripts:</p>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url https://tenant.sharepoint.com -Interactive
+<h2 id="connect-interactively-using-weblogin-supporting-mfa">Connect interactively using WebLogin supporting MFA</h2>
+<p>One of the easiest methods to use. However, notice that this connection method will have its limitation as we will utility cookie based authentication. For instance, we will not be able to make calls to the Microsoft Graph behind the scenes.</p>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url https://tenant.sharepoint.com -UseWebLogin
 </code></pre>
 <h2 id="connect-using-a-clientid-and-pfx-certificate-stored-on-your-local-machine">Connect using a ClientId and PFX certificate stored on your local machine</h2>
 <p>Allows using an Azure Active Directory app registration from your own Azure Active Directory with a certificate to connect. The private key certificate, typically the .pfx file, should be accessible on your local machine.</p>
