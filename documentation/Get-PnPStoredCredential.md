@@ -19,7 +19,7 @@ Get-PnPStoredCredential -Name <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Returns a stored credential from the Windows Credential Manager
+Returns a stored credential from the Windows Credential Manager or Mac OS Key Chain Entry.
 
 ## EXAMPLES
 

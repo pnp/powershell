@@ -10,7 +10,7 @@ title: Add-PnPStoredCredential
 # Add-PnPStoredCredential
 
 ## SYNOPSIS
-Adds a credential to the Windows Credential Manager
+Adds a credential to the Windows Credential Manager or Mac OS Key Chain Entry.
 
 ## SYNTAX
 
@@ -20,7 +20,7 @@ Add-PnPStoredCredential -Name <String> -Username <String> [-Password <SecureStri
 ```
 
 ## DESCRIPTION
-Adds an entry to the Windows Credential Manager. If you add an entry in the form of the URL of your tenant/server PnP PowerShell will check if that entry is available when you connect using Connect-PnPOnline. If it finds a matching URL it will use the associated credentials.
+Adds an entry to the Windows Credential Manager or Mac OS Key Chain Entry. If you add an entry in the form of the URL of your tenant/server PnP PowerShell will check if that entry is available when you connect using Connect-PnPOnline. If it finds a matching URL it will use the associated credentials.
 
 If you add a Credential with a name of "https://yourtenant.sharepoint.com" it will find a match when you connect to "https://yourtenant.sharepoint.com" but also when you connect to "https://yourtenant.sharepoint.com/sites/demo1". Of course you can specify more granular entries, allow you to automatically provide credentials for different URLs.
 
@@ -65,7 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -Overwrite
-{{ Fill Overwrite Description }}
+Use parameter to overwrite existing Mac OS Key Chain Entry. Not required on Windows.
 
 ```yaml
 Type: SwitchParameter
