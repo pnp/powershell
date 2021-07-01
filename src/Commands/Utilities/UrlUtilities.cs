@@ -42,5 +42,34 @@ namespace PnP.PowerShell.Commands.Utilities
             return HttpUtility.UrlEncode(urlToEncode);
 #endif
         }
+
+        public static bool IsPersonalSiteUrl(string url)
+        {
+            Uri uri = new Uri(url);
+            if (IsMySite(uri))
+            {
+                if (!string.IsNullOrWhiteSpace(uri.AbsolutePath))
+                {
+                    return uri.AbsolutePath.StartsWith("/personal/", StringComparison.OrdinalIgnoreCase);
+                }
+                return false;
+            }
+            return false;
+        }
+
+        public static bool IsMySite(Uri uri)
+        {
+            ValidateUri("path", uri);
+            return uri.Host.IndexOf("-my.", StringComparison.OrdinalIgnoreCase) > 0;
+        }
+
+        public static void ValidateUri(string name, Uri uri)
+        {
+            if (string.IsNullOrEmpty(name) || uri == null || (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
+            {
+                throw new ArgumentException(name);
+            }
+        }
+
     }
 }
