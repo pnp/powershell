@@ -3098,6 +3098,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPTenantDeletedSite.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPTenantDeletedSite.html",
+          "hash": "v/2lggcqqd8LkGzIJq7GAQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPTenantId.md",
       "output": {
         ".html": {
@@ -5054,6 +5066,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPTenantDeletedSite.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPTenantDeletedSite.html",
+          "hash": "HNSpTMd1TS+ma6TEzV1FlQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPTenantSite.md",
       "output": {
         ".html": {
@@ -5407,6 +5431,18 @@
         ".html": {
           "relative_path": "cmdlets/Restore-PnPRecycleBinItem.html",
           "hash": "H3aPAfH/HagCjjB4oM2JEw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Restore-PnPTenantDeletedSite.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Restore-PnPTenantDeletedSite.html",
+          "hash": "1JKKtJMpCyF64cXHgKwpjg=="
         }
       },
       "is_incremental": false,
@@ -6786,7 +6822,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "fQwdBjWaZgchOHYpQ8sMqg=="
+          "hash": "o5t0nIPoeB9qnnsPneX4Ow=="
         }
       },
       "is_incremental": false,
@@ -6865,7 +6901,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 565,
+          "total_file_count": 568,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
