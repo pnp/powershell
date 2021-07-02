@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 term = Term.GetTerm(ClientContext, termStore, termSet, false, null);
             }
 
-            var label = term.CreateLabel(Name, Lcid, IsDefault.IsPresent ? IsDefault.ToBool() : true);
+            var label = term.CreateLabel(Name, Lcid, IsDefault.IsPresent ? IsDefault.ToBool() : false);
             ClientContext.Load(label);
             ClientContext.ExecuteQueryRetry();
             WriteObject(label);
