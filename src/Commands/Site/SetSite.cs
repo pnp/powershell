@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Site
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public string LogoFilePath;
-                
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         [Alias("Sharing")]
         public SharingCapabilities? SharingCapability = null;
@@ -114,18 +114,19 @@ namespace PnP.PowerShell.Commands.Site
             if (ParameterSpecified(nameof(Classification)))
             {
                 site.Classification = Classification;
-                executeQueryRequired = true;
+                context.ExecuteQueryRetry();
             }
+
             if (ParameterSpecified(nameof(LogoFilePath)))
-            {
-                site.EnsureProperty(s => s.GroupId);
-                if (site.GroupId != Guid.Empty)
+            {                
+                if (!System.IO.Path.IsPathRooted(LogoFilePath))
                 {
-                    if (!System.IO.Path.IsPathRooted(LogoFilePath))
-                    {
-                        LogoFilePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogoFilePath);
-                    }
-                    if (System.IO.File.Exists(LogoFilePath))
+                    LogoFilePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogoFilePath);
+                }
+                if (System.IO.File.Exists(LogoFilePath))
+                {
+                    site.EnsureProperty(s => s.GroupId);
+                    if (site.GroupId != Guid.Empty)
                     {
                         var bytes = System.IO.File.ReadAllBytes(LogoFilePath);
 
@@ -142,21 +143,31 @@ namespace PnP.PowerShell.Commands.Site
                         {
                             mimeType = "image/png";
                         }
-                        var result = PnP.Framework.Sites.SiteCollection.SetGroupImageAsync(context, bytes, mimeType).GetAwaiter().GetResult();
+                        var result = Framework.Sites.SiteCollection.SetGroupImageAsync(context, bytes, mimeType).GetAwaiter().GetResult();
                     }
-                    else
+
+                    var webTemplateId = context.Web.GetBaseTemplateId();
+                    System.IO.FileInfo file = new System.IO.FileInfo(LogoFilePath);
+
+                    var createdList = context.Web.Lists.EnsureSiteAssetsLibrary();
+                    context.Web.Context.Load(createdList, l => l.RootFolder);
+                    context.Web.Context.ExecuteQueryRetry();
+
+                    var logoFileName = file.Name;
+                    if (webTemplateId == "SITEPAGEPUBLISHING#0" || webTemplateId == "STS#3" || webTemplateId == "GROUP#0")
                     {
-                        throw new Exception("Logo file does not exist");
+                        logoFileName = "__sitelogo__" + file.Name;
                     }
+
+                    var uploadedFile = createdList.RootFolder.UploadFile(logoFileName, LogoFilePath, true);
+                    context.Web.SiteLogoUrl = uploadedFile.ServerRelativeUrl;
+                    context.Web.Update();
+                    context.ExecuteQueryRetry();                    
                 }
                 else
                 {
-                    throw new Exception("Not an Office365 group enabled site.");
-                }
-            }
-            if (executeQueryRequired)
-            {
-                context.ExecuteQueryRetry();
+                    throw new Exception("Logo file does not exist");
+                }                
             }
 
             if (IsTenantProperty())
