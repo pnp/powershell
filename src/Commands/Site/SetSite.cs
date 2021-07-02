@@ -135,7 +135,7 @@ namespace PnP.PowerShell.Commands.Site
                         {
                             mimeType = "image/gif";
                         }
-                        if (LogoFilePath.EndsWith("jpg", StringComparison.InvariantCultureIgnoreCase))
+                        if (LogoFilePath.EndsWith("jpg", StringComparison.InvariantCultureIgnoreCase) || LogoFilePath.EndsWith("jpeg", StringComparison.InvariantCultureIgnoreCase))
                         {
                             mimeType = "image/jpeg";
                         }
