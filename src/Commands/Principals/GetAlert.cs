@@ -7,17 +7,25 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAlert")]
+    [Cmdlet(VerbsCommon.Get, "PnPAlert", DefaultParameterSetName = ParameterSet_SPECIFICUSER)]
     public class GetAlert : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
+        private const string ParameterSet_SPECIFICUSER = "Alerts for a specific user";
+        private const string ParameterSet_ALLUSERS = "Alerts for all users";
+
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_SPECIFICUSER)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_ALLUSERS)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFICUSER)]
         public UserPipeBind User;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFICUSER)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALLUSERS)]
         public string Title;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALLUSERS)]
+        public SwitchParameter AllUsers;
 
         protected override void ExecuteCmdlet()
         {
@@ -27,38 +35,69 @@ namespace PnP.PowerShell.Commands.Principals
                 list = List.GetList(CurrentWeb);
             }
 
-            var alert = new AlertCreationInformation();
-
-            User user;
-            if (null != User)
+            if (!ParameterSpecified(nameof(AllUsers)))
             {
-                user = User.GetUser(ClientContext);
-                if (user == null)
+                // Return alerts for a specific user
+                User user;
+                if (null != User)
                 {
-                    throw new ArgumentException("Unable to find user", "Identity");
+                    user = User.GetUser(ClientContext);
+                    if (user == null)
+                    {
+                        throw new ArgumentException("Unable to find user", nameof(User));
+                    }
                 }
-            }
-            else
-            {
-                user = CurrentWeb.CurrentUser;
-            }
+                else
+                {
+                    user = CurrentWeb.CurrentUser;
+                }
 
-            user.EnsureProperty(u => u.Alerts.IncludeWithDefaultProperties(a => a.ListID));
-            if (list != null && !string.IsNullOrWhiteSpace(Title))
-            {
-                WriteObject(user.Alerts.Where(l => l.ListID == list.Id && l.Title == Title), true);
-            }
-            else if (list != null)
-            {
-                WriteObject(user.Alerts.Where(l => l.ListID == list.Id), true);
-            }
-            else if (!string.IsNullOrWhiteSpace(Title))
-            {
-                WriteObject(user.Alerts.Where(l => l.Title == Title), true);
+                user.EnsureProperty(u => u.Alerts.IncludeWithDefaultProperties(a => a.ListID));
+
+                if (list != null && !string.IsNullOrWhiteSpace(Title))
+                {
+                    WriteObject(user.Alerts.Where(l => l.ListID == list.Id && l.Title == Title), true);
+                }
+                else if (list != null)
+                {
+                    WriteObject(user.Alerts.Where(l => l.ListID == list.Id), true);
+                }
+                else if (!string.IsNullOrWhiteSpace(Title))
+                {
+                    WriteObject(user.Alerts.Where(l => l.Title == Title), true);
+                }
+                else
+                {
+                    WriteObject(user.Alerts, true);
+                }                    
             }
             else
             {
-                WriteObject(user.Alerts, true);
+                // Return alerts for all users
+                ClientContext.Load(CurrentWeb.Alerts);
+                if (list != null)
+                {
+                    ClientContext.Load(CurrentWeb.Alerts, a => a.Include(b => b.ListID));
+                }
+                ClientContext.ExecuteQueryRetry();
+
+                if(list != null)
+                {
+                    // Return all alerts on the specified list for all users
+                    if (string.IsNullOrWhiteSpace(Title))
+                    {
+                        WriteObject(CurrentWeb.Alerts.Where(a => a.ListID == list.Id), true);
+                    }
+                    else
+                    {
+                        WriteObject(CurrentWeb.Alerts.Where(a => a.ListID == list.Id && a.Title == Title), true);
+                    }
+                }
+                else
+                {
+                    // Return all alerts for all users
+                    WriteObject(CurrentWeb.Alerts, true);
+                }
             }
         }
     }
