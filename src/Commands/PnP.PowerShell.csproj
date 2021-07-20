@@ -41,11 +41,11 @@
 
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.14.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
     <PackageReference Include="Microsoft.Graph" Version="3.33.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.30.1" />
     <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="PnP.Framework" Version="1.5.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
     <PackageReference Include="PnP.Framework" Version="*" Condition="'$(IsRelease)' == '1'" />
@@ -57,7 +57,7 @@
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
-    <PackageReference Include="System.Security.Cryptography.OpenSsl" Version="5.0.0" />
+    <PackageReference Include="System.Security.Cryptography.OpenSsl" Version="4.7.0" />
     <PackageReference Include="System.Text.Encodings.Web" Version="4.7.2" />
     <PackageReference Include="System.Text.Json" Version="4.7.2" />
     <PackageReference Include="TextCopy" Version="4.3.1" />
