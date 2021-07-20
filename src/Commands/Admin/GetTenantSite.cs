@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands
         protected override void ExecuteCmdlet()
         {
             ClientContext.ExecuteQueryRetry();
-            if(ParameterSpecified(nameof(Identity)))
+            if (ParameterSpecified(nameof(Identity)))
             {
                 var siteProperties = Tenant.GetSitePropertiesByUrl(Identity.Url, Detailed);
                 ClientContext.Load(siteProperties);
@@ -73,7 +73,7 @@ namespace PnP.PowerShell.Commands
 #pragma warning restore CS0618 // Type or member is obsolete
                     Filter = Filter,
                 };
-                
+
                 if (ClientContext.ServerVersion >= new Version(16, 0, 7708, 1200))
                 {
                     if (ParameterSpecified(nameof(GroupIdDefined)))
@@ -81,7 +81,7 @@ namespace PnP.PowerShell.Commands
                         filter.GroupIdDefined = GroupIdDefined.Value == true ? 1 : 2;
                     }
                 }
-                else if(ParameterSpecified(nameof(GroupIdDefined)))
+                else if (ParameterSpecified(nameof(GroupIdDefined)))
                 {
                     throw new PSArgumentException("Filtering by Group Id is not yet available for this tenant.");
                 }
@@ -104,7 +104,7 @@ namespace PnP.PowerShell.Commands
                 }
                 else
                 {
-                    WriteObject(sites.OrderBy(x => x.Url).Select(s => new Model.SPOSite(s,null)), true);
+                    WriteObject(sites.OrderBy(x => x.Url).Select(s => new Model.SPOSite(s, null)), true);
                 }
             }
         }

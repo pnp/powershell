@@ -102,7 +102,7 @@ namespace PnP.PowerShell.Commands.Lists
 
                     if (tag != null)
                     {
-                        item.SetComplianceTag(tag.TagName, tag.BlockDelete, tag.BlockEdit, tag.IsEventTag, tag.SuperLock);
+                        item.SetComplianceTag(tag.TagName, tag.BlockDelete, tag.BlockEdit, tag.IsEventTag, tag.SuperLock, false);
                     }
                     else
                     {
