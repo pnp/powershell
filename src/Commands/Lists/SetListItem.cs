@@ -132,7 +132,7 @@ namespace PnP.PowerShell.Commands.Lists
 
                     if (ParameterSpecified(nameof(ClearLabel)))
                     {
-                        item.SetComplianceTag(string.Empty, false, false, false, false);
+                        item.SetComplianceTag(string.Empty, false, false, false, false, false);
                         ClientContext.ExecuteQueryRetry();
                     }
                     if (!string.IsNullOrEmpty(Label))
@@ -146,7 +146,7 @@ namespace PnP.PowerShell.Commands.Lists
                         {
                             try
                             {
-                                item.SetComplianceTag(tag.TagName, tag.BlockDelete, tag.BlockEdit, tag.IsEventTag, tag.SuperLock);
+                                item.SetComplianceTag(tag.TagName, tag.BlockDelete, tag.BlockEdit, tag.IsEventTag, tag.SuperLock, false);
                                 ClientContext.ExecuteQueryRetry();
                             }
                             catch (System.Exception error)
