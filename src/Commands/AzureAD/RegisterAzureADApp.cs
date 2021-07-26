@@ -457,7 +457,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             var cert = new X509Certificate2();
             if (ParameterSetName == ParameterSet_EXISTINGCERT)
             {
-                if (!System.IO.Path.IsPathRooted(CertificatePath))
+                if (!Path.IsPathRooted(CertificatePath))
                 {
                     CertificatePath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, CertificatePath);
                 }
@@ -565,9 +565,8 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         private AzureADApp CreateApp(string loginEndPoint, HttpClient httpClient, string token, X509Certificate2 cert, string redirectUri, List<PermissionScope> scopes)
         {
-            var expirationDate = DateTime.Parse(cert.GetExpirationDateString()).ToUniversalTime();
-            var startDate = DateTime.Parse(cert.GetEffectiveDateString()).ToUniversalTime();
-
+            var expirationDate = cert.NotAfter.ToUniversalTime();
+            var startDate = cert.NotBefore.ToUniversalTime();
 
             var scopesPayload = GetScopesPayload(scopes);
             var payload = new
@@ -600,7 +599,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             var requestContent = new StringContent(JsonSerializer.Serialize(payload));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-            var azureApp = GraphHelper.PostAsync<AzureADApp>(httpClient, $"https://{PnP.Framework.AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications", requestContent, token).GetAwaiter().GetResult();
+            var azureApp = GraphHelper.PostAsync<AzureADApp>(httpClient, $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications", requestContent, token).GetAwaiter().GetResult();
             if (azureApp != null)
             {
                 Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"App {azureApp.DisplayName} with id {azureApp.AppId} created.");
@@ -615,7 +614,6 @@ namespace PnP.PowerShell.Commands.AzureAD
             var resource = scopes.FirstOrDefault(s => s.resourceAppId == PermissionScopes.ResourceAppId_Graph) != null ? $"https://{AzureAuthHelper.GetGraphEndPoint(AzureEnvironment)}/.default" : "https://microsoft.sharepoint-df.com/.default";
 
             var consentUrl = $"{loginEndPoint}/{Tenant}/v2.0/adminconsent?client_id={azureApp.AppId}&scope={resource}&redirect_uri={redirectUri}";
-
 
             if (OperatingSystem.IsWindows() && !NoPopup)
             {
@@ -636,7 +634,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                     // {
                     //     Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"[{i}]");
                     // }
-                    System.Threading.Thread.Sleep(1000);
+                    Thread.Sleep(1000);
 
                     // Check if CTRL+C has been pressed and if so, abort the wait
                     if (Stopping)
@@ -679,7 +677,5 @@ namespace PnP.PowerShell.Commands.AzureAD
                 WriteObject(record);
             }
         }
-
-
     }
 }

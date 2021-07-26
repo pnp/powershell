@@ -31,6 +31,12 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public SwitchParameter RequiresJoinApproval;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter EnablePermissionsSync;
+
+        [Parameter(Mandatory = false)]
+        public Guid ParentHubSiteId;
+
         protected override void ExecuteCmdlet()
         {
             var hubSiteProperties = Identity.GetHubSite(Tenant);
@@ -58,6 +64,14 @@ namespace PnP.PowerShell.Commands.Admin
             if (ParameterSpecified(nameof(RequiresJoinApproval)))
             {
                 hubSiteProperties.RequiresJoinApproval = RequiresJoinApproval.ToBool();
+            }
+            if (ParameterSpecified(nameof(EnablePermissionsSync)))
+            {
+                hubSiteProperties.EnablePermissionsSync = EnablePermissionsSync.ToBool();                
+            }
+            if (ParameterSpecified(nameof(ParentHubSiteId)))
+            {
+                hubSiteProperties.ParentHubSiteId = ParentHubSiteId;
             }
             hubSiteProperties.Update();
             ClientContext.ExecuteQueryRetry();
