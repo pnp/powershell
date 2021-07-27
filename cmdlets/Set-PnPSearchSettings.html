@@ -107,7 +107,7 @@
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Set-PnPSearchSettings -SearchPageUrl &quot;&quot;
 </code></pre>
-<p>Clear the suite bar search box URL and revert to the default behavior</p>
+<p>Clear the suite bar search box redirect URL and revert to the default behavior</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Set-PnPSearchSettings -SearchPageUrl &quot;https://contoso.sharepoint.com/sites/mysearch/SitePages/search.aspx&quot; -Scope Site
 </code></pre>
@@ -144,7 +144,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-scope">-Scope</h3>
-<p>Scope to apply the setting to. Possible values: Web (default), Site\r\n\r\nFor a root site, the scope does not matter.</p>
+<p>Scope to apply the setting to. Possible values: Web (default), Site. For a root site, the scope does not matter.</p>
 <pre><code class="lang-yaml">Type: SearchSettingsScope
 Parameter Sets: (All)
 Accepted values: Site, Web
@@ -156,7 +156,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-searchboxinnavbar">-SearchBoxInNavBar</h3>
-<p>Set the scope of which the suite bar search box shows. Possible values: Inherit, AllPages, ModernOnly, Hidden</p>
+<p>Set the scope of which the suite bar search box shows. Possible values: Inherit, AllPages, ModernOnly, Hidden.</p>
 <pre><code class="lang-yaml">Type: SearchBoxInNavBarType
 Parameter Sets: (All)
 Accepted values: Inherit, AllPages, ModernOnly, Hidden
@@ -168,7 +168,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-searchboxplaceholdertext">-SearchBoxPlaceholderText</h3>
-<p>{{ Fill SearchBoxPlaceholderText Description }}</p>
+<p>Set the placeholder text displayed in the search box.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -190,7 +190,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-searchscope">-SearchScope</h3>
-<p>Set the search scope of the suite bar search box. Possible values: DefaultScope, Tenant, Hub, Site</p>
+<p>Set the search scope of the suite bar search box. Possible values: DefaultScope, Tenant, Hub, Site.</p>
 <pre><code class="lang-yaml">Type: SearchScopeType
 Parameter Sets: (All)
 Accepted values: DefaultScope, Tenant, Hub, Site

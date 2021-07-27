@@ -462,7 +462,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPJavaScriptBlock.html",
-          "hash": "X+czHXdUyo/SnlHK7F26BQ=="
+          "hash": "YNUpvjcdCmc3snFouHScqQ=="
         }
       },
       "is_incremental": false,
@@ -810,7 +810,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPStoredCredential.html",
-          "hash": "3iemPJC8WiVwoYu1redUoA=="
+          "hash": "k+xjMq/jqVnjGNyJXwEGwQ=="
         }
       },
       "is_incremental": false,
@@ -2298,7 +2298,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPMicrosoft365Group.html",
-          "hash": "I0lBMSqycpsne5sVD5TA+g=="
+          "hash": "dQb3k2GHfI9IweWYJJD7Mw=="
         }
       },
       "is_incremental": false,
@@ -2850,7 +2850,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPStoredCredential.html",
-          "hash": "Dt8MP4SyhZQF+9iqjL57mw=="
+          "hash": "ZT7J5TZedQUQjJHMbZPm/g=="
         }
       },
       "is_incremental": false,
@@ -3102,7 +3102,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPTenantDeletedSite.html",
-          "hash": "v/2lggcqqd8LkGzIJq7GAQ=="
+          "hash": "MboxrXnRArvpcmIZ74KvUw=="
         }
       },
       "is_incremental": false,
@@ -3774,7 +3774,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/New-PnPAzureCertificate.html",
-          "hash": "UfFE25T0v8M8//UMo2c6/Q=="
+          "hash": "CxbLzssEBGie55i1jzUmBg=="
         }
       },
       "is_incremental": false,
@@ -5070,7 +5070,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPTenantDeletedSite.html",
-          "hash": "HNSpTMd1TS+ma6TEzV1FlQ=="
+          "hash": "Lh+PaqV4859wgxWHJnmx7w=="
         }
       },
       "is_incremental": false,
@@ -5442,7 +5442,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Restore-PnPTenantDeletedSite.html",
-          "hash": "1JKKtJMpCyF64cXHgKwpjg=="
+          "hash": "LWXGZ1OUJX76uGSfRJKsKQ=="
         }
       },
       "is_incremental": false,
@@ -5862,7 +5862,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPHubSite.html",
-          "hash": "pCZgsuZldh1yl77bwstsXw=="
+          "hash": "1uHSIBys7GMCuKrStShclA=="
         }
       },
       "is_incremental": false,
@@ -6150,7 +6150,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSearchSettings.html",
-          "hash": "fU38DpcMtzkWXAceR8/CiQ=="
+          "hash": "O4Zguu9srzzj/7V5g8/AWw=="
         }
       },
       "is_incremental": false,
@@ -6654,7 +6654,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Submit-PnPTeamsChannelMessage.html",
-          "hash": "D54WZu8TmQ1VhP5XVvgdsQ=="
+          "hash": "mabXnAV0Z3CKH437WftDOQ=="
         }
       },
       "is_incremental": false,

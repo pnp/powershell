@@ -91,7 +91,7 @@
 <p>Sets hub site properties</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPHubSite [-Identity] &lt;HubSitePipeBind&gt; [-Title &lt;String&gt;] [-LogoUrl &lt;String&gt;] [-Description &lt;String&gt;]
- [-SiteDesignId &lt;Guid&gt;] [-HideNameInNavigation] [-RequiresJoinApproval] [-Connection &lt;PnPConnection&gt;]
+ [-SiteDesignId &lt;Guid&gt;] [-HideNameInNavigation] [-RequiresJoinApproval] [-EnablePermissionsSync] [-ParentHubSiteId &lt;Guid&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -113,6 +113,10 @@
 <pre><code class="lang-powershell">Set-PnPHubSite -Identity &quot;https://tenant.sharepoint.com/sites/myhubsite&quot; -LogoUrl &quot;https://tenant.sharepoint.com/SiteAssets/Logo.png&quot;
 </code></pre>
 <p>Sets the logo of the hub site</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Set-PnPHubSite -Identity &quot;https://tenant.sharepoint.com/sites/myhubsite&quot; -EnablePermissionsSync
+</code></pre>
+<p>Sync hub permissions to associated sites</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -126,7 +130,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-description">-Description</h3>
-<p>{{ Fill Description Description }}</p>
+<p>Description of the hub site collection.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -147,7 +151,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>{{ Fill Identity Description }}</p>
+<p>The URL of the hub site collection.</p>
 <pre><code class="lang-yaml">Type: HubSitePipeBind
 Parameter Sets: (All)
 Aliases: HubSite
@@ -159,7 +163,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-logourl">-LogoUrl</h3>
-<p>{{ Fill LogoUrl Description }}</p>
+<p>The logoUrl of the Hub site.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -191,8 +195,30 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-title">-Title</h3>
-<p>{{ Fill Title Description }}</p>
+<p>The title of the hub site collection.</p>
 <pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-enablepermissionssync">-EnablePermissionsSync</h3>
+<p>Sync hub permissions to associated sites</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-parenthubsiteid">-ParentHubSiteId</h3>
+<p>The ID of the parent hub site.</p>
+<pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
 
 Required: False
