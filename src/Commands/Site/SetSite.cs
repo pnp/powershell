@@ -180,6 +180,8 @@ namespace PnP.PowerShell.Commands.Site
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
                 Tenant tenant = new Tenant(context);
                 var siteProperties = tenant.GetSitePropertiesByUrl(siteUrl, false);
+                tenant.Context.Load(siteProperties);
+                tenant.Context.ExecuteQueryRetry();
 
                 if (ParameterSpecified(nameof(OverrideTenantAnonymousLinkExpirationPolicy)))
                 {
