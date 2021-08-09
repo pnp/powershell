@@ -348,31 +348,62 @@ namespace PnP.PowerShell.Commands.Utilities
             var owners = new List<User>();
             var guests = new List<User>();
             var members = new List<User>();
+
+            Func<string, Func<User, User>> setUserType = (string userType) => (User user) => new User()
+            {
+                Id = user.Id,
+                DisplayName = user.DisplayName,
+                UserPrincipalName = user.UserPrincipalName,
+                UserType = userType
+            };
+
+            Func<string, Task<List<User>>> getAllUsersFromEndpoint = async (string endpoint) =>
+              {
+                  List<User> users = new List<User>();
+                  var collection = await GraphHelper.GetAsync<RestResultCollection<User>>(httpClient, $"v1.0/groups/{groupId}/{endpoint}?$select=Id,displayName,userPrincipalName,userType", accessToken);
+                  if (collection != null && collection.Items.Any())
+                  {
+                      users.AddRange(collection.Items);
+                  }
+                  while (collection.NextLink != null)
+                  {
+                      collection = await GraphHelper.GetAsync<RestResultCollection<User>>(httpClient, collection.NextLink, accessToken);
+                      if (collection != null && collection.Items.Any())
+                      {
+                          users.AddRange(collection.Items);
+                      }
+                  }
+                  return users;
+              };
+
             if (selectedRole != "guest")
             {
-                owners = (await GraphHelper.GetAsync<RestResultCollection<User>>(httpClient, $"v1.0/groups/{groupId}/owners?$select=Id,displayName,userPrincipalName,userType", accessToken)).Items.Select(t => new User()
+                var collection = await getAllUsersFromEndpoint("owners");
+                var setOwnerUserType = setUserType("Owner");
+
+                if (collection != null && collection.Any())
                 {
-                    Id = t.Id,
-                    DisplayName = t.DisplayName,
-                    UserPrincipalName = t.UserPrincipalName,
-                    UserType = "Owner"
-                }).ToList();
+                    owners.AddRange(collection.Select(setOwnerUserType));
+                }
             }
             if (selectedRole != "owner")
             {
-                var users = (await GraphHelper.GetAsync<RestResultCollection<User>>(httpClient, $"v1.0/groups/{groupId}/members?$select=Id,displayName,userPrincipalName,userType", accessToken)).Items;
+                var users = await getAllUsersFromEndpoint("members");
                 HashSet<string> hashSet = new HashSet<string>(owners.Select(u => u.Id));
+                var setGuestUserType = setUserType("Guest");
+                var setMemberUserType = setUserType("Member");
+
                 foreach (var user in users)
                 {
                     if (!hashSet.Contains(user.Id))
                     {
                         if (user.UserType != null && user.UserType.ToLower().Equals("guest"))
                         {
-                            guests.Add(new User() { DisplayName = user.DisplayName, Id = user.Id, UserPrincipalName = user.UserPrincipalName, UserType = "Guest" });
+                            guests.Add(setGuestUserType(user));
                         }
                         else
                         {
-                            members.Add(new User() { DisplayName = user.DisplayName, Id = user.Id, UserPrincipalName = user.UserPrincipalName, UserType = "Member" });
+                            members.Add(setMemberUserType(user));
                         }
                     }
                 }
