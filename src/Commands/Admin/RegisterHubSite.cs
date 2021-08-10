@@ -39,9 +39,10 @@ namespace PnP.PowerShell.Commands.Admin
                     Tenant.UnregisterHubSite(Site.Url);
                     ClientContext.ExecuteQueryRetry();
                     throw;
-                }
-                WriteObject(hubSiteProperties);
+                }                
             }
+
+            WriteObject(hubSiteProperties);
         }
     }
 }
