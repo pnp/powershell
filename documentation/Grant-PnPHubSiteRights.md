@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Specify hub site ur
+Specify hub site url
 
 ```yaml
 Type: HubSitePipeBind
