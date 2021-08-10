@@ -186,6 +186,9 @@ namespace PnP.PowerShell.Commands
             var props = GetSiteProperties(Identity.Url);
             var updateRequired = false;
 
+            ClientContext.Load(props);
+            ClientContext.ExecuteQueryRetry();
+
             if (ParameterSpecified(nameof(Title)))
             {
                 props.Title = Title;
