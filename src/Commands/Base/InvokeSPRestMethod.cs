@@ -87,9 +87,21 @@ namespace PnP.PowerShell.Commands.Admin
                         if (!Raw)
                         {
                             var jsonElement = JsonSerializer.Deserialize<JsonElement>(responseString);
+
+                            string nextLink = string.Empty;
+                            if (jsonElement.TryGetProperty("odata.nextLink", out JsonElement nextLinkProperty))
+                            {
+                                nextLink = nextLinkProperty.ToString();
+                            }
                             if (jsonElement.TryGetProperty("value", out JsonElement valueProperty))
                             {
-                                WriteObject(ConvertToPSObject(valueProperty, "value"), true);
+                                var formattedObject = ConvertToPSObject(valueProperty, "value");
+                                if (!string.IsNullOrEmpty(nextLink))
+                                {
+                                    formattedObject.Properties.Add(new PSNoteProperty("odata.nextLink", nextLink));
+                                }
+
+                                WriteObject(formattedObject, true);
                             }
                             else
                             {
@@ -150,7 +162,7 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 var array = ConvertToPSObjectArray(element);
                 pso.Properties.Add(new PSNoteProperty(jsonPropertyName, array));
-            }
+            }            
             else
             {
                 foreach (var prop in element.EnumerateObject())
