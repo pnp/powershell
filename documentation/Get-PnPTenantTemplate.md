@@ -21,7 +21,7 @@ Generates a provisioning tenant template from a site. If the site is a hubsite a
 
 ### Extract a template to a file
 ```powershell
-Get-PnPTenantTemplate [-SiteUrl <String>] [-Out] <String> [-Force]
+Get-PnPTenantTemplate [-SiteUrl <String>] [-Out <String>] [-Force]
  [-Configuration <ExtractConfigurationPipeBind>] [-Connection <PnPConnection>]  
  [<CommonParameters>]
 ```
@@ -29,7 +29,7 @@ Get-PnPTenantTemplate [-SiteUrl <String>] [-Out] <String> [-Force]
 ### Extract a template as an object
 ```powershell
 Get-PnPTenantTemplate [-SiteUrl <String>] [-AsInstance] [-Configuration <ExtractConfigurationPipeBind>]
- [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -42,6 +42,20 @@ Get-PnPTenantTemplate -Out tenanttemplate.xml
 ```
 
 Extracts a tenant template
+
+### EXAMPLE 2
+```powershell
+Get-PnPTenantTemplate -Out tenanttemplate.xml -SiteUrl https://m365x123456.sharepoint.com/sites/HomeSite
+```
+
+Extracts a tenant template for the site https://m365x123456.sharepoint.com/sites/HomeSite and places the schema XML into the file "tenanttemplate.xml".
+
+### EXAMPLE 3
+```powershell
+Get-PnPTenantTemplate -Out tenanttemplate.xml -SiteUrl https://m365x123456.sharepoint.com/sites/HomeSite -Force
+```
+
+Extracts a tenant template for the site https://m365x123456.sharepoint.com/sites/HomeSite and places the schema XML into the file "tenanttemplate.xml". The xml file will be overwritten if it already exists.
 
 ## PARAMETERS
 
