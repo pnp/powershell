@@ -32,7 +32,8 @@ namespace PnP.PowerShell.Commands.Site
         public string LogoFilePath;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public SharingCapabilities? Sharing = null;
+        [Alias("Sharing")]
+        public SharingCapabilities? SharingCapability = null;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public long? StorageMaximumLevel = null;
@@ -113,18 +114,19 @@ namespace PnP.PowerShell.Commands.Site
             if (ParameterSpecified(nameof(Classification)))
             {
                 site.Classification = Classification;
-                executeQueryRequired = true;
+                context.ExecuteQueryRetry();
             }
+
             if (ParameterSpecified(nameof(LogoFilePath)))
-            {
-                site.EnsureProperty(s => s.GroupId);
-                if (site.GroupId != Guid.Empty)
+            {                
+                if (!System.IO.Path.IsPathRooted(LogoFilePath))
                 {
-                    if (!System.IO.Path.IsPathRooted(LogoFilePath))
-                    {
-                        LogoFilePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogoFilePath);
-                    }
-                    if (System.IO.File.Exists(LogoFilePath))
+                    LogoFilePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogoFilePath);
+                }
+                if (System.IO.File.Exists(LogoFilePath))
+                {
+                    site.EnsureProperty(s => s.GroupId);
+                    if (site.GroupId != Guid.Empty)
                     {
                         var bytes = System.IO.File.ReadAllBytes(LogoFilePath);
 
@@ -133,7 +135,7 @@ namespace PnP.PowerShell.Commands.Site
                         {
                             mimeType = "image/gif";
                         }
-                        if (LogoFilePath.EndsWith("jpg", StringComparison.InvariantCultureIgnoreCase))
+                        if (LogoFilePath.EndsWith("jpg", StringComparison.InvariantCultureIgnoreCase) || LogoFilePath.EndsWith("jpeg", StringComparison.InvariantCultureIgnoreCase))
                         {
                             mimeType = "image/jpeg";
                         }
@@ -141,21 +143,31 @@ namespace PnP.PowerShell.Commands.Site
                         {
                             mimeType = "image/png";
                         }
-                        var result = PnP.Framework.Sites.SiteCollection.SetGroupImageAsync(context, bytes, mimeType).GetAwaiter().GetResult();
+                        var result = Framework.Sites.SiteCollection.SetGroupImageAsync(context, bytes, mimeType).GetAwaiter().GetResult();
                     }
-                    else
+
+                    var webTemplateId = context.Web.GetBaseTemplateId();
+                    System.IO.FileInfo file = new System.IO.FileInfo(LogoFilePath);
+
+                    var createdList = context.Web.Lists.EnsureSiteAssetsLibrary();
+                    context.Web.Context.Load(createdList, l => l.RootFolder);
+                    context.Web.Context.ExecuteQueryRetry();
+
+                    var logoFileName = file.Name;
+                    if (webTemplateId == "SITEPAGEPUBLISHING#0" || webTemplateId == "STS#3" || webTemplateId == "GROUP#0")
                     {
-                        throw new Exception("Logo file does not exist");
+                        logoFileName = "__sitelogo__" + file.Name;
                     }
+
+                    var uploadedFile = createdList.RootFolder.UploadFile(logoFileName, LogoFilePath, true);
+                    context.Web.SiteLogoUrl = uploadedFile.ServerRelativeUrl;
+                    context.Web.Update();
+                    context.ExecuteQueryRetry();                    
                 }
                 else
                 {
-                    throw new Exception("Not an Office365 group enabled site.");
-                }
-            }
-            if (executeQueryRequired)
-            {
-                context.ExecuteQueryRetry();
+                    throw new Exception("Logo file does not exist");
+                }                
             }
 
             if (IsTenantProperty())
@@ -168,6 +180,8 @@ namespace PnP.PowerShell.Commands.Site
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
                 Tenant tenant = new Tenant(context);
                 var siteProperties = tenant.GetSitePropertiesByUrl(siteUrl, false);
+                tenant.Context.Load(siteProperties);
+                tenant.Context.ExecuteQueryRetry();
 
                 if (ParameterSpecified(nameof(OverrideTenantAnonymousLinkExpirationPolicy)))
                 {
@@ -194,9 +208,9 @@ namespace PnP.PowerShell.Commands.Site
                     }
                     tenant.AddAdministrators(admins, new Uri(siteUrl));
                 }
-                if (Sharing.HasValue)
+                if (SharingCapability.HasValue)
                 {
-                    siteProperties.SharingCapability = Sharing.Value;
+                    siteProperties.SharingCapability = SharingCapability.Value;
                     executeQueryRequired = true;
                 }
                 if (StorageMaximumLevel.HasValue)
@@ -303,7 +317,7 @@ namespace PnP.PowerShell.Commands.Site
         private bool IsTenantProperty() =>
                 LockState.HasValue ||
                 (Owners != null && Owners.Count > 0) ||
-                Sharing.HasValue ||
+                SharingCapability.HasValue ||
                 StorageMaximumLevel.HasValue ||
                 StorageWarningLevel.HasValue ||
                 AllowSelfServiceUpgrade.HasValue ||
