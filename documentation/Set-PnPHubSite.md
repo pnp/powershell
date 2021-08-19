@@ -21,7 +21,7 @@ Sets hub site properties
 
 ```powershell
 Set-PnPHubSite [-Identity] <HubSitePipeBind> [-Title <String>] [-LogoUrl <String>] [-Description <String>]
- [-SiteDesignId <Guid>] [-HideNameInNavigation] [-RequiresJoinApproval] [-Connection <PnPConnection>]
+ [-SiteDesignId <Guid>] [-HideNameInNavigation] [-RequiresJoinApproval] [-EnablePermissionsSync] [-ParentHubSiteId <Guid>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -58,6 +58,13 @@ Set-PnPHubSite -Identity "https://tenant.sharepoint.com/sites/myhubsite" -LogoUr
 
 Sets the logo of the hub site
 
+### EXAMPLE 5
+```powershell
+Set-PnPHubSite -Identity "https://tenant.sharepoint.com/sites/myhubsite" -EnablePermissionsSync
+```
+
+Sync hub permissions to associated sites
+
 ## PARAMETERS
 
 ### -Connection
@@ -75,7 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -Description
-{{ Fill Description Description }}
+Description of the hub site collection.
 
 ```yaml
 Type: String
@@ -102,7 +109,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-{{ Fill Identity Description }}
+The URL of the hub site collection.
 
 ```yaml
 Type: HubSitePipeBind
@@ -117,7 +124,7 @@ Accept wildcard characters: False
 ```
 
 ### -LogoUrl
-{{ Fill LogoUrl Description }}
+The logoUrl of the Hub site.
 
 ```yaml
 Type: String
@@ -158,10 +165,38 @@ Accept wildcard characters: False
 ```
 
 ### -Title
-{{ Fill Title Description }}
+The title of the hub site collection.
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnablePermissionsSync
+Sync hub permissions to associated sites
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ParentHubSiteId
+The ID of the parent hub site.
+
+```yaml
+Type: Guid
 Parameter Sets: (All)
 
 Required: False

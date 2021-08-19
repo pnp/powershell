@@ -15,10 +15,34 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = true)]
         public SitePipeBind Site;
 
+        [Parameter(Mandatory = false)]
+        [AllowEmptyCollection]
+        [AllowNull]
+        public string[] Principals { get; set; }
+
         protected override void ExecuteCmdlet()
         {
-            Tenant.RegisterHubSite(Site.Url);
+            HubSiteProperties hubSiteProperties = Tenant.RegisterHubSite(Site.Url);
+            ClientContext.Load(hubSiteProperties);
             ClientContext.ExecuteQueryRetry();
+
+            if (Principals != null && Principals.Length > 0)
+            {
+                try
+                {
+                    hubSiteProperties = Tenant.GrantHubSiteRightsById(hubSiteProperties.ID, Principals, SPOHubSiteUserRights.Join);
+                    ClientContext.Load(hubSiteProperties);
+                    ClientContext.ExecuteQueryRetry();
+                }
+                catch (Exception)
+                {
+                    Tenant.UnregisterHubSite(Site.Url);
+                    ClientContext.ExecuteQueryRetry();
+                    throw;
+                }                
+            }
+
+            WriteObject(hubSiteProperties);
         }
     }
 }

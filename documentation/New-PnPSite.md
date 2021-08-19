@@ -16,7 +16,7 @@ Creates a communication site, Microsoft 365 group-connected team site or Modern 
 
 ### TeamSite
 ```powershell
-New-PnPSite -Type TeamSite -Title <String> -Alias <String> [-Description <String>] [-Classification <String>] [-IsPublic] [-Lcid <UInt>] [-Owners <String[][]>] [-PreferredDataLocation <Office365Geography>] [-SensitivityLabel <String>] [-HubSiteId <Guid>] [-Wait] [-Connection <PnPConnection>]
+New-PnPSite -Type TeamSite -Title <String> -Alias <String> [-Description <String>] [-Classification <String>] [-IsPublic] [-Lcid <UInt>] [-Owners <String[][]>] [-PreferredDataLocation <Office365Geography>] [-SensitivityLabel <String>] [-HubSiteId <Guid>] [-SiteAlias <String>] [-Wait] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -100,33 +100,40 @@ This will create a new Modern Team Site collection with the title 'Team Contoso'
 
 ### EXAMPLE 10
 ```powershell
+New-PnPSite -Type TeamSite -Title 'Team Contoso' -Alias contoso -SiteAlias contoso-site
+```
+
+This will create a new Modern Team Site collection with the title 'Team Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso-site' or 'https://tenant.sharepoint.com/teams/contoso-site' based on the managed path configuration in the SharePoint Online Admin portal. The underlying M365 Group will have 'contoso' as the alias.
+
+### EXAMPLE 11
+```powershell
 New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso
 ```
 
 This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'
 
-### EXAMPLE 11
+### EXAMPLE 12
 ```powershell
 New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -SiteDesignId ae2349d5-97d6-4440-94d1-6516b72449ac
 ```
 
 This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. It will use the specified custom site design for the site.
 
-### EXAMPLE 12
+### EXAMPLE 13
 ```powershell
 New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Classification "HBI"
 ```
 
 This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. The classification for the site will be set to "HBI"
 
-### EXAMPLE 13
+### EXAMPLE 14
 ```powershell
 New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -ShareByEmailEnabled
 ```
 
 This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. Allows owners to invite users outside of the organization.
 
-### EXAMPLE 14
+### EXAMPLE 15
 ```powershell
 New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Lcid 1040
 ```
@@ -313,6 +320,20 @@ Parameter Sets: CommunicationSite, TeamSiteWithoutMicrosoft365Group
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SiteAlias
+The site alias to use for the team site URL. If specified, a site collection will be created based on its value, otherwise the value specified in Alias parameter will be used.
+
+```yaml
+Type: String
+Parameter Sets: TeamSite
+
+Required: True
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -113,6 +113,11 @@ namespace PnP.PowerShell.Commands
                 creationInformation.PreferredDataLocation = _teamSiteParameters.PreferredDataLocation;
                 creationInformation.SensitivityLabel = _teamSiteParameters.SensitivityLabel;
 
+                if (ParameterSpecified("SiteAlias"))
+                {
+                    creationInformation.SiteAlias = _teamSiteParameters.SiteAlias;
+                }
+
                 if (ClientContext.GetContextSettings()?.Type != Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
                 {
                     var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GraphAccessToken);
@@ -226,6 +231,9 @@ namespace PnP.PowerShell.Commands
 
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
             public string SensitivityLabel;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
+            public string SiteAlias;
         }
 
         public class TeamSiteWithoutMicrosoft365Group
