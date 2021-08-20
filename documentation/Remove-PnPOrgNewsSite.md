@@ -24,7 +24,7 @@ Remove-PnPOrgNewsSite -OrgNewsSiteUrl <SitePipeBind> [-Connection <PnPConnection
 ```
 
 ## DESCRIPTION
-Removes a given site from the list of organizational news sites based on its URL in your Sharepoint Online Tenant.
+Removes a given site from the list of organizational news sites based on its URL in your SharePoint Online Tenant.
 
 ## EXAMPLES
 
