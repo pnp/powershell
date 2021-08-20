@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands
         public Guid[] SiteScriptIds;
 
         [Parameter(Mandatory = false)]
-        public string Description;     
+        public string Description;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter IsDefault;
@@ -34,6 +34,11 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = true)]
         public SiteWebTemplate WebTemplate;
 
+        [Parameter(Mandatory = false)]
+        public string ThumbnailUrl;
+
+        [Parameter(Mandatory = false)]
+        public Guid DesignPackageId;
 
         protected override void ExecuteCmdlet()
         {
@@ -45,7 +50,9 @@ namespace PnP.PowerShell.Commands
                 IsDefault = IsDefault,
                 PreviewImageAltText = PreviewImageAltText,
                 PreviewImageUrl = PreviewImageUrl,
-                WebTemplate = ((int)WebTemplate).ToString()
+                WebTemplate = ((int)WebTemplate).ToString(),
+                ThumbnailUrl = ThumbnailUrl,
+                DesignPackageId = DesignPackageId
             };
 
             var design = Tenant.CreateSiteDesign(siteDesignInfo);

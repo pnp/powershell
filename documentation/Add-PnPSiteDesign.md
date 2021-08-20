@@ -21,7 +21,8 @@ Creates a new Site Design on the current tenant.
 
 ```powershell
 Add-PnPSiteDesign -Title <String> -SiteScriptIds <Guid[]> [-Description <String>] [-IsDefault]
- [-PreviewImageAltText <String>] [-PreviewImageUrl <String>] -WebTemplate <SiteWebTemplate>
+ [-PreviewImageAltText <String>] [-PreviewImageUrl <String>] [-WebTemplate <SiteWebTemplate>]
+ [-ThumbnailUrl <String>] [-DesignPackageId <Guid>]
  [-Connection <PnPConnection>]
 ```
 
@@ -160,6 +161,36 @@ Parameter Sets: (All)
 Accepted values: TeamSite, CommunicationSite, GrouplessTeamSite
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ThumbnailUrl
+The URL of a thumbnail image. If none is specified, SharePoint uses a generic image. Recommended size is 400 x 300 pixels.
+
+```yaml
+Type: SiteWebTemplate
+Parameter Sets: (All)
+Accepted values: TeamSite, CommunicationSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DesignPackageId
+Sets the design package Id of this site design.
+
+```yaml
+Type: SiteWebTemplate
+Parameter Sets: (All)
+Accepted values: TeamSite, CommunicationSite
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
