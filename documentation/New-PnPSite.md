@@ -226,7 +226,9 @@ Accept wildcard characters: False
 ```
 
 ### -IsPublic
-Specifies if the site is public.
+Identifies whether the corresponding Microsoft365 group type is Private or Public. If not specified, group is considered Public.
+Content in a Public group can be seen by anybody in the organization, and anybody in the organization is able to join the group. 
+Content in a Private group can only be seen by the members of the group and people who want to join a private group have to be approved by a group owner.
 
 ```yaml
 Type: SwitchParameter
