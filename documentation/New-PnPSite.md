@@ -256,7 +256,7 @@ Accept wildcard characters: False
 ```
 
 ### -Owners
-One or more owners to specify for the site. Defaults to the current user. Required if you use an app-only connection.
+Specifies one or more users with full access on the site and owner permissions on the corresponding Microsoft 365 Group. Can be used when Team Site is being created.  Requires user object. If this parameter is skipped or a group object is provided, the user running New-PnPSite command will be set as a site owner. Required in case of the app-only connection.
 
 ```yaml
 Type: String[]
@@ -270,7 +270,7 @@ Accept wildcard characters: False
 ```
 
 ### -Owner
-The owner to specify for the site. Defaults to the current user. Required if you use an app-only connection.
+Specifies a Site Collection Administator for the new site. Can be used when Communication Site is being created or Teams Site should not get a corresponding Microsoft 365 group.  Requires user object. If this parameter is skipped or a group object is provided, the user running New-PnPSite command will be set as a site owner. Required in case of the app-only connection.
 
 ```yaml
 Type: String
