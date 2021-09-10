@@ -418,7 +418,7 @@ namespace PnP.PowerShell.Commands.Base
                 X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(CertificatePath, CertificatePassword);
                 if (PnPConnection.Current?.ClientId == ClientId &&
                     PnPConnection.Current?.Tenant == Tenant &&
-                    PnPConnection.Current?.Certificate.Thumbprint == certificate.Thumbprint)
+                    PnPConnection.Current?.Certificate?.Thumbprint == certificate.Thumbprint)
                 {
                     ReuseAuthenticationManager();
                 }
@@ -431,7 +431,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 if (PnPConnection.Current?.ClientId == ClientId &&
                     PnPConnection.Current?.Tenant == Tenant &&
-                    PnPConnection.Current?.Certificate.Thumbprint == certificate.Thumbprint)
+                    PnPConnection.Current?.Certificate?.Thumbprint == certificate.Thumbprint)
                 {
                     ReuseAuthenticationManager();
                 }
@@ -453,7 +453,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 if (PnPConnection.Current?.ClientId == ClientId &&
                                     PnPConnection.Current?.Tenant == Tenant &&
-                                    PnPConnection.Current?.Certificate.Thumbprint == certificate.Thumbprint)
+                                    PnPConnection.Current?.Certificate?.Thumbprint == certificate.Thumbprint)
                 {
                     ReuseAuthenticationManager();
                 }
