@@ -5,9 +5,9 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.ServiceHealth
 {
-    [Cmdlet(VerbsCommon.Get, "PnPServiceUpdateMessage")]
+    [Cmdlet(VerbsCommon.Get, "PnPMessageCenterAnnouncement")]
     [RequiredMinimalApiPermissions("ServiceMessage.Read.All")]
-    public class GetServiceUpdateMessage : PnPGraphCmdlet
+    public class GetMessageCenterAnnouncement : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
         public string Identity;
