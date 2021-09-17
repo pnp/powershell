@@ -226,7 +226,9 @@ Accept wildcard characters: False
 ```
 
 ### -IsPublic
-Specifies if the site is public.
+Identifies whether the corresponding Microsoft365 group type is Private or Public. If not specified, group is considered Public.
+Content in a Public group can be seen by anybody in the organization, and anybody in the organization is able to join the group. 
+Content in a Private group can only be seen by the members of the group and people who want to join a private group have to be approved by a group owner.
 
 ```yaml
 Type: SwitchParameter
@@ -254,7 +256,7 @@ Accept wildcard characters: False
 ```
 
 ### -Owners
-One or more owners to specify for the site. Defaults to the current user. Required if you use an app-only connection.
+Specifies one or more users with full access on the site and owner permissions on the corresponding Microsoft 365 Group. Can be used when Team Site is being created.  Requires user object. If this parameter is skipped or a group object is provided, the user running New-PnPSite command will be set as a site owner. Required in case of the app-only connection.
 
 ```yaml
 Type: String[]
@@ -268,7 +270,7 @@ Accept wildcard characters: False
 ```
 
 ### -Owner
-The owner to specify for the site. Defaults to the current user. Required if you use an app-only connection.
+Specifies a Site Collection Administator for the new site. Can be used when Communication Site is being created or Teams Site should not get a corresponding Microsoft 365 group.  Requires user object. If this parameter is skipped or a group object is provided, the user running New-PnPSite command will be set as a site owner. Required in case of the app-only connection.
 
 ```yaml
 Type: String
