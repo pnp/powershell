@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
@@ -9,6 +9,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPOffice365ServiceMessage")]
     [RequiredMinimalApiPermissions("https://manage.office.com/ServiceHealth.Read")]
+    [Obsolete("Use Get-PnPServiceUpdateMessage instead. It uses the Microsoft Graph backend which returns slightly different data. The API used by this cmdlet will be pulled by Microsoft in the future.")]
     public class GetOffice365ServiceMessage : PnPOfficeManagementApiCmdlet
     {
         [Parameter(Mandatory = false)]
