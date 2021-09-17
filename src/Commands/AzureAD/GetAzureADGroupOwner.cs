@@ -30,9 +30,9 @@ namespace PnP.PowerShell.Commands.Graph
             {
                 // Get Owners of the group
                 List<GroupUser> owners = GroupsUtility.GetGroupOwners(group.Convert(), AccessToken);
-                if (owners.Any())
+                if (owners != null && owners.Any())
                 {
-                    WriteObject(owners.Select(o => AzureADGroupUser.CreateFrom(o)),true);
+                    WriteObject(owners.Select(o => AzureADGroupUser.CreateFrom(o)), true);
                 }
             }
         }
