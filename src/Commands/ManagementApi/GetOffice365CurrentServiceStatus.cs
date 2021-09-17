@@ -9,11 +9,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPOffice365CurrentServiceStatus")]
     [RequiredMinimalApiPermissions("https://manage.office.com/ServiceHealth.Read")]
-<<<<<<< HEAD
     [Obsolete("Use Get-PnPServiceCurrentHealth instead. It uses the Microsoft Graph backend which returns slightly different data. The Office Management API used by this cmdlet will be pulled by Microsoft in the future.")]    
-=======
-    [Obsolete("Use Get-PnPServiceCurrentHealth instead. It uses the Microsoft Graph backend which returns slightly different data. The API used by this cmdlet will be pulled by Microsoft in the future.")]    
->>>>>>> 185e1d36 (Added new Service Health cmdlets which use the Microsoft Graph backend)
     public class GetOffice365CurrentServiceStatus : PnPOfficeManagementApiCmdlet
     {
         [Parameter(Mandatory = false)]
