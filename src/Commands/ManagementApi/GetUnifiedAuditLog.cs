@@ -80,11 +80,11 @@ namespace PnP.PowerShell.Commands.ManagementApi
             var url = $"{ApiUrl}/subscriptions/content?contentType={ContentTypeString}&PublisherIdentifier=${TenantId}";
             if (StartTime != DateTime.MinValue)
             {
-                url += $"&startTime={StartTime:yyyy-MM-ddThh:mm:ss}";
+                url += $"&startTime={StartTime:yyyy-MM-ddTHH:mm:ss}";
             }
             if (EndTime != DateTime.MaxValue)
             {
-                url += $"&endTime={EndTime:yyyy-MM-ddThh:mm:ss}";
+                url += $"&endTime={EndTime:yyyy-MM-ddTHH:mm:ss}";
             }
 
             List<ManagementApiSubscriptionContent> subscriptionContents = new List<ManagementApiSubscriptionContent>();
