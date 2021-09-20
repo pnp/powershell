@@ -9,9 +9,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Added lots of extra information getting returned when using `Get-PnPFlow`
 
 ### Contributors
 
+- Koen Zomers [koenzomers]
 
 ## [1.7.0]
 
