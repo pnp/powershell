@@ -14,7 +14,6 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _flow = flow;
         }
 
-
         public string GetName()
         {
             if (_flow != null)
@@ -23,6 +22,5 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             return _name;
         }
-
     }
 }
