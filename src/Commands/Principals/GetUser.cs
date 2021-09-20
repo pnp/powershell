@@ -279,7 +279,8 @@ namespace PnP.PowerShell.Commands.Principals
             }
             else
             {
-                WriteObject(Identity.GetUser(ClientContext));
+                var user = Identity.GetUser(ClientContext, retrievalOptions: RetrievalExpressions);
+                WriteObject(user);
             }
         }
 
