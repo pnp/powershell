@@ -127,7 +127,7 @@ namespace PnP.PowerShell.Commands.Lists
                 {
                     if(Identity.Item == null)
                     {
-                        throw new PSArgumentException($"No -List has been provided specifying the list to update");
+                        throw new PSArgumentException($"No -List has been provided specifying the list to update the item in");
                     }
 
                     list = Identity.Item.ParentList;

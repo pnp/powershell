@@ -53,21 +53,55 @@ namespace PnP.PowerShell.Commands.Lists
             }
             else
             {
-                if(Identity == null || (Identity.Item == null && Identity.Id == 0))
-                {
-                    throw new PSArgumentException($"No -Identity has been provided specifying the item to remove");
-                }
-
                 List list;
                 if(List != null)
                 {
                     list = List.GetList(CurrentWeb);
+
+                    if (Identity == null || (Identity.Item == null && Identity.Id == 0))
+                    {
+                        // Remove all list items from the list
+                        if (Force || ShouldContinue($"{(Recycle ? "Recycle" : "Remove")} all items in the list?", Resources.Confirm))
+                        {
+                            CamlQuery query = new CamlQuery { ViewXml = "<View><Query><Where></Where></Query><ViewFields><FieldRef Name='ID' /></ViewFields><RowLimit>100</RowLimit></View>" };
+
+                            bool stillItemsToProcess = true;
+                            while(stillItemsToProcess)
+                            {
+                                var listItems = list.GetItems(query);
+                                ClientContext.Load(listItems, listItem => listItem.Include(oneItem => oneItem, oneItem => oneItem["ID"]));
+                                ClientContext.ExecuteQueryRetry();
+
+                                var itemsToProcess = listItems.Count;
+                                if (itemsToProcess > 0)
+                                {
+                                    for (var x = itemsToProcess - 1; x >= 0; x--)
+                                    {
+                                        if (Recycle)
+                                        {
+                                            listItems[x].Recycle();
+                                        }
+                                        else
+                                        {
+                                            listItems[x].DeleteObject();
+                                        }
+                                    }
+                                    ClientContext.ExecuteQueryRetry();
+                                }
+                                else
+                                {
+                                    stillItemsToProcess = false;
+                                }
+                            } 
+                        }
+                        return;
+                    }
                 }
                 else
                 {
-                    if(Identity.Item == null)
+                    if(Identity == null || Identity.Item == null)
                     {
-                        throw new PSArgumentException($"No -List has been provided specifying the list to remove");
+                        throw new PSArgumentException($"No -Identity has been provided specifying the item to remove");
                     }
 
                     list = Identity.Item.ParentList;
