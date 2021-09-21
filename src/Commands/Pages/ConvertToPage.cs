@@ -14,10 +14,7 @@ using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Pages
 {
-
     [Cmdlet(VerbsData.ConvertTo, "PnPPage")]
-    [Alias("ConvertTo-PnPClientSidePage")]
-    [WriteAliasWarning("Please use 'ConvertTo-PnPPage'. The alias 'ConvertTo-PnPClientSidePage' will be removed in the 1.5.0 release")]
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
         private static string rootFolder = "<root>";
