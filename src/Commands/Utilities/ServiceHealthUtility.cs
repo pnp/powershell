@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
-        /// Retrieves a specific Service Update Messages
+        /// Retrieves a specific Service Update Message
         /// </summary>
         /// <param name="id">Identifier of the service update message</param>
         /// <param name="httpClient">HttpClient to use for retrieval of the data</param>
