@@ -9,9 +9,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Added option which allows new SharePoint 2013 Workflow creation to be disabled tenant wide by using `Set-PnPTenant -StopNew2013Workflows` and requesting its current setting using `Get-PnPTenant | Select StopNew2013Workflows`
 
 ### Contributors
 
+- Koen Zomers [koenzomers]
 
 ## [1.7.0]
 
