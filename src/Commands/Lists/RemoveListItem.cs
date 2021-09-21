@@ -1,26 +1,30 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPListItem")]
+    [Cmdlet(VerbsCommon.Remove, "PnPListItem", DefaultParameterSetName = ParameterSet_SINGLE)]
     public class RemoveListItem : PnPWebCmdlet
     {
         const string ParameterSet_BATCHED = "Batched";
         const string ParameterSet_SINGLE = "Single";
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
+        [Parameter(ValueFromPipeline = true, Position = 0)]
         [ValidateNotNull]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
+        [Parameter(ValueFromPipeline = true)]
         public ListItemPipeBind Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         public SwitchParameter Recycle;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
@@ -49,27 +53,39 @@ namespace PnP.PowerShell.Commands.Lists
             }
             else
             {
-                var list = List.GetList(CurrentWeb);
-                if (list == null)
+                if(Identity == null || (Identity.Item == null && Identity.Id == 0))
                 {
-                    throw new PSArgumentException(string.Format(Resources.ListNotFound, List.ToString()));
+                    throw new PSArgumentException($"No -Identity has been provided specifying the item to remove");
                 }
-                if (Identity != null)
+
+                List list;
+                if(List != null)
                 {
-                    var item = Identity.GetListItem(list);
-                    var message = $"{(Recycle ? "Recycle" : "Remove")} list item with id {item.Id}?";
-                    if (Force || ShouldContinue(message, Resources.Confirm))
+                    list = List.GetList(CurrentWeb);
+                }
+                else
+                {
+                    if(Identity.Item == null)
                     {
-                        if (Recycle)
-                        {
-                            item.Recycle();
-                        }
-                        else
-                        {
-                            item.DeleteObject();
-                        }
-                        ClientContext.ExecuteQueryRetry();
+                        throw new PSArgumentException($"No -List has been provided specifying the list to remove");
                     }
+
+                    list = Identity.Item.ParentList;
+                }
+
+                var item = Identity.GetListItem(list);
+                var message = $"{(Recycle ? "Recycle" : "Remove")} list item with id {item.Id}?";
+                if (Force || ShouldContinue(message, Resources.Confirm))
+                {
+                    if (Recycle)
+                    {
+                        item.Recycle();
+                    }
+                    else
+                    {
+                        item.DeleteObject();
+                    }
+                    ClientContext.ExecuteQueryRetry();
                 }
             }
         }
