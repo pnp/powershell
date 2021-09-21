@@ -9,9 +9,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Added flexibility to mix and pipe `Add\Get\Remove-PnPListItem` with `Get-PnPList`
+- Added ability to remove all list items from a list using `Remove-PnPListItem -List <listname>` and not providing a list item identifier
 
 ### Contributors
 
+- Koen Zomers [koenzomers]
 
 ## [1.7.0]
 
