@@ -9,9 +9,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-
+- Removed `ConvertTo-PnPClientSidePage` cmdlet as it has been replaced by `ConvertTo-PnPPage`
+  
 ### Contributors
 
+- Koen Zomers [koenzomers]
 
 ## [1.7.0]
 
