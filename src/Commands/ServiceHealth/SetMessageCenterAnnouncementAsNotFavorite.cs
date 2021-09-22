@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace PnP.PowerShell.Commands.ServiceHealth
 {
-    [Cmdlet(VerbsCommon.Set, "PnPMessageCenterAnnouncementAsRead", DefaultParameterSetName = ParameterSet_ALL)]
+    [Cmdlet(VerbsCommon.Set, "PnPMessageCenterAnnouncementAsNotFavorite", DefaultParameterSetName = ParameterSet_ALL)]
     [RequiredMinimalApiPermissions("ServiceMessageViewpoint.Write")]
-    public class SetMessageCenterAnnouncementAsRead : PnPGraphCmdlet
+    public class SetMessageCenterAnnouncementAsNotFavorite : PnPGraphCmdlet
     {
         private const string ParameterSet_ALL = "All";
         private const string ParameterSet_SINGLE = "Single";
@@ -24,11 +24,11 @@ namespace PnP.PowerShell.Commands.ServiceHealth
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsReadByIdAsync(Identity, HttpClient, AccessToken).GetAwaiter().GetResult(), true);
+                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsNotfavoriteByIdAsync(Identity, HttpClient, AccessToken).GetAwaiter().GetResult(), true);
             }
             else if (ParameterSpecified(nameof(Identities)))
             {
-                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsReadByIdAsync(Identities, HttpClient, AccessToken).GetAwaiter().GetResult(), true);
+                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsNotfavoriteByIdAsync(Identities, HttpClient, AccessToken).GetAwaiter().GetResult(), true);
             }
             else
             {
@@ -38,8 +38,8 @@ namespace PnP.PowerShell.Commands.ServiceHealth
                 // Create an array of the Ids of all message center announcements
                 var messageCenterAnnouncementIds = messageCenterAnnouncements.Select(item => item.Id).ToArray();
 
-                // Mark all message center announcements as read
-                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsReadByIdAsync(messageCenterAnnouncementIds, HttpClient, AccessToken).GetAwaiter().GetResult(), true);
+                // Mark all message center announcements as not favorites
+                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsNotfavoriteByIdAsync(messageCenterAnnouncementIds, HttpClient, AccessToken).GetAwaiter().GetResult(), true);
             }
         }        
     }

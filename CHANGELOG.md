@@ -10,6 +10,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - Added `Get-PnPMessageCenterAnnouncent`, `Get-PnPServiceCurrentHealth` and `Get-PnPServiceHealthIssue` cmdlets which pull their data out of the Microsoft Graph API and are replacing the former `Get-PnPOffice365CurrentServiceStatus`, `Get-PnPOffice365HistoricalServiceStatus` and `Get-PnPoffice365ServiceMessage` cmdlets which pull their data from the Office Health and Communications API which is to be deprecated on December 17, 2021. If you're using any of these last three cmdlets, please rewrite your functionality to start using one of the first three cmdlets before this date.
+- Added `Set-PnPMessageCenterAnnouncementAsRead` which allows setting one or more message center announcements as read for the current user
+- Added `Set-PnPMessageCenterAnnouncementAsUnread` which allows setting one or more message center announcements as unread for the current user
+- Added `Set-PnPMessageCenterAnnouncementAsArchived` which allows setting one or more message center announcements as archived for the current user
+- Added `Set-PnPMessageCenterAnnouncementAsNotArchived` which allows setting one or more message center announcements as not archived for the current user
+- Added `Set-PnPMessageCenterAnnouncementAsFavorite` which allows setting one or more message center announcements as favorite for the current user 
+- Added `Set-PnPMessageCenterAnnouncementAsNotFavorite` which allows setting one or more message center announcements as not favorite for the current user 
 
 ### Contributors
 
