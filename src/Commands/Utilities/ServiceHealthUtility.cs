@@ -44,21 +44,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             var item = await GraphHelper.GetAsync<ServiceUpdateMessage>(httpClient, $"v1.0/admin/serviceAnnouncement/messages/{id}", accessToken);
             return item;
-        }  
-
-        /// <summary>
-        /// Sets specific Service Update Messages as read
-        /// </summary>
-        /// <param name="id">Identifier of the service update message</param>
-        /// <param name="httpClient">HttpClient to use for updating the data</param>
-        /// <param name="accessToken">AccessToken to use for authentication of the request</param>
-        /// <returns><see cref="ServiceUpdateMessage"> containing the requested information</returns>
-        public static async Task<bool> SetServiceUpdateMessageAsReadByIdAsync(string[] id, HttpClient httpClient, string accessToken)
-        {
-            var postBody = new PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody { MessageIds = id };
-            var item = await GraphHelper.PostAsync<PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody>(httpClient, "v1.0/admin/serviceAnnouncement/messages/markRead", postBody, accessToken);
-            return true;
-        }                
+        }               
 
         #endregion       
 
