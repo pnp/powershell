@@ -200,7 +200,11 @@ namespace PnP.PowerShell.Commands.Utilities
             var postBody = new PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody { MessageIds = id };
             var item = await GraphHelper.PostAsync<PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody>(httpClient, "v1.0/admin/serviceAnnouncement/messages/unfavorite", postBody, accessToken);
             return true;
+<<<<<<< HEAD
         }
+=======
+        }             
+>>>>>>> d9595bc7 (Added service update message status cmdlets)
 
         #endregion       
 
