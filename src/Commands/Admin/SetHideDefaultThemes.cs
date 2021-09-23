@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands.Admin
     [Cmdlet(VerbsCommon.Set, "PnPHideDefaultThemes")]
     public class SetHideDefaultThemes : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public bool HideDefaultThemes = false;
 
         protected override void ExecuteCmdlet()

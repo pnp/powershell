@@ -1,17 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Utilities.REST
 {
-
+    /// <summary>
+    /// Contains a collection of results
+    /// </summary>
+    /// <typeparam name="T">Model type to map the contents to</typeparam>
     public class RestResultCollection<T>
     {
-        [JsonPropertyName("@odata.nextLink")]
+        [JsonPropertyName("nextLink")]
         public string NextLink { get; set; }
+
+        [JsonPropertyName("@odata.nextLink")]
+        private string ODataNextLink
+        {
+            get { return NextLink; }
+            set { NextLink = value; }
+        }
 
         [JsonPropertyName("value")]
         public IEnumerable<T> Items { get; set; }

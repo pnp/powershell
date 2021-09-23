@@ -16,13 +16,13 @@ List content in folder
 
 ### Folder via url
 ```powershell
-Get-PnPFolderItem [[-FolderSiteRelativeUrl] <String>] [-ItemType <String>] [-ItemName <String>] [-Recursive]
+Get-PnPFolderItem [-FolderSiteRelativeUrl <String>] [-ItemType <String>] [-ItemName <String>] [-Recursive]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Folder via pipebind
 ```powershell
-Get-PnPFolderItem [[-Identity] <FolderPipeBind>] [-ItemType <String>] [-ItemName <String>] [-Recursive]
+Get-PnPFolderItem [-Identity <FolderPipeBind>] [-ItemType <String>] [-ItemName <String>] [-Recursive]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -68,7 +68,7 @@ Returns all files and folders, including contents of any subfolders, in the fold
 ## PARAMETERS
 
 ### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection
 
 ```yaml
 Type: PnPConnection
