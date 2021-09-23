@@ -37,6 +37,7 @@ namespace PnP.PowerShell.Commands.Model
             this.signInAccelerationDomain = tenant.SignInAccelerationDomain;
             this.disabledWebPartIds = tenant.DisabledWebPartIds;
             this.stopNew2013Workflows = tenant.StopNew2013Workflows;
+            this.viewInFileExplorerEnabled = tenant.ViewInFileExplorerEnabled;
 
             try
             {
@@ -486,6 +487,8 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool StopNew2013Workflows => stopNew2013Workflows;
 
+        public bool ViewInFileExplorerEnabled => viewInFileExplorerEnabled;
+
         private bool hideDefaultThemes;
 
         private long storageQuota;
@@ -621,5 +624,10 @@ namespace PnP.PowerShell.Commands.Model
         private SensitiveByDefaultState markNewFilesSensitiveByDefault;    
 
         private bool stopNew2013Workflows;
+
+        private SensitiveByDefaultState markNewFilesSensitiveByDefault;
+
+        private bool viewInFileExplorerEnabled;
+
     }
 }

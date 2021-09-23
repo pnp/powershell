@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPHideDefaultTheme
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Defines if the default / OOTB themes should be visible to users or not.
+Defines if the default out of the box themes should be visible to users or not.
 
 ## SYNTAX
 
@@ -24,7 +24,7 @@ Set-PnPHideDefaultThemes -HideDefaultThemes <Boolean> [-Connection <PnPConnectio
 ```
 
 ## DESCRIPTION
-Use this cmdlet to hide or show the default themes to users
+Use this cmdlet to hide or show the default themes to users as an option to change the look to of their site
 
 You must be a SharePoint Online global administrator to run the cmdlet.
 
@@ -35,14 +35,14 @@ You must be a SharePoint Online global administrator to run the cmdlet.
 Set-PnPHideDefaultThemes -HideDefaultThemes $true
 ```
 
-This example hides the default themes
+The out of the box themes will be hidden
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPHideDefaultThemes -HideDefaultThemes $false
 ```
 
-This example shows the default themes
+The out of the box themes will be shown
 
 ## PARAMETERS
 
@@ -70,7 +70,7 @@ Parameter Sets: (All)
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True
 Accept wildcard characters: False
 ```
 

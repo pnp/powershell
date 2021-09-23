@@ -59,6 +59,13 @@ Add-PnPNavigationNode -Title "Wiki" -Location "QuickLaunch" -Url "wiki/"
 
 Adds a navigation node to the quicklaunch. The navigation node will have the title "Wiki" and will link to Wiki library on the selected Web.
 
+### EXAMPLE 6
+```powershell
+Add-PnPNavigationNode -Title "Label" -Location "TopNavigationBar" -Url "http://linkless.header"
+```
+
+Adds a navigation node to the top navigation bar. The navigation node will be created as a label.
+
 ## PARAMETERS
 
 ### -Connection

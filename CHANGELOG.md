@@ -4,12 +4,16 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
-
+ 
 ## [1.8.0]
 
 ### Changed
 
 - Added option which allows new SharePoint 2013 Workflow creation to be disabled tenant wide by using `Set-PnPTenant -StopNew2013Workflows` and requesting its current setting using `Get-PnPTenant | Select StopNew2013Workflows`
+
+- Added lots of extra information getting returned when using `Get-PnPFlow`.
+- Removed `ConvertTo-PnPClientSidePage` cmdlet as it has been replaced by `ConvertTo-PnPPage`
+- Added option which allows the Explorer View for Microsoft Edge to be enabled tenant wide by using `Set-PnPTenant -ViewInFileExplorerEnabled` and requesting its current setting using `Get-PnPTenant | Select ViewInFileExplorerEnabled`. It can be that this option is not enabled yet on your tenant in which case trying to set it results in to `Set-PnPTenant: The requested operation is part of an experimental feature that is not supported in the current environment.`. In that case try again later.
 
 ### Contributors
 
