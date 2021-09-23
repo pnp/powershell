@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Graph
             {
                 var flowName = Identity.GetName();
                 var result = RestHelper.GetAsync<Model.PowerAutomate.Flow>(HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
-                WriteObject(result, true);
+                WriteObject(result, false);
             }
             else
             {
