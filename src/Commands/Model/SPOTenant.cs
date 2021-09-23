@@ -625,8 +625,6 @@ namespace PnP.PowerShell.Commands.Model
 
         private bool stopNew2013Workflows;
 
-        private SensitiveByDefaultState markNewFilesSensitiveByDefault;
-
         private bool viewInFileExplorerEnabled;
 
     }
