@@ -6,9 +6,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
  
 ## [1.8.0]
-
+ 
 ### Changed
 
+- Added `Get-PnPMessageCenterAnnouncent`, `Get-PnPServiceCurrentHealth` and `Get-PnPServiceHealthIssue` cmdlets which pull their data out of the Microsoft Graph API and are replacing the former `Get-PnPOffice365CurrentServiceStatus`, `Get-PnPOffice365HistoricalServiceStatus` and `Get-PnPoffice365ServiceMessage` cmdlets which pull their data from the Office Health and Communications API which is to be deprecated on December 17, 2021. If you're using any of these last three cmdlets, please rewrite your functionality to start using one of the first three cmdlets before this date.
 
 - Added option which allows new SharePoint 2013 Workflow creation to be disabled tenant wide by using `Set-PnPTenant -StopNew2013Workflows` and requesting its current setting using `Get-PnPTenant | Select StopNew2013Workflows`
 - Fixed issue with `Get-PnPUser -Identity x` ignoring additional requested attributes using `-Includes`
