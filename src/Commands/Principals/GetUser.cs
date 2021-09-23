@@ -1,6 +1,5 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using System.Linq.Expressions;
 using System;
 using PnP.PowerShell.Commands.Base.PipeBinds;
@@ -279,7 +278,8 @@ namespace PnP.PowerShell.Commands.Principals
             }
             else
             {
-                WriteObject(Identity.GetUser(ClientContext));
+                var user = Identity.GetUser(ClientContext, retrievalOptions: RetrievalExpressions);
+                WriteObject(user);
             }
         }
 
