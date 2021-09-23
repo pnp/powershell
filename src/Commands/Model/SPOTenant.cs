@@ -36,6 +36,7 @@ namespace PnP.PowerShell.Commands.Model
             this.provisionSharedWithEveryoneFolder = tenant.ProvisionSharedWithEveryoneFolder;
             this.signInAccelerationDomain = tenant.SignInAccelerationDomain;
             this.disabledWebPartIds = tenant.DisabledWebPartIds;
+            this.viewInFileExplorerEnabled = tenant.ViewInFileExplorerEnabled;
 
             try
             {
@@ -483,6 +484,8 @@ namespace PnP.PowerShell.Commands.Model
 
         public SensitiveByDefaultState MarkNewFilesSensitiveByDefault => markNewFilesSensitiveByDefault;
 
+        public bool ViewInFileExplorerEnabled => viewInFileExplorerEnabled;
+
         private bool hideDefaultThemes;
 
         private long storageQuota;
@@ -616,5 +619,7 @@ namespace PnP.PowerShell.Commands.Model
         private bool disableCustomAppAuthentication;
 
         private SensitiveByDefaultState markNewFilesSensitiveByDefault;
+
+        private bool viewInFileExplorerEnabled;
     }
 }
