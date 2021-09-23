@@ -36,6 +36,8 @@ namespace PnP.PowerShell.Commands.Model
             this.provisionSharedWithEveryoneFolder = tenant.ProvisionSharedWithEveryoneFolder;
             this.signInAccelerationDomain = tenant.SignInAccelerationDomain;
             this.disabledWebPartIds = tenant.DisabledWebPartIds;
+            this.stopNew2013Workflows = tenant.StopNew2013Workflows;
+            this.viewInFileExplorerEnabled = tenant.ViewInFileExplorerEnabled;
 
             try
             {
@@ -345,7 +347,7 @@ namespace PnP.PowerShell.Commands.Model
             } catch
             {
                 this.disableCustomAppAuthentication = false;
-            }
+            }           
             this.markNewFilesSensitiveByDefault = tenant.MarkNewFilesSensitiveByDefault;
         }
 
@@ -483,6 +485,10 @@ namespace PnP.PowerShell.Commands.Model
 
         public SensitiveByDefaultState MarkNewFilesSensitiveByDefault => markNewFilesSensitiveByDefault;
 
+        public bool StopNew2013Workflows => stopNew2013Workflows;
+
+        public bool ViewInFileExplorerEnabled => viewInFileExplorerEnabled;
+
         private bool hideDefaultThemes;
 
         private long storageQuota;
@@ -615,6 +621,11 @@ namespace PnP.PowerShell.Commands.Model
 
         private bool disableCustomAppAuthentication;
 
-        private SensitiveByDefaultState markNewFilesSensitiveByDefault;
+        private SensitiveByDefaultState markNewFilesSensitiveByDefault;    
+
+        private bool stopNew2013Workflows;
+
+        private bool viewInFileExplorerEnabled;
+
     }
 }
