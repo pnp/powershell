@@ -214,6 +214,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? DisableBackToClassic;
 
         [Parameter(Mandatory = false)]
+        public bool? StopNew2013Workflows;  
+
+        [Parameter(Mandatory = false)]
         public bool? ViewInFileExplorerEnabled;
 
         protected override void ExecuteCmdlet()
@@ -815,11 +818,19 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.MarkNewFilesSensitiveByDefault = MarkNewFilesSensitiveByDefault.Value;
                 modified = true;
             }
+
+            if (StopNew2013Workflows.HasValue)
+            {
+                Tenant.StopNew2013Workflows = StopNew2013Workflows.Value;
+                modified = true;
+            }
+
             if (ViewInFileExplorerEnabled.HasValue)
             {
                 Tenant.ViewInFileExplorerEnabled = ViewInFileExplorerEnabled.Value;
                 modified = true;
-            }            
+            }
+
             if (modified)
             {
                 ClientContext.ExecuteQueryRetry();
