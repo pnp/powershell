@@ -43,14 +43,14 @@ jobs:
       run: dotnet build --configuration Release --no-restore -p:WarningLevel=0
       working-directory: pnpcore/src/sdk/PnP.Core
     - name: Install PnP.Framework dependencies
-      run: dotnet restore -p:PnPCoreSdkPath="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Release\netstandard2.0\PnP.Core.dll"
+      run: dotnet restore -p:PnPCoreSdkPath="/home/runner/work/powershell/powershell/pnpcore/src/sdk/PnP.Core/bin/Release/netstandard2.0/PnP.Core.dll"
       working-directory: pnpframework/src/lib
     - name: Build PnP.Framework
-      run: dotnet build --configuration Release --no-restore -p:WarningLevel=0 -p:PnPCoreSdkPath="..\..\..\..\pnpcore\src\sdk\PnP.Core\bin\Release\netstandard2.0\PnP.Core.dll"
+      run: dotnet build --configuration Release --no-restore -p:WarningLevel=0 -p:PnPCoreSdkPath="/home/runner/work/powershell/powershell/pnpcore/src/sdk/PnP.Core/bin/Release/netstandard2.0/PnP.Core.dll"
       working-directory: pnpframework/src/lib/PnP.Framework
     - name: Install PnP.PowerShell dependencies
-      run: dotnet restore -p:PnPFrameworkPath="..\..\..\pnpframework\src\lib\PnP.Framework\bin\Release\netstandard2.0\PnP.Framework.dll" -p:PnPCoreSdkPath="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Release\netstandard2.0\PnP.Core.dll"
+      run: dotnet restore -p:PnPFrameworkPath="..\..\..\pnpframework\src\lib\PnP.Framework\bin\Release\netstandard2.0\PnP.Framework.dll" -p:PnPCoreSdkPath="/home/runner/work/powershell/powershell/pnpcore/src/sdk/PnP.Core/bin/Release/netstandard2.0/PnP.Core.dll"
       working-directory: powershell/src
     - name: Build PnP.PowerShell
-      run: dotnet build --configuration Release --no-restore -p:PnPFrameworkPath="..\..\..\pnpframework\src\lib\PnP.Framework\bin\Release\netstandard2.0\PnP.Framework.dll" -p:PnPCoreSdkPath="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Release\netstandard2.0\PnP.Core.dll"
+      run: dotnet build --configuration Release --no-restore -p:PnPFrameworkPath="..\..\..\pnpframework\src\lib\PnP.Framework\bin\Release\netstandard2.0\PnP.Framework.dll" -p:PnPCoreSdkPath="/home/runner/work/powershell/powershell/pnpcore/src/sdk/PnP.Core/bin/Release/netstandard2.0/PnP.Core.dll"
       working-directory: powershell/src
