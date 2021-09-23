@@ -7,6 +7,11 @@ on:
       - dev
     paths: 
       - 'src/**'
+  push: 
+    branches:
+      - dev
+    paths:
+      - 'src/**'
 jobs:
   build_dev_branch:
     runs-on: ubuntu-latest
