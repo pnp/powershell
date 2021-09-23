@@ -15,7 +15,10 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPPersonalSite.htm
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Office365 only: Creates a personal / OneDrive For Business site
+If you want to use this cmdlet in an automated script not requiring manual authentication, you *must* assign the following permisson to your application registration from either Azure Active Directory or done through https://tenant-admin.sharepoint.com/_layouts/appregnew.aspx with the following permission through https://tenant-admin.sharepoint.com/_layouts/appinv.aspx:<br/><br/> `
+<AppPermissionRequests AllowAppOnlyPolicy="true">
+    <AppPermissionRequest Scope="http://sharepoint/social/tenant" Right="FullControl" />
+  </AppPermissionRequests>`<br/><br/>You then *must* connect using<br/> `Connect-PnPOnline -Url https://tenant-admin.sharepoint.com -ClientId <clientid> -ClientSecret <clientsecret>`<br/>Authenticating using a certificate is *not* possible and will throw an unauthorized exception. It does not require assigning any permissions in Azure Active Directory.
 
 ## SYNTAX
 
@@ -25,15 +28,16 @@ New-PnPPersonalSite [-Email] <String[]> [-Connection <PnPConnection>] [<CommonPa
 
 ## DESCRIPTION
 
+Creates a OneDrive For Business site for the provided user(s)
+
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-$users = ('katiej@contoso.onmicrosoft.com','garth@contoso.onmicrosoft.com')
-                 New-PnPPersonalSite -Email $users
+New-PnPPersonalSite -Email @('katiej@contoso.onmicrosoft.com','garth@contoso.onmicrosoft.com')
 ```
 
-Creates a personal / OneDrive For Business site for the 2 users in the variable $users
+Creates a OneDrive For Business site for the provided two users
 
 ## PARAMETERS
 
