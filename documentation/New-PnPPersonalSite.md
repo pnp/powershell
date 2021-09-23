@@ -20,6 +20,12 @@ If you want to use this cmdlet in an automated script not requiring manual authe
     <AppPermissionRequest Scope="http://sharepoint/social/tenant" Right="FullControl" />
   </AppPermissionRequests>`<br/><br/>You then *must* connect using<br/> `Connect-PnPOnline -Url https://tenant-admin.sharepoint.com -ClientId <clientid> -ClientSecret <clientsecret>`<br/>Authenticating using a certificate is *not* possible and will throw an unauthorized exception. It does not require assigning any permissions in Azure Active Directory.
 
+  If you want to run this cmdlet using an interactive login, you *must* connect using:
+
+```powershell
+Connect-PnPOnline -Url https://tenant-admin.sharepoint.com -UseWebLogin
+```
+
 ## SYNTAX
 
 ```powershell
