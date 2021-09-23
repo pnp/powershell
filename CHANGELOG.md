@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Fixed issue with `Get-PnPUser -Identity x` ignoring additional requested attributes using `-Includes`
 
 - Added lots of extra information getting returned when using `Get-PnPFlow`.
 - Removed `ConvertTo-PnPClientSidePage` cmdlet as it has been replaced by `ConvertTo-PnPPage`
