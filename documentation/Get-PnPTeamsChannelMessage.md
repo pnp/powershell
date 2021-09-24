@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsChannelMess
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-Sends a message to a Microsoft Teams Channel.
+Returns messages from the specified Microsoft Teams Channel.
 
 ## SYNTAX
 
