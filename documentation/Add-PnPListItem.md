@@ -171,7 +171,8 @@ Multiple lines of text: -Values @{"MultiText" = "New text\n\nMore text"}
 
 Rich text: -Values @{"MultiText" = "&lt;strong&gt;New&lt;/strong&gt; text"}
 
-Choice: -Values @{"Choice" = "Value 1"}
+Choice: -Values @{"Choice" = "Choice 1"}
+Choice: -Values @{"Choice" = "Choice 1;#Choice 2"}
 
 Number: -Values @{"Number" = "10"}
 
