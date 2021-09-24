@@ -171,13 +171,15 @@ Multiple lines of text: -Values @{"MultiText" = "New text\n\nMore text"}
 
 Rich text: -Values @{"MultiText" = "&lt;strong&gt;New&lt;/strong&gt; text"}
 
-Choice: -Values @{"Choice" = "Value 1"}
+Choice: -Values @{"Choice" = "Choice 1"}
+Choice: -Values @{"Choice" = "Choice 1;#Choice 2"}
 
 Number: -Values @{"Number" = "10"}
 
-Currency: -Values @{"Number" = "10"}
-
 Currency: -Values @{"Currency" = "10"}
+
+> [!NOTE]
+> For numeric and currency fields, when using -Batch, provide the value using the comma and dots matching the regional setting of the site you're adding the listitem to. When not using batch, you must always provide the value in the American notation, so dot for decimals and comma for thousands separators.
 
 Date and Time: -Values @{"DateAndTime" = "03/13/2015 14:16"}
 
