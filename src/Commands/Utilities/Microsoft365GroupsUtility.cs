@@ -449,15 +449,15 @@ namespace PnP.PowerShell.Commands.Utilities
                         contentType = "image/gif";
                         break;
                     }
-                case "png":
+                case ".png":
                     {
-                        contentType = "image/jpeg";
+                        contentType = "image/png";
                         break;
                     }
             }
             if (!string.IsNullOrEmpty(contentType))
             {
-                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
                 var updated = false;
                 var retryCount = 10;
                 while (retryCount > 0)
@@ -480,7 +480,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             else
             {
-                throw new Exception("Unrecognized image format. Supported formats are .png, .jpg and .gif");
+                throw new Exception("Unrecognized image format. Supported formats are .png, .jpg, .jpeg and .gif");
             }
         }
 

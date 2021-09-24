@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;
+using System.Linq;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -21,16 +22,18 @@ namespace PnP.PowerShell.Commands.Base
                 var output = new List<PnPException>();
                 if (All.IsPresent)
                 {
-                    foreach (ErrorRecord exception in exceptions)
+                    for (var x = 0; x < exceptions.Count; x++)
                     {
+                        var exception = exceptions[x] as ErrorRecord;
+                        if (exception == null) continue;
 
                         var correlationId = string.Empty;
                         if (exception.Exception.Data.Contains("CorrelationId"))
                         {
-                            correlationId = exception.Exception.Data["CorrelationId"].ToString();
+                            correlationId = exception.Exception.Data["CorrelationId"]?.ToString();
                         }
                         var timeStampUtc = DateTime.MinValue;
-                        if (exception.Exception.Data.Contains("TimeStampUtc"))
+                        if (exception.Exception.Data.Contains("TimeStampUtc") && exception.Exception.Data["TimeStampUtc"] != null)
                         {
                             timeStampUtc = (DateTime)exception.Exception.Data["TimeStampUtc"];
                         }
@@ -39,11 +42,15 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    var exception = (ErrorRecord)exceptions[0];
+                    var exceptionObject = exceptions.ToArray().FirstOrDefault(e => e is ErrorRecord);
+                    if(exceptionObject == null) return;
+
+                    var exception = (ErrorRecord) exceptionObject;
+
                     var correlationId = string.Empty;
                     if (exception.Exception.Data.Contains("CorrelationId") && exception.Exception.Data["CorrelationId"] != null)
                     {
-                        correlationId = exception.Exception.Data["CorrelationId"].ToString();
+                        correlationId = exception.Exception.Data["CorrelationId"]?.ToString();
                     }
                     var timeStampUtc = DateTime.MinValue;
                     if (exception.Exception.Data.Contains("TimeStampUtc") && exception.Exception.Data["TimeStampUtc"] != null)
