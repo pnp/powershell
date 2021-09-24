@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added lots of extra information getting returned when using `Get-PnPFlow`.
 - Removed `ConvertTo-PnPClientSidePage` cmdlet as it has been replaced by `ConvertTo-PnPPage`
 - Added option which allows the Explorer View for Microsoft Edge to be enabled tenant wide by using `Set-PnPTenant -ViewInFileExplorerEnabled` and requesting its current setting using `Get-PnPTenant | Select ViewInFileExplorerEnabled`. It can be that this option is not enabled yet on your tenant in which case trying to set it results in to `Set-PnPTenant: The requested operation is part of an experimental feature that is not supported in the current environment.`. In that case try again later.
+- Fixed issue with `Set-PnPDefaultColumnValues -List "Documents" -Folder "Földer" -Field "Text" -Value "123"` not working when having a folder name with special characters in it
 - Fixed `Get-PnPException` throwing an exception and not showing the last exception if the last cmdlet throwing an exception used `-ErrorAction Stop`
 - Fixed `Get-PnPException -All` throwing an exception
 - Fixed an issue with `Set-PnPSite -Identity <url> -Owner <upn>` not working if the URL would be a OneDrive for Business site
