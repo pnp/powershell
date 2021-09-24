@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Contributors
 
 - Koen Zomers [koenzomers]
+- Yuriy Samorodov [YuriySamorodov]
 
 ## [1.7.0]
 
