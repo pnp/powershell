@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Text.Encodings.Web;
 #if !NETFRAMEWORK
 using System.Web;
 #endif
@@ -13,8 +12,8 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             var uriParts = uri.Host.Split('.');
             if (uriParts[0].EndsWith("-admin")) return uri.OriginalString;
-            if (!uriParts[0].EndsWith("-admin"))
-                return $"https://{uriParts[0]}-admin.{string.Join(".", uriParts.Skip(1))}";
+            if (uriParts[0].EndsWith("-my")) return $"https://{uriParts[0].Remove(uriParts[0].Length - 3, 3)}-admin.{string.Join(".", uriParts.Skip(1))}";
+            if (!uriParts[0].EndsWith("-admin")) return $"https://{uriParts[0]}-admin.{string.Join(".", uriParts.Skip(1))}";
             return null;
         }
 
