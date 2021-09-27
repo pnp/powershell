@@ -16,7 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPMessageCenterAnnouncementAsNotArchived` which allows setting one or more message center announcements as not archived for the current user
 - Added `Set-PnPMessageCenterAnnouncementAsFavorite` which allows setting one or more message center announcements as favorite for the current user 
 - Added `Set-PnPMessageCenterAnnouncementAsNotFavorite` which allows setting one or more message center announcements as not favorite for the current user 
-
+ 
 ### Contributors
 
 - Koen Zomers [koenzomers]
