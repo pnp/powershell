@@ -1,71 +1,79 @@
 ﻿using System;
 using System.Collections;
-using System.ComponentModel;
 using System.Linq;
 using System.Management.Automation;
-using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base;
-using PnP.Framework.Utilities;
+using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsData.Sync, "PnPSharePointUserProfilesFromAzureActiveDirectory")]
-    public class SyncSharePointUserProfilesFromAzureActiveDirectory : PnPAdminCmdlet
+    public class SyncSharePointUserProfilesFromAzureActiveDirectory : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0)]
-        public string Folder;
+        [Parameter(Mandatory = false)]
+        public Array Users;
 
-        [Parameter(Mandatory = true, Position = 1)]
-        public string Path = string.Empty;
+        [Parameter(Mandatory = false)]
+        public string Folder = "Shared Documents";
 
-        [Parameter(Mandatory = true, Position = 2)]
+        [Parameter(Mandatory = true)]
         public Hashtable UserProfilePropertyMapping;
-
-        [Parameter(Mandatory = true, Position = 3)]
-        public string IdProperty;
-
-        [Parameter(Mandatory = false, Position = 4)]
-        public ImportProfilePropertiesUserIdType IdType = ImportProfilePropertiesUserIdType.Email;
 
         protected override void ExecuteCmdlet()
         {
-            if (string.IsNullOrWhiteSpace(Path))
+            if (string.IsNullOrWhiteSpace(Folder))
             {
-                throw new InvalidEnumArgumentException(@"Path cannot be empty.");
+                throw new PSArgumentNullException(nameof(Folder), "Folder cannot be empty");
             }
 
-            if (string.IsNullOrWhiteSpace(IdProperty))
+            var aadUsers = new List<PnP.PowerShell.Commands.Model.AzureAD.User>();
+            if (ParameterSpecified(nameof(Users)))
             {
-                throw new InvalidEnumArgumentException(@"IdProperty cannot be empty.");
+                // Loop through provided Azure Active Directory User objects
+                foreach (PSObject user in Users)
+                {
+                    // Only accept and process PnP Framework User model entities
+                    if (user.ImmediateBaseObject is PnP.Framework.Graph.Model.User aadUser)
+                    {
+                        aadUsers.Add(PnP.PowerShell.Commands.Model.AzureAD.User.CreateFrom(aadUser));
+                    }
+                }
+                
+                if(aadUsers.Count == 0)
+                {
+                    throw new PSArgumentException($"No valid Azure Active Directory users provided through {nameof(Users)} parameter", nameof(Users));
+                }
             }
-            
-            var webCtx = ClientContext.Clone(PnPConnection.Current.Url);
-            var web = webCtx.Web;
-            var webServerRelativeUrl = web.EnsureProperty(w => w.ServerRelativeUrl);
-            if (!Folder.ToLower().StartsWith(webServerRelativeUrl))
+            else
             {
-                Folder = UrlUtility.Combine(webServerRelativeUrl, Folder);
-            }
-            if (!web.DoesFolderExists(Folder))
-            {
-                throw new InvalidOperationException($"Folder {Folder} does not exist.");
-            }
-            var folder = web.GetFolderByServerRelativeUrl(Folder);
+                // Construct an array with all the Azure Active Directory properties that need to be fetched from the users to be able to make the mapping
+                var allAadPropertiesList = new List<string>();
+                foreach(DictionaryEntry userProfilePropertyMappingEntry in UserProfilePropertyMapping)
+                {
+                    if (userProfilePropertyMappingEntry.Value != null && !allAadPropertiesList.Contains(userProfilePropertyMappingEntry.Value.ToString()))
+                    {
+                        allAadPropertiesList.Add(userProfilePropertyMappingEntry.Value.ToString());
+                    }
+                }
 
-            var fileName = System.IO.Path.GetFileName(Path);
-            File file = folder.UploadFile(fileName, Path, true);
-            
-            var o365 = new Office365Tenant(ClientContext);
-            var propDictionary = UserProfilePropertyMapping.Cast<DictionaryEntry>().ToDictionary(kvp => (string)kvp.Key, kvp => (string)kvp.Value);
-            var url = new Uri(webCtx.Url).GetLeftPart(UriPartial.Authority) + file.ServerRelativeUrl;
-            var id = o365.QueueImportProfileProperties(IdType, IdProperty, propDictionary, url);
-            ClientContext.ExecuteQueryRetry();
+                // Retrieve all the users from Azure Active Directory
+                aadUsers = PnP.Framework.Graph.UsersUtility.ListUsers(AccessToken, allAadPropertiesList.ToArray()).Select(u => PnP.PowerShell.Commands.Model.AzureAD.User.CreateFrom(u)).ToList();
 
-            var job = o365.GetImportProfilePropertyJob(id.Value);
-            ClientContext.Load(job);
-            ClientContext.ExecuteQueryRetry();
+                if(aadUsers.Count == 0)
+                {
+                    throw new PSInvalidOperationException($"No Azure Active Directory users found to process");
+                }
+            }
+
+            // Create a ClientContext connecting to the site specified through the Connect-PnPOnline cmdlet instead of the current potential Admin ClientContext.
+            var nonAdminClientContext = ClientContext.Clone(PnPConnection.Current.Url);
+
+            // Perform the mapping and execute the sync operation
+            var job = PnP.PowerShell.Commands.Utilities.SharePointUserProfileSync.SyncFromAzureActiveDirectory(nonAdminClientContext, aadUsers, UserProfilePropertyMapping, Folder).GetAwaiter().GetResult();
+
+            // Write the sync job details
             WriteObject(job);
         }
     }
