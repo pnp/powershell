@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Koen Zomers [koenzomers]
 - Yuriy Samorodov [YuriySamorodov]
+- Asad Refai [asadrefai]
 
 ## [1.7.0]
 
