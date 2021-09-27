@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPException` throwing an exception and not showing the last exception if the last cmdlet throwing an exception used `-ErrorAction Stop`
 - Fixed `Get-PnPException -All` throwing an exception
 - Fixed an issue with `Set-PnPSite -Identity <url> -Owner <upn>` not working if the URL would be a OneDrive for Business site
+- Removed `Add-PnPUserToGroup` as it has been replaced by `Add-PnPGroupMember`
 
 ### Contributors
 
