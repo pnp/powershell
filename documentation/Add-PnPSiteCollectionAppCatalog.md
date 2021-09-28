@@ -11,9 +11,10 @@ title: Add-PnPSiteCollectionAppCatalog
 
 ## SYNOPSIS
 
-**Required Permissions**
+**Requirements**
 
-* SharePoint: Access to the SharePoint Tenant Administration site
+* The user must have access to the SharePoint Tenant Administration site,
+* An open connection to the SharePoint Tenant Administration site when invoking the command.
 
 Adds a Site Collection scoped App Catalog to a site
 
@@ -28,13 +29,6 @@ Add-PnPSiteCollectionAppCatalog [-Site <SitePipeBind>] [-Connection <PnPConnecti
 ## EXAMPLES
 
 ### EXAMPLE 1
-```powershell
-Add-PnPSiteCollectionAppCatalog
-```
-
-This will add a SiteCollection app catalog to the currently connected to site
-
-### EXAMPLE 2
 ```powershell
 Add-PnPSiteCollectionAppCatalog -Site "https://contoso.sharepoint.com/sites/FinanceTeamsite"
 ```
