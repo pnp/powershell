@@ -23,6 +23,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPException` throwing an exception and not showing the last exception if the last cmdlet throwing an exception used `-ErrorAction Stop`
 - Fixed `Get-PnPException -All` throwing an exception
 - Fixed an issue with `Set-PnPSite -Identity <url> -Owner <upn>` not working if the URL would be a OneDrive for Business site
+- Renamed `Get-PnPFlowEnvironment` to `Get-PnPPowerAutomateEnvironment`
+- Added lots of extra information getting returned when using `Get-PnPPowerPlatformEnvironment`
+- Added the option to use `-Verbose` with `Export-PnPFlow` so it wil show details on why an export failed when it is not possible to export the flow
 
 ### Contributors
 

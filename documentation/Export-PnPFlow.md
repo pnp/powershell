@@ -93,7 +93,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The name/id of flow or a flow object to export
+The value of the Name property of a Flow that you wish to export
 
 ```yaml
 Type: PowerAutomateFlowPipeBind
