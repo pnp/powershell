@@ -1,11 +1,6 @@
-﻿using Microsoft.Online.SharePoint.TenantAdministration;
-using Microsoft.Online.SharePoint.TenantManagement;
-using Microsoft.SharePoint.Client;
-
+﻿using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
-using System;
 using System.Management.Automation;
-using System.Threading;
 
 namespace PnP.PowerShell.Commands.Admin
 {

@@ -13,26 +13,32 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Set, "PnPListItem")]
+    [Cmdlet(VerbsCommon.Set, "PnPListItem", DefaultParameterSetName = ParameterSet_SINGLE)]
     public class SetListItem : PnPWebCmdlet
     {
         const string ParameterSet_SINGLE = "Single";
-        const string Parameterset_BATCHED = "Batched";
+        const string ParameterSet_BATCHED = "Batched";
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
+        [Parameter(ValueFromPipeline = true, Position = 0)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
+        [Parameter(ValueFromPipeline = true)]
         public ListItemPipeBind Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         public ContentTypePipeBind ContentType;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         public Hashtable Values;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         [Obsolete("Use '-UpdateType SystemUpdate' instead.")]
         public SwitchParameter SystemUpdate;
 
@@ -42,10 +48,11 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
         public SwitchParameter ClearLabel;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         public ListItemUpdateType UpdateType;
 
-        [Parameter(Mandatory = true, ParameterSetName = Parameterset_BATCHED)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BATCHED)]
         [ValidateNotNull]
         public PnPBatch Batch;
 
@@ -106,7 +113,25 @@ namespace PnP.PowerShell.Commands.Lists
             }
             else
             {
-                List list = List.GetList(CurrentWeb);
+                if(Identity == null || (Identity.Item == null && Identity.Id == 0))
+                {
+                    throw new PSArgumentException($"No -Identity has been provided specifying the item to update");
+                }
+
+                List list;
+                if(List != null)
+                {
+                    list = List.GetList(CurrentWeb);
+                }
+                else
+                {
+                    if(Identity.Item == null)
+                    {
+                        throw new PSArgumentException($"No -List has been provided specifying the list to update the item in");
+                    }
+
+                    list = Identity.Item.ParentList;
+                }
 
                 if (list != null)
                 {

@@ -14,9 +14,8 @@ namespace PnP.PowerShell.Commands
         private const string ParameterSet_GROUP = "Set group permissions";
         private const string ParameterSet_USER = "Set user permissions";
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public WebPipeBind Identity;
-
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GROUP)]
         public GroupPipeBind Group;
