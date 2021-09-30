@@ -5,10 +5,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
  
-## [1.8.0]
- 
-### Changed
+## [Current Nightly]
 
+### Changed
 
 - Added flexibility to mix and pipe `Add\Get\Remove-PnPListItem` with `Get-PnPList`
 - Added ability to remove all list items from a list using `Remove-PnPListItem -List <listname>` and not providing a list item identifier
