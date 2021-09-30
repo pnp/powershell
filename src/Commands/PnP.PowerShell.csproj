@@ -55,7 +55,6 @@
 		<PackageReference Include="PnP.Core" Version="*" Condition="'$(IsRelease)' == '1'" />
 		<PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
-		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />
 		<PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
 		<PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
 		<PackageReference Include="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
