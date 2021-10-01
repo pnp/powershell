@@ -44,8 +44,11 @@ If during one of these chunks an exception occurs (for instance you are trying t
 
 ## Cmdlets that support batching
 
-As of release 0.3.31-nightly the following cmdlets support batching:
+As of release 1.7.63-nightly the following cmdlets support batching:
 
 * [`Add-PnPListItem`](/cmdlets/Add-PnPListItem)
 * [`Set-PnPListItem`](/cmdlets/Set-PnPListItem)
 * [`Remove-PnPListItem`](/cmdlets/Remove-PnPListItem)
+* [`Publish-PnPSyntexModel`](/cmdlets/Publish-PnPSyntexModel)
+* [`Unpublish-PnPSyntexModel`](/cmdlets/Unpublish-PnPSyntexModel)
+* [`Request-PnPSyntexClassifyAndExtract`](/cmdlets/Request-PnPSyntexClassifyAndExtract)
