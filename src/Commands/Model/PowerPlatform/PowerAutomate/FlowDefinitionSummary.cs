@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace PnP.PowerShell.Commands.Model.PowerAutomate
+namespace PnP.PowerShell.Commands.Model.PowerPlatform.PowerAutomate
 {
     /// <summary>
     /// Contains information on what action(s) and trigger(s) are used in a Microsoft Power Automate Flow
