@@ -84,35 +84,35 @@
 	<ItemGroup Condition="'$(PnPCoreSdkPath)' != '' and '$(IsRelease)' != '1'">
 		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
 		<Reference Include="PnP.Core">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core/bin/Debug/netstandard2.0/PnP.Core.dll</HintPath>
+			<HintPath>$(PnPCoreSdkPath)PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
 		<Reference Include="PnP.Core.Auth">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Auth/bin/Debug/netstandard2.0/PnP.Core.Auth.dll</HintPath>
+			<HintPath>$(PnPCoreSdkPath)PnP.Core.Auth\bin\Debug\netstandard2.0\PnP.Core.Auth.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
 		<Reference Include="PnP.Core.Admin">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Admin/bin/Debug/netstandard2.0/PnP.Core.Admin.dll</HintPath>
+			<HintPath>$(PnPCoreSdkPath)PnP.Core.Admin\bin\Debug\netstandard2.0\PnP.Core.Admin.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
 		<Reference Include="PnP.Core.Transformation">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Transformation/bin/Debug/netstandard2.0/PnP.Core.Transformation.dll</HintPath>
+			<HintPath>$(PnPCoreSdkPath)PnP.Core.Transformation\bin\Debug\netstandard2.0\PnP.Core.Transformation.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
 		<Reference Include="PnP.Core.Transformation.SharePoint">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Transformation.SharePoint/bin/Debug/netstandard2.0/PnP.Core.Transformation.SharePoint.dll</HintPath>
+			<HintPath>$(PnPCoreSdkPath)PnP.Core.Transformation.SharePoint\bin\Debug\netstandard2.0\PnP.Core.Transformation.SharePoint.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(PnPFrameworkPath)' != '' and '$(IsRelease)' != '1'">
-		<Reference Include="PnP.Framework" Condition="'$(PnPFrameworkPath)' != ''">
-			<HintPath>$(PnPFrameworkPath)PnP.Framework/bin/Debug/netstandard2.0/PnP.Framework.dll</HintPath>
+		<Reference Include="PnP.Framework">
+			<HintPath>$(PnPFrameworkPath)PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
