@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Files
                 }
                 case "Folder":
                 {
-                    var folder = Folder.GetFolder(CurrentWeb);
+                    var folder = Folder.GetFolder(CurrentWeb, false);
                     if (folder == null)
                         throw new ArgumentException("The specified folder was not found");
                     WriteObject(folder.FindFiles(Match));
