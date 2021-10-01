@@ -18,7 +18,7 @@ Returns the flows for a given environment
 ## SYNTAX
 
 ```
-Get-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> [-AsAdmin] [-Identity <PowerAutomateFlowPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> [-AsAdmin] [-Identity <PowerPlatformPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,14 +28,14 @@ This cmdlets returns the flows for a given enviroment.
 
 ### Example 1
 ```powershell
-$environment = Get-PnPFlowEnvironment
+$environment = Get-PnPPowerPlatformEnvironment
 Get-PnPFlow -Environment $environment
 ```
-This returns all the flows for a given environment
+This returns all the flows for a given power platform environment
 
 ### Example 2
 ```powershell
-$environment = Get-PnPFlowEnvironment
+$environment = Get-PnPPowerPlatformEnvironment
 Get-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
 This returns specific flow
@@ -74,7 +74,7 @@ Accept wildcard characters: False
 ```
 
 ### -Environment
-The name of the environment or an Environment object to retrieve the available flows for.
+The name of the Power Platform environment or an Environment object to retrieve the available flows for.
 
 ```yaml
 Type: PowerAutomateEnvironmentPipeBind
@@ -92,7 +92,7 @@ Accept wildcard characters: False
 The Name/Id of the flow to retrieve.
 
 ```yaml
-Type: PowerAutomateFlowPipeBind
+Type: PowerPlatformPipeBind
 Parameter Sets: (All)
 Aliases:
 

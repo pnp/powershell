@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace PnP.PowerShell.Commands.Model.PowerAutomate
+namespace PnP.PowerShell.Commands.Model.PowerPlatform.PowerAutomate
 {
     /// <summary>
     /// Contains metadata on an action or trigger in a Microsoft Power Automate Flow

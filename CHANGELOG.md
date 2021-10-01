@@ -5,24 +5,36 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
  
-## [1.8.0]
- 
+## [Current Nightly]
+
 ### Changed
 
-
 - Added flexibility to mix and pipe `Add\Get\Remove-PnPListItem` with `Get-PnPList`
-- Added ability to remove all list items from a list using `Remove-PnPListItem -List <listname>` and not providing a list item identifier
+- Added ability to remove all list items from a list using `Remove-PnPListItem -List <listname>` and not providing a list item identifier.
 - Added `Get-PnPMessageCenterAnnouncent`, `Get-PnPServiceCurrentHealth` and `Get-PnPServiceHealthIssue` cmdlets which pull their data out of the Microsoft Graph API and are replacing the former `Get-PnPOffice365CurrentServiceStatus`, `Get-PnPOffice365HistoricalServiceStatus` and `Get-PnPoffice365ServiceMessage` cmdlets which pull their data from the Office Health and Communications API which is to be deprecated on December 17, 2021. If you're using any of these last three cmdlets, please rewrite your functionality to start using one of the first three cmdlets before this date.
-
+- Fixed `Get-PnPChangeLog -Nightly` not returning anything
 - Added option which allows new SharePoint 2013 Workflow creation to be disabled tenant wide by using `Set-PnPTenant -StopNew2013Workflows` and requesting its current setting using `Get-PnPTenant | Select StopNew2013Workflows`
 - Fixed issue with `Get-PnPUser -Identity x` ignoring additional requested attributes using `-Includes`
 - Added lots of extra information getting returned when using `Get-PnPFlow`.
 - Removed `ConvertTo-PnPClientSidePage` cmdlet as it has been replaced by `ConvertTo-PnPPage`
 - Added option which allows the Explorer View for Microsoft Edge to be enabled tenant wide by using `Set-PnPTenant -ViewInFileExplorerEnabled` and requesting its current setting using `Get-PnPTenant | Select ViewInFileExplorerEnabled`. It can be that this option is not enabled yet on your tenant in which case trying to set it results in to `Set-PnPTenant: The requested operation is part of an experimental feature that is not supported in the current environment.`. In that case try again later.
+- Fixed issue with `Set-PnPDefaultColumnValues -List "Documents" -Folder "Földer" -Field "Text" -Value "123"` not working when having a folder name with special characters in it.
+- Fixed `Get-PnPException` throwing an exception and not showing the last exception if the last cmdlet throwing an exception used `-ErrorAction Stop`
+- Fixed `Get-PnPException -All` throwing an exception.
+- Fixed an issue with `Set-PnPSite -Identity <url> -Owner <upn>` not working if the URL would be a OneDrive for Business site.
+- Renamed `Get-PnPFlowEnvironment` to `Get-PnPPowerAutomateEnvironment`
+- Added lots of extra information getting returned when using `Get-PnPPowerPlatformEnvironment`
+- Added the option to use `-Verbose` with `Export-PnPFlow` so it wil show details on why an export failed when it is not possible to export the flow.
+- Removed `Add-PnPUserToGroup` as it has been replaced by `Add-PnPGroupMember`
+- Fixed an issue with `Get-PnPSiteScriptFromWeb` requiring an Include parameter next to providing lists and fixed specifying lists through List\ListName not working.
+- Changed `Get-PnPSiteScriptFromWeb` to get a site script of the currently connected to site if `-Url` is omitted.
 
 ### Contributors
 
 - Koen Zomers [koenzomers]
+- Yuriy Samorodov [YuriySamorodov]
+- Asad Refai [asadrefai]
+- James Eccles [jameseccles]
 
 ## [1.7.0]
 

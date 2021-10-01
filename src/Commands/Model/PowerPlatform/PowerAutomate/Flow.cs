@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace PnP.PowerShell.Commands.Model.PowerAutomate
+namespace PnP.PowerShell.Commands.Model.PowerPlatform.PowerAutomate
 {
     /// <summary>
     /// Contains information on one Microsoft Power Automate Flow

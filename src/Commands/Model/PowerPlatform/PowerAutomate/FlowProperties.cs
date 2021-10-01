@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using PnP.PowerShell.Commands.Utilities.JSON;
 
-namespace PnP.PowerShell.Commands.Model.PowerAutomate
+namespace PnP.PowerShell.Commands.Model.PowerPlatform.PowerAutomate
 {
     /// <summary>
     /// Contains additional information on one Microsoft Power Automate Flow
@@ -120,7 +119,7 @@ namespace PnP.PowerShell.Commands.Model.PowerAutomate
         /// The environment the Flow runs in
         /// </summary>
         [JsonPropertyName("environment")]
-        public Environment EnvironmentDetails { get; set; }  
+        public Environment.Environment EnvironmentDetails { get; set; }  
 
         /// <summary>
         /// Unique identifier of the template used to build this Flow
