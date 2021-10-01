@@ -7,8 +7,6 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPGroupMember")]
-    [Alias("Get-PnPGroupMembers")]
-    [WriteAliasWarning("Please use Get-PnPGroupMember (singular). The alias `Get-PnPGroupMembers` (plural) will be removed in the 1.5.0 release")]
     public class GetGroupMembers : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
