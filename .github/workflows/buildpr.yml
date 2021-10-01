@@ -52,5 +52,5 @@ jobs:
       run: dotnet restore -p:PnPFrameworkPath="..\..\pnpframework\src\lib\" -p:PnPCoreSdkPath="..\..\pnpcore\src\sdk\"
       working-directory: powershell/src
     - name: Build PnP.PowerShell
-      run: dotnet build --configuration Release --no-restore -p:PnPFrameworkPath="..\..\pnpframework\src\lib\" -p:PnPCoreSdkPath="..\..\pnpcore\src\sdk\"
+      run: dotnet build --configuration Release --no-restore -p:PnPFrameworkPath="..\..\..\pnpframework\src\lib\" -p:PnPCoreSdkPath="..\..\..\pnpcore\src\sdk\"
       working-directory: powershell/src
