@@ -32,6 +32,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Get-PnPGroupMembers` cmdlet alias and related warning. The cmdlet `Get-PnPGroupMember` (singular) is available.
 - Removed `Remove-PnPUserFromGroup` cmdlet alias and related warning. The cmdlet `Remove-PnPGroupMember` is available.
 - Removed `Initialize-PnPPowerShellAuthentication` cmdlet alias and related warning. The cmdlet `Register-PnPAzureADApp` is the replacement.
+- `Get-PnPFileVersion` cmdlet documentation improved with additional example.
+- `Add-PnPNavigationNode` cmdlet documentation improved with additional example feature which shows how to add a navigation node as a label.
 
 ### Contributors
 
@@ -40,6 +42,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Asad Refai [asadrefai]
 - James Eccles [jameseccles]
 - Giacomo Pozzoni [jackpoz]
+- Todd Klindt [ToddKlindt]
+- Rolands Strakis [wonderplayer]
 
 ## [1.7.0]
 
