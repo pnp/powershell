@@ -5,10 +5,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
  
-## [1.8.0]
- 
-### Changed
+## [Current Nightly]
 
+### Changed
 
 - Added flexibility to mix and pipe `Add\Get\Remove-PnPListItem` with `Get-PnPList`
 - Added ability to remove all list items from a list using `Remove-PnPListItem -List <listname>` and not providing a list item identifier
@@ -24,12 +23,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPException -All` throwing an exception
 - Fixed an issue with `Set-PnPSite -Identity <url> -Owner <upn>` not working if the URL would be a OneDrive for Business site
 - Removed `Add-PnPUserToGroup` as it has been replaced by `Add-PnPGroupMember`
+- Fixed an issue with `Get-PnPSiteScriptFromWeb` requiring an Include parameter next to providing lists and fixed specifying lists through List\ListName not working
+- Changed `Get-PnPSiteScriptFromWeb` to get a site script of the currently connected to site if `-Url` is omitted
 
 ### Contributors
 
 - Koen Zomers [koenzomers]
 - Yuriy Samorodov [YuriySamorodov]
 - Asad Refai [asadrefai]
+- James Eccles [jameseccles]
 
 ## [1.7.0]
 
