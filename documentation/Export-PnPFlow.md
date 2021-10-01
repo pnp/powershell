@@ -34,6 +34,8 @@ Export-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerA
 ## DESCRIPTION
 This cmdlet exports a flow either as a json file or as a zip package.
 
+Many times exporting a Flow will not be possible due to various reasons such as connections having gone stale, SharePoint sites referenced no longer existing or other configuration errors in the Flow. To display these errors when trying to export a Flow, provide the -Verbose flag with your export request. If not provided, these errors will silently be ignored.
+
 ## EXAMPLES
 
 ### Example 1
@@ -93,7 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The name/id of flow or a flow object to export
+The value of the Name property of a Flow that you wish to export
 
 ```yaml
 Type: PowerAutomateFlowPipeBind

@@ -1,4 +1,4 @@
-namespace PnP.PowerShell.Commands.Model.PowerAutomate.Enums
+namespace PnP.PowerShell.Commands.Model.PowerPlatform.PowerAutomate.Enums
 {
     /// <summary>
     /// Contains the possible sharing types for a Flow
