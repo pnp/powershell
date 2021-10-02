@@ -23,32 +23,17 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
         protected override void ExecuteCmdlet()
         {
-            List<Model.PowerPlatform.PowerAutomate.Flow> flows = new List<Model.PowerPlatform.PowerAutomate.Flow>();
-
             var environmentName = Environment.GetName();
 
             if (ParameterSpecified(nameof(Identity)))
             {
                 var flowName = Identity.GetName();
-                var result = RestHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 WriteObject(result, false);
             }
             else
             {
-                var result = RestHelper.GetAsync<RestResultCollection<Model.PowerPlatform.PowerAutomate.Flow>>(HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
-
-                if (result.Items.Any())
-                {
-                    flows.AddRange(result.Items);
-                    while (!string.IsNullOrEmpty(result.NextLink))
-                    {
-                        result = RestHelper.GetAsync<RestResultCollection<Model.PowerPlatform.PowerAutomate.Flow>>(HttpClient, result.NextLink, AccessToken).GetAwaiter().GetResult();
-                        if (result.Items.Any())
-                        {
-                            flows.AddRange(result.Items);
-                        }
-                    }
-                }
+                var flows = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.PowerAutomate.Flow>(HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 WriteObject(flows, true);
             }
         }
