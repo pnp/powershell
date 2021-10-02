@@ -62,6 +62,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             return null;
         }
+        
         internal EventReceiverDefinition GetEventReceiverOnWeb(Web web)
         {
             if (_eventReceiverDefinition != null)
