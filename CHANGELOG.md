@@ -34,6 +34,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Initialize-PnPPowerShellAuthentication` cmdlet alias and related warning. The cmdlet `Register-PnPAzureADApp` is the replacement.
 - `Get-PnPFileVersion` cmdlet documentation improved with additional example.
 - `Add-PnPNavigationNode` cmdlet documentation improved with additional example feature which shows how to add a navigation node as a label.
+- Added option to add/list/remove event receivers from the site scope using `Add-PnPEventReceiver -Scope <Site/Web>`, `Get-PnPEventReceiver -Scope <All/Site/Web>` and `Remove-PnPEventReceiver -Scope <All/Site/Web>`
 
 ### Contributors
 
@@ -44,6 +45,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Giacomo Pozzoni [jackpoz]
 - Todd Klindt [ToddKlindt]
 - Rolands Strakis [wonderplayer]
+- Bhishma Bhandari [bhishma]
 
 ## [1.7.0]
 
