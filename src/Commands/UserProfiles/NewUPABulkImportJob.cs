@@ -5,13 +5,12 @@ using System.Linq;
 using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
-    [Cmdlet(VerbsCommon.New, "PnPUPABulkImportJob")]
+    [Cmdlet(VerbsCommon.New, "PnPUPABulkImportJob", DefaultParameterSetName = ParameterSet_UPLOADFILE)]
     public class NewUPABulkImportJob : PnPAdminCmdlet
     {
         private const string ParameterSet_UPLOADFILE = "Submit up a new user profile bulk import job from local file";
@@ -42,7 +41,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
         {
             if (string.IsNullOrWhiteSpace(IdProperty))
             {
-                throw new InvalidEnumArgumentException(@"IdProperty cannot be empty.");
+                throw new InvalidEnumArgumentException(@"IdProperty cannot be empty");
             }
 
             switch (ParameterSetName)
@@ -50,7 +49,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 case ParameterSet_UPLOADFILE:
                     if (string.IsNullOrWhiteSpace(Path))
                     {
-                        throw new InvalidEnumArgumentException(@"Path cannot be empty.");
+                        throw new InvalidEnumArgumentException(@"Path cannot be empty");
                     }
 
                     var webCtx = ClientContext.Clone(PnPConnection.Current.Url);
@@ -62,7 +61,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     }
                     if (!web.DoesFolderExists(Folder))
                     {
-                        throw new InvalidOperationException($"Folder {Folder} does not exist.");
+                        throw new InvalidOperationException($"Folder {Folder} does not exist");
                     }
                     var folder = web.GetFolderByServerRelativeUrl(Folder);
 
@@ -73,7 +72,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 case ParameterSet_URL:
                     if (string.IsNullOrWhiteSpace(Url))
                     {
-                        throw new InvalidEnumArgumentException(@"Url cannot be empty.");
+                        throw new InvalidEnumArgumentException(@"Url cannot be empty");
                     }
                     break;
             }
