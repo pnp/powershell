@@ -54,7 +54,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/buildingsource.html",
-          "hash": "UFFC73HSxrQwintAsxJd+w=="
+          "hash": "45VBN6d5pknM0zK/2bGT/g=="
         }
       },
       "is_incremental": false,
@@ -2479,6 +2479,18 @@
         ".html": {
           "relative_path": "cmdlets/Get-PnPPlannerTask.html",
           "hash": "tArhrdQYi9Ly/gwhbqzDSA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPowerPlatformEnvironment.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPowerPlatformEnvironment.html",
+          "hash": "KxVig/r79RPVo8LN174I+Q=="
         }
       },
       "is_incremental": false,
@@ -6870,7 +6882,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "OibLnsImhxdpYM2xAje5Og=="
+          "hash": "x/modN76CinP/Y1NkAR/mQ=="
         }
       },
       "is_incremental": false,
@@ -6949,7 +6961,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 572,
+          "total_file_count": 573,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

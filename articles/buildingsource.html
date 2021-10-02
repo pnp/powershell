@@ -127,6 +127,13 @@ c:\repos\pnpframework
 </code></pre>
 <p>Now, build the PnP Framework by navigating to the <code>build</code> folder in the <code>pnpframework</code> folder and run <code>Build-Debug.ps1</code>. This will compile the PnP Framework.</p>
 <p>Next, navigate to the <code>build</code> folder of the <code>powershell</code> folder and run <code>Build-Debug.ps1 -LocalPnPFramework</code>. This will compile PnP PowerShell and refer to the -locally- compiled version of the PnP Framework. If you do not specify the <code>-LocalPnPFramework</code> switch it will refer to the latest nightly build available on NuGet.org instead.</p>
+<h1 id="running-against-a-local-copy-of-the-pnp-core-sdk">Running against a local copy of the PnP Core SDK</h1>
+<p>If your code changes require changes to the PnP Core SDK (meaning any of the PnP Core SDK libraries like: PnP.Core, PnP.Core.Auth, PnP.Core.Admin, PnP.Core.Transformation, or PnP.Core.Transformation.SharePoint) you might want to use a local version of the PnP Core SDK which you modified. In order to do this you will need to have both the PnP.PowerShell repository (<a href="https://github.com/pnp/powershell">https://github.com/pnp/powershell</a>) and the PnP.Core repository (<a href="https://github.com/pnp/pnpcore">https://github.com/pnp/pnpcore</a>) locally on your computer. Make sure that both repositories are located at the same folder level. E.g.:</p>
+<pre><code class="lang-console">c:\repos\powershell
+c:\repos\pnpcore
+</code></pre>
+<p>Now, build the PnP Core SDK by navigating to the <code>build</code> folder in the <code>pnpcore</code> folder and run <code>Build-Debug.ps1</code>. This will compile the whole PnP Core SDK solution, including PnP.Core.Auth, PnP.Core.Admin, PnP.Core.Transformation, and PnP.Core.Transformation.SharePoint.</p>
+<p>Next, navigate to the <code>build</code> folder of the <code>powershell</code> folder and run <code>Build-Debug.ps1 -LocalPnPCore</code>. This will compile PnP PowerShell and refer to the -locally- compiled version of the PnP Core SDK. If you do not specify the <code>-LocalPnPCore</code> switch it will refer to the latest nightly build available on NuGet.org instead.</p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
