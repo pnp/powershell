@@ -29,6 +29,5 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             site.Context.ExecuteQueryRetry();
             return roleDefinition;
         }
-
     }
 }

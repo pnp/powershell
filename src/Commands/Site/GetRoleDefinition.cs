@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Site
                 var roleDefinitions = ClientContext.Site.RootWeb.RoleDefinitions;
                 ClientContext.Load(roleDefinitions);
                 ClientContext.ExecuteQueryRetry();
-                WriteObject(roleDefinitions);
+                WriteObject(roleDefinitions, true);
             }
         }
     }
