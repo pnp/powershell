@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - `Get-PnPFileVersion` cmdlet documentation improved with additional example.
 - `Add-PnPNavigationNode` cmdlet documentation improved with additional example feature which shows how to add a navigation node as a label.
 - Added `-Url` parameter to `New-PnPUPABulkImportJob` which allows providing a URL to an existing SharePoint User Profile import mapping instruction file stored on SharePoint Online
+- Changed `Get-PnPSiteDesign` and `Invoke-PnPSiteDesign` to when providing a name through `-Identity` to be able to work with all site designs having that same name instead of just the first one
 
 ### Contributors
 
