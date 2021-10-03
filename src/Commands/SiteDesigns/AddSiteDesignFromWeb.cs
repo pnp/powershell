@@ -3,11 +3,13 @@ using System.Linq;
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using System;
+using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteScriptFromWeb", DefaultParameterSetName = ParameterSet_BASICCOMPONENTS)]
-    public class GetSiteScriptFromWeb : PnPAdminCmdlet
+    [Cmdlet(VerbsCommon.Add, "PnPSiteDesignFromWeb", DefaultParameterSetName = ParameterSet_BASICCOMPONENTS)]
+    public class AddSiteDesignFromWeb : PnPAdminCmdlet
     {
         private const string ParameterSet_BASICCOMPONENTS = "Basic components";
         private const string ParameterSet_ALLCOMPONENTS = "All components";
@@ -43,6 +45,30 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         public SwitchParameter IncludeTheme;
 
+        [Parameter(Mandatory = true)]
+        public string Title;
+
+        [Parameter(Mandatory = false)]
+        public string Description;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter IsDefault;
+
+        [Parameter(Mandatory = false)]
+        public string PreviewImageAltText;
+
+        [Parameter(Mandatory = false)]
+        public string PreviewImageUrl;
+
+        [Parameter(Mandatory = false)]
+        public string ThumbnailUrl;
+
+        [Parameter(Mandatory = false)]
+        public Guid DesignPackageId;
+
+        [Parameter(Mandatory = true)]
+        public SiteWebTemplate WebTemplate;   
+
         protected override void ExecuteCmdlet()
         {
             // If no URL specified, we take the URL of the site that the current context is connected to
@@ -51,18 +77,51 @@ namespace PnP.PowerShell.Commands
                 Url = PnPConnection.Current.Url;
             }
 
+            // Generate site script
             var tenantSiteScriptSerializationInfo = new TenantSiteScriptSerializationInfo
             {
                 IncludeBranding = IncludeBranding || IncludeAll,
-                IncludedLists = Lists.Select(l => l.Replace("\\", "/")).ToArray(),
+                IncludedLists = Lists?.Select(l => l.Replace("\\", "/")).ToArray(),
                 IncludeLinksToExportedItems = IncludeLinksToExportedItems || IncludeAll,
                 IncludeRegionalSettings = IncludeRegionalSettings || IncludeAll,
                 IncludeSiteExternalSharingCapability = IncludeSiteExternalSharingCapability || IncludeAll,
                 IncludeTheme = IncludeTheme || IncludeAll
             };
-            var script = Tenant.GetSiteScriptFromSite(Url, tenantSiteScriptSerializationInfo);
+            var generatedSiteScript = Tenant.GetSiteScriptFromSite(Url, tenantSiteScriptSerializationInfo);
             ClientContext.ExecuteQueryRetry();
-            WriteObject(script.Value.JSON);
+            
+            var siteScript = generatedSiteScript.Value.JSON;
+
+            // Add the site script as a new site script to the tenant
+            TenantSiteScriptCreationInfo siteScriptCreationInfo = new TenantSiteScriptCreationInfo
+            {
+                Title = Title,
+                Description = Description,
+                Content = siteScript
+            };
+            
+            var addedSiteScript = Tenant.CreateSiteScript(siteScriptCreationInfo);
+            ClientContext.Load(addedSiteScript);
+            ClientContext.ExecuteQueryRetry();
+
+            // Create a site design
+            TenantSiteDesignCreationInfo siteDesignInfo = new TenantSiteDesignCreationInfo
+            {
+                Title = Title,
+                SiteScriptIds = new [] { addedSiteScript.Id },
+                Description = Description,
+                IsDefault = IsDefault,
+                PreviewImageAltText = PreviewImageAltText,
+                PreviewImageUrl = PreviewImageUrl,
+                WebTemplate = ((int)WebTemplate).ToString(),
+                ThumbnailUrl = ThumbnailUrl,
+                DesignPackageId = DesignPackageId
+            };
+
+            var design = Tenant.CreateSiteDesign(siteDesignInfo);
+            ClientContext.Load(design);
+            ClientContext.ExecuteQueryRetry();
+            WriteObject(design);
         }
     }
 }

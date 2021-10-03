@@ -1,11 +1,8 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using System;
-using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
