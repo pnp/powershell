@@ -45,27 +45,51 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         public SwitchParameter IncludeTheme;
 
+        [Parameter(ParameterSetName = ParameterSet_BASICCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_ALLCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         [Parameter(Mandatory = true)]
         public string Title;
 
+        [Parameter(ParameterSetName = ParameterSet_BASICCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_ALLCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         [Parameter(Mandatory = false)]
         public string Description;
 
+        [Parameter(ParameterSetName = ParameterSet_BASICCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_ALLCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         [Parameter(Mandatory = false)]
         public SwitchParameter IsDefault;
 
+        [Parameter(ParameterSetName = ParameterSet_BASICCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_ALLCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         [Parameter(Mandatory = false)]
         public string PreviewImageAltText;
 
+        [Parameter(ParameterSetName = ParameterSet_BASICCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_ALLCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         [Parameter(Mandatory = false)]
         public string PreviewImageUrl;
 
+        [Parameter(ParameterSetName = ParameterSet_BASICCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_ALLCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         [Parameter(Mandatory = false)]
         public string ThumbnailUrl;
 
+        [Parameter(ParameterSetName = ParameterSet_BASICCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_ALLCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         [Parameter(Mandatory = false)]
         public Guid DesignPackageId;
 
+        [Parameter(ParameterSetName = ParameterSet_BASICCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_ALLCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         [Parameter(Mandatory = true)]
         public SiteWebTemplate WebTemplate;   
 
