@@ -242,7 +242,7 @@ Accept wildcard characters: False
 ```
 
 ### -Lcid
-The language to use for the site.
+The language to use for the site. For more information, see Locale IDs supported by SharePoint at https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint. To get the list of supported languages on a SharePoint environment use: Get-PnPAvailableLanguage.
 
 ```yaml
 Type: SwitchParameter
