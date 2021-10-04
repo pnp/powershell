@@ -97,7 +97,7 @@ Accept wildcard characters: False
 ```
 
 ### -IncludeAll
-If specified will include all supported components into the Site Script
+If specified will include all supported components into the Site Script except for the lists and document libraries, these need to be explicitly be specified through -Lists
 
 ```yaml
 Type: SwitchParameter

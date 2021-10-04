@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands
             var tenantSiteScriptSerializationInfo = new TenantSiteScriptSerializationInfo
             {
                 IncludeBranding = IncludeBranding || IncludeAll,
-                IncludedLists = Lists.Select(l => l.Replace("\\", "/")).ToArray(),
+                IncludedLists = Lists?.Select(l => l.Replace("\\", "/")).ToArray(),
                 IncludeLinksToExportedItems = IncludeLinksToExportedItems || IncludeAll,
                 IncludeRegionalSettings = IncludeRegionalSettings || IncludeAll,
                 IncludeSiteExternalSharingCapability = IncludeSiteExternalSharingCapability || IncludeAll,
