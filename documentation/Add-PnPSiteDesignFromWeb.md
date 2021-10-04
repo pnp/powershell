@@ -215,6 +215,104 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -IncludeAll
+If specified will include all supported components into the Site Script except for the lists and document libraries, these need to be explicitly be specified through -Lists
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: All components
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeBranding
+If specified will include the branding of the site into the Site Script
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Specific components
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeLinksToExportedItems
+If specified will include navigation links into the Site Script
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Specific components
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeRegionalSettings
+If specified will include the regional settings into the Site Script
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Specific components
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeSiteExternalSharingCapability
+If specified will include the external sharing configuration into the Site Script
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Specific components
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeTheme
+If specified will include the branding of the site into the Site Script
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Specific components
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Lists
+Allows specifying one or more site relative URLs of lists that should be included into the Site Script, i.e. "Shared Documents","List\MyList"
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
