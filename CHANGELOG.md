@@ -36,6 +36,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - `Add-PnPNavigationNode` cmdlet documentation improved with additional example feature which shows how to add a navigation node as a label.
 - Added `-Url` parameter to `New-PnPUPABulkImportJob` which allows providing a URL to an existing SharePoint User Profile import mapping instruction file stored on SharePoint Online
 - Fixed an issue with several PnP PowerShell cmdlets such as `Get-PnPTeamsUser` where not all results would be returned
+- Fixed unable to piping the output of `Get-PnPRoleDefinition` to i.e. filter by RoleTypeKind
+- Changed `Set-PnPListItemPermission` to support piping in a roledefinition for `-AddRole` and `-RemoveRole`
+- Fixed issue with 'Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID
 
 ### Contributors
 
@@ -48,6 +51,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Rolands Strakis [wonderplayer]
 - [reusto]
 - [4ndri]
+- [WimVandierendonck]
 
 ## [1.7.0]
 

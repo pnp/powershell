@@ -62,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -Lcid
-Specifies the language of this site collection. For more information, see Locale IDs supported by SharePoint at https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint. To get the list of supported languages on a SharePoint environment use: Get-PnPAvailableLanguage.
+Specifies the language of this site collection. For more information, see Locale IDs supported by SharePoint at https://github.com/pnp/powershell/wiki/Supported-LCIDs-by-SharePoint. To get the list of supported languages on a SharePoint environment use: Get-PnPAvailableLanguage.
 
 ```yaml
 Type: UInt32
