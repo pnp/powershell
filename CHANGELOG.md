@@ -37,6 +37,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Url` parameter to `New-PnPUPABulkImportJob` which allows providing a URL to an existing SharePoint User Profile import mapping instruction file stored on SharePoint Online
 - Fixed unable to piping the output of `Get-PnPRoleDefinition` to i.e. filter by RoleTypeKind
 - Changed `Set-PnPListItemPermission` to support piping in a roledefinition for `-AddRole` and `-RemoveRole`
+- Fixed issue with 'Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID
+
 
 ### Contributors
 
