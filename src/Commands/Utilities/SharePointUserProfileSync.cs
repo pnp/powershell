@@ -22,7 +22,8 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="users">Azure AD User objects that need to be synced</param>
         /// <param name="userProfilePropertyMappings">Hashtable with the mapping from the Azure Active Directory property (the value) to the SharePoint Online User Profile Property (the key)</param>
         /// <param name="sharePointFolder">Location in the currently connected to site where to upload the JSON file to with instructions to update the user profiles</param>
-        public static async Task<ImportProfilePropertiesJobInfo> SyncFromAzureActiveDirectory(ClientContext clientContext, IEnumerable<PnP.PowerShell.Commands.Model.AzureAD.User> users, Hashtable userProfilePropertyMappings, string sharePointFolder)
+        /// <param name="onlyCreateAndUploadMappingsFile">Boolean indicating if only the mappings file should be created and uploaded to SharePoint Online (true) or if the import job on that file should also be invoked (false)</param>
+        public static async Task<ImportProfilePropertiesJobInfo> SyncFromAzureActiveDirectory(ClientContext clientContext, IEnumerable<PnP.PowerShell.Commands.Model.AzureAD.User> users, Hashtable userProfilePropertyMappings, string sharePointFolder, bool onlyCreateAndUploadMappingsFile = false)
         {
              var webServerRelativeUrl = clientContext.Web.EnsureProperty(w => w.ServerRelativeUrl);
             if (!sharePointFolder.ToLower().StartsWith(webServerRelativeUrl))
@@ -86,6 +87,9 @@ namespace PnP.PowerShell.Commands.Utilities
                     file = folder.UploadFile(fileName, stream, true);
                 }
             }
+
+            // Check if we should kick off the process to import the file
+            if(onlyCreateAndUploadMappingsFile) return null;
 
             // Instruct SharePoint Online to process the JSON file
             var o365 = new Office365Tenant(clientContext);

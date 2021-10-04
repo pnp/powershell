@@ -21,6 +21,9 @@ namespace PnP.PowerShell.Commands.UserProfiles
         [Parameter(Mandatory = true)]
         public Hashtable UserProfilePropertyMapping;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter WhatIf;
+
         protected override void ExecuteCmdlet()
         {
             if (string.IsNullOrWhiteSpace(Folder))
@@ -71,7 +74,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             var nonAdminClientContext = ClientContext.Clone(PnPConnection.Current.Url);
 
             // Perform the mapping and execute the sync operation
-            var job = PnP.PowerShell.Commands.Utilities.SharePointUserProfileSync.SyncFromAzureActiveDirectory(nonAdminClientContext, aadUsers, UserProfilePropertyMapping, Folder).GetAwaiter().GetResult();
+            var job = PnP.PowerShell.Commands.Utilities.SharePointUserProfileSync.SyncFromAzureActiveDirectory(nonAdminClientContext, aadUsers, UserProfilePropertyMapping, Folder, ParameterSpecified(nameof(WhatIf))).GetAwaiter().GetResult();
 
             // Write the sync job details
             WriteObject(job);

@@ -103,6 +103,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -WhatIf
+Will retrieve the users from Azure Active Directory and create and upload the mappings JSON file, but will not invoke a request to SharePoint Online to queue the import process. This way you can examine the mappings JSON file on SharePoint Online first to ensure the mappings are being done correctly.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
