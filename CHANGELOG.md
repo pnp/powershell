@@ -50,6 +50,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Todd Klindt [ToddKlindt]
 - Rolands Strakis [wonderplayer]
 - [reusto]
+- [WimVandierendonck]
 
 ## [1.7.0]
 
