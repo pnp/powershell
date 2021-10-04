@@ -59,10 +59,17 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (_id != Guid.Empty)
             {
-                var design = Tenant.GetSiteDesign(tenant.Context, Id);
-                tenant.Context.Load(design);
-                (tenant.Context as ClientContext).ExecuteQueryRetry();
-                return design;
+                try
+                {
+                    var design = Tenant.GetSiteDesign(tenant.Context, Id);
+                    tenant.Context.Load(design);
+                    (tenant.Context as ClientContext).ExecuteQueryRetry();
+                    return design;
+                }
+                catch(Microsoft.SharePoint.Client.ServerException e) when (e.ServerErrorTypeName == "System.IO.FileNotFoundException")
+                {
+                    return null;
+                }
             }
             return null;
         }

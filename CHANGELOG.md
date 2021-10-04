@@ -28,6 +28,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Add-PnPUserToGroup` as it has been replaced by `Add-PnPGroupMember`
 - Fixed an issue with `Get-PnPSiteScriptFromWeb` requiring an Include parameter next to providing lists and fixed specifying lists through List\ListName not working.
 - Changed `Get-PnPSiteScriptFromWeb` to get a site script of the currently connected to site if `-Url` is omitted.
+- Improved `Find-PnPFile` error message.
+- Removed `Get-PnPGroupMembers` cmdlet alias and related warning. The cmdlet `Get-PnPGroupMember` (singular) is available.
+- Removed `Remove-PnPUserFromGroup` cmdlet alias and related warning. The cmdlet `Remove-PnPGroupMember` is available.
+- Removed `Initialize-PnPPowerShellAuthentication` cmdlet alias and related warning. The cmdlet `Register-PnPAzureADApp` is the replacement.
+- `Get-PnPFileVersion` cmdlet documentation improved with additional example.
+- `Add-PnPNavigationNode` cmdlet documentation improved with additional example feature which shows how to add a navigation node as a label.
+- Added `-Url` parameter to `New-PnPUPABulkImportJob` which allows providing a URL to an existing SharePoint User Profile import mapping instruction file stored on SharePoint Online
+- Fixed unable to piping the output of `Get-PnPRoleDefinition` to i.e. filter by RoleTypeKind
+- Changed `Set-PnPListItemPermission` to support piping in a roledefinition for `-AddRole` and `-RemoveRole`
+- Fixed issue with 'Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID
+
 
 ### Contributors
 
@@ -35,6 +46,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Yuriy Samorodov [YuriySamorodov]
 - Asad Refai [asadrefai]
 - James Eccles [jameseccles]
+- Giacomo Pozzoni [jackpoz]
+- Todd Klindt [ToddKlindt]
+- Rolands Strakis [wonderplayer]
+- [reusto]
 
 ## [1.7.0]
 
