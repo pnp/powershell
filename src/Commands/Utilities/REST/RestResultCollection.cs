@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Utilities.REST
 {
-    /// <summary>7
+    /// <summary>
     /// Contains a collection of results
     /// </summary>
     /// <typeparam name="T">Model type to map the contents to</typeparam>
