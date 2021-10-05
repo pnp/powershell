@@ -73,7 +73,6 @@ namespace PnP.PowerShell.Commands
             {
                 throw new PSInvalidOperationException((gex.Message));
             }
-
             catch (Exception ex)
             {
                 PnPConnection.Current.RestoreCachedContext(PnPConnection.Current.Url);
@@ -87,7 +86,6 @@ namespace PnP.PowerShell.Commands
 
                 WriteError(errorRecord);
             }
-
         }
 
         protected override void EndProcessing()

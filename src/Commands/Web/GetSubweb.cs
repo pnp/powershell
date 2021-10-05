@@ -4,11 +4,12 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System;
-using PnP.PowerShell.Commands.Extensions;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPSubWeb")]
+    [WriteAliasWarning("Please use Get-PnPSubWeb instead. Get-PnPSubWebs will be removed in a future version.")]
     [Alias("Get-PnPSubWebs")]
 
     public class GetSubWebs : PnPWebRetrievalsCmdlet<Web>

@@ -17,16 +17,19 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            var siteDesign = Identity.GetTenantSiteDesign(Tenant);
-            if(siteDesign == null)
+            var siteDesigns = Identity.GetTenantSiteDesign(Tenant);
+            if(siteDesigns == null || siteDesigns.Length == 0)
             {
                 throw new PSArgumentException("Site design provided through the Identity parameter could not be found", nameof(Identity));
             }
 
-            if (Force || ShouldContinue(Properties.Resources.RemoveSiteDesign, Properties.Resources.Confirm))
+            foreach (var siteDesign in siteDesigns)
             {
-                Tenant.DeleteSiteDesign(siteDesign.Id);
-                ClientContext.ExecuteQueryRetry();
+                if (Force || ShouldContinue(Properties.Resources.RemoveSiteDesign, Properties.Resources.Confirm))
+                {
+                    Tenant.DeleteSiteDesign(siteDesign.Id);
+                    ClientContext.ExecuteQueryRetry();
+                }
             }
         }
     }
