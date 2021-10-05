@@ -21,6 +21,8 @@ Invoke-PnPSiteDesign [-Identity] <TenantSiteDesignPipeBind> [-WebUrl <String>]
 
 ## DESCRIPTION
 
+Applies the Site Design provided through Identity to an existing site. When providing a site design name and multiple site designs exist with the same name, all of them will be invoked.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

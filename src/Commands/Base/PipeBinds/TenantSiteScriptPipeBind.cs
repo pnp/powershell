@@ -42,6 +42,5 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _id = Guid.Empty;
             _siteScript = null;
         }
-
     }
 }
