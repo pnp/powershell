@@ -56,13 +56,20 @@ namespace PnP.PowerShell.Commands
         protected override void ExecuteCmdlet()
         {
             // Retrieve the provided site design
-            var siteDesign = Identity.GetTenantSiteDesign(Tenant);
+            var siteDesigns = Identity.GetTenantSiteDesign(Tenant);
 
-            // Ensure the site design has been found
-            if(siteDesign == null)
+            // Ensure a site design has been found
+            if(siteDesigns == null || siteDesigns.Length == 0)
             {
                 throw new PSArgumentException("Site design provided through the Identity parameter could not be found. Use Add-PnPSiteDesignFromWeb if you intend on adding a new site design.", nameof(Identity));
             }
+
+            // Ensure we only have one site design so we're sure which one needs to be updated
+            if(siteDesigns.Length > 1)
+            {
+                throw new PSArgumentException("Multiple site designs have been found based on the name provided through the Identity parameter. Please use the site design Id instead to specify only one site design to update.", nameof(Identity));
+            }
+            var siteDesign = siteDesigns[0];
 
             // Generate site script
             WriteVerbose($"Generating site script from {Url}");
