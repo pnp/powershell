@@ -36,6 +36,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - `Add-PnPNavigationNode` cmdlet documentation improved with additional example feature which shows how to add a navigation node as a label.
 - Added option to add/list/remove event receivers from the site scope using `Add-PnPEventReceiver -Scope <Site/Web>`, `Get-PnPEventReceiver -Scope <All/Site/Web>` and `Remove-PnPEventReceiver -Scope <All/Site/Web>`
 - Added `-Url` parameter to `New-PnPUPABulkImportJob` which allows providing a URL to an existing SharePoint User Profile import mapping instruction file stored on SharePoint Online
+- Added `Add-PnPSiteDesignFromWeb` which combines `Get-PnPSiteScriptFromWeb`, `Add-PnPSiteScript` and `Add-PnPSiteDesign` into one cmdlet to allow for a specific site to directly be added as a site design to allow other sites to be configured similarly
+- Added `Update-PnPSiteDesignFromWeb` which combines `Get-PnPSiteScriptFromWeb` and `Set-PnPSiteScript` into one cmdlet to allow for a specific site design to directly be updated based on an existing site which can function as a template
 - Changed `Get-PnPSiteDesign` and `Invoke-PnPSiteDesign` to when providing a name through `-Identity` to be able to work with all site designs having that same name instead of just the first one
 - Fixed unable to piping the output of `Get-PnPRoleDefinition` to i.e. filter by RoleTypeKind
 - Changed `Set-PnPListItemPermission` to support piping in a roledefinition for `-AddRole` and `-RemoveRole`

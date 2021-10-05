@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            // If no URL specific, we take the URL of the site that the current context is connected to
+            // If no URL specified, we take the URL of the site that the current context is connected to
             if(!ParameterSpecified(nameof(Url)))
             {
                 Url = PnPConnection.Current.Url;
