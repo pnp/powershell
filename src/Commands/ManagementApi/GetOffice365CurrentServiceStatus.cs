@@ -17,12 +17,8 @@ namespace PnP.PowerShell.Commands.ManagementApi
 
         protected override void ExecuteCmdlet()
         {
-            var collection = GraphHelper.GetAsync<RestResultCollection<ManagementApiServiceStatus>>(HttpClient, $"{ApiRootUrl}ServiceComms/CurrentStatus{(ParameterSpecified(nameof(Workload)) ? $"?$filter=Workload eq '{Workload.Value}'" : "")}", AccessToken, false).GetAwaiter().GetResult();
-
-            if (collection != null)
-            {
-                WriteObject(collection.Items, true);
-            }
+            var collection = GraphHelper.GetResultCollectionAsync<ManagementApiServiceStatus>(HttpClient, $"{ApiRootUrl}ServiceComms/CurrentStatus{(ParameterSpecified(nameof(Workload)) ? $"?$filter=Workload eq '{Workload.Value}'" : "")}", AccessToken, false).GetAwaiter().GetResult();
+            WriteObject(collection, true);
         }
     }
 }
