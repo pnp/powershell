@@ -18,13 +18,21 @@ namespace PnP.PowerShell.Commands
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(Identity.GetTenantSiteDesign(Tenant));
+                var siteDesigns = Identity.GetTenantSiteDesign(Tenant);
+
+                if(siteDesigns.Length == 0)
+                {
+                    WriteVerbose("No site designs with the identity provided through Identity have been found");
+                }
+
+                WriteObject(siteDesigns, true);
             }
             else
             {
                 var designs = Tenant.GetSiteDesigns();
                 ClientContext.Load(designs);
                 ClientContext.ExecuteQueryRetry();
+
                 WriteObject(designs.ToList(), true);
             }
         }

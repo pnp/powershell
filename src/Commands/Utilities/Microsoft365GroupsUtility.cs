@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Linq;
 using PnP.PowerShell.Commands.Utilities.REST;
-using System.Text.Json.Serialization;
 using System.Text.Json;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Base;
@@ -16,19 +15,10 @@ namespace PnP.PowerShell.Commands.Utilities
         internal static async Task<IEnumerable<Microsoft365Group>> GetGroupsAsync(HttpClient httpClient, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
             var items = new List<Microsoft365Group>();
-            var result = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(httpClient, "v1.0/groups", accessToken);
-            if (result != null && result.Items.Any())
+            var result = await GraphHelper.GetResultCollectionAsync<Microsoft365Group>(httpClient, "v1.0/groups", accessToken);
+            if (result != null && result.Any())
             {
-                items.AddRange(result.Items);
-                while (!string.IsNullOrEmpty(result.NextLink))
-                {
-                    result = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(httpClient, result.NextLink, accessToken);
-
-                    if (result != null && result.Items.Any())
-                    {
-                        items.AddRange(result.Items);
-                    }
-                }
+                items.AddRange(result);               
             }
             if (includeSiteUrl || includeOwners)
             {
@@ -149,22 +139,8 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static async Task<IEnumerable<Microsoft365Group>> GetDeletedGroupsAsync(HttpClient httpClient, string accessToken)
         {
-            var items = new List<Microsoft365Group>();
-            var result = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(httpClient, "v1.0/directory/deleteditems/microsoft.graph.group", accessToken);
-            if (result != null && result.Items.Any())
-            {
-                items.AddRange(result.Items);
-                while (!string.IsNullOrEmpty(result.NextLink))
-                {
-                    result = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(httpClient, result.NextLink, accessToken);
-
-                    if (result != null && result.Items.Any())
-                    {
-                        items.AddRange(result.Items);
-                    }
-                }
-            }
-            return items;
+            var result = await GraphHelper.GetResultCollectionAsync<Microsoft365Group>(httpClient, "v1.0/directory/deleteditems/microsoft.graph.group", accessToken);
+            return result;
         }
 
         internal static async Task<Microsoft365Group> RestoreDeletedGroupAsync(HttpClient httpClient, Guid groupId, string accessToken)
@@ -249,22 +225,8 @@ namespace PnP.PowerShell.Commands.Utilities
 
         private static async Task<IEnumerable<Microsoft365User>> GetGroupMembersAsync(string groupName, HttpClient httpClient, Guid groupId, string accessToken)
         {
-            List<Microsoft365User> returnValue = null;
-            var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365User>>(httpClient, $"v1.0/groups/{groupId}/{groupName}", accessToken);
-            if (results != null && results.Items.Any())
-            {
-                returnValue = new List<Microsoft365User>();
-                returnValue.AddRange(results.Items);
-                while (!string.IsNullOrEmpty(results.NextLink))
-                {
-                    results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365User>>(httpClient, results.NextLink, accessToken);
-                    if (results != null && results.Items.Any())
-                    {
-                        returnValue.AddRange(results.Items);
-                    }
-                }
-            }
-            return returnValue;
+            var results = await GraphHelper.GetResultCollectionAsync<Microsoft365User>(httpClient, $"v1.0/groups/{groupId}/{groupName}", accessToken);
+            return results;
         }
 
         internal static async Task ClearMembersAsync(HttpClient httpClient, Guid groupId, string accessToken)

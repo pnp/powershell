@@ -45,6 +45,24 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             return Name ?? Id.ToString();
         }
 
+        internal EventReceiverDefinition GetEventReceiverOnSite(Microsoft.SharePoint.Client.Site site)
+        {
+            if (_eventReceiverDefinition != null)
+            {
+                return _eventReceiverDefinition;
+            }
+
+            if (_id != Guid.Empty)
+            {
+                return site.GetEventReceiverById(_id);
+            }
+            else if (!string.IsNullOrEmpty(Name))
+            {
+                return site.GetEventReceiverByName(Name);
+            }
+            return null;
+        }
+        
         internal EventReceiverDefinition GetEventReceiverOnWeb(Web web)
         {
             if (_eventReceiverDefinition != null)

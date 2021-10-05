@@ -1,9 +1,7 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
-using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
@@ -37,9 +35,19 @@ namespace PnP.PowerShell.Commands
                         ThrowTerminatingError(new ErrorRecord(new System.Exception("Invalid URL"), "INVALIDURL", ErrorCategory.InvalidArgument, WebUrl));
                     }
                 }
-                TenantSiteDesign design = Identity.GetTenantSiteDesign(tenant);
-                if (design != null)
+
+                // Retrieve the site designs
+                var designs = Identity.GetTenantSiteDesign(tenant);
+
+                if (designs == null || designs.Length == 0)
                 {
+                    throw new PSArgumentException("No site designs found matching the identity provided through Identity", nameof(Identity));
+                }
+
+                foreach (var design in designs)
+                {
+                    WriteVerbose($"Invoking site design '{design.Title}' ({design.Id})");
+
                     var results = tenant.ApplySiteDesign(webUrl, design.Id);
                     tenantContext.Load(results);
                     tenantContext.ExecuteQueryRetry();
