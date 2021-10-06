@@ -758,6 +758,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPSiteDesignFromWeb.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPSiteDesignFromWeb.html",
+          "hash": "zaogF+FuutdFB+93XXZYsA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPSiteDesignTask.md",
       "output": {
         ".html": {
@@ -6734,6 +6746,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Sync-PnPSharePointUserProfilesFromAzureActiveDirectory.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Sync-PnPSharePointUserProfilesFromAzureActiveDirectory.html",
+          "hash": "gdvqVW8yXYZ2c8SI8jQEOw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Test-PnPListItemIsRecord.md",
       "output": {
         ".html": {
@@ -6854,6 +6878,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Update-PnPSiteDesignFromWeb.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Update-PnPSiteDesignFromWeb.html",
+          "hash": "A7wVXCE2psmwCPpQ1FwAuQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Update-PnPTeamsApp.md",
       "output": {
         ".html": {
@@ -6882,7 +6918,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "x/modN76CinP/Y1NkAR/mQ=="
+          "hash": "Aa7FAIerCsXHsvUtKu7wpg=="
         }
       },
       "is_incremental": false,
@@ -6961,7 +6997,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 573,
+          "total_file_count": 576,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

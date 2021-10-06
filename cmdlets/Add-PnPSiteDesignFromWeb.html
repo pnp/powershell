@@ -1,0 +1,347 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Add-PnPSiteDesignFromWeb | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Add-PnPSiteDesignFromWeb | PnP PowerShell ">
+    <meta name="generator" content="docfx 2.51.0.0">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+                    <h1 id="add-pnpsitedesignfromweb">Add-PnPSiteDesignFromWeb</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
+</ul>
+<p>Creates a new Site Design on the current tenant based on the site provided through -Url or the currently connected to site if -Url is omitted</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Add-PnPSiteDesignFromWeb -Title &lt;String&gt; [-Description &lt;String&gt;] [-IsDefault]
+ [-PreviewImageAltText &lt;String&gt;] [-PreviewImageUrl &lt;String&gt;] [-WebTemplate &lt;SiteWebTemplate&gt;]
+ [-ThumbnailUrl &lt;String&gt;] [-DesignPackageId &lt;Guid&gt;] [-Lists &lt;String[]&gt;] [-IncludeBranding] [-IncludeLinksToExportedItems]
+ [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme]
+ [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Creates a new Site Design on the current tenant based on the site provided through -Url or the currently connected to site if -Url is omitted. It combines the steps of <code>Get-PnPSiteScriptFromWeb</code>, <code>Add-PnPSiteScript</code> and <code>Add-PnPSiteDesign</code> into one cmdlet. The information returned from running the cmdlet is the information of the Site Design that has been created.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Add-PnPSiteDesignFromWeb -Title &quot;My Company Design&quot; -Description &quot;My description&quot; -WebTemplate TeamSite -IncludeAll
+</code></pre>
+<p>Generates a site script based on all the components of the currently connected to site, excluding its lists and libraries and based on the generated script it will create a site script and a site design with the specified title and description for modern team sites.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Add-PnPSiteDesignFromWeb -Title &quot;My Company Design&quot; -Description &quot;My description&quot; -WebTemplate TeamSite -IncludeAll -Lists (&quot;/lists/Issue list&quot;, &quot;Shared Documents)
+</code></pre>
+<p>Generates a site script based on all the components of the currently connected to site, including the list &quot;Issue list&quot; and the default document library &quot;Shared Documents&quot; and based on the generated script it will create a site script and a site design with the specified title and description for modern team sites.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Add-PnPSiteDesignFromWeb -Title &quot;My Company Design&quot; -Description &quot;My description&quot; -WebTemplate TeamSite -Lists &quot;/lists/Issue list&quot; -ThumbnailUrl https://contoso.sharepoint.com/SiteAssets/logo.png
+</code></pre>
+<p>Generates a site script based on the list &quot;Issue list&quot; in the current site and based on the generated script it will create a site script and a site design with the specified title, description and logo for modern team sites.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-confirm">-Confirm</h3>
+<p>Prompts you for confirmation before running the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-whatif">-WhatIf</h3>
+<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-description">-Description</h3>
+<p>The description of the site design</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-isdefault">-IsDefault</h3>
+<p>Specifies if the site design is a default site design</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-previewimagealttext">-PreviewImageAltText</h3>
+<p>Sets the text for the preview image. This was used in the old site designs approach and currently has no function anymore.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-previewimageurl">-PreviewImageUrl</h3>
+<p>Sets the url to the preview image. This was used in the old site designs approach and currently has no function anymore. Use ThumbnailUrl instead.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-title">-Title</h3>
+<p>The title of the site design</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-webtemplate">-WebTemplate</h3>
+<p>Specifies the type of site to which this design applies</p>
+<pre><code class="lang-yaml">Type: SiteWebTemplate
+Parameter Sets: (All)
+Accepted values: TeamSite, CommunicationSite, GrouplessTeamSite
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-thumbnailurl">-ThumbnailUrl</h3>
+<p>The full URL of a thumbnail image, i.e. <a href="https://contoso.sharepoint/siteassets/image.png">https://contoso.sharepoint/siteassets/image.png</a>. If none is specified, SharePoint uses a generic image. Recommended size is 400 x 300 pixels. This is the image that will be shown when selecting a template through &quot;Apply a site template&quot; or &quot;Browse templates&quot; shown in &quot;Start designing your site&quot; shown when creating a new site.</p>
+<pre><code class="lang-yaml">Type: SiteWebTemplate
+Parameter Sets: (All)
+Accepted values: TeamSite, CommunicationSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-designpackageid">-DesignPackageId</h3>
+<p>Sets the design package Id of this site design</p>
+<pre><code class="lang-yaml">Type: SiteWebTemplate
+Parameter Sets: (All)
+Accepted values: TeamSite, CommunicationSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-includeall">-IncludeAll</h3>
+<p>If specified will include all supported components into the Site Script except for the lists and document libraries, these need to be explicitly be specified through -Lists</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: All components
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-includebranding">-IncludeBranding</h3>
+<p>If specified will include the branding of the site into the Site Script</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Specific components
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-includelinkstoexporteditems">-IncludeLinksToExportedItems</h3>
+<p>If specified will include navigation links into the Site Script</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Specific components
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-includeregionalsettings">-IncludeRegionalSettings</h3>
+<p>If specified will include the regional settings into the Site Script</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Specific components
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-includesiteexternalsharingcapability">-IncludeSiteExternalSharingCapability</h3>
+<p>If specified will include the external sharing configuration into the Site Script</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Specific components
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-includetheme">-IncludeTheme</h3>
+<p>If specified will include the branding of the site into the Site Script</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Specific components
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-lists">-Lists</h3>
+<p>Allows specifying one or more site relative URLs of lists that should be included into the Site Script, i.e. &quot;Shared Documents&quot;,&quot;List\MyList&quot;</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://telemetry.sharepointpnp.com/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+</html>
