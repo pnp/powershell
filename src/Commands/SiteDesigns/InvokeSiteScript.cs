@@ -10,15 +10,21 @@ using System.Text.Json;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "PnPSiteScript")]
+    [Cmdlet(VerbsLifecycle.Invoke, "PnPSiteScript", DefaultParameterSetName = ParameterSet_SCRIPTCONTENTS)]
     public class InvokeSiteScript : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
+        private const string ParameterSet_SITESCRIPTREFERENCE = "By Site Script Reference";
+        private const string ParameterSet_SCRIPTCONTENTS = "By providing script contents";
+
+        [Parameter(ParameterSetName = ParameterSet_SITESCRIPTREFERENCE, Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public TenantSiteScriptPipeBind Identity;
 
+        [Parameter(ParameterSetName = ParameterSet_SITESCRIPTREFERENCE)]
+        [Parameter(ParameterSetName = ParameterSet_SCRIPTCONTENTS)]
         [Parameter(Mandatory = false)]
         public string WebUrl;
         
+        [Parameter(ParameterSetName = ParameterSet_SCRIPTCONTENTS)]
         [Parameter(Mandatory = false)]
         public string Script;
 
@@ -49,12 +55,25 @@ namespace PnP.PowerShell.Commands
             //     }
 
             var hostUrl = ParameterSpecified(nameof(WebUrl)) ? WebUrl : CurrentWeb.Url;
-            
-            var content = new StringContent(string.Concat(@"{ ""script"": ""{", Script.Replace("\\", "\\\\").Replace(@"""", @"\"""), " \"}"));
-            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var results = GraphHelper.PostAsync(this.HttpClient, $"{hostUrl}/_api/Microsoft.Sharepoint.Utilities.WebTemplateExtensions.SiteScriptUtility.ExecuteTemplateScript()", AccessToken, content).GetAwaiter().GetResult();
 
-            // var record = new PSObject();
+            
+
+            if(ParameterSpecified(nameof(Script)))
+            {
+                var escapedScript = System.Text.RegularExpressions.Regex.Replace(Script.Replace("\\\"", "\\\\\\\""), "(?<!\\\\)\"", "\\\"", System.Text.RegularExpressions.RegexOptions.Singleline);
+                var content = new StringContent(string.Concat(@"{ ""script"": """, escapedScript, " \"}"));
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                var results = GraphHelper.PostAsync(this.HttpClient, $"{hostUrl}/_api/Microsoft.Sharepoint.Utilities.WebTemplateExtensions.SiteScriptUtility.ExecuteTemplateScript()", AccessToken, content).GetAwaiter().GetResult();
+
+                WriteObject(results);
+            }
+            else
+            {
+
+            }
+
+            // var record = new PSObject();B
+
             // foreach (var item in results.Items)
             // {
             //     record.Properties.Add(new PSVariableProperty(new PSVariable(item.Key.Split('|')[1], item.Value)));

@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands
                 var scripts = Tenant.GetSiteScripts();
                 ClientContext.Load(scripts, s => s.Include(sc => sc.Id, sc => sc.Title, sc => sc.Version, sc => sc.Description, sc => sc.Content, sc => sc.IsSiteScriptPackage));
                 ClientContext.ExecuteQueryRetry();
-                WriteObject(scripts.ToList(), true);
+                WriteObject(scripts, true);
             }
         }
     }
