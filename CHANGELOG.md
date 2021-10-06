@@ -42,9 +42,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Changed `Get-PnPSiteDesign` and `Invoke-PnPSiteDesign` to when providing a name through `-Identity` to be able to work with all site designs having that same name instead of just the first one
 - Fixed unable to piping the output of `Get-PnPRoleDefinition` to i.e. filter by RoleTypeKind.
 - Changed `Set-PnPListItemPermission` to support piping in a roledefinition for `-AddRole` and `-RemoveRole`
-- Fixed issue with 'Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID
+- Fixed issue with `Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID
 - Added `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` cmdlet which allows direct synchronization of user profile properties of choice between user profiles in Azure Active Directory and their SharePoint Online User Profile Service user profile equivallents
-- Fixed issue with 'Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID.
+- Fixed issue with `Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID.
 
 ### Contributors
 
