@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Changed `Set-PnPListItemPermission` to support piping in a roledefinition for `-AddRole` and `-RemoveRole`
 - Fixed issue with 'Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID
 - Added `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` cmdlet which allows direct synchronization of user profile properties of choice between user profiles in Azure Active Directory and their SharePoint Online User Profile Service user profile equivallents
+- Fixed issue with `Get-PnPUPABulkImportStatus` where it did not allow you to pipe its output to i.e. get the most recent one using `Select -Latest 1` or the ones that failed using `? State -ne "Succeeded"`
 
 ### Contributors
 
