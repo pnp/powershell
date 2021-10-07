@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace PnP.PowerShell.Commands.Model.AzureAD
 {
     /// <summary>
@@ -21,6 +24,56 @@ namespace PnP.PowerShell.Commands.Model.AzureAD
         public System.Guid? Id { get; set; }
 
         /// <summary>
+        /// Business phone numbers for the user
+        /// </summary>
+        public IEnumerable<string> BusinessPhones { get; set; }
+
+        /// <summary>
+        /// Given name of the user
+        /// </summary>
+        public string GivenName { get; set; }
+
+        /// <summary>
+        /// Job title of the user
+        /// </summary>
+        public string JobTitle { get; set; }
+
+        /// <summary>
+        /// Primary e-mail address of the user
+        /// </summary>
+        public string Mail { get; set; }
+
+        /// <summary>
+        /// Mobile phone number of the user
+        /// </summary>
+        public string MobilePhone { get; set; }
+
+        /// <summary>
+        /// Office location of the user
+        /// </summary>
+        public string OfficeLocation { get; set; }
+
+        /// <summary>
+        /// Preferred language of the user
+        /// </summary>
+        public string PreferredLanguage { get; set; }
+
+        /// <summary>
+        /// Surname of the user
+        /// </summary>
+        public string Surname { get; set; }
+
+         /// <summary>
+        /// Indicates if the account is currently enabled
+        /// </summary>
+        public bool? AccountEnabled { get; set; }
+
+        /// <summary>
+        /// Additional properties requested regarding the user and included in the response
+        /// </summary>
+        public IDictionary<string, object> AdditionalProperties { get; set; }       
+
+        /// <summary>
         /// Converts a PnP Framework User to a PnP PowerShell Azure Active Directory User
         /// </summary>
         /// <param name="entity">PnP Framework user object</param>
@@ -30,8 +83,26 @@ namespace PnP.PowerShell.Commands.Model.AzureAD
             var user = new User
             {
                 UserPrincipalName = entity.UserPrincipalName,
-                DisplayName = entity.DisplayName
+                DisplayName = entity.DisplayName,
+                Id = entity.Id,
+                BusinessPhones = entity.BusinessPhones,
+                GivenName = entity.GivenName,
+                JobTitle = entity.JobTitle,
+                Mail = entity.Mail,
+                MobilePhone = entity.MobilePhone,
+                OfficeLocation = entity.OfficeLocation,
+                PreferredLanguage = entity.PreferredLanguage,
+                Surname = entity.Surname,
+                AccountEnabled = entity.AccountEnabled,
+                AdditionalProperties = new Dictionary<string, object>(StringComparer.InvariantCultureIgnoreCase)
             };
+
+            // Copy over the AdditionalProperties. We have to do it like this instead of directly assigning the Dictionary so we can instruct the dictionary to ignore casing in the dictionary constructor.
+            foreach (var additionalProperty in entity.AdditionalProperties)
+            {
+                user.AdditionalProperties.Add(additionalProperty.Key, additionalProperty.Value);
+            }
+
             return user;
         }
     }
