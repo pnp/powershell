@@ -35,7 +35,13 @@ When not providing -Users, it will fetch all the users and the properties define
 
 ### Required permissions
 
-In order to be able to run this cmdlet all you need is to have the [Sites.ReadWrite.All] permissions on SharePoint to allow it to upload the JSON file to SharePoint Online. If you don't provide any users by providing the `-Users` parameter, you would also need [User.Read.All] permissions on Microsoft Graph so it will be able to read the users directly from Azure Active Directory.
+In order to be able to run this cmdlet you need to have [User.Read.All] and [Sites.FullControl.All] permissions on SharePoint and [User.Read.All] permissions on Microsoft Graph so it will be able to read the users directly from Azure Active Directory and upload the JSON file to SharePoint Online. It also needs to have the Tenant Full Control ACS permission through https://tenant-admin.sharepoint.com/_layouts/appinv.aspx for it to be allowed to kick off the import user profile process:
+
+`
+<AppPermissionRequests AllowAppOnlyPolicy="true">
+  <AppPermissionRequest Scope="http://sharepoint/content/tenant" Right="FullControl" />
+</AppPermissionRequests>
+`
 
 ## EXAMPLES
 

@@ -69,7 +69,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 }
 
                 // Retrieve all the users from Azure Active Directory
-                aadUsers = PnP.Framework.Graph.UsersUtility.ListUsers(GraphAccessToken, allAadPropertiesList.ToArray()).Select(u => PnP.PowerShell.Commands.Model.AzureAD.User.CreateFrom(u)).ToList();
+                aadUsers = PnP.Framework.Graph.UsersUtility.ListUsers(GraphAccessToken, allAadPropertiesList.ToArray(), endIndex: null).Select(u => PnP.PowerShell.Commands.Model.AzureAD.User.CreateFrom(u)).ToList();
 
                 if(aadUsers.Count == 0)
                 {
