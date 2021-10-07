@@ -33,7 +33,7 @@ You can also query the import job status using `Get-PnPUPABulkImportStatus -JobI
 
 When not providing -Users, it will fetch all the users and the properties defined in the mapping from Azure Active Directory itself. You can also opt to query for a subset of Azure Active Directory users to update using i.e. `Get-PnPAzureAdUser` and feed the outcome of that to the -Users parameter. In this case you must ensure that the user objects you supply contain the properties you wish to sync towards SharePoint Online.
 
-## Required permissions
+**Required Permissions**
 
 In order to be able to run this cmdlet you need to have [User.Read.All] and [Sites.FullControl.All] permissions on SharePoint and [User.Read.All] permissions on Microsoft Graph so it will be able to read the users directly from Azure Active Directory and upload the JSON file to SharePoint Online. It also needs to have the Tenant Full Control ACS permission through https://tenant-admin.sharepoint.com/_layouts/appinv.aspx for it to be allowed to kick off the import user profile process:
 
