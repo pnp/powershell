@@ -7,6 +7,7 @@ using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -40,13 +41,22 @@ namespace PnP.PowerShell.Commands.Utilities
             var bulkUpdateBuilder = new StringBuilder();
             var userUpdateBuilder = new StringBuilder();
             foreach(var user in users)
-            {                
+            {  
                 foreach (DictionaryEntry userProfilePropertyMapping in userProfilePropertyMappings)
                 {
-                    if (userProfilePropertyMapping.Key != null && userProfilePropertyMapping.Value != null && user.GetType().GetProperty(userProfilePropertyMapping.Value.ToString()) != null)
+                    if (userProfilePropertyMapping.Key != null && userProfilePropertyMapping.Value != null)
                     {
-                        // Construct an entry with the SharePoint Online User Profile property name and the value it should be set to
-                        userUpdateBuilder.AppendFormat(@"""{0}"":""{1}"",", userProfilePropertyMapping.Key, user.GetType().GetProperty(userProfilePropertyMapping.Value.ToString()).GetValue(user));
+                        // Check if the property is a property directly on the user object
+                        if (user.GetType().GetProperty(userProfilePropertyMapping.Value.ToString(), BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null)
+                        {
+                            // Construct an entry with the SharePoint Online User Profile property name and the value it should be set to coming from a property on the User object
+                            userUpdateBuilder.AppendFormat(@"""{0}"":""{1}"",", userProfilePropertyMapping.Key, user.GetType().GetProperty(userProfilePropertyMapping.Value.ToString(), BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance).GetValue(user));
+                        }
+                        else if (user.AdditionalProperties != null && user.AdditionalProperties.TryGetValue(userProfilePropertyMapping.Value.ToString(), out object userProfilePropertyMappingValue))
+                        {
+                            // Construct an entry with the SharePoint Online User Profile property name and the value it should be set to coming from a property on the AdditionalProperties dictionary on the User object
+                            userUpdateBuilder.AppendFormat(@"""{0}"":""{1}"",", userProfilePropertyMapping.Key, userProfilePropertyMappingValue != null ? userProfilePropertyMappingValue.ToString() : string.Empty);
+                        }
                     }                    
                 }
 
@@ -98,7 +108,7 @@ namespace PnP.PowerShell.Commands.Utilities
             var id = o365.QueueImportProfileProperties(ImportProfilePropertiesUserIdType.PrincipalName, "IdName", propDictionary, url);
             clientContext.ExecuteQueryRetry();
 
-            // Retrieve the import jon details
+            // Retrieve the import json details
             var job = o365.GetImportProfilePropertyJob(id.Value);
             clientContext.Load(job);
             clientContext.ExecuteQueryRetry();

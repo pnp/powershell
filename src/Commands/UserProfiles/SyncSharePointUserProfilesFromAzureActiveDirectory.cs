@@ -34,6 +34,12 @@ namespace PnP.PowerShell.Commands.UserProfiles
             var aadUsers = new List<PnP.PowerShell.Commands.Model.AzureAD.User>();
             if (ParameterSpecified(nameof(Users)))
             {
+                // Users to sync have been provided
+                if(Users == null)
+                {
+                    throw new PSArgumentNullException(nameof(Users), "Provided Users collection cannot be null");
+                }
+
                 // Loop through provided Azure Active Directory User objects
                 foreach (PSObject user in Users)
                 {
@@ -51,6 +57,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             }
             else
             {
+                // No users to sync have been provided, retrieve all users
                 // Construct an array with all the Azure Active Directory properties that need to be fetched from the users to be able to make the mapping
                 var allAadPropertiesList = new List<string>();
                 foreach(DictionaryEntry userProfilePropertyMappingEntry in UserProfilePropertyMapping)
@@ -62,7 +69,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 }
 
                 // Retrieve all the users from Azure Active Directory
-                aadUsers = PnP.Framework.Graph.UsersUtility.ListUsers(GraphAccessToken, allAadPropertiesList.ToArray()).Select(u => PnP.PowerShell.Commands.Model.AzureAD.User.CreateFrom(u)).ToList();
+                aadUsers = PnP.Framework.Graph.UsersUtility.ListUsers(GraphAccessToken, allAadPropertiesList.ToArray(), endIndex: null).Select(u => PnP.PowerShell.Commands.Model.AzureAD.User.CreateFrom(u)).ToList();
 
                 if(aadUsers.Count == 0)
                 {

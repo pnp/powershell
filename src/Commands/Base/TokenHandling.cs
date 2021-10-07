@@ -67,6 +67,11 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     requiredScopes = new[] { appOnlyDefaultScope }; // override for app only
                 }
+                if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
+                {
+                    // When connected using ACS, we cannot get a token for another endpoint
+                    throw new PSInvalidOperationException("Trying to get a token for a different endpoint while being connected through an ACS token is not possible. Please connect differently.");
+                }
                 var accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
                 return accessToken;
             }
