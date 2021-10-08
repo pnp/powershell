@@ -18,7 +18,8 @@ Sets parameters of a page
 Set-PnPPage [-Identity] <PagePipeBind> [-Name <String>] [-Title <String>]
  [-LayoutType <PageLayoutType>] [-PromoteAs <PagePromoteType>] [-CommentsEnabled]
  [-Publish] [-HeaderType <PageHeaderType>] [-HeaderLayoutType <PageHeaderLayoutType>] [-ScheduledPublishDate <DateTime>] 
- [-ContentType <ContentTypePipeBind>] [-ThumbnailUrl <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-RemoveScheduledPublish] [-ContentType <ContentTypePipeBind>] [-ThumbnailUrl <String>] 
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -249,7 +250,21 @@ Accept wildcard characters: False
 ```
 
 ### -ScheduledPublishDate
-If provided, the page will be scheduled to be published on the provided date and time. It will enable page scheduling on the Site Pages library if not already enabled. If not provided, the publishing of the page will not be schduled.
+If provided, the page will be scheduled to be published on the provided date and time. It will enable page scheduling on the Site Pages library if not already enabled. If not provided, the publishing of the page will not be scheduled.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RemoveScheduledPublish
+If provided, the page publish schedule will be removed, if it has been set.
 
 ```yaml
 Type: DateTime

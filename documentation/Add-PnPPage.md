@@ -201,7 +201,7 @@ Accept wildcard characters: False
 ```
 
 ### -ScheduledPublishDate
-If provided, the page will be scheduled to be published on the provided date and time. It will enable page scheduling on the Site Pages library if not already enabled. If not provided, the publishing of the page will not be schduled.
+If provided, the page will be scheduled to be published on the provided date and time. It will enable page scheduling on the Site Pages library if not already enabled. If not provided, the publishing of the page will not be scheduled.
 
 ```yaml
 Type: DateTime

@@ -38,6 +38,9 @@ namespace PnP.PowerShell.Commands.Pages
         public DateTime? ScheduledPublishDate;
 
         [Parameter(Mandatory = false)]
+        public SwitchParameter RemoveScheduledPublish;
+
+        [Parameter(Mandatory = false)]
         public PageHeaderType HeaderType;
 
         [Parameter(Mandatory = false)]
@@ -169,6 +172,11 @@ namespace PnP.PowerShell.Commands.Pages
             if(ParameterSpecified(nameof(ScheduledPublishDate)))
             {
                 clientSidePage.SchedulePublish(ScheduledPublishDate.Value);
+            }
+
+            if(ParameterSpecified(nameof(RemoveScheduledPublish)))
+            {
+                clientSidePage.RemoveSchedulePublish();
             }
 
             WriteObject(clientSidePage);
