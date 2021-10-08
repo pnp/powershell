@@ -69,12 +69,14 @@ Creates a new page named 'NewPage' using the article layout and schedule it to b
 
 ## PARAMETERS
 
-### -ScheduledPublishDate
-If provided, the page will be scheduled to be published on the provided date and time. It will enable page scheduling on the Site Pages library if not already enabled. If not provided, the publishing of the page will not be schduled.
+### -Connection
+Optional connection to be used by the cmdlet.
+Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
-Type: DateTime
+Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -82,9 +84,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
-
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ### -CommentsEnabled
 Enables or Disables the comments on the page
@@ -201,10 +200,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ScheduledPublishDate
+If provided, the page will be scheduled to be published on the provided date and time. It will enable page scheduling on the Site Pages library if not already enabled. If not provided, the publishing of the page will not be schduled.
 
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

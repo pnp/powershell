@@ -115,7 +115,7 @@ namespace PnP.PowerShell.Commands.Pages
 
             if(ParameterSpecified(nameof(ScheduledPublishDate)))
             {
-                clientSidePage.SchedulePublishAsync(ScheduledPublishDate.Value).Wait();
+                clientSidePage.SchedulePublish(ScheduledPublishDate.Value);
             }
 
             WriteObject(clientSidePage);
