@@ -4,10 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using PnP.Core.QueryModel;
-using PnP.Core.Services;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 
@@ -15,23 +12,30 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Add, "PnPListItem")]
+    [Cmdlet(VerbsCommon.Add, "PnPListItem", DefaultParameterSetName = ParameterSet_SINGLE)]
     public class AddListItem : PnPWebCmdlet
     {
         private const string ParameterSet_SINGLE = "Single";
         private const string ParameterSet_BATCHED = "Batched";
 
-
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         [ValidateNotNull]
         public ListPipeBind List;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         [Parameter(Mandatory = false)]
         public ContentTypePipeBind ContentType;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         [Parameter(Mandatory = false)]
         public Hashtable Values;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         [Parameter(Mandatory = false)]
         public string Folder;
 

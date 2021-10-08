@@ -16,8 +16,8 @@ namespace PnP.PowerShell.Commands.Site
         {
             foreach (var owner in Owners)
             {
-                User user = owner.GetUser(ClientContext);
-                
+                User user = owner.GetUser(ClientContext, true);
+
                 if (user != null)
                 {
                     user.IsSiteAdmin = false;

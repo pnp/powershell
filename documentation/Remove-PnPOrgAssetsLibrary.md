@@ -25,7 +25,7 @@ Remove-PnPOrgAssetsLibrary -LibraryUrl <String> [-ShouldRemoveFromCdn <Boolean>]
 ```
 
 ## DESCRIPTION
-Removes a given document library as a organizational asset source based on its server relative URL in your Sharepoint Online Tenant. It will not remove the document library itself. It may take some time before this change will be reflected in the webinterface.
+Removes a given document library as a organizational asset source based on its server relative URL in your SharePoint Online Tenant. It will not remove the document library itself. It may take some time before this change will be reflected in the webinterface.
 
 ## EXAMPLES
 

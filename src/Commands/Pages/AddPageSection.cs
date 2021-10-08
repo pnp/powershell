@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Pages
 
             if (page != null)
             {
-                page.AddSection(new CanvasSection(page, SectionTemplate, Order) { ZoneEmphasis = ZoneEmphasis });
+                page.AddSection(SectionTemplate, Order, ZoneEmphasis);
                 page.Save();
             }
             else

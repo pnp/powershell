@@ -22,10 +22,6 @@ namespace PnP.PowerShell.Commands.Graph
                 {
                     WriteObject(TeamsUtility.GetTeamAsync(AccessToken, HttpClient, groupId).GetAwaiter().GetResult());
                 }
-                else
-                {
-                    WriteError(new PSArgumentException("Team not found"), ErrorCategory.ObjectNotFound);                    
-                }
             }
             else
             {

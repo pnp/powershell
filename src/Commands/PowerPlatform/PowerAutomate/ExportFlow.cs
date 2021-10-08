@@ -1,17 +1,12 @@
-﻿using PnP.Framework.Entities;
-using PnP.Framework.Graph;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Model.PowerAutomate;
 using PnP.PowerShell.Commands.Utilities.REST;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
     [Cmdlet(VerbsData.Export, "PnPFlow")]
     [RequiredMinimalApiPermissions("https://management.azure.com//.default")]
@@ -22,7 +17,7 @@ namespace PnP.PowerShell.Commands.Graph
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASPACKAGE)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASJSON)]
-        public PowerAutomateEnvironmentPipeBind Environment;
+        public PowerPlatformEnvironmentPipeBind Environment;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASPACKAGE)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASJSON)]
@@ -51,7 +46,6 @@ namespace PnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
-            var overwriteExisting = true;
             if (ParameterSpecified(nameof(OutPath)))
             {
                 if (!System.IO.Path.IsPathRooted(OutPath))
@@ -64,20 +58,12 @@ namespace PnP.PowerShell.Commands.Graph
                 }
                 if (System.IO.File.Exists(OutPath))
                 {
-                    if (Force || ShouldContinue($"File '{OutPath}' exists. Overwrite?", "Export Flow"))
+                    if (!Force && !ShouldContinue($"File '{OutPath}' exists. Overwrite?", "Export Flow"))
                     {
-                        overwriteExisting = true;
-                    }
-                    else
-                    {
-                        overwriteExisting = false;
+                        // Exit cmdlet
+                        return;
                     }
                 }
-            }
-
-            if (!overwriteExisting)
-            {
-                return; // exit cmdlet
             }
 
             var environmentName = Environment.GetName();
@@ -87,14 +73,13 @@ namespace PnP.PowerShell.Commands.Graph
             {
                 var postData = new
                 {
-
                     baseResourceIds = new[] {
                     $"/providers/Microsoft.Flow/flows/{flowName}"
                 }
                 };
-                var wrapper = RestHelper.PostAsync<PackageResourceWrapper>(HttpClient, $"https://api.bap.microsoft.com/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/listPackageResources?api-version=2016-11-01", AccessToken, payload: postData).GetAwaiter().GetResult();
+                var wrapper = RestHelper.PostAsync<Model.PowerPlatform.PowerAutomate.FlowExportPackageWrapper>(HttpClient, $"https://api.bap.microsoft.com/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/listPackageResources?api-version=2016-11-01", AccessToken, payload: postData).GetAwaiter().GetResult();
 
-                if (wrapper.Status == "Succeeded")
+                if (wrapper.Status == Model.PowerPlatform.PowerAutomate.Enums.FlowExportStatus.Succeeded)
                 {
                     foreach (var resource in wrapper.Resources)
                     {
@@ -111,9 +96,10 @@ namespace PnP.PowerShell.Commands.Graph
 
                     var exportPostData = new
                     {
-                        includedResourceIds = new[] {
-                         $"/providers/Microsoft.Flow/flows/{flowName}"
-                    },
+                        includedResourceIds = new[]
+                        {
+                             $"/providers/Microsoft.Flow/flows/{flowName}"
+                        },
                         details = new
                         {
                             displayName = PackageDisplayName,
@@ -162,6 +148,14 @@ namespace PnP.PowerShell.Commands.Graph
                                 }
                             }
                         }
+                    }
+                }
+                else
+                {
+                    // Errors have been reported in the export request result
+                    foreach (var error in wrapper.Errors)
+                    {
+                        WriteVerbose($"Export failed for {flowName} with error {error.Code}: {error.Message}");
                     }
                 }
             }

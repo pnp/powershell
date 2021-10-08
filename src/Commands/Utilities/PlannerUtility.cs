@@ -15,12 +15,12 @@ namespace PnP.PowerShell.Commands.Utilities
         public static async Task<IEnumerable<PlannerPlan>> GetPlansAsync(HttpClient httpClient, string accessToken, string groupId, bool resolveDisplayNames)
         {
             var returnCollection = new List<PlannerPlan>();
-            var collection = await GraphHelper.GetAsync<RestResultCollection<PlannerPlan>>(httpClient, $"v1.0/groups/{groupId}/planner/plans", accessToken);
-            if (collection != null && collection.Items.Any())
+            var collection = await GraphHelper.GetResultCollectionAsync<PlannerPlan>(httpClient, $"v1.0/groups/{groupId}/planner/plans", accessToken);
+            if (collection != null && collection.Any())
             {
                 if (resolveDisplayNames)
                 {
-                    foreach (var plan in collection.Items)
+                    foreach (var plan in collection)
                     {
                         var fullIdentity = await ResolveIdentityAsync(httpClient, accessToken, plan.CreatedBy.User);
                         plan.CreatedBy.User = fullIdentity;
@@ -31,26 +31,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 else
                 {
-                    returnCollection = collection.Items.ToList();
-                }
-                while (!string.IsNullOrEmpty(collection.NextLink))
-                {
-                    collection = await GraphHelper.GetAsync<RestResultCollection<PlannerPlan>>(httpClient, collection.NextLink, accessToken);
-                    if (resolveDisplayNames)
-                    {
-                        foreach (var plan in collection.Items)
-                        {
-                            var fullIdentity = await ResolveIdentityAsync(httpClient, accessToken, plan.CreatedBy.User);
-                            plan.CreatedBy.User = fullIdentity;
-                            var owner = await ResolveGroupName(httpClient, accessToken, plan.Owner);
-                            plan.Owner = owner;
-                            returnCollection.Add(plan);
-                        }
-                    }
-                    else
-                    {
-                        returnCollection.AddRange(collection.Items);
-                    }
+                    returnCollection = collection.ToList();
                 }
             }
             return returnCollection;
@@ -108,12 +89,12 @@ namespace PnP.PowerShell.Commands.Utilities
         public static async Task<IEnumerable<PlannerTask>> GetTasksAsync(HttpClient httpClient, string accessToken, string planId, bool resolveDisplayNames)
         {
             var returnCollection = new List<PlannerTask>();
-            var collection = await GraphHelper.GetAsync<RestResultCollection<PlannerTask>>(httpClient, $"v1.0/planner/plans/{planId}/tasks", accessToken);
-            if (collection != null && collection.Items.Any())
+            var collection = await GraphHelper.GetResultCollectionAsync<PlannerTask>(httpClient, $"v1.0/planner/plans/{planId}/tasks", accessToken);
+            if (collection != null && collection.Any())
             {
                 if (resolveDisplayNames)
                 {
-                    foreach (var task in collection.Items)
+                    foreach (var task in collection)
                     {
                         var fullIdentity = await ResolveIdentityAsync(httpClient, accessToken, task.CreatedBy.User);
                         task.CreatedBy.User = fullIdentity;
@@ -129,32 +110,8 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 else
                 {
-                    returnCollection = collection.Items.ToList();
-                }
-                while (!string.IsNullOrEmpty(collection.NextLink))
-                {
-                    collection = await GraphHelper.GetAsync<RestResultCollection<PlannerTask>>(httpClient, collection.NextLink, accessToken);
-                    if (resolveDisplayNames)
-                    {
-                        foreach (var task in collection.Items)
-                        {
-                            var fullIdentity = await ResolveIdentityAsync(httpClient, accessToken, task.CreatedBy.User);
-                            task.CreatedBy.User = fullIdentity;
-                            if (task.Assignments != null)
-                            {
-                                foreach (var assignment in task.Assignments)
-                                {
-                                    assignment.Value.AssignedBy.User = await ResolveIdentityAsync(httpClient, accessToken, assignment.Value.AssignedBy.User);
-                                }
-                            }
-                            returnCollection.Add(task);
-                        }
-                    }
-                    else
-                    {
-                        returnCollection.AddRange(collection.Items);
-                    }
-                }
+                    returnCollection = collection.ToList();
+                }                
             }
             return returnCollection;
         }
@@ -267,18 +224,8 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static async Task<IEnumerable<PlannerBucket>> GetBucketsAsync(HttpClient httpClient, string accessToken, string planId)
         {
-            List<PlannerBucket> returnCollection = new List<PlannerBucket>();
-            var collection = await GraphHelper.GetAsync<RestResultCollection<PlannerBucket>>(httpClient, $"v1.0/planner/plans/{planId}/buckets", accessToken);
-            if (collection.Items.Any())
-            {
-                returnCollection.AddRange(collection.Items);
-                while (!string.IsNullOrEmpty(collection.NextLink))
-                {
-                    collection = await GraphHelper.GetAsync<RestResultCollection<PlannerBucket>>(httpClient, collection.NextLink, accessToken);
-                    returnCollection.AddRange(collection.Items);
-                }
-            }
-            return returnCollection.OrderBy(p => p.OrderHint);
+            var collection = await GraphHelper.GetResultCollectionAsync<PlannerBucket>(httpClient, $"v1.0/planner/plans/{planId}/buckets", accessToken);
+            return collection.OrderBy(p => p.OrderHint);
         }
 
         public static async Task<PlannerBucket> CreateBucketAsync(HttpClient httpClient, string accessToken, string name, string planId)

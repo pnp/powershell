@@ -26,6 +26,8 @@ Get-PnPSiteDesign [[-Identity] <TenantSiteDesignPipeBind>] [-Connection <PnPConn
 
 ## DESCRIPTION
 
+Retrieve Site Designs that have been registered on the current tenant. When providing a name with -Identity, it returns all site designs with that name.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

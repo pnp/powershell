@@ -21,7 +21,7 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
  [-EnableAttachments <Boolean>] [-EnableFolderCreation <Boolean>] [-EnableVersioning <Boolean>]
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
  [-EnableModeration <Boolean>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-NoCrawl] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -359,6 +359,20 @@ The title of the list
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NoCrawl
+Switch parameter if this list should be indexed in search. 
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

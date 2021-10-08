@@ -6,10 +6,11 @@ applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPWeb.html
 ---
- 
+
 # Remove-PnPWeb
 
 ## SYNOPSIS
+
 Removes a subweb in the current web
 
 ## SYNTAX
@@ -24,6 +25,7 @@ Remove-PnPWeb -Url <String> -Identity <WebPipeBind> [-Force] [-Connection <PnPCo
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Remove-PnPWeb -Url projectA
 ```
@@ -31,6 +33,7 @@ Remove-PnPWeb -Url projectA
 Remove a web
 
 ### EXAMPLE 2
+
 ```powershell
 Remove-PnPWeb -Identity 5fecaf67-6b9e-4691-a0ff-518fc9839aa0
 ```
@@ -38,8 +41,9 @@ Remove-PnPWeb -Identity 5fecaf67-6b9e-4691-a0ff-518fc9839aa0
 Remove a web specified by its ID
 
 ### EXAMPLE 3
+
 ```powershell
-Get-PnPSubWebs | Remove-PnPWeb -Force
+Get-PnPSubWeb | Remove-PnPWeb -Force
 ```
 
 Remove all subwebs and do not ask for confirmation
@@ -47,6 +51,7 @@ Remove all subwebs and do not ask for confirmation
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
@@ -61,6 +66,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
+
 Do not ask for confirmation to delete the subweb
 
 ```yaml
@@ -75,6 +81,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
+
 Identity/Id/Web object to delete
 
 ```yaml
@@ -89,6 +96,7 @@ Accept wildcard characters: False
 ```
 
 ### -Url
+
 The site relative url of the web, e.g. 'Subweb1'
 
 ```yaml
@@ -102,9 +110,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

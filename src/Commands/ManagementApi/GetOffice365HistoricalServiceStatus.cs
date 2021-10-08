@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Management.Automation;
-using PnP.Framework.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model;
@@ -10,6 +9,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPOffice365HistoricalServiceStatus")]
     [RequiredMinimalApiPermissions("https://manage.office.com/ServiceHealth.Read")]
+    [Obsolete("Use Get-PnPServiceHealthIssue instead. It uses the Microsoft Graph backend which returns slightly different data. The Office Management API used by this cmdlet will be pulled by Microsoft in the future.")]
     public class GetOffice365HistoricalServiceStatus : PnPOfficeManagementApiCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -23,7 +23,6 @@ namespace PnP.PowerShell.Commands.ManagementApi
             {
                 WriteObject(collection.Items, true);
             }
-           
         }
     }
 }
