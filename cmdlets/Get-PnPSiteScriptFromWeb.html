@@ -95,12 +95,12 @@
    [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="specific-components">Specific components</h3>
-<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url &lt;String&gt; [-Lists &lt;String[]&gt;] [-IncludeBranding] [-IncludeLinksToExportedItems]
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb [-Url &lt;String&gt;] [-Lists &lt;String[]&gt;] [-IncludeBranding] [-IncludeLinksToExportedItems]
  [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme]
- [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This command allows a Site Script to be generated off of an existing site on your tenant. Connect to your SharePoint Online Admin site before executing this command.</p>
+<p>This command allows a Site Script to be generated off of an existing site on your tenant. You need to provide at least one of the optional Include or Lists arguments. If you omit the URL, the Site Script will be created from the site to which you are connected.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url &quot;https://contoso.sharepoint.com/sites/teamsite&quot; -IncludeAll
@@ -114,6 +114,10 @@
 <pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url &quot;https://contoso.sharepoint.com/sites/teamsite&quot; -IncludeBranding -IncludeLinksToExportedItems
 </code></pre>
 <p>Returns the generated Site Script JSON containing the branding and navigation links from the site at the provided Url</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -IncludeAll
+</code></pre>
+<p>Returns the generated Site Script JSON containing all the components from the currently connected to site</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-confirm">-Confirm</h3>
 <p>Prompts you for confirmation before running the cmdlet.</p>
@@ -139,7 +143,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-includeall">-IncludeAll</h3>
-<p>If specified will include all supported components into the Site Script</p>
+<p>If specified will include all supported components into the Site Script except for the lists and document libraries, these need to be explicitly be specified through -Lists</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: All components
 
@@ -216,11 +220,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-url">-Url</h3>
-<p>Specifies the URL of the site to generate a Site Script from</p>
+<p>Specifies the URL of the site to generate a Site Script from. If omitted, the currently connected to site will be used.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)

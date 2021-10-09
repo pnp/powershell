@@ -84,26 +84,25 @@
                     <h1 id="request-pnppersonalsite">Request-PnPPersonalSite</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Requests that one or more users be enqueued for a Personal Site to be created.</p>
+<p>Requests that one or more users be enqueued for a OneDrive for Business site to be created for them.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Request-PnPPersonalSite -UserEmails &lt;String[]&gt; [-NoWait]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>The Request-PnPPersonalSite cmdlet requests that the users specified be enqueued so that a Personal Site be created for each. The actual Personal site is created by a Timer Job later.</p>
+<p>The Request-PnPPersonalSite cmdlet requests that the users specified be enqueued so that a Personal Site be created for each. The actual OneDrive for Business site is created by a Timer Job later.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>• You must specify a string array of user logins that contains one or more valid user email (logins) and cannot contain any empty fields. The command will stop if it encounters any empty strings in the array. A maximum of 200 users can be specified. <br><br>• The actor executing this cmdlet must be at least assigned the SharePoint Online administrator role and have been assigned a SharePoint Online license to be able to provision the OneDrive for Business sites. The users who the sites will be provisioned for must also have a SharePoint license assigned. <br><br>•  This cmdlet is NOT OneDrive Multi-Geo aware. If you need to request Personal Sites for Multi-Geo enabled tenants, you must run this cmdlet for users in the region their data is to be hosted in. To retrieve users with a specific PDL, use the following sample: <code>Get-MSOLUser | Where {$_.PreferredDataLocation -eq &quot;EUR&quot;}</code>.</p>
+<p>• You must specify a string array of user logins that contains one or more valid user email (logins) and cannot contain any empty fields. The command will stop if it encounters any empty strings in the array. A maximum of 200 users can be specified. <br><br>• The actor executing this cmdlet must be at least assigned the SharePoint Online administrator role and have been assigned a SharePoint Online license to be able to provision the OneDrive for Business sites. The users who the sites will be provisioned for must also have a SharePoint license assigned. <br><br>•  This cmdlet is NOT OneDrive Multi-Geo aware. If you need to request Personal Sites for Multi-Geo enabled tenants, you must run this cmdlet for users in the region their data is to be hosted in. To retrieve users with a specific PDL, use the following sample: <code>Get-MSOLUser | Where {$_.PreferredDataLocation -eq &quot;EUR&quot;}</code><br><br>•  If you want to use this cmdlet in an automated script not requiring manual authentication, you <em>must</em> assign the following permisson to your application registration from either Azure Active Directory or done through <a href="https://tenant-admin.sharepoint.com/_layouts/appregnew.aspx">https://tenant-admin.sharepoint.com/_layouts/appregnew.aspx</a> with the following permission through <a href="https://tenant-admin.sharepoint.com/_layouts/appinv.aspx">https://tenant-admin.sharepoint.com/_layouts/appinv.aspx</a>:<br><br> <code>&lt;AppPermissionRequests AllowAppOnlyPolicy=&quot;true&quot;&gt; &lt;AppPermissionRequest Scope=&quot;http://sharepoint/social/tenant&quot; Right=&quot;FullControl&quot; /&gt; &lt;/AppPermissionRequests&gt;</code><br><br>You then <em>must</em> connect using<br> <code>Connect-PnPOnline -Url https://tenant-admin.sharepoint.com -ClientId &lt;clientid&gt; -ClientSecret &lt;clientsecret&gt;</code><br>Authenticating using a certificate is <em>not</em> possible and will throw an unauthorized exception. It does not require assigning any permissions in Azure Active Directory.<br><br>If you want to run this cmdlet using an interactive login, you <em>must</em> connect using:<br><code>Connect-PnPOnline -Url https://tenant-admin.sharepoint.com -UseWebLogin</code></p>
 </div>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">$emails = &quot;user1@contoso.com&quot;, &quot;user2@contoso.com&quot;
-Request-PnPPersonalSite -UserEmails $emails
+<pre><code class="lang-powershell">Request-PnPPersonalSite -UserEmails @(&quot;user1@contoso.com&quot;, &quot;user2@contoso.com&quot;)
 </code></pre>
-<p>This example requests that two users to be enqueued for the creation of a Personal Site.</p>
+<p>This example requests that two users to be enqueued for the creation of a OneDrive for Business Site</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Request-PnPPersonalSite -UserEmails $emails
+<pre><code class="lang-powershell">Request-PnPPersonalSite -UserEmails &quot;user1@contoso.com&quot;
 </code></pre>
-<p>This example requests that many users to be queued for the creation of a Personal Site. The users are previously defined using the variable $emails.</p>
+<p>This example requests that for the provided user a OneDrive for Business site will be created</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-useremails">-UserEmails</h3>
 <p>Specifies one or more user logins to be enqueued for the creation of a Personal Site. The Personal site is created by a Timer Job later. You can specify between 1 and 200 users.</p>

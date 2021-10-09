@@ -87,11 +87,11 @@
 <p>List content in folder</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="folder-via-url">Folder via url</h3>
-<pre><code class="lang-powershell">Get-PnPFolderItem [[-FolderSiteRelativeUrl] &lt;String&gt;] [-ItemType &lt;String&gt;] [-ItemName &lt;String&gt;] [-Recursive]
+<pre><code class="lang-powershell">Get-PnPFolderItem [-FolderSiteRelativeUrl &lt;String&gt;] [-ItemType &lt;String&gt;] [-ItemName &lt;String&gt;] [-Recursive]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="folder-via-pipebind">Folder via pipebind</h3>
-<pre><code class="lang-powershell">Get-PnPFolderItem [[-Identity] &lt;FolderPipeBind&gt;] [-ItemType &lt;String&gt;] [-ItemName &lt;String&gt;] [-Recursive]
+<pre><code class="lang-powershell">Get-PnPFolderItem [-Identity &lt;FolderPipeBind&gt;] [-ItemType &lt;String&gt;] [-ItemName &lt;String&gt;] [-Recursive]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -118,7 +118,7 @@
 <p>Returns all files and folders, including contents of any subfolders, in the folder SitePages which is located in the root of the current web</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 

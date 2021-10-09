@@ -90,11 +90,15 @@
 </ul>
 <p>Adds a Site Collection scoped App Catalog to a site</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPSiteCollectionAppCatalog -Site &lt;SitePipeBind&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPSiteCollectionAppCatalog [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Add-PnPSiteCollectionAppCatalog
+</code></pre>
+<p>This will add a SiteCollection app catalog to the currently connected to site</p>
+<h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Add-PnPSiteCollectionAppCatalog -Site &quot;https://contoso.sharepoint.com/sites/FinanceTeamsite&quot;
 </code></pre>
 <p>This will add a SiteCollection app catalog to the specified site</p>
@@ -115,7 +119,7 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: SitePipeBind
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

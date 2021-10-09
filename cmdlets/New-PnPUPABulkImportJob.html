@@ -94,6 +94,10 @@
  [-IdProperty] &lt;String&gt; [[-IdType] &lt;ImportProfilePropertiesUserIdType&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
+<pre><code class="lang-powershell">New-PnPUPABulkImportJob -Url &lt;String&gt; [-UserProfilePropertyMapping] &lt;Hashtable&gt;
+ [-IdProperty] &lt;String&gt; [[-IdType] &lt;ImportProfilePropertiesUserIdType&gt;] [-Connection &lt;PnPConnection&gt;]
+ [&lt;CommonParameters&gt;]
+</code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>See <a href="https://docs.microsoft.com/sharepoint/dev/solution-guidance/bulk-user-profile-update-api-for-sharepoint-online">https://docs.microsoft.com/sharepoint/dev/solution-guidance/bulk-user-profile-update-api-for-sharepoint-online</a> for information on the API and how the bulk import process works.</p>
 <h2 id="examples">EXAMPLES</h2>
@@ -115,7 +119,11 @@
 
 New-PnPUPABulkImportJob -Folder &quot;Shared Documents&quot; -Path profiles.json -IdProperty &quot;IdName&quot; -UserProfilePropertyMapping @{&quot;Department&quot;=&quot;Department&quot;}
 </code></pre>
-<p>This will submit a new user profile bulk import job to SharePoint Online.</p>
+<p>This will submit a new user profile bulk import job to SharePoint Online using a local file.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">New-PnPUPABulkImportJob -Url &quot;https://{tenant}.sharepoint.com/Shared Documents/profiles.json&quot; -IdProperty &quot;IdName&quot; -UserProfilePropertyMapping @{&quot;Department&quot;=&quot;Department&quot;}
+</code></pre>
+<p>This will submit a new user profile bulk import job to SharePoint Online using an already uploaded file.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -131,7 +139,7 @@ Accept wildcard characters: False
 <h3 id="-folder">-Folder</h3>
 <p>Site or server relative URL of the folder to where you want to store the import job file.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+Parameter Sets: Submit up a new user profile bulk import job from local file
 
 Required: True
 Position: 0
@@ -158,17 +166,28 @@ Accepted values: Email, CloudId, PrincipalName
 
 Required: False
 Position: 4
-Default value: None
+Default value: Email
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-path">-Path</h3>
 <p>The local file path.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+Parameter Sets: Submit up a new user profile bulk import job from local file
 
 Required: True
 Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-url">-Url</h3>
+<p>The url of the file saved in SharePoint.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Submit up a new user profile bulk import job job from url
+
+Required: True
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

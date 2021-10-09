@@ -88,22 +88,22 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Defines if the default / OOTB themes should be visible to users or not.</p>
+<p>Defines if the default out of the box themes should be visible to users or not.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPHideDefaultThemes -HideDefaultThemes &lt;Boolean&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Use this cmdlet to hide or show the default themes to users</p>
+<p>Use this cmdlet to hide or show the default themes to users as an option to change the look to of their site</p>
 <p>You must be a SharePoint Online global administrator to run the cmdlet.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPHideDefaultThemes -HideDefaultThemes $true
 </code></pre>
-<p>This example hides the default themes</p>
+<p>The out of the box themes will be hidden</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPHideDefaultThemes -HideDefaultThemes $false
 </code></pre>
-<p>This example shows the default themes</p>
+<p>The out of the box themes will be shown</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -124,7 +124,7 @@ Parameter Sets: (All)
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>

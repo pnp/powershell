@@ -101,7 +101,11 @@
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPHubSite -Identity &quot;https://contoso.sharepoint.com/sites/myhubsite&quot;
 </code></pre>
-<p>Returns the properties of the specified hubsite</p>
+<p>Returns the properties of the specified hubsite by using the hubsite url</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPHubSite -Identity &quot;bc07d4b8-1c2f-4184-8cc2-a52dfd6fe0c4&quot;
+</code></pre>
+<p>Returns the properties of the specified hubsite by using the hubsite site id</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -115,7 +119,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>{{ Fill Identity Description }}</p>
+<p>Specify hub site url or site id</p>
 <pre><code class="lang-yaml">Type: HubSitePipeBind
 Parameter Sets: (All)
 

@@ -90,7 +90,7 @@
 </ul>
 <p>Registers a site as a hubsite</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Register-PnPHubSite -Site &lt;SitePipeBind&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Register-PnPHubSite -Site &lt;SitePipeBind&gt; [-Principals &lt;String[][]&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Registers a site as a hubsite</p>
@@ -99,6 +99,10 @@
 <pre><code class="lang-powershell">Register-PnPHubSite -Site &quot;https://tenant.sharepoint.com/sites/myhubsite&quot;
 </code></pre>
 <p>This example registers the specified site as a hubsite</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Register-PnPHubSite -Site &quot;https://tenant.sharepoint.com/sites/myhubsite&quot; -Principals &quot;user@contoso.com&quot;
+</code></pre>
+<p>This example registers the specified site as a hubsite and specifies that 'user@contoso.com' be granted rights to the hub site.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -114,6 +118,17 @@ Accept wildcard characters: False
 <h3 id="-site">-Site</h3>
 <p>The site to register as a hubsite</p>
 <pre><code class="lang-yaml">Type: SitePipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-principals">-Principals</h3>
+<p>Specifies One or more principles (user or group) to be granted rights to the specified HubSite. Can be used to filter who can associate sites to this hub site.</p>
+<pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
 Required: True

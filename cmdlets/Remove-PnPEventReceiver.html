@@ -86,8 +86,8 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Remove an eventreceiver</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPEventReceiver -Identity &lt;EventReceiverPipeBind&gt; [-List &lt;ListPipeBind&gt;] [-Force] 
- [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPEventReceiver -Identity &lt;EventReceiverPipeBind&gt; [-List &lt;ListPipeBind&gt;] [-Scope &lt;EventReceiverScope&gt;] [-Force] 
+ [-Connection &lt;PnPConnection&gt;]  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Removes/unregisters a specific eventreceiver</p>
@@ -116,9 +116,21 @@
 <pre><code class="lang-powershell">Get-PnPEventReceiver | ? ReceiverUrl -Like &quot;*azurewebsites.net*&quot; | Remove-PnPEventReceiver
 </code></pre>
 <p>This will remove all event receivers from the current site which are pointing to a service hosted on Azure Websites</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Remove-PnPEventReceiver -Scope Site
+</code></pre>
+<p>This will remove all the event receivers defined on the current site collection</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Remove-PnPEventReceiver -Scope Web
+</code></pre>
+<p>This will remove all the event receivers defined on the current site</p>
+<h3 id="example-9">EXAMPLE 9</h3>
+<pre><code class="lang-powershell">Remove-PnPEventReceiver -Scope All
+</code></pre>
+<p>This will remove all the event receivers defined on the current site and web</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-confirm">-Confirm</h3>
-<p>Prompts you for confirmation before running the cmdlet.</p>
+<p>Prompts you for confirmation before running the cmdlet</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: cf
@@ -170,6 +182,18 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-scope">-Scope</h3>
+<p>The scope of the EventReceivers to remove</p>
+<pre><code class="lang-yaml">Type: EventReceiverScope
+Parameter Sets: Scope
+Accepted values: Web, Site, All
+
+Required: False
+Position: Named
+Default value: Web
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

@@ -92,7 +92,7 @@
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPSiteDesign -Identity &lt;TenantSiteDesignPipeBind&gt; [-Title &lt;String&gt;] [-SiteScriptIds &lt;GuidPipeBind[]&gt;]
  [-Description &lt;String&gt;] [-IsDefault] [-PreviewImageAltText &lt;String&gt;] [-PreviewImageUrl &lt;String&gt;]
- [-WebTemplate &lt;SiteWebTemplate&gt;] [-Version &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;]  
+ [-WebTemplate &lt;SiteWebTemplate&gt;] [-Version &lt;Int32&gt;] [-ThumbnailUrl &lt;String&gt;] [-DesignPackageId &lt;Guid&gt;] [-Connection &lt;PnPConnection&gt;]  
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -220,6 +220,30 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-webtemplate">-WebTemplate</h3>
 <p>Specifies the type of site to which this design applies</p>
+<pre><code class="lang-yaml">Type: SiteWebTemplate
+Parameter Sets: (All)
+Accepted values: TeamSite, CommunicationSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-thumbnailurl">-ThumbnailUrl</h3>
+<p>The URL of a thumbnail image. If none is specified, SharePoint uses a generic image. Recommended size is 400 x 300 pixels.</p>
+<pre><code class="lang-yaml">Type: SiteWebTemplate
+Parameter Sets: (All)
+Accepted values: TeamSite, CommunicationSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-designpackageid">-DesignPackageId</h3>
+<p>Sets the design package Id of this site design.</p>
 <pre><code class="lang-yaml">Type: SiteWebTemplate
 Parameter Sets: (All)
 Accepted values: TeamSite, CommunicationSite

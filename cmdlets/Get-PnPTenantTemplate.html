@@ -91,13 +91,13 @@
 <p>Generates a provisioning tenant template from a site. If the site is a hubsite any connected site will be included.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="extract-a-template-to-a-file">Extract a template to a file</h3>
-<pre><code class="lang-powershell">Get-PnPTenantTemplate [-SiteUrl &lt;String&gt;] [-Out] &lt;String&gt; [-Force]
+<pre><code class="lang-powershell">Get-PnPTenantTemplate [-SiteUrl &lt;String&gt;] [-Out &lt;String&gt;] [-Force]
  [-Configuration &lt;ExtractConfigurationPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]  
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="extract-a-template-as-an-object">Extract a template as an object</h3>
 <pre><code class="lang-powershell">Get-PnPTenantTemplate [-SiteUrl &lt;String&gt;] [-AsInstance] [-Configuration &lt;ExtractConfigurationPipeBind&gt;]
- [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -105,6 +105,14 @@
 <pre><code class="lang-powershell">Get-PnPTenantTemplate -Out tenanttemplate.xml
 </code></pre>
 <p>Extracts a tenant template</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPTenantTemplate -Out tenanttemplate.xml -SiteUrl https://m365x123456.sharepoint.com/sites/HomeSite
+</code></pre>
+<p>Extracts a tenant template for the site <a href="https://m365x123456.sharepoint.com/sites/HomeSite">https://m365x123456.sharepoint.com/sites/HomeSite</a> and places the schema XML into the file &quot;tenanttemplate.xml&quot;.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPTenantTemplate -Out tenanttemplate.xml -SiteUrl https://m365x123456.sharepoint.com/sites/HomeSite -Force
+</code></pre>
+<p>Extracts a tenant template for the site <a href="https://m365x123456.sharepoint.com/sites/HomeSite">https://m365x123456.sharepoint.com/sites/HomeSite</a> and places the schema XML into the file &quot;tenanttemplate.xml&quot;. The xml file will be overwritten if it already exists.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-asinstance">-AsInstance</h3>
 <p>Returns the template as an in-memory object, which is an instance of the ProvisioningHierarchy type of the PnP Core Component. It cannot be used together with the -Out parameter.</p>

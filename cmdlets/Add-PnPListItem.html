@@ -196,10 +196,14 @@ Accept wildcard characters: False
 <p>Single line of text: -Values @{&quot;Title&quot; = &quot;Title New&quot;}</p>
 <p>Multiple lines of text: -Values @{&quot;MultiText&quot; = &quot;New text\n\nMore text&quot;}</p>
 <p>Rich text: -Values @{&quot;MultiText&quot; = &quot;&lt;strong&gt;New&lt;/strong&gt; text&quot;}</p>
-<p>Choice: -Values @{&quot;Choice&quot; = &quot;Value 1&quot;}</p>
+<p>Choice: -Values @{&quot;Choice&quot; = &quot;Choice 1&quot;}
+Choice: -Values @{&quot;Choice&quot; = &quot;Choice 1;#Choice 2&quot;}</p>
 <p>Number: -Values @{&quot;Number&quot; = &quot;10&quot;}</p>
-<p>Currency: -Values @{&quot;Number&quot; = &quot;10&quot;}</p>
 <p>Currency: -Values @{&quot;Currency&quot; = &quot;10&quot;}</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>For numeric and currency fields, when using -Batch, provide the value using the comma and dots matching the regional setting of the site you're adding the listitem to. When not using batch, you must always provide the value in the American notation, so dot for decimals and comma for thousands separators.</p>
+</div>
 <p>Date and Time: -Values @{&quot;DateAndTime&quot; = &quot;03/13/2015 14:16&quot;}</p>
 <p>Lookup (id of lookup value): -Values @{&quot;Lookup&quot; = &quot;2&quot;}</p>
 <p>Multi value lookup (id of lookup values as array 1): -Values @{&quot;MultiLookupField&quot; = &quot;1&quot;,&quot;2&quot;}</p>

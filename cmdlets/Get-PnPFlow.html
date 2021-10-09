@@ -90,18 +90,18 @@
 </ul>
 <p>Returns the flows for a given environment</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Get-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; [-AsAdmin] [-Identity &lt;PowerAutomateFlowPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code>Get-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; [-AsAdmin] [-Identity &lt;PowerPlatformPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlets returns the flows for a given enviroment.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPFlowEnvironment
+<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
 Get-PnPFlow -Environment $environment
 </code></pre>
-<p>This returns all the flows for a given environment</p>
+<p>This returns all the flows for a given power platform environment</p>
 <h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPFlowEnvironment
+<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
 Get-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 </code></pre>
 <p>This returns specific flow</p>
@@ -132,7 +132,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-environment">-Environment</h3>
-<p>The name of the environment or an Environment object to retrieve the available flows for.</p>
+<p>The name of the Power Platform environment or an Environment object to retrieve the available flows for.</p>
 <pre><code class="lang-yaml">Type: PowerAutomateEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
@@ -145,7 +145,7 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>The Name/Id of the flow to retrieve.</p>
-<pre><code class="lang-yaml">Type: PowerAutomateFlowPipeBind
+<pre><code class="lang-yaml">Type: PowerPlatformPipeBind
 Parameter Sets: (All)
 Aliases:
 

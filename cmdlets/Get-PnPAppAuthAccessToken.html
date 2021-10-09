@@ -84,17 +84,17 @@
                     <h1 id="get-pnpappauthaccesstoken">Get-PnPAppAuthAccessToken</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Returns the access token</p>
+<p>Returns the access token for SharePoint Online</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Get-PnPAppAuthAccessToken [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Returns the access token from the current client context (only works with App-Only authentication)</p>
+<p>Returns the SharePoint Online access token from the current client context. This will only work in the App authentication flow (App+user or App-Only). For the Microsoft Graph access token, use <code>Get-PnPAccessToken</code> instead.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">$accessToken = Get-PnPAppAuthAccessToken
 </code></pre>
-<p>This will put the access token from current context in the $accessToken variable. Will only work in App authentication flow (App+user or App-Only)</p>
+<p>This will put the SharePoint Online access token from current context in the $accessToken variable</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>

@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Adds a new remote event receiver</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPEventReceiver [-List &lt;ListPipeBind&gt;] -Name &lt;String&gt; -Url &lt;String&gt; -EventReceiverType &lt;EventReceiverType&gt;
+<pre><code class="lang-powershell">Add-PnPEventReceiver [-List &lt;ListPipeBind&gt;] [-Scope &lt;EventReceiverScope&gt;] -Name &lt;String&gt; -Url &lt;String&gt; -EventReceiverType &lt;EventReceiverType&gt;
  -Synchronization &lt;EventReceiverSynchronization&gt; [-SequenceNumber &lt;Int32&gt;] [-Force] 
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
@@ -99,7 +99,15 @@
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Add-PnPEventReceiver -Name &quot;TestEventReceiver&quot; -Url https://yourserver.azurewebsites.net/eventreceiver.svc -EventReceiverType WebAdding -Synchronization Synchronous
 </code></pre>
-<p>This will add a new remote event receiver that is executed while a new subsite is being created</p>
+<p>This will add a new remote event receiver that is executed before a new subsite is being created</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Add-PnPEventReceiver -Name &quot;TestEventReceiver&quot; -Url https://yourserver.azurewebsites.net/eventreceiver.svc -EventReceiverType ListAdding -Synchronization Synchronous -Scope Site
+</code></pre>
+<p>This will add a new remote event receiver that is executed before a new list is being created inside the site collection scope</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Add-PnPEventReceiver -Name &quot;TestEventReceiver&quot; -Url https://yourserver.azurewebsites.net/eventreceiver.svc -EventReceiverType ListDeleted -Synchronization Asynchronous -Scope Web
+</code></pre>
+<p>This will add a new remote event receiver that is executed after a list has been deleted from the current site</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -113,7 +121,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-eventreceivertype">-EventReceiverType</h3>
-<p>The type of the event receiver like ItemAdded, ItemAdding. See <a href="https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.eventreceivertype.aspx">https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.eventreceivertype.aspx</a> for the full list of available types.</p>
+<p>The type of the event receiver like ItemAdded, ItemAdding. See <a href="https://docs.microsoft.com/previous-versions/office/sharepoint-server/jj167297(v=office.15)">https://docs.microsoft.com/previous-versions/office/sharepoint-server/jj167297(v=office.15)</a> for the full list of available types.</p>
 <pre><code class="lang-yaml">Type: EventReceiverType
 Parameter Sets: (All)
 Aliases: Type
@@ -139,11 +147,23 @@ Accept wildcard characters: False
 <h3 id="-list">-List</h3>
 <p>The list object or name where the remote event receiver needs to be added. If omitted, the remote event receiver will be added to the web.</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
-Parameter Sets: (All)
+Parameter Sets: List
 
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-scope">-Scope</h3>
+<p>The scope of the EventReceiver to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.</p>
+<pre><code class="lang-yaml">Type: EventReceiverScope
+Parameter Sets: Scope
+Accepted values: Web, Site, All
+
+Required: False
+Position: Named
+Default value: Web
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
