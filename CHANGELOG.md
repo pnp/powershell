@@ -4,8 +4,21 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
- 
+
 ## [Current Nightly]
+
+### Changed
+
+- Fixed `Get-PnPGroupMember -User` not properly returning the specified user.
+- Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
+- Added optional `-ScheduledPublishDate` parameter to `Add-PnPPage` and `Set-PnPPage` to allow for scheduling a page to be published.
+- Added `-RemoveScheduledPublish` to `Set-PnPPage` to allow for a page publish schedule to be removed.
+
+### Contributors
+
+- Koen Zomers [koenzomers]
+
+## [1.8.0]
 
 ### Changed
 
@@ -34,6 +47,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Initialize-PnPPowerShellAuthentication` cmdlet alias and related warning. The cmdlet `Register-PnPAzureADApp` is the replacement.
 - `Get-PnPFileVersion` cmdlet documentation improved with additional example.
 - `Add-PnPNavigationNode` cmdlet documentation improved with additional example feature which shows how to add a navigation node as a label.
+- Added option to add/list/remove event receivers from the site scope using `Add-PnPEventReceiver -Scope <Site/Web>`, `Get-PnPEventReceiver -Scope <All/Site/Web>` and `Remove-PnPEventReceiver -Scope <All/Site/Web>`
+- Added `-Url` parameter to `New-PnPUPABulkImportJob` which allows providing a URL to an existing SharePoint User Profile import mapping instruction file stored on SharePoint Online
+- Fixed an issue with several PnP PowerShell cmdlets such as `Get-PnPTeamsUser` where not all results would be returned
+- Added `Add-PnPSiteDesignFromWeb` which combines `Get-PnPSiteScriptFromWeb`, `Add-PnPSiteScript` and `Add-PnPSiteDesign` into one cmdlet to allow for a specific site to directly be added as a site design to allow other sites to be configured similarly
+- Added `Update-PnPSiteDesignFromWeb` which combines `Get-PnPSiteScriptFromWeb` and `Set-PnPSiteScript` into one cmdlet to allow for a specific site design to directly be updated based on an existing site which can function as a template
+- Changed `Get-PnPSiteDesign` and `Invoke-PnPSiteDesign` to when providing a name through `-Identity` to be able to work with all site designs having that same name instead of just the first one
+- Fixed unable to piping the output of `Get-PnPRoleDefinition` to i.e. filter by RoleTypeKind.
+- Changed `Set-PnPListItemPermission` to support piping in a roledefinition for `-AddRole` and `-RemoveRole`
+- Fixed issue with `Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID
+- Added `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` cmdlet which allows direct synchronization of user profile properties of choice between user profiles in Azure Active Directory and their SharePoint Online User Profile Service user profile equivallents
+- Fixed issue with `Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID.
+- Fixed issue with `Get-PnPUPABulkImportStatus` where it did not allow you to pipe its output to i.e. get the most recent one using `Select -Latest 1` or the ones that failed using `? State -ne "Succeeded"`
 
 ### Contributors
 
@@ -44,6 +69,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Giacomo Pozzoni [jackpoz]
 - Todd Klindt [ToddKlindt]
 - Rolands Strakis [wonderplayer]
+- Bhishma Bhandari [bhishma]
+- [reusto]
+- [4ndri]
+- [WimVandierendonck]
 
 ## [1.7.0]
 

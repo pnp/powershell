@@ -72,7 +72,7 @@ Resets permissions for listitem with id 1 to inherit permissions from the list '
 The role that must be assigned to the group or user
 
 ```yaml
-Type: String
+Type: RoleDefinitionPipeBind
 Parameter Sets: User, Group
 
 Required: False
@@ -169,7 +169,7 @@ Accept wildcard characters: False
 The role that must be removed from the group or user
 
 ```yaml
-Type: String
+Type: RoleDefinitionPipeBind
 Parameter Sets: User, Group
 
 Required: False
@@ -206,9 +206,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

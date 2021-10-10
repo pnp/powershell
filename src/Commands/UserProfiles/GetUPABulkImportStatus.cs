@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 ClientContext.ExecuteQueryRetry();
 
                 GetErrorInfo(job);
-                WriteObject(job);
+                WriteObject(job, true);
             }
             else
             {
@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 {
                     GetErrorInfo(job);
                 }
-                WriteObject(jobs);
+                WriteObject(jobs, true);
             }
         }
 

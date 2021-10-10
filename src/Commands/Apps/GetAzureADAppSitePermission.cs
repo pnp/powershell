@@ -47,10 +47,10 @@ namespace PnP.PowerShell.Commands.Apps
                 if (!ParameterSpecified(nameof(PermissionId)))
                 {
                     // all permissions
-                    var results = Utilities.REST.RestHelper.GetAsync<RestResultCollection<AzureADAppPermissionInternal>>(HttpClient, $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/sites/{siteId}/permissions", AccessToken).GetAwaiter().GetResult();
-                    if (results.Items.Any())
+                    var results = GraphHelper.GetResultCollectionAsync<AzureADAppPermissionInternal>(HttpClient, $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/sites/{siteId}/permissions", AccessToken).GetAwaiter().GetResult();
+                    if (results.Any())
                     {
-                        var convertedResults = results.Items.Select(i => i.Convert());
+                        var convertedResults = results.Select(i => i.Convert());
                         if (ParameterSpecified(nameof(AppIdentity)))
                         {
                             var filteredResults = convertedResults.Where(p => p.Apps.Any(a => a.DisplayName == AppIdentity || a.Id == AppIdentity));
@@ -64,7 +64,7 @@ namespace PnP.PowerShell.Commands.Apps
                 }
                 else
                 {
-                    var results = Utilities.REST.RestHelper.GetAsync<AzureADAppPermissionInternal>(HttpClient, $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken).GetAwaiter().GetResult();
+                    var results = GraphHelper.GetAsync<AzureADAppPermissionInternal>(HttpClient, $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken).GetAwaiter().GetResult();
                     WriteObject(results.Convert());
                 }
             }

@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Get-PnPSiteScriptFromWeb
 schema: 2.0.0
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Update-PnPSiteDesignFromWeb.html
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteScriptFromWeb.html
+title: Update-PnPSiteDesignFromWeb
 ---
- 
-# Get-PnPSiteScriptFromWeb
+  
+# Update-PnPSiteDesignFromWeb
 
 ## SYNOPSIS
 
@@ -15,65 +15,51 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteScriptFromWe
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Generates a Site Script from an existing site
+Updates an existing Site Design on the current tenant based on the site provided through -Url or the currently connected to site if -Url is omitted
 
 ## SYNTAX
 
-### All components
 ```powershell
-Get-PnPSiteScriptFromWeb -Url <String> [-Lists <String[]>] [-IncludeAll] [-Connection <PnPConnection>]
-   [<CommonParameters>]
-```
-
-### Specific components
-```powershell
-Get-PnPSiteScriptFromWeb [-Url <String>] [-Lists <String[]>] [-IncludeBranding] [-IncludeLinksToExportedItems]
- [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme]
- [-Connection <PnPConnection>] [<CommonParameters>]
+Update-PnPSiteDesignFromWeb -Identity <TenantSiteDesignPipeBind> -Url <String> [-Lists <String[]>] [-IncludeBranding] [-IncludeLinksToExportedItems]
+ [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme] [-IncludeAll]
+ [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-This command allows a Site Script to be generated off of an existing site on your tenant. You need to provide at least one of the optional Include or Lists arguments. If you omit the URL, the Site Script will be created from the site to which you are connected.
+
+Updates an existing Site Design on the current tenant based on the site provided through -Url or the currently connected to site if -Url is omitted. It combines the steps of `Get-PnPSiteScriptFromWeb` and `Set-PnPSiteScript` to generate a site script from a web and update an existing site script with it into one cmdlet. The information returned from running the cmdlet is the information of the Site Design that has been updated.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPSiteScriptFromWeb -Url "https://contoso.sharepoint.com/sites/teamsite" -IncludeAll
+Update-PnPSiteDesignFromWeb -Identity "Contoso Project" -IncludeAll
 ```
 
-Returns the generated Site Script JSON containing all supported components from the site at the provided Url
+Generates a site script based on all the components of the currently connected to site, excluding its lists and libraries and based on the generated script it will update the site script in the site design with the provided name.
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPSiteScriptFromWeb -Url "https://contoso.sharepoint.com/sites/teamsite" -IncludeAll -Lists "Shared Documents","Lists\MyList"
+Update-PnPSiteDesignFromWeb -Identity "Contoso Project" -IncludeAll -Lists ("/lists/Issue list", "Shared Documents)
 ```
 
-Returns the generated Site Script JSON containing all supported components from the site at the provided Url including the lists "Shared Documents" and "MyList"
+Generates a site script based on all the components of the currently connected to site, including the list "Issue list" and the default document library "Shared Documents" and based on the generated script it will update the site script in the site design with the provided name.
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPSiteScriptFromWeb -Url "https://contoso.sharepoint.com/sites/teamsite" -IncludeBranding -IncludeLinksToExportedItems
+Update-PnPSiteDesignFromWeb -Url https://contoso.sharepoint.com/sites/template -Identity "Contoso Project" -Lists "/lists/Issue list"
 ```
 
-Returns the generated Site Script JSON containing the branding and navigation links from the site at the provided Url
-
-### EXAMPLE 4
-```powershell
-Get-PnPSiteScriptFromWeb -IncludeAll
-```
-
-Returns the generated Site Script JSON containing all the components from the currently connected to site
+Generates a site script based on the list "Issue list" in the site provided through Url and based on the generated script it will update the site script in the site design with the provided name.
 
 ## PARAMETERS
 
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
-Type: SwitchParameter
+Type: PnPConnection
 Parameter Sets: (All)
-Aliases: cf
 
 Required: False
 Position: Named
@@ -82,12 +68,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+### -WhatIf
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
-Type: PnPConnection
+Type: SwitchParameter
 Parameter Sets: (All)
+Aliases: wi
 
 Required: False
 Position: Named
@@ -194,36 +181,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Url
-Specifies the URL of the site to generate a Site Script from. If omitted, the currently connected to site will be used.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
