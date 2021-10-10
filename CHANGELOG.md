@@ -4,7 +4,20 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
- 
+
+## [Current Nightly]
+
+### Changed
+
+- Fixed `Get-PnPGroupMember -User` not properly returning the specified user.
+- Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
+- Added optional `-ScheduledPublishDate` parameter to `Add-PnPPage` and `Set-PnPPage` to allow for scheduling a page to be published.
+- Added `-RemoveScheduledPublish` to `Set-PnPPage` to allow for a page publish schedule to be removed.
+
+### Contributors
+
+- Koen Zomers [koenzomers]
+
 ## [1.8.0]
 
 ### Changed
@@ -46,8 +59,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` cmdlet which allows direct synchronization of user profile properties of choice between user profiles in Azure Active Directory and their SharePoint Online User Profile Service user profile equivallents
 - Fixed issue with `Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID.
 - Fixed issue with `Get-PnPUPABulkImportStatus` where it did not allow you to pipe its output to i.e. get the most recent one using `Select -Latest 1` or the ones that failed using `? State -ne "Succeeded"`
-- Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
-  
+
 ### Contributors
 
 - Koen Zomers [koenzomers]

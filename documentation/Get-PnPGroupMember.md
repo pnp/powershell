@@ -10,7 +10,7 @@ title: Get-PnPGroupMember
 # Get-PnPGroupMember
 
 ## SYNOPSIS
-Retrieves all members of a group
+Retrieves all members of a SharePoint group
 
 ## SYNTAX
 
@@ -19,23 +19,23 @@ Get-PnPGroupMember -Group <GroupPipeBind> [-User String]
 ```
 
 ## DESCRIPTION
-This command will return all the users or a specific user that are members of the provided SharePoint Group
+This command will return all the users or a specific user that are members of the provided SharePoint group
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPGroupMember -Group 'Marketing Site Members'
+Get-PnPGroupMember -Group "Marketing Site Members"
 ```
 
-Returns all the users that are a member of the group 'Marketing Site Members' in the current sitecollection
+Returns all the users that are a member of the group "Marketing Site Members" in the current sitecollection
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPGroupMember -Group "Marketing Site Members" -User "manager@domain.com"
 ```
 
-Will return a user if the user specific is a member of the specified group.
+Will return a user if the user "manager@domain.com" is a member of the specified SharePoint group
 
 ### EXAMPLE 3
 ```powershell
@@ -81,10 +81,6 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

@@ -29,6 +29,9 @@ namespace PnP.PowerShell.Commands.Pages
         public SwitchParameter Publish;
 
         [Parameter(Mandatory = false)]
+        public DateTime? ScheduledPublishDate;
+
+        [Parameter(Mandatory = false)]
         public PageHeaderLayoutType HeaderLayoutType = PageHeaderLayoutType.FullWidthImage;
 
         protected override void ExecuteCmdlet()
@@ -104,6 +107,11 @@ namespace PnP.PowerShell.Commands.Pages
             if (Publish)
             {
                 clientSidePage.Publish();
+            }
+
+            if(ParameterSpecified(nameof(ScheduledPublishDate)))
+            {
+                clientSidePage.SchedulePublish(ScheduledPublishDate.Value);
             }
 
             WriteObject(clientSidePage);
