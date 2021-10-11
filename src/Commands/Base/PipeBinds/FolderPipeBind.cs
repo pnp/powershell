@@ -1,11 +1,14 @@
 ﻿using Microsoft.SharePoint.Client;
 using System;
+using PnPCore = PnP.Core.Model.SharePoint;
+
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public sealed class FolderPipeBind
     {
         private readonly Folder _folder;
+        private readonly PnPCore.IFolder _coreFolder;
         private readonly Guid _id;
         private readonly string _name;
 
@@ -71,6 +74,29 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 else
                     return null;
             }
+        }
+
+        internal PnPCore.IFolder GetFolder(PnP.Core.Services.PnPContext context, params System.Linq.Expressions.Expression<Func<PnPCore.IFolder, object>>[] selectors)
+        {
+            PnPCore.IFolder returnFolder = null;
+            if (_coreFolder != null)
+            {
+                returnFolder = _coreFolder;
+            }
+            if (_folder != null)
+            {
+                _folder.EnsureProperties(p => p.UniqueId);
+                returnFolder = context.Web.GetFolderById(_folder.UniqueId, selectors);
+            }
+            else if (_id != Guid.Empty)
+            {
+                returnFolder = context.Web.GetFolderById(_id, selectors);
+            }
+            else if (!string.IsNullOrEmpty(ServerRelativeUrl))
+            {
+                returnFolder = context.Web.GetFolderByServerRelativeUrl(ServerRelativeUrl, selectors);
+            }
+            return returnFolder;
         }
     }
 }
