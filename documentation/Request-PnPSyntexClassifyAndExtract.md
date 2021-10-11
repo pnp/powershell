@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPage.html
 # Request-PnPSyntexClassifyAndExtract
 
 ## SYNOPSIS
-Requests for a file or all files in a library to be classified and extracted via the published SharePoint Syntex models on the libraries hosting the files.
+Requests for a file, folder or all files in a library to be classified and extracted via the published SharePoint Syntex models on the libraries hosting the files.
 
 ## SYNTAX
 
@@ -20,14 +20,23 @@ Request-PnPSyntexClassifyAndExtract -FileUrl <string> [-Batch <PnPBatch>]  [-Con
 [<CommonParameters>]
 ```
 
-### List
+### Folder
 ```powershell
-Request-PnPSyntexClassifyAndExtract -List <ListPipeBind> [-Force <SwitchParameter>] [-Connection <PnPConnection>] 
+Request-PnPSyntexClassifyAndExtract -Folder <FolderPipeBind> [-Connection <PnPConnection>] 
 [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This command requests for a file or all files in a library to be classified and extracted via the published SharePoint Syntex models on the libraries hosting the files.
+This command requests for all files in a folder (including the possible sub folders) to be classified and extracted via the published SharePoint Syntex models on the libraries hosting the files. Folder content classification and extraction requests are always send to the off peak Syntex content processing queue.
+
+### List
+```powershell
+Request-PnPSyntexClassifyAndExtract -List <ListPipeBind> [-OffPeak <SwitchParameter>] [-Force <SwitchParameter>] [-Connection <PnPConnection>] 
+[<CommonParameters>]
+```
+
+## DESCRIPTION
+This command requests for all files in a library to be classified and extracted via the published SharePoint Syntex models on the libraries hosting the files. When using with the `OffPeak` switch then the files are send to the off peak Syntex content processing queue, this way there's no need to enumerate all files in the library and submit them to the regular queue. When using the `Force` switch without setting OffPeak then all files are enumerated and sent to the regular queue, regardless of whether they were processed in the past.
 
 ## EXAMPLES
 
@@ -35,13 +44,22 @@ This command requests for a file or all files in a library to be classified and 
 ```powershell
 Request-PnPSyntexClassifyAndExtract -FileUrl "/sites/finance/invoices/invoice1.docx" 
 ```
+
 Requests the classification and extraction of invoice1.docx in library "Invoices".
 
 ### EXAMPLE 2
 ```powershell
 Request-PnPSyntexClassifyAndExtract -List "Invoices"
 ```
+
 Requests the classification and extraction of all files in library "Invoices" that never were classified and extracted before.
+
+### EXAMPLE 3
+```powershell
+Request-PnPSyntexClassifyAndExtract -Folder (Get-PnPFolder -Url "invoices/Q1/jan")
+```
+
+Requests the classification and extraction of all files in the folder "jan" in library "invoices" that never were classified and extracted before.
 
 ## PARAMETERS
 
@@ -84,6 +102,34 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OffPeak
+If set, then the files to classify are sent to the off peak queue without enumerating them.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: List
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Folder
+The folder holding the files to classify and extract
+
+```yaml
+Type: FolderPipeBind
+Parameter Sets: Folder
+
+Required: False
+Position: 0
+Default value: None
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
