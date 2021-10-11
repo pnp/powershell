@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-
+- Fixed group member retrieval through `Get-PnPAzureADGroupOwner` and `Get-PnPAzureAdGroupMember` throwing an exception when a security group has been placed in the Azure  Active Directory group being queried
 
 ### Contributors
 
