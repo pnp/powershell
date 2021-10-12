@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
@@ -54,7 +53,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 }
 
                 // Retrieve all the users from Azure Active Directory
-                aadUsers = PnP.Framework.Graph.UsersUtility.ListUsers(GraphAccessToken, allAadPropertiesList.ToArray(), endIndex: null).Select(u => PnP.PowerShell.Commands.Model.AzureAD.User.CreateFrom(u)).ToList();
+                aadUsers = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUsers(GraphAccessToken, null, null, allAadPropertiesList.ToArray(), endIndex: null);
 
                 if(aadUsers.Count == 0)
                 {
