@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using System.Collections.Generic;
 
@@ -13,7 +11,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
     public class SyncSharePointUserProfilesFromAzureActiveDirectory : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false)]
-        public List<PnP.Framework.Graph.Model.User> Users;
+        public List<PnP.PowerShell.Commands.Model.AzureAD.User> Users;
 
         [Parameter(Mandatory = false)]
         public string Folder = "Shared Documents";
@@ -40,16 +38,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     throw new PSArgumentNullException(nameof(Users), "Provided Users collection cannot be null");
                 }
 
-                foreach (PnP.Framework.Graph.Model.User user in Users) {
-
-                    aadUsers.Add(PnP.PowerShell.Commands.Model.AzureAD.User.CreateFrom(user));
-
-                }
-
-                if(aadUsers.Count == 0)
-                {
-                    throw new PSArgumentException($"No valid Azure Active Directory users provided through {nameof(Users)} parameter", nameof(Users));
-                }
+                aadUsers = Users;
             }
             else
             {
