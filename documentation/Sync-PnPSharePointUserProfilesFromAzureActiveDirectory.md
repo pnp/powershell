@@ -73,7 +73,7 @@ This will retrieve all users in Azure Active Directory and take its phone proper
 Through this parameter you can pass in users coming forward from a query through Get-PnPAzureADUser that need to have their SharePoint Online User profiles updated
 
 ```yaml
-Type: Array
+Type: System.Collections.Generic.List`1[PnP.Framework.Graph.Model.User]
 Parameter Sets: (All)
 
 Required: False
