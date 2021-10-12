@@ -198,13 +198,16 @@ namespace PnP.PowerShell.Commands.Utilities
             var ownerId = string.Empty;
             if (string.IsNullOrEmpty(owner))
             {
-                var user = await GraphHelper.GetAsync<User>(httpClient, "v1.0/me?$select=Id", accessToken);
-                ownerId = user.Id;
-            }
-            else if(owners !=null && owners.Length > 0)
-            {
-                var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{owners[0]}?$select=Id", accessToken);
-                ownerId = user.Id;
+                if (owners != null && owners.Length > 0)
+                {
+                    var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{owners[0]}?$select=Id", accessToken);
+                    ownerId = user.Id;
+                }
+                else
+                {
+                    var user = await GraphHelper.GetAsync<User>(httpClient, "v1.0/me?$select=Id", accessToken);
+                    ownerId = user.Id;
+                }
             }
             else
             {
