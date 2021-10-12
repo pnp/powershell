@@ -49,7 +49,14 @@ $batch = New-PnPBatch
 Invoke-PnPBatch -Batch $batch
 ```
 
-This will delete all the items with Id 1 to Id 50 in the specified list.
+Removes all the items with Id 1 to Id 50 in the "Demo List" list
+
+### EXAMPLE 4
+```powershell
+Remove-PnPListItem -List "Demo List"
+```
+
+Removes all items from the "Demlo List" list after asking for confirmation
 
 ## PARAMETERS
 

@@ -15,7 +15,7 @@ Enables the modern communication site experience on a classic team site.
 ## SYNTAX
 
 ```powershell
-Enable-PnPCommSite [[-DesignPackageId] <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+Enable-PnPCommSite [-DesignPackageId <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -54,7 +54,7 @@ Accept wildcard characters: False
 ```
 
 ### -DesignPackageId
-The id (guid) of the design package to apply: 96c933ac-3698-44c7-9f4a-5fd17d71af9e (Topic = default), 6142d2a0-63a5-4ba0-aede-d9fefca2c767 (Showcase) or f6cc5403-0d63-442e-96c0-285923709ffc (Blank)
+The id (guid) of the design package to apply: 96c933ac-3698-44c7-9f4a-5fd17d71af9e (Topic = default), 6142d2a0-63a5-4ba0-aede-d9fefca2c767 (Showcase) or f6cc5403-0d63-442e-96c0-285923709ffc (Blank).
 
 ```yaml
 Type: String

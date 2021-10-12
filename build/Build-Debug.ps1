@@ -14,11 +14,7 @@ Param(
 	[Parameter(Mandatory = $false,
 		ValueFromPipeline = $false)]
 	[switch]
-	$LocalPnPCore,
-	[Parameter(Mandatory = $false,
-		ValueFromPipeline = $false)]
-	[switch]
-	$LocalPnPCoreProject
+	$LocalPnPCore
 )
 
 $localPnPCoreSdkPathValue = $env:PnPCoreSdkPath
@@ -56,7 +52,7 @@ if ($LocalPnPFramework) {
 	$pnpFrameworkAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll"
 	$pnpFrameworkAssembly = [System.IO.Path]::GetFullPath($pnpFrameworkAssembly)
 	if (Test-Path $pnpFrameworkAssembly -PathType Leaf) {
-		$buildCmd += " -p:PnPFrameworkPath=`"..\..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll`""
+		$buildCmd += " -p:PnPFrameworkPath=`"..\..\..\pnpframework\src\lib\`""
 	}
  else {
 		$localFolder = Join-Path $PSScriptRoot -ChildPath "..\..\pnpframework"
@@ -69,7 +65,7 @@ if ($LocalPnPCore) {
 	$pnpCoreAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll"
 	$pnpCoreAssembly = [System.IO.Path]::GetFullPath($pnpCoreAssembly)
 	if (Test-Path $pnpCoreAssembly -PathType Leaf) {
-		$buildCmd += " -p:PnPCoreSdkPath=`"..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll`""
+		$buildCmd += " -p:PnPCoreSdkPath=`"..\..\..\pnpcore\src\sdk\`""
 	}
  else {
 		$localFolder = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore"
@@ -124,7 +120,7 @@ if ($LASTEXITCODE -eq 0) {
 		}
 	}
 	Catch {
-		Write-Error "Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module?"
+		Write-Error "Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module or PS modules are hosted one a OneDrive synced location. In the later case manually delete $destinationFolder and try again."
 		exit 1
 	}
 

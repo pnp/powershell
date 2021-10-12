@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-{{ Fill Identity Description }}
+Specify hub site url
 
 ```yaml
 Type: HubSitePipeBind
@@ -67,7 +67,8 @@ Accept wildcard characters: False
 ```
 
 ### -Principals
-{{ Fill Principals Description }}
+Specify user(s) login name i.e user@company.com
+
 
 ```yaml
 Type: String[]

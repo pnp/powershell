@@ -39,7 +39,14 @@ Returns all hubsite properties
 Get-PnPHubSite -Identity "https://contoso.sharepoint.com/sites/myhubsite"
 ```
 
-Returns the properties of the specified hubsite
+Returns the properties of the specified hubsite by using the hubsite url
+
+### EXAMPLE 3
+```powershell
+Get-PnPHubSite -Identity "bc07d4b8-1c2f-4184-8cc2-a52dfd6fe0c4"
+```
+
+Returns the properties of the specified hubsite by using the hubsite site id
 
 ## PARAMETERS
 
@@ -58,7 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-{{ Fill Identity Description }}
+Specify hub site url or site id
 
 ```yaml
 Type: HubSitePipeBind

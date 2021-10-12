@@ -16,7 +16,7 @@ Creates a communication site, Microsoft 365 group-connected team site or Modern 
 
 ### TeamSite
 ```powershell
-New-PnPSite -Type TeamSite -Title <String> -Alias <String> [-Description <String>] [-Classification <String>] [-IsPublic] [-Lcid <UInt>] [-Owners <String[][]>] [-PreferredDataLocation <Office365Geography>] [-SensitivityLabel <String>] [-HubSiteId <Guid>] [-Wait] [-Connection <PnPConnection>]
+New-PnPSite -Type TeamSite -Title <String> -Alias <String> [-Description <String>] [-Classification <String>] [-IsPublic] [-Lcid <UInt>] [-Owners <String[][]>] [-PreferredDataLocation <Office365Geography>] [-SensitivityLabel <String>] [-HubSiteId <Guid>] [-SiteAlias <String>] [-Wait] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -100,33 +100,40 @@ This will create a new Modern Team Site collection with the title 'Team Contoso'
 
 ### EXAMPLE 10
 ```powershell
+New-PnPSite -Type TeamSite -Title 'Team Contoso' -Alias contoso -SiteAlias contoso-site
+```
+
+This will create a new Modern Team Site collection with the title 'Team Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso-site' or 'https://tenant.sharepoint.com/teams/contoso-site' based on the managed path configuration in the SharePoint Online Admin portal. The underlying M365 Group will have 'contoso' as the alias.
+
+### EXAMPLE 11
+```powershell
 New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso
 ```
 
 This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'
 
-### EXAMPLE 11
+### EXAMPLE 12
 ```powershell
 New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -SiteDesignId ae2349d5-97d6-4440-94d1-6516b72449ac
 ```
 
 This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. It will use the specified custom site design for the site.
 
-### EXAMPLE 12
+### EXAMPLE 13
 ```powershell
 New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Classification "HBI"
 ```
 
 This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. The classification for the site will be set to "HBI"
 
-### EXAMPLE 13
+### EXAMPLE 14
 ```powershell
 New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -ShareByEmailEnabled
 ```
 
 This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. Allows owners to invite users outside of the organization.
 
-### EXAMPLE 14
+### EXAMPLE 15
 ```powershell
 New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Lcid 1040
 ```
@@ -219,7 +226,9 @@ Accept wildcard characters: False
 ```
 
 ### -IsPublic
-Specifies if the site is public.
+Identifies whether the corresponding Microsoft365 group type is Private or Public. If not specified, group is considered Public.
+Content in a Public group can be seen by anybody in the organization, and anybody in the organization is able to join the group. 
+Content in a Private group can only be seen by the members of the group and people who want to join a private group have to be approved by a group owner.
 
 ```yaml
 Type: SwitchParameter
@@ -233,7 +242,7 @@ Accept wildcard characters: False
 ```
 
 ### -Lcid
-The language to use for the site.
+The language to use for the site. For more information, see Locale IDs supported by SharePoint at https://github.com/pnp/powershell/wiki/Supported-LCIDs-by-SharePoint. To get the list of supported languages on a SharePoint environment use: Get-PnPAvailableLanguage.
 
 ```yaml
 Type: SwitchParameter
@@ -247,7 +256,7 @@ Accept wildcard characters: False
 ```
 
 ### -Owners
-One or more owners to specify for the site. Defaults to the current user. Required if you use an app-only connection.
+Specifies one or more users with full access on the site and owner permissions on the corresponding Microsoft 365 Group. Can be used when Team Site is being created.  Requires user object. If this parameter is skipped or a group object is provided, the user running New-PnPSite command will be set as a site owner. Required in case of the app-only connection.
 
 ```yaml
 Type: String[]
@@ -261,7 +270,7 @@ Accept wildcard characters: False
 ```
 
 ### -Owner
-The owner to specify for the site. Defaults to the current user. Required if you use an app-only connection.
+Specifies a Site Collection Administator for the new site. Can be used when Communication Site is being created or Teams Site should not get a corresponding Microsoft 365 group.  Requires user object. If this parameter is skipped or a group object is provided, the user running New-PnPSite command will be set as a site owner. Required in case of the app-only connection.
 
 ```yaml
 Type: String
@@ -313,6 +322,20 @@ Parameter Sets: CommunicationSite, TeamSiteWithoutMicrosoft365Group
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SiteAlias
+The site alias to use for the team site URL. If specified, a site collection will be created based on its value, otherwise the value specified in Alias parameter will be used.
+
+```yaml
+Type: String
+Parameter Sets: TeamSite
+
+Required: True
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

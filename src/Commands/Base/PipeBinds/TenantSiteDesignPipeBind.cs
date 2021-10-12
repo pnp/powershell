@@ -44,25 +44,32 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        public TenantSiteDesign GetTenantSiteDesign(Tenant tenant)
+        public TenantSiteDesign[] GetTenantSiteDesign(Tenant tenant)
         {
             if (_siteDesign != null)
             {
-                return _siteDesign;
+                return new[] { _siteDesign };
             }
             if (!string.IsNullOrEmpty(_title))
             {
                 var designs = tenant.GetSiteDesigns();
                 var result = tenant.Context.LoadQuery(designs.Where(d => d.Title == _title));
                 (tenant.Context as ClientContext).ExecuteQueryRetry();
-                return result.FirstOrDefault();
+                return result.ToArray();
             }
             else if (_id != Guid.Empty)
             {
-                var design = Tenant.GetSiteDesign(tenant.Context, Id);
-                tenant.Context.Load(design);
-                (tenant.Context as ClientContext).ExecuteQueryRetry();
-                return design;
+                try
+                {
+                  var design = Tenant.GetSiteDesign(tenant.Context, Id);
+                  tenant.Context.Load(design);
+                  (tenant.Context as ClientContext).ExecuteQueryRetry();
+                  return new[] { design };
+                }
+                catch(Microsoft.SharePoint.Client.ServerException e) when (e.ServerErrorTypeName == "System.IO.FileNotFoundException")
+                {
+                    return null;
+                }
             }
             return null;
         }

@@ -19,7 +19,7 @@ title: Get-PnPAzureADUser
 
   * Microsoft Graph API : One of Directory.Read.All, Directory.ReadWrite.All, User.Read.All, User.ReadWrite.All
 
-Retrieves users from Azure Active Directory. By default the following properties will be loaded: BusinessPhones, DisplayName, GivenName, JobTitle, Mail, MobilePhone, OfficeLocation, PreferredLanguage, Surname, UserPrincipalName, Id, AccountEnabled 
+Retrieves users from Azure Active Directory. The following properties will always be loaded: BusinessPhones, DisplayName, GivenName, JobTitle, Mail, MobilePhone, OfficeLocation, PreferredLanguage, Surname, UserPrincipalName, Id, AccountEnabled. Using the -Select parameter you can instruct additional properties to be retrieved.
 
 ## SYNTAX
 
@@ -185,7 +185,7 @@ Accept wildcard characters: False
 ```
 
 ### -Select
-Allows providing an array with the property names of specific properties to return. If not provided, the default properties will be returned.
+Allows providing an array with the property names of specific additional properties to return next to the standard properties mentioned at the top of this article which are always returned. The property names are case insensitive. If not provided, the default properties will be returned which are listed at the top of this article.
 
 ```yaml
 Type: String[]

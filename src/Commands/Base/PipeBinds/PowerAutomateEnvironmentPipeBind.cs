@@ -1,19 +1,18 @@
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
-    public sealed class PowerAutomateEnvironmentPipeBind
+    public sealed class PowerPlatformEnvironmentPipeBind
     {
         private readonly string _name;
-        private readonly Model.PowerAutomate.Environment _environment;
-        public PowerAutomateEnvironmentPipeBind(string input)
+        private readonly Model.PowerPlatform.Environment.Environment _environment;
+        public PowerPlatformEnvironmentPipeBind(string input)
         {
             _name = input;
         }
 
-        public PowerAutomateEnvironmentPipeBind(Model.PowerAutomate.Environment environment)
+        public PowerPlatformEnvironmentPipeBind(Model.PowerPlatform.Environment.Environment environment)
         {
             _environment = environment;
         }
-
 
         public string GetName()
         {
@@ -23,6 +22,5 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             return _name;
         }
-
     }
 }

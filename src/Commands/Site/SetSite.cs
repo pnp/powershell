@@ -3,8 +3,6 @@ using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using PnP.Framework;
 using PnP.Framework.Entities;
-
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections.Generic;
@@ -15,7 +13,6 @@ namespace PnP.PowerShell.Commands.Site
     [Cmdlet(VerbsCommon.Set, "PnPSite")]
     public class SetSite : PnPSharePointCmdlet
     {
-
         private const string ParameterSet_LOCKSTATE = "Set Lock State";
         private const string ParameterSet_PROPERTIES = "Set Properties";
 
@@ -172,7 +169,6 @@ namespace PnP.PowerShell.Commands.Site
 
             if (IsTenantProperty())
             {
-
                 var tenantAdminUrl = UrlUtilities.GetTenantAdministrationUrl(context.Url);
                 context = context.Clone(tenantAdminUrl);
 
@@ -180,6 +176,8 @@ namespace PnP.PowerShell.Commands.Site
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
                 Tenant tenant = new Tenant(context);
                 var siteProperties = tenant.GetSitePropertiesByUrl(siteUrl, false);
+                tenant.Context.Load(siteProperties);
+                tenant.Context.ExecuteQueryRetry();
 
                 if (ParameterSpecified(nameof(OverrideTenantAnonymousLinkExpirationPolicy)))
                 {

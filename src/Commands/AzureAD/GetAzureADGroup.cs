@@ -21,14 +21,17 @@ namespace PnP.PowerShell.Commands.Graph
             if (Identity != null)
             {
                 var group = Identity.GetGroup(AccessToken);
-                WriteObject(group);
+                if (group != null)
+                {
+                    WriteObject(group);
+                }
             }
             else
             {
                 var groups = GroupsUtility.GetGroups(AccessToken);
-                if(groups.Any())
+                if (groups != null && groups.Any())
                 {
-                    WriteObject(groups.Select(e => AzureADGroup.CreateFrom(e)),true);
+                    WriteObject(groups.Select(e => AzureADGroup.CreateFrom(e)), true);
                 }
             }
         }

@@ -30,7 +30,6 @@ This command will return all the items in the tenant recycle bin for the Office 
 
 ### EXAMPLE 1
 ```powershell
-https://contoso-admin.sharepoint.com
 Get-PnPTenantRecycleBinItem
 ```
 

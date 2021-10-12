@@ -77,7 +77,7 @@ namespace PnP.PowerShell.Commands.WebParts
             }
             else
             {
-                webpart = new PageWebPart(Component.GetComponent(clientSidePage));
+                webpart = clientSidePage.NewWebPart(Component.GetComponent(clientSidePage));
             }
 
             if (WebPartProperties != null)

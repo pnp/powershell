@@ -1,11 +1,11 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPFlowEnvironment.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPowerPlatformEnvironment.html
 Module Name: PnP.PowerShell
 external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
 ---
   
-# Get-PnPFlowEnvironment
+# Get-PnPPowerPlatformEnvironment
 
 ## SYNOPSIS
 
@@ -13,25 +13,25 @@ schema: 2.0.0
 
 * Azure: management.azure.com
 
-Retrieves the Microsoft Flow environments for the current tenant.
+Retrieves the Microsoft Power Platform environments for the current tenant.
 
 ## SYNTAX
 
 ```
-Get-PnPFlowEnvironment [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPPowerPlatformEnvironment [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This cmdlet retrieves the Microsoft Flow environments for the current tenant
+This cmdlet retrieves the Microsoft Power Platform environments for the current tenant
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-Get-PnPFlowEnvironment
+Get-PnPPowerPlatformEnvironment
 ```
 
-This cmdlets returns the flow environments for the current tenant.
+This cmdlets returns the Power Platform environments for the current tenant.
 
 ## PARAMETERS
 
@@ -54,5 +54,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

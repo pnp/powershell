@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
@@ -9,6 +9,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPOffice365ServiceMessage")]
     [RequiredMinimalApiPermissions("https://manage.office.com/ServiceHealth.Read")]
+    [Obsolete("Use Get-PnPMessageCenterAnnouncement instead. It uses the Microsoft Graph backend which returns slightly different data. The Office Management API used by this cmdlet will be pulled by Microsoft in the future.")]
     public class GetOffice365ServiceMessage : PnPOfficeManagementApiCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -16,12 +17,8 @@ namespace PnP.PowerShell.Commands.ManagementApi
 
         protected override void ExecuteCmdlet()
         {
-            var collection = GraphHelper.GetAsync<RestResultCollection<ManagementApiServiceMessage>>(HttpClient, $"{ApiRootUrl}ServiceComms/Messages{(ParameterSpecified(nameof(Workload)) ? $"?$filter=Workload eq '{Workload.Value}'" : "")}", AccessToken, false).GetAwaiter().GetResult();
-
-            if (collection != null)
-            {
-                WriteObject(collection.Items, true);
-            }
+            var collection = GraphHelper.GetResultCollectionAsync<ManagementApiServiceMessage>(HttpClient, $"{ApiRootUrl}ServiceComms/Messages{(ParameterSpecified(nameof(Workload)) ? $"?$filter=Workload eq '{Workload.Value}'" : "")}", AccessToken, false).GetAwaiter().GetResult();
+            WriteObject(collection, true);
         }
     }
 }

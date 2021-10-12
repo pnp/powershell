@@ -12,12 +12,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public SPOSitePipeBind(string url)
         {
-            _url = url;
+            _url = url?.TrimEnd(new char[] { '/' });
         }   
 
         public SPOSitePipeBind(Uri uri)
         {
-            _url = uri.AbsoluteUri;
+            _url = uri.AbsoluteUri?.TrimEnd(new char[] { '/' });
         }
 
         public SPOSitePipeBind(SPOSite site)
@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 throw new PSArgumentException("Site Url must be specified");
             }
-            _url = site.Url;
+            _url = site.Url?.TrimEnd(new char[] { '/' });
         }
 
         

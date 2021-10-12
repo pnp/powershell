@@ -25,18 +25,10 @@ namespace PnP.PowerShell.Commands.AzureAD
             else
             {
                 List<PSObject> apps = new List<PSObject>();
-                var result = Utilities.REST.GraphHelper.GetAsync<RestResultCollection<AzureADApp>>(HttpClient, "/v1.0/applications", AccessToken).GetAwaiter().GetResult();
-                if (result != null && result.Items.Any())
+                var result = GraphHelper.GetResultCollectionAsync<AzureADApp>(HttpClient, "/v1.0/applications", AccessToken).GetAwaiter().GetResult();
+                if (result != null && result.Any())
                 {
-                    apps.AddRange(result.Items.Select(p => ConvertToPSObject(p)));
-                    while (!string.IsNullOrEmpty(result.NextLink))
-                    {
-                        result = Utilities.REST.GraphHelper.GetAsync<RestResultCollection<AzureADApp>>(HttpClient, result.NextLink, AccessToken).GetAwaiter().GetResult();
-                        if (result != null && result.Items.Any())
-                        {
-                            apps.AddRange(result.Items.Select(p => ConvertToPSObject(p)));
-                        }
-                    }
+                    apps.AddRange(result.Select(p => ConvertToPSObject(p)));
                 }
                 WriteObject(apps, true);
             }
