@@ -29,7 +29,7 @@ New-PnPTeamsTeam -GroupId <String> [-Owner <String>] [-AllowAddRemoveApps <Boole
  [-AllowOwnerDeleteMessages <Boolean>] [-AllowStickersAndMemes <Boolean>] [-AllowTeamMentions <Boolean>]
  [-AllowUserDeleteMessages <Boolean>] [-AllowUserEditMessages <Boolean>]
  [-GiphyContentRating <TeamGiphyContentRating>] [-ShowInTeamsSearchAndSuggestions <Boolean>]
- [-Classification <String>]  [<CommonParameters>]
+ [-Classification <String>] [-Owners <String[]>] [-Members <String[]>]  [<CommonParameters>]
 ```
 
 ### For a new group
@@ -43,6 +43,7 @@ New-PnPTeamsTeam -DisplayName <String> [-MailNickName <String>] [-Description <S
  [-AllowUserDeleteMessages <Boolean>] [-AllowUserEditMessages <Boolean>]
  [-GiphyContentRating <TeamGiphyContentRating>] [-Visibility <TeamVisibility>]
  [-ShowInTeamsSearchAndSuggestions <Boolean>] [-Classification <String>] 
+ [-Owners <String[]>] [-Members <String[]>]
  [<CommonParameters>]
 ```
 
@@ -395,6 +396,34 @@ Set to Public to allow all users in your organization to join the group by defau
 Type: TeamVisibility
 Parameter Sets: For a new group
 Accepted values: Private, Public
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Owners
+The UPN(s) of the user(s) to be added to the Microsoft 365 group as a owners.
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Members
+The UPN(s) of the user(s) to be added to the Microsoft 365 group as a members.
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
 
 Required: False
 Position: Named

@@ -59,7 +59,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 team.DisplayName = group.DisplayName;
                 team.MailNickname = group.MailNickname;
-                team.Visibility = group.Visibility;                
+                team.Visibility = group.Visibility;
                 return team;
             }
             else
@@ -104,14 +104,14 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static async Task<Team> NewTeamAsync(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, TeamCreationInformation teamCI, TeamsTemplateType templateType = TeamsTemplateType.None)
+        public static async Task<Team> NewTeamAsync(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, TeamCreationInformation teamCI, string[] owners, string[] members, TeamsTemplateType templateType = TeamsTemplateType.None)
         {
             Group group = null;
             Team returnTeam = null;
             // Create group
             if (string.IsNullOrEmpty(groupId))
             {
-                group = await CreateGroupAsync(accessToken, httpClient, displayName, description, classification, mailNickname, owner, visibility, templateType);
+                group = await CreateGroupAsync(accessToken, httpClient, displayName, description, classification, mailNickname, owner, visibility, owners, templateType);
                 bool wait = true;
                 int iterations = 0;
                 while (wait)
@@ -151,6 +151,16 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             if (group != null)
             {
+                if (owners != null && owners.Length > 0)
+                {
+                    Framework.Graph.GroupsUtility.AddGroupOwners(group.Id, owners, accessToken, false);
+                }
+
+                if (members != null && members.Length > 0)
+                {
+                    Framework.Graph.GroupsUtility.AddGroupMembers(group.Id, members, accessToken, false);
+                }
+
                 Team team = teamCI.ToTeam(group.Visibility);
                 var retry = true;
                 var iteration = 0;
@@ -161,7 +171,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         var teamSettings = await GraphHelper.PutAsync(httpClient, $"v1.0/groups/{group.Id}/team", team, accessToken);
                         if (teamSettings != null)
                         {
-                            returnTeam = await TeamsUtility.GetTeamAsync(accessToken, httpClient, group.Id);
+                            returnTeam = await GetTeamAsync(accessToken, httpClient, group.Id);
                         }
                         retry = false;
                     }
@@ -181,7 +191,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return returnTeam;
         }
 
-        private static async Task<Group> CreateGroupAsync(string accessToken, HttpClient httpClient, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, TeamsTemplateType templateType = TeamsTemplateType.None)
+        private static async Task<Group> CreateGroupAsync(string accessToken, HttpClient httpClient, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, string[] owners, TeamsTemplateType templateType = TeamsTemplateType.None)
         {
             Group group = new Group();
             // get the owner if no owner was specified
@@ -189,6 +199,11 @@ namespace PnP.PowerShell.Commands.Utilities
             if (string.IsNullOrEmpty(owner))
             {
                 var user = await GraphHelper.GetAsync<User>(httpClient, "v1.0/me?$select=Id", accessToken);
+                ownerId = user.Id;
+            }
+            else if(owners !=null && owners.Length > 0)
+            {
+                var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{owners[0]}?$select=Id", accessToken);
                 ownerId = user.Id;
             }
             else
@@ -246,12 +261,15 @@ namespace PnP.PowerShell.Commands.Utilities
             try
             {
                 return await GraphHelper.PostAsync<Group>(httpClient, "v1.0/groups", group, accessToken);
-            } catch (GraphException ex)
+            }
+            catch (GraphException ex)
             {
-                if(ex.Error.Message.Contains("extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType"))
+                if (ex.Error.Message.Contains("extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType"))
                 {
                     throw new PSInvalidOperationException("Invalid EDU license type");
-                } else {
+                }
+                else
+                {
                     throw;
                 }
             }
@@ -396,7 +414,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 users.AddRange(collection.Select(m => new User() { DisplayName = m.DisplayName, Id = m.UserId, UserPrincipalName = m.email, UserType = m.Roles.Count > 0 ? m.Roles[0].ToLower() : "" }));
             }
-           
+
             if (selectedRole != null)
             {
                 return users.Where(u => u.UserType == selectedRole);
