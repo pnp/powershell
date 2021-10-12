@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PnP.PowerShell.Commands.Model.AzureAD
 {
@@ -98,11 +99,14 @@ namespace PnP.PowerShell.Commands.Model.AzureAD
             };
 
             // Copy over the AdditionalProperties. We have to do it like this instead of directly assigning the Dictionary so we can instruct the dictionary to ignore casing in the dictionary constructor.
-            foreach (var additionalProperty in entity.AdditionalProperties)
+            if (null != entity.AdditionalProperties)
             {
-                user.AdditionalProperties.Add(additionalProperty.Key, additionalProperty.Value);
+                foreach (var additionalProperty in entity.AdditionalProperties)
+                {
+                    user.AdditionalProperties.Add(additionalProperty.Key, additionalProperty.Value);
+                }
             }
-
+            
             return user;
         }
     }
