@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
     public class SyncSharePointUserProfilesFromAzureActiveDirectory : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false)]
-        public Array Users;
+        public List<PnP.Framework.Graph.Model.User> Users;
 
         [Parameter(Mandatory = false)]
         public string Folder = "Shared Documents";
@@ -40,16 +40,12 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     throw new PSArgumentNullException(nameof(Users), "Provided Users collection cannot be null");
                 }
 
-                // Loop through provided Azure Active Directory User objects
-                foreach (PSObject user in Users)
-                {
-                    // Only accept and process PnP Framework User model entities
-                    if (user.ImmediateBaseObject is PnP.Framework.Graph.Model.User aadUser)
-                    {
-                        aadUsers.Add(PnP.PowerShell.Commands.Model.AzureAD.User.CreateFrom(aadUser));
-                    }
+                foreach (PnP.Framework.Graph.Model.User user in Users) {
+
+                    aadUsers.Add(PnP.PowerShell.Commands.Model.AzureAD.User.CreateFrom(user));
+
                 }
-                
+
                 if(aadUsers.Count == 0)
                 {
                     throw new PSArgumentException($"No valid Azure Active Directory users provided through {nameof(Users)} parameter", nameof(Users));
