@@ -24,6 +24,8 @@ Set-PnPPage [-Identity] <PagePipeBind> [-Name <String>] [-Title <String>]
 
 ## DESCRIPTION
 
+Sets parameters of a page. All pages must be located inside the Site Pages library.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
@@ -49,10 +51,10 @@ Disables the comments on the page named 'MyPage'
 
 ### EXAMPLE 4
 ```powershell
-Set-PnPPage -Identity "MyPage" -HeaderType Default
+Set-PnPPage -Identity "hr/MyPage" -HeaderType Default
 ```
 
-Sets the header of the page to the default header
+Sets the header of the page called MyPage located in the folder hr inside the Site Pages library to the default header
 
 ### EXAMPLE 5
 ```powershell
@@ -150,7 +152,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The name/identity of the page
+The name/identity of the page. This can be a page instance or the filename of the page. I.e. if the page is called MyPage.aspx and is located in the root of the Site Pages library, provide "MyPage" or "MyPage.aspx". If the page is called MyOtherPage.aspx and is located inside a subfolder called HR located in the root of the Site Pages library, provide "HR/MyOtherPage" or "HR/MyOtherPage.aspx".
 
 ```yaml
 Type: PagePipeBind

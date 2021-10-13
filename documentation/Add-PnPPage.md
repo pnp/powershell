@@ -10,7 +10,7 @@ title: Add-PnPPage
 # Add-PnPPage
 
 ## SYNOPSIS
-Adds a Page
+Allows creation of a new page
 
 ## SYNTAX
 
@@ -22,6 +22,7 @@ Add-PnPPage [-Name] <String> [-LayoutType <PageLayoutType>]
 ```
 
 ## DESCRIPTION
+Allows creation of a new page. The page will be located inside the Site Pages library of the cite currently connected to.
 
 ## EXAMPLES
 
@@ -158,7 +159,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-Specifies the name of the page.
+Specifies the name of the page. It will also be used to define the filename. I.e. if you provide MyPage, it will create a page MyPage.aspx inside the Site Pages library.
 
 ```yaml
 Type: String

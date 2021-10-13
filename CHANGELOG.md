@@ -13,6 +13,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
 - Added optional `-ScheduledPublishDate` parameter to `Add-PnPPage` and `Set-PnPPage` to allow for scheduling a page to be published.
 - Added `-RemoveScheduledPublish` to `Set-PnPPage` to allow for a page publish schedule to be removed.
+- Added support for off peak SharePoint Syntex content classification and extraction for lists and folders via new `-OffPeak` and `-Folder` parameters for `Request-PnPSyntexClassifyAndExtract`
+- Fixed an issue where `Set-PnPPage` would not be able to find a page if you would start the `-Identity` with a forward slash
+- Fixed an issue where `Set-PnPPage` would not return its parent Folder
 - Improved `Get-PnPFile` cmdlet to handle large file downloads.
 - Added support for off peak SharePoint Syntex content classification and extraction for lists and folders via new `-OffPeak` and `-Folder` parameters for `Request-PnPSyntexClassifyAndExtract`.
 - Fix `Set-PnPListItem` not working when using `Label` and `Values` parameters together.
