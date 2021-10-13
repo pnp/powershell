@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Lists
         public SwitchParameter SystemUpdate;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
-        public String Label;
+        public string Label;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
         public SwitchParameter ClearLabel;
@@ -113,19 +113,19 @@ namespace PnP.PowerShell.Commands.Lists
             }
             else
             {
-                if(Identity == null || (Identity.Item == null && Identity.Id == 0))
+                if (Identity == null || (Identity.Item == null && Identity.Id == 0))
                 {
                     throw new PSArgumentException($"No -Identity has been provided specifying the item to update");
                 }
 
                 List list;
-                if(List != null)
+                if (List != null)
                 {
                     list = List.GetList(CurrentWeb);
                 }
                 else
                 {
-                    if(Identity.Item == null)
+                    if (Identity.Item == null)
                     {
                         throw new PSArgumentException($"No -List has been provided specifying the list to update the item in");
                     }
@@ -136,24 +136,6 @@ namespace PnP.PowerShell.Commands.Lists
                 if (list != null)
                 {
                     var item = Identity.GetListItem(list);
-
-                    bool updateRequired = false;
-
-                    if (ContentType != null)
-                    {
-                        ContentType ct = ContentType.GetContentType(list);
-                        if (ct != null)
-                        {
-                            item["ContentTypeId"] = ct.EnsureProperty(w => w.StringId); ;
-                            ListItemHelper.UpdateListItem(item, UpdateType);
-                            ClientContext.ExecuteQueryRetry();
-                        }
-                    }
-                    if (Values != null)
-                    {
-                        ListItemHelper.SetFieldValues(item, Values, this);
-                        updateRequired = true;
-                    }
 
                     if (ParameterSpecified(nameof(ClearLabel)))
                     {
@@ -185,8 +167,19 @@ namespace PnP.PowerShell.Commands.Lists
                         }
                     }
 
-                    if (updateRequired)
+                    if (ContentType != null)
                     {
+                        ContentType ct = ContentType.GetContentType(list);
+                        if (ct != null)
+                        {
+                            item["ContentTypeId"] = ct.EnsureProperty(w => w.StringId); ;
+                            ListItemHelper.UpdateListItem(item, UpdateType);
+                            ClientContext.ExecuteQueryRetry();
+                        }
+                    }
+                    if (Values != null)
+                    {
+                        ListItemHelper.SetFieldValues(item, Values, this);
                         ListItemHelper.UpdateListItem(item, UpdateType);
                     }
                     ClientContext.ExecuteQueryRetry();
