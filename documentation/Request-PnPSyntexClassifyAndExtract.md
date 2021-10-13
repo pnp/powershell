@@ -26,9 +26,6 @@ Request-PnPSyntexClassifyAndExtract -Folder <FolderPipeBind> [-Connection <PnPCo
 [<CommonParameters>]
 ```
 
-## DESCRIPTION
-This command requests for all files in a folder (including the possible sub folders) to be classified and extracted via the published SharePoint Syntex models on the libraries hosting the files. Folder content classification and extraction requests are always send to the off peak Syntex content processing queue.
-
 ### List
 ```powershell
 Request-PnPSyntexClassifyAndExtract -List <ListPipeBind> [-OffPeak <SwitchParameter>] [-Force <SwitchParameter>] [-Connection <PnPConnection>] 
@@ -36,7 +33,8 @@ Request-PnPSyntexClassifyAndExtract -List <ListPipeBind> [-OffPeak <SwitchParame
 ```
 
 ## DESCRIPTION
-This command requests for all files in a library to be classified and extracted via the published SharePoint Syntex models on the libraries hosting the files. When using with the `OffPeak` switch then the files are send to the off peak Syntex content processing queue, this way there's no need to enumerate all files in the library and submit them to the regular queue. When using the `Force` switch without setting OffPeak then all files are enumerated and sent to the regular queue, regardless of whether they were processed in the past.
+
+This command requests for all files in a library, folder or individual files to be classified and extracted via the published SharePoint Syntex models on the libraries hosting the files. When using with the `OffPeak` switch then the files are send to the off peak Syntex content processing queue, this way there's no need to enumerate all files in the library and submit them to the regular queue. When using the `Force` switch without setting OffPeak then all files are enumerated and sent to the regular queue, regardless of whether they were processed in the past.
 
 ## EXAMPLES
 

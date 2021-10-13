@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Linq;
+﻿using System.Collections;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using System.Collections.Generic;
 
@@ -13,7 +10,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
     public class SyncSharePointUserProfilesFromAzureActiveDirectory : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false)]
-        public Array Users;
+        public List<PnP.PowerShell.Commands.Model.AzureAD.User> Users;
 
         [Parameter(Mandatory = false)]
         public string Folder = "Shared Documents";
@@ -40,20 +37,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     throw new PSArgumentNullException(nameof(Users), "Provided Users collection cannot be null");
                 }
 
-                // Loop through provided Azure Active Directory User objects
-                foreach (PSObject user in Users)
-                {
-                    // Only accept and process PnP Framework User model entities
-                    if (user.ImmediateBaseObject is PnP.Framework.Graph.Model.User aadUser)
-                    {
-                        aadUsers.Add(PnP.PowerShell.Commands.Model.AzureAD.User.CreateFrom(aadUser));
-                    }
-                }
-                
-                if(aadUsers.Count == 0)
-                {
-                    throw new PSArgumentException($"No valid Azure Active Directory users provided through {nameof(Users)} parameter", nameof(Users));
-                }
+                aadUsers = Users;
             }
             else
             {
@@ -69,7 +53,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 }
 
                 // Retrieve all the users from Azure Active Directory
-                aadUsers = PnP.Framework.Graph.UsersUtility.ListUsers(GraphAccessToken, allAadPropertiesList.ToArray(), endIndex: null).Select(u => PnP.PowerShell.Commands.Model.AzureAD.User.CreateFrom(u)).ToList();
+                aadUsers = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUsers(GraphAccessToken, null, null, allAadPropertiesList.ToArray(), endIndex: null);
 
                 if(aadUsers.Count == 0)
                 {

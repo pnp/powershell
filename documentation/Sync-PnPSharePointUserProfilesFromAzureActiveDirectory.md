@@ -54,13 +54,21 @@ This will retrieve all users in Azure Active Directory and take its phone proper
 
 ### EXAMPLE 2
 ```powershell
-$users = Get-PnPAzureADUser -Filter "jobTitle eq 'IT Administraror'"
+$users = Get-PnPAzureADUser -Filter "jobTitle eq 'IT Administrator'"
 Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping @{"CostCenter"="ext_123456"} -Users $users
 ```
 
 This will update the CostCenter SharePoint Online User Profile property with the value of the property ext_123456 coming from Azure Active Directory for the users getting returned by the Get-PnPAzureADUser query. It will upload the JSON file with the instructions for the update to the 'Shared Documents' library of the site currently connected to.
 
 ### EXAMPLE 3
+```powershell
+$delta = Get-PnPAzureADUser -Delta -DeltaToken $delta.DeltaToken
+Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping @{"CostCenter"="ext_123456"} -Users $delta.Users
+```
+
+This will retrieve all the users from Azure Active Directory and includes a DeltaToken in the response. Using the DeltaToken you can retrieve only those users which have had changes done to their attributes since the DeltaToken was given out. This makes it ideal to use with the profile sync as this way you only will sync those users that have had changes to their profiles. Only for those users this will update the CostCenter SharePoint Online User Profile property with the value of the property ext_123456 coming from Azure Active Directory. It will upload the JSON file with the instructions for the update to the 'Shared Documents' library of the site currently connected to.
+
+### EXAMPLE 4
 ```powershell
 Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping @{"CostCenter"="ext_123456"} -Folder "User Profile Sync"
 ```
@@ -73,7 +81,7 @@ This will retrieve all users in Azure Active Directory and take its phone proper
 Through this parameter you can pass in users coming forward from a query through Get-PnPAzureADUser that need to have their SharePoint Online User profiles updated
 
 ```yaml
-Type: Array
+Type: System.Collections.Generic.List`1[PnP.Framework.Graph.Model.User]
 Parameter Sets: (All)
 
 Required: False
