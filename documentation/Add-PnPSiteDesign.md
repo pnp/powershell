@@ -178,9 +178,8 @@ Accept wildcard characters: False
 The full URL of a thumbnail image, i.e. https://contoso.sharepoint/siteassets/image.png. If none is specified, SharePoint uses a generic image. Recommended size is 400 x 300 pixels. This is the image that will be shown when selecting a template through "Apply a site template" or "Browse templates" shown in "Start designing your site" shown when creating a new site.
 
 ```yaml
-Type: SiteWebTemplate
+Type: String
 Parameter Sets: (All)
-Accepted values: TeamSite, CommunicationSite
 
 Required: False
 Position: Named
@@ -193,9 +192,8 @@ Accept wildcard characters: False
 Sets the design package Id of this site design.
 
 ```yaml
-Type: SiteWebTemplate
+Type: Guid
 Parameter Sets: (All)
-Accepted values: TeamSite, CommunicationSite
 
 Required: False
 Position: Named

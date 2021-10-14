@@ -17,11 +17,14 @@ Sets parameters of a page
 ```powershell
 Set-PnPPage [-Identity] <PagePipeBind> [-Name <String>] [-Title <String>]
  [-LayoutType <PageLayoutType>] [-PromoteAs <PagePromoteType>] [-CommentsEnabled]
- [-Publish] [-HeaderType <PageHeaderType>] [-HeaderLayoutType <PageHeaderLayoutType>] [-ContentType <ContentTypePipeBind>]
- [-ThumbnailUrl <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Publish] [-HeaderType <PageHeaderType>] [-HeaderLayoutType <PageHeaderLayoutType>] [-ScheduledPublishDate <DateTime>] 
+ [-RemoveScheduledPublish] [-ContentType <ContentTypePipeBind>] [-ThumbnailUrl <String>] 
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
+Sets parameters of a page. All pages must be located inside the Site Pages library.
 
 ## EXAMPLES
 
@@ -48,10 +51,10 @@ Disables the comments on the page named 'MyPage'
 
 ### EXAMPLE 4
 ```powershell
-Set-PnPPage -Identity "MyPage" -HeaderType Default
+Set-PnPPage -Identity "hr/MyPage" -HeaderType Default
 ```
 
-Sets the header of the page to the default header
+Sets the header of the page called MyPage located in the folder hr inside the Site Pages library to the default header
 
 ### EXAMPLE 5
 ```powershell
@@ -66,6 +69,13 @@ Set-PnPPage -Identity "MyPage" -HeaderType Custom -ServerRelativeImageUrl "/site
 ```
 
 Sets the header of the page to custom header, using the specified image and translates the location of the image in the header given the values specified
+
+### EXAMPLE 7
+```powershell
+Set-PnPPage -Identity "MyPage" -ScheduledPublishDate (Get-Date).AddHours(1)
+```
+
+Schedules the page "MyPage" to be published in one hour from now
 
 ## PARAMETERS
 
@@ -142,7 +152,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The name/identity of the page
+The name/identity of the page. This can be a page instance or the filename of the page. I.e. if the page is called MyPage.aspx and is located in the root of the Site Pages library, provide "MyPage" or "MyPage.aspx". If the page is called MyOtherPage.aspx and is located inside a subfolder called HR located in the root of the Site Pages library, provide "HR/MyOtherPage" or "HR/MyOtherPage.aspx".
 
 ```yaml
 Type: PagePipeBind
@@ -241,9 +251,34 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ScheduledPublishDate
+If provided, the page will be scheduled to be published on the provided date and time. It will enable page scheduling on the Site Pages library if not already enabled. If not provided, the publishing of the page will not be scheduled.
 
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RemoveScheduledPublish
+If provided, the page publish schedule will be removed, if it has been set.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

@@ -10,18 +10,19 @@ title: Add-PnPPage
 # Add-PnPPage
 
 ## SYNOPSIS
-Adds a Page
+Allows creation of a new page
 
 ## SYNTAX
 
 ```powershell
 Add-PnPPage [-Name] <String> [-LayoutType <PageLayoutType>]
  [-PromoteAs <PagePromoteType>] [-ContentType <ContentTypePipeBind>] [-CommentsEnabled] [-Publish]
- [-HeaderLayoutType <PageHeaderLayoutType>] [-Connection <PnPConnection>]
+ [-HeaderLayoutType <PageHeaderLayoutType>] [-ScheduledPublishDate <DateTime>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+Allows creation of a new page. The page will be located inside the Site Pages library of the cite currently connected to.
 
 ## EXAMPLES
 
@@ -60,7 +61,30 @@ Add-PnPPage -Name "NewPage" -HeaderLayoutType ColorBlock
 
 Creates a new page named 'NewPage' using the ColorBlock header layout
 
+### EXAMPLE 6
+```powershell
+Add-PnPPage -Name "NewPage" Article -ScheduledPublishDate (Get-Date).AddHours(1)
+```
+
+Creates a new page named 'NewPage' using the article layout and schedule it to be published in 1 hour from now
+
 ## PARAMETERS
+
+### -Connection
+Optional connection to be used by the cmdlet.
+Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -CommentsEnabled
 Enables or Disables the comments on the page
@@ -135,7 +159,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-Specifies the name of the page.
+Specifies the name of the page. It will also be used to define the filename. I.e. if you provide MyPage, it will create a page MyPage.aspx inside the Site Pages library.
 
 ```yaml
 Type: String
@@ -177,10 +201,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ScheduledPublishDate
+If provided, the page will be scheduled to be published on the provided date and time. It will enable page scheduling on the Site Pages library if not already enabled. If not provided, the publishing of the page will not be scheduled.
 
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

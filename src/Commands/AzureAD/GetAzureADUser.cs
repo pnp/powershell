@@ -2,7 +2,6 @@
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using System;
-using System.Collections.Generic;
 using System.Management.Automation;
 using System.Net;
 
@@ -60,26 +59,25 @@ namespace PnP.PowerShell.Commands.Principals
             }
             if (ParameterSpecified(nameof(Identity)))
             {
-                PnP.Framework.Graph.Model.User user;
+                PnP.PowerShell.Commands.Model.AzureAD.User user;
                 if (Guid.TryParse(Identity, out Guid identityGuid))
                 {
-                    user = PnP.Framework.Graph.UsersUtility.GetUser(AccessToken, identityGuid);
+                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(AccessToken, identityGuid);
                 }
                 else
                 {
-                    
-                    user = PnP.Framework.Graph.UsersUtility.GetUser(AccessToken, WebUtility.UrlEncode(Identity), Select);
+                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(AccessToken, WebUtility.UrlEncode(Identity), Select);
                 }
                 WriteObject(user);
             }
             else if (ParameterSpecified(nameof(Delta)))
             {
-                PnP.Framework.Graph.Model.UserDelta userDelta = PnP.Framework.Graph.UsersUtility.ListUserDelta(AccessToken, DeltaToken, Filter, OrderBy, Select, StartIndex, EndIndex);
+                var userDelta = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUserDelta(AccessToken, DeltaToken, Filter, OrderBy, Select, StartIndex, EndIndex);
                 WriteObject(userDelta);
             } 
             else
             {
-                List<PnP.Framework.Graph.Model.User> users = PnP.Framework.Graph.UsersUtility.ListUsers(AccessToken, Filter, OrderBy, Select, StartIndex, EndIndex);
+                var users = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUsers(AccessToken, Filter, OrderBy, Select, StartIndex, EndIndex);
                 WriteObject(users, true);
             }
         }

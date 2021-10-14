@@ -4,8 +4,31 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
- 
+
 ## [Current Nightly]
+
+### Changed
+
+- Fixed `Get-PnPGroupMember -User` not properly returning the specified user.
+- Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
+- Added optional `-ScheduledPublishDate` parameter to `Add-PnPPage` and `Set-PnPPage` to allow for scheduling a page to be published.
+- Added `-RemoveScheduledPublish` to `Set-PnPPage` to allow for a page publish schedule to be removed.
+- Added support for off peak SharePoint Syntex content classification and extraction for lists and folders via new `-OffPeak` and `-Folder` parameters for `Request-PnPSyntexClassifyAndExtract`
+- Fixed an issue where `Set-PnPPage` would not be able to find a page if you would start the `-Identity` with a forward slash
+- Fixed an issue where `Set-PnPPage` would not return its parent Folder
+- Improved `Get-PnPFile` cmdlet to handle large file downloads.
+- Added support for off peak SharePoint Syntex content classification and extraction for lists and folders via new `-OffPeak` and `-Folder` parameters for `Request-PnPSyntexClassifyAndExtract`.
+- Fix `Set-PnPListItem` not working when using `Label` and `Values` parameters together.
+- Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`
+
+### Contributors
+
+- Koen Zomers [koenzomers]
+- Bert Jansen [jansenbe]
+- Gautam Sheth [gautamdsheth]
+- [reusto]
+
+## [1.8.0]
 
 ### Changed
 
@@ -43,8 +66,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed unable to piping the output of `Get-PnPRoleDefinition` to i.e. filter by RoleTypeKind.
 - Changed `Set-PnPListItemPermission` to support piping in a roledefinition for `-AddRole` and `-RemoveRole`
 - Fixed issue with 'Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID.
-- Fixed issue with 'Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID
 - Changed that `Get-PnPSiteScript -Identity` now also works with the site script name instead of just the site script Id
+- Added `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` cmdlet which allows direct synchronization of user profile properties of choice between user profiles in Azure Active Directory and their SharePoint Online User Profile Service user profile equivallents
+- Fixed issue with `Get-PnPUPABulkImportStatus` where it did not allow you to pipe its output to i.e. get the most recent one using `Select -Latest 1` or the ones that failed using `? State -ne "Succeeded"`
 
 ### Contributors
 
