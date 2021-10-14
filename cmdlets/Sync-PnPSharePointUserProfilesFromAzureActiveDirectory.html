@@ -105,18 +105,23 @@
 </code></pre>
 <p>This will retrieve all users in Azure Active Directory and take its phone property to update in the HomePhone field in the SharePoint Online user profiles for each of these users. Similarly it will set the SharePoint Online User Profile property named CustomProperty to the value of the DisplayName as set in Azure Active Directory on the user object. It will upload the JSON file with the instructions for the update to the 'Shared Documents' library of the site currently connected to.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">$users = Get-PnPAzureADUser -Filter &quot;jobTitle eq 'IT Administraror'&quot;
+<pre><code class="lang-powershell">$users = Get-PnPAzureADUser -Filter &quot;jobTitle eq 'IT Administrator'&quot;
 Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping @{&quot;CostCenter&quot;=&quot;ext_123456&quot;} -Users $users
 </code></pre>
 <p>This will update the CostCenter SharePoint Online User Profile property with the value of the property ext_123456 coming from Azure Active Directory for the users getting returned by the Get-PnPAzureADUser query. It will upload the JSON file with the instructions for the update to the 'Shared Documents' library of the site currently connected to.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">$delta = Get-PnPAzureADUser -Delta -DeltaToken $delta.DeltaToken
+Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping @{&quot;CostCenter&quot;=&quot;ext_123456&quot;} -Users $delta.Users
+</code></pre>
+<p>This will retrieve all the users from Azure Active Directory and includes a DeltaToken in the response. Using the DeltaToken you can retrieve only those users which have had changes done to their attributes since the DeltaToken was given out. This makes it ideal to use with the profile sync as this way you only will sync those users that have had changes to their profiles. Only for those users this will update the CostCenter SharePoint Online User Profile property with the value of the property ext_123456 coming from Azure Active Directory. It will upload the JSON file with the instructions for the update to the 'Shared Documents' library of the site currently connected to.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping @{&quot;CostCenter&quot;=&quot;ext_123456&quot;} -Folder &quot;User Profile Sync&quot;
 </code></pre>
 <p>This will retrieve all users in Azure Active Directory and take its phone property to update in the HomePhone field in the SharePoint Online user profiles for each of these users. Similarly it will set the SharePoint Online User Profile property named CustomProperty to the value of the DisplayName as set in Azure Active Directory on the user object. It will upload the JSON file with the instructions for the update to a library named 'User Profile Sync' in the site currently connected to.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-users">-Users</h3>
 <p>Through this parameter you can pass in users coming forward from a query through Get-PnPAzureADUser that need to have their SharePoint Online User profiles updated</p>
-<pre><code class="lang-yaml">Type: Array
+<pre><code class="lang-yaml">Type: System.Collections.Generic.List`1[PnP.Framework.Graph.Model.User]
 Parameter Sets: (All)
 
 Required: False

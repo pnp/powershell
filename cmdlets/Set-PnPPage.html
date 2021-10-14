@@ -88,10 +88,12 @@
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPPage [-Identity] &lt;PagePipeBind&gt; [-Name &lt;String&gt;] [-Title &lt;String&gt;]
  [-LayoutType &lt;PageLayoutType&gt;] [-PromoteAs &lt;PagePromoteType&gt;] [-CommentsEnabled]
- [-Publish] [-HeaderType &lt;PageHeaderType&gt;] [-HeaderLayoutType &lt;PageHeaderLayoutType&gt;] [-ContentType &lt;ContentTypePipeBind&gt;]
- [-ThumbnailUrl &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-Publish] [-HeaderType &lt;PageHeaderType&gt;] [-HeaderLayoutType &lt;PageHeaderLayoutType&gt;] [-ScheduledPublishDate &lt;DateTime&gt;] 
+ [-RemoveScheduledPublish] [-ContentType &lt;ContentTypePipeBind&gt;] [-ThumbnailUrl &lt;String&gt;] 
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Sets parameters of a page. All pages must be located inside the Site Pages library.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -LayoutType Home -Title &quot;My Page&quot;
@@ -106,9 +108,9 @@
 </code></pre>
 <p>Disables the comments on the page named 'MyPage'</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -HeaderType Default
+<pre><code class="lang-powershell">Set-PnPPage -Identity &quot;hr/MyPage&quot; -HeaderType Default
 </code></pre>
-<p>Sets the header of the page to the default header</p>
+<p>Sets the header of the page called MyPage located in the folder hr inside the Site Pages library to the default header</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -HeaderType None
 </code></pre>
@@ -117,6 +119,10 @@
 <pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -HeaderType Custom -ServerRelativeImageUrl &quot;/sites/demo1/assets/myimage.png&quot; -TranslateX 10.5 -TranslateY 11.0
 </code></pre>
 <p>Sets the header of the page to custom header, using the specified image and translates the location of the image in the header given the values specified</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -ScheduledPublishDate (Get-Date).AddHours(1)
+</code></pre>
+<p>Schedules the page &quot;MyPage&quot; to be published in one hour from now</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-commentsenabled">-CommentsEnabled</h3>
 <p>Enables or Disables the comments on the page</p>
@@ -176,7 +182,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The name/identity of the page</p>
+<p>The name/identity of the page. This can be a page instance or the filename of the page. I.e. if the page is called MyPage.aspx and is located in the root of the Site Pages library, provide &quot;MyPage&quot; or &quot;MyPage.aspx&quot;. If the page is called MyOtherPage.aspx and is located inside a subfolder called HR located in the root of the Site Pages library, provide &quot;HR/MyOtherPage&quot; or &quot;HR/MyOtherPage.aspx&quot;.</p>
 <pre><code class="lang-yaml">Type: PagePipeBind
 Parameter Sets: (All)
 
@@ -246,6 +252,28 @@ Accept wildcard characters: False
 <h3 id="-title">-Title</h3>
 <p>Sets the title of the page.</p>
 <pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-scheduledpublishdate">-ScheduledPublishDate</h3>
+<p>If provided, the page will be scheduled to be published on the provided date and time. It will enable page scheduling on the Site Pages library if not already enabled. If not provided, the publishing of the page will not be scheduled.</p>
+<pre><code class="lang-yaml">Type: DateTime
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-removescheduledpublish">-RemoveScheduledPublish</h3>
+<p>If provided, the page publish schedule will be removed, if it has been set.</p>
+<pre><code class="lang-yaml">Type: DateTime
 Parameter Sets: (All)
 
 Required: False
