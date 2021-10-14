@@ -5,7 +5,7 @@ using System.Management.Automation.Runspaces;
 namespace PnP.PowerShell.Tests.Graph
 {
     [TestClass]
-    public class GetAADUserTests
+    public class GetAzureADUserTests
     {
         #region Test Setup/CleanUp
         [ClassInitialize]
