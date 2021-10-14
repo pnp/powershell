@@ -1,16 +1,12 @@
 ﻿using PnP.Core.Model.SharePoint;
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Linq;
 using System.Management.Automation;
-using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Add, "PnPPage")]
-    [Alias("Add-PnPClientSidePage")]
-    [WriteAliasWarning("Please use 'Add-PnPPage'. The alias 'Add-PnPClientSidePage' will be removed in the 1.5.0 release")]
     public class AddPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
@@ -31,6 +27,9 @@ namespace PnP.PowerShell.Commands.Pages
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Publish;
+
+        [Parameter(Mandatory = false)]
+        public DateTime? ScheduledPublishDate;
 
         [Parameter(Mandatory = false)]
         public PageHeaderLayoutType HeaderLayoutType = PageHeaderLayoutType.FullWidthImage;
@@ -108,6 +107,11 @@ namespace PnP.PowerShell.Commands.Pages
             if (Publish)
             {
                 clientSidePage.Publish();
+            }
+
+            if(ParameterSpecified(nameof(ScheduledPublishDate)))
+            {
+                clientSidePage.SchedulePublish(ScheduledPublishDate.Value);
             }
 
             WriteObject(clientSidePage);

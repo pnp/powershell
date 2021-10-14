@@ -35,6 +35,12 @@ namespace PnP.PowerShell.Commands.Pages
         public SwitchParameter Publish;
 
         [Parameter(Mandatory = false)]
+        public DateTime? ScheduledPublishDate;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter RemoveScheduledPublish;
+
+        [Parameter(Mandatory = false)]
         public PageHeaderType HeaderType;
 
         [Parameter(Mandatory = false)]
@@ -61,13 +67,14 @@ namespace PnP.PowerShell.Commands.Pages
 
         protected override void ExecuteCmdlet()
         {
-
             var clientSidePage = Identity?.GetPage();
 
             if (clientSidePage == null)
+            {
                 // If the client side page object cannot be found
                 throw new Exception($"Page {Identity?.Name} cannot be found.");
-
+            }
+            
             // We need to have the page name, if not found, raise an error
             string name = PageUtilities.EnsureCorrectPageName(Name ?? Identity?.Name);
             if (name == null)
@@ -161,6 +168,16 @@ namespace PnP.PowerShell.Commands.Pages
             if (Publish)
             {
                 clientSidePage.Publish();
+            }
+
+            if(ParameterSpecified(nameof(ScheduledPublishDate)))
+            {
+                clientSidePage.SchedulePublish(ScheduledPublishDate.Value);
+            }
+
+            if(ParameterSpecified(nameof(RemoveScheduledPublish)))
+            {
+                clientSidePage.RemoveSchedulePublish();
             }
 
             WriteObject(clientSidePage);
