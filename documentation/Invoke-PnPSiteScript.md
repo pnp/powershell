@@ -14,13 +14,13 @@ Applies a Site Script to an existing site
 
 ## SYNTAX
 
-Executing a site script registered as such:
+### Executing a site script registered as such
 
 ```powershell
 Invoke-PnPSiteScript -Identity <TenantSiteScriptPipeBind> -WebUrl <String> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
-Executing a site script by passing in the script directly:
+### Executing a site script by passing in the script directly
 
 ```powershell
 Invoke-PnPSiteScript -Script <String> [-WebUrl <String>] [-Connection <PnPConnection>] [<CommonParameters>]

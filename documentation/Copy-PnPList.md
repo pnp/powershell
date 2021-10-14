@@ -14,31 +14,32 @@ Creates a copy of an existing list
 
 ## SYNTAX
 
-Copy a list to the same site by providing a list id, name or list instance
+### Copy a list to the same site by providing a list id, name or list instance
 
 ```powershell
 Copy-PnPList -Identity <ListPipeBind> -Title <String> [-WhatIf] [-Verbose] [-Connection <PnPConnection>]
 ```
 
-Copy a list to the same site by providing a list URL
+### Copy a list to the same site by providing a list URL
 
 ```powershell
 Copy-PnPList -SourceListUrl <String> -Title <String> [-WhatIf] [-Verbose] [-Connection <PnPConnection>]
 ```
 
-Copy a list to another site by providing a list id, name or list instance
+### Copy a list to another site by providing a list id, name or list instance
 
 ```powershell
 Copy-PnPList -Identity <ListPipeBind> -DestinationWebUrl <String> [-Title <String>] [-WhatIf] [-Verbose] [-Connection <PnPConnection>]
 ```
 
-Copy a list to another site by providing a list URL
+### Copy a list to another site by providing a list URL
 
 ```powershell
 Copy-PnPList -SourceListUrl <String> -DestinationWebUrl <String> [-Title <String>] [-WhatIf] [-Verbose] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
+
 This cmdlet allows an existing list to be copied to either the same site or to another site. It copies the fields, views and settings of the list. It does not copy along the list items in the list.
 
 ## EXAMPLES
