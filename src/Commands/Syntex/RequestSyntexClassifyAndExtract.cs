@@ -44,6 +44,12 @@ namespace PnP.PowerShell.Commands.Syntex
             {
                 IList list = List.GetList(ctx);
 
+                // If a list is above 5K we default to off-peak processing
+                if (list.ItemCount > 5000)
+                {
+                    OffPeak = true;
+                }
+
                 if (OffPeak)
                 {
                     var classifyAndExtractResult = list.ClassifyAndExtractOffPeak();
