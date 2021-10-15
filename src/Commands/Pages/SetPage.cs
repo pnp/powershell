@@ -67,13 +67,14 @@ namespace PnP.PowerShell.Commands.Pages
 
         protected override void ExecuteCmdlet()
         {
-
             var clientSidePage = Identity?.GetPage();
 
             if (clientSidePage == null)
+            {
                 // If the client side page object cannot be found
                 throw new Exception($"Page {Identity?.Name} cannot be found.");
-
+            }
+            
             // We need to have the page name, if not found, raise an error
             string name = PageUtilities.EnsureCorrectPageName(Name ?? Identity?.Name);
             if (name == null)
