@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support for off peak SharePoint Syntex content classification and extraction for lists and folders via new `-OffPeak` and `-Folder` parameters for `Request-PnPSyntexClassifyAndExtract`.
 - Fix `Set-PnPListItem` not working when using `Label` and `Values` parameters together.
 - Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`
+- Fix issue with `Add-PnPListFoldersToProvisioningTemplate` not working when having nested folder structure.
 
 ### Contributors
 
