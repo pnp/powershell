@@ -22,6 +22,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`
 - Added `Invoke-PnPSiteScript` which allows for a Site Script to be executed on a site without needing to have it registered in a site design or site script first
 - Added `Copy-PnPList` which allows for a copy of a SharePoint list to be made in the same site or to another site. Copying along list item data is not yet possible but will follow in a later release.
+- Added `Get\Set-PnPWebHeader` to work with the Change the look > Header options of a site
+- Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`.
+- Added `Enable-PnPPageScheduling` and `Disable-PnPPageScheduling` to enable or disable page publishing scheduling on modern pages
+- Fixed documentation for `Get-PnPFlow` and `Enable-PnPFlow` cmdlets
+- Fixed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` not being able to deal with multi value properties on the Azure Active Directory side, such as `BusinessPhones`
 
 ### Contributors
 
@@ -29,6 +34,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Bert Jansen [jansenbe]
 - Gautam Sheth [gautamdsheth]
 - [reusto]
+- Asad Refai [asadrefai]
 
 ## [1.8.0]
 
@@ -70,7 +76,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with 'Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID.
 - Changed that `Get-PnPSiteScript -Identity` now also works with the site script name instead of just the site script Id
 - Added `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` cmdlet which allows direct synchronization of user profile properties of choice between user profiles in Azure Active Directory and their SharePoint Online User Profile Service user profile equivallents
-- Fixed issue with `Get-PnPUPABulkImportStatus` where it did not allow you to pipe its output to i.e. get the most recent one using `Select -Latest 1` or the ones that failed using `? State -ne "Succeeded"`
+- Fixed issue with `Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID.
+- Fixed issue with `Get-PnPUPABulkImportStatus` where it did not allow you to pipe its output to i.e. get the most recent one using `Select -Latest 1` or the ones that failed using `? State -ne "Succeeded"`  
 
 ### Contributors
 
