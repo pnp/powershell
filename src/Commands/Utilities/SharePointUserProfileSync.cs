@@ -47,10 +47,20 @@ namespace PnP.PowerShell.Commands.Utilities
                     if (userProfilePropertyMapping.Key != null && userProfilePropertyMapping.Value != null)
                     {
                         // Check if the property is a property directly on the user object
-                        if (user.GetType().GetProperty(userProfilePropertyMapping.Value.ToString(), BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance) != null)
+                        var aadUserProperty = user.GetType().GetProperty(userProfilePropertyMapping.Value.ToString(), BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                        if (aadUserProperty != null)
                         {
                             // Construct an entry with the SharePoint Online User Profile property name and the value it should be set to coming from a property on the User object
-                            userUpdateBuilder.AppendFormat(@"""{0}"":""{1}"",", userProfilePropertyMapping.Key, user.GetType().GetProperty(userProfilePropertyMapping.Value.ToString(), BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance).GetValue(user));
+                            if(aadUserProperty.PropertyType == typeof(IEnumerable<string>))
+                            {
+                                // AAD User property is an array, join all entries with a comma and add the combined string to the mapping output
+                                userUpdateBuilder.AppendFormat(@"""{0}"":""{1}"",", userProfilePropertyMapping.Key, string.Join(",", ((IEnumerable)aadUserProperty.GetValue(user)).Cast<string>().ToArray()));
+                            }
+                            else
+                            {
+                                // AAD User property is a string, add its value to the mapping output
+                                userUpdateBuilder.AppendFormat(@"""{0}"":""{1}"",", userProfilePropertyMapping.Key, aadUserProperty.GetValue(user));
+                            }
                         }
                         else if (user.AdditionalProperties != null && user.AdditionalProperties.TryGetValue(userProfilePropertyMapping.Value.ToString(), out object userProfilePropertyMappingValue))
                         {
