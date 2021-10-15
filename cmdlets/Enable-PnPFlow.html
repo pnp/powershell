@@ -90,7 +90,8 @@
 </ul>
 <p>Enables a specific flow</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Enable-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Identity &lt;PowerAutomateFlowPipeBind&gt; [-AsAdmin] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Enable-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Identity &lt;PowerAutomateFlowPipeBind&gt; [-AsAdmin] 
+[-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet enables a specific flow</p>
@@ -101,6 +102,30 @@ Enable-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c
 </code></pre>
 <p>Enables the specified flow</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-environment">-Environment</h3>
+<p>The name of the environment or an Environment object to retrieve the available flows for.</p>
+<pre><code class="lang-yaml">Type: PowerAutomateEnvironmentPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>Identity of the flow to enable</p>
+<pre><code class="lang-yaml">Type: PowerAutomateFlowPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-asadmin">-AsAdmin</h3>
 <p>Enable the flow as an adminstrator</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
@@ -121,30 +146,6 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-environment">-Environment</h3>
-<p>The name of the environment or an Environment object to retrieve the available flows for.</p>
-<pre><code class="lang-yaml">Type: PowerAutomateEnvironmentPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>Identity of the flow to enable</p>
-<pre><code class="lang-yaml">Type: PowerAutomateFlowPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
