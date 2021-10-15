@@ -1,9 +1,12 @@
 ﻿using Microsoft.SharePoint.Client;
+using PnP.Core.Model.SharePoint;
+using PnP.Core.Services;
 using PnP.Framework.Utilities;
 
 using System;
 using System.IO;
 using System.Management.Automation;
+using System.Threading.Tasks;
 using File = Microsoft.SharePoint.Client.File;
 
 namespace PnP.PowerShell.Commands.Files
@@ -86,7 +89,7 @@ namespace PnP.PowerShell.Commands.Files
                             WriteWarning($"File '{fileToSave}' exists already. use the -Force parameter to overwrite the file.");
                         }
                         return Force;
-                    });
+                    }).Wait();
                     break;
                 case URLASFILEOBJECT:
                     file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
@@ -128,37 +131,33 @@ namespace PnP.PowerShell.Commands.Files
             }
         }
 
-        private void SaveFileToLocal(Web web, string serverRelativeUrl, string localPath, string localFileName = null, Func<string, bool> fileExistsCallBack = null)
+        private async Task SaveFileToLocal(Web web, string serverRelativeUrl, string localPath, string localFileName = null, Func<string, bool> fileExistsCallBack = null)
         {
-            var file = web.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
-            var clientContext = web.Context as ClientContext;
-            clientContext.Load(file);
-            clientContext.ExecuteQueryRetry();
+            // Get a reference to the file to download
+            IFile fileToDownload = await PnPContext.Web.GetFileByServerRelativeUrlAsync(serverRelativeUrl);
 
-            ClientResult<Stream> stream = file.OpenBinaryStream();
-            clientContext.ExecuteQueryRetry();
+            // Start the download
+            Stream downloadedContentStream = await fileToDownload.GetContentAsync(true);
 
-            var fileOut = System.IO.Path.Combine(localPath, !string.IsNullOrEmpty(localFileName) ? localFileName : file.Name);
+            // Download the file bytes in 2MB chunks and immediately write them to a file on disk 
+            // This approach avoids the file being fully loaded in the process memory
+            var bufferSize = 2 * 1024 * 1024;  // 2 MB buffer
+
+            var fileOut = System.IO.Path.Combine(localPath, !string.IsNullOrEmpty(localFileName) ? localFileName : fileToDownload.Name);
 
             if (!System.IO.File.Exists(fileOut) || (fileExistsCallBack != null && fileExistsCallBack(fileOut)))
             {
-                using (Stream fileStream = new FileStream(fileOut, FileMode.Create))
+                using (var content = System.IO.File.Create(fileOut))
                 {
-                    CopyStream(stream.Value, fileStream);
+                    var buffer = new byte[bufferSize];
+                    int read;
+                    while ((read = await downloadedContentStream.ReadAsync(buffer, 0, buffer.Length)) != 0)
+                    {
+                        content.Write(buffer, 0, read);
+                    }
                 }
             }
-        }
 
-        private void CopyStream(Stream source, Stream destination)
-        {
-            byte[] buffer = new byte[32768];
-            int bytesRead;
-
-            do
-            {
-                bytesRead = source.Read(buffer, 0, buffer.Length);
-                destination.Write(buffer, 0, bytesRead);
-            } while (bytesRead != 0);
         }
     }
 }
