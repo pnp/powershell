@@ -19,7 +19,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Get-PnPFile` cmdlet to handle large file downloads.
 - Added support for off peak SharePoint Syntex content classification and extraction for lists and folders via new `-OffPeak` and `-Folder` parameters for `Request-PnPSyntexClassifyAndExtract`.
 - Fix `Set-PnPListItem` not working when using `Label` and `Values` parameters together.
-- Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`
+- Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`.
+- Added `Enable-PnPPageScheduling` and `Disable-PnPPageScheduling` to enable or disable page publishing scheduling on modern pages
+- Fixed documentation for `Get-PnPFlow` and `Enable-PnPFlow` cmdlets.
 - Fix issue with `Add-PnPListFoldersToProvisioningTemplate` not working when having nested folder structure.
 
 ### Contributors
@@ -28,6 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Bert Jansen [jansenbe]
 - Gautam Sheth [gautamdsheth]
 - [reusto]
+- Asad Refai [asadrefai]
 
 ## [1.8.0]
 
@@ -68,7 +71,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Changed `Set-PnPListItemPermission` to support piping in a roledefinition for `-AddRole` and `-RemoveRole`
 - Added `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` cmdlet which allows direct synchronization of user profile properties of choice between user profiles in Azure Active Directory and their SharePoint Online User Profile Service user profile equivallents
 - Fixed issue with `Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID.
-- Fixed issue with `Get-PnPUPABulkImportStatus` where it did not allow you to pipe its output to i.e. get the most recent one using `Select -Latest 1` or the ones that failed using `? State -ne "Succeeded"`
+- Fixed issue with `Get-PnPUPABulkImportStatus` where it did not allow you to pipe its output to i.e. get the most recent one using `Select -Latest 1` or the ones that failed using `? State -ne "Succeeded"`  
 
 ### Contributors
 
