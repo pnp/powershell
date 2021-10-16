@@ -650,6 +650,30 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPPlannerRoster.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPPlannerRoster.html",
+          "hash": "tinmKeXwthiJX2UqQRHbMQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPPlannerRosterMember.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPPlannerRosterMember.html",
+          "hash": "q+nfPKZ36nJKTq/yzHjRQA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPPlannerTask.md",
       "output": {
         ".html": {
@@ -1231,6 +1255,18 @@
         ".html": {
           "relative_path": "cmdlets/Copy-PnPItemProxy.html",
           "hash": "duhxgJJfTNu7ycStdtxqAg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Copy-PnPList.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Copy-PnPList.html",
+          "hash": "Yikw9x9N2g8MTOSYNMvW+A=="
         }
       },
       "is_incremental": false,
@@ -2486,6 +2522,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPlannerConfiguration.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPlannerConfiguration.html",
+          "hash": "OIVCf7F8oalnooyjWqdzKA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPPlannerPlan.md",
       "output": {
         ".html": {
@@ -2498,11 +2546,47 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPlannerRosterMember.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPlannerRosterMember.html",
+          "hash": "KLHxLpOMxRbgdFH3/ijZ/g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPlannerRosterPlan.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPlannerRosterPlan.html",
+          "hash": "SRzm7tsbG57gcmwldO5JFA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPPlannerTask.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPPlannerTask.html",
           "hash": "iPpiFqUUsOyaRI5+w+fcew=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPlannerUserPolicy.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPlannerUserPolicy.html",
+          "hash": "0tChER1u2CG6iwNaqatYTQ=="
         }
       },
       "is_incremental": false,
@@ -3470,6 +3554,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPWebHeader.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPWebHeader.html",
+          "hash": "B6SniT0wBM6Y909WizmVzw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPWebPart.md",
       "output": {
         ".html": {
@@ -3679,6 +3775,18 @@
         ".html": {
           "relative_path": "cmdlets/Invoke-PnPSiteDesign.html",
           "hash": "IlbQooPPJKmjA5EyioxI8w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Invoke-PnPSiteScript.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Invoke-PnPSiteScript.html",
+          "hash": "XunTXKljAmI9WAEer5zO8w=="
         }
       },
       "is_incremental": false,
@@ -4843,6 +4951,30 @@
         ".html": {
           "relative_path": "cmdlets/Remove-PnPPlannerPlan.html",
           "hash": "Cwy+SXdwB5mNIjY+3Y1oLA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPPlannerRoster.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPPlannerRoster.html",
+          "hash": "tuGJWaVLGtFjg7DrV/Zh4g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPPlannerRosterMember.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPPlannerRosterMember.html",
+          "hash": "qA+RixE0fjkEVmmwF0Z/Ww=="
         }
       },
       "is_incremental": false,
@@ -6158,6 +6290,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPPlannerConfiguration.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPPlannerConfiguration.html",
+          "hash": "vgi26ir74caVTvUbOF8cxw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPPlannerPlan.md",
       "output": {
         ".html": {
@@ -6175,6 +6319,18 @@
         ".html": {
           "relative_path": "cmdlets/Set-PnPPlannerTask.html",
           "hash": "6TVVLeB7SLVWmAv3ZZ8vHw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPPlannerUserPolicy.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPPlannerUserPolicy.html",
+          "hash": "zE5VnKc1jFPjV9xIYeKRww=="
         }
       },
       "is_incremental": false,
@@ -6662,6 +6818,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPWebHeader.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPWebHeader.html",
+          "hash": "jnSDNutfti7JlECIUbD7OQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPWebPartProperty.md",
       "output": {
         ".html": {
@@ -6930,7 +7098,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "LQEtixFL3yfsGB/7AKW8Ng=="
+          "hash": "og9EqIlJANfVOMvGHZpTFw=="
         }
       },
       "is_incremental": false,
@@ -7009,7 +7177,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 577,
+          "total_file_count": 591,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
