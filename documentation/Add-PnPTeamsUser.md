@@ -39,7 +39,12 @@ Adds a user as an owner to the team
 Add-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Member
 ```
 
-Adds a user as a member to the team
+### EXAMPLE 3
+```powershell
+Add-PnPTeamsUser -Team MyTeam -Users "john@doe.com","jane@doe.com" -Role Member
+```
+
+Adds users as a member to the team
 
 ## PARAMETERS
 
@@ -77,7 +82,21 @@ Specify the UPN (e.g. john@doe.com)
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: (User)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Users
+Specify the users UPN (e.g. john@doe.com, jane@doe.com)
+
+```yaml
+Type: String array
+Parameter Sets: (Users)
 
 Required: True
 Position: Named

@@ -59,7 +59,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 team.DisplayName = group.DisplayName;
                 team.MailNickname = group.MailNickname;
-                team.Visibility = group.Visibility;                
+                team.Visibility = group.Visibility;
                 return team;
             }
             else
@@ -246,12 +246,15 @@ namespace PnP.PowerShell.Commands.Utilities
             try
             {
                 return await GraphHelper.PostAsync<Group>(httpClient, "v1.0/groups", group, accessToken);
-            } catch (GraphException ex)
+            }
+            catch (GraphException ex)
             {
-                if(ex.Error.Message.Contains("extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType"))
+                if (ex.Error.Message.Contains("extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType"))
                 {
                     throw new PSInvalidOperationException("Invalid EDU license type");
-                } else {
+                }
+                else
+                {
                     throw;
                 }
             }
@@ -329,6 +332,21 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
+        public static async Task AddUsersAsync(HttpClient httpClient, string accessToken, string groupId, string[] upn, string role)
+        {
+            var chunks = BatchUtility.Chunk(upn, 20);
+            foreach (var chunk in chunks)
+            {
+                var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/users/{0}", "id");
+                var teamChannelMember = new List<TeamChannelMember>();
+                foreach (var userid in results.Select(r => r.Value))
+                {
+                    teamChannelMember.Add(new TeamChannelMember() { Roles = new List<string> { role }, UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{userid}')" });
+                }
+                await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/members/add", new { values = teamChannelMember }, accessToken);
+            }
+        }
+
         public static async Task<List<User>> GetUsersAsync(HttpClient httpClient, string accessToken, string groupId, string role)
         {
             var selectedRole = role != null ? role.ToLower() : null;
@@ -396,7 +414,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 users.AddRange(collection.Select(m => new User() { DisplayName = m.DisplayName, Id = m.UserId, UserPrincipalName = m.email, UserType = m.Roles.Count > 0 ? m.Roles[0].ToLower() : "" }));
             }
-           
+
             if (selectedRole != null)
             {
                 return users.Where(u => u.UserType == selectedRole);
