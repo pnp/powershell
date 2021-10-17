@@ -31,6 +31,8 @@ namespace PnP.PowerShell.Commands.Model.Graph
         
         [JsonPropertyName("extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType")]
         public string EducationObjectType { get; set; }
+
+        public List<string> ResourceBehaviorOptions { get; set; }
     }
 
     public enum GroupVisibility

@@ -59,7 +59,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 team.DisplayName = group.DisplayName;
                 team.MailNickname = group.MailNickname;
-                team.Visibility = group.Visibility;                
+                team.Visibility = group.Visibility;
                 return team;
             }
             else
@@ -104,14 +104,14 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static async Task<Team> NewTeamAsync(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, TeamCreationInformation teamCI, TeamsTemplateType templateType = TeamsTemplateType.None)
+        public static async Task<Team> NewTeamAsync(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, TeamCreationInformation teamCI, TeamsTemplateType templateType = TeamsTemplateType.None, TeamResourceBehaviorOptions?[] resourceBehaviorOptions = null)
         {
             Group group = null;
             Team returnTeam = null;
             // Create group
             if (string.IsNullOrEmpty(groupId))
             {
-                group = await CreateGroupAsync(accessToken, httpClient, displayName, description, classification, mailNickname, owner, visibility, templateType);
+                group = await CreateGroupAsync(accessToken, httpClient, displayName, description, classification, mailNickname, owner, visibility, templateType, resourceBehaviorOptions);
                 bool wait = true;
                 int iterations = 0;
                 while (wait)
@@ -181,7 +181,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return returnTeam;
         }
 
-        private static async Task<Group> CreateGroupAsync(string accessToken, HttpClient httpClient, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, TeamsTemplateType templateType = TeamsTemplateType.None)
+        private static async Task<Group> CreateGroupAsync(string accessToken, HttpClient httpClient, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, TeamsTemplateType templateType = TeamsTemplateType.None, TeamResourceBehaviorOptions?[] resourceBehaviorOptions = null)
         {
             Group group = new Group();
             // get the owner if no owner was specified
@@ -222,6 +222,15 @@ namespace PnP.PowerShell.Commands.Utilities
             group.Owners = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
             group.Members = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
             group.Visibility = visibility == GroupVisibility.NotSpecified ? GroupVisibility.Private : visibility;
+            if (resourceBehaviorOptions != null && resourceBehaviorOptions.Length > 0)
+            {
+                var teamResourceBehaviorOptionsValue = new List<string>();
+                for (int i = 0; i < resourceBehaviorOptions.Length; i++)
+                {
+                    teamResourceBehaviorOptionsValue.Add(resourceBehaviorOptions[i].ToString());
+                }
+                group.ResourceBehaviorOptions = teamResourceBehaviorOptionsValue;
+            }
 
             switch (templateType)
             {
@@ -246,12 +255,15 @@ namespace PnP.PowerShell.Commands.Utilities
             try
             {
                 return await GraphHelper.PostAsync<Group>(httpClient, "v1.0/groups", group, accessToken);
-            } catch (GraphException ex)
+            }
+            catch (GraphException ex)
             {
-                if(ex.Error.Message.Contains("extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType"))
+                if (ex.Error.Message.Contains("extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType"))
                 {
                     throw new PSInvalidOperationException("Invalid EDU license type");
-                } else {
+                }
+                else
+                {
                     throw;
                 }
             }
@@ -396,7 +408,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 users.AddRange(collection.Select(m => new User() { DisplayName = m.DisplayName, Id = m.UserId, UserPrincipalName = m.email, UserType = m.Roles.Count > 0 ? m.Roles[0].ToLower() : "" }));
             }
-           
+
             if (selectedRole != null)
             {
                 return users.Where(u => u.UserType == selectedRole);
