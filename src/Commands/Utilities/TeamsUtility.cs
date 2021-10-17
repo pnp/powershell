@@ -153,12 +153,32 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 if (owners != null && owners.Length > 0)
                 {
-                    Framework.Graph.GroupsUtility.AddGroupOwners(group.Id, owners, accessToken, false);
+                    var chunks = BatchUtility.Chunk(owners, 20);
+                    foreach (var chunk in chunks)
+                    {
+                        var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/users/{0}", "id");
+                        var teamOwners = new List<TeamChannelMember>();
+                        foreach (var userid in results.Select(r => r.Value))
+                        {
+                            teamOwners.Add(new TeamChannelMember() { Roles = new List<string> { "owner" }, UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{userid}')" });
+                        }
+                        await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/members/add", new { values = teamOwners }, accessToken);
+                    }
                 }
 
                 if (members != null && members.Length > 0)
                 {
-                    Framework.Graph.GroupsUtility.AddGroupMembers(group.Id, members, accessToken, false);
+                    var chunks = BatchUtility.Chunk(members, 20);
+                    foreach (var chunk in chunks)
+                    {
+                        var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/users/{0}", "id");
+                        var teamMembers = new List<TeamChannelMember>();
+                        foreach (var userid in results.Select(r => r.Value))
+                        {
+                            teamMembers.Add(new TeamChannelMember() { Roles = new List<string> { "member" }, UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{userid}')" });
+                        }
+                        await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/members/add", new { values = teamMembers }, accessToken);
+                    }
                 }
 
                 Team team = teamCI.ToTeam(group.Visibility);
