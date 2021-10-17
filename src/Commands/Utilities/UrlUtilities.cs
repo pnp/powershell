@@ -42,6 +42,15 @@ namespace PnP.PowerShell.Commands.Utilities
 #endif
         }
 
+        public static string UrlDecode(string urlToEncode)
+        {
+#if NETFRAMEWORK
+            return System.Net.WebUtility.UrlDecode(urlToEncode);
+#else
+            return HttpUtility.UrlDecode(urlToEncode);
+#endif
+        }        
+
         public static bool IsPersonalSiteUrl(string url)
         {
             Uri uri = new Uri(url);
