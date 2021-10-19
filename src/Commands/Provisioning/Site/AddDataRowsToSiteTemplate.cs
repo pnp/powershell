@@ -1,4 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Taxonomy;
 using PnP.Framework.Provisioning.Connectors;
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.Providers;
@@ -205,6 +206,25 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         {
             var rawValue = listItem[field.InternalName];
             if (rawValue == null) return null;
+
+            if (field is TaxonomyField)
+            {
+                if (rawValue is TaxonomyFieldValueCollection)
+                {
+                    List<string> termIds = new List<string>();
+                    foreach (var taxonomyValue in (TaxonomyFieldValueCollection)rawValue)
+                    {
+                        termIds.Add($"{taxonomyValue.TermGuid}");
+                    }
+                    return String.Join(";", termIds);
+                }
+                else if (rawValue is TaxonomyFieldValue)
+                {
+                    return $"{((TaxonomyFieldValue)rawValue).TermGuid}";
+                }
+
+            }
+
 
             switch (field.FieldTypeKind)
             {
