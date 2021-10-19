@@ -61,9 +61,11 @@ namespace PnP.PowerShell.Commands.Base
         public string Url;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         public CredentialPipeBind Credentials;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         public SwitchParameter CurrentCredentials;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
