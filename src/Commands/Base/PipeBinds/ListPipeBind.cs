@@ -76,67 +76,82 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         internal PnPCore.IList GetList(PnPBatch batch, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] selectors)
         {
-            PnPCore.IList returnList = null;
-            if (_corelist != null)
+            return GetList(batch, true, selectors);
+        }
+
+        internal PnPCore.IList GetList(PnPBatch batch, bool throwError = true, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] selectors)
+        {
+            try
             {
-                returnList = _corelist;
-            }
-            if (_list != null)
-            {
-                var batchedList = batch.GetCachedList(_list.Id);
-                if (batchedList != null)
+                PnPCore.IList returnList = null;
+                if (_corelist != null)
                 {
-                    return batchedList;
+                    returnList = _corelist;
                 }
-                returnList = batch.Context.Web.Lists.GetById(_list.Id, selectors);
-            }
-            else if (_id != Guid.Empty)
-            {
-                var batchedList = batch.GetCachedList(_id);
-                if (batchedList != null)
+                if (_list != null)
                 {
-                    return batchedList;
-                }
-                returnList = batch.Context.Web.Lists.GetById(_id, selectors);
-            }
-            else if (!string.IsNullOrEmpty(_name))
-            {
-                var batchedList = batch.GetCachedList(_name);
-                if (batchedList != null)
-                {
-                    return batchedList;
-                }
-                returnList = batch.Context.Web.Lists.GetByTitle(_name, selectors);
-                if (returnList == null)
-                {
-                    var url = _name;
-                    batch.Context.Web.EnsureProperties(w => w.ServerRelativeUrl);
-                    if (!_name.ToLower().StartsWith(batch.Context.Web.ServerRelativeUrl.ToLower()))
+                    var batchedList = batch.GetCachedList(_list.Id);
+                    if (batchedList != null)
                     {
-                        url = $"{batch.Context.Web.ServerRelativeUrl}/{url.TrimStart('/')}";
+                        return batchedList;
                     }
-                    try
+                    returnList = batch.Context.Web.Lists.GetById(_list.Id, selectors);
+                }
+                else if (_id != Guid.Empty)
+                {
+                    var batchedList = batch.GetCachedList(_id);
+                    if (batchedList != null)
                     {
-                        batchedList = batch.GetCachedList(url);
-                        if (batchedList != null)
+                        return batchedList;
+                    }
+                    returnList = batch.Context.Web.Lists.GetById(_id, selectors);
+                }
+                else if (!string.IsNullOrEmpty(_name))
+                {
+                    var batchedList = batch.GetCachedList(_name);
+                    if (batchedList != null)
+                    {
+                        return batchedList;
+                    }
+                    returnList = batch.Context.Web.Lists.GetByTitle(_name, selectors);
+                    if (returnList == null)
+                    {
+                        var url = _name;
+                        batch.Context.Web.EnsureProperties(w => w.ServerRelativeUrl);
+                        if (!_name.ToLower().StartsWith(batch.Context.Web.ServerRelativeUrl.ToLower()))
                         {
-                            return batchedList;
+                            url = $"{batch.Context.Web.ServerRelativeUrl}/{url.TrimStart('/')}";
                         }
-                        returnList = batch.Context.Web.Lists.GetByServerRelativeUrl(url, selectors);
-                    }
-                    catch (PnP.Core.SharePointRestServiceException ex)
-                    {
-                        throw new PSInvalidOperationException((ex.Error as PnP.Core.SharePointRestError).Message);
+                        try
+                        {
+                            batchedList = batch.GetCachedList(url);
+                            if (batchedList != null)
+                            {
+                                return batchedList;
+                            }
+                            returnList = batch.Context.Web.Lists.GetByServerRelativeUrl(url, selectors);
+                        }
+                        catch (PnP.Core.SharePointRestServiceException ex)
+                        {
+                            throw new PSInvalidOperationException((ex.Error as PnP.Core.SharePointRestError).Message);
+                        }
                     }
                 }
+                if (returnList != null)
+                {
+                    //returnList.EnsureProperties(l => l.Fields.QueryProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
+                    returnList.EnsureProperties(l => l.Id, l => l.OnQuickLaunch, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder, l => l.Fields.QueryProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
+                    batch.CacheList(returnList);
+                }
+                return returnList;
             }
-            if (returnList != null)
+            catch(Exception)
             {
-                //returnList.EnsureProperties(l => l.Fields.QueryProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
-                returnList.EnsureProperties(l => l.Id, l => l.OnQuickLaunch, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder, l => l.Fields.QueryProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
-                batch.CacheList(returnList);
+                if (throwError)
+                    throw;
+                else
+                    return null;
             }
-            return returnList;
         }
         internal PnPCore.IList GetList(PnP.Core.Services.PnPContext context, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] selectors)
         {

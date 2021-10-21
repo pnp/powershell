@@ -51,7 +51,7 @@ namespace PnP.PowerShell.Commands.Lists
             if (ParameterSpecified(nameof(Batch)))
             {
                 
-                var list = List.GetList(Batch);
+                var list = List.GetList(Batch, false);
                 if (list == null)
                     throw new ArgumentException("The specified list was not found");
                 //list.EnsureProperties(l => l.Id, l => l.Fields.QueryProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
