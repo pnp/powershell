@@ -52,6 +52,8 @@ namespace PnP.PowerShell.Commands.Lists
             {
                 
                 var list = List.GetList(Batch);
+                if (list == null)
+                    throw new ArgumentException("The specified list was not found");
                 //list.EnsureProperties(l => l.Id, l => l.Fields.QueryProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
 
                 var values = ListItemHelper.GetFieldValues(list, null, Values, ClientContext, Batch);
@@ -65,6 +67,8 @@ namespace PnP.PowerShell.Commands.Lists
             else
             {
                 List list = List.GetList(CurrentWeb);
+                if (list == null)
+                    throw new ArgumentException("The specified list was not found");
                 ListItemCreationInformation liCI = new ListItemCreationInformation();
                 if (Folder != null)
                 {
