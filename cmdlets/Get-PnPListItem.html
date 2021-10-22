@@ -142,6 +142,15 @@
 <pre><code class="lang-powershell">Get-PnPListItem -List Samples -FolderServerRelativeUrl &quot;/sites/contosomarketing/Lists/Samples/Demo&quot;
 </code></pre>
 <p>Retrieves all list items from the Demo folder in the Samples list located in the contosomarketing site collection</p>
+<h3 id="example-10">EXAMPLE 10</h3>
+<pre><code class="lang-powershell">PS D:\Code&gt; Get-PnPListItem -List &quot;Shared Documents&quot; | Select-Object id,@{label=&quot;Filename&quot;;expression={$_.FieldValues.FileLeafRef}}
+
+Id Filename
+-- --------
+ 1 Contoso-Financial-Calendar-Q1_68340_97779.pptx
+ 5 Does this work.docx
+</code></pre>
+<p>Retrieves all list items from the Shared Documents and shows each item's ID and Filename</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
