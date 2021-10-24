@@ -14,15 +14,31 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added optional `-ScheduledPublishDate` parameter to `Add-PnPPage` and `Set-PnPPage` to allow for scheduling a page to be published.
 - Added `-RemoveScheduledPublish` to `Set-PnPPage` to allow for a page publish schedule to be removed.
 - Added support for off peak SharePoint Syntex content classification and extraction for lists and folders via new `-OffPeak` and `-Folder` parameters for `Request-PnPSyntexClassifyAndExtract`
+- Added `Get\Set-PnPPlannerConfiguration` to allow working with the Microsoft Planner tenant configuration
+- Added `Get\Set-PnPPlannerUserPolicy` to allow setting Microsoft Planner user policies for specific users
+- Added `Get\Add\Remove-PnPPlannerRoster` which allows a Microsoft Planner Roster to be created, retrieved or removed
+- Added `Get\Add\Remove-PnPPlannerRosterMember` to be able to read, add and remove members from a Microsft Planner Roster
+- Added `Get-PnPPlannerRosterPlan` to be able to retrieve the Microsoft Planner plans inside a Microsoft Planner Roster or the ones belonging to a specific user
 - Fixed an issue where `Set-PnPPage` would not be able to find a page if you would start the `-Identity` with a forward slash
 - Fixed an issue where `Set-PnPPage` would not return its parent Folder
 - Improved `Get-PnPFile` cmdlet to handle large file downloads.
 - Added support for off peak SharePoint Syntex content classification and extraction for lists and folders via new `-OffPeak` and `-Folder` parameters for `Request-PnPSyntexClassifyAndExtract`.
 - Fix `Set-PnPListItem` not working when using `Label` and `Values` parameters together.
+- Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`
+- Added `Invoke-PnPSiteScript` which allows for a Site Script to be executed on a site without needing to have it registered in a site design or site script first
+- Added `Copy-PnPList` which allows for a copy of a SharePoint list to be made in the same site or to another site. Copying along list item data is not yet possible but will follow in a later release.
+- Added `Get\Set-PnPWebHeader` to work with the Change the look > Header options of a site
 - Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`.
 - Added `Enable-PnPPageScheduling` and `Disable-PnPPageScheduling` to enable or disable page publishing scheduling on modern pages
 - Fixed documentation for `Get-PnPFlow` and `Enable-PnPFlow` cmdlets.
 - Fix issue with `Add-PnPListFoldersToProvisioningTemplate` not working when having nested folder structure.
+- Fixed documentation for `Get-PnPFlow` and `Enable-PnPFlow` cmdlets
+- Fixed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` not being able to deal with multi value properties on the Azure Active Directory side, such as `BusinessPhones`.
+- Fix `Add-PnPListItem` issue with setting MultiChoice columns when using `-Batch` parameter.
+- Fixed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` not being able to deal with multi value properties on the Azure Active Directory side, such as `BusinessPhones`
+- Fix issue with `Remove-PnPListItem` when trying to use it with `Batch` parameter.
+- Added ability to add multiple users to a Teams team in the `Add-PnPTeamsUser` cmdlet.
+- Added `-Credentials $cred` or `-CurrentCredentials` to be allowed to be used in combination with `Connect-PnPOnline -SPOManagementshell`
 
 ### Contributors
 
@@ -31,6 +47,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Gautam Sheth [gautamdsheth]
 - [reusto]
 - Asad Refai [asadrefai]
+- Daniel Huber [daniel0611]
 
 ## [1.8.0]
 
@@ -69,6 +86,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Changed `Get-PnPSiteDesign` and `Invoke-PnPSiteDesign` to when providing a name through `-Identity` to be able to work with all site designs having that same name instead of just the first one
 - Fixed unable to piping the output of `Get-PnPRoleDefinition` to i.e. filter by RoleTypeKind.
 - Changed `Set-PnPListItemPermission` to support piping in a roledefinition for `-AddRole` and `-RemoveRole`
+- Fixed issue with 'Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID.
+- Changed that `Get-PnPSiteScript -Identity` now also works with the site script name instead of just the site script Id
 - Added `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` cmdlet which allows direct synchronization of user profile properties of choice between user profiles in Azure Active Directory and their SharePoint Online User Profile Service user profile equivallents
 - Fixed issue with `Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID.
 - Fixed issue with `Get-PnPUPABulkImportStatus` where it did not allow you to pipe its output to i.e. get the most recent one using `Select -Latest 1` or the ones that failed using `? State -ne "Succeeded"`  

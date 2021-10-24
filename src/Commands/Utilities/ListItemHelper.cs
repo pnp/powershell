@@ -516,6 +516,17 @@ namespace PnP.PowerShell.Commands.Utilities
                                 }
                                 break;
                             }
+                        case "MultiChoice":
+                            {
+                                string itemValue = string.Empty;
+                                var choices = values[key];
+                                foreach (var choice in (dynamic)choices)
+                                {
+                                    itemValue += choice + ";#";
+                                }
+                                item[key as string] = itemValue.Substring(0, itemValue.Length - 2);
+                                break;
+                            }
                         default:
                             {
                                 item[key as string] = values[key];
