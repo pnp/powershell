@@ -110,6 +110,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 if (returnList == null)
                 {
                     var url = _name;
+                    batch.Context.Web.EnsureProperties(w => w.ServerRelativeUrl);
                     if (!_name.ToLower().StartsWith(batch.Context.Web.ServerRelativeUrl.ToLower()))
                     {
                         url = $"{batch.Context.Web.ServerRelativeUrl}/{url.TrimStart('/')}";
