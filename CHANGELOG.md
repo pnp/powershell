@@ -30,6 +30,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get\Set-PnPWebHeader` to work with the Change the look > Header options of a site
 - Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`.
 - Added `Enable-PnPPageScheduling` and `Disable-PnPPageScheduling` to enable or disable page publishing scheduling on modern pages
+- Fixed documentation for `Get-PnPFlow` and `Enable-PnPFlow` cmdlets.
+- Fix issue with `Add-PnPListFoldersToProvisioningTemplate` not working when having nested folder structure.
 - Fixed documentation for `Get-PnPFlow` and `Enable-PnPFlow` cmdlets
 - Fixed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` not being able to deal with multi value properties on the Azure Active Directory side, such as `BusinessPhones`.
 - Fix `Add-PnPListItem` issue with setting MultiChoice columns when using `-Batch` parameter.
