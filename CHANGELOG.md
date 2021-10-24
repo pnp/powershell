@@ -14,6 +14,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added optional `-ScheduledPublishDate` parameter to `Add-PnPPage` and `Set-PnPPage` to allow for scheduling a page to be published.
 - Added `-RemoveScheduledPublish` to `Set-PnPPage` to allow for a page publish schedule to be removed.
 - Added support for off peak SharePoint Syntex content classification and extraction for lists and folders via new `-OffPeak` and `-Folder` parameters for `Request-PnPSyntexClassifyAndExtract`
+
+- Added `Get\Set-PnPPlannerConfiguration` to allow working with the Microsoft Planner tenant configuration
+- Added `Get\Set-PnPPlannerUserPolicy` to allow setting Microsoft Planner user policies for specific users
+- Added `Get\Add\Remove-PnPPlannerRoster` which allows a Microsoft Planner Roster to be created, retrieved or removed
+- Added `Get\Add\Remove-PnPPlannerRosterMember` to be able to read, add and remove members from a Microsft Planner Roster
+- Added `Get-PnPPlannerRosterPlan` to be able to retrieve the Microsoft Planner plans inside a Microsoft Planner Roster or the ones belonging to a specific user
+
 - Fixed an issue where `Set-PnPPage` would not be able to find a page if you would start the `-Identity` with a forward slash
 - Fixed an issue where `Set-PnPPage` would not return its parent Folder
 - Improved `Get-PnPFile` cmdlet to handle large file downloads.
@@ -28,6 +35,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed documentation for `Get-PnPFlow` and `Enable-PnPFlow` cmdlets
 - Fixed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` not being able to deal with multi value properties on the Azure Active Directory side, such as `BusinessPhones`
 - Fix issue with `Remove-PnPListItem` when trying to use it with `Batch` parameter.
+- Added ability to add multiple users to a Teams team in the `Add-PnPTeamsUser` cmdlet.
+- Added `-Credentials $cred` or `-CurrentCredentials` to be allowed to be used in combination with `Connect-PnPOnline -SPOManagementshell`
 
 ### Contributors
 
@@ -36,6 +45,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Gautam Sheth [gautamdsheth]
 - [reusto]
 - Asad Refai [asadrefai]
+- Daniel Huber [daniel0611]
 
 ## [1.8.0]
 
