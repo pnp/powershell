@@ -50,11 +50,11 @@ namespace PnP.PowerShell.Commands.Lists
         {
             if (ParameterSpecified(nameof(Batch)))
             {
-                
                 var list = List.GetList(Batch, false);
                 if (list == null)
+                {
                     throw new ArgumentException("The specified list was not found");
-                //list.EnsureProperties(l => l.Id, l => l.Fields.QueryProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
+                }
 
                 var values = ListItemHelper.GetFieldValues(list, null, Values, ClientContext, Batch);
                 if (ContentType != null)
@@ -68,14 +68,16 @@ namespace PnP.PowerShell.Commands.Lists
             {
                 List list = List.GetList(CurrentWeb);
                 if (list == null)
-                    throw new ArgumentException("The specified list was not found");
+                {
+                    throw new PSArgumentException("The specified list was not found", nameof(List));
+                }
+
                 ListItemCreationInformation liCI = new ListItemCreationInformation();
                 if (Folder != null)
                 {
                     // Create the folder if it doesn't exist
                     var rootFolder = list.EnsureProperty(l => l.RootFolder);
-                    var targetFolder =
-                        CurrentWeb.EnsureFolder(rootFolder, Folder);
+                    var targetFolder = CurrentWeb.EnsureFolder(rootFolder, Folder);
 
                     liCI.FolderUrl = targetFolder.ServerRelativeUrl;
                 }
@@ -88,7 +90,6 @@ namespace PnP.PowerShell.Commands.Lists
 
                     if (ct != null)
                     {
-
                         item["ContentTypeId"] = ct.EnsureProperty(w => w.StringId);
                         item.Update();
                         systemUpdate = true;
