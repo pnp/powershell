@@ -53,7 +53,7 @@ namespace PnP.PowerShell.Commands.Lists
                 var list = List.GetList(Batch, false);
                 if (list == null)
                 {
-                    throw new ArgumentException("The specified list was not found");
+                    throw new PSArgumentException("The specified list was not found. Notice that the title is case sensitive.", nameof(List));
                 }
 
                 var values = ListItemHelper.GetFieldValues(list, null, Values, ClientContext, Batch);
@@ -69,7 +69,7 @@ namespace PnP.PowerShell.Commands.Lists
                 List list = List.GetList(CurrentWeb);
                 if (list == null)
                 {
-                    throw new PSArgumentException("The specified list was not found", nameof(List));
+                    throw new PSArgumentException("The specified list was not found. Notice that the title is case sensitive.", nameof(List));
                 }
 
                 ListItemCreationInformation liCI = new ListItemCreationInformation();
