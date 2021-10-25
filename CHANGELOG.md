@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads
 - Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`
+- A clearer error message will now be returned when using `Add-PnPListItem -List` and specifying an invalid list name
      
 ### Fixed
 - Fixed `Get-PnPGroupMember -User` not properly returning the specified user
@@ -53,6 +54,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Asad Refai [asadrefai]
 - Daniel Huber [daniel0611]
 - Bart-Jan Dekker [bjdekker]
+- Giacomo Pozzoni [jackpoz]
 
 ## [1.8.0]
 
