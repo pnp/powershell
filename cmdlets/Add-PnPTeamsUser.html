@@ -101,7 +101,10 @@
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Add-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Member
 </code></pre>
-<p>Adds a user as a member to the team</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Add-PnPTeamsUser -Team MyTeam -Users &quot;john@doe.com&quot;,&quot;jane@doe.com&quot; -Role Member
+</code></pre>
+<p>Adds users as a member to the team</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-role">-Role</h3>
 <p>Specify the role of the user</p>
@@ -129,7 +132,18 @@ Accept wildcard characters: False
 <h3 id="-user">-User</h3>
 <p>Specify the UPN (e.g. john@doe.com)</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+Parameter Sets: (User)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-users">-Users</h3>
+<p>Specify the users UPN (e.g. john@doe.com, jane@doe.com)</p>
+<pre><code class="lang-yaml">Type: String array
+Parameter Sets: (Users)
 
 Required: True
 Position: Named
