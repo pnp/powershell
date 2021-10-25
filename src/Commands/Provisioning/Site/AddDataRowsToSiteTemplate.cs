@@ -4,7 +4,6 @@ using PnP.Framework.Provisioning.Connectors;
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.Providers;
 using PnP.Framework.Provisioning.Providers.Xml;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
 using System;
@@ -12,8 +11,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
 using System.Text.RegularExpressions;
+using System.Text;
 using SPSite = Microsoft.SharePoint.Client.Site;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
@@ -67,7 +66,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 throw new ApplicationException("Invalid template file!");
             }
-            //We will remove a list if it's found so we can get the list
+            // We will remove a list if it's found so we can get the list
 
             List spList = List.GetListOrThrow(nameof(List), CurrentWeb,
                            l => l.RootFolder, l => l.HasUniqueRoleAssignments);
@@ -106,7 +105,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             var rows = new DataRowCollection(template);
             foreach (var listItem in listItems)
             {
-                //Make sure we don't pull Folders.. Of course this won't work
+                // Make sure we don't pull Folders.. Of course this won't work
                 if (listItem.ServerObjectIsNull == false)
                 {
                     ClientContext.Load(listItem);
@@ -156,7 +155,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                         }
                         else
                         {
-                            //All fields are added except readonly fields and unsupported field type
+                            // All fields are added except readonly fields and unsupported field type
                             var fieldsToExport = fieldCollection.AsEnumerable()
                                 .Where(f => !f.ReadOnlyField && !_unsupportedFieldTypes.Contains(f.FieldTypeKind));
                             foreach (var field in fieldsToExport)
@@ -207,6 +206,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             var rawValue = listItem[field.InternalName];
             if (rawValue == null) return null;
 
+            // Since the TaxonomyField is not in the FieldTypeKind enumeration below, a specific check is done here for this type
             if (field is TaxonomyField)
             {
                 if (rawValue is TaxonomyFieldValueCollection)
@@ -222,10 +222,9 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 {
                     return $"{((TaxonomyFieldValue)rawValue).TermGuid}";
                 }
-
             }
 
-
+            // Specific operations based on the type of field at hand
             switch (field.FieldTypeKind)
             {
                 case FieldType.Geolocation:
@@ -292,11 +291,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         private static string Tokenize(string input, Web web, SPSite site)
         {
             if (string.IsNullOrEmpty(input)) return input;
-            //foreach (var list in lists)
-            //{
-            //    input = input.ReplaceCaseInsensitive(web.Url.TrimEnd('/') + "/" + list.GetWebRelativeUrl(), "{listurl:" + Regex.Escape(list.Title) + "}");
-            //    input = input.ReplaceCaseInsensitive(list.RootFolder.ServerRelativeUrl, "{listurl:" + Regex.Escape(list.Title)+ "}");
-            //}
+
             input = input.ReplaceCaseInsensitive(web.Url, "{site}");
             input = input.ReplaceCaseInsensitive(web.ServerRelativeUrl, "{site}");
             input = input.ReplaceCaseInsensitive(web.Id.ToString(), "{siteid}");
