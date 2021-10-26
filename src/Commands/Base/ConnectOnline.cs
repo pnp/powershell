@@ -61,9 +61,11 @@ namespace PnP.PowerShell.Commands.Base
         public string Url;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         public CredentialPipeBind Credentials;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         public SwitchParameter CurrentCredentials;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
@@ -327,11 +329,11 @@ namespace PnP.PowerShell.Commands.Base
             CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with Client Secret uses legacy authentication and provides limited functionality. We can for instance not execute requests towards the Microsoft Graph, which limits cmdlets related to Microsoft Teams, Microsoft Planner, Microsoft Flow and Microsoft 365 Groups. You can hide this warning by using Connect-PnPOnline [your parameters] -WarningAction Ignore", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
             if (PnPConnection.Current?.ClientId == ClientId &&
                 PnPConnection.Current?.ClientSecret == ClientSecret &&
-                PnPConnection.Current?.Tenant == AADDomain)
+                PnPConnection.Current?.Tenant == Realm)
             {
                 ReuseAuthenticationManager();
             }
-            return PnPConnection.CreateWithACSAppOnly(new Uri(Url), AADDomain, ClientId, ClientSecret, TenantAdminUrl, AzureEnvironment);
+            return PnPConnection.CreateWithACSAppOnly(new Uri(Url), Realm, ClientId, ClientSecret, TenantAdminUrl, AzureEnvironment);
         }
 
         /// <summary>

@@ -65,7 +65,7 @@ class FrontMatters {
 
 $fm = New-Object -TypeName FrontMatters
 
-Copy-Item -Path "./master/documentation/*.md" -Destination "./dev/pages/cmdlets" -Force
+Copy-Item -Path "./dev/documentation/*.md" -Destination "./dev/pages/cmdlets" -Force
 
 foreach ($nightlycmdlet in $nightlycmdlets) {
     if (!$releasedcmdlets.Contains($nightlycmdlet)) {

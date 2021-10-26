@@ -97,7 +97,10 @@ if ($LASTEXITCODE -eq 0) {
 	Try {
 		# Module folder there?
 		if (Test-Path $destinationFolder) {
-			# Yes, empty it
+			# Yes, empty it. Do it per folder as that seems the only way to delete the PS modules from a ODB synced folder
+			Remove-Item $destinationFolder\common\* -Recurse -Force -ErrorAction Stop
+			Remove-Item $destinationFolder\core\* -Recurse -Force -ErrorAction Stop
+			Remove-Item $destinationFolder\framework\* -Recurse -Force -ErrorAction Stop
 			Remove-Item $destinationFolder\* -Recurse -Force -ErrorAction Stop
 		}
 		# No, create it

@@ -17,8 +17,9 @@ Enables a specific flow
 
 ## SYNTAX
 
-```
-Enable-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerAutomateFlowPipeBind> [-AsAdmin] [-Connection <PnPConnection>] [<CommonParameters>]
+```powershell
+Enable-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerAutomateFlowPipeBind> [-AsAdmin] 
+[-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,6 +36,36 @@ Enable-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c
 Enables the specified flow
 
 ## PARAMETERS
+
+### -Environment
+The name of the environment or an Environment object to retrieve the available flows for.
+
+```yaml
+Type: PowerAutomateEnvironmentPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Identity
+Identity of the flow to enable
+
+```yaml
+Type: PowerAutomateFlowPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -AsAdmin
 Enable the flow as an adminstrator
@@ -67,35 +98,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Environment
-The name of the environment or an Environment object to retrieve the available flows for.
 
-```yaml
-Type: PowerAutomateEnvironmentPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Identity
-Identity of the flow to enable
-
-```yaml
-Type: PowerAutomateFlowPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 
 ## RELATED LINKS

@@ -15,5 +15,4 @@ namespace PnP.PowerShell.Commands.Model.Planner
         public string Id { get; set; }
         public IdentitySet CreatedBy { get; set; }
     }
-
 }

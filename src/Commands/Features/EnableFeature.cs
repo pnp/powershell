@@ -28,6 +28,5 @@ namespace PnP.PowerShell.Commands.Features
                 ClientContext.Site.ActivateFeature(Identity);
             }
         }
-
     }
 }
