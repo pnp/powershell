@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
      
 ### Fixed
 - Fixed `Get-PnPGroupMember -User` not properly returning the specified user
+- Fixed group member retrieval through `Get-PnPAzureADGroupOwner` and `Get-PnPAzureAdGroupMember` throwing an exception when a security group has been placed in the Azure Active Directory group being queried
 - Fixed an issue where `Set-PnPPage` would not be able to find a page if you would start the `-Identity` with a forward slash
 - Fixed an issue where `Set-PnPPage` would not return its parent Folder
 - Fixed `Set-PnPListItem` not working when using `Label` and `Values` parameters together
@@ -41,12 +42,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Add-PnPListItem` issue with setting MultiChoice columns when using `-Batch` parameter
 - Fixed issue with `Remove-PnPListItem` when trying to use it with `Batch` parameter
 - Fixed `Add-PnPDataRowsToSiteTemplate` not exporting TaxonomyFieldValues properly
-  
+
 ### Removed
 - Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
 
 ### Contributors
-
 - Koen Zomers [koenzomers]
 - Bert Jansen [jansenbe]
 - Gautam Sheth [gautamdsheth]
