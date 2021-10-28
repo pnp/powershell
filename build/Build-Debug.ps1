@@ -123,7 +123,7 @@ if ($LASTEXITCODE -eq 0) {
 		}
 	}
 	Catch {
-		Write-Error "Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module or PS modules are hosted one a OneDrive synced location. In the later case manually delete $destinationFolder and try again."
+		Write-Error "Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module or PS modules are hosted in a OneDrive synced location. In the latter case, manually delete $destinationFolder and try again."
 		exit 1
 	}
 
