@@ -56,6 +56,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Bart-Jan Dekker [bjdekker]
 - Giacomo Pozzoni [jackpoz]
 - Chris Kent [thechriskent]
+- Filip Bosmans [FilipBosmans]
 
 ## [1.8.0]
 
