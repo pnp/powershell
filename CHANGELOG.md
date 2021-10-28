@@ -55,6 +55,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Daniel Huber [daniel0611]
 - Bart-Jan Dekker [bjdekker]
 - Giacomo Pozzoni [jackpoz]
+- Chris Kent [thechriskent]
 
 ## [1.8.0]
 
