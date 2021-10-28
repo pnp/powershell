@@ -85,7 +85,7 @@ if ($LASTEXITCODE -eq 0) {
 		$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
 	}
 	else {
-		$destinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
+		$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 	}
 
 	$corePath = "$destinationFolder/Core"
