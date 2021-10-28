@@ -46,7 +46,7 @@ Gets the speakers field from the list Demo list
 Get-PnPField -Group "Custom Columns"
 ```
 
-Gets all the fields for the group called Custom Columns for the site currently connected to.
+Gets all the fields for the group called Custom Columns for the site currently connected to
 
 ## PARAMETERS
 
