@@ -99,6 +99,10 @@
 <pre><code class="lang-powershell">Get-PnPField -List &quot;Demo list&quot; -Identity &quot;Speakers&quot;
 </code></pre>
 <p>Gets the speakers field from the list Demo list</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPField -Group &quot;Custom Columns&quot;
+</code></pre>
+<p>Gets all the fields for the group called Custom Columns for the site currently connected to</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
