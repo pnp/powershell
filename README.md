@@ -2,7 +2,7 @@
 
 **PnP PowerShell** is a .NET Core 3.1 / .NET Framework 4.6.1 based PowerShell Module providing over 500 cmdlets that work with Microsoft 365 environments and more specifically SharePoint Online and Microsoft Teams.
 
-Last version | Last nightly version
+Last version | Last nightly version  
 -------------|---------------------
 [![PnP.PowerShell](https://img.shields.io/powershellgallery/v/pnp.powershell)](https://www.powershellgallery.com/packages/PnP.PowerShell/) | [![PnP.PowerShell](https://img.shields.io/powershellgallery/v/pnp.powershell?include_prereleases)](https://www.powershellgallery.com/packages/PnP.PowerShell/)
 
