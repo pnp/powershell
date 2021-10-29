@@ -14,6 +14,7 @@ title: Get-PnPMicrosoft365GroupMember
 **Required Permissions**
 
   * Microsoft Graph API : at least Group.Read.All
+  * Microsoft Graph API : Directory.Read.All
 
 Gets members of a particular Microsoft 365 Group (aka Unified Group).
 

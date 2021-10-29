@@ -42,8 +42,6 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _corelist = list ?? throw new ArgumentNullException(nameof(list));
         }
 
-
-
         internal List GetList(Web web, params System.Linq.Expressions.Expression<Func<List, object>>[] retrievals)
         {
             List list = null;
@@ -75,6 +73,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         }
 
         internal PnPCore.IList GetList(PnPBatch batch, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] selectors)
+        {
+            return GetList(batch, true, selectors);
+        }
+
+        internal PnPCore.IList GetList(PnPBatch batch, bool throwError = true, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] selectors)
         {
             PnPCore.IList returnList = null;
             if (_corelist != null)
@@ -110,6 +113,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 if (returnList == null)
                 {
                     var url = _name;
+                    batch.Context.Web.EnsureProperties(w => w.ServerRelativeUrl);
                     if (!_name.ToLower().StartsWith(batch.Context.Web.ServerRelativeUrl.ToLower()))
                     {
                         url = $"{batch.Context.Web.ServerRelativeUrl}/{url.TrimStart('/')}";
@@ -123,6 +127,10 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                         }
                         returnList = batch.Context.Web.Lists.GetByServerRelativeUrl(url, selectors);
                     }
+                    catch (PnP.Core.SharePointRestServiceException e) when ((e.Error as PnP.Core.SharePointRestError)?.Code == "System.IO.FileNotFoundException" && !throwError)
+                    {
+                        return null;
+                    }
                     catch (PnP.Core.SharePointRestServiceException ex)
                     {
                         throw new PSInvalidOperationException((ex.Error as PnP.Core.SharePointRestError).Message);
@@ -131,12 +139,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             if (returnList != null)
             {
-                //returnList.EnsureProperties(l => l.Fields.QueryProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
                 returnList.EnsureProperties(l => l.Id, l => l.OnQuickLaunch, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder, l => l.Fields.QueryProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
                 batch.CacheList(returnList);
             }
             return returnList;
         }
+
         internal PnPCore.IList GetList(PnP.Core.Services.PnPContext context, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] selectors)
         {
             PnPCore.IList returnList = null;
@@ -181,26 +189,27 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         }
 
         internal List GetListOrThrow(string paramName, Web selectedWeb, params System.Linq.Expressions.Expression<Func<List, object>>[] retrievals)
-            => GetList(selectedWeb, retrievals)
-            ?? throw new PSArgumentException(NoListMessage, paramName);
-
+        {
+            return GetList(selectedWeb, retrievals) ?? throw new PSArgumentException(NoListMessage, paramName);
+        }
 
         internal PnPCore.IList GetListOrThrow(string paramName, PnP.Core.Services.PnPContext context, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] retrievals)
-            => GetList(context, retrievals)
-            ?? throw new PSArgumentException(NoListMessage, paramName);
+        {
+            return GetList(context, retrievals) ?? throw new PSArgumentException(NoListMessage, paramName);
+        }
 
         internal List GetListOrWarn(Cmdlet cmdlet, Web web, params System.Linq.Expressions.Expression<Func<List, object>>[] retrievals)
         {
             var list = GetList(web, retrievals);
             if (list is null)
+            {
                 cmdlet.WriteWarning(NoListMessage);
+            }
 
             return list;
         }
 
-        private string NoListMessage
-            => $"No list found with id, title or url '{this}' (title is case-sensitive)";
-
+        private string NoListMessage => $"No list found with id, title or url '{this}' (title is case-sensitive)";
 
         public override string ToString()
         {
@@ -218,11 +227,5 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             return "Unknown list";
         }
-        // public override string ToString()
-        //     => _name
-        //     ?? (_id != Guid.Empty ? _id.ToString() : null)
-        //     ?? (_list.IsPropertyAvailable(l => l.Title) ? _list.Title : null)
-        //     ?? (_list.IsPropertyAvailable(l => l.Id) ? _list.Id.ToString() : null)
-        //     ?? "[List object with no Title or Id]";
     }
 }

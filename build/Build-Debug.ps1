@@ -97,7 +97,10 @@ if ($LASTEXITCODE -eq 0) {
 	Try {
 		# Module folder there?
 		if (Test-Path $destinationFolder) {
-			# Yes, empty it
+			# Yes, empty it. Do it per folder as that seems the only way to delete the PS modules from a ODB synced folder
+			Remove-Item $destinationFolder\common\* -Recurse -Force -ErrorAction Stop
+			Remove-Item $destinationFolder\core\* -Recurse -Force -ErrorAction Stop
+			Remove-Item $destinationFolder\framework\* -Recurse -Force -ErrorAction Stop
 			Remove-Item $destinationFolder\* -Recurse -Force -ErrorAction Stop
 		}
 		# No, create it
@@ -120,7 +123,7 @@ if ($LASTEXITCODE -eq 0) {
 		}
 	}
 	Catch {
-		Write-Error "Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module or PS modules are hosted one a OneDrive synced location. In the later case manually delete $destinationFolder and try again."
+		Write-Error "Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module or PS modules are hosted in a OneDrive synced location. In the latter case, manually delete $destinationFolder and try again."
 		exit 1
 	}
 
