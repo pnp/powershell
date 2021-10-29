@@ -49,7 +49,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EmailAttestationRequired <Boolean>] [-EmailAttestationReAuthDays <Int32>] [-HideDefaultThemes <Boolean>]
  [-DisabledWebPartIds <Guid[]>] [-EnableAIPIntegration <Boolean>] [-DisableCustomAppAuthentication <Boolean>] 
  [-EnableAutoNewsDigest <Boolean>] [-CommentsOnListItemsDisabled <Boolean>] [-CommentsOnFilesDisabled <Boolean>]
- [-DisableBackToClassic <Boolean>]
+ [-DisableBackToClassic <Boolean>] [-InformationBarriersSuspension <Boolean>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -1196,6 +1196,21 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -InformationBarriersSuspension
+To suspend information barriers in your M365 tenant.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

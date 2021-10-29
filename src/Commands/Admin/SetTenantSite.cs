@@ -160,6 +160,9 @@ namespace PnP.PowerShell.Commands
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility { get; set; }
+                
+        [Parameter(Mandatory = false)]
+        public string InformationBarriersMode { get; set; }
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
@@ -491,6 +494,12 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(OverrideBlockUserInfoVisibility)))
             {
                 props.OverrideBlockUserInfoVisibility = OverrideBlockUserInfoVisibility;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(InformationBarriersMode)) && !string.IsNullOrEmpty(InformationBarriersMode))
+            {
+                props.IBMode = InformationBarriersMode;
                 updateRequired = true;
             }
 

@@ -23,6 +23,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Enable-PnPPageScheduling` and `Disable-PnPPageScheduling` to enable or disable page publishing scheduling on modern pages
 - Added ability to add multiple users to a Teams team in the `Add-PnPTeamsUser` cmdlet
 - Added `-Credentials $cred` or `-CurrentCredentials` to be allowed to be used in combination with `Connect-PnPOnline -SPOManagementshell`
+- Added `-InformationBarriersMode` in the `Set-PnPTenantSite` cmdlet.
+- Added `-InformationBarriersSuspension` in the `Set-PnPTenant` cmdlet.
    
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads

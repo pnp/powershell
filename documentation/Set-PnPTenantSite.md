@@ -31,7 +31,7 @@ Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-
  [-SharingDomainRestrictionMode <SharingDomainRestrictionModes>] [-CommentsOnSitePagesDisabled]
  [-DisableAppViews <AppViewsPolicy>] [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>]
  [-DisableFlows <FlowsPolicy>] [-AnonymousLinkExpirationInDays <Int32>] [-SensitivityLabel <String>] [-RemoveLabel] [-AddInformationSegment <Guid[]>] [-RemoveInformationSegment <Guid[]>]
- [-OverrideTenantAnonymousLinkExpirationPolicy] [-Wait] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-OverrideTenantAnonymousLinkExpirationPolicy] [-InformationBarriersMode <String>] [-Wait] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Set Lock State
@@ -583,6 +583,20 @@ Specifies the warning level in megabytes of the site collection to warn the site
 
 ```yaml
 Type: Double
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -InformationBarriersMode
+Specifies the information barrier mode which help strengthen access, sharing, and membership of a site based on its IB mode and segments associated with the site. Expected values are `Open`, `OwnerModerated` , `Implicit` and `Explicit`.
+
+```yaml
+Type: String
 Parameter Sets: Set Properties
 
 Required: False

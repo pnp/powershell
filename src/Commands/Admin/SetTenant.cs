@@ -219,6 +219,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public bool? ViewInFileExplorerEnabled;
 
+        [Parameter(Mandatory = false)]
+        public bool? InformationBarriersSuspension;
+
         protected override void ExecuteCmdlet()
         {
             ClientContext.Load(Tenant);
@@ -828,6 +831,12 @@ namespace PnP.PowerShell.Commands.Admin
             if (ViewInFileExplorerEnabled.HasValue)
             {
                 Tenant.ViewInFileExplorerEnabled = ViewInFileExplorerEnabled.Value;
+                modified = true;
+            }
+
+            if (InformationBarriersSuspension.HasValue)
+            {
+                Tenant.InformationBarriersSuspension = InformationBarriersSuspension.Value;
                 modified = true;
             }
 
