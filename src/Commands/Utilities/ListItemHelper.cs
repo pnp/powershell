@@ -547,7 +547,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     foreach (var field in specialFields)
                     {
-                        if (!item.ContainsKey(field))
+                        if (!item.ContainsKey(field) && existingItem.Values.ContainsKey(field))
                         {
                             item[field] = existingItem[field];
                         }

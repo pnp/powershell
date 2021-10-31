@@ -43,6 +43,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Remove-PnPListItem` when trying to use it with `Batch` parameter
 - Fixed `Add-PnPDataRowsToSiteTemplate` not exporting TaxonomyFieldValues properly
 - Fixed `Add/Set-PnPListItem` issue with managed metadata / taxonomy field value failing in a batched request.
+- Fixed `Set-PnPListItem` issue with setting `Modified` date value properly when using `-Batch` parameter.
 
 ### Removed
 - Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
