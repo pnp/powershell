@@ -1198,7 +1198,7 @@ Accept wildcard characters: False
 ```
 
 ### -InformationBarriersSuspension
-To suspend information barriers in your M365 tenant.
+Allows suspension of the information barriers future in a Microsoft 365 tenant. Setting this to $true will disable information barriers, setting this to $falsde will enable information barriers. For more information, see https://docs.microsoft.com/sharepoint/information-barriers.
 
 ```yaml
 Type: Boolean
@@ -1214,4 +1214,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

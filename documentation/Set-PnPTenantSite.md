@@ -593,11 +593,12 @@ Accept wildcard characters: False
 ```
 
 ### -InformationBarriersMode
-Specifies the information barrier mode which help strengthen access, sharing, and membership of a site based on its IB mode and segments associated with the site. Expected values are `Open`, `OwnerModerated` , `Implicit` and `Explicit`.
+Specifies the information barrier mode which helps strengthen access, sharing, and membership of a site based on its information barrier mode and segments associated with the site. Expected values are `Open`, `OwnerModerated` , `Implicit` and `Explicit`.
 
 ```yaml
 Type: String
 Parameter Sets: Set Properties
+Accepted values: Open, OwnerModerated, Implicit, Explicit
 
 Required: False
 Position: Named
