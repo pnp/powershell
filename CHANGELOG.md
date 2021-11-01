@@ -22,7 +22,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get\Set-PnPWebHeader` to work with the Change the look > Header options of a site
 - Added `Enable-PnPPageScheduling` and `Disable-PnPPageScheduling` to enable or disable page publishing scheduling on modern pages
 - Added ability to add multiple users to a Teams team in the `Add-PnPTeamsUser` cmdlet
-- Added `-Credentials $cred` or `-CurrentCredentials` to be allowed to be used in combination with `Connect-PnPOnline -SPOManagementshell`
+- Added `-Credentials $cred` or `-CurrentCredentials` to be allowed to be used in combination with `Connect-PnPOnline -SPOManagementshell`.
+- Added `-DemoteNewsArticle` parameter to the `Set-PnPPage` cmdlet to demote an existing news post to a regular page.
+- Added `-Translate` and `-TranslationLanguageCodes` parameters to `Set-PnPPage` and `Add-PnPPage`. This enables multilingual page creation in sites.
    
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads
