@@ -24,6 +24,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added ability to add multiple users to a Teams team in the `Add-PnPTeamsUser` cmdlet
 - Added `-Credentials $cred` or `-CurrentCredentials` to be allowed to be used in combination with `Connect-PnPOnline -SPOManagementshell`
 - Added `-Recycle` parameter to `Remove-PnPPage` to delete the page and send it to the recycle bin. This prevents permanently deleting the page and you can also restore it.
+- Added `-DemoteNewsArticle` parameter to the `Set-PnPPage` cmdlet to demote an existing news post to a regular page.
+- Added `-Translate` and `-TranslationLanguageCodes` parameters to `Set-PnPPage` and `Add-PnPPage`. This enables multilingual page creation in sites.
    
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads
