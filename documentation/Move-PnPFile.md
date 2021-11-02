@@ -15,7 +15,7 @@ Moves a file or folder to a different location
 ## SYNTAX
 
 ```powershell
-Move-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-NoWait] [-Force] [-Connection <PnPConnection>]
+Move-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-OverwriteIfAlreadyExists] [-AllowSchemaMismatch] [-AllowSmallerVersionLimitOnDestination] [-NoWait] [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
