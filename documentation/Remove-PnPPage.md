@@ -49,7 +49,7 @@ Removes the specified page which is contained in the $page variable.
 Remove-PnPPage -Identity "MyPage" -Recycle
 ```
 
-Removes the page named 'MyPage.aspx' and sends to the recycle bin.
+Removes the page named 'MyPage.aspx' and sends it to the recycle bin.
 
 ## PARAMETERS
 
