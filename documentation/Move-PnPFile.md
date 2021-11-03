@@ -15,7 +15,7 @@ Moves a file or folder to a different location
 ## SYNTAX
 
 ```powershell
-Move-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-NoWait] [-Force] [-Connection <PnPConnection>]
+Move-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-AllowSchemaMismatch] [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-NoWait] [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -39,7 +39,7 @@ Moves a file named Document.docx located in the document library named "Shared D
 
 ### EXAMPLE 3
 ```powershell
-Move-PnPFile -SourceUrl "Shared Documents/Document.docx" -TargetUrl "/sites/otherproject/Shared Documents" -OverwriteIfAlreadyExists -AllowSchemaMismatch -AllowSmallerVersionLimitOnDestination
+Move-PnPFile -SourceUrl "Shared Documents/Document.docx" -TargetUrl "/sites/otherproject/Shared Documents" -Overwrite -AllowSchemaMismatch -AllowSmallerVersionLimitOnDestination
 ```
 
 Moves a file named Document.docx located in the document library named "Shared Documents" in the current site to the document library named "Shared Documents" in another site collection "otherproject" allowing it to overwrite an existing file Document.docx in the destination, allowing the fields to be different on the destination document library from the source document library and allowing a lower document version limit on the destination compared to the source.
