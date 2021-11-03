@@ -88,8 +88,9 @@
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Add-PnPPage [-Name] &lt;String&gt; [-LayoutType &lt;PageLayoutType&gt;]
  [-PromoteAs &lt;PagePromoteType&gt;] [-ContentType &lt;ContentTypePipeBind&gt;] [-CommentsEnabled] [-Publish]
- [-HeaderLayoutType &lt;PageHeaderLayoutType&gt;] [-ScheduledPublishDate &lt;DateTime&gt;] [-Connection &lt;PnPConnection&gt;]
- [&lt;CommonParameters&gt;]
+ [-HeaderLayoutType &lt;PageHeaderLayoutType&gt;] [-ScheduledPublishDate &lt;DateTime&gt;] 
+ [-Translate][-TranslationLanguageCodes &lt;Int[][]&gt;]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows creation of a new page. The page will be located inside the Site Pages library of the cite currently connected to.</p>
@@ -118,6 +119,18 @@
 <pre><code class="lang-powershell">Add-PnPPage -Name &quot;NewPage&quot; Article -ScheduledPublishDate (Get-Date).AddHours(1)
 </code></pre>
 <p>Creates a new page named 'NewPage' using the article layout and schedule it to be published in 1 hour from now</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Add-PnPPage -Name &quot;NewPage&quot; -Translate
+</code></pre>
+<p>Creates a new page named 'NewPage' and also creates the necessary translated page for the supported languages in the site collection.</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Add-PnPPage -Name &quot;NewPage&quot; -Translate -TranslationLanguageCodes 1043
+</code></pre>
+<p>Creates a new page named 'NewPage' and also creates the necessary translated page for the specified language in the site collection. In this case, it will create the translated page for Dutch language. If the Dutch language is not enabled, it will enable the language and then create the translated page.</p>
+<h3 id="example-9">EXAMPLE 9</h3>
+<pre><code class="lang-powershell">Add-PnPPage -Name &quot;NewPage&quot; -Translate -TranslationLanguageCodes 1043,1035
+</code></pre>
+<p>Creates a new page named 'NewPage' and also creates the necessary translated page for the specified languages in the site collection. In this case, it will create the translated pages for Dutch and Finnish languages. If these languages are not enabled, it will enable these languages and then create the translated pages for the specified languages.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet.
@@ -226,6 +239,28 @@ Accept wildcard characters: False
 <h3 id="-scheduledpublishdate">-ScheduledPublishDate</h3>
 <p>If provided, the page will be scheduled to be published on the provided date and time. It will enable page scheduling on the Site Pages library if not already enabled. If not provided, the publishing of the page will not be scheduled.</p>
 <pre><code class="lang-yaml">Type: DateTime
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-translate">-Translate</h3>
+<p>Creates multilingual pages for all the languages specified in the site collection</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-translationlanguagecodes">-TranslationLanguageCodes</h3>
+<p>Creates multilingual pages for specified languages.</p>
+<pre><code class="lang-yaml">Type: Integer array
 Parameter Sets: (All)
 
 Required: False

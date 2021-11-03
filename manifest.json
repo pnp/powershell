@@ -594,7 +594,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPPage.html",
-          "hash": "rUqfYKrweh32pBIVMarbng=="
+          "hash": "Q/AdiqJHKggp1WXIh8VDRQ=="
         }
       },
       "is_incremental": false,
@@ -4914,7 +4914,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPPage.html",
-          "hash": "CCJuib5Ol7hboiH3Rm0zog=="
+          "hash": "O/LWX1u9NKuE0gNr2sbhyg=="
         }
       },
       "is_incremental": false,
@@ -6246,7 +6246,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPPage.html",
-          "hash": "9XM71BHsSs6dSyvA4eQrkQ=="
+          "hash": "TdKGGxQMjNhv5RzlVrEU9w=="
         }
       },
       "is_incremental": false,

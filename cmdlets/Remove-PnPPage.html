@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Removes a page</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPPage [-Identity] &lt;PagePipeBind&gt; [-Force] 
+<pre><code class="lang-powershell">Remove-PnPPage [-Identity] &lt;PagePipeBind&gt; [-Force] [-Recycle]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -103,6 +103,10 @@
 <pre><code class="lang-powershell">Remove-PnPPage $page
 </code></pre>
 <p>Removes the specified page which is contained in the $page variable.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Remove-PnPPage -Identity &quot;MyPage&quot; -Recycle
+</code></pre>
+<p>Removes the page named 'MyPage.aspx' and sends it to the recycle bin.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -135,6 +139,17 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-recycle">-Recycle</h3>
+<p>Specifying the Recycle parameter will delete the page and send it to recycle bin.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
