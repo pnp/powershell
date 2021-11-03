@@ -62,6 +62,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Giacomo Pozzoni [jackpoz]
 - Chris Kent [thechriskent]
 - Filip Bosmans [FilipBosmans]
+- zylantha
 
 ## [1.8.0]
 
