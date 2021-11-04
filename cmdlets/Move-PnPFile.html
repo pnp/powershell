@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Moves a file or folder to a different location</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Move-PnPFile [-SourceUrl] &lt;String&gt; [-TargetUrl] &lt;String&gt; [-Overwrite] [-NoWait] [-Force] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Move-PnPFile [-SourceUrl] &lt;String&gt; [-TargetUrl] &lt;String&gt; [-Overwrite] [-AllowSchemaMismatch] [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-NoWait] [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows moving a file or folder to a different location inside the same document library, such as in a subfolder, to a different document library on the same site collection or to a document library on another site collection. If you move a file to a different site or subweb you cannot specify a target filename.</p>
@@ -100,7 +100,7 @@
 </code></pre>
 <p>Moves a file named Document.docx located in the document library named &quot;Shared Documents&quot; in the current site to the document library named &quot;Archive&quot; in the same site. If a file named Document.docx already exists at the destination, it will overwrite it.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Move-PnPFile -SourceUrl &quot;Shared Documents/Document.docx&quot; -TargetUrl &quot;/sites/otherproject/Shared Documents&quot; -OverwriteIfAlreadyExists -AllowSchemaMismatch -AllowSmallerVersionLimitOnDestination
+<pre><code class="lang-powershell">Move-PnPFile -SourceUrl &quot;Shared Documents/Document.docx&quot; -TargetUrl &quot;/sites/otherproject/Shared Documents&quot; -Overwrite -AllowSchemaMismatch -AllowSmallerVersionLimitOnDestination
 </code></pre>
 <p>Moves a file named Document.docx located in the document library named &quot;Shared Documents&quot; in the current site to the document library named &quot;Shared Documents&quot; in another site collection &quot;otherproject&quot; allowing it to overwrite an existing file Document.docx in the destination, allowing the fields to be different on the destination document library from the source document library and allowing a lower document version limit on the destination compared to the source.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
