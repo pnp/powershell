@@ -63,6 +63,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Chris Kent [thechriskent]
 - Filip Bosmans [FilipBosmans]
 - [zylantha]
+- Justin [pagejustin]
 
 ## [1.8.0]
 
