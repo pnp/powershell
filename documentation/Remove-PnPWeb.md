@@ -16,7 +16,7 @@ Removes a subweb in the current web
 ## SYNTAX
 
 ```powershell
-Remove-PnPWeb -Url <String> -Identity <WebPipeBind> [-Force] [-Connection <PnPConnection>]
+Remove-PnPWeb -Identity <WebPipeBind> [-Force] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -27,20 +27,12 @@ Remove-PnPWeb -Url <String> -Identity <WebPipeBind> [-Force] [-Connection <PnPCo
 ### EXAMPLE 1
 
 ```powershell
-Remove-PnPWeb -Url projectA
-```
-
-Remove a web
-
-### EXAMPLE 2
-
-```powershell
 Remove-PnPWeb -Identity 5fecaf67-6b9e-4691-a0ff-518fc9839aa0
 ```
 
 Remove a web specified by its ID
 
-### EXAMPLE 3
+### EXAMPLE 2
 
 ```powershell
 Get-PnPSubWeb | Remove-PnPWeb -Force
@@ -92,21 +84,6 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Url
-
-The site relative url of the web, e.g. 'Subweb1'
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
