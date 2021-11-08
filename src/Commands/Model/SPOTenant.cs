@@ -344,11 +344,20 @@ namespace PnP.PowerShell.Commands.Model
             try
             {
                 this.disableCustomAppAuthentication = tenant.DisableCustomAppAuthentication;
-            } catch
+            }
+            catch
             {
                 this.disableCustomAppAuthentication = false;
             }           
             this.markNewFilesSensitiveByDefault = tenant.MarkNewFilesSensitiveByDefault;
+            try
+            {
+                this.disableSpacesActivation = tenant.DisableSpacesActivation;
+            }
+            catch
+            {
+                this.disableSpacesActivation = false;
+            }
         }
 
         public bool HideDefaultThemes => hideDefaultThemes;
@@ -489,6 +498,8 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool ViewInFileExplorerEnabled => viewInFileExplorerEnabled;
 
+        public bool DisableSpacesActivation => disableSpacesActivation;
+
         private bool hideDefaultThemes;
 
         private long storageQuota;
@@ -626,6 +637,8 @@ namespace PnP.PowerShell.Commands.Model
         private bool stopNew2013Workflows;
 
         private bool viewInFileExplorerEnabled;
+
+        private bool disableSpacesActivation;
 
     }
 }
