@@ -22,6 +22,14 @@ Get-PnPMasterPage [-Connection <PnPConnection>] [<CommonParameters>]
 
 ## EXAMPLES
 
+### EXAMPLE 1
+```powershell
+Get-PnPMasterPage
+```
+
+This will return the urls of the default Master Page and custom Master Page of the current site.
+
+
 ## PARAMETERS
 
 ### -Connection
