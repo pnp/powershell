@@ -419,9 +419,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### ResourceBehaviorOptions
+### -ResourceBehaviorOptions
 
-To set ResourceBehaviorOptions which accepts multiple values that specify group behaviors for a Microsoft 365 group. This will only work when you create a new M365 group, it will not work for existing groups.
+Allows providing ResourceBehaviorOptions which accepts multiple values that specify group behaviors for a Microsoft 365 Group. This will only work when you create a new Microsoft 365 Group, it will not work for existing groups.
 
 ```yaml
 Type: TeamResourceBehaviorOptions
