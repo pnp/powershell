@@ -43,6 +43,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Add-PnPListFoldersToProvisioningTemplate` not working when having nested folder structure   
 - Fixed documentation for `Get-PnPFlow` and `Enable-PnPFlow` cmdlets
 - Fixed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` not being able to deal with multi value properties on the Azure Active Directory side, such as `BusinessPhones`
+- Added `ResourceBehaviorOptions` option in `New-PnPTeamsTeam` cmdlet to set `ResourceBehaviorOptions` while provisioning a Team.
 - Fixed `Add-PnPListItem` issue with setting MultiChoice columns when using `-Batch` parameter
 - Fixed issue with `Remove-PnPListItem` when trying to use it with `Batch` parameter
 - Fixed `Add-PnPDataRowsToSiteTemplate` not exporting TaxonomyFieldValues properly
