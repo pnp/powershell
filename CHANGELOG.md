@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Recycle` parameter to `Remove-PnPPage` to delete the page and send it to the recycle bin. This prevents permanently deleting the page and you can also restore it.
 - Added `-DemoteNewsArticle` parameter to the `Set-PnPPage` cmdlet to demote an existing news post to a regular page.
 - Added `-Translate` and `-TranslationLanguageCodes` parameters to `Set-PnPPage` and `Add-PnPPage`. This enables multilingual page creation in sites.
+- Added `-AllowFilesWithKeepLabelToBeDeletedSPO` and `-AllowFilesWithKeepLabelToBeDeletedODB` options to `Set-PnPTenant` which allows configuration of files on SharePoint Online and OneDrive for Business being blocked by a retention policy to be possible to be deleted anyway and then moved to the preservation hold library. The default for SharePoint Online for this will change as announced in Message Center announcement MC264360. This will allow reverting it. The current values can be retrieved using `Get-PnPTenant`.
    
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads
