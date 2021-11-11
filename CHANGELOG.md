@@ -64,6 +64,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Filip Bosmans [FilipBosmans]
 - [zylantha]
 - Justin [pagejustin]
+- Collin Argo [SCollinA]
 
 ## [1.8.0]
 
