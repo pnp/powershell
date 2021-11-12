@@ -366,6 +366,14 @@ namespace PnP.PowerShell.Commands.Model
                 this.allowFilesWithKeepLabelToBeDeletedODB = true;
             }                                 
             this.markNewFilesSensitiveByDefault = tenant.MarkNewFilesSensitiveByDefault;
+            try
+            {
+                this.disableSpacesActivation = tenant.DisableSpacesActivation;
+            }
+            catch
+            {
+                this.disableSpacesActivation = false;
+            }
         }
 
         public bool HideDefaultThemes => hideDefaultThemes;
@@ -506,9 +514,13 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool ViewInFileExplorerEnabled => viewInFileExplorerEnabled;
 
+
+        public bool DisableSpacesActivation => disableSpacesActivation;
+
         public bool AllowFilesWithKeepLabelToBeDeletedSPO => allowFilesWithKeepLabelToBeDeletedSPO;
 
         public bool AllowFilesWithKeepLabelToBeDeletedODB => allowFilesWithKeepLabelToBeDeletedODB;
+
 
         private bool hideDefaultThemes;
 
@@ -648,9 +660,13 @@ namespace PnP.PowerShell.Commands.Model
 
         private bool viewInFileExplorerEnabled;
 
+
+        private bool disableSpacesActivation;
+
         private bool allowFilesWithKeepLabelToBeDeletedSPO;
 
         private bool allowFilesWithKeepLabelToBeDeletedODB;
+
 
     }
 }
