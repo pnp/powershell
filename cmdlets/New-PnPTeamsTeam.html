@@ -110,7 +110,8 @@
  [-AllowOwnerDeleteMessages &lt;Boolean&gt;] [-AllowStickersAndMemes &lt;Boolean&gt;] [-AllowTeamMentions &lt;Boolean&gt;]
  [-AllowUserDeleteMessages &lt;Boolean&gt;] [-AllowUserEditMessages &lt;Boolean&gt;]
  [-GiphyContentRating &lt;TeamGiphyContentRating&gt;] [-Visibility &lt;TeamVisibility&gt;]
- [-ShowInTeamsSearchAndSuggestions &lt;Boolean&gt;] [-Classification &lt;String&gt;] 
+ [-ShowInTeamsSearchAndSuggestions &lt;Boolean&gt;] [-Classification &lt;String&gt;]
+ [-ResourceBehaviorOptions &lt;TeamResourceBehaviorOptions&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -123,6 +124,14 @@
 <pre><code class="lang-powershell">New-PnPTeamsTeam -GroupId $groupId
 </code></pre>
 <p>This will create a new Microsoft Teams team from an existing Microsoft 365 Group using the Group ID (teamify)</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">New-PnPTeamsTeam -DisplayName &quot;myPnPDemo1&quot; -Visibility Private -AllowCreateUpdateRemoveTabs $false -AllowUserDeleteMessages $false -ResourceBehaviorOptions WelcomeEmailDisabled
+</code></pre>
+<p>This will create a new Microsoft Teams team called &quot;myPnPDemo1&quot; and sets the privacy to Private, as well as preventing users from deleting their messages or update/remove tabs. The user creating the Microsoft Teams team will be added as Owner. Welcome Email will not be sent when the Group is created.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">New-PnPTeamsTeam -DisplayName &quot;myPnPDemo1&quot; -Visibility Private -AllowCreateUpdateRemoveTabs $false -AllowUserDeleteMessages $false -ResourceBehaviorOptions WelcomeEmailDisabled, HideGroupInOutlook
+</code></pre>
+<p>This will create a new Microsoft Teams team called &quot;myPnPDemo1&quot; and sets the privacy to Private, as well as preventing users from deleting their messages or update/remove tabs. The user creating the Microsoft Teams team will be added as Owner. Welcome Email will not be sent when the Group is created. The M365 Group will also not be visible in Outlook.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-allowaddremoveapps">-AllowAddRemoveApps</h3>
 <p>Boolean value that determines whether or not members (not only owners) are allowed to add apps to the team.</p>
@@ -382,6 +391,18 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: TeamVisibility
 Parameter Sets: For a new group
 Accepted values: Private, Public
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-resourcebehavioroptions">-ResourceBehaviorOptions</h3>
+<p>Allows providing ResourceBehaviorOptions which accepts multiple values that specify group behaviors for a Microsoft 365 Group. This will only work when you create a new Microsoft 365 Group, it will not work for existing groups.</p>
+<pre><code class="lang-yaml">Type: TeamResourceBehaviorOptions
+Parameter Sets: For a new group
+Accepted values: AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeNewGroupMembers, WelcomeEmailDisabled
 
 Required: False
 Position: Named

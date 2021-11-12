@@ -2346,7 +2346,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPMasterPage.html",
-          "hash": "fT+sDPQV4ge1Cw9CeyTs9w=="
+          "hash": "zHb3hA8zegdbLupRDTMHSg=="
         }
       },
       "is_incremental": false,
@@ -4146,7 +4146,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/New-PnPTeamsTeam.html",
-          "hash": "/jDKl45U7lTxW3qoUIFVDQ=="
+          "hash": "kgDEMdS8w5j5bxM32v+YHw=="
         }
       },
       "is_incremental": false,
@@ -5406,7 +5406,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPWeb.html",
-          "hash": "SyDlszEm7aUhAup+kFVIpQ=="
+          "hash": "7pBPybxlV2E+MQGWTIgylw=="
         }
       },
       "is_incremental": false,
@@ -6642,7 +6642,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTenant.html",
-          "hash": "L6fx7uG3oWQqXF2wGA+uOw=="
+          "hash": "ZOTwPEWROClU+iC1Ce3nlg=="
         }
       },
       "is_incremental": false,
