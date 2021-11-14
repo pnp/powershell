@@ -160,9 +160,9 @@ namespace PnP.PowerShell.Commands
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility { get; set; }
-                
-        [Parameter(Mandatory = false)]
-        public string InformationBarriersMode { get; set; }
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public InformationBarriersMode InformationBarriersMode;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
@@ -497,10 +497,22 @@ namespace PnP.PowerShell.Commands
                 updateRequired = true;
             }
 
-            if (ParameterSpecified(nameof(InformationBarriersMode)) && !string.IsNullOrEmpty(InformationBarriersMode))
+            if (ParameterSpecified(nameof(InformationBarriersMode)))
             {
-                props.IBMode = InformationBarriersMode;
+                props.IBMode = InformationBarriersMode.ToString();
                 updateRequired = true;
+            }            
+
+            if (updateRequired)
+            {
+                var op = props.Update();
+                ClientContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
+                ClientContext.ExecuteQueryRetry();
+
+                if (Wait)
+                {
+                    WaitForIsComplete(ClientContext, op, timeoutFunction, TenantOperationMessage.SettingSiteProperties);
+                }
             }
 
             if (ParameterSpecified(nameof(HubSiteId)))
@@ -521,18 +533,6 @@ namespace PnP.PowerShell.Commands
                     Tenant.ConnectSiteToHubSite(Identity.Url, hubsiteProperties.SiteUrl);
                 }
                 ClientContext.ExecuteQueryRetry();
-            }
-
-            if (updateRequired)
-            {
-                var op = props.Update();
-                ClientContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
-                ClientContext.ExecuteQueryRetry();
-
-                if (Wait)
-                {
-                    WaitForIsComplete(ClientContext, op, timeoutFunction, TenantOperationMessage.SettingSiteProperties);
-                }
             }
 
             if (Owners != null && Owners.Count > 0)
