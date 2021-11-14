@@ -104,14 +104,14 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static async Task<Team> NewTeamAsync(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, TeamCreationInformation teamCI, string[] owners, string[] members, TeamsTemplateType templateType = TeamsTemplateType.None)
+        public static async Task<Team> NewTeamAsync(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, TeamCreationInformation teamCI, string[] owners, string[] members, TeamsTemplateType templateType = TeamsTemplateType.None, TeamResourceBehaviorOptions?[] resourceBehaviorOptions = null)
         {
             Group group = null;
             Team returnTeam = null;
             // Create group
             if (string.IsNullOrEmpty(groupId))
             {
-                group = await CreateGroupAsync(accessToken, httpClient, displayName, description, classification, mailNickname, owner, visibility, owners, templateType);
+                group = await CreateGroupAsync(accessToken, httpClient, displayName, description, classification, mailNickname, owner, visibility, owners, templateType, resourceBehaviorOptions);
                 bool wait = true;
                 int iterations = 0;
                 while (wait)
@@ -211,7 +211,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return returnTeam;
         }
 
-        private static async Task<Group> CreateGroupAsync(string accessToken, HttpClient httpClient, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, string[] owners, TeamsTemplateType templateType = TeamsTemplateType.None)
+        private static async Task<Group> CreateGroupAsync(string accessToken, HttpClient httpClient, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, string[] owners, TeamsTemplateType templateType = TeamsTemplateType.None, TeamResourceBehaviorOptions?[] resourceBehaviorOptions = null)
         {
             Group group = new Group();
             // get the owner if no owner was specified
@@ -260,6 +260,15 @@ namespace PnP.PowerShell.Commands.Utilities
             group.Owners = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
             group.Members = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
             group.Visibility = visibility == GroupVisibility.NotSpecified ? GroupVisibility.Private : visibility;
+            if (resourceBehaviorOptions != null && resourceBehaviorOptions.Length > 0)
+            {
+                var teamResourceBehaviorOptionsValue = new List<string>();
+                for (int i = 0; i < resourceBehaviorOptions.Length; i++)
+                {
+                    teamResourceBehaviorOptionsValue.Add(resourceBehaviorOptions[i].ToString());
+                }
+                group.ResourceBehaviorOptions = teamResourceBehaviorOptionsValue;
+            }
 
             switch (templateType)
             {
@@ -367,6 +376,21 @@ namespace PnP.PowerShell.Commands.Utilities
                 stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
                 await GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/{role.ToLower()}s/$ref", accessToken, stringContent);
+            }
+        }
+
+        public static async Task AddUsersAsync(HttpClient httpClient, string accessToken, string groupId, string[] upn, string role)
+        {
+            var chunks = BatchUtility.Chunk(upn, 20);
+            foreach (var chunk in chunks)
+            {
+                var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/users/{0}", "id");
+                var teamChannelMember = new List<TeamChannelMember>();
+                foreach (var userid in results.Select(r => r.Value))
+                {
+                    teamChannelMember.Add(new TeamChannelMember() { Roles = new List<string> { role }, UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{userid}')" });
+                }
+                await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/members/add", new { values = teamChannelMember }, accessToken);
             }
         }
 

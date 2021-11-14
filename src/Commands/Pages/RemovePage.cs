@@ -16,6 +16,9 @@ namespace PnP.PowerShell.Commands.Pages
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Recycle;
+
         protected override void ExecuteCmdlet()
         {
             if (Force || ShouldContinue(Resources.RemoveClientSidePage, Resources.Confirm))
@@ -24,7 +27,14 @@ namespace PnP.PowerShell.Commands.Pages
                 if (clientSidePage == null)
                     throw new Exception($"Page '{Identity?.Name}' does not exist");
 
-                clientSidePage.Delete();
+                if (Recycle.IsPresent)
+                {
+                    clientSidePage.PageListItem.Recycle();
+                }
+                else
+                {
+                    clientSidePage.Delete();
+                }                
             }
         }
     }

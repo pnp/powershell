@@ -137,7 +137,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                     retFolder.Folders.Add(childFolder);
                 }
             }
-            if (IncludeSecurity && folderItem.HasUniqueRoleAssignments)
+            if (IncludeSecurity && folderItem.ServerObjectIsNull != null && !folderItem.ServerObjectIsNull.Value && folderItem.HasUniqueRoleAssignments)
             {
                 var RoleAssignments = folderItem.RoleAssignments;
                 ClientContext.Load(RoleAssignments);

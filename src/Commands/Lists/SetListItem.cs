@@ -72,7 +72,7 @@ namespace PnP.PowerShell.Commands.Lists
                     var item = Identity.GetListItem(list);
                     if (item == null)
                     {
-                        throw new PSArgumentException($"Cannot find item with Identity {Identity}");
+                        throw new PSArgumentException($"Cannot find item with Identity {Identity}", nameof(Identity));
                     }
                     var values = ListItemHelper.GetFieldValues(list, item, Values, ClientContext, Batch);
                     if (values == null)
@@ -115,7 +115,7 @@ namespace PnP.PowerShell.Commands.Lists
             {
                 if (Identity == null || (Identity.Item == null && Identity.Id == 0))
                 {
-                    throw new PSArgumentException($"No -Identity has been provided specifying the item to update");
+                    throw new PSArgumentException($"No -Identity has been provided specifying the item to update", nameof(Identity));
                 }
 
                 List list;
@@ -127,7 +127,7 @@ namespace PnP.PowerShell.Commands.Lists
                 {
                     if (Identity.Item == null)
                     {
-                        throw new PSArgumentException($"No -List has been provided specifying the list to update the item in");
+                        throw new PSArgumentException($"No -List has been provided specifying the list to update the item in", nameof(Identity));
                     }
 
                     list = Identity.Item.ParentList;

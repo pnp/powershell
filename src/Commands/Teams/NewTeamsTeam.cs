@@ -102,6 +102,8 @@ namespace PnP.PowerShell.Commands.Graph
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string[] Members;
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NEWGROUP)]
+        public TeamResourceBehaviorOptions?[] ResourceBehaviorOptions;
 
         protected override void ExecuteCmdlet()
         {
