@@ -374,6 +374,14 @@ namespace PnP.PowerShell.Commands.Model
             {
                 this.disableSpacesActivation = false;
             }
+            try
+            {
+                this.disableAddToOneDrive = tenant.DisableAddToOneDrive;
+            }
+            catch
+            {
+                this.disableAddToOneDrive = false;
+            }
         }
 
         public bool HideDefaultThemes => hideDefaultThemes;
@@ -514,12 +522,13 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool ViewInFileExplorerEnabled => viewInFileExplorerEnabled;
 
-
         public bool DisableSpacesActivation => disableSpacesActivation;
 
         public bool AllowFilesWithKeepLabelToBeDeletedSPO => allowFilesWithKeepLabelToBeDeletedSPO;
 
         public bool AllowFilesWithKeepLabelToBeDeletedODB => allowFilesWithKeepLabelToBeDeletedODB;
+
+        public bool DisableAddToOneDrive => disableAddToOneDrive;
 
 
         private bool hideDefaultThemes;
@@ -667,6 +676,7 @@ namespace PnP.PowerShell.Commands.Model
 
         private bool allowFilesWithKeepLabelToBeDeletedODB;
 
+        private bool disableAddToOneDrive;
 
     }
 }
