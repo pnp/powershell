@@ -17,8 +17,9 @@ Allows creation of a new page
 ```powershell
 Add-PnPPage [-Name] <String> [-LayoutType <PageLayoutType>]
  [-PromoteAs <PagePromoteType>] [-ContentType <ContentTypePipeBind>] [-CommentsEnabled] [-Publish]
- [-HeaderLayoutType <PageHeaderLayoutType>] [-ScheduledPublishDate <DateTime>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ [-HeaderLayoutType <PageHeaderLayoutType>] [-ScheduledPublishDate <DateTime>] 
+ [-Translate][-TranslationLanguageCodes <Int[][]>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -67,6 +68,27 @@ Add-PnPPage -Name "NewPage" Article -ScheduledPublishDate (Get-Date).AddHours(1)
 ```
 
 Creates a new page named 'NewPage' using the article layout and schedule it to be published in 1 hour from now
+
+### EXAMPLE 7
+```powershell
+Add-PnPPage -Name "NewPage" -Translate
+```
+
+Creates a new page named 'NewPage' and also creates the necessary translated page for the supported languages in the site collection.
+
+### EXAMPLE 8
+```powershell
+Add-PnPPage -Name "NewPage" -Translate -TranslationLanguageCodes 1043
+```
+
+Creates a new page named 'NewPage' and also creates the necessary translated page for the specified language in the site collection. In this case, it will create the translated page for Dutch language. If the Dutch language is not enabled, it will enable the language and then create the translated page.
+
+### EXAMPLE 9
+```powershell
+Add-PnPPage -Name "NewPage" -Translate -TranslationLanguageCodes 1043,1035
+```
+
+Creates a new page named 'NewPage' and also creates the necessary translated page for the specified languages in the site collection. In this case, it will create the translated pages for Dutch and Finnish languages. If these languages are not enabled, it will enable these languages and then create the translated pages for the specified languages.
 
 ## PARAMETERS
 
@@ -206,6 +228,34 @@ If provided, the page will be scheduled to be published on the provided date and
 
 ```yaml
 Type: DateTime
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Translate
+Creates multilingual pages for all the languages specified in the site collection
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TranslationLanguageCodes
+Creates multilingual pages for specified languages.
+
+```yaml
+Type: Integer array
 Parameter Sets: (All)
 
 Required: False

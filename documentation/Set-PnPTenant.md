@@ -1214,3 +1214,35 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
+### -SetAllowFilesWithKeepLabelToBeDeletedSPO
+Allows configuration on if files located on SharePoint Online having retention labels on them blocking them from deletion ($false) or if they can be deleted which will move the file to the preservation hold library ($true)
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: $true
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SetAllowFilesWithKeepLabelToBeDeletedODB
+Allows configuration on if files located on OneDrive for Business having retention labels on them blocking them from deletion ($false) or if they can be deleted which will move the file to the preservation hold library ($true)
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: $true
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+## RELATED LINKS
+
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
