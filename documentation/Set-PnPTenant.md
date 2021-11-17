@@ -49,7 +49,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EmailAttestationRequired <Boolean>] [-EmailAttestationReAuthDays <Int32>] [-HideDefaultThemes <Boolean>]
  [-DisabledWebPartIds <Guid[]>] [-EnableAIPIntegration <Boolean>] [-DisableCustomAppAuthentication <Boolean>] 
  [-EnableAutoNewsDigest <Boolean>] [-CommentsOnListItemsDisabled <Boolean>] [-CommentsOnFilesDisabled <Boolean>]
- [-DisableBackToClassic <Boolean>]
+ [-DisableBackToClassic <Boolean>] [-InformationBarriersSuspension <Boolean>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -1185,6 +1185,20 @@ Accept wildcard characters: False
 
 ### -CommentsOnFilesDisabled
 Disables or enables commenting functionality on files.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -InformationBarriersSuspension
+Allows suspension of the information barriers future in a Microsoft 365 tenant. Setting this to $true will disable information barriers, setting this to $falsde will enable information barriers. For more information, see https://docs.microsoft.com/sharepoint/information-barriers.
 
 ```yaml
 Type: Boolean

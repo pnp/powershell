@@ -220,6 +220,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? ViewInFileExplorerEnabled;
 
         [Parameter(Mandatory = false)]
+        public bool? InformationBarriersSuspension;
+        
+        [Parameter(Mandatory = false)]
         public bool? AllowFilesWithKeepLabelToBeDeletedSPO;
 
         [Parameter(Mandatory = false)]
@@ -841,6 +844,11 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
+            if (InformationBarriersSuspension.HasValue)
+            {
+                Tenant.InformationBarriersSuspension = InformationBarriersSuspension.Value;
+                modified = true;
+            }
             if (AllowFilesWithKeepLabelToBeDeletedSPO.HasValue)
             {
                 Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetAllowFilesWithKeepLabelToBeDeletedSPO(ClientContext, AllowFilesWithKeepLabelToBeDeletedSPO.Value);
