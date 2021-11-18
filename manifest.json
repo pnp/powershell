@@ -6642,7 +6642,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTenant.html",
-          "hash": "ZOTwPEWROClU+iC1Ce3nlg=="
+          "hash": "xyAqSN1jemLjGRM1K8Op6A=="
         }
       },
       "is_incremental": false,
@@ -6690,7 +6690,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTenantSite.html",
-          "hash": "INpluYK1rW3LjQmiSlHAIg=="
+          "hash": "YZDj/TvbQCEIWuLF0jwp3w=="
         }
       },
       "is_incremental": false,

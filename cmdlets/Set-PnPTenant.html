@@ -119,7 +119,7 @@
  [-EmailAttestationRequired &lt;Boolean&gt;] [-EmailAttestationReAuthDays &lt;Int32&gt;] [-HideDefaultThemes &lt;Boolean&gt;]
  [-DisabledWebPartIds &lt;Guid[]&gt;] [-EnableAIPIntegration &lt;Boolean&gt;] [-DisableCustomAppAuthentication &lt;Boolean&gt;] 
  [-EnableAutoNewsDigest &lt;Boolean&gt;] [-CommentsOnListItemsDisabled &lt;Boolean&gt;] [-CommentsOnFilesDisabled &lt;Boolean&gt;]
- [-DisableBackToClassic &lt;Boolean&gt;]
+ [-DisableBackToClassic &lt;Boolean&gt;] [-InformationBarriersSuspension &lt;Boolean&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -982,6 +982,17 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-informationbarrierssuspension">-InformationBarriersSuspension</h3>
+<p>Allows suspension of the information barriers future in a Microsoft 365 tenant. Setting this to $true will disable information barriers, setting this to $falsde will enable information barriers. For more information, see <a href="https://docs.microsoft.com/sharepoint/information-barriers">https://docs.microsoft.com/sharepoint/information-barriers</a>.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-setallowfileswithkeeplabeltobedeletedspo">-SetAllowFilesWithKeepLabelToBeDeletedSPO</h3>
 <p>Allows configuration on if files located on SharePoint Online having retention labels on them blocking them from deletion ($false) or if they can be deleted which will move the file to the preservation hold library ($true)</p>
 <pre><code class="lang-yaml">Type: Boolean
@@ -1001,6 +1012,17 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: $true
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-disableaddtoonedrive">-DisableAddToOneDrive</h3>
+<p>Allows configuration on <code>Add shortcut to OneDrive</code> feature in SharePoint document libraries. If set to <code>$true</code>, then this feature will be disabled on all sites in the tenant. If set to <code>$false</code>, it will be enabled on all sites in the tenant.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases: DisableAddShortcutsToOneDrive
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

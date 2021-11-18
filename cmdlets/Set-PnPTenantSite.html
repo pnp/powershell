@@ -101,7 +101,7 @@
  [-SharingDomainRestrictionMode &lt;SharingDomainRestrictionModes&gt;] [-CommentsOnSitePagesDisabled]
  [-DisableAppViews &lt;AppViewsPolicy&gt;] [-DisableCompanyWideSharingLinks &lt;CompanyWideSharingLinksPolicy&gt;]
  [-DisableFlows &lt;FlowsPolicy&gt;] [-AnonymousLinkExpirationInDays &lt;Int32&gt;] [-SensitivityLabel &lt;String&gt;] [-RemoveLabel] [-AddInformationSegment &lt;Guid[]&gt;] [-RemoveInformationSegment &lt;Guid[]&gt;]
- [-OverrideTenantAnonymousLinkExpirationPolicy] [-Wait] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-OverrideTenantAnonymousLinkExpirationPolicy] [-InformationBarriersMode &lt;InformationBarriersMode&gt;] [-Wait] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="set-lock-state">Set Lock State</h3>
 <pre><code class="lang-powershell">Set-PnPTenantSite [-Identity] &lt;String&gt; [-LockState &lt;SiteLockState&gt;] [-Wait] [-Connection &lt;PnPConnection&gt;]
@@ -520,6 +520,18 @@ Accept wildcard characters: False
 <p>Specifies the warning level in megabytes of the site collection to warn the site collection administrator that the site is approaching the resource quota.</p>
 <pre><code class="lang-yaml">Type: Double
 Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-informationbarriersmode">-InformationBarriersMode</h3>
+<p>Specifies the information barrier mode which helps strengthen access, sharing, and membership of a site based on its information barrier mode and segments associated with the site. Expected values are <code>Open</code>, <code>OwnerModerated</code> , <code>Implicit</code> and <code>Explicit</code>. For more information, see <a href="https://docs.microsoft.com/sharepoint/information-barriers#information-barriers-modes-and-sharepoint-sites">https://docs.microsoft.com/sharepoint/information-barriers#information-barriers-modes-and-sharepoint-sites</a></p>
+<pre><code class="lang-yaml">Type: InformationBarriersMode
+Parameter Sets: Set Properties
+Accepted values: Open, OwnerModerated, Implicit, Explicit
 
 Required: False
 Position: Named
