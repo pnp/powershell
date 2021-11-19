@@ -66,7 +66,7 @@ Shows by the default all the built into SharePoint Online site templates, except
 ## PARAMETERS
 
 ### -Identity
-Id of the built in site template to configure
+Id of the built in site template to configure. See https://docs.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description for the full list of available types.
 
 ```yaml
 Type: Guid
