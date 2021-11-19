@@ -20,8 +20,7 @@ Adds published content types from content type hub site to current site. If the 
 ## SYNTAX
 
 ```powershell
-Add-PnPContentTypesFromContentTypeHub -ContentTypes List<String>
- [-Connection <PnPConnection>] [<CommonParameters>]
+Add-PnPContentTypesFromContentTypeHub -ContentTypes List<String> [-Site <SitePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,13 +29,17 @@ Add-PnPContentTypesFromContentTypeHub -ContentTypes List<String>
 
 ### EXAMPLE 1
 ```powershell
- $list = New-Object Collections.Generic.List[string]
- $list.Add('0x0101')
- $list.Add('0x01')
-Add-PnPContentTypesFromContentTypeHub -ContentTypes $list
+ Add-PnPContentTypesFromContentTypeHub -ContentTypes "0x0101", "0x01"
 ```
 
 This will add the content types with the ids '0x0101' and '0x01' to the current site. Latest published version of these content types will be synced if they were already present in the current site.
+
+### EXAMPLE 2
+```powershell
+ Add-PnPContentTypesFromContentTypeHub -ContentTypes "0x010057C83E557396744783531D80144BD08D" -Site https://tenant.sharepoint.com/sites/HR
+```
+
+This will add the content type with the id '0x010057C83E557396744783531D80144BD08D' to the site with the provided URL. Latest published version of these content types will be synced if they were already present in the current site.
 
 ## PARAMETERS
 
@@ -67,8 +70,21 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -Site
+The site to which to add the content types coming from the hub. If omitted, it will be applied to the currently connected to site.
+
+```yaml
+Type: SitePipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: Currently connected to site
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
