@@ -74,6 +74,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Justin [pagejustin]
 - Collin Argo [SCollinA]
 - Leon Armston [LeonArmston]
+- Lars Höög [h00g]
 
 ## [1.8.0]
 
