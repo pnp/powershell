@@ -1,0 +1,142 @@
+---
+Module Name: PnP.PowerShell
+title: Set-PnPBuiltInSiteTemplateSettings
+schema: 2.0.0
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPBuiltInSiteTemplateSettings.html
+---
+ 
+# Set-PnPBuiltInSiteTemplateSettings
+
+## SYNOPSIS
+
+**Required Permissions**
+
+* SharePoint: Access to the SharePoint Tenant Administration site
+
+Allows configuration of the built into SharePoint Online site templates.
+
+## SYNTAX
+
+### Configure by the site template identifier
+
+```powershell
+Set-PnPBuiltInSiteTemplateSettings -Identity <BuiltInSiteTemplateSettingsPipeBind> -IsHidden <Boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
+```
+
+### Configure by the site template name
+
+```powershell
+Set-PnPBuiltInSiteTemplateSettings -Template <BuiltInSiteTemplates> -IsHidden <Boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
+```
+
+## DESCRIPTION
+
+## EXAMPLES
+
+### EXAMPLE 1
+```powershell
+Set-PnPBuiltInSiteTemplateSettings -Identity 9522236e-6802-4972-a10d-e98dc74b3344 -IsHidden $false
+```
+
+Makes the Event Planning template visible
+
+### EXAMPLE 2
+```powershell
+Set-PnPBuiltInSiteTemplateSettings -Identity 00000000-0000-0000-0000-000000000000 -IsHidden $true
+```
+
+Hides by the default all the built into SharePoint Online site templates, except those specifically configured to be visible again
+
+### EXAMPLE 3
+```powershell
+Set-PnPBuiltInSiteTemplateSettings -Template CrisisManagement -IsHidden $true
+```
+
+Makes the Crisis Management template invisible
+
+### EXAMPLE 4
+```powershell
+Set-PnPBuiltInSiteTemplateSettings -Template All -IsHidden $false
+```
+
+Shows by the default all the built into SharePoint Online site templates, except those specifically configured to be hidden
+
+## PARAMETERS
+
+### -Identity
+Id of the built in site template to configure
+
+```yaml
+Type: Guid
+Parameter Sets: ByIdentity
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: False
+```
+
+### -Template
+Internal name of the template to configure
+
+```yaml
+Type: BuiltInSiteTemplates
+Parameter Sets: ByTemplate
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsHidden
+Defines if the built in site template should be hidden ($true) or visible ($false)
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases: cf
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+## RELATED LINKS
+
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
