@@ -90,7 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -IsDefault
-Specifies if the site design is a default site design
+Specifies that the site design is a default site design
 
 ```yaml
 Type: SwitchParameter
