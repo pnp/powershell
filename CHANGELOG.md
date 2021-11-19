@@ -32,11 +32,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-AllowFilesWithKeepLabelToBeDeletedSPO` and `-AllowFilesWithKeepLabelToBeDeletedODB` options to `Set-PnPTenant` which allows configuration of files on SharePoint Online and OneDrive for Business being blocked by a retention policy to be possible to be deleted anyway and then moved to the preservation hold library. The default for SharePoint Online for this will change as announced in Message Center announcement MC264360. This will allow reverting it. The current values can be retrieved using `Get-PnPTenant`.
 - Added `DisableAddToOneDrive` state to be returned with `Get-PnPTenant` cmdlet.
 - Added `-DisableAddToOneDrive` to `Set-PnPTenant` cmdlet to enable/disable users from adding shortcuts to OneDrive.
+- Added optional `-Site` parameter to `Add-PnPContentTypesFromContenTypeHub` which allows a specific site to be specified to add the content type hub content types to
   
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads
 - Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`
 - A clearer error message will now be returned when using `Add-PnPListItem -List` and specifying an invalid list name
+- Response of `Add-PnPContentTypesFromContenTypeHub` is now returned in the root of the response as well as under Value as it was previously for backwards compatibility
      
 ### Fixed
 - Fixed `Get-PnPGroupMember -User` not properly returning the specified user
