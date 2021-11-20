@@ -50,6 +50,14 @@ Add-PnPHubToHubAssociation -SourceUrl "https://yourtenant.sharepoint.com/sites/s
 
 This example associates the source hub site with the url https://yourtenant.sharepoint.com/sites/sourcehub with the target hub site with the url https://yourtenant.sharepoint.com/sites/targethub.
 
+### EXAMPLE 3
+```powershell
+Add-PnPHubToHubAssociation -SourceUrl "https://yourtenant.sharepoint.com/sites/secondlevelhub" -TargetUrl "https://yourtenant.sharepoint.com/sites/toplevelhub"
+Add-PnPHubToHubAssociation -SourceUrl "https://yourtenant.sharepoint.com/sites/thirdlevelhub" -TargetUrl "https://yourtenant.sharepoint.com/sites/secondlevelhub"
+```
+
+This example associates the source hub site with the url https://yourtenant.sharepoint.com/sites/secondlevelhub with the target hub site with the url https://yourtenant.sharepoint.com/sites/toplevelhub and then associates the source hub site with the url https://yourtenant.sharepoint.com/sites/thirdlevelhub with the target hub site with the url https://yourtenant.sharepoint.com/sites/secondlevelhub to generate a three-level hub site structure. Note that 3 levels of hub site connections is the maximum recommended as content on sites beyond level 3 will not appear in search results.
+
 ## PARAMETERS
 
 ### -Connection
