@@ -68,6 +68,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
+If provided, no confirmation will be asked to remove the file, but instead it will silently be removed.
 
 ```yaml
 Type: SwitchParameter
@@ -121,8 +122,6 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-
-
 ### -WhatIf
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
@@ -141,4 +140,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
