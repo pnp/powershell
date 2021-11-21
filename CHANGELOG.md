@@ -76,6 +76,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Leon Armston [LeonArmston]
 - Lars Höög [h00g]
 - [kachihro]
+- [Andy-Dawson]
 
 ## [1.8.0]
 
