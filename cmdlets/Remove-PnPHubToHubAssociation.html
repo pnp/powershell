@@ -91,10 +91,10 @@
 <p>Removes the selected hub site from its parent hub.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-id">By Id</h3>
-<pre><code class="lang-powershell">Add-PnPHubToHubAssociation -HubSiteId &lt;Guid&gt;
+<pre><code class="lang-powershell">Remove-PnPHubToHubAssociation -HubSiteId &lt;Guid&gt;
 </code></pre>
 <h3 id="by-url">By Url</h3>
-<pre><code class="lang-powershell">Add-PnPHubToHubAssociation -HubSiteUrl &lt;string&gt;
+<pre><code class="lang-powershell">Remove-PnPHubToHubAssociation -HubSiteUrl &lt;string&gt;
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Use this cmdlet to remove the selected hub site from its parent hub.</p>
@@ -104,7 +104,7 @@
 </code></pre>
 <p>This example removes the hubsite with id 6638bd4c-d88d-447c-9eb2-c84f28ba8b15 from its parent hub.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Remove-PnPHubToHubAssociation -HubSiteUrl &quot;https://yourtenant.sharepoint.com/sites/hub&quot;
+<pre><code class="lang-powershell">Remove-PnPHubToHubAssociation -HubSiteUrl &quot;https://yourtenant.sharepoint.com/sites/sourcehub&quot;
 </code></pre>
 <p>This example removes the hubsite with id <a href="https://yourtenant.sharepoint.com/sites/sourcehub">https://yourtenant.sharepoint.com/sites/sourcehub</a> from its parent hub.</p>
 <h2 id="parameters">PARAMETERS</h2>

@@ -88,7 +88,7 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Associates a hub site to a hub site.</p>
+<p>Associates a hub site to another hub site to build a hierarchy of hubs. The association only is a content association, meaning that only the content of the underlying associates sites will surface in webparts such as the news webpart. No other settings will be inherrited. At most 3 levels of hubs can be associated with each other.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-id">By Id</h3>
 <pre><code class="lang-powershell">Add-PnPHubToHubAssociation -Source &lt;Guid&gt; -Target &lt;Guid&gt; [-Connection &lt;PnPConnection&gt;]
@@ -107,6 +107,11 @@
 <pre><code class="lang-powershell">Add-PnPHubToHubAssociation -SourceUrl &quot;https://yourtenant.sharepoint.com/sites/sourcehub&quot; -TargetUrl &quot;https://yourtenant.sharepoint.com/sites/targethub&quot;
 </code></pre>
 <p>This example associates the source hub site with the url <a href="https://yourtenant.sharepoint.com/sites/sourcehub">https://yourtenant.sharepoint.com/sites/sourcehub</a> with the target hub site with the url <a href="https://yourtenant.sharepoint.com/sites/targethub">https://yourtenant.sharepoint.com/sites/targethub</a>.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Add-PnPHubToHubAssociation -SourceUrl &quot;https://yourtenant.sharepoint.com/sites/secondlevelhub&quot; -TargetUrl &quot;https://yourtenant.sharepoint.com/sites/toplevelhub&quot;
+Add-PnPHubToHubAssociation -SourceUrl &quot;https://yourtenant.sharepoint.com/sites/thirdlevelhub&quot; -TargetUrl &quot;https://yourtenant.sharepoint.com/sites/secondlevelhub&quot;
+</code></pre>
+<p>This example associates the source hub site with the url <a href="https://yourtenant.sharepoint.com/sites/secondlevelhub">https://yourtenant.sharepoint.com/sites/secondlevelhub</a> with the target hub site with the url <a href="https://yourtenant.sharepoint.com/sites/toplevelhub">https://yourtenant.sharepoint.com/sites/toplevelhub</a> and then associates the source hub site with the url <a href="https://yourtenant.sharepoint.com/sites/thirdlevelhub">https://yourtenant.sharepoint.com/sites/thirdlevelhub</a> with the target hub site with the url <a href="https://yourtenant.sharepoint.com/sites/secondlevelhub">https://yourtenant.sharepoint.com/sites/secondlevelhub</a> to generate a three-level hub site structure. Note that 3 levels of hub site connections is the maximum supported amount. Content on sites beyond level 3 will not appear in search results.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
