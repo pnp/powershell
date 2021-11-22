@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTenantSyncCli
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Returns organization-level OneDrive synchronization restriction settings
+Removes organization-level OneDrive synchronization restrictions
 
 ## SYNTAX
 
