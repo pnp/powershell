@@ -78,6 +78,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Lars Höög [h00g]
 - [kachihro]
 - [Andy-Dawson]
+- David Aeschlimann [TashunkoWitko]
 
 ## [1.8.0]
 
