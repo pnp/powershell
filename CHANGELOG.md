@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `DisableAddToOneDrive` state to be returned with `Get-PnPTenant` cmdlet.
 - Added `-DisableAddToOneDrive` to `Set-PnPTenant` cmdlet to enable/disable users from adding shortcuts to OneDrive.
 - Added `Set-PnPBuiltInSiteTemplateSettings` and `Get-PnPBuiltInSiteTemplateSettings` to allow making the built in SharePoint Online site templates visible or hidden and getting their current settings
+- Added support for Channel sites (ID 69) to `Add-PnPSiteDesign`, `Set-PnPSiteDesign` and `Add-PnPSiteDesignFromWeb`
   
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads
@@ -76,6 +77,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Collin Argo [SCollinA]
 - Leon Armston [LeonArmston]
 - Lars Höög [h00g]
+- [kachihro]
+- [Andy-Dawson]
+- David Aeschlimann [TashunkoWitko]
 
 ## [1.8.0]
 
