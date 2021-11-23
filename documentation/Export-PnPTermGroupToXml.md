@@ -46,7 +46,7 @@ Exports the term group with the specified name to the file 'output.xml' located 
 
 ### EXAMPLE 4
 ```powershell
-$termgroup = Get-PnPTermGroup -GroupName Test
+$termgroup = Get-PnPTermGroup -Identity Test
 $termgroup | Export-PnPTermGroupToXml -Out c:\output.xml
 ```
 
