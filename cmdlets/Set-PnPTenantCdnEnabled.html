@@ -88,21 +88,29 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Enables or disabled the public or private Office 365 Content Delivery Network (CDN).</p>
+<p>Enables or disables the public or private Office 365 Content Delivery Network (CDN).</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPTenantCdnEnabled [-NoDefaultOrigins] -Enable &lt;Boolean&gt; -CdnType &lt;CdnType&gt; [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Enables or disabled the public or private Office 365 Content Delivery Network (CDN).</p>
+<p>Enables or disables the public or private Office 365 Content Delivery Network (CDN) for the tenant.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPTenantCdnEnabled -CdnType Public -Enable $true
 </code></pre>
 <p>This example sets the Public CDN enabled.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Set-PnPTenantCdnEnabled -CdnType Private -Enable $false
+</code></pre>
+<p>This example disables the Private CDN for the tenant.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Set-PnPTenantCdnEnabled -CdnType Public -Enable $true -NoDefaultOrigins
+</code></pre>
+<p>This example enables the Public CDN for the tenant, but skips the provisioning of the default origins.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-cdntype">-CdnType</h3>
-<p>The type of cdn to enable or disable</p>
+<p>The type of CDN to enable or disable</p>
 <pre><code class="lang-yaml">Type: CdnType
 Parameter Sets: (All)
 Accepted values: Public, Private, Both
@@ -136,7 +144,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-nodefaultorigins">-NoDefaultOrigins</h3>
-<p>{{ Fill NoDefaultOrigins Description }}</p>
+<p>If specified, the default origins for the specified CDN type will not be provisioned. See <a href="https://docs.microsoft.com/microsoft-365/enterprise/use-microsoft-365-cdn-with-spo?view=o365-worldwide#default-cdn-origins">Default CDN origins</a> for information about the origins that are provisioned by default when you enable the Office 365 CDN, and the potential impact of skipping the setup of default origins.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 

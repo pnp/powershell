@@ -206,7 +206,7 @@ Accept wildcard characters: False
 <p>Specifies the type of site to which this design applies</p>
 <pre><code class="lang-yaml">Type: SiteWebTemplate
 Parameter Sets: (All)
-Accepted values: TeamSite, CommunicationSite, GrouplessTeamSite
+Accepted values: TeamSite, CommunicationSite, GrouplessTeamSite, ChannelSite
 
 Required: True
 Position: Named
@@ -216,9 +216,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-thumbnailurl">-ThumbnailUrl</h3>
 <p>The full URL of a thumbnail image, i.e. <a href="https://contoso.sharepoint/siteassets/image.png">https://contoso.sharepoint/siteassets/image.png</a>. If none is specified, SharePoint uses a generic image. Recommended size is 400 x 300 pixels. This is the image that will be shown when selecting a template through &quot;Apply a site template&quot; or &quot;Browse templates&quot; shown in &quot;Start designing your site&quot; shown when creating a new site.</p>
-<pre><code class="lang-yaml">Type: SiteWebTemplate
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Accepted values: TeamSite, CommunicationSite
 
 Required: False
 Position: Named

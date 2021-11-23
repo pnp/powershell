@@ -165,6 +165,12 @@ Get-PnPSiteTemplate -Out NewTemplate.xml -ExtensibilityHandlers $handler1,$handl
 <pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.pnp -ListsToExtract &quot;Title of List One&quot;,&quot;95c4efd6-08f4-4c67-94ae-49d696ba1298&quot;,&quot;Title of List Three&quot;
 </code></pre>
 <p>Extracts a provisioning template in Office Open XML from the current web, including only the lists specified by title or ID.</p>
+<h3 id="example-16">EXAMPLE 16</h3>
+<pre><code class="lang-powershell">Get-PnPSiteTemplate -Out template.xml -Handlers Fields, ContentTypes, SupportedUILanguages -PersistMultiLanguageResources
+</code></pre>
+<p>Extracts a provisioning template in XML format from the current web including the fields, content types and supported ui languages.
+It will create a resource file for each supported language. The generated resource files will be named 'template.en-US.resx' etc.
+It is mandatory to include the &quot;SupportedUILanguages&quot; for these handlers as otherwise the resource files will not be created.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-configuration">-Configuration</h3>
 <p>Specify a JSON configuration file to configure the extraction progress.</p>

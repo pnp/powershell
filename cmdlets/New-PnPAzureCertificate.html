@@ -99,15 +99,15 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">New-PnPAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer
 </code></pre>
-<p>This will generate a default self-signed certificate named &quot;pnp.contoso.com&quot; valid for 10 years and output a pfx and cer file.</p>
+<p>This will generate a default self-signed certificate named &quot;pnp.contoso.com&quot; valid for 10 years and output a pfx and cer file to disk. The private key file (pfx) will not be password protected.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">New-PnPAzureCertificate -CommonName &quot;My Certificate&quot; -ValidYears 30
 </code></pre>
-<p>This will output a certificate named &quot;My Certificate&quot; which expires in 30 years from now.</p>
+<p>This will output a certificate named &quot;My Certificate&quot; which expires in 30 years from now to the screen. It will not write the certificate files to disk.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">New-PnPAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer -CertificatePassword (ConvertTo-SecureString -String &quot;pass@word1&quot; -AsPlainText -Force)
 </code></pre>
-<p>This will generate a default self-signed certificate named &quot;pnp.contoso.com&quot; valid for 10 years and output a pfx and cer file. The pfx file will have the password pass@word1 set on it.</p>
+<p>This will generate a default self-signed certificate named &quot;pnp.contoso.com&quot; valid for 10 years and output a pfx and cer file to disk. The pfx file will have the password pass@word1 set on it.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-certificatepassword">-CertificatePassword</h3>
 <p>Optional certificate password</p>
