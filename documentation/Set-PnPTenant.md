@@ -49,7 +49,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EmailAttestationRequired <Boolean>] [-EmailAttestationReAuthDays <Int32>] [-HideDefaultThemes <Boolean>]
  [-DisabledWebPartIds <Guid[]>] [-EnableAIPIntegration <Boolean>] [-DisableCustomAppAuthentication <Boolean>] 
  [-EnableAutoNewsDigest <Boolean>] [-CommentsOnListItemsDisabled <Boolean>] [-CommentsOnFilesDisabled <Boolean>]
- [-DisableBackToClassic <Boolean>]
+ [-DisableBackToClassic <Boolean>] [-InformationBarriersSuspension <Boolean>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -1196,7 +1196,63 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -InformationBarriersSuspension
+Allows suspension of the information barriers future in a Microsoft 365 tenant. Setting this to $true will disable information barriers, setting this to $falsde will enable information barriers. For more information, see https://docs.microsoft.com/sharepoint/information-barriers.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SetAllowFilesWithKeepLabelToBeDeletedSPO
+Allows configuration on if files located on SharePoint Online having retention labels on them blocking them from deletion ($false) or if they can be deleted which will move the file to the preservation hold library ($true)
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: $true
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SetAllowFilesWithKeepLabelToBeDeletedODB
+Allows configuration on if files located on OneDrive for Business having retention labels on them blocking them from deletion ($false) or if they can be deleted which will move the file to the preservation hold library ($true)
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: $true
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisableAddToOneDrive
+Allows configuration on `Add shortcut to OneDrive` feature in SharePoint document libraries. If set to `$true`, then this feature will be disabled on all sites in the tenant. If set to `$false`, it will be enabled on all sites in the tenant.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases: DisableAddShortcutsToOneDrive
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

@@ -23,10 +23,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Enable-PnPPageScheduling` and `Disable-PnPPageScheduling` to enable or disable page publishing scheduling on modern pages
 - Added ability to add multiple users to a Teams team in the `Add-PnPTeamsUser` cmdlet
 - Added `-Credentials $cred` or `-CurrentCredentials` to be allowed to be used in combination with `Connect-PnPOnline -SPOManagementshell`
+- Added `-InformationBarriersMode` in the `Set-PnPTenantSite` cmdlet which allows fine tuning of the information barriers mode per site collection
+- Added `-InformationBarriersSuspension` in the `Set-PnPTenant` cmdlet which allows information barriers to be enabled or disabled in a tenant   
 - Added `-Recycle` parameter to `Remove-PnPPage` to delete the page and send it to the recycle bin. This prevents permanently deleting the page and you can also restore it.
 - Added `-DemoteNewsArticle` parameter to the `Set-PnPPage` cmdlet to demote an existing news post to a regular page.
 - Added `-Translate` and `-TranslationLanguageCodes` parameters to `Set-PnPPage` and `Add-PnPPage`. This enables multilingual page creation in sites.
-   
+- Added `DisableSpacesActivation` state to be returned with `Get-PnPTenant`
+- Added `-AllowFilesWithKeepLabelToBeDeletedSPO` and `-AllowFilesWithKeepLabelToBeDeletedODB` options to `Set-PnPTenant` which allows configuration of files on SharePoint Online and OneDrive for Business being blocked by a retention policy to be possible to be deleted anyway and then moved to the preservation hold library. The default for SharePoint Online for this will change as announced in Message Center announcement MC264360. This will allow reverting it. The current values can be retrieved using `Get-PnPTenant`.
+- Added `DisableAddToOneDrive` state to be returned with `Get-PnPTenant` cmdlet.
+- Added `-DisableAddToOneDrive` to `Set-PnPTenant` cmdlet to enable/disable users from adding shortcuts to OneDrive.
+- Added `Set-PnPBuiltInSiteTemplateSettings` and `Get-PnPBuiltInSiteTemplateSettings` to allow making the built in SharePoint Online site templates visible or hidden and getting their current settings
+- Added support for Channel sites (ID 69) to `Add-PnPSiteDesign`, `Set-PnPSiteDesign` and `Add-PnPSiteDesignFromWeb`
+  
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads
 - Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`
@@ -42,11 +50,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Add-PnPListFoldersToProvisioningTemplate` not working when having nested folder structure   
 - Fixed documentation for `Get-PnPFlow` and `Enable-PnPFlow` cmdlets
 - Fixed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` not being able to deal with multi value properties on the Azure Active Directory side, such as `BusinessPhones`
+- Added `ResourceBehaviorOptions` option in `New-PnPTeamsTeam` cmdlet to set `ResourceBehaviorOptions` while provisioning a Team.
 - Fixed `Add-PnPListItem` issue with setting MultiChoice columns when using `-Batch` parameter
 - Fixed issue with `Remove-PnPListItem` when trying to use it with `Batch` parameter
 - Fixed `Add-PnPDataRowsToSiteTemplate` not exporting TaxonomyFieldValues properly
 - Fixed `Add/Set-PnPListItem` issue with managed metadata / taxonomy field value failing in a batched request.
 - Fixed `Set-PnPListItem` issue with setting `Modified` date value properly when using `-Batch` parameter.
+- Fixed `Get-PnPTeamsTeam -Identity` throwing an exception if the name of the team would contain special characters
 
 ### Removed
 - Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
@@ -64,6 +74,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Filip Bosmans [FilipBosmans]
 - [zylantha]
 - Justin [pagejustin]
+- Collin Argo [SCollinA]
+- Leon Armston [LeonArmston]
+- Lars Höög [h00g]
+- [kachihro]
+- [Andy-Dawson]
+- David Aeschlimann [TashunkoWitko]
 
 ## [1.8.0]
 

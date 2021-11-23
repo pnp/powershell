@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Model
 {
     public class SPOTenant
     {
-        public SPOTenant(Tenant tenant)
+        public SPOTenant(Tenant tenant, ClientContext clientContext)
         {
             this.hideDefaultThemes = tenant.HideDefaultThemes;
             this.storageQuota = tenant.StorageQuota;
@@ -344,11 +344,44 @@ namespace PnP.PowerShell.Commands.Model
             try
             {
                 this.disableCustomAppAuthentication = tenant.DisableCustomAppAuthentication;
-            } catch
+            }
+            catch
             {
                 this.disableCustomAppAuthentication = false;
-            }           
+            } 
+            try
+            {
+                this.allowFilesWithKeepLabelToBeDeletedSPO = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAllowFilesWithKeepLabelToBeDeletedSPO(clientContext).Value;
+            }
+            catch
+            {
+                this.allowFilesWithKeepLabelToBeDeletedSPO = true;
+            }    
+            try
+            {
+                this.allowFilesWithKeepLabelToBeDeletedODB = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAllowFilesWithKeepLabelToBeDeletedODB(clientContext).Value;
+            }
+            catch
+            {
+                this.allowFilesWithKeepLabelToBeDeletedODB = true;
+            }                                 
             this.markNewFilesSensitiveByDefault = tenant.MarkNewFilesSensitiveByDefault;
+            try
+            {
+                this.disableSpacesActivation = tenant.DisableSpacesActivation;
+            }
+            catch
+            {
+                this.disableSpacesActivation = false;
+            }
+            try
+            {
+                this.disableAddToOneDrive = tenant.DisableAddToOneDrive;
+            }
+            catch
+            {
+                this.disableAddToOneDrive = false;
+            }
         }
 
         public bool HideDefaultThemes => hideDefaultThemes;
@@ -489,6 +522,15 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool ViewInFileExplorerEnabled => viewInFileExplorerEnabled;
 
+        public bool DisableSpacesActivation => disableSpacesActivation;
+
+        public bool AllowFilesWithKeepLabelToBeDeletedSPO => allowFilesWithKeepLabelToBeDeletedSPO;
+
+        public bool AllowFilesWithKeepLabelToBeDeletedODB => allowFilesWithKeepLabelToBeDeletedODB;
+
+        public bool DisableAddToOneDrive => disableAddToOneDrive;
+
+
         private bool hideDefaultThemes;
 
         private long storageQuota;
@@ -626,6 +668,15 @@ namespace PnP.PowerShell.Commands.Model
         private bool stopNew2013Workflows;
 
         private bool viewInFileExplorerEnabled;
+
+
+        private bool disableSpacesActivation;
+
+        private bool allowFilesWithKeepLabelToBeDeletedSPO;
+
+        private bool allowFilesWithKeepLabelToBeDeletedODB;
+
+        private bool disableAddToOneDrive;
 
     }
 }
