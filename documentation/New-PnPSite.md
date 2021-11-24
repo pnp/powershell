@@ -140,6 +140,13 @@ New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://t
 
 This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the default language to Italian (LCID 1040).
 
+### EXAMPLE 1
+```powershell
+New-PnPSite -Type CommunicationSite -Title NewContoso -Url https://tenant.sharepoint.com/sites/contoso/newContoso
+```
+
+This will create a new Communications Site collection with the title 'NewContoso' and the url 'https://tenant.sharepoint.com/sites/contoso/newContoso'
+
 ## PARAMETERS
 
 ### -Alias
