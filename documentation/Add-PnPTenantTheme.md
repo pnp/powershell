@@ -63,6 +63,40 @@ Add-PnPTenantTheme -Identity "MyCompanyTheme" -Palette $themepalette -IsInverted
 
 This example adds a theme to the current tenant.
 
+### EXAMPLE 2
+```powershell
+$themepalette = @{
+  "themePrimary" = "#00ffff";
+  "themeLighterAlt" = "#f3fcfc";
+  "themeLighter" = "#daffff";
+  "themeLight" = "#affefe";
+  "themeTertiary" = "#76ffff";
+  "themeSecondary" = "#39ffff";
+  "themeDarkAlt" = "#00c4c4";
+  "themeDark" = "#009090";
+  "themeDarker" = "#005252";
+  "neutralLighterAlt" = "#f8f8f8";
+  "neutralLighter" = "#f4f4f4";
+  "neutralLight" = "#eaeaea";
+  "neutralQuaternaryAlt" = "#dadada";
+  "neutralQuaternary" = "#d0d0d0";
+  "neutralTertiaryAlt" = "#c8c8c8";
+  "neutralTertiary" = "#a6a6a6";
+  "neutralSecondaryAlt" = "#767676";
+  "neutralSecondary" = "#666666";
+  "neutralPrimary" = "#333";
+  "neutralPrimaryAlt" = "#3c3c3c";
+  "neutralDark" = "#212121";
+  "black" = "#000000";
+  "white" = "#fff";
+  "primaryBackground" = "#fff";
+  "primaryText" = "#333"
+ }
+Add-PnPTenantTheme -Identity "MyCompanyTheme" -Palette $themepalette -IsInverted $false -Overwrite
+```
+
+This example overwrites an existing theme on the current tenant.
+
 ## PARAMETERS
 
 ### -Connection
@@ -108,7 +142,7 @@ Accept wildcard characters: False
 ```
 
 ### -Overwrite
-{{ Fill Overwrite Description }}
+Use this parameter to allow existing theme with the same name to be overwritten.
 
 ```yaml
 Type: SwitchParameter
