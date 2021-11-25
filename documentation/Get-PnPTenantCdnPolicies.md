@@ -24,7 +24,7 @@ Get-PnPTenantCdnPolicies -CdnType <SPOTenantCdnType> [-Connection <PnPConnection
 ```
 
 ## DESCRIPTION
-Enables or disabled the public or private Office 365 Content Delivery Network (CDN).
+Retrieves the current CDN policies for the tenant for the specified CDN type.
 
 ## EXAMPLES
 

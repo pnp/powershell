@@ -33,7 +33,29 @@ Get-PnPPowerPlatformEnvironment
 
 This cmdlets returns the Power Platform environments for the current tenant.
 
+### Example 2
+```powershell
+Get-PnPPowerPlatformEnvironment -IsDefault $true
+```
+
+This cmdlets returns the default Power Platform environment for the current tenant.
+
 ## PARAMETERS
+
+### -IsDefault
+Allows retrieval of the default Power Platform environment by passing in `-IsDefault $true`. When passing in `-IsDefault $false` you will get all non default environments. If not provided at all, all available environments, both default and non-default, will be returned.
+
+```yaml
+Type: bool
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Connection
 Optional connection to be used by the cmdlet.

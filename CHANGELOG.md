@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current Nightly]
 
 ### Added
+- Added `Get-PnPTenantInstance` which will return one or more tenant instances, depending if you have a multi-geo or single-geo (default) tenant.
 - Added optional `-ScheduledPublishDate` parameter to `Add-PnPPage` and `Set-PnPPage` to allow for scheduling a page to be published
 - Added `-RemoveScheduledPublish` to `Set-PnPPage` to allow for a page publish schedule to be removed
 - Added support for off peak SharePoint Syntex content classification and extraction for lists and folders via new `-OffPeak` and `-Folder` parameters for `Request-PnPSyntexClassifyAndExtract`
@@ -33,7 +34,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `DisableAddToOneDrive` state to be returned with `Get-PnPTenant` cmdlet.
 - Added `-DisableAddToOneDrive` to `Set-PnPTenant` cmdlet to enable/disable users from adding shortcuts to OneDrive.
 - Added optional `-Site` parameter to `Add-PnPContentTypesFromContenTypeHub` which allows a specific site to be specified to add the content type hub content types to
-  
+- Added `Set-PnPBuiltInSiteTemplateSettings` and `Get-PnPBuiltInSiteTemplateSettings` to allow making the built in SharePoint Online site templates visible or hidden and getting their current settings
+- Added support for Channel sites (ID 69) to `Add-PnPSiteDesign`, `Set-PnPSiteDesign` and `Add-PnPSiteDesignFromWeb`
+- Added optional `-IsDefault` option to `Get-PnPPowerPlatformEnvironment` which allows just the default or non default environments to be returned. If not provided, all environments will be returned as was the case before this addition.
+
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads
 - Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`
@@ -57,6 +61,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Add/Set-PnPListItem` issue with managed metadata / taxonomy field value failing in a batched request.
 - Fixed `Set-PnPListItem` issue with setting `Modified` date value properly when using `-Batch` parameter.
 - Fixed `Get-PnPTeamsTeam -Identity` throwing an exception if the name of the team would contain special characters
+- Fixed `Get-PnPTerm` throwing an exception when used in combination with `-Includes` [#1384](https://github.com/pnp/powershell/pull/1384)
+- Fixed `Get-PnPDiagnostics` throwing an unable to cast exception under some circumstances [#1380](https://github.com/pnp/powershell/pull/1380)
 
 ### Removed
 - Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
@@ -77,6 +83,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Collin Argo [SCollinA]
 - Leon Armston [LeonArmston]
 - Lars Höög [h00g]
+- [kachihro]
+- [Andy-Dawson]
+- David Aeschlimann [TashunkoWitko]
+- [outorted]
+- [dkardokas]
+- Asad Refai [asadrefai]
+- Giacomo Pozzoni [jackpoz]
 
 ## [1.8.0]
 

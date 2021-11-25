@@ -114,7 +114,6 @@ namespace PnP.PowerShell.Commands
             {
                 WriteError(new ErrorRecord(new ItemNotFoundException(), "SITEDESIGNNOTFOUND", ErrorCategory.ObjectNotFound, Identity));
             }
-
         }
     }
 }

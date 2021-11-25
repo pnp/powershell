@@ -194,7 +194,7 @@ Specifies the type of site to which this design applies
 ```yaml
 Type: SiteWebTemplate
 Parameter Sets: (All)
-Accepted values: TeamSite, CommunicationSite
+Accepted values: TeamSite, CommunicationSite, GrouplessTeamSite, ChannelSite
 
 Required: False
 Position: Named
@@ -207,9 +207,8 @@ Accept wildcard characters: False
 The URL of a thumbnail image. If none is specified, SharePoint uses a generic image. Recommended size is 400 x 300 pixels.
 
 ```yaml
-Type: SiteWebTemplate
+Type: String
 Parameter Sets: (All)
-Accepted values: TeamSite, CommunicationSite
 
 Required: False
 Position: Named
