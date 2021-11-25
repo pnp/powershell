@@ -15,17 +15,17 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPBuiltInSiteTempl
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Allows configuration of the built into SharePoint Online site templates.
+Allows configuration of the built-in SharePoint Online site templates.
 
 ## SYNTAX
 
-### Configure by the site template identifier
+### Configure through the site template identifier
 
 ```powershell
 Set-PnPBuiltInSiteTemplateSettings -Identity <BuiltInSiteTemplateSettingsPipeBind> -IsHidden <Boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
-### Configure by the site template name
+### Configure through the site template name
 
 ```powershell
 Set-PnPBuiltInSiteTemplateSettings -Template <BuiltInSiteTemplates> -IsHidden <Boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
@@ -47,26 +47,26 @@ Makes the Event Planning template visible
 Set-PnPBuiltInSiteTemplateSettings -Identity 00000000-0000-0000-0000-000000000000 -IsHidden $true
 ```
 
-Hides by the default all the built into SharePoint Online site templates, except those specifically configured to be visible again
+Hides all the default built-in SharePoint Online site templates, except those specifically configured to be visible again
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPBuiltInSiteTemplateSettings -Template CrisisManagement -IsHidden $true
 ```
 
-Makes the Crisis Management template invisible
+Hides the Crisis Management template
 
 ### EXAMPLE 4
 ```powershell
 Set-PnPBuiltInSiteTemplateSettings -Template All -IsHidden $false
 ```
 
-Shows by the default all the built into SharePoint Online site templates, except those specifically configured to be hidden
+Shows by the default all the built-in SharePoint Online site templates, except those specifically configured to be hidden
 
 ## PARAMETERS
 
 ### -Identity
-Id of the built in site template to configure. See https://docs.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description for the full list of available types.
+Id of the built-in site template to configure. See https://docs.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description for the full list of available types.
 
 ```yaml
 Type: Guid
@@ -80,7 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -Template
-Internal name of the template to configure
+Internal name of the template
 
 ```yaml
 Type: BuiltInSiteTemplates
@@ -123,7 +123,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs. No changes will be made.
 
 ```yaml
 Type: SwitchParameter
