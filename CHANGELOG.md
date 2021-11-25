@@ -82,6 +82,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - [Andy-Dawson]
 - David Aeschlimann [TashunkoWitko]
 - [outorted]
+- Asad Refai [asadrefai]
 
 ## [1.8.0]
 
