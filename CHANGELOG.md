@@ -58,6 +58,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Add/Set-PnPListItem` issue with managed metadata / taxonomy field value failing in a batched request.
 - Fixed `Set-PnPListItem` issue with setting `Modified` date value properly when using `-Batch` parameter.
 - Fixed `Get-PnPTeamsTeam -Identity` throwing an exception if the name of the team would contain special characters
+- Fixed `Get-PnPDiagnostics` throwing an unable to cast exception under some circumstances [#1380](https://github.com/pnp/powershell/pull/1380)
 
 ### Removed
 - Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
@@ -82,6 +83,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - [Andy-Dawson]
 - David Aeschlimann [TashunkoWitko]
 - [outorted]
+- Giacomo Pozzoni [jackpoz]
 
 ## [1.8.0]
 
