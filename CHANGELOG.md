@@ -83,6 +83,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - [Andy-Dawson]
 - David Aeschlimann [TashunkoWitko]
 - [outorted]
+- Asad Refai [asadrefai]
 - Giacomo Pozzoni [jackpoz]
 
 ## [1.8.0]
