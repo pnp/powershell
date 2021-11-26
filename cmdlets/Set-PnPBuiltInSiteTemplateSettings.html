@@ -88,12 +88,12 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Allows configuration of the built into SharePoint Online site templates.</p>
+<p>Allows configuration of the built-in SharePoint Online site templates.</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="configure-by-the-site-template-identifier">Configure by the site template identifier</h3>
+<h3 id="configure-through-the-site-template-identifier">Configure through the site template identifier</h3>
 <pre><code class="lang-powershell">Set-PnPBuiltInSiteTemplateSettings -Identity &lt;BuiltInSiteTemplateSettingsPipeBind&gt; -IsHidden &lt;Boolean&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
-<h3 id="configure-by-the-site-template-name">Configure by the site template name</h3>
+<h3 id="configure-through-the-site-template-name">Configure through the site template name</h3>
 <pre><code class="lang-powershell">Set-PnPBuiltInSiteTemplateSettings -Template &lt;BuiltInSiteTemplates&gt; -IsHidden &lt;Boolean&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -105,18 +105,18 @@
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPBuiltInSiteTemplateSettings -Identity 00000000-0000-0000-0000-000000000000 -IsHidden $true
 </code></pre>
-<p>Hides by the default all the built into SharePoint Online site templates, except those specifically configured to be visible again</p>
+<p>Hides all the default built-in SharePoint Online site templates, except those specifically configured to be visible again</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPBuiltInSiteTemplateSettings -Template CrisisManagement -IsHidden $true
 </code></pre>
-<p>Makes the Crisis Management template invisible</p>
+<p>Hides the Crisis Management template</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Set-PnPBuiltInSiteTemplateSettings -Template All -IsHidden $false
 </code></pre>
-<p>Shows by the default all the built into SharePoint Online site templates, except those specifically configured to be hidden</p>
+<p>Shows by the default all the built-in SharePoint Online site templates, except those specifically configured to be hidden</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
-<p>Id of the built in site template to configure. See <a href="https://docs.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description">https://docs.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description</a> for the full list of available types.</p>
+<p>Id of the built-in site template to configure. See <a href="https://docs.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description">https://docs.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description</a> for the full list of available types.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: ByIdentity
 
@@ -127,7 +127,7 @@ Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-template">-Template</h3>
-<p>Internal name of the template to configure</p>
+<p>Internal name of the template</p>
 <pre><code class="lang-yaml">Type: BuiltInSiteTemplates
 Parameter Sets: ByTemplate
 
@@ -161,7 +161,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
+<p>Shows what would happen if the cmdlet runs. No changes will be made.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: wi

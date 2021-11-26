@@ -90,18 +90,18 @@
 </ul>
 <p>Adds published content types from content type hub site to current site. If the content type already exists on the current site then the latest published version of the content type will be synced to the site.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPContentTypesFromContentTypeHub -ContentTypes List&lt;String&gt;
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPContentTypesFromContentTypeHub -ContentTypes List&lt;String&gt; [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell"> $list = New-Object Collections.Generic.List[string]
- $list.Add('0x0101')
- $list.Add('0x01')
-Add-PnPContentTypesFromContentTypeHub -ContentTypes $list
+<pre><code class="lang-powershell"> Add-PnPContentTypesFromContentTypeHub -ContentTypes &quot;0x0101&quot;, &quot;0x01&quot;
 </code></pre>
 <p>This will add the content types with the ids '0x0101' and '0x01' to the current site. Latest published version of these content types will be synced if they were already present in the current site.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell"> Add-PnPContentTypesFromContentTypeHub -ContentTypes &quot;0x010057C83E557396744783531D80144BD08D&quot; -Site https://tenant.sharepoint.com/sites/HR
+</code></pre>
+<p>This will add the content type with the id '0x010057C83E557396744783531D80144BD08D' to the site with the provided URL. Latest published version of these content types will be synced if they were already present in the current site.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -122,6 +122,17 @@ Parameter Sets: (All)
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-site">-Site</h3>
+<p>The site to which to add the content types coming from the hub. If omitted, it will be applied to the currently connected to site.</p>
+<pre><code class="lang-yaml">Type: SitePipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: Currently connected to site
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

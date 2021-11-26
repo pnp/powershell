@@ -105,10 +105,14 @@
 <p>Many times exporting a Microsoft Power Automate Flow will not be possible due to various reasons such as connections having gone stale, SharePoint sites referenced no longer existing or other configuration errors in the Flow. To display these errors when trying to export a Flow, provide the -Verbose flag with your export request. If not provided, these errors will silently be ignored.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPFlowEnvironment
+<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment -IsDefault $true
 Export-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 </code></pre>
-<p>This will export the specified Microsoft Power Automate Flow as an output to the current output of PowerShell</p>
+<p>This will export the specified Microsoft Power Automate Flow from the default Power Platform environment as an output to the current output of PowerShell</p>
+<h3 id="example-2">Example 2</h3>
+<pre><code class="lang-powershell">Get-PnPPowerPlatformEnvironment | foreach { Get-PnPFlow -Environment $_.Name } | foreach { Export-PnPFlow -Environment $_.Properties.EnvironmentDetails.Name -Identity $_ -OutPath &quot;c:\flows\$($_.Name).zip&quot; -AsZipPackage }
+</code></pre>
+<p>This will export all the Microsoft Power Automate Flows available within the tenant from all users from all the available Power Platform environments as a ZIP package for each of them to a local folder c:\flows</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-aszippackage">-AsZipPackage</h3>
 <p>If specified the flow will be exported as a zip package</p>

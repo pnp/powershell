@@ -127,6 +127,37 @@
 Add-PnPTenantTheme -Identity &quot;MyCompanyTheme&quot; -Palette $themepalette -IsInverted $false
 </code></pre>
 <p>This example adds a theme to the current tenant.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">$themepalette = @{
+  &quot;themePrimary&quot; = &quot;#00ffff&quot;;
+  &quot;themeLighterAlt&quot; = &quot;#f3fcfc&quot;;
+  &quot;themeLighter&quot; = &quot;#daffff&quot;;
+  &quot;themeLight&quot; = &quot;#affefe&quot;;
+  &quot;themeTertiary&quot; = &quot;#76ffff&quot;;
+  &quot;themeSecondary&quot; = &quot;#39ffff&quot;;
+  &quot;themeDarkAlt&quot; = &quot;#00c4c4&quot;;
+  &quot;themeDark&quot; = &quot;#009090&quot;;
+  &quot;themeDarker&quot; = &quot;#005252&quot;;
+  &quot;neutralLighterAlt&quot; = &quot;#f8f8f8&quot;;
+  &quot;neutralLighter&quot; = &quot;#f4f4f4&quot;;
+  &quot;neutralLight&quot; = &quot;#eaeaea&quot;;
+  &quot;neutralQuaternaryAlt&quot; = &quot;#dadada&quot;;
+  &quot;neutralQuaternary&quot; = &quot;#d0d0d0&quot;;
+  &quot;neutralTertiaryAlt&quot; = &quot;#c8c8c8&quot;;
+  &quot;neutralTertiary&quot; = &quot;#a6a6a6&quot;;
+  &quot;neutralSecondaryAlt&quot; = &quot;#767676&quot;;
+  &quot;neutralSecondary&quot; = &quot;#666666&quot;;
+  &quot;neutralPrimary&quot; = &quot;#333&quot;;
+  &quot;neutralPrimaryAlt&quot; = &quot;#3c3c3c&quot;;
+  &quot;neutralDark&quot; = &quot;#212121&quot;;
+  &quot;black&quot; = &quot;#000000&quot;;
+  &quot;white&quot; = &quot;#fff&quot;;
+  &quot;primaryBackground&quot; = &quot;#fff&quot;;
+  &quot;primaryText&quot; = &quot;#333&quot;
+ }
+Add-PnPTenantTheme -Identity &quot;MyCompanyTheme&quot; -Palette $themepalette -IsInverted $false -Overwrite
+</code></pre>
+<p>This example overwrites an existing theme on the current tenant.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -162,7 +193,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-overwrite">-Overwrite</h3>
-<p>{{ Fill Overwrite Description }}</p>
+<p>Use this parameter to allow existing theme with the same name to be overwritten.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
