@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Admin
         {
             if (ParameterSetName == ParamSet_ById)
             {
-                HubSiteProperties sourceProperties = this.Tenant.GetHubSitePropertiesById(Source);
+                HubSiteProperties sourceProperties = Tenant.GetHubSitePropertiesById(Source);
                 ClientContext.Load(sourceProperties);
                 sourceProperties.ParentHubSiteId = Target;
                 sourceProperties.Update();
@@ -41,14 +41,49 @@ namespace PnP.PowerShell.Commands.Admin
             }
             else
             {
-                HubSiteProperties sourceProperties = this.Tenant.GetHubSitePropertiesByUrl(SourceUrl);
-                ClientContext.Load(sourceProperties);
-                var targetSite = this.Tenant.GetSiteByUrl(TargetUrl);
-                ClientContext.Load(targetSite);
+                ClientObjectList<HubSiteProperties> hubSitesProperties = Tenant.GetHubSitesProperties();
+                ClientContext.Load(hubSitesProperties);
                 ClientContext.ExecuteQueryRetry();
-                sourceProperties.ParentHubSiteId = targetSite.HubSiteId;
-                sourceProperties.Update();
-                ClientContext.ExecuteQueryRetry();
+
+                var sourceEnumerator = hubSitesProperties.GetEnumerator();
+                var destEnumerator = hubSitesProperties.GetEnumerator();
+                bool sourceHubSiteFound = false;
+                bool destinationHubSiteFound = false;
+                while (sourceEnumerator.MoveNext())
+                {
+                    HubSiteProperties hubsite = sourceEnumerator.Current;
+                    if (hubsite.SiteUrl.ToLower() == SourceUrl.ToLower())
+                    {
+                        sourceHubSiteFound = true;
+                        break;
+                    }
+                }
+
+                while (destEnumerator.MoveNext())
+                {
+                    HubSiteProperties hubsite = destEnumerator.Current;
+                    if (hubsite.SiteUrl.ToLower() == TargetUrl.ToLower())
+                    {
+                        destinationHubSiteFound = true;
+                        break;
+                    }
+                }
+
+                if (sourceHubSiteFound && destinationHubSiteFound)
+                {
+                    HubSiteProperties sourceProperties = Tenant.GetHubSitePropertiesByUrl(SourceUrl);
+                    ClientContext.Load(sourceProperties);
+                    Microsoft.SharePoint.Client.Site targetSite = Tenant.GetSiteByUrl(TargetUrl);
+                    ClientContext.Load(targetSite);
+                    ClientContext.ExecuteQueryRetry();
+                    sourceProperties.ParentHubSiteId = targetSite.HubSiteId;
+                    sourceProperties.Update();
+                    ClientContext.ExecuteQueryRetry();
+                }
+                else
+                {
+                    throw new PSInvalidOperationException("Both source and destination site needs to be Hub sites.");
+                }
             }
         }
     }
