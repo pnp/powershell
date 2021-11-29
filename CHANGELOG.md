@@ -66,6 +66,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Removed
 - Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
+- Removed `Get-PnPSubWebs` as that was marked deprecated a year ago. Use `Get-PnPSubWeb` instead.
 
 ### Contributors
 - Koen Zomers [koenzomers]
