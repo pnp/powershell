@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Update-PnPUserType.html
 # Update-PnPUserType
 
 ## SYNOPSIS
-Updates an available app from the app catalog
+Updates an user's UserType across all SharePoint online sites.
 
 ## SYNTAX
 
