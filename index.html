@@ -76,17 +76,18 @@
                   </div>
                     <h1 id="pnp-powershell">PnP PowerShell</h1>
 
-<p>PnP PowerShell is a <strong>cross-platform</strong> PowerShell Module providing over 500 cmdlets that work with Microsoft 365 environments and more specifically SharePoint Online, Microsoft Teams, Microsoft Planner and Microsoft Flow.</p>
+<p>PnP PowerShell is a <strong>cross-platform</strong> PowerShell Module providing over 600 cmdlets that work with Microsoft 365 environments and more specifically SharePoint Online, Microsoft Teams, Microsoft Planner and Microsoft Flow.</p>
 <div class="NOTE">
 <h5>Note</h5>
 <p>This module is a successor of the <a href="https://github.com/pnp/pnp-powershell">SharePointPnPPowerShellOnline</a> module, which is now regarded legacy and not maintained anymore. This newer version of the PowerShell module is cross-platform (e.g. it works on Windows, MacOS and Linux) however will only support SharePoint Online. Going forward will only be actively maintaining the cross-platform PnP PowerShell module.</p>
 </div>
 <h1 id="getting-up-and-running">Getting up and running</h1>
+<p>It is recommended to use PowerShell 7.x, which can be installed by following <a href="https://docs.microsoft.com/powershell/scripting/install/installing-powershell-on-windows">these instructions</a>. Most of the cmdlets should work under PowerShell 5.x as well, though.</p>
 <p>To install PnP PowerShell:</p>
 <pre><code class="lang-powershell">Install-Module -Name PnP.PowerShell
 </code></pre>
 <p>To install a nightly build of PnP PowerShell:</p>
-<pre><code class="lang-powershell">Install-Module -Name PnP.PowerShell -AllowPrerelease
+<pre><code class="lang-powershell">Install-Module -Name PnP.PowerShell -AllowPrerelease -SkipPublisherCheck -AllowClobber
 </code></pre>
 <p>See the <a href="/powershell/articles">articles</a> section for more information on authentication and configuration. All <a href="/powershell/cmdlets/Add-PnPAlert.html">cmdlets</a> have been documented too.</p>
 <h1 id="ive-found-a-bug-where-do-i-need-to-log-an-issue-or-create-a-pr">I've found a bug, where do I need to log an issue or create a PR</h1>
