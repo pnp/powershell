@@ -38,12 +38,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support for Channel sites (ID 69) to `Add-PnPSiteDesign`, `Set-PnPSiteDesign` and `Add-PnPSiteDesignFromWeb`
 - Added optional `-IsDefault` option to `Get-PnPPowerPlatformEnvironment` which allows just the default or non default environments to be returned. If not provided, all environments will be returned as was the case before this addition.
 - Added `ResourceBehaviorOptions` option in `New-PnPTeamsTeam` cmdlet to set `ResourceBehaviorOptions` while provisioning a Team
+- Added alias on `Copy-PnPFile` for `Copy-PnPFolder`. It could already be used to copy a folder, but to make this more clear, and as we already had a `Copy/Move-PnPFolder` as well, the same cmdlet is now also available under its alternative cmdlet name.
 
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads
-- Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`
-- A clearer error message will now be returned when using `Add-PnPListItem -List` and specifying an invalid list name
-- Response of `Add-PnPContentTypesFromContenTypeHub` is now returned in the root of the response as well as under Value as it was previously for backwards compatibility
+- Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`.
+- A clearer error message will now be returned when using `Add-PnPListItem -List` and specifying an invalid list name.
+- Response of `Add-PnPContentTypesFromContenTypeHub` is now returned in the root of the response as well as under Value as it was previously for backwards compatibility.
+- Improved synopsis documentation for `Update-PnPUserType` cmdlet.
      
 ### Fixed
 - Fixed `Get-PnPGroupMember -User` not properly returning the specified user
@@ -66,6 +68,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Removed
 - Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
+- Removed `Get-PnPSubWebs` as that was marked deprecated a year ago. Use `Get-PnPSubWeb` instead. [#1394](https://github.com/pnp/powershell/pull/1394)
 
 ### Contributors
 - Koen Zomers [koenzomers]
