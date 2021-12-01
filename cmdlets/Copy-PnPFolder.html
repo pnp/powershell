@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Move-PnPFile | PnP PowerShell </title>
+    <title>Copy-PnPFolder | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Move-PnPFile | PnP PowerShell ">
+    <meta name="title" content="Copy-PnPFolder | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,80 +77,72 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="move-pnpfile">Move-PnPFile</h1>
+                    <h1 id="copy-pnpfolder">Copy-PnPFolder</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Moves a file or folder to a different location</p>
+<p>Copies a folder or file to a different location</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Move-PnPFile [-SourceUrl] &lt;String&gt; [-TargetUrl] &lt;String&gt; [-Overwrite] [-AllowSchemaMismatch] [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-NoWait] [-Force] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Copy-PnPFolder [-SourceUrl] &lt;String&gt; [-TargetUrl] &lt;String&gt; [-Overwrite] [-Force] [-IgnoreVersionHistory] [-NoWait] [-Connection &lt;PnPConnection&gt;]  
+  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows moving a file or folder to a different location inside the same document library, such as in a subfolder, to a different document library on the same site collection or to a document library on another site collection. If you move a file to a different site or subweb you cannot specify a target filename.</p>
-<p>Moving files and folders is bound to some restrictions. You can find more on it here: <a href="https://docs.microsoft.com/office365/servicedescriptions/sharepoint-online-service-description/sharepoint-online-limits#moving-and-copying-across-sites">https://docs.microsoft.com/office365/servicedescriptions/sharepoint-online-service-description/sharepoint-online-limits#moving-and-copying-across-sites</a></p>
+<p>Copies a folder or file to a different location. This location can be within the same document library, same site, same site collection or even to another site collection on the same tenant. Currently there is a 200MB file size limit for the file or folder to be copied. Notice that if copying between sites or to a subsite you cannot specify a target filename, only a folder name.</p>
+<p>Copying files and folders is bound to some restrictions. You can find more on it here: <a href="https://docs.microsoft.com/office365/servicedescriptions/sharepoint-online-service-description/sharepoint-online-limits#moving-and-copying-across-sites">https://docs.microsoft.com/office365/servicedescriptions/sharepoint-online-service-description/sharepoint-online-limits#moving-and-copying-across-sites</a></p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Move-PnPFile -SourceUrl &quot;Shared Documents/Document.docx&quot; -TargetUrl &quot;Archive/Document2.docx&quot;
+<pre><code class="lang-powershell">Copy-PnPFolder -SourceUrl &quot;Shared Documents/MyProjectfiles&quot; -TargetUrl &quot;/sites/otherproject/Shared Documents&quot; -Overwrite
 </code></pre>
-<p>Moves a file named Document.docx located in the document library named &quot;Shared Documents&quot; in the current site to the document library named &quot;Archive&quot; in the same site, renaming the file to Document2.docx. If a file named Document2.docx already exists at the destination, it won't perform the move.</p>
+<p>Copies a folder named MyProjectFiles in the document library called Documents located in the current site to the root folder of the library named Documents in the site collection otherproject. If a folder named MyProjectFiles already exists, it will overwrite it.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Move-PnPFile -SourceUrl &quot;Shared Documents/Document.docx&quot; -TargetUrl &quot;Archive&quot; -Overwrite
+<pre><code class="lang-powershell">Copy-PnPFolder -SourceUrl &quot;/sites/project/Shared Documents/company.docx&quot; -TargetUrl &quot;/sites/otherproject/Shared Documents&quot;
 </code></pre>
-<p>Moves a file named Document.docx located in the document library named &quot;Shared Documents&quot; in the current site to the document library named &quot;Archive&quot; in the same site. If a file named Document.docx already exists at the destination, it will overwrite it.</p>
+<p>Copies a file named company.docx located in a document library called Shared Documents in the site collection project to the Shared Documents library in the site collection otherproject. If a file named company.docx already exists, it won't perform the copy.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Move-PnPFile -SourceUrl &quot;Shared Documents/Document.docx&quot; -TargetUrl &quot;/sites/otherproject/Shared Documents&quot; -Overwrite -AllowSchemaMismatch -AllowSmallerVersionLimitOnDestination
+<pre><code class="lang-powershell">Copy-PnPFolder -SourceUrl &quot;Shared Documents/company.docx&quot; -TargetUrl &quot;/sites/otherproject/Shared Documents&quot; -IgnoreVersionHistory
 </code></pre>
-<p>Moves a file named Document.docx located in the document library named &quot;Shared Documents&quot; in the current site to the document library named &quot;Shared Documents&quot; in another site collection &quot;otherproject&quot; allowing it to overwrite an existing file Document.docx in the destination, allowing the fields to be different on the destination document library from the source document library and allowing a lower document version limit on the destination compared to the source.</p>
+<p>Copies a file named company.docx located in a document library called Documents in the current site to the site collection otherproject. If a file named company.docx already exists, it won't perform the copy. Only the latest version of the file will be copied and its history will be discarded.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Move-PnPFile -SourceUrl &quot;/sites/project/Shared Documents/Archive&quot; -TargetUrl &quot;/sites/archive/Project&quot; -AllowSchemaMismatch -AllowSmallerVersionLimitOnDestination
+<pre><code class="lang-powershell">Copy-PnPFolder -SourceUrl &quot;/sites/project/Shared Documents/Archive&quot; -TargetUrl &quot;/sites/otherproject/Shared Documents&quot; -Overwrite
 </code></pre>
-<p>Moves a folder named Archive located in the document library named &quot;Shared Documents&quot; in the current site to the document library named &quot;Project&quot; in another site collection &quot;archive&quot; not allowing it to overwrite an existing folder named &quot;Archive&quot; in the destination, allowing the fields to be different on the destination document library from the source document library and allowing a lower document version limit on the destination compared to the source.</p>
+<p>Copies a folder named Archive located in a document library called Shared Documents in the site collection project to the Shared Documents library in the site collection otherproject. If a folder named Archive already exists, it will overwrite it.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">$job = Move-PnPFile -SourceUrl &quot;Shared Documents/company.docx&quot; -TargetUrl &quot;SubSite2/Shared Documents&quot; -NoWait
+<pre><code class="lang-powershell">Copy-PnPFolder -SourceUrl &quot;Documents/company.docx&quot; -TargetUrl &quot;Documents/company2.docx&quot;
+</code></pre>
+<p>Copies a file named company.docx located in a document library called Documents to a new document named company2.docx in the same library.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Copy-PnPFolder -SourceUrl &quot;Shared Documents/company.docx&quot; -TargetUrl &quot;Shared Documents2/company.docx&quot;
+</code></pre>
+<p>Copies a file named company.docx located in a document library called Documents to a document library called Documents2 in the same site.</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Copy-PnPFolder -SourceUrl &quot;Shared DocuDocuments/company.docx&quot; -TargetUrl &quot;Subsite/Shared Documents&quot;
+</code></pre>
+<p>Copies a file named company.docx located in a document library called Documents to the document library named Documents in a subsite named Subsite keeping the file name.</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Copy-PnPFolder -SourceUrl &quot;Shared Documents/company.docx&quot; -TargetUrl &quot;/sites/otherproject/Shared Documents&quot; -Overwrite
+</code></pre>
+<p>Copies a file named company.docx located in a document library called Documents in the current site to the site collection otherproject. If a file named company.docx already exists, it will still perform the copy and replace the original company.docx file.</p>
+<h3 id="example-9">EXAMPLE 9</h3>
+<pre><code class="lang-powershell">Copy-PnPFolder -SourceUrl &quot;Shared Documents/MyDocs&quot; -TargetUrl &quot;/sites/otherproject/Documents&quot; -Overwrite
+</code></pre>
+<p>Copies a folder named MyDocs in the document library called Documents located in the current site to the site collection otherproject. If the MyDocs folder exist it will copy into it, if not it will be created.</p>
+<h3 id="example-10">EXAMPLE 10</h3>
+<pre><code class="lang-powershell">Copy-PnPFolder -SourceUrl &quot;SubSite1/Documents/company.docx&quot; -TargetUrl &quot;SubSite2/Documents&quot;
+</code></pre>
+<p>Copies a file named company.docx in the library named Documents in SubSite1 to the library named Documents in SubSite2.</p>
+<h3 id="example-11">EXAMPLE 11</h3>
+<pre><code class="lang-powershell">$job = Copy-PnPFolder -SourceUrl &quot;Shared Documents/company.docx&quot; -TargetUrl &quot;SubSite2/Shared Documents&quot; -NoWait
 $jobStatus = Receive-PnPCopyMoveJobStatus -Job $result
 if($jobStatus.JobState == 0)
 {
   Write-Host &quot;Job finished&quot;
 }
 </code></pre>
-<p>Moves a file named company.docx from the current document library to the documents library in SubSite2. It will not wait for the action to return but returns job information instead. The Receive-PnPCopyMoveJobStatus cmdlet will return the job status.</p>
+<p>Copies a file named company.docx from the current document library to the documents library in SubSite2. It will not wait for the action to return but returns job information instead. The Receive-PnPCopyMoveJobStatus cmdlet will return the job status.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-allowschemamismatch">-AllowSchemaMismatch</h3>
-<p>If provided and the target document library specified using TargetServerRelativeLibrary has different fields than the document library where the document is being moved from, the move will succeed. If not provided, it will fail to protect against data loss of metadata stored in fields that cannot be moved along.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-allowsmallerversionlimitondestination">-AllowSmallerVersionLimitOnDestination</h3>
-<p>If provided and the target document library specified using TargetServerRelativeLibrary is configured to keep less historical versions of documents than the document library where the document is being moved from, the move will succeed. If not provided, it will fail to protect against data loss of historical versions that cannot be moved along.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-force">-Force</h3>
 <p>If provided, no confirmation will be requested and the action will be performed</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
@@ -163,7 +155,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-ignoreversionhistory">-IgnoreVersionHistory</h3>
-<p>If provided, only the latest version of the document will be moved and its history will be discared. If not provided, all historical versions will be moved along.</p>
+<p>If provided, only the latest version of the document will be copied and its history will be discarded. If not provided, all historical versions will be copied.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -174,7 +166,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-overwrite">-Overwrite</h3>
-<p>If provided, if a file or folder already exists at the TargetUrl, it will be overwritten. If omitted, the move operation will be canceled if the file or folder already exists at the TargetUrl location.</p>
+<p>If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the copy operation will be canceled if the file already exists at the TargetUrl location.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -185,20 +177,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-sourceurl">-SourceUrl</h3>
-<p>Site or server relative URL specifying the file or folder to move. Must include the file name if it is a file or the entire path to the folder if it is a folder.</p>
+<p>Site or server relative URL specifying the file or folder to copy. Must include the file name if it is a file or the entire path to the folder if it is a folder.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases: SiteRelativeUrl, ServerRelativeUrl
 
 Required: True
-Position: 0
+Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-targeturl">-TargetUrl</h3>
-<p>Site or server relative URL of a document library where to move the file or folder to.</p>
+<p>Site or server relative URL where to copy the file or folder to. Must not include the file name.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+Aliases: TargetServerRelativeLibrary
 
 Required: True
 Position: 1
@@ -207,7 +201,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-nowait">-NoWait</h3>
-<p>If specified the task will return immediately after creating the move job. The cmdlet will return a job object which can be used with Receive-PnPCopyMoveJobStatus to retrieve the status of the job.</p>
+<p>If specified the task will return immediately after creating the copy job. The cmdlet will return a job object which can be used with Receive-PnPCopyMoveJobStatus to retrieve the status of the job.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
