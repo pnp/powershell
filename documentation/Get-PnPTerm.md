@@ -68,7 +68,7 @@ Returns the term named "Small Finance", from the "Departments" termset in a term
 
 ### EXAMPLE 5
 ```powershell
-$term = Get-PnPTerm -Identity "Small Finance" -TermSet "Departments" -TermGroup "Corporate" -Include Labels
+$term = Get-PnPTerm -Identity "Small Finance" -TermSet "Departments" -TermGroup "Corporate" -Includes Labels
 $term.Labels
 ```
 
