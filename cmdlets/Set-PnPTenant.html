@@ -119,7 +119,8 @@
  [-EmailAttestationRequired &lt;Boolean&gt;] [-EmailAttestationReAuthDays &lt;Int32&gt;] [-HideDefaultThemes &lt;Boolean&gt;]
  [-DisabledWebPartIds &lt;Guid[]&gt;] [-EnableAIPIntegration &lt;Boolean&gt;] [-DisableCustomAppAuthentication &lt;Boolean&gt;] 
  [-EnableAutoNewsDigest &lt;Boolean&gt;] [-CommentsOnListItemsDisabled &lt;Boolean&gt;] [-CommentsOnFilesDisabled &lt;Boolean&gt;]
- [-DisableBackToClassic &lt;Boolean&gt;] [-InformationBarriersSuspension &lt;Boolean&gt;]
+ [-DisableBackToClassic &lt;Boolean&gt;] [-InformationBarriersSuspension &lt;Boolean&gt;] 
+ [-AllowFilesWithKeepLabelToBeDeletedODB &lt;Boolean&gt;] [-AllowFilesWithKeepLabelToBeDeletedSPO &lt;Boolean&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -993,7 +994,7 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-setallowfileswithkeeplabeltobedeletedspo">-SetAllowFilesWithKeepLabelToBeDeletedSPO</h3>
+<h3 id="-allowfileswithkeeplabeltobedeletedspo">-AllowFilesWithKeepLabelToBeDeletedSPO</h3>
 <p>Allows configuration on if files located on SharePoint Online having retention labels on them blocking them from deletion ($false) or if they can be deleted which will move the file to the preservation hold library ($true)</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
@@ -1004,7 +1005,7 @@ Default value: $true
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-setallowfileswithkeeplabeltobedeletedodb">-SetAllowFilesWithKeepLabelToBeDeletedODB</h3>
+<h3 id="-allowfileswithkeeplabeltobedeletedodb">-AllowFilesWithKeepLabelToBeDeletedODB</h3>
 <p>Allows configuration on if files located on OneDrive for Business having retention labels on them blocking them from deletion ($false) or if they can be deleted which will move the file to the preservation hold library ($true)</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)

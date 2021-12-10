@@ -4686,7 +4686,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPFile.html",
-          "hash": "0vZkZoyj1ewGLDd8mpeHdg=="
+          "hash": "PpqOq0Nw8WezGrwnFma+/g=="
         }
       },
       "is_incremental": false,
@@ -6690,7 +6690,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTenant.html",
-          "hash": "xyAqSN1jemLjGRM1K8Op6A=="
+          "hash": "HM/XZl1ZsshkC85wLtvC1w=="
         }
       },
       "is_incremental": false,
