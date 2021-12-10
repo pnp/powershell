@@ -209,5 +209,5 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[Documentation](https://docs.microsoft.com/graph/api/group-update)
-
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+[Microsoft Graph documentation](https://docs.microsoft.com/graph/api/group-update)
