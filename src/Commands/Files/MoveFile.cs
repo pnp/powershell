@@ -1,6 +1,5 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.Framework.Utilities;
 using System;
