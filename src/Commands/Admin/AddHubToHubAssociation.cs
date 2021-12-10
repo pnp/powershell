@@ -66,7 +66,7 @@ namespace PnP.PowerShell.Commands.Admin
                 ClientContext.ExecuteQueryRetry();
                 sourceProperties.ParentHubSiteId = targetSite.HubSiteId;
                 sourceProperties.Update();
-                ClientContext.ExecuteQueryRetry();                                
+                ClientContext.ExecuteQueryRetry();
             }
         }
     }
