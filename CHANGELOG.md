@@ -39,6 +39,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added optional `-IsDefault` option to `Get-PnPPowerPlatformEnvironment` which allows just the default or non default environments to be returned. If not provided, all environments will be returned as was the case before this addition.
 - Added `ResourceBehaviorOptions` option in `New-PnPTeamsTeam` cmdlet to set `ResourceBehaviorOptions` while provisioning a Team
 - Added alias on `Copy-PnPFile` for `Copy-PnPFolder`. It could already be used to copy a folder, but to make this more clear, and as we already had a `Copy/Move-PnPFolder` as well, the same cmdlet is now also available under its alternative cmdlet name.
+- Added `IsFluidEnabled` state to be returned with `Get-PnPTenant` cmdlet.
+- Added `-IsFluidEnabled` to `Set-PnPTenant` cmdlet to enable/disable users from using Fluid components.
 
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads

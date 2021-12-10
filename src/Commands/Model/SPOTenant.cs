@@ -368,6 +368,14 @@ namespace PnP.PowerShell.Commands.Model
             }
             try
             {
+                this.isFluidEnabled = tenant.IsFluidEnabled;
+            }
+            catch
+            {
+                this.isFluidEnabled = false;
+            }
+            try
+            {
                 var getAllowFilesWithKeepLabelToBeDeletedSPO = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAllowFilesWithKeepLabelToBeDeletedSPO(clientContext);
                 var getAllowFilesWithKeepLabelToBeDeletedODB = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAllowFilesWithKeepLabelToBeDeletedODB(clientContext);                
                 clientContext.ExecuteQueryRetry();
@@ -524,6 +532,8 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool DisableAddToOneDrive => disableAddToOneDrive;
 
+        public bool IsFluidEnabled => isFluidEnabled;
+
         private bool hideDefaultThemes;
 
         private long storageQuota;
@@ -670,6 +680,8 @@ namespace PnP.PowerShell.Commands.Model
         private bool? allowFilesWithKeepLabelToBeDeletedODB;
 
         private bool disableAddToOneDrive;
+
+        private bool isFluidEnabled;
 
     }
 }
