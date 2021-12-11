@@ -3114,7 +3114,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPTaxonomyItem.html",
-          "hash": "5V6RZV6Lah8sitFX6PPdtA=="
+          "hash": "U0TsvuZkeVbaQ/nVqHwThA=="
         }
       },
       "is_incremental": false,
@@ -3438,7 +3438,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPTerm.html",
-          "hash": "6fr8pwoKkLXr5DOPlgG5wA=="
+          "hash": "H0CnQ1mq+KqmwA7JcxDmWw=="
         }
       },
       "is_incremental": false,

@@ -121,7 +121,7 @@
 </code></pre>
 <p>Returns the term named &quot;Small Finance&quot;, from the &quot;Departments&quot; termset in a term group called &quot;Corporate&quot; from the site collection termstore even if it is a subterm below &quot;Finance&quot;</p>
 <h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">$term = Get-PnPTerm -Identity &quot;Small Finance&quot; -TermSet &quot;Departments&quot; -TermGroup &quot;Corporate&quot; -Include Labels
+<pre><code class="lang-powershell">$term = Get-PnPTerm -Identity &quot;Small Finance&quot; -TermSet &quot;Departments&quot; -TermGroup &quot;Corporate&quot; -Includes Labels
 $term.Labels
 </code></pre>
 <p>Returns all the localized labels for the term named &quot;Small Finance&quot;, from the &quot;Departments&quot; termset in a term group called &quot;Corporate&quot;</p>
