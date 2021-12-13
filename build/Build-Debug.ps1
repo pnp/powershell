@@ -140,7 +140,7 @@ if ($LASTEXITCODE -eq 0) {
 			else {
 				$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 			}
-			if ($PSVersionTable.PSVersion.Major -eq 5) {
+			if ($PSVersionTable.PSVersion.Major -eq 6) {
 				Write-Host "Importing Framework version of assembly"
 				Import-Module -Name "$destinationFolder/Framework/PnP.PowerShell.dll" -DisableNameChecking
 			}
@@ -168,7 +168,7 @@ if ($LASTEXITCODE -eq 0) {
 	Author = 'Microsoft 365 Patterns and Practices'
 	CompanyName = 'Microsoft 365 Patterns and Practices'
 	CompatiblePSEditions = @(`"Core`",`"Desktop`")
-	PowerShellVersion = '5.1'
+	PowerShellVersion = '6.1'
 	DotNetFrameworkVersion = '4.6.1'
 	ProcessorArchitecture = 'None'
 	FunctionsToExport = '*'  
