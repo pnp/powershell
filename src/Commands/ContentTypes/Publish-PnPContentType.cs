@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
-        public ContentType ContentTypeToPublish;
+        public ContentType ContentType;
 
         protected override void ExecuteCmdlet()
         {
@@ -20,8 +20,8 @@ namespace PnP.PowerShell.Commands.ContentTypes
             var pub = new Microsoft.SharePoint.Client.Taxonomy.ContentTypeSync.ContentTypePublisher(ClientContext, site);
             ClientContext.Load(pub);
             ClientContext.ExecuteQuery();
-            var republish = pub.IsPublished(ContentTypeToPublish);
-            pub.Publish(ContentTypeToPublish, republish);
+            var republish = pub.IsPublished(ContentType);
+            pub.Publish(ContentType, republish);
             ClientContext.ExecuteQuery();
         }
     }

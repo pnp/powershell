@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
-        public ContentType ContentTypeToUnpublish;
+        public ContentType ContentType;
 
         protected override void ExecuteCmdlet()
         {
@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
             var pub = new Microsoft.SharePoint.Client.Taxonomy.ContentTypeSync.ContentTypePublisher(ClientContext, site);
             ClientContext.Load(pub);
             ClientContext.ExecuteQuery();
-            var isPublished = pub.IsPublished(ContentTypeToUnpublish);
+            var isPublished = pub.IsPublished(ContentType);
             WriteObject(isPublished);
         }
     }
