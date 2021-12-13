@@ -4,13 +4,10 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System;
-using PnP.PowerShell.Commands.Extensions;
 
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPSubWeb")]
-    [Alias("Get-PnPSubWebs")]
-
     public class GetSubWebs : PnPWebRetrievalsCmdlet<Web>
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]

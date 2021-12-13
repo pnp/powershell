@@ -13,39 +13,46 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Set, "PnPListItem")]
+    [Cmdlet(VerbsCommon.Set, "PnPListItem", DefaultParameterSetName = ParameterSet_SINGLE)]
     public class SetListItem : PnPWebCmdlet
     {
         const string ParameterSet_SINGLE = "Single";
-        const string Parameterset_BATCHED = "Batched";
+        const string ParameterSet_BATCHED = "Batched";
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
-
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
+        [Parameter(ValueFromPipeline = true, Position = 0)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
+        [Parameter(ValueFromPipeline = true)]
         public ListItemPipeBind Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         public ContentTypePipeBind ContentType;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         public Hashtable Values;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         [Obsolete("Use '-UpdateType SystemUpdate' instead.")]
         public SwitchParameter SystemUpdate;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
-        public String Label;
+        public string Label;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
         public SwitchParameter ClearLabel;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         public ListItemUpdateType UpdateType;
 
-        [Parameter(Mandatory = true, ParameterSetName = Parameterset_BATCHED)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BATCHED)]
         [ValidateNotNull]
         public PnPBatch Batch;
 
@@ -65,7 +72,7 @@ namespace PnP.PowerShell.Commands.Lists
                     var item = Identity.GetListItem(list);
                     if (item == null)
                     {
-                        throw new PSArgumentException($"Cannot find item with Identity {Identity}");
+                        throw new PSArgumentException($"Cannot find item with Identity {Identity}", nameof(Identity));
                     }
                     var values = ListItemHelper.GetFieldValues(list, item, Values, ClientContext, Batch);
                     if (values == null)
@@ -106,13 +113,59 @@ namespace PnP.PowerShell.Commands.Lists
             }
             else
             {
-                List list = List.GetList(CurrentWeb);
+                if (Identity == null || (Identity.Item == null && Identity.Id == 0))
+                {
+                    throw new PSArgumentException($"No -Identity has been provided specifying the item to update", nameof(Identity));
+                }
+
+                List list;
+                if (List != null)
+                {
+                    list = List.GetList(CurrentWeb);
+                }
+                else
+                {
+                    if (Identity.Item == null)
+                    {
+                        throw new PSArgumentException($"No -List has been provided specifying the list to update the item in", nameof(Identity));
+                    }
+
+                    list = Identity.Item.ParentList;
+                }
 
                 if (list != null)
                 {
                     var item = Identity.GetListItem(list);
 
-                    bool updateRequired = false;
+                    if (ParameterSpecified(nameof(ClearLabel)))
+                    {
+                        item.SetComplianceTag(string.Empty, false, false, false, false, false);
+                        ClientContext.ExecuteQueryRetry();
+                    }
+                    if (!string.IsNullOrEmpty(Label))
+                    {
+                        var tags = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAvailableTagsForSite(ClientContext, ClientContext.Url);
+                        ClientContext.ExecuteQueryRetry();
+
+                        var tag = tags.Where(t => t.TagName == Label).FirstOrDefault();
+
+                        if (tag != null)
+                        {
+                            try
+                            {
+                                item.SetComplianceTag(tag.TagName, tag.BlockDelete, tag.BlockEdit, tag.IsEventTag, tag.SuperLock, false);
+                                ClientContext.ExecuteQueryRetry();
+                            }
+                            catch (System.Exception error)
+                            {
+                                WriteWarning(error.Message.ToString());
+                            }
+                        }
+                        else
+                        {
+                            WriteWarning("Can not find compliance tag with value: " + Label);
+                        }
+                    }
 
                     if (ContentType != null)
                     {
@@ -127,41 +180,6 @@ namespace PnP.PowerShell.Commands.Lists
                     if (Values != null)
                     {
                         ListItemHelper.SetFieldValues(item, Values, this);
-                        updateRequired = true;
-                    }
-
-                    if (ParameterSpecified(nameof(ClearLabel)))
-                    {
-                        item.SetComplianceTag(string.Empty, false, false, false, false);
-                        ClientContext.ExecuteQueryRetry();
-                    }
-                    if (!string.IsNullOrEmpty(Label))
-                    {
-                        var tags = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAvailableTagsForSite(ClientContext, ClientContext.Url);
-                        ClientContext.ExecuteQueryRetry();
-
-                        var tag = tags.Where(t => t.TagName == Label).FirstOrDefault();
-
-                        if (tag != null)
-                        {
-                            try
-                            {
-                                item.SetComplianceTag(tag.TagName, tag.BlockDelete, tag.BlockEdit, tag.IsEventTag, tag.SuperLock);
-                                ClientContext.ExecuteQueryRetry();
-                            }
-                            catch (System.Exception error)
-                            {
-                                WriteWarning(error.Message.ToString());
-                            }
-                        }
-                        else
-                        {
-                            WriteWarning("Can not find compliance tag with value: " + Label);
-                        }
-                    }
-
-                    if (updateRequired)
-                    {
                         ListItemHelper.UpdateListItem(item, UpdateType);
                     }
                     ClientContext.ExecuteQueryRetry();

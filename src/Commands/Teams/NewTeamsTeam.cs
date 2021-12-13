@@ -94,6 +94,12 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NEWGROUP)]
         public TeamsTemplateType Template = TeamsTemplateType.None;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public bool? AllowCreatePrivateChannels;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NEWGROUP)]
+        public TeamResourceBehaviorOptions?[] ResourceBehaviorOptions;
+
         protected override void ExecuteCmdlet()
         {
             var teamCI = new TeamCreationInformation()
@@ -120,8 +126,9 @@ namespace PnP.PowerShell.Commands.Graph
                 GroupId = GroupId,
                 ShowInTeamsSearchAndSuggestions = ShowInTeamsSearchAndSuggestions,
                 Visibility = (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()),
+                AllowCreatePrivateChannels = AllowCreatePrivateChannels,
             };
-            WriteObject(TeamsUtility.NewTeamAsync(AccessToken, HttpClient, GroupId, DisplayName, Description, Classification, MailNickName, Owner, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI, Template).GetAwaiter().GetResult());
+            WriteObject(TeamsUtility.NewTeamAsync(AccessToken, HttpClient, GroupId, DisplayName, Description, Classification, MailNickName, Owner, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI, Template, ResourceBehaviorOptions).GetAwaiter().GetResult());
         }
     }
 }

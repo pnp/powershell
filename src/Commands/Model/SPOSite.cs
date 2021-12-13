@@ -99,7 +99,6 @@ namespace PnP.PowerShell.Commands.Model
             OwnerName = props.OwnerName;
             OverrideTenantAnonymousLinkExpirationPolicy = props.OverrideTenantAnonymousLinkExpirationPolicy;
             OverrideTenantExternalUserExpirationPolicy = props.OverrideTenantExternalUserExpirationPolicy;
-            ProtectionLevelName = props.AuthContextStrength;
             PWAEnabled = props.PWAEnabled;
             RelatedGroupId = props.RelatedGroupId;
             ResourceQuota = props.UserCodeMaximumLevel;

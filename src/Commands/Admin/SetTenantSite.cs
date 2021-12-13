@@ -161,13 +161,16 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility { get; set; }
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public InformationBarriersMode InformationBarriersMode;
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
 
         protected override void ExecuteCmdlet()
         {
             ClientContext.ExecuteQueryRetry(); // fixes issue where ServerLibraryVersion is not available.
-            
+
             Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
             if (LockState.HasValue)
@@ -185,6 +188,9 @@ namespace PnP.PowerShell.Commands
         {
             var props = GetSiteProperties(Identity.Url);
             var updateRequired = false;
+
+            ClientContext.Load(props);
+            ClientContext.ExecuteQueryRetry();
 
             if (ParameterSpecified(nameof(Title)))
             {
@@ -491,6 +497,24 @@ namespace PnP.PowerShell.Commands
                 updateRequired = true;
             }
 
+            if (ParameterSpecified(nameof(InformationBarriersMode)))
+            {
+                props.IBMode = InformationBarriersMode.ToString();
+                updateRequired = true;
+            }            
+
+            if (updateRequired)
+            {
+                var op = props.Update();
+                ClientContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
+                ClientContext.ExecuteQueryRetry();
+
+                if (Wait)
+                {
+                    WaitForIsComplete(ClientContext, op, timeoutFunction, TenantOperationMessage.SettingSiteProperties);
+                }
+            }
+
             if (ParameterSpecified(nameof(HubSiteId)))
             {
                 var hubsiteProperties = Tenant.GetHubSitePropertiesById(HubSiteId);
@@ -511,18 +535,6 @@ namespace PnP.PowerShell.Commands
                 ClientContext.ExecuteQueryRetry();
             }
 
-            if (updateRequired)
-            {
-                var op = props.Update();
-                ClientContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
-                ClientContext.ExecuteQueryRetry();
-
-                if (Wait)
-                {
-                    WaitForIsComplete(ClientContext, op, timeoutFunction, TenantOperationMessage.SettingSiteProperties);
-                }
-            }
-
             if (Owners != null && Owners.Count > 0)
             {
                 var admins = new List<UserEntity>();
@@ -531,7 +543,26 @@ namespace PnP.PowerShell.Commands
                     var userEntity = new UserEntity { LoginName = owner };
                     admins.Add(userEntity);
                 }
-                Tenant.AddAdministrators(admins, new Uri(Identity.Url));
+                foreach (UserEntity admin in admins)
+                {
+                    try
+                    {
+                        Tenant.SetSiteAdmin(Identity.Url, admin.LoginName, true);
+                        Tenant.Context.ExecuteQueryRetry();
+                    }
+                    catch (Exception)
+                    {
+                        using (var siteContext = Tenant.Context.Clone(Identity.Url))
+                        {
+                            var spAdmin = siteContext.Web.EnsureUser(admin.LoginName);
+                            siteContext.Load(spAdmin);
+                            siteContext.ExecuteQueryRetry();
+
+                            Tenant.SetSiteAdmin(Identity.Url, spAdmin.LoginName, true);
+                            Tenant.Context.ExecuteQueryRetry();
+                        }
+                    }
+                }
             }
         }
 

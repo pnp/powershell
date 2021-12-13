@@ -27,13 +27,13 @@ Get-PnPSiteScriptFromWeb -Url <String> [-Lists <String[]>] [-IncludeAll] [-Conne
 
 ### Specific components
 ```powershell
-Get-PnPSiteScriptFromWeb -Url <String> [-Lists <String[]>] [-IncludeBranding] [-IncludeLinksToExportedItems]
+Get-PnPSiteScriptFromWeb [-Url <String>] [-Lists <String[]>] [-IncludeBranding] [-IncludeLinksToExportedItems]
  [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme]
- [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This command allows a Site Script to be generated off of an existing site on your tenant. Connect to your SharePoint Online Admin site before executing this command.
+This command allows a Site Script to be generated off of an existing site on your tenant. You need to provide at least one of the optional Include or Lists arguments. If you omit the URL, the Site Script will be created from the site to which you are connected.
 
 ## EXAMPLES
 
@@ -57,6 +57,13 @@ Get-PnPSiteScriptFromWeb -Url "https://contoso.sharepoint.com/sites/teamsite" -I
 ```
 
 Returns the generated Site Script JSON containing the branding and navigation links from the site at the provided Url
+
+### EXAMPLE 4
+```powershell
+Get-PnPSiteScriptFromWeb -IncludeAll
+```
+
+Returns the generated Site Script JSON containing all the components from the currently connected to site
 
 ## PARAMETERS
 
@@ -90,7 +97,7 @@ Accept wildcard characters: False
 ```
 
 ### -IncludeAll
-If specified will include all supported components into the Site Script
+If specified will include all supported components into the Site Script except for the lists and document libraries, these need to be explicitly be specified through -Lists
 
 ```yaml
 Type: SwitchParameter
@@ -188,13 +195,13 @@ Accept wildcard characters: False
 ```
 
 ### -Url
-Specifies the URL of the site to generate a Site Script from
+Specifies the URL of the site to generate a Site Script from. If omitted, the currently connected to site will be used.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)

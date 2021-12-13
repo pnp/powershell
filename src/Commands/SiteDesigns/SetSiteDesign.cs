@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands
         public Guid[] SiteScriptIds;
 
         [Parameter(Mandatory = false)]
-        public string Description;     
+        public string Description;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter IsDefault;
@@ -39,6 +39,11 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false)]
         public int Version;
 
+        [Parameter(Mandatory = false)]
+        public string ThumbnailUrl;
+
+        [Parameter(Mandatory = false)]
+        public Guid? DesignPackageId;
 
         protected override void ExecuteCmdlet()
         {
@@ -73,19 +78,29 @@ namespace PnP.PowerShell.Commands
                     design.PreviewImageUrl = PreviewImageUrl;
                     isDirty = true;
                 }
-                if(ParameterSpecified(nameof(WebTemplate)))
+                if (ParameterSpecified(nameof(WebTemplate)))
                 {
                     design.WebTemplate = ((int)WebTemplate).ToString();
                     isDirty = true;
                 }
-                if(ParameterSpecified(nameof(Version)))
+                if (ParameterSpecified(nameof(Version)))
                 {
                     design.Version = Version;
                     isDirty = true;
                 }
-                if(ParameterSpecified(nameof(SiteScriptIds)))
+                if (ParameterSpecified(nameof(SiteScriptIds)))
                 {
                     design.SiteScriptIds = SiteScriptIds.Select(t => t).ToArray();
+                    isDirty = true;
+                }
+                if (ParameterSpecified(nameof(ThumbnailUrl)))
+                {
+                    design.ThumbnailUrl = ThumbnailUrl;
+                    isDirty = true;
+                }
+                if (DesignPackageId.HasValue)
+                {
+                    design.DesignPackageId = DesignPackageId.Value;
                     isDirty = true;
                 }
                 if (isDirty)
@@ -94,11 +109,11 @@ namespace PnP.PowerShell.Commands
                     ClientContext.ExecuteQueryRetry();
                 }
                 WriteObject(design);
-            } else
+            }
+            else
             {
                 WriteError(new ErrorRecord(new ItemNotFoundException(), "SITEDESIGNNOTFOUND", ErrorCategory.ObjectNotFound, Identity));
             }
-            
         }
     }
 }

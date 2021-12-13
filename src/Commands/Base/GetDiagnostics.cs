@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
 
@@ -76,9 +77,9 @@ namespace PnP.PowerShell.Commands.Base
             // Most of this code has been copied from GetException cmdlet
             PnPException pnpException = null;
             var exceptions = (ArrayList)this.SessionState.PSVariable.Get("error").Value;
-            if (exceptions.Count > 0)
+            var exception = (ErrorRecord)(exceptions.ToArray().FirstOrDefault(e => e is ErrorRecord));
+            if (exception != null)
             {
-                var exception = (ErrorRecord)exceptions[0];
                 var correlationId = string.Empty;
                 if (exception.Exception.Data.Contains("CorrelationId"))
                 {

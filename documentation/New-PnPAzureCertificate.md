@@ -12,7 +12,7 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPAzureCertificate
 ## SYNOPSIS
 Generate a new 2048bit self-signed certificate and manifest settings for use when using CSOM via an app-only ADAL application.
 
-See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started.
+See https://github.com/pnp/powershell/tree/master/samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started.
 
 KeyCredentials contains the ADAL app manifest sections.
 
@@ -37,21 +37,21 @@ New-PnPAzureCertificate [-CommonName <String>] [-Country <String>] [-State <Stri
 New-PnPAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer
 ```
 
-This will generate a default self-signed certificate named "pnp.contoso.com" valid for 10 years and output a pfx and cer file.
+This will generate a default self-signed certificate named "pnp.contoso.com" valid for 10 years and output a pfx and cer file to disk. The private key file (pfx) will not be password protected.
 
 ### EXAMPLE 2
 ```powershell
 New-PnPAzureCertificate -CommonName "My Certificate" -ValidYears 30
 ```
 
-This will output a certificate named "My Certificate" which expires in 30 years from now.
+This will output a certificate named "My Certificate" which expires in 30 years from now to the screen. It will not write the certificate files to disk.
 
 ### EXAMPLE 3
 ```powershell
 New-PnPAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer -CertificatePassword (ConvertTo-SecureString -String "pass@word1" -AsPlainText -Force)
 ```
 
-This will generate a default self-signed certificate named "pnp.contoso.com" valid for 10 years and output a pfx and cer file. The pfx file will have the password pass@word1 set on it.
+This will generate a default self-signed certificate named "pnp.contoso.com" valid for 10 years and output a pfx and cer file to disk. The pfx file will have the password pass@word1 set on it.
 
 ## PARAMETERS
 

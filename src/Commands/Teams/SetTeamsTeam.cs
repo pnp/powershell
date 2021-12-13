@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Graph
         public string Description;
 
         [Parameter(Mandatory = false)]
-        public TeamVisibility Visibility;
+        public GroupVisibility Visibility;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowAddRemoveApps;
@@ -79,6 +79,9 @@ namespace PnP.PowerShell.Commands.Graph
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Classification;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public bool? AllowCreatePrivateChannels;
         protected override void ExecuteCmdlet()
         {
             var groupId = Identity.GetGroupId(HttpClient, AccessToken);
@@ -114,6 +117,10 @@ namespace PnP.PowerShell.Commands.Graph
                             group.Visibility = (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString());
                             updateGroup = true;
                         }
+                        else
+                        {
+                            group.Visibility = team.Visibility;
+                        }
                         team.IsArchived = null; // cannot update this value;
 
                         if(updateGroup)
@@ -138,8 +145,9 @@ namespace PnP.PowerShell.Commands.Graph
                         teamCI.AllowUserDeleteMessages = ParameterSpecified(nameof(AllowUserDeleteMessages)) ? AllowUserDeleteMessages : null;
                         teamCI.AllowUserEditMessages = ParameterSpecified(nameof(AllowUserEditMessages)) ? AllowUserEditMessages : null;
                         teamCI.Classification = ParameterSpecified(nameof(Classification)) ? Classification : null;
+                        teamCI.AllowCreatePrivateChannels = ParameterSpecified(nameof(AllowCreatePrivateChannels)) ? AllowCreatePrivateChannels : null;                        
 
-                        var updated = TeamsUtility.UpdateTeamAsync(HttpClient, AccessToken, groupId, teamCI.ToTeam()).GetAwaiter().GetResult();
+                        var updated = TeamsUtility.UpdateTeamAsync(HttpClient, AccessToken, groupId, teamCI.ToTeam(group.Visibility)).GetAwaiter().GetResult();
                         WriteObject(updated);
                     }
                 }

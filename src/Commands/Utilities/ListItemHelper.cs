@@ -353,26 +353,26 @@ namespace PnP.PowerShell.Commands.Utilities
                         case "TaxonomyFieldTypeMulti":
                             {
                                 var value = values[key];
+                                if (batch.TermStore == null)
+                                {
+                                    taxSession = clientContext.Site.GetTaxonomySession();
+                                    store = taxSession.GetDefaultSiteCollectionTermStore();
+                                    clientContext.Load(store, s => s.DefaultLanguage);
+                                    clientContext.ExecuteQueryRetry();
+                                    defaultLanguage = store.DefaultLanguage;
+                                    batch.TermStore = store;
+                                    batch.TaxonomySession = taxSession;
+                                    batch.DefaultTermStoreLanguage = defaultLanguage;
+                                }
+                                else
+                                {
+                                    taxSession = batch.TaxonomySession;
+                                    store = batch.TermStore;
+                                    defaultLanguage = batch.DefaultTermStoreLanguage.Value;
+                                }
                                 if (value != null && value.GetType().IsArray)
                                 {
-                                    var fieldValueCollection = field.NewFieldValueCollection();
-                                    if (batch.TermStore == null)
-                                    {
-                                        taxSession = clientContext.Site.GetTaxonomySession();
-                                        store = taxSession.GetDefaultSiteCollectionTermStore();
-                                        clientContext.Load(store, s => s.DefaultLanguage);
-                                        clientContext.ExecuteQueryRetry();
-                                        defaultLanguage = store.DefaultLanguage;
-                                        batch.TermStore = store;
-                                        batch.TaxonomySession = taxSession;
-                                        batch.DefaultTermStoreLanguage = defaultLanguage;
-                                    }
-                                    else
-                                    {
-                                        taxSession = batch.TaxonomySession;
-                                        store = batch.TermStore;
-                                        defaultLanguage = batch.DefaultTermStoreLanguage.Value;
-                                    }
+                                    var fieldValueCollection = field.NewFieldValueCollection();                                    
                                     foreach (var arrayItem in value as object[])
                                     {
                                         Term taxonomyItem;
@@ -516,6 +516,17 @@ namespace PnP.PowerShell.Commands.Utilities
                                 }
                                 break;
                             }
+                        case "MultiChoice":
+                            {
+                                string itemValue = string.Empty;
+                                var choices = values[key];
+                                foreach (var choice in (dynamic)choices)
+                                {
+                                    itemValue += choice + ";#";
+                                }
+                                item[key as string] = itemValue.Substring(0, itemValue.Length - 2);
+                                break;
+                            }
                         default:
                             {
                                 item[key as string] = values[key];
@@ -536,7 +547,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     foreach (var field in specialFields)
                     {
-                        if (!item.ContainsKey(field))
+                        if (!item.ContainsKey(field) && existingItem.Values.ContainsKey(field))
                         {
                             item[field] = existingItem[field];
                         }

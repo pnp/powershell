@@ -15,12 +15,12 @@ namespace PnP.PowerShell.Commands.Utilities
         public static async Task<IEnumerable<PlannerPlan>> GetPlansAsync(HttpClient httpClient, string accessToken, string groupId, bool resolveDisplayNames)
         {
             var returnCollection = new List<PlannerPlan>();
-            var collection = await GraphHelper.GetAsync<RestResultCollection<PlannerPlan>>(httpClient, $"v1.0/groups/{groupId}/planner/plans", accessToken);
-            if (collection != null && collection.Items.Any())
+            var collection = await GraphHelper.GetResultCollectionAsync<PlannerPlan>(httpClient, $"v1.0/groups/{groupId}/planner/plans", accessToken);
+            if (collection != null && collection.Any())
             {
                 if (resolveDisplayNames)
                 {
-                    foreach (var plan in collection.Items)
+                    foreach (var plan in collection)
                     {
                         var fullIdentity = await ResolveIdentityAsync(httpClient, accessToken, plan.CreatedBy.User);
                         plan.CreatedBy.User = fullIdentity;
@@ -31,26 +31,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 else
                 {
-                    returnCollection = collection.Items.ToList();
-                }
-                while (!string.IsNullOrEmpty(collection.NextLink))
-                {
-                    collection = await GraphHelper.GetAsync<RestResultCollection<PlannerPlan>>(httpClient, collection.NextLink, accessToken);
-                    if (resolveDisplayNames)
-                    {
-                        foreach (var plan in collection.Items)
-                        {
-                            var fullIdentity = await ResolveIdentityAsync(httpClient, accessToken, plan.CreatedBy.User);
-                            plan.CreatedBy.User = fullIdentity;
-                            var owner = await ResolveGroupName(httpClient, accessToken, plan.Owner);
-                            plan.Owner = owner;
-                            returnCollection.Add(plan);
-                        }
-                    }
-                    else
-                    {
-                        returnCollection.AddRange(collection.Items);
-                    }
+                    returnCollection = collection.ToList();
                 }
             }
             return returnCollection;
@@ -103,17 +84,17 @@ namespace PnP.PowerShell.Commands.Utilities
 
         #endregion
 
-
         #region Tasks
+
         public static async Task<IEnumerable<PlannerTask>> GetTasksAsync(HttpClient httpClient, string accessToken, string planId, bool resolveDisplayNames)
         {
             var returnCollection = new List<PlannerTask>();
-            var collection = await GraphHelper.GetAsync<RestResultCollection<PlannerTask>>(httpClient, $"v1.0/planner/plans/{planId}/tasks", accessToken);
-            if (collection != null && collection.Items.Any())
+            var collection = await GraphHelper.GetResultCollectionAsync<PlannerTask>(httpClient, $"v1.0/planner/plans/{planId}/tasks", accessToken);
+            if (collection != null && collection.Any())
             {
                 if (resolveDisplayNames)
                 {
-                    foreach (var task in collection.Items)
+                    foreach (var task in collection)
                     {
                         var fullIdentity = await ResolveIdentityAsync(httpClient, accessToken, task.CreatedBy.User);
                         task.CreatedBy.User = fullIdentity;
@@ -129,32 +110,8 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 else
                 {
-                    returnCollection = collection.Items.ToList();
-                }
-                while (!string.IsNullOrEmpty(collection.NextLink))
-                {
-                    collection = await GraphHelper.GetAsync<RestResultCollection<PlannerTask>>(httpClient, collection.NextLink, accessToken);
-                    if (resolveDisplayNames)
-                    {
-                        foreach (var task in collection.Items)
-                        {
-                            var fullIdentity = await ResolveIdentityAsync(httpClient, accessToken, task.CreatedBy.User);
-                            task.CreatedBy.User = fullIdentity;
-                            if (task.Assignments != null)
-                            {
-                                foreach (var assignment in task.Assignments)
-                                {
-                                    assignment.Value.AssignedBy.User = await ResolveIdentityAsync(httpClient, accessToken, assignment.Value.AssignedBy.User);
-                                }
-                            }
-                            returnCollection.Add(task);
-                        }
-                    }
-                    else
-                    {
-                        returnCollection.AddRange(collection.Items);
-                    }
-                }
+                    returnCollection = collection.ToList();
+                }                
             }
             return returnCollection;
         }
@@ -234,6 +191,182 @@ namespace PnP.PowerShell.Commands.Utilities
         }
         #endregion
 
+        #region Rosters
+
+        /// <summary>
+        /// Creates a new Planner Roster
+        /// </summary>
+        /// <param name="httpClient">HttpClient instance to use to send out requests</param>
+        /// <param name="accessToken">AccessToken to use to authenticate the request</param>
+        /// <returns>PlannerRoster</returns>
+        public static async Task<PlannerRoster> CreateRosterAsync(HttpClient httpClient, string accessToken)
+        {
+            var stringContent = new StringContent("{ \"@odata.type\": \"#microsoft.graph.plannerRoster\" }");
+            stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            return await GraphHelper.PostAsync<PlannerRoster>(httpClient, "beta/planner/rosters", stringContent, accessToken);
+        }
+
+        /// <summary>
+        /// Gets a Planner Roster
+        /// </summary>
+        /// <param name="rosterId">Identifier of the roster</param>
+        /// <param name="httpClient">HttpClient instance to use to send out requests</param>
+        /// <param name="accessToken">AccessToken to use to authenticate the request</param>
+        /// <returns>PlannerRoster</returns>
+        public static async Task<PlannerRoster> GetRosterAsync(HttpClient httpClient, string accessToken, string rosterId)
+        {
+            return await GraphHelper.GetAsync<PlannerRoster>(httpClient, $"beta/planner/rosters/{rosterId}", accessToken);
+        }        
+
+        /// <summary>
+        /// Deletes a Planner Roster
+        /// </summary>
+        /// <param name="rosterId">Identifier of the roster</param>
+        /// <param name="httpClient">HttpClient instance to use to send out requests</param>
+        /// <param name="accessToken">AccessToken to use to authenticate the request</param>
+        /// <returns>HttpResponseMessage</returns>
+        public static async Task<HttpResponseMessage> DeleteRosterAsync(HttpClient httpClient, string accessToken, string rosterId)
+        {
+            return await GraphHelper.DeleteAsync(httpClient, $"beta/planner/rosters/{rosterId}", accessToken);
+        }
+
+        /// <summary>
+        /// Adds a member to an existing Planner Roster
+        /// </summary>
+        /// <param name="rosterId">Identifier of the roster to add the member to</param>
+        /// <param name="userId">Identifier of the user to add as a member</param>
+        /// <param name="httpClient">HttpClient instance to use to send out requests</param>
+        /// <param name="accessToken">AccessToken to use to authenticate the request</param>
+        /// <returns>PlannerRoster</returns>
+        public static async Task<PlannerRoster> AddRosterMemberAsync(HttpClient httpClient, string accessToken, string rosterId, string userId)
+        {
+            var stringContent = new StringContent("{ \"@odata.type\": \"#microsoft.graph.plannerRosterMember\", \"userId\": \"" + userId + "\" }");
+            stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            return await GraphHelper.PostAsync<PlannerRoster>(httpClient, $"beta/planner/rosters/{rosterId}/members", stringContent, accessToken);
+        }
+
+        /// <summary>
+        /// Removes a member from an existing Planner Roster
+        /// </summary>
+        /// <param name="rosterId">Identifier of the roster to remove the member from</param>
+        /// <param name="userId">Identifier of the user to remove as a member</param>
+        /// <param name="httpClient">HttpClient instance to use to send out requests</param>
+        /// <param name="accessToken">AccessToken to use to authenticate the request</param>
+        /// <returns>HttpResponseMessage</returns>
+        public static async Task<HttpResponseMessage> RemoveRosterMemberAsync(HttpClient httpClient, string accessToken, string rosterId, string userId)
+        {
+            return await GraphHelper.DeleteAsync(httpClient, $"beta/planner/rosters/{rosterId}/members/{userId}", accessToken);
+        } 
+
+        /// <summary>
+        /// Returns all current members of an existing Planner Roster
+        /// </summary>
+        /// <param name="rosterId">Identifier of the roster to retrieve the members of</param>
+        /// <param name="httpClient">HttpClient instance to use to send out requests</param>
+        /// <param name="accessToken">AccessToken to use to authenticate the request</param>
+        /// <returns>IEnumerable<PlannerRosterMember></returns>
+        public static async Task<IEnumerable<PlannerRosterMember>> GetRosterMembersAsync(HttpClient httpClient, string accessToken, string rosterId)
+        {
+            var returnCollection = new List<PlannerRosterMember>();
+            var collection = await GraphHelper.GetResultCollectionAsync<PlannerRosterMember>(httpClient, $"beta/planner/rosters/{rosterId}/members", accessToken);
+            if (collection != null && collection.Any())
+            {
+                returnCollection = collection.ToList();
+            }
+            return returnCollection;
+        }
+
+        /// <summary>
+        /// Gets the Planner Rosters for a specific user
+        /// </summary>
+        /// <param name="userId">Identifier of the user</param>
+        /// <param name="httpClient">HttpClient instance to use to send out requests</param>
+        /// <param name="accessToken">AccessToken to use to authenticate the request</param>
+        /// <returns>PlannerRoster</returns>
+        public static async Task<PlannerRoster> GetRosterPlansByUserAsync(HttpClient httpClient, string accessToken, string userId)
+        {
+            return await GraphHelper.GetAsync<PlannerRoster>(httpClient, $"beta/users/{userId}/planner/rosterPlans", accessToken);
+        }
+
+        /// <summary>
+        /// Gets the Planner Plans in a specific Planner Roster
+        /// </summary>
+        /// <param name="userId">Identifier of the user</param>
+        /// <param name="httpClient">HttpClient instance to use to send out requests</param>
+        /// <param name="accessToken">AccessToken to use to authenticate the request</param>
+        /// <returns>PlannerRoster</returns>
+        public static async Task<PlannerRoster> GetRosterPlansByRosterAsync(HttpClient httpClient, string accessToken, string rosterId)
+        {
+            return await GraphHelper.GetAsync<PlannerRoster>(httpClient, $"beta/planner/rosters/{rosterId}/plans", accessToken);
+        }         
+
+        #endregion
+
+        #region Admin Tasks
+
+        /// <summary>
+        /// Retrieves the Planner tenant configuration
+        /// </summary>
+        /// <param name="httpClient">HttpClient instance to use to send out requests</param>
+        /// <param name="accessToken">AccessToken to use to authenticate the request</param>
+        /// <returns>PlannerTenantConfig</returns>
+        public static async Task<PlannerTenantConfig> GetPlannerConfigAsync(HttpClient httpClient, string accessToken)
+        {
+            var result = await GraphHelper.GetAsync<PlannerTenantConfig>(httpClient, "https://tasks.office.com/taskAPI/tenantAdminSettings/Settings", accessToken);
+            return result;
+        }
+
+        /// <summary>
+        /// Sets the Planner tenant configuration
+        /// </summary>
+        /// <param name="httpClient">HttpClient instance to use to send out requests</param>
+        /// <param name="accessToken">AccessToken to use to authenticate the request</param>
+        /// <returns>PlannerTenantConfig</returns>
+        public static async Task<PlannerTenantConfig> SetPlannerConfigAsync(HttpClient httpClient, string accessToken, bool? isPlannerAllowed, bool? allowCalendarSharing, bool? allowTenantMoveWithDataLoss, bool? allowRosterCreation, bool? allowPlannerMobilePushNotifications)
+        {
+            var content = new PlannerTenantConfig
+            {
+                IsPlannerAllowed = isPlannerAllowed,
+                AllowCalendarSharing = allowCalendarSharing,
+                AllowTenantMoveWithDataLoss = allowTenantMoveWithDataLoss,
+                AllowRosterCreation = allowRosterCreation,
+                AllowPlannerMobilePushNotifications = allowPlannerMobilePushNotifications
+            };
+            var result = await GraphHelper.PatchAsync(httpClient, accessToken, "https://tasks.office.com/taskAPI/tenantAdminSettings/Settings", content);
+            return result;
+        }
+
+        /// <summary>
+        /// Retrieves the Planner User Policy for the provided user
+        /// </summary>
+        /// <param name="userId">Azure Active Directory User Identifier or User Principal name</param>
+        /// <param name="httpClient">HttpClient instance to use to send out requests</param>
+        /// <param name="accessToken">AccessToken to use to authenticate the request</param>
+        /// <returns>PlannerUserPolicy</returns>
+        public static async Task<PlannerUserPolicy> GetPlannerUserPolicyAsync(HttpClient httpClient, string accessToken, string userId)
+        {
+            var result = await GraphHelper.GetAsync<PlannerUserPolicy>(httpClient, $"https://tasks.office.com/taskAPI/tenantAdminSettings/UserPolicy('{userId}')", accessToken);
+            return result;
+        }        
+
+        /// <summary>
+        /// Sets the Planner User Policy for the provided user
+        /// </summary>
+        /// <param name="userId">Azure Active Directory User Identifier or User Principal name</param>
+        /// <param name="httpClient">HttpClient instance to use to send out requests</param>
+        /// <param name="accessToken">AccessToken to use to authenticate the request</param>
+        /// <returns>PlannerUserPolicy</returns>
+        public static async Task<PlannerUserPolicy> SetPlannerUserPolicyAsync(HttpClient httpClient, string accessToken, string userId, bool? blockDeleteTasksNotCreatedBySelf)
+        {
+            var content = new PlannerUserPolicy
+            {
+                BlockDeleteTasksNotCreatedBySelf = blockDeleteTasksNotCreatedBySelf
+            };
+            var result = await GraphHelper.PutAsync<PlannerUserPolicy>(httpClient, $"https://tasks.office.com/taskAPI/tenantAdminSettings/UserPolicy('{userId}')", content, accessToken);
+            return result;
+        }
+
+        #endregion
 
         private static async Task<Identity> ResolveIdentityAsync(HttpClient httpClient, string accessToken, Identity identity)
         {
@@ -263,22 +396,13 @@ namespace PnP.PowerShell.Commands.Utilities
                 return null;
             }
         }
+
         #region Buckets
 
         public static async Task<IEnumerable<PlannerBucket>> GetBucketsAsync(HttpClient httpClient, string accessToken, string planId)
         {
-            List<PlannerBucket> returnCollection = new List<PlannerBucket>();
-            var collection = await GraphHelper.GetAsync<RestResultCollection<PlannerBucket>>(httpClient, $"v1.0/planner/plans/{planId}/buckets", accessToken);
-            if (collection.Items.Any())
-            {
-                returnCollection.AddRange(collection.Items);
-                while (!string.IsNullOrEmpty(collection.NextLink))
-                {
-                    collection = await GraphHelper.GetAsync<RestResultCollection<PlannerBucket>>(httpClient, collection.NextLink, accessToken);
-                    returnCollection.AddRange(collection.Items);
-                }
-            }
-            return returnCollection.OrderBy(p => p.OrderHint);
+            var collection = await GraphHelper.GetResultCollectionAsync<PlannerBucket>(httpClient, $"v1.0/planner/plans/{planId}/buckets", accessToken);
+            return collection.OrderBy(p => p.OrderHint);
         }
 
         public static async Task<PlannerBucket> CreateBucketAsync(HttpClient httpClient, string accessToken, string name, string planId)

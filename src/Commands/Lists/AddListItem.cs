@@ -4,10 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using PnP.Core.QueryModel;
-using PnP.Core.Services;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 
@@ -15,23 +12,30 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Add, "PnPListItem")]
+    [Cmdlet(VerbsCommon.Add, "PnPListItem", DefaultParameterSetName = ParameterSet_SINGLE)]
     public class AddListItem : PnPWebCmdlet
     {
         private const string ParameterSet_SINGLE = "Single";
         private const string ParameterSet_BATCHED = "Batched";
 
-
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         [ValidateNotNull]
         public ListPipeBind List;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         [Parameter(Mandatory = false)]
         public ContentTypePipeBind ContentType;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         [Parameter(Mandatory = false)]
         public Hashtable Values;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         [Parameter(Mandatory = false)]
         public string Folder;
 
@@ -46,9 +50,11 @@ namespace PnP.PowerShell.Commands.Lists
         {
             if (ParameterSpecified(nameof(Batch)))
             {
-                
-                var list = List.GetList(Batch);
-                //list.EnsureProperties(l => l.Id, l => l.Fields.QueryProperties(f => f.Id, f => f.Title, f => f.InternalName, f => f.TypeAsString));
+                var list = List.GetList(Batch, false);
+                if (list == null)
+                {
+                    throw new PSArgumentException("The specified list was not found. Notice that the title is case sensitive.", nameof(List));
+                }
 
                 var values = ListItemHelper.GetFieldValues(list, null, Values, ClientContext, Batch);
                 if (ContentType != null)
@@ -61,13 +67,17 @@ namespace PnP.PowerShell.Commands.Lists
             else
             {
                 List list = List.GetList(CurrentWeb);
+                if (list == null)
+                {
+                    throw new PSArgumentException("The specified list was not found. Notice that the title is case sensitive.", nameof(List));
+                }
+
                 ListItemCreationInformation liCI = new ListItemCreationInformation();
                 if (Folder != null)
                 {
                     // Create the folder if it doesn't exist
                     var rootFolder = list.EnsureProperty(l => l.RootFolder);
-                    var targetFolder =
-                        CurrentWeb.EnsureFolder(rootFolder, Folder);
+                    var targetFolder = CurrentWeb.EnsureFolder(rootFolder, Folder);
 
                     liCI.FolderUrl = targetFolder.ServerRelativeUrl;
                 }
@@ -80,7 +90,6 @@ namespace PnP.PowerShell.Commands.Lists
 
                     if (ct != null)
                     {
-
                         item["ContentTypeId"] = ct.EnsureProperty(w => w.StringId);
                         item.Update();
                         systemUpdate = true;
@@ -102,7 +111,7 @@ namespace PnP.PowerShell.Commands.Lists
 
                     if (tag != null)
                     {
-                        item.SetComplianceTag(tag.TagName, tag.BlockDelete, tag.BlockEdit, tag.IsEventTag, tag.SuperLock);
+                        item.SetComplianceTag(tag.TagName, tag.BlockDelete, tag.BlockEdit, tag.IsEventTag, tag.SuperLock, false);
                     }
                     else
                     {

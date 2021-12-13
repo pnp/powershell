@@ -30,7 +30,7 @@ Get-PnPUnifiedAuditLog [-ContentType <AuditContentType>] [-StartTime <DateTime>]
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPUnifiedAuditLog -ContentType SharePoint -StartTime (Get-Date).AddDays(-1) -EndTime (Get-Date).AddDays(-2)
+Get-PnPUnifiedAuditLog -ContentType SharePoint -StartTime (Get-Date).AddDays(-2) -EndTime (Get-Date).AddDays(-1)
 ```
 
 Retrieves the audit logs of SharePoint happening between the current time yesterday and the current time the day before yesterday

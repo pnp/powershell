@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 group = GroupsUtility.GetGroup(Group.Id, accessToken);
             }
-            else if (!String.IsNullOrEmpty(GroupId))
+            else if (!string.IsNullOrEmpty(GroupId))
             {
                 group = GroupsUtility.GetGroup(GroupId, accessToken);
             }
@@ -63,7 +63,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                     group = groups.FirstOrDefault();
                 }
             }
-            return AzureADGroup.CreateFrom(group);
+            if (group != null)
+            {
+                return AzureADGroup.CreateFrom(group);
+            }
+            return null;
         }
 
         public AzureADGroup GetDeletedGroup(string accessToken)

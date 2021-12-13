@@ -4,12 +4,12 @@ using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Attributes;
+using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Set, "PnPPage")]
     [Alias("Set-PnPClientSidePage")]
-    [WriteAliasWarning("Please use 'Set-PnPPage'. The alias 'Set-PnPClientSidePage' will be removed in the 1.5.0 release")]
 
     public class SetPage : PnPWebCmdlet, IDynamicParameters
     {
@@ -35,6 +35,12 @@ namespace PnP.PowerShell.Commands.Pages
         public SwitchParameter Publish;
 
         [Parameter(Mandatory = false)]
+        public DateTime? ScheduledPublishDate;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter RemoveScheduledPublish;
+
+        [Parameter(Mandatory = false)]
         public PageHeaderType HeaderType;
 
         [Parameter(Mandatory = false)]
@@ -46,6 +52,15 @@ namespace PnP.PowerShell.Commands.Pages
 
         [Parameter(Mandatory = false)]
         public PageHeaderLayoutType HeaderLayoutType = PageHeaderLayoutType.FullWidthImage;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter DemoteNewsArticle;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Translate;
+
+        [Parameter(Mandatory = false)]
+        public int[] TranslationLanguageCodes;
 
         private CustomHeaderDynamicParameters customHeaderParameters;
 
@@ -61,12 +76,13 @@ namespace PnP.PowerShell.Commands.Pages
 
         protected override void ExecuteCmdlet()
         {
-
             var clientSidePage = Identity?.GetPage();
 
             if (clientSidePage == null)
+            {
                 // If the client side page object cannot be found
                 throw new Exception($"Page {Identity?.Name} cannot be found.");
+            }
 
             // We need to have the page name, if not found, raise an error
             string name = PageUtilities.EnsureCorrectPageName(Name ?? Identity?.Name);
@@ -161,6 +177,45 @@ namespace PnP.PowerShell.Commands.Pages
             if (Publish)
             {
                 clientSidePage.Publish();
+            }
+
+            if (ParameterSpecified(nameof(ScheduledPublishDate)))
+            {
+                clientSidePage.SchedulePublish(ScheduledPublishDate.Value);
+            }
+
+            if (ParameterSpecified(nameof(RemoveScheduledPublish)))
+            {
+                clientSidePage.RemoveSchedulePublish();
+            }
+
+            if (ParameterSpecified(nameof(DemoteNewsArticle)))
+            {
+                clientSidePage.DemoteNewsArticle();
+            }
+
+            if (ParameterSpecified(nameof(Translate)))
+            {
+                if (ParameterSpecified(nameof(TranslationLanguageCodes)))
+                {
+                    PageTranslationOptions options = new PageTranslationOptions();
+                    if (TranslationLanguageCodes != null && TranslationLanguageCodes.Length > 0)
+                    {
+                        var translationLanguagesList = new List<int>(TranslationLanguageCodes);
+
+                        PnPContext.Web.EnsureMultilingual(translationLanguagesList);
+
+                        foreach (int i in TranslationLanguageCodes)
+                        {
+                            options.AddLanguage(i);
+                        }
+                        clientSidePage.TranslatePages(options);
+                    }
+                }
+                else
+                {
+                    clientSidePage.TranslatePages();
+                }
             }
 
             WriteObject(clientSidePage);

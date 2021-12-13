@@ -15,8 +15,8 @@ Remove an eventreceiver
 ## SYNTAX
 
 ```powershell
-Remove-PnPEventReceiver -Identity <EventReceiverPipeBind> [-List <ListPipeBind>] [-Force] 
- [-Connection <PnPConnection>]   [<CommonParameters>]
+Remove-PnPEventReceiver -Identity <EventReceiverPipeBind> [-List <ListPipeBind>] [-Scope <EventReceiverScope>] [-Force] 
+ [-Connection <PnPConnection>]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -66,10 +66,31 @@ Get-PnPEventReceiver | ? ReceiverUrl -Like "*azurewebsites.net*" | Remove-PnPEve
 
 This will remove all event receivers from the current site which are pointing to a service hosted on Azure Websites
 
+### EXAMPLE 7
+```powershell
+Remove-PnPEventReceiver -Scope Site
+```
+
+This will remove all the event receivers defined on the current site collection
+
+### EXAMPLE 8
+```powershell
+Remove-PnPEventReceiver -Scope Web
+```
+
+This will remove all the event receivers defined on the current site
+
+### EXAMPLE 9
+```powershell
+Remove-PnPEventReceiver -Scope All
+```
+
+This will remove all the event receivers defined on the current site and web
+
 ## PARAMETERS
 
 ### -Confirm
-Prompts you for confirmation before running the cmdlet.
+Prompts you for confirmation before running the cmdlet
 
 ```yaml
 Type: SwitchParameter
@@ -139,7 +160,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Scope
+The scope of the EventReceivers to remove
 
+```yaml
+Type: EventReceiverScope
+Parameter Sets: Scope
+Accepted values: Web, Site, All
+
+Required: False
+Position: Named
+Default value: Web
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -WhatIf
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
@@ -159,4 +193,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

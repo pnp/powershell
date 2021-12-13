@@ -5,6 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using System.Collections.Generic;
 using System.Linq;
+using PnP.Core.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Branding
 {
@@ -39,7 +40,27 @@ namespace PnP.PowerShell.Commands.Branding
         public string ClientSideHostProperties;
         protected override void ExecuteCmdlet()
         {
-            var actions = Identity.GetCustomActions(PnPContext, Scope);
+            IEnumerable<IUserCustomAction> actions = null;
+            if (Identity != null)
+            {
+                actions = Identity.GetCustomActions(PnPContext, Scope);
+            }
+
+            else
+            {
+                var customActions = new List<IUserCustomAction>();
+
+                if (Scope == CustomActionScope.Web || Scope == CustomActionScope.All)
+                {
+                    customActions.AddRange(PnPContext.Web.UserCustomActions.ToList());
+                }
+                if (Scope == CustomActionScope.Site || Scope == CustomActionScope.All)
+                {
+                    customActions.AddRange(PnPContext.Site.UserCustomActions.ToList());
+                }
+
+                actions = customActions.AsEnumerable();
+            }
 
             // If a ClientSideComponentId has been provided, only leave those who have a matching client side component id
             if (ParameterSetName == ParameterSet_CLIENTSIDECOMPONENTID)

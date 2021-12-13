@@ -10,7 +10,7 @@ title: Get-PnPGroup
 # Get-PnPGroup
 
 ## SYNOPSIS
-Returns a specific SharePoint group or all SharePoint groups in site.
+Returns a specific SharePoint group or all SharePoint groups in the current site
 
 ## SYNTAX
 
@@ -52,14 +52,14 @@ Get-PnPGroup [-AssociatedOwnerGroup] [-Connection <PnPConnection>] [-Includes <S
 Get-PnPGroup
 ```
 
-Returns all SharePoint groups in a site
+Returns all SharePoint groups in the current site
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPGroup -Identity 'My Site Users'
 ```
 
-This will return the group called 'My Site Users' in if available in the current site
+This will return the group called 'My Site Users' if available in the current site
 
 ### EXAMPLE 3
 ```powershell
@@ -127,7 +127,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Get a specific group by name
+Get a specific group by its name or id
 
 ```yaml
 Type: GroupPipeBind
@@ -141,10 +141,6 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

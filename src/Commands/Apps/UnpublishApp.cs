@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Apps
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public AppMetadataPipeBind Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public AppCatalogScope Scope = AppCatalogScope.Tenant;
 
         protected override void ExecuteCmdlet()

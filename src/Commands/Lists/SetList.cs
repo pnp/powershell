@@ -73,6 +73,9 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false)]
         public ListWriteSecurity WriteSecurity;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter NoCrawl;
+
         protected override void ExecuteCmdlet()
         {
             var list = Identity.GetList(CurrentWeb);
@@ -174,6 +177,12 @@ namespace PnP.PowerShell.Commands.Lists
                 if (ParameterSpecified(nameof(WriteSecurity)))
                 {
                     list.WriteSecurity = (int)WriteSecurity;
+                    updateRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(NoCrawl)))
+                {
+                    list.NoCrawl = NoCrawl;
                     updateRequired = true;
                 }
 

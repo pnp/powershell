@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Apps
         public SitePipeBind Site;
 
         [Parameter(Mandatory = true)]
-        [ValidateSet("Write", "Read")]
+        [ValidateSet("Write", "Read", "Manage", "FullControl")]
         public string[] Permissions;
 
         protected override void ExecuteCmdlet()

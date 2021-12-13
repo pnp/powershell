@@ -1,10 +1,12 @@
 # PnP PowerShell
-PnP PowerShell is a **cross-platform** PowerShell Module providing over 500 cmdlets that work with Microsoft 365 environments and more specifically SharePoint Online, Microsoft Teams, Microsoft Planner and Microsoft Flow.
+PnP PowerShell is a **cross-platform** PowerShell Module providing over 600 cmdlets that work with Microsoft 365 environments and more specifically SharePoint Online, Microsoft Teams, Microsoft Planner and Microsoft Flow.
 
 > [!NOTE]
 > This module is a successor of the [SharePointPnPPowerShellOnline](https://github.com/pnp/pnp-powershell) module, which is now regarded legacy and not maintained anymore. This newer version of the PowerShell module is cross-platform (e.g. it works on Windows, MacOS and Linux) however will only support SharePoint Online. Going forward will only be actively maintaining the cross-platform PnP PowerShell module.
 
 # Getting up and running
+
+It is recommended to use PowerShell 7.x, which can be installed by following [these instructions](https://docs.microsoft.com/powershell/scripting/install/installing-powershell-on-windows). Most of the cmdlets should work under PowerShell 5.x as well, though.
 
 To install PnP PowerShell:
 
@@ -14,7 +16,7 @@ Install-Module -Name PnP.PowerShell
 
 To install a nightly build of PnP PowerShell:
 ```powershell
-Install-Module -Name PnP.PowerShell -AllowPrerelease
+Install-Module -Name PnP.PowerShell -AllowPrerelease -SkipPublisherCheck -AllowClobber
 ```
 
 See the [articles](/powershell/articles) section for more information on authentication and configuration. All [cmdlets](/powershell/cmdlets/Add-PnPAlert.html) have been documented too.
