@@ -89,7 +89,7 @@
 <h3 id="add-field-to-list-default">Add field to list (Default)</h3>
 <pre><code class="lang-powershell">Add-PnPField [-List &lt;ListPipeBind&gt;] -DisplayName &lt;String&gt; -InternalName &lt;String&gt; -Type &lt;FieldType&gt;
  [-Id &lt;Guid&gt;] [-AddToDefaultView] [-Required] [-Group &lt;String&gt;] [-ClientSideComponentId &lt;Guid&gt;]
- [-ClientSideComponentProperties &lt;String&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-ClientSideComponentProperties &lt;String&gt;] [-AddToAllContentTypes] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="add-field-reference-to-list">Add field reference to list</h3>
@@ -102,7 +102,7 @@
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="add-field-by-xml-to-list">Add field by XML to list</h3>
-<pre><code class="lang-powershell">Add-PnPField [-AddToDefaultView] [-Required] [-Group &lt;String&gt;] 
+<pre><code class="lang-powershell">Add-PnPField [-AddToDefaultView] [-Required] [-Group &lt;String&gt;] [-AddToAllContentTypes]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -123,6 +123,17 @@
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-addtodefaultview">-AddToDefaultView</h3>
 <p>Switch Parameter if this field must be added to the default view</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Add field to list, Add field by XML to list
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-addtoallcontenttypes">-AddToAllContentTypes</h3>
+<p>Switch Parameter if this field must be added to all content types</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Add field to list, Add field by XML to list
 
