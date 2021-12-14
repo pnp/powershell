@@ -36,7 +36,7 @@ Request-PnPSyntexClassifyAndExtract -List <ListPipeBind> [-OffPeak <SwitchParame
 
 This command requests for all files in a library, folder or individual files to be classified and extracted via the published SharePoint Syntex models on the libraries hosting the files. When using with the `OffPeak` switch then the files are send to the off peak Syntex content processing queue, this way there's no need to enumerate all files in the library and submit them to the regular queue. When using the `Force` switch without setting OffPeak then all files are enumerated and sent to the regular queue, regardless of whether they were processed in the past.
 
-When the list contains more than 5000 files the cmdlet always uses the off peak SharePoint Syntex queue.
+When the list contains more than 5000 files or when using the folder parameter the cmdlet will use the off peak SharePoint Syntex queue.
 
 ## EXAMPLES
 
@@ -120,7 +120,7 @@ Accept wildcard characters: False
 ```
 
 ### -Folder
-The folder holding the files to classify and extract
+The folder holding the files to classify and extract. When using this parameter, files will be send to the off peak queue.
 
 ```yaml
 Type: FolderPipeBind

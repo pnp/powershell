@@ -7,13 +7,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Current Nightly]
 
-### Changed
-
-- Fixed `Get-PnPGroupMember -User` not properly returning the specified user.
-- Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
-- Added optional `-ScheduledPublishDate` parameter to `Add-PnPPage` and `Set-PnPPage` to allow for scheduling a page to be published.
-- Added `-RemoveScheduledPublish` to `Set-PnPPage` to allow for a page publish schedule to be removed.
-- Added support to add multiple owners and members in `New-PnPTeamsTeam` cmdlet.
+### Added
+- Added `Get-PnPTenantInstance` which will return one or more tenant instances, depending if you have a multi-geo or single-geo (default) tenant.
 - Added support for off peak SharePoint Syntex content classification and extraction for lists and folders via new `-OffPeak` and `-Folder` parameters for `Request-PnPSyntexClassifyAndExtract`
 - Added `Get\Set-PnPPlannerConfiguration` to allow working with the Microsoft Planner tenant configuration
 - Added `Get\Set-PnPPlannerUserPolicy` to allow setting Microsoft Planner user policies for specific users
@@ -27,16 +22,31 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Enable-PnPPageScheduling` and `Disable-PnPPageScheduling` to enable or disable page publishing scheduling on modern pages
 - Added ability to add multiple users to a Teams team in the `Add-PnPTeamsUser` cmdlet
 - Added `-Credentials $cred` or `-CurrentCredentials` to be allowed to be used in combination with `Connect-PnPOnline -SPOManagementshell`
+- Added `-InformationBarriersMode` in the `Set-PnPTenantSite` cmdlet which allows fine tuning of the information barriers mode per site collection
+- Added `-InformationBarriersSuspension` in the `Set-PnPTenant` cmdlet which allows information barriers to be enabled or disabled in a tenant   
 - Added `-Recycle` parameter to `Remove-PnPPage` to delete the page and send it to the recycle bin. This prevents permanently deleting the page and you can also restore it.
 - Added `-DemoteNewsArticle` parameter to the `Set-PnPPage` cmdlet to demote an existing news post to a regular page.
 - Added `-Translate` and `-TranslationLanguageCodes` parameters to `Set-PnPPage` and `Add-PnPPage`. This enables multilingual page creation in sites.
 - Added `DisableSpacesActivation` state to be returned with `Get-PnPTenant`
 - Added `-AllowFilesWithKeepLabelToBeDeletedSPO` and `-AllowFilesWithKeepLabelToBeDeletedODB` options to `Set-PnPTenant` which allows configuration of files on SharePoint Online and OneDrive for Business being blocked by a retention policy to be possible to be deleted anyway and then moved to the preservation hold library. The default for SharePoint Online for this will change as announced in Message Center announcement MC264360. This will allow reverting it. The current values can be retrieved using `Get-PnPTenant`.
-  
+- Added `DisableAddToOneDrive` state to be returned with `Get-PnPTenant` cmdlet.
+- Added `-DisableAddToOneDrive` to `Set-PnPTenant` cmdlet to enable/disable users from adding shortcuts to OneDrive.
+- Added optional `-Site` parameter to `Add-PnPContentTypesFromContenTypeHub` which allows a specific site to be specified to add the content type hub content types to
+- Added `Set-PnPBuiltInSiteTemplateSettings` and `Get-PnPBuiltInSiteTemplateSettings` to allow making the built in SharePoint Online site templates visible or hidden and getting their current settings
+- Added support for Channel sites (ID 69) to `Add-PnPSiteDesign`, `Set-PnPSiteDesign` and `Add-PnPSiteDesignFromWeb`
+- Added optional `-IsDefault` option to `Get-PnPPowerPlatformEnvironment` which allows just the default or non default environments to be returned. If not provided, all environments will be returned as was the case before this addition.
+- Added `ResourceBehaviorOptions` option in `New-PnPTeamsTeam` cmdlet to set `ResourceBehaviorOptions` while provisioning a Team
+- Added alias on `Copy-PnPFile` for `Copy-PnPFolder`. It could already be used to copy a folder, but to make this more clear, and as we already had a `Copy/Move-PnPFolder` as well, the same cmdlet is now also available under its alternative cmdlet name.
+- Added optional `-ScheduledPublishDate` parameter to `Add-PnPPage` and `Set-PnPPage` to allow for scheduling a page to be published.
+- Added `-RemoveScheduledPublish` to `Set-PnPPage` to allow for a page publish schedule to be removed.
+- Added support to add multiple owners and members in `New-PnPTeamsTeam` cmdlet.
+
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads
-- Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`
-- A clearer error message will now be returned when using `Add-PnPListItem -List` and specifying an invalid list name
+- Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`.
+- A clearer error message will now be returned when using `Add-PnPListItem -List` and specifying an invalid list name.
+- Response of `Add-PnPContentTypesFromContenTypeHub` is now returned in the root of the response as well as under Value as it was previously for backwards compatibility.
+- Improved synopsis documentation for `Update-PnPUserType` cmdlet.
      
 ### Fixed
 - Fixed `Get-PnPGroupMember -User` not properly returning the specified user
@@ -48,16 +58,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Add-PnPListFoldersToProvisioningTemplate` not working when having nested folder structure   
 - Fixed documentation for `Get-PnPFlow` and `Enable-PnPFlow` cmdlets
 - Fixed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` not being able to deal with multi value properties on the Azure Active Directory side, such as `BusinessPhones`
-- Added `ResourceBehaviorOptions` option in `New-PnPTeamsTeam` cmdlet to set `ResourceBehaviorOptions` while provisioning a Team.
 - Fixed `Add-PnPListItem` issue with setting MultiChoice columns when using `-Batch` parameter
 - Fixed issue with `Remove-PnPListItem` when trying to use it with `Batch` parameter
 - Fixed `Add-PnPDataRowsToSiteTemplate` not exporting TaxonomyFieldValues properly
 - Fixed `Add/Set-PnPListItem` issue with managed metadata / taxonomy field value failing in a batched request.
 - Fixed `Set-PnPListItem` issue with setting `Modified` date value properly when using `-Batch` parameter.
 - Fixed `Get-PnPTeamsTeam -Identity` throwing an exception if the name of the team would contain special characters
+- Fixed `Get-PnPTerm` throwing an exception when used in combination with `-Includes` [#1384](https://github.com/pnp/powershell/pull/1384)
+- Fixed `Get-PnPDiagnostics` throwing an unable to cast exception under some circumstances [#1380](https://github.com/pnp/powershell/pull/1380)
 
 ### Removed
 - Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
+- Removed `Get-PnPSubWebs` as that was marked deprecated a year ago. Use `Get-PnPSubWeb` instead. [#1394](https://github.com/pnp/powershell/pull/1394)
 
 ### Contributors
 - Koen Zomers [koenzomers]
@@ -74,6 +86,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Justin [pagejustin]
 - Collin Argo [SCollinA]
 - Leon Armston [LeonArmston]
+- Lars Höög [h00g]
+- [kachihro]
+- [Andy-Dawson]
+- David Aeschlimann [TashunkoWitko]
+- [outorted]
+- [dkardokas]
+- Asad Refai [asadrefai]
+- Giacomo Pozzoni [jackpoz]
 
 ## [1.8.0]
 

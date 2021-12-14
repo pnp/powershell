@@ -40,11 +40,18 @@ Many times exporting a Microsoft Power Automate Flow will not be possible due to
 
 ### Example 1
 ```powershell
-$environment = Get-PnPFlowEnvironment
+$environment = Get-PnPPowerPlatformEnvironment -IsDefault $true
 Export-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
 
-This will export the specified Microsoft Power Automate Flow as an output to the current output of PowerShell
+This will export the specified Microsoft Power Automate Flow from the default Power Platform environment as an output to the current output of PowerShell
+
+### Example 2
+```powershell
+Get-PnPPowerPlatformEnvironment | foreach { Get-PnPFlow -Environment $_.Name } | foreach { Export-PnPFlow -Environment $_.Properties.EnvironmentDetails.Name -Identity $_ -OutPath "c:\flows\$($_.Name).zip" -AsZipPackage }
+```
+
+This will export all the Microsoft Power Automate Flows available within the tenant from all users from all the available Power Platform environments as a ZIP package for each of them to a local folder c:\flows
 
 ## PARAMETERS
 

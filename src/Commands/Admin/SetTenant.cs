@@ -9,7 +9,7 @@ using Microsoft.Online.SharePoint.TenantManagement;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPTenant", DefaultParameterSetName = ParameterAttribute.AllParameterSets)]
-   
+
     public class SetTenant : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -214,16 +214,23 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? DisableBackToClassic;
 
         [Parameter(Mandatory = false)]
-        public bool? StopNew2013Workflows;  
+        public bool? StopNew2013Workflows;
 
         [Parameter(Mandatory = false)]
         public bool? ViewInFileExplorerEnabled;
 
         [Parameter(Mandatory = false)]
+        public bool? InformationBarriersSuspension;
+        
+        [Parameter(Mandatory = false)]
         public bool? AllowFilesWithKeepLabelToBeDeletedSPO;
 
         [Parameter(Mandatory = false)]
         public bool? AllowFilesWithKeepLabelToBeDeletedODB;
+
+        [Parameter(Mandatory = false)]
+        [Alias("DisableAddShortcutsToOneDrive")]
+        public bool? DisableAddToOneDrive;
 
         protected override void ExecuteCmdlet()
         {
@@ -258,7 +265,7 @@ namespace PnP.PowerShell.Commands.Admin
             }
             if (SharingCapability != null)
             {
-                
+
                 Tenant.SharingCapability = SharingCapability.Value;
                 modified = true;
             }
@@ -784,7 +791,7 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 modified = true;
             }
-            if(HideDefaultThemes.HasValue)
+            if (HideDefaultThemes.HasValue)
             {
                 Tenant.HideDefaultThemes = HideDefaultThemes.Value;
                 modified = true;
@@ -794,12 +801,12 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.DisabledWebPartIds = DisabledWebPartIds;
                 modified = true;
             }
-            if(EnableAIPIntegration.HasValue)
+            if (EnableAIPIntegration.HasValue)
             {
                 Tenant.EnableAIPIntegration = EnableAIPIntegration.Value;
                 modified = true;
             }
-            if(DisableCustomAppAuthentication.HasValue)
+            if (DisableCustomAppAuthentication.HasValue)
             {
                 Tenant.DisableCustomAppAuthentication = DisableCustomAppAuthentication.Value;
                 modified = true;
@@ -837,6 +844,11 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
+            if (InformationBarriersSuspension.HasValue)
+            {
+                Tenant.InformationBarriersSuspension = InformationBarriersSuspension.Value;
+                modified = true;
+            }
             if (AllowFilesWithKeepLabelToBeDeletedSPO.HasValue)
             {
                 Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetAllowFilesWithKeepLabelToBeDeletedSPO(ClientContext, AllowFilesWithKeepLabelToBeDeletedSPO.Value);
@@ -846,6 +858,12 @@ namespace PnP.PowerShell.Commands.Admin
             if (AllowFilesWithKeepLabelToBeDeletedODB.HasValue)
             {
                 Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetAllowFilesWithKeepLabelToBeDeletedODB(ClientContext, AllowFilesWithKeepLabelToBeDeletedODB.Value);
+                modified = true;
+            }
+
+            if (DisableAddToOneDrive.HasValue)
+            {
+                Tenant.DisableAddToOneDrive = DisableAddToOneDrive.Value;
                 modified = true;
             }
 
