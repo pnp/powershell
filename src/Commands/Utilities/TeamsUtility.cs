@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Base;
+﻿using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Teams;
@@ -10,6 +11,9 @@ using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Group = PnP.PowerShell.Commands.Model.Graph.Group;
+using TeamChannel = PnP.PowerShell.Commands.Model.Teams.TeamChannel;
+using User = PnP.PowerShell.Commands.Model.Teams.User;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -216,35 +220,78 @@ namespace PnP.PowerShell.Commands.Utilities
             Group group = new Group();
             // get the owner if no owner was specified
             var ownerId = string.Empty;
+            var contextSettings = PnPConnection.Current.Context.GetContextSettings();
             if (string.IsNullOrEmpty(owner))
             {
                 if (owners != null && owners.Length > 0)
                 {
                     var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{owners[0]}?$select=Id", accessToken);
-                    ownerId = user.Id;
+                    if (user != null)
+                    {
+                        ownerId = user.Id;
+                    }
+                    else
+                    {
+                        // find the user in the organization
+                        var collection = await GraphHelper.GetResultCollectionAsync<User>(httpClient, $"v1.0/users?$filter=mail eq '{owner[0]}'&$select=Id", accessToken);
+                        if (collection != null)
+                        {
+                            if (collection.Any())
+                            {
+                                ownerId = collection.First().Id;
+                            }
+                        }
+                    }
                 }
                 else
                 {
-                    var user = await GraphHelper.GetAsync<User>(httpClient, "v1.0/me?$select=Id", accessToken);
-                    ownerId = user.Id;
+                    if (contextSettings.Type != Framework.Utilities.Context.ClientContextType.AzureADCertificate)
+                    {
+                        var user = await GraphHelper.GetAsync<User>(httpClient, "v1.0/me?$select=Id", accessToken);
+                        ownerId = user.Id;
+                    }
                 }
             }
             else
             {
-                var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{owner}?$select=Id", accessToken);
-                if (user != null)
+                if (owners != null && owners.Length > 0)
                 {
-                    ownerId = user.Id;
+                    var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{owners[0]}?$select=Id", accessToken);
+                    if (user != null)
+                    {
+                        ownerId = user.Id;
+                    }
+                    else
+                    {
+                        // find the user in the organization
+                        var collection = await GraphHelper.GetResultCollectionAsync<User>(httpClient, $"v1.0/users?$filter=mail eq '{owner[0]}'&$select=Id", accessToken);
+                        if (collection != null)
+                        {
+                            if (collection.Any())
+                            {
+                                ownerId = collection.First().Id;
+                            }
+                        }
+                    }
                 }
                 else
                 {
-                    // find the user in the organization
-                    var collection = await GraphHelper.GetResultCollectionAsync<User>(httpClient, $"v1.0/users?$filter=mail eq '{owner}'&$select=Id", accessToken);
-                    if (collection != null)
+                    // To do : remove this entire else condition at a future date
+                    var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{owner}?$select=Id", accessToken);
+                    if (user != null)
                     {
-                        if (collection.Any())
+                        ownerId = user.Id;
+                    }
+                    else
+                    {
+                        // find the user in the organization
+                        var collection = await GraphHelper.GetResultCollectionAsync<User>(httpClient, $"v1.0/users?$filter=mail eq '{owner}'&$select=Id", accessToken);
+                        if (collection != null)
                         {
-                            ownerId = collection.First().Id;
+                            if (collection.Any())
+                            {
+                                ownerId = collection.First().Id;
+                            }
                         }
                     }
                 }

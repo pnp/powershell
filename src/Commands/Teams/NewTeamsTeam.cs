@@ -31,6 +31,7 @@ namespace PnP.PowerShell.Commands.Graph
         [ValidateLength(0, 1024)]
         public string Description;
 
+        [Obsolete("Please use the Owners parameter instead.The -Owner parameter has been deprecated and will be removed in a future version. ")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Owner;
 
