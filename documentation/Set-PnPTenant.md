@@ -1254,6 +1254,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -IsFluidEnabled
+Allows configuration on whether Fluid components are enabled or disabled in the tenant. If set to `$true`, then this feature will be disabled on all sites in the tenant. If set to `$false`, it will be enabled on all sites in the tenant.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases: DisableAddShortcutsToOneDrive
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
