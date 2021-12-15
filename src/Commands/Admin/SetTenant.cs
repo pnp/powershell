@@ -232,6 +232,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Alias("DisableAddShortcutsToOneDrive")]
         public bool? DisableAddToOneDrive;
 
+        [Parameter(Mandatory = false)]
+        public bool? IsFluidEnabled;
+
         protected override void ExecuteCmdlet()
         {
             ClientContext.Load(Tenant);
@@ -864,6 +867,12 @@ namespace PnP.PowerShell.Commands.Admin
             if (DisableAddToOneDrive.HasValue)
             {
                 Tenant.DisableAddToOneDrive = DisableAddToOneDrive.Value;
+                modified = true;
+            }
+
+            if (IsFluidEnabled.HasValue)
+            {
+                Tenant.IsFluidEnabled = IsFluidEnabled.Value;
                 modified = true;
             }
 

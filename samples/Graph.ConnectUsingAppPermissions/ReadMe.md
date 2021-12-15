@@ -94,13 +94,7 @@ Version  | Date | Comments
 1.0  | Feb 17 2017 | Initial release
 
 ## Resources ##
-* [How to use Application Permission with v2 endpoint and Microsoft Graph][1]
-* [Microsoft Graph app authentication using Azure AD][2]
-
-[1]: https://blogs.msdn.microsoft.com/tsmatsuz/2016/10/07/application-permission-with-v2-endpoint-and-microsoft-graph/
-[2]: https://graph.microsoft.io/en-us/docs/authorization/app_authorization
 
 ## **Disclaimer** 
 THIS CODE IS PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 ________________________________________
-
