@@ -56,7 +56,7 @@ Accept wildcard characters: False
 ```
 
 ### -FieldXml
-CAML snippet containing the field definition. See http://msdn.microsoft.com/en-us/library/office/ms437580(v=office.15).aspx
+CAML snippet containing the field definition. See https://docs.microsoft.com/sharepoint/dev/schema/field-element-list
 
 ```yaml
 Type: String
@@ -87,6 +87,5 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[Field CAML](http://msdn.microsoft.com/en-us/library/office/ms437580(v=office.15).aspx)
-
-
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+[Field CAML documentation](https://docs.microsoft.com/sharepoint/dev/schema/field-element-list)

@@ -49,5 +49,5 @@ Accept pipeline input: True
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[Documentation](https://docs.microsoft.com/graph/api/group-renew)
-
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+[Microsoft Graph documentation](https://docs.microsoft.com/graph/api/group-renew)
