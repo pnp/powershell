@@ -57,8 +57,19 @@ namespace PnP.PowerShell.Commands.Base
             var authManager = contextSettings.AuthenticationManager;
             if (authManager != null)
             {
+                if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
+                {
+                    // When connected using ACS, we cannot get a token for another endpoint
+                    throw new PSInvalidOperationException("Trying to get a token for a different endpoint while being connected through an ACS token is not possible. Please connect differently.");
+                }
+
                 string[] requiredScopes = null;
-                var requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdletType, typeof(RequiredMinimalApiPermissions));
+                //RequiredMinimalApiPermissions requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdletType, typeof(RequiredMinimalApiPermissions));
+                RequiredMinimalApiPermissions requiredScopesAttribute = null;
+                if (cmdletType != null)
+                {
+                    requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdletType, typeof(RequiredMinimalApiPermissions));
+                }
                 if (requiredScopesAttribute != null)
                 {
                     requiredScopes = requiredScopesAttribute.PermissionScopes;
@@ -67,10 +78,9 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     requiredScopes = new[] { appOnlyDefaultScope }; // override for app only
                 }
-                if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
+                if (requiredScopes == null && !string.IsNullOrEmpty(appOnlyDefaultScope))
                 {
-                    // When connected using ACS, we cannot get a token for another endpoint
-                    throw new PSInvalidOperationException("Trying to get a token for a different endpoint while being connected through an ACS token is not possible. Please connect differently.");
+                    requiredScopes = new[] { appOnlyDefaultScope };
                 }
                 var accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
                 return accessToken;
