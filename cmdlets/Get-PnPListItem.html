@@ -129,7 +129,7 @@
 <h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">Get-PnPListItem -List Tasks -Query &quot;&lt;View&gt;&lt;ViewFields&gt;&lt;FieldRef Name='Title'/&gt;&lt;FieldRef Name='Modified'/&gt;&lt;/ViewFields&gt;&lt;Query&gt;&lt;Where&gt;&lt;Geq&gt;&lt;FieldRef Name='Modified'/&gt;&lt;Value Type='DateTime'&gt;&lt;Today/&gt;&lt;/Value&gt;&lt;/Eq&gt;&lt;/Where&gt;&lt;/Query&gt;&lt;/View&gt;&quot;
 </code></pre>
-<p>Retrieves all list items modified today, retrieving the columns 'Title' and 'Modified'. When you use -Query, you can add a <viewfields> clause to retrieve specific columns (since you cannot use -Fields)<p>
+<p>Retrieves all list items modified today, retrieving the columns 'Title' and 'Modified'. When you use -Query, you can add a <code>&lt;ViewFields&gt;</code> clause to retrieve specific columns (since you cannot use -Fields)</p>
 <h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">Get-PnPListItem -List Tasks -PageSize 1000
 </code></pre>
@@ -253,7 +253,7 @@ Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
-</viewfields></article>
+</article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">

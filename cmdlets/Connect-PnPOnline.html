@@ -163,7 +163,7 @@ A browser window will automatically open and the code you need to enter will be 
 Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificatePath 'c:\mycertificate.pfx' -CertificatePassword $password  -Tenant 'contoso.onmicrosoft.com'
 </code></pre>
 <p>Connects using an Azure Active Directory registered application using a locally available certificate containing a private key.
-See <a href="https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread">https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread</a> for a sample on how to get started.</p>
+See <a href="https://docs.microsoft.com/sharepoint/dev/solution-guidance/security-apponly-azuread">https://docs.microsoft.com/sharepoint/dev/solution-guidance/security-apponly-azuread</a> for a sample on how to get started.</p>
 <h3 id="example-7">EXAMPLE 7</h3>
 <pre><code>Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -Thumbprint 34CFAA860E5FB8C44335A38A097C1E41EEA206AA
 </code></pre>
@@ -174,7 +174,7 @@ Ensure you have imported the private key certificate, typically the .pfx file, i
 <pre><code>Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificateBase64Encoded $base64encodedstring -Tenant 'contoso.onmicrosoft.com'
 </code></pre>
 <p>Connects using an Azure Active Directory registered application using a certificate with a private key that has been base64 encoded.
-See <a href="https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread">https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread</a> for a sample on how to get started.</p>
+See <a href="https://docs.microsoft.com/sharepoint/dev/solution-guidance/security-apponly-azuread">https://docs.microsoft.com/sharepoint/dev/solution-guidance/security-apponly-azuread</a> for a sample on how to get started.</p>
 <h3 id="example-9">EXAMPLE 9</h3>
 <pre><code>Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -UseWebLogin
 </code></pre>
