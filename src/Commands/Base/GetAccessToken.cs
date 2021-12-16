@@ -29,31 +29,18 @@ namespace PnP.PowerShell.Commands.Base
             if (ParameterSetName == ResourceTypeParam)
             {
                 accessTokenValue = null;
-                if (PnPConnection.Current != null)
+
+                switch (ResourceTypeName)
                 {
-                    if (PnPConnection.Current.Context != null)
-                    {
-                        switch (ResourceTypeName)
-                        {
-                            case ResourceTypeName.Graph:
-                                accessTokenValue = AccessToken;
-                                break;
-                            case ResourceTypeName.SharePoint:
-                                var settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(PnPConnection.Current.Context);
-                                if (settings != null)
-                                {
-                                    var authManager = settings.AuthenticationManager;
-                                    if (authManager != null)
-                                    {
-                                        accessTokenValue = TokenHandler.GetAccessToken(null, PnPConnection.Current.Context.Url.TrimEnd('/') + "/.default");
-                                    }
-                                }
-                                break;
-                            case ResourceTypeName.ARM:
-                                accessTokenValue = TokenHandler.GetAccessToken(null, "https://management.azure.com/.default");
-                                break;
-                        }
-                    }
+                    case ResourceTypeName.Graph:
+                        accessTokenValue = AccessToken;
+                        break;
+                    case ResourceTypeName.SharePoint:
+                        accessTokenValue = TokenHandler.GetAccessToken(null, PnPConnection.Current?.Context?.Url?.TrimEnd('/') + "/.default");
+                        break;
+                    case ResourceTypeName.ARM:
+                        accessTokenValue = TokenHandler.GetAccessToken(null, "https://management.azure.com/.default");
+                        break;
                 }
             }
 
