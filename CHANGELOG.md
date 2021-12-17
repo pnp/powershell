@@ -67,6 +67,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPTeamsTeam -Identity` throwing an exception if the name of the team would contain special characters
 - Fixed `Get-PnPTerm` throwing an exception when used in combination with `-Includes` [#1384](https://github.com/pnp/powershell/pull/1384)
 - Fixed `Get-PnPDiagnostics` throwing an unable to cast exception under some circumstances [#1380](https://github.com/pnp/powershell/pull/1380)
+- Fixed `Get-PnPTeamsTab` issue with missing TeamsApp object values. It will now populate TeamsApp object with Id ,DisplayName , ExternalId and DistributionMethod properties if available.
 
 ### Removed
 - Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.

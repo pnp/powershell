@@ -22,9 +22,11 @@ namespace PnP.PowerShell.Commands.Model.Teams
                 _displayName = System.Net.WebUtility.UrlDecode(value);
             }
         }
+        
+        public TeamApp TeamsApp { get; set; }
 
         [JsonPropertyName("teamsApp@odata.bind")]
-        public string TeamsApp { get; set; }
+        public string TeamsAppOdataBind { get; set; }
         /// <summary>
         /// App definition identifier of the tab
         /// </summary>
