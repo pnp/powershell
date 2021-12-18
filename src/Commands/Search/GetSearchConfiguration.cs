@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Xml.Linq;
+using System.Dynamic;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Search.Administration;
 using Microsoft.SharePoint.Client.Search.Portability;
 
 using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Utilities.REST;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
+
 
 namespace PnP.PowerShell.Commands.Search
 {
@@ -19,6 +25,12 @@ namespace PnP.PowerShell.Commands.Search
         ManagedPropertyMappings = 1
     }
 
+    public enum BookmarkStatus
+    {
+        Suggested = 0,
+        Published = 1
+    }
+
     [Cmdlet(VerbsCommon.Get, "PnPSearchConfiguration", DefaultParameterSetName = "Xml")]
     public class GetSearchConfiguration : PnPWebCmdlet
     {
@@ -26,26 +38,46 @@ namespace PnP.PowerShell.Commands.Search
         public SearchConfigurationScope Scope = SearchConfigurationScope.Web;
 
         [Parameter(Mandatory = false, ParameterSetName = "Xml")]
+        [Parameter(Mandatory = false, ParameterSetName = "CSV")]
         public string Path;
 
-        [Parameter(Mandatory = false,
-            ParameterSetName = "OutputFormat")]
+        [Parameter(Mandatory = false, ParameterSetName = "OutputFormat")]
         public OutputFormat OutputFormat = OutputFormat.CompleteXml;
+
+        [Parameter(Mandatory = false, ParameterSetName = "CSV")]
+        public SwitchParameter PromotedResultsToBookmarkCSV;
+
+        [Parameter(Mandatory = false, ParameterSetName = "CSV")]
+        public BookmarkStatus BookmarkStatus = BookmarkStatus.Suggested;
 
         protected override void ExecuteCmdlet()
         {
-            string configOutput = string.Empty;
+            string output = string.Empty;
 
             switch (Scope)
             {
                 case SearchConfigurationScope.Web:
                     {
-                        configOutput = CurrentWeb.GetSearchConfiguration();
+                        if (PromotedResultsToBookmarkCSV.IsPresent)
+                        {
+                            output = RestHelper.ExecuteGetRequest(ClientContext, "searchsetting/getpromotedresultqueryrules");
+                        }
+                        else
+                        {
+                            output = CurrentWeb.GetSearchConfiguration();
+                        }
                         break;
                     }
                 case SearchConfigurationScope.Site:
                     {
-                        configOutput = ClientContext.Site.GetSearchConfiguration();
+                        if (PromotedResultsToBookmarkCSV.IsPresent)
+                        {
+                            output = RestHelper.ExecuteGetRequest(ClientContext, "searchsetting/getpromotedresultqueryrules?sitecollectionlevel=true");
+                        }
+                        else
+                        {
+                            output = ClientContext.Site.GetSearchConfiguration();
+                        }
                         break;
                     }
                 case SearchConfigurationScope.Subscription:
@@ -55,15 +87,27 @@ namespace PnP.PowerShell.Commands.Search
                             throw new InvalidOperationException(Resources.CurrentSiteIsNoTenantAdminSite);
                         }
 
-                        SearchObjectOwner owningScope = new SearchObjectOwner(ClientContext, SearchObjectLevel.SPSiteSubscription);
-                        var config = new SearchConfigurationPortability(ClientContext);
-                        ClientResult<string> configuration = config.ExportSearchConfiguration(owningScope);
-                        ClientContext.ExecuteQueryRetry();
-
-                        configOutput = configuration.Value;
+                        if (PromotedResultsToBookmarkCSV.IsPresent)
+                        {
+                            output = RestHelper.ExecuteGetRequest(ClientContext, "searchsetting/getpromotedresultqueryrules");
+                        }
+                        else
+                        {
+                            SearchObjectOwner owningScope = new SearchObjectOwner(ClientContext, SearchObjectLevel.SPSiteSubscription);
+                            var config = new SearchConfigurationPortability(ClientContext);
+                            ClientResult<string> configuration = config.ExportSearchConfiguration(owningScope);
+                            ClientContext.ExecuteQueryRetry();
+                            output = configuration.Value;
+                        }
                     }
                     break;
             }
+
+            if (PromotedResultsToBookmarkCSV.IsPresent)
+            {
+                output = ConvertToCSV(output);
+            }
+
 
             if (Path != null)
             {
@@ -71,17 +115,17 @@ namespace PnP.PowerShell.Commands.Search
                 {
                     Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
                 }
-                System.IO.File.WriteAllText(Path, configOutput);
+                System.IO.File.WriteAllText(Path, output);
             }
             else
             {
                 if (OutputFormat == OutputFormat.CompleteXml)
                 {
-                    WriteObject(configOutput);
+                    WriteObject(output);
                 }
                 else if (OutputFormat == OutputFormat.ManagedPropertyMappings)
                 {
-                    StringReader sr = new StringReader(configOutput);
+                    StringReader sr = new StringReader(output);
                     var doc = XDocument.Load(sr);
                     var mps = GetCustomManagedProperties(doc);
 
@@ -100,8 +144,151 @@ namespace PnP.PowerShell.Commands.Search
             }
         }
 
-        #region Helper functions
+        private string ConvertToCSV(string json)
+        {
+            var bookmarks = new List<ExpandoObject>();
+            var config = JsonSerializer.Deserialize<Root>(json);
+            if (config.Result != null)
+            {
+                foreach (var rule in config.Result)
+                {
+                    //if (!rule.IsPromotedResultsOnly) continue;
+                    if (rule.QueryConditions == null || rule.PromotedResults == null) continue;
+                    foreach (var promoResult in rule.PromotedResults)
+                    {
+                        if (promoResult.IsVisual) continue;
+                        dynamic bookmark = new ExpandoObject();
+                        bookmark.Title = promoResult.Title.Contains(" ") ? '"' + promoResult.Title + '"' : promoResult.Title;
+                        bookmark.Url = promoResult.Url;
+                        List<string> triggerTerms = new List<string>();
+                        bool matchSimilar = false;
+                        foreach (var condition in rule.QueryConditions)
+                        {
+                            if (condition.Terms == null) continue;
+                            if (condition.QueryConditionType != "Keyword") continue;
 
+                            if (condition.MatchingOptions.Contains("ProperPrefix") || condition.MatchingOptions.Contains("ProperSuffix"))
+                            {
+                                matchSimilar = true;
+                            }
+
+                            foreach (string term in condition.Terms)
+                            {
+                                triggerTerms.AddRange(term.Split(';').Select(s => s.Replace("Keywords:", "").Trim()).ToList());
+                            }
+                        }
+                        if (triggerTerms.Count == 0) continue;
+
+                        var dict = bookmark as IDictionary<string, object>;
+
+                        bookmark.Keywords = string.Join(";", triggerTerms.Distinct());
+                        dict["Match Similar Keywords"] = matchSimilar.ToString().ToLowerInvariant();
+                        bookmark.State = BookmarkStatus == BookmarkStatus.Suggested ? "suggested" : "published";
+                        bookmark.Description = promoResult.Description.Contains(" ") ? '"' + promoResult.Description + '"' : promoResult.Description;
+                        dict["Reserved Keywords"] = string.Empty;
+                        bookmark.Categories = string.Empty;
+
+                        dict["Start Date"] = rule.StartDate != DateTime.MinValue ? rule.StartDate.ToString("yyyy-MM-ddTHH:mm:ssZ") : string.Empty;
+                        dict["End Date"] = rule.EndDate != DateTime.MinValue ? rule.EndDate.ToString("yyyy-MM-ddTHH:mm:ssZ") : string.Empty;
+                        dict["Country/Region"] = string.Empty;
+                        bookmark.Groups = string.Empty;
+                        dict["Device & OS"] = string.Empty;
+                        dict["Targeted Variations"] = string.Empty;
+                        dict["Last Modified"] = string.Empty;
+                        dict["Last Modified By"] = string.Empty;
+                        bookmark.Id = string.Empty;
+                        bookmarks.Add(bookmark);
+                    }
+                }
+            }
+
+            StringBuilder sb = new StringBuilder();
+            bool firstLine = true;
+            foreach (var bookmark in bookmarks)
+            {
+                var dict = bookmark as IDictionary<string, object>;
+                if (firstLine)
+                {
+                    sb.AppendLine(string.Join(",", dict.Keys));
+                    firstLine = false;
+                }
+                sb.AppendLine(string.Join(",", dict.Values));
+            }
+
+            return sb.ToString();
+        }
+
+        #region Queryrule / Bookmark classes
+        public class ContextCondition
+        {
+            [JsonPropertyName("ContextConditionType")]
+            public string ContextConditionType { get; set; }
+
+            [JsonPropertyName("SourceId")]
+            public string SourceId { get; set; }
+        }
+
+        public class PromotedResult
+        {
+            [JsonPropertyName("Description")]
+            public string Description { get; set; }
+
+            [JsonPropertyName("IsVisual")]
+            public bool IsVisual { get; set; }
+
+            [JsonPropertyName("Title")]
+            public string Title { get; set; }
+
+            [JsonPropertyName("Url")]
+            public string Url { get; set; }
+        }
+
+        public class QueryCondition
+        {
+            [JsonPropertyName("LCID")]
+            public int LCID { get; set; }
+
+            [JsonPropertyName("MatchingOptions")]
+            public string MatchingOptions { get; set; }
+
+            [JsonPropertyName("QueryConditionType")]
+            public string QueryConditionType { get; set; }
+
+            [JsonPropertyName("SubjectTermsOrigin")]
+            public string SubjectTermsOrigin { get; set; }
+
+            [JsonPropertyName("Terms")]
+            public List<string> Terms { get; set; }
+        }
+
+        public class Result
+        {
+            [JsonPropertyName("EndDate")]
+            public DateTime EndDate { get; set; }
+
+            [JsonPropertyName("IsPromotedResultsOnly")]
+            public bool IsPromotedResultsOnly { get; set; }
+
+            [JsonPropertyName("PromotedResults")]
+            public List<PromotedResult> PromotedResults { get; set; }
+
+            [JsonPropertyName("QueryConditions")]
+            public List<QueryCondition> QueryConditions { get; set; }
+
+            [JsonPropertyName("StartDate")]
+            public DateTime StartDate { get; set; }
+        }
+
+        public class Root
+        {
+            [JsonPropertyName("Result")]
+            public List<Result> Result { get; set; }
+        }
+
+
+        #endregion
+
+        #region Helper functions
         internal class ManagedProperty
         {
             public string Name { get; set; }
