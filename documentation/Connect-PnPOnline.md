@@ -128,7 +128,7 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-
 ```
 
 Connects using an Azure Active Directory registered application using a locally available certificate containing a private key.
-See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.
+See https://docs.microsoft.com/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.
 
 ### EXAMPLE 7
 ```
@@ -145,7 +145,7 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-
 ```
 
 Connects using an Azure Active Directory registered application using a certificate with a private key that has been base64 encoded.
-See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.
+See https://docs.microsoft.com/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.
 
 ### EXAMPLE 9
 ```

@@ -26,6 +26,13 @@ Get-PnPSearchConfiguration [-Scope <SearchConfigurationScope>] [-OutputFormat <O
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
+### BookmarksCSV
+```powershell
+Get-PnPSearchConfiguration [-Scope <SearchConfigurationScope>] [-PromotedResultsToBookmarkCSV] [-BookmarkStatus <BookmarkStatus>] [-Path <String>]
+ [-Connection <PnPConnection>] [<CommonParameters>]
+```
+
+
 ## DESCRIPTION
 
 ## EXAMPLES
@@ -64,6 +71,27 @@ Get-PnPSearchConfiguration -Scope Site -OutputFormat ManagedPropertyMappings
 ```
 
 Returns all custom managed properties and crawled property mapping at the current site collection
+
+### EXAMPLE 6
+```powershell
+Get-PnPSearchConfiguration -Scope Site -PromotedResultsToBookmarkCSV -Path bookmarks.csv
+```
+
+Export promoted results from query rules on the site collection as a CSV file with the bookmarks in suggested status
+
+### EXAMPLE 7
+```powershell
+Get-PnPSearchConfiguration -Scope Site -PromotedResultsToBookmarkCSV -Path bookmarks.csv -BookmarkStatus Published
+```
+
+Export promoted results from query rules on the site collection as a CSV file with the bookmarks in published status
+
+### EXAMPLE 8
+```powershell
+Get-PnPSearchConfiguration -Scope Subscription -PromotedResultsToBookmarkCSV
+```
+
+Export promoted results from query rules on the tenant in CSV format with the bookmarks in suggested status.
 
 ## PARAMETERS
 
@@ -125,7 +153,40 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -PromotedResultsToBookmarkCSV
+Output promoted results to a compatible CSV file to be used as Bookmark import at https://admin.microsoft.com/#/MicrosoftSearch/bookmarks.
 
+Export details:
+
+* Promoted results marked as "Render the URL as a banner instead of as a hyperlink" and query rules with no triggers will be skipped.
+* Triggers set to "Advanced Query Text Match" and "Query Contains Action Term" will have "Match Similar Keywords" set to true for the Bookmark.
+* Multiple triggers on a query rule will be merged into one.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: CSV
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BookmarkStatus
+Output bookmarks to be in suggested or published status upon CSV import. Defaults to suggested status.
+
+```yaml
+Type: BookmarkStatus
+Parameter Sets: CSV
+Accepted values: Suggested, Published
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 

@@ -348,23 +348,7 @@ namespace PnP.PowerShell.Commands.Model
             catch
             {
                 this.disableCustomAppAuthentication = false;
-            } 
-            try
-            {
-                this.allowFilesWithKeepLabelToBeDeletedSPO = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAllowFilesWithKeepLabelToBeDeletedSPO(clientContext).Value;
-            }
-            catch
-            {
-                this.allowFilesWithKeepLabelToBeDeletedSPO = true;
-            }    
-            try
-            {
-                this.allowFilesWithKeepLabelToBeDeletedODB = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAllowFilesWithKeepLabelToBeDeletedODB(clientContext).Value;
-            }
-            catch
-            {
-                this.allowFilesWithKeepLabelToBeDeletedODB = true;
-            }                                 
+            }                               
             this.markNewFilesSensitiveByDefault = tenant.MarkNewFilesSensitiveByDefault;
             try
             {
@@ -382,6 +366,24 @@ namespace PnP.PowerShell.Commands.Model
             {
                 this.disableAddToOneDrive = false;
             }
+            try
+            {
+                this.isFluidEnabled = tenant.IsFluidEnabled;
+            }
+            catch
+            {
+                this.isFluidEnabled = false;
+            }
+            try
+            {
+                var getAllowFilesWithKeepLabelToBeDeletedSPO = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAllowFilesWithKeepLabelToBeDeletedSPO(clientContext);
+                var getAllowFilesWithKeepLabelToBeDeletedODB = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAllowFilesWithKeepLabelToBeDeletedODB(clientContext);                
+                clientContext.ExecuteQueryRetry();
+
+                this.allowFilesWithKeepLabelToBeDeletedSPO = getAllowFilesWithKeepLabelToBeDeletedSPO.Value;
+                this.allowFilesWithKeepLabelToBeDeletedODB = getAllowFilesWithKeepLabelToBeDeletedODB.Value;
+            }
+            catch { }
         }
 
         public bool HideDefaultThemes => hideDefaultThemes;
@@ -524,12 +526,13 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool DisableSpacesActivation => disableSpacesActivation;
 
-        public bool AllowFilesWithKeepLabelToBeDeletedSPO => allowFilesWithKeepLabelToBeDeletedSPO;
+        public bool? AllowFilesWithKeepLabelToBeDeletedSPO => allowFilesWithKeepLabelToBeDeletedSPO;
 
-        public bool AllowFilesWithKeepLabelToBeDeletedODB => allowFilesWithKeepLabelToBeDeletedODB;
+        public bool? AllowFilesWithKeepLabelToBeDeletedODB => allowFilesWithKeepLabelToBeDeletedODB;
 
         public bool DisableAddToOneDrive => disableAddToOneDrive;
 
+        public bool IsFluidEnabled => isFluidEnabled;
 
         private bool hideDefaultThemes;
 
@@ -672,11 +675,13 @@ namespace PnP.PowerShell.Commands.Model
 
         private bool disableSpacesActivation;
 
-        private bool allowFilesWithKeepLabelToBeDeletedSPO;
+        private bool? allowFilesWithKeepLabelToBeDeletedSPO;
 
-        private bool allowFilesWithKeepLabelToBeDeletedODB;
+        private bool? allowFilesWithKeepLabelToBeDeletedODB;
 
         private bool disableAddToOneDrive;
+
+        private bool isFluidEnabled;
 
     }
 }

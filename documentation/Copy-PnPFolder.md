@@ -2,26 +2,26 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Copy-PnPFile.html
+online version: https://pnp.github.io/powershell/cmdlets/Copy-PnPFolder.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Copy-PnPFile
+title: Copy-PnPFolder
 ---
   
-# Copy-PnPFile
+# Copy-PnPFolder
 
 ## SYNOPSIS
-Copies a file or folder to a different location
+Copies a folder or file to a different location
 
 ## SYNTAX
 
 ```powershell
-Copy-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-Force] [-IgnoreVersionHistory] [-NoWait] [-Connection <PnPConnection>]  
+Copy-PnPFolder [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-Force] [-IgnoreVersionHistory] [-NoWait] [-Connection <PnPConnection>]  
   [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Copies a file or folder to a different location. This location can be within the same document library, same site, same site collection or even to another site collection on the same tenant. Currently there is a 200MB file size limit for the file or folder to be copied. Notice that if copying between sites or to a subsite you cannot specify a target filename, only a folder name.
+Copies a folder or file to a different location. This location can be within the same document library, same site, same site collection or even to another site collection on the same tenant. Currently there is a 200MB file size limit for the file or folder to be copied. Notice that if copying between sites or to a subsite you cannot specify a target filename, only a folder name.
 
 Copying files and folders is bound to some restrictions. You can find more on it here: https://docs.microsoft.com/office365/servicedescriptions/sharepoint-online-service-description/sharepoint-online-limits#moving-and-copying-across-sites
 
@@ -29,77 +29,77 @@ Copying files and folders is bound to some restrictions. You can find more on it
 
 ### EXAMPLE 1
 ```powershell
-Copy-PnPFile -SourceUrl "Shared Documents/MyProjectfiles" -TargetUrl "/sites/otherproject/Shared Documents" -Overwrite
+Copy-PnPFolder -SourceUrl "Shared Documents/MyProjectfiles" -TargetUrl "/sites/otherproject/Shared Documents" -Overwrite
 ```
 
 Copies a folder named MyProjectFiles in the document library called Documents located in the current site to the root folder of the library named Documents in the site collection otherproject. If a folder named MyProjectFiles already exists, it will overwrite it.
 
 ### EXAMPLE 2
 ```powershell
-Copy-PnPFile -SourceUrl "/sites/project/Shared Documents/company.docx" -TargetUrl "/sites/otherproject/Shared Documents"
+Copy-PnPFolder -SourceUrl "/sites/project/Shared Documents/company.docx" -TargetUrl "/sites/otherproject/Shared Documents"
 ```
 
 Copies a file named company.docx located in a document library called Shared Documents in the site collection project to the Shared Documents library in the site collection otherproject. If a file named company.docx already exists, it won't perform the copy.
 
 ### EXAMPLE 3
 ```powershell
-Copy-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "/sites/otherproject/Shared Documents" -IgnoreVersionHistory
+Copy-PnPFolder -SourceUrl "Shared Documents/company.docx" -TargetUrl "/sites/otherproject/Shared Documents" -IgnoreVersionHistory
 ```
 
 Copies a file named company.docx located in a document library called Documents in the current site to the site collection otherproject. If a file named company.docx already exists, it won't perform the copy. Only the latest version of the file will be copied and its history will be discarded.
 
 ### EXAMPLE 4
 ```powershell
-Copy-PnPFile -SourceUrl "/sites/project/Shared Documents/Archive" -TargetUrl "/sites/otherproject/Shared Documents" -Overwrite
+Copy-PnPFolder -SourceUrl "/sites/project/Shared Documents/Archive" -TargetUrl "/sites/otherproject/Shared Documents" -Overwrite
 ```
 
 Copies a folder named Archive located in a document library called Shared Documents in the site collection project to the Shared Documents library in the site collection otherproject. If a folder named Archive already exists, it will overwrite it.
 
 ### EXAMPLE 5
 ```powershell
-Copy-PnPFile -SourceUrl "Documents/company.docx" -TargetUrl "Documents/company2.docx"
+Copy-PnPFolder -SourceUrl "Documents/company.docx" -TargetUrl "Documents/company2.docx"
 ```
 
 Copies a file named company.docx located in a document library called Documents to a new document named company2.docx in the same library.
 
 ### EXAMPLE 6
 ```powershell
-Copy-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "Shared Documents2/company.docx"
+Copy-PnPFolder -SourceUrl "Shared Documents/company.docx" -TargetUrl "Shared Documents2/company.docx"
 ```
 
 Copies a file named company.docx located in a document library called Documents to a document library called Documents2 in the same site. 
 
 ### EXAMPLE 7
 ```powershell
-Copy-PnPFile -SourceUrl "Shared DocuDocuments/company.docx" -TargetUrl "Subsite/Shared Documents"
+Copy-PnPFolder -SourceUrl "Shared DocuDocuments/company.docx" -TargetUrl "Subsite/Shared Documents"
 ```
 
 Copies a file named company.docx located in a document library called Documents to the document library named Documents in a subsite named Subsite keeping the file name.
 
 ### EXAMPLE 8
 ```powershell
-Copy-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "/sites/otherproject/Shared Documents" -Overwrite
+Copy-PnPFolder -SourceUrl "Shared Documents/company.docx" -TargetUrl "/sites/otherproject/Shared Documents" -Overwrite
 ```
 
 Copies a file named company.docx located in a document library called Documents in the current site to the site collection otherproject. If a file named company.docx already exists, it will still perform the copy and replace the original company.docx file.
 
 ### EXAMPLE 9
 ```powershell
-Copy-PnPFile -SourceUrl "Shared Documents/MyDocs" -TargetUrl "/sites/otherproject/Documents" -Overwrite
+Copy-PnPFolder -SourceUrl "Shared Documents/MyDocs" -TargetUrl "/sites/otherproject/Documents" -Overwrite
 ```
 
 Copies a folder named MyDocs in the document library called Documents located in the current site to the site collection otherproject. If the MyDocs folder exist it will copy into it, if not it will be created.
 
 ### EXAMPLE 10
 ```powershell
-Copy-PnPFile -SourceUrl "SubSite1/Documents/company.docx" -TargetUrl "SubSite2/Documents"
+Copy-PnPFolder -SourceUrl "SubSite1/Documents/company.docx" -TargetUrl "SubSite2/Documents"
 ```
 
 Copies a file named company.docx in the library named Documents in SubSite1 to the library named Documents in SubSite2.
 
 ### EXAMPLE 11
 ```powershell
-$job = Copy-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "SubSite2/Shared Documents" -NoWait
+$job = Copy-PnPFolder -SourceUrl "Shared Documents/company.docx" -TargetUrl "SubSite2/Shared Documents" -NoWait
 $jobStatus = Receive-PnPCopyMoveJobStatus -Job $result
 if($jobStatus.JobState == 0)
 {
@@ -200,5 +200,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

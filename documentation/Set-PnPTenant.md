@@ -49,7 +49,8 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EmailAttestationRequired <Boolean>] [-EmailAttestationReAuthDays <Int32>] [-HideDefaultThemes <Boolean>]
  [-DisabledWebPartIds <Guid[]>] [-EnableAIPIntegration <Boolean>] [-DisableCustomAppAuthentication <Boolean>] 
  [-EnableAutoNewsDigest <Boolean>] [-CommentsOnListItemsDisabled <Boolean>] [-CommentsOnFilesDisabled <Boolean>]
- [-DisableBackToClassic <Boolean>] [-InformationBarriersSuspension <Boolean>]
+ [-DisableBackToClassic <Boolean>] [-InformationBarriersSuspension <Boolean>] 
+ [-AllowFilesWithKeepLabelToBeDeletedODB <Boolean>] [-AllowFilesWithKeepLabelToBeDeletedSPO <Boolean>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -923,7 +924,7 @@ The valid values are:
 ExternalUserAndGuestSharing (default) - External user sharing (share by email) and guest link sharing are both enabled. Disabled - External user sharing (share by email) and guest link sharing are both disabled.
 ExternalUserSharingOnly - External user sharing (share by email) is enabled, but guest link sharing is disabled.
 
-For more information about sharing, see Manage external sharing for your SharePoint online environment (https://docs.microsoft.com/en-us/sharepoint/turn-external-sharing-on-or-off).
+For more information about sharing, see Manage external sharing for your SharePoint online environment (https://docs.microsoft.com/sharepoint/turn-external-sharing-on-or-off).
 
 ```yaml
 Type: SharingCapabilities
@@ -1211,7 +1212,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -SetAllowFilesWithKeepLabelToBeDeletedSPO
+### -AllowFilesWithKeepLabelToBeDeletedSPO
 Allows configuration on if files located on SharePoint Online having retention labels on them blocking them from deletion ($false) or if they can be deleted which will move the file to the preservation hold library ($true)
 
 ```yaml
@@ -1225,7 +1226,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -SetAllowFilesWithKeepLabelToBeDeletedODB
+### -AllowFilesWithKeepLabelToBeDeletedODB
 Allows configuration on if files located on OneDrive for Business having retention labels on them blocking them from deletion ($false) or if they can be deleted which will move the file to the preservation hold library ($true)
 
 ```yaml
@@ -1246,6 +1247,20 @@ Allows configuration on `Add shortcut to OneDrive` feature in SharePoint documen
 Type: Boolean
 Parameter Sets: (All)
 Aliases: DisableAddShortcutsToOneDrive
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsFluidEnabled
+Allows configuration on whether Fluid components are enabled or disabled in the tenant. If set to `$true`, then this feature will be enabled on all sites in the tenant. If set to `$false`, it will be disabled on all sites in the tenant.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
 Required: False
 Position: Named
 Default value: None
