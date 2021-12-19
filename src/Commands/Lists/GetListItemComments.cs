@@ -50,13 +50,10 @@ namespace PnP.PowerShell.Commands.Lists
                         IsReply = comment.IsReply,
                         ItemId = comment.ItemId,
                         LikeCount = comment.LikeCount,
-                        LikedBy = comment.LikedBy,
                         ListId = comment.ListId,
-                        Mentions = comment.Mentions,
                         ParentId = comment.ParentId,
-                        Replies = comment.Replies,
                         ReplyCount = comment.ReplyCount,
-                        Text = comment.Text
+                        Text = comment.Text                        
                     };
 
                     commentsList.Add(commentValue);
