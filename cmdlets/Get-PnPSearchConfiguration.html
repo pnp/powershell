@@ -94,6 +94,10 @@
 <pre><code class="lang-powershell">Get-PnPSearchConfiguration [-Scope &lt;SearchConfigurationScope&gt;] [-OutputFormat &lt;OutputFormat&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
+<h3 id="bookmarkscsv">BookmarksCSV</h3>
+<pre><code class="lang-powershell">Get-PnPSearchConfiguration [-Scope &lt;SearchConfigurationScope&gt;] [-PromotedResultsToBookmarkCSV] [-BookmarkStatus &lt;BookmarkStatus&gt;] [-Path &lt;String&gt;]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+</code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
@@ -116,6 +120,18 @@
 <pre><code class="lang-powershell">Get-PnPSearchConfiguration -Scope Site -OutputFormat ManagedPropertyMappings
 </code></pre>
 <p>Returns all custom managed properties and crawled property mapping at the current site collection</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Get-PnPSearchConfiguration -Scope Site -PromotedResultsToBookmarkCSV -Path bookmarks.csv
+</code></pre>
+<p>Export promoted results from query rules on the site collection as a CSV file with the bookmarks in suggested status</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Get-PnPSearchConfiguration -Scope Site -PromotedResultsToBookmarkCSV -Path bookmarks.csv -BookmarkStatus Published
+</code></pre>
+<p>Export promoted results from query rules on the site collection as a CSV file with the bookmarks in published status</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Get-PnPSearchConfiguration -Scope Subscription -PromotedResultsToBookmarkCSV
+</code></pre>
+<p>Export promoted results from query rules on the tenant in CSV format with the bookmarks in suggested status.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -156,6 +172,35 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: SearchConfigurationScope
 Parameter Sets: (All)
 Accepted values: Web, Site, Subscription
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-promotedresultstobookmarkcsv">-PromotedResultsToBookmarkCSV</h3>
+<p>Output promoted results to a compatible CSV file to be used as Bookmark import at <a href="https://admin.microsoft.com/#/MicrosoftSearch/bookmarks">https://admin.microsoft.com/#/MicrosoftSearch/bookmarks</a>.</p>
+<p>Export details:</p>
+<ul>
+<li>Promoted results marked as &quot;Render the URL as a banner instead of as a hyperlink&quot; and query rules with no triggers will be skipped.</li>
+<li>Triggers set to &quot;Advanced Query Text Match&quot; and &quot;Query Contains Action Term&quot; will have &quot;Match Similar Keywords&quot; set to true for the Bookmark.</li>
+<li>Multiple triggers on a query rule will be merged into one.</li>
+</ul>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: CSV
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-bookmarkstatus">-BookmarkStatus</h3>
+<p>Output bookmarks to be in suggested or published status upon CSV import. Defaults to suggested status.</p>
+<pre><code class="lang-yaml">Type: BookmarkStatus
+Parameter Sets: CSV
+Accepted values: Suggested, Published
 
 Required: False
 Position: Named
