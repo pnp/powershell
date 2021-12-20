@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             else
             {
                 var channels = TeamsUtility.GetChannelsAsync(accessToken, httpClient, groupId).GetAwaiter().GetResult();
-                return channels.FirstOrDefault(c => c.DisplayName.Equals(_displayName, StringComparison.OrdinalIgnoreCase)).Id;
+                return channels.FirstOrDefault(c => c.DisplayName.Equals(_displayName, StringComparison.OrdinalIgnoreCase))?.Id;
             }
         }
 
