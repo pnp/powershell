@@ -52,6 +52,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved documentation of `Add-PnPField`, reflects the missing `-AddToAllContentTypes` parameter.
 - Improved documentation of `Get-PnPTaxonomyItem` with addition of new example and removing obsolete parameters.
 - Improved documentation of `Get-PnPTerm`, fixed typos.
+- Improved `Add-PnPHubToHubAssociation`. It will now throw error if both, source and destination, sites are not Hub sites, currently it fails silently without any information to the user. [#1390](https://github.com/pnp/powershell/pull/1390)
      
 ### Fixed
 - Fixed `Get-PnPGroupMember -User` not properly returning the specified user
