@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Webhooks
     [Cmdlet(VerbsCommon.Add, "PnPWebhookSubscription")]
     public class AddWebhookSubscription : PnPWebCmdlet
     {
-        public const int DefaultValidityInDays = 180; // Note: the max is 180 days not 6 months - https://docs.microsoft.com/en-us/sharepoint/dev/apis/webhooks/overview-sharepoint-webhooks
+        public const int DefaultValidityInDays = 180; // Note: the max is 180 days not 6 months - https://docs.microsoft.com/sharepoint/dev/apis/webhooks/overview-sharepoint-webhooks
         public const int ValidityDeltaInDays = -72; // Note: Some expiration dates too close to the limit are rejected
 
 

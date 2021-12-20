@@ -617,7 +617,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static async Task<TeamTab> GetTabAsync(string accessToken, HttpClient httpClient, string groupId, string channelId, string tabId)
         {
-            return await GraphHelper.GetAsync<TeamTab>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tabId}", accessToken);
+            return await GraphHelper.GetAsync<TeamTab>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tabId}?$expand=teamsApp", accessToken, propertyNameCaseInsensitive: true);
         }
 
         public static async Task<HttpResponseMessage> DeleteTabAsync(string accessToken, HttpClient httpClient, string groupId, string channelId, string tabId)
@@ -743,7 +743,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
             }
             tab.DisplayName = displayName;
-            tab.TeamsApp = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/appCatalogs/teamsApps/{tab.TeamsAppId}";
+            tab.TeamsAppOdataBind = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/appCatalogs/teamsApps/{tab.TeamsAppId}";
             return await GraphHelper.PostAsync<TeamTab>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs", tab, accessToken);
         }
         #endregion

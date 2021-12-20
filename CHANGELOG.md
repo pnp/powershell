@@ -40,6 +40,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added optional `-ScheduledPublishDate` parameter to `Add-PnPPage` and `Set-PnPPage` to allow for scheduling a page to be published.
 - Added `-RemoveScheduledPublish` to `Set-PnPPage` to allow for a page publish schedule to be removed.
 - Added support to add multiple owners and members in `New-PnPTeamsTeam` cmdlet.
+- Added `IsFluidEnabled` state to be returned with `Get-PnPTenant` cmdlet.
+- Added `-IsFluidEnabled` to `Set-PnPTenant` cmdlet to enable/disable users from using Fluid components.
+- Added `Add\Get\Remove-PnPListItemComment` cmdlets to deal with list item comments. Using these cmdlets, you will now be able to add, retrieve and delete list item comments. [#1462](https://github.com/pnp/powershell/pull/1462)
+- Added `-ResourceTypeName` and `-ResourceUrl` parameters to `Get-PnPAccessToken` to fetch access token of specified resource. [#1451](https://github.com/pnp/powershell/pull/1451)
 
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads
@@ -47,6 +51,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - A clearer error message will now be returned when using `Add-PnPListItem -List` and specifying an invalid list name.
 - Response of `Add-PnPContentTypesFromContenTypeHub` is now returned in the root of the response as well as under Value as it was previously for backwards compatibility.
 - Improved synopsis documentation for `Update-PnPUserType` cmdlet.
+- Improved documentation of `Add-PnPField`, reflects the missing `-AddToAllContentTypes` parameter.
+- Improved documentation of `Get-PnPTaxonomyItem` with addition of new example and removing obsolete parameters.
+- Improved documentation of `Get-PnPTerm`, fixed typos.
+- Improved `Add-PnPHubToHubAssociation`. It will now throw error if both, source and destination, sites are not Hub sites, currently it fails silently without any information to the user. [#1390](https://github.com/pnp/powershell/pull/1390)
      
 ### Fixed
 - Fixed `Get-PnPGroupMember -User` not properly returning the specified user
@@ -66,6 +74,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPTeamsTeam -Identity` throwing an exception if the name of the team would contain special characters
 - Fixed `Get-PnPTerm` throwing an exception when used in combination with `-Includes` [#1384](https://github.com/pnp/powershell/pull/1384)
 - Fixed `Get-PnPDiagnostics` throwing an unable to cast exception under some circumstances [#1380](https://github.com/pnp/powershell/pull/1380)
+- Fixed `Get-PnPTeamsTab` issue with missing TeamsApp object values. It will now populate TeamsApp object with Id, DisplayName, ExternalId and DistributionMethod properties if available. [#1459](https://github.com/pnp/powershell/pull/1459)
 
 ### Removed
 - Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
@@ -93,7 +102,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - [outorted]
 - [dkardokas]
 - Asad Refai [asadrefai]
-- Giacomo Pozzoni [jackpoz]
 
 ## [1.8.0]
 
