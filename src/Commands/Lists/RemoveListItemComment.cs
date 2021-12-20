@@ -1,16 +1,12 @@
 ﻿using PnP.Core.QueryModel;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Properties;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPListItemComments")]
+    [Cmdlet(VerbsCommon.Remove, "PnPListItemComment")]
     public class RemoveListItemComment : PnPWebCmdlet
     {
         private const string ParameterSet_SINGLE = "Single";
@@ -40,14 +36,14 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (list == null)
             {
-                throw new PSArgumentException($"Cannot find List with Identity {List}", nameof(List));
+                throw new PSArgumentException($"Cannot find list provided through -{nameof(List)}", nameof(List));
             }
 
             var item = Identity.GetListItem(list);
 
             if (item == null)
             {
-                throw new PSArgumentException($"Cannot find item with Identity {Identity}", nameof(Identity));
+                throw new PSArgumentException($"Cannot find list item provided through -{nameof(Identity)}", nameof(Identity));
             }
 
             var commentsCollection = item.GetCommentsAsync().GetAwaiter().GetResult();
@@ -56,7 +52,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (All.IsPresent)
             {
-                if (Force || ShouldContinue($"Remove all list item comments ?", Resources.Confirm))
+                if (Force || ShouldContinue($"Remove all list item comments?", Resources.Confirm))
                 {
                     var commentsList = commentsEnumerable.ToList();
                     for (int i = commentsList.Count - 1; i >= 0; i--)
@@ -76,7 +72,7 @@ namespace PnP.PowerShell.Commands.Lists
 
                 if (commentToBeDeleted != null)
                 {
-                    if (Force || ShouldContinue($"Remove list item comment ?", Resources.Confirm))
+                    if (Force || ShouldContinue($"Remove list item comment?", Resources.Confirm))
                     {
                         commentToBeDeleted.Delete();
                     }

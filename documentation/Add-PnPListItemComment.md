@@ -16,7 +16,7 @@ Adds a comment to the specified list item in the SharePoint list
 
 ### Single
 ```powershell
-Add-PnPListItemComment [-List] <ListPipeBind>  [-Identity] <ListItemPipeBind> [-Text] [-Connection <PnPConnection>] [<CommonParameters>]
+Add-PnPListItemComment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-Text] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -91,5 +91,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

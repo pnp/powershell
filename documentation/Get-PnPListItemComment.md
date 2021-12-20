@@ -2,21 +2,21 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPListItemComments.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPListItemComment.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPListItemComments
+title: Get-PnPListItemComment
 ---
   
 # Get-PnPListItem
 
 ## SYNOPSIS
-Retrieves comments from the list item in the specified list.
+Retrieves all comments from the list item in the specified list.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPListItemComments -List Tasks -Identity "1"
+Get-PnPListItemComment -List Tasks -Identity 1
 ```
 
 Retrieves all comments for the specified list item from the Tasks list
@@ -68,5 +68,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

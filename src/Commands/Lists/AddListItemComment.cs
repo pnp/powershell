@@ -1,8 +1,5 @@
 ﻿using PnP.PowerShell.Commands.Base.PipeBinds;
-using System;
-using System.Collections.Generic;
 using System.Management.Automation;
-using System.Text;
 
 namespace PnP.PowerShell.Commands.Lists
 {
@@ -24,14 +21,14 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (list == null)
             {
-                throw new PSArgumentException($"Cannot find List with Identity {List}", nameof(List));
+                throw new PSArgumentException($"Cannot find list provided through -{nameof(List)}", nameof(List));
             }
 
             var item = Identity.GetListItem(list);
             
             if (item == null)
             {
-                throw new PSArgumentException($"Cannot find item with Identity {Identity}", nameof(Identity));
+                throw new PSArgumentException($"Cannot find list item provided through -{nameof(Identity)}", nameof(Identity));
             }
 
             if (string.IsNullOrEmpty(Text))

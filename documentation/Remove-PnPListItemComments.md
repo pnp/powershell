@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Remove-PnPListItemComments
+title: Remove-PnPListItemComment
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPListItemComments.html
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPListItemComment.html
 ---
  
-# Remove-PnPListItemComments
+# Remove-PnPListItemComment
 
 ## SYNOPSIS
 Deletes a comment or all comments from a list item in a SharePoint list.
@@ -16,12 +16,12 @@ Deletes a comment or all comments from a list item in a SharePoint list.
 
 ### Single
 ```powershell
-Remove-PnPListItemComments [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-Text] [-Force] 
+Remove-PnPListItemComment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-Text] [-Force] 
 ```
 
 ### All
 ```powershell
-Remove-PnPListItemComments [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-All] [-Force]
+Remove-PnPListItemComment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-All] [-Force]
 ```
 
 ## DESCRIPTION
@@ -30,28 +30,28 @@ Remove-PnPListItemComments [-List] <ListPipeBind> [-Identity] <ListItemPipeBind>
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPListItemComments -List "Demo List" -Identity "1" -Text "test comment" -Force
+Remove-PnPListItemComment -List "Demo List" -Identity "1" -Text "test comment" -Force
 ```
 
 Removes the comment with text "test comment" from list item with id "1" from the "Demo List" list. The text needs to be case sensitive. It may not work with comments containing mentions.
 
 ### EXAMPLE 2
 ```powershell
-Remove-PnPListItemComments -List "Demo List" -Identity "1" -Text "test comment"
+Remove-PnPListItemComment -List "Demo List" -Identity "1" -Text "test comment"
 ```
 
 Removes the comment with text "test comment" from list item with id "1" from the "Demo List" list after asking for confirmation. The text needs to be case sensitive. It will may work with comments containing mentions.
 
 ### EXAMPLE 3
 ```powershell
-Remove-PnPListItemComments -List "Demo List" -Identity "1" -All -Force
+Remove-PnPListItemComment -List "Demo List" -Identity "1" -All -Force
 ```
 
 Removes all comments from list item with id "1" from the "Demo List" list.
 
 ### EXAMPLE 4
 ```powershell
-Remove-PnPListItemComments -List "Demo List" -Identity "1" -All
+Remove-PnPListItemComment -List "Demo List" -Identity "1" -All
 ```
 
 Removes all comments from list item with id "1" from the "Demo List" list after asking for confirmation.
@@ -145,4 +145,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

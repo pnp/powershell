@@ -6,7 +6,7 @@ using PnP.Core.QueryModel;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "PnPListItemComments")]
+    [Cmdlet(VerbsCommon.Get, "PnPListItemComment")]
     public class GetListItemComments : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -21,14 +21,14 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (list == null)
             {
-                throw new PSArgumentException($"Cannot find List with Identity {List}", nameof(List));
+                throw new PSArgumentException($"Cannot find list provided through -{nameof(List)}", nameof(List));
             }
 
             var item = Identity.GetListItem(list);
 
             if (item == null)
             {
-                throw new PSArgumentException($"Cannot find item with Identity {Identity}", nameof(Identity));
+                throw new PSArgumentException($"Cannot find list item provided through -{nameof(Identity)}", nameof(Identity));
             }
 
             var commentsCollection = item.GetCommentsAsync().GetAwaiter().GetResult();
