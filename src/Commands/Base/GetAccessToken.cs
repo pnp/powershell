@@ -1,14 +1,14 @@
-﻿using System;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAccessToken")]
+    [Cmdlet(VerbsCommon.Get, "PnPAccessToken", DefaultParameterSetName = DefaultParam)]
     [RequiredMinimalApiPermissions("https://graph.microsoft.com/.default")]
     public class GetPnPAccessToken : PnPGraphCmdlet
     {
+        private const string DefaultParam = "Default";
         private const string ResourceTypeParam = "Resource Type Name";
         private const string ResourceUrlParam = "Resource Url";
 
@@ -18,6 +18,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ResourceUrlParam)]
         public string ResourceUrl;
 
+        [Parameter(ParameterSetName = DefaultParam)]
         [Parameter(ParameterSetName = ResourceTypeParam)]
         [Parameter(ParameterSetName = ResourceUrlParam)]
         [Parameter(Mandatory = false)]
@@ -43,7 +44,6 @@ namespace PnP.PowerShell.Commands.Base
                         break;
                 }
             }
-
             else if (ParameterSetName == ResourceUrlParam)
             {
                 accessTokenValue = TokenHandler.GetAccessToken(null, ResourceUrl);

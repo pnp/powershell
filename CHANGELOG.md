@@ -41,7 +41,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added alias on `Copy-PnPFile` for `Copy-PnPFolder`. It could already be used to copy a folder, but to make this more clear, and as we already had a `Copy/Move-PnPFolder` as well, the same cmdlet is now also available under its alternative cmdlet name.
 - Added `IsFluidEnabled` state to be returned with `Get-PnPTenant` cmdlet.
 - Added `-IsFluidEnabled` to `Set-PnPTenant` cmdlet to enable/disable users from using Fluid components.
-- Added `-ResourceTypeName` and `ResourceUrl` parameters to `Get-PnPAccessToken` to fetch access token of specified resource.
+- Added `-ResourceTypeName` and `-ResourceUrl` parameters to `Get-PnPAccessToken` to fetch access token of specified resource. [#1451](https://github.com/pnp/powershell/pull/1451)
 
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads
@@ -49,9 +49,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - A clearer error message will now be returned when using `Add-PnPListItem -List` and specifying an invalid list name.
 - Response of `Add-PnPContentTypesFromContenTypeHub` is now returned in the root of the response as well as under Value as it was previously for backwards compatibility.
 - Improved synopsis documentation for `Update-PnPUserType` cmdlet.
-- Improved documentation of `Add-PnPField` , reflects the missing `-AddToAllContentTypes` parameter.
+- Improved documentation of `Add-PnPField`, reflects the missing `-AddToAllContentTypes` parameter.
 - Improved documentation of `Get-PnPTaxonomyItem` with addition of new example and removing obsolete parameters.
-- Improved documentation of `Get-PnPTerm` , fixed typos.
+- Improved documentation of `Get-PnPTerm`, fixed typos.
      
 ### Fixed
 - Fixed `Get-PnPGroupMember -User` not properly returning the specified user

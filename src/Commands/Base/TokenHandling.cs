@@ -1,7 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
-using Newtonsoft.Json.Linq;
 using PnP.PowerShell.Commands.Attributes;
-using PnP.PowerShell.Commands.Model;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -9,7 +7,6 @@ using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -63,8 +60,7 @@ namespace PnP.PowerShell.Commands.Base
                     throw new PSInvalidOperationException("Trying to get a token for a different endpoint while being connected through an ACS token is not possible. Please connect differently.");
                 }
 
-                string[] requiredScopes = null;
-                //RequiredMinimalApiPermissions requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdletType, typeof(RequiredMinimalApiPermissions));
+                string[] requiredScopes = null;                
                 RequiredMinimalApiPermissions requiredScopesAttribute = null;
                 if (cmdletType != null)
                 {

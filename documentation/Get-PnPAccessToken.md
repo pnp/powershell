@@ -59,8 +59,9 @@ Specify the Resource Type for which you want the access token.
 If not specified, it will by default return Microsoft Graph access token.
 
 ```yaml
-Type: SwitchParameter
+Type: ResourceTypeName
 Parameter Sets: Resource Type Name
+Accepted values: Graph, SharePoint, ARM
 
 Required: False
 Position: Named
@@ -74,7 +75,7 @@ Specify the Resource URL for which you want the access token.
 If not specified, it will by default return Microsoft Graph access token.
 
 ```yaml
-Type: SwitchParameter
+Type: String
 Parameter Sets: Resource Url
 
 Required: False
