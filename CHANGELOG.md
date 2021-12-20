@@ -48,6 +48,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - A clearer error message will now be returned when using `Add-PnPListItem -List` and specifying an invalid list name.
 - Response of `Add-PnPContentTypesFromContenTypeHub` is now returned in the root of the response as well as under Value as it was previously for backwards compatibility.
 - Improved synopsis documentation for `Update-PnPUserType` cmdlet.
+- Improved `Add-PnPHubToHubAssociation`. It will now throw error if both, source and destination, sites are not Hub sites, currently it fails silently without any information to the user. [#1390](https://github.com/pnp/powershell/pull/1390)
      
 ### Fixed
 - Fixed `Get-PnPGroupMember -User` not properly returning the specified user

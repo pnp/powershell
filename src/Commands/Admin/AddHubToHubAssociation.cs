@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Admin
         {
             if (ParameterSetName == ParamSet_ById)
             {
-                HubSiteProperties sourceProperties = this.Tenant.GetHubSitePropertiesById(Source);
+                HubSiteProperties sourceProperties = Tenant.GetHubSitePropertiesById(Source);
                 ClientContext.Load(sourceProperties);
                 sourceProperties.ParentHubSiteId = Target;
                 sourceProperties.Update();
@@ -41,9 +41,27 @@ namespace PnP.PowerShell.Commands.Admin
             }
             else
             {
-                HubSiteProperties sourceProperties = this.Tenant.GetHubSitePropertiesByUrl(SourceUrl);
+                SiteProperties sourceSiteProperties = Tenant.GetSitePropertiesByUrl(SourceUrl, true);
+                ClientContext.Load(sourceSiteProperties);
+                ClientContext.ExecuteQueryRetry();
+
+                SiteProperties destSiteProperties = Tenant.GetSitePropertiesByUrl(TargetUrl, true);
+                ClientContext.Load(destSiteProperties);
+                ClientContext.ExecuteQueryRetry();
+
+                if (!sourceSiteProperties.IsHubSite)
+                {
+                    throw new PSInvalidOperationException("Source site collection needs to be a Hub site.");
+                }
+
+                if (!destSiteProperties.IsHubSite)
+                {
+                    throw new PSInvalidOperationException("Destination site collection needs to be a Hub site.");
+                }
+                
+                HubSiteProperties sourceProperties = Tenant.GetHubSitePropertiesByUrl(SourceUrl);
                 ClientContext.Load(sourceProperties);
-                var targetSite = this.Tenant.GetSiteByUrl(TargetUrl);
+                Microsoft.SharePoint.Client.Site targetSite = Tenant.GetSiteByUrl(TargetUrl);
                 ClientContext.Load(targetSite);
                 ClientContext.ExecuteQueryRetry();
                 sourceProperties.ParentHubSiteId = targetSite.HubSiteId;
