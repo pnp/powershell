@@ -81,6 +81,13 @@ New-PnPTeamsTeam -DisplayName "myPnPDemo1" -Visibility Private -AllowCreateUpdat
 
 This will create a new Microsoft Teams team called "myPnPDemo1" and sets the privacy to Private, as well as preventing users from deleting their messages or update/remove tabs. The user creating the Microsoft Teams team will be added as Owner. Welcome Email will not be sent when the Group is created. The M365 Group will also not be visible in Outlook.
 
+### EXAMPLE 5
+```powershell
+New-PnPTeamsTeam -DisplayName "myPnPDemo1" -Visibility Private -Owners "user1@contoso.onmicrosoft.com","user2@contoso.onmicrosoft.com" -Members "user3@contoso.onmicrosoft.com"
+```
+
+This will create a new Microsoft Teams team called "myPnPDemo1" and sets the privacy to Private. User1 and user2 will be added as owners. User3 will be added as a member.
+
 ## PARAMETERS
 
 ### -AllowAddRemoveApps
