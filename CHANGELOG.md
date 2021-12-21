@@ -82,6 +82,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Get-PnPSubWebs` as that was marked deprecated a year ago. Use `Get-PnPSubWeb` instead. [#1394](https://github.com/pnp/powershell/pull/1394)
 
 ### Contributors
+- Mikael Svenson [wobba]
 - Koen Zomers [koenzomers]
 - Bert Jansen [jansenbe]
 - Gautam Sheth [gautamdsheth]
