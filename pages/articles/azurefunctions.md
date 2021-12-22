@@ -205,7 +205,7 @@ Next step is to assign permissions to this managed identity so it is authorized 
 
    ```powershell
    $managedIdentityId = "<Object (principal) ID of the Azure Function generated in the previous section>"
-   New-AzureAdServiceAppRoleAssignment -ObjectId $managedIdentityId -PrincipalId $managedIdentityId -ResourceId $GraphServicePrincipal.ObjectId -Id $appRole.Id
+   New-AzureAdServiceAppRoleAssignment -ObjectId $managedIdentityId -PrincipalId $managedIdentityId -ResourceId $graphServicePrincipal.ObjectId -Id $appRole.Id
    
    ```
 
