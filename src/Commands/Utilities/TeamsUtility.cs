@@ -251,10 +251,10 @@ namespace PnP.PowerShell.Commands.Utilities
             else
             {
                 var user = await GraphHelper.GetAsync<User>(httpClient, "v1.0/me?$select=Id", accessToken);
-                if(user != null)
+                if (user != null)
                 {
                     ownerId = user.Id;
-                }                
+                }
             }
 
             group.DisplayName = displayName;
