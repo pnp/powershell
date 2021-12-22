@@ -252,7 +252,7 @@ namespace PnP.PowerShell.Commands.Utilities
             if(!string.IsNullOrEmpty(ownerId))
             {
                 // TODO Koen: add a check on how we are logged on and if we can call the /me endpoint using that (i.e. won't work under appcreds)
-                
+
                 // Still no owner identified, see if we can make the current user executing this cmdlet the owner
                 var user = await GraphHelper.GetAsync<User>(httpClient, "v1.0/me?$select=Id", accessToken);
                 
@@ -273,6 +273,8 @@ namespace PnP.PowerShell.Commands.Utilities
                 GroupTypes = new List<string>() { "Unified" },
                 SecurityEnabled = false,
                 Owners = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" },
+
+                // TODO Koen: check why the owners were also added as members, is this necessary?
                 //group.Members = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
                 Visibility = visibility == GroupVisibility.NotSpecified ? GroupVisibility.Private : visibility
             };
