@@ -7,6 +7,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Current Nightly]
 
+### Added
+
+
+### Changed
+
+
+### Fixed
+
+
+### Removed
+
+
+### Contributors
+
+
 ## [1.9.0]
 
 ### Added
