@@ -252,9 +252,11 @@ namespace PnP.PowerShell.Commands.Utilities
             if (!string.IsNullOrEmpty(ownerId))
             {
                 var contextSettings = PnPConnection.Current.Context.GetContextSettings();
+                
                 // Still no owner identified, see if we can make the current user executing this cmdlet the owner
                 if (contextSettings.Type != Framework.Utilities.Context.ClientContextType.AzureADCertificate)
                 {
+                    // A delegate context is available, make the user part of the delegate token the owner
                     var user = await GraphHelper.GetAsync<User>(httpClient, "v1.0/me?$select=Id", accessToken);
 
                     if (user != null)
@@ -265,6 +267,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             }
 
+            // Construct the new group
             Group group = new Group
             {
                 DisplayName = displayName,
@@ -277,10 +280,11 @@ namespace PnP.PowerShell.Commands.Utilities
                 Visibility = visibility == GroupVisibility.NotSpecified ? GroupVisibility.Private : visibility
             };
 
+            // Check if we managed to define an owner for the group. If not, we'll revert to not providing an owner, which will mean that the app principal will become the owner of the Group
             if (!string.IsNullOrEmpty(ownerId))
             {
                 group.Owners = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
-                group.Members = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
+                //group.Members = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
             }
 
             if (resourceBehaviorOptions != null && resourceBehaviorOptions.Length > 0)
