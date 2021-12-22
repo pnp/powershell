@@ -15,7 +15,7 @@ Removes a page
 ## SYNTAX
 
 ```powershell
-Remove-PnPPage [-Identity] <PagePipeBind> [-Force] 
+Remove-PnPPage [-Identity] <PagePipeBind> [-Force] [-Recycle]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -43,6 +43,13 @@ Remove-PnPPage $page
 ```
 
 Removes the specified page which is contained in the $page variable.
+
+### EXAMPLE 4
+```powershell
+Remove-PnPPage -Identity "MyPage" -Recycle
+```
+
+Removes the page named 'MyPage.aspx' and sends it to the recycle bin.
 
 ## PARAMETERS
 
@@ -88,7 +95,19 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### -Recycle
+Specifying the Recycle parameter will delete the page and send it to recycle bin.
 
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 

@@ -19,10 +19,13 @@ Set-PnPPage [-Identity] <PagePipeBind> [-Name <String>] [-Title <String>]
  [-LayoutType <PageLayoutType>] [-PromoteAs <PagePromoteType>] [-CommentsEnabled]
  [-Publish] [-HeaderType <PageHeaderType>] [-HeaderLayoutType <PageHeaderLayoutType>] [-ScheduledPublishDate <DateTime>] 
  [-RemoveScheduledPublish] [-ContentType <ContentTypePipeBind>] [-ThumbnailUrl <String>] 
+ [-Translate][-TranslationLanguageCodes <Int[][]>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
+Sets parameters of a page. All pages must be located inside the Site Pages library.
 
 ## EXAMPLES
 
@@ -49,10 +52,10 @@ Disables the comments on the page named 'MyPage'
 
 ### EXAMPLE 4
 ```powershell
-Set-PnPPage -Identity "MyPage" -HeaderType Default
+Set-PnPPage -Identity "hr/MyPage" -HeaderType Default
 ```
 
-Sets the header of the page to the default header
+Sets the header of the page called MyPage located in the folder hr inside the Site Pages library to the default header
 
 ### EXAMPLE 5
 ```powershell
@@ -74,6 +77,27 @@ Set-PnPPage -Identity "MyPage" -ScheduledPublishDate (Get-Date).AddHours(1)
 ```
 
 Schedules the page "MyPage" to be published in one hour from now
+
+### EXAMPLE 8
+```powershell
+Set-PnPPage -Name "NewPage" -Translate
+```
+
+Creates the necessary translated pages for all the supported languages in the site collection.
+
+### EXAMPLE 9
+```powershell
+Set-PnPPage -Name "NewPage" -Translate -TranslationLanguageCodes 1043
+```
+
+Creates the necessary translated page for the specified language in the site collection. In this case, it will create the translated page for Dutch language. If the Dutch language is not enabled, it will enable the language and then create the translated page.
+
+### EXAMPLE 10
+```powershell
+Set-PnPPage -Name "NewPage" -Translate -TranslationLanguageCodes 1043,1035
+```
+
+Creates the necessary translated page for the specified languages in the site collection. In this case, it will create the translated pages for Dutch and Finnish languages. If these languages are not enabled, it will enable these languages and then create the translated pages for the specified languages.
 
 ## PARAMETERS
 
@@ -150,7 +174,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The name/identity of the page
+The name/identity of the page. This can be a page instance or the filename of the page. I.e. if the page is called MyPage.aspx and is located in the root of the Site Pages library, provide "MyPage" or "MyPage.aspx". If the page is called MyOtherPage.aspx and is located inside a subfolder called HR located in the root of the Site Pages library, provide "HR/MyOtherPage" or "HR/MyOtherPage.aspx".
 
 ```yaml
 Type: PagePipeBind
@@ -268,6 +292,34 @@ If provided, the page publish schedule will be removed, if it has been set.
 
 ```yaml
 Type: DateTime
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Translate
+Creates multilingual pages for all the languages specified in the site collection
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TranslationLanguageCodes
+Creates multilingual pages for specified languages.
+
+```yaml
+Type: Integer array
 Parameter Sets: (All)
 
 Required: False

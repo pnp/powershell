@@ -7,60 +7,149 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Current Nightly]
 
-### Changed
-
-- Fixed `Get-PnPGroupMember -User` not properly returning the specified user.
-- Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
-- Added optional `-ScheduledPublishDate` parameter to `Add-PnPPage` and `Set-PnPPage` to allow for scheduling a page to be published.
-- Added `-RemoveScheduledPublish` to `Set-PnPPage` to allow for a page publish schedule to be removed.
+### Added
+- Added `Get-PnPTenantInstance` which will return one or more tenant instances, depending if you have a multi-geo or single-geo (default) tenant.
+- Added optional `-ScheduledPublishDate` parameter to `Add-PnPPage` and `Set-PnPPage` to allow for scheduling a page to be published
+- Added `-RemoveScheduledPublish` to `Set-PnPPage` to allow for a page publish schedule to be removed
 - Added support for off peak SharePoint Syntex content classification and extraction for lists and folders via new `-OffPeak` and `-Folder` parameters for `Request-PnPSyntexClassifyAndExtract`
+- Added `Get\Set-PnPPlannerConfiguration` to allow working with the Microsoft Planner tenant configuration
+- Added `Get\Set-PnPPlannerUserPolicy` to allow setting Microsoft Planner user policies for specific users
+- Added `Get\Add\Remove-PnPPlannerRoster` which allows a Microsoft Planner Roster to be created, retrieved or removed
+- Added `Get\Add\Remove-PnPPlannerRosterMember` to be able to read, add and remove members from a Microsft Planner Roster
+- Added `Get-PnPPlannerRosterPlan` to be able to retrieve the Microsoft Planner plans inside a Microsoft Planner Roster or the ones belonging to a specific user
+- Added support for off peak SharePoint Syntex content classification and extraction for lists and folders via new `-OffPeak` and `-Folder` parameters for `Request-PnPSyntexClassifyAndExtract`
+- Added `Invoke-PnPSiteScript` which allows for a Site Script to be executed on a site without needing to have it registered in a site design or site script first
+- Added `Copy-PnPList` which allows for a copy of a SharePoint list to be made in the same site or to another site. Copying along list item data is not yet possible but will follow in a later release.
+- Added `Get\Set-PnPWebHeader` to work with the Change the look > Header options of a site
+- Added `Enable-PnPPageScheduling` and `Disable-PnPPageScheduling` to enable or disable page publishing scheduling on modern pages
+- Added ability to add multiple users to a Teams team in the `Add-PnPTeamsUser` cmdlet
+- Added `-Credentials $cred` or `-CurrentCredentials` to be allowed to be used in combination with `Connect-PnPOnline -SPOManagementshell`
+- Added `-InformationBarriersMode` in the `Set-PnPTenantSite` cmdlet which allows fine tuning of the information barriers mode per site collection
+- Added `-InformationBarriersSuspension` in the `Set-PnPTenant` cmdlet which allows information barriers to be enabled or disabled in a tenant   
+- Added `-Recycle` parameter to `Remove-PnPPage` to delete the page and send it to the recycle bin. This prevents permanently deleting the page and you can also restore it.
+- Added `-DemoteNewsArticle` parameter to the `Set-PnPPage` cmdlet to demote an existing news post to a regular page.
+- Added `-Translate` and `-TranslationLanguageCodes` parameters to `Set-PnPPage` and `Add-PnPPage`. This enables multilingual page creation in sites.
+- Added `DisableSpacesActivation` state to be returned with `Get-PnPTenant`
+- Added `-AllowFilesWithKeepLabelToBeDeletedSPO` and `-AllowFilesWithKeepLabelToBeDeletedODB` options to `Set-PnPTenant` which allows configuration of files on SharePoint Online and OneDrive for Business being blocked by a retention policy to be possible to be deleted anyway and then moved to the preservation hold library. The default for SharePoint Online for this will change as announced in Message Center announcement MC264360. This will allow reverting it. The current values can be retrieved using `Get-PnPTenant`.
+- Added `DisableAddToOneDrive` state to be returned with `Get-PnPTenant` cmdlet.
+- Added `-DisableAddToOneDrive` to `Set-PnPTenant` cmdlet to enable/disable users from adding shortcuts to OneDrive.
+- Added optional `-Site` parameter to `Add-PnPContentTypesFromContenTypeHub` which allows a specific site to be specified to add the content type hub content types to
+- Added `Set-PnPBuiltInSiteTemplateSettings` and `Get-PnPBuiltInSiteTemplateSettings` to allow making the built in SharePoint Online site templates visible or hidden and getting their current settings
+- Added support for Channel sites (ID 69) to `Add-PnPSiteDesign`, `Set-PnPSiteDesign` and `Add-PnPSiteDesignFromWeb`
+- Added optional `-IsDefault` option to `Get-PnPPowerPlatformEnvironment` which allows just the default or non default environments to be returned. If not provided, all environments will be returned as was the case before this addition.
+- Added `ResourceBehaviorOptions` option in `New-PnPTeamsTeam` cmdlet to set `ResourceBehaviorOptions` while provisioning a Team
+- Added alias on `Copy-PnPFile` for `Copy-PnPFolder`. It could already be used to copy a folder, but to make this more clear, and as we already had a `Copy/Move-PnPFolder` as well, the same cmdlet is now also available under its alternative cmdlet name.
+- Added `IsFluidEnabled` state to be returned with `Get-PnPTenant` cmdlet.
+- Added `-IsFluidEnabled` to `Set-PnPTenant` cmdlet to enable/disable users from using Fluid components.
+- Added `Add\Get\Remove-PnPListItemComment` cmdlets to deal with list item comments. Using these cmdlets, you will now be able to add, retrieve and delete list item comments. [#1462](https://github.com/pnp/powershell/pull/1462)
+- Added `-ResourceTypeName` and `-ResourceUrl` parameters to `Get-PnPAccessToken` to fetch access token of specified resource. [#1451](https://github.com/pnp/powershell/pull/1451)
+
+### Changed
+- Improved `Get-PnPFile` cmdlet to handle large file downloads
+- Updated `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to also allow results from `Get-PnPAzureADUser -Delta` to be provided through `-Users`.
+- A clearer error message will now be returned when using `Add-PnPListItem -List` and specifying an invalid list name.
+- Response of `Add-PnPContentTypesFromContenTypeHub` is now returned in the root of the response as well as under Value as it was previously for backwards compatibility.
+- Improved synopsis documentation for `Update-PnPUserType` cmdlet.
+- Improved documentation of `Add-PnPField`, reflects the missing `-AddToAllContentTypes` parameter.
+- Improved documentation of `Get-PnPTaxonomyItem` with addition of new example and removing obsolete parameters.
+- Improved documentation of `Get-PnPTerm`, fixed typos.
+- Improved `Add-PnPHubToHubAssociation`. It will now throw error if both, source and destination, sites are not Hub sites, currently it fails silently without any information to the user. [#1390](https://github.com/pnp/powershell/pull/1390)
+     
+### Fixed
+- Fixed `Get-PnPGroupMember -User` not properly returning the specified user
+- Fixed group member retrieval through `Get-PnPAzureADGroupOwner` and `Get-PnPAzureAdGroupMember` throwing an exception when a security group has been placed in the Azure Active Directory group being queried
+- Fixed an issue where `Set-PnPPage` would not be able to find a page if you would start the `-Identity` with a forward slash
+- Fixed an issue where `Set-PnPPage` would not return its parent Folder
+- Fixed `Set-PnPListItem` not working when using `Label` and `Values` parameters together
+- Fixed documentation for `Get-PnPFlow` and `Enable-PnPFlow` cmdlets
+- Fixed issue with `Add-PnPListFoldersToProvisioningTemplate` not working when having nested folder structure   
+- Fixed documentation for `Get-PnPFlow` and `Enable-PnPFlow` cmdlets
+- Fixed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` not being able to deal with multi value properties on the Azure Active Directory side, such as `BusinessPhones`
+- Fixed `Add-PnPListItem` issue with setting MultiChoice columns when using `-Batch` parameter
+- Fixed issue with `Remove-PnPListItem` when trying to use it with `Batch` parameter
+- Fixed `Add-PnPDataRowsToSiteTemplate` not exporting TaxonomyFieldValues properly
+- Fixed `Add/Set-PnPListItem` issue with managed metadata / taxonomy field value failing in a batched request.
+- Fixed `Set-PnPListItem` issue with setting `Modified` date value properly when using `-Batch` parameter.
+- Fixed `Get-PnPTeamsTeam -Identity` throwing an exception if the name of the team would contain special characters
+- Fixed `Get-PnPTerm` throwing an exception when used in combination with `-Includes` [#1384](https://github.com/pnp/powershell/pull/1384)
+- Fixed `Get-PnPDiagnostics` throwing an unable to cast exception under some circumstances [#1380](https://github.com/pnp/powershell/pull/1380)
+- Fixed `Get-PnPTeamsTab` issue with missing TeamsApp object values. It will now populate TeamsApp object with Id, DisplayName, ExternalId and DistributionMethod properties if available. [#1459](https://github.com/pnp/powershell/pull/1459)
+
+### Removed
+- Removed `Add-PnPClientSidePage` as that was marked deprecated. Use `Add-PnPPage` instead.
+- Removed `Get-PnPSubWebs` as that was marked deprecated a year ago. Use `Get-PnPSubWeb` instead. [#1394](https://github.com/pnp/powershell/pull/1394)
 
 ### Contributors
-
 - Koen Zomers [koenzomers]
 - Bert Jansen [jansenbe]
+- Gautam Sheth [gautamdsheth]
+- [reusto]
+- Asad Refai [asadrefai]
+- Daniel Huber [daniel0611]
+- Bart-Jan Dekker [bjdekker]
+- Giacomo Pozzoni [jackpoz]
+- Chris Kent [thechriskent]
+- Filip Bosmans [FilipBosmans]
+- [zylantha]
+- Justin [pagejustin]
+- Collin Argo [SCollinA]
+- Leon Armston [LeonArmston]
+- Lars Höög [h00g]
+- [kachihro]
+- [Andy-Dawson]
+- David Aeschlimann [TashunkoWitko]
+- [outorted]
+- [dkardokas]
+- Asad Refai [asadrefai]
 
 ## [1.8.0]
 
-### Changed
-
+### Added
 - Added flexibility to mix and pipe `Add\Get\Remove-PnPListItem` with `Get-PnPList`
 - Added ability to remove all list items from a list using `Remove-PnPListItem -List <listname>` and not providing a list item identifier.
 - Added `Get-PnPMessageCenterAnnouncent`, `Get-PnPServiceCurrentHealth` and `Get-PnPServiceHealthIssue` cmdlets which pull their data out of the Microsoft Graph API and are replacing the former `Get-PnPOffice365CurrentServiceStatus`, `Get-PnPOffice365HistoricalServiceStatus` and `Get-PnPoffice365ServiceMessage` cmdlets which pull their data from the Office Health and Communications API which is to be deprecated on December 17, 2021. If you're using any of these last three cmdlets, please rewrite your functionality to start using one of the first three cmdlets before this date.
-- Fixed `Get-PnPChangeLog -Nightly` not returning anything
 - Added option which allows new SharePoint 2013 Workflow creation to be disabled tenant wide by using `Set-PnPTenant -StopNew2013Workflows` and requesting its current setting using `Get-PnPTenant | Select StopNew2013Workflows`
-- Fixed issue with `Get-PnPUser -Identity x` ignoring additional requested attributes using `-Includes`
 - Added lots of extra information getting returned when using `Get-PnPFlow`.
-- Removed `ConvertTo-PnPClientSidePage` cmdlet as it has been replaced by `ConvertTo-PnPPage`
-- Added option which allows the Explorer View for Microsoft Edge to be enabled tenant wide by using `Set-PnPTenant -ViewInFileExplorerEnabled` and requesting its current setting using `Get-PnPTenant | Select ViewInFileExplorerEnabled`. It can be that this option is not enabled yet on your tenant in which case trying to set it results in to `Set-PnPTenant: The requested operation is part of an experimental feature that is not supported in the current environment.`. In that case try again later.
+- Added option which allows the Explorer View for Microsoft Edge to be enabled tenant wide by using `Set-PnPTenant -ViewInFileExplorerEnabled` and requesting its current setting using `Get-PnPTenant | Select ViewInFileExplorerEnabled`. It can be that this feature is not enabled on your tenant yet, in which case it will return an error. Try it again later in that case.
+- Added lots of extra information getting returned when using `Get-PnPPowerPlatformEnvironment`
+- Added the option to use `-Verbose` with `Export-PnPFlow` so it wil show details on why an export failed when it is not possible to export the flow.
+- Added option to add/list/remove event receivers from the site scope using `Add-PnPEventReceiver -Scope <Site/Web>`, `Get-PnPEventReceiver -Scope <All/Site/Web>` and `Remove-PnPEventReceiver -Scope <All/Site/Web>`
+- Added `-Url` parameter to `New-PnPUPABulkImportJob` which allows providing a URL to an existing SharePoint User Profile import mapping instruction file stored on SharePoint Online
+- Added `Add-PnPSiteDesignFromWeb` which combines `Get-PnPSiteScriptFromWeb`, `Add-PnPSiteScript` and `Add-PnPSiteDesign` into one cmdlet to allow for a specific site to directly be added as a site design to allow other sites to be configured similarly
+- Added `Update-PnPSiteDesignFromWeb` which combines `Get-PnPSiteScriptFromWeb` and `Set-PnPSiteScript` into one cmdlet to allow for a specific site design to directly be updated based on an existing site which can function as a template
+- Added `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` cmdlet which allows direct synchronization of user profile properties of choice between user profiles in Azure Active Directory and their SharePoint Online User Profile Service user profile equivallents
+-   
+### Changed
+- Renamed `Get-PnPFlowEnvironment` to `Get-PnPPowerAutomateEnvironment`
+- Changed `Get-PnPSiteScriptFromWeb` to get a site script of the currently connected to site if `-Url` is omitted.
+- Improved `Find-PnPFile` error message
+- `Get-PnPFileVersion` cmdlet documentation improved with additional example.
+- `Add-PnPNavigationNode` cmdlet documentation improved with additional example feature which shows how to add a navigation node as a label.
+- Changed `Get-PnPSiteDesign` and `Invoke-PnPSiteDesign` to when providing a name through `-Identity` to be able to work with all site designs having that same name instead of just the first one
+- Changed `Set-PnPListItemPermission` to support piping in a roledefinition for `-AddRole` and `-RemoveRole`
+- Changed that `Get-PnPSiteScript -Identity` now also works with the site script name instead of just the site script Id
+
+### Fixed
+- Fixed `Get-PnPChangeLog -Nightly` not returning anything
+- Fixed issue with `Get-PnPUser -Identity x` ignoring additional requested attributes using `-Includes`
 - Fixed issue with `Set-PnPDefaultColumnValues -List "Documents" -Folder "Földer" -Field "Text" -Value "123"` not working when having a folder name with special characters in it.
 - Fixed `Get-PnPException` throwing an exception and not showing the last exception if the last cmdlet throwing an exception used `-ErrorAction Stop`
 - Fixed `Get-PnPException -All` throwing an exception.
 - Fixed an issue with `Set-PnPSite -Identity <url> -Owner <upn>` not working if the URL would be a OneDrive for Business site.
-- Renamed `Get-PnPFlowEnvironment` to `Get-PnPPowerAutomateEnvironment`
-- Added lots of extra information getting returned when using `Get-PnPPowerPlatformEnvironment`
-- Added the option to use `-Verbose` with `Export-PnPFlow` so it wil show details on why an export failed when it is not possible to export the flow.
-- Removed `Add-PnPUserToGroup` as it has been replaced by `Add-PnPGroupMember`
 - Fixed an issue with `Get-PnPSiteScriptFromWeb` requiring an Include parameter next to providing lists and fixed specifying lists through List\ListName not working.
-- Changed `Get-PnPSiteScriptFromWeb` to get a site script of the currently connected to site if `-Url` is omitted.
-- Improved `Find-PnPFile` error message.
+- Fixed issue with 'Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID.
+- Fixed unable to piping the output of `Get-PnPRoleDefinition` to i.e. filter by RoleTypeKind.
+- Fixed an issue with several PnP PowerShell cmdlets such as `Get-PnPTeamsUser` where not all results would be returned
+- Fixed issue with `Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID.
+- Fixed issue with `Get-PnPUPABulkImportStatus` where it did not allow you to pipe its output to i.e. get the most recent one using `Select -Latest 1` or the ones that failed using `? State -ne "Succeeded"`  
+    
+### Removed
+- Removed `ConvertTo-PnPClientSidePage` cmdlet as it has been replaced by `ConvertTo-PnPPage`
+this option is not enabled yet on your tenant in which case trying to set it results in to `Set-PnPTenant: The requested operation is part of an experimental feature that is not supported in the current environment.`. In that case try again later.
+- Removed `Add-PnPUserToGroup` as it has been replaced by `Add-PnPGroupMember`
 - Removed `Get-PnPGroupMembers` cmdlet alias and related warning. The cmdlet `Get-PnPGroupMember` (singular) is available.
 - Removed `Remove-PnPUserFromGroup` cmdlet alias and related warning. The cmdlet `Remove-PnPGroupMember` is available.
 - Removed `Initialize-PnPPowerShellAuthentication` cmdlet alias and related warning. The cmdlet `Register-PnPAzureADApp` is the replacement.
-- `Get-PnPFileVersion` cmdlet documentation improved with additional example.
-- `Add-PnPNavigationNode` cmdlet documentation improved with additional example feature which shows how to add a navigation node as a label.
-- Added option to add/list/remove event receivers from the site scope using `Add-PnPEventReceiver -Scope <Site/Web>`, `Get-PnPEventReceiver -Scope <All/Site/Web>` and `Remove-PnPEventReceiver -Scope <All/Site/Web>`
-- Added `-Url` parameter to `New-PnPUPABulkImportJob` which allows providing a URL to an existing SharePoint User Profile import mapping instruction file stored on SharePoint Online
-- Fixed an issue with several PnP PowerShell cmdlets such as `Get-PnPTeamsUser` where not all results would be returned
-- Added `Add-PnPSiteDesignFromWeb` which combines `Get-PnPSiteScriptFromWeb`, `Add-PnPSiteScript` and `Add-PnPSiteDesign` into one cmdlet to allow for a specific site to directly be added as a site design to allow other sites to be configured similarly
-- Added `Update-PnPSiteDesignFromWeb` which combines `Get-PnPSiteScriptFromWeb` and `Set-PnPSiteScript` into one cmdlet to allow for a specific site design to directly be updated based on an existing site which can function as a template
-- Changed `Get-PnPSiteDesign` and `Invoke-PnPSiteDesign` to when providing a name through `-Identity` to be able to work with all site designs having that same name instead of just the first one
-- Fixed unable to piping the output of `Get-PnPRoleDefinition` to i.e. filter by RoleTypeKind.
-- Changed `Set-PnPListItemPermission` to support piping in a roledefinition for `-AddRole` and `-RemoveRole`
-- Fixed issue with `Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID
-- Added `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` cmdlet which allows direct synchronization of user profile properties of choice between user profiles in Azure Active Directory and their SharePoint Online User Profile Service user profile equivallents
-- Fixed issue with `Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID.
-- Fixed issue with `Get-PnPUPABulkImportStatus` where it did not allow you to pipe its output to i.e. get the most recent one using `Select -Latest 1` or the ones that failed using `? State -ne "Succeeded"`
 
 ### Contributors
 

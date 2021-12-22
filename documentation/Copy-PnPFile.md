@@ -10,7 +10,7 @@ title: Copy-PnPFile
 # Copy-PnPFile
 
 ## SYNOPSIS
-Copies a file or folder to a different location. This location can be within the same document library, same site, same site collection or even to another site collection on the same tenant. Currently there is a 200MB file size limit for the file or folder to be copied. Notice that if copying between sites or to a subsite you cannot specify a target filename, only a folder name.
+Copies a file or folder to a different location
 
 ## SYNTAX
 
@@ -20,6 +20,10 @@ Copy-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-Force] [
 ```
 
 ## DESCRIPTION
+
+Copies a file or folder to a different location. This location can be within the same document library, same site, same site collection or even to another site collection on the same tenant. Currently there is a 200MB file size limit for the file or folder to be copied. Notice that if copying between sites or to a subsite you cannot specify a target filename, only a folder name.
+
+Copying files and folders is bound to some restrictions. You can find more on it here: https://docs.microsoft.com/office365/servicedescriptions/sharepoint-online-service-description/sharepoint-online-limits#moving-and-copying-across-sites
 
 ## EXAMPLES
 

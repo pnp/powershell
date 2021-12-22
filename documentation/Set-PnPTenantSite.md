@@ -31,7 +31,7 @@ Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-
  [-SharingDomainRestrictionMode <SharingDomainRestrictionModes>] [-CommentsOnSitePagesDisabled]
  [-DisableAppViews <AppViewsPolicy>] [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>]
  [-DisableFlows <FlowsPolicy>] [-AnonymousLinkExpirationInDays <Int32>] [-SensitivityLabel <String>] [-RemoveLabel] [-AddInformationSegment <Guid[]>] [-RemoveInformationSegment <Guid[]>]
- [-OverrideTenantAnonymousLinkExpirationPolicy] [-Wait] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-OverrideTenantAnonymousLinkExpirationPolicy] [-InformationBarriersMode <InformationBarriersMode>] [-Wait] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Set Lock State
@@ -584,6 +584,21 @@ Specifies the warning level in megabytes of the site collection to warn the site
 ```yaml
 Type: Double
 Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -InformationBarriersMode
+Specifies the information barrier mode which helps strengthen access, sharing, and membership of a site based on its information barrier mode and segments associated with the site. Expected values are `Open`, `OwnerModerated` , `Implicit` and `Explicit`. For more information, see https://docs.microsoft.com/sharepoint/information-barriers#information-barriers-modes-and-sharepoint-sites
+
+```yaml
+Type: InformationBarriersMode
+Parameter Sets: Set Properties
+Accepted values: Open, OwnerModerated, Implicit, Explicit
 
 Required: False
 Position: Named

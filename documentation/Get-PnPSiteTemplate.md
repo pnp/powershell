@@ -146,6 +146,15 @@ Get-PnPSiteTemplate -Out template.pnp -ListsToExtract "Title of List One","95c4e
 
 Extracts a provisioning template in Office Open XML from the current web, including only the lists specified by title or ID.
 
+### EXAMPLE 16
+```powershell
+Get-PnPSiteTemplate -Out template.xml -Handlers Fields, ContentTypes, SupportedUILanguages -PersistMultiLanguageResources
+```
+
+Extracts a provisioning template in XML format from the current web including the fields, content types and supported ui languages.
+It will create a resource file for each supported language. The generated resource files will be named 'template.en-US.resx' etc.
+It is mandatory to include the "SupportedUILanguages" for these handlers as otherwise the resource files will not be created.
+
 ## PARAMETERS
 
 ### -Configuration
@@ -622,5 +631,5 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[Encoding](https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx)
-
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+[Encoding documentation](https://docs.microsoft.com/dotnet/api/system.text.encoding?view=net-6.0)
