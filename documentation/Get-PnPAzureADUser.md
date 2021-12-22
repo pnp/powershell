@@ -11,15 +11,11 @@ title: Get-PnPAzureADUser
 
 ## SYNOPSIS
 
-> [!TIP]
-> We encourage you to make improvements to this documentation. Please navigate to https://github.com/pnp/powershell/blob/dev/documentation/Get-PnPAzureADUser.md to change this file.
-
-
 **Required Permissions**
 
   * Microsoft Graph API : One of Directory.Read.All, Directory.ReadWrite.All, User.Read.All, User.ReadWrite.All
 
-Retrieves users from Azure Active Directory. The following properties will always be loaded: BusinessPhones, DisplayName, GivenName, JobTitle, Mail, MobilePhone, OfficeLocation, PreferredLanguage, Surname, UserPrincipalName, Id, AccountEnabled. Using the -Select parameter you can instruct additional properties to be retrieved.
+Retrieves users from Azure Active Directory. By default the following properties will be loaded: BusinessPhones, DisplayName, GivenName, JobTitle, Mail, MobilePhone, OfficeLocation, PreferredLanguage, Surname, UserPrincipalName, Id, AccountEnabled 
 
 ## SYNTAX
 
@@ -96,7 +92,7 @@ Retrieves all the users from Azure Active Directory of which their DisplayName s
 Get-PnPAzureADUser -Delta
 ```
 
-Retrieves all the users from Azure Active Directory and include a delta DeltaToken which can be used by providing -DeltaToken <token> to query for changes to users in Active Directory since this run
+Retrieves all the users from Azure Active Directory and include a delta DeltaToken which can be used by providing -DeltaToken `<token>` to query for changes to users in Active Directory since this run
 
 ### EXAMPLE 9
 ```powershell
@@ -185,7 +181,7 @@ Accept wildcard characters: False
 ```
 
 ### -Select
-Allows providing an array with the property names of specific additional properties to return next to the standard properties mentioned at the top of this article which are always returned. The property names are case insensitive. If not provided, the default properties will be returned which are listed at the top of this article.
+Allows providing an array with the property names of specific properties to return. If not provided, the default properties will be returned.
 
 ```yaml
 Type: String[]

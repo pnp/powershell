@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         public PagePipeBind(IPage page)
         {
             _page = page;
-            _name = page.Name;
+            _name = string.IsNullOrEmpty(page.Folder) ? page.Name : $"{page.Folder}/{page.Name}";
         }
 
         public PagePipeBind(string name)
@@ -44,7 +44,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 try
                 {
-                    var pages = ctx.Web.GetPages(Name);
+                    var pages = ctx.Web.GetPages(Name.TrimStart('/'));
                     if (pages != null)
                     {
                         // Just grab the first returned page, the filtering was already done in the GetPages() call

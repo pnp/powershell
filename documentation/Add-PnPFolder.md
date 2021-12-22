@@ -30,6 +30,20 @@ Add-PnPFolder -Name NewFolder -Folder _catalogs/masterpage
 
 This will create the folder NewFolder in the masterpage catalog
 
+### EXAMPLE 2
+```powershell
+Add-PnPFolder -Name NewFolder -Folder "Shared Documents"
+```
+
+This will create the folder NewFolder in the Documents library
+
+### EXAMPLE 3
+```powershell
+Add-PnPFolder -Name NewFolder -Folder "Shared Documents/Folder"
+```
+
+This will create the folder NewFolder in Folder inside the Documents library
+
 ## PARAMETERS
 
 ### -Connection

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,6 +54,17 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.GetAccessToken());
+
+            var authManager = context.GetContextSettings().AuthenticationManager;
+            if (authManager.CookieContainer != null)
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (var cookie in authManager.CookieContainer.GetCookies(new Uri(url)))
+                {
+                    sb.AppendFormat("{0}; ", cookie.ToString());
+                }
+                client.DefaultRequestHeaders.Add("Cookie", sb.ToString());
+            }
             var returnValue = client.GetStringAsync(url).GetAwaiter().GetResult();
             return returnValue;
         }

@@ -1,9 +1,15 @@
 # Installing PnP PowerShell
 
-You can run the following commands to install the PowerShell cmdlets:
+You can run the following commands to install the latest stable PowerShell cmdlets:
 
 ```powershell
 Install-Module -Name "PnP.PowerShell"
+```
+
+If you want to install or update to the latest nightly built prerelease of PnP PowerShell, run:
+
+```powershell
+Install-Module -Name "PnP.PowerShell" -AllowPrerelease
 ```
 
 This will work on Windows / Linux / MacOS.

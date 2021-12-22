@@ -18,7 +18,7 @@ Add a field
 ```powershell
 Add-PnPField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> -Type <FieldType>
  [-Id <Guid>] [-AddToDefaultView] [-Required] [-Group <String>] [-ClientSideComponentId <Guid>]
- [-ClientSideComponentProperties <String>] [-Connection <PnPConnection>]
+ [-ClientSideComponentProperties <String>] [-AddToAllContentTypes] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -37,7 +37,7 @@ Add-PnPField -DisplayName <String> -InternalName <String> -Type <FieldType> [-Id
 
 ### Add field by XML to list
 ```powershell
-Add-PnPField [-AddToDefaultView] [-Required] [-Group <String>] 
+Add-PnPField [-AddToDefaultView] [-Required] [-Group <String>] [-AddToAllContentTypes]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -71,6 +71,20 @@ This will add a field of type Multiple Choice to the list "Demo List". (you can 
 
 ### -AddToDefaultView
 Switch Parameter if this field must be added to the default view
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Add field to list, Add field by XML to list
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AddToAllContentTypes
+Switch Parameter if this field must be added to all content types
 
 ```yaml
 Type: SwitchParameter

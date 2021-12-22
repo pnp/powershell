@@ -14,6 +14,7 @@ title: Get-PnPMicrosoft365GroupOwner
 **Required Permissions**
 
   * Microsoft Graph API : at least Group.Read.All
+  * Microsoft Graph API : Directory.Read.All
 
 Gets owners of a particular Microsoft 365 Group
 

@@ -15,11 +15,13 @@ Moves a file or folder to a different location
 ## SYNTAX
 
 ```powershell
-Move-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-NoWait] [-Force] [-Connection <PnPConnection>]
+Move-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-AllowSchemaMismatch] [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-NoWait] [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 Allows moving a file or folder to a different location inside the same document library, such as in a subfolder, to a different document library on the same site collection or to a document library on another site collection. If you move a file to a different site or subweb you cannot specify a target filename.
+
+Moving files and folders is bound to some restrictions. You can find more on it here: https://docs.microsoft.com/office365/servicedescriptions/sharepoint-online-service-description/sharepoint-online-limits#moving-and-copying-across-sites
 
 ## EXAMPLES
 
@@ -39,7 +41,7 @@ Moves a file named Document.docx located in the document library named "Shared D
 
 ### EXAMPLE 3
 ```powershell
-Move-PnPFile -SourceUrl "Shared Documents/Document.docx" -TargetUrl "/sites/otherproject/Shared Documents" -OverwriteIfAlreadyExists -AllowSchemaMismatch -AllowSmallerVersionLimitOnDestination
+Move-PnPFile -SourceUrl "Shared Documents/Document.docx" -TargetUrl "/sites/otherproject/Shared Documents" -Overwrite -AllowSchemaMismatch -AllowSmallerVersionLimitOnDestination
 ```
 
 Moves a file named Document.docx located in the document library named "Shared Documents" in the current site to the document library named "Shared Documents" in another site collection "otherproject" allowing it to overwrite an existing file Document.docx in the destination, allowing the fields to be different on the destination document library from the source document library and allowing a lower document version limit on the destination compared to the source.

@@ -119,6 +119,5 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[Encoding](https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx)
-
-
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+[Encoding documentation](https://docs.microsoft.com/dotnet/api/system.text.encoding?view=net-6.0)

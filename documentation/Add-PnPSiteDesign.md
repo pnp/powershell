@@ -90,7 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -IsDefault
-Specifies if the site design is a default site design
+Specifies that the site design is a default site design
 
 ```yaml
 Type: SwitchParameter
@@ -165,7 +165,7 @@ Specifies the type of site to which this design applies
 ```yaml
 Type: SiteWebTemplate
 Parameter Sets: (All)
-Accepted values: TeamSite, CommunicationSite, GrouplessTeamSite
+Accepted values: TeamSite, CommunicationSite, GrouplessTeamSite, ChannelSite
 
 Required: True
 Position: Named
