@@ -177,13 +177,13 @@ Next step is to assign permissions to this managed identity so it is authorized 
    Install-Module AzureAD
    ```
    
- 1. Connect to the Azure instance where your Azure Function runs and of which you want to use the Microsoft Graph through PnP PowerShell
+1. Connect to the Azure instance where your Azure Function runs and of which you want to use the Microsoft Graph through PnP PowerShell
 
     ```powershell
     Connect-AzureAD -TenandId <contoso>.onmicrosoft.com
     ```
     
- 1. Retrieve the Azure AD Service Principal instance for the Microsoft Graph. It should always be AppId 00000003-0000-0000-c000-000000000000.
+1. Retrieve the Azure AD Service Principal instance for the Microsoft Graph. It should always be AppId 00000003-0000-0000-c000-000000000000.
 
    ```powershell
    $graphServicePrincipal = Get-AzureADServicePrincipal -SearchString "Microsoft Graph" | Select-Object -First 1
@@ -227,4 +227,4 @@ Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
 
 ```
 
-Notice the super clean and simple `Connect-PnPOnline`. No identifiers whatsoever need to be provided. Based on the permissions assigned to the managed identity, it will be able to authenticate and authorize access to the Microsoft Graph APIs used behind the cmdlet to fetch the data.
+Notice the super clean and simple `Connect-PnPOnline`. No identifiers whatsoever need to be provided. Nothing that could fall into wrong hands, no client secret or certificate that could expire. Based on the permissions assigned to the managed identity, it will be able to authenticate and authorize access to the Microsoft Graph APIs used behind the cmdlet to fetch the data.
