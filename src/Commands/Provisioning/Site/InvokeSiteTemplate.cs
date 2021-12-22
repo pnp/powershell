@@ -3,7 +3,6 @@ using System.IO;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Provisioning.Model;
-
 using PnP.Framework.Provisioning.Providers.Xml;
 using PnP.Framework.Provisioning.Connectors;
 using PnP.Framework.Provisioning.ObjectHandlers;
@@ -13,7 +12,6 @@ using PnP.Framework.Provisioning.Providers;
 using System.Collections.Generic;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Base;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
@@ -174,7 +172,6 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                     }
                 }
             }
-
             else
             {
                 provisioningTemplate = InputInstance;
