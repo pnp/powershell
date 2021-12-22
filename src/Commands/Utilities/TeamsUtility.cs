@@ -112,7 +112,8 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             Group group = null;
             Team returnTeam = null;
-            // Create group
+            
+            // Create the Group
             if (string.IsNullOrEmpty(groupId))
             {
                 group = await CreateGroupAsync(accessToken, httpClient, displayName, description, classification, mailNickname, visibility, owners, templateType, resourceBehaviorOptions);
@@ -182,43 +183,31 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                 }
 
+                // Construct a list of all owners and members to add
+                var teamOwnersAndMembers = new List<TeamChannelMember>();
+
                 if (owners != null && owners.Length > 0)
                 {
-                    var chunks = BatchUtility.Chunk(owners, 20);
-                    foreach (var chunk in chunks)
+                    foreach (var owner in owners)
                     {
-                        var teamMembers = new List<TeamChannelMember>();
-                        var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/users/{0}", "id");
-
-                        foreach (var userid in results.Select(r => r.Value))
-                        {
-                            teamMembers.Add(new TeamChannelMember { Roles = new List<string> { "owner" }, UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{userid}')" });
-                        }
-                        if (teamMembers.Count > 0)
-                        {
-                            await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{group.Id}/members/add", new { values = teamMembers }, accessToken);
-                        }
+                        teamOwnersAndMembers.Add(new TeamChannelMember { Roles = new List<string> { "owner" }, UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{owner}')" });
                     }
                 }
 
                 if (members != null && members.Length > 0)
                 {
-                    var chunks = BatchUtility.Chunk(members, 20);
-                    foreach (var chunk in chunks)
+                    foreach (var member in members)
                     {
-                        var teamMembers = new List<TeamChannelMember>();
-                        var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/users/{0}", "id");
-
-                        foreach (var userid in results.Select(r => r.Value))
-                        {
-                            teamMembers.Add(new TeamChannelMember { Roles = new List<string> { "member" }, UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{userid}')" });
-                        }
-                        if (teamMembers.Count > 0)
-                        {
-                            await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{group.Id}/members/add", new { values = teamMembers }, accessToken);
-                        }
+                        teamOwnersAndMembers.Add(new TeamChannelMember { Roles = new List<string>(), UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{member}')" });
                     }
                 }
+
+                // If there are owners or members to add, execute the request to add them
+                if (teamOwnersAndMembers.Count > 0)
+                {
+                    await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{group.Id}/members/add", new { values = teamOwnersAndMembers }, accessToken);
+                }
+
             }
             return returnTeam;
         }
