@@ -225,41 +225,58 @@ namespace PnP.PowerShell.Commands.Utilities
 
         private static async Task<Group> CreateGroupAsync(string accessToken, HttpClient httpClient, string displayName, string description, string classification, string mailNickname, GroupVisibility visibility, string[] owners, TeamsTemplateType templateType = TeamsTemplateType.None, TeamResourceBehaviorOptions?[] resourceBehaviorOptions = null)
         {
-            Group group = new Group();
-            // get the owner if no owner was specified
-            var ownerId = string.Empty;
-            var contextSettings = PnPConnection.Current.Context.GetContextSettings();
+            // When creating a group, we always need an owner, thus we'll try to define it from the passed in owners array
+            string ownerId = null;
             if (owners != null && owners.Length > 0)
             {
+                // Owner(s) have been provided, use the first owner as the initial owner. The other owners will be added later.
                 var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{owners[0]}?$select=Id", accessToken);
                 if (user != null)
                 {
+                    // User Id of the first owner has been found
                     ownerId = user.Id;
                 }
                 else
                 {
-                    // find the user in the organization
+                    // Unable to find the owner by its user principal name, try looking for it on its email address
                     var collection = await GraphHelper.GetResultCollectionAsync<User>(httpClient, $"v1.0/users?$filter=mail eq '{owners[0]}'&$select=Id", accessToken);
-                    if (collection != null)
+                    if (collection != null && collection.Any())
                     {
-                        if (collection.Any())
-                        {
-                            ownerId = collection.First().Id;
-                        }
+                        // User found on its email address
+                        ownerId = collection.First().Id;
                     }
                 }
             }
+            
+            // Check if by now we've identified a user Id to become the owner
+            if(!string.IsNullOrEmpty(ownerId))
+            {
+                // TODO Koen: add a check on how we are logged on and if we can call the /me endpoint using that (i.e. won't work under appcreds)
+                
+                // Still no owner identified, see if we can make the current user executing this cmdlet the owner
+                var user = await GraphHelper.GetAsync<User>(httpClient, "v1.0/me?$select=Id", accessToken);
+                
+                if (user != null)
+                {
+                    // User executing the cmdlet will become the owner
+                    ownerId = user.Id;
+                }
+            }
 
-            group.DisplayName = displayName;
-            group.Description = description;
-            group.Classification = classification;
-            group.MailEnabled = true;
-            group.MailNickname = mailNickname ?? await CreateAliasAsync(httpClient, accessToken);
-            group.GroupTypes = new List<string>() { "Unified" };
-            group.SecurityEnabled = false;
-            group.Owners = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
-            group.Members = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
-            group.Visibility = visibility == GroupVisibility.NotSpecified ? GroupVisibility.Private : visibility;
+            Group group = new Group
+            {
+                DisplayName = displayName,
+                Description = description,
+                Classification = classification,
+                MailEnabled = true,
+                MailNickname = mailNickname ?? await CreateAliasAsync(httpClient, accessToken),
+                GroupTypes = new List<string>() { "Unified" },
+                SecurityEnabled = false,
+                Owners = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" },
+                //group.Members = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
+                Visibility = visibility == GroupVisibility.NotSpecified ? GroupVisibility.Private : visibility
+            };
+
             if (resourceBehaviorOptions != null && resourceBehaviorOptions.Length > 0)
             {
                 var teamResourceBehaviorOptionsValue = new List<string>();
