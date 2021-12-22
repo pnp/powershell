@@ -273,7 +273,6 @@ namespace PnP.PowerShell.Commands.Utilities
             if (!string.IsNullOrEmpty(ownerId))
             {
                 group.Owners = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
-                //group.Members = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
             }
 
             if (resourceBehaviorOptions != null && resourceBehaviorOptions.Length > 0)
