@@ -228,7 +228,6 @@ namespace PnP.PowerShell.Commands.Utilities
             Group group = new Group();
             // get the owner if no owner was specified
             var ownerId = string.Empty;
-            var contextSettings = PnPConnection.Current.Context.GetContextSettings();
             if (owners != null && owners.Length > 0)
             {
                 var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{owners[0]}?$select=Id", accessToken);
@@ -249,6 +248,14 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                 }
             }
+            else
+            {
+                var user = await GraphHelper.GetAsync<User>(httpClient, "v1.0/me?$select=Id", accessToken);
+                if(user != null)
+                {
+                    ownerId = user.Id;
+                }                
+            }
 
             group.DisplayName = displayName;
             group.Description = description;
@@ -257,8 +264,11 @@ namespace PnP.PowerShell.Commands.Utilities
             group.MailNickname = mailNickname ?? await CreateAliasAsync(httpClient, accessToken);
             group.GroupTypes = new List<string>() { "Unified" };
             group.SecurityEnabled = false;
-            group.Owners = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
-            group.Members = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
+            if (!string.IsNullOrEmpty(ownerId))
+            {
+                group.Owners = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
+                group.Members = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
+            }
             group.Visibility = visibility == GroupVisibility.NotSpecified ? GroupVisibility.Private : visibility;
             if (resourceBehaviorOptions != null && resourceBehaviorOptions.Length > 0)
             {
