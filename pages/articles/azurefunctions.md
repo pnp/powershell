@@ -20,7 +20,7 @@ As the UI in https://portal.azure.com changes every now and then, but the princi
  
    ```powershell
    @{
-       'PnP.PowerShell' = '0.3.9-nightly'
+       'PnP.PowerShell' = '1.8.0'
    }
    ```
 1. The version that will be installed will be the specified nightly build.
