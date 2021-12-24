@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added optional `-Role` parameter to `Get-PnPMicrosoft365GroupMember` cmdlet. You can now also fetch guest users by specifying `-Role Guest`.
+
 
 ### Changed
 

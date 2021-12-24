@@ -15,10 +15,31 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public Microsoft365GroupPipeBind Identity;
 
+        [Parameter(Mandatory = false)]
+        [ValidateSet(new[] { "Member", "Guest" })]
+        public string Role;
+
         protected override void ExecuteCmdlet()
         {
-            var members = Microsoft365GroupsUtility.GetMembersAsync(HttpClient, Identity.GetGroupId(HttpClient, AccessToken), AccessToken).GetAwaiter().GetResult();
-            WriteObject(members?.OrderBy(m => m.DisplayName), true);
+            if (ParameterSpecified(nameof(Role)))
+            {
+                if (!string.IsNullOrEmpty(Role) && Role.ToLower() == "guest")
+                {
+                    var groupId = Identity.GetGroupId(HttpClient, AccessToken);
+                    var guestUsers = TeamsUtility.GetUsersAsync(HttpClient, AccessToken, groupId.ToString(), Role).GetAwaiter().GetResult();
+                    WriteObject(guestUsers?.OrderBy(g => g.DisplayName), true);
+                }
+                else
+                {
+                    var members = Microsoft365GroupsUtility.GetMembersAsync(HttpClient, Identity.GetGroupId(HttpClient, AccessToken), AccessToken).GetAwaiter().GetResult();
+                    WriteObject(members?.OrderBy(m => m.DisplayName), true);
+                }
+            }
+            else
+            {
+                var members = Microsoft365GroupsUtility.GetMembersAsync(HttpClient, Identity.GetGroupId(HttpClient, AccessToken), AccessToken).GetAwaiter().GetResult();
+                WriteObject(members?.OrderBy(m => m.DisplayName), true);
+            }
         }
     }
 }
