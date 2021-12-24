@@ -84,7 +84,9 @@
                     <h1 id="add-pnpfiletositetemplate">Add-PnPFileToSiteTemplate</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Adds a file to a PnP Provisioning Template</p>
+<p>Adds a file to a PnP Provisioning Template package</p>
+<h2 id="description">Description</h2>
+<p>Allows adding a file to a PnP Provisioning Template package (.pnp) so that the file will get uploaded to the SharePoint Online site to which the template is being invoked. This allows the file to be referenced in i.e. a document template, site logo or any other component that references a file.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="local-file">Local File</h3>
 <pre><code class="lang-powershell">Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-Source] &lt;String&gt; [-Folder] &lt;String&gt;
@@ -97,16 +99,16 @@
  [[-FileLevel] &lt;FileLevel&gt;] [-FileOverwrite] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
-<h2 id="description">DESCRIPTION</h2>
+<h2 id="description-1">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPFileToSiteTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder
+<pre><code class="lang-powershell">Add-PnPFileToSiteTemplate -Path template.pnp -Source &quot;Instructions.docx&quot; -Folder &quot;Shared Documents&quot;
 </code></pre>
-<p>Adds a file to a PnP Site Template</p>
+<p>Embeds a file named &quot;Instructions.docx&quot; located in the current folder on the local machine into the PnP Site Template file &quot;template.pnp&quot; located in the current folder on the local machine, instructing it to be uploaded to the default document library when the template is applied to a site.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPFileToSiteTemplate -Path template.xml -Source $sourceFilePath -Folder $targetFolder
+<pre><code class="lang-powershell">Add-PnPFileToSiteTemplate -Path c:\temp\template.pnp -Source &quot;c:\temp\Sample.pptx&quot; -Folder &quot;Shared Documents\Samples&quot;
 </code></pre>
-<p>Adds a file reference to a PnP Site XML Template</p>
+<p>Embeds a file named &quot;Sample.pptx&quot; located in the c:\temp on the local machine into the PnP Site Template file located at &quot;c:\temp\template.pnp&quot; on the local machine, instructing it to be uploaded to the folder Samples located in the default document library when the template is applied to a site.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Add-PnPFileToSiteTemplate -Path template.pnp -Source &quot;./myfile.png&quot; -Folder &quot;folderinsite&quot; -FileLevel Published -FileOverwrite:$false
 </code></pre>
@@ -116,7 +118,7 @@
 </code></pre>
 <p>Adds a file to a PnP Site Template with a custom container for the file</p>
 <h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Add-PnPFileToSiteTemplate -Path template.pnp -SourceUrl &quot;Shared%20Documents/ProjectStatus.docs&quot;
+<pre><code class="lang-powershell">Add-PnPFileToSiteTemplate -Path template.pnp -SourceUrl &quot;Shared%20Documents/ProjectStatus.docx&quot;
 </code></pre>
 <p>Adds a file to a PnP Provisioning Template retrieved from the currently connected site. The url can be server relative or web relative. If specifying a server relative url has to start with the current site url.</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -143,24 +145,24 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-filelevel">-FileLevel</h3>
-<p>The level of the files to add. Defaults to Published</p>
+<p>The level of the files to add, defaults to Published.</p>
 <pre><code class="lang-yaml">Type: FileLevel
 Parameter Sets: (All)
 
 Required: False
 Position: 4
-Default value: None
+Default value: Published
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-fileoverwrite">-FileOverwrite</h3>
-<p>Set to overwrite in site, Defaults to true</p>
+<p>Set to overwrite in site, defaults to true.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
 Position: 5
-Default value: None
+Default value: $true
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
@@ -187,7 +189,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-source">-Source</h3>
-<p>The file to add to the in-memory template, optionally including full path.</p>
+<p>The file to add to the PnP Provisioning Template, optionally including full path.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Local File
 
@@ -198,7 +200,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-sourceurl">-SourceUrl</h3>
-<p>The file to add to the in-memory template, specifying its url in the current connected Web.</p>
+<p>The file to add to the PnP Provisioning Template, specifying its url in the current connected Web.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Remove File
 
