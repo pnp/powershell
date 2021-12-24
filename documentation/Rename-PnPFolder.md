@@ -15,7 +15,7 @@ Renames a folder
 ## SYNTAX
 
 ```powershell
-Rename-PnPFolder -Folder <String> -TargetFolderName <String> [-Connection <PnPConnection>]
+Rename-PnPFolder -Folder <FolderPipeBind> -TargetFolderName <String> [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -50,7 +50,7 @@ Accept wildcard characters: False
 The folder to rename
 
 ```yaml
-Type: String
+Type: FolderPipeBind
 Parameter Sets: (All)
 
 Required: True
