@@ -14,13 +14,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPTenantTemplate")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
-
     public class InvokeTenantTemplate : PnPAdminCmdlet
     {
         private const string ParameterSet_PATH = "By Path";
@@ -83,7 +81,6 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             {
                 configuration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
             }
-
 
             configuration.SiteProvisionedDelegate = (title, url) =>
             {
@@ -291,7 +288,6 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             if (consentRequired)
             {
                 // try to retrieve an access token for the Microsoft Graph:
-
                 try
                 {
                     var accessToken = GraphAccessToken;
