@@ -112,7 +112,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             Group group = null;
             Team returnTeam = null;
-            
+
             // Create the Group
             if (string.IsNullOrEmpty(groupId))
             {
@@ -183,31 +183,39 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                 }
 
-                // Construct a list of all owners and members to add
-                var teamOwnersAndMembers = new List<TeamChannelMember>();
-
                 if (owners != null && owners.Length > 0)
                 {
-                    foreach (var owner in owners)
+                    var chunkedOwners = BatchUtility.Chunk(owners, 20);
+                    foreach (var chunk in chunkedOwners)
                     {
-                        teamOwnersAndMembers.Add(new TeamChannelMember { Roles = new List<string> { "owner" }, UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{owner}')" });
+                        var teamOwners = new List<TeamChannelMember>();
+                        foreach (var owner in chunk)
+                        {
+                            teamOwners.Add(new TeamChannelMember { Roles = new List<string> { "owner" }, UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{owner}')" });
+                        }
+                        if (teamOwners.Count > 0)
+                        {
+                            await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{group.Id}/members/add", new { values = teamOwners }, accessToken);
+                        }
                     }
                 }
 
                 if (members != null && members.Length > 0)
                 {
-                    foreach (var member in members)
+                    var chunkedMembers = BatchUtility.Chunk(members, 20);
+                    foreach (var chunk in chunkedMembers)
                     {
-                        teamOwnersAndMembers.Add(new TeamChannelMember { Roles = new List<string>(), UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{member}')" });
+                        var teamMembers = new List<TeamChannelMember>();
+                        foreach (var member in chunk)
+                        {
+                            teamMembers.Add(new TeamChannelMember { Roles = new List<string>(), UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{member}')" });
+                        }
+                        if (teamMembers.Count > 0)
+                        {
+                            await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{group.Id}/members/add", new { values = teamMembers }, accessToken);
+                        }
                     }
                 }
-
-                // If there are owners or members to add, execute the request to add them
-                if (teamOwnersAndMembers.Count > 0)
-                {
-                    await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{group.Id}/members/add", new { values = teamOwnersAndMembers }, accessToken);
-                }
-
             }
             return returnTeam;
         }
@@ -241,7 +249,7 @@ namespace PnP.PowerShell.Commands.Utilities
             if (!string.IsNullOrEmpty(ownerId))
             {
                 var contextSettings = PnPConnection.Current.Context.GetContextSettings();
-                
+
                 // Still no owner identified, see if we can make the current user executing this cmdlet the owner
                 if (contextSettings.Type != Framework.Utilities.Context.ClientContextType.AzureADCertificate)
                 {
@@ -273,6 +281,7 @@ namespace PnP.PowerShell.Commands.Utilities
             if (!string.IsNullOrEmpty(ownerId))
             {
                 group.Owners = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
+                group.Members = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
             }
 
             if (resourceBehaviorOptions != null && resourceBehaviorOptions.Length > 0)
