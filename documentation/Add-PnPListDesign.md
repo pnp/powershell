@@ -4,7 +4,7 @@ schema: 2.0.0
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Add-PnPListDesign.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Add-PnPSiteDesign
+title: Add-PnPListDesign
 ---
   
 # Add-PnPListDesign
@@ -38,7 +38,7 @@ Adds a new List Design, with the specified title and description. When applied i
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPListDesign -Title "My Company Design" -SiteScriptIds "6def687f-0e08-4f1e-999c-791f3af9a600" -Description "My description" -ListColor Orange -ListIcon BullseyeTarget -Thumbnail "https://contoso.sharepoint.com/SiteAssets/site-thumbnail.png"
+Add-PnPListDesign -Title "My Company Design" -SiteScriptIds "6def687f-0e08-4f1e-999c-791f3af9a600" -Description "My description" -ListColor Orange -ListIcon BullseyeTarget -ThumbnailUrl "https://contoso.sharepoint.com/SiteAssets/site-thumbnail.png"
 ```
 
 Adds a new List Design, with the specified title, description and list color, list icon and thumbnail to be shown in the template picker. When applied it will run the scripts as referenced by the IDs. Use Get-PnPSiteScript to receive Site Scripts. 
@@ -144,8 +144,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Thumbnail
-The full URL of a thumbnail image, i.e. https://contoso.sharepoint/siteassets/image.png. If none is specified, SharePoint uses a generic image. Recommended size is 400 x 300 pixels. This is the image that will be shown in the "From your organization" section of the "Create" List screen.
+### -ThumbnailUrl
+The full URL of a thumbnail image, i.e. https://contoso.sharepoint/siteassets/image.png. If none is specified, SharePoint uses a generic image. This is the image that will be shown in the "From your organization" section of the "Create" List screen.
 
 ```yaml
 Type: String
