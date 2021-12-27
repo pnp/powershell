@@ -26,9 +26,6 @@ namespace PnP.PowerShell.Commands
         public TenantListDesignColor ListColor;
 
         [Parameter(Mandatory = false)]
-        public string[] TemplateFeatures;
-
-        [Parameter(Mandatory = false)]
         public string ThumbnailUrl;
 
         protected override void ExecuteCmdlet()
@@ -39,7 +36,6 @@ namespace PnP.PowerShell.Commands
                 ListColor = ListColor,
                 ListIcon = ListIcon,
                 SiteScriptIds = SiteScriptIds,
-                TemplateFeatures = TemplateFeatures,
                 ThumbnailUrl = ThumbnailUrl,
                 Title = Title
             };
