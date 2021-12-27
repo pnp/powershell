@@ -331,6 +331,7 @@ namespace PnP.PowerShell.Commands.Site
                 SocialBarOnSitePagesDisabled.HasValue ||
                  AnonymousLinkExpirationInDays.HasValue ||
                 ParameterSpecified(nameof(OverrideTenantAnonymousLinkExpirationPolicy)) ||
-                LocaleId.HasValue;
+                LocaleId.HasValue ||
+                DisableCompanyWideSharingLinks.HasValue;
     }
 }
