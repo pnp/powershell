@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Fixed
 
 - Fixed `Set-PnPSite` not working with `DisableCompanyWideSharingLinks` parameter.
+- Fixed `Get-PnPListPermissions` returing wrong information in case of broken inheritance.
 
 ### Removed
 
