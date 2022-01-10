@@ -456,6 +456,37 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
+        public static async Task<List<TeamUser>> GetTeamUsersWithDisplayNameAsync(HttpClient httpClient, string accessToken, string groupId, string userDisplayName)
+        {
+            // multiple users can have same display name, so using list
+            var teamUserWithDisplayName = new List<TeamUser>();
+
+            teamUserWithDisplayName = (await GraphHelper.GetResultCollectionAsync<TeamUser>(httpClient, $"v1.0/teams/{groupId}/members?$filter=displayname eq '{userDisplayName}'", accessToken)).Select(t => new TeamUser()
+            {
+                Id = t.Id,
+                DisplayName = t.DisplayName,
+                email = t.email,
+                UserId = t.UserId
+            }).ToList();
+            
+            return teamUserWithDisplayName;
+        }
+
+        public static async Task<TeamUser> UpdateTeamUserRole(HttpClient httpClient, string accessToken, string groupId, string teamMemberId, string role)
+        {
+            var teamUser = new TeamUser
+            {
+                Type = "#microsoft.graph.aadUserConversationMember",
+                Roles = new List<string>() { role }
+            };
+
+            var updateUserEndpoint = $"v1.0/teams/{groupId}/members/{teamMemberId}";
+
+            var result = await GraphHelper.PatchAsync(httpClient, accessToken, updateUserEndpoint, teamUser);
+            
+            return result;
+        }
+
         #endregion
 
         #region Channel
