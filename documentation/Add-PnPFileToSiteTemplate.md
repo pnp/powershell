@@ -10,7 +10,11 @@ title: Add-PnPFileToSiteTemplate
 # Add-PnPFileToSiteTemplate
 
 ## SYNOPSIS
-Adds a file to a PnP Provisioning Template
+Adds a file to a PnP Provisioning Template package
+
+## Description
+
+Allows adding a file to a PnP Provisioning Template package (.pnp) so that the file will get uploaded to the SharePoint Online site to which the template is being invoked. This allows the file to be referenced in i.e. a document template, site logo or any other component that references a file.
 
 ## SYNTAX
 
@@ -35,17 +39,17 @@ Add-PnPFileToSiteTemplate [-Path] <String> [-SourceUrl] <String> [[-Container] <
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPFileToSiteTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder
+Add-PnPFileToSiteTemplate -Path template.pnp -Source "Instructions.docx" -Folder "Shared Documents"
 ```
 
-Adds a file to a PnP Site Template
+Embeds a file named "Instructions.docx" located in the current folder on the local machine into the PnP Site Template file "template.pnp" located in the current folder on the local machine, instructing it to be uploaded to the default document library when the template is applied to a site.
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPFileToSiteTemplate -Path template.xml -Source $sourceFilePath -Folder $targetFolder
+Add-PnPFileToSiteTemplate -Path c:\temp\template.pnp -Source "c:\temp\Sample.pptx" -Folder "Shared Documents\Samples"
 ```
 
-Adds a file reference to a PnP Site XML Template
+Embeds a file named "Sample.pptx" located in the c:\temp on the local machine into the PnP Site Template file located at "c:\temp\template.pnp" on the local machine, instructing it to be uploaded to the folder Samples located in the default document library when the template is applied to a site.
 
 ### EXAMPLE 3
 ```powershell
@@ -63,7 +67,7 @@ Adds a file to a PnP Site Template with a custom container for the file
 
 ### EXAMPLE 5
 ```powershell
-Add-PnPFileToSiteTemplate -Path template.pnp -SourceUrl "Shared%20Documents/ProjectStatus.docs"
+Add-PnPFileToSiteTemplate -Path template.pnp -SourceUrl "Shared%20Documents/ProjectStatus.docx"
 ```
 
 Adds a file to a PnP Provisioning Template retrieved from the currently connected site. The url can be server relative or web relative. If specifying a server relative url has to start with the current site url.
@@ -99,7 +103,7 @@ Accept wildcard characters: False
 ```
 
 ### -FileLevel
-The level of the files to add. Defaults to Published
+The level of the files to add, defaults to Published.
 
 ```yaml
 Type: FileLevel
@@ -107,13 +111,13 @@ Parameter Sets: (All)
 
 Required: False
 Position: 4
-Default value: None
+Default value: Published
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -FileOverwrite
-Set to overwrite in site, Defaults to true
+Set to overwrite in site, defaults to true.
 
 ```yaml
 Type: SwitchParameter
@@ -121,7 +125,7 @@ Parameter Sets: (All)
 
 Required: False
 Position: 5
-Default value: None
+Default value: $true
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -155,7 +159,7 @@ Accept wildcard characters: False
 ```
 
 ### -Source
-The file to add to the in-memory template, optionally including full path.
+The file to add to the PnP Provisioning Template, optionally including full path.
 
 ```yaml
 Type: String
@@ -169,7 +173,7 @@ Accept wildcard characters: False
 ```
 
 ### -SourceUrl
-The file to add to the in-memory template, specifying its url in the current connected Web.
+The file to add to the PnP Provisioning Template, specifying its url in the current connected Web.
 
 ```yaml
 Type: String
@@ -196,10 +200,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
