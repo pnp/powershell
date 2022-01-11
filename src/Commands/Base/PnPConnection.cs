@@ -667,20 +667,25 @@ namespace PnP.PowerShell.Commands.Base
             var enableTelemetry = false;
             var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             var telemetryFile = System.IO.Path.Combine(userProfile, ".pnppowershelltelemetry");
+            // Give priority to env variable then telemtry file but still defaults to true
             if (Environment.GetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY") != null)
             {
                 enableTelemetry = Environment.GetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY").ToLower().Equals("false");
-            }
-
-            if (!System.IO.File.Exists(telemetryFile))
-            {
-                enableTelemetry = true;
+                if (enableTelemetry) Console.WriteLine("enabling telemetry because env var is defnied and not true");
             }
             else
             {
-                if (System.IO.File.ReadAllText(telemetryFile).ToLower() == "allow")
+                if (!System.IO.File.Exists(telemetryFile))
                 {
                     enableTelemetry = true;
+                }
+                else
+                {
+                    if (System.IO.File.ReadAllText(telemetryFile).ToLower() == "allow")
+                    {
+                        enableTelemetry = true;
+                        Console.WriteLine("enabling telemetry file at " + telemetryFile + "contains allow");
+                    }
                 }
             }
 
