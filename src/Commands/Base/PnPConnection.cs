@@ -671,19 +671,21 @@ namespace PnP.PowerShell.Commands.Base
             {
                 enableTelemetry = Environment.GetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY").ToLower().Equals("false");
             }
-
-            if (!System.IO.File.Exists(telemetryFile))
-            {
-                enableTelemetry = true;
-            }
             else
             {
-                if (System.IO.File.ReadAllText(telemetryFile).ToLower() == "allow")
+
+                if (!System.IO.File.Exists(telemetryFile))
                 {
                     enableTelemetry = true;
                 }
+                else
+                {
+                    if (System.IO.File.ReadAllText(telemetryFile).ToLower() == "allow")
+                    {
+                        enableTelemetry = true;
+                    }
+                }
             }
-
             if (enableTelemetry)
             {
                 var serverLibraryVersion = "";
