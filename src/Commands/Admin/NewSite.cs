@@ -115,7 +115,7 @@ namespace PnP.PowerShell.Commands
 
                 if (ParameterSpecified("SiteAlias"))
                 {
-                    creationInformation.SiteAlias = _teamSiteParameters.SiteAlias;
+                    creationInformation.SiteAlias = System.Text.RegularExpressions.Regex.Replace(_teamSiteParameters.SiteAlias, @"[^\w\._'-]", string.Empty);
                 }
 
                 if (ClientContext.GetContextSettings()?.Type != Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
