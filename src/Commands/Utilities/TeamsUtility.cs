@@ -353,10 +353,10 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static async Task AddUsersAsync(HttpClient httpClient, string accessToken, string groupId, string[] upn, string role)
         {
-            var chunks = BatchUtility.Chunk(upn, 20);
+            var chunks = BatchUtility.Chunk(upn.Select(u => GetUserGraphUrlForUPN(u)), 20);
             foreach (var chunk in chunks)
             {
-                var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/users/{0}", "id");
+                var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/{0}", "id");
                 var teamChannelMember = new List<TeamChannelMember>();
                 foreach (var userid in results.Select(r => r.Value))
                 {
