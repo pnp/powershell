@@ -70,7 +70,10 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
             List spList = List.GetListOrThrow(nameof(List), CurrentWeb,
                            l => l.RootFolder, l => l.HasUniqueRoleAssignments);
-            ListInstance listInstance = template.Lists.Find(l => l.Title == spList.Title);
+
+            var tokenParser = new Framework.Provisioning.ObjectHandlers.TokenParser(ClientContext.Web, template);
+
+            ListInstance listInstance = template.Lists.Find(l => tokenParser.ParseString(l.Title) == spList.Title);
             if (listInstance == null)
             {
                 throw new ApplicationException("List does not exist in the template file!");
