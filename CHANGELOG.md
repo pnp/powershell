@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added `Add\Remove\Invoke-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design.
+- Added support to add multiple owners and members in `New-PnPTeamsTeam` cmdlet.
 
 ### Changed
 
@@ -18,17 +20,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Set-PnPSite` not working with `DisableCompanyWideSharingLinks` parameter.
 - Fixed `Get-PnPListPermissions` returing wrong information in case of broken inheritance.
 - Fixed `Submit-PnPSearchQuery -Query "somequery"` yielding an error when no results [#1520](https://github.com/pnp/powershell/pull/1520)
+- Fixed `Set-PnPTenantSite` not setting SharingCapability property correctly.
+- Fixed `Get-PnPMicrosoft365Group` retrieving non-Unified groups when parameters are not specified.
+
 
 ### Removed
 
 
 ### Contributors
 
+- Leon Armston [LeonArmston]
+- Reshmee Auckloo [reshmee011]
 
 ## [1.9.0]
 
 ### Added
 - Added `Get-PnPTenantInstance` which will return one or more tenant instances, depending if you have a multi-geo or single-geo (default) tenant.
+- Added optional `-ScheduledPublishDate` parameter to `Add-PnPPage` and `Set-PnPPage` to allow for scheduling a page to be published
+- Added `-RemoveScheduledPublish` to `Set-PnPPage` to allow for a page publish schedule to be removed
 - Added support for off peak SharePoint Syntex content classification and extraction for lists and folders via new `-OffPeak` and `-Folder` parameters for `Request-PnPSyntexClassifyAndExtract`
 - Added `Get\Set-PnPPlannerConfiguration` to allow working with the Microsoft Planner tenant configuration
 - Added `Get\Set-PnPPlannerUserPolicy` to allow setting Microsoft Planner user policies for specific users
@@ -57,9 +66,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added optional `-IsDefault` option to `Get-PnPPowerPlatformEnvironment` which allows just the default or non default environments to be returned. If not provided, all environments will be returned as was the case before this addition.
 - Added `ResourceBehaviorOptions` option in `New-PnPTeamsTeam` cmdlet to set `ResourceBehaviorOptions` while provisioning a Team
 - Added alias on `Copy-PnPFile` for `Copy-PnPFolder`. It could already be used to copy a folder, but to make this more clear, and as we already had a `Copy/Move-PnPFolder` as well, the same cmdlet is now also available under its alternative cmdlet name.
-- Added optional `-ScheduledPublishDate` parameter to `Add-PnPPage` and `Set-PnPPage` to allow for scheduling a page to be published.
-- Added `-RemoveScheduledPublish` to `Set-PnPPage` to allow for a page publish schedule to be removed.
-- Added support to add multiple owners and members in `New-PnPTeamsTeam` cmdlet.
 - Added `IsFluidEnabled` state to be returned with `Get-PnPTenant` cmdlet.
 - Added `-IsFluidEnabled` to `Set-PnPTenant` cmdlet to enable/disable users from using Fluid components.
 - Added `Add\Get\Remove-PnPListItemComment` cmdlets to deal with list item comments. Using these cmdlets, you will now be able to add, retrieve and delete list item comments. [#1462](https://github.com/pnp/powershell/pull/1462)
