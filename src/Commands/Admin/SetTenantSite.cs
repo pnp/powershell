@@ -360,15 +360,7 @@ namespace PnP.PowerShell.Commands
             {
                 props.AnonymousLinkExpirationInDays = AnonymousLinkExpirationInDays.Value;
                 updateRequired = true;
-            }
-
-            if (ParameterSpecified(nameof(DisableSharingForNonOwners)))
-            {
-                var office365Tenant = new Office365Tenant(ClientContext);
-                ClientContext.Load(office365Tenant);
-                ClientContext.ExecuteQueryRetry();
-                office365Tenant.DisableSharingForNonOwnersOfSite(Identity.Url);
-            }
+            }            
 
             if (ParameterSpecified(nameof(ConditionalAccessPolicy)) && ConditionalAccessPolicy == PnPConditionalAccessPolicyType.ProtectionLevel || ConditionalAccessPolicy == PnPConditionalAccessPolicyType.AuthenticationContext)
             {
@@ -513,6 +505,14 @@ namespace PnP.PowerShell.Commands
                 {
                     WaitForIsComplete(ClientContext, op, timeoutFunction, TenantOperationMessage.SettingSiteProperties);
                 }
+            }
+
+            if (ParameterSpecified(nameof(DisableSharingForNonOwners)))
+            {
+                var office365Tenant = new Office365Tenant(ClientContext);
+                ClientContext.Load(office365Tenant);
+                ClientContext.ExecuteQueryRetry();
+                office365Tenant.DisableSharingForNonOwnersOfSite(Identity.Url);
             }
 
             if (ParameterSpecified(nameof(HubSiteId)))
