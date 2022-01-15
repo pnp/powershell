@@ -357,4 +357,7 @@
   <data name="CertificateWithThumbprintDoesNotHavePrivateKey" xml:space="preserve">
     <value>The provided certificate with the thumbprint '{0}' does not have a private key which is required for a connection to be established. Ensure you have imported the certificate containing the private key, typically the .pfx file, into the Windows Certificate Store.</value>
   </data>
+  <data name="RemoveListDesign" xml:space="preserve">
+    <value>Remove list design?</value>
+  </data>
 </root>
