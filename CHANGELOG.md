@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPListPermissions` returing wrong information in case of broken inheritance.
 - Fixed `Submit-PnPSearchQuery -Query "somequery"` yielding an error when no results [#1520](https://github.com/pnp/powershell/pull/1520)
 - Fixed `Set-PnPTenantSite` not setting SharingCapability property correctly.
+- Fixed `Get-PnPMicrosoft365Group` retrieving non-Unified groups when parameters are not specified.
 
 
 ### Removed

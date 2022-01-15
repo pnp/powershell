@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.Utilities
         internal static async Task<IEnumerable<Microsoft365Group>> GetGroupsAsync(HttpClient httpClient, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
             var items = new List<Microsoft365Group>();
-            var result = await GraphHelper.GetResultCollectionAsync<Microsoft365Group>(httpClient, "v1.0/groups", accessToken);
+            var result = await GraphHelper.GetResultCollectionAsync<Microsoft365Group>(httpClient, "v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified')", accessToken);
             if (result != null && result.Any())
             {
                 items.AddRange(result);               
