@@ -136,7 +136,10 @@ namespace PnP.PowerShell.Commands.Search
                             if (resultTable.TableType == "RelevantResults")
                             {
                                 currentCount = resultTable.RowCount;
-                                lastDocId = resultTable.ResultRows.Last()["DocId"].ToString();
+                                if (currentCount > 0)
+                                {
+                                    lastDocId = resultTable.ResultRows.Last()["DocId"].ToString();
+                                }
                             }
                         }
                     }
