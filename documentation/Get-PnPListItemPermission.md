@@ -1,10 +1,10 @@
 ---
 Module Name: PnP.PowerShell
-title: Get-PnPListItemPermission
+title: Get-PnPListItemPermissions
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPListItemPermission.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPListItemPermissions.html
 ---
  
 # Get-PnPListItemPermission
@@ -16,7 +16,7 @@ Gets list item permissions.
 
 ```powershell
 
-Get-PnPListItemPermission [-List] <ListPipeBind> -Identity <ListItemPipeBind>
+Get-PnPListItemPermissions [-List] <ListPipeBind> -Identity <ListItemPipeBind>
  [-Connection <PnPConnection>] [<CommonParameters>]
 
 ```
@@ -27,7 +27,7 @@ Get-PnPListItemPermission [-List] <ListPipeBind> -Identity <ListItemPipeBind>
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPListItemPermission -List 'Documents' -Identity 1
+Get-PnPListItemPermissions -List 'Documents' -Identity 1
 ```
 
 Get the permissions for listitem with id 1 in the list 'Documents'
