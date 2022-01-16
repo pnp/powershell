@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Set-PnPHomePage | PnP PowerShell </title>
+    <title>Remove-PnPListDesign | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Set-PnPHomePage | PnP PowerShell ">
+    <meta name="title" content="Remove-PnPListDesign | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,29 +77,41 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="set-pnphomepage">Set-PnPHomePage</h1>
+                    <h1 id="remove-pnplistdesign">Remove-PnPListDesign</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets the home page of the current web.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
+</ul>
+<p>Removes a List Design</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPHomePage [-RootFolderRelativeUrl] &lt;String&gt; [-Connection &lt;PnPConnection&gt;]
- [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPListDesign [-Identity] &lt;TenantListDesignPipeBind&gt; [-Force] [-Connection &lt;PnPConnection&gt;] 
+  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+<pre><code class="lang-powershell">Remove-PnPListDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd
 </code></pre>
-<p>Sets the home page to the home.aspx file which resides in the SitePages library</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPHomePage -RootFolderRelativeUrl Lists/Sample/AllItems.aspx
-</code></pre>
-<p>Sets the home page to be the Sample list</p>
+<p>Removes the specified list design</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-confirm">-Confirm</h3>
+<p>Prompts you for confirmation before running the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -111,16 +123,38 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-rootfolderrelativeurl">-RootFolderRelativeUrl</h3>
-<p>The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'</p>
-<pre><code class="lang-yaml">Type: String
+<h3 id="-force">-Force</h3>
+<p>If specified you will not be asked to confirm removing the specified Site Design</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: Path
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>The ID of the list design to remove</p>
+<pre><code class="lang-yaml">Type: TenantListDesignPipeBind
+Parameter Sets: (All)
 
 Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-whatif">-WhatIf</h3>
+<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>

@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Set-PnPHomePage | PnP PowerShell </title>
+    <title>Add-PnPListDesign | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Set-PnPHomePage | PnP PowerShell ">
+    <meta name="title" content="Add-PnPListDesign | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,29 +77,46 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="set-pnphomepage">Set-PnPHomePage</h1>
+                    <h1 id="add-pnplistdesign">Add-PnPListDesign</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets the home page of the current web.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
+</ul>
+<p>Creates a new List Design on the current tenant</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPHomePage [-RootFolderRelativeUrl] &lt;String&gt; [-Connection &lt;PnPConnection&gt;]
- [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPListDesign -Title &lt;String&gt; -SiteScriptIds &lt;Guid[]&gt; [-Description &lt;String&gt;] 
+ [-ListColor&lt;TenantListDesignIcon&gt;] [-ListIcon &lt;TenantListDesignColor&gt;] [-ThumbnailUrl &lt;String&gt;] 
+ [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+<pre><code class="lang-powershell">Add-PnPListDesign -Title &quot;My Custom List&quot; -SiteScriptIds &quot;e84dcb46-3ab9-4456-a136-66fc6ae3d3c5&quot;   
 </code></pre>
-<p>Sets the home page to the home.aspx file which resides in the SitePages library</p>
+<p>Adds a new List Design, with the specified title and description. When applied it will run the scripts as referenced by the IDs. Use Get-PnPSiteScript to receive site Scripts.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPHomePage -RootFolderRelativeUrl Lists/Sample/AllItems.aspx
+<pre><code class="lang-powershell">Add-PnPListDesign -Title &quot;My Company Design&quot; -SiteScriptIds &quot;6def687f-0e08-4f1e-999c-791f3af9a600&quot; -Description &quot;My description&quot; -ListColor Orange -ListIcon BullseyeTarget -ThumbnailUrl &quot;https://contoso.sharepoint.com/SiteAssets/site-thumbnail.png&quot;
 </code></pre>
-<p>Sets the home page to be the Sample list</p>
+<p>Adds a new List Design, with the specified title, description and list color, list icon and thumbnail to be shown in the template picker. When applied it will run the scripts as referenced by the IDs. Use Get-PnPSiteScript to receive Site Scripts.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-confirm">-Confirm</h3>
+<p>Prompts you for confirmation before running the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -111,16 +128,82 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-rootfolderrelativeurl">-RootFolderRelativeUrl</h3>
-<p>The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'</p>
+<h3 id="-description">-Description</h3>
+<p>The description of the list design</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases: Path
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-sitescriptids">-SiteScriptIds</h3>
+<p>An array of guids of site scripts</p>
+<pre><code class="lang-yaml">Type: Guid[]
+Parameter Sets: (All)
 
 Required: True
-Position: 0
+Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-title">-Title</h3>
+<p>The title of the list design</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-listcolor">-ListColor</h3>
+<p>The list color from the create list experience.</p>
+<pre><code class="lang-yaml">Type: TenantListDesignColor
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-listicon">-ListIcon</h3>
+<p>The list icon from the create list experience.</p>
+<pre><code class="lang-yaml">Type: TenantListDesignIcon
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-thumbnailurl">-ThumbnailUrl</h3>
+<p>The full URL of a thumbnail image, i.e. <a href="https://contoso.sharepoint/siteassets/image.png">https://contoso.sharepoint/siteassets/image.png</a>. If none is specified, SharePoint uses a generic image. This is the image that will be shown in the &quot;From your organization&quot; section of the &quot;Create&quot; List screen.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-whatif">-WhatIf</h3>
+<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>

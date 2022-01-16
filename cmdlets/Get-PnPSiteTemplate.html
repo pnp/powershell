@@ -171,6 +171,12 @@ Get-PnPSiteTemplate -Out NewTemplate.xml -ExtensibilityHandlers $handler1,$handl
 <p>Extracts a provisioning template in XML format from the current web including the fields, content types and supported ui languages.
 It will create a resource file for each supported language. The generated resource files will be named 'template.en-US.resx' etc.
 It is mandatory to include the &quot;SupportedUILanguages&quot; for these handlers as otherwise the resource files will not be created.</p>
+<h3 id="example-17">EXAMPLE 17</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com/sites/yourContentCenter&quot;
+
+Get-PnPSiteTemplate -Out MyModels.pnp -Handlers SyntexModels
+</code></pre>
+<p>Export all Syntex Document Understanding models in a Content Center into a single PnP template</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-configuration">-Configuration</h3>
 <p>Specify a JSON configuration file to configure the extraction progress.</p>
@@ -243,7 +249,7 @@ Accept wildcard characters: False
 <p>Allows you to run all handlers, excluding the ones specified.</p>
 <pre><code class="lang-yaml">Type: Handlers
 Parameter Sets: (All)
-Accepted values: None, AuditSettings, ComposedLook, CustomActions, ExtensibilityProviders, Features, Fields, Files, Lists, Pages, Publishing, RegionalSettings, SearchSettings, SitePolicy, SupportedUILanguages, TermGroups, Workflows, SiteSecurity, ContentTypes, PropertyBagEntries, PageContents, WebSettings, Navigation, ImageRenditions, ApplicationLifecycleManagement, Tenant, WebApiPermissions, SiteHeader, SiteFooter, Theme, SiteSettings, All
+Accepted values: All, ApplicationLifecycleManagement, AuditSettings, ComposedLook, ContentTypes, CustomActions, ExtensibilityProviders, Features, Fields, Files, ImageRenditions, Lists, Navigation, None, PageContents, Pages, PropertyBagEntries, Publishing, RegionalSettings, SearchSettings, SiteFooter, SiteHeader, SitePolicy, SiteSecurity, SiteSettings, SupportedUILanguages, SyntexModels, Tenant, TermGroups, Theme, WebApiPermissions, WebSettings, Workflows
 
 Required: False
 Position: Named
@@ -277,7 +283,7 @@ Accept wildcard characters: False
 <p>Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting. For possible values for this parameter visit <a href="https://docs.microsoft.com/dotnet/api/officedevpnp.core.framework.provisioning.model.handlers">https://docs.microsoft.com/dotnet/api/officedevpnp.core.framework.provisioning.model.handlers</a></p>
 <pre><code class="lang-yaml">Type: Handlers
 Parameter Sets: (All)
-Accepted values: None, AuditSettings, ComposedLook, CustomActions, ExtensibilityProviders, Features, Fields, Files, Lists, Pages, Publishing, RegionalSettings, SearchSettings, SitePolicy, SupportedUILanguages, TermGroups, Workflows, SiteSecurity, ContentTypes, PropertyBagEntries, PageContents, WebSettings, Navigation, ImageRenditions, ApplicationLifecycleManagement, Tenant, WebApiPermissions, SiteHeader, SiteFooter, Theme, SiteSettings, All
+Accepted values: All, ApplicationLifecycleManagement, AuditSettings, ComposedLook, ContentTypes, CustomActions, ExtensibilityProviders, Features, Fields, Files, ImageRenditions, Lists, Navigation, None, PageContents, Pages, PropertyBagEntries, Publishing, RegionalSettings, SearchSettings, SiteFooter, SiteHeader, SitePolicy, SiteSecurity, SiteSettings, SupportedUILanguages, SyntexModels, Tenant, TermGroups, Theme, WebApiPermissions, WebSettings, Workflows
 
 Required: False
 Position: Named
