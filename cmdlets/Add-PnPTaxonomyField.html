@@ -93,8 +93,8 @@
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="id">Id</h3>
-<pre><code class="lang-powershell">Add-PnPTaxonomyField [-List &lt;ListPipeBind&gt;] -DisplayName &lt;String&gt; -InternalName &lt;String&gt;
- [-TaxonomyItemId &lt;Guid&gt;] [-Group &lt;String&gt;] [-Id &lt;Guid&gt;] [-AddToDefaultView] [-MultiValue]
+<pre><code class="lang-powershell">Add-PnPTaxonomyField [-List &lt;ListPipeBind&gt;] -DisplayName &lt;String&gt; -InternalName &lt;String&gt; 
+-TaxonomyItemId &lt;Guid&gt; [-Group &lt;String&gt;] [-Id &lt;Guid&gt;] [-AddToDefaultView] [-MultiValue]
  [-Required] [-FieldOptions &lt;AddFieldOptions&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
@@ -105,6 +105,10 @@
 <pre><code class="lang-powershell">Add-PnPTaxonomyField -DisplayName &quot;Test&quot; -InternalName &quot;Test&quot; -TermSetPath &quot;TestTermGroup|TestTermSet&quot;
 </code></pre>
 <p>Adds a new taxonomy field called &quot;Test&quot; that points to the TestTermSet which is located in the TestTermGroup</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Add-PnPTaxonomyField -DisplayName &quot;Test&quot; -InternalName &quot;Test&quot; -TaxonomyItemId &quot;0e5fe3c6-3e6a-4d25-9f48-82a655f15992&quot; 
+</code></pre>
+<p>Adds a new taxonomy field called &quot;Test&quot; that points to the Term set with the term set id of 0e5fe3c6-3e6a-4d25-9f48-82a655f15992</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-addtodefaultview">-AddToDefaultView</h3>
 <p>Switch Parameter if this field must be added to the default view</p>
