@@ -62,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -Lcid
-Specifies the language of this site collection. For more information, see Locale IDs supported by SharePoint at https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint. To get the list of supported languages on a SharePoint environment use: Get-PnPAvailableLanguage.
+Specifies the language of this site collection. For more information, see Locale IDs supported by SharePoint at https://github.com/pnp/powershell/wiki/Supported-LCIDs-by-SharePoint. To get the list of supported languages on a SharePoint environment use: Get-PnPAvailableLanguage.
 
 ```yaml
 Type: UInt32
@@ -104,7 +104,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceQuota
-Specifies the quota for this site collection in Sandboxed Solutions units. This value must not exceed the company's aggregate available Sandboxed Solutions quota. The default value is 0. For more information, see Resource Usage Limits on Sandboxed Solutions in SharePoint 2010 : http://msdn.microsoft.com/en-us/library/gg615462.aspx.
+Specifies the quota for this site collection in Sandboxed Solutions units. This value must not exceed the company's aggregate available Sandboxed Solutions quota. The default value is 0. For more information, see Resource Usage Limits on Sandboxed Solutions in SharePoint 2010 : https://docs.microsoft.com/previous-versions/office/developer/sharepoint-2010/gg615462(v=office.14).
 
 ```yaml
 Type: Double

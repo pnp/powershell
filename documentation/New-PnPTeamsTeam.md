@@ -42,7 +42,8 @@ New-PnPTeamsTeam -DisplayName <String> [-MailNickName <String>] [-Description <S
  [-AllowOwnerDeleteMessages <Boolean>] [-AllowStickersAndMemes <Boolean>] [-AllowTeamMentions <Boolean>]
  [-AllowUserDeleteMessages <Boolean>] [-AllowUserEditMessages <Boolean>]
  [-GiphyContentRating <TeamGiphyContentRating>] [-Visibility <TeamVisibility>]
- [-ShowInTeamsSearchAndSuggestions <Boolean>] [-Classification <String>] 
+ [-ShowInTeamsSearchAndSuggestions <Boolean>] [-Classification <String>]
+ [-ResourceBehaviorOptions <TeamResourceBehaviorOptions>]
  [<CommonParameters>]
 ```
 
@@ -63,6 +64,21 @@ New-PnPTeamsTeam -GroupId $groupId
 ```
 
 This will create a new Microsoft Teams team from an existing Microsoft 365 Group using the Group ID (teamify)
+
+
+### EXAMPLE 3
+```powershell
+New-PnPTeamsTeam -DisplayName "myPnPDemo1" -Visibility Private -AllowCreateUpdateRemoveTabs $false -AllowUserDeleteMessages $false -ResourceBehaviorOptions WelcomeEmailDisabled
+```
+
+This will create a new Microsoft Teams team called "myPnPDemo1" and sets the privacy to Private, as well as preventing users from deleting their messages or update/remove tabs. The user creating the Microsoft Teams team will be added as Owner. Welcome Email will not be sent when the Group is created.
+
+### EXAMPLE 4
+```powershell
+New-PnPTeamsTeam -DisplayName "myPnPDemo1" -Visibility Private -AllowCreateUpdateRemoveTabs $false -AllowUserDeleteMessages $false -ResourceBehaviorOptions WelcomeEmailDisabled, HideGroupInOutlook
+```
+
+This will create a new Microsoft Teams team called "myPnPDemo1" and sets the privacy to Private, as well as preventing users from deleting their messages or update/remove tabs. The user creating the Microsoft Teams team will be added as Owner. Welcome Email will not be sent when the Group is created. The M365 Group will also not be visible in Outlook.
 
 ## PARAMETERS
 
@@ -402,6 +418,23 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -ResourceBehaviorOptions
+
+Allows providing ResourceBehaviorOptions which accepts multiple values that specify group behaviors for a Microsoft 365 Group. This will only work when you create a new Microsoft 365 Group, it will not work for existing groups.
+
+```yaml
+Type: TeamResourceBehaviorOptions
+Parameter Sets: For a new group
+Accepted values: AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeNewGroupMembers, WelcomeEmailDisabled
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 
 ## RELATED LINKS
 

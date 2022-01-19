@@ -6,47 +6,51 @@ applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPWeb.html
 ---
- 
+
 # Remove-PnPWeb
 
 ## SYNOPSIS
-Removes a subweb in the current web
+
+Removes a subsite
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPWeb -Url <String> -Identity <WebPipeBind> [-Force] [-Connection <PnPConnection>]
- [<CommonParameters>]
+Remove-PnPWeb -Identity <WebPipeBind> [-Force] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### EXAMPLE 2
+
 ```powershell
-Remove-PnPWeb -Url projectA
+Remove-PnPWeb -Identity projectA
 ```
 
-Remove a web
+Removes the subsite called projectA and will ask for confirmation before doing so
 
-### EXAMPLE 2
+### EXAMPLE 1
+
 ```powershell
 Remove-PnPWeb -Identity 5fecaf67-6b9e-4691-a0ff-518fc9839aa0
 ```
 
-Remove a web specified by its ID
+Remove the subsite with the provided Id and will ask for confirmaton before doing so
 
-### EXAMPLE 3
+### EXAMPLE 2
+
 ```powershell
-Get-PnPSubWebs | Remove-PnPWeb -Force
+Get-PnPSubWeb | Remove-PnPWeb -Force
 ```
 
-Remove all subwebs and do not ask for confirmation
+Removes all subsites while not asking for confirmation to do so
 
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
@@ -61,6 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
+
 Do not ask for confirmation to delete the subweb
 
 ```yaml
@@ -75,7 +80,8 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Identity/Id/Web object to delete
+
+The identifier of a subsite, the subsite instance or name of the subsite
 
 ```yaml
 Type: WebPipeBind
@@ -88,23 +94,6 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Url
-The site relative url of the web, e.g. 'Subweb1'
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

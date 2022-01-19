@@ -8,8 +8,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Remove, "PnPGroupMember")]
-    [Alias("Remove-PnPUserFromGroup")]
-    [WriteAliasWarning("Please use Remove-PnPGroupMember. The alias `Remove-PnPUserFromGroup` will be removed in the 1.5.0 release")]
+    
     public class RemoveUserFromGroup : PnPWebCmdlet
     {
 

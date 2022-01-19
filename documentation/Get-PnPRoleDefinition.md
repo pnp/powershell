@@ -36,6 +36,13 @@ Get-PnPRoleDefinition -Identity Read
 
 Retrieves the specified Role Definition (Permission Level) settings of the current site
 
+### EXAMPLE 3
+```powershell
+Get-PnPRoleDefinition | Where-Object { $_.RoleTypeKind -eq "Administrator" }
+```
+
+Retrieves the Role Definition (Permission Level) settings with the Administrator type, regardless of its name
+
 ## PARAMETERS
 
 ### -Connection

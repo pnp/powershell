@@ -10,17 +10,17 @@ title: Get-PnPEventReceiver
 # Get-PnPEventReceiver
 
 ## SYNOPSIS
-Return registered eventreceivers
+Returns registered event receivers
 
 ## SYNTAX
 
 ```powershell
-Get-PnPEventReceiver [-List <ListPipeBind>] [-Identity <EventReceiverPipeBind>] 
+Get-PnPEventReceiver [-List <ListPipeBind>] [-Scope <EventReceiverScope>] [-Identity <EventReceiverPipeBind>] 
  [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Returns all registered or a specific eventreceiver
+Returns all registered or a specific event receiver
 
 ## EXAMPLES
 
@@ -66,6 +66,27 @@ Get-PnPEventReceiver -List "ProjectList" -Identity MyReceiver
 
 This will return the event receiver in the "ProjectList" list with the provided ReceiverName "MyReceiver"
 
+### EXAMPLE 7
+```powershell
+Get-PnPEventReceiver -Scope Site
+```
+
+This will return all the event receivers defined on the current site collection
+
+### EXAMPLE 8
+```powershell
+Get-PnPEventReceiver -Scope Web
+```
+
+This will return all the event receivers defined on the current site
+
+### EXAMPLE 9
+```powershell
+Get-PnPEventReceiver -Scope All
+```
+
+This will return all the event receivers defined on the current site and web
+
 ## PARAMETERS
 
 ### -Connection
@@ -110,10 +131,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Scope
+The scope of the EventReceivers to retrieve
 
+```yaml
+Type: EventReceiverScope
+Parameter Sets: Scope
+Accepted values: Web, Site, All
+
+Required: False
+Position: Named
+Default value: Web
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

@@ -94,5 +94,5 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)[Locale IDs](https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint)
-
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+[Locale IDs](https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint)

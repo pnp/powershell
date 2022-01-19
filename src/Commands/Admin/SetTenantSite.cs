@@ -161,6 +161,9 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility { get; set; }
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public InformationBarriersMode InformationBarriersMode;
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
 
@@ -357,15 +360,7 @@ namespace PnP.PowerShell.Commands
             {
                 props.AnonymousLinkExpirationInDays = AnonymousLinkExpirationInDays.Value;
                 updateRequired = true;
-            }
-
-            if (ParameterSpecified(nameof(DisableSharingForNonOwners)))
-            {
-                var office365Tenant = new Office365Tenant(ClientContext);
-                ClientContext.Load(office365Tenant);
-                ClientContext.ExecuteQueryRetry();
-                office365Tenant.DisableSharingForNonOwnersOfSite(Identity.Url);
-            }
+            }            
 
             if (ParameterSpecified(nameof(ConditionalAccessPolicy)) && ConditionalAccessPolicy == PnPConditionalAccessPolicyType.ProtectionLevel || ConditionalAccessPolicy == PnPConditionalAccessPolicyType.AuthenticationContext)
             {
@@ -494,6 +489,32 @@ namespace PnP.PowerShell.Commands
                 updateRequired = true;
             }
 
+            if (ParameterSpecified(nameof(InformationBarriersMode)))
+            {
+                props.IBMode = InformationBarriersMode.ToString();
+                updateRequired = true;
+            }            
+
+            if (updateRequired)
+            {
+                var op = props.Update();
+                ClientContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
+                ClientContext.ExecuteQueryRetry();
+
+                if (Wait)
+                {
+                    WaitForIsComplete(ClientContext, op, timeoutFunction, TenantOperationMessage.SettingSiteProperties);
+                }
+            }
+
+            if (ParameterSpecified(nameof(DisableSharingForNonOwners)))
+            {
+                var office365Tenant = new Office365Tenant(ClientContext);
+                ClientContext.Load(office365Tenant);
+                ClientContext.ExecuteQueryRetry();
+                office365Tenant.DisableSharingForNonOwnersOfSite(Identity.Url);
+            }
+
             if (ParameterSpecified(nameof(HubSiteId)))
             {
                 var hubsiteProperties = Tenant.GetHubSitePropertiesById(HubSiteId);
@@ -512,18 +533,6 @@ namespace PnP.PowerShell.Commands
                     Tenant.ConnectSiteToHubSite(Identity.Url, hubsiteProperties.SiteUrl);
                 }
                 ClientContext.ExecuteQueryRetry();
-            }
-
-            if (updateRequired)
-            {
-                var op = props.Update();
-                ClientContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
-                ClientContext.ExecuteQueryRetry();
-
-                if (Wait)
-                {
-                    WaitForIsComplete(ClientContext, op, timeoutFunction, TenantOperationMessage.SettingSiteProperties);
-                }
             }
 
             if (Owners != null && Owners.Count > 0)

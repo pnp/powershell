@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Model
 {
     public class SPOTenant
     {
-        public SPOTenant(Tenant tenant)
+        public SPOTenant(Tenant tenant, ClientContext clientContext)
         {
             this.hideDefaultThemes = tenant.HideDefaultThemes;
             this.storageQuota = tenant.StorageQuota;
@@ -36,6 +36,8 @@ namespace PnP.PowerShell.Commands.Model
             this.provisionSharedWithEveryoneFolder = tenant.ProvisionSharedWithEveryoneFolder;
             this.signInAccelerationDomain = tenant.SignInAccelerationDomain;
             this.disabledWebPartIds = tenant.DisabledWebPartIds;
+            this.stopNew2013Workflows = tenant.StopNew2013Workflows;
+            this.viewInFileExplorerEnabled = tenant.ViewInFileExplorerEnabled;
 
             try
             {
@@ -342,11 +344,46 @@ namespace PnP.PowerShell.Commands.Model
             try
             {
                 this.disableCustomAppAuthentication = tenant.DisableCustomAppAuthentication;
-            } catch
+            }
+            catch
             {
                 this.disableCustomAppAuthentication = false;
-            }
+            }                               
             this.markNewFilesSensitiveByDefault = tenant.MarkNewFilesSensitiveByDefault;
+            try
+            {
+                this.disableSpacesActivation = tenant.DisableSpacesActivation;
+            }
+            catch
+            {
+                this.disableSpacesActivation = false;
+            }
+            try
+            {
+                this.disableAddToOneDrive = tenant.DisableAddToOneDrive;
+            }
+            catch
+            {
+                this.disableAddToOneDrive = false;
+            }
+            try
+            {
+                this.isFluidEnabled = tenant.IsFluidEnabled;
+            }
+            catch
+            {
+                this.isFluidEnabled = false;
+            }
+            try
+            {
+                var getAllowFilesWithKeepLabelToBeDeletedSPO = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAllowFilesWithKeepLabelToBeDeletedSPO(clientContext);
+                var getAllowFilesWithKeepLabelToBeDeletedODB = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAllowFilesWithKeepLabelToBeDeletedODB(clientContext);                
+                clientContext.ExecuteQueryRetry();
+
+                this.allowFilesWithKeepLabelToBeDeletedSPO = getAllowFilesWithKeepLabelToBeDeletedSPO.Value;
+                this.allowFilesWithKeepLabelToBeDeletedODB = getAllowFilesWithKeepLabelToBeDeletedODB.Value;
+            }
+            catch { }
         }
 
         public bool HideDefaultThemes => hideDefaultThemes;
@@ -483,6 +520,20 @@ namespace PnP.PowerShell.Commands.Model
 
         public SensitiveByDefaultState MarkNewFilesSensitiveByDefault => markNewFilesSensitiveByDefault;
 
+        public bool StopNew2013Workflows => stopNew2013Workflows;
+
+        public bool ViewInFileExplorerEnabled => viewInFileExplorerEnabled;
+
+        public bool DisableSpacesActivation => disableSpacesActivation;
+
+        public bool? AllowFilesWithKeepLabelToBeDeletedSPO => allowFilesWithKeepLabelToBeDeletedSPO;
+
+        public bool? AllowFilesWithKeepLabelToBeDeletedODB => allowFilesWithKeepLabelToBeDeletedODB;
+
+        public bool DisableAddToOneDrive => disableAddToOneDrive;
+
+        public bool IsFluidEnabled => isFluidEnabled;
+
         private bool hideDefaultThemes;
 
         private long storageQuota;
@@ -615,6 +666,22 @@ namespace PnP.PowerShell.Commands.Model
 
         private bool disableCustomAppAuthentication;
 
-        private SensitiveByDefaultState markNewFilesSensitiveByDefault;
+        private SensitiveByDefaultState markNewFilesSensitiveByDefault;    
+
+        private bool stopNew2013Workflows;
+
+        private bool viewInFileExplorerEnabled;
+
+
+        private bool disableSpacesActivation;
+
+        private bool? allowFilesWithKeepLabelToBeDeletedSPO;
+
+        private bool? allowFilesWithKeepLabelToBeDeletedODB;
+
+        private bool disableAddToOneDrive;
+
+        private bool isFluidEnabled;
+
     }
 }

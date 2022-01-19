@@ -14,7 +14,7 @@ namespace PnP.PowerShell.Commands.Admin
             ClientContext.Load(Tenant);
             ClientContext.Load(Tenant, t => t.HideDefaultThemes);
             ClientContext.ExecuteQueryRetry();
-            WriteObject(new SPOTenant(Tenant));
+            WriteObject(new SPOTenant(Tenant, ClientContext));
         }
     }
 }

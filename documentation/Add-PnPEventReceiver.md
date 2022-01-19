@@ -15,7 +15,7 @@ Adds a new remote event receiver
 ## SYNTAX
 
 ```powershell
-Add-PnPEventReceiver [-List <ListPipeBind>] -Name <String> -Url <String> -EventReceiverType <EventReceiverType>
+Add-PnPEventReceiver [-List <ListPipeBind>] [-Scope <EventReceiverScope>] -Name <String> -Url <String> -EventReceiverType <EventReceiverType>
  -Synchronization <EventReceiverSynchronization> [-SequenceNumber <Int32>] [-Force] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
@@ -36,7 +36,21 @@ This will add a new remote event receiver that is executed after an item has bee
 Add-PnPEventReceiver -Name "TestEventReceiver" -Url https://yourserver.azurewebsites.net/eventreceiver.svc -EventReceiverType WebAdding -Synchronization Synchronous
 ```
 
-This will add a new remote event receiver that is executed while a new subsite is being created
+This will add a new remote event receiver that is executed before a new subsite is being created
+
+### EXAMPLE 3
+```powershell
+Add-PnPEventReceiver -Name "TestEventReceiver" -Url https://yourserver.azurewebsites.net/eventreceiver.svc -EventReceiverType ListAdding -Synchronization Synchronous -Scope Site
+```
+
+This will add a new remote event receiver that is executed before a new list is being created inside the site collection scope
+
+### EXAMPLE 4
+```powershell
+Add-PnPEventReceiver -Name "TestEventReceiver" -Url https://yourserver.azurewebsites.net/eventreceiver.svc -EventReceiverType ListDeleted -Synchronization Asynchronous -Scope Web
+```
+
+This will add a new remote event receiver that is executed after a list has been deleted from the current site
 
 ## PARAMETERS
 
@@ -55,7 +69,7 @@ Accept wildcard characters: False
 ```
 
 ### -EventReceiverType
-The type of the event receiver like ItemAdded, ItemAdding. See https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.eventreceivertype.aspx for the full list of available types.
+The type of the event receiver like ItemAdded, ItemAdding. See https://docs.microsoft.com/previous-versions/office/sharepoint-server/jj167297(v=office.15) for the full list of available types.
 
 ```yaml
 Type: EventReceiverType
@@ -89,11 +103,26 @@ The list object or name where the remote event receiver needs to be added. If om
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
+Parameter Sets: List
 
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Scope
+The scope of the EventReceiver to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.
+
+```yaml
+Type: EventReceiverScope
+Parameter Sets: Scope
+Accepted values: Web, Site, All
+
+Required: False
+Position: Named
+Default value: Web
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -156,10 +185,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

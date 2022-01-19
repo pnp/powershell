@@ -1,6 +1,5 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
@@ -18,10 +17,19 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            if (Force || ShouldContinue(Properties.Resources.RemoveSiteDesign, Properties.Resources.Confirm))
+            var siteDesigns = Identity.GetTenantSiteDesign(Tenant);
+            if(siteDesigns == null || siteDesigns.Length == 0)
             {
-                Tenant.DeleteSiteDesign(Identity.Id);
-                ClientContext.ExecuteQueryRetry();
+                throw new PSArgumentException("Site design provided through the Identity parameter could not be found", nameof(Identity));
+            }
+
+            foreach (var siteDesign in siteDesigns)
+            {
+                if (Force || ShouldContinue(Properties.Resources.RemoveSiteDesign, Properties.Resources.Confirm))
+                {
+                    Tenant.DeleteSiteDesign(siteDesign.Id);
+                    ClientContext.ExecuteQueryRetry();
+                }
             }
         }
     }

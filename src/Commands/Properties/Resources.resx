@@ -232,10 +232,10 @@
     <value>The Unified Group with MailNickname of {0} already exists. Do you want to create another one?</value>
   </data>
   <data name="CopyFile0To1" xml:space="preserve">
-    <value>Copy file '{0}' to '{1}'?</value>
+    <value>Copy file or folder '{0}' to '{1}'?</value>
   </data>
   <data name="MoveFile0To1" xml:space="preserve">
-    <value>Move file '{0}' to '{1}'?</value>
+    <value>Move file or folder '{0}' to '{1}'?</value>
   </data>
   <data name="MoveListItemWithId0ToRecycleBin" xml:space="preserve">
     <value>Move list item with ID {0} to Recycle Bin?</value>
@@ -356,5 +356,8 @@
   </data>
   <data name="CertificateWithThumbprintDoesNotHavePrivateKey" xml:space="preserve">
     <value>The provided certificate with the thumbprint '{0}' does not have a private key which is required for a connection to be established. Ensure you have imported the certificate containing the private key, typically the .pfx file, into the Windows Certificate Store.</value>
+  </data>
+  <data name="RemoveListDesign" xml:space="preserve">
+    <value>Remove list design?</value>
   </data>
 </root>

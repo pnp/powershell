@@ -1,5 +1,4 @@
 using System.Management.Automation;
-using System.Net.Http;
 using System.Reflection;
 using System.Text.Json;
 
@@ -39,16 +38,12 @@ namespace PnP.PowerShell.Commands
                 {
                     url = "https://raw.githubusercontent.com/pnp/powershell/dev/CHANGELOG.md";
                 }
-
-
                 var assembly = Assembly.GetExecutingAssembly();
 #if !NETFRAMEWORK
                 var currentVersion = new SemanticVersion(assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);
 #else
             var currentVersion = new System.Version(((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version);
 #endif
-
-
                 var response = client.GetAsync(url).GetAwaiter().GetResult();
                 if (response.IsSuccessStatusCode)
                 {
@@ -56,8 +51,7 @@ namespace PnP.PowerShell.Commands
 
                     if (Nightly)
                     {
-                        var versionString = $"{currentVersion.Major}.{currentVersion.Minor}.0";
-                        var match = System.Text.RegularExpressions.Regex.Match(content, $"(## \\[Current Nightly\\]\\n(.*)\\n)(## \\[{versionString}]\\n)", System.Text.RegularExpressions.RegexOptions.Singleline);
+                        var match = System.Text.RegularExpressions.Regex.Match(content, @"## \[Current Nightly\][\r\n]{1,}(.*?)[\r\n]{1,}## \[[\d\.]{5,}][\r\n]{1,}", System.Text.RegularExpressions.RegexOptions.Singleline);
 
                         if (match.Success)
                         {

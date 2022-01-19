@@ -84,7 +84,7 @@ Retrieves all available fields of list items based on the CAML query specified
 Get-PnPListItem -List Tasks -Query "<View><ViewFields><FieldRef Name='Title'/><FieldRef Name='Modified'/></ViewFields><Query><Where><Geq><FieldRef Name='Modified'/><Value Type='DateTime'><Today/></Value></Eq></Where></Query></View>"
 ```
 
-Retrieves all list items modified today, retrieving the columns 'Title' and 'Modified'. When you use -Query, you can add a <ViewFields> clause to retrieve specific columns (since you cannot use -Fields)
+Retrieves all list items modified today, retrieving the columns 'Title' and 'Modified'. When you use -Query, you can add a `<ViewFields>` clause to retrieve specific columns (since you cannot use -Fields)
 
 ### EXAMPLE 7
 ```powershell
@@ -106,6 +106,18 @@ Get-PnPListItem -List Samples -FolderServerRelativeUrl "/sites/contosomarketing/
 ```
 
 Retrieves all list items from the Demo folder in the Samples list located in the contosomarketing site collection
+
+### EXAMPLE 10
+```powershell
+PS D:\Code> Get-PnPListItem -List "Shared Documents" | Select-Object id,@{label="Filename";expression={$_.FieldValues.FileLeafRef}}
+
+Id Filename
+-- --------
+ 1 Contoso-Financial-Calendar-Q1_68340_97779.pptx
+ 5 Does this work.docx
+```
+
+Retrieves all list items from the Shared Documents and shows each item's ID and Filename
 
 ## PARAMETERS
 

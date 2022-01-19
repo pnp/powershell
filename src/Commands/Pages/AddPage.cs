@@ -1,16 +1,13 @@
 ﻿using PnP.Core.Model.SharePoint;
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Add, "PnPPage")]
-    [Alias("Add-PnPClientSidePage")]
-    [WriteAliasWarning("Please use 'Add-PnPPage'. The alias 'Add-PnPClientSidePage' will be removed in the 1.5.0 release")]
     public class AddPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
@@ -33,7 +30,16 @@ namespace PnP.PowerShell.Commands.Pages
         public SwitchParameter Publish;
 
         [Parameter(Mandatory = false)]
+        public DateTime? ScheduledPublishDate;
+
+        [Parameter(Mandatory = false)]
         public PageHeaderLayoutType HeaderLayoutType = PageHeaderLayoutType.FullWidthImage;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Translate;
+
+        [Parameter(Mandatory = false)]
+        public int[] TranslationLanguageCodes;
 
         protected override void ExecuteCmdlet()
         {
@@ -46,7 +52,7 @@ namespace PnP.PowerShell.Commands.Pages
             try
             {
                 var pages = PnPContext.Web.GetPages(name);
-                if (pages != null && pages.FirstOrDefault(p=>p.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)) != null)
+                if (pages != null && pages.FirstOrDefault(p => p.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)) != null)
                 {
                     pageExists = true;
                 }
@@ -108,6 +114,35 @@ namespace PnP.PowerShell.Commands.Pages
             if (Publish)
             {
                 clientSidePage.Publish();
+            }
+
+            if (ParameterSpecified(nameof(ScheduledPublishDate)))
+            {
+                clientSidePage.SchedulePublish(ScheduledPublishDate.Value);
+            }
+
+            if (ParameterSpecified(nameof(Translate)))
+            {
+                if (ParameterSpecified(nameof(TranslationLanguageCodes)))
+                {
+                    PageTranslationOptions options = new PageTranslationOptions();
+                    if (TranslationLanguageCodes != null && TranslationLanguageCodes.Length > 0)
+                    {
+                        var translationLanguagesList = new List<int>(TranslationLanguageCodes);
+
+                        PnPContext.Web.EnsureMultilingual(translationLanguagesList);
+
+                        foreach (int i in TranslationLanguageCodes)
+                        {
+                            options.AddLanguage(i);
+                        }
+                        clientSidePage.TranslatePages(options);
+                    }
+                }
+                else
+                {
+                    clientSidePage.TranslatePages();
+                }
             }
 
             WriteObject(clientSidePage);

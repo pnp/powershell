@@ -1,5 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using System;
+using PnPCore = PnP.Core.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -40,27 +41,56 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public string ServerRelativeUrl => _name;
 
-        internal Folder GetFolder(Web web)
+        internal Folder GetFolder(Web web, bool throwError = true)
         {
-            Folder folder = null;
-            if (Folder != null)
+            try
             {
-                folder = Folder;
+                Folder folder = null;
+                if (Folder != null)
+                {
+                    folder = Folder;
+                }
+                else if (Id != Guid.Empty)
+                {
+                    folder = web.GetFolderById(Id);
+                }
+                else if (!string.IsNullOrEmpty(ServerRelativeUrl))
+                {
+                    folder = web.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(ServerRelativeUrl));
+                }
+                if (folder != null)
+                {
+                    web.Context.Load(folder);
+                    web.Context.ExecuteQueryRetry();
+                }
+                return folder;
             }
-            else if (Id != Guid.Empty)
+            catch
             {
-                folder = web.GetFolderById(Id);
+                if (throwError)
+                    throw;
+                else
+                    return null;
+            }
+        }
+
+        internal PnPCore.IFolder GetFolder(PnP.Core.Services.PnPContext context, params System.Linq.Expressions.Expression<Func<PnPCore.IFolder, object>>[] selectors)
+        {
+            PnPCore.IFolder returnFolder = null;
+            if (_folder != null)
+            {
+                _folder.EnsureProperties(p => p.UniqueId);
+                returnFolder = context.Web.GetFolderById(_folder.UniqueId, selectors);
+            }
+            else if (_id != Guid.Empty)
+            {
+                returnFolder = context.Web.GetFolderById(_id, selectors);
             }
             else if (!string.IsNullOrEmpty(ServerRelativeUrl))
             {
-                folder = web.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(ServerRelativeUrl));
+                returnFolder = context.Web.GetFolderByServerRelativeUrl(ServerRelativeUrl, selectors);
             }
-            if (folder != null)
-            {
-                web.Context.Load(folder);
-                web.Context.ExecuteQueryRetry();
-            }
-            return folder;
+            return returnFolder;
         }
     }
 }

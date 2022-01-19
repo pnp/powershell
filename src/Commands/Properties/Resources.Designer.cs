@@ -178,7 +178,7 @@ namespace PnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copy file &apos;{0}&apos; to &apos;{1}&apos;?.
+        ///   Looks up a localized string similar to Copy file or folder &apos;{0}&apos; to &apos;{1}&apos;?.
         /// </summary>
         internal static string CopyFile0To1 {
             get {
@@ -314,7 +314,7 @@ namespace PnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move file &apos;{0}&apos; to &apos;{1}&apos;?.
+        ///   Looks up a localized string similar to Move file or folder &apos;{0}&apos; to &apos;{1}&apos;?.
         /// </summary>
         internal static string MoveFile0To1 {
             get {
@@ -535,6 +535,15 @@ namespace PnP.PowerShell.Commands.Properties {
         internal static string RemoveList {
             get {
                 return ResourceManager.GetString("RemoveList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove list design?.
+        /// </summary>
+        internal static string RemoveListDesign {
+            get {
+                return ResourceManager.GetString("RemoveListDesign", resourceCulture);
             }
         }
         

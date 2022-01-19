@@ -10,7 +10,10 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPListItemPermissi
 # Set-PnPListItemPermission
 
 ## SYNOPSIS
-Sets list item permissions. Use Get-PnPRoleDefinition to retrieve all available roles you can add or remove using this cmdlet.
+Sets list item permissions. 
+Use Get-PnPRoleDefinition to retrieve all available roles you can add or remove using this cmdlet.
+Use Get-PnPGroup to retrieve all groups available that you can add or remove using this cmdlet when using the -group parameter.
+
 
 ## SYNTAX
 
@@ -66,13 +69,21 @@ Set-PnPListItemPermission -List 'Documents' -Identity 1 -InheritPermissions
 
 Resets permissions for listitem with id 1 to inherit permissions from the list 'Documents'
 
+### EXAMPLE 5
+```powershell
+Set-PnPListItemPermission -List 'Documents' -Identity 1 -AddRole 'Read' -RemoveRole 'Contribute' -Group "Site collection Visitors"
+```
+
+Adds the 'Read' permission to the group of Site collection Visitors while removing the 'Contribute' permissions
+
+
 ## PARAMETERS
 
 ### -AddRole
 The role that must be assigned to the group or user
 
 ```yaml
-Type: String
+Type: RoleDefinitionPipeBind
 Parameter Sets: User, Group
 
 Required: False
@@ -169,7 +180,7 @@ Accept wildcard characters: False
 The role that must be removed from the group or user
 
 ```yaml
-Type: String
+Type: RoleDefinitionPipeBind
 Parameter Sets: User, Group
 
 Required: False
@@ -206,9 +217,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

@@ -13,7 +13,7 @@ schema: 2.0.0
 
 * Azure: management.azure.com
 
-Exports the Flow
+Exports a Microsoft Power Automate Flow
 
 ## SYNTAX
 
@@ -32,17 +32,26 @@ Export-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerA
 ```
 
 ## DESCRIPTION
-This cmdlet exports a flow either as a json file or as a zip package.
+This cmdlet exports a Microsoft Power Automate Flow either as a json file or as a zip package.
+
+Many times exporting a Microsoft Power Automate Flow will not be possible due to various reasons such as connections having gone stale, SharePoint sites referenced no longer existing or other configuration errors in the Flow. To display these errors when trying to export a Flow, provide the -Verbose flag with your export request. If not provided, these errors will silently be ignored.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-$environment = Get-PnPFlowEnvironment
+$environment = Get-PnPPowerPlatformEnvironment -IsDefault $true
 Export-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
 
-This will export the specified flow as an output to the current output of PowerShell
+This will export the specified Microsoft Power Automate Flow from the default Power Platform environment as an output to the current output of PowerShell
+
+### Example 2
+```powershell
+Get-PnPPowerPlatformEnvironment | foreach { Get-PnPFlow -Environment $_.Name } | foreach { Export-PnPFlow -Environment $_.Properties.EnvironmentDetails.Name -Identity $_ -OutPath "c:\flows\$($_.Name).zip" -AsZipPackage }
+```
+
+This will export all the Microsoft Power Automate Flows available within the tenant from all users from all the available Power Platform environments as a ZIP package for each of them to a local folder c:\flows
 
 ## PARAMETERS
 
@@ -93,7 +102,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The name/id of flow or a flow object to export
+The value of the Name property of a Microsoft Power Automate Flow that you wish to export
 
 ```yaml
 Type: PowerAutomateFlowPipeBind
@@ -123,7 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -OutPath
-Optional file name of the file to export to.
+Optional file name of the file to export to. If not provided, it will store the ZIP package to the current location from where the cmdlet is being run.
 
 ```yaml
 Type: String
@@ -199,6 +208,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp) 

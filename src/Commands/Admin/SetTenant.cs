@@ -9,7 +9,7 @@ using Microsoft.Online.SharePoint.TenantManagement;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPTenant", DefaultParameterSetName = ParameterAttribute.AllParameterSets)]
-   
+
     public class SetTenant : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -212,6 +212,29 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public bool? DisableBackToClassic;
+
+        [Parameter(Mandatory = false)]
+        public bool? StopNew2013Workflows;
+
+        [Parameter(Mandatory = false)]
+        public bool? ViewInFileExplorerEnabled;
+
+        [Parameter(Mandatory = false)]
+        public bool? InformationBarriersSuspension;
+        
+        [Parameter(Mandatory = false)]
+        public bool? AllowFilesWithKeepLabelToBeDeletedSPO;
+
+        [Parameter(Mandatory = false)]
+        public bool? AllowFilesWithKeepLabelToBeDeletedODB;
+
+        [Parameter(Mandatory = false)]
+        [Alias("DisableAddShortcutsToOneDrive")]
+        public bool? DisableAddToOneDrive;
+
+        [Parameter(Mandatory = false)]
+        public bool? IsFluidEnabled;
+
         protected override void ExecuteCmdlet()
         {
             ClientContext.Load(Tenant);
@@ -245,7 +268,7 @@ namespace PnP.PowerShell.Commands.Admin
             }
             if (SharingCapability != null)
             {
-                
+
                 Tenant.SharingCapability = SharingCapability.Value;
                 modified = true;
             }
@@ -771,7 +794,7 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 modified = true;
             }
-            if(HideDefaultThemes.HasValue)
+            if (HideDefaultThemes.HasValue)
             {
                 Tenant.HideDefaultThemes = HideDefaultThemes.Value;
                 modified = true;
@@ -781,12 +804,12 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.DisabledWebPartIds = DisabledWebPartIds;
                 modified = true;
             }
-            if(EnableAIPIntegration.HasValue)
+            if (EnableAIPIntegration.HasValue)
             {
                 Tenant.EnableAIPIntegration = EnableAIPIntegration.Value;
                 modified = true;
             }
-            if(DisableCustomAppAuthentication.HasValue)
+            if (DisableCustomAppAuthentication.HasValue)
             {
                 Tenant.DisableCustomAppAuthentication = DisableCustomAppAuthentication.Value;
                 modified = true;
@@ -811,6 +834,48 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.MarkNewFilesSensitiveByDefault = MarkNewFilesSensitiveByDefault.Value;
                 modified = true;
             }
+
+            if (StopNew2013Workflows.HasValue)
+            {
+                Tenant.StopNew2013Workflows = StopNew2013Workflows.Value;
+                modified = true;
+            }
+
+            if (ViewInFileExplorerEnabled.HasValue)
+            {
+                Tenant.ViewInFileExplorerEnabled = ViewInFileExplorerEnabled.Value;
+                modified = true;
+            }
+
+            if (InformationBarriersSuspension.HasValue)
+            {
+                Tenant.InformationBarriersSuspension = InformationBarriersSuspension.Value;
+                modified = true;
+            }
+            if (AllowFilesWithKeepLabelToBeDeletedSPO.HasValue)
+            {
+                Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetAllowFilesWithKeepLabelToBeDeletedSPO(ClientContext, AllowFilesWithKeepLabelToBeDeletedSPO.Value);
+                modified = true;
+            }
+
+            if (AllowFilesWithKeepLabelToBeDeletedODB.HasValue)
+            {
+                Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetAllowFilesWithKeepLabelToBeDeletedODB(ClientContext, AllowFilesWithKeepLabelToBeDeletedODB.Value);
+                modified = true;
+            }
+
+            if (DisableAddToOneDrive.HasValue)
+            {
+                Tenant.DisableAddToOneDrive = DisableAddToOneDrive.Value;
+                modified = true;
+            }
+
+            if (IsFluidEnabled.HasValue)
+            {
+                Tenant.IsFluidEnabled = IsFluidEnabled.Value;
+                modified = true;
+            }
+
             if (modified)
             {
                 ClientContext.ExecuteQueryRetry();

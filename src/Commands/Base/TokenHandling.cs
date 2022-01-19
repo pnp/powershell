@@ -1,7 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
-using Newtonsoft.Json.Linq;
 using PnP.PowerShell.Commands.Attributes;
-using PnP.PowerShell.Commands.Model;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -9,7 +7,6 @@ using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -57,8 +54,18 @@ namespace PnP.PowerShell.Commands.Base
             var authManager = contextSettings.AuthenticationManager;
             if (authManager != null)
             {
-                string[] requiredScopes = null;
-                var requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdletType, typeof(RequiredMinimalApiPermissions));
+                if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
+                {
+                    // When connected using ACS, we cannot get a token for another endpoint
+                    throw new PSInvalidOperationException("Trying to get a token for a different endpoint while being connected through an ACS token is not possible. Please connect differently.");
+                }
+
+                string[] requiredScopes = null;                
+                RequiredMinimalApiPermissions requiredScopesAttribute = null;
+                if (cmdletType != null)
+                {
+                    requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdletType, typeof(RequiredMinimalApiPermissions));
+                }
                 if (requiredScopesAttribute != null)
                 {
                     requiredScopes = requiredScopesAttribute.PermissionScopes;
@@ -66,6 +73,10 @@ namespace PnP.PowerShell.Commands.Base
                 if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
                 {
                     requiredScopes = new[] { appOnlyDefaultScope }; // override for app only
+                }
+                if (requiredScopes == null && !string.IsNullOrEmpty(appOnlyDefaultScope))
+                {
+                    requiredScopes = new[] { appOnlyDefaultScope };
                 }
                 var accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
                 return accessToken;

@@ -1,20 +1,27 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
-using Microsoft.SharePoint.Client;
-
+using System.Linq;
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
+using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteScriptFromWeb")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteScriptFromWeb", DefaultParameterSetName = ParameterSet_BASICCOMPONENTS)]
     public class GetSiteScriptFromWeb : PnPAdminCmdlet
     {
+        private const string ParameterSet_BASICCOMPONENTS = "Basic components";
         private const string ParameterSet_ALLCOMPONENTS = "All components";
         private const string ParameterSet_SPECIFICCOMPONENTS = "Specific components";
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(ParameterSetName = ParameterSet_BASICCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_ALLCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public string Url;
 
+        [Parameter(ParameterSetName = ParameterSet_BASICCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_ALLCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         [Parameter(Mandatory = false)]
         public string[] Lists;
 
@@ -38,10 +45,16 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
+            // If no URL specified, we take the URL of the site that the current context is connected to
+            if(!ParameterSpecified(nameof(Url)))
+            {
+                Url = PnPConnection.Current.Url;
+            }
+
             var tenantSiteScriptSerializationInfo = new TenantSiteScriptSerializationInfo
             {
                 IncludeBranding = IncludeBranding || IncludeAll,
-                IncludedLists = Lists,
+                IncludedLists = Lists?.Select(l => l.Replace("\\", "/")).ToArray(),
                 IncludeLinksToExportedItems = IncludeLinksToExportedItems || IncludeAll,
                 IncludeRegionalSettings = IncludeRegionalSettings || IncludeAll,
                 IncludeSiteExternalSharingCapability = IncludeSiteExternalSharingCapability || IncludeAll,

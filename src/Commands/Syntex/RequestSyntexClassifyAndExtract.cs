@@ -14,6 +14,7 @@ namespace PnP.PowerShell.Commands.Syntex
     {
         const string ParameterSet_LIST = "List";
         const string Parameterset_FILE = "File";
+        const string Parameterset_FOLDER = "Folder";
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_LIST)]
         public ListPipeBind List;
@@ -21,11 +22,18 @@ namespace PnP.PowerShell.Commands.Syntex
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST)]
         public SwitchParameter Force = false;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST)]
+        public SwitchParameter OffPeak = false;
+
         [Parameter(Mandatory = true, ParameterSetName = Parameterset_FILE)]
         public string FileUrl;
 
         [Parameter(Mandatory = false, ParameterSetName = Parameterset_FILE)]
         public PnPBatch Batch;
+
+        [Parameter(Mandatory = true, ParameterSetName = Parameterset_FOLDER)]
+        public FolderPipeBind Folder;
+
 
         protected override void ExecuteCmdlet()
         {
@@ -36,30 +44,74 @@ namespace PnP.PowerShell.Commands.Syntex
             {
                 IList list = List.GetList(ctx);
 
-                var classifyAndExtractResults = list.ClassifyAndExtract(force: Force.IsPresent);
-
-                List<Model.Syntex.SyntexClassifyAndExtractResult> classifyAndExtractResultsOutput = new List<Model.Syntex.SyntexClassifyAndExtractResult>();
-                if (classifyAndExtractResults != null && classifyAndExtractResults.Any())
+                // If a list is above 5K we default to off-peak processing
+                if (list.ItemCount > 5000)
                 {
-                    foreach (var classifyAndExtractResult in classifyAndExtractResults)
-                    {
-                        classifyAndExtractResultsOutput.Add(new Model.Syntex.SyntexClassifyAndExtractResult()
-                        {
-                            Created = classifyAndExtractResult.Created,
-                            DeliverDate = classifyAndExtractResult.DeliverDate,
-                            ErrorMessage = classifyAndExtractResult.ErrorMessage,
-                            Id = classifyAndExtractResult.Id,
-                            Status = classifyAndExtractResult.Status,
-                            StatusCode = classifyAndExtractResult.StatusCode,
-                            TargetServerRelativeUrl = classifyAndExtractResult.TargetServerRelativeUrl,
-                            TargetSiteUrl = classifyAndExtractResult.TargetSiteUrl,
-                            TargetWebServerRelativeUrl = classifyAndExtractResult.TargetWebServerRelativeUrl,
-                            WorkItemType = classifyAndExtractResult.WorkItemType,
-                        });
-                    }
+                    OffPeak = true;
                 }
 
-                WriteObject(classifyAndExtractResultsOutput, true);
+                if (OffPeak)
+                {
+                    var classifyAndExtractResult = list.ClassifyAndExtractOffPeak();
+                    WriteObject(new Model.Syntex.SyntexClassifyAndExtractResult()
+                    {
+                        Created = classifyAndExtractResult.Created,
+                        DeliverDate = classifyAndExtractResult.DeliverDate,
+                        ErrorMessage = classifyAndExtractResult.ErrorMessage,
+                        Id = classifyAndExtractResult.Id,
+                        Status = classifyAndExtractResult.Status,
+                        StatusCode = classifyAndExtractResult.StatusCode,
+                        TargetServerRelativeUrl = classifyAndExtractResult.TargetServerRelativeUrl,
+                        TargetSiteUrl = classifyAndExtractResult.TargetSiteUrl,
+                        TargetWebServerRelativeUrl = classifyAndExtractResult.TargetWebServerRelativeUrl,
+                        WorkItemType = classifyAndExtractResult.WorkItemType,
+                    });
+                }
+                else
+                {
+                    var classifyAndExtractResults = list.ClassifyAndExtract(force: Force.IsPresent);
+
+                    List<Model.Syntex.SyntexClassifyAndExtractResult> classifyAndExtractResultsOutput = new List<Model.Syntex.SyntexClassifyAndExtractResult>();
+                    if (classifyAndExtractResults != null && classifyAndExtractResults.Any())
+                    {
+                        foreach (var classifyAndExtractResult in classifyAndExtractResults)
+                        {
+                            classifyAndExtractResultsOutput.Add(new Model.Syntex.SyntexClassifyAndExtractResult()
+                            {
+                                Created = classifyAndExtractResult.Created,
+                                DeliverDate = classifyAndExtractResult.DeliverDate,
+                                ErrorMessage = classifyAndExtractResult.ErrorMessage,
+                                Id = classifyAndExtractResult.Id,
+                                Status = classifyAndExtractResult.Status,
+                                StatusCode = classifyAndExtractResult.StatusCode,
+                                TargetServerRelativeUrl = classifyAndExtractResult.TargetServerRelativeUrl,
+                                TargetSiteUrl = classifyAndExtractResult.TargetSiteUrl,
+                                TargetWebServerRelativeUrl = classifyAndExtractResult.TargetWebServerRelativeUrl,
+                                WorkItemType = classifyAndExtractResult.WorkItemType,
+                            });
+                        }
+                    }
+                    WriteObject(classifyAndExtractResultsOutput, true);
+                }
+
+            }
+            else if (ParameterSpecified(nameof(Folder)))
+            {
+                IFolder folder = Folder.GetFolder(ctx);
+                var classifyAndExtractResult = folder.ClassifyAndExtractOffPeak();
+                WriteObject(new Model.Syntex.SyntexClassifyAndExtractResult()
+                {
+                    Created = classifyAndExtractResult.Created,
+                    DeliverDate = classifyAndExtractResult.DeliverDate,
+                    ErrorMessage = classifyAndExtractResult.ErrorMessage,
+                    Id = classifyAndExtractResult.Id,
+                    Status = classifyAndExtractResult.Status,
+                    StatusCode = classifyAndExtractResult.StatusCode,
+                    TargetServerRelativeUrl = classifyAndExtractResult.TargetServerRelativeUrl,
+                    TargetSiteUrl = classifyAndExtractResult.TargetSiteUrl,
+                    TargetWebServerRelativeUrl = classifyAndExtractResult.TargetWebServerRelativeUrl,
+                    WorkItemType = classifyAndExtractResult.WorkItemType,
+                });
             }
             else
             {
