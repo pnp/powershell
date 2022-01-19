@@ -8,6 +8,7 @@ using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
 using System.Threading.Tasks;
 using System.Reflection;
+using PnP.PowerShell.Commands.Model.SharePoint.SharePointUserProfileSync;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -24,7 +25,8 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="userProfilePropertyMappings">Hashtable with the mapping from the Azure Active Directory property (the value) to the SharePoint Online User Profile Property (the key)</param>
         /// <param name="sharePointFolder">Location in the currently connected to site where to upload the JSON file to with instructions to update the user profiles</param>
         /// <param name="onlyCreateAndUploadMappingsFile">Boolean indicating if only the mappings file should be created and uploaded to SharePoint Online (true) or if the import job on that file should also be invoked (false)</param>
-        public static async Task<ImportProfilePropertiesJobInfo> SyncFromAzureActiveDirectory(ClientContext clientContext, IEnumerable<PnP.PowerShell.Commands.Model.AzureAD.User> users, Hashtable userProfilePropertyMappings, string sharePointFolder, bool onlyCreateAndUploadMappingsFile = false)
+        /// <returns>Information on the status of the import job that has been created because of this action</returns>
+        public static async Task<SharePointUserProfileSyncStatus> SyncFromAzureActiveDirectory(ClientContext clientContext, IEnumerable<PnP.PowerShell.Commands.Model.AzureAD.User> users, Hashtable userProfilePropertyMappings, string sharePointFolder, bool onlyCreateAndUploadMappingsFile = false)
         {
              var webServerRelativeUrl = clientContext.Web.EnsureProperty(w => w.ServerRelativeUrl);
             if (!sharePointFolder.ToLower().StartsWith(webServerRelativeUrl))
@@ -109,7 +111,14 @@ namespace PnP.PowerShell.Commands.Utilities
             }
 
             // Check if we should kick off the process to import the file
-            if(onlyCreateAndUploadMappingsFile) return null;
+            if (onlyCreateAndUploadMappingsFile)
+            {
+                return new SharePointUserProfileSyncStatus
+                {
+                    SourceUri = new Uri(clientContext.Url).GetLeftPart(UriPartial.Authority) + file.ServerRelativeUrl,
+                    State = Enums.SharePointUserProfileImportProfilePropertiesJobState.WontStart
+                };
+            }
 
             // Instruct SharePoint Online to process the JSON file
             var o365 = new Office365Tenant(clientContext);
@@ -123,7 +132,9 @@ namespace PnP.PowerShell.Commands.Utilities
             clientContext.Load(job);
             clientContext.ExecuteQueryRetry();
 
-            return job;
+            // Map the CSOM result object to our own entity
+            var sharePointUserProfileSyncStatus = SharePointUserProfileSyncStatus.ParseFromImportProfilePropertiesJobInfo(job);
+            return sharePointUserProfileSyncStatus;
         }
     }
 }

@@ -46,6 +46,11 @@ namespace PnP.PowerShell.Commands.Principals
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DELTA)]
         public int? EndIndex = 999;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYID)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DELTA)]
+        public SwitchParameter UseBeta;        
+
         protected override void ExecuteCmdlet()
         {
             if(MyInvocation.InvocationName.ToLower().Equals("get-pnpaaduser"))
@@ -62,22 +67,22 @@ namespace PnP.PowerShell.Commands.Principals
                 PnP.PowerShell.Commands.Model.AzureAD.User user;
                 if (Guid.TryParse(Identity, out Guid identityGuid))
                 {
-                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(AccessToken, identityGuid);
+                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(AccessToken, identityGuid, useBetaEndPoint: UseBeta.IsPresent);
                 }
                 else
                 {
-                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(AccessToken, WebUtility.UrlEncode(Identity), Select);
+                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(AccessToken, WebUtility.UrlEncode(Identity), Select, useBetaEndPoint: UseBeta.IsPresent);
                 }
                 WriteObject(user);
             }
             else if (ParameterSpecified(nameof(Delta)))
             {
-                var userDelta = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUserDelta(AccessToken, DeltaToken, Filter, OrderBy, Select, StartIndex, EndIndex);
+                var userDelta = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUserDelta(AccessToken, DeltaToken, Filter, OrderBy, Select, StartIndex, EndIndex, useBetaEndPoint: UseBeta.IsPresent);
                 WriteObject(userDelta);
             } 
             else
             {
-                var users = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUsers(AccessToken, Filter, OrderBy, Select, StartIndex, EndIndex);
+                var users = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUsers(AccessToken, Filter, OrderBy, Select, StartIndex, EndIndex, useBetaEndPoint: UseBeta.IsPresent);
                 WriteObject(users, true);
             }
         }
