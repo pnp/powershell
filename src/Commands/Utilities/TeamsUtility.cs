@@ -185,7 +185,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
                 if (owners != null && owners.Length > 0)
                 {
-                    var chunkedOwners = BatchUtility.Chunk(owners, 20);
+                    var chunkedOwners = BatchUtility.Chunk(owners, 200);
                     foreach (var chunk in chunkedOwners)
                     {
                         var teamOwners = new List<TeamChannelMember>();
@@ -202,7 +202,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
                 if (members != null && members.Length > 0)
                 {
-                    var chunkedMembers = BatchUtility.Chunk(members, 20);
+                    var chunkedMembers = BatchUtility.Chunk(members, 200);
                     foreach (var chunk in chunkedMembers)
                     {
                         var teamMembers = new List<TeamChannelMember>();
