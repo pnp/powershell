@@ -10,9 +10,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - Added `Add\Remove\Invoke-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design.
+- Added `-Content` option to `Add-PnPFile` which allows textual content to be directly uploaded to SharePoint without having to save it as a file first
 
 ### Changed
 
+- Introduced optional `-UseBeta` parameter to `Get-PnPAzureADUser` to force it to use the Microsoft Graph beta endpoint. This can be necessary when i.e. using `-Select "PreferredDataLocation"` to query for users with a specific multi geo location as this property is only available through the beta endpoint.
+- Changed the return type of `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to return our own entity instead of the one returned by CSOM to decouple it and also allow for it to return the location where the import file has been uploaded to on SharePoint when using `-WhatIf`. This allows for the scenario where you would use `-WhatIf` to create the mapping JSON file, but not actually start the import yet because i.e. you want to modify the data in the mapping file first before you trigger the import process to start.
 
 ### Fixed
 
