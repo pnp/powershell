@@ -48,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-A name of the group
+SharePoint group name, id or instance to return the permissions for
 
 ```yaml
 Type: GroupPipeBind
