@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added `Add\Remove\Invoke-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design.
 
 ### Changed
 
@@ -17,12 +18,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Fixed `Set-PnPSite` not working with `DisableCompanyWideSharingLinks` parameter.
 - Fixed `Get-PnPListPermissions` returing wrong information in case of broken inheritance.
+- Fixed `Submit-PnPSearchQuery -Query "somequery"` yielding an error when no results [#1520](https://github.com/pnp/powershell/pull/1520)
+- Fixed `Set-PnPTenantSite` not setting SharingCapability property correctly.
+- Fixed `Get-PnPMicrosoft365Group` retrieving non-Unified groups when parameters are not specified.
+
 
 ### Removed
 
 
 ### Contributors
 
+- Leon Armston [LeonArmston]
+- Reshmee Auckloo [reshmee011]
 
 ## [1.9.0]
 
