@@ -78,9 +78,9 @@ namespace PnP.PowerShell.Commands.Model.ServiceHealth
         public DateTime? ExpiryDateTime { get; set; }
 
         /// <summary>
-        /// Unknown
+        /// Information on if this announcement has been read, favored and archived
         /// </summary>
-        public string ViewPoint { get; set; }
+        public ServiceUpdateMessageViewPoint ViewPoint { get; set; }
 
         /// <summary>
         /// Collection with additional information on the service message, i.e. hyperlinks

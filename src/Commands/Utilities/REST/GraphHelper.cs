@@ -138,7 +138,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                     var entity = JsonSerializer.Deserialize<T>(stringContent, options);
                     return entity;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     return default(T);
                 }
