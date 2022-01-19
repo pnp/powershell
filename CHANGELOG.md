@@ -22,7 +22,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Set-PnPTenantSite` not setting SharingCapability property correctly.
 - Fixed `Get-PnPMicrosoft365Group` retrieving non-Unified groups when parameters are not specified.
 
-
 ### Removed
 
 
@@ -30,6 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Leon Armston [LeonArmston]
 - Reshmee Auckloo [reshmee011]
+- Arleta [PowershellScripts]
 
 ## [1.9.0]
 
