@@ -2010,7 +2010,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPEventReceiver.html",
-          "hash": "tyz3yL82Jzuntxdky6pduQ=="
+          "hash": "SQnYzJpREaKgE5fbrtzHIA=="
         }
       },
       "is_incremental": false,
@@ -2046,7 +2046,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPFeature.html",
-          "hash": "R17dzhmESn8WOY0nrFW+/g=="
+          "hash": "++Kkg7wnzT5QJCEFkoSgCQ=="
         }
       },
       "is_incremental": false,
@@ -2190,7 +2190,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPGroupPermissions.html",
-          "hash": "re5AJFgE85juUFX7mJrMeg=="
+          "hash": "S3ps+z6BgQ8g1SKRUyZRxg=="
         }
       },
       "is_incremental": false,
