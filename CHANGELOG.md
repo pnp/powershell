@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - Added `Add\Remove\Invoke-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design.
+- Added `DisablePersonalListCreation` parameter to `Set-PnPTenant` cmdlet to provide ability to disable personal lists creation.
+- Added `DisabledModernListTemplateIds` and `EnableModernListTemplateIds` parameters to `Set-PnPTenant` cmdlet to provide ability to disable or enable modern lists with specific Ids.
+- Added `DisablePersonalListCreation` and `DisabledModernListTemplateIds` values to be displayed when using `Get-PnPTenant` cmdlet.
 
 ### Changed
 

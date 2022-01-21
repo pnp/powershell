@@ -1268,6 +1268,48 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DisablePersonalListCreation
+Allows configuration on whether Personal lists are enabled or disabled in the tenant. If set to `$true`, then this Personal lists will be allowed to be created in the tenant. If set to `$false`, it will be disabled the tenant.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisabledModernListTemplateIds
+Guids of out of the box modern lists id's to hide
+
+```yaml
+Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableModernListTemplateIds
+Guids of out of the box modern lists id's to show.
+
+```yaml
+Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
