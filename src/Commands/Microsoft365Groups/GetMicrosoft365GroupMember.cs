@@ -17,16 +17,16 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         [Parameter(Mandatory = false)]
         [ValidateSet(new[] { "Member", "Guest" })]
-        public string Role;
+        public string UserType;
 
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSpecified(nameof(Role)))
+            if (ParameterSpecified(nameof(UserType)))
             {
-                if (!string.IsNullOrEmpty(Role) && Role.ToLower() == "guest")
+                if (!string.IsNullOrEmpty(UserType) && UserType.ToLower() == "guest")
                 {
                     var groupId = Identity.GetGroupId(HttpClient, AccessToken);
-                    var guestUsers = TeamsUtility.GetUsersAsync(HttpClient, AccessToken, groupId.ToString(), Role).GetAwaiter().GetResult();
+                    var guestUsers = TeamsUtility.GetUsersAsync(HttpClient, AccessToken, groupId.ToString(), UserType).GetAwaiter().GetResult();
                     WriteObject(guestUsers?.OrderBy(g => g.DisplayName), true);
                 }
                 else

@@ -44,7 +44,7 @@ Retrieves all the members of a specific Microsoft 365 Group based on the group's
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPMicrosoft365GroupMember -Identity $group -Role Guest
+Get-PnPMicrosoft365GroupMember -Identity $group -UserType Guest
 ```
 
 Retrieves all the guest users of a specific Microsoft 365 Group based on the group's object instance
@@ -65,7 +65,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Role
+### -UserType
 Specify to filter on the role of the user
 
 ```yaml
