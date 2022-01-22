@@ -20,6 +20,7 @@ Get-PnPGroupPermissions [-Identity] <GroupPipeBind> [-Connection <PnPConnection>
 ```
 
 ## DESCRIPTION
+This command will return the permissions of a specific SharePoint group
 
 ## EXAMPLES
 
@@ -47,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Get the permissions of a specific group by name
+SharePoint group name, id or instance to return the permissions for
 
 ```yaml
 Type: GroupPipeBind
