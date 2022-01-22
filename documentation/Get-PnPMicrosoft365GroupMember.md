@@ -21,7 +21,7 @@ Gets members of a particular Microsoft 365 Group (aka Unified Group).
 ## SYNTAX
 
 ```powershell
-Get-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> [-Role <String>] [<CommonParameters>]
+Get-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> [-UserType <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -66,7 +66,7 @@ Accept wildcard characters: False
 ```
 
 ### -UserType
-Specify to filter on the role of the user
+Specify to filter on the type of the user like member or guest
 
 ```yaml
 Type: String
