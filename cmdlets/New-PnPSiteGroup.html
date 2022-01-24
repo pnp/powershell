@@ -91,7 +91,7 @@
 <p>Creates a new group in a SharePoint Online site collection.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">New-PnPSiteGroup
-   -Group &lt;String&gt;
+   -Name &lt;String&gt;
    -PermissionLevels &lt;String[]&gt;
    [-Site &lt;SitePipeBind&gt;]
 </code></pre>
@@ -99,11 +99,11 @@
 <p>A SharePoint group is a set of individual users. SharePoint groups enable you to manage sets of users instead of individual users.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">New-PnPSiteGroup -Site &quot;https://contoso.sharepoint.com/sites/siteA&quot; -Group &quot;Project Leads&quot; -PermissionLevels &quot;Full Control&quot;
+<pre><code class="lang-powershell">New-PnPSiteGroup -Site &quot;https://contoso.sharepoint.com/sites/siteA&quot; -Name &quot;Project Leads&quot; -PermissionLevels &quot;Full Control&quot;
 </code></pre>
 <p>This example creates a group named Project Leads with the Full Control permission level on the site collection <a href="https://contoso.sharepoint.com/sites/siteA">https://contoso.sharepoint.com/sites/siteA</a>.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">New-PnPSiteGroup -Site &quot;https://contoso.sharepoint.com/sites/marketing&quot; -Group &quot;NewGroupName&quot; -PermissionLevels &quot;Design&quot;
+<pre><code class="lang-powershell">New-PnPSiteGroup -Site &quot;https://contoso.sharepoint.com/sites/marketing&quot; -Name &quot;NewGroupName&quot; -PermissionLevels &quot;Design&quot;
 </code></pre>
 <p>This example creates a group named NewGroupName with the Design permission level on the site collection <a href="https://contoso.sharepoint.com/sites/marketing">https://contoso.sharepoint.com/sites/marketing</a>.</p>
 <h2 id="parameters">PARAMETERS</h2>
