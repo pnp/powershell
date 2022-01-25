@@ -43,6 +43,7 @@ namespace PnP.PowerShell.Commands.Pages
 
         [Parameter(Mandatory = false)]
         public string Title;
+        
         protected override void ExecuteCmdlet()
         {
             IPage clientSidePage = null;
