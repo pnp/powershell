@@ -232,7 +232,7 @@ Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
 </code></pre>
 </li>
 <li><p>Connect to the Azure instance where your Azure Function runs and of which you want to use the Microsoft Graph through PnP PowerShell</p>
-<pre><code class="lang-powershell">Connect-AzureAD -TenandId &lt;contoso&gt;.onmicrosoft.com
+<pre><code class="lang-powershell">Connect-AzureAD -TenantId &lt;contoso&gt;.onmicrosoft.com
 </code></pre>
 </li>
 <li><p>Retrieve the Azure AD Service Principal instance for the Microsoft Graph. It should always be AppId 00000003-0000-0000-c000-000000000000.</p>
