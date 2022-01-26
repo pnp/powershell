@@ -68,7 +68,7 @@ Copies the list "My List" to the site with the provided URL changing the list na
 ### EXAMPLE 4
 ```powershell
 $list = Get-PnPList -Identity "My List"
-Copy-PnPList -Identity $l -Title "My copied list"
+Copy-PnPList -Identity $list -Title "My copied list"
 ```
 
 Copies the list "My List" to the site with the provided URL changing the list name to "My copied list"
