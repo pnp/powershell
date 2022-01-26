@@ -10,27 +10,39 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - Added additional properties to the users returned by `Get-PnPMicrosoft365GroupMember` such as `userType` [#1474](https://github.com/pnp/powershell/pull/1474)
+- Added `Get\New\Remove\Set-PnPMicrosoft365GroupSettings` cmdlets to interact with Microsoft 365 Group settings.
+- Added `Get-PnPMicrosoft365GroupSettingTemplates` cmdlet to retrieve system wide Microsoft 365 Group setting templates.
 - Added `Add\Remove\Invoke-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design.
-
+- Added `Add\Remove\Set-PnPAdaptiveScopeProperty` cmdlets to add/update/remove a property bag value while dealing with the noscript toggling in one cmdlet [#1556](https://github.com/pnp/powershell/pull/1556)
+- Added support to add multiple owners and members in `New-PnPTeamsTeam` cmdlet [#1241](https://github.com/pnp/powershell/pull/1241)
+- Added the ability to set the title of a new modern page in SharePoint Online using `Add-PnPPage` to be different from its filename by using `-Title`
+ 
 ### Changed
 
+- The `Move\Remove\Rename-PnPFolder` cmdlets now support pipebinds.
+- Changed `Add-PnPDataRowsToSiteTemplate`, it will return a warning if user(s) are not found during list item extraction. Earlier it used to throw error and stop extraction of list items.
 
 ### Fixed
 
 - Fixed `Set-PnPSite` not working with `DisableCompanyWideSharingLinks` parameter.
-- Fixed `Get-PnPListPermissions` returing wrong information in case of broken inheritance.
+- Fixed `Get-PnPListPermissions` returning wrong information in case of broken inheritance.
 - Fixed `Submit-PnPSearchQuery -Query "somequery"` yielding an error when no results [#1520](https://github.com/pnp/powershell/pull/1520)
 - Fixed `Set-PnPTenantSite` not setting SharingCapability property correctly.
 - Fixed `Get-PnPMicrosoft365Group` retrieving non-Unified groups when parameters are not specified.
+- Fixed `Get-PnPRecycleBinListItem` not retrieving second stage items if only `RowLimit` is specified.
+- Fixed `Add-PnPDataRowsToSiteTemplate` issue with PnP templates when it contained multilingual references.
+- Fixed `Copy-PnPItemProxy` is not recognized as the name of a cmdlet, function, script file, or operable program error with the cmdlet.- Fixed `Copy-PnPItemProxy` is not recognized as the name of a cmdlet, function, script file, or operable program error with the cmdlet.
 
 ### Removed
 
 
 ### Contributors
 
+- Lschockaert
 - Leon Armston [LeonArmston]
 - Reshmee Auckloo [reshmee011]
 - Arleta [PowershellScripts]
+- Brendon Lee [brenle]
 
 ## [1.9.0]
 
@@ -70,6 +82,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-IsFluidEnabled` to `Set-PnPTenant` cmdlet to enable/disable users from using Fluid components.
 - Added `Add\Get\Remove-PnPListItemComment` cmdlets to deal with list item comments. Using these cmdlets, you will now be able to add, retrieve and delete list item comments. [#1462](https://github.com/pnp/powershell/pull/1462)
 - Added `-ResourceTypeName` and `-ResourceUrl` parameters to `Get-PnPAccessToken` to fetch access token of specified resource. [#1451](https://github.com/pnp/powershell/pull/1451)
+- Added `-BookmarkStatus` parameter to `Get-PnPSearchConfiguration` cmdlet to call REST endpoint to fetch promoted results defined via query rules and output them in Bookmark supported CSV format.
 
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads
@@ -107,6 +120,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Get-PnPSubWebs` as that was marked deprecated a year ago. Use `Get-PnPSubWeb` instead. [#1394](https://github.com/pnp/powershell/pull/1394)
 
 ### Contributors
+- Mikael Svenson [wobba]
 - Koen Zomers [koenzomers]
 - Bert Jansen [jansenbe]
 - Gautam Sheth [gautamdsheth]

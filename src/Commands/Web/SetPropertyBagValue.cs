@@ -8,6 +8,7 @@ using PnP.Framework.Utilities;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPPropertyBagValue")]
+    [Alias("Add-PnPPropertyBagValue")]
     public class SetPropertyBagValue : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "Web")]

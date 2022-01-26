@@ -180,7 +180,7 @@ Next step is to assign permissions to this managed identity so it is authorized 
 1. Connect to the Azure instance where your Azure Function runs and of which you want to use the Microsoft Graph through PnP PowerShell
 
     ```powershell
-    Connect-AzureAD -TenandId <contoso>.onmicrosoft.com
+    Connect-AzureAD -TenantId <contoso>.onmicrosoft.com
     ```
     
 1. Retrieve the Azure AD Service Principal instance for the Microsoft Graph. It should always be AppId 00000003-0000-0000-c000-000000000000.
