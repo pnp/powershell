@@ -29,6 +29,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Removed
 
+- Removed `Add-PnPClientSidePageSection`, use `Add-PnPPageSection` instead
+- Removed `Add-PnPClientSideWebPart`, use `Add-PnPPageWebPart` instead
+- Removed `Add-PnPClientSideText`, use `Add-PnPPageTextPart` instead
 
 ### Contributors
 
