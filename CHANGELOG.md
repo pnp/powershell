@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Set-PnPTenantSite` not setting SharingCapability property correctly.
 - Fixed `Get-PnPMicrosoft365Group` retrieving non-Unified groups when parameters are not specified.
 - Fixed `Get-PnPRecycleBinListItem` not retrieving second stage items if only `RowLimit` is specified.
+- Fixed `Add-PnPDataRowsToSiteTemplate` issue with PnP templates when it contained multilingual references.
 
 ### Removed
 
