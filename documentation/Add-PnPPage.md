@@ -36,54 +36,61 @@ Creates a new page named 'NewPage'
 
 ### EXAMPLE 2
 ```powershell
+Add-PnPPage -Name "NewPage" -Title "Welcome to my page"
+```
+
+Creates a new page NewPage.aspx with the title as provided
+
+### EXAMPLE 3
+```powershell
 Add-PnPPage -Name "NewPage" -ContentType "MyPageContentType"
 ```
 
 Creates a new page named 'NewPage' and sets the content type to the content type specified
 
-### EXAMPLE 3
+### EXAMPLE 4
 ```powershell
 Add-PnPPage -Name "NewPageTemplate" -PromoteAs Template
 ```
 
 Creates a new page named 'NewPage' and saves as a template to the site.
 
-### EXAMPLE 4
+### EXAMPLE 5
 ```powershell
 Add-PnPPage -Name "Folder/NewPage"
 ```
 
 Creates a new page named 'NewPage' under 'Folder' folder and saves as a template to the site.
 
-### EXAMPLE 5
+### EXAMPLE 6
 ```powershell
 Add-PnPPage -Name "NewPage" -HeaderLayoutType ColorBlock
 ```
 
 Creates a new page named 'NewPage' using the ColorBlock header layout
 
-### EXAMPLE 6
+### EXAMPLE 7
 ```powershell
 Add-PnPPage -Name "NewPage" Article -ScheduledPublishDate (Get-Date).AddHours(1)
 ```
 
 Creates a new page named 'NewPage' using the article layout and schedule it to be published in 1 hour from now
 
-### EXAMPLE 7
+### EXAMPLE 8
 ```powershell
 Add-PnPPage -Name "NewPage" -Translate
 ```
 
 Creates a new page named 'NewPage' and also creates the necessary translated page for the supported languages in the site collection.
 
-### EXAMPLE 8
+### EXAMPLE 9
 ```powershell
 Add-PnPPage -Name "NewPage" -Translate -TranslationLanguageCodes 1043
 ```
 
 Creates a new page named 'NewPage' and also creates the necessary translated page for the specified language in the site collection. In this case, it will create the translated page for Dutch language. If the Dutch language is not enabled, it will enable the language and then create the translated page.
 
-### EXAMPLE 9
+### EXAMPLE 10
 ```powershell
 Add-PnPPage -Name "NewPage" -Translate -TranslationLanguageCodes 1043,1035
 ```
