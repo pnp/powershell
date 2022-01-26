@@ -17,7 +17,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - Changed `Add-PnPDataRowsToSiteTemplate`, it will return a warning if user(s) are not found during list item extraction. Earlier it used to throw error and stop extraction of list items.
-- Changed the return type of `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to return our own entity instead of the one returned by CSOM to decouple it and also allow for it to return the location where the import file has been uploaded to on SharePoint when using `-WhatIf`. This allows for the scenario where you would use `-WhatIf` to create the mapping JSON file, but not actually start the import yet because i.e. you want to modify the data in the mapping file first before you trigger the import process to start. [#1559](https://github.com/pnp/powershell/pull/1559)
+- Changed the return type of `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to return our own entity instead of the one returned by CSOM [#1559](https://github.com/pnp/powershell/pull/1559)
+- Changed running `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` with `-WhatIf` to also provide a return entity providing the path to where the JSON file has been uploaded to [#1559](https://github.com/pnp/powershell/pull/1559)
 
 ### Fixed
 
