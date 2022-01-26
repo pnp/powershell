@@ -20,6 +20,7 @@ Get-PnPFeature [[-Identity] <FeaturePipeBind>] [-Scope <FeatureScope>]
 ```
 
 ## DESCRIPTION
+This cmdlet returns all activated features or a specific activated feature.
 
 ## EXAMPLES
 
