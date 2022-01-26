@@ -67,7 +67,6 @@ namespace PnP.PowerShell.Commands.Graph
             {
                 throw new PSArgumentException("Team not found");
             }
-
         }
     }
 }

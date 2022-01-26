@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
-- Added `Update-PnPTeamsUser` cmdlet to change the role of a user in an existing Teams instance
+- Added `Update-PnPTeamsUser` cmdlet to change the role of a user in an existing Teams team [#1499](https://github.com/pnp/powershell/pull/1499)
 
 ### Changed
 

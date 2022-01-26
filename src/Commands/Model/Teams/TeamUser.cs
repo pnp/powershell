@@ -29,6 +29,4 @@ namespace PnP.PowerShell.Commands.Model.Teams
         [JsonPropertyName("visibleHistoryStartDateTime")]
         public string visibleHistoryStartDateTime { get; set; }
     }
-
-
 }
