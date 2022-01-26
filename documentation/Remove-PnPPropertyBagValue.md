@@ -20,6 +20,7 @@ Remove-PnPPropertyBagValue [-Key] <String> [-Folder <String>] [-Force]
 ```
 
 ## DESCRIPTION
+Removes a value from the property bag. If working with a modern SharePoint Online site or having noscript enabled, you will have to disable this yourself temporarily using `Set-PnPTenantSite -Url <url> -NoScriptSite:$false` to be able to make the change.
 
 ## EXAMPLES
 
