@@ -9,7 +9,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
-- Added `Add\Remove\Invoke-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design.
+- Added `Add\Remove\Invoke-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design
+- Added support to add multiple owners and members in `New-PnPTeamsTeam` cmdlet [#1241](https://github.com/pnp/powershell/pull/1241)
 - Added the ability to set the title of a new modern page in SharePoint Online using `Add-PnPPage` to be different from its filename by using `-Title`
  
 ### Changed
@@ -74,6 +75,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-IsFluidEnabled` to `Set-PnPTenant` cmdlet to enable/disable users from using Fluid components.
 - Added `Add\Get\Remove-PnPListItemComment` cmdlets to deal with list item comments. Using these cmdlets, you will now be able to add, retrieve and delete list item comments. [#1462](https://github.com/pnp/powershell/pull/1462)
 - Added `-ResourceTypeName` and `-ResourceUrl` parameters to `Get-PnPAccessToken` to fetch access token of specified resource. [#1451](https://github.com/pnp/powershell/pull/1451)
+- Added `-BookmarkStatus` parameter to `Get-PnPSearchConfiguration` cmdlet to call REST endpoint to fetch promoted results defined via query rules and output them in Bookmark supported CSV format.
 
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads
@@ -111,6 +113,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Get-PnPSubWebs` as that was marked deprecated a year ago. Use `Get-PnPSubWeb` instead. [#1394](https://github.com/pnp/powershell/pull/1394)
 
 ### Contributors
+- Mikael Svenson [wobba]
 - Koen Zomers [koenzomers]
 - Bert Jansen [jansenbe]
 - Gautam Sheth [gautamdsheth]
