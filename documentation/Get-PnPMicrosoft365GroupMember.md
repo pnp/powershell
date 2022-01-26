@@ -16,7 +16,7 @@ title: Get-PnPMicrosoft365GroupMember
   * Microsoft Graph API : at least Group.Read.All
   * Microsoft Graph API : Directory.Read.All
 
-Gets members of a particular Microsoft 365 Group (aka Unified Group).
+Returns the members of a particular Microsoft 365 Group
 
 ## SYNTAX
 
@@ -25,6 +25,7 @@ Get-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> [-UserType 
 ```
 
 ## DESCRIPTION
+Returns the members of a particular Microsoft 365 Group
 
 ## EXAMPLES
 
@@ -44,10 +45,10 @@ Retrieves all the members of a specific Microsoft 365 Group based on the group's
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPMicrosoft365GroupMember -Identity $group -UserType Guest
+Get-PnPMicrosoft365GroupMember -Identity "Sales" | Where-Object UserType -eq Guest
 ```
 
-Retrieves all the guest users of a specific Microsoft 365 Group based on the group's object instance
+Returns all the guest users of the Microsoft 365 Group named "Sales"
 
 ## PARAMETERS
 
@@ -65,23 +66,6 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -UserType
-Specify to filter on the type of the user like member or guest
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Accepted values: Member, Guest
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
