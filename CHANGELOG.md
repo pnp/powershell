@@ -9,19 +9,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
-- Added `Add\Remove\Invoke-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design.
-- Added support to add multiple owners and members in `New-PnPTeamsTeam` cmdlet.
-
+- Added `Add\Remove\Invoke-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design
+- Added support to add multiple owners and members in `New-PnPTeamsTeam` cmdlet [#1241](https://github.com/pnp/powershell/pull/1241)
+- Added the ability to set the title of a new modern page in SharePoint Online using `Add-PnPPage` to be different from its filename by using `-Title`
+ 
 ### Changed
 
+- Changed `Add-PnPDataRowsToSiteTemplate`, it will return a warning if user(s) are not found during list item extraction. Earlier it used to throw error and stop extraction of list items.
 
 ### Fixed
 
 - Fixed `Set-PnPSite` not working with `DisableCompanyWideSharingLinks` parameter.
-- Fixed `Get-PnPListPermissions` returing wrong information in case of broken inheritance.
+- Fixed `Get-PnPListPermissions` returning wrong information in case of broken inheritance.
 - Fixed `Submit-PnPSearchQuery -Query "somequery"` yielding an error when no results [#1520](https://github.com/pnp/powershell/pull/1520)
 - Fixed `Set-PnPTenantSite` not setting SharingCapability property correctly.
 - Fixed `Get-PnPMicrosoft365Group` retrieving non-Unified groups when parameters are not specified.
+- Fixed `Get-PnPRecycleBinListItem` not retrieving second stage items if only `RowLimit` is specified.
+- Fixed `Add-PnPDataRowsToSiteTemplate` issue with PnP templates when it contained multilingual references.
+- Fixed `Copy-PnPItemProxy` is not recognized as the name of a cmdlet, function, script file, or operable program error with the cmdlet.- Fixed `Copy-PnPItemProxy` is not recognized as the name of a cmdlet, function, script file, or operable program error with the cmdlet.
 
 ### Removed
 
