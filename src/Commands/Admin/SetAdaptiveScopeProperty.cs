@@ -1,11 +1,11 @@
-﻿using System;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPAdaptiveScopeProperty")]
+    [Alias("Add-PnPAdaptiveScopeProperty")]
     public class SetAdaptiveScopeProperty : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -13,7 +13,6 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = true)]
         public string Value;
-
 
         protected override void ExecuteCmdlet()
         {

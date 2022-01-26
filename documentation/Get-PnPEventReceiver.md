@@ -10,7 +10,7 @@ title: Get-PnPEventReceiver
 # Get-PnPEventReceiver
 
 ## SYNOPSIS
-Return registered eventreceivers
+Returns registered event receivers
 
 ## SYNTAX
 
@@ -20,7 +20,7 @@ Get-PnPEventReceiver [-List <ListPipeBind>] [-Scope <EventReceiverScope>] [-Iden
 ```
 
 ## DESCRIPTION
-Returns all registered or a specific eventreceiver
+Returns all registered or a specific event receiver
 
 ## EXAMPLES
 

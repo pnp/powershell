@@ -51,7 +51,7 @@ if($runPublic -eq $false -and $existing_pnpcoresdk_hash -ne $pnpcoresdk_hash)
 
 if ($runPublish -eq $true) {
 
-	$versionFileContents = Get-Content "$PSScriptRoot/../version.txt" -Raw
+	$versionFileContents = (Get-Content "$PSScriptRoot/../version.txt" -Raw).Trim()
 	if ($versionFileContents.Contains("%")) {
 		$versionString = $versionFileContents.Replace("%", "0");
 		$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionString)
