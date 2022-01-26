@@ -10,9 +10,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - Added `Add\Remove\Invoke-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design.
-
+- Added the ability to set the title of a new modern page in SharePoint Online using `Add-PnPPage` to be different from its filename by using `-Title`
+ 
 ### Changed
 
+- Changed `Add-PnPDataRowsToSiteTemplate`, it will return a warning if user(s) are not found during list item extraction. Earlier it used to throw error and stop extraction of list items.
 
 ### Fixed
 
@@ -21,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Submit-PnPSearchQuery -Query "somequery"` yielding an error when no results [#1520](https://github.com/pnp/powershell/pull/1520)
 - Fixed `Set-PnPTenantSite` not setting SharingCapability property correctly.
 - Fixed `Get-PnPMicrosoft365Group` retrieving non-Unified groups when parameters are not specified.
+- Fixed `Get-PnPRecycleBinListItem` not retrieving second stage items if only `RowLimit` is specified.
 - Fixed `Add-PnPDataRowsToSiteTemplate` issue with PnP templates when it contained multilingual references.
 
 ### Removed
@@ -30,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Leon Armston [LeonArmston]
 - Reshmee Auckloo [reshmee011]
+- Arleta [PowershellScripts]
 
 ## [1.9.0]
 
