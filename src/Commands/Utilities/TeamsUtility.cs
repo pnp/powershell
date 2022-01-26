@@ -204,7 +204,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 if (teamOwnersAndMembers.Count > 0)
                 {
                     var ownersAndMembers = BatchUtility.Chunk(teamOwnersAndMembers, 200);
-                    foreach (var chunk in ownersAndMembers.ToList())
+                    foreach (var chunk in ownersAndMembers)
                     {
                         await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{group.Id}/members/add", new { values = chunk.ToList() }, accessToken);
                     }
