@@ -1,6 +1,5 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
@@ -13,7 +12,7 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = true)]
         public string Name = string.Empty;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
         public FolderPipeBind Folder;
 
@@ -51,4 +50,3 @@ namespace PnP.PowerShell.Commands.Files
         }
     }
 }
-

@@ -1,7 +1,5 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
-using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Files
@@ -9,7 +7,7 @@ namespace PnP.PowerShell.Commands.Files
     [Cmdlet(VerbsCommon.Rename, "PnPFolder")]
     public class RenameFolder : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
         public FolderPipeBind Folder;
 
