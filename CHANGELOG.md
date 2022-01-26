@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added `Update-PnPTeamsUser` cmdlet to change the role of a user in an existing Teams team [#1499](https://github.com/pnp/powershell/pull/1499)
 - Added `Get\New\Remove\Set-PnPMicrosoft365GroupSettings` cmdlets to interact with Microsoft 365 Group settings.
 - Added `Get-PnPMicrosoft365GroupSettingTemplates` cmdlet to retrieve system wide Microsoft 365 Group setting templates.
 - Added `Add\Remove\Invoke-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design.
