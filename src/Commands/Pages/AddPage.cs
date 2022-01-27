@@ -41,6 +41,9 @@ namespace PnP.PowerShell.Commands.Pages
         [Parameter(Mandatory = false)]
         public int[] TranslationLanguageCodes;
 
+        [Parameter(Mandatory = false)]
+        public string Title;
+        
         protected override void ExecuteCmdlet()
         {
             IPage clientSidePage = null;
@@ -67,6 +70,12 @@ namespace PnP.PowerShell.Commands.Pages
             // Create a page that persists immediately
             clientSidePage = PnPContext.Web.NewPage(LayoutType);
             clientSidePage.PageHeader.LayoutType = HeaderLayoutType;
+
+            if (ParameterSpecified(nameof(Title)))
+            {
+                // Set the page title that will be shown at the top of the page. If omitted, the title will be the equivallent of the name of the page which will be used as the filename as well.
+                clientSidePage.PageTitle = Title;
+            }
 
             if (PromoteAs == PagePromoteType.Template)
             {

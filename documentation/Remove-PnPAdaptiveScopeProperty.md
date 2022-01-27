@@ -1,49 +1,43 @@
 ---
 Module Name: PnP.PowerShell
-title: Remove-PnPPropertyBagValue
+title: Remove-PnPAdaptiveScopeProperty
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPPropertyBagValue.html
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPAdaptiveScopeProperty.html
 ---
  
-# Remove-PnPPropertyBagValue
+# Remove-PnPAdaptiveScopeProperty
 
 ## SYNOPSIS
-Removes a value from the property bag
+Removes a value from the current web property bag
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPPropertyBagValue [-Key] <String> [-Folder <String>] [-Force] 
+Remove-PnPAdaptiveScopeProperty [-Key] <String> [-Force] 
  [-Connection <PnPConnection>]   [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Removes a value from the property bag. If working with a modern SharePoint Online site or having noscript enabled, you will have to disable this yourself temporarily using `Set-PnPTenantSite -Url <url> -NoScriptSite:$false` to be able to make the change.
+
+This cmdlet is used to remove a property bag value. Executing this cmdlet removes a value from the current web property bag just like  `Remove-PnPPropertyBagValue` would do, but also takes care of toggling the noscript value to allow for this to be possible in one cmdlet. Using this cmdlet does therefore require having the SharePoint Online Admin role or equivallent app permissions.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPPropertyBagValue -Key MyKey
+Remove-PnPAdaptiveScopeProperty -Key MyKey
 ```
 
 This will remove the value with key MyKey from the current web property bag
 
 ### EXAMPLE 2
 ```powershell
-Remove-PnPPropertyBagValue -Key MyKey -Folder /MyFolder
+Remove-PnPAdaptiveScopeProperty -Key MyKey -Force
 ```
 
-This will remove the value with key MyKey from the folder MyFolder which is located in the root folder of the current web
-
-### EXAMPLE 3
-```powershell
-Remove-PnPPropertyBagValue -Key MyKey -Folder /
-```
-
-This will remove the value with key MyKey from the root folder of the current web
+This will remove the value with key MyKey from the current web property bag without prompting for confirmation
 
 ## PARAMETERS
 
@@ -52,20 +46,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Folder
-Site relative url of the folder. See examples for use.
-
-```yaml
-Type: String
 Parameter Sets: (All)
 
 Required: False
@@ -106,3 +86,6 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 
+[Microsoft 365 Information Governance](https://docs.microsoft.com/en-us/microsoft-365/compliance/manage-information-governance?view=o365-worldwide)
+
+[Adaptive policy scopes](https://docs.microsoft.com/en-us/microsoft-365/compliance/retention?view=o365-worldwide#adaptive-or-static-policy-scopes-for-retention)
