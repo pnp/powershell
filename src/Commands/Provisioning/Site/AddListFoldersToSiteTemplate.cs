@@ -59,8 +59,11 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             ClientContext.Load(spList, l => l.RootFolder, l => l.HasUniqueRoleAssignments);
             ClientContext.ExecuteQueryRetry();
 
+            var tokenParser = new Framework.Provisioning.ObjectHandlers.TokenParser(ClientContext.Web, template);
+
             //We will remove a list if it's found so we can get the list
-            ListInstance listInstance = template.Lists.Find(l => l.Title == spList.Title);
+            ListInstance listInstance = template.Lists.Find(l => tokenParser.ParseString(l.Title) == spList.Title);            
+            
             if (listInstance == null)
             {
                 throw new ApplicationException("List does not exist in the template file.");
