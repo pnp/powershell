@@ -9,16 +9,28 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added additional properties to the users returned by `Get-PnPMicrosoft365GroupMember` such as `userType` [#1474](https://github.com/pnp/powershell/pull/1474)
+- Added `Update-PnPTeamsUser` cmdlet to change the role of a user in an existing Teams team [#1499](https://github.com/pnp/powershell/pull/1499)
+- Added `Get\New\Remove\Set-PnPMicrosoft365GroupSettings` cmdlets to interact with Microsoft 365 Group settings.
+- Added `Get-PnPMicrosoft365GroupSettingTemplates` cmdlet to retrieve system wide Microsoft 365 Group setting templates.
 - Added `Add\Remove\Invoke-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design.
+- Added `DisablePersonalListCreation` parameter to `Set-PnPTenant` cmdlet to provide ability to disable personal lists creation [#1545](https://github.com/pnp/powershell/pull/1545)
+- Added `DisabledModernListTemplateIds` and `EnableModernListTemplateIds` parameters to `Set-PnPTenant` cmdlet to provide ability to disable or enable modern lists with specific Ids [#1545](https://github.com/pnp/powershell/pull/1545)
+- Added `DisablePersonalListCreation` and `DisabledModernListTemplateIds` values to be displayed when using `Get-PnPTenant` cmdlet [#1545](https://github.com/pnp/powershell/pull/1545)
+- Added `Add\Remove\Set-PnPAdaptiveScopeProperty` cmdlets to add/update/remove a property bag value while dealing with the noscript toggling in one cmdlet [#1556](https://github.com/pnp/powershell/pull/1556)
+- Added support to add multiple owners and members in `New-PnPTeamsTeam` cmdlet [#1241](https://github.com/pnp/powershell/pull/1241)
 - Added the ability to set the title of a new modern page in SharePoint Online using `Add-PnPPage` to be different from its filename by using `-Title`
 - Added `-Content` option to `Add-PnPFile` which allows textual content to be directly uploaded to SharePoint without having to save it as a file first
 - Added optional `-UseBeta` parameter to `Get-PnPAzureADUser` to force it to use the Microsoft Graph beta endpoint. This can be necessary when i.e. using `-Select "PreferredDataLocation"` to query for users with a specific multi geo location as this property is only available through the beta endpoint. [#1559](https://github.com/pnp/powershell/pull/1559)
   
 ### Changed
 
+- Improved `Add-PnPTeamsUser` cmdlet. The cmdlet executes faster and we can now add users in batches of 200. [#1548](https://github.com/pnp/powershell/pull/1548)
+- The `Move\Remove\Rename-PnPFolder` cmdlets now support pipebinds.
 - Changed `Add-PnPDataRowsToSiteTemplate`, it will return a warning if user(s) are not found during list item extraction. Earlier it used to throw error and stop extraction of list items.
 - Changed the return type of `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to return our own entity instead of the one returned by CSOM [#1559](https://github.com/pnp/powershell/pull/1559)
 - Changed running `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` with `-WhatIf` to also provide a return entity providing the path to where the JSON file has been uploaded to [#1559](https://github.com/pnp/powershell/pull/1559)
+- Disabling telemetry collection now requires either setting the environment variable or creating the telemetry file ([documentation](https://pnp.github.io/powershell/articles/configuration.html)) [#1504](https://github.com/pnp/powershell/pull/1504)
 
 ### Fixed
 
@@ -30,15 +42,25 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPRecycleBinListItem` not retrieving second stage items if only `RowLimit` is specified.
 - Fixed `Add-PnPDataRowsToSiteTemplate` issue with PnP templates when it contained multilingual references.
 - Fixed `Copy-PnPItemProxy` is not recognized as the name of a cmdlet, function, script file, or operable program error with the cmdlet.- Fixed `Copy-PnPItemProxy` is not recognized as the name of a cmdlet, function, script file, or operable program error with the cmdlet.
+- Fixed `Add-PnPMicrosoft365GroupMember`, `Remove-PnPMicrosoft365GroupMember`, `Add-PnPTeamsUser` and `Remove-PnPTeamsUser` not being able to handle guest accounts containing # characters [#1523](https://github.com/pnp/powershell/pull/1523)
 
 ### Removed
 
+- Removed `Add-PnPClientSidePageSection`, use `Add-PnPPageSection` instead [#1563](https://github.com/pnp/powershell/pull/1563)
+- Removed `Add-PnPClientSideWebPart`, use `Add-PnPPageWebPart` instead [#1563](https://github.com/pnp/powershell/pull/1563)
+- Removed `Add-PnPClientSideText`, use `Add-PnPPageTextPart` instead [#1563](https://github.com/pnp/powershell/pull/1563)
 
 ### Contributors
 
+- Lschockaert
 - Leon Armston [LeonArmston]
 - Reshmee Auckloo [reshmee011]
 - Arleta [PowershellScripts]
+- Brendon Lee [brenle]
+- Guillaume Bordier [gbordier]
+- [reusto]
+- Gautam Sheth [gautamdsheth]
+- Koen Zomers [koenzomers]
 
 ## [1.9.0]
 
@@ -78,6 +100,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-IsFluidEnabled` to `Set-PnPTenant` cmdlet to enable/disable users from using Fluid components.
 - Added `Add\Get\Remove-PnPListItemComment` cmdlets to deal with list item comments. Using these cmdlets, you will now be able to add, retrieve and delete list item comments. [#1462](https://github.com/pnp/powershell/pull/1462)
 - Added `-ResourceTypeName` and `-ResourceUrl` parameters to `Get-PnPAccessToken` to fetch access token of specified resource. [#1451](https://github.com/pnp/powershell/pull/1451)
+- Added `-BookmarkStatus` parameter to `Get-PnPSearchConfiguration` cmdlet to call REST endpoint to fetch promoted results defined via query rules and output them in Bookmark supported CSV format.
 
 ### Changed
 - Improved `Get-PnPFile` cmdlet to handle large file downloads
@@ -115,6 +138,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Get-PnPSubWebs` as that was marked deprecated a year ago. Use `Get-PnPSubWeb` instead. [#1394](https://github.com/pnp/powershell/pull/1394)
 
 ### Contributors
+- Mikael Svenson [wobba]
 - Koen Zomers [koenzomers]
 - Bert Jansen [jansenbe]
 - Gautam Sheth [gautamdsheth]

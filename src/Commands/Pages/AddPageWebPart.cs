@@ -2,14 +2,10 @@
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
-using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Add, "PnPPageWebPart")]
-    [Alias("Add-PnPClientSideWebPart")]
-    [WriteAliasWarning("Please use 'Add-PnPPageWebPart'. The alias 'Add-PnPClientSideWebPart' will be removed in the 1.5.0 release")]
-
     public class AddWebPart : PnPWebCmdlet
     {
         private const string ParameterSet_DEFAULTBUILTIN = "Default with built-in web part";

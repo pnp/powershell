@@ -19,7 +19,7 @@ Get-PnPPowerShellTelemetryEnabled [-Connection <PnPConnection>] [<CommonParamete
 ```
 
 ## DESCRIPTION
-In order to help to make PnP PowerShell better, we can track anonymous telemetry. We track the version of the cmdlets you are using, which cmdlet you are executing and which version of SharePoint you are connecting to. Use Disable-PnPPowerShellTelemetry to turn this off, alternative, use the -NoTelemetry switch on Connect-PnPOnline to turn it off for that session.
+In order to help to make PnP PowerShell better, we can track anonymous telemetry. For more information on what we collect and how to prevent this data from being collected, visit [Configure PnP PowerShell](https://pnp.github.io/powershell/articles/configuration.html).
 
 ## EXAMPLES
 

@@ -348,7 +348,7 @@ namespace PnP.PowerShell.Commands.Model
             catch
             {
                 this.disableCustomAppAuthentication = false;
-            }                               
+            }
             this.markNewFilesSensitiveByDefault = tenant.MarkNewFilesSensitiveByDefault;
             try
             {
@@ -376,8 +376,19 @@ namespace PnP.PowerShell.Commands.Model
             }
             try
             {
+                this.disablePersonalListCreation = tenant.DisablePersonalListCreation;
+            }
+            catch
+            {
+                this.disablePersonalListCreation = false;
+            }
+
+            this.disabledModernListTemplateIds = tenant.DisabledModernListTemplateIds;
+
+            try
+            {
                 var getAllowFilesWithKeepLabelToBeDeletedSPO = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAllowFilesWithKeepLabelToBeDeletedSPO(clientContext);
-                var getAllowFilesWithKeepLabelToBeDeletedODB = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAllowFilesWithKeepLabelToBeDeletedODB(clientContext);                
+                var getAllowFilesWithKeepLabelToBeDeletedODB = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAllowFilesWithKeepLabelToBeDeletedODB(clientContext);
                 clientContext.ExecuteQueryRetry();
 
                 this.allowFilesWithKeepLabelToBeDeletedSPO = getAllowFilesWithKeepLabelToBeDeletedSPO.Value;
@@ -533,6 +544,9 @@ namespace PnP.PowerShell.Commands.Model
         public bool DisableAddToOneDrive => disableAddToOneDrive;
 
         public bool IsFluidEnabled => isFluidEnabled;
+        public bool DisablePersonalListCreation => disablePersonalListCreation;
+
+        public Guid[] DisabledModernListTemplateIds => disabledModernListTemplateIds;
 
         private bool hideDefaultThemes;
 
@@ -666,12 +680,11 @@ namespace PnP.PowerShell.Commands.Model
 
         private bool disableCustomAppAuthentication;
 
-        private SensitiveByDefaultState markNewFilesSensitiveByDefault;    
+        private SensitiveByDefaultState markNewFilesSensitiveByDefault;
 
         private bool stopNew2013Workflows;
 
         private bool viewInFileExplorerEnabled;
-
 
         private bool disableSpacesActivation;
 
@@ -682,6 +695,10 @@ namespace PnP.PowerShell.Commands.Model
         private bool disableAddToOneDrive;
 
         private bool isFluidEnabled;
+
+        private bool disablePersonalListCreation;
+
+        private Guid[] disabledModernListTemplateIds;
 
     }
 }
