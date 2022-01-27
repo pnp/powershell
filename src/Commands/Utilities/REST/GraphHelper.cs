@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -124,7 +125,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             var stringContent = await GetAsync(httpClient, url, accessToken);
             if (stringContent != null)
             {
-                var options = new JsonSerializerOptions() { IgnoreNullValues = true };
+                var options = new JsonSerializerOptions { IgnoreNullValues = true };
+                options.Converters.Add(new JsonStringEnumConverter());
                 if (camlCasePolicy)
                 {
                     options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
@@ -138,7 +140,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                     var entity = JsonSerializer.Deserialize<T>(stringContent, options);
                     return entity;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     return default(T);
                 }
