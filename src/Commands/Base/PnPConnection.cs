@@ -663,29 +663,17 @@ namespace PnP.PowerShell.Commands.Base
 
         internal void InitializeTelemetry(ClientContext context, InitializationType initializationType)
         {
-
-            var enableTelemetry = false;
             var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             var telemetryFile = System.IO.Path.Combine(userProfile, ".pnppowershelltelemetry");
-            if (Environment.GetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY") != null)
-            {
-                enableTelemetry = Environment.GetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY").ToLower().Equals("false");
-            }
-            else
-            {
 
-                if (!System.IO.File.Exists(telemetryFile))
-                {
-                    enableTelemetry = true;
-                }
-                else
-                {
-                    if (System.IO.File.ReadAllText(telemetryFile).ToLower() == "allow")
-                    {
-                        enableTelemetry = true;
-                    }
-                }
-            }
+            // If telemetry should be enabled is based on:
+            // a. The environmentvariable not having been set OR having been set and having the value false
+            //    AND
+            // b. The telemetry file not existing OR existing and having the word allow in it
+            var enableTelemetry = ((Environment.GetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY") == null || Environment.GetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY").Equals("false", StringComparison.InvariantCultureIgnoreCase)) &&
+                                   (!System.IO.File.Exists(telemetryFile) || System.IO.File.ReadAllText(telemetryFile).Equals("allow", StringComparison.InvariantCultureIgnoreCase)));
+
+            // Load Application Insights if telemetry should be enabled
             if (enableTelemetry)
             {
                 var serverLibraryVersion = "";
