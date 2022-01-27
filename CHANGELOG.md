@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- Improved `Add-PnPTeamsUser` cmdlet. The cmdlet executes faster and we can now add users in batches of 200.
+- Improved `Add-PnPTeamsUser` cmdlet. The cmdlet executes faster and we can now add users in batches of 200. [#1548](https://github.com/pnp/powershell/pull/1548)
 
 ### Fixed
 
