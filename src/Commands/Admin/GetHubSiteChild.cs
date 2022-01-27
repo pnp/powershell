@@ -1,6 +1,5 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
@@ -21,8 +20,11 @@ namespace PnP.PowerShell.Commands.Admin
             try
             {
                 hubSiteProperties = Identity.GetHubSite(Tenant);
-                ClientContext.Load(hubSiteProperties, h => h.ID);
-                ClientContext.ExecuteQueryRetry();
+                if(!hubSiteProperties.IsPropertyAvailable("ID"))
+                {
+                    ClientContext.Load(hubSiteProperties, h => h.ID);
+                    ClientContext.ExecuteQueryRetry();
+                }
             }
             catch (ServerException ex)
             {
