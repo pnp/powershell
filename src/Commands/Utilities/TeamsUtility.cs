@@ -214,6 +214,16 @@ namespace PnP.PowerShell.Commands.Utilities
             return returnTeam;
         }
 
+        internal static string GetUserGraphUrlForUPN(string upn)
+        {
+
+            var escapedUpn = upn.Replace("#", "%23");
+
+            if (escapedUpn.StartsWith("$")) return $"users('{escapedUpn}')";
+
+            return $"users/{escapedUpn}";
+        }
+
         private static async Task<Group> CreateGroupAsync(string accessToken, HttpClient httpClient, string displayName, string description, string classification, string mailNickname, GroupVisibility visibility, string[] owners, TeamsTemplateType templateType = TeamsTemplateType.None, TeamResourceBehaviorOptions?[] resourceBehaviorOptions = null)
         {
             // When creating a group, we always need an owner, thus we'll try to define it from the passed in owners array
@@ -221,7 +231,8 @@ namespace PnP.PowerShell.Commands.Utilities
             if (owners != null && owners.Length > 0)
             {
                 // Owner(s) have been provided, use the first owner as the initial owner. The other owners will be added later.
-                var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{owners[0]}?$select=Id", accessToken);
+                var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{GetUserGraphUrlForUPN(owners[0])}?$select=Id", accessToken);
+
                 if (user != null)
                 {
                     // User Id of the first owner has been found
@@ -376,7 +387,7 @@ namespace PnP.PowerShell.Commands.Utilities
         #region Users
         public static async Task AddUserAsync(HttpClient httpClient, string accessToken, string groupId, string upn, string role)
         {
-            var userIdResult = await GraphHelper.GetAsync(httpClient, $"v1.0/users/{upn}?$select=Id", accessToken);
+            var userIdResult = await GraphHelper.GetAsync(httpClient, $"v1.0/{GetUserGraphUrlForUPN(upn)}?$select=Id", accessToken);
             var resultElement = JsonSerializer.Deserialize<JsonElement>(userIdResult);
             if (resultElement.TryGetProperty("id", out JsonElement idProperty))
             {
@@ -394,10 +405,10 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static async Task AddUsersAsync(HttpClient httpClient, string accessToken, string groupId, string[] upn, string role)
         {
-            var chunks = BatchUtility.Chunk(upn, 20);
+            var chunks = BatchUtility.Chunk(upn.Select(u => GetUserGraphUrlForUPN(u)), 20);
             foreach (var chunk in chunks)
             {
-                var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/users/{0}", "id");
+                var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/{0}", "id");
                 var teamChannelMember = new List<TeamChannelMember>();
                 foreach (var userid in results.Select(r => r.Value))
                 {
@@ -487,7 +498,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static async Task DeleteUserAsync(HttpClient httpClient, string accessToken, string groupId, string upn, string role)
         {
-            var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{upn}?$select=Id", accessToken);
+            var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/{GetUserGraphUrlForUPN(upn)}?$select=Id", accessToken);
             if (user != null)
             {
                 // check if the user is an owner
@@ -566,7 +577,7 @@ namespace PnP.PowerShell.Commands.Utilities
             if (isPrivate)
             {
                 channel.Type = "#Microsoft.Graph.channel";
-                var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{ownerUPN}", accessToken);
+                var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/{GetUserGraphUrlForUPN(ownerUPN)}", accessToken);
                 channel.Members = new List<TeamChannelMember>();
                 channel.Members.Add(new TeamChannelMember() { Roles = new List<string> { "owner" }, UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{user.Id}')" });
                 return await GraphHelper.PostAsync<TeamChannel>(httpClient, $"v1.0/teams/{groupId}/channels", channel, accessToken);
