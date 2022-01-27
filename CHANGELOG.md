@@ -20,7 +20,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Add\Remove\Set-PnPAdaptiveScopeProperty` cmdlets to add/update/remove a property bag value while dealing with the noscript toggling in one cmdlet [#1556](https://github.com/pnp/powershell/pull/1556)
 - Added support to add multiple owners and members in `New-PnPTeamsTeam` cmdlet [#1241](https://github.com/pnp/powershell/pull/1241)
 - Added the ability to set the title of a new modern page in SharePoint Online using `Add-PnPPage` to be different from its filename by using `-Title`
- 
+- Added `Get-PnPTeamsPrimaryChannel` to get the primary Teams channel, general, of a Team [#1572](https://github.com/pnp/powershell/pull/1572)
+
 ### Changed
 
 - Improved `Add-PnPTeamsUser` cmdlet. The cmdlet executes faster and we can now add users in batches of 200. [#1548](https://github.com/pnp/powershell/pull/1548)
@@ -55,6 +56,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Brendon Lee [brenle]
 - Guillaume Bordier [gbordier]
 - [reusto]
+- Reshmee Auckloo [reshmee011]
 - Gautam Sheth [gautamdsheth]
 - Koen Zomers [koenzomers]
 
