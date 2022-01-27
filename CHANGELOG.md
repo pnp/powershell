@@ -46,6 +46,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Add-PnPClientSidePageSection`, use `Add-PnPPageSection` instead [#1563](https://github.com/pnp/powershell/pull/1563)
 - Removed `Add-PnPClientSideWebPart`, use `Add-PnPPageWebPart` instead [#1563](https://github.com/pnp/powershell/pull/1563)
 - Removed `Add-PnPClientSideText`, use `Add-PnPPageTextPart` instead [#1563](https://github.com/pnp/powershell/pull/1563)
+- Removed `Get-PnPAADUser`, use `Get-PnPAzureADUser` instead [#1568](https://github.com/pnp/powershell/pull/1568)
 
 ### Contributors
 
