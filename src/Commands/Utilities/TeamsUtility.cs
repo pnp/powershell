@@ -405,17 +405,22 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static async Task AddUsersAsync(HttpClient httpClient, string accessToken, string groupId, string[] upn, string role)
         {
-            var chunks = BatchUtility.Chunk(upn.Select(u => GetUserGraphUrlForUPN(u)), 20);
-            foreach (var chunk in chunks)
+            var teamChannelMember = new List<TeamChannelMember>();
+            if(upn != null && upn.Length > 0)
             {
-                var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/{0}", "id");
-                var teamChannelMember = new List<TeamChannelMember>();
-                foreach (var userid in results.Select(r => r.Value))
+                foreach (var user in upn)
                 {
-                    teamChannelMember.Add(new TeamChannelMember() { Roles = new List<string> { role }, UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{userid}')" });
+                    teamChannelMember.Add(new TeamChannelMember() { Roles = new List<string> { role }, UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{user}')" });
                 }
-                await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/members/add", new { values = teamChannelMember }, accessToken);
-            }
+                if (teamChannelMember.Count > 0)
+                {
+                    var chunks = BatchUtility.Chunk(teamChannelMember, 200);
+                    foreach (var chunk in chunks.ToList())
+                    {
+                        await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/members/add", new { values = chunk.ToList() }, accessToken);
+                    }
+                }
+            }            
         }
 
         public static async Task<List<User>> GetUsersAsync(HttpClient httpClient, string accessToken, string groupId, string role)
