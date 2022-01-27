@@ -1269,7 +1269,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisablePersonalListCreation
-Allows configuration on whether Personal lists are enabled or disabled in the tenant. If set to `$true`, then this Personal lists will be allowed to be created in the tenant. If set to `$false`, it will be disabled the tenant.
+Allows configuring whether personal lists created within the OneDrive for Business site of the user is enabled or disabled in the tenant. If set to `$true`, personal lists will be allowed to be created in the tenant. If set to `$false`, it will be disabled in the tenant.
 
 ```yaml
 Type: Boolean
@@ -1283,7 +1283,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisabledModernListTemplateIds
-Guids of out of the box modern lists id's to hide
+Guids of out of the box modern list templates to hide when creating a new list
 
 ```yaml
 Type: Guid[]
@@ -1297,7 +1297,7 @@ Accept wildcard characters: False
 ```
 
 ### -EnableModernListTemplateIds
-Guids of out of the box modern lists id's to show.
+Guids of out of the box modern liststemplates to show when creating a new list
 
 ```yaml
 Type: Guid[]
