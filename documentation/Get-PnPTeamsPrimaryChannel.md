@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsPrimaryChan
 
   * Microsoft Graph API : Channel.ReadBasic.All, ChannelSettings.Read.All, ChannelSettings.ReadWrite.All
 
-Get the default channel, General, of a team.
+Gets the default channel, General, of a team.
 
 ## SYNTAX
 
@@ -25,6 +25,7 @@ Get-PnPTeamsPrimaryChannel -Team <TeamsTeamPipeBind> [-Identity <TeamsChannelPip
 ```
 
 ## DESCRIPTION
+Gets the default channel, General, of a team.
 
 ## EXAMPLES
 
@@ -33,10 +34,19 @@ Get-PnPTeamsPrimaryChannel -Team <TeamsTeamPipeBind> [-Identity <TeamsChannelPip
 Get-PnPTeamsPrimaryChannel -Team ee0f40fc-b2f7-45c7-b62d-11b90dd2ea8e
 ```
 
+Gets the default channel of the Team with the provided Id
+
+### EXAMPLE 2
+```powershell
+Get-PnPTeamsPrimaryChannel -Team Sales
+```
+
+Gets the default channel of the Sales Team
+
 ## PARAMETERS
 
 ### -Team
-Specify the group id, mailNickname or display name of the team to use.
+The group id, mailNickname or display name of the team to use.
 
 ```yaml
 Type: TeamsTeamPipeBind
@@ -52,4 +62,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+[Microsoft Graph documentation](https://docs.microsoft.com/graph/api/team-get-primarychannel)
