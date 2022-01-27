@@ -28,7 +28,7 @@ Get-PnPWebPart -ServerRelativePageUrl <String> [-Identity <WebPartPipeBind>]
 Get-PnPWebPart -ServerRelativePageUrl "/sites/demo/sitepages/home.aspx"
 ```
 
-Returns all webparts defined on the given page.
+Returns all webparts defined on the given page. This command only works with Classic Pages.
 
 ### EXAMPLE 2
 ```powershell
