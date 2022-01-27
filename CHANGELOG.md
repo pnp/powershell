@@ -51,6 +51,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Brendon Lee [brenle]
 - Guillaume Bordier [gbordier]
 - [reusto]
+- Gautam Sheth [gautamdsheth]
+- Koen Zomers [koenzomers]
 
 ## [1.9.0]
 
