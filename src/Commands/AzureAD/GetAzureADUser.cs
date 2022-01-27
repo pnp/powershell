@@ -44,7 +44,7 @@ namespace PnP.PowerShell.Commands.Principals
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DELTA)]
-        public int? EndIndex = 999;
+        public int? EndIndex = null;
 
         protected override void ExecuteCmdlet()
         {
