@@ -43,14 +43,14 @@ Get-PnPAzureADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [
 Get-PnPAzureADUser
 ```
 
-Retrieves the first 1000 users from Azure Active Directory
+Retrieves all users from Azure Active Directory
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAzureADUser -EndIndex $null
+Get-PnPAzureADUser -EndIndex 50
 ```
 
-Retrieves all users from Azure Active Directory
+Retrieves the first 50 users from Azure Active Directory. Notice that you have no control over who will be in this batch of 50 unless you combine it with the `-Filter` and/or `-OrderBy` parameters.
 
 ### EXAMPLE 3
 ```powershell
@@ -106,7 +106,7 @@ Retrieves all the users from Azure Active Directory which have had changes since
 Get-PnPAzureADUser -StartIndex 10 -EndIndex 20
 ```
 
-Retrieves the 10th through the 20th user from Azure Active Directory
+Retrieves the 10th through the 20th user from Azure Active Directory. Notice that you have no control over which users will be in this batch of 10 users.
 
 ## PARAMETERS
 
@@ -195,7 +195,7 @@ Accept wildcard characters: False
 ```
 
 ### -StartIndex
-Allows defining the first result to return. Useful for i.e. paging.
+Allows defining the first result to return. Useful for i.e. pagination.
 
 ```yaml
 Type: Int32
@@ -209,7 +209,7 @@ Accept wildcard characters: False
 ```
 
 ### -EndIndex
-Allows defining the last result to return. Useful for i.e. pagina. If omitted, it will use 999. If set to $null, it will return all users from Azure Active Directory.
+Allows defining the last result to return. Useful for i.e. pagination. If omitted, it will return all available users from Azure Active Directory.
 
 ```yaml
 Type: Int32
@@ -217,7 +217,7 @@ Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: 999
+Default value: $null
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
