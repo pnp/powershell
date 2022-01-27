@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added the ability to set the title of a new modern page in SharePoint Online using `Add-PnPPage` to be different from its filename by using `-Title`
 - Added `-Content` option to `Add-PnPFile` which allows textual content to be directly uploaded to SharePoint without having to save it as a file first
 - Added optional `-UseBeta` parameter to `Get-PnPAzureADUser` to force it to use the Microsoft Graph beta endpoint. This can be necessary when i.e. using `-Select "PreferredDataLocation"` to query for users with a specific multi geo location as this property is only available through the beta endpoint. [#1559](https://github.com/pnp/powershell/pull/1559)
+- Added `-Content` option to `Add-PnPFile` which allows creating a new file on SharePoint Online and directly providing its textual content, i.e. to upload a log file of the execution [#1559](https://github.com/pnp/powershell/pull/1559)
   
 ### Changed
 
