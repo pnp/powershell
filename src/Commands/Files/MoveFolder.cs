@@ -1,7 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
-using PnP.Framework.Utilities;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Files
 {
@@ -9,9 +8,9 @@ namespace PnP.PowerShell.Commands.Files
     
     public class MoveFolder : PnPWebCmdlet
     {
-
-        [Parameter(Mandatory = true)]
-        public string Folder = string.Empty;
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [ValidateNotNullOrEmpty]
+        public FolderPipeBind Folder;
 
         [Parameter(Mandatory = true)]
         public string TargetFolder = string.Empty;
@@ -20,9 +19,8 @@ namespace PnP.PowerShell.Commands.Files
         {
             CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
-            var sourceFolderUrl = UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, Folder);
-            Folder sourceFolder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(sourceFolderUrl));
-            ClientContext.Load(sourceFolder, f => f.Name, f => f.ServerRelativeUrl);
+            var sourceFolder = Folder.GetFolder(CurrentWeb);            
+            ClientContext.Load(sourceFolder, f => f.Name, f => f.ServerRelativeUrl, f => f.ServerRelativePath);
             ClientContext.ExecuteQueryRetry();
 
             var targetPath = string.Concat(TargetFolder, "/", sourceFolder.Name);

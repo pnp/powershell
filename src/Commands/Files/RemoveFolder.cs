@@ -1,8 +1,8 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.Framework.Utilities;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Files
 {
@@ -12,8 +12,9 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = true)]
         public string Name = string.Empty;
 
-        [Parameter(Mandatory = true)]
-        public string Folder = string.Empty;
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [ValidateNotNullOrEmpty]
+        public FolderPipeBind Folder;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Recycle;
@@ -25,7 +26,11 @@ namespace PnP.PowerShell.Commands.Files
         {
             CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
-            var folderUrl = UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, Folder, Name);
+            var parentFolder = Folder.GetFolder(CurrentWeb);
+            ClientContext.Load(parentFolder, f => f.Name, f => f.ServerRelativeUrl, f => f.ServerRelativePath);
+            ClientContext.ExecuteQueryRetry();
+
+            var folderUrl = UrlUtility.Combine(parentFolder.ServerRelativePath.DecodedUrl, Name);
             Folder folder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
             folder.EnsureProperty(f => f.Name);
 
@@ -45,4 +50,3 @@ namespace PnP.PowerShell.Commands.Files
         }
     }
 }
-
