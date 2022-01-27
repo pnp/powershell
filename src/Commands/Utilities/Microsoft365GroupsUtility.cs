@@ -15,10 +15,10 @@ namespace PnP.PowerShell.Commands.Utilities
         internal static async Task<IEnumerable<Microsoft365Group>> GetGroupsAsync(HttpClient httpClient, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
             var items = new List<Microsoft365Group>();
-            var result = await GraphHelper.GetResultCollectionAsync<Microsoft365Group>(httpClient, "v1.0/groups", accessToken);
+            var result = await GraphHelper.GetResultCollectionAsync<Microsoft365Group>(httpClient, "v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified')", accessToken);
             if (result != null && result.Any())
             {
-                items.AddRange(result);               
+                items.AddRange(result);
             }
             if (includeSiteUrl || includeOwners)
             {
@@ -50,7 +50,6 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             return items;
         }
-
         internal static async Task<Microsoft365Group> GetGroupAsync(HttpClient httpClient, Guid groupId, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
             var group = await GraphHelper.GetAsync<Microsoft365Group>(httpClient, $"v1.0/groups/{groupId}", accessToken);
@@ -96,8 +95,6 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             return group;
         }
-
-
         internal static async Task<Microsoft365Group> GetGroupAsync(HttpClient httpClient, string displayName, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
             var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(httpClient, $"v1.0/groups?$filter=displayName eq '{displayName}' or mailNickName eq '{displayName}'", accessToken);
@@ -395,7 +392,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             if (createTeam)
             {
-                await CreateTeamAsync(httpClient, accessToken, newGroup.Id.Value);                
+                await CreateTeamAsync(httpClient, accessToken, newGroup.Id.Value);
             }
 
             return newGroup;
@@ -461,7 +458,7 @@ namespace PnP.PowerShell.Commands.Utilities
             var createTeamEndPoint = $"v1.0/groups/{groupId}/team";
             bool wait = true;
             var iterations = 0;
-            
+
             while (wait)
             {
                 iterations++;
@@ -492,8 +489,6 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             await GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/renew", new { }, accessToken);
         }
-
-
 
         internal static async Task<Microsoft365Group> UpdateAsync(HttpClient httpClient, string accessToken, Microsoft365Group group)
         {
@@ -529,6 +524,70 @@ namespace PnP.PowerShell.Commands.Utilities
                     retry = false;
                 }
             }
+        }
+
+        internal static async Task<Microsoft365GroupSettingValueCollection> GetGroupSettingsAsync(HttpClient httpClient, string accessToken)
+        {
+            var result = await GraphHelper.GetAsync<Microsoft365GroupSettingValueCollection>(httpClient, "v1.0/groupSettings", accessToken, propertyNameCaseInsensitive: true);
+            return result;
+        }
+
+        internal static async Task<Microsoft365GroupSettingValueCollection> GetGroupSettingsAsync(HttpClient httpClient, string accessToken, string groupId)
+        {
+            var result = await GraphHelper.GetAsync<Microsoft365GroupSettingValueCollection>(httpClient, $"v1.0/groups/{groupId}/settings", accessToken, propertyNameCaseInsensitive: true);
+            return result;
+        }
+
+        internal static async Task<Microsoft365GroupSetting> CreateGroupSetting(HttpClient httpClient, string accessToken, dynamic groupSettingObject)
+        {
+            var stringContent = new StringContent(JsonSerializer.Serialize(groupSettingObject));
+            stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            var result = await GraphHelper.PostAsync<Microsoft365GroupSetting>(httpClient, "v1.0/groupSettings", stringContent, accessToken, propertyNameCaseInsensitive: true);
+            return result;
+        }
+
+        internal static async Task<Microsoft365GroupSetting> CreateGroupSetting(HttpClient httpClient, string accessToken, string groupId, dynamic groupSettingObject)
+        {
+            var stringContent = new StringContent(JsonSerializer.Serialize(groupSettingObject));
+            stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            var result = await GraphHelper.PostAsync<Microsoft365GroupSetting>(httpClient, $"v1.0/groups/{groupId}/settings", stringContent, accessToken, propertyNameCaseInsensitive: true);
+            return result;
+        }
+
+        internal static async Task UpdateGroupSetting(HttpClient httpClient, string accessToken, string id, dynamic groupSettingObject)
+        {
+            var stringContent = new StringContent(JsonSerializer.Serialize(groupSettingObject));
+            stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            await GraphHelper.PatchAsync(httpClient, accessToken, stringContent, $"v1.0/groupSettings/{id}");
+        }
+
+        internal static async Task UpdateGroupSetting(HttpClient httpClient, string accessToken, string id, string groupId, dynamic groupSettingObject)
+        {
+            var stringContent = new StringContent(JsonSerializer.Serialize(groupSettingObject));
+            stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            await GraphHelper.PatchAsync(httpClient, accessToken, stringContent, $"v1.0/groups/{groupId}/settings/{id}");
+        }
+
+        internal static async Task RemoveGroupSetting(HttpClient httpClient, string accessToken, string id)
+        {            
+            await GraphHelper.DeleteAsync(httpClient, $"v1.0/groupSettings/{id}", accessToken);
+        }
+
+        internal static async Task RemoveGroupSetting(HttpClient httpClient, string accessToken, string id, string groupId)
+        {            
+            await GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}/settings/{id}", accessToken);
+        }
+
+        internal static async Task<Microsoft365GroupTemplateSettingValueCollection> GetGroupTemplateSettingsAsync(HttpClient httpClient, string accessToken)
+        {
+            var result = await GraphHelper.GetAsync<Microsoft365GroupTemplateSettingValueCollection>(httpClient, "v1.0/groupSettingTemplates", accessToken, propertyNameCaseInsensitive: true);
+            return result;
+        }
+
+        internal static async Task<Microsoft365GroupSettingTemplate> GetGroupTemplateSettingsAsync(HttpClient httpClient, string accessToken, string id)
+        {
+            var result = await GraphHelper.GetAsync<Microsoft365GroupSettingTemplate>(httpClient, $"v1.0/groupSettingTemplates/{id}", accessToken, propertyNameCaseInsensitive: true);
+            return result;
         }
     }
 }
