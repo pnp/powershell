@@ -5,9 +5,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Reset, "PnPFileVersion")]
-    
-    
-    
     public class ResetFileVersion : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
