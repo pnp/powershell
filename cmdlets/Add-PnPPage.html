@@ -100,34 +100,38 @@
 </code></pre>
 <p>Creates a new page named 'NewPage'</p>
 <h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Add-PnPPage -Name &quot;NewPage&quot; -Title &quot;Welcome to my page&quot;
+</code></pre>
+<p>Creates a new page NewPage.aspx with the title as provided</p>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Add-PnPPage -Name &quot;NewPage&quot; -ContentType &quot;MyPageContentType&quot;
 </code></pre>
 <p>Creates a new page named 'NewPage' and sets the content type to the content type specified</p>
-<h3 id="example-3">EXAMPLE 3</h3>
+<h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Add-PnPPage -Name &quot;NewPageTemplate&quot; -PromoteAs Template
 </code></pre>
 <p>Creates a new page named 'NewPage' and saves as a template to the site.</p>
-<h3 id="example-4">EXAMPLE 4</h3>
+<h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Add-PnPPage -Name &quot;Folder/NewPage&quot;
 </code></pre>
 <p>Creates a new page named 'NewPage' under 'Folder' folder and saves as a template to the site.</p>
-<h3 id="example-5">EXAMPLE 5</h3>
+<h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">Add-PnPPage -Name &quot;NewPage&quot; -HeaderLayoutType ColorBlock
 </code></pre>
 <p>Creates a new page named 'NewPage' using the ColorBlock header layout</p>
-<h3 id="example-6">EXAMPLE 6</h3>
+<h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">Add-PnPPage -Name &quot;NewPage&quot; Article -ScheduledPublishDate (Get-Date).AddHours(1)
 </code></pre>
 <p>Creates a new page named 'NewPage' using the article layout and schedule it to be published in 1 hour from now</p>
-<h3 id="example-7">EXAMPLE 7</h3>
+<h3 id="example-8">EXAMPLE 8</h3>
 <pre><code class="lang-powershell">Add-PnPPage -Name &quot;NewPage&quot; -Translate
 </code></pre>
 <p>Creates a new page named 'NewPage' and also creates the necessary translated page for the supported languages in the site collection.</p>
-<h3 id="example-8">EXAMPLE 8</h3>
+<h3 id="example-9">EXAMPLE 9</h3>
 <pre><code class="lang-powershell">Add-PnPPage -Name &quot;NewPage&quot; -Translate -TranslationLanguageCodes 1043
 </code></pre>
 <p>Creates a new page named 'NewPage' and also creates the necessary translated page for the specified language in the site collection. In this case, it will create the translated page for Dutch language. If the Dutch language is not enabled, it will enable the language and then create the translated page.</p>
-<h3 id="example-9">EXAMPLE 9</h3>
+<h3 id="example-10">EXAMPLE 10</h3>
 <pre><code class="lang-powershell">Add-PnPPage -Name &quot;NewPage&quot; -Translate -TranslationLanguageCodes 1043,1035
 </code></pre>
 <p>Creates a new page named 'NewPage' and also creates the necessary translated page for the specified languages in the site collection. In this case, it will create the translated pages for Dutch and Finnish languages. If these languages are not enabled, it will enable these languages and then create the translated pages for the specified languages.</p>

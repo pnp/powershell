@@ -99,7 +99,7 @@
  [-AllowOwnerDeleteMessages &lt;Boolean&gt;] [-AllowStickersAndMemes &lt;Boolean&gt;] [-AllowTeamMentions &lt;Boolean&gt;]
  [-AllowUserDeleteMessages &lt;Boolean&gt;] [-AllowUserEditMessages &lt;Boolean&gt;]
  [-GiphyContentRating &lt;TeamGiphyContentRating&gt;] [-ShowInTeamsSearchAndSuggestions &lt;Boolean&gt;]
- [-Classification &lt;String&gt;]  [&lt;CommonParameters&gt;]
+ [-Classification &lt;String&gt;] [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;]  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="for-a-new-group">For a new group</h3>
 <pre><code class="lang-powershell">New-PnPTeamsTeam -DisplayName &lt;String&gt; [-MailNickName &lt;String&gt;] [-Description &lt;String&gt;] [-Owner &lt;String&gt;]
@@ -110,7 +110,8 @@
  [-AllowOwnerDeleteMessages &lt;Boolean&gt;] [-AllowStickersAndMemes &lt;Boolean&gt;] [-AllowTeamMentions &lt;Boolean&gt;]
  [-AllowUserDeleteMessages &lt;Boolean&gt;] [-AllowUserEditMessages &lt;Boolean&gt;]
  [-GiphyContentRating &lt;TeamGiphyContentRating&gt;] [-Visibility &lt;TeamVisibility&gt;]
- [-ShowInTeamsSearchAndSuggestions &lt;Boolean&gt;] [-Classification &lt;String&gt;]
+ [-ShowInTeamsSearchAndSuggestions &lt;Boolean&gt;] [-Classification &lt;String&gt;] 
+ [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;]
  [-ResourceBehaviorOptions &lt;TeamResourceBehaviorOptions&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
@@ -132,6 +133,10 @@
 <pre><code class="lang-powershell">New-PnPTeamsTeam -DisplayName &quot;myPnPDemo1&quot; -Visibility Private -AllowCreateUpdateRemoveTabs $false -AllowUserDeleteMessages $false -ResourceBehaviorOptions WelcomeEmailDisabled, HideGroupInOutlook
 </code></pre>
 <p>This will create a new Microsoft Teams team called &quot;myPnPDemo1&quot; and sets the privacy to Private, as well as preventing users from deleting their messages or update/remove tabs. The user creating the Microsoft Teams team will be added as Owner. Welcome Email will not be sent when the Group is created. The M365 Group will also not be visible in Outlook.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">New-PnPTeamsTeam -DisplayName &quot;myPnPDemo1&quot; -Visibility Private -Owners &quot;user1@contoso.onmicrosoft.com&quot;,&quot;user2@contoso.onmicrosoft.com&quot; -Members &quot;user3@contoso.onmicrosoft.com&quot;
+</code></pre>
+<p>This will create a new Microsoft Teams team called &quot;myPnPDemo1&quot; and sets the privacy to Private. User1 and user2 will be added as owners. User3 will be added as a member.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-allowaddremoveapps">-AllowAddRemoveApps</h3>
 <p>Boolean value that determines whether or not members (not only owners) are allowed to add apps to the team.</p>
@@ -392,6 +397,27 @@ Accept wildcard characters: False
 Parameter Sets: For a new group
 Accepted values: Private, Public
 
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-owners">-Owners</h3>
+<p>The UPN(s) of the user(s) to be added to the Microsoft 365 group as a owners.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-members">-Members</h3>
+<p>The UPN(s) of the user(s) to be added to the Microsoft 365 group as a members.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None

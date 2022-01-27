@@ -84,7 +84,7 @@
                     <h1 id="set-pnppropertybagvalue">Set-PnPPropertyBagValue</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets a property bag value</p>
+<p>Adds a new or updates an existing property bag value</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="web">Web</h3>
 <pre><code class="lang-powershell">Set-PnPPropertyBagValue -Key &lt;String&gt; -Value &lt;String&gt; [-Indexed] 
@@ -95,6 +95,7 @@
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Updates an existing property bag value or adds it as a new key\value pair if it doesn't exist yet. If working with a modern SharePoint Online site or having noscript enabled, you will have to disable this yourself temporarily using <code>Set-PnPTenantSite -Url &lt;url&gt; -NoScriptSite:$false</code> to be able to make the change.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPPropertyBagValue -Key MyKey -Value MyValue

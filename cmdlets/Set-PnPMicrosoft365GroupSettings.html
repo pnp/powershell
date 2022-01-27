@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Remove-PnPPropertyBagValue | PnP PowerShell </title>
+    <title>Set-PnPMicrosoft365GroupSettings | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Remove-PnPPropertyBagValue | PnP PowerShell ">
+    <meta name="title" content="Set-PnPMicrosoft365GroupSettings | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,57 +77,35 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="remove-pnppropertybagvalue">Remove-PnPPropertyBagValue</h1>
+                    <h1 id="set-pnpmicrosoft365groupsettings">Set-PnPMicrosoft365GroupSettings</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Removes a value from the property bag</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: One of Directory.ReadWrite.All, Directory.AccessUser.All</li>
+</ul>
+<p>Updates Microsoft 365 Group settings for the tenant or specified Group.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPPropertyBagValue [-Key] &lt;String&gt; [-Folder &lt;String&gt;] [-Force] 
- [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPMicrosoft365GroupSettings -Identity &lt;string&gt; [-Values &lt;Hashtable&gt;] [-Group &lt;Microsoft365GroupPipeBind&gt;]
+ [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Removes a value from the property bag. If working with a modern SharePoint Online site or having noscript enabled, you will have to disable this yourself temporarily using <code>Set-PnPTenantSite -Url &lt;url&gt; -NoScriptSite:$false</code> to be able to make the change.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPPropertyBagValue -Key MyKey
+<pre><code class="lang-powershell">Set-PnPMicrosoft365GroupSettings -Identity $groupSettingId -Values @{&quot;AllowToAddGuests&quot;=&quot;true&quot;}
 </code></pre>
-<p>This will remove the value with key MyKey from the current web property bag</p>
+<p>Sets the properties of the setting where $groupSettingId is a Group setting ID. You can get the Group setting using the <code>Get-PnPMicrosoft365GroupSettings</code> cmdlet.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Remove-PnPPropertyBagValue -Key MyKey -Folder /MyFolder
+<pre><code class="lang-powershell">Set-PnPMicrosoft365GroupSettings -Identity $groupSettingId -Values @{&quot;AllowToAddGuests&quot;=&quot;true&quot;} -Group $groupId
 </code></pre>
-<p>This will remove the value with key MyKey from the folder MyFolder which is located in the root folder of the current web</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Remove-PnPPropertyBagValue -Key MyKey -Folder /
-</code></pre>
-<p>This will remove the value with key MyKey from the root folder of the current web</p>
+<p>Sets the properties of the Microsoft 365 group specific setting where $groupSettingId is a setting ID of that group. You can get the Group setting using the <code>Get-PnPMicrosoft365GroupSettings -Group</code> cmdlet.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-folder">-Folder</h3>
-<p>Site relative url of the folder. See examples for use.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-force">-Force</h3>
+<h3 id="-identity">-Identity</h3>
+<p>The Identity of the Microsoft 365 Group setting</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -137,19 +115,31 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-key">-Key</h3>
-<p>Key of the property bag value to be removed</p>
-<pre><code class="lang-yaml">Type: String
+<h3 id="-values">-Values</h3>
+<p>Hashtable of properties for the settings. Use the syntax @{AllowToAddGuests=&quot;false&quot;;GuestUsageGuidelinesUrl=&quot;https://google.com/privacy&quot;}.</p>
+<pre><code class="lang-yaml">Type: Hashtable
 Parameter Sets: (All)
 
 Required: True
-Position: 0
+Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-group">-Group</h3>
+<p>The Identity of the Microsoft 365 Group for which you want to update setting.</p>
+<pre><code class="lang-yaml">Type: Microsoft365GroupPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
+<a href="https://docs.microsoft.com/graph/api/groupsetting-update">Microsoft Graph documentation</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

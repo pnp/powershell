@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Deletes a folder within a parent folder</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPFolder -Name &lt;String&gt; -Folder &lt;String&gt; [-Recycle] [-Force] 
+<pre><code class="lang-powershell">Remove-PnPFolder -Name &lt;String&gt; -Folder &lt;FolderPipeBind&gt; [-Recycle] [-Force] 
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -113,7 +113,7 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-folder">-Folder</h3>
 <p>The parent folder in the site</p>
-<pre><code class="lang-yaml">Type: String
+<pre><code class="lang-yaml">Type: FolderPipeBind
 Parameter Sets: (All)
 
 Required: True
