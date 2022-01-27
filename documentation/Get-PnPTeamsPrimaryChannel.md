@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsPrimaryChan
 
   * Microsoft Graph API : Channel.ReadBasic.All, ChannelSettings.Read.All, ChannelSettings.ReadWrite.All
 
-Gets the primary channel for a specified Team.
+Get the default channel, General, of a team.
 
 ## SYNTAX
 
