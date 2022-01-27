@@ -562,7 +562,11 @@ namespace PnP.PowerShell.Commands.Utilities
             var collection = await GraphHelper.GetResultCollectionAsync<TeamChannel>(httpClient, $"v1.0/teams/{groupId}/channels", accessToken);
             return collection;
         }
-
+        public static async Task<TeamChannel> GetPrimaryChannelAsync(string accessToken, HttpClient httpClient, string groupId)
+        {
+            var collection = await GraphHelper.GetAsync<TeamChannel>(httpClient, $"v1.0/teams/{groupId}/primaryChannel", accessToken);
+            return collection;
+        }
         public static async Task<HttpResponseMessage> DeleteChannelAsync(string accessToken, HttpClient httpClient, string groupId, string channelId)
         {
             return await GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}", accessToken);
