@@ -2,13 +2,10 @@
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
-using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Add, "PnPPageSection")]
-    [Alias("Add-PnPClientSidePageSection")]
-    [WriteAliasWarning("Please use 'Add-PnPPageSection'. The alias 'Add-PnPClientSidePageSection' will be removed in the 1.5.0 release")]
     public class AddPageSection : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -22,7 +19,6 @@ namespace PnP.PowerShell.Commands.Pages
 
         [Parameter(Mandatory = false)]
         public int ZoneEmphasis = 0;
-
 
         protected override void ExecuteCmdlet()
         {

@@ -160,11 +160,21 @@ namespace PnP.PowerShell.Commands.Utilities
             await AddUsersToGroupAsync("members", httpClient, groupId, users, accessToken, removeExisting);
         }
 
+        internal static string GetUserGraphUrlForUPN(string upn)
+        {
+            
+            var escapedUpn = upn.Replace("#", "%23");
+
+            if (escapedUpn.StartsWith("$")) return $"users('{escapedUpn}')";
+
+            return $"users/{escapedUpn}";
+        }
+
         private static async Task AddUsersToGroupAsync(string groupName, HttpClient httpClient, Guid groupId, string[] users, string accessToken, bool removeExisting)
         {
             foreach (var user in users)
             {
-                var userIdResult = await GraphHelper.GetAsync(httpClient, $"v1.0/users/{user}?$select=Id", accessToken);
+                var userIdResult = await GraphHelper.GetAsync(httpClient, $"v1.0/{GetUserGraphUrlForUPN(user)}?$select=Id", accessToken);
                 var resultElement = JsonSerializer.Deserialize<JsonElement>(userIdResult);
                 if (resultElement.TryGetProperty("id", out JsonElement idProperty))
                 {
@@ -196,7 +206,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             foreach (var user in users)
             {
-                var resultString = await GraphHelper.GetAsync(httpClient, $"v1.0/users/{user}?$select=Id", accessToken);
+                var resultString = await GraphHelper.GetAsync(httpClient, $"v1.0/{GetUserGraphUrlForUPN(user)}?$select=Id", accessToken);
                 var resultElement = JsonSerializer.Deserialize<JsonElement>(resultString);
                 if (resultElement.TryGetProperty("id", out JsonElement idElement))
                 {
@@ -325,7 +335,7 @@ namespace PnP.PowerShell.Commands.Utilities
             foreach (var upn in userPrincipalNames)
             {
                 id++;
-                batch.Requests.Add(new GraphBatchRequest() { Id = id.ToString(), Method = "GET", Url = $"/users/{upn}?$select=Id" });
+                batch.Requests.Add(new GraphBatchRequest() { Id = id.ToString(), Method = "GET", Url = $"/{GetUserGraphUrlForUPN(upn)}?$select=Id" });
                 requests.Add(id.ToString(), upn);
             }
             var stringContent = new StringContent(JsonSerializer.Serialize(batch));
