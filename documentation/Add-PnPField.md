@@ -17,7 +17,7 @@ Add a field
 ### Add field to list (Default)
 ```powershell
 Add-PnPField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> -Type <FieldType>
- [-Id <Guid>] [-Formula <String>] [-AddToDefaultView] [-Required] [-Group <String>] [-ClientSideComponentId <Guid>]
+ [-Id <Guid>] [-Formula <String>] [-Choices <String>] [-AddToDefaultView] [-Required] [-Group <String>] [-ClientSideComponentId <Guid>]
  [-ClientSideComponentProperties <String>] [-AddToAllContentTypes] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -30,7 +30,7 @@ Add-PnPField -List <ListPipeBind> -Field <FieldPipeBind> [-Connection <PnPConnec
 
 ### Add field to web
 ```powershell
-Add-PnPField -DisplayName <String> -InternalName <String> -Type <FieldType> [-Id <Guid>] [-Formula <String>] 
+Add-PnPField -DisplayName <String> -InternalName <String> -Type <FieldType> [-Id <Guid>] [-Formula <String>] [-Choices <String>]
  [-ClientSideComponentId <Guid>] [-ClientSideComponentProperties <String>] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
@@ -63,17 +63,17 @@ This will add a field of type Multiple Choice to the list "Demo List". (you can 
 
 ### EXAMPLE 4
 ```powershell
-Add-PnPField -List "TestLib" -Field "Demo List"
+Add-PnPField -List "Demo List" -Field "MyTestCol"
 ```
 
-This will add an existing site column called "MyTest" to the list "Demo List".
+This will add an existing site column called "MyTestCol" to the list "Demo List".
 
 ### EXAMPLE 5
 ```powershell
-Add-PnPField -Type Choice -Choices "PnP","Parker","Sharing Is Caring" -DisplayName "Choice Column" -InternalName "Choice"
+Add-PnPField -Type Choice -Choices "PnP","Parker","Sharing Is Caring" -DisplayName "My Test Column" -InternalName "MyTestCol"
 ```
 
-This will add a site column of type Choice along with choices and only one choice can be chosen at the same time.
+This will add a site column of type Choice (only one choice value can be chosen at the same time) called "My Test Column" with three choice values.
 
 ## PARAMETERS
 
@@ -108,8 +108,8 @@ Accept wildcard characters: False
 The Choice values when field type is Choice or MultiChoice
 
 ```yaml
-Type: FieldPipeBind
-Parameter Sets: Add field to list (Choice or MultiChoice Field), Add field to web (Choice or MultiChoice Field)
+Type: String[]
+Parameter Sets: Add field to list (Choice or MultiChoice Field Chosen), Add field to web (Choice or MultiChoice Field Chosen)
 
 Required: False
 Position: Named
@@ -192,10 +192,10 @@ Accept wildcard characters: False
 The Formula when Calculated column is chosen.
 
 ```yaml
-Type: FieldPipeBind
+Type: String[]
 Parameter Sets: Add field to list (Calculated Field), Add field to web  (Calculated Field)
 
-Required: Fals
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
