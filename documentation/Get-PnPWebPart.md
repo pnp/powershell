@@ -26,7 +26,7 @@ Allows retrieval of the definition of a webpart on a classic SharePoint Online p
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPWebPart -ServerRelativePageUrl "/sites/demo/sitepages/home.aspx"
+Get-PnPWebPart -ServerRelativePageUrl "/sites/demo/sitepages/home.aspx".
 ```
 
 Returns all webparts defined on the given classic page
