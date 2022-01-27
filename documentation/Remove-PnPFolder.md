@@ -15,7 +15,7 @@ Deletes a folder within a parent folder
 ## SYNTAX
 
 ```powershell
-Remove-PnPFolder -Name <String> -Folder <String> [-Recycle] [-Force] 
+Remove-PnPFolder -Name <String> -Folder <FolderPipeBind> [-Recycle] [-Force] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -57,7 +57,7 @@ Accept wildcard characters: False
 The parent folder in the site
 
 ```yaml
-Type: String
+Type: FolderPipeBind
 Parameter Sets: (All)
 
 Required: True
