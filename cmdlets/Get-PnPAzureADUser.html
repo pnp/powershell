@@ -104,11 +104,11 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADUser
 </code></pre>
-<p>Retrieves the first 1000 users from Azure Active Directory</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADUser -EndIndex $null
-</code></pre>
 <p>Retrieves all users from Azure Active Directory</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPAzureADUser -EndIndex 50
+</code></pre>
+<p>Retrieves the first 50 users from Azure Active Directory. Notice that you have no control over who will be in this batch of 50 unless you combine it with the <code>-Filter</code> and/or <code>-OrderBy</code> parameters.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADUser -Identity 328c7693-5524-44ac-a946-73e02d6b0f98
 </code></pre>
@@ -140,7 +140,7 @@
 <h3 id="example-10">EXAMPLE 10</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADUser -StartIndex 10 -EndIndex 20
 </code></pre>
-<p>Retrieves the 10th through the 20th user from Azure Active Directory</p>
+<p>Retrieves the 10th through the 20th user from Azure Active Directory. Notice that you have no control over which users will be in this batch of 10 users.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-delta">-Delta</h3>
 <p>Retrieves all users and provides a SkipToken delta token to allow to query for changes since this run when querying again by adding -DeltaToken to the command</p>
@@ -209,7 +209,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-startindex">-StartIndex</h3>
-<p>Allows defining the first result to return. Useful for i.e. paging.</p>
+<p>Allows defining the first result to return. Useful for i.e. pagination.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 
@@ -220,13 +220,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-endindex">-EndIndex</h3>
-<p>Allows defining the last result to return. Useful for i.e. pagina. If omitted, it will use 999. If set to $null, it will return all users from Azure Active Directory.</p>
+<p>Allows defining the last result to return. Useful for i.e. pagination. If omitted, it will return all available users from Azure Active Directory.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: 999
+Default value: $null
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

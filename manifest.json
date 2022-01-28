@@ -333,7 +333,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPField.html",
-          "hash": "lhErJql1/HFwtpnlHNxhuA=="
+          "hash": "YcKoRfZP3+a8zNGNWDQftg=="
         }
       },
       "is_incremental": false,
@@ -1797,7 +1797,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPAzureADUser.html",
-          "hash": "/gC/Lsyi+YjnEM6rda98sw=="
+          "hash": "ppV1Vd8BtcsdIdpo+T0qMQ=="
         }
       },
       "is_incremental": false,
@@ -2421,7 +2421,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPMicrosoft365GroupMember.html",
-          "hash": "PjHUQCAD0r/Mur8DBwoJXw=="
+          "hash": "Pd6d890Ebk9uFaLBhRyqqA=="
         }
       },
       "is_incremental": false,
@@ -3209,6 +3209,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPTeamsPrimaryChannel.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPTeamsPrimaryChannel.html",
+          "hash": "kjWl1IA7PrxGj/bCoWYZlw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPTeamsTab.md",
       "output": {
         ".html": {
@@ -3645,7 +3657,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPWebPart.html",
-          "hash": "ZF+eo2rRMDcp/rbb46kAVg=="
+          "hash": "t9vAKGJvMofIrya6n0W5BA=="
         }
       },
       "is_incremental": false,
@@ -7293,7 +7305,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "HoJg2p9E5DHgzevB4kt0Dw=="
+          "hash": "8y08MkjvErU2g66ZKIv4jg=="
         }
       },
       "is_incremental": false,
@@ -7372,7 +7384,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 607,
+          "total_file_count": 608,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

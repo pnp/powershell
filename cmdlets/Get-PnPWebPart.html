@@ -90,15 +90,16 @@
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Allows retrieval of the definition of a webpart on a classic SharePoint Online page.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPWebPart -ServerRelativePageUrl &quot;/sites/demo/sitepages/home.aspx&quot;
 </code></pre>
-<p>Returns all webparts defined on the given page.</p>
+<p>Returns all webparts defined on the given classic page.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPWebPart -ServerRelativePageUrl &quot;/sites/demo/sitepages/home.aspx&quot; -Identity a2875399-d6ff-43a0-96da-be6ae5875f82
 </code></pre>
-<p>Returns a specific web part defined on the given page.</p>
+<p>Returns a specific web part defined on the given classic page.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>

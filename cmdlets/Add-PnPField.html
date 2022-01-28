@@ -88,7 +88,7 @@
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="add-field-to-list-default">Add field to list (Default)</h3>
 <pre><code class="lang-powershell">Add-PnPField [-List &lt;ListPipeBind&gt;] -DisplayName &lt;String&gt; -InternalName &lt;String&gt; -Type &lt;FieldType&gt;
- [-Id &lt;Guid&gt;] [-AddToDefaultView] [-Required] [-Group &lt;String&gt;] [-ClientSideComponentId &lt;Guid&gt;]
+ [-Id &lt;Guid&gt;] [-Formula &lt;String&gt;] [-Choices &lt;String&gt;] [-AddToDefaultView] [-Required] [-Group &lt;String&gt;] [-ClientSideComponentId &lt;Guid&gt;]
  [-ClientSideComponentProperties &lt;String&gt;] [-AddToAllContentTypes] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
@@ -97,12 +97,8 @@
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="add-field-to-web">Add field to web</h3>
-<pre><code class="lang-powershell">Add-PnPField -DisplayName &lt;String&gt; -InternalName &lt;String&gt; -Type &lt;FieldType&gt; [-Id &lt;Guid&gt;]
+<pre><code class="lang-powershell">Add-PnPField -DisplayName &lt;String&gt; -InternalName &lt;String&gt; -Type &lt;FieldType&gt; [-Id &lt;Guid&gt;] [-Formula &lt;String&gt;] [-Choices &lt;String&gt;]
  [-ClientSideComponentId &lt;Guid&gt;] [-ClientSideComponentProperties &lt;String&gt;] 
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
-</code></pre>
-<h3 id="add-field-by-xml-to-list">Add field by XML to list</h3>
-<pre><code class="lang-powershell">Add-PnPField [-AddToDefaultView] [-Required] [-Group &lt;String&gt;] [-AddToAllContentTypes]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -120,11 +116,19 @@
 <pre><code class="lang-powershell">Add-PnPField -List &quot;Demo list&quot; -DisplayName &quot;Speakers&quot; -InternalName &quot;SPSSpeakers&quot; -Type MultiChoice -Group &quot;Demo Group&quot; -AddToDefaultView -Choices &quot;Obiwan Kenobi&quot;,&quot;Darth Vader&quot;, &quot;Anakin Skywalker&quot;
 </code></pre>
 <p>This will add a field of type Multiple Choice to the list &quot;Demo List&quot;. (you can pick several choices for the same item)</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Add-PnPField -List &quot;Demo List&quot; -Field &quot;MyTestCol&quot;
+</code></pre>
+<p>This will add an existing site column called &quot;MyTestCol&quot; to the list &quot;Demo List&quot;.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Add-PnPField -Type Choice -Choices &quot;PnP&quot;,&quot;Parker&quot;,&quot;Sharing Is Caring&quot; -DisplayName &quot;My Test Column&quot; -InternalName &quot;MyTestCol&quot;
+</code></pre>
+<p>This will add a site column of type Choice (only one choice value can be chosen at the same time) called &quot;My Test Column&quot; with three choice values.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-addtodefaultview">-AddToDefaultView</h3>
 <p>Switch Parameter if this field must be added to the default view</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Add field to list, Add field by XML to list
+Parameter Sets: Add field to list, Add field to web
 
 Required: False
 Position: Named
@@ -135,7 +139,18 @@ Accept wildcard characters: False
 <h3 id="-addtoallcontenttypes">-AddToAllContentTypes</h3>
 <p>Switch Parameter if this field must be added to all content types</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Add field to list, Add field by XML to list
+Parameter Sets: Add field to list, Add field to web
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-choices">-Choices</h3>
+<p>The Choice values when field type is Choice or MultiChoice</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: Add field to list (Choice or MultiChoice Field Chosen), Add field to web (Choice or MultiChoice Field Chosen)
 
 Required: False
 Position: Named
@@ -198,6 +213,17 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-formula">-Formula</h3>
+<p>The Formula when Calculated column is chosen.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: Add field to list (Calculated Field), Add field to web  (Calculated Field)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-group">-Group</h3>
 <p>The group name to where this field belongs to</p>
 <pre><code class="lang-yaml">Type: String
@@ -254,7 +280,7 @@ Accept wildcard characters: False
 <h3 id="-required">-Required</h3>
 <p>Switch Parameter if the field is a required field</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Add field to list, Add field by XML to list
+Parameter Sets: Add field to list, Add field to web
 
 Required: False
 Position: Named
