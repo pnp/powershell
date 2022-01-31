@@ -35,7 +35,7 @@ Retrieve List Designs that have been registered on the current tenant. When prov
 Get-PnPListDesign
 ```
 
-Returns all registered site designs
+Returns all registered list designs
 
 ### EXAMPLE 2
 ```powershell
