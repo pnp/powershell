@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Base
             PnPConnection.Current.CacheContext();
 
             if (PnPConnection.Current.TenantAdminUrl != null &&
-                (PnPConnection.Current.ConnectionType == ConnectionType.O365))
+                (PnPConnection.Current.ConnectionType == ConnectionType.SiteCollection))
             {
                 var uri = new Uri(PnPConnection.Current.Url);
                 var uriParts = uri.Host.Split('.');
@@ -67,7 +67,7 @@ namespace PnP.PowerShell.Commands.Base
                 Uri uri = new Uri(ClientContext.Url);
                 var uriParts = uri.Host.Split('.');
                 if (!uriParts[0].EndsWith("-admin") &&
-                    PnPConnection.Current.ConnectionType == ConnectionType.O365)
+                    PnPConnection.Current.ConnectionType == ConnectionType.SiteCollection)
                 {                    
                     _baseUri = new Uri($"{uri.Scheme}://{uri.Authority}");
 
