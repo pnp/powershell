@@ -20,8 +20,7 @@ Retrieve List Designs that have been registered on the current tenant.
 ## SYNTAX
 
 ```powershell
-Get-PnPListDesign [[-Identity] <TenantListDesignPipeBind>] [-Connection <PnPConnection>]  
- [<CommonParameters>]
+Get-PnPListDesign [[-Identity] <TenantListDesignPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -52,18 +51,17 @@ Returns a specific registered list design by name
 
 ## PARAMETERS
 
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
+### -Identity
+If specified, it will retrieve the specified list design
 
 ```yaml
-Type: SwitchParameter
+Type: TenantListDesignPipeBind
 Parameter Sets: (All)
-Aliases: cf
 
 Required: False
-Position: Named
+Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -81,36 +79,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Identity
-If specified will retrieve the specified list design
-
-```yaml
-Type: TenantListDesignPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
