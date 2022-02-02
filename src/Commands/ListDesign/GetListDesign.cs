@@ -1,9 +1,7 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
@@ -22,7 +20,7 @@ namespace PnP.PowerShell.Commands
 
                 if(listDesigns.Length == 0)
                 {
-                    WriteVerbose("No list designs with the identity provided through Identity have been found");
+                    WriteVerbose($"No list designs with the identity provided through {nameof(Identity)} have been found");
                 }
 
                 WriteObject(listDesigns, true);
@@ -33,7 +31,7 @@ namespace PnP.PowerShell.Commands
                 ClientContext.Load(designs);
                 ClientContext.ExecuteQueryRetry();
 
-                WriteObject(designs.ToList(), true);
+                WriteObject(designs, true);
             }
         }
     }
