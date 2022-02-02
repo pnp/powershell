@@ -41,6 +41,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Add-PnPDataRowsToSiteTemplate` issue with PnP templates when it contained multilingual references.
 - Fixed `Copy-PnPItemProxy` is not recognized as the name of a cmdlet, function, script file, or operable program error with the cmdlet.
 - Fixed `Add-PnPMicrosoft365GroupMember`, `Remove-PnPMicrosoft365GroupMember`, `Add-PnPTeamsUser` and `Remove-PnPTeamsUser` not being able to handle guest accounts containing # characters [#1523](https://github.com/pnp/powershell/pull/1523)
+- Fixed `Add-PnPFileToSiteTemplate` when used alongside `Get-PnPFile` where the FileStream tried to overwrite an already open filestream when a file was located in the same directory as the template file itself.
 
 ### Removed
 
@@ -51,6 +52,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- brenle
+- Johan Brännmar [brannmar]
 - Lschockaert
 - Leon Armston [LeonArmston]
 - Reshmee Auckloo [reshmee011]
