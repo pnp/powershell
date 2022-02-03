@@ -1,3 +1,4 @@
+using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 
@@ -8,9 +9,9 @@ namespace PnP.PowerShell.Commands.ContentTypes
     [Cmdlet(VerbsData.Publish, "PnPContentType")]
     public class PublishContentType : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
-        public ContentType ContentType;
+        public ContentTypePipeBind ContentType;
 
         protected override void ExecuteCmdlet()
         {
@@ -20,8 +21,17 @@ namespace PnP.PowerShell.Commands.ContentTypes
             var pub = new Microsoft.SharePoint.Client.Taxonomy.ContentTypeSync.ContentTypePublisher(ClientContext, site);
             ClientContext.Load(pub);
             ClientContext.ExecuteQuery();
-            var republish = pub.IsPublished(ContentType);
-            pub.Publish(ContentType, republish);
+            var ct = ContentType.GetContentTypeOrError(this, nameof(ContentType), site.RootWeb);
+
+            if (ct == null)
+            {
+                WriteError(new ErrorRecord(new Exception($"Invalid content type id."), "INVALIDCTID", ErrorCategory.InvalidArgument, ContentType));
+                return;
+            }
+
+            var republish = pub.IsPublished(ct);
+            ClientContext.ExecuteQuery();
+            pub.Publish(ct, republish.Value);
             ClientContext.ExecuteQuery();
         }
     }

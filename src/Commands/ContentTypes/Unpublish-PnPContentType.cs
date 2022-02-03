@@ -1,3 +1,4 @@
+using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 
@@ -8,9 +9,9 @@ namespace PnP.PowerShell.Commands.ContentTypes
     [Cmdlet(VerbsData.Unpublish, "PnPContentType")]
     public class UnpublishContentType : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
-        public ContentType ContentType;
+        public ContentTypePipeBind ContentType;
 
         protected override void ExecuteCmdlet()
         {
@@ -20,7 +21,15 @@ namespace PnP.PowerShell.Commands.ContentTypes
             var pub = new Microsoft.SharePoint.Client.Taxonomy.ContentTypeSync.ContentTypePublisher(ClientContext, site);
             ClientContext.Load(pub);
             ClientContext.ExecuteQuery();
-            pub.Unpublish(ContentType);
+            var ct = ContentType.GetContentTypeOrError(this, nameof(ContentType), site.RootWeb);
+            
+            if (ct == null)
+            {
+                WriteError(new ErrorRecord(new Exception($"Invalid content type id."), "INVALIDCTID", ErrorCategory.InvalidArgument, ContentType));
+                return;
+            }
+
+            pub.Unpublish(ct);
             ClientContext.ExecuteQuery();
         }
     }

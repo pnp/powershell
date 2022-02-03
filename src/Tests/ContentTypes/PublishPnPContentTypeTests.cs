@@ -23,10 +23,8 @@ namespace PnP.PowerShell.Tests.ContentTypes
         {
             using (var scope = new PSTestScope(true))
             {
-                Microsoft.SharePoint.Client.Web web = ClientContext.Web;
-                var contentType = web.ContentTypes.GetById("0x0101");
                 var results = scope.ExecuteCommand("Publish-PnPContentType",
-                    new CommandParameter("ContentType", contentType));
+                    new CommandParameter("ContentType", "0x0101"));
 
                 Assert.IsNotNull(results);
             }
