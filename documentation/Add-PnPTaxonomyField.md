@@ -24,8 +24,8 @@ Add-PnPTaxonomyField [-List <ListPipeBind>] -DisplayName <String> -InternalName 
 
 ### Id
 ```powershell
-Add-PnPTaxonomyField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String>
- [-TaxonomyItemId <Guid>] [-Group <String>] [-Id <Guid>] [-AddToDefaultView] [-MultiValue]
+Add-PnPTaxonomyField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> 
+-TaxonomyItemId <Guid> [-Group <String>] [-Id <Guid>] [-AddToDefaultView] [-MultiValue]
  [-Required] [-FieldOptions <AddFieldOptions>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -41,6 +41,13 @@ Add-PnPTaxonomyField -DisplayName "Test" -InternalName "Test" -TermSetPath "Test
 ```
 
 Adds a new taxonomy field called "Test" that points to the TestTermSet which is located in the TestTermGroup
+
+### EXAMPLE 2
+```powershell
+Add-PnPTaxonomyField -DisplayName "Test" -InternalName "Test" -TaxonomyItemId "0e5fe3c6-3e6a-4d25-9f48-82a655f15992" 
+```
+
+Adds a new taxonomy field called "Test" that points to the Term set with the term set id of 0e5fe3c6-3e6a-4d25-9f48-82a655f15992
 
 ## PARAMETERS
 
@@ -87,7 +94,7 @@ Accept wildcard characters: False
 ```
 
 ### -FieldOptions
-Specifies the control settings while adding a field. See https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.addfieldoptions.aspx for details
+Specifies the control settings while adding a field. See https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee542202(v=office.15) for details
 
 ```yaml
 Type: AddFieldOptions

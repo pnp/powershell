@@ -924,7 +924,7 @@ The valid values are:
 ExternalUserAndGuestSharing (default) - External user sharing (share by email) and guest link sharing are both enabled. Disabled - External user sharing (share by email) and guest link sharing are both disabled.
 ExternalUserSharingOnly - External user sharing (share by email) is enabled, but guest link sharing is disabled.
 
-For more information about sharing, see Manage external sharing for your SharePoint online environment (https://docs.microsoft.com/en-us/sharepoint/turn-external-sharing-on-or-off).
+For more information about sharing, see Manage external sharing for your SharePoint online environment (https://docs.microsoft.com/sharepoint/turn-external-sharing-on-or-off).
 
 ```yaml
 Type: SharingCapabilities
@@ -1247,6 +1247,62 @@ Allows configuration on `Add shortcut to OneDrive` feature in SharePoint documen
 Type: Boolean
 Parameter Sets: (All)
 Aliases: DisableAddShortcutsToOneDrive
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsFluidEnabled
+Allows configuration on whether Fluid components are enabled or disabled in the tenant. If set to `$true`, then this feature will be enabled on all sites in the tenant. If set to `$false`, it will be disabled on all sites in the tenant.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisablePersonalListCreation
+Allows configuring whether personal lists created within the OneDrive for Business site of the user is enabled or disabled in the tenant. If set to `$true`, personal lists will be allowed to be created in the tenant. If set to `$false`, it will be disabled in the tenant.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisabledModernListTemplateIds
+Guids of out of the box modern list templates to hide when creating a new list
+
+```yaml
+Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableModernListTemplateIds
+Guids of out of the box modern liststemplates to show when creating a new list
+
+```yaml
+Type: Guid[]
+Parameter Sets: (All)
+
 Required: False
 Position: Named
 Default value: None

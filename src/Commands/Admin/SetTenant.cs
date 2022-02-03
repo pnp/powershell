@@ -5,6 +5,7 @@ using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 using System;
 using Microsoft.Online.SharePoint.TenantManagement;
+using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Admin
 {
@@ -221,7 +222,7 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public bool? InformationBarriersSuspension;
-        
+
         [Parameter(Mandatory = false)]
         public bool? AllowFilesWithKeepLabelToBeDeletedSPO;
 
@@ -231,6 +232,18 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         [Alias("DisableAddShortcutsToOneDrive")]
         public bool? DisableAddToOneDrive;
+
+        [Parameter(Mandatory = false)]
+        public bool? IsFluidEnabled;
+
+        [Parameter(Mandatory = false)]
+        public bool? DisablePersonalListCreation;
+
+        [Parameter(Mandatory = false)]
+        public Guid[] DisabledModernListTemplateIds;
+
+        [Parameter(Mandatory = false)]
+        public Guid[] EnableModernListTemplateIds;
 
         protected override void ExecuteCmdlet()
         {
@@ -867,8 +880,43 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
+            if (IsFluidEnabled.HasValue)
+            {
+                Tenant.IsFluidEnabled = IsFluidEnabled.Value;
+                modified = true;
+            }
+
+            if (DisablePersonalListCreation.HasValue)
+            {
+                Tenant.DisablePersonalListCreation = DisablePersonalListCreation.Value;
+                modified = true;
+            }
+
+            if (DisabledModernListTemplateIds != null && DisabledModernListTemplateIds.Length > 0)
+            {
+                Tenant.DisabledModernListTemplateIds = DisabledModernListTemplateIds;
+                modified = true;
+            }
+
             if (modified)
             {
+                ClientContext.ExecuteQueryRetry();
+            }
+
+            if (EnableModernListTemplateIds != null && EnableModernListTemplateIds.Length > 0)
+            {
+                Tenant.EnsureProperty(t => t.DisabledModernListTemplateIds);
+                List<Guid> disabledListTemplateIds = new List<Guid>(Tenant.DisabledModernListTemplateIds);
+                Guid[] disableModernListTemplateIds = EnableModernListTemplateIds;
+                foreach (Guid templateId in disableModernListTemplateIds)
+                {
+                    if (templateId != Guid.Empty)
+                    {
+                        disabledListTemplateIds.Remove(templateId);
+                    }
+                }
+
+                Tenant.DisabledModernListTemplateIds = disabledListTemplateIds.ToArray();
                 ClientContext.ExecuteQueryRetry();
             }
         }

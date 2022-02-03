@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPropertyBagValue
 # Set-PnPPropertyBagValue
 
 ## SYNOPSIS
-Sets a property bag value
+Adds a new or updates an existing property bag value
 
 ## SYNTAX
 
@@ -27,6 +27,7 @@ Set-PnPPropertyBagValue -Key <String> -Value <String> [-Folder <String>]
 ```
 
 ## DESCRIPTION
+Updates an existing property bag value or adds it as a new key\value pair if it doesn't exist yet. If working with a modern SharePoint Online site or having noscript enabled, you will have to disable this yourself temporarily using `Set-PnPTenantSite -Url <url> -NoScriptSite:$false` to be able to make the change.
 
 ## EXAMPLES
 

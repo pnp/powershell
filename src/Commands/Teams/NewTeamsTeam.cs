@@ -6,6 +6,7 @@ using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System;
+using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
@@ -31,6 +32,7 @@ namespace PnP.PowerShell.Commands.Graph
         [ValidateLength(0, 1024)]
         public string Description;
 
+        [Obsolete("Please use the -Owners parameter instead. The -Owner parameter has been deprecated and will be removed in a future version.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Owner;
 
@@ -97,6 +99,12 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowCreatePrivateChannels;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public string[] Owners;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public string[] Members;
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NEWGROUP)]
         public TeamResourceBehaviorOptions?[] ResourceBehaviorOptions;
 
@@ -126,9 +134,18 @@ namespace PnP.PowerShell.Commands.Graph
                 GroupId = GroupId,
                 ShowInTeamsSearchAndSuggestions = ShowInTeamsSearchAndSuggestions,
                 Visibility = (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()),
-                AllowCreatePrivateChannels = AllowCreatePrivateChannels,
+                AllowCreatePrivateChannels = AllowCreatePrivateChannels
             };
-            WriteObject(TeamsUtility.NewTeamAsync(AccessToken, HttpClient, GroupId, DisplayName, Description, Classification, MailNickName, Owner, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI, Template, ResourceBehaviorOptions).GetAwaiter().GetResult());
+
+            #pragma warning disable 612, 618 // Disables the obsolete warning for the compiler output
+            if (!string.IsNullOrWhiteSpace(Owner))
+            {
+                // Adding Owner parameter to the Owners array for backwards compatibility
+                Owners = Owners != null ? Owners.Concat(new[] { Owner }).ToArray() : new[] { Owner };
+            }
+            #pragma warning restore 612, 618 
+
+            WriteObject(TeamsUtility.NewTeamAsync(AccessToken, HttpClient, GroupId, DisplayName, Description, Classification, MailNickName, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI, Owners, Members, Template, ResourceBehaviorOptions).GetAwaiter().GetResult());
         }
     }
 }

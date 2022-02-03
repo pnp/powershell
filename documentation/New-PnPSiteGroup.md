@@ -21,7 +21,7 @@ Creates a new group in a SharePoint Online site collection.
 
 ```powershell
 New-PnPSiteGroup
-   -Group <String>
+   -Name <String>
    -PermissionLevels <String[]>
    [-Site <SitePipeBind>]
 ```
@@ -33,14 +33,14 @@ A SharePoint group is a set of individual users. SharePoint groups enable you to
 
 ### EXAMPLE 1
 ```powershell
-New-PnPSiteGroup -Site "https://contoso.sharepoint.com/sites/siteA" -Group "Project Leads" -PermissionLevels "Full Control"
+New-PnPSiteGroup -Site "https://contoso.sharepoint.com/sites/siteA" -Name "Project Leads" -PermissionLevels "Full Control"
 ```
 
 This example creates a group named Project Leads with the Full Control permission level on the site collection https://contoso.sharepoint.com/sites/siteA.
 
 ### EXAMPLE 2
 ```powershell
-New-PnPSiteGroup -Site "https://contoso.sharepoint.com/sites/marketing" -Group "NewGroupName" -PermissionLevels "Design"
+New-PnPSiteGroup -Site "https://contoso.sharepoint.com/sites/marketing" -Name "NewGroupName" -PermissionLevels "Design"
 ```
 This example creates a group named NewGroupName with the Design permission level on the site collection https://contoso.sharepoint.com/sites/marketing.
 
@@ -64,7 +64,7 @@ Accept wildcard characters: False
 Specifies the permission levels to grant to the newly created group. It can be any permission level that exists on the site collection on which the group is being created.
 
 > [!NOTE]
-> Permission Levels, are defined on the top-level site of the site collection, please see [How to create and edit permission levels](https://docs.microsoft.com/en-us/sharepoint/how-to-create-and-edit-permission-levels) for more information.
+> Permission Levels, are defined on the top-level site of the site collection, please see [How to create and edit permission levels](https://docs.microsoft.com/sharepoint/how-to-create-and-edit-permission-levels) for more information.
 
 ```yaml
 Type: String[]

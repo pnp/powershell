@@ -124,7 +124,7 @@ Accept wildcard characters: False
 ```
 
 ### -IgnoreVersionHistory
-If provided, only the latest version of the document will be moved and its history will be discared. If not provided, all historical versions will be moved along.
+If provided, only the latest version of the document will be moved and its history will be discarded. If not provided, all historical versions will be moved along.
 
 ```yaml
 Type: SwitchParameter

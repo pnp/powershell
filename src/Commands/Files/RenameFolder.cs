@@ -1,16 +1,15 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
-using PnP.Framework.Utilities;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Rename, "PnPFolder")]
     public class RenameFolder : PnPWebCmdlet
     {
-
-        [Parameter(Mandatory = true)]
-        public string Folder = string.Empty;
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [ValidateNotNullOrEmpty]
+        public FolderPipeBind Folder;
 
         [Parameter(Mandatory = true)]
         public string TargetFolderName = string.Empty;
@@ -19,10 +18,8 @@ namespace PnP.PowerShell.Commands.Files
         {
             CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
-            var sourceFolderUrl = UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, Folder);
-            Folder sourceFolder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(sourceFolderUrl));
-            ClientContext.Load(sourceFolder, f => f.Name, f => f.ServerRelativePath);
-            ClientContext.ExecuteQueryRetry();
+            var sourceFolder = Folder.GetFolder(CurrentWeb);
+            sourceFolder.EnsureProperties(f => f.ServerRelativePath, f => f.Name);            
 
             var targetPath = string.Concat(sourceFolder.ServerRelativePath.DecodedUrl.Remove(sourceFolder.ServerRelativePath.DecodedUrl.Length - sourceFolder.Name.Length), TargetFolderName);
             sourceFolder.MoveToUsingPath(ResourcePath.FromDecodedUrl(targetPath));

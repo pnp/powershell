@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -124,7 +125,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             var stringContent = await GetAsync(httpClient, url, accessToken);
             if (stringContent != null)
             {
-                var options = new JsonSerializerOptions() { IgnoreNullValues = true };
+                var options = new JsonSerializerOptions { IgnoreNullValues = true };
+                options.Converters.Add(new JsonStringEnumConverter());
                 if (camlCasePolicy)
                 {
                     options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
@@ -267,9 +269,9 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         #endregion
 
 
-        public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, HttpContent content, string accessToken, Dictionary<string, string> additionalHeaders = null)
+        public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, HttpContent content, string accessToken, Dictionary<string, string> additionalHeaders = null, bool propertyNameCaseInsensitive = false)
         {
-            return await PostInternalAsync<T>(httpClient, url, accessToken, content, additionalHeaders);
+            return await PostInternalAsync<T>(httpClient, url, accessToken, content, additionalHeaders, propertyNameCaseInsensitive);
         }
 
         public static async Task<T> PutAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content, Dictionary<string, string> additionalHeaders = null)
@@ -303,7 +305,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return await PostInternalAsync<T>(httpClient, url, accessToken, null);
         }
 
-        private static async Task<T> PostInternalAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content, Dictionary<string, string> additionalHeaders = null)
+        private static async Task<T> PostInternalAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content, Dictionary<string, string> additionalHeaders = null, bool propertyNameCaseInsensitive = false)
         {
             var message = GetMessage(url, HttpMethod.Post, accessToken, content, additionalHeaders);
             var stringContent = await SendMessageAsync(httpClient, message, accessToken);
@@ -311,7 +313,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             {
                 try
                 {
-                    return JsonSerializer.Deserialize<T>(stringContent, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                    return JsonSerializer.Deserialize<T>(stringContent, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase, PropertyNameCaseInsensitive = propertyNameCaseInsensitive });
                 }
                 catch
                 {

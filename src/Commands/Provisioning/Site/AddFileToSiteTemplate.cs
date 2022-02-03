@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
     public class AddFileToSiteTemplate : PnPWebCmdlet
     {
         const string parameterSet_LOCALFILE = "Local File";
-        const string parameterSet_REMOTEFILE = "Remove File";
+        const string parameterSet_REMOTEFILE = "Remote File";
 
         [Parameter(Mandatory = true, Position = 0)]
         public string Path;
@@ -113,7 +113,11 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         {
             var source = !string.IsNullOrEmpty(container) ? (container + "/" + fileName) : fileName;
 
-            template.Connector.SaveFileStream(fileName, container, fs);
+            //See if sourcefile already is in same directory as template, if so we dont need to save it again
+            if (!System.IO.File.Exists(System.IO.Path.Combine(new FileInfo(Path).DirectoryName, source)))
+            {
+                template.Connector.SaveFileStream(fileName, container, fs);
+            }
 
             if (template.Connector is ICommitableFileConnector connector)
             {
