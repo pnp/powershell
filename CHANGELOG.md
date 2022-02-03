@@ -21,6 +21,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support to add multiple owners and members in `New-PnPTeamsTeam` cmdlet [#1241](https://github.com/pnp/powershell/pull/1241)
 - Added the ability to set the title of a new modern page in SharePoint Online using `Add-PnPPage` to be different from its filename by using `-Title`
 - Added `Get-PnPTeamsPrimaryChannel` to get the primary Teams channel, general, of a Team [#1572](https://github.com/pnp/powershell/pull/1572)
+- Added `Publish\Unpublish-PnPContentType` to allow for content types to be published or unpublished on hub sites [#1597](https://github.com/pnp/powershell/pull/1597)
+- Added `Get-PnPContentTypePublishingStatus` to get te current publication state of a content type in the content type hub site [#1597](https://github.com/pnp/powershell/pull/1597)
 
 ### Changed
 
@@ -52,6 +54,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- [swapnil1993]
 - Hugo Bernier [hugoabernier]
 - brenle
 - Johan Brännmar [brannmar]
