@@ -12,15 +12,12 @@ namespace PnP.PowerShell.Commands.ContentTypes
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
         public ContentTypePipeBind ContentType;
-
         protected override void ExecuteCmdlet()
         {
             Microsoft.SharePoint.Client.Site site = ClientContext.Site;
-            ClientContext.Load(site);
-            ClientContext.ExecuteQuery();
             var pub = new Microsoft.SharePoint.Client.Taxonomy.ContentTypeSync.ContentTypePublisher(ClientContext, site);
             ClientContext.Load(pub);
-            ClientContext.ExecuteQuery();
+            ClientContext.ExecuteQueryRetry();
             var ct = ContentType.GetContentTypeOrError(this, nameof(ContentType), site.RootWeb);
             
             if (ct == null)
@@ -30,7 +27,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
             }
 
             pub.Unpublish(ct);
-            ClientContext.ExecuteQuery();
+            ClientContext.ExecuteQueryRetry();
         }
     }
 }
