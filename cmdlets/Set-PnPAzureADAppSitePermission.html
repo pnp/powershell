@@ -90,7 +90,7 @@
 </ul>
 <p>Updates permissions for a given app.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPAzureADAppSitePermission -PermissionId &lt;String&gt; -Permissions &lt;&quot;Read&quot;|&quot;Write&quot;&gt; [-Site &lt;SitePipeBind&gt;]
+<pre><code class="lang-powershell">Set-PnPAzureADAppSitePermission -PermissionId &lt;String&gt; -Permissions &lt;&quot;Read&quot;|&quot;Write&quot;|&quot;Manage&quot;|&quot;FullControl&quot;&gt; [-Site &lt;SitePipeBind&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlets updates permissions for a given app in a site.</p>
@@ -117,7 +117,7 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 
 Required: True
-Accepted values: Write, Read
+Accepted values: Write, Read, Manage, FullControl
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -162,5 +162,12 @@ Accept wildcard characters: False
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
 </html>
