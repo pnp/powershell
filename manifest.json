@@ -1901,6 +1901,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPContentTypePublishingStatus.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPContentTypePublishingStatus.html",
+          "hash": "ElXG3wmEf/7WLQgGTR7DrQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPContext.md",
       "output": {
         ".html": {
@@ -4469,6 +4481,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Publish-PnPContentType.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Publish-PnPContentType.html",
+          "hash": "6Fz+Uojr8yLybZdLbc2yPQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Publish-PnPSyntexModel.md",
       "output": {
         ".html": {
@@ -6849,7 +6873,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTenant.html",
-          "hash": "uIRsRtlYGR8uqlyXhbFKdQ=="
+          "hash": "ZgIc48fy5zOV0y3oJNkP5w=="
         }
       },
       "is_incremental": false,
@@ -7217,6 +7241,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Unpublish-PnPContentType.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Unpublish-PnPContentType.html",
+          "hash": "FSUGXyrHkKLcE7ajHAOmwQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Unpublish-PnPSyntexModel.md",
       "output": {
         ".html": {
@@ -7317,7 +7353,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "Dqe4FYYzYaYh0IPRpKj05w=="
+          "hash": "eK7iYEcqfy8cmiKYjbekwA=="
         }
       },
       "is_incremental": false,
@@ -7396,7 +7432,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 609,
+          "total_file_count": 612,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
