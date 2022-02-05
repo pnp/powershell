@@ -90,8 +90,7 @@
 </ul>
 <p>Retrieve Site Designs that have been registered on the current tenant.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPSiteDesign [[-Identity] &lt;TenantSiteDesignPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]  
- [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPSiteDesign [[-Identity] &lt;TenantSiteDesignPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Retrieve Site Designs that have been registered on the current tenant. When providing a name with -Identity, it returns all site designs with that name.</p>
@@ -105,29 +104,6 @@
 </code></pre>
 <p>Returns a specific registered site designs</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-confirm">-Confirm</h3>
-<p>Prompts you for confirmation before running the cmdlet.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>If specified will retrieve the specified site design</p>
 <pre><code class="lang-yaml">Type: TenantSiteDesignPipeBind
@@ -139,11 +115,10 @@ Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named
