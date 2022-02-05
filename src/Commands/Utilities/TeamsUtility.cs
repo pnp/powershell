@@ -231,7 +231,7 @@ namespace PnP.PowerShell.Commands.Utilities
             if (owners != null && owners.Length > 0)
             {
                 // Owner(s) have been provided, use the first owner as the initial owner. The other owners will be added later.
-                var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{GetUserGraphUrlForUPN(owners[0])}?$select=Id", accessToken);
+                var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/{GetUserGraphUrlForUPN(owners[0])}?$select=Id", accessToken);
 
                 if (user != null)
                 {
