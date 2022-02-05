@@ -17,7 +17,7 @@ Add a field
 ### Add field to list (Default)
 ```powershell
 Add-PnPField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> -Type <FieldType>
- [-Id <Guid>] [-AddToDefaultView] [-Required] [-Group <String>] [-ClientSideComponentId <Guid>]
+ [-Id <Guid>] [-Formula <String>] [-Choices <String>] [-AddToDefaultView] [-Required] [-Group <String>] [-ClientSideComponentId <Guid>]
  [-ClientSideComponentProperties <String>] [-AddToAllContentTypes] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
@@ -30,14 +30,8 @@ Add-PnPField -List <ListPipeBind> -Field <FieldPipeBind> [-Connection <PnPConnec
 
 ### Add field to web
 ```powershell
-Add-PnPField -DisplayName <String> -InternalName <String> -Type <FieldType> [-Id <Guid>]
+Add-PnPField -DisplayName <String> -InternalName <String> -Type <FieldType> [-Id <Guid>] [-Formula <String>] [-Choices <String>]
  [-ClientSideComponentId <Guid>] [-ClientSideComponentProperties <String>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
-```
-
-### Add field by XML to list
-```powershell
-Add-PnPField [-AddToDefaultView] [-Required] [-Group <String>] [-AddToAllContentTypes]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -67,6 +61,20 @@ Add-PnPField -List "Demo list" -DisplayName "Speakers" -InternalName "SPSSpeaker
 
 This will add a field of type Multiple Choice to the list "Demo List". (you can pick several choices for the same item)
 
+### EXAMPLE 4
+```powershell
+Add-PnPField -List "Demo List" -Field "MyTestCol"
+```
+
+This will add an existing site column called "MyTestCol" to the list "Demo List".
+
+### EXAMPLE 5
+```powershell
+Add-PnPField -Type Choice -Choices "PnP","Parker","Sharing Is Caring" -DisplayName "My Test Column" -InternalName "MyTestCol"
+```
+
+This will add a site column of type Choice (only one choice value can be chosen at the same time) called "My Test Column" with three choice values.
+
 ## PARAMETERS
 
 ### -AddToDefaultView
@@ -74,7 +82,7 @@ Switch Parameter if this field must be added to the default view
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Add field to list, Add field by XML to list
+Parameter Sets: Add field to list, Add field to web
 
 Required: False
 Position: Named
@@ -88,7 +96,20 @@ Switch Parameter if this field must be added to all content types
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Add field to list, Add field by XML to list
+Parameter Sets: Add field to list, Add field to web
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+### -Choices
+The Choice values when field type is Choice or MultiChoice
+
+```yaml
+Type: String[]
+Parameter Sets: Add field to list (Choice or MultiChoice Field Chosen), Add field to web (Choice or MultiChoice Field Chosen)
 
 Required: False
 Position: Named
@@ -167,6 +188,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Formula
+The Formula when Calculated column is chosen.
+
+```yaml
+Type: String[]
+Parameter Sets: Add field to list (Calculated Field), Add field to web  (Calculated Field)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Group
 The group name to where this field belongs to
 
@@ -239,7 +274,7 @@ Switch Parameter if the field is a required field
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Add field to list, Add field by XML to list
+Parameter Sets: Add field to list, Add field to web
 
 Required: False
 Position: Named

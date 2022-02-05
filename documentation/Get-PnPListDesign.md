@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Get-PnPSiteDesign
+title: Get-PnPListDesign
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteDesign.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPListDesign.html
 ---
  
-# Get-PnPSiteDesign
+# Get-PnPListDesign
 
 ## SYNOPSIS
 
@@ -15,41 +15,47 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteDesign.html
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Retrieve Site Designs that have been registered on the current tenant.
+Retrieve List Designs that have been registered on the current tenant.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteDesign [[-Identity] <TenantSiteDesignPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPListDesign [[-Identity] <TenantListDesignPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Retrieve Site Designs that have been registered on the current tenant. When providing a name with -Identity, it returns all site designs with that name.
+Retrieve List Designs that have been registered on the current tenant. When providing a name with -Identity, it returns all list designs with that name.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPSiteDesign
+Get-PnPListDesign
 ```
 
-Returns all registered site designs
+Returns all registered list designs
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd
+Get-PnPListDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd
+```
+Returns a specific registered list design by id
+
+### EXAMPLE 3
+```powershell
+Get-PnPListDesign -Identity ListEvent
 ```
 
-Returns a specific registered site designs
+Returns a specific registered list design by name
 
 ## PARAMETERS
 
 ### -Identity
-If specified will retrieve the specified site design
+If specified, it will retrieve the specified list design
 
 ```yaml
-Type: TenantSiteDesignPipeBind
+Type: TenantListDesignPipeBind
 Parameter Sets: (All)
 
 Required: False

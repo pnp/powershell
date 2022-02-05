@@ -20,6 +20,7 @@ Get-PnPWebPart -ServerRelativePageUrl <String> [-Identity <WebPartPipeBind>]
 ```
 
 ## DESCRIPTION
+Allows retrieval of the definition of a webpart on a classic SharePoint Online page. 
 
 ## EXAMPLES
 
@@ -28,14 +29,14 @@ Get-PnPWebPart -ServerRelativePageUrl <String> [-Identity <WebPartPipeBind>]
 Get-PnPWebPart -ServerRelativePageUrl "/sites/demo/sitepages/home.aspx"
 ```
 
-Returns all webparts defined on the given page.
+Returns all webparts defined on the given classic page.
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPWebPart -ServerRelativePageUrl "/sites/demo/sitepages/home.aspx" -Identity a2875399-d6ff-43a0-96da-be6ae5875f82
 ```
 
-Returns a specific web part defined on the given page.
+Returns a specific web part defined on the given classic page.
 
 ## PARAMETERS
 
@@ -82,9 +83,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

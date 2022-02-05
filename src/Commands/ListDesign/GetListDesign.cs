@@ -2,37 +2,36 @@
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteDesign")]
-    public class GetSiteDesign : PnPAdminCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPListDesign")]
+    public class GetListDesign : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
-        public TenantSiteDesignPipeBind Identity;
+        public TenantListDesignPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                var siteDesigns = Identity.GetTenantSiteDesign(Tenant);
+                var listDesigns = Identity.GetTenantListDesign(Tenant);
 
-                if(siteDesigns.Length == 0)
+                if(listDesigns.Length == 0)
                 {
-                    WriteVerbose("No site designs with the identity provided through Identity have been found");
+                    WriteVerbose($"No list designs with the identity provided through {nameof(Identity)} have been found");
                 }
 
-                WriteObject(siteDesigns, true);
+                WriteObject(listDesigns, true);
             }
             else
             {
-                var designs = Tenant.GetSiteDesigns();
+                var designs = Tenant.GetListDesigns();
                 ClientContext.Load(designs);
                 ClientContext.ExecuteQueryRetry();
 
-                WriteObject(designs.ToList(), true);
+                WriteObject(designs, true);
             }
         }
     }

@@ -1,22 +1,26 @@
 ---
 Module Name: PnP.PowerShell
-title: Test-PnPTenantTemplate
 schema: 2.0.0
 applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Publish-PnPContentType.html
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Test-PnPTenantTemplate.html
+title: Publish-PnPContentType
 ---
- 
-# Test-PnPTenantTemplate
+  
+# Publish-PnPContentType
 
 ## SYNOPSIS
-Tests a tenant template for invalid references
+
+**Required Permissions**
+
+  * Fullcontrol permission on the content type hub site.
+
+Publishes or republishes a content type present on content type hub site.
 
 ## SYNTAX
 
 ```powershell
-Test-PnPTenantTemplate -Template <ProvisioningHierarchy> [-Connection <PnPConnection>]  
- [<CommonParameters>]
+Publish-PnPContentType -ContentType <ContentTypePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -25,11 +29,10 @@ Test-PnPTenantTemplate -Template <ProvisioningHierarchy> [-Connection <PnPConnec
 
 ### EXAMPLE 1
 ```powershell
-Test-PnPTenantTemplate -Template $myTemplate
+ Publish-PnPContentType -ContentType 0x0101
 ```
 
-Checks for valid template references
-
+This will publish the content type with the given id.
 ## PARAMETERS
 
 ### -Connection
@@ -46,11 +49,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Template
-The in-memory template to test
+### -ContentType
+The content type object in the content type hub site which is to be published.
 
 ```yaml
-Type: ProvisioningHierarchy
+Type: ContentType
 Parameter Sets: (All)
 
 Required: True
@@ -60,22 +63,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

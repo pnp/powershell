@@ -9,7 +9,6 @@ namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADUser", DefaultParameterSetName = ParameterSet_LIST)]
     [RequiredMinimalApiPermissions("User.Read.All")]
-    [Alias("Get-PnPAADUser")]
     public class GetAzureADUser : PnPGraphCmdlet
     {
         const string ParameterSet_BYID = "Return by specific ID";
@@ -44,7 +43,7 @@ namespace PnP.PowerShell.Commands.Principals
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DELTA)]
-        public int? EndIndex = 999;
+        public int? EndIndex = null;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST)]
@@ -53,11 +52,6 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            if(MyInvocation.InvocationName.ToLower().Equals("get-pnpaaduser"))
-            {
-                WriteWarning("Get-PnPAADUser is obsolete. Use Get-PnPAzureADUser instead which has the same parameters.");
-            }
-
             if (PnPConnection.Current.ClientId == PnPConnection.PnPManagementShellClientId)
             {
                 PnPConnection.Current.Scopes = new[] { "Directory.ReadWrite.All" };
