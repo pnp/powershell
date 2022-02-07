@@ -15,7 +15,7 @@ Adds a new Software-Defined Networking (SDN) provider
 ## SYNTAX
 
 ```powershell
-New-PnPSdnProvider -Identity <String> -License <String> [-Confirm] [-WhatIf]
+New-PnPSdnProvider -Identity <String> -License <String> [-WhatIf]
 ```
 
 ## DESCRIPTION
@@ -89,4 +89,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

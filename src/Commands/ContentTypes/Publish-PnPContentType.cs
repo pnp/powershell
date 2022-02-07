@@ -16,11 +16,9 @@ namespace PnP.PowerShell.Commands.ContentTypes
         protected override void ExecuteCmdlet()
         {
             Microsoft.SharePoint.Client.Site site = ClientContext.Site;
-            ClientContext.Load(site);
-            ClientContext.ExecuteQuery();
             var pub = new Microsoft.SharePoint.Client.Taxonomy.ContentTypeSync.ContentTypePublisher(ClientContext, site);
             ClientContext.Load(pub);
-            ClientContext.ExecuteQuery();
+            ClientContext.ExecuteQueryRetry();
             var ct = ContentType.GetContentTypeOrError(this, nameof(ContentType), site.RootWeb);
 
             if (ct == null)
@@ -30,9 +28,9 @@ namespace PnP.PowerShell.Commands.ContentTypes
             }
 
             var republish = pub.IsPublished(ct);
-            ClientContext.ExecuteQuery();
+            ClientContext.ExecuteQueryRetry();
             pub.Publish(ct, republish.Value);
-            ClientContext.ExecuteQuery();
+            ClientContext.ExecuteQueryRetry();
         }
     }
 }
