@@ -23,6 +23,8 @@ New-PnPGroup -Title <String> [-Description <String>] [-Owner <String>] [-AllowRe
 
 ## DESCRIPTION
 
+This command creates a SharePoint group in the current Site Collection connected to. 
+
 ## EXAMPLES
 
 ### EXAMPLE 1

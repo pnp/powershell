@@ -1,5 +1,4 @@
 ﻿using PnP.Framework.Provisioning.Model;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 

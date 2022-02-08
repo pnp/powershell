@@ -6,7 +6,6 @@ using Microsoft.SharePoint.Client;
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.ObjectHandlers;
 using PnP.Framework.Provisioning.Providers.Xml;
-
 using File = System.IO.File;
 
 namespace PnP.PowerShell.Commands.Taxonomy
@@ -19,7 +18,6 @@ namespace PnP.PowerShell.Commands.Taxonomy
 
         [Parameter(Mandatory = false, ParameterSetName = "File")]
         public string Path;
-
 
         protected override void ExecuteCmdlet()
         {

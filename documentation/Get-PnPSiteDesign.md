@@ -20,8 +20,7 @@ Retrieve Site Designs that have been registered on the current tenant.
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteDesign [[-Identity] <TenantSiteDesignPipeBind>] [-Connection <PnPConnection>]  
- [<CommonParameters>]
+Get-PnPSiteDesign [[-Identity] <TenantSiteDesignPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -46,18 +45,17 @@ Returns a specific registered site designs
 
 ## PARAMETERS
 
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
+### -Identity
+If specified will retrieve the specified site design
 
 ```yaml
-Type: SwitchParameter
+Type: TenantSiteDesignPipeBind
 Parameter Sets: (All)
-Aliases: cf
 
 Required: False
-Position: Named
+Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -75,36 +73,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Identity
-If specified will retrieve the specified site design
-
-```yaml
-Type: TenantSiteDesignPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
