@@ -89,11 +89,19 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public string ClientSecret { get; protected set; }
 
-        //public TelemetryClient TelemetryClient { get; set; }
+        /// <summary>
+        /// Azure Application Insights instance to provide telemetry
+        /// </summary>
         public ApplicationInsights ApplicationInsights { get; set; }
 
+        /// <summary>
+        /// Url of the SharePoint Online site to connect to
+        /// </summary>
         public string Url { get; protected set; }
 
+        /// <summary>
+        /// Url of the SharePoint Online Admin center to use. If omitted, it will try to automatically determine this.
+        /// </summary>
         public string TenantAdminUrl { get; protected set; }
 
         /// <summary>
@@ -106,6 +114,9 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public bool DeleteCertificateFromCacheOnDisconnect { get; internal set; }
 
+        /// <summary>
+        /// ClientContext to use to execute Client Side Object Model (CSOM) requests
+        /// </summary>
         public ClientContext Context { get; set; }
 
         /// <summary>
@@ -117,6 +128,10 @@ namespace PnP.PowerShell.Commands.Base
         /// Defines if this is a managed identity connection for use in cloud shell
         /// </summary>
         internal bool ManagedIdentity { get; set; }
+
+        /// <summary>
+        /// Type of Azure cloud to connect to
+        /// </summary>
         public AzureEnvironment AzureEnvironment { get; set; } = AzureEnvironment.Production;
 
         private string _graphEndPoint;

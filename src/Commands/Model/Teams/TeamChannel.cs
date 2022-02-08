@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model.Teams
@@ -37,12 +38,22 @@ namespace PnP.PowerShell.Commands.Model.Teams
         /// Defines the Description of the Channel
         /// </summary>
         public string Description { get; set; }
-
+        /// <summary>
+        /// Created date time for the channel
+        /// </summary>  
+        public DateTime? CreatedDateTime { get; set; }
+        /// <summary>
+        /// Email for the channel
+        /// </summary>
+        public string Email { get; set; }
+        /// <summary>
+        /// web url of the channel
+        /// </summary>
+        public string WebUrl { get; set; }
         /// <summary>
         /// Defines whether the Channel is Favorite by default for all members of the Team
         /// </summary>
         public bool? IsFavoriteByDefault { get; set; }
-
         /// <summary>
         /// Declares the ID for the Channel
         /// </summary>

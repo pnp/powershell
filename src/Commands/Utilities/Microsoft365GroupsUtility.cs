@@ -230,9 +230,9 @@ namespace PnP.PowerShell.Commands.Utilities
             return await GetGroupMembersAsync("members", httpClient, groupId, accessToken);
         }
 
-        private static async Task<IEnumerable<Microsoft365User>> GetGroupMembersAsync(string groupName, HttpClient httpClient, Guid groupId, string accessToken)
+        private static async Task<IEnumerable<Microsoft365User>> GetGroupMembersAsync(string userType, HttpClient httpClient, Guid groupId, string accessToken)
         {
-            var results = await GraphHelper.GetResultCollectionAsync<Microsoft365User>(httpClient, $"v1.0/groups/{groupId}/{groupName}", accessToken);
+            var results = await GraphHelper.GetResultCollectionAsync<Microsoft365User>(httpClient, $"v1.0/groups/{groupId}/{userType}?$select=*", accessToken);
             return results;
         }
 
