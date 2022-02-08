@@ -144,7 +144,7 @@ namespace PnP.PowerShell.Commands.Base
             using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
             {
                 PnPClientContext context = null;
-                ConnectionType connectionType = ConnectionType.SiteCollection;
+                ConnectionType connectionType = ConnectionType.O365;
                 if (url != null)
                 {
                     context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
@@ -199,7 +199,7 @@ namespace PnP.PowerShell.Commands.Base
                     }
                     context.ApplicationName = Resources.ApplicationName;
                     context.DisableReturnValueCache = true;
-                    connectionType = ConnectionType.SiteCollection;
+                    connectionType = ConnectionType.O365;
                     context.ExecutingWebRequest += (sender, e) =>
                     {
                         e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
@@ -212,7 +212,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                connectionType = ConnectionType.SiteCollection;
+                connectionType = ConnectionType.O365;
             }
 
             var spoConnection = new PnPConnection(context, connectionType, null, clientId, clientSecret, url?.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.ClientIDSecret)
@@ -269,7 +269,7 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
                     };
-                    var connectionType = ConnectionType.SiteCollection;
+                    var connectionType = ConnectionType.O365;
 
                     var spoConnection = new PnPConnection(context, connectionType, null, clientId, null, url.ToString(), null, PnPPSVersionTag, InitializationType.DeviceLogin)
                     {
@@ -315,7 +315,7 @@ namespace PnP.PowerShell.Commands.Base
                     e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
                 };
 
-                var connectionType = ConnectionType.SiteCollection;
+                var connectionType = ConnectionType.O365;
 
                 if (IsTenantAdminSite(context))
                 {
@@ -416,10 +416,10 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
                 }
-                var connectionType = ConnectionType.SiteCollection;
+                var connectionType = ConnectionType.O365;
                 if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
                 {
-                    connectionType = ConnectionType.SiteCollection;
+                    connectionType = ConnectionType.O365;
                 }
 
                 if (IsTenantAdminSite(context))
@@ -461,7 +461,7 @@ namespace PnP.PowerShell.Commands.Base
                     };
                 }
 
-                spoConnection = new PnPConnection(context, ConnectionType.SiteCollection, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, initializationType)
+                spoConnection = new PnPConnection(context, ConnectionType.O365, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, initializationType)
                 {
                     ConnectionMethod = Model.ConnectionMethod.Credentials,
                     AzureEnvironment = azureEnvironment,
@@ -493,7 +493,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     context.ApplicationName = Resources.ApplicationName;
                     context.DisableReturnValueCache = true;
-                    var spoConnection = new PnPConnection(context, ConnectionType.SiteCollection, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.InteractiveLogin);
+                    var spoConnection = new PnPConnection(context, ConnectionType.O365, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.InteractiveLogin);
                     spoConnection.ConnectionMethod = Model.ConnectionMethod.WebLogin;
                     spoConnection.AzureEnvironment = azureEnvironment;
                     return spoConnection;
@@ -534,7 +534,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
                 };
-                var connectionType = ConnectionType.SiteCollection;
+                var connectionType = ConnectionType.O365;
 
                 if (IsTenantAdminSite(context))
                 {
@@ -593,7 +593,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             InitializeTelemetry(null, initializationType);
             var coreAssembly = Assembly.GetExecutingAssembly();
-            ConnectionType = ConnectionType.SiteCollection;
+            ConnectionType = ConnectionType.O365;
             PnPVersionTag = pnpVersionTag;
             TenantAdminUrl = tenantAdminUrl;
             ConnectionMethod = ConnectionMethod.ManagedIdentity;

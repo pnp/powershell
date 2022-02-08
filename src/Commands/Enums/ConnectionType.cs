@@ -8,7 +8,7 @@
         /// <summary>
         /// Normal SharePoint Online site collection
         /// </summary>
-        SiteCollection = 1,
+        O365 = 1,
 
         /// <summary>
         /// SharePoint Online Admin site collection
