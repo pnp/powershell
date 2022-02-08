@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Update-PnPTeamsUser` cmdlet to change the role of a user in an existing Teams team [#1499](https://github.com/pnp/powershell/pull/1499)
 - Added `Get\New\Remove\Set-PnPMicrosoft365GroupSettings` cmdlets to interact with Microsoft 365 Group settings.
 - Added `Get-PnPMicrosoft365GroupSettingTemplates` cmdlet to retrieve system wide Microsoft 365 Group setting templates.
+- Added `Add\Remove\Invoke\Get-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design.
 - Added `DisablePersonalListCreation` parameter to `Set-PnPTenant` cmdlet to provide ability to disable personal lists creation [#1545](https://github.com/pnp/powershell/pull/1545)
 - Added `DisabledModernListTemplateIds` and `EnableModernListTemplateIds` parameters to `Set-PnPTenant` cmdlet to provide ability to disable or enable modern lists with specific Ids [#1545](https://github.com/pnp/powershell/pull/1545)
 - Added `DisablePersonalListCreation` and `DisabledModernListTemplateIds` values to be displayed when using `Get-PnPTenant` cmdlet [#1545](https://github.com/pnp/powershell/pull/1545)
@@ -201,7 +202,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Add-PnPSiteDesignFromWeb` which combines `Get-PnPSiteScriptFromWeb`, `Add-PnPSiteScript` and `Add-PnPSiteDesign` into one cmdlet to allow for a specific site to directly be added as a site design to allow other sites to be configured similarly
 - Added `Update-PnPSiteDesignFromWeb` which combines `Get-PnPSiteScriptFromWeb` and `Set-PnPSiteScript` into one cmdlet to allow for a specific site design to directly be updated based on an existing site which can function as a template
 - Added `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` cmdlet which allows direct synchronization of user profile properties of choice between user profiles in Azure Active Directory and their SharePoint Online User Profile Service user profile equivallents
--   
+-  
 ### Changed
 - Renamed `Get-PnPFlowEnvironment` to `Get-PnPPowerAutomateEnvironment`
 - Changed `Get-PnPSiteScriptFromWeb` to get a site script of the currently connected to site if `-Url` is omitted.
@@ -247,7 +248,6 @@ this option is not enabled yet on your tenant in which case trying to set it res
 - [reusto]
 - [4ndri]
 - [WimVandierendonck]
-- Koen Zomers [koenzomers]
 
 ## [1.7.0]
 
