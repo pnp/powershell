@@ -20,7 +20,7 @@ Marks one or multiple message center announcements of the Office 365 Services as
 ## SYNTAX
 
 ```powershell
-Set-PnPMessageCenterAnnouncementAsArchived [-Identity <Id>] [-Identities <Ids>] [<CommonParameters>]
+Set-PnPMessageCenterAnnouncementAsArchived [-Identity <Ids>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,7 +36,7 @@ Marks message center announcement MC123456 as archived for the current user
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPMessageCenterAnnouncementAsArchived -Identities @("MC123456", "MC234567")
+Set-PnPMessageCenterAnnouncementAsArchived -Identity "MC123456", "MC234567"
 ```
 
 Marks message center announcements MC123456 and MC234567 as archived for the current user
@@ -51,25 +51,13 @@ Marks all message center announcements as archived for the current user
 ## PARAMETERS
 
 ### -Identity
-Marks a particular message center announcement with the provided Id as archived
-```yaml
-Type: String
-Parameter Sets: Single
+Marks the message center announcement or announcements with the provided Ids as archived
 
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Identities
-Marks the message center announcements with the provided Ids as archived
 ```yaml
 Type: String[]
-Parameter Sets: Multiple
+Parameter Sets: None
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

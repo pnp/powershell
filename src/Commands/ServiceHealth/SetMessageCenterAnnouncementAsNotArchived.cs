@@ -6,29 +6,18 @@ using System.Linq;
 
 namespace PnP.PowerShell.Commands.ServiceHealth
 {
-    [Cmdlet(VerbsCommon.Set, "PnPMessageCenterAnnouncementAsNotArchived", DefaultParameterSetName = ParameterSet_ALL)]
+    [Cmdlet(VerbsCommon.Set, "PnPMessageCenterAnnouncementAsNotArchived")]
     [RequiredMinimalApiPermissions("ServiceMessageViewpoint.Write")]
     public class SetMessageCenterAnnouncementAsNotArchived : PnPGraphCmdlet
     {
-        private const string ParameterSet_ALL = "All";
-        private const string ParameterSet_SINGLE = "Single";
-        private const string ParameterSet_MULTIPLE = "Multiple";
-
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SINGLE)]
-        public string Identity;
-
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_MULTIPLE)]
-        public string[] Identities;
+        [Parameter(Mandatory = false)]
+        public string[] Identity;
 
         protected override void ExecuteCmdlet()
         {
             if (ParameterSpecified(nameof(Identity)))
             {
                 WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsUnarchivedByIdAsync(Identity, HttpClient, AccessToken).GetAwaiter().GetResult(), true);
-            }
-            else if (ParameterSpecified(nameof(Identities)))
-            {
-                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsUnarchivedByIdAsync(Identities, HttpClient, AccessToken).GetAwaiter().GetResult(), true);
             }
             else
             {
