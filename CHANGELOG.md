@@ -55,6 +55,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Add-PnPClientSideWebPart`, use `Add-PnPPageWebPart` instead [#1563](https://github.com/pnp/powershell/pull/1563)
 - Removed `Add-PnPClientSideText`, use `Add-PnPPageTextPart` instead [#1563](https://github.com/pnp/powershell/pull/1563)
 - Removed `Get-PnPAADUser`, use `Get-PnPAzureADUser` instead [#1568](https://github.com/pnp/powershell/pull/1568)
+- Removed `Get-PnPOffice365CurrentServiceStatus`, `Get-PnPOffice365HistoricalServiceStatus`, `Get-PnPOffice365ServiceMessage` and `Get-PnPOffice365Services` as Microsoft has removed the underlying Office Management APIs. Use `Get-PnPMessageCenterAnnouncent`, `Get-PnPServiceCurrentHealth` and `Get-PnPServiceHealthIssue` instead. [#1608](https://github.com/pnp/powershell/pull/1608)
 
 ### Contributors
 
