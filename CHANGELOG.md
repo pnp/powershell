@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Publish\Unpublish-PnPContentType` to allow for content types to be published or unpublished on hub sites [#1597](https://github.com/pnp/powershell/pull/1597)
 - Added `Get-PnPContentTypePublishingStatus` to get te current publication state of a content type in the content type hub site [#1597](https://github.com/pnp/powershell/pull/1597)
 - Added ability to pipe the output of `Get-PnPTenantDeletedSite` to either `Restore-PnPTenantDeletedSite` or `Remove-PnPTenantDeletedSite` [#1596](https://github.com/pnp/powershell/pull/1596)
+- Added `Rename-PnPTenantSite` to rename a SharePoint Online site URL [#1606](https://github.com/pnp/powershell/pull/1606)
 
 ### Changed
 
