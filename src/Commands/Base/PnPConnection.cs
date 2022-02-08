@@ -156,7 +156,7 @@ namespace PnP.PowerShell.Commands.Base
                     };
                     if (IsTenantAdminSite(context))
                     {
-                        connectionType = ConnectionType.TenantAdminSite;
+                        connectionType = ConnectionType.TenantAdmin;
                     }
                 }
 
@@ -206,7 +206,7 @@ namespace PnP.PowerShell.Commands.Base
                     };
                     if (IsTenantAdminSite(context))
                     {
-                        connectionType = ConnectionType.TenantAdminSite;
+                        connectionType = ConnectionType.TenantAdmin;
                     }
                 }
             }
@@ -319,7 +319,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 if (IsTenantAdminSite(context))
                 {
-                    connectionType = ConnectionType.TenantAdminSite;
+                    connectionType = ConnectionType.TenantAdmin;
                 }
 
                 var spoConnection = new PnPConnection(context, connectionType, null, clientId, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.ClientIDCertificate)
@@ -424,7 +424,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 if (IsTenantAdminSite(context))
                 {
-                    connectionType = ConnectionType.TenantAdminSite;
+                    connectionType = ConnectionType.TenantAdmin;
                 }
 
                 spoConnection = new PnPConnection(context, connectionType, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, initializationType)
@@ -538,7 +538,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 if (IsTenantAdminSite(context))
                 {
-                    connectionType = ConnectionType.TenantAdminSite;
+                    connectionType = ConnectionType.TenantAdmin;
                 }
 
                 var spoConnection = new PnPConnection(context, connectionType, null, clientId, null, uri.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.ClientIDCertificate)

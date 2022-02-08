@@ -13,6 +13,6 @@
         /// <summary>
         /// SharePoint Online Admin site collection
         /// </summary>
-        TenantAdminSite = 2,
+        TenantAdmin = 2,
     }
 }
