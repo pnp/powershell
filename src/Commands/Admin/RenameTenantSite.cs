@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -70,92 +69,86 @@ namespace PnP.PowerShell.Commands.Admin
             };
 
             var tenantUrl = UrlUtilities.GetTenantAdministrationUrl(ClientContext.Url);
-            try
+
+            var results = Utilities.REST.RestHelper.PostAsync<SPOSiteRenameJob>(HttpClient, $"{tenantUrl.TrimEnd('/')}/_api/SiteRenameJobs?api-version=1.4.7", ClientContext, body, false).GetAwaiter().GetResult();
+            if (!Wait.IsPresent)
             {
-                var results = Utilities.REST.RestHelper.PostAsync<SPOSiteRenameJob>(HttpClient, $"{tenantUrl.TrimEnd('/')}/_api/SiteRenameJobs?api-version=1.4.7", ClientContext, body, false).GetAwaiter().GetResult();
-                if (!Wait.IsPresent)
+                if (results != null)
                 {
-                    if (results != null)
-                    {
-                        WriteObject(results);
-                    }
+                    WriteObject(results);
                 }
-                else
+            }
+            else
+            {
+                bool wait = true;
+                var iterations = 0;
+
+                var method = new HttpMethod("GET");
+
+                var httpClient = PnPHttpClient.Instance.GetHttpClient(ClientContext);
+
+                var requestUrl = $"{tenantUrl.TrimEnd('/')}/_api/SiteRenameJobs/GetJobsBySiteUrl(url='{Identity.Url}')?api-version=1.4.7";
+
+                while (wait)
                 {
-                    bool wait = true;
-                    var iterations = 0;
-
-                    var method = new HttpMethod("GET");
-
-                    var httpClient = PnPHttpClient.Instance.GetHttpClient(ClientContext);
-
-                    var requestUrl = $"{tenantUrl.TrimEnd('/')}/_api/SiteRenameJobs/GetJobsBySiteUrl(url='{Identity.Url}')?api-version=1.4.7";
-
-                    while (wait)
+                    iterations++;
+                    try
                     {
-                        iterations++;
-                        try
+                        using (HttpRequestMessage request = new HttpRequestMessage(method, requestUrl))
                         {
-                            using (HttpRequestMessage request = new HttpRequestMessage(method, requestUrl))
+                            request.Headers.Add("accept", "application/json;odata=nometadata");
+                            request.Headers.Add("X-AttemptNumber", iterations.ToString());
+                            PnPHttpClient.AuthenticateRequestAsync(request, ClientContext).GetAwaiter().GetResult();
+
+                            HttpResponseMessage response = httpClient.SendAsync(request, new System.Threading.CancellationToken()).Result;
+
+                            if (response.IsSuccessStatusCode)
                             {
-                                request.Headers.Add("accept", "application/json;odata=nometadata");
-                                request.Headers.Add("X-AttemptNumber", iterations.ToString());
-                                PnPHttpClient.AuthenticateRequestAsync(request, ClientContext).GetAwaiter().GetResult();
-
-                                HttpResponseMessage response = httpClient.SendAsync(request, new System.Threading.CancellationToken()).Result;
-
-                                if (response.IsSuccessStatusCode)
+                                var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                                if (responseString != null)
                                 {
-                                    var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                                    if (responseString != null)
+                                    var jsonElement = JsonSerializer.Deserialize<JsonElement>(responseString);
+
+                                    if (jsonElement.TryGetProperty("value", out JsonElement valueProperty))
                                     {
-                                        var jsonElement = JsonSerializer.Deserialize<JsonElement>(responseString);
+                                        var siteRenameResults = JsonSerializer.Deserialize<List<SPOSiteRenameJob>>(valueProperty.ToString());
 
-                                        if (jsonElement.TryGetProperty("value", out JsonElement valueProperty))
+                                        if (siteRenameResults != null && siteRenameResults.Count > 0)
                                         {
-                                            var siteRenameResults = JsonSerializer.Deserialize<List<SPOSiteRenameJob>>(valueProperty.ToString());
-
-                                            if (siteRenameResults != null && siteRenameResults.Count > 0)
+                                            var siteRenameResponse = siteRenameResults[0];
+                                            if (!string.IsNullOrEmpty(siteRenameResponse.ErrorDescription))
                                             {
-                                                var siteRenameResponse = siteRenameResults[0];
-                                                if (!string.IsNullOrEmpty(siteRenameResponse.ErrorDescription))
-                                                {
-                                                    wait = false;
-                                                    throw new PSInvalidOperationException(siteRenameResponse.ErrorDescription);
-                                                }
-                                                if (siteRenameResponse.JobState == "Success")
-                                                {
-                                                    wait = false;
-                                                    WriteObject(siteRenameResponse);
-                                                }
-                                                else
-                                                {
-                                                    Task.Delay(TimeSpan.FromSeconds(30)).GetAwaiter().GetResult();
-                                                }
+                                                wait = false;
+                                                throw new PSInvalidOperationException(siteRenameResponse.ErrorDescription);
+                                            }
+                                            if (siteRenameResponse.JobState == "Success")
+                                            {
+                                                wait = false;
+                                                WriteObject(siteRenameResponse);
+                                            }
+                                            else
+                                            {
+                                                Task.Delay(TimeSpan.FromSeconds(30)).GetAwaiter().GetResult();
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-                        catch (Exception)
+                    }
+                    catch (Exception)
+                    {
+                        if (iterations * 30 >= 300)
                         {
-                            if (iterations * 30 >= 300)
-                            {
-                                wait = false;
-                                throw;
-                            }
-                            else
-                            {
-                                Task.Delay(TimeSpan.FromSeconds(30)).GetAwaiter().GetResult();
-                            }
+                            wait = false;
+                            throw;
+                        }
+                        else
+                        {
+                            Task.Delay(TimeSpan.FromSeconds(30)).GetAwaiter().GetResult();
                         }
                     }
                 }
-            }
-            catch
-            {
-                throw;
             }
         }
     }

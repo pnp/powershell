@@ -18,8 +18,7 @@ This will not work for Multi-geo environments.
 
 ```powershell
 Rename-PnPTenantSite [[-Identity] <SPOSitePipeBind>] [[-NewSiteUrl] <String>] [[-NewSiteTitle] <string>]
-[[-SuppressMarketplaceAppCheck] [<SwitchParameter>]] [[-SuppressWorkflow2013Check] [<SwitchParameter>]] [-Connection <PnPConnection>]
-[<CommonParameters>]
+[[-SuppressMarketplaceAppCheck] [<SwitchParameter>]] [[-SuppressWorkflow2013Check] [<SwitchParameter>]] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,12 +27,12 @@ Rename-PnPTenantSite [[-Identity] <SPOSitePipeBind>] [[-NewSiteUrl] <String>] [[
 
 ### EXAMPLE 1
 ```powershell
-$url="https://<tenant>.sharepoint.com/site/samplesite"
-$NewSiteUrl="https://<tenant>.sharepoint.com/site/renamed"
-Rename-PnPTenantSite -Identity $url -NewSiteUrl $NewSiteUrl
+$currentSiteUrl = "https://<tenant>.sharepoint.com/site/samplesite"
+$updatedSiteUrl = "https://<tenant>.sharepoint.com/site/renamed"
+Rename-PnPTenantSite -Identity $currentSiteUrl -NewSiteUrl $updatedSiteUrl
 ```
 
-Starts the rename of the SPO site with name "samplesite" to "renamed" without modifying the title.
+Starts the rename of the SharePoint Online site with name "samplesite" to "renamed" without modifying the title.
 
 ## PARAMETERS
 
@@ -52,7 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Specifies the URL of the SharePoint Site on which SharePoint Spaces should be disabled. Must be provided if Scope is set to Tenant.
+Specifies the full URL of the SharePoint Online site collection that needs to be renamed.
 
 ```yaml
 Type: SPOSitePipeBind
@@ -66,7 +65,7 @@ Accept wildcard characters: False
 ```
 
 ### -NewSiteUrl
-Specifies the new URL of the SharePoint Site that you want to set
+Specifies the full URL of the SharePoint Online site collection to which it needs to be renamed.
 
 ```yaml
 Type: String
@@ -75,7 +74,7 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -89,7 +88,7 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -103,7 +102,7 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -117,7 +116,7 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -136,7 +135,7 @@ Accept wildcard characters: False
 ```
 
 ### -Wait
-Wait till the renaming of the new site collection is successfull. If not specified, a job will be created for SPO and you can check it a few seconds or minutes later.
+Wait till the renaming of the new site collection is successfull. If not specified, a job will be created which you can use to check for its status.
 
 ```yaml
 Type: SwitchParameter
@@ -145,13 +144,10 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
-
-
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
