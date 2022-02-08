@@ -20,11 +20,7 @@ namespace PnP.PowerShell.Commands.Admin
             try
             {
                 hubSiteProperties = Identity.GetHubSite(Tenant);
-                if(!hubSiteProperties.IsPropertyAvailable("ID"))
-                {
-                    ClientContext.Load(hubSiteProperties, h => h.ID);
-                    ClientContext.ExecuteQueryRetry();
-                }
+                hubSiteProperties.EnsureProperty(h => h.ID);
             }
             catch (ServerException ex)
             {
