@@ -128,6 +128,14 @@ Register-PnPAzureADApp -ApplicationName &quot;PnPPowerShell&quot; -Tenant yourte
 <p>You will be asked to authenticate. After that the cmdlet will generate a certificate and will store it in the Windows Certificate Management Store and a new Azure AD Application will be registered with the specified name. The public key of the certificate file will be uploaded and registered with the newly create application registration. Notice that the <code>Register-PnPAzureADApp</code> cmdlet only have to be executed once per tenant/application. The output of the cmdlet contains the thumbprint to use.</p>
 <pre><code class="lang-PowerShell">Connect-PnPOnline -ClientId fa1a81f1-e729-44d8-bb71-0a0c339c0f62 -Url &quot;https://tenant.sharepoint.com&quot; -Tenant tenant.onmicrosoft.com -Thumbprint $thumbprint
 </code></pre>
+<h2 id="connect-using-a-clientid-and-pfx-certificate-being-base64-encoded">Connect using a ClientId and PFX certificate being Base64 encoded</h2>
+<p>In some scenarios it might be easier to have the PFX file being encoded as a string using Base64 as opposed to having to store the physical PFX file somewhere. If you have the PFX encoded using Base64 encoding, you can connect using:</p>
+<pre><code class="lang-PowerShell">Connect-PnPOnline -ClientId fa1a81f1-e729-44d8-bb71-0a0c339c0f62 -Url &quot;https://tenant.sharepoint.com&quot; -Tenant tenant.onmicrosoft.com -CertificateBase64Encoded $encodedPfx
+</code></pre>
+<p>If you wish to convert a PFX file to its Base64 encoded equivallent, you can use:</p>
+<pre><code class="lang-PowerShell">$bytes = Get-Content '.\PnPPowerShell.pfx' -AsByteStream
+$encodedPfx = [System.Convert]::ToBase64String($bytes)
+</code></pre>
 <h2 id="connect-to-a-national-cloud-deployment-gccgermanychina">Connect to a National Cloud Deployment (GCC/Germany/China)</h2>
 <p>If you are on a National Cloud instance, read the <a href="authentication.html">authentication</a> article for more information</p>
 </article>
