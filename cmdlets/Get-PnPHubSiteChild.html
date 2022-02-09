@@ -88,17 +88,21 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Retrieves all sites linked to a specific hub site</p>
+<p>Retrieves all sites associated to a specific hub site</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Get-PnPHubSiteChild -Identity &lt;HubSitePipeBind&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Retrieves all sites linked to a specific hub site</p>
+<p>Retrieves all sites associated to a specific hub site</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPHubSiteChild -Identity &quot;https://contoso.sharepoint.com/sites/myhubsite&quot;
 </code></pre>
-<p>Returns the sites having configured the provided hub site as their hub site</p>
+<p>Returns the sites which are associated with the provided hub site as their hub site</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPHubSite | Get-PnPHubSiteChild
+</code></pre>
+<p>Returns all sites that are associated to a hub site</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -112,7 +116,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The URL of the hubsite for which to receive the sites refering to it</p>
+<p>The URL, Id or instance of the hubsite for which to receive the sites refering to it</p>
 <pre><code class="lang-yaml">Type: HubSitePipeBind
 Parameter Sets: (All)
 
