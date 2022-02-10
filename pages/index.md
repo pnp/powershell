@@ -44,7 +44,7 @@ Make a clone of the repository, navigate to the build folder in the repository a
 
 ## Supportability and SLA
 
-This module is open-source and community provided module with active community providing support for it. There is no SLA or direct support for this open-source module from Microsoft. Please report any issues using the [issues list](https://github.com/pnp/powershell/issues).
+This library is open-source and community provided library with active community providing support for it. This is not Microsoft provided module so there's no no SLA or direct support for this open-source component from Microsoft. Please report any issues using the [issues list](https://github.com/pnp/powershell/issues).
 
 ## Updating the documentation
 
