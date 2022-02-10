@@ -10,6 +10,10 @@ This module is a successor of the [PnP-PowerShell](https://github.com/pnp/pnp-po
 
 For more information about installing or upgrading to this module, please refer to the documentation at https://pnp.github.io/powershell/articles/index.html
 
+## Supportability and SLA
+
+This library is open-source and community provided library with active community providing support for it. There is no SLA or direct support for this open-source component from Microsoft. Please report any issues using the [issues list](https://github.com/pnp/pnpcore/issues).
+
 ---
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
