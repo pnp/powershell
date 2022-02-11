@@ -6,7 +6,6 @@ using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using System.Text;
 
 namespace PnP.PowerShell.Commands.Admin
 {
@@ -64,8 +63,16 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 DeletedSiteProperties deletedSitePropertiesByUrl = Tenant.GetDeletedSitePropertiesByUrl(Identity.Url);
                 ClientContext.Load(deletedSitePropertiesByUrl);
-                ClientContext.ExecuteQueryRetry();
-                WriteObject(new Model.SPODeletedSite(deletedSitePropertiesByUrl));
+
+                try
+                {
+                    ClientContext.ExecuteQueryRetry();
+                    WriteObject(new Model.SPODeletedSite(deletedSitePropertiesByUrl));
+                }
+                catch (Microsoft.SharePoint.Client.ServerException e) when (e.ServerErrorTypeName.Equals("Microsoft.SharePoint.Client.UnknownError", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    WriteVerbose($"No sitecollection found in the tenant recycle bin with the Url {Identity.Url}");
+                }
             }
         }
 

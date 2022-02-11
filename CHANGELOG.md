@@ -13,23 +13,32 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Update-PnPTeamsUser` cmdlet to change the role of a user in an existing Teams team [#1499](https://github.com/pnp/powershell/pull/1499)
 - Added `Get\New\Remove\Set-PnPMicrosoft365GroupSettings` cmdlets to interact with Microsoft 365 Group settings.
 - Added `Get-PnPMicrosoft365GroupSettingTemplates` cmdlet to retrieve system wide Microsoft 365 Group setting templates.
-- Added `Add\Remove\Invoke-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design.
+- Added `Add\Remove\Invoke\Get-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design.
 - Added `DisablePersonalListCreation` parameter to `Set-PnPTenant` cmdlet to provide ability to disable personal lists creation [#1545](https://github.com/pnp/powershell/pull/1545)
 - Added `DisabledModernListTemplateIds` and `EnableModernListTemplateIds` parameters to `Set-PnPTenant` cmdlet to provide ability to disable or enable modern lists with specific Ids [#1545](https://github.com/pnp/powershell/pull/1545)
 - Added `DisablePersonalListCreation` and `DisabledModernListTemplateIds` values to be displayed when using `Get-PnPTenant` cmdlet [#1545](https://github.com/pnp/powershell/pull/1545)
 - Added `Add\Remove\Set-PnPAdaptiveScopeProperty` cmdlets to add/update/remove a property bag value while dealing with the noscript toggling in one cmdlet [#1556](https://github.com/pnp/powershell/pull/1556)
 - Added support to add multiple owners and members in `New-PnPTeamsTeam` cmdlet [#1241](https://github.com/pnp/powershell/pull/1241)
 - Added the ability to set the title of a new modern page in SharePoint Online using `Add-PnPPage` to be different from its filename by using `-Title`
+- Added optional `-UseBeta` parameter to `Get-PnPAzureADUser` to force it to use the Microsoft Graph beta endpoint. This can be necessary when i.e. using `-Select "PreferredDataLocation"` to query for users with a specific multi geo location as this property is only available through the beta endpoint. [#1559](https://github.com/pnp/powershell/pull/1559)
+- Added `-Content` option to `Add-PnPFile` which allows creating a new file on SharePoint Online and directly providing its textual content, i.e. to upload a log file of the execution [#1559](https://github.com/pnp/powershell/pull/1559)
 - Added `Get-PnPTeamsPrimaryChannel` to get the primary Teams channel, general, of a Team [#1572](https://github.com/pnp/powershell/pull/1572)
 - Added `IgnoreDefaultProperties` parameter to `Get-PnPAzureADUser` to allow for the default properties not to be retrieved but instead just the ones you specify using `Select` [#1575](https://github.com/pnp/powershell/pull/1575)
+- Added `Publish\Unpublish-PnPContentType` to allow for content types to be published or unpublished on hub sites [#1597](https://github.com/pnp/powershell/pull/1597)
+- Added `Get-PnPContentTypePublishingStatus` to get te current publication state of a content type in the content type hub site [#1597](https://github.com/pnp/powershell/pull/1597)
+- Added ability to pipe the output of `Get-PnPTenantDeletedSite` to either `Restore-PnPTenantDeletedSite` or `Remove-PnPTenantDeletedSite` [#1596](https://github.com/pnp/powershell/pull/1596)
+- Added `Rename-PnPTenantSite` to rename a SharePoint Online site URL [#1606](https://github.com/pnp/powershell/pull/1606)
 
 ### Changed
 
 - Improved `Add-PnPTeamsUser` cmdlet. The cmdlet executes faster and we can now add users in batches of 200. [#1548](https://github.com/pnp/powershell/pull/1548)
 - The `Move\Remove\Rename-PnPFolder` cmdlets now support pipebinds.
 - Changed `Add-PnPDataRowsToSiteTemplate`, it will return a warning if user(s) are not found during list item extraction. Earlier it used to throw error and stop extraction of list items.
+- Changed the return type of `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to return our own entity instead of the one returned by CSOM [#1559](https://github.com/pnp/powershell/pull/1559)
+- Changed running `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` with `-WhatIf` to also provide a return entity providing the path to where the JSON file has been uploaded to [#1559](https://github.com/pnp/powershell/pull/1559)
 - Disabling telemetry collection now requires either setting the environment variable or creating the telemetry file ([documentation](https://pnp.github.io/powershell/articles/configuration.html)) [#1504](https://github.com/pnp/powershell/pull/1504)
 - Changed `Get-PnPAzureADUser` to now return all the users in Azure Active Directory by default, instead of only the first 999, unless you specified `-EndIndex:$null` [#1565](https://github.com/pnp/powershell/pull/1565)
+- Changed `Get-PnPTenantDeletedSite -Identity` no longer returning an unknown exception when no site collection with the provided Url exists in the tenant recycle bin but instead returning no output to align with other cmdlets [#1596](https://github.com/pnp/powershell/pull/1596)
 
 ### Fixed
 
@@ -42,6 +51,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Add-PnPDataRowsToSiteTemplate` issue with PnP templates when it contained multilingual references.
 - Fixed `Copy-PnPItemProxy` is not recognized as the name of a cmdlet, function, script file, or operable program error with the cmdlet.
 - Fixed `Add-PnPMicrosoft365GroupMember`, `Remove-PnPMicrosoft365GroupMember`, `Add-PnPTeamsUser` and `Remove-PnPTeamsUser` not being able to handle guest accounts containing # characters [#1523](https://github.com/pnp/powershell/pull/1523)
+- Fixed not being able to pipe `Get-PnPHubSite` to `Get-PnPHubSiteChild` to retrieve all site collections which are associated to any hub site [#1571](https://github.com/pnp/powershell/pull/1571)
+- Fixed `Add-PnPFileToSiteTemplate` when used alongside `Get-PnPFile` where the FileStream tried to overwrite an already open filestream when a file was located in the same directory as the template file itself.
+- Fixed `Get-PnPMessageCenterAnnouncement` returning an error [#1607](https://github.com/pnp/powershell/pull/1607)
+- Fixed `New-PnPTeamsTeam` issue when adding Owners and Members.
+- Fixed running an admin cmdlet not always returning to the same context as before running the cmdlet [#1611](https://github.com/pnp/powershell/pull/1611)
 
 ### Removed
 
@@ -49,9 +63,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Add-PnPClientSideWebPart`, use `Add-PnPPageWebPart` instead [#1563](https://github.com/pnp/powershell/pull/1563)
 - Removed `Add-PnPClientSideText`, use `Add-PnPPageTextPart` instead [#1563](https://github.com/pnp/powershell/pull/1563)
 - Removed `Get-PnPAADUser`, use `Get-PnPAzureADUser` instead [#1568](https://github.com/pnp/powershell/pull/1568)
+- Removed `Get-PnPOffice365CurrentServiceStatus`, `Get-PnPOffice365HistoricalServiceStatus`, `Get-PnPOffice365ServiceMessage` and `Get-PnPOffice365Services` as Microsoft has removed the underlying Office Management APIs. Use `Get-PnPMessageCenterAnnouncent`, `Get-PnPServiceCurrentHealth` and `Get-PnPServiceHealthIssue` instead. [#1608](https://github.com/pnp/powershell/pull/1608)
 
 ### Contributors
 
+- Swapnil Shrivastava [swapnil1993]
+- Hugo Bernier [hugoabernier]
+- brenle
+- Johan Brännmar [brannmar]
 - Lschockaert
 - Leon Armston [LeonArmston]
 - Reshmee Auckloo [reshmee011]
@@ -202,7 +221,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed an issue with several PnP PowerShell cmdlets such as `Get-PnPTeamsUser` where not all results would be returned
 - Fixed issue with `Remove-PnPSiteDesign -Identity` not accepting a site design name, only a GUID.
 - Fixed issue with `Get-PnPUPABulkImportStatus` where it did not allow you to pipe its output to i.e. get the most recent one using `Select -Latest 1` or the ones that failed using `? State -ne "Succeeded"`  
-    
+- Fixed an issue where running `Get-PnPSiteDesign -Identity` passing in an identifier that did not exist would return an exception [#1622](https://github.com/pnp/powershell/pull/1622)
+
 ### Removed
 - Removed `ConvertTo-PnPClientSidePage` cmdlet as it has been replaced by `ConvertTo-PnPPage`
 this option is not enabled yet on your tenant in which case trying to set it results in to `Set-PnPTenant: The requested operation is part of an experimental feature that is not supported in the current environment.`. In that case try again later.

@@ -15,7 +15,7 @@ title: Get-PnPHubSiteChild
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Retrieves all sites linked to a specific hub site
+Retrieves all sites associated to a specific hub site
 
 ## SYNTAX
 
@@ -24,7 +24,7 @@ Get-PnPHubSiteChild -Identity <HubSitePipeBind> [-Connection <PnPConnection>] [<
 ```
 
 ## DESCRIPTION
-Retrieves all sites linked to a specific hub site
+Retrieves all sites associated to a specific hub site
 
 ## EXAMPLES
 
@@ -33,7 +33,14 @@ Retrieves all sites linked to a specific hub site
 Get-PnPHubSiteChild -Identity "https://contoso.sharepoint.com/sites/myhubsite"
 ```
 
-Returns the sites having configured the provided hub site as their hub site
+Returns the sites which are associated with the provided hub site as their hub site
+
+### EXAMPLE 2
+```powershell
+Get-PnPHubSite | Get-PnPHubSiteChild
+```
+
+Returns all sites that are associated to a hub site
 
 ## PARAMETERS
 
@@ -52,7 +59,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The URL of the hubsite for which to receive the sites refering to it
+The URL, Id or instance of the hubsite for which to receive the sites refering to it
 
 ```yaml
 Type: HubSitePipeBind
@@ -68,5 +75,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

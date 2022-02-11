@@ -86,6 +86,21 @@ You will be asked to authenticate. After that the cmdlet will generate a certifi
 Connect-PnPOnline -ClientId fa1a81f1-e729-44d8-bb71-0a0c339c0f62 -Url "https://tenant.sharepoint.com" -Tenant tenant.onmicrosoft.com -Thumbprint $thumbprint
 ```
 
+## Connect using a ClientId and PFX certificate being Base64 encoded
+
+In some scenarios it might be easier to have the PFX file being encoded as a string using Base64 as opposed to having to store the physical PFX file somewhere. If you have the PFX encoded using Base64 encoding, you can connect using:
+
+```PowerShell
+Connect-PnPOnline -ClientId fa1a81f1-e729-44d8-bb71-0a0c339c0f62 -Url "https://tenant.sharepoint.com" -Tenant tenant.onmicrosoft.com -CertificateBase64Encoded $encodedPfx
+```
+
+If you wish to convert a PFX file to its Base64 encoded equivallent, you can use:
+
+```PowerShell
+$bytes = Get-Content '.\PnPPowerShell.pfx' -AsByteStream
+$encodedPfx = [System.Convert]::ToBase64String($bytes)
+```
+
 ## Connect to a National Cloud Deployment (GCC/Germany/China)
 
 If you are on a National Cloud instance, read the [authentication](authentication.md) article for more information

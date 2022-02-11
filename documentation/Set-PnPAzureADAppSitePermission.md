@@ -20,7 +20,7 @@ Updates permissions for a given app.
 ## SYNTAX
 
 ```powershell
-Set-PnPAzureADAppSitePermission -PermissionId <String> -Permissions <"Read"|"Write"> [-Site <SitePipeBind>]
+Set-PnPAzureADAppSitePermission -PermissionId <String> -Permissions <"Read"|"Write"|"Manage"|"FullControl"> [-Site <SitePipeBind>]
 ```
 
 ## DESCRIPTION
@@ -60,7 +60,7 @@ Type: String
 Parameter Sets: (All)
 
 Required: True
-Accepted values: Write, Read
+Accepted values: Write, Read, Manage, FullControl
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -84,5 +84,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
