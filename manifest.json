@@ -26,6 +26,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/azurecloudshell.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/azurecloudshell.html",
+          "hash": "sH3V07RDB5CeflKgAghCag=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/azurefunctions.md",
       "output": {
         ".html": {
@@ -141,7 +153,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "iRQKbcDvYXEVoqi9xyAoUg=="
+          "hash": "H8hTywwbnjZ67tgDmc4R3g=="
         }
       },
       "is_incremental": false,
@@ -201,7 +213,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPApplicationCustomizer.html",
-          "hash": "EvceO8IC4NeyrA71TGs6oA=="
+          "hash": "hhEUjbmsbcItNu4kAazhWg=="
         }
       },
       "is_incremental": false,
@@ -7324,6 +7336,94 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/azurecloudshell/devicelogin.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurecloudshell/devicelogin.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurecloudshell/deviceloginconnected.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurecloudshell/deviceloginconnected.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurecloudshell/deviceloginentercode.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurecloudshell/deviceloginentercode.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurecloudshell/installmodule.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurecloudshell/installmodule.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurecloudshell/launchcloudshellfromazureportal.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurecloudshell/launchcloudshellfromazureportal.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurecloudshell/launchcloudshellfromm365admin.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurecloudshell/launchcloudshellfromm365admin.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurecloudshell/launchcloudshellfromteamsadmin.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurecloudshell/launchcloudshellfromteamsadmin.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurecloudshell/launchingthroughbrowser.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurecloudshell/launchingthroughbrowser.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/logo.svg",
       "output": {
         "resource": {
@@ -7339,7 +7439,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "QHknVWMlZPGrxWubESGXzg=="
+          "hash": "W10Kcckw66Ue3RQNewlrug=="
         }
       },
       "is_incremental": false,
@@ -7372,7 +7472,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 607,
+          "total_file_count": 608,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
