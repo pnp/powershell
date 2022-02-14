@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace PnP.PowerShell.Commands.Model.ServiceHealth
 {
     /// <summary>
@@ -6,18 +8,21 @@ namespace PnP.PowerShell.Commands.Model.ServiceHealth
     public class ServiceUpdateMessageViewPoint
     {
         /// <summary>
-        /// Indicates if this service announcement has been read
+        /// Indicates if the message center announcement has been read
         /// </summary>
+        [JsonPropertyName("isRead")]
         public bool? IsRead { get; set; }
 
         /// <summary>
-        /// Indicates if this service announcement has been archived
+        /// Indicates if the message center announcement has been favored
         /// </summary>
-        public bool? IsArchived { get; set; }
+        [JsonPropertyName("isFavorited")]
+        public bool? IsFavorited { get; set; }
 
         /// <summary>
-        /// Indicates if this service announcement has been favored
+        /// Indicates if the message center announcement has been archived
         /// </summary>
-        public bool? IsFavorited { get; set; }
+        [JsonPropertyName("isArchived")]
+        public bool? IsArchived { get; set; }
     }
 }

@@ -47,6 +47,8 @@ namespace PnP.PowerShell.Commands.Principals
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST)]
+        public SwitchParameter IgnoreDefaultProperties;
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DELTA)]
         public SwitchParameter UseBeta;        
 
@@ -56,16 +58,22 @@ namespace PnP.PowerShell.Commands.Principals
             {
                 PnPConnection.Current.Scopes = new[] { "Directory.ReadWrite.All" };
             }
+            
+            if(ParameterSpecified(nameof(IgnoreDefaultProperties)) && !ParameterSpecified(nameof(Select)))
+            {
+                throw new ArgumentException($"When providing {nameof(IgnoreDefaultProperties)}, you must provide {nameof(Select)}", nameof(Select));
+            }
+
             if (ParameterSpecified(nameof(Identity)))
             {
                 PnP.PowerShell.Commands.Model.AzureAD.User user;
                 if (Guid.TryParse(Identity, out Guid identityGuid))
                 {
-                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(AccessToken, identityGuid, useBetaEndPoint: UseBeta.IsPresent);
+                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(AccessToken, identityGuid, ignoreDefaultProperties: IgnoreDefaultProperties, useBetaEndPoint: UseBeta.IsPresent);
                 }
                 else
                 {
-                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(AccessToken, WebUtility.UrlEncode(Identity), Select, useBetaEndPoint: UseBeta.IsPresent);
+                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(AccessToken, WebUtility.UrlEncode(Identity), Select, ignoreDefaultProperties: IgnoreDefaultProperties, useBetaEndPoint: UseBeta.IsPresent);
                 }
                 WriteObject(user);
             }
@@ -76,7 +84,7 @@ namespace PnP.PowerShell.Commands.Principals
             } 
             else
             {
-                var users = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUsers(AccessToken, Filter, OrderBy, Select, StartIndex, EndIndex, useBetaEndPoint: UseBeta.IsPresent);
+                var users = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUsers(AccessToken, Filter, OrderBy, Select, ignoreDefaultProperties: IgnoreDefaultProperties, StartIndex, EndIndex, useBetaEndPoint: UseBeta.IsPresent);
                 WriteObject(users, true);
             }
         }
