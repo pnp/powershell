@@ -76,7 +76,18 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             return await GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}", accessToken);
         }
-
+        public static async Task<HttpResponseMessage> CloneTeamAsync(string accessToken, HttpClient httpClient, string groupId, TeamCloneInformation teamClone)
+        {
+            StringContent content = new StringContent(JsonSerializer.Serialize( new { displayName = teamClone.DisplayName , 
+                    classification = teamClone.Classification , 
+                    description = teamClone.Description, 
+                    mailNickname= teamClone.MailNickName , 
+                    visibility = teamClone.Visibility.ToString(),
+                    partsToClone = String.Join(",", teamClone.PartsToClone)
+            }));
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            return await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/clone", accessToken, content);
+        }
         private static async Task<Team> ParseTeamJsonAsync(string accessToken, HttpClient httpClient, string groupId)
         {
             // Get Settings
