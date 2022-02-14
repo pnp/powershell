@@ -8,18 +8,20 @@ using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
+using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Copy, "PnPTeamsTeam")]
     [RequiredMinimalApiPermissions("Team.Create")]
-    public class CloneTeamsTeam : PnPGraphCmdlet
+    public class CopyTeamsTeam : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
         public TeamsTeamPipeBind Identity;
 
         [Parameter(Mandatory = true)]
+        [ValidateNotNullOrEmpty]
         public string DisplayName;
 
         [Parameter(Mandatory = false)]
@@ -47,38 +49,42 @@ namespace PnP.PowerShell.Commands.Teams
         protected override void ExecuteCmdlet()
         {
             var groupId = Identity.GetGroupId(HttpClient, AccessToken);
-            if (groupId != null)
+            
+            if (groupId == null)
             {
-                TeamCloneInformation teamClone = new TeamCloneInformation();
-                teamClone.Classification = Classification;
-                teamClone.Description = Description;
-                teamClone.DisplayName = DisplayName;
-                teamClone.PartsToClone = PartsToClone;
-                /** copying displayName into MailNickName still required by the payload so to deliver better user experience
-                * but currently ignored and can't be set by user */
-                teamClone.MailNickName = DisplayName;
-                teamClone.Visibility = (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString());
-                var response = TeamsUtility.CloneTeamAsync(AccessToken, HttpClient, groupId, teamClone).GetAwaiter().GetResult();
-                if (!response.IsSuccessStatusCode)
+                throw new PSArgumentException("Team not found", nameof(Identity));
+            }
+
+            if (!ParameterSpecified(nameof(PartsToClone)))
+            {
+                // If no specific parts have been provided, all available parts will be copied
+                PartsToClone = Enum.GetValues(typeof(Microsoft.Graph.ClonableTeamParts)).Cast<Microsoft.Graph.ClonableTeamParts>().ToArray();
+            }
+
+            TeamCloneInformation teamClone = new TeamCloneInformation();
+            teamClone.Classification = Classification;
+            teamClone.Description = Description;
+            teamClone.DisplayName = DisplayName;
+            teamClone.PartsToClone = PartsToClone;
+            /** copying displayName into MailNickName still required by the payload so to deliver better user experience
+            * but currently ignored and can't be set by user */
+            teamClone.MailNickName = DisplayName;
+            teamClone.Visibility = (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString());
+            var response = TeamsUtility.CloneTeamAsync(AccessToken, HttpClient, groupId, teamClone).GetAwaiter().GetResult();
+            if (!response.IsSuccessStatusCode)
+            {
+                if (GraphHelper.TryGetGraphException(response, out GraphException ex))
                 {
-                    if (GraphHelper.TryGetGraphException(response, out GraphException ex))
+                    if (ex.Error != null)
                     {
-                        if (ex.Error != null)
-                        {
-                            throw new PSInvalidOperationException(ex.Error.Message);
-                        }
-                    }
-                    else
-                    {
-                        WriteError(new ErrorRecord(new Exception($"Team clone failed"), "CLONEFAILED", ErrorCategory.InvalidResult, this));
+                        throw new PSInvalidOperationException(ex.Error.Message);
                     }
                 }
-            }
-            else
-            {
-                throw new PSArgumentException("Team not found");
+                else
+                {
+                    WriteError(new ErrorRecord(new Exception($"Team clone failed"), "CLONEFAILED", ErrorCategory.InvalidResult, this));
+                }
             }
         }
-
     }
 }
