@@ -44,13 +44,14 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="filter">OData filter to apply to retrieval of the users from the Microsoft Graph</param>
         /// <param name="orderby">OData orderby instruction</param>
         /// <param name="selectProperties">Allows providing the names of properties to return regarding the users. If not provided, the standard properties will be returned.</param>
+        /// <param name="ignoreDefaultProperties">If set to true, only the properties provided through selectProperties will be loaded. The default properties will not be. Optional. Default is that the default properties will always be retrieved.</param>
         /// <param name="startIndex">First item in the results returned by Microsoft Graph to return</param>
         /// <param name="endIndex">Last item in the results returned by Microsoft Graph to return. Provide NULL to return all results that exist.</param>
         /// <param name="useBetaEndPoint">Indicates if the v1.0 (false) or beta (true) endpoint should be used at Microsoft Graph to query for the data</param>
         /// <returns>List with User objects</returns>
-        public static List<User> ListUsers(string accessToken, string filter, string orderby, string[] selectProperties = null, int startIndex = 0, int? endIndex = 999, bool useBetaEndPoint = false)
+        public static List<User> ListUsers(string accessToken, string filter, string orderby, string[] selectProperties = null, bool ignoreDefaultProperties = false, int startIndex = 0, int? endIndex = 999, bool useBetaEndPoint = false)
         {
-            return PnP.Framework.Graph.UsersUtility.ListUsers(accessToken, filter, orderby, selectProperties, startIndex, endIndex, useBetaEndPoint: useBetaEndPoint).Select(User.CreateFrom).ToList();
+            return PnP.Framework.Graph.UsersUtility.ListUsers(accessToken, filter, orderby, selectProperties, startIndex, endIndex, ignoreDefaultProperties: ignoreDefaultProperties, useBetaEndPoint: useBetaEndPoint).Select(User.CreateFrom).ToList();
         }
 
         /// <summary>
@@ -59,13 +60,14 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="accessToken">The OAuth 2.0 Access Token to use for invoking the Microsoft Graph</param>
         /// <param name="userId">The unique identifier of the user in Azure Active Directory to return</param>    
         /// <param name="selectProperties">Allows providing the names of properties to return regarding the users. If not provided, the standard properties will be returned.</param>
+        /// <param name="ignoreDefaultProperties">If set to true, only the properties provided through selectProperties will be loaded. The default properties will not be. Optional. Default is that the default properties will always be retrieved.</param>
         /// <param name="startIndex">First item in the results returned by Microsoft Graph to return</param>
         /// <param name="endIndex">Last item in the results returned by Microsoft Graph to return. Provide NULL to return all results that exist.</param>
         /// <param name="useBetaEndPoint">Indicates if the v1.0 (false) or beta (true) endpoint should be used at Microsoft Graph to query for the data</param>
         /// <returns>List with User objects</returns>
-        public static User GetUser(string accessToken, Guid userId, string[] selectProperties = null, int startIndex = 0, int? endIndex = 999, bool useBetaEndPoint = false)
+        public static User GetUser(string accessToken, Guid userId, string[] selectProperties = null, bool ignoreDefaultProperties = false, int startIndex = 0, int? endIndex = 999, bool useBetaEndPoint = false)
         {
-            return PnP.Framework.Graph.UsersUtility.ListUsers(accessToken, $"id eq '{userId}'", null, selectProperties, startIndex, endIndex, useBetaEndPoint: useBetaEndPoint).Select(User.CreateFrom).FirstOrDefault();
+            return PnP.Framework.Graph.UsersUtility.ListUsers(accessToken, $"id eq '{userId}'", null, selectProperties, startIndex, endIndex, ignoreDefaultProperties: ignoreDefaultProperties, useBetaEndPoint: useBetaEndPoint).Select(User.CreateFrom).FirstOrDefault();
         }
 
         /// <summary>
@@ -74,13 +76,14 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="accessToken">The OAuth 2.0 Access Token to use for invoking the Microsoft Graph</param>
         /// <param name="userPrincipalName">The User Principal Name of the user in Azure Active Directory to return</param>
         /// <param name="selectProperties">Allows providing the names of properties to return regarding the users. If not provided, the standard properties will be returned.</param>
+        /// <param name="ignoreDefaultProperties">If set to true, only the properties provided through selectProperties will be loaded. The default properties will not be. Optional. Default is that the default properties will always be retrieved.</param>
         /// <param name="startIndex">First item in the results returned by Microsoft Graph to return</param>
         /// <param name="endIndex">Last item in the results returned by Microsoft Graph to return. Provide NULL to return all results that exist.</param>
         /// <param name="useBetaEndPoint">Indicates if the v1.0 (false) or beta (true) endpoint should be used at Microsoft Graph to query for the data</param>
         /// <returns>User object</returns>
-        public static User GetUser(string accessToken, string userPrincipalName, string[] selectProperties = null, int startIndex = 0, int? endIndex = 999, bool useBetaEndPoint = false)
+        public static User GetUser(string accessToken, string userPrincipalName, string[] selectProperties = null, bool ignoreDefaultProperties = false, int startIndex = 0, int? endIndex = 999, bool useBetaEndPoint = false)
         {
-            return PnP.Framework.Graph.UsersUtility.ListUsers(accessToken, $"userPrincipalName eq '{userPrincipalName}'", null, selectProperties, startIndex, endIndex, useBetaEndPoint: useBetaEndPoint).Select(User.CreateFrom).FirstOrDefault();
+            return PnP.Framework.Graph.UsersUtility.ListUsers(accessToken, $"userPrincipalName eq '{userPrincipalName}'", null, selectProperties, startIndex, endIndex, ignoreDefaultProperties: ignoreDefaultProperties, useBetaEndPoint: useBetaEndPoint).Select(User.CreateFrom).FirstOrDefault();
         }
 
         #endregion
