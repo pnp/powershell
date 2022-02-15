@@ -87,7 +87,7 @@
 <p>Synchronizes user profiles from Azure Active Directory into the SharePoint Online User Profiles</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="upload-file">Upload file</h3>
-<pre><code class="lang-powershell">Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping &lt;Hashtable&gt; [-Users &lt;Array&gt;] [-Folder &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping &lt;Hashtable&gt; [-Users &lt;Array&gt;] [-Folder &lt;String&gt;] [-Wait] [-Verbose] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet allows synchronizing user profiles from Azure Active Directory to their SharePoint Online User Profile equivallents. Note that certain properties are already synced by default. A list of these can be found here: <a href="https://docs.microsoft.com/sharepoint/user-profile-sync#properties-that-are-synced-into-sharepoint-user-profiles">https://docs.microsoft.com/sharepoint/user-profile-sync#properties-that-are-synced-into-sharepoint-user-profiles</a></p>
@@ -96,6 +96,7 @@
 <p>When running this cmdlet, it will upload a file named <code>userprofilesyncdata-&lt;timestamp&gt;-&lt;guid&gt;.json</code> to the documents library of the SharePoint Online site you are connected to. From there an asynchronous process will be started that processed the JSON file and updates the user profiles on the SharePoint Online side. The time before this process starts varies. Once that process is done and only if something failed, you will find a new folder created in the same document library of which the folder name starts with the same name as the filename. It will contain a .log file in which you can find the results of it trying to update the user profiles in SharePoint Online which were specified in the JSON file. If all the user profile properties have been updated successfully, it will not create such a folder and log file.</p>
 <p>You can also query the import job status using <code>Get-PnPUPABulkImportStatus -JobId &lt;jobid&gt;</code>. The jobid will be returned upon running this cmdlet and can be fed into this cmdlet to get the actual status. It will show <code>State: Submitted</code> after running this cmdlet and before processing it and <code>State: Succeeded</code> once its done and was successful or <code>State: Error</code> if it failed. It will also return full details on the file it will use to update the user profiles and the location of the log file once its done processing and only if it failed. For documentation on all the possible states it can be in, see <a href="https://docs.microsoft.com/sharepoint/dev/solution-guidance/bulk-user-profile-update-api-for-sharepoint-online#parameters-2">https://docs.microsoft.com/sharepoint/dev/solution-guidance/bulk-user-profile-update-api-for-sharepoint-online#parameters-2</a>.</p>
 <p>When not providing -Users, it will fetch all the users and the properties defined in the mapping from Azure Active Directory itself. You can also opt to query for a subset of Azure Active Directory users to update using i.e. <code>Get-PnPAzureAdUser</code> and feed the outcome of that to the -Users parameter. In this case you must ensure that the user objects you supply contain the properties you wish to sync towards SharePoint Online.</p>
+<p>When not providing -Folder, it will assume a document library named &quot;Shared Documents&quot; is present within the site collection you're currently connected to. In case you are not using an English site collection, this name may be different and localized. In that case use the -Folder parameter passing in the localized name of the document library you wish to upload the mapping file to.</p>
 <p><strong>Required Permissions</strong></p>
 <p>In order to be able to run this cmdlet you need to have [User.Read.All] and [Sites.FullControl.All] permissions on SharePoint and [User.Read.All] permissions on Microsoft Graph so it will be able to read the users directly from Azure Active Directory and upload the JSON file to SharePoint Online. It also needs to have the Tenant Full Control ACS permission through <a href="https://tenant-admin.sharepoint.com/_layouts/appinv.aspx">https://tenant-admin.sharepoint.com/_layouts/appinv.aspx</a> for it to be allowed to kick off the import user profile process:</p>
 <p><code>&lt;AppPermissionRequests AllowAppOnlyPolicy=&quot;true&quot;&gt; &lt;AppPermissionRequest Scope=&quot;http://sharepoint/content/tenant&quot; Right=&quot;FullControl&quot; /&gt; &lt;/AppPermissionRequests&gt;</code></p>
@@ -106,18 +107,22 @@
 <p>This will retrieve all users in Azure Active Directory and take its phone property to update in the HomePhone field in the SharePoint Online user profiles for each of these users. Similarly it will set the SharePoint Online User Profile property named CustomProperty to the value of the DisplayName as set in Azure Active Directory on the user object. It will upload the JSON file with the instructions for the update to the 'Shared Documents' library of the site currently connected to.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">$users = Get-PnPAzureADUser -Filter &quot;jobTitle eq 'IT Administrator'&quot;
-Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping @{&quot;CostCenter&quot;=&quot;ext_123456&quot;} -Users $users
+Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping @{&quot;CostCenter&quot;=&quot;extension_b0b5aaa58a0a4287acd826c5b8330e48_CostCenter&quot;} -Users $users
 </code></pre>
-<p>This will update the CostCenter SharePoint Online User Profile property with the value of the property ext_123456 coming from Azure Active Directory for the users getting returned by the Get-PnPAzureADUser query. It will upload the JSON file with the instructions for the update to the 'Shared Documents' library of the site currently connected to.</p>
+<p>This will update the CostCenter SharePoint Online User Profile property with the value of the property extension_b0b5aaa58a0a4287acd826c5b8330e48_CostCenter coming from Azure Active Directory for the users getting returned by the Get-PnPAzureADUser query. It will upload the JSON file with the instructions for the update to the 'Shared Documents' library of the site currently connected to.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">$delta = Get-PnPAzureADUser -Delta -DeltaToken $delta.DeltaToken
-Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping @{&quot;CostCenter&quot;=&quot;ext_123456&quot;} -Users $delta.Users
+Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping @{&quot;CostCenter&quot;=&quot;extension_b0b5aaa58a0a4287acd826c5b8330e48_CostCenter&quot;} -Users $delta.Users
 </code></pre>
-<p>This will retrieve all the users from Azure Active Directory and includes a DeltaToken in the response. Using the DeltaToken you can retrieve only those users which have had changes done to their attributes since the DeltaToken was given out. This makes it ideal to use with the profile sync as this way you only will sync those users that have had changes to their profiles. Only for those users this will update the CostCenter SharePoint Online User Profile property with the value of the property ext_123456 coming from Azure Active Directory. It will upload the JSON file with the instructions for the update to the 'Shared Documents' library of the site currently connected to.</p>
+<p>This will retrieve all the users from Azure Active Directory and includes a DeltaToken in the response. Using the DeltaToken you can retrieve only those users which have had changes done to their attributes since the DeltaToken was given out. This makes it ideal to use with the profile sync as this way you only will sync those users that have had changes to their profiles. Only for those users this will update the CostCenter SharePoint Online User Profile property with the value of the property extension_b0b5aaa58a0a4287acd826c5b8330e48_CostCenter coming from Azure Active Directory. It will upload the JSON file with the instructions for the update to the 'Shared Documents' library of the site currently connected to.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping @{&quot;CostCenter&quot;=&quot;ext_123456&quot;} -Folder &quot;User Profile Sync&quot;
+<pre><code class="lang-powershell">Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping @{&quot;CostCenter&quot;=&quot;extension_b0b5aaa58a0a4287acd826c5b8330e48_CostCenter&quot;} -Folder &quot;User Profile Sync&quot;
 </code></pre>
-<p>This will retrieve all users in Azure Active Directory and take its phone property to update in the HomePhone field in the SharePoint Online user profiles for each of these users. Similarly it will set the SharePoint Online User Profile property named CustomProperty to the value of the DisplayName as set in Azure Active Directory on the user object. It will upload the JSON file with the instructions for the update to a library named 'User Profile Sync' in the site currently connected to.</p>
+<p>This will retrieve all users in Azure Active Directory and take its extension property named CostCenter to update in the CostCenter field in the SharePoint Online user profiles for each of these users. It will upload the JSON file with the instructions for the update to a library named 'User Profile Sync' in the site currently connected to.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping @{&quot;CostCenter&quot;=&quot;extension_b0b5aaa58a0a4287acd826c5b8330e48_CostCenter&quot;} -Folder &quot;User Profile Sync\Jobs&quot; -Wait -Verbose
+</code></pre>
+<p>This will retrieve all users in Azure Active Directory and take its extension property named CostCenter to update in the CostCenter field in the SharePoint Online user profiles for each of these users. It will upload the JSON file with the instructions for the update to the folder Jobs inside a library named 'User Profile Sync' in the site currently connected to. It will wait with continuing the execution of the remainder of your script until the synchronization process has either completed or failed. It will output verbose logging to provide input on its status while executing. Notice that it may very well take 10 minutes or more for the synchronization to complete.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-users">-Users</h3>
 <p>Through this parameter you can pass in users coming forward from a query through Get-PnPAzureADUser that need to have their SharePoint Online User profiles updated</p>
@@ -131,13 +136,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-folder">-Folder</h3>
-<p>The site relative name of the folder or document library to upload the JSON files containing the user profiles to be updated. I.e. 'Shared Documents' to upload it to the root of the default Documents library in a Team site.</p>
+<p>The site relative name of the folder or document library to upload the JSON files containing the user profiles to be updated. I.e. 'Shared Documents' to upload it to the root of the default Documents library in a Team site. If you want to specify a folder inside the document library, you can use i.e. 'Shared Documents\Somefolder'. If you are not using a site collection in the English language, be sure to provide this parameter passing in the localized name of your library instead.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: None
+Default value: &quot;Shared Documents&quot;
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
@@ -158,6 +163,29 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-wait">-Wait</h3>
+<p>Adding this parameter will cause the script to start the user profile sync operation and wait with proceeding with the rest of the script until the user profiles have been imported into the SharePoint Online user profile. It can take a long time for the user profile sync operation to complete. It will check every 30 seconds for the current status of the job, to avoid getting throttled. This retry value is non configurable.</p>
+<p>Add <code>-Verbose</code> as well to be notified about the progress while waiting.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while going through the user profile sync steps.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named

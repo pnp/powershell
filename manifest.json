@@ -6389,6 +6389,78 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsArchived.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsArchived.html",
+          "hash": "jKIh39HYtOtd/+KuK4HPJg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsFavorite.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsFavorite.html",
+          "hash": "UpfFQ73QIT9hiUvsZ5QwFw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsNotArchived.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsNotArchived.html",
+          "hash": "hr4NgzQhYD3tOZuOiB9atg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsNotFavorite.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsNotFavorite.html",
+          "hash": "o5fsnNqFgaL1Il/jxR6zhg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsRead.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsRead.html",
+          "hash": "dBI5GHLcFflkdEytDSdCCA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsUnread.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsUnread.html",
+          "hash": "K/6P/PTzIgQtubbTXcvWcw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPMicrosoft365Group.md",
       "output": {
         ".html": {
@@ -7113,7 +7185,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Sync-PnPSharePointUserProfilesFromAzureActiveDirectory.html",
-          "hash": "MnRjP4EUN4QvY0m3mP/hZw=="
+          "hash": "KuN92Wd0Q5+hc5tn4ZvHNw=="
         }
       },
       "is_incremental": false,
@@ -7305,7 +7377,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "WRSA8NTC6OnSbmVHnowknQ=="
+          "hash": "oMtQncMRqrrYKSaYDj8H3g=="
         }
       },
       "is_incremental": false,
@@ -7472,7 +7544,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 608,
+          "total_file_count": 614,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
