@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <returns>Information on the status of the import job that has been created because of this action</returns>
         public static async Task<SharePointUserProfileSyncStatus> SyncFromAzureActiveDirectory(ClientContext clientContext, IEnumerable<PnP.PowerShell.Commands.Model.AzureAD.User> users, Hashtable userProfilePropertyMappings, string sharePointFolder, bool onlyCreateAndUploadMappingsFile = false)
         {
-             var webServerRelativeUrl = clientContext.Web.EnsureProperty(w => w.ServerRelativeUrl);
+            var webServerRelativeUrl = clientContext.Web.EnsureProperty(w => w.ServerRelativeUrl);
             if (!sharePointFolder.ToLower().StartsWith(webServerRelativeUrl))
             {
                 sharePointFolder = UrlUtility.Combine(webServerRelativeUrl, sharePointFolder);
