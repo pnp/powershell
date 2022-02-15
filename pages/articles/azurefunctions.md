@@ -18,6 +18,7 @@ As the UI in https://portal.azure.com changes every now and then, but the princi
 1. In the dropdown presented, select `requirements.psd1`. You'll notice that the function app wants to provide the Azure cmdlets. If you do not need those, keep the `Az` entry presented commented out.
 1. Add a new entry or replace the whole contents of the file with:
  
+   ### Specific stable version
    ```powershell
    @{
        'PnP.PowerShell' = '1.9.0'
@@ -25,6 +26,7 @@ As the UI in https://portal.azure.com changes every now and then, but the princi
    ```
    The version that will be installed will be the specified specific build, which is generally recommended. You build and test your Azure Function against this specific PnP PowerShell version. Future releases may work differently and cause issues, therefore it is generally recommended to specify a specific version here.
    
+   ### Latest stable version
    If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version:
 
     ```powershell
@@ -32,7 +34,15 @@ As the UI in https://portal.azure.com changes every now and then, but the princi
         'PnP.PowerShell' = '1.*'
      }
     ```
-   This will then automatically download any minor version of the major 1 release when available. Notice that you cannot use wildcards to specify a nightly build.
+   This will then automatically download any minor version of the major 1 release when available. Note that wildcards will always take the latest stable version and not the nightly build/prerelease versions.
+   
+   ### Specific prerelease version
+   If you wish to use a specific prerelease/nightly build version, go to the [overview of available versions](https://www.powershellgallery.com/packages/PnP.PowerShell) and literally copy/paste the version in the definition:  
+    ```powershell
+    @{
+        'PnP.PowerShell' = '1.9.46-nightly'
+     }
+    ```
 
 1. Save the `requirements.psd1` file 
 
