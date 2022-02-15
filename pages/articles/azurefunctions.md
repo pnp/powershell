@@ -9,8 +9,14 @@ In this article we will setup an Azure Function to use PnP PowerShell
 
 As the UI in https://portal.azure.com changes every now and then, but the principles stay the same, follow the following steps:
 
-1. Create a new Function App and navigate there when ready.
-1. Make sure you select the option to run PowerShell V3 functions, based upon PowerShell 7.
+1. Create a new Function App
+1. Choose runtime stack `PowerShell Core` and version `7.0`
+   
+   ![](./../images/azurefunctions/createfunctionappbasics.png)
+
+1. Select `Windows` as the operating system or else you will not be able to perform the following steps from your browser.
+
+   ![](./../images/azurefunctions/createfunctionapphosting.png)
 
 ## Make PnP PowerShell available to all functions in the app
 
@@ -44,6 +50,8 @@ As the UI in https://portal.azure.com changes every now and then, but the princi
      }
     ```
 
+    ![Adding PnP PowerShell to the requirements.psd1 file in an Azure Function](./../images/azurefunctions/addpnpposhtoappfilerequirements.png)
+
 1. Save the `requirements.psd1` file 
 
 1. If you decide to keep the Az cmdlets commented out, save and edit the `profile.psd` file. Mark out the following block in the file as follows, if not already done:
@@ -55,7 +63,10 @@ As the UI in https://portal.azure.com changes every now and then, but the princi
    # }
    ```
 
-   Save the `profile.psd` file.
+   Save the `profile.ps1` file. If you don't do this and enable a managed identity on the Azure Function, it will throw an exception.
+
+   ![Disable the Az commands in profile](../images/azurefunctions/disableazinprofile.png)
+
 
 ## Decide how you want to authenticate in your PowerShell Function
 
@@ -131,7 +142,7 @@ Once you have an Azure Active Directory application set up and the public key ce
 1. Click `Upload Certificate` and select the "MyDemoApp.pfx" file that has been created for you. Enter the password you used in the script above.
 1 After the certificate has been uploaded, copy the thumbprint value shown.
 1 Navigate to `Configuration` and add a new Application Setting
-1. Call the setting `WEBSITE_LOAD_CERTIFICATES` and set the thumbprint as a value. To make all the certificates you uploaded available use `*` as the value. See https://docs.microsoft.com/en-gb/azure/app-service/configure-ssl-certificate-in-code for more information.
+1. Call the setting `WEBSITE_LOAD_CERTIFICATES` and set the thumbprint as a value. To make all the certificates you uploaded available use `*` as the value. See https://docs.microsoft.com/azure/app-service/configure-ssl-certificate-in-code for more information.
 1. Save the settings
 
 #### Create the Azure Function
