@@ -100,7 +100,7 @@ namespace PnP.PowerShell.Commands.Utilities
             File file = null;
             using (var stream = new System.IO.MemoryStream())
             {
-                using (var writer = new System.IO.StreamWriter(stream))
+                using (var writer = new System.IO.StreamWriter(stream, Encoding.UTF8))
                 {
                     await writer.WriteAsync(json);
                     writer.Flush();

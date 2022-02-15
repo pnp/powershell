@@ -16,7 +16,7 @@ Synchronizes user profiles from Azure Active Directory into the SharePoint Onlin
 
 ### Upload file
 ```powershell
-Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping <Hashtable> [-Users <Array>] [-Folder <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping <Hashtable> [-Users <Array>] [-Folder <String>] [-Wait] [-Verbose] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -128,6 +128,36 @@ Will retrieve the users from Azure Active Directory and create and upload the ma
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Wait
+Adding this parameter will cause the script to start the user profile sync operation and wait with proceeding with the rest of the script until the user profiles have been imported into the SharePoint Online user profile. It can take a long time for the user profile sync operation to complete. It will check every 30 seconds for the current status of the job, to avoid getting throttled. This retry value is non configurable.
+
+Add `-Verbose` as well to be notified about the progress while waiting.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Verbose
+When provided, additional debug statements will be shown while going through the user profile sync steps.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named
