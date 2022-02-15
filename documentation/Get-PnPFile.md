@@ -64,7 +64,7 @@ Retrieves the file and outputs its contents to the console
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -AsFile
+Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -AsFileObject
 ```
 
 Retrieves the file and returns it as a File object
