@@ -94,7 +94,11 @@
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Adds a given document library as an organizational asset source in your SharePoint Online Tenant. All organizational asset sources you add must reside in the same site collection. Document libraries specified as organizational asset must be enabled as an Office 365 CDN source, either as private or public. It may take some time before this change will be reflected in the webinterface.</p>
+<p>Adds a given document library as an organizational asset source in your SharePoint Online Tenant. You can specify multiple libraries, but all organizational asset sources you add must reside in the same site collection.</p>
+<p>Document libraries specified as organizational asset must be enabled as an Office 365 CDN source, either as private or public.</p>
+<p>The libraries must also have read rights for 'Everyone except external users' enabled on them. Either on library or on the entire site level.</p>
+<p>Only entire libraries can be configured as an organizational asset, folders cannot.</p>
+<p>It may take some time before this change will be reflected in the webinterface.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos&quot;

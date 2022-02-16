@@ -91,8 +91,14 @@
 <h2 id="create-the-function-app">Create the function app</h2>
 <p>As the UI in <a href="https://portal.azure.com">https://portal.azure.com</a> changes every now and then, but the principles stay the same, follow the following steps:</p>
 <ol>
-<li>Create a new Function App and navigate there when ready.</li>
-<li>Make sure you select the option to run PowerShell V3 functions, based upon PowerShell 7.</li>
+<li><p>Create a new Function App</p>
+</li>
+<li><p>Choose runtime stack <code>PowerShell Core</code> and version <code>7.0</code></p>
+<p><img src="../images/azurefunctions/createfunctionappbasics.png" alt=""></p>
+</li>
+<li><p>Select <code>Windows</code> as the operating system or else you will not be able to perform the following steps from your browser.</p>
+<p><img src="../images/azurefunctions/createfunctionapphosting.png" alt=""></p>
+</li>
 </ol>
 <h2 id="make-pnp-powershell-available-to-all-functions-in-the-app">Make PnP PowerShell available to all functions in the app</h2>
 <ol>
@@ -101,17 +107,26 @@
 <li><p>In the dropdown presented, select <code>requirements.psd1</code>. You'll notice that the function app wants to provide the Azure cmdlets. If you do not need those, keep the <code>Az</code> entry presented commented out.</p>
 </li>
 <li><p>Add a new entry or replace the whole contents of the file with:</p>
+<h3 id="specific-stable-version">Specific stable version</h3>
 <pre><code class="lang-powershell">@{
     'PnP.PowerShell' = '1.9.0'
 }
 </code></pre>
 <p>The version that will be installed will be the specified specific build, which is generally recommended. You build and test your Azure Function against this specific PnP PowerShell version. Future releases may work differently and cause issues, therefore it is generally recommended to specify a specific version here.</p>
+<h3 id="latest-stable-version">Latest stable version</h3>
 <p>If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version:</p>
 <pre><code class="lang-powershell">@{
     'PnP.PowerShell' = '1.*'
  }
 </code></pre>
-<p>This will then automatically download any minor version of the major 1 release when available. Notice that you cannot use wildcards to specify a nightly build.</p>
+<p>This will then automatically download any minor version of the major 1 release when available. Note that wildcards will always take the latest stable version and not the nightly build/prerelease versions.</p>
+<h3 id="specific-prerelease-version">Specific prerelease version</h3>
+<p>If you wish to use a specific prerelease/nightly build version, go to the <a href="https://www.powershellgallery.com/packages/PnP.PowerShell">overview of available versions</a> and literally copy/paste the version in the definition:</p>
+<pre><code class="lang-powershell">@{
+    'PnP.PowerShell' = '1.9.46-nightly'
+ }
+</code></pre>
+<p><img src="../images/azurefunctions/addpnpposhtoappfilerequirements.png" alt="Adding PnP PowerShell to the requirements.psd1 file in an Azure Function"></p>
 </li>
 <li><p>Save the <code>requirements.psd1</code> file</p>
 </li>
@@ -121,7 +136,8 @@
 #     Connect-AzAccount -Identity
 # }
 </code></pre>
-<p>Save the <code>profile.psd</code> file.</p>
+<p>Save the <code>profile.ps1</code> file. If you don't do this and enable a managed identity on the Azure Function, it will throw an exception.</p>
+<p><img src="../images/azurefunctions/disableazinprofile.png" alt="Disable the Az commands in profile"></p>
 </li>
 </ol>
 <h2 id="decide-how-you-want-to-authenticate-in-your-powershell-function">Decide how you want to authenticate in your PowerShell Function</h2>
@@ -185,7 +201,7 @@ Register-PnPAzureADApp -ApplicationName &quot;MyDemoApp&quot; -Tenant [yourtenan
 <li>Click <code>Upload Certificate</code> and select the &quot;MyDemoApp.pfx&quot; file that has been created for you. Enter the password you used in the script above.
 1 After the certificate has been uploaded, copy the thumbprint value shown.
 1 Navigate to <code>Configuration</code> and add a new Application Setting</li>
-<li>Call the setting <code>WEBSITE_LOAD_CERTIFICATES</code> and set the thumbprint as a value. To make all the certificates you uploaded available use <code>*</code> as the value. See <a href="https://docs.microsoft.com/en-gb/azure/app-service/configure-ssl-certificate-in-code">https://docs.microsoft.com/en-gb/azure/app-service/configure-ssl-certificate-in-code</a> for more information.</li>
+<li>Call the setting <code>WEBSITE_LOAD_CERTIFICATES</code> and set the thumbprint as a value. To make all the certificates you uploaded available use <code>*</code> as the value. See <a href="https://docs.microsoft.com/azure/app-service/configure-ssl-certificate-in-code">https://docs.microsoft.com/azure/app-service/configure-ssl-certificate-in-code</a> for more information.</li>
 <li>Save the settings</li>
 </ol>
 <h4 id="create-the-azure-function">Create the Azure Function</h4>

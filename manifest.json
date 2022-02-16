@@ -42,7 +42,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/azurefunctions.html",
-          "hash": "iycrmn2O5VbcJjgpbieX0w=="
+          "hash": "QCbWZ951KZqjcJWXz6O1Ww=="
         }
       },
       "is_incremental": false,
@@ -609,7 +609,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPOrgAssetsLibrary.html",
-          "hash": "RDfqNG7IToFO1YdGAPS15w=="
+          "hash": "CWf1cZsuJP6G/7mPzlmPiQ=="
         }
       },
       "is_incremental": false,
@@ -2061,7 +2061,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPFile.html",
-          "hash": "pXlRqnqFRSiwDLwFL42/FA=="
+          "hash": "LDSOteT0db9iGx36lfSxXg=="
         }
       },
       "is_incremental": false,
@@ -3009,7 +3009,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPSiteTemplate.html",
-          "hash": "zDNc9+6SL4Afu3NvW15AJQ=="
+          "hash": "/lREIpvojTAKeBRdwQlIEQ=="
         }
       },
       "is_incremental": false,
@@ -4449,7 +4449,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Read-PnPSiteTemplate.html",
-          "hash": "oGny7BQL2cF6raDN4Ij1VQ=="
+          "hash": "7c8tA6Z6w/fYdOslWWv5Bw=="
         }
       },
       "is_incremental": false,
@@ -7489,6 +7489,50 @@
       "output": {
         "resource": {
           "relative_path": "images/azurecloudshell/launchingthroughbrowser.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurefunctions/addpnpposhtoappfilerequirements.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurefunctions/addpnpposhtoappfilerequirements.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurefunctions/createfunctionappbasics.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurefunctions/createfunctionappbasics.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurefunctions/createfunctionapphosting.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurefunctions/createfunctionapphosting.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurefunctions/disableazinprofile.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurefunctions/disableazinprofile.png"
         }
       },
       "is_incremental": false,

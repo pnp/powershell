@@ -84,7 +84,7 @@
                     <h1 id="get-pnpfile">Get-PnPFile</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Downloads a file.</p>
+<p>Downloads a file</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="return-as-file-object-default">Return as file object (Default)</h3>
 <pre><code class="lang-powershell">Get-PnPFile [-Url] &lt;String&gt; -AsFileObject [-Connection &lt;PnPConnection&gt;]
@@ -102,21 +102,22 @@
 <pre><code class="lang-powershell">Get-PnPFile [-Url] &lt;String&gt; -AsString [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Allows downloading of a file from SharePoint Online. The file contents can either be read directly into memory as text, directly saved to local disk or stored in memory for further processing.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor
+<pre><code class="lang-powershell">Get-PnPFile -Url &quot;/sites/project/Shared Documents/Document.docx&quot;
 </code></pre>
 <p>Retrieves the file and downloads it to the current folder</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor -AsFile
+<pre><code class="lang-powershell">Get-PnPFile -Url /sites/project/SiteAssets/image.jpg -Path c:\temp -FileName image.jpg -AsFile
 </code></pre>
-<p>Retrieves the file and downloads it to c:\temp\company.spcolor</p>
+<p>Retrieves the file and downloads it to c:\temp\image.jpg</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -AsString
 </code></pre>
-<p>Retrieves the file and outputs its contents to the console</p>
+<p>Retrieves the contents of the file as text and outputs its contents to the console</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -AsFile
+<pre><code class="lang-powershell">Get-PnPFile -Url /sites/project/Shared Documents/Folder/Presentation.pptx -AsFileObject
 </code></pre>
 <p>Retrieves the file and returns it as a File object</p>
 <h3 id="example-5">EXAMPLE 5</h3>
@@ -124,9 +125,13 @@
 </code></pre>
 <p>Retrieves the file and returns it as a ListItem object</p>
 <h3 id="example-6">EXAMPLE 6</h3>
-<pre><code class="lang-powershell">Get-PnPFile -Url _catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor -AsFile
+<pre><code class="lang-powershell">Get-PnPFile -Url /personal/john_tenant_onmicrosoft_com/Documents/Sample.xlsx -Path c:\temp -FileName Project.xlsx -AsFile
 </code></pre>
-<p>Retrieves the file by site relative URL and downloads it to c:\temp\company.spcolor</p>
+<p>Retrieves the file Sample.xlsx by its site relative URL from a OneDrive for Business site and downloads it to c:\temp\Project.xlsx</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Get-PnPFile -Url &quot;/sites/templates/Shared Documents/HR Site.pnp&quot; -AsMemoryStream
+</code></pre>
+<p>Retrieves the file in memory for further processing</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-asfile">-AsFile</h3>
 <pre><code class="lang-yaml">Type: SwitchParameter
@@ -166,6 +171,16 @@ Accept wildcard characters: False
 Parameter Sets: Return as string
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-asmemorystrean">-AsMemoryStrean</h3>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Download the content of the file to memory
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

@@ -84,17 +84,19 @@
                     <h1 id="read-pnpsitetemplate">Read-PnPSiteTemplate</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Loads/Reads a PnP file from the file system or a string</p>
+<p>Loads/Reads a PnP file from the file system, string or stream</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-path">By Path</h3>
-<pre><code class="lang-powershell">Read-PnPSiteTemplate [-Path] &lt;String&gt; [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;]
- [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Read-PnPSiteTemplate [-Path] &lt;String&gt; [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="by-xml">By XML</h3>
-<pre><code class="lang-powershell">Read-PnPSiteTemplate [-Xml] &lt;String&gt; [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;]
- [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Read-PnPSiteTemplate [-Xml] &lt;String&gt; [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [&lt;CommonParameters&gt;]
+</code></pre>
+<h3 id="from-a-stream">From a Stream</h3>
+<pre><code class="lang-powershell">Read-PnPSiteTemplate [-Stream] &lt;Stream&gt; [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet allows you to read a PnP Provisioning Template from disk, by passing in XML as text or from a stream to keep it in memory and not needing to physically save the template anywhere. The template can be modified in memory if needed and then applied to a site.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Read-PnPSiteTemplate -Path template.pnp
@@ -108,6 +110,11 @@
 <pre><code class="lang-powershell">Read-PnPSiteTemplate -Xml $xml
 </code></pre>
 <p>Reads a PnP Provisioning template from a string containing the XML of a provisioning template</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">$stream = Get-PnPFile -Url &quot;/sites/templates/Site Templates/sample1.pnp&quot; -AsMemoryStream
+Read-PnPSiteTemplate -Stream $stream
+</code></pre>
+<p>Downloads the contents of a PnP Provisioning template from a SharePoint Online location in memory and parses it as a PnP Provisioning Template</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-path">-Path</h3>
 <p>Filename to read from, optionally including full path.</p>
@@ -135,6 +142,17 @@ Accept wildcard characters: False
 <p>Variable to read from, containing the valid XML of a provisioning template.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: By XML
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-stream">-Stream</h3>
+<p>Stream containing an XML or PNP provisioning template package</p>
+<pre><code class="lang-yaml">Type: Stream
+Parameter Sets: By Stream
 
 Required: True
 Position: 1
