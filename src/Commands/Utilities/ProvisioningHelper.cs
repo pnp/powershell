@@ -131,57 +131,44 @@ namespace PnP.PowerShell.Commands.Utilities
                 stream.Position = 0;
             }
 
-            // Validate if the stream contains an OpenXML .pnp template or a .xml template
-            var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
-
-            if (!isOpenOfficeFile)
+            using (var memoryStream = new System.IO.MemoryStream())
             {
-                if(stream.CanSeek)
-                {
-                    stream.Position = 0;
-                }
-
-                var memoryStream = new System.IO.MemoryStream();
                 stream.CopyTo(memoryStream);
+                memoryStream.Position = 0;
 
-                if(stream.CanSeek)
+                // Validate if the stream contains an OpenXML .pnp template or a .xml template
+                var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(memoryStream);
+                memoryStream.Position = 0;
+
+                if (!isOpenOfficeFile)
                 {
-                    stream.Position = 0;
+                    var xml = Encoding.UTF8.GetString(memoryStream.ToArray());
+                    return new List<ProvisioningTemplate> { LoadSiteTemplateFromString(xml, templateProviderExtensions, exceptionHandler) };
                 }
 
-                var xml = Encoding.UTF8.GetString(memoryStream.ToArray());
-                return new List<ProvisioningTemplate> { LoadSiteTemplateFromString(xml, templateProviderExtensions, exceptionHandler) };
-            }
+                var openXmlConnector = new OpenXMLConnector(memoryStream);
+                var provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
 
-            var openXmlConnector = new OpenXMLConnector(stream);
-            var provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
-
-            try
-            {
-                var provisioningTemplates = provider.GetTemplates();
-                return provisioningTemplates;
-            }
-            catch (ApplicationException ex)
-            {
-                if (ex.InnerException is AggregateException)
+                try
                 {
-                    if (exceptionHandler != null)
+                    var provisioningTemplates = provider.GetTemplates();
+                    return provisioningTemplates;
+                }
+                catch (ApplicationException ex)
+                {
+                    if (ex.InnerException is AggregateException)
                     {
-                        foreach (var exception in ((AggregateException)ex.InnerException).InnerExceptions)
+                        if (exceptionHandler != null)
                         {
-                            exceptionHandler(exception);
+                            foreach (var exception in ((AggregateException)ex.InnerException).InnerExceptions)
+                            {
+                                exceptionHandler(exception);
+                            }
                         }
                     }
                 }
+                return null;
             }
-            finally
-            {
-                if(stream != null && stream.CanSeek)
-                {
-                    stream.Position = 0;
-                }
-            }
-            return null;
         }
 
         /// <summary>
