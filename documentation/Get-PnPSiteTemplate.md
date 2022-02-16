@@ -315,6 +315,7 @@ If specified all site pages will be included
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
+Alias: IncludeAllClientSidePages
 
 Required: False
 Position: Named
