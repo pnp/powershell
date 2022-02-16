@@ -24,7 +24,7 @@ Read-PnPSiteTemplate [-Path] <String> [-TemplateProviderExtensions <ITemplatePro
 Read-PnPSiteTemplate [-Xml] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [<CommonParameters>]
 ```
 
- ### From a Stream
+### From a Stream
 ```powershell
 Read-PnPSiteTemplate [-Stream] <Stream> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [<CommonParameters>]
 ```
