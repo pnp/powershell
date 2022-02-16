@@ -207,6 +207,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Add-PnPSiteDesignFromWeb` which combines `Get-PnPSiteScriptFromWeb`, `Add-PnPSiteScript` and `Add-PnPSiteDesign` into one cmdlet to allow for a specific site to directly be added as a site design to allow other sites to be configured similarly
 - Added `Update-PnPSiteDesignFromWeb` which combines `Get-PnPSiteScriptFromWeb` and `Set-PnPSiteScript` into one cmdlet to allow for a specific site design to directly be updated based on an existing site which can function as a template
 - Added `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` cmdlet which allows direct synchronization of user profile properties of choice between user profiles in Azure Active Directory and their SharePoint Online User Profile Service user profile equivallents
+- Added `-AsMemoryStream` option to `Get-PnPFile` to allow for downloading of a file from SharePoint Online in memory for further processing
+- Added `-Stream` option to `Read-PnPSiteTemplate` to allow for processing on a PnP Provisioning Template coming from memory
 
 ### Changed
 - Renamed `Get-PnPFlowEnvironment` to `Get-PnPPowerAutomateEnvironment`
