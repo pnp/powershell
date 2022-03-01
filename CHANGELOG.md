@@ -79,6 +79,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- [mahajangaurav]
 - Dennis [expiscornovus]
 - Jasey Waegebaert [Jwaegebaert]
 - Swapnil Shrivastava [swapnil1993]
