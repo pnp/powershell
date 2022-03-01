@@ -80,6 +80,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Contributors
 
 - [mahajangaurav]
+- Dennis [expiscornovus]
+- Jasey Waegebaert [Jwaegebaert]
 - Swapnil Shrivastava [swapnil1993]
 - Hugo Bernier [hugoabernier]
 - brenle
@@ -221,6 +223,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Changed `Get-PnPSiteDesign` and `Invoke-PnPSiteDesign` to when providing a name through `-Identity` to be able to work with all site designs having that same name instead of just the first one
 - Changed `Set-PnPListItemPermission` to support piping in a roledefinition for `-AddRole` and `-RemoveRole`
 - Changed that `Get-PnPSiteScript -Identity` now also works with the site script name instead of just the site script Id
+- Changed that `Get-PnPUnifiedAuditLog` returns the error being returned by the Office Management API service, in case something goes wrong [#1631](https://github.com/pnp/powershell/pull/1631)
 
 ### Fixed
 - Fixed `Get-PnPChangeLog -Nightly` not returning anything
