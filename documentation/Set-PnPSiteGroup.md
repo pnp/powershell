@@ -37,7 +37,7 @@ Example 1 changes permission level of the ProjectViewers group inside site colle
 ### EXAMPLE 2
 
 ```powershell
-Set-PnPSiteGroup -Site "https://contoso.sharepoint.com| -Identity "ProjectViewers" -Owner user@domain.com
+Set-PnPSiteGroup -Site "https://contoso.sharepoint.com" -Identity "ProjectViewers" -Owner user@domain.com
 ```
 
 Example 2 sets user@domain.com as the owner of the ProjectViewers group.
