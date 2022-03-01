@@ -89,9 +89,10 @@ namespace PnP.PowerShell.Commands.ManagementApi
 
             List<ManagementApiSubscriptionContent> subscriptionContents = new List<ManagementApiSubscriptionContent>();
             var subscriptionResponse = GraphHelper.GetResponseAsync(HttpClient, url, AccessToken).GetAwaiter().GetResult();
+            var content = subscriptionResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
             if (subscriptionResponse.IsSuccessStatusCode)
             {
-                var content = subscriptionResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 subscriptionContents.AddRange(System.Text.Json.JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content, new System.Text.Json.JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
                 while (subscriptionResponse.Headers.Contains("NextPageUri"))
                 {
@@ -103,12 +104,17 @@ namespace PnP.PowerShell.Commands.ManagementApi
                     }
                 }
             }
+            else
+            {
+                // Request was not successful
+                throw new PSInvalidOperationException($"Service responded with HTTP {(int) subscriptionResponse.StatusCode} {subscriptionResponse.ReasonPhrase}: {content}");
+            }
+
             if (subscriptionContents.Any())
             {
-                foreach (var content in subscriptionContents)
+                foreach (var subscriptionContent in subscriptionContents)
                 {
-
-                    var logs = GraphHelper.GetAsync<IEnumerable<ManagementApiUnifiedLogRecord>>(HttpClient, content.ContentUri, AccessToken, false).GetAwaiter().GetResult();
+                    var logs = GraphHelper.GetAsync<IEnumerable<ManagementApiUnifiedLogRecord>>(HttpClient, subscriptionContent.ContentUri, AccessToken, false).GetAwaiter().GetResult();
                     WriteObject(logs, true);
                 }
             }
