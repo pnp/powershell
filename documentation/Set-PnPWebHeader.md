@@ -34,7 +34,7 @@ Sets the background image of the heading of the site to the provided image
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPWebHeader -HeaderEmphasis String
+Set-PnPWebHeader -HeaderEmphasis Strong
 ```
 
 Sets the site to use a strong colored bar at the top of the site
