@@ -84,7 +84,7 @@
                     <h1 id="set-pnpfolderpermission">Set-PnPFolderPermission</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets folder permissions. Use Get-PnPRoleDefinition to retrieve all available roles you can add or remove using this cmdlet.</p>
+<p>Sets or clears permissions on folders within SharePoint Online</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="user-default">User (Default)</h3>
 <pre><code class="lang-powershell">Set-PnPFolderPermission [-List] &lt;ListPipeBind&gt; -Identity &lt;FolderPipeBind&gt; -User &lt;String&gt; [-AddRole &lt;String&gt;]
@@ -101,21 +101,22 @@
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Sets or clears permissions on folders within SharePoint Online. Use Get-PnPRoleDefinition to retrieve all available roles you can add or remove using this cmdlet.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPFolderPermission -List 'Shared Documents' -Identity 'Shared Documents\Folder' -User 'user@contoso.com' -AddRole 'Contribute'
 </code></pre>
 <p>Adds the 'Contribute' permission to the user 'user@contoso.com' for the folder named 'Folder' located in the root of the library 'Shared Documents'</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPFolderPermission -List 'Documents' -Identity 'Shared Documents\Folder\Subfolder' -User 'user@contoso.com' -RemoveRole 'Contribute'
+<pre><code class="lang-powershell">Set-PnPFolderPermission -List 'AnotherDocumentLibrary' -Identity 'AnotherDocumentLibrary\Folder\Subfolder' -User 'user@contoso.com' -RemoveRole 'Contribute'
 </code></pre>
-<p>Removes the 'Contribute' permission to the user 'user@contoso.com' for the folder named 'Subfolder' located in the folder 'Folder' which is located in the root of the library 'Shared Documents'</p>
+<p>Removes the 'Contribute' permission from the user 'user@contoso.com' for the folder named 'Subfolder' located in the folder 'Folder' which is located in the root of the library 'AnotherDocumentLibrary'</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Set-PnPFolderPermission -List 'Documents' -Identity 'Shared Documents\Folder' -User 'user@contoso.com' -AddRole 'Contribute' -ClearExisting
+<pre><code class="lang-powershell">Set-PnPFolderPermission -List 'Shared Documents' -Identity 'Shared Documents\Folder' -User 'user@contoso.com' -AddRole 'Contribute' -ClearExisting
 </code></pre>
 <p>Adds the 'Contribute' permission to the user 'user@contoso.com' for the folder named 'Folder' located in the root of the library 'Shared Documents' and removes all other permissions</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Get-PnPFolder -Url 'Shared Documents\Folder' | Set-PnPFolderPermission -List 'Documents' -InheritPermissions
+<pre><code class="lang-powershell">Get-PnPFolder -Url 'Shared Documents\Folder' | Set-PnPFolderPermission -List 'Shared Documents' -InheritPermissions
 </code></pre>
 <p>Resets permissions for the folder named 'Folder' located in the root of the library 'Shared Documents' to inherit permissions from the library 'Shared Documents'</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -131,7 +132,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-clearexisting">-ClearExisting</h3>
-<p>Clear all existing permissions</p>
+<p>Clears all existing permissions</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: User, Group
 
@@ -141,18 +142,8 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-group">-Group</h3>
+<p>The ID, name or instance of a SharePoint Group to add or remove permissions to/from</p>
 <pre><code class="lang-yaml">Type: GroupPipeBind
 Parameter Sets: Group
 
@@ -207,7 +198,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-systemupdate">-SystemUpdate</h3>
-<p>Update the folder permissions without creating a new version or triggering MS Flow.</p>
+<p>Update the folder permissions without creating a new version or triggering Microsoft Power Automate Flow</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -222,6 +213,17 @@ Accept wildcard characters: False
 Parameter Sets: User
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

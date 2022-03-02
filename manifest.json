@@ -249,7 +249,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPContentType.html",
-          "hash": "G6gvx/3H5z82xVufj6slag=="
+          "hash": "7CckLTJE/EXreACW2atDdg=="
         }
       },
       "is_incremental": false,
@@ -6141,7 +6141,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPFolderPermission.html",
-          "hash": "fbXxGqAccj/I7jn0f91Igw=="
+          "hash": "Tl9UL/apcii4WhD3cXArJw=="
         }
       },
       "is_incremental": false,
@@ -6693,7 +6693,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSiteGroup.html",
-          "hash": "QZnGS+f5ax6GT/m9mbpGjA=="
+          "hash": "JxoHwdmK0T7cznKUNg03xA=="
         }
       },
       "is_incremental": false,
@@ -7077,7 +7077,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPWebHeader.html",
-          "hash": "2R4NK3UANTgbOOm9k/xEOw=="
+          "hash": "irjUykhUBDw/fk1p50ewyA=="
         }
       },
       "is_incremental": false,
