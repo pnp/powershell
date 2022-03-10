@@ -7,7 +7,7 @@ external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTenantDeletedSite.html
 ---
  
-# Remove-PnPTenantSite
+# Remove-PnPTenantDeletedSite
 
 ## SYNOPSIS
 
