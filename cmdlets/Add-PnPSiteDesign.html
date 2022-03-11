@@ -105,6 +105,10 @@
 <pre><code class="lang-powershell">Add-PnPSiteDesign -Title &quot;My Company Design&quot; -SiteScriptIds &quot;e84dcb46-3ab9-4456-a136-66fc6ae3d3c5&quot;,&quot;6def687f-0e08-4f1e-999c-791f3af9a600&quot; -Description &quot;My description&quot; -WebTemplate TeamSite -ThumbnailUrl https://contoso.sharepoint.com/sites/templates/siteassets/logo.png
 </code></pre>
 <p>Adds a new Site Design, with the specified title, description and logo to be shown in the template picker. When applied it will run the scripts as referenced by the IDs. Use Get-PnPSiteScript to receive Site Scripts. The WebTemplate parameter specifies that this design applies to modern Team Sites.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Add-PnPSiteDesign -Title &quot;My Company Design&quot; -SiteScriptIds &quot;e84dcb46-3ab9-4456-a136-66fc6ae3d3c5&quot;,&quot;6def687f-0e08-4f1e-999c-791f3af9a600&quot; -Description &quot;My description&quot; -WebTemplate TeamSite -ThumbnailUrl &quot;https://contoso.sharepoint.com/sites/templates/my images/logo.png&quot;
+</code></pre>
+<p>Adds a new Site Design, with the specified title, description and logo to be shown in the template picker. When applied it will run the scripts as referenced by the IDs. Use Get-PnPSiteScript to receive Site Scripts. The WebTemplate parameter specifies that this design applies to modern Team Sites. Notice that when the location for the TumbnailUrl contains a space, it should be provided URL decoded, so i.e. no %20 for spaces.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-confirm">-Confirm</h3>
 <p>Prompts you for confirmation before running the cmdlet.</p>
@@ -208,7 +212,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-thumbnailurl">-ThumbnailUrl</h3>
-<p>The full URL of a thumbnail image, i.e. <a href="https://contoso.sharepoint/siteassets/image.png">https://contoso.sharepoint/siteassets/image.png</a>. If none is specified, SharePoint uses a generic image. Recommended size is 400 x 300 pixels. This is the image that will be shown when selecting a template through &quot;Apply a site template&quot; or &quot;Browse templates&quot; shown in &quot;Start designing your site&quot; shown when creating a new site.</p>
+<p>The full URL of a thumbnail image, i.e. <a href="https://contoso.sharepoint/siteassets/image.png">https://contoso.sharepoint/siteassets/image.png</a>. If none is specified, SharePoint uses a generic image. Recommended size is 400 x 300 pixels. This is the image that will be shown when selecting a template through &quot;Apply a site template&quot; or &quot;Browse templates&quot; shown in &quot;Start designing your site&quot; shown when creating a new site. If there are spaces in the URL, do not URL encode them, so i.e. do not use %20 where there is a space, but instead just provide the link with the space inside.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 

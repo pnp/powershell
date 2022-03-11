@@ -813,7 +813,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPSiteDesign.html",
-          "hash": "3po4GlvPGB1xbqAUS7sIaw=="
+          "hash": "vx5eMEC/LaHoihMU/N/iHQ=="
         }
       },
       "is_incremental": false,
@@ -5409,7 +5409,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPTenantDeletedSite.html",
-          "hash": "nmCkBoI50Tgt+/xa7un1Sg=="
+          "hash": "X2tOA+/RFUC6XH76+5p4AQ=="
         }
       },
       "is_incremental": false,
@@ -6681,7 +6681,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSiteDesign.html",
-          "hash": "pNcOjE0dredf8EDy1Zw24A=="
+          "hash": "V77hzvh6Muz+IH2rVRvRxA=="
         }
       },
       "is_incremental": false,
