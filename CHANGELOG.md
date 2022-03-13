@@ -40,6 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-AsMemoryStream` option to `Get-PnPFile` to allow for downloading of a file from SharePoint Online in memory for further processing [#1638](https://github.com/pnp/powershell/pull/1638)
 - Added `-Stream` option to `Read-PnPSiteTemplate` to allow for processing on a PnP Provisioning Template coming from memory [#1638](https://github.com/pnp/powershell/pull/1638)
 - Added `-Force` option to `Set-PnPTenant` to allow skipping the confirmation question for certain other parameters like `SignInAccelerationDomain,EnableGuestSignInAcceleration,BccExternalSharingInvitations,OrphanedPersonalSitesRetentionPeriod,OneDriveForGuestsEnabled,AllowDownloadingNonWebViewableFiles`.
+- Added `Get-PnPCompatibleHubContentTypes` which allows the list of content types present in the content type hub site that can be added to the root web or a list on a target site to be returned [#1678](https://github.com/pnp/powershell/pull/1678)
 
 ### Changed
 
