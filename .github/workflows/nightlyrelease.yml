@@ -15,6 +15,7 @@ jobs:
     steps:
     - name: Build an image
       run: |
+        cd dev
         ls
         VERSION=$(cat ./version.txt)
         docker build --build-arg "PNP_MODULE_VERSION=$VERSION" ./docker -f ./docker/pnppowershell-prerelease.dockerFile --tag pnp-powershell:$VERSION
