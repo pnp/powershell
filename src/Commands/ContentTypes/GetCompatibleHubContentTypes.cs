@@ -15,14 +15,14 @@ namespace PnP.PowerShell.Commands.ContentTypes
 
         protected override void ExecuteCmdlet()
         {
-            var sub = new Microsoft.SharePoint.Client.Taxonomy.ContentTypeSync.ContentTypeSubscriber(ClientContext);
-            ClientContext.Load(sub);
+            var subscriber = new Microsoft.SharePoint.Client.Taxonomy.ContentTypeSync.ContentTypeSubscriber(ClientContext);
+            ClientContext.Load(subscriber);
             ClientContext.ExecuteQueryRetry();
 
-            var res = sub.GetCompatibleHubContentTypes(WebUrl, ListUrl);
+            var results = subscriber.GetCompatibleHubContentTypes(WebUrl, ListUrl);
             ClientContext.ExecuteQueryRetry();
 
-            WriteObject(res);
+            WriteObject(results, true);
         }
     }
 }
