@@ -13,8 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v2
     - name: Build an image
       run: |
+        ls
         cd dev
         ls
         VERSION=$(cat ./version.txt)
