@@ -16,11 +16,11 @@ docker run --rm -it -v $(pwd):/home/powershell mcr.microsoft.com/dotnet/sdk:6.0 
 
 ```bash
 VERSION=$(cat ./version.txt)
-docker build --build-arg "PNP_MODULE_VERSION=$VERSION" ./docker -f ./docker/pnppowershell-prerelease.dockerFile --tag asapozhkov/pnp-powershell:$VERSION
-docker login -u asapozhkov -p $DOCKER_TOKEN
-docker push asapozhkov/pnp-powershell:$VERSION
+docker build --build-arg "PNP_MODULE_VERSION=$VERSION" ./docker -f ./docker/pnppowershell-prerelease.dockerFile --tag $DOCKER_USERNAME/powershell:$VERSION
+docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+docker push $DOCKER_USERNAME/powershell:$VERSION
 ```
 
 # Publish automatically with Github Actions
 
-Set "DOCKER_TOKEN" variable in Github Actions Secrets
+Set "DOCKER_USERNAME" and "DOCKER_PASSWORD" variables in Github Actions Secrets
