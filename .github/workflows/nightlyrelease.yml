@@ -18,3 +18,4 @@ jobs:
       run: |
         VERSION=$(cat ./version.txt)-nightly
         docker build --build-arg "PNP_MODULE_VERSION=$VERSION" ./docker -f ./docker/pnppowershell-prerelease.dockerFile --tag pnp-powershell:$VERSION
+        docker login -u asapozhkov -p ${{ secrets.GITHUB_TOKEN }}
