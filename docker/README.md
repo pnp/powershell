@@ -10,7 +10,7 @@ docker run --rm -it -v $(pwd):/home/powershell mcr.microsoft.com/dotnet/sdk:6.0 
 
 # Publish with prereleases manually
 
-1. Set "DOCKER_TOKEN" variable in Github Actions Secrets
+1. Set "DOCKER_USERNAME" and "DOCKER_PASSWORD" variables
 
 2. Run
 
