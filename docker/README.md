@@ -17,6 +17,7 @@ docker run --rm -it -v $(pwd):/home/powershell mcr.microsoft.com/dotnet/sdk:6.0 
 ```bash
 VERSION=$(cat ./version.txt)-nightly
 docker build --build-arg "PNP_MODULE_VERSION=$VERSION" ./docker -f ./docker/pnppowershell-prerelease.dockerFile --tag $DOCKER_USERNAME/powershell:$VERSION
+docker image tag $DOCKER_USERNAME/powershell:$VERSION $DOCKER_USERNAME/powershell:nightly
 docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 docker push $DOCKER_USERNAME/powershell:$VERSION
 docker push $DOCKER_USERNAME/powershell:nightly
