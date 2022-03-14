@@ -17,5 +17,6 @@ jobs:
     - name: Build an image
       run: |
         VERSION=$(cat ./version.txt)-nightly
-        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" ./docker -f ./docker/pnppowershell-prerelease.dockerFile --tag pnp-powershell:$VERSION
+        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" ./docker -f ./docker/pnppowershell-prerelease.dockerFile --tag asapozhkov/pnp-powershell:$VERSION
         docker login -u asapozhkov -p ${{ secrets.DOCKER_TOKEN }}
+        docker push asapozhkov/pnp-powershell:$VERSION
