@@ -16,5 +16,5 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build an image
       run: |
-        VERSION=$(cat ./version.txt)
+        VERSION=$(cat ./version.txt)-nightly
         docker build --build-arg "PNP_MODULE_VERSION=$VERSION" ./docker -f ./docker/pnppowershell-prerelease.dockerFile --tag pnp-powershell:$VERSION
