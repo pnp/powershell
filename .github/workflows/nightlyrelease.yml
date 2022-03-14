@@ -18,7 +18,7 @@ jobs:
       run: |
         VERSION=$(cat ./version.txt)-nightly
         docker build --build-arg "PNP_MODULE_VERSION=$VERSION" ./docker -f ./docker/pnppowershell-prerelease.dockerFile --tag ${{ secrets.DOCKER_USERNAME }}/powershell:$VERSION
-        docker image tag $DOCKER_USERNAME/powershell:$VERSION $DOCKER_USERNAME/powershell:nightly
+        docker image tag ${{ secrets.DOCKER_USERNAME }}/powershell:$VERSION ${{ secrets.DOCKER_USERNAME }}/powershell:nightly
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker push ${{ secrets.DOCKER_USERNAME }}/powershell:$VERSION
         docker push ${{ secrets.DOCKER_USERNAME }}/powershell:nightly
