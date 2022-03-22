@@ -70,6 +70,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `New-PnPTeamsTeam` issue when adding Owners and Members.
 - Fixed running an admin cmdlet not always returning to the same context as before running the cmdlet [#1611](https://github.com/pnp/powershell/pull/1611)
 - Fixed [an issue](https://github.com/pnp/powershell/issues/1501) where `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` would not correctly sync characters which are not part of the Western European encoding (iso-8859-1)
+- Fixed [an issue](https://github.com/pnp/powershell/issues/1692) where `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` would not correctly sync user profiles if a value contained a backslash (\)
 
 ### Removed
 
