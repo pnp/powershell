@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Utilities
         private static ConcurrentDictionary<string, (string requestDigest, DateTime expiresOn)> requestDigestInfos = new ConcurrentDictionary<string, (string requestDigest, DateTime expiresOn)>();
 #pragma warning restore CS0169,CA1823
 
-        internal static ClientContext GetWebLoginClientContext(string siteUrl, bool clearCookies, bool scriptErrorsSuppressed = false, Uri loginRequestUri = null, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static ClientContext GetWebLoginClientContext(string siteUrl, bool clearCookies, bool scriptErrorsSuppressed = true, Uri loginRequestUri = null, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
 #if Windows
             if (OperatingSystem.IsWindows())
