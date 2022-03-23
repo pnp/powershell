@@ -45,26 +45,28 @@ This cmdlet returns app permissions for either the current or a given site.
 Get-PnPAzureADAppSitePermission
 ```
 
-Returns the apps that have permissions for the currently connected to site. Notice that if PermissionId is not specified the Roles property is not populated. This is a current API limitation. 
+Returns the apps that have permissions for the currently connected to site. Note that if PermissionId is not specified then the Roles property is not populated. This is a current API limitation. 
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPAzureADAppSitePermissions -Site https://contoso.sharepoint.com/sites/projects
 ```
 
-Returns the apps that have permissions for the site specified. Notice that you require to have the SharePoint Administrator role in your tenant to be able to use this.
+Returns the apps that have permissions for the site specified. Note that you required to have the SharePoint Administrator role in your tenant to be able to use this command.
 
 ### EXAMPLE 3
 ```powershell
 Get-PnPAzureADAppSitePermission -PermissionId TowaS50fG1zLnNwLmV4dHwxYxNmI0OTI1
 ```
 
-Returns the specific app details given the permission id for the current site.
+Returns the specific app details for the given permission id for the current site.
 
 ### EXAMPLE 4
 ```powershell
 Get-PnPAzureADAppSitePermission -AppIdentity "Test App"
 ```
+
+Returns the specific app details given the display name of the app specified
 
 ### EXAMPLE 5
 ```powershell
