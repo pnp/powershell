@@ -45,7 +45,7 @@ This cmdlet returns app permissions for either the current or a given site.
 Get-PnPAzureADAppSitePermission
 ```
 
-Returns the apps that have permissions for the currently connected to site. Note that if PermissionId is not specified then the Roles property is not populated. This is a current API limitation. 
+Returns the apps that have permissions for the currently connected to site. Note that if PermissionId is not specified then the Roles property is not populated. This is a current API limitation.
 
 ### EXAMPLE 2
 ```powershell
@@ -59,21 +59,21 @@ Returns the apps that have permissions for the site specified. Note that you req
 Get-PnPAzureADAppSitePermission -PermissionId TowaS50fG1zLnNwLmV4dHwxYxNmI0OTI1
 ```
 
-Returns the specific app details for the given permission id for the current site.
+Returns the specific app permission details for the given permission id for the current site
 
 ### EXAMPLE 4
 ```powershell
 Get-PnPAzureADAppSitePermission -AppIdentity "Test App"
 ```
 
-Returns the specific app details given the display name of the app specified
+Returns the specific app permission details for the app with the provided name
 
 ### EXAMPLE 5
 ```powershell
 Get-PnPAzureADAppSitePermission -AppIdentity "14effc36-dc8b-4f68-8919-f6beb7d847b3"
 ```
 
-Returns the specific app details given the id of the app specified
+Returns the specific app permission details for the app with the provided Id
 
 ## PARAMETERS
 
@@ -122,5 +122,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
