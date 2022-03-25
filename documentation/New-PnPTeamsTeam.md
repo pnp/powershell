@@ -12,7 +12,6 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPTeamsTeam.html
 ## SYNOPSIS
 
 **Required Permissions**
-<img width="871" alt="image" src="https://user-images.githubusercontent.com/5940670/160120972-60f9660a-b988-4dd0-9dbd-53f29d9f7c46.png">
 
   * Microsoft Graph API: Group.ReadWrite.All
 
