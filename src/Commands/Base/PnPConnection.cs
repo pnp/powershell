@@ -476,7 +476,7 @@ namespace PnP.PowerShell.Commands.Base
             if (Utilities.OperatingSystem.IsWindows())
             {
                 // Log in to a specific page on the tenant which is known to be performant
-                var webLoginClientContext = BrowserHelper.GetWebLoginClientContext(url.ToString(), clearCookies, loginRequestUri: new Uri(url, "/_layouts/15/settings.aspx"));
+                var webLoginClientContext = BrowserHelper.GetWebLoginClientContext(url.ToString(), clearCookies, scriptErrorsSuppressed: false, loginRequestUri: new Uri(url, "/_layouts/15/settings.aspx"));
 
                 // Ensure the login process has been completed
                 if (webLoginClientContext == null)

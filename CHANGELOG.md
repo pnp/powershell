@@ -53,6 +53,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Disabling telemetry collection now requires either setting the environment variable or creating the telemetry file ([documentation](https://pnp.github.io/powershell/articles/configuration.html)) [#1504](https://github.com/pnp/powershell/pull/1504)
 - Changed `Get-PnPAzureADUser` to now return all the users in Azure Active Directory by default, instead of only the first 999, unless you specified `-EndIndex:$null` [#1565](https://github.com/pnp/powershell/pull/1565)
 - Changed `Get-PnPTenantDeletedSite -Identity` no longer returning an unknown exception when no site collection with the provided Url exists in the tenant recycle bin but instead returning no output to align with other cmdlets [#1596](https://github.com/pnp/powershell/pull/1596)
+- Changed `Connect-PnPOnline -UseWebLogin` to no longer suppress errors which should allow for certificate logins to be used [#1706](https://github.com/pnp/powershell/issues/1706)
 - The cmdlet `New-PnPTeamsTeam` no longer supports adding members or owners through their e-mail addresses, if they differ from their UPNs. The User Principal Names must be used instead [#1241](https://github.com/pnp/powershell/pull/1241)
 
 ### Fixed
@@ -84,6 +85,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Michael Vasiloff [mikevasiloff]
 - Jerker Vallbo [jerval53]
 - [mahajangaurav]
 - Dennis [expiscornovus]
