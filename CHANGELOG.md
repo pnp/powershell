@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPMessageCenterAnnouncementAsNotFavorite` which allows setting one or more message center announcements as not favorite for the current user [#1151](https://github.com/pnp/powershell/pull/1151)
 - Added `-AsMemoryStream` option to `Get-PnPFile` to allow for downloading of a file from SharePoint Online in memory for further processing [#1638](https://github.com/pnp/powershell/pull/1638)
 - Added `-Stream` option to `Read-PnPSiteTemplate` to allow for processing on a PnP Provisioning Template coming from memory [#1638](https://github.com/pnp/powershell/pull/1638)
+- Added `New-PnPAzureADUserTemporaryAccessPass` which allows creation of a Temporary Access Pass for a specific user in Azure Active Directory
 - Added `-Force` option to `Set-PnPTenant` to allow skipping the confirmation question for certain other parameters like `SignInAccelerationDomain,EnableGuestSignInAcceleration,BccExternalSharingInvitations,OrphanedPersonalSitesRetentionPeriod,OneDriveForGuestsEnabled,AllowDownloadingNonWebViewableFiles`.
 - Added `Get-PnPCompatibleHubContentTypes` which allows the list of content types present in the content type hub site that can be added to the root web or a list on a target site to be returned [#1678](https://github.com/pnp/powershell/pull/1678)
 
@@ -53,6 +54,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Changed `Get-PnPAzureADUser` to now return all the users in Azure Active Directory by default, instead of only the first 999, unless you specified `-EndIndex:$null` [#1565](https://github.com/pnp/powershell/pull/1565)
 - Changed `Get-PnPTenantDeletedSite -Identity` no longer returning an unknown exception when no site collection with the provided Url exists in the tenant recycle bin but instead returning no output to align with other cmdlets [#1596](https://github.com/pnp/powershell/pull/1596)
 - Changed `Connect-PnPOnline -UseWebLogin` to no longer suppress errors which should allow for certificate logins to be used [#1706](https://github.com/pnp/powershell/issues/1706)
+- The cmdlet `New-PnPTeamsTeam` no longer supports adding members or owners through their e-mail addresses, if they differ from their UPNs. The User Principal Names must be used instead [#1241](https://github.com/pnp/powershell/pull/1241)
 
 ### Fixed
 
@@ -71,6 +73,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `New-PnPTeamsTeam` issue when adding Owners and Members.
 - Fixed running an admin cmdlet not always returning to the same context as before running the cmdlet [#1611](https://github.com/pnp/powershell/pull/1611)
 - Fixed [an issue](https://github.com/pnp/powershell/issues/1501) where `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` would not correctly sync characters which are not part of the Western European encoding (iso-8859-1)
+- Fixed [an issue](https://github.com/pnp/powershell/issues/1692) where `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` would not correctly sync user profiles if a value contained a backslash (\) [#1711](https://github.com/pnp/powershell/pull/1711)
 
 ### Removed
 

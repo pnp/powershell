@@ -21,7 +21,7 @@ Creates a new team in Microsoft Teams or teamifies an existing Microsoft 365 Gro
 
 ### For an existing group
 ```powershell
-New-PnPTeamsTeam -GroupId <String> [-Owner <String>] [-AllowAddRemoveApps <Boolean>]
+New-PnPTeamsTeam -GroupId <String> [-AllowAddRemoveApps <Boolean>]
  [-AllowChannelMentions <Boolean>] [-AllowCreateUpdateChannels <Boolean>]
  [-AllowCreateUpdateRemoveConnectors <Boolean>] [-AllowCreateUpdateRemoveTabs <Boolean>]
  [-AllowCustomMemes <Boolean>] [-AllowDeleteChannels <Boolean>] [-AllowGiphy <Boolean>]
@@ -34,7 +34,7 @@ New-PnPTeamsTeam -GroupId <String> [-Owner <String>] [-AllowAddRemoveApps <Boole
 
 ### For a new group
 ```powershell
-New-PnPTeamsTeam -DisplayName <String> [-MailNickName <String>] [-Description <String>] [-Owner <String>]
+New-PnPTeamsTeam -DisplayName <String> [-MailNickName <String>] [-Description <String>] 
  [-AllowAddRemoveApps <Boolean>] [-AllowChannelMentions <Boolean>] [-AllowCreateUpdateChannels <Boolean>]
  [-AllowCreateUpdateRemoveConnectors <Boolean>] [-AllowCreateUpdateRemoveTabs <Boolean>]
  [-AllowCustomMemes <Boolean>] [-AllowDeleteChannels <Boolean>] [-AllowGiphy <Boolean>]
@@ -384,19 +384,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Owner
-An admin who is allowed to create on behalf of another user should use this flag to specify the desired owner of the group.This user will be added as both a member and an owner of the group. If not specified, the user who creates the team will be added as both a member and an owner.
 
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -ShowInTeamsSearchAndSuggestions
 Setting that determines whether or not private teams should be searchable from Teams clients for users who do not belong to that team. Set to $false to make those teams not discoverable from Teams clients.
@@ -427,8 +415,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Owner
+User to be added as both a member and an owner of the group. If not specified, the user who creates the team will be added as both a member and an owner. This parameter has been deprecated and will be removed in a future version. Use -Owners instead which allows providing one or even multiple owners at once.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Owners
-The UPN(s) of the user(s) to be added to the Microsoft 365 group as a owners.
+The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as owners. If omitted and the cmdlet is run using a token containing a user identity, such as when logging on with -Interactive or -DeviceLogin, the user used to authenticate with would become the owner. You can provide as many owners as you want, as long as you stay within the [Microsoft 365 Groups limits](https://docs.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits). Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.
 
 ```yaml
 Type: String[]
@@ -442,7 +444,7 @@ Accept wildcard characters: False
 ```
 
 ### -Members
-The UPN(s) of the user(s) to be added to the Microsoft 365 group as a members.
+The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as members. You can provide as many members as you want, as long as you stay within the [Microsoft 365 Groups limits](https://docs.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits). Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.
 
 ```yaml
 Type: String[]

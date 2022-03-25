@@ -77,7 +77,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     bulkUpdateBuilder.Append(@"{""IdName"":""");
                     bulkUpdateBuilder.Append(user.UserPrincipalName);
                     bulkUpdateBuilder.Append(@""",");
-                    bulkUpdateBuilder.Append(userUpdateBuilder.ToString().TrimEnd(','));
+                    bulkUpdateBuilder.Append(userUpdateBuilder.ToString().TrimEnd(',').Replace(@"\", @"\\"));
                     bulkUpdateBuilder.Append("},");
 
                     userUpdateBuilder.Clear();

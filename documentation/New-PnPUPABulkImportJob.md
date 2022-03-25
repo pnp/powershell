@@ -67,20 +67,6 @@ This will submit a new user profile bulk import job to SharePoint Online using a
 
 ## PARAMETERS
 
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Folder
 Site or server relative URL of the folder to where you want to store the import job file.
 
@@ -96,7 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -IdProperty
-The name of the identifying property in your file.
+The name of the property identifying the user in your JSON file to update the user profile for
 
 ```yaml
 Type: String
@@ -125,7 +111,7 @@ Accept wildcard characters: False
 ```
 
 ### -Path
-The local file path.
+The local file path of the JSON file to use for the user profile import
 
 ```yaml
 Type: String
@@ -139,7 +125,7 @@ Accept wildcard characters: False
 ```
 
 ### -Url
-The url of the file saved in SharePoint.
+The full url of the JSON file saved in SharePoint Online containing the identities and properties to import into the SharePoint Online User Profiles
 
 ```yaml
 Type: String
@@ -153,7 +139,7 @@ Accept wildcard characters: False
 ```
 
 ### -UserProfilePropertyMapping
-Specify user profile property mapping between the import file and UPA property names.
+Specify user profile property mapping between the import file and UPA property names, i.e. `@{"JobTitle"="Title"}` where the left side represents the property in the JSON file and the right side the name of the property in the SharePoint Online User Profile Service.
 
 ```yaml
 Type: Hashtable
@@ -166,6 +152,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+[Bulk update custom user profile properties for SharePoint Online](https://docs.microsoft.com/sharepoint/dev/solution-guidance/bulk-user-profile-update-api-for-sharepoint-online)
