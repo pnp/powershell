@@ -91,7 +91,7 @@
 <p>Creates a new team in Microsoft Teams or teamifies an existing Microsoft 365 Group. If the Microsoft 365 Group does not exist yet, it will create it first and then add a Microsoft Teams team to the group. If it does already exist, it will use the provided Microsoft 365 Group and just teamify it by adding a Microsoft Teams team to it.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="for-an-existing-group">For an existing group</h3>
-<pre><code class="lang-powershell">New-PnPTeamsTeam -GroupId &lt;String&gt; [-Owner &lt;String&gt;] [-AllowAddRemoveApps &lt;Boolean&gt;]
+<pre><code class="lang-powershell">New-PnPTeamsTeam -GroupId &lt;String&gt; [-AllowAddRemoveApps &lt;Boolean&gt;]
  [-AllowChannelMentions &lt;Boolean&gt;] [-AllowCreateUpdateChannels &lt;Boolean&gt;]
  [-AllowCreateUpdateRemoveConnectors &lt;Boolean&gt;] [-AllowCreateUpdateRemoveTabs &lt;Boolean&gt;]
  [-AllowCustomMemes &lt;Boolean&gt;] [-AllowDeleteChannels &lt;Boolean&gt;] [-AllowGiphy &lt;Boolean&gt;]
@@ -102,7 +102,7 @@
  [-Classification &lt;String&gt;] [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;]  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="for-a-new-group">For a new group</h3>
-<pre><code class="lang-powershell">New-PnPTeamsTeam -DisplayName &lt;String&gt; [-MailNickName &lt;String&gt;] [-Description &lt;String&gt;] [-Owner &lt;String&gt;]
+<pre><code class="lang-powershell">New-PnPTeamsTeam -DisplayName &lt;String&gt; [-MailNickName &lt;String&gt;] [-Description &lt;String&gt;] 
  [-AllowAddRemoveApps &lt;Boolean&gt;] [-AllowChannelMentions &lt;Boolean&gt;] [-AllowCreateUpdateChannels &lt;Boolean&gt;]
  [-AllowCreateUpdateRemoveConnectors &lt;Boolean&gt;] [-AllowCreateUpdateRemoveTabs &lt;Boolean&gt;]
  [-AllowCustomMemes &lt;Boolean&gt;] [-AllowDeleteChannels &lt;Boolean&gt;] [-AllowGiphy &lt;Boolean&gt;]
@@ -369,17 +369,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-owner">-Owner</h3>
-<p>An admin who is allowed to create on behalf of another user should use this flag to specify the desired owner of the group.This user will be added as both a member and an owner of the group. If not specified, the user who creates the team will be added as both a member and an owner.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-showinteamssearchandsuggestions">-ShowInTeamsSearchAndSuggestions</h3>
 <p>Setting that determines whether or not private teams should be searchable from Teams clients for users who do not belong to that team. Set to $false to make those teams not discoverable from Teams clients.</p>
 <pre><code class="lang-yaml">Type: Boolean
@@ -403,8 +392,19 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-owner">-Owner</h3>
+<p>User to be added as both a member and an owner of the group. If not specified, the user who creates the team will be added as both a member and an owner. This parameter has been deprecated and will be removed in a future version. Use -Owners instead which allows providing one or even multiple owners at once.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-owners">-Owners</h3>
-<p>The UPN(s) of the user(s) to be added to the Microsoft 365 group as a owners.</p>
+<p>The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as owners. If omitted and the cmdlet is run using a token containing a user identity, such as when logging on with -Interactive or -DeviceLogin, the user used to authenticate with would become the owner. You can provide as many owners as you want, as long as you stay within the <a href="https://docs.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits">Microsoft 365 Groups limits</a>. Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
@@ -415,7 +415,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-members">-Members</h3>
-<p>The UPN(s) of the user(s) to be added to the Microsoft 365 group as a members.</p>
+<p>The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as members. You can provide as many members as you want, as long as you stay within the <a href="https://docs.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits">Microsoft 365 Groups limits</a>. Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 Required: False

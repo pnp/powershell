@@ -1749,7 +1749,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPAzureADAppSitePermission.html",
-          "hash": "ply09kJ1coY/efe7cSE+Vg=="
+          "hash": "q2hJnv2QzsQzkQRvmsLf5A=="
         }
       },
       "is_incremental": false,
@@ -4025,6 +4025,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPAzureADUserTemporaryAccessPass.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPAzureADUserTemporaryAccessPass.html",
+          "hash": "1qZyLeyuxJMCBQjA72O2Fg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/New-PnPAzureCertificate.md",
       "output": {
         ".html": {
@@ -4233,7 +4245,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/New-PnPTeamsTeam.html",
-          "hash": "8m5E9kw8O7513yXgLBGZ3g=="
+          "hash": "BNNngx8VvI2lqAcPpZ5unw=="
         }
       },
       "is_incremental": false,
@@ -7389,7 +7401,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "082PNa3zHqp0Ks1nUx0s2Q=="
+          "hash": "+SgG1sjvVPLv/CjNEvMnqQ=="
         }
       },
       "is_incremental": false,
@@ -7600,7 +7612,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 615,
+          "total_file_count": 616,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
