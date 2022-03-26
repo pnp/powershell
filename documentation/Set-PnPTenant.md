@@ -51,7 +51,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EnableAutoNewsDigest <Boolean>] [-CommentsOnListItemsDisabled <Boolean>] [-CommentsOnFilesDisabled <Boolean>]
  [-DisableBackToClassic <Boolean>] [-InformationBarriersSuspension <Boolean>] 
  [-AllowFilesWithKeepLabelToBeDeletedODB <Boolean>] [-AllowFilesWithKeepLabelToBeDeletedSPO <Boolean>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Force] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -1310,6 +1310,20 @@ Guids of out of the box modern liststemplates to show when creating a new list
 
 ```yaml
 Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+If provided, no confirmation will be requested and the action will be performed
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

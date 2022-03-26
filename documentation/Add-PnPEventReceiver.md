@@ -21,6 +21,7 @@ Add-PnPEventReceiver [-List <ListPipeBind>] [-Scope <EventReceiverScope>] -Name 
 ```
 
 ## DESCRIPTION
+This cmdlet adds a new remote event receiver.
 
 ## EXAMPLES
 
