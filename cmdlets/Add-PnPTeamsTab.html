@@ -99,6 +99,10 @@
 <pre><code class="lang-powershell">Add-PnPTeamsTab -Team &quot;My Team&quot; -Channel &quot;My Channel&quot; -DisplayName &quot;My Tab Name&quot; -Type WebSite -ContentUrl &quot;https://aka.ms/m365pnp&quot;
 </code></pre>
 <p>Adds a web site tab to the specified channel.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Add-PnPTeamsTab -Team &quot;My Team&quot; -Channel &quot;My Channel&quot; -DisplayName &quot;My Tab Name&quot; -Type PDF -ContentUrl &quot;https://contoso.sharepoint.com/sites/Marketing/Shared Documents/General/MyFile.pdf&quot; -EntityId &quot;null&quot;
+</code></pre>
+<p>Adds the specified PDF file from the &quot;Documents&quot; library as a tab.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-channel">-Channel</h3>
 <p>Specify the channel id or name of the team to retrieve.</p>
