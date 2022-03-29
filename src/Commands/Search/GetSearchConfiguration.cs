@@ -171,19 +171,23 @@ namespace PnP.PowerShell.Commands.Search
                     }
                     foreach (var promoResult in rule.PromotedResults)
                     {
-                        if (promoResult.IsVisual)
-                        {
-                            continue;
-                        }
                         dynamic bookmark = new ExpandoObject();
                         bookmark.Title = promoResult.Title.Contains(" ") ? '"' + promoResult.Title + '"' : promoResult.Title;
                         bookmark.Url = promoResult.Url;
+                        
+                        if (promoResult.IsVisual)
+                        {
+                            WriteWarning($"Skipping visual promoted result {bookmark.Title} ({bookmark.Url})");
+                            continue;
+                        }
+                        
                         List<string> triggerTerms = new List<string>();
                         bool matchSimilar = false;
                         foreach (var condition in rule.QueryConditions)
                         {
                             if (condition.Terms == null || condition.QueryConditionType != "Keyword")
                             {
+                                WriteWarning($"Skipping {bookmark.Title} due to no trigger conditions");
                                 continue;
                             }
 
@@ -199,6 +203,7 @@ namespace PnP.PowerShell.Commands.Search
                         }
                         if (triggerTerms.Count == 0)
                         {
+                            WriteWarning($"Skipping {bookmark.Title} due to no trigger terms");
                             continue;
                         }
 
