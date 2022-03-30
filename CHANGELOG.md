@@ -86,8 +86,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Contributors
 
 - Michael Vasiloff [mikevasiloff]
+- [svermaak]
+- Russell Gove [russgove] 
+- Mike Park [mikeparkie]
 - Jerker Vallbo [jerval53]
-- [mahajangaurav]
+- Gaurav Mahajan [mahajangaurav]
 - Dennis [expiscornovus]
 - Jasey Waegebaert [Jwaegebaert]
 - Swapnil Shrivastava [swapnil1993]
@@ -97,7 +100,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Lschockaert
 - Leon Armston [LeonArmston]
 - Reshmee Auckloo [reshmee011]
-- Arleta [PowershellScripts]
+- Arleta Wanat [PowershellScripts]
 - Brendon Lee [brenle]
 - Guillaume Bordier [gbordier]
 - [reusto]
