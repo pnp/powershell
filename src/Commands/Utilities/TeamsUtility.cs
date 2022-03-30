@@ -11,7 +11,6 @@ using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.Graph;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 using Team = PnP.PowerShell.Commands.Model.Teams.Team;
 using TeamChannel = PnP.PowerShell.Commands.Model.Teams.TeamChannel;
