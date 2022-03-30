@@ -160,7 +160,7 @@ namespace PnP.PowerShell.Commands.Base
         public string TenantAdminUrl;
 
         [Parameter(Mandatory = false)]
-        [Obsolete("Set the environment variable 'PNPPOWERSHELL_DISABLETELEMETRY' to 'true' instead of using this switch.")]
+        [Obsolete("Set the environment variable 'PNP_DISABLETELEMETRY' to 'true' instead of using this switch.")]
         public SwitchParameter NoTelemetry;
 
         [Parameter(Mandatory = false)]
@@ -194,7 +194,7 @@ namespace PnP.PowerShell.Commands.Base
 #pragma warning disable CS0618 // NoTelemetry and NoVersionCheck needs to be set through environment variables now
             if (NoTelemetry)
             {
-                Environment.SetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY", "true");
+                Environment.SetEnvironmentVariable("PNP_DISABLETELEMETRY", "true");
             }
             if (NoVersionCheck)
             {

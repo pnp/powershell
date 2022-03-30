@@ -476,7 +476,7 @@ namespace PnP.PowerShell.Commands.Base
             if (Utilities.OperatingSystem.IsWindows())
             {
                 // Log in to a specific page on the tenant which is known to be performant
-                var webLoginClientContext = BrowserHelper.GetWebLoginClientContext(url.ToString(), clearCookies, loginRequestUri: new Uri(url, "/_layouts/15/settings.aspx"));
+                var webLoginClientContext = BrowserHelper.GetWebLoginClientContext(url.ToString(), clearCookies, scriptErrorsSuppressed: false, loginRequestUri: new Uri(url, "/_layouts/15/settings.aspx"));
 
                 // Ensure the login process has been completed
                 if (webLoginClientContext == null)
@@ -681,13 +681,23 @@ namespace PnP.PowerShell.Commands.Base
             var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             var telemetryFile = System.IO.Path.Combine(userProfile, ".pnppowershelltelemetry");
 
+
+
+            var enableTelemetry = true;
+            if (Environment.GetEnvironmentVariable("PNP_DISABLETELEMETRY") != null)
+            {
+                enableTelemetry = false;
+            }
+            // We have old systems to disable telemetry. 
             // If telemetry should be enabled is based on:
             // a. The environmentvariable not having been set OR having been set and having the value false
             //    AND
             // b. The telemetry file not existing OR existing and having the word allow in it
-            var enableTelemetry = ((Environment.GetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY") == null || Environment.GetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY").Equals("false", StringComparison.InvariantCultureIgnoreCase)) &&
+            if (enableTelemetry == true)
+            {
+                enableTelemetry = ((Environment.GetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY") == null || Environment.GetEnvironmentVariable("PNPPOWERSHELL_DISABLETELEMETRY").Equals("false", StringComparison.InvariantCultureIgnoreCase)) &&
                                    (!System.IO.File.Exists(telemetryFile) || System.IO.File.ReadAllText(telemetryFile).Equals("allow", StringComparison.InvariantCultureIgnoreCase)));
-
+            }
             // Load Application Insights if telemetry should be enabled
             if (enableTelemetry)
             {

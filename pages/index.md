@@ -42,6 +42,10 @@ We have shipped the version now both PnP PowerShell for classic PowerShell and P
 
 Make a clone of the repository, navigate to the build folder in the repository and run Build-Debug.ps1. See more details [here](articles/buildingsource.md).
 
+## Supportability and SLA
+
+This library is open-source and community provided library with active community providing support for it. This is not Microsoft provided module so there's no SLA or direct support for this open-source component from Microsoft. Please report any issues using the [issues list](https://github.com/pnp/powershell/issues).
+
 ## Updating the documentation
 
 All cmdlet documentation has been moved to the https://github.com/pnp/powershell/tree/dev/documentation folder. If you want to make changes, make sure to follow the format as used in the other files present there. These files follow a specific schema which allows us to generate the correct files. You can also make changes directly to the documention at https://docs.microsoft.com/powershell/sharepoint/sharepoint-pnp/sharepoint-pnp-cmdlets?view=sharepoint-ps. Notice that the documentation there is currently NOT reflecting this library: the documentation applies to the Windows Only version of PnP PowerShell.

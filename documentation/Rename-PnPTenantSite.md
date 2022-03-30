@@ -12,7 +12,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Rename-PnPTenantSite.ht
 ## SYNOPSIS
 This command starts a rename of a site on a SharePoint Online site. You can change the URL, and optionally the site title along with changing the URL.
 
-This will not work for Multi-geo environments.
+This will not work between Multi-geo environments.
 
 ## SYNTAX
 

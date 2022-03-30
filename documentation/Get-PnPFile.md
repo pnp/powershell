@@ -10,7 +10,7 @@ title: Get-PnPFile
 # Get-PnPFile
 
 ## SYNOPSIS
-Downloads a file.
+Downloads a file
 
 ## SYNTAX
 
@@ -38,33 +38,34 @@ Get-PnPFile [-Url] <String> -AsString [-Connection <PnPConnection>] [<CommonPara
 ```
 
 ## DESCRIPTION
+Allows downloading of a file from SharePoint Online. The file contents can either be read directly into memory as text, directly saved to local disk or stored in memory for further processing.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor
+Get-PnPFile -Url "/sites/project/Shared Documents/Document.docx"
 ```
 
 Retrieves the file and downloads it to the current folder
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor -AsFile
+Get-PnPFile -Url /sites/project/SiteAssets/image.jpg -Path c:\temp -FileName image.jpg -AsFile
 ```
 
-Retrieves the file and downloads it to c:\temp\company.spcolor
+Retrieves the file and downloads it to c:\temp\image.jpg
 
 ### EXAMPLE 3
 ```powershell
 Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -AsString
 ```
 
-Retrieves the file and outputs its contents to the console
+Retrieves the contents of the file as text and outputs its contents to the console
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -AsFile
+Get-PnPFile -Url /sites/project/Shared Documents/Folder/Presentation.pptx -AsFileObject
 ```
 
 Retrieves the file and returns it as a File object
@@ -78,10 +79,17 @@ Retrieves the file and returns it as a ListItem object
 
 ### EXAMPLE 6
 ```powershell
-Get-PnPFile -Url _catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor -AsFile
+Get-PnPFile -Url /personal/john_tenant_onmicrosoft_com/Documents/Sample.xlsx -Path c:\temp -FileName Project.xlsx -AsFile
 ```
 
-Retrieves the file by site relative URL and downloads it to c:\temp\company.spcolor
+Retrieves the file Sample.xlsx by its site relative URL from a OneDrive for Business site and downloads it to c:\temp\Project.xlsx
+
+### EXAMPLE 7
+```powershell
+Get-PnPFile -Url "/sites/templates/Shared Documents/HR Site.pnp" -AsMemoryStream
+```
+
+Retrieves the file in memory for further processing
 
 ## PARAMETERS
 
@@ -134,6 +142,19 @@ Type: SwitchParameter
 Parameter Sets: Return as string
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AsMemoryStrean
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Download the content of the file to memory
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -225,10 +246,6 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
