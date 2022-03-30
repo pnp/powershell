@@ -11,7 +11,9 @@ using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Graph;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
+using Team = PnP.PowerShell.Commands.Model.Teams.Team;
 using TeamChannel = PnP.PowerShell.Commands.Model.Teams.TeamChannel;
 using User = PnP.PowerShell.Commands.Model.Teams.User;
 
@@ -607,6 +609,20 @@ namespace PnP.PowerShell.Commands.Utilities
                 channel.IsFavoriteByDefault = isFavoriteByDefault;
                 return await GraphHelper.PostAsync<TeamChannel>(httpClient, $"v1.0/teams/{groupId}/channels", channel, accessToken);
             }
+        }
+
+        public static async Task<TeamChannelMember> AddChannelUserAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, string upn, string role)
+        {
+            var channelMember = new TeamChannelMember
+            {
+                UserIdentifier = $"https://graph.microsoft.com/v1.0/users('{upn}')",
+            };
+
+            // The role for the user. Must be owner or empty.
+            if (role.Equals("Owner"))
+                channelMember.Roles.Add("owner");
+
+            return await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/members", channelMember, accessToken);
         }
 
         public static async Task PostMessageAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, TeamChannelMessage message)
