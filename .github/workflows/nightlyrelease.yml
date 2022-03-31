@@ -12,7 +12,7 @@ jobs:
     - name: Build an image
       run: |
         VERSION=$(cat ./version.txt)-nightly
-        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" ./docker -f ./docker/pnppowershell-prerelease.dockerFile --tag ${{ secrets.DOCKER_USERNAME }}/powershell:$VERSION
+        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" ./docker -f ./docker/pnppowershell.dockerFile --tag ${{ secrets.DOCKER_USERNAME }}/powershell:$VERSION
     - name: Tag the image
       run: |
         VERSION=$(cat ./version.txt)-nightly
