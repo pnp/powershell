@@ -1869,7 +1869,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPCompatibleHubContentTypes.html",
-          "hash": "Oh1N4sNnhWrPeXjeUSAEaA=="
+          "hash": "Jfld4RmjzPiEFnaoM8Z13Q=="
         }
       },
       "is_incremental": false,
@@ -4029,7 +4029,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/New-PnPAzureADUserTemporaryAccessPass.html",
-          "hash": "1qZyLeyuxJMCBQjA72O2Fg=="
+          "hash": "R6ExqgTOQI738VQ+RDbYFA=="
         }
       },
       "is_incremental": false,
@@ -6417,7 +6417,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsArchived.html",
-          "hash": "jKIh39HYtOtd/+KuK4HPJg=="
+          "hash": "Kdp4QwVzK8aXjy3+HeKmLw=="
         }
       },
       "is_incremental": false,
@@ -6429,7 +6429,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsFavorite.html",
-          "hash": "UpfFQ73QIT9hiUvsZ5QwFw=="
+          "hash": "gB/ZAW9d83E08035VEZJ7w=="
         }
       },
       "is_incremental": false,
@@ -6441,7 +6441,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsNotArchived.html",
-          "hash": "hr4NgzQhYD3tOZuOiB9atg=="
+          "hash": "LaCdhxb1k7HYfu/ool/eLg=="
         }
       },
       "is_incremental": false,
@@ -6453,7 +6453,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsNotFavorite.html",
-          "hash": "o5fsnNqFgaL1Il/jxR6zhg=="
+          "hash": "mIDaKb6GVdz4Pn2FQscsAw=="
         }
       },
       "is_incremental": false,
@@ -6465,7 +6465,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsRead.html",
-          "hash": "dBI5GHLcFflkdEytDSdCCA=="
+          "hash": "qhch4wqOH0hUYwD4zp/7BQ=="
         }
       },
       "is_incremental": false,
@@ -6477,7 +6477,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsUnread.html",
-          "hash": "K/6P/PTzIgQtubbTXcvWcw=="
+          "hash": "BL0VRcRcbuhT2eakS7mo6g=="
         }
       },
       "is_incremental": false,
