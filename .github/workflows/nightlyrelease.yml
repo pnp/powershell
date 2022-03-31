@@ -5,10 +5,8 @@ on:
   schedule:
   - cron: '30 3 * * *'
 jobs:
-  build:
-
+  publish-docker:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Build an image
