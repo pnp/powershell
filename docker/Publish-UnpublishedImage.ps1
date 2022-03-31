@@ -23,5 +23,8 @@ Param(
 $publishedImageVersions = (Invoke-RestMethod https://registry.hub.docker.com/v2/repositories/$DOCKER_USERNAME/$DOCKER_IMAGE_NAME/tags).results | % {
     $_.name
 }
-Write-Host $publishedImageVersions.Count;
-Find-Module $PS_MODULE_NAME -AllVersions
+Find-Module $PS_MODULE_NAME -AllVersions -AllowPrerelease | % {
+    if ( !( $publishedImageVersions -contains $_ ) ) {
+        $_
+    }
+}
