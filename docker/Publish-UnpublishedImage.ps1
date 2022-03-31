@@ -20,7 +20,7 @@ Param(
     [Security.SecureString]
     $DOCKER_PASSWORD
 )
-$publishedImageVersions = (Invoke-RestMethod https://registry.hub.docker.com/v2/repositories/$DOCKER_USERNAME/$DOCKER_IMAGE_NAME/tags).results | % {
+$publishedImageVersions = (Invoke-RestMethod https://registry.hub.docker.com/v2/repositories/$DOCKER_USERNAME/$DOCKER_IMAGE_NAME/tags?page_size=10240).results | % {
     $_.name
 }
 $moduleVersions = Find-Module $PS_MODULE_NAME -AllVersions;
