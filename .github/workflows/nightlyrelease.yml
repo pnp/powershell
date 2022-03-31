@@ -20,6 +20,6 @@ jobs:
     - name: Push the image
       run: |
         VERSION=$(cat ./version.txt)-nightly
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker push ${{ secrets.DOCKER_USERNAME }}/powershell:$VERSION
         docker push ${{ secrets.DOCKER_USERNAME }}/powershell:nightly
