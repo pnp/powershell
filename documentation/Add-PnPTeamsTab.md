@@ -35,6 +35,13 @@ Add-PnPTeamsTab -Team "My Team" -Channel "My Channel" -DisplayName "My Tab Name"
 
 Adds a web site tab to the specified channel.
 
+### EXAMPLE 2
+```powershell
+Add-PnPTeamsTab -Team "My Team" -Channel "My Channel" -DisplayName "My Tab Name" -Type PDF -ContentUrl "https://contoso.sharepoint.com/sites/Marketing/Shared Documents/General/MyFile.pdf" -EntityId "null"
+```
+
+Adds the specified PDF file from the "Documents" library as a tab.
+
 ## PARAMETERS
 
 ### -Channel
