@@ -20,6 +20,8 @@ Param(
     [Security.SecureString]
     $DOCKER_PASSWORD
 )
-$publishedImageVersions = docker image list $DOCKER_USERNAME/$DOCKER_IMAGE_NAME --format "{{.Tag}}"
+$publishedImageVersions = (Invoke-RestMethod https://registry.hub.docker.com/v2/repositories/$DOCKER_USERNAME/$DOCKER_IMAGE_NAME/tags).results | % {
+    $_.name
+}
 Write-Host $publishedImageVersions.Count;
 Find-Module $PS_MODULE_NAME -AllVersions
