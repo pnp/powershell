@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Build an image
+    - name: Build and Publish All
       shell: pwsh
-      run: ./docker/publish.ps1
+      run: |
+        `$securedPassword = ConvertTo-SecureString "${{ secrets.DOCKER_PASSWORD }}" -AsPlainText -Force
+        ./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell ${{ secrets.DOCKER_USERNAME }} powershell `$securedPassword
