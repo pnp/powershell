@@ -9,8 +9,9 @@ on:
       - 'docker/**'
 jobs:
   publish-docker:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Build an image
+      shell: pwsh
       run: ./docker/publish.ps1
