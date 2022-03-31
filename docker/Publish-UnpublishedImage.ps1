@@ -24,7 +24,8 @@ $publishedImageVersions = (Invoke-RestMethod https://registry.hub.docker.com/v2/
     $_.name
 }
 Find-Module $PS_MODULE_NAME -AllVersions -AllowPrerelease | % {
-    if ( !( $publishedImageVersions -contains $_ ) ) {
-        $_
+    $moduleVersion = $_.Version;
+    if ( !( $publishedImageVersions -contains $moduleVersion ) ) {
+        $moduleVersion
     }
 }
