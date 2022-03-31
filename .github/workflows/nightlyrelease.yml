@@ -2,11 +2,8 @@ name: Nightly Release to PowerShell Gallery
 
 on:
   workflow_dispatch:
-  push: 
-    branches:
-      - dev
-    paths:
-      - 'docker/**'
+  schedule:
+  - cron: '30 3 * * *'
 jobs:
   build:
 
