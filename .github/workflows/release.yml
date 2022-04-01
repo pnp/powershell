@@ -2,12 +2,8 @@ name: Release to Docker Hub
 
 on:
   workflow_dispatch:
-  push: 
-    branches:
-      - dev
-    paths:
-      - 'docker/**'
-      - '.github/workflows/release.yml'
+  schedule:
+  - cron: '30 3 * * *'
 jobs:
   publish-docker:
     runs-on: ubuntu-latest
