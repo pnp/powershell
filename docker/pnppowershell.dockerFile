@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/powershell:7.2.1-alpine-3.14-20211215
+FROM mcr.microsoft.com/powershell:7.2.2-alpine-3.14-20220318
 
 SHELL ["pwsh", "-command"]
 ARG PNP_MODULE_VERSION
