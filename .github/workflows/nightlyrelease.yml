@@ -39,7 +39,6 @@ jobs:
         push: true
         branch: dev
         token: ${{ secrets.PAT }}
-        name: Nightly Release to PowerShell Gallery
   publish-docker:
     runs-on: ubuntu-latest
     needs: [ build ]
