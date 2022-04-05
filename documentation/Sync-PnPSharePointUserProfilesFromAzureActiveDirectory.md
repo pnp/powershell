@@ -131,7 +131,11 @@ Accept wildcard characters: False
 ```
 
 ### -IdType
+<<<<<<< HEAD
 The type of profile identifier (Email/CloudId/PrincipalName). Defaults to CloudId. Ensure that if you use this in combination with `-Users` that all of the user objects you're passing in are having their Mail property populated when choosing IdType Email, Id property for IdType CloudId or UserPrincipalName for IdType PrincipalName.
+=======
+The type of profile identifier (Email/CloudId/PrincipalName). Defaults to CloudId. Ensure that if you use this in combination with `-Users` that all of the user objects you're passing in are having their Mail property populated when choosing IdType Email, Id property for CloudId or UserPrincipalName for PrincipalName.
+>>>>>>> b75bab61... Work in progress
 
 ```yaml
 Type: ImportProfilePropertiesUserIdType
