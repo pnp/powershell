@@ -25,6 +25,9 @@ namespace PnP.PowerShell.Commands.UserProfiles
         public SwitchParameter WhatIf;
 
         [Parameter(Mandatory = false)]
+        public ImportProfilePropertiesUserIdType IdType = ImportProfilePropertiesUserIdType.PrincipalName;
+
+        [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
 
         protected override void ExecuteCmdlet()
@@ -78,7 +81,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
             // Perform the mapping and execute the sync operation
             WriteVerbose($"Creating mapping file{(WhatIf.ToBool() ? " and" : ",")} uploading it to SharePoint Online to folder '{Folder}'{(WhatIf.ToBool() ? "" : " and executing sync job")}");
-            var job = PnP.PowerShell.Commands.Utilities.SharePointUserProfileSync.SyncFromAzureActiveDirectory(nonAdminClientContext, aadUsers, UserProfilePropertyMapping, Folder, ParameterSpecified(nameof(WhatIf))).GetAwaiter().GetResult();
+            var job = PnP.PowerShell.Commands.Utilities.SharePointUserProfileSync.SyncFromAzureActiveDirectory(nonAdminClientContext, aadUsers, IdType, UserProfilePropertyMapping, Folder, ParameterSpecified(nameof(WhatIf))).GetAwaiter().GetResult();
 
             WriteVerbose($"Job initiated with Id {job.JobId} and status {job.State} for file {job.SourceUri}");
 

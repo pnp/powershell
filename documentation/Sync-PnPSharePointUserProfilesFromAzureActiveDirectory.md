@@ -16,7 +16,7 @@ Synchronizes user profiles from Azure Active Directory into the SharePoint Onlin
 
 ### Upload file
 ```powershell
-Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping <Hashtable> [-Users <Array>] [-Folder <String>] [-Wait] [-Verbose] [-Connection <PnPConnection>] [<CommonParameters>]
+Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping <Hashtable> [-IdType <Enum>] [-Users <Array>] [-Folder <String>] [-Wait] [-Verbose] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -126,6 +126,20 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IdType
+The type of profile identifier (Email/CloudId/PrincipalName). Defaults to CloudId. Ensure that if you use this in combination with `-Users` that all of the user objects you're passing in are having their Mail property populated when choosing IdType Email, Id property for CloudId or UserPrincipalName for PrincipalName.
+
+```yaml
+Type: ImportProfilePropertiesUserIdType
+Parameter Sets: (All)
+Accepted values: Email, CloudId, PrincipalName
+
+Required: False
+Default value: CloudId
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
