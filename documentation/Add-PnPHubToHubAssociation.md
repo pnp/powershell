@@ -15,7 +15,7 @@ title: Add-PnPHubToHubAssociation
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Associates a hub site to another hub site to build a hierarchy of hubs. The association only is a content association, meaning that only the content of the underlying associates sites will surface in webparts such as the news webpart. No other settings will be inherrited. At most 3 levels of hubs can be associated with each other.
+Associates a hub site to another hub site to build a hierarchy of hubs. The association only is a content association, meaning that only the content of the underlying associates sites will surface in webparts such as the news webpart. No other settings will be inherited. At most 3 levels of hubs can be associated with each other.
 
 ## SYNTAX
 
