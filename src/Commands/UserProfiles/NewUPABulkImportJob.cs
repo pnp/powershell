@@ -7,6 +7,7 @@ using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
 using PnP.Framework.Utilities;
+using System.Threading;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
@@ -36,6 +37,10 @@ namespace PnP.PowerShell.Commands.UserProfiles
         [Parameter(Mandatory = false, Position = 4, ParameterSetName = ParameterSet_UPLOADFILE)]
         [Parameter(Mandatory = false, Position = 3, ParameterSetName = ParameterSet_URL)]
         public ImportProfilePropertiesUserIdType IdType = ImportProfilePropertiesUserIdType.Email;
+
+        [Parameter(Mandatory = false, Position = 4, ParameterSetName = ParameterSet_UPLOADFILE)]
+        [Parameter(Mandatory = false, Position = 3, ParameterSetName = ParameterSet_URL)]
+        public SwitchParameter Wait;        
 
         protected override void ExecuteCmdlet()
         {
@@ -85,6 +90,32 @@ namespace PnP.PowerShell.Commands.UserProfiles
             var job = o365.GetImportProfilePropertyJob(id.Value);
             ClientContext.Load(job);
             ClientContext.ExecuteQueryRetry();
+
+            WriteVerbose($"Job initiated with Id {job.JobId} and status {job.State} for file {job.SourceUri}");
+
+            // Check if we should wait with finalzing this cmdlet execution until the user profile import operation has completed
+            if(Wait.ToBool())
+            {
+                // Go into a loop to wait for the import to be successful or erroneous
+                ImportProfilePropertiesJobInfo jobStatus;
+                do
+                {
+                    // Wait for 30 seconds before requesting its current state again to avoid running into throttling
+                    Thread.Sleep((int)System.TimeSpan.FromSeconds(30).TotalMilliseconds);                    
+
+                    // Request the current status of the import job
+                    jobStatus = o365.GetImportProfilePropertyJob(job.JobId);
+                    ClientContext.Load(jobStatus);
+                    ClientContext.ExecuteQueryRetry();
+
+                    WriteVerbose($"Current status of job {job.JobId}: {jobStatus.State}");
+                }
+                while (jobStatus.State != ImportProfilePropertiesJobState.Succeeded && jobStatus.State != ImportProfilePropertiesJobState.Error);
+
+                // Import job either completed or failed
+                job = jobStatus;
+            }
+
             WriteObject(job);
         }
     }

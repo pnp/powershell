@@ -23,10 +23,11 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="clientContext">A ClientContext which can be used to interact with SharePoint Online</param>
         /// <param name="users">Azure AD User objects that need to be synced</param>
         /// <param name="userProfilePropertyMappings">Hashtable with the mapping from the Azure Active Directory property (the value) to the SharePoint Online User Profile Property (the key)</param>
+        /// <param name="idType">Type of identifier to map the user on to synchronize its user profile of (CloudId, PrincipalName, Email)</param>
         /// <param name="sharePointFolder">Location in the currently connected to site where to upload the JSON file to with instructions to update the user profiles</param>
         /// <param name="onlyCreateAndUploadMappingsFile">Boolean indicating if only the mappings file should be created and uploaded to SharePoint Online (true) or if the import job on that file should also be invoked (false)</param>
         /// <returns>Information on the status of the import job that has been created because of this action</returns>
-        public static async Task<SharePointUserProfileSyncStatus> SyncFromAzureActiveDirectory(ClientContext clientContext, IEnumerable<PnP.PowerShell.Commands.Model.AzureAD.User> users, Hashtable userProfilePropertyMappings, string sharePointFolder, bool onlyCreateAndUploadMappingsFile = false)
+        public static async Task<SharePointUserProfileSyncStatus> SyncFromAzureActiveDirectory(ClientContext clientContext, IEnumerable<PnP.PowerShell.Commands.Model.AzureAD.User> users, ImportProfilePropertiesUserIdType idType, Hashtable userProfilePropertyMappings, string sharePointFolder, bool onlyCreateAndUploadMappingsFile = false)
         {
             var webServerRelativeUrl = clientContext.Web.EnsureProperty(w => w.ServerRelativeUrl);
             if (!sharePointFolder.ToLower().StartsWith(webServerRelativeUrl))
@@ -72,12 +73,29 @@ namespace PnP.PowerShell.Commands.Utilities
                     }                    
                 }
 
+                // If there are properties to update for this user, add the IdName property for this user and the fields to update to the mapping output
                 if(userUpdateBuilder.Length > 0)
                 {
                     bulkUpdateBuilder.Append(@"{""IdName"":""");
-                    bulkUpdateBuilder.Append(user.UserPrincipalName);
+
+                    // Map the proper IdType property based on the IdType that we need to use to identify the user by
+                    switch(idType)
+                    {
+                        case ImportProfilePropertiesUserIdType.CloudId: 
+                            bulkUpdateBuilder.Append(user.Id);
+                            break;
+
+                        case ImportProfilePropertiesUserIdType.Email: 
+                            bulkUpdateBuilder.Append(user.Mail);
+                            break;
+
+                        case ImportProfilePropertiesUserIdType.PrincipalName:
+                            bulkUpdateBuilder.Append(user.UserPrincipalName);
+                            break;
+                    }
+                    
                     bulkUpdateBuilder.Append(@""",");
-                    bulkUpdateBuilder.Append(userUpdateBuilder.ToString().TrimEnd(',').Replace(@"\", @"\\"));
+                    bulkUpdateBuilder.Append(userUpdateBuilder.ToString().TrimEnd(',')).Replace(@"\", @"\\");
                     bulkUpdateBuilder.Append("},");
 
                     userUpdateBuilder.Clear();
@@ -124,7 +142,7 @@ namespace PnP.PowerShell.Commands.Utilities
             var o365 = new Office365Tenant(clientContext);
             var propDictionary = userProfilePropertyMappings.Cast<DictionaryEntry>().ToDictionary(kvp => (string)kvp.Key, kvp => (string)kvp.Key);
             var url = new Uri(clientContext.Url).GetLeftPart(UriPartial.Authority) + file.ServerRelativeUrl;
-            var id = o365.QueueImportProfileProperties(ImportProfilePropertiesUserIdType.PrincipalName, "IdName", propDictionary, url);
+            var id = o365.QueueImportProfileProperties(idType, "IdName", propDictionary, url);
             clientContext.ExecuteQueryRetry();
 
             // Retrieve the import json details
