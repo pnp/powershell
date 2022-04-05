@@ -7,7 +7,7 @@ PnP PowerShell is a **cross-platform** PowerShell Module providing over 600 cmdl
 # Getting up and running
 
 It is recommended to use PowerShell 7.x, which can be installed by following [these instructions](https://docs.microsoft.com/powershell/scripting/install/installing-powershell-on-windows). Most of the cmdlets should work under PowerShell 5.x as well, though.
-
+ZXZXxZ
 To install PnP PowerShell:
 
 ```powershell
