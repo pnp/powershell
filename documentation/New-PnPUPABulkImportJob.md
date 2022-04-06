@@ -175,10 +175,14 @@ Accept wildcard characters: False
 
 ### -Wait
 <<<<<<< HEAD
+<<<<<<< HEAD
 Adding this parameter will cause the script to start the user profile sync operation and wait with proceeding with the rest of the script until the user profiles have been imported into the SharePoint Online user profile. It can take a long time for the user profile sync operation to complete. It will check every 30 seconds for the current status of the job, to avoid getting throttled. The check interval is non configurable.
 =======
 Adding this parameter will cause the script to start the user profile sync operation and wait with proceeding with the rest of the script until the user profiles have been imported into the SharePoint Online user profile. It can take a long time for the user profile sync operation to complete. It will check every 30 seconds for the current status of the job, to avoid getting throttled. This retry value is non configurable.
 >>>>>>> b75bab61... Work in progress
+=======
+Adding this parameter will cause the script to start the user profile sync operation and wait with proceeding with the rest of the script until the user profiles have been imported into the SharePoint Online user profile. It can take a long time for the user profile sync operation to complete. It will check every 30 seconds for the current status of the job, to avoid getting throttled. The check interval is non configurable.
+>>>>>>> 813e9972... Minor documentatipn updates
 
 Add `-Verbose` as well to be notified about the progress while waiting.
 
