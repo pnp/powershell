@@ -50,6 +50,9 @@ namespace PnP.PowerShell.Commands.Search
         [Parameter(Mandatory = false, ParameterSetName = "CSV")]
         public BookmarkStatus BookmarkStatus = BookmarkStatus.Suggested;
 
+        [Parameter(Mandatory = false, ParameterSetName = "CSV")]
+        public bool ExcludeVisualPromotedResults = true;
+
         protected override void ExecuteCmdlet()
         {
             string output = string.Empty;
@@ -175,7 +178,7 @@ namespace PnP.PowerShell.Commands.Search
                         bookmark.Title = promoResult.Title.Contains(" ") ? '"' + promoResult.Title + '"' : promoResult.Title;
                         bookmark.Url = promoResult.Url;
                         
-                        if (promoResult.IsVisual)
+                        if (promoResult.IsVisual && ExcludeVisualPromotedResults)
                         {
                             WriteWarning($"Skipping visual promoted result {bookmark.Title} ({bookmark.Url})");
                             continue;
