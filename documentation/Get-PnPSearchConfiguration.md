@@ -193,7 +193,7 @@ Accept wildcard characters: False
 
 Exclude promoted results marked as "Render the URL as a banner instead of as a hyperlink". Defaults to true.
 
-````yaml
+```yaml
 Type: Boolean
 Parameter Sets: CSV
 
@@ -202,7 +202,7 @@ Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
-````
+```
 
 ### -BookmarkStatus
 Output bookmarks to be in suggested or published status upon CSV import. Defaults to suggested status.
@@ -217,7 +217,7 @@ Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
-````
+```
 
 ## RELATED LINKS
 
