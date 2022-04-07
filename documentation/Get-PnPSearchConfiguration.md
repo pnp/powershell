@@ -158,14 +158,13 @@ Output promoted results to a compatible CSV file to be used as Bookmark import a
 
 Export details:
 
-- Promoted results marked as "Render the URL as a banner instead of as a hyperlink" (visual promoted results) and query rules with no triggers will be skipped by default.
-- Triggers set to "Advanced Query Text Match" and "Query Contains Action Term" will have "Match Similar Keywords" set to true for the Bookmark.
-- Multiple triggers on a query rule will be merged into a single trigger.
+* Promoted results marked as "Render the URL as a banner instead of as a hyperlink" (visual promoted results) and query rules with no triggers will be skipped by default.
+* Triggers set to "Advanced Query Text Match" and "Query Contains Action Term" will have "Match Similar Keywords" set to true for the Bookmark.
+* Multiple triggers on a query rule will be merged into a single trigger.
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: CSV
-
 Required: False
 Position: Named
 Default value: None
