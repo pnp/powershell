@@ -8,6 +8,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current Nightly]
 
 ### Added
+- Added `-Wait` and `-Verbose` optional paramarers to `New-PnPUPABulkImportJob` [#1752](https://github.com/pnp/powershell/pull/1752)
+
+### Changed
+- Changed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to map users based on their Ids instead which should resolve some issues around user identities reporting not to exist. You can use the new `-IdType` option to switch it back to `PrincipalName` if needed.  [#1752](https://github.com/pnp/powershell/pull/1752)
+
+### Fixed
+
+### Removed
+
+### Contributors
+
+- Arleta Wanat [PowershellScripts]
+- Koen Zomers [koenzomers]
+
+## [1.10.0]
+
+### Added
 
 - Added additional properties to the users returned by `Get-PnPMicrosoft365GroupMember` such as `userType` [#1474](https://github.com/pnp/powershell/pull/1474)
 - Added `Update-PnPTeamsUser` cmdlet to change the role of a user in an existing Teams team [#1499](https://github.com/pnp/powershell/pull/1499)
@@ -86,8 +103,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Contributors
 
 - Michael Vasiloff [mikevasiloff]
+- [svermaak]
+- Russell Gove [russgove] 
+- Mike Park [mikeparkie]
 - Jerker Vallbo [jerval53]
-- [mahajangaurav]
+- Gaurav Mahajan [mahajangaurav]
 - Dennis [expiscornovus]
 - Jasey Waegebaert [Jwaegebaert]
 - Swapnil Shrivastava [swapnil1993]
@@ -97,7 +117,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Lschockaert
 - Leon Armston [LeonArmston]
 - Reshmee Auckloo [reshmee011]
-- Arleta [PowershellScripts]
+- Arleta Wanat [PowershellScripts]
 - Brendon Lee [brenle]
 - Guillaume Bordier [gbordier]
 - [reusto]
