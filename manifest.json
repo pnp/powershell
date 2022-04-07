@@ -381,7 +381,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPFile.html",
-          "hash": "xfXaqG6CUhIjrJHilbAfkA=="
+          "hash": "8LAT+EmdQ/KoMABv+cRFPw=="
         }
       },
       "is_incremental": false,
@@ -633,7 +633,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPPage.html",
-          "hash": "AdQiEwjn088g4RLbgwJfwQ=="
+          "hash": "/fU+VKJ6hmRCAJ+h9uvuJg=="
         }
       },
       "is_incremental": false,
@@ -765,7 +765,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPRoleDefinition.html",
-          "hash": "sYQ4RIrt4KrR7gqMceXKKQ=="
+          "hash": "KqCVri/MfwNRu4G2zTulTA=="
         }
       },
       "is_incremental": false,
@@ -4389,7 +4389,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/New-PnPUPABulkImportJob.html",
-          "hash": "n5Pgqt3OIEd9gBOjjyJsdg=="
+          "hash": "dgkkfuCbR67AhvTPXnC9Fg=="
         }
       },
       "is_incremental": false,
@@ -7209,7 +7209,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Sync-PnPSharePointUserProfilesFromAzureActiveDirectory.html",
-          "hash": "KuN92Wd0Q5+hc5tn4ZvHNw=="
+          "hash": "qxUmCh08nGlN3+CJutMAPQ=="
         }
       },
       "is_incremental": false,

@@ -91,11 +91,11 @@
 <p>Submit up a new user profile bulk import job.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">New-PnPUPABulkImportJob [-Folder] &lt;String&gt; [-Path] &lt;String&gt; [-UserProfilePropertyMapping] &lt;Hashtable&gt;
- [-IdProperty] &lt;String&gt; [[-IdType] &lt;ImportProfilePropertiesUserIdType&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-IdProperty] &lt;String&gt; [[-IdType] &lt;ImportProfilePropertiesUserIdType&gt;] [-Wait] [-Verbose] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <pre><code class="lang-powershell">New-PnPUPABulkImportJob -Url &lt;String&gt; [-UserProfilePropertyMapping] &lt;Hashtable&gt;
- [-IdProperty] &lt;String&gt; [[-IdType] &lt;ImportProfilePropertiesUserIdType&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-IdProperty] &lt;String&gt; [[-IdType] &lt;ImportProfilePropertiesUserIdType&gt;] [-Wait] [-Verbose] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -124,6 +124,10 @@ New-PnPUPABulkImportJob -Folder &quot;Shared Documents&quot; -Path profiles.json
 <pre><code class="lang-powershell">New-PnPUPABulkImportJob -Url &quot;https://{tenant}.sharepoint.com/Shared Documents/profiles.json&quot; -IdProperty &quot;IdName&quot; -UserProfilePropertyMapping @{&quot;Department&quot;=&quot;Department&quot;}
 </code></pre>
 <p>This will submit a new user profile bulk import job to SharePoint Online using an already uploaded file.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">New-PnPUPABulkImportJob -Url &quot;https://{tenant}.sharepoint.com/sites/userprofilesync/Shared Documents/profiles.json&quot; -IdProperty &quot;IdName&quot; -UserProfilePropertyMapping @{&quot;Department&quot;=&quot;Department&quot;} -Wait -Verbose
+</code></pre>
+<p>This will submit a new user profile bulk import job to SharePoint Online using an already uploaded file and will wait until the import has finished.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-folder">-Folder</h3>
 <p>Site or server relative URL of the folder to where you want to store the import job file.</p>
@@ -195,6 +199,29 @@ Accept wildcard characters: False
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-wait">-Wait</h3>
+<p>Adding this parameter will cause the script to start the user profile sync operation and wait with proceeding with the rest of the script until the user profiles have been imported into the SharePoint Online user profile. It can take a long time for the user profile sync operation to complete. It will check every 30 seconds for the current status of the job, to avoid getting throttled. The check interval is non configurable.</p>
+<p>Add <code>-Verbose</code> as well to be notified about the progress while waiting.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while going through the user profile sync steps.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
