@@ -2745,7 +2745,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPSearchConfiguration.html",
-          "hash": "jVq3d5B2/Ef8+Mjsv1JsYQ=="
+          "hash": "xYFB3oCSh7/BbB3sB8ILyQ=="
         }
       },
       "is_incremental": false,
@@ -7209,7 +7209,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Sync-PnPSharePointUserProfilesFromAzureActiveDirectory.html",
-          "hash": "qxUmCh08nGlN3+CJutMAPQ=="
+          "hash": "UZG/y0bBycbLyury4TsjdA=="
         }
       },
       "is_incremental": false,
