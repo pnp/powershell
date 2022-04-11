@@ -88,5 +88,10 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             return user;
         }
+
+        public override string ToString()
+            => _id != 0 ? _id.ToString()
+            : !string.IsNullOrEmpty(_loginOrName) ? _loginOrName
+            : _user.ToString();
     }
 }
