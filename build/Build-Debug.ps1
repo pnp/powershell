@@ -1,3 +1,4 @@
+#Requires -PSEdition Core
 Param(
 	[Parameter(Mandatory = $false,
 		ValueFromPipeline = $false)]
