@@ -15,7 +15,7 @@ title: Grant-PnPAzureADAppSitePermission
 
   * Microsoft Graph API: Sites.FullControl.All
 
-Grants an Azure AD App registration, which has the "Sites.Selected" permission scope set, access to a site.
+Adds permissions for a given Azure Active Directory application registration
 
 ## SYNTAX
 
@@ -25,23 +25,23 @@ Grant-PnPAzureADAppSitePermission -AppId <Guid> -DisplayName <String> -Permissio
 
 ## DESCRIPTION
 
-This cmdlet grants a specific Azure AD App registration access to a site. The app requires to have the "Sites.Selected" permission scope set.
+This cmdlet adds permissions for a given Azure Active Directory application registration in a site collection. It is used in conjunction with the Azure Active Directory SharePoint application permission Sites.Selected. Notice that this cmdlet allows for fewer permissions compared for when updating rights through [Set-PnPAzureADAppSitePermission](Set-PnPAzureADAppSitePermission.html). If you wish to i.e. assign FullControl permissions, you need to add read or write permissions through this cmdlet first and then update it to FullControl.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Grant-PnPAzureADAppSitePermission -AppId "aa37b89e-75a7-47e3-bdb6-b763851c61b6" -DisplayName "TestApp" -Permissions Write
+Grant-PnPAzureADAppSitePermission -AppId "aa37b89e-75a7-47e3-bdb6-b763851c61b6" -DisplayName "TestApp" -Permissions Read
 ```
 
-Grants the app with the specified ID write access to the current site that has been connected to with Connect-PnPOnline.
+Adds permissions for the Azure Active Directory application registration with the specific application id and sets the rights to 'Read' access for the currently connected to site collection
 
 ### EXAMPLE 2
 ```powershell
 Grant-PnPAzureADAppSitePermission -AppId "aa37b89e-75a7-47e3-bdb6-b763851c61b6" -DisplayName "TestApp" -Permissions Write -Site https://contoso.sharepoint.com/sites/projects
 ```
 
-Grants the app with the specified ID write access to specified site.
+Adds permissions for the Azure Active Directory application registration with the specific application id and sets the rights to 'Write' access for the site collection at the provided URL
 
 ## PARAMETERS
 
@@ -60,7 +60,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisplayName
-The display name to set for the app in the site.
+The display name to set for the application permission you're adding. Only for visual reference purposes, does not need to match the name of the application in Azure Active Directory.
 
 ```yaml
 Type: String
@@ -74,14 +74,14 @@ Accept wildcard characters: False
 ```
 
 ### -Permissions
-Specifies the permissions to set for the app. 
+Specifies the permissions to set for the Azure Active Directory application registration which can either be Read or Write. Use [Set-PnPAzureADAppSitePermission](Set-PnPAzureADAppSitePermission.html) after initially adding these permissions to update it to Manage or FullControl permissions.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 
 Required: True
-Accepted values: Write, Read
+Accepted values: Read, Write
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -89,7 +89,7 @@ Accept wildcard characters: False
 ```
 
 ### -Site
-Optional url to to a site to retrieve the permissions for. Defaults to the current site.
+Optional url to to a site to set the permissions for. Defaults to the current site if not provided.
 
 ```yaml
 Type: SitePipeBind
@@ -97,7 +97,7 @@ Parameter Sets: (All)
 
 Required: True
 Position: Named
-Default value: None
+Default value: Currently connected to site
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -105,5 +105,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
