@@ -88,21 +88,21 @@
 <ul>
 <li>Microsoft Graph API: Sites.FullControl.All</li>
 </ul>
-<p>Grants an Azure AD App registration, which has the &quot;Sites.Selected&quot; permission scope set, access to a site.</p>
+<p>Adds permissions for a given Azure Active Directory application registration</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &lt;Guid&gt; -DisplayName &lt;String&gt; -Permissions &lt;Read|Write&gt; [-Site &lt;SitePipeBind&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet grants a specific Azure AD App registration access to a site. The app requires to have the &quot;Sites.Selected&quot; permission scope set.</p>
+<p>This cmdlet adds permissions for a given Azure Active Directory application registration in a site collection. It is used in conjunction with the Azure Active Directory SharePoint application permission Sites.Selected. Notice that this cmdlet allows for fewer permissions compared for when updating rights through <a href="Set-PnPAzureADAppSitePermission.html">Set-PnPAzureADAppSitePermission</a>. If you wish to i.e. assign FullControl permissions, you need to add read or write permissions through this cmdlet first and then update it to FullControl.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &quot;aa37b89e-75a7-47e3-bdb6-b763851c61b6&quot; -DisplayName &quot;TestApp&quot; -Permissions Write
+<pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &quot;aa37b89e-75a7-47e3-bdb6-b763851c61b6&quot; -DisplayName &quot;TestApp&quot; -Permissions Read
 </code></pre>
-<p>Grants the app with the specified ID write access to the current site that has been connected to with Connect-PnPOnline.</p>
+<p>Adds permissions for the Azure Active Directory application registration with the specific application id and sets the rights to 'Read' access for the currently connected to site collection</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &quot;aa37b89e-75a7-47e3-bdb6-b763851c61b6&quot; -DisplayName &quot;TestApp&quot; -Permissions Write -Site https://contoso.sharepoint.com/sites/projects
 </code></pre>
-<p>Grants the app with the specified ID write access to specified site.</p>
+<p>Adds permissions for the Azure Active Directory application registration with the specific application id and sets the rights to 'Write' access for the site collection at the provided URL</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-appid">-AppId</h3>
 <p>If specified the permission with that id specified will be retrieved</p>
@@ -116,7 +116,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-displayname">-DisplayName</h3>
-<p>The display name to set for the app in the site.</p>
+<p>The display name to set for the application permission you're adding. Only for visual reference purposes, does not need to match the name of the application in Azure Active Directory.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -127,25 +127,25 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-permissions">-Permissions</h3>
-<p>Specifies the permissions to set for the app.</p>
+<p>Specifies the permissions to set for the Azure Active Directory application registration which can either be Read or Write. Use <a href="Set-PnPAzureADAppSitePermission.html">Set-PnPAzureADAppSitePermission</a> after initially adding these permissions to update it to Manage or FullControl permissions.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: True
-Accepted values: Write, Read
+Accepted values: Read, Write
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-site">-Site</h3>
-<p>Optional url to to a site to retrieve the permissions for. Defaults to the current site.</p>
+<p>Optional url to to a site to set the permissions for. Defaults to the current site if not provided.</p>
 <pre><code class="lang-yaml">Type: SitePipeBind
 Parameter Sets: (All)
 
 Required: True
 Position: Named
-Default value: None
+Default value: Currently connected to site
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

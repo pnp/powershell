@@ -3712,12 +3712,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "cmdlets/Grant-PnPAzureADAppSitePermission.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Grant-PnPAzureADAppSitePermission.html",
-          "hash": "Mw5W17ID36sYTeL1wzMdUw=="
+          "hash": "HnibrASMIu1a+rVCQVS/pw=="
         }
       },
       "is_incremental": false,
@@ -5992,12 +5995,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPAzureADAppSitePermission.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPAzureADAppSitePermission.html",
-          "hash": "2GXL6oCe9NZjOnl3oi0wZw=="
+          "hash": "MjUxBbl+6ZSVlUsTJVfFBg=="
         }
       },
       "is_incremental": false,

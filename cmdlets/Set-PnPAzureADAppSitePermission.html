@@ -88,20 +88,24 @@
 <ul>
 <li>Microsoft Graph API: Sites.FullControl.All</li>
 </ul>
-<p>Updates permissions for a given app.</p>
+<p>Updates permissions for a given Azure Active Directory application registration</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPAzureADAppSitePermission -PermissionId &lt;String&gt; -Permissions &lt;&quot;Read&quot;|&quot;Write&quot;|&quot;Manage&quot;|&quot;FullControl&quot;&gt; [-Site &lt;SitePipeBind&gt;]
+<pre><code class="lang-powershell">Set-PnPAzureADAppSitePermission -PermissionId &lt;String&gt; -Permissions &lt;Read|Write|Manage|FullControl&gt; [-Site &lt;SitePipeBind&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlets updates permissions for a given app in a site.</p>
+<p>This cmdlet updates permissions for a given Azure Active Directory application registration in a site collection. It is used in conjunction with the Azure Active Directory SharePoint application permission Sites.Selected. Notice that this cmdlet allows for more permissions compared for when initially setting rights through <a href="Grant-PnPAzureADAppSitePermission.html">Grant-PnPAzureADAppSitePermission</a>.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPAzureADAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa -Permissions Read
 </code></pre>
-<p>Updates the app with the specific permission id and sets the rights to 'Read' access.</p>
+<p>Updates the Azure Active Directory application registration with the specific permission id and sets the rights to 'Read' access for the currently connected to site collection</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Set-PnPAzureADAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa -Permissions FullControl -Site https://contoso.microsoft.com/sites/projects
+</code></pre>
+<p>Updates the Azure Active Directory application registration with the specific permission id and sets the rights to 'FullControl' access for the site collection at the provided URL</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-permissionid">-PermissionId</h3>
-<p>If specified the permission with that id specified will be retrieved</p>
+<p>The permission with the id specified will be updated. Use <a href="Get-PnPAzureADAppSitePermission.html">Get-PnPAzureADAppSitePermission</a> to discover currently set permissions which can be updated.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -112,25 +116,25 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-permissions">-Permissions</h3>
-<p>Specifies the permissions to set for the app.</p>
+<p>Specifies the permissions to set for the Azure Active Directory application registration which can either be Read, Write, Manage or FullControl.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: True
-Accepted values: Write, Read, Manage, FullControl
+Accepted values: Read, Write, Manage, FullControl
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-site">-Site</h3>
-<p>Optional url to to a site to set the permissions for. Defaults to the current site.</p>
+<p>Optional url to to a site to set the permissions for. Defaults to the current site if not provided.</p>
 <pre><code class="lang-yaml">Type: SitePipeBind
 Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: None
+Default value: Currently connected to site
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
