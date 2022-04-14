@@ -5,6 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPGroupMember")]
+    [OutputType(typeof(Microsoft.SharePoint.Client.User))]
     public class GetGroupMembers : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
