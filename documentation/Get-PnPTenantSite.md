@@ -200,7 +200,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The URL or Id of the site collection
+The URL or Id of the site collection. Requesting a site collection by its Id only works for modern SharePoint Online site collections.
 
 ```yaml
 Type: String
