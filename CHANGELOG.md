@@ -23,7 +23,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Milan Holemans [milanholemans]
 - Arleta Wanat [PowershellScripts]
 - Koen Zomers [koenzomers]
-- James May [fowl2]
 
 ## [1.10.0]
 
