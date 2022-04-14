@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPUser", DefaultParameterSetName = PARAMETERSET_IDENTITY)]
     [OutputType(typeof(User), ParameterSetName = new[] { PARAMETERSET_IDENTITY, PARAMETERSET_WITHRIGHTSASSIGNED })]
-    [OutputType(typeof(UserWithRightsAssignedDetailed), ParameterSetName = new[] { PARAMETERSET_WITHRIGHTSASSIGNEDDETAILED })]
+    [OutputType(typeof(Model.UserWithRightsAssignedDetailed), ParameterSetName = new[] { PARAMETERSET_WITHRIGHTSASSIGNEDDETAILED })]
     public class GetUser : PnPWebRetrievalsCmdlet<User>
     {
         private const string PARAMETERSET_IDENTITY = "Identity based request";
@@ -274,7 +274,7 @@ namespace PnP.PowerShell.Commands.Principals
                                                where u.User.LoginName == uniqueUser
                                                select u.User).FirstOrDefault();
 
-                        WriteObject(new UserWithRightsAssignedDetailed
+                        WriteObject(new Model.UserWithRightsAssignedDetailed
                         {
                             Title = userInformation.Title,
                             LoginName = userInformation.LoginName,
@@ -330,14 +330,5 @@ namespace PnP.PowerShell.Commands.Principals
             }
             return users;
         }
-    }
-
-    public sealed class UserWithRightsAssignedDetailed
-    {
-        public string Title { get; set; }
-        public string LoginName { get; set; }
-        public string Email { get; set; }
-        public List<string> Groups { get; set; }
-        public Dictionary<string, string> Permissions { get; set; }
     }
 }
