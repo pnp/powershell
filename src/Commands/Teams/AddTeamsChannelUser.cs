@@ -28,11 +28,15 @@ namespace PnP.PowerShell.Commands.Teams
         {
             var groupId = Team.GetGroupId(HttpClient, AccessToken);
             if (groupId == null)
+            {
                 throw new PSArgumentException("Group not found");
+            }
 
             var channelId = Channel.GetId(HttpClient, AccessToken, groupId);
             if (channelId == null)
+            {
                 throw new PSArgumentException("Channel not found");
+            }
 
             try
             {
@@ -41,7 +45,9 @@ namespace PnP.PowerShell.Commands.Teams
             catch (GraphException ex)
             {
                 if (ex.Error != null)
+                {
                     throw new PSInvalidOperationException(ex.Error.Message);
+                }
 
                 throw;
             }
