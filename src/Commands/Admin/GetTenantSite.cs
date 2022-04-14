@@ -3,7 +3,6 @@ using System.Linq;
 using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
 using System.Collections.Generic;
@@ -45,9 +44,18 @@ namespace PnP.PowerShell.Commands
             ClientContext.ExecuteQueryRetry();
             if (ParameterSpecified(nameof(Identity)))
             {
-                var siteProperties = Tenant.GetSitePropertiesByUrl(Identity.Url, Detailed);
-                ClientContext.Load(siteProperties);
-                ClientContext.ExecuteQueryRetry();
+                SiteProperties siteProperties;
+                if(Identity.Id.HasValue)
+                {
+                    siteProperties = Tenant.GetSitePropertiesById(Identity.Id.Value, Detailed);
+                    if(siteProperties == null) return;
+                }
+                else
+                {
+                    siteProperties = Tenant.GetSitePropertiesByUrl(Identity.Url, Detailed);
+                    ClientContext.Load(siteProperties);
+                    ClientContext.ExecuteQueryRetry();
+                }
                 Model.SPOSite site = null;
                 if (ParameterSpecified(nameof(DisableSharingForNonOwnersStatus)))
                 {
