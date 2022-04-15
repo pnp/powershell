@@ -1085,6 +1085,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnpTeamsChannelUser.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnpTeamsChannelUser.html",
+          "hash": "J72HOqdMKWIzf6a1rue0Jw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Approve-PnPTenantServicePrincipalPermissionRequest.md",
       "output": {
         ".html": {
@@ -7407,7 +7419,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "+SgG1sjvVPLv/CjNEvMnqQ=="
+          "hash": "OS20zMlTqynDUtfdaAq5Jg=="
         }
       },
       "is_incremental": false,
@@ -7618,7 +7630,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 616,
+          "total_file_count": 617,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
