@@ -20,7 +20,7 @@ Adds a user to an existing Microsoft Teams instance.
 ## SYNTAX
 
 ```powershell
-Add-PnPTeamsUser -Team <TeamsTeamPipeBind> -Channel <ChannelPipebind> -User <String> -Role <String> [<CommonParameters>]
+Add-PnPTeamsUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -User <String> -Role <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
