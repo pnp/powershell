@@ -31,7 +31,9 @@ Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-
  [-SharingDomainRestrictionMode <SharingDomainRestrictionModes>] [-CommentsOnSitePagesDisabled]
  [-DisableAppViews <AppViewsPolicy>] [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>]
  [-DisableFlows <FlowsPolicy>] [-AnonymousLinkExpirationInDays <Int32>] [-SensitivityLabel <String>] [-RemoveLabel] [-AddInformationSegment <Guid[]>] [-RemoveInformationSegment <Guid[]>]
- [-OverrideTenantAnonymousLinkExpirationPolicy] [-InformationBarriersMode <InformationBarriersMode>] [-Wait] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-OverrideTenantAnonymousLinkExpirationPolicy] [-InformationBarriersMode <InformationBarriersMode>] 
+ [-MediaTranscription <MediaTranscriptionPolicyType>] [-Wait] 
+ [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Set Lock State
@@ -632,6 +634,19 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -MediaTranscription
+When the feature is enabled, videos can have transcripts generated on demand or generated automatically in certain scenarios. This is the default because the policy is default on. If a video owner decides they don’t want the transcript, they can always hide or delete it from that video. Possible values: `Enabled, Disabled`
+
+```yaml
+Type: MediaTranscriptionPolicyType
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

@@ -9,7 +9,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Added `-Wait` and `-Verbose` optional paramarers to `New-PnPUPABulkImportJob` [#1752](https://github.com/pnp/powershell/pull/1752)
-- Added `Add-PnpTeamsChannelUser` which allows members and owners to be added to private channels in Teams [#1735](https://github.com/pnp/powershell/pull/1735)
+- Added `Add-PnPTeamsChannelUser` which allows members and owners to be added to private channels in Teams [#1735](https://github.com/pnp/powershell/pull/1735)
+- Added `ExcludeVisualPromotedResults` parameter to `Get-PnPSearchConfiguration` which excludes promoted results [#1750](https://github.com/pnp/powershell/pull/1750)
+- Added `MediaTranscription` parameter to `Set-PnPTenantSite` and `Set-PnPSite` cmdlets which when enabled allows videos to have transcripts generated on demand or generated automatically in certain scenarios
 
 ### Changed
 - Changed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to map users based on their Ids instead which should resolve some issues around user identities reporting not to exist. You can use the new `-IdType` option to switch it back to `PrincipalName` if needed.  [#1752](https://github.com/pnp/powershell/pull/1752)
@@ -23,6 +25,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Milan Holemans [milanholemans]
 - Arleta Wanat [PowershellScripts]
 - Koen Zomers [koenzomers]
+- Mikael Svenson [wobba]
+- Gautam Sheth [gautamdsheth]
 
 ## [1.10.0]
 
