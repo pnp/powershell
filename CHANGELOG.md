@@ -16,6 +16,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 
+- Fixed `Get-PnPTenantSite` cmdlet so that it will return data even if the template name is specified in a different case.
+
 ### Removed
 
 ### Contributors
