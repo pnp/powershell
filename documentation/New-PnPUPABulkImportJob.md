@@ -21,13 +21,13 @@ Submit up a new user profile bulk import job.
 
 ```powershell
 New-PnPUPABulkImportJob [-Folder] <String> [-Path] <String> [-UserProfilePropertyMapping] <Hashtable>
- [-IdProperty] <String> [[-IdType] <ImportProfilePropertiesUserIdType>] [-Connection <PnPConnection>]
+ [-IdProperty] <String> [[-IdType] <ImportProfilePropertiesUserIdType>] [-Wait] [-Verbose] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ```powershell
 New-PnPUPABulkImportJob -Url <String> [-UserProfilePropertyMapping] <Hashtable>
- [-IdProperty] <String> [[-IdType] <ImportProfilePropertiesUserIdType>] [-Connection <PnPConnection>]
+ [-IdProperty] <String> [[-IdType] <ImportProfilePropertiesUserIdType>] [-Wait] [-Verbose] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -64,6 +64,13 @@ New-PnPUPABulkImportJob -Url "https://{tenant}.sharepoint.com/Shared Documents/p
 ```
 
 This will submit a new user profile bulk import job to SharePoint Online using an already uploaded file.
+
+### EXAMPLE 3
+```powershell
+New-PnPUPABulkImportJob -Url "https://{tenant}.sharepoint.com/sites/userprofilesync/Shared Documents/profiles.json" -IdProperty "IdName" -UserProfilePropertyMapping @{"Department"="Department"} -Wait -Verbose
+```
+
+This will submit a new user profile bulk import job to SharePoint Online using an already uploaded file and will wait until the import has finished.
 
 ## PARAMETERS
 
@@ -157,6 +164,36 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Wait
+Adding this parameter will cause the script to start the user profile sync operation and wait with proceeding with the rest of the script until the user profiles have been imported into the SharePoint Online user profile. It can take a long time for the user profile sync operation to complete. It will check every 30 seconds for the current status of the job, to avoid getting throttled. The check interval is non configurable.
+
+Add `-Verbose` as well to be notified about the progress while waiting.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Verbose
+When provided, additional debug statements will be shown while going through the user profile sync steps.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

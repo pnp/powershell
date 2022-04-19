@@ -16,7 +16,7 @@ Synchronizes user profiles from Azure Active Directory into the SharePoint Onlin
 
 ### Upload file
 ```powershell
-Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping <Hashtable> [-Users <Array>] [-Folder <String>] [-Wait] [-Verbose] [-Connection <PnPConnection>] [<CommonParameters>]
+Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping <Hashtable> [-IdType <Enum>] [-Users <Array>] [-Folder <String>] [-Wait] [-Verbose] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -130,6 +130,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -IdType
+The type of profile identifier (Email/CloudId/PrincipalName). Defaults to CloudId. Ensure that if you use this in combination with `-Users` that all of the user objects you're passing in are having their Mail property populated when choosing IdType Email, Id property for IdType CloudId or UserPrincipalName for IdType PrincipalName.
+
+```yaml
+Type: ImportProfilePropertiesUserIdType
+Parameter Sets: (All)
+Accepted values: Email, CloudId, PrincipalName
+
+Required: False
+Default value: CloudId
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -WhatIf
 Will retrieve the users from Azure Active Directory and create and upload the mappings JSON file, but will not invoke a request to SharePoint Online to queue the import process. This way you can examine the mappings JSON file on SharePoint Online first to ensure the mappings are being done correctly.
 
@@ -146,7 +160,7 @@ Accept wildcard characters: False
 ```
 
 ### -Wait
-Adding this parameter will cause the script to start the user profile sync operation and wait with proceeding with the rest of the script until the user profiles have been imported into the SharePoint Online user profile. It can take a long time for the user profile sync operation to complete. It will check every 30 seconds for the current status of the job, to avoid getting throttled. This retry value is non configurable.
+Adding this parameter will cause the script to start the user profile sync operation and wait with proceeding with the rest of the script until the user profiles have been imported into the SharePoint Online user profile. It can take a long time for the user profile sync operation to complete. It will check every 30 seconds for the current status of the job, to avoid getting throttled. The check interval is non configurable.
 
 Add `-Verbose` as well to be notified about the progress while waiting.
 
