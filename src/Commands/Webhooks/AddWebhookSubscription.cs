@@ -8,6 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Webhooks
 {
     [Cmdlet(VerbsCommon.Add, "PnPWebhookSubscription")]
+    [OutputType(typeof(WebhookSubscription))]
     public class AddWebhookSubscription : PnPWebCmdlet
     {
         public const int DefaultValidityInDays = 180; // Note: the max is 180 days not 6 months - https://docs.microsoft.com/sharepoint/dev/apis/webhooks/overview-sharepoint-webhooks
