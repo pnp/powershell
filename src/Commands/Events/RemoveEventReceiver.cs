@@ -6,6 +6,7 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Commands.Events
 {
     [Cmdlet(VerbsCommon.Remove, "PnPEventReceiver", DefaultParameterSetName = ParameterSet_SCOPE)]
+    [OutputType(typeof(void))]
     public class RemoveEventReceiver : PnPWebCmdlet
     {
         private const string ParameterSet_LIST = "From a list";
