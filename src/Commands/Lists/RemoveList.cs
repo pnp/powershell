@@ -1,18 +1,25 @@
 ﻿using System.Management.Automation;
+
 using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPList")]
+    [Cmdlet(VerbsCommon.Remove, "PnPList", DefaultParameterSetName = ParameterSet_Delete)]
+    [OutputType(typeof(void), ParameterSetName = new[] { ParameterSet_Delete })]
+    [OutputType(typeof(RecycleResult), ParameterSetName = new[] { ParameterSet_Recycle })]
     public class RemoveList : PnPWebCmdlet
     {
+        public const string ParameterSet_Delete = "Delete";
+        public const string ParameterSet_Recycle = "Recycle";
+
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         [ValidateNotNull]
         public ListPipeBind Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_Recycle)]
         public SwitchParameter Recycle;
 
         [Parameter(Mandatory = false)]
@@ -26,13 +33,15 @@ namespace PnP.PowerShell.Commands.Lists
                 {
                     if (Recycle)
                     {
-                        list.Recycle();
+                        var recycleResult = list.Recycle();
+                        ClientContext.ExecuteQueryRetry();
+                        WriteObject(new RecycleResult { RecycleBinItemId = recycleResult.Value });
                     }
                     else
                     {
                         list.DeleteObject();
+                        ClientContext.ExecuteQueryRetry();
                     }
-                    ClientContext.ExecuteQueryRetry();
                 }
             }
         }
