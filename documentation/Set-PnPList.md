@@ -73,7 +73,21 @@ Turns on attachments on a list
 ## PARAMETERS
 
 ### -BreakRoleInheritance
-If used the security inheritance is broken for this list
+If used the security inheritance is broken for this list from its parent, the web in which it resides. Permissions can be added using [Set-PnPListPermission](Set-PnPListPermission.html).
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResetRoleInheritance
+If used the security inheritance is reset for this list meaning it will not copy the permissions from its parent, but will start with an empty list of permissions. Permissions can be added using [Set-PnPListPermission](Set-PnPListPermission.html).
 
 ```yaml
 Type: SwitchParameter
@@ -310,21 +324,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
-
-### -ResetRoleInheritance
-If used the security inheritance is reset for this list (inherited from parent)
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 
 ### -ReadSecurity
 Sets the read security for the list

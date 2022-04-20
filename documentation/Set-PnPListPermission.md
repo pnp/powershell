@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPListPermission.h
 # Set-PnPListPermission
 
 ## SYNOPSIS
-Sets list permissions
+Allows permissions on a SharePoint list to be changed
 
 ## SYNTAX
 
@@ -27,6 +27,7 @@ Set-PnPListPermission -Identity <ListPipeBind> -User <String> [-AddRole <String>
 ```
 
 ## DESCRIPTION
+Allows changing of permissions on a SharePoint list. In case you would like to break the permission inheritance on a list from its parent, you can use [Set-PnPList -BreakRoleInheritance](Set-PnPList.html#-breakroleinheritance).
 
 ## EXAMPLES
 
@@ -46,8 +47,22 @@ Removes the 'Contribute' permission to the user 'user@contoso.com' for the list 
 
 ## PARAMETERS
 
+### -Identity
+The Id, title or an instance of the list
+
+```yaml
+Type: ListPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -AddRole
-The role that must be assigned to the group or user
+The name of the role that must be assigned to the group or user. The name of the role is localized and depends on the language in which the site has been created, so i.e. for an English site you would use `Full Control`, but for a Dutch site you would use `Volledig beheer`.
 
 ```yaml
 Type: String
@@ -60,11 +75,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+### -RemoveRole
+The name of the role that must be removed from the group or user. The name of the role is localized and depends on the language in which the site has been created, so i.e. for an English site you would use `Full Control`, but for a Dutch site you would use `Volledig beheer`.
 
 ```yaml
-Type: PnPConnection
+Type: String
 Parameter Sets: (All)
 
 Required: False
@@ -87,34 +102,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Identity
-The ID or Title of the list.
-
-```yaml
-Type: ListPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -RemoveRole
-The role that must be removed from the group or user
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -User
 
 ```yaml
@@ -128,9 +115,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
