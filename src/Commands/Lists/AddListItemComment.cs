@@ -1,9 +1,11 @@
-﻿using PnP.PowerShell.Commands.Base.PipeBinds;
+﻿using PnP.Core.Model.SharePoint;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Add, "PnPListItemComment")]
+    [OutputType(typeof(IComment))]
     public class AddListItemComment : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -38,7 +40,9 @@ namespace PnP.PowerShell.Commands.Lists
 
             var comments = item.GetCommentsAsync().GetAwaiter().GetResult();
 
-            comments.Add(Text);
+            var addedComment = comments.Add(Text);
+
+            WriteObject(addedComment);
         }
     }
 }
