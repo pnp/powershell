@@ -12,6 +12,7 @@ using PnP.PowerShell.Commands.Enums;
 namespace PnP.PowerShell.Commands.Features
 {
     [Cmdlet(VerbsCommon.Get, "PnPFeature")]
+    [OutputType(typeof(Feature))]
     public class GetFeature : PnPWebRetrievalsCmdlet<Feature>
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
