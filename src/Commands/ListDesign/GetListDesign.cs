@@ -7,6 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPListDesign")]
+    [OutputType(typeof(TenantListDesign))]
     public class GetListDesign : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
