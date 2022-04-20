@@ -13,6 +13,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Add, "PnPListItem", DefaultParameterSetName = ParameterSet_SINGLE)]
+    [OutputType(typeof(ListItem))]
     public class AddListItem : PnPWebCmdlet
     {
         private const string ParameterSet_SINGLE = "Single";

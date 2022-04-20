@@ -6,6 +6,7 @@ using Microsoft.SharePoint.Client;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.New, "PnPList")]
+    [OutputType(typeof(List))]
     public class NewList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
