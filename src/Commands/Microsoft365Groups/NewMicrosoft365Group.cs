@@ -68,7 +68,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             if (!Force)
             {
                 var candidate = Microsoft365GroupsUtility.GetGroupAsync(HttpClient, MailNickname, AccessToken, false, false).GetAwaiter().GetResult();
-                forceCreation = candidate == null || ShouldContinue($"The Microsoft 365 Group '{MailNickname} already exists. Do you want to create a new one?", Resources.Confirm);
+                forceCreation = candidate == null || ShouldContinue($"The Microsoft 365 Group '{MailNickname} already exists. Do you want to create a new one?", Properties.Resources.Confirm);
             }
             else
             {
