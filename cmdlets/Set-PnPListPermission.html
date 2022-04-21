@@ -84,7 +84,7 @@
                     <h1 id="set-pnplistpermission">Set-PnPListPermission</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets list permissions</p>
+<p>Allows permissions on a SharePoint list to be changed</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="group">Group</h3>
 <pre><code class="lang-powershell">Set-PnPListPermission -Identity &lt;ListPipeBind&gt; -Group &lt;GroupPipeBind&gt; [-AddRole &lt;String&gt;]
@@ -95,6 +95,7 @@
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Allows changing of permissions on a SharePoint list. In case you would like to break the permission inheritance on a list from its parent, you can use <a href="Set-PnPList.html#-breakroleinheritance">Set-PnPList -BreakRoleInheritance</a>.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPListPermission -Identity 'Documents' -User 'user@contoso.com' -AddRole 'Contribute'
@@ -105,8 +106,19 @@
 </code></pre>
 <p>Removes the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-identity">-Identity</h3>
+<p>The Id, title or an instance of the list</p>
+<pre><code class="lang-yaml">Type: ListPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-addrole">-AddRole</h3>
-<p>The role that must be assigned to the group or user</p>
+<p>The name of the role that must be assigned to the group or user. The name of the role is localized and depends on the language in which the site has been created, so i.e. for an English site you would use <code>Full Control</code>, but for a Dutch site you would use <code>Volledig beheer</code>.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -116,9 +128,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
+<h3 id="-removerole">-RemoveRole</h3>
+<p>The name of the role that must be removed from the group or user. The name of the role is localized and depends on the language in which the site has been created, so i.e. for an English site you would use <code>Full Control</code>, but for a Dutch site you would use <code>Volledig beheer</code>.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
@@ -137,33 +149,22 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>The ID or Title of the list.</p>
-<pre><code class="lang-yaml">Type: ListPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-removerole">-RemoveRole</h3>
-<p>The role that must be removed from the group or user</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-user">-User</h3>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: User
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

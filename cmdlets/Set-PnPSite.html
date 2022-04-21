@@ -95,6 +95,7 @@
  [-DisableCompanyWideSharingLinks &lt;CompanyWideSharingLinksPolicy&gt;] [-DisableSharingForNonOwners]
  [-LocaleId &lt;UInt32&gt;] [-RestrictedToGeo &lt;RestrictedToRegion&gt;] [-SocialBarOnSitePagesDisabled]
  [-AnonymousLinkExpirationInDays &lt;Int32&gt;] [-OverrideTenantAnonymousLinkExpirationPolicy]
+ [-MediaTranscription &lt;MediaTranscriptionPolicyType&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="set-lock-state">Set Lock State</h3>
@@ -391,6 +392,16 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: Int64
 Parameter Sets: Set Properties
 
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-mediatranscription">-MediaTranscription</h3>
+<p>When the feature is enabled, videos can have transcripts generated on demand or generated automatically in certain scenarios. This is the default because the policy is default on. If a video owner decides they don’t want the transcript, they can always hide or delete it from that video. Possible values: <code>Enabled, Disabled</code></p>
+<pre><code class="lang-yaml">Type: MediaTranscriptionPolicyType
+Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None

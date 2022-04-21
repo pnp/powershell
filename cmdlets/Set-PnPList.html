@@ -122,7 +122,18 @@
 <p>Turns on attachments on a list</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-breakroleinheritance">-BreakRoleInheritance</h3>
-<p>If used the security inheritance is broken for this list</p>
+<p>If used the security inheritance is broken for this list from its parent, the web in which it resides. Permissions can be added using <a href="Set-PnPListPermission.html">Set-PnPListPermission</a>.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-resetroleinheritance">-ResetRoleInheritance</h3>
+<p>If used the security inheritance is reset for this list meaning it will not copy the permissions from its parent, but will start with an empty list of permissions. Permissions can be added using <a href="Set-PnPListPermission.html">Set-PnPListPermission</a>.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -301,17 +312,6 @@ Accept wildcard characters: False
 <h3 id="-minorversions">-MinorVersions</h3>
 <p>Maximum minor versions to keep</p>
 <pre><code class="lang-yaml">Type: UInt32
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-resetroleinheritance">-ResetRoleInheritance</h3>
-<p>If used the security inheritance is reset for this list (inherited from parent)</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

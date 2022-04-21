@@ -91,7 +91,7 @@
 <p>Creates a new Microsoft 365 Group</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName &lt;String&gt; -Description &lt;String&gt; -MailNickname &lt;String&gt;
- [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam] [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-Force]
+ [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam] [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-ResourceBehaviorOptions &lt;TeamResourceBehaviorOptions&gt;] [-Force]
   [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -112,6 +112,10 @@
 <pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers -IsPrivate
 </code></pre>
 <p>Creates a private Microsoft 365 Group with all the required properties, and with a custom list of Owners and a custom list of Members</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName &quot;myPnPDemo1&quot; -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers -IsPrivate -ResourceBehaviorOptions WelcomeEmailDisabled, HideGroupInOutlook
+</code></pre>
+<p>This will create a new Microsoft 365 Group called &quot;myPnPDemo1&quot; and sets the privacy to Private. Welcome Email will not be sent when the Group is created. The M365 Group will also not be visible in Outlook.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-createteam">-CreateTeam</h3>
 <p>Creates a Microsoft Teams team associated with created group</p>
@@ -227,6 +231,18 @@ Accept wildcard characters: False
 <p>Controls whether the group shows in the Outlook left-hand navigation.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-resourcebehavioroptions">-ResourceBehaviorOptions</h3>
+<p>Allows providing ResourceBehaviorOptions which accepts multiple values that specify group behaviors for a Microsoft 365 Group.</p>
+<pre><code class="lang-yaml">Type: TeamResourceBehaviorOptions
+Parameter Sets: (All)
+Accepted values: AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeNewGroupMembers, WelcomeEmailDisabled
 
 Required: False
 Position: Named

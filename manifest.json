@@ -4128,7 +4128,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/New-PnPMicrosoft365Group.html",
-          "hash": "MKTQ8Aglhq6Mned7APgmWg=="
+          "hash": "A/jzDlHydgPfz/xNM7U7kw=="
         }
       },
       "is_incremental": false,
@@ -6334,12 +6334,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPList.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPList.html",
-          "hash": "78uyTcrW77zw2J/Pd05iKg=="
+          "hash": "CfuXUd3O5l6FoauNAG3muA=="
         }
       },
       "is_incremental": false,
@@ -6394,12 +6397,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPListPermission.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPListPermission.html",
-          "hash": "6ZiUJivdQ1b0r9j8Ssr6fw=="
+          "hash": "66CoPXbUbE0b0qwblMo5GA=="
         }
       },
       "is_incremental": false,
@@ -6699,7 +6705,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSite.html",
-          "hash": "gR0T16xDVHG0MNs0qQJilw=="
+          "hash": "PndRveBwlbcHJGcFTUAbhg=="
         }
       },
       "is_incremental": false,
@@ -6987,7 +6993,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTenantSite.html",
-          "hash": "0HNqHvHkqv1qIQdTom5iJg=="
+          "hash": "exe5sjZWYltx5K911saglQ=="
         }
       },
       "is_incremental": false,
