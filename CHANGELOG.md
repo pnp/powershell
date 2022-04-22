@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `ExcludeVisualPromotedResults` parameter to `Get-PnPSearchConfiguration` which excludes promoted results [#1750](https://github.com/pnp/powershell/pull/1750)
 - Added `MediaTranscription` parameter to `Set-PnPTenantSite` and `Set-PnPSite` cmdlets which when enabled allows videos to have transcripts generated on demand or generated automatically in certain scenarios.
 - Added `-SensitivityLabels` parameter to `New-PnPTeamsTeam` and `New-PnPMicrosoft365Group` cmdlets to apply sensitivity label to the Microsoft 365 Group and Team.
+- Added `-SensitivityLabels` parameter to `Set-PnPMicrosoft365Group` cmdlets to apply sensitivity label to the Microsoft 365 Group and Team.
 
 ### Changed
 - Changed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to map users based on their Ids instead which should resolve some issues around user identities reporting not to exist. You can use the new `-IdType` option to switch it back to `PrincipalName` if needed.  [#1752](https://github.com/pnp/powershell/pull/1752)

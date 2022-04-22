@@ -389,7 +389,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         {
                             labelId = label
                         });
-                    }                    
+                    }
                 }
 
                 group.AssignedLabels = assignedLabels;
@@ -605,6 +605,36 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             var result = await GraphHelper.GetAsync<Microsoft365GroupSettingTemplate>(httpClient, $"v1.0/groupSettingTemplates/{id}", accessToken, propertyNameCaseInsensitive: true);
             return result;
+        }
+
+        internal static async Task SetSensitivityLabelsAsync(HttpClient httpClient, string accessToken, Guid groupId, List<AssignedLabels> assignedLabels)
+        {
+            var patchData = new
+            {
+                assignedLabels,
+            };
+
+            var retry = true;
+            var iteration = 0;
+            while (retry)
+            {
+                try
+                {
+                    await GraphHelper.PatchAsync<dynamic>(httpClient, accessToken, $"v1.0/groups/{groupId}", patchData);
+                    retry = false;
+                }
+
+                catch (Exception)
+                {
+                    await Task.Delay(5000);
+                    iteration++;
+                }
+
+                if (iteration > 10) // don't try more than 10 times
+                {
+                    retry = false;
+                }
+            }
         }
     }
 }

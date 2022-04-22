@@ -21,7 +21,7 @@ Creates a new Microsoft 365 Group
 
 ```powershell
 New-PnPMicrosoft365Group -DisplayName <String> -Description <String> -MailNickname <String>
- [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam] [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-ResourceBehaviorOptions <TeamResourceBehaviorOptions>] [-Force]
+ [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam] [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-ResourceBehaviorOptions <TeamResourceBehaviorOptions>] [-Force] [-SensitivityLabels <GUID[]>]
   [<CommonParameters>]
 ```
 
