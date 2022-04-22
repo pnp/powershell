@@ -8,6 +8,7 @@ using System.Linq;
 namespace PnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Add, "PnPDocumentSet")]
+    [OutputType(typeof(string))]
     public class AddDocumentSet : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

@@ -7,6 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Remove, "PnPListItemComment")]
+    [OutputType(typeof(void))]
     public class RemoveListItemComment : PnPWebCmdlet
     {
         private const string ParameterSet_SINGLE = "Single";

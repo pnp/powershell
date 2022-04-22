@@ -8,6 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPGraphSubscription")]
+    [OutputType(typeof(Framework.Graph.Model.Subscription))]
     public class SetGraphSubscription : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

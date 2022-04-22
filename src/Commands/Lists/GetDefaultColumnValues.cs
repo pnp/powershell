@@ -1,13 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;
+using System.Linq;
+
 using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "PnPDefaultColumnValues")]
+    [OutputType(typeof(ListDefaultColumnValue))]
     public class GetDefaultColumnValues : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -25,27 +29,24 @@ namespace PnP.PowerShell.Commands.Lists
                 if (list.BaseTemplate == (int)ListTemplateType.DocumentLibrary || list.BaseTemplate == (int)ListTemplateType.WebPageLibrary || list.BaseTemplate == (int)ListTemplateType.PictureLibrary)
                 {
                     var defaultValues = list.GetDefaultColumnValues();
-                    var dynamicList = new List<dynamic>();
                     if (defaultValues != null)
                     {
                         foreach (var dict in defaultValues)
                         {
-                            dynamicList.Add(
-                                new
-                                {
-                                    Path = dict["Path"],
-                                    Field = dict["Field"],
-                                    Value = dict["Value"]
-                                });
+                            WriteObject(new ListDefaultColumnValue()
+                            {
+                                Path = dict["Path"],
+                                Field = dict["Field"],
+                                Value = dict["Value"]
+                            });
 
                         }
-                        WriteObject(dynamicList, true);
                     }
                 }
-            }
-            else
-            {
-                WriteWarning("List is not a document library");
+                else
+                {
+                    WriteWarning("List is not a document library");
+                }
             }
         }
     }
