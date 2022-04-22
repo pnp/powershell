@@ -1,13 +1,3 @@
-# Build module in Docker in Linux
-
-```bash
-docker run --rm -it -v $(pwd):/home/powershell mcr.microsoft.com/dotnet/sdk:6.0 pwsh
-```
-
-```powershell
-/home/powershell/docker/build-module-in-linux.ps1
-```
-
 # Publish manually
 
 1. Set "DOCKER_USERNAME" and "DOCKER_PASSWORD" variables
