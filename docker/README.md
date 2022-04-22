@@ -8,6 +8,17 @@ docker run --rm -it -v $(pwd):/home/powershell mcr.microsoft.com/dotnet/sdk:6.0 
 /home/powershell/docker/build-module-in-linux.ps1
 ```
 
+# Publish manually
+
+1. Set "DOCKER_USERNAME" and "DOCKER_PASSWORD" variables
+
+2. Run
+
+```powershell
+$securedPassword = ConvertTo-SecureString $DOCKER_PASSWORD -AsPlainText -Force
+./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell $DOCKER_USERNAME powershell $securedPassword
+```
+
 # Publish with prereleases manually
 
 1. Set "DOCKER_USERNAME" and "DOCKER_PASSWORD" variables
