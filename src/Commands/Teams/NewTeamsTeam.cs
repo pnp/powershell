@@ -150,7 +150,7 @@ namespace PnP.PowerShell.Commands.Graph
 #pragma warning restore 612, 618
 
             var contextSettings = PnPConnection.Current.Context.GetContextSettings();
-            if (contextSettings.Type != Framework.Utilities.Context.ClientContextType.AzureADCertificate)
+            if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
             {
                 if (SensitivityLabels != null && SensitivityLabels.Length > 0)
                 {
