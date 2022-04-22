@@ -34,6 +34,9 @@ namespace PnP.PowerShell.Commands.Admin
         public string ContentType = "application/json";
 
         [Parameter(Mandatory = false)]
+        public string Accept = "application/json;odata=nometadata";
+
+        [Parameter(Mandatory = false)]
         public SwitchParameter Raw;
 
         protected override void ExecuteCmdlet()
@@ -52,7 +55,12 @@ namespace PnP.PowerShell.Commands.Admin
 
             using (HttpRequestMessage request = new HttpRequestMessage(method, requestUrl))
             {
-                request.Headers.Add("accept", "application/json;odata=nometadata");
+                if(string.IsNullOrEmpty(Accept))
+                {
+                    Accept = "application/json;odata=nometadata";
+                }
+
+                request.Headers.Add("accept", Accept);
 
                 if (Method == HttpRequestMethod.Merge)
                 {
