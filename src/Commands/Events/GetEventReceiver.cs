@@ -6,7 +6,8 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Events
 {
     [Cmdlet(VerbsCommon.Get, "PnPEventReceiver", DefaultParameterSetName = ParameterSet_SCOPE)]
-  
+    [OutputType(typeof(EventReceiverDefinition))]
+
     public class GetEventReceiver : PnPWebRetrievalsCmdlet<EventReceiverDefinition>
     {
         private const string ParameterSet_LIST = "On a list";

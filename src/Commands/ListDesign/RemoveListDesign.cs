@@ -7,6 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "PnPListDesign")]
+    [OutputType(typeof(void))]
     public class RemoveListDesign : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]

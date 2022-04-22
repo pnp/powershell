@@ -7,6 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPGroup", DefaultParameterSetName = "All")]
+    [OutputType(typeof(Group))]
     public class GetGroup : PnPWebRetrievalsCmdlet<Group>
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByName")]

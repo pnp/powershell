@@ -9,6 +9,7 @@ namespace PnP.PowerShell.Commands.Lists
 {
     //TODO: Create Test
     [Cmdlet(VerbsCommon.Set, "PnPListPermission")]
+    [OutputType(typeof(void))]
     public class SetListPermission : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]

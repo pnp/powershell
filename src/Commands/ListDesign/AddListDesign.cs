@@ -7,6 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "PnPListDesign")]
+    [OutputType(typeof(TenantListDesign))]
     public class AddListDesign : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

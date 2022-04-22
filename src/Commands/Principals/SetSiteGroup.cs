@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Model;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Set, "PnPSiteGroup")]
-
+    [OutputType(typeof(SiteGroup))]
     public class SetSiteGroup : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false)]
