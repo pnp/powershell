@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Viva
     [Cmdlet(VerbsCommon.Get, "PnPVivaConnectionsDashboardACE")]
     public class GetVivaConnectionsDashboard : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false)]
         public Guid Identity;
         protected override void ExecuteCmdlet()
         {

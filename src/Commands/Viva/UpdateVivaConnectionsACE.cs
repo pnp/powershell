@@ -11,25 +11,25 @@ namespace PnP.PowerShell.Commands.Viva
     [Cmdlet(VerbsData.Update, "PnPVivaConnectionsDashboardACE")]
     public class UpdateVivaConnectionsACE : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true)]
         public Guid Identity;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false)]
         public string Title;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false)]
         public string PropertiesJSON;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false)]
         public string Description;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false)]
         public string IconProperty;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false)]
         public int Order;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false)]
         public CardSize CardSize = CardSize.Medium;
 
         protected override void ExecuteCmdlet()

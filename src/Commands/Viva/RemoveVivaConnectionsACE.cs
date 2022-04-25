@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Viva
     [Cmdlet(VerbsCommon.Remove, "PnPVivaConnectionsDashboardACE")]
     public class RemoveVivaConnectionsACE : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true)]
         public Guid Identity;
         protected override void ExecuteCmdlet()
         {
