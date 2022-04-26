@@ -15,11 +15,15 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            var g = Identity.GetGroup(PnPContext);
-            var r = g.GetRoleDefinitions();
-            if (r != null)
+            var group = Identity.GetGroup(PnPContext);
+
+            if (group == null)
+                throw new PSArgumentException("Site group not found", nameof(Identity));
+
+            var roleDefinitions = group.GetRoleDefinitions();
+            if (roleDefinitions != null)
             {
-                WriteObject(r.RequestedItems, true);
+                WriteObject(roleDefinitions.RequestedItems, true);
             }
         }
     }
