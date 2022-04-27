@@ -9,7 +9,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Added `-Wait` and `-Verbose` optional paramarers to `New-PnPUPABulkImportJob` [#1752](https://github.com/pnp/powershell/pull/1752)
-- Added `Add-PnpTeamsChannelUser` which allows members and owners to be added to private channels in Teams [#1735](https://github.com/pnp/powershell/pull/1735)
 - Added `ResourceBehaviorOptions` option in `New-PnPMicrosoft365Group` cmdlet to set `ResourceBehaviorOptions` while provisioning a Microsoft 365 Group.
 - Added `Add-PnPTeamsChannelUser` which allows members and owners to be added to private channels in Teams [#1735](https://github.com/pnp/powershell/pull/1735)
 - Added `ExcludeVisualPromotedResults` parameter to `Get-PnPSearchConfiguration` which excludes promoted results [#1750](https://github.com/pnp/powershell/pull/1750)
