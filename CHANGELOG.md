@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Add-PnPDocumentSet` cmdlet so that it will support Document Set Content Type Id specified at the web level. [#1796](https://github.com/pnp/powershell/pull/1796)
 - Fixed `Get-PnPGroup` , `Get-PnPGroupPermissions` and `Set-PnPGroupPermissions ` cmdlets by making them more consistent. They will also throw error if a group is not found. [#1808](https://github.com/pnp/powershell/pull/1808)
 - Fixed `Get-PnPFile` issue with every 3rd file download in PS 5.
+- Fixed `Add-PnPContentTypesFromContentTypeHub`, if `Site` parameter is specified, it will be used now to sync content types from content type hub site.
 
 ### Removed
 
