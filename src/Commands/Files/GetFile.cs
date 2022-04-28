@@ -161,21 +161,22 @@ namespace PnP.PowerShell.Commands.Files
         private static async Task SaveFileToLocal(IFile fileToDownload, string filePath)
         {
             // Start the download
-            Stream downloadedContentStream = await fileToDownload.GetContentAsync(true);
-
-            // Download the file bytes in 2MB chunks and immediately write them to a file on disk 
-            // This approach avoids the file being fully loaded in the process memory
-            var bufferSize = 2 * 1024 * 1024;  // 2 MB buffer
-
-            using (FileStream content = System.IO.File.Create(filePath))
+            using (Stream downloadedContentStream = await fileToDownload.GetContentAsync(true))
             {
-                byte[] buffer = new byte[bufferSize];
-                int read;
-                while ((read = await downloadedContentStream.ReadAsync(buffer, 0, buffer.Length)) != 0)
+                // Download the file bytes in 2MB chunks and immediately write them to a file on disk 
+                // This approach avoids the file being fully loaded in the process memory
+                var bufferSize = 2 * 1024 * 1024;  // 2 MB buffer
+
+                using (FileStream content = System.IO.File.Create(filePath))
                 {
-                    content.Write(buffer, 0, read);
+                    byte[] buffer = new byte[bufferSize];
+                    int read;
+                    while ((read = await downloadedContentStream.ReadAsync(buffer, 0, buffer.Length)) != 0)
+                    {
+                        content.Write(buffer, 0, read);
+                    }
                 }
-            }
+            }                
         }
     }
 }
