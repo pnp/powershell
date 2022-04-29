@@ -2181,7 +2181,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPGroup.html",
-          "hash": "x4/mtwEPr6TzMpyMAHFFQw=="
+          "hash": "2NyTpCHVhmolcyZx5okYJg=="
         }
       },
       "is_incremental": false,
@@ -3864,7 +3864,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Invoke-PnPSPRestMethod.html",
-          "hash": "mGIR4520CEzXF651rce7eg=="
+          "hash": "AlZ/NO/nJrcL7TgcponXXg=="
         }
       },
       "is_incremental": false,

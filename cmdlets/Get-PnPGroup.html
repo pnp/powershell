@@ -114,7 +114,7 @@
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPGroup -Identity 'My Site Users'
 </code></pre>
-<p>This will return the group called 'My Site Users' if available in the current site</p>
+<p>This will return the group called 'My Site Users' if available in the current site. The name is case sensitive, so a group called 'My site users' would not be found.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPGroup -AssociatedMemberGroup
 </code></pre>
@@ -165,7 +165,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Get a specific group by its name or id</p>
+<p>Get a specific group by its name or id. The name case sensitive.</p>
 <pre><code class="lang-yaml">Type: GroupPipeBind
 Parameter Sets: ByName
 Aliases: Name
