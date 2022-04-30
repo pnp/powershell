@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         url = url.Remove(0, 1);
                     }
-                    if (!url.StartsWith("beta", StringComparison.OrdinalIgnoreCase) || !url.StartsWith("beta", StringComparison.OrdinalIgnoreCase))
+                    if (!url.StartsWith("beta/", StringComparison.OrdinalIgnoreCase) && !url.StartsWith("v1.0/", StringComparison.OrdinalIgnoreCase))
                     {
                         url = UrlUtility.Combine("v1.0", url);
                     }
