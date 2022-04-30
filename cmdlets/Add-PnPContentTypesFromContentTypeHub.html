@@ -98,6 +98,13 @@
 <pre><code class="lang-powershell"> Add-PnPContentTypesFromContentTypeHub -ContentTypes &quot;0x0101&quot;, &quot;0x01&quot;
 </code></pre>
 <p>This will add the content types with the ids '0x0101' and '0x01' to the current site. Latest published version of these content types will be synced if they were already present in the current site.</p>
+<ul>
+<li>There's an issue with this cmdlet if you use it on private channel sites. The workaround for that is to execute the below command:
+<ul>
+<li><code>Enable-PnPFeature -Identity 73ef14b1-13a9-416b-a9b5-ececa2b0604c -Scope Site -Force</code></li>
+</ul>
+</li>
+</ul>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell"> Add-PnPContentTypesFromContentTypeHub -ContentTypes &quot;0x010057C83E557396744783531D80144BD08D&quot; -Site https://tenant.sharepoint.com/sites/HR
 </code></pre>
