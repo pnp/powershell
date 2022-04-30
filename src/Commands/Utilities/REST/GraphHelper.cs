@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        private static HttpRequestMessage GetMessage(string url, HttpMethod method, string accessToken, HttpContent content = null, Dictionary<string, string> additionalHeaders = null)
+        private static HttpRequestMessage GetMessage(string url, HttpMethod method, string accessToken, HttpContent content = null, IDictionary<string, string> additionalHeaders = null)
         {
             if (url.StartsWith("/"))
             {
@@ -67,9 +67,9 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return message;
         }
 
-        public static async Task<string> GetAsync(HttpClient httpClient, string url, string accessToken)
+        public static async Task<string> GetAsync(HttpClient httpClient, string url, string accessToken, IDictionary<string, string> additionalHeaders = null)
         {
-            var message = GetMessage(url, HttpMethod.Get, accessToken);
+            var message = GetMessage(url, HttpMethod.Get, accessToken, null, additionalHeaders);
             return await SendMessageAsync(httpClient, message, accessToken);
         }
 
@@ -148,26 +148,26 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return default(T);
         }
 
-        public static async Task<HttpResponseMessage> PostAsync(HttpClient httpClient, string url, string accessToken, HttpContent content)
+        public static async Task<HttpResponseMessage> PostAsync(HttpClient httpClient, string url, string accessToken, HttpContent content, IDictionary<string, string> additionalHeaders = null)
         {
-            var message = GetMessage(url, HttpMethod.Post, accessToken, content);
+            var message = GetMessage(url, HttpMethod.Post, accessToken, content, additionalHeaders);
             return await GetResponseMessageAsync(httpClient, message);
         }
 
-        public static async Task<HttpResponseMessage> PutAsync(HttpClient httpClient, string url, string accessToken, HttpContent content)
+        public static async Task<HttpResponseMessage> PutAsync(HttpClient httpClient, string url, string accessToken, HttpContent content, IDictionary<string, string> additionalHeaders = null)
         {
-            var message = GetMessage(url, HttpMethod.Put, accessToken, content);
+            var message = GetMessage(url, HttpMethod.Put, accessToken, content, additionalHeaders);
             return await GetResponseMessageAsync(httpClient, message);
         }
 
         #region DELETE
-        public static async Task<HttpResponseMessage> DeleteAsync(HttpClient httpClient, string url, string accessToken, Dictionary<string, string> additionalHeaders = null)
+        public static async Task<HttpResponseMessage> DeleteAsync(HttpClient httpClient, string url, string accessToken, IDictionary<string, string> additionalHeaders = null)
         {
             var message = GetMessage(url, HttpMethod.Delete, accessToken, null, additionalHeaders);
             return await GetResponseMessageAsync(httpClient, message);
         }
 
-        public static async Task<T> DeleteAsync<T>(HttpClient httpClient, string url, string accessToken, bool camlCasePolicy = true, Dictionary<string, string> additionalHeaders = null)
+        public static async Task<T> DeleteAsync<T>(HttpClient httpClient, string url, string accessToken, bool camlCasePolicy = true, IDictionary<string, string> additionalHeaders = null)
         {
             var response = await DeleteAsync(httpClient, url, accessToken, additionalHeaders);
             if (response.IsSuccessStatusCode)
@@ -196,7 +196,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         #endregion
 
         #region PATCH
-        public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, T content, Dictionary<string, string> additionalHeaders = null, bool camlCasePolicy = true)
+        public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, T content, IDictionary<string, string> additionalHeaders = null, bool camlCasePolicy = true)
         {
             var serializerSettings = new JsonSerializerOptions() { IgnoreNullValues = true };
             if (camlCasePolicy)
@@ -221,7 +221,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, HttpContent content, Dictionary<string, string> additionalHeaders = null)
+        public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, HttpContent content, IDictionary<string, string> additionalHeaders = null)
         {
 #if NETFRAMEWORK
             var message = GetMessage(url, new HttpMethod("PATCH"), accessToken, content, additionalHeaders);
@@ -239,7 +239,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        public static async Task<HttpResponseMessage> PatchAsync(HttpClient httpClient, string accessToken, HttpContent content, string url, Dictionary<string, string> additionalHeaders = null)
+        public static async Task<HttpResponseMessage> PatchAsync(HttpClient httpClient, string accessToken, HttpContent content, string url, IDictionary<string, string> additionalHeaders = null)
         {
 #if NETFRAMEWORK
             var message = GetMessage(url, new HttpMethod("PATCH"), accessToken, content, additionalHeaders);
@@ -251,7 +251,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
 
 
-        // public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, T content,Dictionary<string, string> additionalHeaders = null)
+        // public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, T content,IDictionary<string, string> additionalHeaders = null)
         // {
         //     var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
         //     requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
@@ -269,12 +269,12 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         #endregion
 
 
-        public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, HttpContent content, string accessToken, Dictionary<string, string> additionalHeaders = null, bool propertyNameCaseInsensitive = false)
+        public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, HttpContent content, string accessToken, IDictionary<string, string> additionalHeaders = null, bool propertyNameCaseInsensitive = false)
         {
             return await PostInternalAsync<T>(httpClient, url, accessToken, content, additionalHeaders, propertyNameCaseInsensitive);
         }
 
-        public static async Task<T> PutAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content, Dictionary<string, string> additionalHeaders = null)
+        public static async Task<T> PutAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content, IDictionary<string, string> additionalHeaders = null)
         {
             var message = GetMessage(url, HttpMethod.Put, accessToken, content, additionalHeaders);
             var stringContent = await SendMessageAsync(httpClient, message, accessToken);
@@ -305,7 +305,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return await PostInternalAsync<T>(httpClient, url, accessToken, null);
         }
 
-        private static async Task<T> PostInternalAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content, Dictionary<string, string> additionalHeaders = null, bool propertyNameCaseInsensitive = false)
+        private static async Task<T> PostInternalAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content, IDictionary<string, string> additionalHeaders = null, bool propertyNameCaseInsensitive = false)
         {
             var message = GetMessage(url, HttpMethod.Post, accessToken, content, additionalHeaders);
             var stringContent = await SendMessageAsync(httpClient, message, accessToken);
