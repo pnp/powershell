@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model.Teams
 {
@@ -40,6 +35,7 @@ namespace PnP.PowerShell.Commands.Model.Teams
     /// </summary>
     public enum TeamGiphyContentRating
     {
+        unknownFutureValue,
         moderate,
         strict
     }
