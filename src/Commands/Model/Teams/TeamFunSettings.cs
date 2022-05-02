@@ -35,7 +35,6 @@ namespace PnP.PowerShell.Commands.Model.Teams
     /// </summary>
     public enum TeamGiphyContentRating
     {
-        unknownFutureValue,
         moderate,
         strict
     }
