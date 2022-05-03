@@ -500,7 +500,7 @@ namespace PnP.PowerShell.Commands.Utilities
             var collection = await GraphHelper.GetResultCollectionAsync<TeamChannelMember>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/members", accessToken);
             if (collection != null && collection.Any())
             {
-                users.AddRange(collection.Select(m => new User() { DisplayName = m.DisplayName, Id = m.UserId, UserPrincipalName = m.email, UserType = m.Roles.Count > 0 ? m.Roles[0].ToLower() : "" }));
+                users.AddRange(collection.Select(m => new User() { DisplayName = m.DisplayName, Id = m.UserId, UserPrincipalName = m.Email, UserType = m.Roles.Count > 0 ? m.Roles[0].ToLower() : "" }));
             }
 
             if (selectedRole != null)
@@ -608,6 +608,28 @@ namespace PnP.PowerShell.Commands.Utilities
                 channel.IsFavoriteByDefault = isFavoriteByDefault;
                 return await GraphHelper.PostAsync<TeamChannel>(httpClient, $"v1.0/teams/{groupId}/channels", channel, accessToken);
             }
+        }
+
+        public static async Task<TeamChannelMember> GetChannelMemberAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, string membershipId)
+        {
+            // Currently the Graph request to get a membership by id fails (v1.0/teams/{groupId}/channels/{channelId}/members/{membershipId}).
+            // This is why the method below is used.
+
+            var memberships = await GetChannelMembersAsync(httpClient, accessToken, groupId, channelId);
+            return memberships.FirstOrDefault(m => membershipId.Equals(m.Id));
+        }
+
+        public static async Task<IEnumerable<TeamChannelMember>> GetChannelMembersAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, string role = null)
+        {
+            var collection = await GraphHelper.GetResultCollectionAsync<TeamChannelMember>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/members", accessToken);
+
+            if (!string.IsNullOrEmpty(role))
+            {
+                // Members have no role value
+                collection = role.Equals("member", StringComparison.OrdinalIgnoreCase) ? collection.Where(i => !i.Roles.Any()) : collection.Where(i => i.Roles.Any(r => role.Equals(r, StringComparison.OrdinalIgnoreCase)));
+            }
+
+            return collection;
         }
 
         public static async Task<TeamChannelMember> AddChannelUserAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, string upn, string role)

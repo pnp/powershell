@@ -1,11 +1,11 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPFlow.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPFlowRun.html
 Module Name: PnP.PowerShell
 external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
 ---
   
-# Get-PnPFlow
+# Get-PnPFlowRun
 
 ## SYNOPSIS
 
@@ -13,33 +13,33 @@ schema: 2.0.0
 
 * Azure: management.azure.com
 
-Returns the flows for a given environment
+Returns the flows runs for a given flow.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> [-AsAdmin] [-Identity <PowerPlatformPipeBind>] 
+Get-PnPFlowRun -Environment <PowerAutomateEnvironmentPipeBind> -Flow <PowerAutomateFlowPipeBind> [-Identity <PowerAutomateFlowRunPipeBind>]
 [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This cmdlet returns the flows for a given enviroment.
+This cmdlet returns the flow runs for a given flow.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
 $environment = Get-PnPPowerPlatformEnvironment
-Get-PnPFlow -Environment $environment
+Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182
 ```
-This returns all the flows for a given power platform environment
+This returns all the flow runs for a given flow
 
 ### Example 2
 ```powershell
 $environment = Get-PnPPowerPlatformEnvironment
-Get-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
 ```
-This returns a specific flow
+This returns a specific flow run
 
 ## PARAMETERS
 
@@ -58,26 +58,26 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Identity
+### -Flow
 The Name/Id of the flow to retrieve.
 
 ```yaml
-Type: PowerPlatformPipeBind
+Type: PowerAutomateFlowPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: true
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AsAdmin
-If specified returns all the flows as admin. If not specified only the flows for the current user will be returned.
+### -Identity
+The Name/Id of the flow run to retrieve.
 
 ```yaml
-Type: SwitchParameter
+Type: PowerAutomateFlowRunPipeBind
 Parameter Sets: (All)
 Aliases:
 
@@ -107,5 +107,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
