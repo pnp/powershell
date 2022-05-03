@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using PnP.PowerShell.Commands.Model.Graph;
+using PnP.PowerShell.Commands.Utilities.JSON;
+using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using PnP.PowerShell.Commands.Model.Graph;
 
 namespace PnP.PowerShell.Commands.Model.Teams
 {
@@ -84,8 +86,22 @@ namespace PnP.PowerShell.Commands.Model.Teams
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public GroupVisibility Visibility { get; set; }
 
-        #endregion
+        /// <summary>
+        /// Web URL of the team
+        /// </summary>
+        public string WebUrl { get; set; }
 
+        /// <summary>
+        /// Internal unique ID of the team
+        /// </summary>
+        public string InternalId { get; set; }
+
+        /// <summary>
+        /// Date when the team was created
+        /// </summary>
+        public DateTimeOffset? CreatedDateTime { get; set; }
+
+        #endregion
     }
 
     /// <summary>
