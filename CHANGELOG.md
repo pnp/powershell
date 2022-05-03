@@ -14,6 +14,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `ExcludeVisualPromotedResults` parameter to `Get-PnPSearchConfiguration` which excludes promoted results [#1750](https://github.com/pnp/powershell/pull/1750)
 - Added `MediaTranscription` parameter to `Set-PnPTenantSite` and `Set-PnPSite` cmdlets which when enabled allows videos to have transcripts generated on demand or generated automatically in certain scenarios. [#1771](https://github.com/pnp/powershell/pull/1771)
 - Added `Accept` parameter to `Invoke-PnPSPRestMethod` cmdlet which if specified will pass the Accept HTTP request header. [#1795](https://github.com/pnp/powershell/pull/1795)
+- Added `Get-PnPFlowRun` cmdlet to retrieve a specific run, or all runs from a specific Power Automate flow. [#1819](https://github.com/pnp/powershell/pull/1819)
+- Added `Invoke-PnPGraphMethod` cmdlet to invoke generic Microsoft Graph API Methods. [#1820](https://github.com/pnp/powershell/pull/1820)
 
 ### Changed
 - Changed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to map users based on their Ids instead which should resolve some issues around user identities reporting not to exist. You can use the new `-IdType` option to switch it back to `PrincipalName` if needed.  [#1752](https://github.com/pnp/powershell/pull/1752)
@@ -25,10 +27,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPGroup` , `Get-PnPGroupPermissions` and `Set-PnPGroupPermissions ` cmdlets by making them more consistent. They will also throw error if a group is not found. [#1808](https://github.com/pnp/powershell/pull/1808)
 - Fixed `Get-PnPFile` issue with every 3rd file download in PS 5.
 - Fixed `Add-PnPContentTypesFromContentTypeHub`, if `Site` parameter is specified, it will be used now to sync content types from content type hub site.
+- Fixed `Get-PnPTeamsTeam`, the cmdlet now also returns additional properties like `WebUrl, CreatedDateTime, InternalId` [#1825](https://github.com/pnp/powershell/pull/1825)
 
 ### Removed
 
 ### Contributors
+- [4ndri]
 - Martin Lingstuyl [martinlingstuyl]
 - James May [fowl2]
 - Milan Holemans [milanholemans]
