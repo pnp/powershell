@@ -1037,6 +1037,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPVivaConnectionsDashboardACE.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPVivaConnectionsDashboardACE.html",
+          "hash": "WiFEotixKElF16IVjew7IA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPWebPartToWebPartPage.md",
       "output": {
         ".html": {
@@ -2109,7 +2121,19 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPFlow.html",
-          "hash": "ErfK+C0/oMyMQC/wRtGIVw=="
+          "hash": "dBPrGSRCbIzRhlrXIQUS8A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPFlowRun.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPFlowRun.html",
+          "hash": "IH5+XlhPOa+stl4U+SiLFw=="
         }
       },
       "is_incremental": false,
@@ -3209,6 +3233,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPTeamsChannelUser.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPTeamsChannelUser.html",
+          "hash": "1KBmQQYxFJ8has5ad1Ockg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPTeamsPrimaryChannel.md",
       "output": {
         ".html": {
@@ -3629,6 +3665,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPVivaConnectionsDashboardACE.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPVivaConnectionsDashboardACE.html",
+          "hash": "UwyMUuVOi3zddcbihMas9Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPWeb.md",
       "output": {
         ".html": {
@@ -3829,6 +3877,18 @@
         ".html": {
           "relative_path": "cmdlets/Invoke-PnPBatch.html",
           "hash": "44IRKZoDp/OAY9mKrm48Ag=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Invoke-PnPGraphMethod.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Invoke-PnPGraphMethod.html",
+          "hash": "bCM0e78iL6lXsxvEcsMFyw=="
         }
       },
       "is_incremental": false,
@@ -5569,6 +5629,18 @@
         ".html": {
           "relative_path": "cmdlets/Remove-PnPView.html",
           "hash": "HKvYxJPkAKod1bL3+qFnUQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPVivaConnectionsDashboardACE.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPVivaConnectionsDashboardACE.html",
+          "hash": "2rSC9AQTy03L4/i6HmDnwQ=="
         }
       },
       "is_incremental": false,
@@ -7420,12 +7492,24 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Update-PnPVivaConnectionsDashboardACE.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Update-PnPVivaConnectionsDashboardACE.html",
+          "hash": "x8gO+GYuN0VjniVcOwuN8A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Toc",
       "source_relative_path": "cmdlets/toc.yml",
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "OS20zMlTqynDUtfdaAq5Jg=="
+          "hash": "zLp+hAlQGV9SY/7lEj3xHg=="
         }
       },
       "is_incremental": false,
@@ -7636,7 +7720,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 617,
+          "total_file_count": 624,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

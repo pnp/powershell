@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPFlow | PnP PowerShell </title>
+    <title>Invoke-PnPGraphMethod | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPFlow | PnP PowerShell ">
+    <meta name="title" content="Invoke-PnPGraphMethod | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,51 +77,50 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="get-pnpflow">Get-PnPFlow</h1>
+                    <h1 id="invoke-pnpgraphmethod">Invoke-PnPGraphMethod</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>Azure: management.azure.com</li>
-</ul>
-<p>Returns the flows for a given environment</p>
+<p>Invokes a REST request towards the Microsoft Graph API</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; [-AsAdmin] [-Identity &lt;PowerPlatformPipeBind&gt;] 
-[-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &lt;String&gt;
+                      [-AdditionalHeaders &lt;System.Collections.Generic.IDictionary`2[System.String,System.String]&gt;]
+                      [[-Method] &lt;HttpRequestMethod&gt;] 
+                      [-Content &lt;Object&gt;] 
+                      [-ContentType &lt;String&gt;] 
+                      [-ConsistencyLevelEventual] 
+                      [-Raw]
+                      [-All] 
+                      [-Connection &lt;PnPConnection&gt;]
+                      [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet returns the flows for a given enviroment.</p>
+<p>Invokes a REST request towards the Microsoft Graph API</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
-Get-PnPFlow -Environment $environment
+<pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &quot;groups?`$filter=startsWith(displayName,'ZZ')&amp;`$select=displayName&quot;
+Invoke-PnPGraphMethod -Url 'groups/{id}?`$select=hideFromOutlookClients'
 </code></pre>
-<p>This returns all the flows for a given power platform environment</p>
+<p>Execute a GET request to get groups by filter and select.</p>
 <h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
-Get-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+<pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &quot;groups/{id}&quot; -Method Delete
 </code></pre>
-<p>This returns a specific flow</p>
+<p>delete the group with id.</p>
+<h3 id="example-3">Example 3</h3>
+<pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &quot;groups/{id}&quot; -Method Patch -Content @{ displayName = &quot;NewName&quot; }
+</code></pre>
+<p>set the displayName of the group with a Patch request.</p>
+<h3 id="example-4">Example 4</h3>
+<pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &quot;v1.0/users?$filter=accountEnabled ne true&amp;$count=true&quot; -Method Get -ConsistencyLevelEventual
+</code></pre>
+<p>get users with advanced query capabilities. use of -ConsistencyLevelEventual.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-environment">-Environment</h3>
-<p>The name of the Power Platform environment or an Environment object to retrieve the available flows for.</p>
-<pre><code class="lang-yaml">Type: PowerAutomateEnvironmentPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>The Name/Id of the flow to retrieve.</p>
-<pre><code class="lang-yaml">Type: PowerPlatformPipeBind
+<h3 id="-additionalheaders">-AdditionalHeaders</h3>
+<p>Additional request headers</p>
+<pre><code class="lang-yaml">Type: System.Collections.Generic.IDictionary`2[System.String,System.String]
 Parameter Sets: (All)
 Aliases:
 
@@ -131,8 +130,8 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-asadmin">-AsAdmin</h3>
-<p>If specified returns all the flows as admin. If not specified only the flows for the current user will be returned.</p>
+<h3 id="-all">-All</h3>
+<p>retrieve all pages of results. this will loop through all @odata.nextLink. this flag will only be respected if the request is a GET request.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
@@ -154,6 +153,79 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-consistencyleveleventual">-ConsistencyLevelEventual</h3>
+<p>set the ConsistencyLevel header to eventual for advanced query capabilities on Azure AD directory objects</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-content">-Content</h3>
+<p>A string or object to send</p>
+<pre><code class="lang-yaml">Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-contenttype">-ContentType</h3>
+<p>The content type of the object to send. Defaults to 'application/json'.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-method">-Method</h3>
+<p>The Http method to execute. Defaults to GET.</p>
+<pre><code class="lang-yaml">Type: HttpRequestMethod
+Parameter Sets: (All)
+Aliases:
+Accepted values: Default, Get, Head, Post, Put, Delete, Trace, Options, Merge, Patch
+
+Required: False
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-raw">-Raw</h3>
+<p>If specified the returned data will not be converted to an object but returned as a JSON string.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-url">-Url</h3>
+<p>the graph endpoint to invoke</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>

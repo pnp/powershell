@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPFlow | PnP PowerShell </title>
+    <title>Get-PnPFlowRun | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPFlow | PnP PowerShell ">
+    <meta name="title" content="Get-PnPFlowRun | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,35 +77,35 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="get-pnpflow">Get-PnPFlow</h1>
+                    <h1 id="get-pnpflowrun">Get-PnPFlowRun</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
 <li>Azure: management.azure.com</li>
 </ul>
-<p>Returns the flows for a given environment</p>
+<p>Returns the flows runs for a given flow.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; [-AsAdmin] [-Identity &lt;PowerPlatformPipeBind&gt;] 
+<pre><code class="lang-powershell">Get-PnPFlowRun -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Flow &lt;PowerAutomateFlowPipeBind&gt; [-Identity &lt;PowerAutomateFlowRunPipeBind&gt;]
 [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet returns the flows for a given enviroment.</p>
+<p>This cmdlet returns the flow runs for a given flow.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
 <pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
-Get-PnPFlow -Environment $environment
+Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182
 </code></pre>
-<p>This returns all the flows for a given power platform environment</p>
+<p>This returns all the flow runs for a given flow</p>
 <h3 id="example-2">Example 2</h3>
 <pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
-Get-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
 </code></pre>
-<p>This returns a specific flow</p>
+<p>This returns a specific flow run</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-environment">-Environment</h3>
 <p>The name of the Power Platform environment or an Environment object to retrieve the available flows for.</p>
@@ -119,21 +119,21 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-identity">-Identity</h3>
+<h3 id="-flow">-Flow</h3>
 <p>The Name/Id of the flow to retrieve.</p>
-<pre><code class="lang-yaml">Type: PowerPlatformPipeBind
+<pre><code class="lang-yaml">Type: PowerAutomateFlowPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: true
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-asadmin">-AsAdmin</h3>
-<p>If specified returns all the flows as admin. If not specified only the flows for the current user will be returned.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
+<h3 id="-identity">-Identity</h3>
+<p>The Name/Id of the flow run to retrieve.</p>
+<pre><code class="lang-yaml">Type: PowerAutomateFlowRunPipeBind
 Parameter Sets: (All)
 Aliases:
 
