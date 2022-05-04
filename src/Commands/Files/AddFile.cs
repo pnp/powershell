@@ -13,6 +13,7 @@ namespace PnP.PowerShell.Commands.Files
     {
         private const string ParameterSet_ASFILE = "Upload file";
         private const string ParameterSet_ASSTREAM = "Upload file from stream";
+        private const string ParameterSet_ASTEXT = "Upload file from text";
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASFILE)]
         [ValidateNotNullOrEmpty]
@@ -23,6 +24,7 @@ namespace PnP.PowerShell.Commands.Files
         public FolderPipeBind Folder;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASTEXT)]
         [ValidateNotNullOrEmpty]
         public string FileName = string.Empty;
 
@@ -33,6 +35,9 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM)]
         [ValidateNotNullOrEmpty]
         public Stream Stream;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASTEXT)]
+        public string Content;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Checkout;
@@ -112,14 +117,30 @@ namespace PnP.PowerShell.Commands.Files
                 { // Swallow exception, file does not exist 
                 }
             }
+            
             Microsoft.SharePoint.Client.File file;
-            if (ParameterSetName == ParameterSet_ASFILE)
+            switch (ParameterSetName)
             {
-                file = folder.UploadFile(FileName, Path, true);
-            }
-            else
-            {
-                file = folder.UploadFile(FileName, Stream, true);
+                case ParameterSet_ASFILE:
+                    file = folder.UploadFile(FileName, Path, true);
+                    break;
+
+                case ParameterSet_ASTEXT:
+                    using (var stream = new MemoryStream())
+                    {
+                        using (var writer = new StreamWriter(stream))
+                        {
+                            writer.Write(Content);
+                            writer.Flush();
+                            stream.Position = 0;
+                            file = folder.UploadFile(FileName, stream, true);
+                        }
+                    }
+                    break;
+
+                default:
+                    file = folder.UploadFile(FileName, Stream, true);
+                    break;
             }
 
             bool updateRequired = false;

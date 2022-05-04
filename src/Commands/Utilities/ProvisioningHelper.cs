@@ -5,9 +5,7 @@ using PnP.Framework.Provisioning.Providers.Xml;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -47,6 +45,13 @@ namespace PnP.PowerShell.Commands.Utilities
             return formatter;
         }
 
+        /// <summary>
+        /// Loads a PnP Provisioning Template from a file on disk
+        /// </summary>
+        /// <param name="templatePath">Path to the template file on disk</param>
+        /// <param name="templateProviderExtensions"></param>
+        /// <param name="exceptionHandler"></param>
+        /// <returns>Template definition</returns>
         internal static ProvisioningTemplate LoadSiteTemplateFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler)
         {
             // Prepare the File Connector
@@ -106,6 +111,73 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
+        /// <summary>
+        /// Loads a PnP Provisioning Template from a stream
+        /// </summary>
+        /// <param name="stream">Stream containing the provisioning template</param>
+        /// <param name="templateProviderExtensions"></param>
+        /// <param name="exceptionHandler"></param>
+        /// <returns>List with template definitions found within the stream</returns>
+        /// <exception cref="ArgumentNullException">Thrown when stream is not provided</exception>
+        internal static List<ProvisioningTemplate> LoadSiteTemplatesFromStream(Stream stream, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream), "Stream must be provided");
+            }
+
+            if(stream.CanSeek)
+            {
+                stream.Position = 0;
+            }
+
+            using (var memoryStream = new System.IO.MemoryStream())
+            {
+                stream.CopyTo(memoryStream);
+                memoryStream.Position = 0;
+
+                // Validate if the stream contains an OpenXML .pnp template or a .xml template
+                var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(memoryStream);
+                memoryStream.Position = 0;
+
+                if (!isOpenOfficeFile)
+                {
+                    var xml = Encoding.UTF8.GetString(memoryStream.ToArray());
+                    return new List<ProvisioningTemplate> { LoadSiteTemplateFromString(xml, templateProviderExtensions, exceptionHandler) };
+                }
+
+                var openXmlConnector = new OpenXMLConnector(memoryStream);
+                var provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
+
+                try
+                {
+                    var provisioningTemplates = provider.GetTemplates();
+                    return provisioningTemplates;
+                }
+                catch (ApplicationException ex)
+                {
+                    if (ex.InnerException is AggregateException)
+                    {
+                        if (exceptionHandler != null)
+                        {
+                            foreach (var exception in ((AggregateException)ex.InnerException).InnerExceptions)
+                            {
+                                exceptionHandler(exception);
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Loads a PnP Provisioning Template from passed in XML
+        /// </summary>
+        /// <param name="xml">String containing the XML of the template</param>
+        /// <param name="templateProviderExtensions"></param>
+        /// <param name="exceptionHandler"></param>
+        /// <returns>Template definition</returns>
         internal static ProvisioningTemplate LoadSiteTemplateFromString(string xml, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler)
         {
             XMLTemplateProvider provider = new XMLStreamTemplateProvider();

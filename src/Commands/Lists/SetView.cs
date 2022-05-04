@@ -8,6 +8,7 @@ using System.Collections;
 namespace PnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Set, "PnPView")]
+    [OutputType(typeof(View))]
     public class SetView : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]

@@ -61,7 +61,7 @@ Adds a navigation node to the quicklaunch. The navigation node will have the tit
 
 ### EXAMPLE 6
 ```powershell
-Add-PnPNavigationNode -Title "Label" -Location "TopNavigationBar" -Url "http://linkless.header"
+Add-PnPNavigationNode -Title "Label" -Location "TopNavigationBar" -Url "http://linkless.header/"
 ```
 
 Adds a navigation node to the top navigation bar. The navigation node will be created as a label.

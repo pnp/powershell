@@ -100,7 +100,7 @@ namespace PnP.PowerShell.Commands
 
                 if (Template != null)
                 {
-                    WriteObject(sites.Where(t => t.Template == Template).OrderBy(x => x.Url).Select(s => new Model.SPOSite(s, null)), true);
+                    WriteObject(sites.Where(t => t.Template.ToLower() == Template.ToLower()).OrderBy(x => x.Url).Select(s => new Model.SPOSite(s, null)), true);
                 }
                 else
                 {

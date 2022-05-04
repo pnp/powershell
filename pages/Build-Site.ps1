@@ -83,7 +83,7 @@ foreach ($nightlycmdlet in $nightlycmdlets) {
 $items = Get-ChildItem "./dev/pages/cmdlets/*.md"
 $toc = ""
 foreach ($item in $items) {
-    $toc = $toc + "- name: $($item.Name -replace '.md','')`n  href: $($item.Name)`n"
+    $toc = $toc + "- name: $($item.BaseName)`n  href: $($item.Name)`n"
 }
 
 $toc | Out-File "./dev/pages/cmdlets/toc.yml" -Force

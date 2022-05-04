@@ -10,6 +10,7 @@ using System.Linq;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Copy, "PnPList", DefaultParameterSetName = ParameterSet_TOCURRENTSITEBYPIPE)]
+    [OutputType(typeof(List))]
     public class CopyList : PnPWebCmdlet
     {
         private const string ParameterSet_LISTBYPIPE = "By piping in a list";

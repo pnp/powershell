@@ -1,4 +1,4 @@
-﻿using PnP.Framework.Graph.Model;
+﻿using PnP.PowerShell.Commands.Model.AzureAD;
 using System;
 using System.Net;
 
@@ -63,11 +63,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             if (_userId != null)
             {
-                return PnP.Framework.Graph.UsersUtility.GetUser(accessToken, _userId);
+                return User.CreateFrom(PnP.Framework.Graph.UsersUtility.GetUser(accessToken, _userId));
             }
             if (_upn != null)
             {                
-                return PnP.Framework.Graph.UsersUtility.GetUser(accessToken, WebUtility.UrlEncode(_upn));
+                return User.CreateFrom(PnP.Framework.Graph.UsersUtility.GetUser(accessToken, WebUtility.UrlEncode(_upn)));
             }
             return null;
         }

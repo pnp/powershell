@@ -24,8 +24,6 @@ namespace PnP.PowerShell.Commands.Model.Teams
         public string UserId { get; set; }
 
         [JsonPropertyName("email")]
-        public string email { get; set; }
+        public string Email { get; set; }
     }
-
-
 }

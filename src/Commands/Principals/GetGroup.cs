@@ -7,6 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPGroup", DefaultParameterSetName = "All")]
+    [OutputType(typeof(Group))]
     public class GetGroup : PnPWebRetrievalsCmdlet<Group>
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByName")]
@@ -25,8 +26,25 @@ namespace PnP.PowerShell.Commands.Principals
         {
             if (ParameterSetName == "ByName")
             {
-                Group group = Identity.GetGroup(CurrentWeb);
-                WriteObject(group);
+                // Get group by name using Core SDK because of
+                // case sensitivity difference between Core SDK and CSOM
+                // Loads group using CSOM to bypass a breaking change
+                var pnpGroup = Identity.GetGroup(PnPContext);
+
+                if (pnpGroup != null)
+                {
+                    var csomGroup = CurrentWeb.SiteGroups.GetById(pnpGroup.Id);
+                    ClientContext.Load(csomGroup);
+                    ClientContext.Load(csomGroup.Users);
+                    ClientContext.ExecuteQueryRetry();
+
+                    WriteObject(csomGroup);
+                }
+                else
+                {
+                    throw new PSArgumentException("Site group not found", nameof(Identity));
+                }
+
             }
             else if (ParameterSetName == "Members")
             {

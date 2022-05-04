@@ -21,7 +21,7 @@ Creates a new Microsoft 365 Group
 
 ```powershell
 New-PnPMicrosoft365Group -DisplayName <String> -Description <String> -MailNickname <String>
- [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam] [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-Force]
+ [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam] [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-ResourceBehaviorOptions <TeamResourceBehaviorOptions>] [-Force]
   [<CommonParameters>]
 ```
 
@@ -56,6 +56,13 @@ New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -Ma
 ```
 
 Creates a private Microsoft 365 Group with all the required properties, and with a custom list of Owners and a custom list of Members
+
+### EXAMPLE 5
+```powershell
+New-PnPMicrosoft365Group -DisplayName "myPnPDemo1" -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers -IsPrivate -ResourceBehaviorOptions WelcomeEmailDisabled, HideGroupInOutlook
+```
+
+This will create a new Microsoft 365 Group called "myPnPDemo1" and sets the privacy to Private. Welcome Email will not be sent when the Group is created. The M365 Group will also not be visible in Outlook.
 
 ## PARAMETERS
 
@@ -205,6 +212,22 @@ Controls whether the group shows in the Outlook left-hand navigation.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResourceBehaviorOptions
+
+Allows providing ResourceBehaviorOptions which accepts multiple values that specify group behaviors for a Microsoft 365 Group.
+
+```yaml
+Type: TeamResourceBehaviorOptions
+Parameter Sets: (All)
+Accepted values: AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeNewGroupMembers, WelcomeEmailDisabled
 
 Required: False
 Position: Named

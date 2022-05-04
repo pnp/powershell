@@ -29,6 +29,7 @@ Add-PnPFile -Folder <FolderPipeBind> -FileName <String> -Stream <Stream> [-Check
 ```
 
 ## DESCRIPTION
+This cmdlet uploads a local file or a file from a stream to the specified folder.
 
 ## EXAMPLES
 

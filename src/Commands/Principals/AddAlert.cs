@@ -9,6 +9,7 @@ using PnP.PowerShell.Commands.Enums;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Add, "PnPAlert")]
+    [OutputType(typeof(AlertCreationInformation))]
     public class AddAlert : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -89,7 +90,7 @@ namespace PnP.PowerShell.Commands.Principals
                 {
                     alert.AlertTime = Time;
                 }
-
+                
                 user.Alerts.Add(alert);
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(alert);

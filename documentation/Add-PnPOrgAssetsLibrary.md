@@ -25,7 +25,15 @@ Add-PnPOrgAssetsLibrary -LibraryUrl <String> [-ThumbnailUrl <String>] [-CdnType 
 ```
 
 ## DESCRIPTION
-Adds a given document library as an organizational asset source in your SharePoint Online Tenant. All organizational asset sources you add must reside in the same site collection. Document libraries specified as organizational asset must be enabled as an Office 365 CDN source, either as private or public. It may take some time before this change will be reflected in the webinterface.
+Adds a given document library as an organizational asset source in your SharePoint Online Tenant. You can specify multiple libraries, but all organizational asset sources you add must reside in the same site collection.
+
+Document libraries specified as organizational asset must be enabled as an Office 365 CDN source, either as private or public.
+
+The libraries must also have read rights for 'Everyone except external users' enabled on them. Either on library or on the entire site level.
+
+Only entire libraries can be configured as an organizational asset, folders cannot.
+
+It may take some time before this change will be reflected in the webinterface.
 
 ## EXAMPLES
 

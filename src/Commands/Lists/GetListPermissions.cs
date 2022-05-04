@@ -1,11 +1,13 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 
+using PnP.Core.Model.Security;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPListPermissions")]
+    [OutputType(typeof(IRoleDefinition))]
     public class GetListPermissions : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByName")]

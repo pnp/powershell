@@ -6,6 +6,7 @@ using Microsoft.SharePoint.Client;
 namespace PnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Remove, "PnPContentTypeFromDocumentSet")]
+    [OutputType(typeof(void))]
     public class RemoveContentTypeFromDocumentSet : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

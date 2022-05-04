@@ -1,10 +1,12 @@
 ﻿using PnP.Framework.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Properties;
 using PnP.PowerShell.Commands.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 
@@ -48,6 +50,9 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
+        [Parameter(Mandatory = false)]
+        public TeamResourceBehaviorOptions?[] ResourceBehaviorOptions;
+
         protected override void ExecuteCmdlet()
         {
             if (MailNickname.Contains(" "))
@@ -89,6 +94,17 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     SecurityEnabled = false,
                     GroupTypes = new string[] { "Unified" }
                 };
+                
+                if (ResourceBehaviorOptions != null && ResourceBehaviorOptions.Length > 0)
+                {
+                    var teamResourceBehaviorOptionsValue = new List<string>();
+                    for (int i = 0; i < ResourceBehaviorOptions.Length; i++)
+                    {
+                        teamResourceBehaviorOptionsValue.Add(ResourceBehaviorOptions[i].ToString());
+                    }
+                    newGroup.ResourceBehaviorOptions = teamResourceBehaviorOptionsValue.ToArray();
+                }
+
                 var group = Microsoft365GroupsUtility.CreateAsync(HttpClient, AccessToken, newGroup, CreateTeam, LogoPath, Owners, Members, HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
                 
                 if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))

@@ -2,12 +2,10 @@
 using PnP.Core.Model.SharePoint;
 using PnP.Core.Services;
 using PnP.Framework.Utilities;
-
 using System;
 using System.IO;
 using System.Management.Automation;
 using System.Threading.Tasks;
-using File = Microsoft.SharePoint.Client.File;
 
 namespace PnP.PowerShell.Commands.Files
 {
@@ -18,11 +16,13 @@ namespace PnP.PowerShell.Commands.Files
         private const string URLASSTRING = "Return as string";
         private const string URLASLISTITEM = "Return as list item";
         private const string URLASFILEOBJECT = "Return as file object";
+        private const string URLASMEMORYSTREAM = "Return as memorystream";
 
         [Parameter(Mandatory = true, ParameterSetName = URLASFILEOBJECT, Position = 0, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = URLASLISTITEM, Position = 0, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = URLTOPATH, Position = 0, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = URLASSTRING, Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = URLASMEMORYSTREAM, Position = 0, ValueFromPipeline = true)]
         [Alias("ServerRelativeUrl", "SiteRelativeUrl")]
         public string Url;
 
@@ -50,6 +50,9 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false, ParameterSetName = URLASFILEOBJECT)]
         public SwitchParameter AsFileObject;
 
+        [Parameter(Mandatory = false, ParameterSetName = URLASMEMORYSTREAM)]
+        public SwitchParameter AsMemoryStream;
+
         protected override void ExecuteCmdlet()
         {
             var serverRelativeUrl = string.Empty;
@@ -65,6 +68,9 @@ namespace PnP.PowerShell.Commands.Files
                 }
             }
 
+            // Remove URL decoding from the Url as that will not work
+            Url = Utilities.UrlUtilities.UrlDecode(Url);
+
             var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             if (!Url.ToLower().StartsWith(webUrl.ToLower()))
@@ -76,46 +82,50 @@ namespace PnP.PowerShell.Commands.Files
                 serverRelativeUrl = Url;
             }
 
-            File file;
-
             switch (ParameterSetName)
             {
                 case URLTOPATH:
 
-                    SaveFileToLocal(CurrentWeb, serverRelativeUrl, Path, Filename, (fileToSave) =>
+                    // Get a reference to the file to download
+                    IFile fileToDownload = PnPContext.Web.GetFileByServerRelativeUrlAsync(serverRelativeUrl).GetAwaiter().GetResult();
+                    string fileToDownloadName = !string.IsNullOrEmpty(Filename) ? Filename : fileToDownload.Name;
+                    string fileOut = System.IO.Path.Combine(Path, fileToDownloadName);
+
+                    if (System.IO.File.Exists(fileOut) && !Force)
                     {
-                        if (!Force)
-                        {
-                            WriteWarning($"File '{fileToSave}' exists already. use the -Force parameter to overwrite the file.");
-                        }
-                        return Force;
-                    }).Wait();
+                        WriteWarning($"File '{fileToDownloadName}' exists already. Use the -Force parameter to overwrite the file.");
+                    }
+                    else
+                    {
+                        SaveFileToLocal(fileToDownload, fileOut).GetAwaiter().GetResult();
+                    }
+
                     break;
                 case URLASFILEOBJECT:
-                    file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+                    var fileObject = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
                     try
                     {
-                        ClientContext.Load(file, f => f.Author, f => f.Length, f => f.ModifiedBy, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
+                        ClientContext.Load(fileObject, f => f.Author, f => f.Length, f => f.ModifiedBy, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
                         ClientContext.ExecuteQueryRetry();
                     }
                     catch (ServerException)
                     {
                         // Assume the cause of the exception is that a principal cannot be found and try again without:
                         // Fallback in case the creator or person having last modified the file no longer exists in the environment such that the file can still be downloaded
-                        ClientContext.Load(file, f => f.Length, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
+                        ClientContext.Load(fileObject, f => f.Length, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
                         ClientContext.ExecuteQueryRetry();
                     }
-                    WriteObject(file);
+                    WriteObject(fileObject);
                     break;
                 case URLASLISTITEM:
-                    file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+                    var fileListItem = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
 
-                    ClientContext.Load(file, f => f.Exists, f => f.ListItemAllFields);
+                    ClientContext.Load(fileListItem, f => f.Exists, f => f.ListItemAllFields);
 
                     ClientContext.ExecuteQueryRetry();
-                    if (file.Exists)
+                    if (fileListItem.Exists)
                     {
-                        WriteObject(file.ListItemAllFields);
+                        WriteObject(fileListItem.ListItemAllFields);
                     }
                     else
                     {
@@ -128,36 +138,45 @@ namespace PnP.PowerShell.Commands.Files
                 case URLASSTRING:
                     WriteObject(CurrentWeb.GetFileAsString(serverRelativeUrl));
                     break;
+                case URLASMEMORYSTREAM:
+                    IFile fileMemoryStream;
+
+                    try
+                    {
+                        fileMemoryStream = PnPContext.Web.GetFileByServerRelativeUrl(ResourcePath.FromDecodedUrl(serverRelativeUrl).DecodedUrl, f => f.Author, f => f.Length, f => f.ModifiedBy, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
+                    }
+                    catch (ServerException)
+                    {
+                        // Assume the cause of the exception is that a principal cannot be found and try again without:
+                        // Fallback in case the creator or person having last modified the file no longer exists in the environment such that the file can still be downloaded
+                        fileMemoryStream = PnPContext.Web.GetFileByServerRelativeUrl(ResourcePath.FromDecodedUrl(serverRelativeUrl).DecodedUrl, f => f.Length, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
+                    }
+
+                    var stream = new System.IO.MemoryStream(fileMemoryStream.GetContentBytes());
+                    WriteObject(stream);
+                    break;
             }
         }
 
-        private async Task SaveFileToLocal(Web web, string serverRelativeUrl, string localPath, string localFileName = null, Func<string, bool> fileExistsCallBack = null)
+        private static async Task SaveFileToLocal(IFile fileToDownload, string filePath)
         {
-            // Get a reference to the file to download
-            IFile fileToDownload = await PnPContext.Web.GetFileByServerRelativeUrlAsync(serverRelativeUrl);
-
             // Start the download
-            Stream downloadedContentStream = await fileToDownload.GetContentAsync(true);
-
-            // Download the file bytes in 2MB chunks and immediately write them to a file on disk 
-            // This approach avoids the file being fully loaded in the process memory
-            var bufferSize = 2 * 1024 * 1024;  // 2 MB buffer
-
-            var fileOut = System.IO.Path.Combine(localPath, !string.IsNullOrEmpty(localFileName) ? localFileName : fileToDownload.Name);
-
-            if (!System.IO.File.Exists(fileOut) || (fileExistsCallBack != null && fileExistsCallBack(fileOut)))
+            using (Stream downloadedContentStream = await fileToDownload.GetContentAsync(true))
             {
-                using (var content = System.IO.File.Create(fileOut))
+                // Download the file bytes in 2MB chunks and immediately write them to a file on disk 
+                // This approach avoids the file being fully loaded in the process memory
+                var bufferSize = 2 * 1024 * 1024;  // 2 MB buffer
+
+                using (FileStream content = System.IO.File.Create(filePath))
                 {
-                    var buffer = new byte[bufferSize];
+                    byte[] buffer = new byte[bufferSize];
                     int read;
                     while ((read = await downloadedContentStream.ReadAsync(buffer, 0, buffer.Length)) != 0)
                     {
                         content.Write(buffer, 0, read);
                     }
                 }
-            }
-
+            }                
         }
     }
 }
