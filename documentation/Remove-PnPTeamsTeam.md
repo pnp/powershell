@@ -25,7 +25,7 @@ Remove-PnPTeamsTeam -Identity <TeamsTeamPipeBind> [-Force]  [<CommonParameters>]
 
 ## DESCRIPTION
 
-Removes a Microsoft Teams Team instance. This also removes the Microsoft 365 Group the team is associated with, and is functionally identicaly to `Remove-PnPMicrosoft365Group`
+Removes a Microsoft Teams Team. This also removes the associated Microsoft 365 Group, and is functionally identical to `Remove-PnPMicrosoft365Group`
 
 ## EXAMPLES
 
