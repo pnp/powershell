@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Linq;
 using System.Management.Automation;
+
 using Microsoft.SharePoint.Client;
+
 using PnP.Framework.Utilities;
+using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Get, "PnPWebPartProperty")]
+    [OutputType(typeof(PropertyBagValue), ParameterSetName = new[] { ParameterSet_All })]
+    [OutputType(typeof(object), ParameterSetName = new[] { ParameterSet_Key })]
     public class GetWebPartProperty : PnPWebCmdlet
     {
+        private const string ParameterSet_All = "All";
+        private const string ParameterSet_Key = "Key";
+
         [Parameter(Mandatory = true)]
         [Alias("PageUrl")]
         public string ServerRelativePageUrl = string.Empty;
@@ -16,7 +24,7 @@ namespace PnP.PowerShell.Commands.WebParts
         [Parameter(Mandatory = true)]
         public Guid Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_Key)]
         public string Key;
 
         protected override void ExecuteCmdlet()
@@ -28,24 +36,20 @@ namespace PnP.PowerShell.Commands.WebParts
                 ServerRelativePageUrl = UrlUtility.Combine(serverRelativeWebUrl, ServerRelativePageUrl);
             }
 
-
             var properties = CurrentWeb.GetWebPartProperties(Identity, ServerRelativePageUrl);
-            var values = properties.FieldValues.Select(x => new PropertyBagValue() { Key = x.Key, Value = x.Value });
+
             if (!string.IsNullOrEmpty(Key))
             {
-                var value = values.FirstOrDefault(v => v.Key == Key);
-                if (value != null)
+                if (properties.FieldValues.TryGetValue(Key, out var value))
                 {
-                    WriteObject(value.Value);
+                    WriteObject(value);
                 }
             }
             else
             {
-                WriteObject(values, true);
+                var values = properties.FieldValues.Select(x => new PropertyBagValue() { Key = x.Key, Value = x.Value });
+                WriteObject(values, enumerateCollection: true);
             }
         }
-
-
-
     }
 }

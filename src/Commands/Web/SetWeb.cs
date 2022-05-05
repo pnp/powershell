@@ -5,6 +5,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPWeb")]
+    [OutputType(typeof(void))]
     public class SetWeb : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

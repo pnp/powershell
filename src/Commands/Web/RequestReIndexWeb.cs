@@ -5,6 +5,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsLifecycle.Request, "PnPReIndexWeb")]
+    [OutputType(typeof(void))]
     public class RequestReIndexWeb : PnPWebCmdlet
     {
 
