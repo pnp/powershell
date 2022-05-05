@@ -59,14 +59,14 @@ Accept wildcard characters: False
 ```
 
 ### -Flow
-The Name/Id of the flow to retrieve.
+The Name/Id of the flow to retrieve the available runs for.
 
 ```yaml
 Type: PowerAutomateFlowPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: true
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
