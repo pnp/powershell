@@ -4,10 +4,12 @@ using Microsoft.SharePoint.Client.UserProfiles;
 using System.Linq;
 
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Set, "PnPSubscribeSharePointNewsDigest")]
+    [OutputType(typeof(string))]
     public class SetSubscribeSharePointNewsDigest : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
@@ -92,10 +94,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 subscriptionEnabled = false;
             }            
 
-            var record = new PSObject();
-            record.Properties.Add(new PSVariableProperty(new PSVariable("Account", Account)));
-            record.Properties.Add(new PSVariableProperty(new PSVariable("Enabled", subscriptionEnabled)));
-
+            var record = new SubscribeSharePointNewsDigestStatus(Account, subscriptionEnabled);
             WriteObject(record);
         }
     }

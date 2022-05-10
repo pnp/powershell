@@ -1,19 +1,22 @@
-﻿using System.Collections;
-using System.Management.Automation;
+﻿using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
+
 using PnP.PowerShell.Commands.Base;
-using System.Collections.Generic;
-using Microsoft.Online.SharePoint.TenantManagement;
 using PnP.PowerShell.Commands.Model.SharePoint.SharePointUserProfileSync;
+
+using System.Collections;
+using System.Collections.Generic;
+using System.Management.Automation;
 using System.Threading;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsData.Sync, "PnPSharePointUserProfilesFromAzureActiveDirectory")]
+    [OutputType(typeof(SharePointUserProfileSyncStatus))]
     public class SyncSharePointUserProfilesFromAzureActiveDirectory : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false)]
-        public List<PnP.PowerShell.Commands.Model.AzureAD.User> Users;
+        public List<Model.AzureAD.User> Users;
 
         [Parameter(Mandatory = false)]
         public string Folder = "Shared Documents";
@@ -41,12 +44,12 @@ namespace PnP.PowerShell.Commands.UserProfiles
             if (ParameterSpecified(nameof(Users)))
             {
                 // Users to sync have been provided
-                if(Users == null)
+                if (Users == null)
                 {
                     throw new PSArgumentNullException(nameof(Users), "Provided Users collection cannot be null");
                 }
 
-                WriteVerbose($"Using provided user collection containing {Users.Count} user{(Users.Count != 1 ? "s": "")}");
+                WriteVerbose($"Using provided user collection containing {Users.Count} user{(Users.Count != 1 ? "s" : "")}");
 
                 aadUsers = Users;
             }
@@ -55,7 +58,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 // No users to sync have been provided, retrieve all users
                 // Construct an array with all the Azure Active Directory properties that need to be fetched from the users to be able to make the mapping
                 var allAadPropertiesList = new List<string>();
-                foreach(DictionaryEntry userProfilePropertyMappingEntry in UserProfilePropertyMapping)
+                foreach (DictionaryEntry userProfilePropertyMappingEntry in UserProfilePropertyMapping)
                 {
                     if (userProfilePropertyMappingEntry.Value != null && !allAadPropertiesList.Contains(userProfilePropertyMappingEntry.Value.ToString()))
                     {
@@ -70,7 +73,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
                 WriteVerbose($"{aadUsers.Count} user{(aadUsers.Count != 1 ? "s have" : " has")} been retrieved from Azure Active Directory");
 
-                if(aadUsers.Count == 0)
+                if (aadUsers.Count == 0)
                 {
                     throw new PSInvalidOperationException($"No Azure Active Directory users found to process");
                 }
@@ -81,12 +84,12 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
             // Perform the mapping and execute the sync operation
             WriteVerbose($"Creating mapping file{(WhatIf.ToBool() ? " and" : ",")} uploading it to SharePoint Online to folder '{Folder}'{(WhatIf.ToBool() ? "" : " and executing sync job")}");
-            var job = PnP.PowerShell.Commands.Utilities.SharePointUserProfileSync.SyncFromAzureActiveDirectory(nonAdminClientContext, aadUsers, IdType, UserProfilePropertyMapping, Folder, ParameterSpecified(nameof(WhatIf))).GetAwaiter().GetResult();
+            var job = Utilities.SharePointUserProfileSync.SyncFromAzureActiveDirectory(nonAdminClientContext, aadUsers, IdType, UserProfilePropertyMapping, Folder, ParameterSpecified(nameof(WhatIf))).GetAwaiter().GetResult();
 
             WriteVerbose($"Job initiated with Id {job.JobId} and status {job.State} for file {job.SourceUri}");
 
             // Check if we should wait with finalzing this cmdlet execution until the user profile import operation has completed
-            if(Wait.ToBool() && !WhatIf.ToBool())
+            if (Wait.ToBool() && !WhatIf.ToBool())
             {
                 // Go into a loop to wait for the import to be successful or erroneous
                 var o365 = new Office365Tenant(ClientContext);
@@ -95,7 +98,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 do
                 {
                     // Wait for 30 seconds before requesting its current state again to avoid running into throttling
-                    Thread.Sleep((int)System.TimeSpan.FromSeconds(30).TotalMilliseconds);                    
+                    Thread.Sleep((int)System.TimeSpan.FromSeconds(30).TotalMilliseconds);
 
                     // Request the current status of the import job
                     jobStatus = o365.GetImportProfilePropertyJob(job.JobId.Value);
