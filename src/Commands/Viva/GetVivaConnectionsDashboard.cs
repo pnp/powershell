@@ -9,6 +9,7 @@ using System.Text;
 namespace PnP.PowerShell.Commands.Viva
 {
     [Cmdlet(VerbsCommon.Get, "PnPVivaConnectionsDashboardACE")]
+    [OutputType(typeof(AdaptiveCardExtension))]
     public class GetVivaConnectionsDashboard : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]
