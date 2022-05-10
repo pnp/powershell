@@ -8,6 +8,7 @@ using PnP.PowerShell.Commands.Enums;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPStoredCredential")]
+    [OutputType(typeof(PSCredential))]
     public class GetStoredCredential : PSCmdlet
     {
         [Parameter(Mandatory = true)]

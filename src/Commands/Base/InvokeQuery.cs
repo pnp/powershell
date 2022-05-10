@@ -5,6 +5,7 @@ using Microsoft.SharePoint.Client;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPQuery")]
+    [OutputType(typeof(void))]
     public class InvokeQuery : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false)]
