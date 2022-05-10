@@ -7,6 +7,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureCertificate", DefaultParameterSetName = "SELF")]
+    [OutputType(typeof(Model.AzureCertificate))]
     public class GetPnPAdalCertificate : PSCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -26,13 +27,23 @@ namespace PnP.PowerShell.Commands.Base
             if (System.IO.File.Exists(Path))
             {
                 var certificate = new X509Certificate2(Path, Password, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet);
-                var rawCert = certificate.GetRawCertData();
-                var base64Cert = Convert.ToBase64String(rawCert);
-                var rawCertHash = certificate.GetCertHash();
-                var base64CertHash = Convert.ToBase64String(rawCertHash);
-                var keyId = Guid.NewGuid();
+                WriteAzureCertificateOutput(this, certificate, Password);
+            }
+            else
+            {
+                throw new PSArgumentException("Certificate file does not exist");
+            }
+        }
 
-                var template = @"
+        static string GetManifestEntry(X509Certificate2 certificate)
+        {
+            var rawCert = certificate.GetRawCertData();
+            var base64Cert = Convert.ToBase64String(rawCert);
+            var rawCertHash = certificate.GetCertHash();
+            var base64CertHash = Convert.ToBase64String(rawCertHash);
+            var keyId = Guid.NewGuid();
+
+            var template = @"
 {{
     ""customKeyIdentifier"": ""{0}"",
     ""keyId"": ""{1}"",
@@ -41,24 +52,42 @@ namespace PnP.PowerShell.Commands.Base
     ""value"":  ""{2}""
 }}
 ";
-                var manifestEntry = string.Format(template, base64CertHash, keyId, base64Cert);
+            var manifestEntry = string.Format(template, base64CertHash, keyId, base64Cert);
+            return manifestEntry;
+        }
 
-                var record = new PSObject();
-                record.Properties.Add(new PSVariableProperty(new PSVariable("Subject", certificate.Subject)));
-                record.Properties.Add(new PSVariableProperty(new PSVariable("ValidFrom", certificate.NotBefore)));
-                record.Properties.Add(new PSVariableProperty(new PSVariable("ValidTo", certificate.NotAfter)));
-                record.Properties.Add(new PSVariableProperty(new PSVariable("Thumbprint", certificate.Thumbprint)));
-
-                record.Properties.Add(new PSVariableProperty(new PSVariable("KeyCredentials", manifestEntry)));
-                record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate", CertificateHelper.CertificateToBase64(certificate))));
-                record.Properties.Add(new PSVariableProperty(new PSVariable("PrivateKey", CertificateHelper.PrivateKeyToBase64(certificate))));
-
-                WriteObject(record);
-            }
-            else
+        static string/*?*/ GetPfxBase64OrWarn(Cmdlet cmdlet, X509Certificate2 certificate, SecureString password)
+        {
+            try
             {
-                throw new PSArgumentException("Certificate file does not exist");
+                var pfxBytes = certificate.Export(X509ContentType.Pfx, password);
+                var base64string = Convert.ToBase64String(pfxBytes);
+                return base64string;
             }
+            catch (Exception ex)
+            {
+                cmdlet.WriteWarning(ex.Message);
+                return null;
+            }
+        }
+
+        internal static void WriteAzureCertificateOutput(PSCmdlet cmdlet, X509Certificate2 certificate, SecureString password)
+        {
+            string manifestEntry = GetManifestEntry(certificate);
+            var pfxBase64 = GetPfxBase64OrWarn(cmdlet, certificate, password);
+
+            var record = new Model.AzureCertificate(
+                subject: certificate.Subject,
+                notBefore: certificate.NotBefore,
+                notAfter: certificate.NotAfter,
+                thumbprint: certificate.Thumbprint,
+                pfxBase64: pfxBase64,
+                keyCredentials: manifestEntry,
+                certificate: CertificateHelper.CertificateToBase64(certificate),
+                privateKey: CertificateHelper.PrivateKeyToBase64(certificate)
+            );
+
+            cmdlet.WriteObject(record);
         }
     }
 }
