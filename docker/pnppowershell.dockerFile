@@ -7,7 +7,7 @@ ARG INSTALL_USER="ContainerAdministrator"
 USER $INSTALL_USER
 ARG PNP_MODULE_VERSION
 ARG SKIP_PUBLISHER_CHECK="TRUE"
-RUN if ( $env:SKIP_PUBLISHER_CHECK ) { \
+RUN if ( $env:SKIP_PUBLISHER_CHECK -eq "True" ) { \
         Write-Host "SKIP_PUBLISHER_CHECK"; \
         Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_MODULE_VERSION -Force -AllowPrerelease -SkipPublisherCheck; \
     } else { \
