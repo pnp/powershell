@@ -1,4 +1,4 @@
-# Publish manually
+# Publish manually in Windows
 
 1. Set "DOCKER_USERNAME" and "DOCKER_PASSWORD" variables
 
@@ -6,7 +6,18 @@
 
 ```powershell
 $securedPassword = ConvertTo-SecureString $DOCKER_PASSWORD -AsPlainText -Force
-./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell $DOCKER_USERNAME powershell $securedPassword
+./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell $DOCKER_USERNAME powershell $securedPassword "pnppowershell-windows.dockerFile" $true "nanoserver-1809,nanoserver-20h2,nanoserver-ltsc2022"
+```
+
+# Publish manually in Linux
+
+1. Set "DOCKER_USERNAME" and "DOCKER_PASSWORD" variables
+
+2. Run
+
+```powershell
+$securedPassword = ConvertTo-SecureString $DOCKER_PASSWORD -AsPlainText -Force
+./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell $DOCKER_USERNAME powershell $securedPassword "pnppowershell.dockerFile" $false "alpine-3.14,arm32v7-ubuntu-bionic"
 ```
 
 # Publish with prereleases manually

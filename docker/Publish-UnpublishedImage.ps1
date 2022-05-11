@@ -18,7 +18,22 @@ Param(
     Mandatory = $true,
     ValueFromPipeline = $false)]
     [Security.SecureString]
-    $DOCKER_PASSWORD
+    $DOCKER_PASSWORD,
+    [Parameter(Position = 4,
+    Mandatory = $false,
+    ValueFromPipeline = $false)]
+    [String]
+    $DOCKER_FILE_NAME = "pnppowershell.dockerFile",
+    [Parameter(Position = 5,
+    Mandatory = $false,
+    ValueFromPipeline = $false)]
+    [bool]
+    $SKIP_PUBLISHER_CHECK = $false,
+    [Parameter(Position = 6,
+    Mandatory = $false,
+    ValueFromPipeline = $false)]
+    [String]
+    $DOCKER_IMAGE_SUFFIX_ARRAY = "nanoserver-1809"
 )
 $publishedImageVersions = (Invoke-RestMethod https://registry.hub.docker.com/v2/repositories/$DOCKER_USERNAME/$DOCKER_IMAGE_NAME/tags?page_size=10240).results | % {
     $_.name
@@ -27,12 +42,17 @@ $moduleVersions = Find-Module $PS_MODULE_NAME -AllVersions;
 [array]::Reverse($moduleVersions);
 $moduleVersions | % {
     $moduleVersion = $_.Version;
-    if ( !( $publishedImageVersions -contains $moduleVersion ) ) {
-        docker build --build-arg "PNP_MODULE_VERSION=$moduleVersion" ./docker -f ./docker/pnppowershell.dockerFile --tag $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:$moduleVersion;
-        docker image tag $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:$moduleVersion $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:latest;
-        $plainStringPassword = [System.Net.NetworkCredential]::new("", $DOCKER_PASSWORD).Password;
-        docker login -u $DOCKER_USERNAME -p "$plainStringPassword";
-        docker push $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:$moduleVersion;
-        docker push $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:latest;
+    $DOCKER_IMAGE_SUFFIX_ARRAY.Split( "," ) | % {
+        $baseImageSuffix = $_;
+        $imageVersion = "$moduleVersion-$baseImageSuffix";
+        Write-Host "Checking $imageVersion"
+        if ( !( $publishedImageVersions -contains $imageVersion ) ) {
+            docker build --build-arg "PNP_MODULE_VERSION=$moduleVersion" --build-arg "BASE_IMAGE_SUFFIX=$baseImageSuffix" --build-arg "SKIP_PUBLISHER_CHECK=FALSE" ./docker -f ./docker/$DOCKER_FILE_NAME --tag $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:$imageVersion;
+            docker image tag $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:$imageVersion$DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:latest;
+            $plainStringPassword = [System.Net.NetworkCredential]::new("", $DOCKER_PASSWORD).Password;
+            docker login -u $DOCKER_USERNAME -p "$plainStringPassword";
+            docker push $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:$imageVersion;
+            docker push $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:latest;
+        }
     }
 }
