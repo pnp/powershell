@@ -48,7 +48,7 @@ $moduleVersions | % {
         Write-Host "Checking $imageVersion"
         if ( !( $publishedImageVersions -contains $imageVersion ) ) {
             docker build --build-arg "PNP_MODULE_VERSION=$moduleVersion" --build-arg "BASE_IMAGE_SUFFIX=$baseImageSuffix" --build-arg "SKIP_PUBLISHER_CHECK=FALSE" ./docker -f ./docker/$DOCKER_FILE_NAME --tag $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:$imageVersion;
-            docker image tag $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:$imageVersion$DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:latest;
+            docker image tag $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:$imageVersion $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:latest;
             $plainStringPassword = [System.Net.NetworkCredential]::new("", $DOCKER_PASSWORD).Password;
             docker login -u $DOCKER_USERNAME -p "$plainStringPassword";
             docker push $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:$imageVersion;
