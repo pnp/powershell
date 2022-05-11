@@ -33,7 +33,7 @@ Param(
     Mandatory = $false,
     ValueFromPipeline = $false)]
     [String]
-    $DOCKER_IMAGE_SUFFIX_ARRAY = "nanoserver-1809"
+    $DOCKER_IMAGE_SUFFIX_ARRAY = "nanoserver-1809,nanoserver-20h2,nanoserver-ltsc2022"
 )
 $publishedImageVersions = (Invoke-RestMethod https://registry.hub.docker.com/v2/repositories/$DOCKER_USERNAME/$DOCKER_IMAGE_NAME/tags?page_size=10240).results | % {
     $_.name
