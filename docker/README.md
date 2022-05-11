@@ -6,7 +6,7 @@
 
 ```powershell
 $securedPassword = ConvertTo-SecureString $DOCKER_PASSWORD -AsPlainText -Force
-./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell $DOCKER_USERNAME powershell $securedPassword $true "nanoserver-1809,nanoserver-20h2,nanoserver-ltsc2022"
+./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell $DOCKER_USERNAME powershell $securedPassword "ContainerAdministrator" $true "nanoserver-1809,nanoserver-20h2,nanoserver-ltsc2022"
 ```
 
 # Publish manually in Linux
@@ -17,7 +17,7 @@ $securedPassword = ConvertTo-SecureString $DOCKER_PASSWORD -AsPlainText -Force
 
 ```powershell
 $securedPassword = ConvertTo-SecureString $DOCKER_PASSWORD -AsPlainText -Force
-./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell $DOCKER_USERNAME powershell $securedPassword $false "alpine-3.14,arm32v7-ubuntu-bionic"
+./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell $DOCKER_USERNAME powershell $securedPassword $false "root" "alpine-3.14,arm32v7-ubuntu-bionic"
 ```
 
 # Publish with prereleases manually
