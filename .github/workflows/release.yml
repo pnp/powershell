@@ -13,7 +13,7 @@ jobs:
       shell: pwsh
       run: |
         $securedPassword = ConvertTo-SecureString "${{ secrets.DOCKER_PASSWORD }}" -AsPlainText -Force
-        ./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell ${{ secrets.DOCKER_USERNAME }} powershell $securedPassword "pnppowershell-windows.dockerFile" $true "nanoserver-1809,nanoserver-20h2,nanoserver-ltsc2022"
+        ./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell ${{ secrets.DOCKER_USERNAME }} powershell $securedPassword $true "nanoserver-1809,nanoserver-20h2,nanoserver-ltsc2022"
   publish-docker-linux:
     runs-on: ubuntu-latest
     steps:
@@ -22,4 +22,4 @@ jobs:
       shell: pwsh
       run: |
         $securedPassword = ConvertTo-SecureString "${{ secrets.DOCKER_PASSWORD }}" -AsPlainText -Force
-        ./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell ${{ secrets.DOCKER_USERNAME }} powershell $securedPassword "pnppowershell.dockerFile" $false "alpine-3.14,arm32v7-ubuntu-bionic"
+        ./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell ${{ secrets.DOCKER_USERNAME }} powershell $securedPassword $false "alpine-3.14,arm32v7-ubuntu-bionic"

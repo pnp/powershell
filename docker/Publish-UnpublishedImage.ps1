@@ -22,14 +22,9 @@ Param(
     [Parameter(Position = 4,
     Mandatory = $false,
     ValueFromPipeline = $false)]
-    [String]
-    $DOCKER_FILE_NAME = "pnppowershell.dockerFile",
-    [Parameter(Position = 5,
-    Mandatory = $false,
-    ValueFromPipeline = $false)]
     [bool]
     $SKIP_PUBLISHER_CHECK = $false,
-    [Parameter(Position = 6,
+    [Parameter(Position = 5,
     Mandatory = $false,
     ValueFromPipeline = $false)]
     [String]
