@@ -6,7 +6,7 @@
 
 ```powershell
 $securedPassword = ConvertTo-SecureString $DOCKER_PASSWORD -AsPlainText -Force
-./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell $DOCKER_USERNAME powershell $securedPassword "ContainerAdministrator" $true "nanoserver-1809,nanoserver-20h2,nanoserver-ltsc2022"
+./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell $DOCKER_USERNAME powershell $securedPassword "ContainerAdministrator" $true "nanoserver-1809"
 ```
 
 # Publish manually in Linux
