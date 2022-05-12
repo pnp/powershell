@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Accept` parameter to `Invoke-PnPSPRestMethod` cmdlet which if specified will pass the Accept HTTP request header. [#1795](https://github.com/pnp/powershell/pull/1795)
 - Added `Get-PnPFlowRun` cmdlet to retrieve a specific run, or all runs from a specific Power Automate flow. [#1819](https://github.com/pnp/powershell/pull/1819)
 - Added `Invoke-PnPGraphMethod` cmdlet to invoke generic Microsoft Graph API Methods. [#1820](https://github.com/pnp/powershell/pull/1820)
+- Added `TimeZone` parameter to `New-PnPSite` cmdlet which allows setting of the site collection in the specified timezone.
 
 ### Changed
 - Changed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to map users based on their Ids instead which should resolve some issues around user identities reporting not to exist. You can use the new `-IdType` option to switch it back to `PrincipalName` if needed.  [#1752](https://github.com/pnp/powershell/pull/1752)
