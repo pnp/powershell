@@ -10,16 +10,8 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: | 
-          3.1.301
-          5.x
-    - uses: actions/checkout@v2
-      with:
-        ref: dev
-        token: ${{ secrets.PAT }}
+    - shell: pwsh
+      run: Write-Host "hi"
   publish-docker-windows-2022:
     runs-on: windows-2022
     needs: [ build ]
