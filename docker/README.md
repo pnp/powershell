@@ -17,7 +17,7 @@ $securedPassword = ConvertTo-SecureString $DOCKER_PASSWORD -AsPlainText -Force
 
 ```powershell
 $securedPassword = ConvertTo-SecureString $DOCKER_PASSWORD -AsPlainText -Force
-./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell $DOCKER_USERNAME powershell $securedPassword $false "root" "alpine-3.14,arm32v7-ubuntu-bionic"
+./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell $DOCKER_USERNAME powershell $securedPassword $false "root" "alpine-3.14"
 ```
 
 # Publish with prereleases manually
