@@ -9,7 +9,8 @@ ARG PNP_MODULE_VERSION
 ARG SKIP_PUBLISHER_CHECK=TRUE
 RUN if ( $env:SKIP_PUBLISHER_CHECK -eq $true ) { \
         Write-Host "SKIP_PUBLISHER_CHECK"; \
-        Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_MODULE_VERSION -Force -AllowPrerelease -SkipPublisherCheck; \
+        Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_MODULE_VERSION -Force -AllowPrerelease -Scope AllUsers -SkipPublisherCheck; \
     } else { \
-        Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_MODULE_VERSION -Force -AllowPrerelease; \
+        Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_MODULE_VERSION -Force -AllowPrerelease -Scope AllUsers; \
     }
+    
