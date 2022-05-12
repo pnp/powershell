@@ -48,11 +48,13 @@ $moduleVersions | % {
         Write-Host "Checking $imageVersion"
         if ( !( $publishedImageVersions -contains $imageVersion ) ) {
             docker build --build-arg "PNP_MODULE_VERSION=$moduleVersion" --build-arg "BASE_IMAGE_SUFFIX=$baseImageSuffix" --build-arg "INSTALL_USER=$DOCKER_INSTALL_USER" --build-arg "SKIP_PUBLISHER_CHECK=$SKIP_PUBLISHER_CHECK" ./docker -f ./docker/pnppowershell.dockerFile --tag $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:$imageVersion;
-            docker image tag $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:$imageVersion $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:latest;
             $plainStringPassword = [System.Net.NetworkCredential]::new("", $DOCKER_PASSWORD).Password;
             docker login -u $DOCKER_USERNAME -p "$plainStringPassword";
             docker push $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:$imageVersion;
-            docker push $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:latest;
+            if ( $baseImageSuffix -eq "alpine-3.14") {
+                docker image tag $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:$imageVersion $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:latest;
+                docker push $DOCKER_USERNAME/$DOCKER_IMAGE_NAME`:latest;
+            }
         }
     }
 }
