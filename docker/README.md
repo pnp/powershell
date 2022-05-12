@@ -20,7 +20,31 @@ $securedPassword = ConvertTo-SecureString $DOCKER_PASSWORD -AsPlainText -Force
 ./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell $DOCKER_USERNAME powershell $securedPassword $false "root" "alpine-3.14"
 ```
 
-# Publish with prereleases manually
+# Publish with prereleases manually in Windows
+
+1. Set "DOCKER_USERNAME" and "DOCKER_PASSWORD" variables
+
+2. Run
+
+```PowerShell
+$VERSION="$(cat ./version.txt)-nightly"
+docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=nanoserver-ltsc2022" --build-arg "INSTALL_USER=ContainerAdministrator" --build-arg "SKIP_PUBLISHER_CHECK=True" ./docker -f ./docker/pnppowershell.dockerFile --tag "$DOCKER_USERNAME/powershell:$VERSION-nanoserver-ltsc2022";
+$VERSION="$(cat ./version.txt)-nightly"
+docker login -u $DOCKER_USERNAME -p "$DOCKER_PASSWORD"
+docker push "$DOCKER_USERNAME/powershell:$VERSION-nanoserver-ltsc2022"
+```
+
+or
+
+```PowerShell
+$VERSION="$(cat ./version.txt)-nightly"
+docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=nanoserver-1809" --build-arg "INSTALL_USER=ContainerAdministrator" --build-arg "SKIP_PUBLISHER_CHECK=True" ./docker -f ./docker/pnppowershell.dockerFile --tag "$DOCKER_USERNAME/powershell:$VERSION-nanoserver-1809";
+$VERSION="$(cat ./version.txt)-nightly"
+docker login -u $DOCKER_USERNAME -p "$DOCKER_PASSWORD"
+docker push "$DOCKER_USERNAME/powershell:$VERSION-nanoserver-1809"
+```
+
+# Publish with prereleases manually in Linux
 
 1. Set "DOCKER_USERNAME" and "DOCKER_PASSWORD" variables
 
@@ -28,10 +52,10 @@ $securedPassword = ConvertTo-SecureString $DOCKER_PASSWORD -AsPlainText -Force
 
 ```bash
 VERSION=$(cat ./version.txt)-nightly
-docker build --build-arg "PNP_MODULE_VERSION=$VERSION" ./docker -f ./docker/pnppowershell-prerelease.dockerFile --tag $DOCKER_USERNAME/powershell:$VERSION
-docker image tag $DOCKER_USERNAME/powershell:$VERSION $DOCKER_USERNAME/powershell:nightly
-docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-docker push $DOCKER_USERNAME/powershell:$VERSION
+docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=alpine-3.14" --build-arg "INSTALL_USER=root" --build-arg "SKIP_PUBLISHER_CHECK=False" ./docker -f ./docker/pnppowershell.dockerFile --tag $DOCKER_USERNAME/powershell:$VERSION-alpine-3.14;
+docker image tag $DOCKER_USERNAME/powershell:$VERSION-alpine-3.14 $DOCKER_USERNAME/powershell:nightly
+docker login -u $DOCKER_USERNAME -p "$DOCKER_PASSWORD"
+docker push $DOCKER_USERNAME/powershell:$VERSION-alpine-3.14
 docker push $DOCKER_USERNAME/powershell:nightly
 ```
 
