@@ -13,4 +13,3 @@ RUN if ( $env:SKIP_PUBLISHER_CHECK -eq $true ) { \
     } else { \
         Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_MODULE_VERSION -Force -AllowPrerelease -Scope AllUsers; \
     }
-    
