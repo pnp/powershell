@@ -70,6 +70,8 @@ Tag name examples:
 * 1.10.0-alpine-3.14
 * 1.10.26-nightly-nanoserver-ltsc2022
 
+To find the version numbers please visit https://www.powershellgallery.com/packages/PnP.PowerShell
+
 ## Feedback
 
 * To give feedback for PnP.PowerShell or for how the images are built, file an issue at [PnP/PowerShell](https://github.com/pnp/powershell/issues/new/choose)
