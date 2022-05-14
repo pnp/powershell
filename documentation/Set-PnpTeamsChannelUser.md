@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPTeamsChannelUser.html
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTeamsChannelUser.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Add-PnPTeamsChannelUser
+title: Set-PnPTeamsChannelUser
 ---
   
-# Add-PnPTeamsChannelUser
+# Set-PnPTeamsChannelUser
 
 ## SYNOPSIS
 
@@ -15,12 +15,12 @@ title: Add-PnPTeamsChannelUser
 
   * Microsoft Graph API: ChannelMember.ReadWrite.All
 
-Adds a user to an existing Microsoft Teams private channel.
+Updates the role of a user in an existing Microsoft Teams private channel.
 
 ## SYNTAX
 
 ```powershell
-Add-PnPTeamsChannelUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -User <String> -Role <String> [<CommonParameters>]
+Set-PnPTeamsChannelUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -User <String> -Role <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,17 +29,17 @@ Add-PnPTeamsChannelUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPTeamsChannelUser -Team 4efdf392-8225-4763-9e7f-4edeb7f721aa -Channel "19:796d063b63e34497aeaf092c8fb9b44e@thread.skype" -User john@doe.com -Role Owner
+Set-PnPTeamsChannelUser -Team 4efdf392-8225-4763-9e7f-4edeb7f721aa -Channel "19:796d063b63e34497aeaf092c8fb9b44e@thread.skype" -Identity MCMjMiMjMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIyMxOTowMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMEB0aHJlYWQuc2t5cGUjIzAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMA== -Role Owner
 ```
 
-Adds user as an owner to the private channel.
+Updates the user with specific membership ID as owner of the specified Teams private channel.
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPTeamsChannelUser -Team "My Team" -Channel "My Private Channel" -User john@doe.com -Role Member
+Set-PnPTeamsChannelUser -Team "My Team" -Channel "My Private Channel" -Identity john@doe.com -Role Member
 ```
 
-Adds user as a member to the private channel.
+Updates the user john@doe.com as member of the specified Teams private channel.
 
 ## PARAMETERS
 
@@ -71,12 +71,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -User
-Specify the UPN (e.g. john@doe.com)
+### -Identity
+Specify membership id, UPN or user ID of the channel member.
 
 ```yaml
-Type: String
-Parameter Sets: (User)
+Type: TeamsChannelMemberPipeBind
+Parameter Sets: (All)
 
 Required: True
 Position: Named

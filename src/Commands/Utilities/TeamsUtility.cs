@@ -697,6 +697,21 @@ namespace PnP.PowerShell.Commands.Utilities
             return await GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/members/{membershipId}", accessToken);
         }
 
+        /// <summary>
+        /// Update the role of a specific member of a Microsoft Teams channel.
+        /// </summary>
+        /// <returns>Updated membership object.</returns>
+        public static async Task<TeamChannelMember> UpdateChannelMemberAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, string membershipId, string role)
+        {
+            var channelMember = new TeamChannelMember();
+
+            // User role. Empty for member, 'owner' for owner.
+            if (role.Equals("owner", StringComparison.OrdinalIgnoreCase))
+                channelMember.Roles.Add("owner");
+
+            return await GraphHelper.PatchAsync(httpClient, accessToken, $"v1.0/teams/{groupId}/channels/{channelId}/members/{membershipId}", channelMember);
+        }
+
         #endregion
 
         #region Tabs
