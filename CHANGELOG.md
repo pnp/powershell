@@ -39,6 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Get-PnPAvailableClientSideComponents`. Use `Get-PnPPageComponent -Page -ListAvailable` instead.  [#1833](https://github.com/pnp/powershell/pull/1833)
 
 ### Contributors
+- Jago Pauwels [jagopauwels]
 - [4ndri]
 - Martin Lingstuyl [martinlingstuyl]
 - James May [fowl2]
