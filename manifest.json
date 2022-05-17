@@ -381,7 +381,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPFile.html",
-          "hash": "8LAT+EmdQ/KoMABv+cRFPw=="
+          "hash": "b1MSTUMW9C1aqtJdypg7RQ=="
         }
       },
       "is_incremental": false,
@@ -4236,7 +4236,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/New-PnPSite.html",
-          "hash": "2fY3m2wYCl0Wxv8BK/VVBA=="
+          "hash": "nwIM7JIKiTjYk6Xbh4zqmQ=="
         }
       },
       "is_incremental": false,
