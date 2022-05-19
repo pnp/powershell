@@ -30,6 +30,12 @@ namespace PnP.PowerShell.Commands.Utilities.JSON
             {
                 return (PSObject)value;
             }
+            if(value is List<object>)
+            {
+                var pso = new PSObject();
+                pso.Properties.Add(new PSNoteProperty("Values", value));
+                return pso;
+            }
             throw new FormatException($"primitive type[{element.ValueKind}] can not be converted to PSObject");
         }
 
