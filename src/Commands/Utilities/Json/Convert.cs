@@ -73,7 +73,14 @@ namespace PnP.PowerShell.Commands.Utilities.JSON
                     }
                 case JsonValueKind.Number:
                     {
-                        value = element.GetInt64();
+                        if (element.TryGetInt64(out long valLong))
+                        {
+                            value = valLong;
+                        }
+                        else if (element.TryGetDouble(out double valDouble))
+                        {
+                            value = valDouble;
+                        }
                         break;
                     }
             }
