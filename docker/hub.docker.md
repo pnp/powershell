@@ -7,14 +7,14 @@
 * latest: The latest stable image
 
   * alpine-3.14
-  * `docker pull pnp/powershell` or `docker pull pnp/powershell:latest`
+  * `docker pull m365pnp/powershell` or `docker pull m365pnp/powershell:latest`
 
 ### Nightly
 
 * nightly: The latest night image
 
   * alpine-3.14
-  * `docker pull pnp/powershell:nightly`
+  * `docker pull m365pnp/powershell:nightly`
 
 ## About this image
 

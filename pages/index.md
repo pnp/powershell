@@ -22,13 +22,13 @@ Install-Module -Name PnP.PowerShell -AllowPrerelease -SkipPublisherCheck -AllowC
 To use PnP.PowerShell in a Windows container:
 
 ```
-docker run -it pnp/powershell:1.10.0-nanoserver-1809
+docker run -it m365pnp/powershell:1.10.0-nanoserver-1809
 ```
 
 To use PnP.PowerShell in a Linux container:
 
 ```
-docker run -it pnp/powershell
+docker run -it m365pnp/powershell
 ```
 
 See the [articles](/powershell/articles) section for more information on authentication and configuration. All [cmdlets](/powershell/cmdlets/Add-PnPAlert.html) have been documented too.
