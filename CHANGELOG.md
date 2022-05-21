@@ -22,7 +22,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Invoke-PnPGraphMethod` cmdlet to invoke generic Microsoft Graph API Methods. [#1820](https://github.com/pnp/powershell/pull/1820)
 - Added `Stop-PnPFlowRun` cmdlet to stop/cancel a specific Power Automate flow run. [#1838](https://github.com/pnp/powershell/pull/1838)
 - Added `Remove-PnPTeamsChannelUser` cmdlet to remove a user from a private channel. [#1840](https://github.com/pnp/powershell/pull/1840)
-- Added `Get-PnPListItemPermissions` cmdlet to retrieve permissions of a list item.
 
 ### Changed
 - Changed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to map users based on their Ids instead which should resolve some issues around user identities reporting not to exist. You can use the new `-IdType` option to switch it back to `PrincipalName` if needed.  [#1752](https://github.com/pnp/powershell/pull/1752)
@@ -58,12 +57,36 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Update-PnPTeamsUser` cmdlet to change the role of a user in an existing Teams team [#1499](https://github.com/pnp/powershell/pull/1499)
 - Added `Get\New\Remove\Set-PnPMicrosoft365GroupSettings` cmdlets to interact with Microsoft 365 Group settings.
 - Added `Get-PnPMicrosoft365GroupSettingTemplates` cmdlet to retrieve system wide Microsoft 365 Group setting templates.
-- Added `Add\Remove\Invoke-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design.
-- Added `Get-PnPListItemPermissions` cmdlet to retrieve permissions of a list item.
+- Added `Add\Remove\Invoke\Get-PnPListDesign` cmdlets to add a list design, remove a list design and apply the list design.
+- Added `DisablePersonalListCreation` parameter to `Set-PnPTenant` cmdlet to provide ability to disable personal lists creation [#1545](https://github.com/pnp/powershell/pull/1545)
+- Added `DisabledModernListTemplateIds` and `EnableModernListTemplateIds` parameters to `Set-PnPTenant` cmdlet to provide ability to disable or enable modern lists with specific Ids [#1545](https://github.com/pnp/powershell/pull/1545)
+- Added `DisablePersonalListCreation` and `DisabledModernListTemplateIds` values to be displayed when using `Get-PnPTenant` cmdlet [#1545](https://github.com/pnp/powershell/pull/1545)
 - Added `Add\Remove\Set-PnPAdaptiveScopeProperty` cmdlets to add/update/remove a property bag value while dealing with the noscript toggling in one cmdlet [#1556](https://github.com/pnp/powershell/pull/1556)
 - Added support to add multiple owners and members in `New-PnPTeamsTeam` cmdlet [#1241](https://github.com/pnp/powershell/pull/1241)
 - Added the ability to set the title of a new modern page in SharePoint Online using `Add-PnPPage` to be different from its filename by using `-Title`
- 
+- Added optional `-UseBeta` parameter to `Get-PnPAzureADUser` to force it to use the Microsoft Graph beta endpoint. This can be necessary when i.e. using `-Select "PreferredDataLocation"` to query for users with a specific multi geo location as this property is only available through the beta endpoint. [#1559](https://github.com/pnp/powershell/pull/1559)
+- Added `-Content` option to `Add-PnPFile` which allows creating a new file on SharePoint Online and directly providing its textual content, i.e. to upload a log file of the execution [#1559](https://github.com/pnp/powershell/pull/1559)
+- Added `Get-PnPTeamsPrimaryChannel` to get the primary Teams channel, general, of a Team [#1572](https://github.com/pnp/powershell/pull/1572)
+- Added `IgnoreDefaultProperties` parameter to `Get-PnPAzureADUser` to allow for the default properties not to be retrieved but instead just the ones you specify using `Select` [#1575](https://github.com/pnp/powershell/pull/1575)
+- Added `Publish\Unpublish-PnPContentType` to allow for content types to be published or unpublished on hub sites [#1597](https://github.com/pnp/powershell/pull/1597)
+- Added `Get-PnPContentTypePublishingStatus` to get te current publication state of a content type in the content type hub site [#1597](https://github.com/pnp/powershell/pull/1597)
+- Added ability to pipe the output of `Get-PnPTenantDeletedSite` to either `Restore-PnPTenantDeletedSite` or `Remove-PnPTenantDeletedSite` [#1596](https://github.com/pnp/powershell/pull/1596)
+- Added `Rename-PnPTenantSite` to rename a SharePoint Online site URL [#1606](https://github.com/pnp/powershell/pull/1606)
+- Added optional `-Wait` option to `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to allow for the script to wait until the user profile sync has completed
+- Added optional `-Verbose` option to `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to allow for seeing the progress of the synchronization process
+- Added `Copy-PnPTeamsTeam` which allows an existing Teams team to be copied into a new Team [#1624](https://github.com/pnp/powershell/pull/1624)
+- Added `Set-PnPMessageCenterAnnouncementAsRead` which allows setting one or more message center announcements as read for the current user [#1151](https://github.com/pnp/powershell/pull/1151)
+- Added `Set-PnPMessageCenterAnnouncementAsUnread` which allows setting one or more message center announcements as unread for the current user [#1151](https://github.com/pnp/powershell/pull/1151)
+- Added `Set-PnPMessageCenterAnnouncementAsArchived` which allows setting one or more message center announcements as archived for the current user [#1151](https://github.com/pnp/powershell/pull/1151)
+- Added `Set-PnPMessageCenterAnnouncementAsNotArchived` which allows setting one or more message center announcements as not archived for the current user [#1151](https://github.com/pnp/powershell/pull/1151)
+- Added `Set-PnPMessageCenterAnnouncementAsFavorite` which allows setting one or more message center announcements as favorite for the current user [#1151](https://github.com/pnp/powershell/pull/1151)
+- Added `Set-PnPMessageCenterAnnouncementAsNotFavorite` which allows setting one or more message center announcements as not favorite for the current user [#1151](https://github.com/pnp/powershell/pull/1151)
+- Added `-AsMemoryStream` option to `Get-PnPFile` to allow for downloading of a file from SharePoint Online in memory for further processing [#1638](https://github.com/pnp/powershell/pull/1638)
+- Added `-Stream` option to `Read-PnPSiteTemplate` to allow for processing on a PnP Provisioning Template coming from memory [#1638](https://github.com/pnp/powershell/pull/1638)
+- Added `New-PnPAzureADUserTemporaryAccessPass` which allows creation of a Temporary Access Pass for a specific user in Azure Active Directory
+- Added `-Force` option to `Set-PnPTenant` to allow skipping the confirmation question for certain other parameters like `SignInAccelerationDomain,EnableGuestSignInAcceleration,BccExternalSharingInvitations,OrphanedPersonalSitesRetentionPeriod,OneDriveForGuestsEnabled,AllowDownloadingNonWebViewableFiles`.
+- Added `Get-PnPCompatibleHubContentTypes` which allows the list of content types present in the content type hub site that can be added to the root web or a list on a target site to be returned [#1678](https://github.com/pnp/powershell/pull/1678)
+
 ### Changed
 
 - Improved `Add-PnPTeamsUser` cmdlet. The cmdlet executes faster and we can now add users in batches of 200. [#1548](https://github.com/pnp/powershell/pull/1548)
