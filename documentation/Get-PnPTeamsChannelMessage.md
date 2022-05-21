@@ -73,13 +73,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
- ### -Identity
+### -Identity
 Specify the id of the message to use.
 
 ```yaml
 Type: TeamsChannelMessagePipeBind
 Parameter Sets: (All)
 Required: False
+
 Position: Named
 Default value: None
 Accept pipeline input: False
