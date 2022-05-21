@@ -34,6 +34,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPFile` issue with every 3rd file download in PS 5.
 - Fixed `Add-PnPContentTypesFromContentTypeHub`, if `Site` parameter is specified, it will be used now to sync content types from content type hub site.
 - Fixed `Get-PnPTeamsTeam`, the cmdlet now also returns additional properties like `WebUrl, CreatedDateTime, InternalId` [#1825](https://github.com/pnp/powershell/pull/1825)
+- Fixed `Add/Set-PnPListItem` , the cmdlet now works correctly with `-Batch` parameter for field types other than string.
 
 ### Removed
 - Removed `Get-PnPAvailableClientSideComponents`. Use `Get-PnPPageComponent -Page -ListAvailable` instead.  [#1833](https://github.com/pnp/powershell/pull/1833)
