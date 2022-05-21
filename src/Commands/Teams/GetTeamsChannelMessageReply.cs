@@ -49,6 +49,11 @@ namespace PnP.PowerShell.Commands.Teams
             {
                 if (ParameterSpecified(nameof(Identity)))
                 {
+                    if (ParameterSpecified(nameof(IncludeDeleted)))
+                    {
+                        throw new PSArgumentException($"Don't specify {nameof(IncludeDeleted)} when using the {nameof(Identity)} parameter.");
+                    }
+
                     var reply = TeamsUtility.GetMessageReplyAsync(HttpClient, AccessToken, groupId, channelId, messageId, Identity.GetId()).GetAwaiter().GetResult();
                     WriteObject(reply);
                 }
