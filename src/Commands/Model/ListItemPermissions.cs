@@ -5,8 +5,8 @@ namespace PnP.PowerShell.Commands.Model
 {
     public class ListItemPermissions
     {
-        public IEnumerable<Core.Model.Security.IRoleDefinition> RoleDefinitions { get; set; }
+        public List<string> Permissions { get; set; }
 
-        public int PrincipalId { get; set; }
+        public string PrincipalName { get; set; }
     }
 }

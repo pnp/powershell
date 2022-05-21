@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Management.Automation;
+using Microsoft.SharePoint.Client;
 using PnP.Core.QueryModel;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
@@ -17,12 +18,9 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(PnPContext);
-
+            var list = List.GetList(CurrentWeb);
             if (list == null)
-            {
-                throw new PSArgumentException($"Cannot find list provided through - {nameof(List)}", nameof(List));
-            }
+                throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 
             var item = Identity.GetListItem(list);
 
@@ -31,18 +29,27 @@ namespace PnP.PowerShell.Commands.Lists
                 throw new PSArgumentException($"Cannot find list item provided through -{nameof(Identity)}", nameof(Identity));
             }
 
-            item.LoadAsync(w => w.RoleAssignments.QueryProperties(p => p.RoleDefinitions, p => p.PrincipalId)).GetAwaiter().GetResult();
+            ClientContext.Load(item, a => a.RoleAssignments.Include(roleAsg => roleAsg.Member.LoginName,
+                    roleAsg => roleAsg.RoleDefinitionBindings.Include(roleDef => roleDef.Name,
+                    roleDef => roleDef.Description)));
+            ClientContext.ExecuteQueryRetry();
 
             var listItemPermissions = new List<ListItemPermissions>();
 
-            foreach (var roleAssignment in item.RoleAssignments.AsRequested())
+            foreach (var roleAssignment in item.RoleAssignments)
             {
                 var listItemPermission = new ListItemPermissions
                 {
-                    RoleDefinitions = roleAssignment.RoleDefinitions.AsRequested(),
-                    PrincipalId = roleAssignment.PrincipalId
+                    PrincipalName = roleAssignment.Member.LoginName
                 };
 
+                List<string> roles = new List<string>();
+                foreach (var role in roleAssignment.RoleDefinitionBindings)
+                {
+                    roles.Add(role.Description);
+                }
+
+                listItemPermission.Permissions = roles;
                 listItemPermissions.Add(listItemPermission);
             }
 
