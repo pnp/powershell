@@ -631,6 +631,22 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
+        /// <summary>
+        /// List all the replies to a message in a channel of a team.
+        /// </summary>
+        public static async Task<IEnumerable<TeamChannelMessageReply>> GetMessageRepliesAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, string messageId)
+        {
+            return await GraphHelper.GetResultCollectionAsync<TeamChannelMessageReply>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages/{messageId}/replies", accessToken);
+        }
+
+        /// <summary>
+        /// Get a specific reply of a message in a channel of a team.
+        /// </summary>
+        public static async Task<TeamChannelMessageReply> GetMessageReplyAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, string messageId, string replyId)
+        {
+            return await GraphHelper.GetAsync<TeamChannelMessageReply>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages/{messageId}/replies/{replyId}", accessToken);
+        }
+
         public static async Task<TeamChannel> UpdateChannelAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, TeamChannel channel)
         {
             return await GraphHelper.PatchAsync(httpClient, accessToken, $"beta/teams/{groupId}/channels/{channelId}", channel);
