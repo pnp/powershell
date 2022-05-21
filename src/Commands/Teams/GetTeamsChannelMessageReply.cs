@@ -22,6 +22,9 @@ namespace PnP.PowerShell.Commands.Teams
         [Parameter(Mandatory = false)]
         public TeamsChannelMessageReplyPipeBind Identity;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter IncludeDeleted;
+
         protected override void ExecuteCmdlet()
         {
             var groupId = Team.GetGroupId(HttpClient, AccessToken);
@@ -51,7 +54,7 @@ namespace PnP.PowerShell.Commands.Teams
                 }
                 else
                 {
-                    var replies = TeamsUtility.GetMessageRepliesAsync(HttpClient, AccessToken, groupId, channelId, messageId).GetAwaiter().GetResult();
+                    var replies = TeamsUtility.GetMessageRepliesAsync(HttpClient, AccessToken, groupId, channelId, messageId, IncludeDeleted).GetAwaiter().GetResult();
                     WriteObject(replies, true);
                 }
             }

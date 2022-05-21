@@ -20,7 +20,9 @@ Returns replies from the specified Microsoft Teams channel message.
 ## SYNTAX
 
 ```powershell
-Get-PnPTeamsChannelMessageReply -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -Message <TeamsChannelMessagePipeBind> [-Identity <TeamsChannelMessageReplyPipeBind>] [<CommonParameters>]
+Get-PnPTeamsChannelMessageReply -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -Message <TeamsChannelMessagePipeBind> 
+[-Identity <TeamsChannelMessageReplyPipeBind>] [-IncludeDeleted]
+[<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,10 +32,10 @@ Get-PnPTeamsChannelMessageReply -Team <TeamsTeamPipeBind> -Channel <TeamsChannel
 ### EXAMPLE 1
 
 ```powershell
-Get-PnPTeamsChannelMessageReply -Team MyTestTeam -Channel "My Channel" -Message 1653089769293
+Get-PnPTeamsChannelMessageReply -Team MyTestTeam -Channel "My Channel" -Message 1653089769293 -IncludeDeleted
 ```
 
-Gets all replies of the specified channel message.
+Gets all (active and deleted) replies of the specified channel message.
 
 ### EXAMPLE 2
 ```powershell
@@ -92,6 +94,20 @@ Specify the id of the message reply to use.
 
 ```yaml
 Type: TeamsChannelMessageReplyPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeDeleted
+Specify to include deleted messages
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
