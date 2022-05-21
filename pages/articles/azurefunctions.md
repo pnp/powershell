@@ -9,8 +9,14 @@ In this article we will setup an Azure Function to use PnP PowerShell
 
 As the UI in https://portal.azure.com changes every now and then, but the principles stay the same, follow the following steps:
 
-1. Create a new Function App and navigate there when ready.
-1. Make sure you select the option to run PowerShell V3 functions, based upon PowerShell 7.
+1. Create a new Function App
+1. Choose runtime stack `PowerShell Core` and version `7.0`
+   
+   ![](./../images/azurefunctions/createfunctionappbasics.png)
+
+1. Select `Windows` as the operating system or else you will not be able to perform the following steps from your browser.
+
+   ![](./../images/azurefunctions/createfunctionapphosting.png)
 
 ## Make PnP PowerShell available to all functions in the app
 
@@ -18,6 +24,7 @@ As the UI in https://portal.azure.com changes every now and then, but the princi
 1. In the dropdown presented, select `requirements.psd1`. You'll notice that the function app wants to provide the Azure cmdlets. If you do not need those, keep the `Az` entry presented commented out.
 1. Add a new entry or replace the whole contents of the file with:
  
+   ### Specific stable version
    ```powershell
    @{
        'PnP.PowerShell' = '1.9.0'
@@ -25,6 +32,7 @@ As the UI in https://portal.azure.com changes every now and then, but the princi
    ```
    The version that will be installed will be the specified specific build, which is generally recommended. You build and test your Azure Function against this specific PnP PowerShell version. Future releases may work differently and cause issues, therefore it is generally recommended to specify a specific version here.
    
+   ### Latest stable version
    If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version:
 
     ```powershell
@@ -32,7 +40,17 @@ As the UI in https://portal.azure.com changes every now and then, but the princi
         'PnP.PowerShell' = '1.*'
      }
     ```
-   This will then automatically download any minor version of the major 1 release when available. Notice that you cannot use wildcards to specify a nightly build.
+   This will then automatically download any minor version of the major 1 release when available. Note that wildcards will always take the latest stable version and not the nightly build/prerelease versions.
+   
+   ### Specific prerelease version
+   If you wish to use a specific prerelease/nightly build version, go to the [overview of available versions](https://www.powershellgallery.com/packages/PnP.PowerShell) and literally copy/paste the version in the definition:  
+    ```powershell
+    @{
+        'PnP.PowerShell' = '1.9.46-nightly'
+     }
+    ```
+
+    ![Adding PnP PowerShell to the requirements.psd1 file in an Azure Function](./../images/azurefunctions/addpnpposhtoappfilerequirements.png)
 
 1. Save the `requirements.psd1` file 
 
@@ -45,7 +63,10 @@ As the UI in https://portal.azure.com changes every now and then, but the princi
    # }
    ```
 
-   Save the `profile.psd` file.
+   Save the `profile.ps1` file. If you don't do this and enable a managed identity on the Azure Function, it will throw an exception.
+
+   ![Disable the Az commands in profile](../images/azurefunctions/disableazinprofile.png)
+
 
 ## Decide how you want to authenticate in your PowerShell Function
 
@@ -121,7 +142,7 @@ Once you have an Azure Active Directory application set up and the public key ce
 1. Click `Upload Certificate` and select the "MyDemoApp.pfx" file that has been created for you. Enter the password you used in the script above.
 1 After the certificate has been uploaded, copy the thumbprint value shown.
 1 Navigate to `Configuration` and add a new Application Setting
-1. Call the setting `WEBSITE_LOAD_CERTIFICATES` and set the thumbprint as a value. To make all the certificates you uploaded available use `*` as the value. See https://docs.microsoft.com/en-gb/azure/app-service/configure-ssl-certificate-in-code for more information.
+1. Call the setting `WEBSITE_LOAD_CERTIFICATES` and set the thumbprint as a value. To make all the certificates you uploaded available use `*` as the value. See https://docs.microsoft.com/azure/app-service/configure-ssl-certificate-in-code for more information.
 1. Save the settings
 
 #### Create the Azure Function
@@ -180,7 +201,7 @@ Next step is to assign permissions to this managed identity so it is authorized 
 1. Connect to the Azure instance where your Azure Function runs and of which you want to use the Microsoft Graph through PnP PowerShell
 
     ```powershell
-    Connect-AzureAD -TenandId <contoso>.onmicrosoft.com
+    Connect-AzureAD -TenantId <contoso>.onmicrosoft.com
     ```
     
 1. Retrieve the Azure AD Service Principal instance for the Microsoft Graph. It should always be AppId 00000003-0000-0000-c000-000000000000.

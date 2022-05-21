@@ -32,11 +32,11 @@ namespace PnP.PowerShell.Commands.RecycleBin
         public int RowLimit;
         protected override void ExecuteCmdlet()
         {
-            DefaultRetrievalExpressions = new Expression<Func<RecycleBinItem, object>>[] {r => r.Id, r => r.Title, r => r.ItemType, r => r.LeafName, r => r.DirName};
+            DefaultRetrievalExpressions = new Expression<Func<RecycleBinItem, object>>[] { r => r.Id, r => r.Title, r => r.ItemType, r => r.LeafName, r => r.DirName };
             if (ParameterSetName == ParameterSet_IDENTITY)
             {
                 RecycleBinItem item = ClientContext.Site.RecycleBin.GetById(Identity);
-                
+
                 ClientContext.Load(item, RetrievalExpressions);
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(item);
@@ -60,12 +60,26 @@ namespace PnP.PowerShell.Commands.RecycleBin
                             break;
                     }
 
-                    RecycleBinItemCollection items = ClientContext.Site.GetRecycleBinItems(null, RowLimit, false, RecycleBinOrderBy.DeletedDate, recycleBinStage);
-                    ClientContext.Load(items);
-                    ClientContext.ExecuteQueryRetry();
+                    if (FirstStage.IsPresent || SecondStage.IsPresent)
+                    {
+                        RecycleBinItemCollection items = ClientContext.Site.GetRecycleBinItems(null, RowLimit, false, RecycleBinOrderBy.DeletedDate, recycleBinStage);
+                        ClientContext.Load(items);
+                        ClientContext.ExecuteQueryRetry();
 
-                    List<RecycleBinItem> recycleBinItemList = items.ToList();
-                    WriteObject(recycleBinItemList, true);
+                        List<RecycleBinItem> recycleBinItemList = items.ToList();
+                        WriteObject(recycleBinItemList, true);
+                    }
+                    else
+                    {
+                        ClientContext.Site.Context.Load(ClientContext.Site.RecycleBin, r => r.IncludeWithDefaultProperties(RetrievalExpressions));
+                        ClientContext.Site.Context.ExecuteQueryRetry();
+
+                        List<RecycleBinItem> recycleBinItemList = ClientContext.Site.RecycleBin.ToList();
+                        recycleBinItemList = recycleBinItemList.Take(RowLimit).ToList();
+                        WriteObject(recycleBinItemList, true);
+                    }
+
+
                 }
                 else
                 {

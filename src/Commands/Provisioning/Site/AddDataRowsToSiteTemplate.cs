@@ -70,15 +70,18 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
             List spList = List.GetListOrThrow(nameof(List), CurrentWeb,
                            l => l.RootFolder, l => l.HasUniqueRoleAssignments);
-            ListInstance listInstance = template.Lists.Find(l => l.Title == spList.Title);
+
+            var tokenParser = new Framework.Provisioning.ObjectHandlers.TokenParser(ClientContext.Web, template);
+
+            ListInstance listInstance = template.Lists.Find(l => tokenParser.ParseString(l.Title) == spList.Title);
             if (listInstance == null)
             {
                 throw new ApplicationException("List does not exist in the template file!");
             }
-                        
+
             ClientContext.Load(ClientContext.Web, w => w.Url, w => w.ServerRelativeUrl, w => w.Id);
-            ClientContext.Load(ClientContext.Site, s => s.Url, s => s.ServerRelativeUrl, s => s.Id);            
-            
+            ClientContext.Load(ClientContext.Site, s => s.Url, s => s.ServerRelativeUrl, s => s.Id);
+
             CamlQuery query = new CamlQuery();
 
             var viewFieldsStringBuilder = new StringBuilder();
@@ -277,15 +280,24 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         private Dictionary<Guid, Dictionary<int, string>> _webUserCache = new Dictionary<Guid, Dictionary<int, string>>();
         private string GetLoginName(Web web, int userId)
         {
-            if (!_webUserCache.ContainsKey(web.Id)) _webUserCache.Add(web.Id, new Dictionary<int, string>());
-            if (!_webUserCache[web.Id].ContainsKey(userId))
+            try
             {
-                var user = web.GetUserById(userId);
-                web.Context.Load(user, u => u.LoginName);
-                web.Context.ExecuteQueryRetry();
-                _webUserCache[web.Id].Add(userId, user.LoginName);
+                if (!_webUserCache.ContainsKey(web.Id)) _webUserCache.Add(web.Id, new Dictionary<int, string>());
+                if (!_webUserCache[web.Id].ContainsKey(userId))
+                {
+                    var user = web.GetUserById(userId);
+                    web.Context.Load(user, u => u.LoginName);
+                    web.Context.ExecuteQueryRetry();
+                    _webUserCache[web.Id].Add(userId, user.LoginName);
+                }
+                return _webUserCache[web.Id][userId];
             }
-            return _webUserCache[web.Id][userId];
+            catch
+            {
+                // If user is removed/disabled from AAD, return null
+                WriteWarning("User cannot be found, skipped adding field value");
+                return null;
+            }
         }
 
         private static string Tokenize(string input, Web web, SPSite site)

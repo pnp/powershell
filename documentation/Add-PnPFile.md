@@ -28,7 +28,15 @@ Add-PnPFile -Folder <FolderPipeBind> -FileName <String> -Stream <Stream> [-Check
  [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
+### Create or update file from text
+```powershell
+Add-PnPFile -Folder <FolderPipeBind> -FileName <String> -Content <text> [-Checkout] [-CheckInComment <String>]
+ [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
+ [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+```
+
 ## DESCRIPTION
+This cmdlet uploads a local file, file from a stream or plain text to the specified folder.
 
 ## EXAMPLES
 
@@ -80,6 +88,13 @@ Add-PnPFile -Path sample.docx -Folder "Documents" -NewFileName "differentname.do
 ```
 
 This will upload a local file sample.docx to the Documents folder giving it the filename differentname.docx on SharePoint
+
+### EXAMPLE 8
+```powershell
+Add-PnPFile -FileName sample.txt -Folder "Shared Documents" -Content '{ "Test": "Value" }'
+```
+
+This will create a file sample.docx in the Documents library inserting the provided plain text into it. If a similarly file already exists at this location, its contents will be overwritten.
 
 ## PARAMETERS
 
@@ -278,6 +293,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Content
+Content to add to the file to create or overwrite on SharePoint. It will blindly overwrite the contents of the file if it already exists.
+
+```yaml
+Type: String
+Parameter Sets: ASTEXT
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Values
 Use the internal names of the fields when specifying field names.
 
@@ -330,10 +359,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Linq;
@@ -20,9 +19,10 @@ namespace PnP.PowerShell.Commands
             {
                 var siteDesigns = Identity.GetTenantSiteDesign(Tenant);
 
-                if(siteDesigns.Length == 0)
+                if(siteDesigns == null || siteDesigns.Length == 0)
                 {
                     WriteVerbose("No site designs with the identity provided through Identity have been found");
+                    return;
                 }
 
                 WriteObject(siteDesigns, true);

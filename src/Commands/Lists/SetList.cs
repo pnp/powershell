@@ -7,6 +7,7 @@ using PnP.PowerShell.Commands.Enums;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Set, "PnPList")]
+    [OutputType(typeof(List))]
     public class SetList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -228,6 +229,8 @@ namespace PnP.PowerShell.Commands.Lists
                     list.Update();
                     ClientContext.ExecuteQueryRetry();
                 }
+
+                WriteObject(list);
             }
         }
     }

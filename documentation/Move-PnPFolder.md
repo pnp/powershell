@@ -15,7 +15,7 @@ Move a folder to another location in the current web. If you want to move a fold
 ## SYNTAX
 
 ```powershell
-Move-PnPFolder -Folder <String> -TargetFolder <String> [-Connection <PnPConnection>]
+Move-PnPFolder -Folder <FolderPipeBind> -TargetFolder <String> [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -57,7 +57,7 @@ Accept wildcard characters: False
 The folder to move
 
 ```yaml
-Type: String
+Type: FolderPipeBind
 Parameter Sets: (All)
 
 Required: True

@@ -40,7 +40,7 @@ Copy-PnPList -SourceListUrl <String> -DestinationWebUrl <String> [-Title <String
 
 ## DESCRIPTION
 
-This cmdlet allows an existing list to be copied to either the same site or to another site. It copies the fields, views and settings of the list. It does not copy along the list items in the list.
+This cmdlet allows an existing list to be copied to either the same site or to another site (same tenant). It copies the fields, views and settings of the list. It does not copy along the list items in the list. If you wish to copy a list from one tenant to another, you will have to export the list as a provisioning template, and then apply the template to the target tenant.
 
 ## EXAMPLES
 
@@ -68,7 +68,7 @@ Copies the list "My List" to the site with the provided URL changing the list na
 ### EXAMPLE 4
 ```powershell
 $list = Get-PnPList -Identity "My List"
-Copy-PnPList -Identity $l -Title "My copied list"
+Copy-PnPList -Identity $list -Title "My copied list"
 ```
 
 Copies the list "My List" to the site with the provided URL changing the list name to "My copied list"

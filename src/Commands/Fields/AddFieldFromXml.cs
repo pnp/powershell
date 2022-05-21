@@ -6,6 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Add, "PnPFieldFromXml")]
+    [OutputType(typeof(Field))]
     public class AddFieldFromXml : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

@@ -10,23 +10,27 @@ online version: https://pnp.github.io/powershell/cmdlets/Read-PnPSiteTemplate.ht
 # Read-PnPSiteTemplate
 
 ## SYNOPSIS
-Loads/Reads a PnP file from the file system or a string
+Loads/Reads a PnP file from the file system, string or stream
 
 ## SYNTAX
 
 ### By Path
 ```powershell
-Read-PnPSiteTemplate [-Path] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
- [<CommonParameters>]
+Read-PnPSiteTemplate [-Path] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [<CommonParameters>]
 ```
 
 ### By XML
 ```powershell
-Read-PnPSiteTemplate [-Xml] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
- [<CommonParameters>]
+Read-PnPSiteTemplate [-Xml] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [<CommonParameters>]
+```
+
+### From a Stream
+```powershell
+Read-PnPSiteTemplate [-Stream] <Stream> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+This cmdlet allows you to read a PnP Provisioning Template from disk, by passing in XML as text or from a stream to keep it in memory and not needing to physically save the template anywhere. The template can be modified in memory if needed and then applied to a site.
 
 ## EXAMPLES
 
@@ -50,6 +54,14 @@ Read-PnPSiteTemplate -Xml $xml
 ```
 
 Reads a PnP Provisioning template from a string containing the XML of a provisioning template
+
+### EXAMPLE 4
+```powershell
+$stream = Get-PnPFile -Url "/sites/templates/Site Templates/sample1.pnp" -AsMemoryStream
+Read-PnPSiteTemplate -Stream $stream
+```
+
+Downloads the contents of a PnP Provisioning template from a SharePoint Online location in memory and parses it as a PnP Provisioning Template
 
 ## PARAMETERS
 
@@ -95,7 +107,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Stream
+Stream containing an XML or PNP provisioning template package
+
+```yaml
+Type: Stream
+Parameter Sets: By Stream
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

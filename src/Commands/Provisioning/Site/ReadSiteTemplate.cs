@@ -1,21 +1,19 @@
-﻿using PnP.Framework.Provisioning.Connectors;
-using PnP.Framework.Provisioning.Model;
-using PnP.Framework.Provisioning.Providers;
-using PnP.Framework.Provisioning.Providers.Xml;
-
+﻿using PnP.Framework.Provisioning.Providers;
 using PnP.PowerShell.Commands.Utilities;
-using System;
 using System.IO;
 using System.Management.Automation;
-using System.Text;
 
 namespace PnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommunications.Read, "PnPSiteTemplate")]
     public class ReadSiteTemplate : PSCmdlet
     {
+        const string ParameterSet_STREAM = "By Stream";
         const string ParameterSet_PATH = "By Path";
         const string ParameterSet_XML = "By XML";
+
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_STREAM)]
+        public Stream Stream;
 
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_PATH)]
         public string Path;
@@ -51,6 +49,14 @@ namespace PnP.PowerShell.Commands.Provisioning
                         }));
                         break;
                     }
+                case ParameterSet_STREAM:
+                    {
+                        WriteObject(ProvisioningHelper.LoadSiteTemplatesFromStream(Stream, TemplateProviderExtensions, (e) =>
+                        {
+                            WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                        }), true);
+                        break;
+                    }                    
             }
         }
     }

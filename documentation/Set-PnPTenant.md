@@ -51,7 +51,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EnableAutoNewsDigest <Boolean>] [-CommentsOnListItemsDisabled <Boolean>] [-CommentsOnFilesDisabled <Boolean>]
  [-DisableBackToClassic <Boolean>] [-InformationBarriersSuspension <Boolean>] 
  [-AllowFilesWithKeepLabelToBeDeletedODB <Boolean>] [-AllowFilesWithKeepLabelToBeDeletedSPO <Boolean>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Force] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -275,7 +275,16 @@ Accept wildcard characters: False
 ```
 
 ### -DisabledWebPartIds
-Guids of out of the box modern web part id's to hide
+Guids of out of the box modern web part id's to disallow from being added to pages and remove from pages where they already have been used. Currently only the following web parts can be disabled in such a way:
+
+Amazon Kindle: 46698648-fcd5-41fc-9526-c7f7b2ace919
+YouTube: 544dd15b-cf3c-441b-96da-004d5a8cea1d
+Twitter: f6fdf4f8-4a24-437b-a127-32e66a5dd9b4
+Embed: 490d7c76-1824-45b2-9de3-676421c997fa
+Microsoft Bookings: d24a7165-c455-4d43-8bc8-fedb04d6c1b5
+Stream: 275c0095-a77e-4f6d-a2a0-6a7626911518
+
+To block one of them, simply pass in the GUID behind the parameter. To disable more than one, separate the GUIDs with a comma. To unblock web parts, just set this property leaving out the one(s) you wish to unblock, leaving the ones that you would like to remain blocked. To unblock all web parts, use `-DisabledWebPartIds @()`. To see which one(s) are currently blocked, use `Get-PnPTenant | Select DisabledWebPartIds`.
 
 ```yaml
 Type: Guid[]
@@ -1259,6 +1268,62 @@ Allows configuration on whether Fluid components are enabled or disabled in the 
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisablePersonalListCreation
+Allows configuring whether personal lists created within the OneDrive for Business site of the user is enabled or disabled in the tenant. If set to `$true`, personal lists will be allowed to be created in the tenant. If set to `$false`, it will be disabled in the tenant.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisabledModernListTemplateIds
+Guids of out of the box modern list templates to hide when creating a new list
+
+```yaml
+Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableModernListTemplateIds
+Guids of out of the box modern liststemplates to show when creating a new list
+
+```yaml
+Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+If provided, no confirmation will be requested and the action will be performed
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
