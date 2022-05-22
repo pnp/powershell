@@ -391,7 +391,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                 }
                                 if (value != null && value.GetType().IsArray)
                                 {
-                                    var fieldValueCollection = field.NewFieldValueCollection();                                    
+                                    var fieldValueCollection = field.NewFieldValueCollection();
                                     foreach (var arrayItem in value as object[])
                                     {
                                         Term taxonomyItem;
@@ -548,7 +548,8 @@ namespace PnP.PowerShell.Commands.Utilities
                             }
                         default:
                             {
-                                item[key as string] = values[key];
+                                object itemValue = values[key] is PSObject ? ((PSObject)values[key]).BaseObject : values[key];
+                                item[key as string] = itemValue;
                                 break;
                             }
                     }
