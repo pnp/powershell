@@ -22,7 +22,7 @@ Sets Microsoft 365 Group properties
 ```powershell
 Set-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-DisplayName <String>] [-Description <String>]
  [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam]
- [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] 
+ [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-SensitivityLabels <GUID[]>]
  [<CommonParameters>]
 ```
 
@@ -64,6 +64,13 @@ Set-PnPMicrosoft365Group -Identity $group -Owners demo@contoso.com
 ```
 
 Sets demo@contoso.com as owner of the group
+
+### EXAMPLE 6
+```powershell
+Set-PnPMicrosoft365Group -Identity $group -SensitivityLabels "bc98af29-59eb-4869-baaa-9a8dff631aa4"
+```
+
+Sets the sensitivity label of the group
 
 ## PARAMETERS
 
@@ -200,6 +207,19 @@ The array UPN values of owners to set to the group. Note: Will replace owners.
 Type: String[]
 Parameter Sets: (All)
 
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SensitivityLabels
+The Sensitivity label to be set to the Microsoft 365 Group. To retrieve the sensitivity label you need to use the Graph API mentioned [here](https://docs.microsoft.com/en-us/graph/api/informationprotectionlabel-get?view=graph-rest-beta&tabs=http).
+
+```yaml
+Type: GUID[]
+Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None

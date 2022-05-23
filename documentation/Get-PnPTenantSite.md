@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantSite.html
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Retrieve site information.
+Retrieves site collection information
 
 ## SYNTAX
 
@@ -32,7 +32,7 @@ Get-PnPTenantSite [-Template <string>] [-Detailed] [-IncludeOneDriveSites] [-Gro
 ```
 
 ## DESCRIPTION
-Use this cmdlet to retrieve site information from your tenant administration.
+This cmdlet allows for retrieval of site collection information through the SharePoint Online tenant site. It requires having SharePoint Online administrator access.
 
 ## EXAMPLES
 
@@ -41,56 +41,63 @@ Use this cmdlet to retrieve site information from your tenant administration.
 Get-PnPTenantSite
 ```
 
-Returns all site collections
+Returns all site collections except the OneDrive for Business sites with basic information on them
 
 ### EXAMPLE 2
-```powershell
-Get-PnPTenantSite -Identity "http://tenant.sharepoint.com/sites/projects"
-```
-
-Returns information about the project site
-
-### EXAMPLE 3
 ```powershell
 Get-PnPTenantSite -Detailed
 ```
 
-Returns all sites with the full details of these sites
+Returns all site collections except the OneDrive for Business sites with the full details on them
 
-### EXAMPLE 4
+### EXAMPLE 3
 ```powershell
 Get-PnPTenantSite -IncludeOneDriveSites
 ```
 
-Returns all sites including all OneDrive for Business sites
+Returns all site collections including all OneDrive for Business sites
 
-### EXAMPLE 5
+### EXAMPLE 4
 ```powershell
 Get-PnPTenantSite -IncludeOneDriveSites -Filter "Url -like '-my.sharepoint.com/personal/'"
 ```
 
-Returns all OneDrive for Business sites
+Returns only OneDrive for Business site collections
+
+### EXAMPLE 5
+```powershell
+Get-PnPTenantSite -Identity "http://tenant.sharepoint.com/sites/projects"
+```
+
+Returns information of the site collection with the provided url
 
 ### EXAMPLE 6
+```powershell
+Get-PnPTenantSite -Identity 7e8a6f56-92fe-4b22-9364-41799e579e8a
+```
+
+Returns information of the site collection with the provided Id
+
+### EXAMPLE 7
 ```powershell
 Get-PnPTenantSite -Template SITEPAGEPUBLISHING#0
 ```
 
-Returns all Communication sites
+Returns all Communication site collections
 
-### EXAMPLE 7
+### EXAMPLE 8
 ```powershell
 Get-PnPTenantSite -Filter "Url -like 'sales'"
 ```
 
-Returns all sites including 'sales' in the url
+Returns all site collections having 'sales' in their url
 
-### EXAMPLE 8
+### EXAMPLE 9
 ```powershell
 Get-PnPTenantSite -GroupIdDefined $true
 ```
 
-Returns all sites which have an underlying Microsoft 365 Group
+Returns all site collections which have an underlying Microsoft 365 Group
 
 ## PARAMETERS
 
@@ -137,7 +144,7 @@ Accept wildcard characters: False
 ```
 
 ### -Filter
-Specifies the script block of the server-side filter to apply. See https://technet.microsoft.com/en-us/library/fp161380.aspx
+Specifies the script block of the server-side filter to apply. See https://docs.microsoft.com/powershell/module/sharepoint-online/get-sposite?view=sharepoint-ps#:~:text=SharePoint%20Online-,%2DFilter,-Specifies%20the%20script.
 
 ```yaml
 Type: String
@@ -193,7 +200,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The URL of the site
+The URL or Id of the site collection. Requesting a site collection by its Id only works for modern SharePoint Online site collections.
 
 ```yaml
 Type: String

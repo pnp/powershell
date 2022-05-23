@@ -97,7 +97,7 @@ namespace PnP.PowerShell.Commands.Utilities
         }
         internal static async Task<Microsoft365Group> GetGroupAsync(HttpClient httpClient, string displayName, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
-            var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(httpClient, $"v1.0/groups?$filter=displayName eq '{displayName}' or mailNickName eq '{displayName}'", accessToken);
+            var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(httpClient, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and displayName eq '{displayName}' or mailNickName eq '{displayName}'", accessToken);
             if (results != null && results.Items.Any())
             {
                 var group = results.Items.First();
@@ -162,7 +162,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static string GetUserGraphUrlForUPN(string upn)
         {
-            
+
             var escapedUpn = upn.Replace("#", "%23");
 
             if (escapedUpn.StartsWith("$")) return $"users('{escapedUpn}')";
@@ -366,7 +366,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        internal static async Task<Microsoft365Group> CreateAsync(HttpClient httpClient, string accessToken, Microsoft365Group group, bool createTeam, string logoPath, string[] owners, string[] members, bool? hideFromAddressLists, bool? hideFromOutlookClients)
+        internal static async Task<Microsoft365Group> CreateAsync(HttpClient httpClient, string accessToken, Microsoft365Group group, bool createTeam, string logoPath, string[] owners, string[] members, bool? hideFromAddressLists, bool? hideFromOutlookClients, List<string> sensitivityLabels)
         {
             if (owners != null && owners.Length > 0)
             {
@@ -376,6 +376,23 @@ namespace PnP.PowerShell.Commands.Utilities
             if (members != null && members.Length > 0)
             {
                 group.MembersODataBind = await GetUsersDataBindValueAsync(httpClient, accessToken, members);
+            }
+
+            if (sensitivityLabels.Count > 0)
+            {
+                var assignedLabels = new List<AssignedLabels>();
+                foreach (var label in sensitivityLabels)
+                {
+                    if (!Guid.Empty.Equals(label))
+                    {
+                        assignedLabels.Add(new AssignedLabels
+                        {
+                            labelId = label
+                        });
+                    }
+                }
+
+                group.AssignedLabels = assignedLabels;
             }
 
             var newGroup = await GraphHelper.PostAsync(httpClient, "v1.0/groups", group, accessToken);
@@ -569,12 +586,12 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         internal static async Task RemoveGroupSetting(HttpClient httpClient, string accessToken, string id)
-        {            
+        {
             await GraphHelper.DeleteAsync(httpClient, $"v1.0/groupSettings/{id}", accessToken);
         }
 
         internal static async Task RemoveGroupSetting(HttpClient httpClient, string accessToken, string id, string groupId)
-        {            
+        {
             await GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}/settings/{id}", accessToken);
         }
 
@@ -588,6 +605,36 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             var result = await GraphHelper.GetAsync<Microsoft365GroupSettingTemplate>(httpClient, $"v1.0/groupSettingTemplates/{id}", accessToken, propertyNameCaseInsensitive: true);
             return result;
+        }
+
+        internal static async Task SetSensitivityLabelsAsync(HttpClient httpClient, string accessToken, Guid groupId, List<AssignedLabels> assignedLabels)
+        {
+            var patchData = new
+            {
+                assignedLabels,
+            };
+
+            var retry = true;
+            var iteration = 0;
+            while (retry)
+            {
+                try
+                {
+                    await GraphHelper.PatchAsync<dynamic>(httpClient, accessToken, $"v1.0/groups/{groupId}", patchData);
+                    retry = false;
+                }
+
+                catch (Exception)
+                {
+                    await Task.Delay(5000);
+                    iteration++;
+                }
+
+                if (iteration > 10) // don't try more than 10 times
+                {
+                    retry = false;
+                }
+            }
         }
     }
 }

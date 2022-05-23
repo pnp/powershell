@@ -4,6 +4,7 @@ using PnP.PowerShell.Commands.Model;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.New, "PnPBatch")]
+    [OutputType(typeof(PnPBatch))]
     public class NewBatch : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

@@ -7,6 +7,7 @@ using Microsoft.SharePoint.Client;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPAuthenticationRealm")]
+    [OutputType(typeof(string))]
     public class GetAuthenticationRealm : PnPSharePointCmdlet
     {
 

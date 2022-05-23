@@ -9,6 +9,7 @@ using System.Text.Json;
 namespace PnP.PowerShell.Commands.Viva
 {
     [Cmdlet(VerbsCommon.Add, "PnPVivaConnectionsDashboardACE")]
+    [OutputType(typeof(IVivaDashboard))]
     public class AddVivaConnectionsDashboardACE : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
