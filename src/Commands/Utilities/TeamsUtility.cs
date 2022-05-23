@@ -730,6 +730,12 @@ namespace PnP.PowerShell.Commands.Utilities
             return await GraphHelper.PatchAsync(httpClient, accessToken, $"v1.0/teams/{groupId}/channels/{channelId}/members/{membershipId}", channelMember);
         }
 
+        public static async Task<TeamsChannelFilesFolder> GetChannelsFilesFolderAsync(HttpClient httpClient, string accessToken, string groupId, string channelId)
+        {
+            var collection = await GraphHelper.GetAsync<TeamsChannelFilesFolder>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/filesFolder", accessToken);
+            return collection;
+        }
+
         #endregion
 
         #region Tabs
