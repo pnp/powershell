@@ -33,6 +33,7 @@ namespace PnP.PowerShell.Commands.Model.Graph
         public string EducationObjectType { get; set; }
 
         public List<string> ResourceBehaviorOptions { get; set; }
+        public List<AssignedLabels> AssignedLabels { get; set; }
     }
 
     public enum GroupVisibility

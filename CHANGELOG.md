@@ -13,6 +13,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `ResourceBehaviorOptions` option in `New-PnPMicrosoft365Group` cmdlet to set `ResourceBehaviorOptions` while provisioning a Microsoft 365 Group. [#1774](https://github.com/pnp/powershell/pull/1774)
 - Added `Add-PnPTeamsChannelUser` which allows members and owners to be added to private channels in Teams [#1735](https://github.com/pnp/powershell/pull/1735)
 - Added `ExcludeVisualPromotedResults` parameter to `Get-PnPSearchConfiguration` which excludes promoted results [#1750](https://github.com/pnp/powershell/pull/1750)
+- Added `MediaTranscription` parameter to `Set-PnPTenantSite` and `Set-PnPSite` cmdlets which when enabled allows videos to have transcripts generated on demand or generated automatically in certain scenarios.
+- Added `-SensitivityLabels` parameter to `New-PnPTeamsTeam` and `New-PnPMicrosoft365Group` cmdlets to apply sensitivity label to the Microsoft 365 Group and Team.
+- Added `-SensitivityLabels` parameter to `Set-PnPMicrosoft365Group` cmdlets to apply sensitivity label to the Microsoft 365 Group and Team.
 - Added `MediaTranscription` parameter to `Set-PnPTenantSite` and `Set-PnPSite` cmdlets which when enabled allows videos to have transcripts generated on demand or generated automatically in certain scenarios
 - Added `Get-PnPVivaConnectionsDashboardACE` to retrieve the Adaptive Card extensions from the Viva connections dashboard page. [#1805](https://github.com/pnp/powershell/pull/1805)
 - Added `Add-PnPVivaConnectionsDashboardACE` to add an Adaptive Card extension to the Viva connections dashboard page. [#1805](https://github.com/pnp/powershell/pull/1805)
