@@ -6,6 +6,7 @@ using PnP.PowerShell.Commands.Properties;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPContext")]
+    [OutputType(typeof(Microsoft.SharePoint.Client.ClientContext))]
     public class GetSPOContext : PSCmdlet
     {
 

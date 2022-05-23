@@ -6,6 +6,7 @@ using PnP.PowerShell.Commands.Enums;
 using System;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Attributes;
+using System.Linq;
 
 namespace PnP.PowerShell.Commands
 {
@@ -30,6 +31,9 @@ namespace PnP.PowerShell.Commands
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
+        
+        [Parameter(Mandatory = false)]
+        public Framework.Enums.TimeZone TimeZone;
 
         public object GetDynamicParameters()
         {
@@ -89,7 +93,19 @@ namespace PnP.PowerShell.Commands
                 creationInformation.SensitivityLabel = _communicationSiteParameters.SensitivityLabel;
 
                 var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
-                WriteObject(returnedContext.Url);
+                if (ParameterSpecified(nameof(TimeZone)))
+                {
+                    returnedContext.Web.EnsureProperties(w => w.RegionalSettings, w => w.RegionalSettings.TimeZones);
+                    returnedContext.Web.RegionalSettings.TimeZone = returnedContext.Web.RegionalSettings.TimeZones.Where(t => t.Id == ((int)TimeZone)).First();
+                    returnedContext.Web.RegionalSettings.Update();
+                    returnedContext.ExecuteQueryRetry();
+                    returnedContext.Site.EnsureProperty(s => s.Url);
+                    WriteObject(returnedContext.Site.Url);
+                }
+                else
+                {
+                    WriteObject(returnedContext.Url);
+                }
             }
             else if (Type == SiteType.TeamSite)
             {
@@ -121,7 +137,19 @@ namespace PnP.PowerShell.Commands
                 if (ClientContext.GetContextSettings()?.Type != Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
                 {
                     var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GraphAccessToken);
-                    WriteObject(returnedContext.Url);
+                    if (ParameterSpecified(nameof(TimeZone)))
+                    {
+                        returnedContext.Web.EnsureProperties(w => w.RegionalSettings, w => w.RegionalSettings.TimeZones);
+                        returnedContext.Web.RegionalSettings.TimeZone = returnedContext.Web.RegionalSettings.TimeZones.Where(t => t.Id == ((int)TimeZone)).First();
+                        returnedContext.Web.RegionalSettings.Update();
+                        returnedContext.ExecuteQueryRetry();
+                        returnedContext.Site.EnsureProperty(s => s.Url);
+                        WriteObject(returnedContext.Site.Url);
+                    }
+                    else
+                    {
+                        WriteObject(returnedContext.Url);
+                    }
                 }
                 else
                 {
@@ -154,7 +182,19 @@ namespace PnP.PowerShell.Commands
                 creationInformation.SensitivityLabel = _teamSiteWithoutMicrosoft365GroupParameters.SensitivityLabel;
 
                 var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
-                WriteObject(returnedContext.Url);
+                if (ParameterSpecified(nameof(TimeZone)))
+                {
+                    returnedContext.Web.EnsureProperties(w => w.RegionalSettings, w => w.RegionalSettings.TimeZones);
+                    returnedContext.Web.RegionalSettings.TimeZone = returnedContext.Web.RegionalSettings.TimeZones.Where(t => t.Id == ((int)TimeZone)).First();
+                    returnedContext.Web.RegionalSettings.Update();
+                    returnedContext.ExecuteQueryRetry();
+                    returnedContext.Site.EnsureProperty(s => s.Url);
+                    WriteObject(returnedContext.Site.Url);
+                }
+                else
+                {
+                    WriteObject(returnedContext.Url);
+                }
             }
         }
 

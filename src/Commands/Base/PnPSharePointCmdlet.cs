@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands
     /// <summary>
     /// Base class for all the PnP SharePoint related cmdlets
     /// </summary>
-    public class PnPSharePointCmdlet : PnPConnectedCmdlet
+    public abstract class PnPSharePointCmdlet : PnPConnectedCmdlet
     {
         /// <summary>
         /// Reference the the SharePoint context on the current connection. If NULL it means there is no SharePoint context available on the current connection.

@@ -64,7 +64,7 @@ The id or name of the channel to retrieve.
 Type: TeamsChannelPipeBind
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
