@@ -7,6 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Syntex
 {
     [Cmdlet(VerbsCommon.Get, "PnPSyntexModel")]
+    [OutputType(typeof(SyntexModel))]
     public class GetSyntexModel : PnPWebCmdlet
     {
 

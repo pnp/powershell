@@ -9,6 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Syntex
 {
     [Cmdlet(VerbsData.Publish, "PnPSyntexModel")]
+    [OutputType(typeof(SyntexPublicationResult))]
     public class PublishSyntexModel : PnPWebCmdlet
     {
         const string ParameterSet_SINGLE = "Single";

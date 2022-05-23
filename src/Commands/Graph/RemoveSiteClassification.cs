@@ -10,6 +10,7 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPSiteClassification")]
     [RequiredMinimalApiPermissions("Directory.ReadWrite.All")]
+    [OutputType(typeof(void))]
     public class RemoveSiteClassification : PnPGraphCmdlet
     {
 

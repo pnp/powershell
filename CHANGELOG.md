@@ -11,21 +11,53 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Wait` and `-Verbose` optional paramarers to `New-PnPUPABulkImportJob` [#1752](https://github.com/pnp/powershell/pull/1752)
 - Added `Add-PnPTeamsChannelUser` which allows members and owners to be added to private channels in Teams [#1735](https://github.com/pnp/powershell/pull/1735)
 - Added `Channel` parameter to `Add-PnPTeamsUser` cmdlet which if specified will allow owners and members to be added to private channels in a Teams Team. [#1772](https://github.com/pnp/powershell/pull/1772)
-- Added `ResourceBehaviorOptions` option in `New-PnPMicrosoft365Group` cmdlet to set `ResourceBehaviorOptions` while provisioning a Microsoft 365 Group.
+- Added `ResourceBehaviorOptions` option in `New-PnPMicrosoft365Group` cmdlet to set `ResourceBehaviorOptions` while provisioning a Microsoft 365 Group. [#1774](https://github.com/pnp/powershell/pull/1774)
 - Added `Add-PnPTeamsChannelUser` which allows members and owners to be added to private channels in Teams [#1735](https://github.com/pnp/powershell/pull/1735)
 - Added `ExcludeVisualPromotedResults` parameter to `Get-PnPSearchConfiguration` which excludes promoted results [#1750](https://github.com/pnp/powershell/pull/1750)
 - Added `MediaTranscription` parameter to `Set-PnPTenantSite` and `Set-PnPSite` cmdlets which when enabled allows videos to have transcripts generated on demand or generated automatically in certain scenarios
+- Added `Get-PnPVivaConnectionsDashboardACE` to retrieve the Adaptive Card extensions from the Viva connections dashboard page. [#1805](https://github.com/pnp/powershell/pull/1805)
+- Added `Add-PnPVivaConnectionsDashboardACE` to add an Adaptive Card extension to the Viva connections dashboard page. [#1805](https://github.com/pnp/powershell/pull/1805)
+- Added `Update-PnPVivaConnectionsDashboardACE` to update an Adaptive Card extension in the Viva connections dashboard page. [#1805](https://github.com/pnp/powershell/pull/1805)
+- Added `Remove-PnPVivaConnectionsDashboardACE` to remove an Adaptive Card extension in the Viva connections dashboard page. [#1805](https://github.com/pnp/powershell/pull/1805)
+- Added `Accept` parameter to `Invoke-PnPSPRestMethod` cmdlet which if specified will pass the Accept HTTP request header. [#1795](https://github.com/pnp/powershell/pull/1795)
+- Added `Get-PnPFlowRun` cmdlet to retrieve a specific run, or all runs from a specific Power Automate flow. [#1819](https://github.com/pnp/powershell/pull/1819)
+- Added `Invoke-PnPGraphMethod` cmdlet to invoke generic Microsoft Graph API Methods. [#1820](https://github.com/pnp/powershell/pull/1820)
+- Added `Stop-PnPFlowRun` cmdlet to stop/cancel a specific Power Automate flow run. [#1838](https://github.com/pnp/powershell/pull/1838)
+- Added `Remove-PnPTeamsChannelUser` cmdlet to remove a user from a private channel. [#1840](https://github.com/pnp/powershell/pull/1840)
+- Added new `PnP.PowerShell` image which also gets published to Docker Hub. [#1580](https://github.com/pnp/powershell/pull/1794)
+- Added capability to Debug the module in Visual Studio. [#1880](https://github.com/pnp/powershell/pull/1880)
+- Added `Set-PnPTeamsChannelUser` cmdlet to update the role of user in a private channel. [#1865](https://github.com/pnp/powershell/pull/1865)
 
 ### Changed
 - Changed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to map users based on their Ids instead which should resolve some issues around user identities reporting not to exist. You can use the new `-IdType` option to switch it back to `PrincipalName` if needed.  [#1752](https://github.com/pnp/powershell/pull/1752)
+- Changed `Get-PnPOrgAssetsLibrary` to return a proper value of the organisation assets libraries. [#1889](https://github.com/pnp/powershell/pull/1889)
+- Bumped .NET Framework version to 4.6.2 as the 4.6.1 is not supported anymore. [#1856](https://github.com/pnp/powershell/pull/1856)
 
 ### Fixed
 
-- Fixed `Get-PnPTenantSite` cmdlet so that it will return data even if the template name is specified in a different case.
+- Fixed `Get-PnPTenantSite` cmdlet so that it will return data even if the template name is specified in a different case. [#1773](https://github.com/pnp/powershell/pull/1773)
+- Fixed `Add-PnPDocumentSet` cmdlet so that it will support Document Set Content Type Id specified at the web level. [#1796](https://github.com/pnp/powershell/pull/1796)
+- Fixed `Get-PnPGroup` , `Get-PnPGroupPermissions` and `Set-PnPGroupPermissions ` cmdlets by making them more consistent. They will also throw error if a group is not found. [#1808](https://github.com/pnp/powershell/pull/1808)
+- Fixed `Get-PnPFile` issue with every 3rd file download in PS 5.
+- Fixed `Add-PnPContentTypesFromContentTypeHub`, if `Site` parameter is specified, it will be used now to sync content types from content type hub site.
+- Fixed `Get-PnPTeamsTeam`, the cmdlet now also returns additional properties like `WebUrl, CreatedDateTime, InternalId` [#1825](https://github.com/pnp/powershell/pull/1825)
+- Fixed `Add/Set-PnPListItem` , the cmdlet now works correctly with `-Batch` parameter for field types other than string. [#1890](https://github.com/pnp/powershell/pull/1890)
+- Fixed `Get-PnPTeamsTeam`, the cmdlet now also returns additional properties like `WebUrl, CreatedDateTime, InternalId`. [#1825](https://github.com/pnp/powershell/pull/1825)
+- Fixed `Set-PnPListPermission`, it will now throw error if the list does not exist. [#1891](https://github.com/pnp/powershell/pull/1891)
+- Fixed `Invoke-PnPSPRestMethod` invalid parsing for SharePoint number columns. [#1877](https://github.com/pnp/powershell/pull/1879)
+- Fix issue with `Add/Set-PnPListItem` not throwing correct exception for invalid taxonomy values. [#1870](https://github.com/pnp/powershell/pull/1870)
 
 ### Removed
+- Removed `Get-PnPAvailableClientSideComponents`. Use `Get-PnPPageComponent -Page -ListAvailable` instead.  [#1833](https://github.com/pnp/powershell/pull/1833)
 
 ### Contributors
+
+- Bart-Jan Dekker [bjdekker]
+- Aleksandr Sapozhkov [shurick81]
+- [spg-iwilson]
+- Jago Pauwels [jagopauwels]
+- [4ndri]
+- Martin Lingstuyl [martinlingstuyl]
 - James May [fowl2]
 - Milan Holemans [milanholemans]
 - Arleta Wanat [PowershellScripts]

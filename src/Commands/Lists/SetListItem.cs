@@ -14,6 +14,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Set, "PnPListItem", DefaultParameterSetName = ParameterSet_SINGLE)]
+    [OutputType(typeof(ListItem))]
     public class SetListItem : PnPWebCmdlet
     {
         const string ParameterSet_SINGLE = "Single";

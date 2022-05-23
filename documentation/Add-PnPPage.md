@@ -23,7 +23,7 @@ Add-PnPPage [-Name] <String> [-LayoutType <PageLayoutType>]
 ```
 
 ## DESCRIPTION
-Creates a new page. The page will be located inside the Site Pages library of the cite currently connected to.
+Creates a new page. The page will be located inside the Site Pages library of the site currently connected to.
 
 ## EXAMPLES
 

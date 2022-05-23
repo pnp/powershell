@@ -6,7 +6,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPGraphSubscription", DefaultParameterSetName = ParameterSet_LIST)]
-  
+    [OutputType(typeof(Framework.Graph.Model.Subscription))]
+
     // Deliberately omitting the CmdletMicrosoftGraphApiPermission attribute as permissions vary largely by the subscription type being used
     public class GetGraphSubscription : PnPGraphCmdlet
     {
