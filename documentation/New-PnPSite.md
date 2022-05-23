@@ -145,7 +145,7 @@ This will create a new Modern team site collection not connected to M365 group w
 New-PnPSite -Type TeamSite -TimeZone UTCPLUS0200_HELSINKI_KYIV_RIGA_SOFIA_TALLINN_VILNIUS -Title "Contoso" -Alias "Contoso"
 ```
 
-This will create a new Modern team site collection connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the timezone to UTC + 2 which is the Eastern European time zone.
+This will create a new Modern team site collection connected to a Microsoft 365 Group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the timezone to UTC + 2 which is the Eastern European time zone.
 
 ## PARAMETERS
 
@@ -392,7 +392,7 @@ Accept wildcard characters: False
 
 ### -TimeZone
 Specifies the timezone of the site to create.
-To get the full list of timezone that you can select, you can visit [https://docs.microsoft.com/en-us/dotnet/api/officedevpnp.core.enums.timezone](https://docs.microsoft.com/en-us/dotnet/api/officedevpnp.core.enums.timezone)
+To get the full list of timezone that you can select, you can visit [https://docs.microsoft.com/dotnet/api/officedevpnp.core.enums.timezone](https://docs.microsoft.com/dotnet/api/officedevpnp.core.enums.timezone)
 
 ```yaml
 Type: Framework.Enums.TimeZone
@@ -437,4 +437,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
