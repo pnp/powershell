@@ -7,9 +7,9 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Teams
 {
-    [Cmdlet(VerbsCommon.Add, "PnPTeamsChannelUser")]
+    [Cmdlet(VerbsCommon.Set, "PnPTeamsChannelUser")]
     [RequiredMinimalApiPermissions("ChannelMember.ReadWrite.All")]
-    public class AddTeamsChannelUser : PnPGraphCmdlet
+    public class SetTeamsChannelUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
         public TeamsTeamPipeBind Team;
@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Teams
         public TeamsChannelPipeBind Channel;
 
         [Parameter(Mandatory = true)]
-        public string User;
+        public TeamsChannelMemberPipeBind Identity;
 
         [Parameter(Mandatory = true)]
         [ValidateSet("Owner", "Member")]
@@ -38,9 +38,16 @@ namespace PnP.PowerShell.Commands.Teams
                 throw new PSArgumentException("Channel not found");
             }
 
+            var membershipId = Identity.GetIdAsync(HttpClient, AccessToken, groupId, channelId).GetAwaiter().GetResult();
+            if (string.IsNullOrEmpty(membershipId))
+            {
+                throw new PSArgumentException("User was not found in the specified Teams channel");
+            }
+
             try
             {
-                TeamsUtility.AddChannelMemberAsync(HttpClient, AccessToken, groupId, channelId, User, Role).GetAwaiter().GetResult();
+                var updatedMember = TeamsUtility.UpdateChannelMemberAsync(HttpClient, AccessToken, groupId, channelId, membershipId, Role).GetAwaiter().GetResult();
+                WriteObject(updatedMember);
             }
             catch (GraphException ex)
             {

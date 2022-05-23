@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTeamsTeam.htm
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-Removes a Microsoft Teams Team instance
+Removes a Microsoft Teams Team instance and its corresponding Microsoft 365 Group
 
 ## SYNTAX
 
@@ -24,6 +24,8 @@ Remove-PnPTeamsTeam -Identity <TeamsTeamPipeBind> [-Force]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
+Removes a Microsoft Teams Team. This also removes the associated Microsoft 365 Group, and is functionally identical to `Remove-PnPMicrosoft365Group`
 
 ## EXAMPLES
 

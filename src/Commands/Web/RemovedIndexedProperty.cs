@@ -6,6 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "PnPIndexedProperty")]
+    [OutputType(typeof(void))]
     public class RemovedIndexedProperty : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

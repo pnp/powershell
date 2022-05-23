@@ -8,6 +8,7 @@ using System.Net.Http;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPWebHeader")]
+    [OutputType(typeof(void))]
     public class SetWebHeader : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

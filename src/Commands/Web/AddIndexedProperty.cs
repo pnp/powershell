@@ -6,6 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "PnPIndexedProperty")]
+    [OutputType(typeof(void))]
     public class AddIndexedProperty : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

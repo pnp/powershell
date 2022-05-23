@@ -1,45 +1,46 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPFlowRun.html
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
+title: Stop-PnPFlowRun
 schema: 2.0.0
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Stop-PnPFlowRun.html
 ---
-  
-# Get-PnPFlowRun
+ 
+# Stop-PnPFlowRun
 
 ## SYNOPSIS
-
 **Required Permissions**
 
 * Azure: management.azure.com
 
-Returns the flows runs for a given flow.
+Stops/cancels a specific run of a Microsoft flow.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPFlowRun -Environment <PowerAutomateEnvironmentPipeBind> -Flow <PowerAutomateFlowPipeBind> [-Identity <PowerAutomateFlowRunPipeBind>]
-[-Connection <PnPConnection>] [<CommonParameters>]
+Stop-PnPFlowRun -Environment <PowerAutomateEnvironmentPipeBind> -Flow <PowerAutomateFlowPipeBind> -Identity <PowerAutomateFlowRunPipeBind> [-Force] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This cmdlet returns the flow runs for a given flow.
+This cmdlet cancels a running Power Automate flow run.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
 $environment = Get-PnPPowerPlatformEnvironment
-Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182
+Stop-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
 ```
-This returns all the flow runs for a given flow
+This cancels the specified flow run of the specified flow
+
 
 ### Example 2
 ```powershell
 $environment = Get-PnPPowerPlatformEnvironment
-Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
+Stop-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230 -Force
 ```
-This returns a specific flow run
+This cancels the specified flow run of the specified flow without confirmation
 
 ## PARAMETERS
 
@@ -59,7 +60,7 @@ Accept wildcard characters: False
 ```
 
 ### -Flow
-The Name/Id of the flow to retrieve the available runs for.
+The Name/Id of the flow to retrieve the available flow runs for.
 
 ```yaml
 Type: PowerAutomateFlowPipeBind
@@ -74,28 +75,26 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The Name/Id of the flow run to retrieve.
+The Name/Id of the flow run to cancel.
 
 ```yaml
 Type: PowerAutomateFlowRunPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Connection
-Optional connection to be used by the cmdlet.
-Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+### -Force
+Specifying the Force parameter will skip the confirmation question.
 
 ```yaml
-Type: PnPConnection
+Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -107,3 +106,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
