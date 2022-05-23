@@ -6,6 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPWebHeader")]
+    [OutputType(typeof(SharePointWebHeader))]
     public class GetWebHeader : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()

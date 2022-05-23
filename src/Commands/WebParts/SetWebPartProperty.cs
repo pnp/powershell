@@ -6,6 +6,7 @@ using PnP.Framework.Utilities;
 namespace PnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Set, "PnPWebPartProperty")]
+    [OutputType(typeof(void))]
     public class SetWebPartProperty : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

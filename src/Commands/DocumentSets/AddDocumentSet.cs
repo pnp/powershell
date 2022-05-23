@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.DocumentSets
             
             var listContentType = ContentType.GetContentType(list);
 
-            if (listContentType is null)
+            if (listContentType.ServerObjectIsNull == null || listContentType.ServerObjectIsNull == true)
             {
                 var siteContentType = ContentType.GetContentTypeOrThrow(nameof(ContentType), CurrentWeb);
                 listContentType = new ContentTypePipeBind(siteContentType.Name).GetContentTypeOrThrow(nameof(ContentType), list);

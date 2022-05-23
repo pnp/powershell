@@ -1,6 +1,9 @@
 ﻿using System.IO;
 using System.Management.Automation;
+
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.WebParts;
+
 using PnP.Framework.Entities;
 using PnP.Framework.Utilities;
 
@@ -9,16 +12,20 @@ using File = System.IO.File;
 namespace PnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Add, "PnPWebPartToWikiPage")]
+    [OutputType(typeof(WebPartDefinition))]
     public class AddWebPartToWikiPage : PnPWebCmdlet
     {
+        private const string ParameterSet_File = "File";
+        private const string ParameterSet_Xml = "Xml";
+
         [Parameter(Mandatory = true)]
         [Alias("PageUrl")]
         public string ServerRelativePageUrl = string.Empty;
 
-        [Parameter(Mandatory = true, ParameterSetName = "XML")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_Xml)]
         public string Xml = string.Empty;
 
-        [Parameter(Mandatory = true, ParameterSetName = "FILE")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_File)]
         public string Path = string.Empty;
 
         [Parameter(Mandatory = true)]
@@ -39,33 +46,29 @@ namespace PnP.PowerShell.Commands.WebParts
                 ServerRelativePageUrl = UrlUtility.Combine(serverRelativeWebUrl, ServerRelativePageUrl);
             }
 
-
-            WebPartEntity wp = null;
-
             switch (ParameterSetName)
             {
-                case "FILE":
+                case ParameterSet_File:
                     if (!System.IO.Path.IsPathRooted(Path))
                     {
                         Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
                     }
-                    if (File.Exists(Path))
-                    {
-                        var fileStream = new StreamReader(Path);
-                        var webPartString = fileStream.ReadToEnd();
-                        fileStream.Close();
 
-                        wp = new WebPartEntity { WebPartXml = webPartString };
-                    }
+                    var webPartXml = File.ReadAllText(Path);
+                    AddWebPartToWiki(webPartXml);
                     break;
-                case "XML":
-                    wp = new WebPartEntity { WebPartXml = Xml };
+
+                case ParameterSet_Xml:
+                    AddWebPartToWiki(Xml);
                     break;
             }
-            if (wp != null)
-            {
-                CurrentWeb.AddWebPartToWikiPage(ServerRelativePageUrl, wp, Row, Column, AddSpace);
-            }
+        }
+
+        private void AddWebPartToWiki(string webPartXml)
+        {
+            var wp = new WebPartEntity { WebPartXml = webPartXml };
+            var webPartDefinition = CurrentWeb.AddWebPartToWikiPage(ServerRelativePageUrl, wp, Row, Column, AddSpace);
+            WriteObject(webPartDefinition);
         }
     }
 }

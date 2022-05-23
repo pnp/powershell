@@ -7,6 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Syntex
 {
     [Cmdlet(VerbsCommon.Get, "PnPSyntexModelPublication")]
+    [OutputType(typeof(Model.Syntex.SyntexModelPublication))]
     public class GetSyntexModelPublication : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

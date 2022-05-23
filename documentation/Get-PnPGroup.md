@@ -59,7 +59,7 @@ Returns all SharePoint groups in the current site
 Get-PnPGroup -Identity 'My Site Users'
 ```
 
-This will return the group called 'My Site Users' if available in the current site
+This will return the group called 'My Site Users' if available in the current site. The name is case sensitive, so a group called 'My site users' would not be found.
 
 ### EXAMPLE 3
 ```powershell
@@ -127,7 +127,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Get a specific group by its name or id
+Get a specific group by its name or id. The name case sensitive.
 
 ```yaml
 Type: GroupPipeBind
