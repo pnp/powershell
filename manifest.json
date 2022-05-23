@@ -633,7 +633,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPPage.html",
-          "hash": "/fU+VKJ6hmRCAJ+h9uvuJg=="
+          "hash": "kSxib1XYw7iHdI1U8Pg15Q=="
         }
       },
       "is_incremental": false,
@@ -1101,7 +1101,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnpTeamsChannelUser.html",
-          "hash": "J72HOqdMKWIzf6a1rue0Jw=="
+          "hash": "EAaj8mpnv7mS33Mz8THB6Q=="
         }
       },
       "is_incremental": false,
@@ -7265,6 +7265,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnpTeamsChannelUser.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnpTeamsChannelUser.html",
+          "hash": "kwAKO5KmtSOcxx8KQ1RAyQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Stop-PnPFlowRun.md",
       "output": {
         ".html": {
@@ -7521,7 +7533,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "uoAb6FVhKa+iElSIm6j3qg=="
+          "hash": "B73kqsRJD9Qp94PEVImwEA=="
         }
       },
       "is_incremental": false,
@@ -7699,7 +7711,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "W10Kcckw66Ue3RQNewlrug=="
+          "hash": "59+YOH8fsX7FpLLP6CkvPA=="
         }
       },
       "is_incremental": false,
@@ -7732,7 +7744,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 625,
+          "total_file_count": 626,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

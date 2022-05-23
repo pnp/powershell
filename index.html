@@ -89,6 +89,12 @@
 <p>To install a nightly build of PnP PowerShell:</p>
 <pre><code class="lang-powershell">Install-Module -Name PnP.PowerShell -AllowPrerelease -SkipPublisherCheck -AllowClobber
 </code></pre>
+<p>To use PnP.PowerShell in a Windows container:</p>
+<pre><code>docker run -it m365pnp/powershell:1.10.0-nanoserver-1809
+</code></pre>
+<p>To use PnP.PowerShell in a Linux container:</p>
+<pre><code>docker run -it m365pnp/powershell
+</code></pre>
 <p>See the <a href="/powershell/articles">articles</a> section for more information on authentication and configuration. All <a href="/powershell/cmdlets/Add-PnPAlert.html">cmdlets</a> have been documented too.</p>
 <h1 id="ive-found-a-bug-where-do-i-need-to-log-an-issue-or-create-a-pr">I've found a bug, where do I need to log an issue or create a PR</h1>
 <p>You can create an issue at <a href="https://github.com/pnp/powershell/issues">https://github.com/pnp/powershell/issues</a>, but please consider first if asking a question at <a href="https://github.com/pnp/powershell/discussions">https://github.com/pnp/powershell/discussions</a> is more appropriate. We would like to focus the issues on actual bugs whereas PnP PowerShell related questions can be asked in the discussions section.</p>
