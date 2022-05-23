@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsChannelFile
 
 **Required Permissions**
 
-  * Microsoft Graph API : One of Group.Read.All
+  * Microsoft Graph API : Group.Read.All
 
 Gets the metadata for the location where the files of a channel are stored.
 
@@ -30,10 +30,10 @@ Get-PnPTeamsChannel [-Team <TeamsTeamPipeBind>] [-Channel <TeamsChannelPipeBind>
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPTeamsChannelFilesFolder -Team a6c1e0d7-f579-4993-81ab-4b666f8edea8 -Identity "Test Channel"
+Get-PnPTeamsChannelFilesFolder -Team "Sales Team" -Identity "Test Channel"
 ```
 
-Retrieves the folder metadata for the channel called 'Test Channel'
+Retrieves the folder metadata for the channel called 'Test Channel' located in the Team named 'Sales Team'
 
 ### EXAMPLE 2
 ```powershell
