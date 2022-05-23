@@ -1,4 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
+
 using PnP.Framework.Http;
 using PnP.Framework.Utilities;
 
@@ -20,25 +21,35 @@ using System.Text.RegularExpressions;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "PnPSPRestMethod")]
+    [Cmdlet(VerbsLifecycle.Invoke, "PnPSPRestMethod", DefaultParameterSetName = PARAMETERSET_Parsed)]
+    [OutputType(typeof(PSObject), ParameterSetName = new[] { PARAMETERSET_Parsed })]
+    [OutputType(typeof(string), ParameterSetName = new[] { PARAMETERSET_Raw })]
     public class InvokeSPRestMethod : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0)]
+        public const string PARAMETERSET_Parsed = "Parsed";
+        public const string PARAMETERSET_Raw = "Raw";
+
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = PARAMETERSET_Parsed)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = PARAMETERSET_Raw)]
         public HttpRequestMethod Method = HttpRequestMethod.Get;
 
-        [Parameter(Mandatory = true, Position = 0)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = PARAMETERSET_Parsed)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = PARAMETERSET_Raw)]
         public string Url;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Parsed)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
         public object Content;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Parsed)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
         public string ContentType = "application/json";
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Parsed)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
         public string Accept = "application/json;odata=nometadata";
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
         public SwitchParameter Raw;
 
         protected override void ExecuteCmdlet()
@@ -57,7 +68,7 @@ namespace PnP.PowerShell.Commands.Admin
 
             using (HttpRequestMessage request = new HttpRequestMessage(method, requestUrl))
             {
-                if(string.IsNullOrEmpty(Accept))
+                if (string.IsNullOrEmpty(Accept))
                 {
                     Accept = "application/json;odata=nometadata";
                 }

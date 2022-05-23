@@ -8,6 +8,7 @@ using System.Text;
 namespace PnP.PowerShell.Commands.Viva
 {
     [Cmdlet(VerbsCommon.Remove, "PnPVivaConnectionsDashboardACE")]
+    [OutputType(typeof(void))]
     public class RemoveVivaConnectionsACE : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

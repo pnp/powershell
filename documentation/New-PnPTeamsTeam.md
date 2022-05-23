@@ -29,7 +29,7 @@ New-PnPTeamsTeam -GroupId <String> [-AllowAddRemoveApps <Boolean>]
  [-AllowOwnerDeleteMessages <Boolean>] [-AllowStickersAndMemes <Boolean>] [-AllowTeamMentions <Boolean>]
  [-AllowUserDeleteMessages <Boolean>] [-AllowUserEditMessages <Boolean>]
  [-GiphyContentRating <TeamGiphyContentRating>] [-ShowInTeamsSearchAndSuggestions <Boolean>]
- [-Classification <String>] [-Owners <String[]>] [-Members <String[]>]  [<CommonParameters>]
+ [-Classification <String>] [-Owners <String[]>] [-Members <String[]>] [<CommonParameters>]
 ```
 
 ### For a new group
@@ -45,6 +45,7 @@ New-PnPTeamsTeam -DisplayName <String> [-MailNickName <String>] [-Description <S
  [-ShowInTeamsSearchAndSuggestions <Boolean>] [-Classification <String>] 
  [-Owners <String[]>] [-Members <String[]>]
  [-ResourceBehaviorOptions <TeamResourceBehaviorOptions>]
+ [-SensitivityLabels <GUID[]>]
  [<CommonParameters>]
 ```
 
@@ -87,6 +88,13 @@ New-PnPTeamsTeam -DisplayName "myPnPDemo1" -Visibility Private -Owners "user1@co
 ```
 
 This will create a new Microsoft Teams team called "myPnPDemo1" and sets the privacy to Private. User1 and user2 will be added as owners. User3 will be added as a member.
+
+### EXAMPLE 6
+```powershell
+New-PnPTeamsTeam -DisplayName "myPnPDemo1" -Visibility Private -Owners "user1@contoso.onmicrosoft.com","user2@contoso.onmicrosoft.com" -Members "user3@contoso.onmicrosoft.com" -SensitivityLabels "bc98af29-59eb-4869-baaa-9a8dff631aa4"
+```
+
+This will create a new Microsoft Teams team called "myPnPDemo1" and sets the privacy to Private. User1 and user2 will be added as owners. User3 will be added as a member. The team will also get the sensitivity label value corresponding to the GUID specified.
 
 ## PARAMETERS
 
@@ -465,6 +473,19 @@ Type: TeamResourceBehaviorOptions
 Parameter Sets: For a new group
 Accepted values: AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeNewGroupMembers, WelcomeEmailDisabled
 
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SensitivityLabels
+The Sensitivity label to be set to the Microsoft 365 Group and Team. To retrieve the sensitivity label you need to use the Graph API mentioned [here](https://docs.microsoft.com/en-us/graph/api/informationprotectionlabel-get?view=graph-rest-beta&tabs=http).
+
+```yaml
+Type: GUID[]
+Parameter Sets: For a new group
 Required: False
 Position: Named
 Default value: None
