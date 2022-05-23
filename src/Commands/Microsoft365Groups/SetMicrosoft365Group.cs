@@ -1,9 +1,12 @@
-﻿using PnP.Framework.Graph;
+﻿using Microsoft.SharePoint.Client;
+using PnP.Framework.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
@@ -45,6 +48,9 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         [Parameter(Mandatory = false)]
         public bool? HideFromOutlookClients;
+
+        [Parameter(Mandatory = false)]
+        public Guid[] SensitivityLabels;
 
         protected override void ExecuteCmdlet()
         {
@@ -109,6 +115,30 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 {
                     // For this scenario a separate call needs to be made
                     Microsoft365GroupsUtility.SetVisibilityAsync(HttpClient, AccessToken, group.Id.Value, HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
+                }
+
+                var assignedLabels = new List<AssignedLabels>();
+                if (SensitivityLabels != null && SensitivityLabels.Length > 0)
+                {
+                    var contextSettings = PnPConnection.Current.Context.GetContextSettings();
+                    if (contextSettings.Type != Framework.Utilities.Context.ClientContextType.AzureADCertificate)
+                    {
+                        foreach (var label in SensitivityLabels)
+                        {
+                            if (!Guid.Empty.Equals(label))
+                            {
+                                assignedLabels.Add(new AssignedLabels
+                                {
+                                    labelId = label.ToString()
+                                });
+                            }
+                        }
+                        Microsoft365GroupsUtility.SetSensitivityLabelsAsync(HttpClient, AccessToken, group.Id.Value, assignedLabels).GetAwaiter().GetResult();
+                    }
+                    else
+                    {
+                        WriteWarning("Adding sensitivity labels in App-only context is not supported by Graph API, so it will be skipped in Group creation");
+                    }
                 }
             }
         }

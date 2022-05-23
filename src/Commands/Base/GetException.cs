@@ -9,6 +9,7 @@ using System.Linq;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPException")]
+    [OutputType(typeof(PnPException))]
     public class GetException : PSCmdlet
     {
         [Parameter(Mandatory = false)]

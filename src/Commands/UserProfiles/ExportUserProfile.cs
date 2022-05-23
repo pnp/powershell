@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+
 using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base;
@@ -9,6 +10,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsData.Export, "PnPUserProfile")]
+    [OutputType(typeof(object))]
     public class ExportUserProfile : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
@@ -16,7 +18,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
         protected override void ExecuteCmdlet()
         {
-             var hostUrl = ClientContext.Url;
+            var hostUrl = ClientContext.Url;
             if (hostUrl.EndsWith("/"))
             {
                 hostUrl = hostUrl.Substring(0, hostUrl.Length - 1);
