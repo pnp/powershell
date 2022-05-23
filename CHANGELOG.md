@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `TimeZone` parameter to `New-PnPSite` cmdlet which allows setting of the site collection in the specified timezone.
 - Added `Stop-PnPFlowRun` cmdlet to stop/cancel a specific Power Automate flow run. [#1838](https://github.com/pnp/powershell/pull/1838)
 - Added `Remove-PnPTeamsChannelUser` cmdlet to remove a user from a private channel. [#1840](https://github.com/pnp/powershell/pull/1840)
+- Added `-Identity` parameter to `Get-PnPTeamsChannelMessage` cmdlet to retrieve a specific message [#1887](https://github.com/pnp/powershell/pull/1887)
 - Added new `PnP.PowerShell` image which also gets published to Docker Hub. [#1580](https://github.com/pnp/powershell/pull/1794)
 - Added capability to Debug the module in Visual Studio. [#1880](https://github.com/pnp/powershell/pull/1880)
 - Added `Set-PnPTeamsChannelUser` cmdlet to update the role of user in a private channel. [#1865](https://github.com/pnp/powershell/pull/1865)
