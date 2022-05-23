@@ -6,6 +6,7 @@ using PnP.PowerShell.Commands.Properties;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPConnection")]
+    [OutputType(typeof(PnPConnection))]
     public class GetPnPConnection : PSCmdlet
     {
 

@@ -19,6 +19,18 @@ To install a nightly build of PnP PowerShell:
 Install-Module -Name PnP.PowerShell -AllowPrerelease -SkipPublisherCheck -AllowClobber
 ```
 
+To use PnP.PowerShell in a Windows container:
+
+```
+docker run -it m365pnp/powershell:1.10.0-nanoserver-1809
+```
+
+To use PnP.PowerShell in a Linux container:
+
+```
+docker run -it m365pnp/powershell
+```
+
 See the [articles](/powershell/articles) section for more information on authentication and configuration. All [cmdlets](/powershell/cmdlets/Add-PnPAlert.html) have been documented too.
 
 # I've found a bug, where do I need to log an issue or create a PR
