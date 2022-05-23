@@ -5,6 +5,7 @@ using System.Text.Json;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPChangeLog")]
+    [OutputType(typeof(string))]
     public class GetChangeLog : PSCmdlet
     {
         [Parameter(Mandatory = false)]
