@@ -25,9 +25,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Accept` parameter to `Invoke-PnPSPRestMethod` cmdlet which if specified will pass the Accept HTTP request header. [#1795](https://github.com/pnp/powershell/pull/1795)
 - Added `Get-PnPFlowRun` cmdlet to retrieve a specific run, or all runs from a specific Power Automate flow. [#1819](https://github.com/pnp/powershell/pull/1819)
 - Added `Invoke-PnPGraphMethod` cmdlet to invoke generic Microsoft Graph API Methods. [#1820](https://github.com/pnp/powershell/pull/1820)
+- Added `TimeZone` parameter to `New-PnPSite` cmdlet which allows setting of the site collection in the specified timezone.
 - Added `Stop-PnPFlowRun` cmdlet to stop/cancel a specific Power Automate flow run. [#1838](https://github.com/pnp/powershell/pull/1838)
 - Added `Remove-PnPTeamsChannelUser` cmdlet to remove a user from a private channel. [#1840](https://github.com/pnp/powershell/pull/1840)
 - Added `Get-PnPTeamsChannelMessageReply` to retrieve all replies or a specific reply of a message in a Teams channel [#1885](https://github.com/pnp/powershell/pull/1885)
+- Added `-Identity` parameter to `Get-PnPTeamsChannelMessage` cmdlet to retrieve a specific message [#1887](https://github.com/pnp/powershell/pull/1887)
 - Added new `PnP.PowerShell` image which also gets published to Docker Hub. [#1580](https://github.com/pnp/powershell/pull/1794)
 - Added capability to Debug the module in Visual Studio. [#1880](https://github.com/pnp/powershell/pull/1880)
 - Added `Set-PnPTeamsChannelUser` cmdlet to update the role of user in a private channel. [#1865](https://github.com/pnp/powershell/pull/1865)

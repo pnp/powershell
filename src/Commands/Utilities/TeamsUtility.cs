@@ -633,10 +633,15 @@ namespace PnP.PowerShell.Commands.Utilities
             await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages", message, accessToken);
         }
 
+        public static async Task<TeamChannelMessage> GetMessageAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, string messageId)
+        {
+            return await GraphHelper.GetAsync<TeamChannelMessage>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages/{messageId}", accessToken);
+        }
+
         public static async Task<List<TeamChannelMessage>> GetMessagesAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, bool includeDeleted = false)
         {
             List<TeamChannelMessage> messages = new List<TeamChannelMessage>();
-            var collection = await GraphHelper.GetResultCollectionAsync<TeamChannelMessage>(httpClient, $"beta/teams/{groupId}/channels/{channelId}/messages", accessToken);
+            var collection = await GraphHelper.GetResultCollectionAsync<TeamChannelMessage>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages", accessToken);
             messages.AddRange(collection);
 
             if (includeDeleted)
