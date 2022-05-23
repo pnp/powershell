@@ -8,6 +8,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 namespace PnP.PowerShell.Commands.RecycleBin
 {
     [Cmdlet(VerbsCommon.Move, "PnPRecycleBinItem")]
+    [OutputType(typeof(void))]
     public class MoveRecycleBinItems : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

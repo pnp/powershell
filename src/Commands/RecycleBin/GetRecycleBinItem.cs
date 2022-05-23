@@ -10,6 +10,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.RecycleBin
 {
     [Cmdlet(VerbsCommon.Get, "PnPRecycleBinItem", DefaultParameterSetName = ParameterSet_ALL)]
+    [OutputType(typeof(RecycleBinItem))]
     public class GetRecycleBinItems : PnPRetrievalsCmdlet<RecycleBinItem>
     {
         private const string ParameterSet_ALL = "All";
