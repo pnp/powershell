@@ -164,6 +164,9 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public InformationBarriersMode InformationBarriersMode;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public MediaTranscriptionPolicyType? MediaTranscription { get; set; }        
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
 
@@ -360,7 +363,7 @@ namespace PnP.PowerShell.Commands
             {
                 props.AnonymousLinkExpirationInDays = AnonymousLinkExpirationInDays.Value;
                 updateRequired = true;
-            }            
+            }
 
             if (ParameterSpecified(nameof(ConditionalAccessPolicy)) && ConditionalAccessPolicy == PnPConditionalAccessPolicyType.ProtectionLevel || ConditionalAccessPolicy == PnPConditionalAccessPolicyType.AuthenticationContext)
             {
@@ -493,7 +496,13 @@ namespace PnP.PowerShell.Commands
             {
                 props.IBMode = InformationBarriersMode.ToString();
                 updateRequired = true;
-            }            
+            }
+
+            if (ParameterSpecified(nameof(MediaTranscription)) && MediaTranscription.HasValue)
+            {
+                props.MediaTranscription = MediaTranscription.Value;
+                updateRequired = true;
+            }
 
             if (updateRequired)
             {

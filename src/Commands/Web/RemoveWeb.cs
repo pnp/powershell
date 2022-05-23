@@ -9,6 +9,7 @@ using PnP.PowerShell.Commands.Extensions;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "PnPWeb")]
+    [OutputType(typeof(void))]
     public class RemoveWeb : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

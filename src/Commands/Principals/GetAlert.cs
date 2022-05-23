@@ -8,6 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPAlert", DefaultParameterSetName = ParameterSet_SPECIFICUSER)]
+    [OutputType(typeof(Alert))]
     public class GetAlert : PnPWebCmdlet
     {
         private const string ParameterSet_SPECIFICUSER = "Alerts for a specific user";

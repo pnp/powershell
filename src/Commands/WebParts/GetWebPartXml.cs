@@ -4,7 +4,9 @@ using System.Linq;
 using System.Management.Automation;
 using System.Net;
 using System.Text;
+
 using Microsoft.SharePoint.Client;
+
 using PnP.Framework.Utilities;
 
 using PnP.PowerShell.Commands.Base;
@@ -13,6 +15,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Get, "PnPWebPartXml")]
+    [OutputType(typeof(string))]
     public class GetWebPartXml : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -50,10 +53,7 @@ namespace PnP.PowerShell.Commands.WebParts
             }
 
 
-            WriteObject(CurrentWeb.GetWebPartXml(id,ServerRelativePageUrl));
-
-            
+            WriteObject(CurrentWeb.GetWebPartXml(id, ServerRelativePageUrl));
         }
-
     }
 }

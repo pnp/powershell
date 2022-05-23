@@ -5,6 +5,7 @@ using Microsoft.SharePoint.Client;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "PnPWeb")]
+    [OutputType(typeof(Web))]
     public class NewWeb : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

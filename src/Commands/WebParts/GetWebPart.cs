@@ -11,6 +11,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Get, "PnPWebPart")]
+    [OutputType(typeof(WebPartDefinition))]
     public class GetWebPart : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

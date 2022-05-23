@@ -10,6 +10,7 @@ using PnP.PowerShell.Commands.Base;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "PnPList")]
+    [OutputType(typeof(List))]
     public class GetList : PnPWebRetrievalsCmdlet<List>
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]

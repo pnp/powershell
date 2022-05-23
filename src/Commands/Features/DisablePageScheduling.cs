@@ -5,6 +5,7 @@ using Microsoft.SharePoint.Client;
 namespace PnP.PowerShell.Commands.Features
 {
     [Cmdlet(VerbsLifecycle.Disable, "PnPPageScheduling")]
+    [OutputType(typeof(void))]
     public class DisablePageScheduling : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()

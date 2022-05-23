@@ -8,6 +8,7 @@ using System;
 namespace PnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Remove, "PnPWebPart")]
+    [OutputType(typeof(void))]
     public class RemoveWebPart : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "ID")]

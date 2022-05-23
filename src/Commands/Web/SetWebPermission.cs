@@ -9,6 +9,7 @@ using PnP.PowerShell.Commands.Extensions;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPWebPermission", DefaultParameterSetName = "User")]
+    [OutputType(typeof(void))]
     public class SetWebPermission : PnPWebCmdlet
     {
         private const string ParameterSet_GROUP = "Set group permissions";

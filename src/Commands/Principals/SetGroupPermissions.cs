@@ -24,6 +24,10 @@ namespace PnP.PowerShell.Commands.Principals
         protected override void ExecuteCmdlet()
         {
             var group = Identity.GetGroup(PnPContext);
+
+            if (group == null)
+                throw new PSArgumentException("Site group not found", nameof(Identity));
+
             PnP.Core.Model.SharePoint.IList list = null;
             if (ParameterSpecified(nameof(List)))
             {
