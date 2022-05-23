@@ -89,6 +89,12 @@ namespace PnP.PowerShell.Commands.UserProfiles
             WriteVerbose($"Creating mapping file{(WhatIf.ToBool() ? " and" : ",")} uploading it to SharePoint Online to folder '{Folder}'{(WhatIf.ToBool() ? "" : " and executing sync job")}");
             var job = PnP.PowerShell.Commands.Utilities.SharePointUserProfileSync.SyncFromAzureActiveDirectory(nonAdminClientContext, aadUsers, IdType, UserProfilePropertyMapping, Folder, ParameterSpecified(nameof(WhatIf))).GetAwaiter().GetResult();
 
+            // Ensure a sync job has been created
+            if(job == null)
+            {
+                throw new PSInvalidOperationException($"Failed to create sync job. Ensure you're providing users to sync and that the mapping is correct.");
+            }
+
             WriteVerbose($"Job initiated with Id {job.JobId} and status {job.State} for file {job.SourceUri}");
 
             // Check if we should wait with finalzing this cmdlet execution until the user profile import operation has completed
