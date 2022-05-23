@@ -21,7 +21,7 @@ Creates a new Microsoft 365 Group
 
 ```powershell
 New-PnPMicrosoft365Group -DisplayName <String> -Description <String> -MailNickname <String>
- [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam] [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-ResourceBehaviorOptions <TeamResourceBehaviorOptions>] [-Force]
+ [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam] [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-ResourceBehaviorOptions <TeamResourceBehaviorOptions>] [-Force] [-SensitivityLabels <GUID[]>]
   [<CommonParameters>]
 ```
 
@@ -63,6 +63,13 @@ New-PnPMicrosoft365Group -DisplayName "myPnPDemo1" -Description $description -Ma
 ```
 
 This will create a new Microsoft 365 Group called "myPnPDemo1" and sets the privacy to Private. Welcome Email will not be sent when the Group is created. The M365 Group will also not be visible in Outlook.
+
+### EXAMPLE 6
+```powershell
+New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname -IsPrivate -SensitivityLabels "bc98af29-59eb-4869-baaa-9a8dff631aa4"
+```
+
+Creates a private Microsoft 365 Group with all the required properties and applies the sensitivity label.
 
 ## PARAMETERS
 
@@ -229,6 +236,19 @@ Type: TeamResourceBehaviorOptions
 Parameter Sets: (All)
 Accepted values: AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeNewGroupMembers, WelcomeEmailDisabled
 
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SensitivityLabels
+The Sensitivity label to be set to the Microsoft 365 Group. To retrieve the sensitivity label you need to use the Graph API mentioned [here](https://docs.microsoft.com/en-us/graph/api/informationprotectionlabel-get?view=graph-rest-beta&tabs=http).
+
+```yaml
+Type: GUID[]
+Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None

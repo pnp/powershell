@@ -9,10 +9,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Added `-Wait` and `-Verbose` optional paramarers to `New-PnPUPABulkImportJob` [#1752](https://github.com/pnp/powershell/pull/1752)
+- Added the ability to retrieve site collection information by its Id using `Get-PnPTenantSite -Identity <id>` [#1766](https://github.com/pnp/powershell/pull/1766)
 - Added `ResourceBehaviorOptions` option in `New-PnPMicrosoft365Group` cmdlet to set `ResourceBehaviorOptions` while provisioning a Microsoft 365 Group. [#1774](https://github.com/pnp/powershell/pull/1774)
 - Added `Add-PnPTeamsChannelUser` which allows members and owners to be added to private channels in Teams [#1735](https://github.com/pnp/powershell/pull/1735)
 - Added `ExcludeVisualPromotedResults` parameter to `Get-PnPSearchConfiguration` which excludes promoted results [#1750](https://github.com/pnp/powershell/pull/1750)
+- Added `MediaTranscription` parameter to `Set-PnPTenantSite` and `Set-PnPSite` cmdlets which when enabled allows videos to have transcripts generated on demand or generated automatically in certain scenarios.
+- Added `-SensitivityLabels` parameter to `New-PnPTeamsTeam` and `New-PnPMicrosoft365Group` cmdlets to apply sensitivity label to the Microsoft 365 Group and Team.
+- Added `-SensitivityLabels` parameter to `Set-PnPMicrosoft365Group` cmdlets to apply sensitivity label to the Microsoft 365 Group and Team.
 - Added `MediaTranscription` parameter to `Set-PnPTenantSite` and `Set-PnPSite` cmdlets which when enabled allows videos to have transcripts generated on demand or generated automatically in certain scenarios
+- Added `Get-PnPTeamsChannelFilesFolder` cmdlet to retrieve metadata for the location where files of a Teams channel are stored. [#1799](https://github.com/pnp/powershell/pull/1799)
 - Added `Get-PnPVivaConnectionsDashboardACE` to retrieve the Adaptive Card extensions from the Viva connections dashboard page. [#1805](https://github.com/pnp/powershell/pull/1805)
 - Added `Add-PnPVivaConnectionsDashboardACE` to add an Adaptive Card extension to the Viva connections dashboard page. [#1805](https://github.com/pnp/powershell/pull/1805)
 - Added `Update-PnPVivaConnectionsDashboardACE` to update an Adaptive Card extension in the Viva connections dashboard page. [#1805](https://github.com/pnp/powershell/pull/1805)
@@ -20,8 +25,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Accept` parameter to `Invoke-PnPSPRestMethod` cmdlet which if specified will pass the Accept HTTP request header. [#1795](https://github.com/pnp/powershell/pull/1795)
 - Added `Get-PnPFlowRun` cmdlet to retrieve a specific run, or all runs from a specific Power Automate flow. [#1819](https://github.com/pnp/powershell/pull/1819)
 - Added `Invoke-PnPGraphMethod` cmdlet to invoke generic Microsoft Graph API Methods. [#1820](https://github.com/pnp/powershell/pull/1820)
+- Added `TimeZone` parameter to `New-PnPSite` cmdlet which allows setting of the site collection in the specified timezone.
 - Added `Stop-PnPFlowRun` cmdlet to stop/cancel a specific Power Automate flow run. [#1838](https://github.com/pnp/powershell/pull/1838)
 - Added `Remove-PnPTeamsChannelUser` cmdlet to remove a user from a private channel. [#1840](https://github.com/pnp/powershell/pull/1840)
+- Added `Get-PnPTeamsChannelMessageReply` to retrieve all replies or a specific reply of a message in a Teams channel [#1885](https://github.com/pnp/powershell/pull/1885)
+- Added `-Identity` parameter to `Get-PnPTeamsChannelMessage` cmdlet to retrieve a specific message [#1887](https://github.com/pnp/powershell/pull/1887)
 - Added new `PnP.PowerShell` image which also gets published to Docker Hub. [#1580](https://github.com/pnp/powershell/pull/1794)
 - Added capability to Debug the module in Visual Studio. [#1880](https://github.com/pnp/powershell/pull/1880)
 - Added `Set-PnPTeamsChannelUser` cmdlet to update the role of user in a private channel. [#1865](https://github.com/pnp/powershell/pull/1865)

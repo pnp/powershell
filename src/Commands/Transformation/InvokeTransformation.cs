@@ -24,6 +24,7 @@ namespace PnP.PowerShell.Commands.Transformation
 {
 
     [Cmdlet(VerbsLifecycle.Invoke, "PnPTransformation")]
+    [OutputType(typeof(string))]
     public class InvokeTransformation : PnPWebCmdlet
     {
         private static string rootFolder = "<root>";
