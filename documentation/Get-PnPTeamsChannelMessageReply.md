@@ -44,7 +44,6 @@ Get-PnPTeamsChannelMessageReply -Team MyTestTeam -Channel "My Channel" -Message 
 
 Gets a specific reply of the specified channel message.
 
-
 ## PARAMETERS
 
 ### -Team
