@@ -40,12 +40,18 @@ namespace PnP.PowerShell.Commands.UserProfiles
             var aadUsers = new List<PnP.PowerShell.Commands.Model.AzureAD.User>();
             if (ParameterSpecified(nameof(Users)))
             {
-                // Users to sync have been provided
+                // Ensure users have been provided
                 if(Users == null)
                 {
                     throw new PSArgumentNullException(nameof(Users), "Provided Users collection cannot be null");
                 }
+                if(Users.Count == 0)
+                {
+                    WriteVerbose("No users have been provided");
+                    return;
+                }
 
+                // Users to sync have been provided
                 WriteVerbose($"Using provided user collection containing {Users.Count} user{(Users.Count != 1 ? "s": "")}");
 
                 aadUsers = Users;
