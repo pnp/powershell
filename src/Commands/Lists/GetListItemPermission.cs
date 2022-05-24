@@ -38,15 +38,18 @@ namespace PnP.PowerShell.Commands.Lists
 
             foreach (var roleAssignment in item.RoleAssignments)
             {
+                roleAssignment.EnsureProperties(r => r.Member, r => r.Member.PrincipalType, r => r.Member.Id, r => r.Member.Id);
                 var listItemPermission = new ListItemPermissions
                 {
-                    PrincipalName = roleAssignment.Member.LoginName
+                    Principal = roleAssignment.Member.LoginName,
+                    PrincipalType = roleAssignment.Member.PrincipalType,
+                    PrincipalId = roleAssignment.Member.Id
                 };
 
-                List<string> roles = new List<string>();
+                List<RoleDefinition> roles = new List<RoleDefinition>();
                 foreach (var role in roleAssignment.RoleDefinitionBindings)
                 {
-                    roles.Add(role.Description);
+                    roles.Add(role);
                 }
 
                 listItemPermission.Permissions = roles;
