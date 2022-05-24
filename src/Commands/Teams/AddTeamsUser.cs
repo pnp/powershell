@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Graph
                         {
                             throw new PSArgumentException("Channel not found");
                         }
-                        TeamsUtility.AddChannelUserAsync(HttpClient, AccessToken, groupId, channelId, User, Role).GetAwaiter().GetResult();
+                        TeamsUtility.AddChannelMemberAsync(HttpClient, AccessToken, groupId, channelId, User, Role).GetAwaiter().GetResult();
                     }
                     else
                     {
