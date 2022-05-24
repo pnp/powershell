@@ -1,27 +1,28 @@
 ---
 Module Name: PnP.PowerShell
-title: Get-PnPTeamsChannelMessage
+title: Get-PnPTeamsChannelMessageReply
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsChannelMessage.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsChannelMessageReply.html
 ---
  
-# Get-PnPTeamsChannelMessage
+# Get-PnPTeamsChannelMessageReply
 
 ## SYNOPSIS
 
 **Required Permissions**
 
-  * Microsoft Graph API: Group.ReadWrite.All
+  * Microsoft Graph API: ChannelMessage.Read.All
 
-Returns messages from the specified Microsoft Teams Channel.
+Returns replies from the specified Microsoft Teams channel message.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPTeamsChannelMessage -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> [-Identity <TeamsChannelMessagePipeBind>] [-IncludeDeleted]
-  [<CommonParameters>]
+Get-PnPTeamsChannelMessageReply -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -Message <TeamsChannelMessagePipeBind> 
+[-Identity <TeamsChannelMessageReplyPipeBind>] [-IncludeDeleted]
+[<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,19 +30,19 @@ Get-PnPTeamsChannelMessage -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeB
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
-Get-PnPTeamsChannelMessage -Team MyTestTeam -Channel "My Channel"
+Get-PnPTeamsChannelMessageReply -Team MyTestTeam -Channel "My Channel" -Message 1653089769293 -IncludeDeleted
 ```
 
-Gets all messages of the specified channel
+Gets all (active and deleted) replies of the specified channel message.
 
 ### EXAMPLE 2
-
 ```powershell
-Get-PnPTeamsChannelMessage -Team MyTestTeam -Channel "My Channel" -Identity 1653089769293
+Get-PnPTeamsChannelMessageReply -Team MyTestTeam -Channel "My Channel" -Message 1653089769293 -Identity 1653086004630
 ```
 
-Gets a specific message of the specified channel
+Gets a specific reply of the specified channel message.
 
 ## PARAMETERS
 
@@ -73,14 +74,28 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Identity
+### -Message
 Specify the id of the message to use.
 
 ```yaml
 Type: TeamsChannelMessagePipeBind
 Parameter Sets: (All)
-Required: False
 
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Identity
+Specify the id of the message reply to use.
+
+```yaml
+Type: TeamsChannelMessageReplyPipeBind
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -88,7 +103,7 @@ Accept wildcard characters: False
 ```
 
 ### -IncludeDeleted
-Specify to include deleted messages.
+Specify to include deleted messages
 
 ```yaml
 Type: SwitchParameter

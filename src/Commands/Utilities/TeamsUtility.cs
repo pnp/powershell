@@ -633,10 +633,15 @@ namespace PnP.PowerShell.Commands.Utilities
             await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages", message, accessToken);
         }
 
+        public static async Task<TeamChannelMessage> GetMessageAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, string messageId)
+        {
+            return await GraphHelper.GetAsync<TeamChannelMessage>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages/{messageId}", accessToken);
+        }
+
         public static async Task<List<TeamChannelMessage>> GetMessagesAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, bool includeDeleted = false)
         {
             List<TeamChannelMessage> messages = new List<TeamChannelMessage>();
-            var collection = await GraphHelper.GetResultCollectionAsync<TeamChannelMessage>(httpClient, $"beta/teams/{groupId}/channels/{channelId}/messages", accessToken);
+            var collection = await GraphHelper.GetResultCollectionAsync<TeamChannelMessage>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages", accessToken);
             messages.AddRange(collection);
 
             if (includeDeleted)
@@ -647,6 +652,24 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 return messages.Where(m => !m.DeletedDateTime.HasValue).ToList();
             }
+        }
+
+        /// <summary>
+        /// List all the replies to a message in a channel of a team.
+        /// </summary>
+        public static async Task<List<TeamChannelMessageReply>> GetMessageRepliesAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, string messageId, bool includeDeleted = false)
+        {
+            var replies = await GraphHelper.GetResultCollectionAsync<TeamChannelMessageReply>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages/{messageId}/replies", accessToken);
+
+            return includeDeleted ? replies.ToList() : replies.Where(r => r.DeletedDateTime.HasValue).ToList();
+        }
+
+        /// <summary>
+        /// Get a specific reply of a message in a channel of a team.
+        /// </summary>
+        public static async Task<TeamChannelMessageReply> GetMessageReplyAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, string messageId, string replyId)
+        {
+            return await GraphHelper.GetAsync<TeamChannelMessageReply>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages/{messageId}/replies/{replyId}", accessToken);
         }
 
         public static async Task<TeamChannel> UpdateChannelAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, TeamChannel channel)
