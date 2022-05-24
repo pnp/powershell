@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.Lists
                 roleAssignment.EnsureProperties(r => r.Member, r => r.Member.PrincipalType, r => r.Member.Id, r => r.Member.Id);
                 var listItemPermission = new ListItemPermissions
                 {
-                    Principal = roleAssignment.Member.LoginName,
+                    PrincipalName = roleAssignment.Member.LoginName,
                     PrincipalType = roleAssignment.Member.PrincipalType,
                     PrincipalId = roleAssignment.Member.Id
                 };

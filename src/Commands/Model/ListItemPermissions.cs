@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands.Model
     {
         public List<RoleDefinition> Permissions { get; set; }
 
-        public string Principal { get; set; }
+        public string PrincipalName { get; set; }
 
         public PrincipalType PrincipalType { get; set; }
 
