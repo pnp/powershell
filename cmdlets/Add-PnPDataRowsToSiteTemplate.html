@@ -93,13 +93,13 @@
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPDataRowsToSiteTemplate -Path template.pnp -List 'PnPTestList' -Query '&lt;View&gt;&lt;/View&gt;' -Fields 'Title','Choice'
+<pre><code class="lang-powershell">Add-PnPDataRowsToSiteTemplate -Path template.pnp -List 'PnPTestList' -Fields 'Title','Choice'
 </code></pre>
 <p>Adds datarows from the provided list to the PnP Provisioning Template at the provided location</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPDataRowsToSiteTemplate -Path template.pnp -List 'PnPTestList' -Query '&lt;View&gt;&lt;/View&gt;' -Fields 'Title','Choice' -IncludeSecurity
+<pre><code class="lang-powershell">Add-PnPDataRowsToSiteTemplate -Path template.pnp -List 'PnPTestList' -Query '&lt;Query&gt;&lt;Where&gt;&lt;Geq&gt;&lt;FieldRef Name=&quot;Modified&quot;/&gt;&lt;Value Type=&quot;DateTime&quot;&gt;&lt;Today OffsetDays=&quot;-7&quot; /&gt;&lt;/Value&gt;&lt;/Geq&gt;&lt;/Where&gt;&lt;/Query&gt;' -Fields 'Title','Choice' -IncludeSecurity
 </code></pre>
-<p>Adds datarows from the provided list to the PnP Provisioning Template at the provided location</p>
+<p>Adds datarows from the provided list to the PnP Provisioning Template at the provided location, only the items that have changed since a week ago</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>

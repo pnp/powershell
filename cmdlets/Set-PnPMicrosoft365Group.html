@@ -92,7 +92,7 @@
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity &lt;Microsoft365GroupPipeBind&gt; [-DisplayName &lt;String&gt;] [-Description &lt;String&gt;]
  [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam]
- [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] 
+ [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-SensitivityLabels &lt;GUID[]&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -117,6 +117,10 @@
 <pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity $group -Owners demo@contoso.com
 </code></pre>
 <p>Sets demo@contoso.com as owner of the group</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity $group -SensitivityLabels &quot;bc98af29-59eb-4869-baaa-9a8dff631aa4&quot;
+</code></pre>
+<p>Sets the sensitivity label of the group</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-createteam">-CreateTeam</h3>
 <p>Creates a Microsoft Teams team associated with created group</p>
@@ -222,6 +226,16 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-sensitivitylabels">-SensitivityLabels</h3>
+<p>The Sensitivity label to be set to the Microsoft 365 Group. To retrieve the sensitivity label you need to use the Graph API mentioned <a href="https://docs.microsoft.com/en-us/graph/api/informationprotectionlabel-get?view=graph-rest-beta&amp;tabs=http">here</a>.</p>
+<pre><code class="lang-yaml">Type: GUID[]
+Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
