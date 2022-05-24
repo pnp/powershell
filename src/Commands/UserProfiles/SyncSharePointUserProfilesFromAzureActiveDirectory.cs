@@ -43,13 +43,20 @@ namespace PnP.PowerShell.Commands.UserProfiles
             var aadUsers = new List<PnP.PowerShell.Commands.Model.AzureAD.User>();
             if (ParameterSpecified(nameof(Users)))
             {
-                // Users to sync have been provided
-                if (Users == null)
+                // Ensure users have been provided
+                if(Users == null)
                 {
                     throw new PSArgumentNullException(nameof(Users), "Provided Users collection cannot be null");
                 }
+                if(Users.Count == 0)
+                {
+                    WriteVerbose("No users have been provided");
+                    return;
+                }
 
-                WriteVerbose($"Using provided user collection containing {Users.Count} user{(Users.Count != 1 ? "s" : "")}");
+
+                // Users to sync have been provided
+                WriteVerbose($"Using provided user collection containing {Users.Count} user{(Users.Count != 1 ? "s": "")}");
 
                 aadUsers = Users;
             }
@@ -85,6 +92,12 @@ namespace PnP.PowerShell.Commands.UserProfiles
             // Perform the mapping and execute the sync operation
             WriteVerbose($"Creating mapping file{(WhatIf.ToBool() ? " and" : ",")} uploading it to SharePoint Online to folder '{Folder}'{(WhatIf.ToBool() ? "" : " and executing sync job")}");
             var job = Utilities.SharePointUserProfileSync.SyncFromAzureActiveDirectory(nonAdminClientContext, aadUsers, IdType, UserProfilePropertyMapping, Folder, ParameterSpecified(nameof(WhatIf))).GetAwaiter().GetResult();
+
+            // Ensure a sync job has been created
+            if(job == null)
+            {
+                throw new PSInvalidOperationException($"Failed to create sync job. Ensure you're providing users to sync and that the mapping is correct.");
+            }
 
             WriteVerbose($"Job initiated with Id {job.JobId} and status {job.State} for file {job.SourceUri}");
 
