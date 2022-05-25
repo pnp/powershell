@@ -27,13 +27,13 @@
 Starting an isolated container with PnP.PowerShell module installed:
 
 ```
-docker run --rm -it asapozhkov/powershell:1.10.0-nanoserver-1809
+docker run --rm -it m365pnp/powershell:1.10.0-nanoserver-1809
 ```
 
 Starting a PnP.PowerShell container with the current directory mounted:
 
 ```PowerShell
-docker run --rm -it -v ${PWD}:c:/app -w c:/app asapozhkov/powershell:1.10.0-nanoserver-1809
+docker run --rm -it -v ${PWD}:c:/app -w c:/app m365pnp/powershell:1.10.0-nanoserver-1809
 ```
 
 ### Linux-container
@@ -41,13 +41,13 @@ docker run --rm -it -v ${PWD}:c:/app -w c:/app asapozhkov/powershell:1.10.0-nano
 Starting an isolated container with PnP.PowerShell module installed:
 
 ```
-docker run --rm -it asapozhkov/powershell
+docker run --rm -it m365pnp/powershell
 ```
 
 Starting a PnP.PowerShell container with the current directory mounted:
 
 ```bash
-docker run --rm -it -v ${PWD}:/home -w /home asapozhkov/powershell
+docker run --rm -it -v ${PWD}:/home -w /home m365pnp/powershell
 ```
 
 ## Tag explanation

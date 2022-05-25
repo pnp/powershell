@@ -9,6 +9,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Remove, "PnPUserProfile")]
+    [OutputType(typeof(void))]
     public class RemoveUserProfile : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
@@ -34,7 +35,8 @@ namespace PnP.PowerShell.Commands.UserProfiles
             {
                 RestHelper.PostAsync(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/HardDeleteUserProfile(accountName=@a,userId='{UserId}')?@a='{normalizedUserName}'", ClientContext).GetAwaiter().GetResult();
             }
-            WriteObject($"Completed deletion of user profile {LoginName}");
+
+            WriteVerbose($"Completed deletion of user profile {LoginName}");
         }
     }
 }
