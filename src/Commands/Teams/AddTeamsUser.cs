@@ -19,6 +19,9 @@ namespace PnP.PowerShell.Commands.Graph
         public TeamsTeamPipeBind Team;
 
         [Parameter(Mandatory = true, ParameterSetName = ParamSet_ByUser)]
+        public TeamsChannelPipeBind Channel;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParamSet_ByUser)]
         public string User;
 
         [Parameter(Mandatory = true, ParameterSetName = ParamSet_ByMultipleUsers)]
@@ -35,15 +38,26 @@ namespace PnP.PowerShell.Commands.Graph
             {
                 try
                 {
-                    if (ParameterSetName == ParamSet_ByUser)
+                    if (ParameterSpecified(nameof(Channel)))
                     {
-                        TeamsUtility.AddUserAsync(HttpClient, AccessToken, groupId, User, Role).GetAwaiter().GetResult();
+                        var channelId = Channel.GetId(HttpClient, AccessToken, groupId);
+                        if (channelId == null)
+                        {
+                            throw new PSArgumentException("Channel not found");
+                        }
+                        TeamsUtility.AddChannelMemberAsync(HttpClient, AccessToken, groupId, channelId, User, Role).GetAwaiter().GetResult();
                     }
                     else
                     {
-                        TeamsUtility.AddUsersAsync(HttpClient, AccessToken, groupId, Users, Role).GetAwaiter().GetResult();
+                        if (ParameterSetName == ParamSet_ByUser)
+                        {
+                            TeamsUtility.AddUserAsync(HttpClient, AccessToken, groupId, User, Role).GetAwaiter().GetResult();
+                        }
+                        else
+                        {
+                            TeamsUtility.AddUsersAsync(HttpClient, AccessToken, groupId, Users, Role).GetAwaiter().GetResult();
+                        }
                     }
-
                 }
                 catch (GraphException ex)
                 {
@@ -61,7 +75,6 @@ namespace PnP.PowerShell.Commands.Graph
             {
                 throw new PSArgumentException("Group not found");
             }
-
         }
     }
 }
