@@ -30,7 +30,7 @@ Get-PnPTerm
     -TermGroup <Guid|Name>
     [-TermStore <Guid>]
     [-Recursive] 
-    [-IncludeChildTerms] [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
+    [-IncludeChildTerms][-IncludeDeprecated] [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -73,6 +73,13 @@ $term.Labels
 ```
 
 Returns all the localized labels for the term named "Small Finance", from the "Departments" termset in a term group called "Corporate"
+
+### EXAMPLE 6
+```powershell
+Get-PnPTerm -Identity "Small Finance" -TermSet "Departments" -TermGroup "Corporate" -Recursive -IncludeDeprecated
+```
+
+Returns the deprecated term named "Small Finance", from the "Departments" termset in a term group called "Corporate" from the site collection termstore even if it is a subterm below "Finance"
 
 ## PARAMETERS
 
@@ -166,6 +173,20 @@ Term store to use; if not specified the default term store is used.
 ```yaml
 Type: GenericObjectNameIdPipeBind<TermStore>
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeDeprecated
+Includes the deprecated terms if available.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: By Term name
 
 Required: False
 Position: Named
