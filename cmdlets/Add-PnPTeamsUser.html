@@ -90,7 +90,7 @@
 </ul>
 <p>Adds a user to an existing Microsoft Teams instance.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPTeamsUser -Team &lt;TeamsTeamPipeBind&gt; -User &lt;String&gt; -Role &lt;String&gt; [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPTeamsUser -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; -User &lt;String&gt; -Role &lt;String&gt; [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -104,7 +104,10 @@
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Add-PnPTeamsUser -Team MyTeam -Users &quot;john@doe.com&quot;,&quot;jane@doe.com&quot; -Role Member
 </code></pre>
-<p>Adds users as a member to the team</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Add-PnPTeamsUser -Team MyTeam -User &quot;jane@doe.com&quot; -Role Member -Channel Private
+</code></pre>
+<p>Adds user as a member to a private channel named Private in MyTeam team.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-role">-Role</h3>
 <p>Specify the role of the user</p>
@@ -124,6 +127,17 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-channel">-Channel</h3>
+<p>Specify the channel id or name of the team to retrieve.</p>
+<pre><code class="lang-yaml">Type: TeamsChannelPipeBind
+Parameter Sets: (User)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
