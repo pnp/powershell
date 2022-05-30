@@ -62,6 +62,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- dc366 [dc366]
 - Bart-Jan Dekker [bjdekker]
 - Aleksandr Sapozhkov [shurick81]
 - [spg-iwilson]
