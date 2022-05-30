@@ -22,7 +22,7 @@ Get-PnPPlannerConfiguration [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This cmdlet returns the Microsoft Planner admin configuration of the tenant. Note that after changing the configuration using `Set-PnPPlannerTenantConfiguration`, this cmdlet may return varying results which could deviate from your desired configuration while the new configuration is being propagated accross the tenant.
+This cmdlet returns the Microsoft Planner admin configuration of the tenant. Note that after changing the configuration using `Set-PnPPlannerTenantConfiguration`, this cmdlet may return varying results which could deviate from your desired configuration while the new configuration is being propagated across the tenant.
 
 ## EXAMPLES
 
