@@ -1,11 +1,14 @@
 ﻿using System.Management.Automation;
+
 using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Move, "PnPListItemToRecycleBin")]
+    [OutputType(typeof(RecycleResult))]
     public class MoveListItemToRecycleBin : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -25,10 +28,11 @@ namespace PnP.PowerShell.Commands.Lists
             if (Identity != null)
             {
                 var item = Identity.GetListItem(list);
-                if (Force || ShouldContinue(string.Format(Properties.Resources.MoveListItemWithId0ToRecycleBin,item.Id), Properties.Resources.Confirm))
+                if (Force || ShouldContinue(string.Format(Properties.Resources.MoveListItemWithId0ToRecycleBin, item.Id), Properties.Resources.Confirm))
                 {
-                    item.Recycle();
+                    var recycleBinResult = item.Recycle();
                     ClientContext.ExecuteQueryRetry();
+                    WriteObject(new RecycleResult { RecycleBinItemId = recycleBinResult.Value });
                 }
             }
         }
