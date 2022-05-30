@@ -21,7 +21,7 @@ Returns all or a specific Planner plan for a Microsoft 365 Group.
 ## SYNTAX
 
 ```powershell
-Get-PnPPlannerPlan -Group <PlannerGroupPipeBind> [-Identity <PlannerPlanPipeBind>] [-ResolveUserDisplayNames]
+Get-PnPPlannerPlan -Group <PlannerGroupPipeBind> [-Identity <PlannerPlanPipeBind>] [-ResolveIdentities]
   [<CommonParameters>]
 ```
 
@@ -76,8 +76,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ResolveUserDisplayNames
-{{ Fill ResolveUserDisplayNames Description }}
+### -ResolveIdentities
+Show user display names instead of user IDs.
 
 ```yaml
 Type: SwitchParameter
