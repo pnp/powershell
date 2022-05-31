@@ -401,8 +401,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static async Task<IEnumerable<PlannerBucket>> GetBucketsAsync(HttpClient httpClient, string accessToken, string planId)
         {
-            var collection = await GraphHelper.GetResultCollectionAsync<PlannerBucket>(httpClient, $"v1.0/planner/plans/{planId}/buckets", accessToken);
-            return collection.OrderBy(p => p.OrderHint);
+            return await GraphHelper.GetResultCollectionAsync<PlannerBucket>(httpClient, $"v1.0/planner/plans/{planId}/buckets", accessToken); 
         }
 
         public static async Task<PlannerBucket> CreateBucketAsync(HttpClient httpClient, string accessToken, string name, string planId)
