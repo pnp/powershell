@@ -58,6 +58,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Invoke-PnPSPRestMethod` invalid parsing for SharePoint number columns. [#1877](https://github.com/pnp/powershell/pull/1879)
 - Fix issue with `Add/Set-PnPListItem` not throwing correct exception for invalid taxonomy values. [#1870](https://github.com/pnp/powershell/pull/1870)
 - Fixed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` throwing an "Object reference not set to an instance of an object" exception when providing an empty users collection or incorrect user mapping [#1896](https://github.com/pnp/powershell/pull/1896)
+- Fixed `Connect-PnPOnline -ReturnConnection` also setting the current connection instead of just the returned connection
+- Fixed `Disconnect-PnPOnline -Connection` also disconnecting other connections next to the provided connection
 
 ### Removed
 - Removed `Get-PnPAvailableClientSideComponents`. Use `Get-PnPPageComponent -Page -ListAvailable` instead.  [#1833](https://github.com/pnp/powershell/pull/1833)
