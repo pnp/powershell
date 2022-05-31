@@ -1,5 +1,4 @@
 ﻿using System;
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
@@ -45,9 +44,11 @@ namespace PnP.PowerShell.Commands
 #pragma warning restore CS0618
             else
             {
+                // Validate that our ClientContext and PnPConnection are both for the same site
                 if (Connection.Context.Url != Connection.Url)
                 {
-                    Connection.RestoreCachedContext(Connection.Url);
+                    // ClientContext is for a different site than our PnPConnection, try to make the connection match the ClientContext URL
+                    Connection.RestoreCachedContext(Connection.Context.Url);
                 }
                 web = ClientContext.Web;
             }
