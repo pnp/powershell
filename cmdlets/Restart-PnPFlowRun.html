@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>get-pnpplannerplan | PnP PowerShell </title>
+    <title>Restart-PnPFlowRun | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="get-pnpplannerplan | PnP PowerShell ">
+    <meta name="title" content="Restart-PnPFlowRun | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,38 +77,50 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="get-pnpplannerplan">Get-PnPPlannerPlan</h1>
+                    <h1 id="restart-pnpflowrun">Restart-PnPFlowRun</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>Microsoft Graph API: Group.ReadWrite.All</li>
-<li>Microsoft Graph API: Group.Read.All</li>
+<li>Azure: management.azure.com</li>
 </ul>
-<p>Returns all or a specific Planner plan for a Microsoft 365 Group.</p>
+<p>Restarts/resubmits a specific flow run for the specified Microsoft Power Automate flow.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPPlannerPlan -Group &lt;PlannerGroupPipeBind&gt; [-Identity &lt;PlannerPlanPipeBind&gt;] [-ResolveIdentities]
-  [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Restart-PnPFlowRun -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Flow &lt;PowerAutomateFlowPipeBind&gt; -Identity &lt;PowerAutomateFlowRunPipeBind&gt; [-Force] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet returns all or a specific Planner plan for a Microsoft 365 Group.</p>
+<p>This cmdlet restarts/resubmits a specific Power Automate flow run.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">Get-PnPPlannerPlan -Group &quot;Marketing&quot;
+<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
+Restart-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
 </code></pre>
-<p>Returns all plans for the Marketing group.</p>
+<p>This restarts the specified flow run of the specified flow</p>
 <h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">Get-PnPPlannerPlan -Group &quot;Marketing&quot; -Identity &quot;Conference Plan&quot;
+<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
+Restart-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230 -Force
 </code></pre>
-<p>Returns the specified plan for the Marketing group.</p>
+<p>This restarts the specified flow run of the specified flow without confirmation</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-group">-Group</h3>
-<p>Specify the group containing the plans</p>
-<pre><code class="lang-yaml">Type: PlannerGroupPipeBind
+<h3 id="-environment">-Environment</h3>
+<p>The name of the Power Platform environment or an Environment object to retrieve the available flows for.</p>
+<pre><code class="lang-yaml">Type: PowerAutomateEnvironmentPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-flow">-Flow</h3>
+<p>The Name/Id of the flow to retrieve the available flow runs for.</p>
+<pre><code class="lang-yaml">Type: PowerAutomateFlowPipeBind
 Parameter Sets: (All)
 Aliases:
 
@@ -119,22 +131,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>If specified the plan with this ID or Name will be returned.</p>
-<pre><code class="lang-yaml">Type: PlannerPlanPipeBind
+<p>The Name/Id of the flow run to restart.</p>
+<pre><code class="lang-yaml">Type: PowerAutomateFlowRunPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-resolveidentities">-ResolveIdentities</h3>
-<p>Show user display names instead of user IDs.</p>
+<h3 id="-force">-Force</h3>
+<p>Specifying the Force parameter will skip the confirmation question.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -142,8 +153,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="commonparameters">CommonParameters</h3>
-<p>This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see <a href="http://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>

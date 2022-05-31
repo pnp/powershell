@@ -244,28 +244,28 @@ Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
 <p>Next step is to assign permissions to this managed identity so it is authorized to access the Microsoft Graph.</p>
 <ol>
 <li><p>Ensure you're having the Azure PowerShell management module installed on your environment. You can install it using:</p>
-<pre><code class="lang-powershell">Install-Module AzureAD
+<pre><code class="lang-powershell">Install-Module Az
 </code></pre>
 </li>
 <li><p>Connect to the Azure instance where your Azure Function runs and of which you want to use the Microsoft Graph through PnP PowerShell</p>
-<pre><code class="lang-powershell">Connect-AzureAD -TenantId &lt;contoso&gt;.onmicrosoft.com
+<pre><code class="lang-powershell">Connect-AzAccount -Tenant &lt;contoso&gt;.onmicrosoft.com
 </code></pre>
 </li>
 <li><p>Retrieve the Azure AD Service Principal instance for the Microsoft Graph. It should always be AppId 00000003-0000-0000-c000-000000000000.</p>
-<pre><code class="lang-powershell">$graphServicePrincipal = Get-AzureADServicePrincipal -SearchString &quot;Microsoft Graph&quot; | Select-Object -First 1
+<pre><code class="lang-powershell">$graphServicePrincipal = Get-AzADServicePrincipal -SearchString &quot;Microsoft Graph&quot; | Select-Object -First 1
 </code></pre>
 </li>
 <li><p>Using the following PowerShell cmdlet you can list all the possible Microsoft Graph permissions you can give your Azure Function through the Managed Identity. This list will be long. Notice that we are specifically querying for application permissions. Delegate permissions cannot be utilized using a Managed Identity.</p>
-<pre><code class="lang-powershell">$graphServicePrincipal.AppRoles | Where-Object { $_.AllowedMemberTypes -eq &quot;Application&quot; }
+<pre><code class="lang-powershell">$graphServicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq &quot;Application&quot; }
 </code></pre>
 </li>
 <li><p>Pick a permission which you would like to grant your Azure Function to have towards the Microsoft Graph, i.e. <code>Group.Read.All</code>.</p>
-<pre><code class="lang-powershell">$appRole = $graphServicePrincipal.AppRoles | Where-Object { $_.AllowedMemberTypes -eq &quot;Application&quot; -and $_.Value -eq &quot;Group.Read.All&quot; }
+<pre><code class="lang-powershell">$appRole = $graphServicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq &quot;Application&quot; -and $_.Value -eq &quot;Group.Read.All&quot; }
 </code></pre>
 </li>
 <li><p>Now assign this permission to the Azure Active Directory app registration that has been created automatically by enabling the managed identity on the Azure Function in the steps above:</p>
 <pre><code class="lang-powershell">$managedIdentityId = &quot;&lt;Object (principal) ID of the Azure Function generated in the previous section&gt;&quot;
-New-AzureAdServiceAppRoleAssignment -ObjectId $managedIdentityId -PrincipalId $managedIdentityId -ResourceId $graphServicePrincipal.ObjectId -Id $appRole.Id
+Add-AzADAppPermission -ObjectId $managedIdentityId -ApiId $graphServicePrincipal.AppId -PermissionId $appRole.Id -Type 'Role'
 
 </code></pre>
 </li>
