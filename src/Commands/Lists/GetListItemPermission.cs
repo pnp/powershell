@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands.Lists
                     roles.Add(role);
                 }
 
-                listItemPermission.RoleDefinitions = roles;
+                listItemPermission.PermissionLevels = roles;
                 listItemPermissions.Add(listItemPermission);
 
                 listItemPermissionCollection.Permissions = listItemPermissions;

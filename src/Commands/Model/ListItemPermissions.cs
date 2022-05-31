@@ -14,7 +14,7 @@ namespace PnP.PowerShell.Commands.Model
 
     public class Permissions
     {        
-        public List<RoleDefinition> RoleDefinitions { get; set; }
+        public List<RoleDefinition> PermissionLevels { get; set; }
 
         public string PrincipalName { get; set; }
 
