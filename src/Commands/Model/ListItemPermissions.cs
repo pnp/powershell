@@ -5,9 +5,16 @@ using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Model
 {
-    public class ListItemPermissions
+    public class ListItemPermissionCollection
     {
-        public List<RoleDefinition> Permissions { get; set; }
+        public bool HasUniqueRoleAssignments { get; set; }
+
+        public List<Permissions> Permissions { get; set; }
+    }
+
+    public class Permissions
+    {        
+        public List<RoleDefinition> RoleDefinitions { get; set; }
 
         public string PrincipalName { get; set; }
 

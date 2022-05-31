@@ -30,16 +30,20 @@ namespace PnP.PowerShell.Commands.Lists
             }
 
             ClientContext.Load(item, a => a.RoleAssignments.Include(roleAsg => roleAsg.Member.LoginName,
+                    roleAsg => roleAsg.Member.PrincipalType, roleAsg => roleAsg.Member.Id,
                     roleAsg => roleAsg.RoleDefinitionBindings.Include(roleDef => roleDef.Name,
-                    roleDef => roleDef.Description)));
+                    roleDef => roleDef.Description, roleDef => roleDef.Id, roleDef => roleDef.RoleTypeKind)), a => a.HasUniqueRoleAssignments);
             ClientContext.ExecuteQueryRetry();
 
-            var listItemPermissions = new List<ListItemPermissions>();
+            var listItemPermissions = new List<Permissions>();
+            var listItemPermissionCollection = new ListItemPermissionCollection
+            {
+                HasUniqueRoleAssignments = item.HasUniqueRoleAssignments
+            };
 
             foreach (var roleAssignment in item.RoleAssignments)
             {
-                roleAssignment.EnsureProperties(r => r.Member, r => r.Member.PrincipalType, r => r.Member.Id, r => r.Member.Id);
-                var listItemPermission = new ListItemPermissions
+                var listItemPermission = new Permissions
                 {
                     PrincipalName = roleAssignment.Member.LoginName,
                     PrincipalType = roleAssignment.Member.PrincipalType,
@@ -52,11 +56,13 @@ namespace PnP.PowerShell.Commands.Lists
                     roles.Add(role);
                 }
 
-                listItemPermission.Permissions = roles;
+                listItemPermission.RoleDefinitions = roles;
                 listItemPermissions.Add(listItemPermission);
+
+                listItemPermissionCollection.Permissions = listItemPermissions;
             }
 
-            WriteObject(listItemPermissions, true);
+            WriteObject(listItemPermissionCollection, true);
         }
     }
 }
