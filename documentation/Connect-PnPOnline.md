@@ -17,14 +17,14 @@ Connect to a SharePoint site
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Credentials <CredentialPipeBind>] [-CurrentCredentials]
  [-CreateDrive] [-DriveName <String>] [-ClientId <String>] [-RedirectUri <String>]
  [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
- [-TransformationOnPrem] [<CommonParameters>]
+ [-TransformationOnPrem] [-ValidateConnection] [<CommonParameters>]
 ```
 
 ### SharePoint ACS (Legacy) App Only
 ```
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Realm <String>] -ClientSecret <String> [-CreateDrive]
  [-DriveName <String>] -ClientId <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
- [<CommonParameters>]
+ [-ValidateConnection] [<CommonParameters>]
 ```
 
 ### App-Only with Azure Active Directory
@@ -32,34 +32,35 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Realm <String>] -ClientS
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
  -Tenant <String> [-CertificatePath <String>] [-CertificateBase64Encoded <String>]
  [-CertificatePassword <SecureString>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
- [<CommonParameters>]
+ [-ValidateConnection] [<CommonParameters>]
 ```
 
 ### App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint
 ```
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
  -Tenant <String> -Thumbprint <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
- [<CommonParameters>]
+ [-ValidateConnection] [<CommonParameters>]
 ```
 
 ### PnP Management Shell / DeviceLogin
 ```
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] [-DeviceLogin]
  [-LaunchBrowser] [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] 
- [<CommonParameters>]
+ [-ValidateConnection] [<CommonParameters>]
 ```
 
 ### Web Login for Multi Factor Authentication
 ```
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>]
  [-TenantAdminUrl <String>] [-UseWebLogin] [-ForceAuthentication]
- [<CommonParameters>]
+ [-ValidateConnection] [<CommonParameters>]
 ```
 
 ### Interactive for Multi Factor Authentication
 ```
 Connect-PnPOnline -Interactive [-ReturnConnection] -Url <String> [-CreateDrive] [-DriveName <String>] [-LaunchBrowser]
- [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication]  [<CommonParameters>]
+ [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection]
+ [<CommonParameters>]
 ```
 
 ### On-premises login for page transformation from on-premises SharePoint to SharePoint Online
@@ -514,6 +515,20 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ValidateConnection
+When provided, the cmdlet will check to ensure the SharePoint Online site specified through `-Url` exists and if not, will throw an exception. If you omit this flag or set it to $false, it will blindly set up a connection without validating that the site actually exists
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token
+Aliases:
+
+Required: False
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
