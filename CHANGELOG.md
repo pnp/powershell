@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Added `-Wait` and `-Verbose` optional paramarers to `New-PnPUPABulkImportJob` [#1752](https://github.com/pnp/powershell/pull/1752)
+- Added `Add-PnPTeamsChannelUser` which allows members and owners to be added to private channels in Teams [#1735](https://github.com/pnp/powershell/pull/1735)
+- Added `Channel` parameter to `Add-PnPTeamsUser` cmdlet which if specified will allow owners and members to be added to private channels in a Teams Team. [#1772](https://github.com/pnp/powershell/pull/1772)
 - Added the ability to retrieve site collection information by its Id using `Get-PnPTenantSite -Identity <id>` [#1766](https://github.com/pnp/powershell/pull/1766)
 - Added `ResourceBehaviorOptions` option in `New-PnPMicrosoft365Group` cmdlet to set `ResourceBehaviorOptions` while provisioning a Microsoft 365 Group. [#1774](https://github.com/pnp/powershell/pull/1774)
 - Added `Add-PnPTeamsChannelUser` which allows members and owners to be added to private channels in Teams [#1735](https://github.com/pnp/powershell/pull/1735)
@@ -34,11 +36,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added new `PnP.PowerShell` image which also gets published to Docker Hub. [#1580](https://github.com/pnp/powershell/pull/1794)
 - Added capability to Debug the module in Visual Studio. [#1880](https://github.com/pnp/powershell/pull/1880)
 - Added `Set-PnPTeamsChannelUser` cmdlet to update the role of user in a private channel. [#1865](https://github.com/pnp/powershell/pull/1865)
+- Added `Restart-PnPFlowRun` which allows for a failed Power Automate flow run to be retried [#1915](https://github.com/pnp/powershell/pull/1915)
 
 ### Changed
 - Changed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to map users based on their Ids instead which should resolve some issues around user identities reporting not to exist. You can use the new `-IdType` option to switch it back to `PrincipalName` if needed.  [#1752](https://github.com/pnp/powershell/pull/1752)
 - Changed `Get-PnPOrgAssetsLibrary` to return a proper value of the organisation assets libraries. [#1889](https://github.com/pnp/powershell/pull/1889)
 - Bumped .NET Framework version to 4.6.2 as the 4.6.1 is not supported anymore. [#1856](https://github.com/pnp/powershell/pull/1856)
+- Changed `Add-PnPDataRowsToSiteTemplate`, it will now export a datetime field value as UTC string. [#1900](https://github.com/pnp/powershell/pull/1900)
+- The cmdlets `Remove-PnPFile`, `Remove-PnPFolder`, `Move-PnPListItemToRecycleBin`, `Remove-PnPList`, `Remove-PnPListItem` and `Remove-PnPPage` will now return the corresponding recycle bin item if they get deleted to the recycle bin. Before they would not return anything. [#1783](https://github.com/pnp/powershell/pull/1783)
 
 ### Fixed
 
@@ -60,6 +65,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- dc366 [dc366]
 - Bart-Jan Dekker [bjdekker]
 - Aleksandr Sapozhkov [shurick81]
 - [spg-iwilson]
