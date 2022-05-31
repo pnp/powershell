@@ -36,8 +36,6 @@ This will put the current connection for use with the -Connection parameter on o
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by specifying -ReturnConnection on Connect-PnPOnline. If not provided, the connection will be retrieved from the current context.
 
 ```yaml
-
-```yaml
 Type: PnPConnection
 Parameter Sets: (All)
 
