@@ -44,7 +44,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Bumped .NET Framework version to 4.6.2 as the 4.6.1 is not supported anymore. [#1856](https://github.com/pnp/powershell/pull/1856)
 - Changed `Add-PnPDataRowsToSiteTemplate`, it will now export a datetime field value as UTC string. [#1900](https://github.com/pnp/powershell/pull/1900)
 - The cmdlets `Remove-PnPFile`, `Remove-PnPFolder`, `Move-PnPListItemToRecycleBin`, `Remove-PnPList`, `Remove-PnPListItem` and `Remove-PnPPage` will now return the corresponding recycle bin item if they get deleted to the recycle bin. Before they would not return anything. [#1783](https://github.com/pnp/powershell/pull/1783)
-- Cmdlets backed by a Microsoft Graph call will now return detailed information when the Graph call fails
+- Cmdlets backed by a Microsoft Graph call will now return detailed information when the Graph call fails [#1923](https://github.com/pnp/powershell/pull/1923)
 
 ### Fixed
 
