@@ -321,14 +321,17 @@ namespace PnP.PowerShell.Commands.Base
             if (ValidateConnection)
             {
                 // Try requesting the site Id to validate that the site to which is being connected exists
+                WriteVerbose($"Validating if the site at {Url} exists");
                 connection.Context.Load(connection.Context.Site, p => p.Id);
 
                 try
                 {
                     connection.Context.ExecuteQueryRetry();
+                    WriteVerbose($"Site at {Url} exists");
                 }
                 catch(System.Net.WebException e) when (e.Message.Contains("404"))
                 {
+                    WriteVerbose($"Site at {Url} does not exist");
                     throw new PSInvalidOperationException($"The specified site {Url} does not exist", e);
                 }
             }

@@ -519,7 +519,7 @@ Accept wildcard characters: False
 ```
 
 ### -ValidateConnection
-When provided, the cmdlet will check to ensure the SharePoint Online site specified through `-Url` exists and if not, will throw an exception. If you omit this flag or set it to $false, it will blindly set up a connection without validating that the site actually exists
+When provided, the cmdlet will check to ensure the SharePoint Online site specified through `-Url` exists and if not, will throw an exception. If you omit this flag or set it to $false, it will blindly set up a connection without validating that the site actually exists. Making use of this option does make one extra call on the connection attempt, so it is recommended to only use it in scenarios where you know the site you're trying to connect o may not exist and would like to have feedback on this during the connect.
 
 ```yaml
 Type: SwitchParameter
@@ -632,6 +632,19 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Verbose
+When provided, additional debug statements will be shown while going through setting up a connection.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
