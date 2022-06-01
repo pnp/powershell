@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using PnP.Core.QueryModel;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "PnPListItemPermissions")]
+    [Cmdlet(VerbsCommon.Get, "PnPListItemPermission")]
     public class GetListItemPermission : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -35,7 +34,7 @@ namespace PnP.PowerShell.Commands.Lists
                     roleDef => roleDef.Description, roleDef => roleDef.Id, roleDef => roleDef.RoleTypeKind)), a => a.HasUniqueRoleAssignments);
             ClientContext.ExecuteQueryRetry();
 
-            var listItemPermissions = new List<Permissions>();
+            var listItemPermissions = new List<ListItemPermission>();
             var listItemPermissionCollection = new ListItemPermissionCollection
             {
                 HasUniqueRoleAssignments = item.HasUniqueRoleAssignments
@@ -43,7 +42,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             foreach (var roleAssignment in item.RoleAssignments)
             {
-                var listItemPermission = new Permissions
+                var listItemPermission = new ListItemPermission
                 {
                     PrincipalName = roleAssignment.Member.LoginName,
                     PrincipalType = roleAssignment.Member.PrincipalType,

@@ -1,10 +1,10 @@
 ---
 Module Name: PnP.PowerShell
-title: Get-PnPListItemPermissions
+title: Get-PnPListItemPermission
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPListItemPermissions.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPListItemPermission.html
 ---
  
 # Get-PnPListItemPermission
@@ -16,7 +16,7 @@ Gets list item permissions.
 
 ```powershell
 
-Get-PnPListItemPermissions [-List] <ListPipeBind> -Identity <ListItemPipeBind>
+Get-PnPListItemPermission [-List] <ListPipeBind> -Identity <ListItemPipeBind>
  [-Connection <PnPConnection>] [<CommonParameters>]
 
 ```
@@ -27,26 +27,12 @@ Get-PnPListItemPermissions [-List] <ListPipeBind> -Identity <ListItemPipeBind>
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPListItemPermissions -List 'Documents' -Identity 1
+Get-PnPListItemPermission -List 'Documents' -Identity 1
 ```
 
 Get the permissions for listitem with id 1 in the list 'Documents'
 
 ## PARAMETERS
-
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Identity
 The ID of the listitem, or actual ListItem object
@@ -73,6 +59,20 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
