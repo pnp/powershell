@@ -99,7 +99,7 @@
     -TermGroup &lt;Guid|Name&gt;
     [-TermStore &lt;Guid&gt;]
     [-Recursive] 
-    [-IncludeChildTerms] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;] [&lt;CommonParameters&gt;]
+    [-IncludeChildTerms][-IncludeDeprecated] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Retries a Term Store Term.</p>
@@ -125,6 +125,10 @@
 $term.Labels
 </code></pre>
 <p>Returns all the localized labels for the term named &quot;Small Finance&quot;, from the &quot;Departments&quot; termset in a term group called &quot;Corporate&quot;</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Get-PnPTerm -Identity &quot;Small Finance&quot; -TermSet &quot;Departments&quot; -TermGroup &quot;Corporate&quot; -Recursive -IncludeDeprecated
+</code></pre>
+<p>Returns the deprecated term named &quot;Small Finance&quot;, from the &quot;Departments&quot; termset in a term group called &quot;Corporate&quot; from the site collection termstore even if it is a subterm below &quot;Finance&quot;</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -196,6 +200,17 @@ Accept wildcard characters: False
 <p>Term store to use; if not specified the default term store is used.</p>
 <pre><code class="lang-yaml">Type: GenericObjectNameIdPipeBind&lt;TermStore&gt;
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-includedeprecated">-IncludeDeprecated</h3>
+<p>Includes the deprecated terms if available.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: By Term name
 
 Required: False
 Position: Named
