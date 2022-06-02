@@ -1233,7 +1233,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Connect-PnPOnline.html",
-          "hash": "oEq71znka55rtDUMp9s+bA=="
+          "hash": "hxD5NZSBQM0fZkHg9NDTXw=="
         }
       },
       "is_incremental": false,
@@ -2410,6 +2410,18 @@
         ".html": {
           "relative_path": "cmdlets/Get-PnPListItemComment.html",
           "hash": "9pOZT5lZIQR4ZOpfAx/8/w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPListItemPermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPListItemPermission.html",
+          "hash": "/bEiuGZfKWYtffWisJVKSw=="
         }
       },
       "is_incremental": false,
@@ -7569,7 +7581,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "VNodR5ret6DSLwujmWIJJQ=="
+          "hash": "KmR/OS0RV+Z9Qawz7hDUTw=="
         }
       },
       "is_incremental": false,
@@ -7780,7 +7792,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 629,
+          "total_file_count": 630,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

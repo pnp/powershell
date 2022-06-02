@@ -90,37 +90,38 @@
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-Credentials &lt;CredentialPipeBind&gt;] [-CurrentCredentials]
  [-CreateDrive] [-DriveName &lt;String&gt;] [-ClientId &lt;String&gt;] [-RedirectUri &lt;String&gt;]
  [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
- [-TransformationOnPrem] [&lt;CommonParameters&gt;]
+ [-TransformationOnPrem] [-ValidateConnection] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="sharepoint-acs-legacy-app-only">SharePoint ACS (Legacy) App Only</h3>
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-Realm &lt;String&gt;] -ClientSecret &lt;String&gt; [-CreateDrive]
  [-DriveName &lt;String&gt;] -ClientId &lt;String&gt; [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
- [&lt;CommonParameters&gt;]
+ [-ValidateConnection] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="app-only-with-azure-active-directory">App-Only with Azure Active Directory</h3>
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] -ClientId &lt;String&gt;
  -Tenant &lt;String&gt; [-CertificatePath &lt;String&gt;] [-CertificateBase64Encoded &lt;String&gt;]
  [-CertificatePassword &lt;SecureString&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
- [&lt;CommonParameters&gt;]
+ [-ValidateConnection] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="app-only-with-azure-active-directory-using-a-certificate-from-the-windows-certificate-management-store-by-thumbprint">App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint</h3>
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] -ClientId &lt;String&gt;
  -Tenant &lt;String&gt; -Thumbprint &lt;String&gt; [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
- [&lt;CommonParameters&gt;]
+ [-ValidateConnection] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="pnp-management-shell--devicelogin">PnP Management Shell / DeviceLogin</h3>
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] [-DeviceLogin]
  [-LaunchBrowser] [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] 
- [&lt;CommonParameters&gt;]
+ [-ValidateConnection] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="web-login-for-multi-factor-authentication">Web Login for Multi Factor Authentication</h3>
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;]
  [-TenantAdminUrl &lt;String&gt;] [-UseWebLogin] [-ForceAuthentication]
- [&lt;CommonParameters&gt;]
+ [-ValidateConnection] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="interactive-for-multi-factor-authentication">Interactive for Multi Factor Authentication</h3>
 <pre><code>Connect-PnPOnline -Interactive [-ReturnConnection] -Url &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] [-LaunchBrowser]
- [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ForceAuthentication]  [&lt;CommonParameters&gt;]
+ [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ForceAuthentication] [-ValidateConnection]
+ [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="on-premises-login-for-page-transformation-from-on-premises-sharepoint-to-sharepoint-online">On-premises login for page transformation from on-premises SharePoint to SharePoint Online</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &lt;String&gt; -TransformationOnPrem [-CurrentCredential]
@@ -470,6 +471,17 @@ Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-validateconnection">-ValidateConnection</h3>
+<p>When provided, the cmdlet will check to ensure the SharePoint Online site specified through <code>-Url</code> exists and if not, will throw an exception. If you omit this flag or set it to $false, it will blindly set up a connection without validating that the site actually exists. Making use of this option does make one extra call on the connection attempt, so it is recommended to only use it in scenarios where you know the site you're trying to connect o may not exist and would like to have feedback on this during the connect.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token
+Aliases:
+
+Required: False
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-transformationonprem">-TransformationOnPrem</h3>
 <p>If you want to the use page transformation cmdlets, setting this switch will allow you to connect to an on-prem server.
 Notice that this -only- applies to Transformation cmdlets.</p>
@@ -545,6 +557,17 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: App-Only with Azure Active Directory
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while going through setting up a connection.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named
