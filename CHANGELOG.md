@@ -66,6 +66,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Removed
 - Removed `Get-PnPAvailableClientSideComponents`. Use `Get-PnPPageComponent -Page -ListAvailable` instead.  [#1833](https://github.com/pnp/powershell/pull/1833)
+- Removed `NextLink` property from `Get-PnPAzureADUser` cmdlet, as it was causing confusion. [#1930](https://github.com/pnp/powershell/pull/1930)
 
 ### Contributors
 
