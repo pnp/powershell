@@ -172,7 +172,7 @@ namespace PnP.PowerShell.Commands.Utilities
             Contains
         }
 
-        internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls = null, bool noThreadJoin = false, CancellationTokenSource cancellationTokenSource = null, bool cancelOnClose = true)
+        internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls = null, bool noThreadJoin = false, CancellationTokenSource cancellationTokenSource = null, bool cancelOnClose = true, bool scriptErrorsSuppressed = true)
         {
             bool success = false;
 #if Windows
@@ -186,12 +186,11 @@ namespace PnP.PowerShell.Commands.Utilities
                     cancellationTokenSource?.Token.Register(() =>
                     {
                         form.Invoke((System.Windows.Forms.MethodInvoker)(() => form.Close()));
-                        //form.Close();
                     });
 
                     var browser = new System.Windows.Forms.WebBrowser
                     {
-                        ScriptErrorsSuppressed = true,
+                        ScriptErrorsSuppressed = scriptErrorsSuppressed,
                         Dock = System.Windows.Forms.DockStyle.Fill
                     };
                     var assembly = typeof(BrowserHelper).Assembly;
@@ -323,7 +322,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 if (OperatingSystem.IsWindows() && usePopup)
                 {
-                    BrowserHelper.GetWebBrowserPopup(url, "Please login", new[] { ($"http://localhost:{port}/?code=", BrowserHelper.UrlMatchType.StartsWith) }, noThreadJoin: true, cancellationTokenSource: cancellationTokenSource, cancelOnClose: true);
+                    BrowserHelper.GetWebBrowserPopup(url, "Please login", new[] { ($"http://localhost:{port}/?code=", BrowserHelper.UrlMatchType.StartsWith) }, noThreadJoin: true, cancellationTokenSource: cancellationTokenSource, cancelOnClose: true, scriptErrorsSuppressed: false);
                 }
                 else
                 {
