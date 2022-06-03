@@ -31,7 +31,6 @@ namespace PnP.PowerShell.Commands.Utilities
             var result = new UserDelta
             {
                 DeltaToken = userDelta.DeltaToken,
-                NextLink = userDelta.NextLink,
                 Users = userDelta.Users.Select(User.CreateFrom).ToList()
             };
             return result;

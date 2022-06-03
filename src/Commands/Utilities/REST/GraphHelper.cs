@@ -1,14 +1,13 @@
 ﻿using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model.Graph;
-using PnP.PowerShell.Commands.Model.Teams;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Utilities.REST
@@ -249,25 +248,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return await GetResponseMessageAsync(httpClient, message);
         }
 
-
-
-        // public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, T content,IDictionary<string, string> additionalHeaders = null)
-        // {
-        //     var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
-        //     requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-        //     var message = GetMessage(url, new HttpMethod("PATCH"), accessToken, requestContent, additionalHeaders);
-        //     var returnValue = await SendMessageAsync(httpClient, message);
-        //     if (!string.IsNullOrEmpty(returnValue))
-        //     {
-        //         return JsonSerializer.Deserialize<T>(returnValue, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-        //     }
-        //     else
-        //     {
-        //         return default;
-        //     }
-        // }
         #endregion
-
 
         public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, HttpContent content, string accessToken, IDictionary<string, string> additionalHeaders = null, bool propertyNameCaseInsensitive = false)
         {
@@ -369,8 +350,6 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-
-
         public static async Task<HttpResponseMessage> GetResponseMessageAsync(HttpClient httpClient, HttpRequestMessage message)
         {
             var response = await httpClient.SendAsync(message);
@@ -381,6 +360,23 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 await Task.Delay(retryAfter.Delta.Value.Seconds * 1000);
                 response = await httpClient.SendAsync(CloneMessage(message));
             }
+
+            // Validate if the response was successful, if not throw an exception
+            if (!response.IsSuccessStatusCode)
+            {
+                if (GraphHelper.TryGetGraphException(response, out GraphException ex))
+                {
+                    if (ex.Error != null)
+                    {
+                        throw new PSInvalidOperationException(ex.Error.Message);
+                    }
+                }
+                else
+                {
+                    throw new PSInvalidOperationException($"Call to Microsoft Graph URL {message.RequestUri} failed with status code {response.StatusCode}");
+                }
+            }
+
             return response;
         }
 
