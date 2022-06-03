@@ -80,7 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -AllowTenantMoveWithDataMigration
-Configure whether a tenant move with data migration is authorized
+Allows configuring whether a tenant move with data migration is authorized
 
 ```yaml
 Type: Boolean
