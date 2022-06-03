@@ -290,8 +290,8 @@ namespace PnP.PowerShell.Commands.Base
 #else
             WriteVerbose($"PnP PowerShell Cmdlets ({Assembly.GetExecutingAssembly().GetName().Version})");
 #endif
-            PnPConnection.Current = connection;
-            if (CreateDrive && PnPConnection.Current.Context != null)
+            
+            if (CreateDrive && connection.Context != null)
             {
                 var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals(SPOProvider.PSProviderName, StringComparison.InvariantCultureIgnoreCase));
                 if (provider != null)
@@ -306,9 +306,9 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
 
-            if (PnPConnection.Current.Url != null)
+            if (connection.Url != null)
             {
-                var hostUri = new Uri(PnPConnection.Current.Url);
+                var hostUri = new Uri(connection.Url);
                 Environment.SetEnvironmentVariable("PNPPSHOST", hostUri.Host);
                 Environment.SetEnvironmentVariable("PNPPSSITE", hostUri.LocalPath);
             }
@@ -339,6 +339,10 @@ namespace PnP.PowerShell.Commands.Base
             if (ReturnConnection)
             {
                 WriteObject(connection);
+            }
+            else
+            {
+                PnPConnection.Current = connection;
             }
         }
 
