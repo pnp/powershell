@@ -108,17 +108,6 @@
 </code></pre>
 <p>This examples shows how to do wildcard searches on the list URL. It returns all lists whose URL starts with &quot;/lists/&quot; This could also be used to search for strings inside of the URL.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>The ID, name or Url (Lists/MyList) of the list</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
@@ -133,6 +122,17 @@ Accept wildcard characters: False
 <h3 id="-throwexceptioniflistnotfound">-ThrowExceptionIfListNotFound</h3>
 <p>Switch parameter if an exception should be thrown if the requested list does not exist (true) or if omitted, nothing will be returned in case the list does not exist</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
 Required: False

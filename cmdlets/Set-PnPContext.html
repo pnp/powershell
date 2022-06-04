@@ -86,10 +86,10 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Set the ClientContext</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPContext [-Context] &lt;ClientContext&gt; [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPContext -Context &lt;ClientContext&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Sets the Client Context to use by the cmdlets, which allows easy context switching. See examples for details.</p>
+<p>Sets the Client Context to be used by the cmdlets, which allows easy context switching. See examples for details.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url $siteAurl -Credentials $credentials
@@ -110,6 +110,17 @@ Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by specifying -ReturnConnection on Connect-PnPOnline. If not provided, the connection will be retrieved from the current context.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>

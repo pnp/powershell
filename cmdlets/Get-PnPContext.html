@@ -84,12 +84,12 @@
                     <h1 id="get-pnpcontext">Get-PnPContext</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Returns the current context</p>
+<p>Returns the current SharePoint Online CSOM context</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPContext [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPContext [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Returns a Client Side Object Model context</p>
+<p>Returns a SharePoint Online Client Side Object Model (CSOM) context</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">$ctx = Get-PnPContext
@@ -105,6 +105,17 @@ Set-PnPContext -Context $ctx # switch back to site A
 Get-PnPList # returns the lists from site A
 </code></pre>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection. If not provided, the context of the connection will be retrieved from the current connection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
