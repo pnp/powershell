@@ -30,35 +30,35 @@ Remove-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBin
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPListItemAttachement -List "Demo List" -Identity 1 -FileName test.txt
+Remove-PnPListItemAttachment -List "Demo List" -Identity 1 -FileName test.txt
 ```
 
 Permanently delete an attachment from the list item with Id "1" in the "Demo List" SharePoint list with file name as test.txt.
 
 ### EXAMPLE 2
 ```powershell
-Remove-PnPListItemAttachement -List "Demo List" -Identity 1 -FileName test.txt -Recycle
+Remove-PnPListItemAttachment -List "Demo List" -Identity 1 -FileName test.txt -Recycle
 ```
 
 Removes an attachment from the list item with Id "1" in the "Demo List" SharePoint list with file name as test.txt and sends it to recycle bin.
 
 ### EXAMPLE 3
 ```powershell
-Remove-PnPListItemAttachement -List "Demo List" -Identity 1 -FileName test.txt -Recycle -Force
+Remove-PnPListItemAttachment -List "Demo List" -Identity 1 -FileName test.txt -Recycle -Force
 ```
 
 Removes an attachment from the list item with Id "1" in the "Demo List" SharePoint list with file name as test.txt and sends it to recycle bin. It will not ask for confirmation from user.
 
 ### EXAMPLE 4
 ```powershell
-Remove-PnPListItemAttachement -List "Demo List" -Identity 1 -All -Recycle -Force
+Remove-PnPListItemAttachment -List "Demo List" -Identity 1 -All -Recycle -Force
 ```
 
 Removes all attachments from the list item with Id "1" in the "Demo List" SharePoint list and sends them to recycle bin. It will not ask for confirmation from user.
 
 ### EXAMPLE 5
 ```powershell
-Remove-PnPListItemAttachement -List "Demo List" -Identity 1 -All
+Remove-PnPListItemAttachment -List "Demo List" -Identity 1 -All
 ```
 
 Permanently deletes all attachments from the list item with Id "1" in the "Demo List" SharePoint list and sends them to recycle bin.
