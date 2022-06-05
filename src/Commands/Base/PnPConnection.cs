@@ -611,6 +611,8 @@ namespace PnP.PowerShell.Commands.Base
 
         internal void CacheContext()
         {
+            if(Context == null) return;
+            
             var c = ContextCache.FirstOrDefault(cc => new Uri(cc.Url).AbsoluteUri == new Uri(Context.Url).AbsoluteUri);
             if (c == null)
             {

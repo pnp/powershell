@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Management.Automation;
 using System.Net.Http;
 
 namespace PnP.PowerShell.Commands.Base
@@ -11,7 +10,15 @@ namespace PnP.PowerShell.Commands.Base
     {
         protected override void BeginProcessing()
         {
+            BeginProcessing(false);
+        }
+
+        protected void BeginProcessing(bool skipConnectedValidation)
+        {
             base.BeginProcessing();
+
+            // Check if we should ensure that we are connected
+            if(skipConnectedValidation) return;
 
             // Ensure there is an active connection
             if (PnPConnection.Current == null)
@@ -21,9 +28,5 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         public HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-
-
     }
-
-
 }

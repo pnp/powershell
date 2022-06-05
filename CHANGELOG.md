@@ -37,6 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added capability to Debug the module in Visual Studio. [#1880](https://github.com/pnp/powershell/pull/1880)
 - Added `Set-PnPTeamsChannelUser` cmdlet to update the role of user in a private channel. [#1865](https://github.com/pnp/powershell/pull/1865)
 - Added `Restart-PnPFlowRun` which allows for a failed Power Automate flow run to be retried [#1915](https://github.com/pnp/powershell/pull/1915)
+- Added optional `-Connection` parameter to `Get-PnPConnection`, `Get-PnPContext` and `Set-PnPContext` which allows for using any of these for a specific connection [#1919](https://github.com/pnp/powershell/pull/1919)
 - Added `-IncludeDeprecated` parameter to `Get-PnPTerm` cmdlet to fetch deprecated terms if specified [#1903](https://github.com/pnp/powershell/pull/1903)
 - Added optional `-ValidateConnection` to `Connect-PnPOnline` which will check if the site you are connecting to exists and if not, will throw an exception [#1924](https://github.com/pnp/powershell/pull/1924)
 - Added `Add-PnPListItemAttachment` cmdlet to provide ability to upload a file as an attachment to a SharePoint list item.
@@ -65,6 +66,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Invoke-PnPSPRestMethod` invalid parsing for SharePoint number columns. [#1877](https://github.com/pnp/powershell/pull/1879)
 - Fix issue with `Add/Set-PnPListItem` not throwing correct exception for invalid taxonomy values. [#1870](https://github.com/pnp/powershell/pull/1870)
 - Fixed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` throwing an "Object reference not set to an instance of an object" exception when providing an empty users collection or incorrect user mapping [#1896](https://github.com/pnp/powershell/pull/1896)
+- Fixed `Connect-PnPOnline -ReturnConnection` also setting the current connection instead of just the returned connection [#1919](https://github.com/pnp/powershell/pull/1919)
+- Fixed `Disconnect-PnPOnline -Connection` also disconnecting other connections next to the provided connection [#1919](https://github.com/pnp/powershell/pull/1919)
+- Fixed `Set-PnPContext` not properly applying the provided context [#1919](https://github.com/pnp/powershell/pull/1919)
 
 ### Removed
 - Removed `Get-PnPAvailableClientSideComponents`. Use `Get-PnPPageComponent -Page -ListAvailable` instead.  [#1833](https://github.com/pnp/powershell/pull/1833)
