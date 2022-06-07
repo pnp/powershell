@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Model.Planner;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Set, "PnPPlannerTask")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
@@ -27,10 +27,16 @@ namespace PnP.PowerShell.Commands.Graph
         public int PercentComplete;
 
         [Parameter(Mandatory = false)]
+        public int Priority;
+
+        [Parameter(Mandatory = false)]
         public DateTime DueDateTime;
 
         [Parameter(Mandatory = false)]
         public DateTime StartDateTime;
+
+        [Parameter(Mandatory = false)]
+        public string Description;
 
         [Parameter(Mandatory = false)]
         public string[] AssignedTo;
@@ -57,14 +63,27 @@ namespace PnP.PowerShell.Commands.Graph
                 {
                     plannerTask.PercentComplete = PercentComplete;
                 }
+
+                if (ParameterSpecified(nameof(Priority)))
+                {
+                    if (Priority < 0 || Priority > 10)
+                    {
+                        throw new PSArgumentException($"Parameter '{nameof(Priority)}' must be a number between 0 and 10.");
+                    }
+
+                    plannerTask.Priority = Priority;
+                }
+
                 if (ParameterSpecified(nameof(DueDateTime)))
                 {
                     plannerTask.DueDateTime = DueDateTime.ToUniversalTime();
                 }
+
                 if (ParameterSpecified(nameof(StartDateTime)))
                 {
                     plannerTask.StartDateTime = StartDateTime.ToUniversalTime();
                 }
+
                 if (ParameterSpecified(nameof(AssignedTo)))
                 {
                     plannerTask.Assignments = new System.Collections.Generic.Dictionary<string, TaskAssignment>();
@@ -88,6 +107,12 @@ namespace PnP.PowerShell.Commands.Graph
 
 
                 PlannerUtility.UpdateTaskAsync(HttpClient, AccessToken, existingTask, plannerTask).GetAwaiter().GetResult();
+
+                if (ParameterSpecified(nameof(Description)))
+                {
+                    var existingTaskDetails = PlannerUtility.GetTaskDetailsAsync(HttpClient, AccessToken, TaskId, false).GetAwaiter().GetResult();
+                    PlannerUtility.UpdateTaskDetailsAsync(HttpClient, AccessToken, existingTaskDetails, Description).GetAwaiter().GetResult();
+                }
             }
             else
             {
