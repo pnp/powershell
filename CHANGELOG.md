@@ -49,7 +49,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - The cmdlets `Remove-PnPFile`, `Remove-PnPFolder`, `Move-PnPListItemToRecycleBin`, `Remove-PnPList`, `Remove-PnPListItem` and `Remove-PnPPage` will now return the corresponding recycle bin item if they get deleted to the recycle bin. Before they would not return anything. [#1783](https://github.com/pnp/powershell/pull/1783)
 - Cmdlets backed by a Microsoft Graph call will now return detailed information when the Graph call fails [#1923](https://github.com/pnp/powershell/pull/1923)
 - Changed `Get-PnPPlannerBucket` to return the buckets in the correct (reversed) order as you see them through the web interface [#1922](https://github.com/pnp/powershell/pull/1922)
-- Changed `Connect-PnPOnline -Interactive` and `Connect-PnPOnline -DeviceLogin` to no longer suppress errors which should allow for certificate logins to be used
+- Changed `Connect-PnPOnline -Interactive` and `Connect-PnPOnline -DeviceLogin` to no longer suppress errors which should allow for certificate logins to be used. [#1933](https://github.com/pnp/powershell/pull/1933)
+- `Set-PnPTeamsChannel` now uses the Graph v1 endpoint, previously it used the beta endpoint. [#1938](https://github.com/pnp/powershell/pull/1938)
+- Service Health cmdlets have been improved, now are consistent with other cmdlets to handle pagination [#1938](https://github.com/pnp/powershell/pull/1938)
 
 ### Fixed
 
