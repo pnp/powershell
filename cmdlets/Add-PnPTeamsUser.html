@@ -90,20 +90,27 @@
 </ul>
 <p>Adds a user to an existing Microsoft Teams instance.</p>
 <h2 id="syntax">SYNTAX</h2>
+<h3 id="user">User</h3>
 <pre><code class="lang-powershell">Add-PnPTeamsUser -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; -User &lt;String&gt; -Role &lt;String&gt; [&lt;CommonParameters&gt;]
 </code></pre>
+<h3 id="users">Users</h3>
+<pre><code class="lang-powershell">Add-PnPTeamsUser -Team &lt;TeamsTeamPipeBind&gt; -Users &lt;String[]&gt; -Role &lt;String&gt; [&lt;CommonParameters&gt;]
+</code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet adds one or more users to an existing Team.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Owner
 </code></pre>
-<p>Adds a user as an owner to the team</p>
+<p>Adds a user as an owner to the team.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Add-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Member
 </code></pre>
+<p>Adds a user as a member to the team.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Add-PnPTeamsUser -Team MyTeam -Users &quot;john@doe.com&quot;,&quot;jane@doe.com&quot; -Role Member
 </code></pre>
+<p>Adds multiple users as members to the team.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Add-PnPTeamsUser -Team MyTeam -User &quot;jane@doe.com&quot; -Role Member -Channel Private
 </code></pre>

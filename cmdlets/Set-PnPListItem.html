@@ -114,7 +114,7 @@
 <p>Sets the retention label in the list item with ID 1 in the &quot;Demo List&quot;.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">$batch = New-PnPBatch
-for($i=0;$i -lt 100;$i++)
+for($i=1;$i -lt 100;$i++)
 {
     Set-PnPListItem -List &quot;Demo List&quot; -Identity $i -Values @{&quot;Title&quot;=&quot;Updated Title&quot;} -Batch $batch
 }
