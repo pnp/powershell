@@ -719,7 +719,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             var channelMember = new TeamChannelMember
             {
-                UserIdentifier = $"https://graph.microsoft.com/v1.0/users('{upn}')",
+                UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{upn}')",
             };
 
             // The role for the user. Must be owner or empty.
