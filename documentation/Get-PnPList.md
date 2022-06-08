@@ -20,6 +20,7 @@ Get-PnPList [[-Identity] <ListPipeBind>] [-ThrowExceptionIfListNotFound]
 ```
 
 ## DESCRIPTION
+This cmdlet returns lists in the current web.
 
 ## EXAMPLES
 
@@ -51,6 +52,13 @@ Get-PnPList | Where-Object {$_.RootFolder.ServerRelativeUrl -like "/lists/*"}
 
 This examples shows how to do wildcard searches on the list URL. It returns all lists whose URL starts with "/lists/" This could also be used to search for strings inside of the URL.
 
+### EXAMPLE 5
+```powershell
+Get-PnPList -Includes HasUniqueRoleAssignments
+```
+
+This examples shows how to retrieve additional properties of the list. 
+
 ## PARAMETERS
 
 ### -Identity
@@ -72,6 +80,20 @@ Switch parameter if an exception should be thrown if the requested list does not
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Includes
+List of properties
+
+```yaml
+Type: String[]
 Parameter Sets: (All)
 
 Required: False
