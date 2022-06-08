@@ -71,6 +71,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Disconnect-PnPOnline -Connection` also disconnecting other connections next to the provided connection [#1919](https://github.com/pnp/powershell/pull/1919)
 - Fixed `Set-PnPContext` not properly applying the provided context [#1919](https://github.com/pnp/powershell/pull/1919)
 - Fixed Graph endpoints for non-commercial clouds for Managed Identity and Teams cmdlets [#1944](https://github.com/pnp/powershell/pull/1944)
+- Fixed `Add-PnPTeamsUser`, the parameter `-Channel` is now not required. [#1953](https://github.com/pnp/powershell/pull/1953)
 
 ### Removed
 - Removed `Get-PnPAvailableClientSideComponents`. Use `Get-PnPPageComponent -Page -ListAvailable` instead.  [#1833](https://github.com/pnp/powershell/pull/1833)
