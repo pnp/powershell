@@ -9,6 +9,8 @@ title: Add-PnPListItem
   
 # Add-PnPListItem
 
+:::image type="content" source="../pages/images/batching/Batching.png" alt-text="Supports batching":::
+
 ## SYNOPSIS
 Adds an item to the list and sets the creation time to the current date and time. The author is set to the current authenticated user executing the cmdlet. In order to set the author to a different user, please refer to Set-PnPListItem.
 
