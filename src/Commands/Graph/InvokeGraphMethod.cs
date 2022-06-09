@@ -1,22 +1,12 @@
-﻿
-using Newtonsoft.Json.Linq;
-using PnP.Framework.Utilities;
-using PnP.PowerShell.Commands.Attributes;
-using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Base.PipeBinds;
+﻿using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Enums;
-using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
-using PnP.PowerShell.Commands.Utilities.JSON;
 using System;
-using System.Linq;
 using System.Management.Automation;
 using System.Text.Json;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using PnP.PowerShell.Commands.Model.Graph;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -160,17 +150,6 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        private void ThrowIfNoSuccess(HttpResponseMessage response)
-        {
-            if (!response.IsSuccessStatusCode)
-            {
-                var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                var exception = JsonSerializer.Deserialize<GraphException>(errorContent, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-                exception.AccessToken = AccessToken;
-                throw exception;
-            }
-        }
-
         private object Deserialize(string result)
         {
             var element = JsonSerializer.Deserialize<JsonElement>(result);
@@ -250,7 +229,6 @@ namespace PnP.PowerShell.Commands.Base
         private void PostRequest()
         {
             var response = GraphHelper.PostAsync(HttpClient, Url, AccessToken, GetHttpContent(), AdditionalHeaders).GetAwaiter().GetResult();
-            ThrowIfNoSuccess(response);
             var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             WriteGraphResult(result);
         }
@@ -258,7 +236,6 @@ namespace PnP.PowerShell.Commands.Base
         private void PutRequest()
         {
             var response = GraphHelper.PutAsync(HttpClient, Url, AccessToken, GetHttpContent(), AdditionalHeaders).GetAwaiter().GetResult();
-            ThrowIfNoSuccess(response);
             var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             WriteGraphResult(result);
         }
@@ -266,7 +243,6 @@ namespace PnP.PowerShell.Commands.Base
         private void PatchRequest()
         {
             var response = GraphHelper.PatchAsync(HttpClient, AccessToken, GetHttpContent(), Url, AdditionalHeaders).GetAwaiter().GetResult();
-            ThrowIfNoSuccess(response);
             var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             WriteGraphResult(result);
         }
@@ -274,7 +250,6 @@ namespace PnP.PowerShell.Commands.Base
         private void DeleteRequest()
         {
             var response = GraphHelper.DeleteAsync(HttpClient, Url, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
-            ThrowIfNoSuccess(response);
             var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             WriteGraphResult(result);
         }

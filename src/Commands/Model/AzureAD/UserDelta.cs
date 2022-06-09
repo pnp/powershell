@@ -16,10 +16,5 @@ namespace PnP.PowerShell.Commands.Model.AzureAD
         /// The DeltaToken which can be used when querying for changes to request changes made to User objects since this DeltaToken has been given out
         /// </summary>
         public string DeltaToken { get; set; }
-
-        /// <summary>
-        /// The NextLink which indicates there are more results
-        /// </summary>
-        public string NextLink { get; set; }
     }
 }

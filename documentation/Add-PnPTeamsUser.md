@@ -19,11 +19,18 @@ Adds a user to an existing Microsoft Teams instance.
 
 ## SYNTAX
 
+### User
 ```powershell
 Add-PnPTeamsUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -User <String> -Role <String> [<CommonParameters>]
 ```
 
+### Users
+```powershell
+Add-PnPTeamsUser -Team <TeamsTeamPipeBind> -Users <String[]> -Role <String> [<CommonParameters>]
+```
+
 ## DESCRIPTION
+This cmdlet adds one or more users to an existing Team. 
 
 ## EXAMPLES
 
@@ -32,17 +39,21 @@ Add-PnPTeamsUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -User
 Add-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Owner
 ```
 
-Adds a user as an owner to the team
+Adds a user as an owner to the team.
 
 ### EXAMPLE 2
 ```powershell
 Add-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Member
 ```
 
+Adds a user as a member to the team.
+
 ### EXAMPLE 3
 ```powershell
 Add-PnPTeamsUser -Team MyTeam -Users "john@doe.com","jane@doe.com" -Role Member
 ```
+
+Adds multiple users as members to the team.
 
 ### EXAMPLE 4
 ```powershell

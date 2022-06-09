@@ -15,11 +15,11 @@ Set the ClientContext
 ## SYNTAX
 
 ```powershell
-Set-PnPContext [-Context] <ClientContext> [<CommonParameters>]
+Set-PnPContext -Context <ClientContext> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Sets the Client Context to use by the cmdlets, which allows easy context switching. See examples for details.
+Sets the Client Context to be used by the cmdlets, which allows easy context switching. See examples for details.
 
 ## EXAMPLES
 
@@ -50,7 +50,20 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by specifying -ReturnConnection on Connect-PnPOnline. If not provided, the connection will be retrieved from the current context.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

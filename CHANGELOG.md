@@ -30,14 +30,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `TimeZone` parameter to `New-PnPSite` cmdlet which allows setting of the site collection in the specified timezone.
 - Added `Stop-PnPFlowRun` cmdlet to stop/cancel a specific Power Automate flow run. [#1838](https://github.com/pnp/powershell/pull/1838)
 - Added `Remove-PnPTeamsChannelUser` cmdlet to remove a user from a private channel. [#1840](https://github.com/pnp/powershell/pull/1840)
+- Added `Get-PnPListItemPermission` cmdlet to retrieve item level permissions. [#1534](https://github.com/pnp/powershell/pull/1534)
 - Added `Get-PnPTeamsChannelMessageReply` to retrieve all replies or a specific reply of a message in a Teams channel [#1885](https://github.com/pnp/powershell/pull/1885)
 - Added `-Identity` parameter to `Get-PnPTeamsChannelMessage` cmdlet to retrieve a specific message [#1887](https://github.com/pnp/powershell/pull/1887)
 - Added new `PnP.PowerShell` image which also gets published to Docker Hub. [#1580](https://github.com/pnp/powershell/pull/1794)
 - Added capability to Debug the module in Visual Studio. [#1880](https://github.com/pnp/powershell/pull/1880)
 - Added `Set-PnPTeamsChannelUser` cmdlet to update the role of user in a private channel. [#1865](https://github.com/pnp/powershell/pull/1865)
 - Added `Restart-PnPFlowRun` which allows for a failed Power Automate flow run to be retried [#1915](https://github.com/pnp/powershell/pull/1915)
+- Added optional `-Connection` parameter to `Get-PnPConnection`, `Get-PnPContext` and `Set-PnPContext` which allows for using any of these for a specific connection [#1919](https://github.com/pnp/powershell/pull/1919)
 - Added `-IncludeDeprecated` parameter to `Get-PnPTerm` cmdlet to fetch deprecated terms if specified [#1903](https://github.com/pnp/powershell/pull/1903)
-- - Added `-IncludeContentType` parameter, which if specified will retrieve content type information of the list items. [#1921](https://github.com/pnp/powershell/pull/1921)
+- Added `-IncludeContentType` parameter, which if specified will retrieve content type information of the list items. [#1921](https://github.com/pnp/powershell/pull/1921)
+- Added optional `-ValidateConnection` to `Connect-PnPOnline` which will check if the site you are connecting to exists and if not, will throw an exception [#1924](https://github.com/pnp/powershell/pull/1924)
+- Added `Add-PnPListItemAttachment` cmdlet to provide ability to upload a file as an attachment to a SharePoint list item. [#1932](https://github.com/pnp/powershell/pull/1932)
+- Added `Remove-PnPListItemAttachment` cmdlet to provide ability to delete a list item attachment. [#1932](https://github.com/pnp/powershell/pull/1932)
+- Added `Get-PnPListItemAttachment` cmdlet to download the attachments from a list item. [#1932](https://github.com/pnp/powershell/pull/1932)
 
 ### Changed
 - Changed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to map users based on their Ids instead which should resolve some issues around user identities reporting not to exist. You can use the new `-IdType` option to switch it back to `PrincipalName` if needed.  [#1752](https://github.com/pnp/powershell/pull/1752)
@@ -45,6 +51,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Bumped .NET Framework version to 4.6.2 as the 4.6.1 is not supported anymore. [#1856](https://github.com/pnp/powershell/pull/1856)
 - Changed `Add-PnPDataRowsToSiteTemplate`, it will now export a datetime field value as UTC string. [#1900](https://github.com/pnp/powershell/pull/1900)
 - The cmdlets `Remove-PnPFile`, `Remove-PnPFolder`, `Move-PnPListItemToRecycleBin`, `Remove-PnPList`, `Remove-PnPListItem` and `Remove-PnPPage` will now return the corresponding recycle bin item if they get deleted to the recycle bin. Before they would not return anything. [#1783](https://github.com/pnp/powershell/pull/1783)
+- Cmdlets backed by a Microsoft Graph call will now return detailed information when the Graph call fails [#1923](https://github.com/pnp/powershell/pull/1923)
+- Changed `Get-PnPPlannerBucket` to return the buckets in the correct (reversed) order as you see them through the web interface [#1922](https://github.com/pnp/powershell/pull/1922)
+- Changed `Connect-PnPOnline -Interactive` and `Connect-PnPOnline -DeviceLogin` to no longer suppress errors which should allow for certificate logins to be used. [#1933](https://github.com/pnp/powershell/pull/1933)
+- `Set-PnPTeamsChannel` now uses the Graph v1 endpoint, previously it used the beta endpoint. [#1938](https://github.com/pnp/powershell/pull/1938)
+- Service Health cmdlets have been improved, now are consistent with other cmdlets to handle pagination [#1938](https://github.com/pnp/powershell/pull/1938)
 
 ### Fixed
 
@@ -60,12 +71,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Invoke-PnPSPRestMethod` invalid parsing for SharePoint number columns. [#1877](https://github.com/pnp/powershell/pull/1879)
 - Fix issue with `Add/Set-PnPListItem` not throwing correct exception for invalid taxonomy values. [#1870](https://github.com/pnp/powershell/pull/1870)
 - Fixed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` throwing an "Object reference not set to an instance of an object" exception when providing an empty users collection or incorrect user mapping [#1896](https://github.com/pnp/powershell/pull/1896)
+- Fixed `Connect-PnPOnline -ReturnConnection` also setting the current connection instead of just the returned connection [#1919](https://github.com/pnp/powershell/pull/1919)
+- Fixed `Disconnect-PnPOnline -Connection` also disconnecting other connections next to the provided connection [#1919](https://github.com/pnp/powershell/pull/1919)
+- Fixed `Set-PnPContext` not properly applying the provided context [#1919](https://github.com/pnp/powershell/pull/1919)
+- Fixed Graph endpoints for non-commercial clouds for Managed Identity and Teams cmdlets [#1944](https://github.com/pnp/powershell/pull/1944)
+- Fixed `Add-PnPTeamsUser`, the parameter `-Channel` is now not required. [#1953](https://github.com/pnp/powershell/pull/1953)
 
 ### Removed
 - Removed `Get-PnPAvailableClientSideComponents`. Use `Get-PnPPageComponent -Page -ListAvailable` instead.  [#1833](https://github.com/pnp/powershell/pull/1833)
+- Removed `NextLink` property from `Get-PnPAzureADUser` cmdlet, as it was causing confusion. [#1930](https://github.com/pnp/powershell/pull/1930)
 
 ### Contributors
 
+- Yuriy Samorodov [YuriySamorodov]
+- Arleta Wanat [PowershellScripts]
+- Marc D Anderson [sympmarc]
 - dc366 [dc366]
 - Bart-Jan Dekker [bjdekker]
 - Aleksandr Sapozhkov [shurick81]
