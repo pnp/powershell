@@ -19,18 +19,8 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <returns>List with <see cref="ServiceUpdateMessage"> objects</returns>
         public static async Task<IEnumerable<ServiceUpdateMessage>> GetServiceUpdateMessagesAsync(HttpClient httpClient, string accessToken)
         {
-            var returnCollection = new List<ServiceUpdateMessage>();
-            var collection = await GraphHelper.GetAsync<RestResultCollection<ServiceUpdateMessage>>(httpClient, $"v1.0/admin/serviceAnnouncement/messages", accessToken);
-            if (collection != null && collection.Items.Any())
-            {
-                returnCollection = collection.Items.ToList();
-                while (!string.IsNullOrEmpty(collection.NextLink))
-                {
-                    collection = await GraphHelper.GetAsync<RestResultCollection<ServiceUpdateMessage>>(httpClient, collection.NextLink, accessToken);
-                    returnCollection.AddRange(collection.Items);
-                }
-            }
-            return returnCollection;
+            var collection = await GraphHelper.GetResultCollectionAsync<ServiceUpdateMessage>(httpClient, $"v1.0/admin/serviceAnnouncement/messages", accessToken);            
+            return collection;
         }
 
         /// <summary>
@@ -214,18 +204,8 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <returns>List with <see cref="ServiceHealthIssue"> objects</returns>
         public static async Task<IEnumerable<ServiceHealthIssue>> GetServiceHealthIssuesAsync(HttpClient httpClient, string accessToken)
         {
-            var returnCollection = new List<ServiceHealthIssue>();
-            var collection = await GraphHelper.GetAsync<RestResultCollection<ServiceHealthIssue>>(httpClient, $"v1.0/admin/serviceAnnouncement/issues", accessToken);
-            if (collection != null && collection.Items.Any())
-            {
-                returnCollection = collection.Items.ToList();
-                while (!string.IsNullOrEmpty(collection.NextLink))
-                {
-                    collection = await GraphHelper.GetAsync<RestResultCollection<ServiceHealthIssue>>(httpClient, collection.NextLink, accessToken);
-                    returnCollection.AddRange(collection.Items);
-                }
-            }
-            return returnCollection;
+            var collection = await GraphHelper.GetResultCollectionAsync<ServiceHealthIssue>(httpClient, $"v1.0/admin/serviceAnnouncement/issues", accessToken);            
+            return collection;
         }
 
         /// <summary>
@@ -253,18 +233,8 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <returns>List with <see cref="ServiceHealthCurrent"> objects</returns>
         public static async Task<IEnumerable<ServiceHealthCurrent>> GetServiceCurrentHealthAsync(HttpClient httpClient, string accessToken)
         {
-            var returnCollection = new List<ServiceHealthCurrent>();
-            var collection = await GraphHelper.GetAsync<RestResultCollection<ServiceHealthCurrent>>(httpClient, $"v1.0/admin/serviceAnnouncement/healthOverviews", accessToken);
-            if (collection != null && collection.Items.Any())
-            {
-                returnCollection = collection.Items.ToList();
-                while (!string.IsNullOrEmpty(collection.NextLink))
-                {
-                    collection = await GraphHelper.GetAsync<RestResultCollection<ServiceHealthCurrent>>(httpClient, collection.NextLink, accessToken);
-                    returnCollection.AddRange(collection.Items);
-                }
-            }
-            return returnCollection;
+            var collection = await GraphHelper.GetResultCollectionAsync<ServiceHealthCurrent>(httpClient, $"v1.0/admin/serviceAnnouncement/healthOverviews", accessToken);            
+            return collection;
         }
 
         /// <summary>
