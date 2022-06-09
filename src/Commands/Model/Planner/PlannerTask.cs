@@ -1,8 +1,8 @@
+using PnP.PowerShell.Commands.Model.Graph;
+using PnP.PowerShell.Commands.Utilities.JSON;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using PnP.PowerShell.Commands.Model.Graph;
-using PnP.PowerShell.Commands.Utilities.JSON;
 
 namespace PnP.PowerShell.Commands.Model.Planner
 {
@@ -16,6 +16,7 @@ namespace PnP.PowerShell.Commands.Model.Planner
         public string OrderHint { get; set; }
         public string AssigneePriority { get; set; }
         public int? PercentComplete { get; set; }
+        public int? Priority { get; set; }
 
         [JsonConverter(typeof(DateTimeISO8601Converter))]
         public DateTime? StartDateTime { get; set; }
@@ -66,5 +67,4 @@ namespace PnP.PowerShell.Commands.Model.Planner
         [JsonExtensionData]
         public IDictionary<string, object> AdditionalData { get; set; }
     }
-
 }
