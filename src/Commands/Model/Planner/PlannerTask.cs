@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Model.Planner
         [JsonConverter(typeof(DateTimeISO8601Converter))]
         public DateTime? CompletedDateTime { get; set; }
 
-        public string CompletedBy { get; set; }
+        public IdentitySet CompletedBy { get; set; }
         public int? ReferenceCount { get; set; }
         public int? CheckListItemCount { get; set; }
         public int? ActiveChecklistItemCount { get; set; }
