@@ -40,6 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added optional `-Connection` parameter to `Get-PnPConnection`, `Get-PnPContext` and `Set-PnPContext` which allows for using any of these for a specific connection [#1919](https://github.com/pnp/powershell/pull/1919)
 - Added `-IncludeDeprecated` parameter to `Get-PnPTerm` cmdlet to fetch deprecated terms if specified [#1903](https://github.com/pnp/powershell/pull/1903)
 - Added optional `-ValidateConnection` to `Connect-PnPOnline` which will check if the site you are connecting to exists and if not, will throw an exception [#1924](https://github.com/pnp/powershell/pull/1924)
+- Added `AllowTenantMoveWithDataMigration` to `Get-PnPPlannerConfiguration` and `Set-PnPPlannerConfiguration` [#1934](https://github.com/pnp/powershell/pull/1934)
 
 ### Changed
 - Changed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to map users based on their Ids instead which should resolve some issues around user identities reporting not to exist. You can use the new `-IdType` option to switch it back to `PrincipalName` if needed.  [#1752](https://github.com/pnp/powershell/pull/1752)
