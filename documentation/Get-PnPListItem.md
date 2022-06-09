@@ -17,26 +17,25 @@ Retrieves list items
 ### All Items (Default)
 ```powershell
 Get-PnPListItem [-List] <ListPipeBind> [-FolderServerRelativeUrl <String>] [-Fields <String[]>]
- [-PageSize <Int32>] [-ScriptBlock <ScriptBlock>] [-Connection <PnPConnection>]
+ [-PageSize <Int32>] [-ScriptBlock <ScriptBlock>][-IncludeContentType <SwitchParameter>][-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### By Id
 ```powershell
-Get-PnPListItem [-List] <ListPipeBind> [-Id <Int32>] [-Fields <String[]>] 
+Get-PnPListItem [-List] <ListPipeBind> [-Id <Int32>] [-Fields <String[]>] [-IncludeContentType <SwitchParameter>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### By Unique Id
 ```powershell
-Get-PnPListItem [-List] <ListPipeBind> [-UniqueId <Guid>] [-Fields <String[]>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPListItem [-List] <ListPipeBind> [-UniqueId <Guid>] [-Fields <String[]>] [-IncludeContentType <SwitchParameter>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### By Query
 ```powershell
 Get-PnPListItem [-List] <ListPipeBind> [-Query <String>] [-FolderServerRelativeUrl <String>]
- [-PageSize <Int32>] [-ScriptBlock <ScriptBlock>] [-Connection <PnPConnection>]
+ [-PageSize <Int32>] [-IncludeContentType <SwitchParameter>] [-ScriptBlock <ScriptBlock>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -118,6 +117,13 @@ Id Filename
 ```
 
 Retrieves all list items from the Shared Documents and shows each item's ID and Filename
+
+### EXAMPLE 11
+```powershell
+Get-PnPListItem -List Tasks -Id 1 -IncludeContentType
+```
+
+Retrieves the list item with ID 1 from the Tasks list along with its content type information.
 
 ## PARAMETERS
 
@@ -247,7 +253,19 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -IncludeContentType
+If specified, it will retrieve the content type information of the list item(s).
 
+```yaml
+Type: Switch Parameter
+Parameter Sets: All
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
