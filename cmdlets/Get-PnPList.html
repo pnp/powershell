@@ -90,6 +90,7 @@
  [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet returns lists in the current web.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPList
@@ -107,6 +108,10 @@
 <pre><code class="lang-powershell">Get-PnPList | Where-Object {$_.RootFolder.ServerRelativeUrl -like &quot;/lists/*&quot;}
 </code></pre>
 <p>This examples shows how to do wildcard searches on the list URL. It returns all lists whose URL starts with &quot;/lists/&quot; This could also be used to search for strings inside of the URL.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Get-PnPList -Includes HasUniqueRoleAssignments
+</code></pre>
+<p>This examples shows how to retrieve additional properties of the list.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
 <p>The ID, name or Url (Lists/MyList) of the list</p>
@@ -122,6 +127,17 @@ Accept wildcard characters: False
 <h3 id="-throwexceptioniflistnotfound">-ThrowExceptionIfListNotFound</h3>
 <p>Switch parameter if an exception should be thrown if the requested list does not exist (true) or if omitted, nothing will be returned in case the list does not exist</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-includes">-Includes</h3>
+<p>List of properties</p>
+<pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
 Required: False
