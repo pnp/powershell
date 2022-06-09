@@ -7,8 +7,8 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "PnPListItemAttachments")]
-    public class GetListItemAttachments : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPListItemAttachment")]
+    public class GetListItemAttachment : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ListPipeBind List;
@@ -29,14 +29,14 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (list == null)
             {
-                throw new PSArgumentException($"Cannot find list provided through -{nameof(List)}", nameof(List));
+                throw new PSArgumentException($"Cannot find the list provided through -{nameof(List)}", nameof(List));
             }
 
             IListItem item = Identity.GetListItem(list);
 
             if (item == null)
             {
-                throw new PSArgumentException($"Cannot find list item provided through -{nameof(Identity)}", nameof(Identity));
+                throw new PSArgumentException($"Cannot find the list item provided through -{nameof(Identity)}", nameof(Identity));
             }
 
             if (string.IsNullOrEmpty(Path))
@@ -53,9 +53,9 @@ namespace PnP.PowerShell.Commands.Lists
 
             item.EnsureProperties(i => i.AttachmentFiles);
 
-            var attachmentFilesCollection = item.AttachmentFiles.AsRequested();
+            var attachmentFilesCollection = item.AttachmentFiles.AsRequested().ToArray();
 
-            if (attachmentFilesCollection?.ToList().Count == 0)
+            if (attachmentFilesCollection.Length == 0)
             {
                 WriteWarning($"No attachments found for the list item provided through -{nameof(Identity)}");
             }
@@ -68,7 +68,7 @@ namespace PnP.PowerShell.Commands.Lists
 
                     if (System.IO.File.Exists(fileOut) && !Force)
                     {
-                        WriteWarning($"File '{attachment.FileName}' exists already in the specified path. Use the -Force parameter to overwrite the file.");
+                        WriteWarning($"File '{attachment.FileName}' exists already in the specified path. This file will be skipped. Use the -Force parameter to overwrite the file in the specified path.");
                     }
                     else
                     {

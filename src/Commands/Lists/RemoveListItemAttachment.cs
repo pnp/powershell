@@ -2,6 +2,7 @@
 using PnP.Core.QueryModel;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Properties;
+using System;
 using System.Linq;
 using System.Management.Automation;
 
@@ -53,11 +54,18 @@ namespace PnP.PowerShell.Commands.Lists
             }
 
             item.EnsureProperties(i => i.AttachmentFiles);
-            var files = item.AttachmentFiles.AsRequested();
+            var files = item.AttachmentFiles.AsRequested().ToArray();
             var removeText = Recycle.IsPresent ? "Recycle" : "Remove";
+
+            if(files.Length == 0)
+            {
+                WriteWarning($"No attachments found on the list item that can be {removeText.ToLower()}d");
+                return;
+            }
+            
             if (All.IsPresent)
             {
-                if (Force || ShouldContinue($"{removeText} all list item attachments?", Resources.Confirm))
+                if (Force || ShouldContinue($"{removeText} {(files.Length != 1 ? $"all {files.Length}" : "the")} list item attachment{(files.Length != 1 ? "s" : "")}?", Resources.Confirm))
                 {
                     foreach (var file in files.ToList())
                     {
@@ -74,15 +82,25 @@ namespace PnP.PowerShell.Commands.Lists
             }
             else
             {
-                if (Force || ShouldContinue($"{removeText} all list item attachments?", Resources.Confirm))
+                // Try to locate the attachment file that needs to be deleted
+                var fileToDelete = files.FirstOrDefault(i => i.FileName.Equals(FileName, StringComparison.InvariantCultureIgnoreCase));
+
+                if(fileToDelete == null)
                 {
-                    if (Recycle.IsPresent)
+                    WriteWarning($"No attachment found with the name '{FileName}'");
+                }
+                else
+                {
+                    if (Force || ShouldContinue($"{removeText} list item attachment '{fileToDelete.FileName}'?", Resources.Confirm))
                     {
-                        files?.ToList().Where(i => i.FileName == FileName)?.FirstOrDefault()?.Recycle();
-                    }
-                    else
-                    {
-                        files?.ToList().Where(i => i.FileName == FileName)?.FirstOrDefault()?.Delete();
+                        if (Recycle.IsPresent)
+                        {
+                            fileToDelete.Recycle();
+                        }
+                        else
+                        {
+                            fileToDelete.Delete();
+                        }
                     }
                 }
             }

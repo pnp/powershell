@@ -65,22 +65,8 @@ Permanently deletes all attachments from the list item with Id "1" in the "Demo 
 
 ## PARAMETERS
 
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -FileName
-Specify name of the attachment to delete from list item
+Specify name of the attachment to delete from list item. The filename is not case sensitive.
 
 ```yaml
 Type: String
@@ -94,7 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -All
-Specify if you want to delete all list item attachments.
+Specify if you want to delete or recycle all the list item attachments.
 
 ```yaml
 Type: SwitchParameter
@@ -136,7 +122,7 @@ Accept wildcard characters: False
 ```
 
 ### -List
-The ID, Title or Url of the list.
+The ID, Title or Url of the list. Note that when providing the name of the list, the list name is case-sensitive.
 
 ```yaml
 Type: ListPipeBind
@@ -157,6 +143,20 @@ Type: ListItemPipeBind
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

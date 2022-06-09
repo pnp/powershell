@@ -24,12 +24,14 @@ Add-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> 
 Add-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-FileName <String>] [-Stream <Stream>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
-### Upload attachment file from text
+### Create attachment file from text
 ```powershell
 Add-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-FileName <String>] [-Content <text>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
+This cmdlet allows adding a file as an attachment to a list item in a SharePoint Online list.
 
 ## EXAMPLES
 
@@ -56,20 +58,6 @@ Add-PnPListItemAttachement -List "Demo List" -Identity 1 -FileName "test.mp4" -S
 Adds a new attachment to the list item with Id "1" in the "Demo List" SharePoint list with file name as test.mp4 and content coming from a stream.
 
 ## PARAMETERS
-
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Content
 Specify text of the attachment for the list item.
@@ -114,7 +102,7 @@ Accept wildcard characters: False
 ```
 
 ### -FileName
-Name for attachment file
+Filename to give to the attachment file on SharePoint
 
 ```yaml
 Type: String
@@ -141,9 +129,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
 ### -List
-The ID, Title or Url of the list.
+The ID, Title or Url of the list. Note that when providing the name of the list, the name is case-sensitive.
 
 ```yaml
 Type: ListPipeBind
@@ -157,13 +144,27 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The ID of the listitem, or actual ListItem object
+The ID of the listitem, or actual ListItem object to add the attachment to.
 
 ```yaml
 Type: ListItemPipeBind
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
