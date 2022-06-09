@@ -62,7 +62,7 @@ Sets the retention label in the list item with ID 1 in the "Demo List".
 ### EXAMPLE 5
 ```powershell
 $batch = New-PnPBatch
-for($i=0;$i -lt 100;$i++)
+for($i=1;$i -lt 100;$i++)
 {
     Set-PnPListItem -List "Demo List" -Identity $i -Values @{"Title"="Updated Title"} -Batch $batch
 }
