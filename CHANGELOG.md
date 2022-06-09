@@ -54,7 +54,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Service Health cmdlets have been improved, now are consistent with other cmdlets to handle pagination [#1938](https://github.com/pnp/powershell/pull/1938)
 
 ### Fixed
-
 - Fixed `Get-PnPTenantSite` cmdlet so that it will return data even if the template name is specified in a different case. [#1773](https://github.com/pnp/powershell/pull/1773)
 - Fixed `Add-PnPDocumentSet` cmdlet so that it will support Document Set Content Type Id specified at the web level. [#1796](https://github.com/pnp/powershell/pull/1796)
 - Fixed `Get-PnPGroup` , `Get-PnPGroupPermissions` and `Set-PnPGroupPermissions ` cmdlets by making them more consistent. They will also throw error if a group is not found. [#1808](https://github.com/pnp/powershell/pull/1808)
@@ -72,6 +71,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Set-PnPContext` not properly applying the provided context [#1919](https://github.com/pnp/powershell/pull/1919)
 - Fixed Graph endpoints for non-commercial clouds for Managed Identity and Teams cmdlets [#1944](https://github.com/pnp/powershell/pull/1944)
 - Fixed `Add-PnPTeamsUser`, the parameter `-Channel` is now not required. [#1953](https://github.com/pnp/powershell/pull/1953)
+- Fixed `Get-PnPPlannerTask` throwing an object reference exception for completed tasks [#1956](https://github.com/pnp/powershell/issues/1956)
 
 ### Removed
 - Removed `Get-PnPAvailableClientSideComponents`. Use `Get-PnPPageComponent -Page -ListAvailable` instead.  [#1833](https://github.com/pnp/powershell/pull/1833)
