@@ -342,13 +342,14 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient instance to use to send out requests</param>
         /// <param name="accessToken">AccessToken to use to authenticate the request</param>
         /// <returns>PlannerTenantConfig</returns>
-        public static async Task<PlannerTenantConfig> SetPlannerConfigAsync(HttpClient httpClient, string accessToken, bool? isPlannerAllowed, bool? allowCalendarSharing, bool? allowTenantMoveWithDataLoss, bool? allowRosterCreation, bool? allowPlannerMobilePushNotifications)
+        public static async Task<PlannerTenantConfig> SetPlannerConfigAsync(HttpClient httpClient, string accessToken, bool? isPlannerAllowed, bool? allowCalendarSharing, bool? allowTenantMoveWithDataLoss, bool? allowTenantMoveWithDataMigration, bool? allowRosterCreation, bool? allowPlannerMobilePushNotifications)
         {
             var content = new PlannerTenantConfig
             {
                 IsPlannerAllowed = isPlannerAllowed,
                 AllowCalendarSharing = allowCalendarSharing,
                 AllowTenantMoveWithDataLoss = allowTenantMoveWithDataLoss,
+                AllowTenantMoveWithDataMigration = allowTenantMoveWithDataMigration,
                 AllowRosterCreation = allowRosterCreation,
                 AllowPlannerMobilePushNotifications = allowPlannerMobilePushNotifications
             };

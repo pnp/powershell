@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = true, ParameterSetName = ParamSet_ByMultipleUsers)]
         public TeamsTeamPipeBind Team;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParamSet_ByUser)]
+        [Parameter(Mandatory = false, ParameterSetName = ParamSet_ByUser)]
         public TeamsChannelPipeBind Channel;
 
         [Parameter(Mandatory = true, ParameterSetName = ParamSet_ByUser)]
