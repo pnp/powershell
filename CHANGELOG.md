@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-IncludeContentType` parameter, which if specified will retrieve content type information of the list items. [#1921](https://github.com/pnp/powershell/pull/1921)
 - Added optional `-ValidateConnection` to `Connect-PnPOnline` which will check if the site you are connecting to exists and if not, will throw an exception [#1924](https://github.com/pnp/powershell/pull/1924)
 - Added `AllowTenantMoveWithDataMigration` to `Get-PnPPlannerConfiguration` and `Set-PnPPlannerConfiguration` [#1934](https://github.com/pnp/powershell/pull/1934)
+- Added the ability to retrieve a Planner plan by only its Id using `Get-PnPPlannerPlan -Identity <id>` [#1935](https://github.com/pnp/powershell/pull/1935)
 - Added `Add-PnPListItemAttachment` cmdlet to provide ability to upload a file as an attachment to a SharePoint list item. [#1932](https://github.com/pnp/powershell/pull/1932)
 - Added `Remove-PnPListItemAttachment` cmdlet to provide ability to delete a list item attachment. [#1932](https://github.com/pnp/powershell/pull/1932)
 - Added `Get-PnPListItemAttachment` cmdlet to download the attachments from a list item. [#1932](https://github.com/pnp/powershell/pull/1932)
