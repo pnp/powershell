@@ -37,7 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added capability to Debug the module in Visual Studio. [#1880](https://github.com/pnp/powershell/pull/1880)
 - Added `Set-PnPTeamsChannelUser` cmdlet to update the role of user in a private channel. [#1865](https://github.com/pnp/powershell/pull/1865)
 - Added `Restart-PnPFlowRun` which allows for a failed Power Automate flow run to be retried [#1915](https://github.com/pnp/powershell/pull/1915)
-- Added optional `-Connection` parameter to `Get-PnPConnection`, `Get-PnPContext` and `Set-PnPContext` which allows for using any of these for a specific connection [#1919](https://github.com/pnp/powershell/pull/1919)
+- Added optional `-Connection` parameter to `Get-PnPConnection`, `Get-PnPContext` and `Set-PnPContext` which allows for using any of these for a specific connection [#1919](https://github.com/pnp/powershell/pull/1919) , [#1958](https://github.com/pnp/powershell/pull/1958)
 - Added `-IncludeDeprecated` parameter to `Get-PnPTerm` cmdlet to fetch deprecated terms if specified [#1903](https://github.com/pnp/powershell/pull/1903)
 - Added `-IncludeContentType` parameter, which if specified will retrieve content type information of the list items. [#1921](https://github.com/pnp/powershell/pull/1921)
 - Added optional `-ValidateConnection` to `Connect-PnPOnline` which will check if the site you are connecting to exists and if not, will throw an exception [#1924](https://github.com/pnp/powershell/pull/1924)
