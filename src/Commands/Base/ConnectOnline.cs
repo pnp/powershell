@@ -665,8 +665,8 @@ namespace PnP.PowerShell.Commands.Base
 
         private void ReuseAuthenticationManager()
         {
-            var contextSettings = PnPConnection.Current.Context.GetContextSettings();
-            PnPConnection.CachedAuthenticationManager = contextSettings.AuthenticationManager;
+            var contextSettings = PnPConnection.Current.Context?.GetContextSettings();
+            PnPConnection.CachedAuthenticationManager = contextSettings?.AuthenticationManager;
         }
         #endregion
     }
