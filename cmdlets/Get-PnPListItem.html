@@ -88,20 +88,19 @@
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="all-items-default">All Items (Default)</h3>
 <pre><code class="lang-powershell">Get-PnPListItem [-List] &lt;ListPipeBind&gt; [-FolderServerRelativeUrl &lt;String&gt;] [-Fields &lt;String[]&gt;]
- [-PageSize &lt;Int32&gt;] [-ScriptBlock &lt;ScriptBlock&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-PageSize &lt;Int32&gt;] [-ScriptBlock &lt;ScriptBlock&gt;][-IncludeContentType &lt;SwitchParameter&gt;][-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="by-id">By Id</h3>
-<pre><code class="lang-powershell">Get-PnPListItem [-List] &lt;ListPipeBind&gt; [-Id &lt;Int32&gt;] [-Fields &lt;String[]&gt;] 
+<pre><code class="lang-powershell">Get-PnPListItem [-List] &lt;ListPipeBind&gt; [-Id &lt;Int32&gt;] [-Fields &lt;String[]&gt;] [-IncludeContentType &lt;SwitchParameter&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="by-unique-id">By Unique Id</h3>
-<pre><code class="lang-powershell">Get-PnPListItem [-List] &lt;ListPipeBind&gt; [-UniqueId &lt;Guid&gt;] [-Fields &lt;String[]&gt;] 
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPListItem [-List] &lt;ListPipeBind&gt; [-UniqueId &lt;Guid&gt;] [-Fields &lt;String[]&gt;] [-IncludeContentType &lt;SwitchParameter&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="by-query">By Query</h3>
 <pre><code class="lang-powershell">Get-PnPListItem [-List] &lt;ListPipeBind&gt; [-Query &lt;String&gt;] [-FolderServerRelativeUrl &lt;String&gt;]
- [-PageSize &lt;Int32&gt;] [-ScriptBlock &lt;ScriptBlock&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-PageSize &lt;Int32&gt;] [-IncludeContentType &lt;SwitchParameter&gt;] [-ScriptBlock &lt;ScriptBlock&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -151,6 +150,10 @@ Id Filename
  5 Does this work.docx
 </code></pre>
 <p>Retrieves all list items from the Shared Documents and shows each item's ID and Filename</p>
+<h3 id="example-11">EXAMPLE 11</h3>
+<pre><code class="lang-powershell">Get-PnPListItem -List Tasks -Id 1 -IncludeContentType
+</code></pre>
+<p>Retrieves the list item with ID 1 from the Tasks list along with its content type information.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -244,6 +247,17 @@ Accept wildcard characters: False
 <p>The UniqueId or GUID of the item to retrieve</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: By Unique Id
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-includecontenttype">-IncludeContentType</h3>
+<p>If specified, it will retrieve the content type information of the list item(s).</p>
+<pre><code class="lang-yaml">Type: Switch Parameter
+Parameter Sets: All
 
 Required: False
 Position: Named

@@ -90,7 +90,7 @@
 </ul>
 <p>Allows the Microsoft Planner configuration of the tenant to be set</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Set-PnPPlannerConfiguration [-IsPlannerAllowed &lt;boolean&gt;] [-AllowRosterCreation &lt;boolean&gt;] [-AllowTenantMoveWithDataLoss &lt;boolean&gt;] [-AllowPlannerMobilePushNotifications &lt;boolean&gt;] [-AllowCalendarSharing &lt;boolean&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code>Set-PnPPlannerConfiguration [-IsPlannerAllowed &lt;boolean&gt;] [-AllowRosterCreation &lt;boolean&gt;] [-AllowTenantMoveWithDataLoss &lt;boolean&gt;] [-AllowTenantMoveWithDataMigration &lt;boolean&gt;] [-AllowPlannerMobilePushNotifications &lt;boolean&gt;] [-AllowCalendarSharing &lt;boolean&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet allows the Microsoft Planner tenant configuration to be changed</p>
@@ -126,6 +126,18 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-allowtenantmovewithdataloss">-AllowTenantMoveWithDataLoss</h3>
 <p>Allows configuring whether a tenant move into a new region is currently authorized</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowtenantmovewithdatamigration">-AllowTenantMoveWithDataMigration</h3>
+<p>Allows configuring whether a tenant move with data migration is authorized</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 Aliases:

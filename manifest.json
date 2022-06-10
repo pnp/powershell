@@ -533,6 +533,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPListItemAttachment.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPListItemAttachment.html",
+          "hash": "ZIk33YtLwwI0LAZBidaehA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPListItemComment.md",
       "output": {
         ".html": {
@@ -2397,7 +2409,19 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPListItem.html",
-          "hash": "Sf9PTllJM+GLuKsXh2Nu7g=="
+          "hash": "iXFLKClZjYTdJwVqtkmDPQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPListItemAttachments.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPListItemAttachments.html",
+          "hash": "U4Ccb81aoGW8HuNbq+p0WQ=="
         }
       },
       "is_incremental": false,
@@ -2625,7 +2649,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPPlannerPlan.html",
-          "hash": "asnGEm34c2E7c3ItEn3F3g=="
+          "hash": "8cDRIcXYWv6ywgtFdSgDbQ=="
         }
       },
       "is_incremental": false,
@@ -5072,6 +5096,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPListItemAttachment.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPListItemAttachment.html",
+          "hash": "dM8Mib4RVxn1gUKxEBQHsw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPListItemComments.md",
       "output": {
         ".html": {
@@ -6717,7 +6753,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPPlannerConfiguration.html",
-          "hash": "5ELhkGxNwOhczKvuNvieaQ=="
+          "hash": "KacPVXTWM5HlX2bQtFZXqg=="
         }
       },
       "is_incremental": false,
@@ -6741,7 +6777,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPPlannerTask.html",
-          "hash": "+ZsI6/QG2mDAMkuQClcFLQ=="
+          "hash": "ASkIrzGJnfNq7XTfuzinLA=="
         }
       },
       "is_incremental": false,
@@ -7581,7 +7617,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "KmR/OS0RV+Z9Qawz7hDUTw=="
+          "hash": "aoi0FI9iaTu40jEbRQBxUA=="
         }
       },
       "is_incremental": false,
@@ -7792,7 +7828,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 630,
+          "total_file_count": 633,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

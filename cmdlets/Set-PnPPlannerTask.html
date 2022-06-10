@@ -92,7 +92,7 @@
 <h2 id="syntax">SYNTAX</h2>
 <pre><code>Set-PnPPlannerTask -TaskId &lt;String&gt; [-Title &lt;String&gt;] [-Bucket &lt;PlannerBucketPipeBind&gt;]
  [-PercentComplete &lt;Int32&gt;] [-DueDateTime &lt;DateTime&gt;] [-StartDateTime &lt;DateTime&gt;]
- [-AssignedTo &lt;String[]
+ [-AssignedTo &lt;String[]] [-Priority &lt;Int32&gt;] [-Description &lt;String&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -189,7 +189,37 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-priority">-Priority</h3>
+<p>Sets the priority of the task. Value should be a number between 0 and 10.</p>
+<ul>
+<li>values 0 and 1 are interpreted as <em>Urgent</em></li>
+<li>values 2, 3 and 4 are interpreted as <em>Important</em></li>
+<li>values 5, 6 and 7 are interpreted as <em>Medium</em></li>
+<li>values 8, 9 and 10 are interpreted as <em>Low</em></li>
+</ul>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-description">-Description</h3>
+<p>Sets the description (notes) of the task.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
