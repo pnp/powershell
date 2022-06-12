@@ -23,6 +23,9 @@ namespace PnP.PowerShell.Commands.Fields
         [Parameter(Mandatory = false, ValueFromPipeline = false)]
         public SwitchParameter InSiteHierarchy;
 
+        [Parameter(Mandatory = false, ValueFromPipeline = false)]
+        public SwitchParameter ReturnTyped;
+
         protected override void ExecuteCmdlet()
         {
             if (List != null)
@@ -53,85 +56,90 @@ namespace PnP.PowerShell.Commands.Fields
                     ClientContext.Load(field, RetrievalExpressions);
                     ClientContext.ExecuteQueryRetry();
 
-                    switch (field.FieldTypeKind)
+                    if (ReturnTyped.IsPresent)
                     {
-                        case FieldType.DateTime:
-                            {
-                                WriteObject(ClientContext.CastTo<FieldDateTime>(field));
-                                break;
-                            }
-                        case FieldType.Choice:
-                            {
-                                WriteObject(ClientContext.CastTo<FieldChoice>(field));
-                                break;
-                            }
-                        case FieldType.Calculated:
-                            {
-                                WriteObject(ClientContext.CastTo<FieldCalculated>(field));
-                                break;
-                            }
-                        case FieldType.Computed:
-                            {
-                                WriteObject(ClientContext.CastTo<FieldComputed>(field));
-                                break;
-                            }
-                        case FieldType.Geolocation:
-                            {
-                                WriteObject(ClientContext.CastTo<FieldGeolocation>(field));
-                                break;
-
-                            }
-                        case FieldType.User:
-                            {
-                                WriteObject(ClientContext.CastTo<FieldUser>(field));
-                                break;
-                            }
-                        case FieldType.Currency:
-                            {
-                                WriteObject(ClientContext.CastTo<FieldCurrency>(field));
-                                break;
-                            }
-                        case FieldType.Guid:
-                            {
-                                WriteObject(ClientContext.CastTo<FieldGuid>(field));
-                                break;
-                            }
-                        case FieldType.URL:
-                            {
-                                WriteObject(ClientContext.CastTo<FieldUrl>(field));
-                                break;
-                            }
-                        case FieldType.Lookup:
-                            {
-                                WriteObject(ClientContext.CastTo<FieldLookup>(field));
-                                break;
-                            }
-                        case FieldType.MultiChoice:
-                            {
-                                WriteObject(ClientContext.CastTo<FieldMultiChoice>(field));
-                                break;
-                            }
-                        case FieldType.Number:
-                            {
-                                WriteObject(ClientContext.CastTo<FieldNumber>(field));
-                                break;
-                            }
-                        case FieldType.Invalid:
-                            {
-                                if (field.TypeAsString.StartsWith("TaxonomyFieldType"))
+                        switch (field.FieldTypeKind)
+                        {
+                            case FieldType.DateTime:
                                 {
-                                    WriteObject(ClientContext.CastTo<TaxonomyField>(field));
+                                    WriteObject(ClientContext.CastTo<FieldDateTime>(field));
                                     break;
                                 }
-                                goto default;
-                            }
-                        default:
-                            {
-                                WriteObject(field);
-                                break;
-                            }
+                            case FieldType.Choice:
+                                {
+                                    WriteObject(ClientContext.CastTo<FieldChoice>(field));
+                                    break;
+                                }
+                            case FieldType.Calculated:
+                                {
+                                    WriteObject(ClientContext.CastTo<FieldCalculated>(field));
+                                    break;
+                                }
+                            case FieldType.Computed:
+                                {
+                                    WriteObject(ClientContext.CastTo<FieldComputed>(field));
+                                    break;
+                                }
+                            case FieldType.Geolocation:
+                                {
+                                    WriteObject(ClientContext.CastTo<FieldGeolocation>(field));
+                                    break;
+                                }
+                            case FieldType.User:
+                                {
+                                    WriteObject(ClientContext.CastTo<FieldUser>(field));
+                                    break;
+                                }
+                            case FieldType.Currency:
+                                {
+                                    WriteObject(ClientContext.CastTo<FieldCurrency>(field));
+                                    break;
+                                }
+                            case FieldType.Guid:
+                                {
+                                    WriteObject(ClientContext.CastTo<FieldGuid>(field));
+                                    break;
+                                }
+                            case FieldType.URL:
+                                {
+                                    WriteObject(ClientContext.CastTo<FieldUrl>(field));
+                                    break;
+                                }
+                            case FieldType.Lookup:
+                                {
+                                    WriteObject(ClientContext.CastTo<FieldLookup>(field));
+                                    break;
+                                }
+                            case FieldType.MultiChoice:
+                                {
+                                    WriteObject(ClientContext.CastTo<FieldMultiChoice>(field));
+                                    break;
+                                }
+                            case FieldType.Number:
+                                {
+                                    WriteObject(ClientContext.CastTo<FieldNumber>(field));
+                                    break;
+                                }
+                            case FieldType.Invalid:
+                                {
+                                    if (field.TypeAsString.StartsWith("TaxonomyFieldType"))
+                                    {
+                                        WriteObject(ClientContext.CastTo<TaxonomyField>(field));
+                                        break;
+                                    }
+                                    goto default;
+                                }
+                            default:
+                                {
+                                    WriteObject(field);
+                                    break;
+                                }
+                        }
                     }
-
+                    else
+                    {
+                        WriteObject(field);
+                    }
                 }
                 else if (fieldCollection != null)
                 {
@@ -212,7 +220,7 @@ namespace PnP.PowerShell.Commands.Fields
                     }
                     ClientContext.Load(field, RetrievalExpressions);
                     ClientContext.ExecuteQueryRetry();
-                    
+
                     switch (field.FieldTypeKind)
                     {
                         case FieldType.DateTime:
