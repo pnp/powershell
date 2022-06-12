@@ -21,12 +21,18 @@ Adds a new task to a planner bucket
 
 ### By Group
 ```powershell
-Add-PnPPlannerTask -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Bucket <PlannerBucketPipeBind> -Title <String> [-AssignedTo <String[]>]
+Add-PnPPlannerTask -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Bucket <PlannerBucketPipeBind> -Title <String> 
+[-PercentComplete <Int32>] [-DueDateTime <DateTime>] [-StartDateTime <DateTime>]
+ [-AssignedTo <String[]] [-Priority <Int32>] [-Description <String>]
+ [<CommonParameters>]
 ```
 
 ### By Plan Id
 ```powershell
-Add-PnPPlannerTask -Bucket <PlannerBucketPipeBind> -PlanId <String> -Title <String> [-AssignedTo <String[]>]
+Add-PnPPlannerTask -Bucket <PlannerBucketPipeBind> -PlanId <String> -Title <String> 
+[-PercentComplete <Int32>] [-DueDateTime <DateTime>] [-StartDateTime <DateTime>]
+ [-AssignedTo <String[]] [-Priority <Int32>] [-Description <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -142,6 +148,85 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -StartDateTime
+Defines the start date of the task.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DueDateTime
+Specify the due date.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PercentComplete
+Defines the percentage of completeness of the task.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Priority
+Sets the priority of the task. Value should be a number between 0 and 10.
+- values 0 and 1 are interpreted as _Urgent_
+- values 2, 3 and 4 are interpreted as _Important_
+- values 5, 6 and 7 are interpreted as _Medium_
+- values 8, 9 and 10 are interpreted as _Low_
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Description
+Sets the description (notes) of the task.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
