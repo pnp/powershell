@@ -34,7 +34,8 @@ namespace PnP.PowerShell.Commands.UserProfiles
             {
                 IncludePersonalSite = PersonalSiteFilter.Include,
                 IncludeDetail = true,
-                Template = "SPSPERS"
+                Template = "SPSPERS",
+                Filter = $"Url -eq '{personalSiteUrl.TrimEnd('/')}'"
             };
 
             var sitesList = Tenant.GetSitePropertiesFromSharePointByFilters(filter);
@@ -54,7 +55,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             }
             else
             {
-                WriteWarning("Couldn't find quota for the specified personal site");
+                WriteWarning($"Couldn't find onedrive quota for the account: {Account} ");
             }
         }
     }
