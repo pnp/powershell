@@ -18,7 +18,7 @@ Allows the Microsoft Planner configuration of the tenant to be set
 ## SYNTAX
 
 ```
-Set-PnPPlannerConfiguration [-IsPlannerAllowed <boolean>] [-AllowRosterCreation <boolean>] [-AllowTenantMoveWithDataLoss <boolean>] [-AllowPlannerMobilePushNotifications <boolean>] [-AllowCalendarSharing <boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPPlannerConfiguration [-IsPlannerAllowed <boolean>] [-AllowRosterCreation <boolean>] [-AllowTenantMoveWithDataLoss <boolean>] [-AllowTenantMoveWithDataMigration <boolean>] [-AllowPlannerMobilePushNotifications <boolean>] [-AllowCalendarSharing <boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -66,6 +66,21 @@ Accept wildcard characters: False
 
 ### -AllowTenantMoveWithDataLoss
 Allows configuring whether a tenant move into a new region is currently authorized
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowTenantMoveWithDataMigration
+Allows configuring whether a tenant move with data migration is authorized
 
 ```yaml
 Type: Boolean

@@ -46,9 +46,9 @@ If during one of these chunks an exception occurs (for instance you are trying t
 
 As of release 1.7.63-nightly the following cmdlets support batching:
 
-* [`Add-PnPListItem`](/cmdlets/Add-PnPListItem)
-* [`Set-PnPListItem`](/cmdlets/Set-PnPListItem)
-* [`Remove-PnPListItem`](/cmdlets/Remove-PnPListItem)
-* [`Publish-PnPSyntexModel`](/cmdlets/Publish-PnPSyntexModel)
-* [`Unpublish-PnPSyntexModel`](/cmdlets/Unpublish-PnPSyntexModel)
-* [`Request-PnPSyntexClassifyAndExtract`](/cmdlets/Request-PnPSyntexClassifyAndExtract)
+* [`Add-PnPListItem`](/powershell/cmdlets/Add-PnPListItem.html)
+* [`Set-PnPListItem`](/powershell/cmdlets/Set-PnPListItem.html)
+* [`Remove-PnPListItem`](/powershell/cmdlets/Remove-PnPListItem.html)
+* [`Publish-PnPSyntexModel`](/powershell/cmdlets/Publish-PnPSyntexModel.html)
+* [`Unpublish-PnPSyntexModel`](/powershell/cmdlets/Unpublish-PnPSyntexModel.html)
+* [`Request-PnPSyntexClassifyAndExtract`](/powershell/cmdlets/Request-PnPSyntexClassifyAndExtract.html)

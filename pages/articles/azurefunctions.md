@@ -195,39 +195,39 @@ Next step is to assign permissions to this managed identity so it is authorized 
 1. Ensure you're having the Azure PowerShell management module installed on your environment. You can install it using:
 
    ```powershell
-   Install-Module AzureAD
+   Install-Module Az
    ```
    
 1. Connect to the Azure instance where your Azure Function runs and of which you want to use the Microsoft Graph through PnP PowerShell
 
     ```powershell
-    Connect-AzureAD -TenantId <contoso>.onmicrosoft.com
+    Connect-AzAccount -Tenant <contoso>.onmicrosoft.com
     ```
     
 1. Retrieve the Azure AD Service Principal instance for the Microsoft Graph. It should always be AppId 00000003-0000-0000-c000-000000000000.
 
    ```powershell
-   $graphServicePrincipal = Get-AzureADServicePrincipal -SearchString "Microsoft Graph" | Select-Object -First 1
+   $graphServicePrincipal = Get-AzADServicePrincipal -SearchString "Microsoft Graph" | Select-Object -First 1
    ```
    
 1. Using the following PowerShell cmdlet you can list all the possible Microsoft Graph permissions you can give your Azure Function through the Managed Identity. This list will be long. Notice that we are specifically querying for application permissions. Delegate permissions cannot be utilized using a Managed Identity.
 
    ```powershell
-   $graphServicePrincipal.AppRoles | Where-Object { $_.AllowedMemberTypes -eq "Application" }
+   $graphServicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq "Application" }
    ```
    
 1. Pick a permission which you would like to grant your Azure Function to have towards the Microsoft Graph, i.e. `Group.Read.All`.
 
    ```powershell
-   $appRole = $graphServicePrincipal.AppRoles | Where-Object { $_.AllowedMemberTypes -eq "Application" -and $_.Value -eq "Group.Read.All" }
+   $appRole = $graphServicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq "Application" -and $_.Value -eq "Group.Read.All" }
    ```
    
 1. Now assign this permission to the Azure Active Directory app registration that has been created automatically by enabling the managed identity on the Azure Function in the steps above:
 
    ```powershell
    $managedIdentityId = "<Object (principal) ID of the Azure Function generated in the previous section>"
-   New-AzureAdServiceAppRoleAssignment -ObjectId $managedIdentityId -PrincipalId $managedIdentityId -ResourceId $graphServicePrincipal.ObjectId -Id $appRole.Id
-   
+   Add-AzADAppPermission -ObjectId $managedIdentityId -ApiId $graphServicePrincipal.AppId -PermissionId $appRole.Id -Type 'Role'
+
    ```
 
 #### Create the Azure Function

@@ -19,11 +19,18 @@ Adds a user to an existing Microsoft Teams instance.
 
 ## SYNTAX
 
+### User
 ```powershell
-Add-PnPTeamsUser -Team <TeamsTeamPipeBind> -User <String> -Role <String> [<CommonParameters>]
+Add-PnPTeamsUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -User <String> -Role <String> [<CommonParameters>]
+```
+
+### Users
+```powershell
+Add-PnPTeamsUser -Team <TeamsTeamPipeBind> -Users <String[]> -Role <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+This cmdlet adds one or more users to an existing Team. 
 
 ## EXAMPLES
 
@@ -32,19 +39,28 @@ Add-PnPTeamsUser -Team <TeamsTeamPipeBind> -User <String> -Role <String> [<Commo
 Add-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Owner
 ```
 
-Adds a user as an owner to the team
+Adds a user as an owner to the team.
 
 ### EXAMPLE 2
 ```powershell
 Add-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Member
 ```
 
+Adds a user as a member to the team.
+
 ### EXAMPLE 3
 ```powershell
 Add-PnPTeamsUser -Team MyTeam -Users "john@doe.com","jane@doe.com" -Role Member
 ```
 
-Adds users as a member to the team
+Adds multiple users as members to the team.
+
+### EXAMPLE 4
+```powershell
+Add-PnPTeamsUser -Team MyTeam -User "jane@doe.com" -Role Member -Channel Private
+```
+
+Adds user as a member to a private channel named Private in MyTeam team.
 
 ## PARAMETERS
 
@@ -71,6 +87,20 @@ Type: TeamsTeamPipeBind
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Channel
+Specify the channel id or name of the team to retrieve.
+
+```yaml
+Type: TeamsChannelPipeBind
+Parameter Sets: (User)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

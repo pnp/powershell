@@ -4,7 +4,6 @@ using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
 using PnP.PowerShell.Commands.Provider;
-using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -18,34 +17,23 @@ namespace PnP.PowerShell.Commands.Base
         protected override void ProcessRecord()
         {
             // If no specific connection has been passed in, take the connection from the current context
-            if (Connection == null)
+            var connection = Connection ?? PnPConnection.Current;
+
+            if (connection?.Certificate != null)
             {
-                Connection = PnPConnection.Current;
-            }
-            if (Connection?.Certificate != null)
-            {
-                if (Connection != null && Connection.DeleteCertificateFromCacheOnDisconnect)
+                if (connection != null && connection.DeleteCertificateFromCacheOnDisconnect)
                 {
-                    PnPConnection.CleanupCryptoMachineKey(Connection.Certificate);
+                    PnPConnection.CleanupCryptoMachineKey(connection.Certificate);
                 }
-                Connection.Certificate = null;
+                connection.Certificate = null;
             }
-            var success = false;
-            if (Connection != null)
-            {
-                success = DisconnectProvidedService(Connection);
-            }
-            else
-            {
-                success = DisconnectCurrentService();
-            }
+
+            var success = DisconnectProvidedService(ref connection);
+            
             if (!success)
             {
                 throw new InvalidOperationException(Properties.Resources.NoConnectionToDisconnect);
             }
-
-            // clear credentials
-            PnPConnection.Current = null;
 
             var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals(SPOProvider.PSProviderName, StringComparison.InvariantCultureIgnoreCase));
             if (provider != null)
@@ -59,7 +47,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static bool DisconnectProvidedService(PnPConnection connection)
+        internal static bool DisconnectProvidedService(ref PnPConnection connection)
         {
             Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
             Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
@@ -70,23 +58,6 @@ namespace PnP.PowerShell.Commands.Base
             connection.Context = null;
             connection = null;
             return true;
-        }
-
-        internal static bool DisconnectCurrentService()
-        {
-            Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
-            Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
-
-            if (PnPConnection.Current == null)
-            {
-                return false;
-            }
-            else
-            {
-                PnPConnection.Current.Context = null;
-                PnPConnection.Current = null;
-                return true;
-            }
         }
     }
 }

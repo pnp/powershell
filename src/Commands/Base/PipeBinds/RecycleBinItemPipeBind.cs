@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.SharePoint.Client;
 
+using PnP.PowerShell.Commands.Model.SharePoint;
+
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public sealed class RecycleBinItemPipeBind
@@ -17,6 +19,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         public RecycleBinItemPipeBind(RecycleBinItem item)
         {
             _item = item;
+        }
+
+        public RecycleBinItemPipeBind(RecycleResult result)
+        {
+            _id = result.RecycleBinItemId;
         }
 
         public RecycleBinItemPipeBind(string id)

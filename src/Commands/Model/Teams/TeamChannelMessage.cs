@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Globalization;
-using System.Reflection;
-using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model.Teams
 {

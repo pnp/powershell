@@ -26,6 +26,12 @@ namespace PnP.PowerShell.Commands.Model.Planner
         public bool? AllowTenantMoveWithDataLoss { get; set; }
 
         /// <summary>
+        /// Indicates whether a tenant move with data migration is authorized.
+        /// </summary>
+        [JsonPropertyName("allowTenantMoveWithDataMigration")]
+        public bool? AllowTenantMoveWithDataMigration { get; set; }
+
+        /// <summary>
         /// Indicates whether the creation of Roster containers (Planner plans without Microsoft 365 Groups) is allowed
         /// </summary>
         [JsonPropertyName("allowRosterCreation")]

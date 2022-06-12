@@ -633,10 +633,15 @@ namespace PnP.PowerShell.Commands.Utilities
             await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages", message, accessToken);
         }
 
+        public static async Task<TeamChannelMessage> GetMessageAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, string messageId)
+        {
+            return await GraphHelper.GetAsync<TeamChannelMessage>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages/{messageId}", accessToken);
+        }
+
         public static async Task<List<TeamChannelMessage>> GetMessagesAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, bool includeDeleted = false)
         {
             List<TeamChannelMessage> messages = new List<TeamChannelMessage>();
-            var collection = await GraphHelper.GetResultCollectionAsync<TeamChannelMessage>(httpClient, $"beta/teams/{groupId}/channels/{channelId}/messages", accessToken);
+            var collection = await GraphHelper.GetResultCollectionAsync<TeamChannelMessage>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages", accessToken);
             messages.AddRange(collection);
 
             if (includeDeleted)
@@ -649,9 +654,27 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
+        /// <summary>
+        /// List all the replies to a message in a channel of a team.
+        /// </summary>
+        public static async Task<List<TeamChannelMessageReply>> GetMessageRepliesAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, string messageId, bool includeDeleted = false)
+        {
+            var replies = await GraphHelper.GetResultCollectionAsync<TeamChannelMessageReply>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages/{messageId}/replies", accessToken);
+
+            return includeDeleted ? replies.ToList() : replies.Where(r => r.DeletedDateTime.HasValue).ToList();
+        }
+
+        /// <summary>
+        /// Get a specific reply of a message in a channel of a team.
+        /// </summary>
+        public static async Task<TeamChannelMessageReply> GetMessageReplyAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, string messageId, string replyId)
+        {
+            return await GraphHelper.GetAsync<TeamChannelMessageReply>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages/{messageId}/replies/{replyId}", accessToken);
+        }
+
         public static async Task<TeamChannel> UpdateChannelAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, TeamChannel channel)
         {
-            return await GraphHelper.PatchAsync(httpClient, accessToken, $"beta/teams/{groupId}/channels/{channelId}", channel);
+            return await GraphHelper.PatchAsync(httpClient, accessToken, $"v1.0/teams/{groupId}/channels/{channelId}", channel);
         }
         #endregion
 
@@ -696,7 +719,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             var channelMember = new TeamChannelMember
             {
-                UserIdentifier = $"https://graph.microsoft.com/v1.0/users('{upn}')",
+                UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{upn}')",
             };
 
             // The role for the user. Must be owner or empty.
@@ -890,19 +913,8 @@ namespace PnP.PowerShell.Commands.Utilities
             var byteArrayContent = new ByteArrayContent(bytes);
             byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
             var response = await GraphHelper.PostAsync(httpClient, "v1.0/appCatalogs/teamsApps", accessToken, byteArrayContent);
-            if (!response.IsSuccessStatusCode)
-            {
-                if (GraphHelper.TryGetGraphException(response, out GraphException exception))
-                {
-                    throw exception;
-                }
-            }
-            else
-            {
-                var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                return JsonSerializer.Deserialize<TeamApp>(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-            }
-            return null;
+            var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            return JsonSerializer.Deserialize<TeamApp>(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
         }
 
         public static async Task<HttpResponseMessage> UpdateAppAsync(HttpClient httpClient, string accessToken, byte[] bytes, string appId)
