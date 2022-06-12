@@ -244,7 +244,7 @@ namespace PnP.PowerShell.Commands.Base
                          {
                              ClipboardService.SetText(deviceCodeResult.UserCode);
                              messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard\n\n");
-                             BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in", cancellationTokenSource: cancellationTokenSource, cancelOnClose: false);
+                             BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in", cancellationTokenSource: cancellationTokenSource, cancelOnClose: false, scriptErrorsSuppressed: false);
                          }
                          else
                          {
@@ -611,6 +611,8 @@ namespace PnP.PowerShell.Commands.Base
 
         internal void CacheContext()
         {
+            if(Context == null) return;
+            
             var c = ContextCache.FirstOrDefault(cc => new Uri(cc.Url).AbsoluteUri == new Uri(Context.Url).AbsoluteUri);
             if (c == null)
             {

@@ -32,7 +32,7 @@ This cmdlet returns the flows for a given enviroment.
 $environment = Get-PnPPowerPlatformEnvironment
 Get-PnPFlow -Environment $environment
 ```
-This returns all the flows for a given power platform environment
+This returns all the flows for a given Power Platform environment
 
 ### Example 2
 ```powershell

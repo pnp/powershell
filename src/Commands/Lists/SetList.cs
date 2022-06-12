@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Lists
     [OutputType(typeof(List))]
     public class SetList : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ListPipeBind Identity;
 
         [Parameter(Mandatory = false)]
