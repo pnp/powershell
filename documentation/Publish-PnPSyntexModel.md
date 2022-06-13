@@ -9,7 +9,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPage.html
  
 # Publish-PnPSyntexModel
 
-:::image type="content" source="../pages/images/batching/Batching.png" alt-text="Supports batching":::
+:::image type="content" source="../pages/images/batching/Batch 2.png" alt-text="Supports batching":::
 
 ## SYNOPSIS
 
