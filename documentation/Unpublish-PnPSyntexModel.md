@@ -9,13 +9,13 @@ online version: https://pnp.github.io/powershell/cmdlets/UnPublish-PnPSyntexMode
  
 # Unpublish-PnPSyntexModel
 
-:::image type="content" source="../pages/images/batching/Batching.png" alt-text="Supports batching":::
-
 ## SYNOPSIS
 
 Unpublishes a SharePoint Syntex model from a list.
 
 This cmdlet only works when you've connected to a SharePoint Syntex Content Center site.
+
+[![Maturity Model for Microsoft 365](/pages/images/batching/Batching.png)](../pages/articles/batching.md)
 
 ## SYNTAX
 

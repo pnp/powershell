@@ -9,11 +9,11 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPListItem.html
  
 # Remove-PnPListItem
 
-:::image type="content" source="../pages/images/batching/Batching.png" alt-text="Supports batching":::
-
 ## SYNOPSIS
 
 Deletes an item from a list
+
+[![Maturity Model for Microsoft 365](/pages/images/batching/Batching.png)](../pages/articles/batching.md)
 
 ## SYNTAX
 
@@ -34,6 +34,7 @@ Remove-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> -Batch <P
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Remove-PnPListItem -List "Demo List" -Identity "1" -Force
 ```

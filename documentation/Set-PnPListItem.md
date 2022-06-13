@@ -9,11 +9,11 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPListItem.html
  
 # Set-PnPListItem
 
-:::image type="content" source="../pages/images/batching/Batching.png" alt-text="Supports batching":::
-
 ## SYNOPSIS
 
 Updates a list item
+
+[![Maturity Model for Microsoft 365](/pages/images/batching/Batching.png)](../pages/articles/batching.md)
 
 ## SYNTAX
 

@@ -9,20 +9,23 @@ title: Add-PnPListItem
   
 # Add-PnPListItem
 
-:::image type="content" source="../pages/images/batching/Batching.png" alt-text="Supports batching":::
-
 ## SYNOPSIS
+
 Adds an item to the list and sets the creation time to the current date and time. The author is set to the current authenticated user executing the cmdlet. In order to set the author to a different user, please refer to Set-PnPListItem.
+
+[![Maturity Model for Microsoft 365](/pages/images/batching/Batching.png)](../pages/articles/batching.md)
 
 ## SYNTAX
 
 ### Single
+
 ```powershell
 Add-PnPListItem [-List] <ListPipeBind> [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>]
  [-Folder <String>] [-Label <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Batched
+
 ```powershell
 Add-PnPListItem [-List] <ListPipeBind> -Batch <PnPBatch> [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>]
  [-Folder <String>] [-Connection <PnPConnection>] [<CommonParameters>]
@@ -33,6 +36,7 @@ Add-PnPListItem [-List] <ListPipeBind> -Batch <PnPBatch> [-ContentType <ContentT
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Add-PnPListItem -List "Demo List" -Values @{"Title" = "Test Title"; "Category"="Test Category"}
 ```
@@ -40,6 +44,7 @@ Add-PnPListItem -List "Demo List" -Values @{"Title" = "Test Title"; "Category"="
 Adds a new list item to the "Demo List", and sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.
 
 ### EXAMPLE 2
+
 ```powershell
 Add-PnPListItem -List "Demo List" -ContentType "Company" -Values @{"Title" = "Test Title"; "Category"="Test Category"}
 ```
@@ -47,6 +52,7 @@ Add-PnPListItem -List "Demo List" -ContentType "Company" -Values @{"Title" = "Te
 Adds a new list item to the "Demo List", sets the content type to "Company" and sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.
 
 ### EXAMPLE 3
+
 ```powershell
 Add-PnPListItem -List "Demo List" -Values @{"MultiUserField"="user1@domain.com","user2@domain.com"}
 ```
@@ -54,6 +60,7 @@ Add-PnPListItem -List "Demo List" -Values @{"MultiUserField"="user1@domain.com",
 Adds a new list item to the "Demo List" and sets the user field called MultiUserField to 2 users. Separate multiple users with a comma.
 
 ### EXAMPLE 4
+
 ```powershell
 Add-PnPListItem -List "Demo List" -Values @{"Title"="Sales Report"} -Folder "projects/europe"
 ```
@@ -61,6 +68,7 @@ Add-PnPListItem -List "Demo List" -Values @{"Title"="Sales Report"} -Folder "pro
 Adds a new list item to the "Demo List". It will add the list item to the europe folder which is located in the projects folder. Folders will be created if needed.
 
 ### EXAMPLE 5
+
 ```powershell
 Add-PnPListItem -List "Demo List" -Values @{"Title"="Sales Report"} -Label "Public"
 ```
@@ -68,6 +76,7 @@ Add-PnPListItem -List "Demo List" -Values @{"Title"="Sales Report"} -Label "Publ
 Adds a new list item to the "Demo List". Sets the retention label to "Public" if it exists on the site.
 
 ### EXAMPLE 6
+
 ```powershell
 $batch = New-PnPBatch
 for($i=0;$i -lt 10;$i++)
@@ -82,6 +91,7 @@ This creates 10 list items by using a batched approach.
 ## PARAMETERS
 
 ### -Batch
+
 Optional batch object used to add items in a batched manner. See examples on how to use this.
 
 ```yaml
@@ -95,6 +105,7 @@ Accept wildcard characters: False
 ```
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
@@ -109,6 +120,7 @@ Accept wildcard characters: False
 ```
 
 ### -ContentType
+
 Specify either the name, ID or an actual content type.
 
 ```yaml
@@ -123,6 +135,7 @@ Accept wildcard characters: False
 ```
 
 ### -Folder
+
 The list relative URL of a folder. E.g. "MyFolder" for a folder located in the root of the list, or "MyFolder/SubFolder" for a folder located in the MyFolder folder which is located in the root of the list.
 
 ```yaml
@@ -137,6 +150,7 @@ Accept wildcard characters: False
 ```
 
 ### -Label
+
 The name of the retention label.
 
 ```yaml
@@ -151,6 +165,7 @@ Accept wildcard characters: False
 ```
 
 ### -List
+
 The ID, Title or Url of the list.
 
 ```yaml
@@ -165,6 +180,7 @@ Accept wildcard characters: False
 ```
 
 ### -Values
+
 Use the internal names of the fields when specifying field names.
 
 Single line of text: -Values @{"Title" = "Title New"}
@@ -218,10 +234,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
