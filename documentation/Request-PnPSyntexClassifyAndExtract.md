@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPage.html
 
 Requests for a file, folder or all files in a library to be classified and extracted via the published SharePoint Syntex models on the libraries hosting the files.
 
-:::image type="content" source="../pages/images/batching/Batch 2.png" alt-text="Supports batching":::
+:::image type="content" source="../pages/images/batching/Batch175.png" alt-text="Supports batching":::
 
 ## SYNTAX
 
