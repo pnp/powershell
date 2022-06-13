@@ -19,9 +19,15 @@ Updates an existing Site Design on the current tenant based on the site provided
 
 ## SYNTAX
 
+### Specific components
 ```powershell
-Update-PnPSiteDesignFromWeb -Identity <TenantSiteDesignPipeBind> -Url <String> [-Lists <String[]>] [-IncludeBranding] [-IncludeLinksToExportedItems]
- [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme] [-IncludeAll]
+Update-PnPSiteDesignFromWeb -Identity <TenantSiteDesignPipeBind> -Url <String> [-Lists <String[]>] [-IncludeBranding <SwitchParameter>] [-IncludeLinksToExportedItems <SwitchParameter>]
+ [-IncludeRegionalSettings <SwitchParameter>] [-IncludeSiteExternalSharingCapability <SwitchParameter>] [-IncludeTheme <SwitchParameter>] [-Connection <PnPConnection>]
+```
+
+### All components
+```powershell
+Update-PnPSiteDesignFromWeb -Identity <TenantSiteDesignPipeBind> -Url <String> [-Lists <String[]>] [-IncludeAll <SwitchParameter>]
  [-Connection <PnPConnection>]
 ```
 
