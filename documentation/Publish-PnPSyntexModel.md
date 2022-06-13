@@ -9,7 +9,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPage.html
  
 # Publish-PnPSyntexModel
 
-![Supports batching](../pages/images/batching/Batch 2.png)
+![Maturity Model for Microsoft 365](/pages/images/batching/Batch%202.png)
 
 :::image type="content" source="../pages/images/batching/Batch 2.png" alt-text="Supports batching":::
 
