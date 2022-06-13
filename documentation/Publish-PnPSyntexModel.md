@@ -4,12 +4,12 @@ title: Publish-PnPSyntexModel
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPage.html
+online version: https://pnp.github.io/powershell/cmdlets/Publish-PnPSyntexModel.html
 ---
  
 # Publish-PnPSyntexModel
 
-![Maturity Model for Microsoft 365](/pages/images/batching/Batch%202.png)
+![Maturity Model for Microsoft 365](/pages/images/batching/Batching2.png)
 
 :::image type="content" source="../pages/images/batching/Batch 2.png" alt-text="Supports batching":::
 
