@@ -131,7 +131,7 @@ namespace PnP.PowerShell.Commands
             {
                 if (Connection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
                 {
-                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, $"https://graph.microsoft.com/").GetAwaiter().GetResult();
+                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, $"https://{Connection.GraphEndPoint}/").GetAwaiter().GetResult();
                 }
                 else
                 {
