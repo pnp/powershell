@@ -19,10 +19,12 @@ Updates a content type in a web or a list
 Set-PnPContentType [-Identity] <ContentTypePipeBind> [-List] <ListPipeBind> [-InSiteHierarchy] <SwitchParameter>
 [-UpdateChildren] <SwitchParameter> [-Name] <String> [-Description] <String> [-Group] <String>
 [-Hidden] <String> [-ReadOnly] <String> [-Sealed] <String>
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] [-Verbose] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
+Allows modification of the settings of a content type in a list or site.
 
 ## EXAMPLES
 
@@ -208,6 +210,20 @@ Specify if you want to seal the content type.
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Verbose
+When provided, additional debug statements will be shown while updating the content type.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
