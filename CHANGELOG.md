@@ -87,6 +87,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Arleta Wanat [PowershellScripts]
 - Yuriy Samorodov [YuriySamorodov]
 - Arleta Wanat [PowershellScripts]
 - Marc D Anderson [sympmarc]
