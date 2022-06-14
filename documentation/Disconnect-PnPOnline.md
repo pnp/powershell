@@ -35,8 +35,6 @@ This will clear out all active tokens from the current connection
 
 ## PARAMETERS
 
-None
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
