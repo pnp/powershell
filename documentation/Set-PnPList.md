@@ -25,6 +25,7 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
 ```
 
 ## DESCRIPTION
+Allows the configuration of a specific SharePoint Online list to be set.
 
 ## EXAMPLES
 
@@ -382,7 +383,7 @@ Accept wildcard characters: False
 ```
 
 ### -ExemptFromBlockDownloadOfNonViewableFiles
-Boolean parameter , if specified allows to configure access capabilites for unmanaged devices at list level.
+Allows to configure access capabilities for unmanaged devices for the list. If set to $true, the list will be accessible by unmanaged devices as well. For more information, see [SharePoint and OneDrive unmanaged device access controls for administrators](https://docs.microsoft.com/sharepoint/control-access-from-unmanaged-devices).
 
 ```yaml
 Type: Boolean
@@ -398,4 +399,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
