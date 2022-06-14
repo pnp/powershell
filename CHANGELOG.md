@@ -87,6 +87,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed Graph endpoints for non-commercial clouds for Managed Identity and Teams cmdlets [#1944](https://github.com/pnp/powershell/pull/1944)
 - Fixed `Add-PnPTeamsUser`, the parameter `-Channel` is now not required. [#1953](https://github.com/pnp/powershell/pull/1953)
 - Fixed `Get-PnPPlannerTask` throwing an object reference exception for completed tasks [#1956](https://github.com/pnp/powershell/issues/1956)
+- Fixed `Get-PnPUserOneDriveQuota` returning the maximum possible quota instead of the actual configured quota on a OneDrive for Business site [#1902](https://github.com/pnp/powershell/pull/1902)
 
 ### Removed
 
