@@ -49,6 +49,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Add-PnPListItemAttachment` cmdlet to provide ability to upload a file as an attachment to a SharePoint list item. [#1932](https://github.com/pnp/powershell/pull/1932)
 - Added `Remove-PnPListItemAttachment` cmdlet to provide ability to delete a list item attachment. [#1932](https://github.com/pnp/powershell/pull/1932)
 - Added `Get-PnPListItemAttachment` cmdlet to download the attachments from a list item. [#1932](https://github.com/pnp/powershell/pull/1932)
+- Added `-ReturnTyped` parameter to `Get-PnPField` cmdlet so that it returns specific type instead of the generic field type. [#1888] (https://github.com/pnp/powershell/pull/1888)
 - Added `Add-PnPViewsFromXML` cmdlet to create one or more views in a list based on an XML string. [#1963](https://github.com/pnp/powershell/pull/1963)
 - Added `-ExemptFromBlockDownloadOfNonViewableFiles` parameter to `Set-PnPList` cmdlet to configure access capabilites for unmanaged devices at list level. [#1973](https://github.com/pnp/powershell/pull/1973)
 - Added `-PercentComplete`, `-Priority`, `-StartDateTime`, `-DueDateTime` and `-Description` to `Add-PnPPlannerTask` [#1964](https://github.com/pnp/powershell/pull/1964)
@@ -57,6 +58,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - Changed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to map users based on their Ids instead which should resolve some issues around user identities reporting not to exist. You can use the new `-IdType` option to switch it back to `PrincipalName` if needed.  [#1752](https://github.com/pnp/powershell/pull/1752)
+- Changed `Add-PnPField` now returns specific type taxonomy field type instead of the generic type. [#1888] (https://github.com/pnp/powershell/pull/1888)
 - Changed `Get-PnPOrgAssetsLibrary` to return a proper value of the organisation assets libraries. [#1889](https://github.com/pnp/powershell/pull/1889)
 - Bumped .NET Framework version to 4.6.2 as the 4.6.1 is not supported anymore. [#1856](https://github.com/pnp/powershell/pull/1856)
 - Changed `Add-PnPDataRowsToSiteTemplate`, it will now export a datetime field value as UTC string. [#1900](https://github.com/pnp/powershell/pull/1900)
