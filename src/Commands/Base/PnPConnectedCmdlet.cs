@@ -20,12 +20,18 @@ namespace PnP.PowerShell.Commands.Base
 
         protected void BeginProcessing(bool skipConnectedValidation)
         {
-            base.BeginProcessing();
+            base.BeginProcessing();            
 
             // If a specific connection has been provided, use that, otherwise use the current connection
             if(Connection == null)
             {
                 Connection = PnPConnection.Current;
+            }
+
+            // Track the execution of the cmdlet in Azure Application Insights
+            if (Connection != null && Connection.ApplicationInsights != null)
+            {
+                Connection.ApplicationInsights.TrackEvent(MyInvocation.MyCommand.Name);
             }
 
             // Check if we should ensure that we are connected

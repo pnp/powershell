@@ -37,12 +37,6 @@ namespace PnP.PowerShell.Commands
             // Call the base but instruct it not to check if there's an active connection as we will do that in this method already
             base.BeginProcessing(true);
 
-            // Track the execution of the cmdlet
-            if (Connection != null && Connection.ApplicationInsights != null)
-            {
-                Connection.ApplicationInsights.TrackEvent(MyInvocation.MyCommand.Name);
-            }
-
             // Ensure there is an active connection to work with
             if (Connection == null || ClientContext == null)
             {
