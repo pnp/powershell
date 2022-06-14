@@ -41,12 +41,12 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
             if (Identity != null)
             {
-                var group = Identity.GetGroup(HttpClient, AccessToken, includeSiteUrl, IncludeOwners);
+                var group = Identity.GetGroup(Connection, AccessToken, includeSiteUrl, IncludeOwners);
                 WriteObject(group);
             }
             else
             {
-                var groups = Microsoft365GroupsUtility.GetGroupsAsync(HttpClient, AccessToken, includeSiteUrl, IncludeOwners).GetAwaiter().GetResult();
+                var groups = Microsoft365GroupsUtility.GetGroupsAsync(Connection, AccessToken, includeSiteUrl, IncludeOwners).GetAwaiter().GetResult();
 
                 WriteObject(groups.OrderBy(p => p.DisplayName), true);
             }

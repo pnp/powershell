@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands
 
         public PnPContext PnPContext => Connection?.PnPContext ?? Connection.PnPContext;
 
-        public new HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient(ClientContext);
+        public HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient(ClientContext);
 
         protected override void BeginProcessing()
         {
@@ -157,6 +157,5 @@ namespace PnP.PowerShell.Commands
             }
             WriteWarning("SharePoint Operation Wait Interrupted");
         }
-
     }
 }

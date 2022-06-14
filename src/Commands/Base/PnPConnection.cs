@@ -17,6 +17,7 @@ using TextCopy;
 using PnP.PowerShell.Commands.Utilities;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Net.Http;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -34,6 +35,10 @@ namespace PnP.PowerShell.Commands.Base
 
         #region Properties
 
+        /// <summary>
+        /// Returns a reusable HTTPClient that can be used to make HTTP calls on this connection instance
+        /// </summary>
+        internal HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
         private PnPContext pnpContext { get; set; }
 

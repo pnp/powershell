@@ -84,12 +84,12 @@ namespace PnP.PowerShell.Commands.Graph
         public bool? AllowCreatePrivateChannels;
         protected override void ExecuteCmdlet()
         {
-            var groupId = Identity.GetGroupId(HttpClient, AccessToken);
+            var groupId = Identity.GetGroupId(Connection, AccessToken);
             if (groupId != null)
             {
                 try
                 {
-                    var team = TeamsUtility.GetTeamAsync(AccessToken, HttpClient, groupId).GetAwaiter().GetResult();
+                    var team = TeamsUtility.GetTeamAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult();
                     var updateGroup = false;
                     var group = new Group();
                     if (team != null)
@@ -125,7 +125,7 @@ namespace PnP.PowerShell.Commands.Graph
 
                         if(updateGroup)
                         {
-                            TeamsUtility.UpdateGroupAsync(HttpClient, AccessToken, groupId, group).GetAwaiter().GetResult();
+                            TeamsUtility.UpdateGroupAsync(Connection, AccessToken, groupId, group).GetAwaiter().GetResult();
                         }
 
                         var teamCI = new TeamCreationInformation();
@@ -147,7 +147,7 @@ namespace PnP.PowerShell.Commands.Graph
                         teamCI.Classification = ParameterSpecified(nameof(Classification)) ? Classification : null;
                         teamCI.AllowCreatePrivateChannels = ParameterSpecified(nameof(AllowCreatePrivateChannels)) ? AllowCreatePrivateChannels : null;                        
 
-                        var updated = TeamsUtility.UpdateTeamAsync(HttpClient, AccessToken, groupId, teamCI.ToTeam(group.Visibility)).GetAwaiter().GetResult();
+                        var updated = TeamsUtility.UpdateTeamAsync(Connection, AccessToken, groupId, teamCI.ToTeam(group.Visibility)).GetAwaiter().GetResult();
                         WriteObject(updated);
                     }
                 }

@@ -322,7 +322,7 @@
     <value>Unable to retrieve a token for {0}. Ensure you connect using one of the Connect-PnPOnline commands which uses the -ClientId argument or use Connect-PnPOnline -Scopes to connect.</value>
   </data>
   <data name="NoConnection" xml:space="preserve">
-    <value>There is currently no connection yet. Use Connect-PnPOnline to connect.</value>
+    <value>There is currently no connection yet. Use Connect-PnPOnline to connect or provide a valid connection using -Connection.</value>
   </data>
   <data name="AccessTokenConnectFailed" xml:space="preserve">
     <value>No URL specified nor does the provided access token contain an audience</value>

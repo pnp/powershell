@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Utilities.REST
 {
+    /// <summary>
+    /// Helper class that aids in making calls towards the Microsoft Graph API
+    /// </summary>
     internal static class GraphHelper
     {
         public static bool TryGetGraphException(HttpResponseMessage responseMessage, out GraphException exception)
@@ -39,7 +42,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        private static HttpRequestMessage GetMessage(string url, HttpMethod method, string accessToken, HttpContent content = null, IDictionary<string, string> additionalHeaders = null)
+        private static HttpRequestMessage GetMessage(string url, HttpMethod method, PnPConnection connection, string accessToken, HttpContent content = null, IDictionary<string, string> additionalHeaders = null)
         {
             if (url.StartsWith("/"))
             {
@@ -66,39 +69,39 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return message;
         }
 
-        public static async Task<string> GetAsync(HttpClient httpClient, string url, string accessToken, IDictionary<string, string> additionalHeaders = null)
+        public static async Task<string> GetAsync(PnPConnection connection, string url, string accessToken, IDictionary<string, string> additionalHeaders = null)
         {
-            var message = GetMessage(url, HttpMethod.Get, accessToken, null, additionalHeaders);
-            return await SendMessageAsync(httpClient, message, accessToken);
+            var message = GetMessage(url, HttpMethod.Get, connection, accessToken, null, additionalHeaders);
+            return await SendMessageAsync(connection, message, accessToken);
         }
 
-        public static async Task<HttpResponseMessage> GetResponseAsync(HttpClient httpClient, string url, string accessToken)
+        public static async Task<HttpResponseMessage> GetResponseAsync(PnPConnection connection, string url, string accessToken)
         {
-            var message = GetMessage(url, HttpMethod.Get, accessToken);
-            return await GetResponseMessageAsync(httpClient, message);
+            var message = GetMessage(url, HttpMethod.Get, connection, accessToken);
+            return await GetResponseMessageAsync(connection, message);
         }
 
         /// <summary>
         /// Queries the provided URL and looks for the NextLink in the results to fetch all the results
         /// </summary>
         /// <typeparam name="T">Type of object to cast the response items to</typeparam>
-        /// <param name="httpClient">HttpClient to use to make the request</param>
+        /// <param name="connection">Connection to use to make the request</param>
         /// <param name="url">Url to query</param>
         /// <param name="accessToken">AccessToken to use for authorizing the request</param>
         /// <param name="camlCasePolicy">Policy indicating the CamlCase that should be applied when mapping results to typed objects</param>
         /// <param name="propertyNameCaseInsensitive">Indicates if the response be mapped to the typed object ignoring different casing</param>
         /// <returns>List with objects of type T returned by the request</returns>
-        public static async Task<IEnumerable<T>> GetResultCollectionAsync<T>(HttpClient httpClient, string url, string accessToken, bool camlCasePolicy = true, bool propertyNameCaseInsensitive = false)
+        public static async Task<IEnumerable<T>> GetResultCollectionAsync<T>(PnPConnection connection, string url, string accessToken, bool camlCasePolicy = true, bool propertyNameCaseInsensitive = false)
         {
             var results = new List<T>();
-            var request = await GetAsync<RestResultCollection<T>>(httpClient, url, accessToken, camlCasePolicy, propertyNameCaseInsensitive);
+            var request = await GetAsync<RestResultCollection<T>>(connection, url, accessToken, camlCasePolicy, propertyNameCaseInsensitive);
 
             if (request.Items.Any())
             {
                 results.AddRange(request.Items);
                 while (!string.IsNullOrEmpty(request.NextLink))
                 {
-                    request = await GetAsync<RestResultCollection<T>>(httpClient, request.NextLink, accessToken, camlCasePolicy, propertyNameCaseInsensitive);
+                    request = await GetAsync<RestResultCollection<T>>(connection, request.NextLink, accessToken, camlCasePolicy, propertyNameCaseInsensitive);
                     if (request.Items.Any())
                     {
                         results.AddRange(request.Items);
@@ -113,15 +116,15 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         /// Queries the provided URL and returns the results as typed objects. It does NOT follow NextLink pages, use GetResultCollectionAsync instead for that.
         /// </summary>
         /// <typeparam name="T">Type of object to cast the response items to</typeparam>
-        /// <param name="httpClient">HttpClient to use to make the request</param>
+        /// <param name="connection">Connection to use to make the request</param>
         /// <param name="url">Url to query</param>
         /// <param name="accessToken">AccessToken to use for authorizing the request</param>
         /// <param name="camlCasePolicy">Policy indicating the CamlCase that should be applied when mapping results to typed objects</param>
         /// <param name="propertyNameCaseInsensitive">Indicates if the response be mapped to the typed object ignoring different casing</param>
         /// <returns>List with objects of type T returned by the request</returns>
-        public static async Task<T> GetAsync<T>(HttpClient httpClient, string url, string accessToken, bool camlCasePolicy = true, bool propertyNameCaseInsensitive = false)
+        public static async Task<T> GetAsync<T>(PnPConnection connection, string url, string accessToken, bool camlCasePolicy = true, bool propertyNameCaseInsensitive = false)
         {
-            var stringContent = await GetAsync(httpClient, url, accessToken);
+            var stringContent = await GetAsync(connection, url, accessToken);
             if (stringContent != null)
             {
                 var options = new JsonSerializerOptions { IgnoreNullValues = true };
@@ -147,28 +150,28 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return default(T);
         }
 
-        public static async Task<HttpResponseMessage> PostAsync(HttpClient httpClient, string url, string accessToken, HttpContent content, IDictionary<string, string> additionalHeaders = null)
+        public static async Task<HttpResponseMessage> PostAsync(PnPConnection connection, string url, string accessToken, HttpContent content, IDictionary<string, string> additionalHeaders = null)
         {
-            var message = GetMessage(url, HttpMethod.Post, accessToken, content, additionalHeaders);
-            return await GetResponseMessageAsync(httpClient, message);
+            var message = GetMessage(url, HttpMethod.Post, connection, accessToken, content, additionalHeaders);
+            return await GetResponseMessageAsync(connection, message);
         }
 
-        public static async Task<HttpResponseMessage> PutAsync(HttpClient httpClient, string url, string accessToken, HttpContent content, IDictionary<string, string> additionalHeaders = null)
+        public static async Task<HttpResponseMessage> PutAsync(PnPConnection connection, string url, string accessToken, HttpContent content, IDictionary<string, string> additionalHeaders = null)
         {
-            var message = GetMessage(url, HttpMethod.Put, accessToken, content, additionalHeaders);
-            return await GetResponseMessageAsync(httpClient, message);
+            var message = GetMessage(url, HttpMethod.Put, connection, accessToken, content, additionalHeaders);
+            return await GetResponseMessageAsync(connection, message);
         }
 
         #region DELETE
-        public static async Task<HttpResponseMessage> DeleteAsync(HttpClient httpClient, string url, string accessToken, IDictionary<string, string> additionalHeaders = null)
+        public static async Task<HttpResponseMessage> DeleteAsync(PnPConnection connection, string url, string accessToken, IDictionary<string, string> additionalHeaders = null)
         {
-            var message = GetMessage(url, HttpMethod.Delete, accessToken, null, additionalHeaders);
-            return await GetResponseMessageAsync(httpClient, message);
+            var message = GetMessage(url, HttpMethod.Delete, connection, accessToken, null, additionalHeaders);
+            return await GetResponseMessageAsync(connection, message);
         }
 
-        public static async Task<T> DeleteAsync<T>(HttpClient httpClient, string url, string accessToken, bool camlCasePolicy = true, IDictionary<string, string> additionalHeaders = null)
+        public static async Task<T> DeleteAsync<T>(PnPConnection connection, string url, string accessToken, bool camlCasePolicy = true, IDictionary<string, string> additionalHeaders = null)
         {
-            var response = await DeleteAsync(httpClient, url, accessToken, additionalHeaders);
+            var response = await DeleteAsync(connection, url, accessToken, additionalHeaders);
             if (response.IsSuccessStatusCode)
             {
                 var stringContent = await response.Content.ReadAsStringAsync();
@@ -195,7 +198,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         #endregion
 
         #region PATCH
-        public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, T content, IDictionary<string, string> additionalHeaders = null, bool camlCasePolicy = true)
+        public static async Task<T> PatchAsync<T>(PnPConnection connection, string accessToken, string url, T content, IDictionary<string, string> additionalHeaders = null, bool camlCasePolicy = true)
         {
             var serializerSettings = new JsonSerializerOptions() { IgnoreNullValues = true };
             if (camlCasePolicy)
@@ -205,11 +208,11 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             var requestContent = new StringContent(JsonSerializer.Serialize(content, serializerSettings));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 #if NETFRAMEWORK
-            var message = GetMessage(url,  new HttpMethod("PATCH"), accessToken, requestContent, additionalHeaders);
+            var message = GetMessage(url, new HttpMethod("PATCH"), connection, accessToken, requestContent, additionalHeaders);
 #else
-            var message = GetMessage(url, HttpMethod.Patch, accessToken, requestContent, additionalHeaders);
+            var message = GetMessage(url, HttpMethod.Patch, connection, accessToken, requestContent, additionalHeaders);
 #endif
-            var returnValue = await SendMessageAsync(httpClient, message, accessToken);
+            var returnValue = await SendMessageAsync(connection, message, accessToken);
             if (!string.IsNullOrEmpty(returnValue))
             {
                 return JsonSerializer.Deserialize<T>(returnValue);
@@ -220,14 +223,14 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, HttpContent content, IDictionary<string, string> additionalHeaders = null)
+        public static async Task<T> PatchAsync<T>(PnPConnection connection, string accessToken, string url, HttpContent content, IDictionary<string, string> additionalHeaders = null)
         {
 #if NETFRAMEWORK
-            var message = GetMessage(url, new HttpMethod("PATCH"), accessToken, content, additionalHeaders);
+            var message = GetMessage(url, new HttpMethod("PATCH"), connection, accessToken, content, additionalHeaders);
 #else
-            var message = GetMessage(url, HttpMethod.Patch, accessToken, content, additionalHeaders);
+            var message = GetMessage(url, HttpMethod.Patch, connection, accessToken, content, additionalHeaders);
 #endif
-            var returnValue = await SendMessageAsync(httpClient, message, accessToken);
+            var returnValue = await SendMessageAsync(connection, message, accessToken);
             if (!string.IsNullOrEmpty(returnValue))
             {
                 return JsonSerializer.Deserialize<T>(returnValue);
@@ -238,27 +241,27 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        public static async Task<HttpResponseMessage> PatchAsync(HttpClient httpClient, string accessToken, HttpContent content, string url, IDictionary<string, string> additionalHeaders = null)
+        public static async Task<HttpResponseMessage> PatchAsync(PnPConnection connection, string accessToken, HttpContent content, string url, IDictionary<string, string> additionalHeaders = null)
         {
 #if NETFRAMEWORK
-            var message = GetMessage(url, new HttpMethod("PATCH"), accessToken, content, additionalHeaders);
+            var message = GetMessage(url, new HttpMethod("PATCH"), connection, accessToken, content, additionalHeaders);
 #else
-            var message = GetMessage(url, HttpMethod.Patch, accessToken, content, additionalHeaders);
+            var message = GetMessage(url, HttpMethod.Patch, connection, accessToken, content, additionalHeaders);
 #endif
-            return await GetResponseMessageAsync(httpClient, message);
+            return await GetResponseMessageAsync(connection, message);
         }
 
         #endregion
 
-        public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, HttpContent content, string accessToken, IDictionary<string, string> additionalHeaders = null, bool propertyNameCaseInsensitive = false)
+        public static async Task<T> PostAsync<T>(PnPConnection connection, string url, HttpContent content, string accessToken, IDictionary<string, string> additionalHeaders = null, bool propertyNameCaseInsensitive = false)
         {
-            return await PostInternalAsync<T>(httpClient, url, accessToken, content, additionalHeaders, propertyNameCaseInsensitive);
+            return await PostInternalAsync<T>(connection, url, accessToken, content, additionalHeaders, propertyNameCaseInsensitive);
         }
 
-        public static async Task<T> PutAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content, IDictionary<string, string> additionalHeaders = null)
+        public static async Task<T> PutAsync<T>(PnPConnection connection, string url, string accessToken, HttpContent content, IDictionary<string, string> additionalHeaders = null)
         {
-            var message = GetMessage(url, HttpMethod.Put, accessToken, content, additionalHeaders);
-            var stringContent = await SendMessageAsync(httpClient, message, accessToken);
+            var message = GetMessage(url, HttpMethod.Put, connection, accessToken, content, additionalHeaders);
+            var stringContent = await SendMessageAsync(connection, message, accessToken);
             if (stringContent != null)
             {
                 try
@@ -273,23 +276,23 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return default;
         }
 
-        public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, T content, string accessToken)
+        public static async Task<T> PostAsync<T>(PnPConnection connection, string url, T content, string accessToken)
         {
             var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-            return await PostInternalAsync<T>(httpClient, url, accessToken, requestContent);
+            return await PostInternalAsync<T>(connection, url, accessToken, requestContent);
         }
 
-        public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, string accessToken)
+        public static async Task<T> PostAsync<T>(PnPConnection connection, string url, string accessToken)
         {
-            return await PostInternalAsync<T>(httpClient, url, accessToken, null);
+            return await PostInternalAsync<T>(connection, url, accessToken, null);
         }
 
-        private static async Task<T> PostInternalAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content, IDictionary<string, string> additionalHeaders = null, bool propertyNameCaseInsensitive = false)
+        private static async Task<T> PostInternalAsync<T>(PnPConnection connection, string url, string accessToken, HttpContent content, IDictionary<string, string> additionalHeaders = null, bool propertyNameCaseInsensitive = false)
         {
-            var message = GetMessage(url, HttpMethod.Post, accessToken, content, additionalHeaders);
-            var stringContent = await SendMessageAsync(httpClient, message, accessToken);
+            var message = GetMessage(url, HttpMethod.Post, connection, accessToken, content, additionalHeaders);
+            var stringContent = await SendMessageAsync(connection, message, accessToken);
             if (stringContent != null)
             {
                 try
@@ -304,12 +307,12 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return default;
         }
 
-        public static async Task<T> PutAsync<T>(HttpClient httpClient, string url, T content, string accessToken)
+        public static async Task<T> PutAsync<T>(PnPConnection connection, string url, T content, string accessToken)
         {
             var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var message = GetMessage(url, HttpMethod.Put, accessToken, requestContent);
-            var returnValue = await SendMessageAsync(httpClient, message, accessToken);
+            var message = GetMessage(url, HttpMethod.Put, connection, accessToken, requestContent);
+            var returnValue = await SendMessageAsync(connection, message, accessToken);
             if (!string.IsNullOrEmpty(returnValue))
             {
                 return JsonSerializer.Deserialize<T>(returnValue, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
@@ -320,22 +323,22 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        public static async Task<HttpResponseMessage> DeleteAsync(HttpClient httpClient, string url, string accessToken)
+        public static async Task<HttpResponseMessage> DeleteAsync(PnPConnection connection, string url, string accessToken)
         {
-            var message = GetMessage(url, HttpMethod.Delete, accessToken);
-            var response = await GetResponseMessageAsync(httpClient, message);
+            var message = GetMessage(url, HttpMethod.Delete, connection, accessToken);
+            var response = await GetResponseMessageAsync(connection, message);
             return response;
         }
 
-        private static async Task<string> SendMessageAsync(HttpClient httpClient, HttpRequestMessage message, string accessToken)
+        private static async Task<string> SendMessageAsync(PnPConnection connection, HttpRequestMessage message, string accessToken)
         {
-            var response = await httpClient.SendAsync(message);
+            var response = await connection.HttpClient.SendAsync(message);
             while (response.StatusCode == (HttpStatusCode)429)
             {
                 // throttled
                 var retryAfter = response.Headers.RetryAfter;
                 await Task.Delay(retryAfter.Delta.Value.Seconds * 1000);
-                response = await httpClient.SendAsync(CloneMessage(message));
+                response = await connection.HttpClient.SendAsync(CloneMessage(message));
             }
             if (response.IsSuccessStatusCode)
             {
@@ -350,15 +353,15 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        public static async Task<HttpResponseMessage> GetResponseMessageAsync(HttpClient httpClient, HttpRequestMessage message)
+        public static async Task<HttpResponseMessage> GetResponseMessageAsync(PnPConnection connection, HttpRequestMessage message)
         {
-            var response = await httpClient.SendAsync(message);
+            var response = await connection.HttpClient.SendAsync(message);
             while (response.StatusCode == (HttpStatusCode)429)
             {
                 // throttled
                 var retryAfter = response.Headers.RetryAfter;
                 await Task.Delay(retryAfter.Delta.Value.Seconds * 1000);
-                response = await httpClient.SendAsync(CloneMessage(message));
+                response = await connection.HttpClient.SendAsync(CloneMessage(message));
             }
 
             // Validate if the response was successful, if not throw an exception

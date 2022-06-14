@@ -48,8 +48,8 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             if (!Force && !ShouldContinue($"Restart flow run with name '{flowRunName}'?", Resources.Confirm))
                 return;
 
-            var triggers = GraphHelper.GetResultCollectionAsync<FlowRunTrigger>(HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/triggers?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
-            RestHelper.PostAsync(HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/triggers/{triggers.First().Name}/histories/{flowRunName}/resubmit?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+            var triggers = GraphHelper.GetResultCollectionAsync<FlowRunTrigger>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/triggers?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+            RestHelper.PostAsync(Connection.HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/triggers/{triggers.First().Name}/histories/{flowRunName}/resubmit?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
         }
     }
 }

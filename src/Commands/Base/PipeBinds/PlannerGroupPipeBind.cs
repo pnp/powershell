@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Management.Automation;
-using System.Net.Http;
 using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
@@ -39,7 +38,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _id = group.Id;
         }
 
-        public string GetGroupId(HttpClient httpClient, string accessToken)
+        public string GetGroupId(PnPConnection connection, string accessToken)
         {
             if (!string.IsNullOrEmpty(_id))
             {
@@ -47,7 +46,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else
             {
-                var collection = GraphHelper.GetAsync<RestResultCollection<Model.Graph.Group>>(httpClient, $"v1.0/groups?$filter=mailNickname eq '{_stringValue}'&$select=Id", accessToken).GetAwaiter().GetResult();
+                var collection = GraphHelper.GetAsync<RestResultCollection<Model.Graph.Group>>(connection, $"v1.0/groups?$filter=mailNickname eq '{_stringValue}'&$select=Id", accessToken).GetAwaiter().GetResult();
                 if (collection != null && collection.Items.Any())
                 {
                     return collection.Items.First().Id;
@@ -55,7 +54,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 else
                 {
                     // find the team by displayName
-                    var byDisplayNamecollection = GraphHelper.GetAsync<RestResultCollection<Model.Graph.Group>>(httpClient, $"v1.0/groups?$filter=displayName eq '{_stringValue}'&$select=Id", accessToken).GetAwaiter().GetResult();
+                    var byDisplayNamecollection = GraphHelper.GetAsync<RestResultCollection<Model.Graph.Group>>(connection, $"v1.0/groups?$filter=displayName eq '{_stringValue}'&$select=Id", accessToken).GetAwaiter().GetResult();
                     if (byDisplayNamecollection != null && byDisplayNamecollection.Items.Any())
                     {
                         if (byDisplayNamecollection.Items.Count() == 1)

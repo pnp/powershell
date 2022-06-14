@@ -96,7 +96,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             // Execute site script on destination site so the list will be created
             WriteVerbose($"Executing site script to site at {DestinationWebUrl}");
-            var actionResults = PnP.PowerShell.Commands.Utilities.SiteTemplates.InvokeSiteScript(HttpClient, AccessToken, script, DestinationWebUrl).GetAwaiter().GetResult().Items.ToArray();
+            var actionResults = PnP.PowerShell.Commands.Utilities.SiteTemplates.InvokeSiteScript(Connection, AccessToken, script, DestinationWebUrl).GetAwaiter().GetResult().Items.ToArray();
             
             // Ensure site script actions have been executed
             if(actionResults.Length == 0)

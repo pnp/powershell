@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Planner
     {
         protected override void ExecuteCmdlet()
         {
-            var result = PlannerUtility.GetPlannerConfigAsync(HttpClient, AccessToken).GetAwaiter().GetResult();
+            var result = PlannerUtility.GetPlannerConfigAsync(Connection, AccessToken).GetAwaiter().GetResult();
             WriteObject(result);
         }
     }

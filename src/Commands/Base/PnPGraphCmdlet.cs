@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (Connection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
                 {
-                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, $"https://{Connection.GraphEndPoint}/").GetAwaiter().GetResult();
+                    return TokenHandler.GetManagedIdentityTokenAsync(this, Connection.HttpClient, $"https://{Connection.GraphEndPoint}/").GetAwaiter().GetResult();
                 }
                 else
                 {

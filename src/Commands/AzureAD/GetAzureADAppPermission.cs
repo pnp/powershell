@@ -20,12 +20,12 @@ namespace PnP.PowerShell.Commands.AzureAD
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(ConvertToPSObject(Identity.GetApp(this, HttpClient, AccessToken)));
+                WriteObject(ConvertToPSObject(Identity.GetApp(this, Connection, AccessToken)));
             }
             else
             {
                 List<PSObject> apps = new List<PSObject>();
-                var result = GraphHelper.GetResultCollectionAsync<AzureADApp>(HttpClient, "/v1.0/applications", AccessToken).GetAwaiter().GetResult();
+                var result = GraphHelper.GetResultCollectionAsync<AzureADApp>(Connection, "/v1.0/applications", AccessToken).GetAwaiter().GetResult();
                 if (result != null && result.Any())
                 {
                     apps.AddRange(result.Select(p => ConvertToPSObject(p)));

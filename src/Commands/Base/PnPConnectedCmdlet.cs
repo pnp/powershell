@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Management.Automation;
-using System.Net.Http;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -13,11 +12,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")]
         public PnPConnection Connection = null;
         // do not remove '#!#99'
-
-        /// <summary>
-        /// Returns a reusable HTTPClient that can be used to make HTTP calls
-        /// </summary>
-        public HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
         protected override void BeginProcessing()
         {

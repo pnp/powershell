@@ -48,25 +48,25 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public Guid GroupId => _groupId;
 
-        public Microsoft365Group GetGroup(HttpClient httpClient, string accessToken, bool includeSite, bool includeOwners)
+        public Microsoft365Group GetGroup(PnPConnection connection, string accessToken, bool includeSite, bool includeOwners)
         {
             Microsoft365Group group = null;
             if (Group != null)
             {
-                group = Microsoft365GroupsUtility.GetGroupAsync(httpClient, _group.Id.Value, accessToken, includeSite, includeOwners).GetAwaiter().GetResult();
+                group = Microsoft365GroupsUtility.GetGroupAsync(connection, _group.Id.Value, accessToken, includeSite, includeOwners).GetAwaiter().GetResult();
             }
             else if (_groupId != Guid.Empty)
             {
-                group = Microsoft365GroupsUtility.GetGroupAsync(httpClient, _groupId, accessToken, includeSite, includeOwners).GetAwaiter().GetResult();
+                group = Microsoft365GroupsUtility.GetGroupAsync(connection, _groupId, accessToken, includeSite, includeOwners).GetAwaiter().GetResult();
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                group = Microsoft365GroupsUtility.GetGroupAsync(httpClient, DisplayName, accessToken, includeSite, includeOwners).GetAwaiter().GetResult();
+                group = Microsoft365GroupsUtility.GetGroupAsync(connection, DisplayName, accessToken, includeSite, includeOwners).GetAwaiter().GetResult();
             }
             return group;
         }
 
-        public Guid GetGroupId(HttpClient httpClient, string accessToken)
+        public Guid GetGroupId(PnPConnection connection, string accessToken)
         {
             if (Group != null)
             {
@@ -78,7 +78,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                var group = Microsoft365GroupsUtility.GetGroupAsync(httpClient, DisplayName, accessToken, false, false).GetAwaiter().GetResult();
+                var group = Microsoft365GroupsUtility.GetGroupAsync(connection, DisplayName, accessToken, false, false).GetAwaiter().GetResult();
                 if (group != null)
                 {
                     return group.Id.Value;
@@ -88,24 +88,24 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             //return Guid.Empty;
         }
 
-        public Microsoft365Group GetDeletedGroup(HttpClient httpClient, string accessToken)
+        public Microsoft365Group GetDeletedGroup(PnPConnection connection, string accessToken)
         {
             if (_group != null)
             {
-                return Microsoft365GroupsUtility.GetDeletedGroupAsync(httpClient, _group.Id.Value, accessToken).GetAwaiter().GetResult();
+                return Microsoft365GroupsUtility.GetDeletedGroupAsync(connection, _group.Id.Value, accessToken).GetAwaiter().GetResult();
             }
             else if (_groupId != Guid.Empty)
             {
-                return Microsoft365GroupsUtility.GetDeletedGroupAsync(httpClient, _groupId, accessToken).GetAwaiter().GetResult();
+                return Microsoft365GroupsUtility.GetDeletedGroupAsync(connection, _groupId, accessToken).GetAwaiter().GetResult();
             }
             else if (!string.IsNullOrEmpty(_displayName))
             {
-                return Microsoft365GroupsUtility.GetDeletedGroupAsync(httpClient, _displayName, accessToken).GetAwaiter().GetResult();
+                return Microsoft365GroupsUtility.GetDeletedGroupAsync(connection, _displayName, accessToken).GetAwaiter().GetResult();
             }
             return null;
         }
 
-        public Guid GetDeletedGroupId(HttpClient httpClient, string accessToken)
+        public Guid GetDeletedGroupId(PnPConnection connection, string accessToken)
         {
             if (_group != null)
             {
@@ -117,7 +117,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (!string.IsNullOrEmpty(_displayName))
             {
-                var group = Microsoft365GroupsUtility.GetDeletedGroupAsync(httpClient, _displayName, accessToken).GetAwaiter().GetResult();
+                var group = Microsoft365GroupsUtility.GetDeletedGroupAsync(connection, _displayName, accessToken).GetAwaiter().GetResult();
                 if (group != null)
                 {
                     return group.Id.Value;
