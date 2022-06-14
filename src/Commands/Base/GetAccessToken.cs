@@ -46,16 +46,16 @@ namespace PnP.PowerShell.Commands.Base
                         accessTokenValue = AccessToken;
                         break;
                     case ResourceTypeName.SharePoint:
-                        accessTokenValue = TokenHandler.GetAccessToken(null, PnPConnection.Current?.Context?.Url?.TrimEnd('/') + "/.default");
+                        accessTokenValue = TokenHandler.GetAccessToken(null, PnPConnection.Current?.Context?.Url?.TrimEnd('/') + "/.default", Connection);
                         break;
                     case ResourceTypeName.ARM:
-                        accessTokenValue = TokenHandler.GetAccessToken(null, "https://management.azure.com/.default");
+                        accessTokenValue = TokenHandler.GetAccessToken(null, "https://management.azure.com/.default", Connection);
                         break;
                 }
             }
             else if (ParameterSetName == ResourceUrlParam)
             {
-                accessTokenValue = TokenHandler.GetAccessToken(null, ResourceUrl);
+                accessTokenValue = TokenHandler.GetAccessToken(null, ResourceUrl, Connection);
             }
 
             if (Decoded.IsPresent)

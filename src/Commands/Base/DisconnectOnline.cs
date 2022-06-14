@@ -28,9 +28,18 @@ namespace PnP.PowerShell.Commands.Base
                 connection.Certificate = null;
             }
 
-            var success = DisconnectProvidedService(ref connection);
-            
-            if (!success)
+            if(Connection != null)
+            {
+                Connection = null;
+                GetType().GetProperty(nameof(Connection)).SetValue(this, null);
+            }
+            else if(PnPConnection.Current != null)
+            {
+                Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
+                Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
+                PnPConnection.Current = null;
+            }
+            else
             {
                 throw new InvalidOperationException(Properties.Resources.NoConnectionToDisconnect);
             }
@@ -45,19 +54,6 @@ namespace PnP.PowerShell.Commands.Base
                     SessionState.Drive.Remove(drive.Name, true, "Global");
                 }
             }
-        }
-
-        internal static bool DisconnectProvidedService(ref PnPConnection connection)
-        {
-            Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
-            Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
-            if (connection == null)
-            {
-                return false;
-            }
-            connection.Context = null;
-            connection = null;
-            return true;
         }
     }
 }

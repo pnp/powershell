@@ -26,21 +26,10 @@ namespace PnP.PowerShell.Commands
 
         public new HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient(ClientContext);
 
-        // do not remove '#!#99'
-        [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")]
-        public PnPConnection Connection = null;
-        // do not remove '#!#99'
-
         protected override void BeginProcessing()
         {
             // Call the base but instruct it not to check if there's an active connection as we will do that in this method already
             base.BeginProcessing(true);
-
-            // If a specific connection has been provided, use that, otherwise use the current connection
-            if(Connection == null)
-            {
-                Connection = PnPConnection.Current;
-            }
 
             // Track the execution of the cmdlet
             if (Connection != null && Connection.ApplicationInsights != null)
@@ -137,7 +126,7 @@ namespace PnP.PowerShell.Commands
                 {
                     if (Connection?.Context != null)
                     {
-                        return TokenHandler.GetAccessToken(GetType(), $"https://{Connection.GraphEndPoint}/.default");
+                        return TokenHandler.GetAccessToken(GetType(), $"https://{Connection.GraphEndPoint}/.default", Connection);
                     }
                 }
 
