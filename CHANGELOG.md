@@ -59,7 +59,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Changed `Get-PnPPlannerBucket` to return the buckets in the correct (reversed) order as you see them through the web interface [#1922](https://github.com/pnp/powershell/pull/1922)
 - Changed `Connect-PnPOnline -Interactive` and `Connect-PnPOnline -DeviceLogin` to no longer suppress errors which should allow for certificate logins to be used. [#1933](https://github.com/pnp/powershell/pull/1933)
 - `Set-PnPTeamsChannel` now uses the Graph v1 endpoint, previously it used the beta endpoint. [#1938](https://github.com/pnp/powershell/pull/1938)
-- Service Health cmdlets have been improved, now are consistent with other cmdlets to handle pagination [#1938](https://github.com/pnp/powershell/pull/1938)
+- Service Health cmdlets have been improved and are now consistent with other cmdlets to handle pagination [#1938](https://github.com/pnp/powershell/pull/1938)
+- Changed that every cmdlet now supports passing in a specific connection using `-Connection`. If omitted, the default connection will be used. [#1949](https://github.com/pnp/powershell/pull/1949)
 
 ### Fixed
 - Fixed `Get-PnPTenantSite` cmdlet so that it will return data even if the template name is specified in a different case. [#1773](https://github.com/pnp/powershell/pull/1773)
@@ -84,6 +85,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Removed
 - Removed `Get-PnPAvailableClientSideComponents`. Use `Get-PnPPageComponent -Page -ListAvailable` instead.  [#1833](https://github.com/pnp/powershell/pull/1833)
 - Removed `NextLink` property from `Get-PnPAzureADUser` cmdlet, as it was causing confusion. [#1930](https://github.com/pnp/powershell/pull/1930)
+- Removed the `-Connection` parameter from `Disconnect-PnPOnline` cmdlet, as it was technically not capable of clearing a connection reference anyway [#1949](https://github.com/pnp/powershell/pull/1949)
 
 ### Contributors
 
