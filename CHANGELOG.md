@@ -47,6 +47,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Add-PnPListItemAttachment` cmdlet to provide ability to upload a file as an attachment to a SharePoint list item. [#1932](https://github.com/pnp/powershell/pull/1932)
 - Added `Remove-PnPListItemAttachment` cmdlet to provide ability to delete a list item attachment. [#1932](https://github.com/pnp/powershell/pull/1932)
 - Added `Get-PnPListItemAttachment` cmdlet to download the attachments from a list item. [#1932](https://github.com/pnp/powershell/pull/1932)
+- Added `-PercentComplete`, `-Priority`, `-StartDateTime`, `-DueDateTime` and `-Description` to `Add-PnPPlannerTask` [#1964](https://github.com/pnp/powershell/pull/1964)
 
 ### Changed
 - Changed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to map users based on their Ids instead which should resolve some issues around user identities reporting not to exist. You can use the new `-IdType` option to switch it back to `PrincipalName` if needed.  [#1752](https://github.com/pnp/powershell/pull/1752)
