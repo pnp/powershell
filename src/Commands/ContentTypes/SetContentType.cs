@@ -96,14 +96,20 @@ namespace PnP.PowerShell.Commands.ContentTypes
                 {
                     if(list != null)
                     {
+                        WriteVerbose("Updating content type on list");
                         ct.Update(false);
                     }
                     else
                     {
+                        WriteVerbose("Updating site content type");
                         ct.Update(UpdateChildren);
                     }
                     ClientContext.ExecuteQueryRetry();
                     WriteObject(ct);
+                }
+                else
+                {
+                    WriteVerbose("No changes to make");
                 }
             }
         }
