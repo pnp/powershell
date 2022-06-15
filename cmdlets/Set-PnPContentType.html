@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPUserOneDriveQuota | PnP PowerShell </title>
+    <title>Set-PnPContentType | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPUserOneDriveQuota | PnP PowerShell ">
+    <meta name="title" content="Set-PnPContentType | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,47 +77,160 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="get-pnpuseronedrivequota">Get-PnPUserOneDriveQuota</h1>
+                    <h1 id="set-pnpcontenttype">Set-PnPContentType</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
-</ul>
-<p>Retrieves the current quota set on the OneDrive for Business site for a specific user in bytes.</p>
+<p>Updates a content type in a web or a list</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPUserOneDriveQuota [-Account] &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPContentType [-Identity] &lt;ContentTypePipeBind&gt; [-List] &lt;ListPipeBind&gt; [-InSiteHierarchy] &lt;SwitchParameter&gt;
+[-UpdateChildren] &lt;SwitchParameter&gt; [-Name] &lt;String&gt; [-Description] &lt;String&gt; [-Group] &lt;String&gt;
+[-Hidden] &lt;String&gt; [-ReadOnly] &lt;String&gt; [-Sealed] &lt;String&gt;
+ [-Connection &lt;PnPConnection&gt;] [-Verbose] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This command allows you to request the quota set on the OneDrive for Business site of a specific user.</p>
+<p>Allows modification of the settings of a content type in a list or site.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPUserOneDriveQuota -Account 'user@domain.com'
+<pre><code class="lang-powershell">Set-PnPContentType -Identity &quot;Project Document&quot; -UpdateChildren -Name &quot;Project Documentation&quot; -Description &quot;Documentation for projects&quot;
 </code></pre>
-<p>Returns the quota set on the OneDrive for Business site for the specified user in bytes</p>
+<p>This will update a content type called &quot;Project Document&quot; in the current web and rename it to &quot;Project Documentation&quot; and change its description to &quot;Documentation for projects&quot;</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">(Get-PnPUserOneDriveQuota -Account 'user@domain.com') / 1gb
+<pre><code class="lang-powershell">Set-PnPContentType -Identity &quot;Project Document&quot; -UpdateChildren -Group &quot;Custom Content Types&quot; -Hidden
 </code></pre>
-<p>Returns the quota set on the OneDrive for Business site for the specified user in gigabytes</p>
+<p>This will update a content type called &quot;Project Document&quot; in the current web, make it hidden and change its group to &quot;Custom Content Types&quot;.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Set-PnPContentType -Identity &quot;Project Document&quot; -List &quot;Projects&quot; -Name &quot;Project Documentation&quot; -Description &quot;Documentation for projects&quot;
+</code></pre>
+<p>This will update a content type called &quot;Project Document&quot; in the list called &quot;Projects&quot; in the current web and rename it to &quot;Project Documentation&quot; and change its description to &quot;Documentation for projects&quot;.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-account">-Account</h3>
-<p>The account of the user, formatted either as a login name, or as a claims identity, e.g. i:0#.f|membership|user@domain.com</p>
-<pre><code class="lang-yaml">Type: String
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>The name or ID of the content type to update</p>
+<pre><code class="lang-yaml">Type: ContentTypePipeBind
 Parameter Sets: (All)
 
 Required: True
 Position: 0
 Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-list">-List</h3>
+<p>The list in which the content type to be updated resides.</p>
+<pre><code class="lang-yaml">Type: ListPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
+<h3 id="-insitehierarchy">-InSiteHierarchy</h3>
+<p>Search site hierarchy for content types</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-updatechildren">-UpdateChildren</h3>
+<p>Specify if you want to update the child content types</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-name">-Name</h3>
+<p>The updated name of the content type.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-description">-Description</h3>
+<p>The updated description of the content type.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-group">-Group</h3>
+<p>The updated group to which the content type belongs.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-hidden">-Hidden</h3>
+<p>Specify if you want to hide the content type.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-readonly">-ReadOnly</h3>
+<p>Specify if you want to set the content type as read only.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-sealed">-Sealed</h3>
+<p>Specify if you want to seal the content type.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while updating the content type.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

@@ -93,15 +93,20 @@
 <pre><code class="lang-powershell">Update-PnPTeamsUser -Team &lt;TeamsTeamPipeBind&gt; -User &lt;String&gt; -Role &lt;String&gt; [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet updates the role of the specified user in the selected Teams instance to Member or Owner.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Update-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Owner
 </code></pre>
-<p>Updates a user as an owner to the team</p>
+<p>Updates a user as an owner of the team.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Update-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Member
 </code></pre>
-<p>Updates a user as a member in the team</p>
+<p>Updates a user as a member of the team.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Update-PnPTeamsUser -Team a0c0a395-4ba6-4fff-958a-000000506d18 -User john@doe.com -Role Member -Force
+</code></pre>
+<p>Updates john@doe.com user as a member of the team and skips the confirmation question.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-role">-Role</h3>
 <p>Specify the role of the user</p>
@@ -129,7 +134,7 @@ Accept wildcard characters: False
 <h3 id="-user">-User</h3>
 <p>Specify the UPN (e.g. john@doe.com)</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (User)
+Parameter Sets: (All)
 
 Required: True
 Position: Named

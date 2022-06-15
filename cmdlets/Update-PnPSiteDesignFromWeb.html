@@ -90,8 +90,12 @@
 </ul>
 <p>Updates an existing Site Design on the current tenant based on the site provided through -Url or the currently connected to site if -Url is omitted</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Update-PnPSiteDesignFromWeb -Identity &lt;TenantSiteDesignPipeBind&gt; -Url &lt;String&gt; [-Lists &lt;String[]&gt;] [-IncludeBranding] [-IncludeLinksToExportedItems]
- [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme] [-IncludeAll]
+<h3 id="specific-components">Specific components</h3>
+<pre><code class="lang-powershell">Update-PnPSiteDesignFromWeb -Identity &lt;TenantSiteDesignPipeBind&gt; -Url &lt;String&gt; [-Lists &lt;String[]&gt;] [-IncludeBranding &lt;SwitchParameter&gt;] [-IncludeLinksToExportedItems &lt;SwitchParameter&gt;]
+ [-IncludeRegionalSettings &lt;SwitchParameter&gt;] [-IncludeSiteExternalSharingCapability &lt;SwitchParameter&gt;] [-IncludeTheme &lt;SwitchParameter&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="all-components">All components</h3>
+<pre><code class="lang-powershell">Update-PnPSiteDesignFromWeb -Identity &lt;TenantSiteDesignPipeBind&gt; -Url &lt;String&gt; [-Lists &lt;String[]&gt;] [-IncludeAll &lt;SwitchParameter&gt;]
  [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>

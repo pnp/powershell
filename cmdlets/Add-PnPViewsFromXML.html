@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPUserOneDriveQuota | PnP PowerShell </title>
+    <title>Add-PnPViewsFromXML | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPUserOneDriveQuota | PnP PowerShell ">
+    <meta name="title" content="Add-PnPViewsFromXML | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,50 +77,105 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="get-pnpuseronedrivequota">Get-PnPUserOneDriveQuota</h1>
+                    <h1 id="add-pnpviewsfromxml">Add-PnPViewsFromXML</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
-</ul>
-<p>Retrieves the current quota set on the OneDrive for Business site for a specific user in bytes.</p>
+<p>Adds one or more views to a list from an XML string.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPUserOneDriveQuota [-Account] &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPViewsFromXML [-List] &lt;ListPipeBind&gt; [-ViewsXML &lt;String&gt;] 
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This command allows you to request the quota set on the OneDrive for Business site of a specific user.</p>
+<p>This cmdlet allows the creation of one or more views on a SharePoint Online list based on passing in an XML definition with the view details.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPUserOneDriveQuota -Account 'user@domain.com'
-</code></pre>
-<p>Returns the quota set on the OneDrive for Business site for the specified user in bytes</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">(Get-PnPUserOneDriveQuota -Account 'user@domain.com') / 1gb
-</code></pre>
-<p>Returns the quota set on the OneDrive for Business site for the specified user in gigabytes</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-account">-Account</h3>
-<p>The account of the user, formatted either as a login name, or as a claims identity, e.g. i:0#.f|membership|user@domain.com</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+<pre><code class="lang-powershell">
+$viewsXML = @&quot;
+&lt;ListViews&gt;
+   &lt;List Type='GenericList'&gt;
+     &lt;View Name='Demo View' ViewTypeKind='Html' OrderedView='TRUE' ViewFields='Author,Created,Editor,Modified' RowLimit='30' DefaultView='TRUE'&gt;
+       &lt;ViewQuery&gt;
+         &lt;OrderBy&gt;
+           &lt;FieldRef Name='ID' Ascending='FALSE'/&gt;
+         &lt;/OrderBy&gt;
+       &lt;/ViewQuery&gt;
+     &lt;/View&gt;
+    &lt;/List&gt;
+&lt;/ListViews&gt;
+&quot;@
 
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+Add-PnPViewsFromXML -List &quot;Demo List&quot; -ViewsXML $viewsXML
 </code></pre>
+<p>Adds one view named &quot;Demo view&quot; to the &quot;Demo List&quot; list from the XML string.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">
+$viewsXML = @&quot;
+&lt;ListViews&gt;
+   &lt;List Type='GenericList'&gt;
+     &lt;View Name='Demo View' ViewTypeKind='Html' OrderedView='TRUE' ViewFields='Author,Created,Editor,Modified' RowLimit='30' DefaultView='TRUE'&gt;
+       &lt;ViewQuery&gt;
+         &lt;OrderBy&gt;
+           &lt;FieldRef Name='ID'  Ascending='FALSE'/&gt;
+         &lt;/OrderBy&gt;
+       &lt;/ViewQuery&gt;
+     &lt;/View&gt;
+    &lt;/List&gt;
+    &lt;List Type='GenericList'&gt;
+     &lt;View Name='Created By Me' ViewTypeKind='Html' OrderedView='TRUE' ViewFields='Author,Created,Editor,Modified' RowLimit='30' DefaultView='FALSE'&gt;
+       &lt;ViewQuery&gt;
+         &lt;Where&gt;
+           &lt;Eq&gt;
+             &lt;FieldRef Name='Author' /&gt;
+             &lt;Value Type='Integer'&gt;
+               &lt;UserID Type='Integer' /&gt;
+             &lt;/Value&gt;
+           &lt;/Eq&gt;
+         &lt;/Where&gt;
+         &lt;OrderBy&gt;
+           &lt;FieldRef Name='Created' Ascending='FALSE'/&gt;
+         &lt;/OrderBy&gt;
+       &lt;/ViewQuery&gt;
+     &lt;/View&gt;
+    &lt;/List&gt;
+&lt;/ListViews&gt;
+&quot;@
+
+Add-PnPViewsFromXML -List &quot;Demo List&quot; -ViewsXML $viewsXML
+</code></pre>
+<p>Adds two views named &quot;Demo view&quot; and &quot;Created By Me&quot; to the &quot;Demo List&quot; list from the XML string.</p>
+<h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-list">-List</h3>
+<p>The ID or Url of the list to add the view to.</p>
+<pre><code class="lang-yaml">Type: ListPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-viewsxml">-ViewsXML</h3>
+<p>The XML string of the view(s) that you want to add to the list.</p>
+<pre><code class="lang-yaml">Type: string
+Parameter Sets: (All)
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

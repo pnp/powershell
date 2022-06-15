@@ -91,10 +91,16 @@
 <p>Adds a new task to a planner bucket</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-group">By Group</h3>
-<pre><code class="lang-powershell">Add-PnPPlannerTask -Group &lt;PlannerGroupPipeBind&gt; -Plan &lt;PlannerPlanPipeBind&gt; -Bucket &lt;PlannerBucketPipeBind&gt; -Title &lt;String&gt; [-AssignedTo &lt;String[]&gt;]
+<pre><code class="lang-powershell">Add-PnPPlannerTask -Group &lt;PlannerGroupPipeBind&gt; -Plan &lt;PlannerPlanPipeBind&gt; -Bucket &lt;PlannerBucketPipeBind&gt; -Title &lt;String&gt; 
+[-PercentComplete &lt;Int32&gt;] [-DueDateTime &lt;DateTime&gt;] [-StartDateTime &lt;DateTime&gt;]
+ [-AssignedTo &lt;String[]] [-Priority &lt;Int32&gt;] [-Description &lt;String&gt;]
+ [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="by-plan-id">By Plan Id</h3>
-<pre><code class="lang-powershell">Add-PnPPlannerTask -Bucket &lt;PlannerBucketPipeBind&gt; -PlanId &lt;String&gt; -Title &lt;String&gt; [-AssignedTo &lt;String[]&gt;]
+<pre><code class="lang-powershell">Add-PnPPlannerTask -Bucket &lt;PlannerBucketPipeBind&gt; -PlanId &lt;String&gt; -Title &lt;String&gt; 
+[-PercentComplete &lt;Int32&gt;] [-DueDateTime &lt;DateTime&gt;] [-StartDateTime &lt;DateTime&gt;]
+ [-AssignedTo &lt;String[]] [-Priority &lt;Int32&gt;] [-Description &lt;String&gt;]
+ [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet adds a new task to Planner bucket</p>
@@ -179,6 +185,72 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-startdatetime">-StartDateTime</h3>
+<p>Defines the start date of the task.</p>
+<pre><code class="lang-yaml">Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-duedatetime">-DueDateTime</h3>
+<p>Specify the due date.</p>
+<pre><code class="lang-yaml">Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-percentcomplete">-PercentComplete</h3>
+<p>Defines the percentage of completeness of the task.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-priority">-Priority</h3>
+<p>Sets the priority of the task. Value should be a number between 0 and 10.</p>
+<ul>
+<li>values 0 and 1 are interpreted as <em>Urgent</em></li>
+<li>values 2, 3 and 4 are interpreted as <em>Important</em></li>
+<li>values 5, 6 and 7 are interpreted as <em>Medium</em></li>
+<li>values 8, 9 and 10 are interpreted as <em>Low</em></li>
+</ul>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-description">-Description</h3>
+<p>Sets the description (notes) of the task.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
