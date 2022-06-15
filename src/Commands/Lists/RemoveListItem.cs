@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Lists
     )]
     public class RemoveListItem : PnPWebCmdlet
     {
-        const string ParameterSet_ALL_DELETE = "Delete single item in list";
+        const string ParameterSet_ALL_DELETE = "Delete all items in list";
         const string ParameterSet_ALL_RECYCLE = "Recycle all items in list";
 
         const string ParameterSet_BATCHED = "Batched";
@@ -29,6 +29,8 @@ namespace PnP.PowerShell.Commands.Lists
         const string ParameterSet_SINGLE_List_RECYCLE = "Recycle single item in list";
         const string ParameterSet_SINGLE_ListItem_RECYCLE = "Recycle single item";
 
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_ALL_DELETE)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_ALL_RECYCLE)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_BATCHED)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_SINGLE_List_DELETE)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_SINGLE_List_RECYCLE)]
@@ -43,10 +45,10 @@ namespace PnP.PowerShell.Commands.Lists
         [ValidateNotNull]
         public ListItemPipeBind Identity;
 
-        [Parameter(ParameterSetName = ParameterSet_ALL_RECYCLE)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ALL_RECYCLE)]
         [Parameter(ParameterSetName = ParameterSet_BATCHED)]
-        [Parameter(ParameterSetName = ParameterSet_SINGLE_List_RECYCLE)]
-        [Parameter(ParameterSetName = ParameterSet_SINGLE_ListItem_RECYCLE)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SINGLE_List_RECYCLE)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SINGLE_ListItem_RECYCLE)]
         public SwitchParameter Recycle;
 
         [Parameter(ParameterSetName = ParameterSet_ALL_DELETE)]
