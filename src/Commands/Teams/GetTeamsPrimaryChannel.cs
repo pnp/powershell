@@ -1,11 +1,7 @@
-﻿using PnP.Framework.Graph;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Teams
@@ -20,10 +16,10 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(HttpClient, AccessToken);
+            var groupId = Team.GetGroupId(Connection, AccessToken);
             if (groupId != null)
             { 
-              WriteObject(TeamsUtility.GetPrimaryChannelAsync(AccessToken, HttpClient, groupId).GetAwaiter().GetResult());
+              WriteObject(TeamsUtility.GetPrimaryChannelAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult());
             } else
             {
                 throw new PSArgumentException("Team not found", nameof(Team));

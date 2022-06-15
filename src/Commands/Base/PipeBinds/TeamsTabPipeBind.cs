@@ -1,13 +1,8 @@
-﻿using Microsoft.SharePoint.Client;
-using PnP.PowerShell.Commands.Model.Teams;
+﻿using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using System.Net;
-using System.Net.Http;
-using System.Web;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -44,7 +39,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public string Id => _id;
 
-        public TeamTab GetTab(BasePSCmdlet cmdlet, HttpClient httpClient, string accessToken, string groupId, string channelId)
+        public TeamTab GetTab(BasePSCmdlet cmdlet, PnPConnection Connection, string accessToken, string groupId, string channelId)
         {
             if (_tab != null)
             {
@@ -52,10 +47,10 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else
             {
-                var tab = TeamsUtility.GetTabAsync(accessToken, httpClient, groupId, channelId, _id).GetAwaiter().GetResult();
+                var tab = TeamsUtility.GetTabAsync(accessToken, Connection, groupId, channelId, _id).GetAwaiter().GetResult();
                 if (string.IsNullOrEmpty(tab.Id))
                 {
-                    var tabs = TeamsUtility.GetTabsAsync(accessToken, httpClient, groupId, channelId).GetAwaiter().GetResult();
+                    var tabs = TeamsUtility.GetTabsAsync(accessToken, Connection, groupId, channelId).GetAwaiter().GetResult();
                     if (tabs != null)
                     {
                         // find the tab by id

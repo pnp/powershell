@@ -384,16 +384,22 @@ namespace PnP.PowerShell.Commands.Properties {
                 return ResourceManager.GetString("NoContextPresent", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The current connection holds no SharePoint context. Please use one of the Connect-PnPOnline commands which uses the -Url argument to connect..
         /// </summary>
-        internal static string NoSharePointConnection {
+        internal static string NoDefaultSharePointConnection {
             get {
-                return ResourceManager.GetString("NoSharePointConnection", resourceCulture);
+                return ResourceManager.GetString("NoDefaultSharePointConnection", resourceCulture);
             }
         }
-        
+
+        internal static string NoSharePointConnectionInProvidedConnection {
+            get {
+                return ResourceManager.GetString("NoSharePointConnectionInProvidedConnection", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to No Tenant Administration Url specified. Connect with Connect-PnPOnline and specify the TenantAdminUrl parameter..
         /// </summary>

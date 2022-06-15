@@ -36,7 +36,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public string Id => _id;
 
-        public string GetId(HttpClient httpClient, string accessToken, string groupId)
+        public string GetId(PnPConnection connection, string accessToken, string groupId)
         {
             if (!string.IsNullOrEmpty(_id))
             {
@@ -44,14 +44,14 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else
             {
-                var channels = TeamsUtility.GetChannelsAsync(accessToken, httpClient, groupId).GetAwaiter().GetResult();
+                var channels = TeamsUtility.GetChannelsAsync(accessToken, connection, groupId).GetAwaiter().GetResult();
                 return channels.FirstOrDefault(c => c.DisplayName.Equals(_displayName, StringComparison.OrdinalIgnoreCase))?.Id;
             }
         }
 
-        public TeamChannel GetChannel(HttpClient httpClient, string accessToken, string groupId)
+        public TeamChannel GetChannel(PnPConnection connection, string accessToken, string groupId)
         {
-            var channels = TeamsUtility.GetChannelsAsync(accessToken, httpClient, groupId).GetAwaiter().GetResult();
+            var channels = TeamsUtility.GetChannelsAsync(accessToken, connection, groupId).GetAwaiter().GetResult();
             if(channels != null && channels.Any())
             {
                 if(!string.IsNullOrEmpty(_id))

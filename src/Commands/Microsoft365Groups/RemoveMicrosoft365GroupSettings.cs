@@ -22,12 +22,12 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Group != null)
             {
-                var groupId = Group.GetGroupId(HttpClient, AccessToken);
-                Microsoft365GroupsUtility.RemoveGroupSetting(HttpClient, AccessToken, Identity, groupId.ToString()).GetAwaiter().GetResult();
+                var groupId = Group.GetGroupId(Connection, AccessToken);
+                Microsoft365GroupsUtility.RemoveGroupSetting(Connection, AccessToken, Identity, groupId.ToString()).GetAwaiter().GetResult();
             }
             else
             {
-                Microsoft365GroupsUtility.RemoveGroupSetting(HttpClient, AccessToken, Identity).GetAwaiter().GetResult();
+                Microsoft365GroupsUtility.RemoveGroupSetting(Connection, AccessToken, Identity).GetAwaiter().GetResult();
             }
         }
     }

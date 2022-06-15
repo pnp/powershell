@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Apps
             {
                 var spoWebAppServicePrincipal = new SPOWebAppServicePrincipal(tenantContext);
                 var appId = spoWebAppServicePrincipal.EnsureProperty(a => a.AppId);
-                var results = GraphHelper.GetAsync<RestResultCollection<ServicePrincipal>>(this.HttpClient, $"/v1.0/servicePrincipals?$filter=appId eq '{appId}'&$select=id", AccessToken).GetAwaiter().GetResult();
+                var results = GraphHelper.GetAsync<RestResultCollection<ServicePrincipal>>(Connection, $"/v1.0/servicePrincipals?$filter=appId eq '{appId}'&$select=id", AccessToken).GetAwaiter().GetResult();
                 if (results.Items.Any())
                 {
                     if (Force || ShouldContinue($"Revoke permission {Scope}?", "Continue"))
@@ -53,6 +53,4 @@ namespace PnP.PowerShell.Commands.Apps
             public string Id { get; set; }
         }
     }
-
-
 }

@@ -179,7 +179,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private void GetRequest()
         {
-            var result = GraphHelper.GetAsync(HttpClient, Url, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
+            var result = GraphHelper.GetAsync(Connection, Url, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
             if (Raw.IsPresent)
             {
                 WriteObject(result);
@@ -203,7 +203,7 @@ namespace PnP.PowerShell.Commands.Base
                                 break;
                             }
                             var nextLink = nextLinkProperty.ToString();
-                            result = GraphHelper.GetAsync(HttpClient, nextLink, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
+                            result = GraphHelper.GetAsync(Connection, nextLink, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
                             element = JsonSerializer.Deserialize<JsonElement>(result);
                             dynamic nextObj = Deserialize(element);
                             if (nextObj != null && nextObj.value != null && (nextObj.value is List<object>))
@@ -228,28 +228,28 @@ namespace PnP.PowerShell.Commands.Base
 
         private void PostRequest()
         {
-            var response = GraphHelper.PostAsync(HttpClient, Url, AccessToken, GetHttpContent(), AdditionalHeaders).GetAwaiter().GetResult();
+            var response = GraphHelper.PostAsync(Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders).GetAwaiter().GetResult();
             var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             WriteGraphResult(result);
         }
 
         private void PutRequest()
         {
-            var response = GraphHelper.PutAsync(HttpClient, Url, AccessToken, GetHttpContent(), AdditionalHeaders).GetAwaiter().GetResult();
+            var response = GraphHelper.PutAsync(Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders).GetAwaiter().GetResult();
             var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             WriteGraphResult(result);
         }
 
         private void PatchRequest()
         {
-            var response = GraphHelper.PatchAsync(HttpClient, AccessToken, GetHttpContent(), Url, AdditionalHeaders).GetAwaiter().GetResult();
+            var response = GraphHelper.PatchAsync(Connection, AccessToken, GetHttpContent(), Url, AdditionalHeaders).GetAwaiter().GetResult();
             var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             WriteGraphResult(result);
         }
 
         private void DeleteRequest()
         {
-            var response = GraphHelper.DeleteAsync(HttpClient, Url, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
+            var response = GraphHelper.DeleteAsync(Connection, Url, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
             var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             WriteGraphResult(result);
         }

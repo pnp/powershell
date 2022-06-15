@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
             if (Force || ShouldContinue($"Remove flow with name '{flowName}'?", "Remove flow"))
             {
-                var result = RestHelper.DeleteAsync<RestResultCollection<Model.PowerPlatform.PowerAutomate.Flow>>(HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var result = RestHelper.DeleteAsync<RestResultCollection<Model.PowerPlatform.PowerAutomate.Flow>>(Connection.HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
             }
         }
     }
