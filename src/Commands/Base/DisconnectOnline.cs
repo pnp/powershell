@@ -11,6 +11,10 @@ namespace PnP.PowerShell.Commands.Base
     [OutputType(typeof(void))]
     public class DisconnectOnline : PSCmdlet
     {
+        [Parameter(Mandatory = false)]
+        [Obsolete("The -Connection parameter technically cannot function and therefore will be removed in a future version. Read the documentation of this cmdlet how to best deal with this: https://pnp.github.io/powershell/cmdlets/Disconnect-PnPOnline.html")]
+        public PnPConnection Connection = null;
+
         protected override void ProcessRecord()
         {
             if(PnPConnection.Current == null)
