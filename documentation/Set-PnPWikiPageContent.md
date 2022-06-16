@@ -27,8 +27,23 @@ Set-PnPWikiPageContent -Path <String> -ServerRelativePageUrl <String>
 ```
 
 ## DESCRIPTION
+This cmdlet updates the content of the specified wikipage to the value specified either in a string or a file.
 
 ## EXAMPLES
+
+### EXAMPLE 1
+```powershell
+Set-PnPWikiPageContent -ServerRelativePageUrl /sites/PnPWikiCollection/SitePages/OurWikiPage.aspx -Path .\sampleblog.html
+```
+Sets the content of OurWikiPage to the content of sampleblog.html file.
+
+### EXAMPLE 2
+```powershell
+$htmlContent = "<div>test</div>"
+Set-PnPWikiPageContent -ServerRelativePageUrl /sites/PnPWikiCollection/SitePages/OurWikiPage.aspx -Content $htmlContent
+```
+
+Sets the content of OurWikiPage as "test". 
 
 ## PARAMETERS
 
