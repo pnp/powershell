@@ -91,7 +91,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Add-PnPTeamsUser`, the parameter `-Channel` is now not required. [#1953](https://github.com/pnp/powershell/pull/1953)
 - Fixed `Get-PnPPlannerTask` throwing an object reference exception for completed tasks [#1956](https://github.com/pnp/powershell/issues/1956)
 - Fixed `Get-PnPUserOneDriveQuota` returning the maximum possible quota instead of the actual configured quota on a OneDrive for Business site [#1902](https://github.com/pnp/powershell/pull/1902)
-- Fixed `Get-PnPFile` throwing an exception when trying to download a file containing the plus character
+- Fixed `Get-PnPFile` throwing an exception when trying to download a file containing the plus character [#1990](https://github.com/pnp/powershell/pull/1990)
 - Fixed `Get-PnPTeamsChannel` not working correctly with PowerShell select. [#1988](https://github.com/pnp/powershell/pull/1988)
 
 ### Removed
