@@ -96,6 +96,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPTeamsChannel` not working correctly with PowerShell select. [#1988](https://github.com/pnp/powershell/pull/1988)
 - Fixed `Update-PnPSiteClassification`, it was ignoring the `Settings` parameter. It will now be processed. [#1989](https://github.com/pnp/powershell/pull/1989)
 - Fixed `Register-PnPAzureADApp` issue with app creation after the connection related changes. [#1993](https://github.com/pnp/powershell/pull/1993)
+- Fixed `Get-PnPFileVersion` not able to correctly use piping on the returned object. [#1997](https://github.com/pnp/powershell/pull/1997)
 
 ### Removed
 
