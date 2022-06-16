@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Teams
                 }
                 else
                 {
-                    WriteObject(TeamsUtility.GetChannelsAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult());
+                    WriteObject(TeamsUtility.GetChannelsAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult(), true);
                 }
             } else
             {
