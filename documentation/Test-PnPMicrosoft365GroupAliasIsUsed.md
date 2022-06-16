@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Test-PnPMicrosoft365Gro
 # Test-PnPMicrosoft365GroupAliasIsUsed
 
 ## SYNOPSIS
-Tests if a given alias is already used used
+Tests if a given alias is already used.
 
 ## SYNTAX
 
