@@ -84,32 +84,19 @@
                     <h1 id="disconnect-pnponline">Disconnect-PnPOnline</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Disconnects the context.</p>
+<p>Disconnects the current connection and clears its token cache.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Disconnect-PnPOnline [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Disconnect-PnPOnline [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<blockquote>
-<p>Note: in general it is not recommended nor needed to use this cmdlet.</p>
-</blockquote>
-<p>Disconnects the current context and requires you to build up a new connection in order to use the Cmdlets again. Using Connect-PnPOnline to connect to a different site has the same effect and it's rarely needed to use Disconnect-PnPOnline. Notice that if you use Disconnect-PnPOnline the internal access token cache will be cleared too. This means that if you loop through many Connect-PnPOnline and subsequent Disconnect-PnPOnline statements a full request to the Azure AD is being made to acquire a token. This will cause throttling to occur and the script will stop.</p>
+<p>Disconnects the current connection and clears its token cache. It will require you to build up a new connection again using <a href="Connect-PnPOnline.html">Connect-PnPOnline</a> in order to use any of the PnP PowerShell cmdlets. You will have to reauthenticate. If instead you simply want to connect to another site collection within the same tenant using the same credentials you used previously, do not use this cmdlet but instead use <code>Connect-PnPOnline -Url https://tenant.sharepoint.com/sites/othersite</code> instead without disconnecting. It will try to reuse the existing authentication method and cached credentials.</p>
+<p>Note that this cmdlet does not support passing in a specific connection to disconnect. If you wish to dispose a specific connection you have set up in a variable using <code>$variable = Connect-PnPOnline -ReturnConnection</code>, just dispose that variable using <code>$variable = $null</code> and it will be cleared from memory.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Disconnect-PnPOnline
 </code></pre>
-<p>This will clear out all active tokens</p>
+<p>This will clear out all active tokens from the current connection</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Connection to be used by cmdlet</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
