@@ -54,6 +54,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-ExemptFromBlockDownloadOfNonViewableFiles` parameter to `Set-PnPList` cmdlet to configure access capabilites for unmanaged devices at list level. [#1973](https://github.com/pnp/powershell/pull/1973)
 - Added `-PercentComplete`, `-Priority`, `-StartDateTime`, `-DueDateTime` and `-Description` to `Add-PnPPlannerTask` [#1964](https://github.com/pnp/powershell/pull/1964)
 - Added `Set-PnPContentType` cmdlet to update the properties of the Content Types in a list or a web. [#1981](https://github.com/pnp/powershell/pull/1981)
+- Added `-SharingCapability` parameter to the `New-PnPTenantSite` cmdlet to update the Sharing capabilties of the newly provisioned classic site collection.
 
 ### Changed
 
