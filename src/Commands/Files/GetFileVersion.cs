@@ -39,7 +39,7 @@ namespace PnP.PowerShell.Commands.Files
             {
                 var versions = file.Versions;
                 ClientContext.ExecuteQueryRetry();
-                WriteObject(versions);
+                WriteObject(versions, true);
             }
         }
     }
