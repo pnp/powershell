@@ -32,6 +32,13 @@ Get-PnPSiteScriptFromWeb [-Url <String>] [-Lists <String[]>] [-IncludeBranding] 
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
+### All lists
+```powershell
+Get-PnPSiteScriptFromWeb [-Url <String>] [-IncludeAllLists] [-IncludeBranding] [-IncludeLinksToExportedItems]
+ [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme]
+ [-Connection <PnPConnection>] [<CommonParameters>]
+```
+
 ## DESCRIPTION
 This command allows a Site Script to be generated off of an existing site on your tenant. You need to provide at least one of the optional Include or Lists arguments. If you omit the URL, the Site Script will be created from the site to which you are connected.
 
