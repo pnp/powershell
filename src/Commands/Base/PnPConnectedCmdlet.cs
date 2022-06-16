@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Net.Http;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -8,6 +8,11 @@ namespace PnP.PowerShell.Commands.Base
     /// </summary>
     public abstract class PnPConnectedCmdlet : BasePSCmdlet
     {
+        // do not remove '#!#99'
+        [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")]
+        public PnPConnection Connection = null;
+        // do not remove '#!#99'
+
         protected override void BeginProcessing()
         {
             BeginProcessing(false);
@@ -15,18 +20,28 @@ namespace PnP.PowerShell.Commands.Base
 
         protected void BeginProcessing(bool skipConnectedValidation)
         {
-            base.BeginProcessing();
+            base.BeginProcessing();            
+
+            // If a specific connection has been provided, use that, otherwise use the current connection
+            if(Connection == null)
+            {
+                Connection = PnPConnection.Current;
+            }
+
+            // Track the execution of the cmdlet in Azure Application Insights
+            if (Connection != null && Connection.ApplicationInsights != null)
+            {
+                Connection.ApplicationInsights.TrackEvent(MyInvocation.MyCommand.Name);
+            }
 
             // Check if we should ensure that we are connected
             if(skipConnectedValidation) return;
 
             // Ensure there is an active connection
-            if (PnPConnection.Current == null)
+            if (Connection == null)
             {
                 throw new InvalidOperationException(Properties.Resources.NoConnection);
             }
         }
-
-        public HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
     }
 }

@@ -23,19 +23,19 @@ namespace PnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(HttpClient, AccessToken);
+            var groupId = Team.GetGroupId(Connection, AccessToken);
             if (groupId != null)
             {
-                var channelId = Channel.GetId(HttpClient, AccessToken, groupId);
+                var channelId = Channel.GetId(Connection, AccessToken, groupId);
                 if (!string.IsNullOrEmpty(channelId))
                 {
                     if (ParameterSpecified(nameof(Identity)))
                     {
-                        WriteObject(Identity.GetTab(this,HttpClient, AccessToken, groupId, channelId));
+                        WriteObject(Identity.GetTab(this,Connection, AccessToken, groupId, channelId));
                     }
                     else
                     {
-                        WriteObject(TeamsUtility.GetTabsAsync(AccessToken, HttpClient, groupId, channelId).GetAwaiter().GetResult(), true);
+                        WriteObject(TeamsUtility.GetTabsAsync(AccessToken, Connection, groupId, channelId).GetAwaiter().GetResult(), true);
                     }
                 }
                 else

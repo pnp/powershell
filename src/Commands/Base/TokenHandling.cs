@@ -48,9 +48,9 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static string GetAccessToken(Type cmdletType, string appOnlyDefaultScope)
+        internal static string GetAccessToken(Type cmdletType, string appOnlyDefaultScope, PnPConnection connection)
         {
-            var contextSettings = PnPConnection.Current.Context.GetContextSettings();
+            var contextSettings = connection.Context.GetContextSettings();
             var authManager = contextSettings.AuthenticationManager;
             if (authManager != null)
             {

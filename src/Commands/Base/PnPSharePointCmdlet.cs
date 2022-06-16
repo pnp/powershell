@@ -22,36 +22,32 @@ namespace PnP.PowerShell.Commands
         /// </summary>
         public ClientContext ClientContext => Connection?.Context;
 
+        /// <summary>
+        /// Reference the the PnP context on the current connection. If NULL it means there is no PnP context available on the current connection.
+        /// </summary>
         public PnPContext PnPContext => Connection?.PnPContext ?? Connection.PnPContext;
 
-        public new HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient(ClientContext);
-
-        // do not remove '#!#99'
-        [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")]
-        public PnPConnection Connection = null;
-        // do not remove '#!#99'
+        /// <summary>
+        /// HttpClient based off of the ClientContext that can be used to make raw HTTP calls to SharePoint Online
+        /// </summary>
+        public HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient(ClientContext);
 
         protected override void BeginProcessing()
         {
             // Call the base but instruct it not to check if there's an active connection as we will do that in this method already
             base.BeginProcessing(true);
 
-            // If a specific connection has been provided, use that, otherwise use the current connection
-            if(Connection == null)
-            {
-                Connection = PnPConnection.Current;
-            }
-
-            // Track the execution of the cmdlet
-            if (Connection != null && Connection.ApplicationInsights != null)
-            {
-                Connection.ApplicationInsights.TrackEvent(MyInvocation.MyCommand.Name);
-            }
-
             // Ensure there is an active connection to work with
             if (Connection == null || ClientContext == null)
             {
-                throw new InvalidOperationException(Resources.NoSharePointConnection);
+                if (ParameterSpecified(nameof(Connection)))
+                {
+                    throw new InvalidOperationException(Resources.NoSharePointConnectionInProvidedConnection);
+                }
+                else
+                {
+                    throw new InvalidOperationException(Resources.NoDefaultSharePointConnection);
+                }
             }
         }
 
@@ -137,7 +133,7 @@ namespace PnP.PowerShell.Commands
                 {
                     if (Connection?.Context != null)
                     {
-                        return TokenHandler.GetAccessToken(GetType(), $"https://{Connection.GraphEndPoint}/.default");
+                        return TokenHandler.GetAccessToken(GetType(), $"https://{Connection.GraphEndPoint}/.default", Connection);
                     }
                 }
 
@@ -168,6 +164,5 @@ namespace PnP.PowerShell.Commands
             }
             WriteWarning("SharePoint Operation Wait Interrupted");
         }
-
     }
 }

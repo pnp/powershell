@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUserOneDriveQuot
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Retrieves the current quota set on the OneDrive for Business site for a specific user
+Retrieves the current quota set on the OneDrive for Business site for a specific user in bytes.
 
 ## SYNTAX
 
@@ -24,7 +24,7 @@ Get-PnPUserOneDriveQuota [-Account] <String> [-Connection <PnPConnection>] [<Com
 ```
 
 ## DESCRIPTION
-This command allows you to request the quota set on the OneDrive for Business site of a specific user. You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet.
+This command allows you to request the quota set on the OneDrive for Business site of a specific user.
 
 ## EXAMPLES
 
@@ -33,7 +33,14 @@ This command allows you to request the quota set on the OneDrive for Business si
 Get-PnPUserOneDriveQuota -Account 'user@domain.com'
 ```
 
-Returns the quota set on the OneDrive for Business site for the specified user
+Returns the quota set on the OneDrive for Business site for the specified user in bytes
+
+### EXAMPLE 2
+```powershell
+(Get-PnPUserOneDriveQuota -Account 'user@domain.com') / 1gb
+```
+
+Returns the quota set on the OneDrive for Business site for the specified user in gigabytes
 
 ## PARAMETERS
 
@@ -68,4 +75,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

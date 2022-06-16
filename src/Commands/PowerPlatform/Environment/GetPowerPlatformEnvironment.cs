@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 
         protected override void ExecuteCmdlet()
         {
-            var environments = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Environment>(HttpClient, "https://management.azure.com/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+            var environments = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Environment>(Connection, "https://management.azure.com/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
 
             if(ParameterSpecified(nameof(IsDefault)) && IsDefault.HasValue)
             {

@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            Microsoft365GroupsUtility.AddMembersAsync(HttpClient, Identity.GetGroupId(HttpClient, AccessToken), Users, AccessToken, RemoveExisting).GetAwaiter().GetResult();
+            Microsoft365GroupsUtility.AddMembersAsync(Connection, Identity.GetGroupId(Connection, AccessToken), Users, AccessToken, RemoveExisting).GetAwaiter().GetResult();
         }
     }
 }

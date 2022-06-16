@@ -27,18 +27,18 @@ namespace PnP.PowerShell.Commands.Graph
         protected override void ExecuteCmdlet()
         {
 
-            var groupId = Team.GetGroupId(HttpClient, AccessToken);
+            var groupId = Team.GetGroupId(Connection, AccessToken);
             if (groupId != null)
             {
-                var channelId = Channel.GetId(HttpClient, AccessToken, groupId);
+                var channelId = Channel.GetId(Connection, AccessToken, groupId);
                 if (channelId != null)
                 {
-                    var tab = Identity.GetTab(this, HttpClient, AccessToken, groupId, channelId);
+                    var tab = Identity.GetTab(this, Connection, AccessToken, groupId, channelId);
                     if (tab != null)
                     {
                         if (Force || ShouldContinue("Removing the tab will remove the settings of this tab too.", Properties.Resources.Confirm))
                         {
-                            var response = TeamsUtility.DeleteTabAsync(AccessToken, HttpClient, groupId, channelId, tab.Id).GetAwaiter().GetResult();
+                            var response = TeamsUtility.DeleteTabAsync(AccessToken, Connection, groupId, channelId, tab.Id).GetAwaiter().GetResult();
                             if (!response.IsSuccessStatusCode)
                             {
                                 if (GraphHelper.TryGetGraphException(response, out GraphException ex))

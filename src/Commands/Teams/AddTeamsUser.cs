@@ -33,29 +33,29 @@ namespace PnP.PowerShell.Commands.Graph
         public string Role;
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(HttpClient, AccessToken);
+            var groupId = Team.GetGroupId(Connection, AccessToken);
             if (groupId != null)
             {
                 try
                 {
                     if (ParameterSpecified(nameof(Channel)))
                     {
-                        var channelId = Channel.GetId(HttpClient, AccessToken, groupId);
+                        var channelId = Channel.GetId(Connection, AccessToken, groupId);
                         if (channelId == null)
                         {
                             throw new PSArgumentException("Channel not found");
                         }
-                        TeamsUtility.AddChannelMemberAsync(HttpClient, AccessToken, groupId, channelId, User, Role).GetAwaiter().GetResult();
+                        TeamsUtility.AddChannelMemberAsync(Connection, AccessToken, groupId, channelId, User, Role).GetAwaiter().GetResult();
                     }
                     else
                     {
                         if (ParameterSetName == ParamSet_ByUser)
                         {
-                            TeamsUtility.AddUserAsync(HttpClient, AccessToken, groupId, User, Role).GetAwaiter().GetResult();
+                            TeamsUtility.AddUserAsync(Connection, AccessToken, groupId, User, Role).GetAwaiter().GetResult();
                         }
                         else
                         {
-                            TeamsUtility.AddUsersAsync(HttpClient, AccessToken, groupId, Users, Role).GetAwaiter().GetResult();
+                            TeamsUtility.AddUsersAsync(Connection, AccessToken, groupId, Users, Role).GetAwaiter().GetResult();
                         }
                     }
                 }

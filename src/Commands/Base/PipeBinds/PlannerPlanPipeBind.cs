@@ -1,7 +1,5 @@
-using System;
 using System.Linq;
 using System.Management.Automation;
-using System.Net.Http;
 using System.Threading.Tasks;
 using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Planner;
@@ -15,7 +13,6 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         private readonly PlannerPlan _plan;
         public PlannerPlanPipeBind()
         {
-
         }
 
         public PlannerPlanPipeBind(string input)
@@ -28,7 +25,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _plan = plan;
         }
 
-        public async Task<PlannerPlan> GetPlanAsync(HttpClient httpClient, string accessToken, string groupId, bool resolveIdentities)
+        public async Task<PlannerPlan> GetPlanAsync(PnPConnection connection, string accessToken, string groupId, bool resolveIdentities)
         {
             if (_plan != null)
             {
@@ -37,11 +34,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             // first try to get the plan by id
             try
             {
-                return await PlannerUtility.GetPlanAsync(httpClient, accessToken, _id, resolveIdentities);
+                return await PlannerUtility.GetPlanAsync(connection, accessToken, _id, resolveIdentities);
             }
             catch (GraphException)
             {
-                var plans = await PlannerUtility.GetPlansAsync(httpClient, accessToken, groupId, resolveIdentities);
+                var plans = await PlannerUtility.GetPlansAsync(connection, accessToken, groupId, resolveIdentities);
                 if (plans != null && plans.Any())
                 {
                     var collection = plans.Where(p => p.Title.Equals(_id));
@@ -58,7 +55,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             return null;
         }
 
-        public async Task<string> GetIdAsync(HttpClient httpClient, string accessToken, string groupId)
+        public async Task<string> GetIdAsync(PnPConnection connection, string accessToken, string groupId)
         {
             if (_plan != null)
             {
@@ -67,12 +64,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             // first try to get the plan by id
             try
             {
-                var plan = await PlannerUtility.GetPlanAsync(httpClient, accessToken, _id, false);
+                var plan = await PlannerUtility.GetPlanAsync(connection, accessToken, _id, false);
                 return plan.Id;
             }
             catch (GraphException)
             {
-                var plans = await PlannerUtility.GetPlansAsync(httpClient, accessToken, groupId, false);
+                var plans = await PlannerUtility.GetPlansAsync(connection, accessToken, groupId, false);
                 if (plans != null && plans.Any())
                 {
                     var collection = plans.Where(p => p.Title.Equals(_id));
