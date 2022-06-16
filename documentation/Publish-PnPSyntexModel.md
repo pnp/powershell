@@ -15,7 +15,7 @@ Publishes a SharePoint Syntex models to a list.
 
 This cmdlet only works when you've connected to a SharePoint Syntex Content Center site.
 
-[![Maturity Model for Microsoft 365](/pages/images/batching/Batching.png)](../pages/articles/batching.md)
+[![Supports Batching](../pages/images/batching/Batching.png)](../pages/articles/batching.md)
 
 ## SYNTAX
 
