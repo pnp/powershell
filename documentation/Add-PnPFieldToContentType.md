@@ -102,6 +102,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -UpdateChildren
+Specifies whether the field needs to be pushed to child content types. Default value is true.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 
 
 ## RELATED LINKS

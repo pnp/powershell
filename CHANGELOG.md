@@ -55,6 +55,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-PercentComplete`, `-Priority`, `-StartDateTime`, `-DueDateTime` and `-Description` to `Add-PnPPlannerTask` [#1964](https://github.com/pnp/powershell/pull/1964)
 - Added `Set-PnPContentType` cmdlet to update the properties of the Content Types in a list or a web. [#1981](https://github.com/pnp/powershell/pull/1981)
 - Added optional `-IncludeAllLists` to `Get-PnPSiteScriptFromWeb` which will include the JSON definition of all custom lists of the current site in the output [#1987](https://github.com/pnp/powershell/pull/1987)
+- Added `-UpdateChildren` parameter to `Add-PnPFieldToContentType` cmdlet. This allows users to skip pushing the fields to child content types. [#1092](https://github.com/pnp/powershell/pull/1992)
 
 ### Changed
 
@@ -92,6 +93,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Add-PnPTeamsUser`, the parameter `-Channel` is now not required. [#1953](https://github.com/pnp/powershell/pull/1953)
 - Fixed `Get-PnPPlannerTask` throwing an object reference exception for completed tasks [#1956](https://github.com/pnp/powershell/issues/1956)
 - Fixed `Get-PnPUserOneDriveQuota` returning the maximum possible quota instead of the actual configured quota on a OneDrive for Business site [#1902](https://github.com/pnp/powershell/pull/1902)
+- Fixed `Get-PnPFile` throwing an exception when trying to download a file containing the plus character [#1990](https://github.com/pnp/powershell/pull/1990)
+- Fixed `Get-PnPTeamsChannel` not working correctly with PowerShell select. [#1988](https://github.com/pnp/powershell/pull/1988)
+- Fixed `Update-PnPSiteClassification`, it was ignoring the `Settings` parameter. It will now be processed. [#1989](https://github.com/pnp/powershell/pull/1989)
+- Fixed `Register-PnPAzureADApp` issue with app creation after the connection related changes. [#1993](https://github.com/pnp/powershell/pull/1993)
+- Fixed `Get-PnPFileVersion` not able to correctly use piping on the returned object. [#1997](https://github.com/pnp/powershell/pull/1997)
 
 ### Removed
 

@@ -31,39 +31,61 @@ namespace PnP.PowerShell.Commands.Site
             try
             {
                 var changed = false;
-                var settings = PnP.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken);
-                if (ParameterSpecified(nameof(Classifications)))
+                var siteClassificationSettings = PnP.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken);
+
+                if (ParameterSetName == ParameterSet_SETTINGS)
                 {
-                    if (settings.Classifications != Classifications)
+                    if(siteClassificationSettings.Classifications != Settings.Classifications)
                     {
-                        settings.Classifications = Classifications;
+                        siteClassificationSettings.Classifications = Settings.Classifications;
+                        changed = true;
+                    }
+                    if (siteClassificationSettings.DefaultClassification != Settings.DefaultClassification)
+                    {
+                        siteClassificationSettings.DefaultClassification = Settings.DefaultClassification;
+                        changed = true;
+                    }
+                    if (siteClassificationSettings.UsageGuidelinesUrl != Settings.UsageGuidelinesUrl)
+                    {
+                        siteClassificationSettings.UsageGuidelinesUrl = Settings.UsageGuidelinesUrl;
                         changed = true;
                     }
                 }
-                if (ParameterSpecified(nameof(DefaultClassification)))
+                else
                 {
-                    if (settings.Classifications.Contains(DefaultClassification))
+                    if (ParameterSpecified(nameof(Classifications)))
                     {
-                        if (settings.DefaultClassification != DefaultClassification)
+                        if (siteClassificationSettings.Classifications != Classifications)
                         {
-                            settings.DefaultClassification = DefaultClassification;
+                            siteClassificationSettings.Classifications = Classifications;
                             changed = true;
                         }
                     }
-                }
-                if (ParameterSpecified(nameof(UsageGuidelinesUrl)))
-                {
-                    if (settings.UsageGuidelinesUrl != UsageGuidelinesUrl)
+                    if (ParameterSpecified(nameof(DefaultClassification)))
                     {
-                        settings.UsageGuidelinesUrl = UsageGuidelinesUrl;
-                        changed = true;
+                        if (siteClassificationSettings.Classifications.Contains(DefaultClassification))
+                        {
+                            if (siteClassificationSettings.DefaultClassification != DefaultClassification)
+                            {
+                                siteClassificationSettings.DefaultClassification = DefaultClassification;
+                                changed = true;
+                            }
+                        }
                     }
-                }
+                    if (ParameterSpecified(nameof(UsageGuidelinesUrl)))
+                    {
+                        if (siteClassificationSettings.UsageGuidelinesUrl != UsageGuidelinesUrl)
+                        {
+                            siteClassificationSettings.UsageGuidelinesUrl = UsageGuidelinesUrl;
+                            changed = true;
+                        }
+                    }
+                }                
                 if (changed)
                 {
-                    if (settings.Classifications.Contains(settings.DefaultClassification))
+                    if (siteClassificationSettings.Classifications.Contains(siteClassificationSettings.DefaultClassification))
                     {
-                        PnP.Framework.Graph.SiteClassificationsUtility.UpdateSiteClassificationsSettings(AccessToken, settings);
+                        PnP.Framework.Graph.SiteClassificationsUtility.UpdateSiteClassificationsSettings(AccessToken, siteClassificationSettings);
                     }
                     else
                     {
