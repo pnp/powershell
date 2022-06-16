@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPListItem.html
 
 Deletes an item from a list
 
-[![Maturity Model for Microsoft 365](/pages/images/batching/Batching.png)](../pages/articles/batching.md)
+[![Supports Batching](../pages/images/batching/Batching.png)](../pages/articles/batching.md)
 
 ## SYNTAX
 

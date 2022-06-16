@@ -47,7 +47,7 @@ If during one of these chunks an exception occurs (for instance you are trying t
 
 The following cmdlets support batching. (This support began with the 1.7.63-nightly release.) All cmdlets which support batching display the badge, linking to this article.
 
-![Maturity Model for Microsoft 365](/pages/images/batching/Batching.png)
+![Supports Batching](../../pages/images/batching/Batching.png)
 
 * [`Add-PnPListItem`](/powershell/cmdlets/Add-PnPListItem.html)
 * [`Set-PnPListItem`](/powershell/cmdlets/Set-PnPListItem.html)

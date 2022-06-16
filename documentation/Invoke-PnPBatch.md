@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Invoke-PnPBatch.html
 
 Executes the batch
 
-[![Maturity Model for Microsoft 365](/pages/images/batching/Batching.png)](../pages/articles/batching.md)
+[![Supports Batching](../pages/images/batching/Batching.png)](../pages/articles/batching.md)
 
 ## SYNTAX
 

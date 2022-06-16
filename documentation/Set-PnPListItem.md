@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPListItem.html
 
 Updates a list item
 
-[![Maturity Model for Microsoft 365](/pages/images/batching/Batching.png)](../pages/articles/batching.md)
+[![Supports Batching](../pages/images/batching/Batching.png)](../pages/articles/batching.md)
 
 ## SYNTAX
 
