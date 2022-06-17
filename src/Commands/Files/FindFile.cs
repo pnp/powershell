@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Files
                     var list = List.GetList(CurrentWeb);
                     if (list == null)
                         throw new ArgumentException("The specified list was not found");
-                    WriteObject(list.FindFiles(Match));
+                    WriteObject(list.FindFiles(Match), true);
                     break;
                 }
                 case "Folder":
@@ -37,12 +37,12 @@ namespace PnP.PowerShell.Commands.Files
                     var folder = Folder.GetFolder(CurrentWeb, false);
                     if (folder == null)
                         throw new ArgumentException("The specified folder was not found");
-                    WriteObject(folder.FindFiles(Match));
+                    WriteObject(folder.FindFiles(Match), true);
                     break;
                 }
                 default:
                 {
-                    WriteObject(CurrentWeb.FindFiles(Match));
+                    WriteObject(CurrentWeb.FindFiles(Match), true);
                     break;
                 }
             }

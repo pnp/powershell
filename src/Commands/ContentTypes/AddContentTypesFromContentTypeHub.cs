@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
                 IsPassed = res.Value.IsPassed,
                 Value = res.Value
             };
-            WriteObject(result);
+            WriteObject(result, true);
         }
     }
 }

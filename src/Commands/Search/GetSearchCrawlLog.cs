@@ -113,7 +113,7 @@ namespace PnP.PowerShell.Commands.Search
                             entries.Add(ConvertToPSObject(dictionary));
                         }
                     }
-                    WriteObject(entries.Take(origLimit));
+                    WriteObject(entries.Take(origLimit), true);
                 }
                 else
                 {
@@ -135,7 +135,7 @@ namespace PnP.PowerShell.Commands.Search
                             entries.Where(e => System.Net.WebUtility.UrlDecode(e.Url.ToString()).ToLower().Contains(":443/person"))
                                 .ToList();
                     }
-                    WriteObject(entries.Take(origLimit).OrderByDescending(i => i.CrawlTime).ToList());
+                    WriteObject(entries.Take(origLimit).OrderByDescending(i => i.CrawlTime).ToList(), true);
                 }
             }
             catch (Exception e)

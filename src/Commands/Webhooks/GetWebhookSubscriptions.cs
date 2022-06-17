@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Webhooks
                 if (list != null)
                 {
                     // Get all the webhook subscriptions for the specified list
-                    WriteObject(list.GetWebhookSubscriptions());
+                    WriteObject(list.GetWebhookSubscriptions(), true);
                 }
                 else
                 {
