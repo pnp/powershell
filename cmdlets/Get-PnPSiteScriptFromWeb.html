@@ -99,39 +99,37 @@
  [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
+<h3 id="all-lists">All lists</h3>
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb [-Url &lt;String&gt;] [-IncludeAllLists] [-IncludeBranding] [-IncludeLinksToExportedItems]
+ [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme]
+ [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+</code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This command allows a Site Script to be generated off of an existing site on your tenant. You need to provide at least one of the optional Include or Lists arguments. If you omit the URL, the Site Script will be created from the site to which you are connected.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -IncludeAll
+</code></pre>
+<p>Returns the generated Site Script JSON containing all supported components from the currently connected to site</p>
+<h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url &quot;https://contoso.sharepoint.com/sites/teamsite&quot; -IncludeAll
 </code></pre>
 <p>Returns the generated Site Script JSON containing all supported components from the site at the provided Url</p>
-<h3 id="example-2">EXAMPLE 2</h3>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url &quot;https://contoso.sharepoint.com/sites/teamsite&quot; -IncludeAll -Lists &quot;Shared Documents&quot;,&quot;Lists\MyList&quot;
 </code></pre>
 <p>Returns the generated Site Script JSON containing all supported components from the site at the provided Url including the lists &quot;Shared Documents&quot; and &quot;MyList&quot;</p>
-<h3 id="example-3">EXAMPLE 3</h3>
+<h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url &quot;https://contoso.sharepoint.com/sites/teamsite&quot; -IncludeBranding -IncludeLinksToExportedItems
 </code></pre>
 <p>Returns the generated Site Script JSON containing the branding and navigation links from the site at the provided Url</p>
-<h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -IncludeAll
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -IncludeAllLists
 </code></pre>
-<p>Returns the generated Site Script JSON containing all the components from the currently connected to site</p>
+<p>Returns the generated Site Script JSON containing all lists from the currently connected to site</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-includeall">-IncludeAll</h3>
-<p>If specified will include all supported components into the Site Script except for the lists and document libraries, these need to be explicitly be specified through -Lists</p>
+<p>If specified will include all supported components into the Site Script including all self lists, branding, navigation links, regional settings, external sharing capability and theme.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: All components
 
@@ -144,7 +142,7 @@ Accept wildcard characters: False
 <h3 id="-includebranding">-IncludeBranding</h3>
 <p>If specified will include the branding of the site into the Site Script</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Specific components
+Parameter Sets: Specific components, All lists
 
 Required: False
 Position: Named
@@ -155,7 +153,7 @@ Accept wildcard characters: False
 <h3 id="-includelinkstoexporteditems">-IncludeLinksToExportedItems</h3>
 <p>If specified will include navigation links into the Site Script</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Specific components
+Parameter Sets: Specific components, All lists
 
 Required: False
 Position: Named
@@ -166,7 +164,7 @@ Accept wildcard characters: False
 <h3 id="-includeregionalsettings">-IncludeRegionalSettings</h3>
 <p>If specified will include the regional settings into the Site Script</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Specific components
+Parameter Sets: Specific components, All lists
 
 Required: False
 Position: Named
@@ -177,7 +175,7 @@ Accept wildcard characters: False
 <h3 id="-includesiteexternalsharingcapability">-IncludeSiteExternalSharingCapability</h3>
 <p>If specified will include the external sharing configuration into the Site Script</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Specific components
+Parameter Sets: Specific components, All lists
 
 Required: False
 Position: Named
@@ -188,7 +186,18 @@ Accept wildcard characters: False
 <h3 id="-includetheme">-IncludeTheme</h3>
 <p>If specified will include the branding of the site into the Site Script</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Specific components
+Parameter Sets: Specific components, All lists
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-includealllists">-IncludeAllLists</h3>
+<p>If specified, all lists that are not hidden, private, internal or catalogs will be included into the Site Script. It cannot be combined with the -Lists nor the -IncludeAll parameters as both will already include all lists.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: All lists
 
 Required: False
 Position: Named
@@ -197,9 +206,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-lists">-Lists</h3>
-<p>Allows specifying one or more site relative URLs of lists that should be included into the Site Script, i.e. &quot;Shared Documents&quot;,&quot;List\MyList&quot;</p>
+<p>Allows specifying one or more site relative URLs of lists that should be included into the Site Script, i.e. &quot;Shared Documents&quot;,&quot;Lists\MyList&quot;</p>
 <pre><code class="lang-yaml">Type: String[]
-Parameter Sets: (All)
+Parameter Sets: Basic components, All components, Specific components
 
 Required: False
 Position: Named
@@ -218,11 +227,10 @@ Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named

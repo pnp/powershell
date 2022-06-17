@@ -92,7 +92,7 @@
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">New-PnPTenantSite -Title &lt;String&gt; -Url &lt;String&gt; -Owner &lt;String&gt; [-Lcid &lt;UInt32&gt;] [-Template &lt;String&gt;]
  -TimeZone &lt;Int32&gt; [-ResourceQuota &lt;Double&gt;] [-ResourceQuotaWarningLevel &lt;Double&gt;] [-StorageQuota &lt;Int64&gt;]
- [-StorageQuotaWarningLevel &lt;Int64&gt;] [-RemoveDeletedSite] [-Wait] [-Connection &lt;PnPConnection&gt;]
+ [-StorageQuotaWarningLevel &lt;Int64&gt;] [-RemoveDeletedSite] [-SharingCapability &lt;SharingCapabilities&gt;] [-Wait] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -240,14 +240,27 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-wait">-Wait</h3>
+<p>Waits for the site collection to be fully provisioned.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: (All), (Wait)
 
 Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
+</code></pre>
+<h3 id="-sharingcapability">-SharingCapability</h3>
+<p>Specifies what the sharing capabilities are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly. It will only work if Wait parameter is specified.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (Wait)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
