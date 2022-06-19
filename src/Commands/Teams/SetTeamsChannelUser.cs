@@ -26,19 +26,19 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(HttpClient, AccessToken);
+            var groupId = Team.GetGroupId(Connection, AccessToken);
             if (groupId == null)
             {
                 throw new PSArgumentException("Group not found");
             }
 
-            var channelId = Channel.GetId(HttpClient, AccessToken, groupId);
+            var channelId = Channel.GetId(Connection, AccessToken, groupId);
             if (channelId == null)
             {
                 throw new PSArgumentException("Channel not found");
             }
 
-            var membershipId = Identity.GetIdAsync(HttpClient, AccessToken, groupId, channelId).GetAwaiter().GetResult();
+            var membershipId = Identity.GetIdAsync(Connection, AccessToken, groupId, channelId).GetAwaiter().GetResult();
             if (string.IsNullOrEmpty(membershipId))
             {
                 throw new PSArgumentException("User was not found in the specified Teams channel");
@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Teams
 
             try
             {
-                var updatedMember = TeamsUtility.UpdateChannelMemberAsync(HttpClient, AccessToken, groupId, channelId, membershipId, Role).GetAwaiter().GetResult();
+                var updatedMember = TeamsUtility.UpdateChannelMemberAsync(Connection, AccessToken, groupId, channelId, membershipId, Role).GetAwaiter().GetResult();
                 WriteObject(updatedMember);
             }
             catch (GraphException ex)

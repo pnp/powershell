@@ -4,7 +4,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsChannelMessage")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
@@ -17,25 +17,40 @@ namespace PnP.PowerShell.Commands.Graph
         public TeamsChannelPipeBind Channel;
 
         [Parameter(Mandatory = false)]
+        public TeamsChannelMessagePipeBind Identity;
+
+        [Parameter(Mandatory = false)]
         public SwitchParameter IncludeDeleted;
+
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(HttpClient, AccessToken);
-            if (groupId != null)
-            {
-                var channel = Channel.GetChannel(HttpClient, AccessToken, groupId);
-                if (channel != null)
-                {
-                    WriteObject(TeamsUtility.GetMessagesAsync(HttpClient, AccessToken, groupId, channel.Id, IncludeDeleted).GetAwaiter().GetResult(), true);
-                } else
-                {
-                    throw new PSArgumentException("Channel not found");
-                }
-            } else
+            var groupId = Team.GetGroupId(Connection, AccessToken);
+            if (groupId == null)
             {
                 throw new PSArgumentException("Team not found");
             }
 
+            var channelId = Channel.GetId(Connection, AccessToken, groupId);
+            if (channelId == null)
+            {
+                throw new PSArgumentException("Channel not found");
+            }
+
+            if (ParameterSpecified(nameof(Identity)))
+            {
+                if (ParameterSpecified(nameof(IncludeDeleted)))
+                {
+                    throw new PSArgumentException($"Don't specify {nameof(IncludeDeleted)} when using the {nameof(Identity)} parameter.");
+                }
+
+                var message = TeamsUtility.GetMessageAsync(Connection, AccessToken, groupId, channelId, Identity.GetId()).GetAwaiter().GetResult();
+                WriteObject(message);
+            }
+            else
+            {
+                var messages = TeamsUtility.GetMessagesAsync(Connection, AccessToken, groupId, channelId, IncludeDeleted).GetAwaiter().GetResult();
+                WriteObject(messages, true);
+            }
         }
     }
 }

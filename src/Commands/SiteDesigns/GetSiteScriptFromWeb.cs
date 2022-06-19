@@ -11,10 +11,12 @@ namespace PnP.PowerShell.Commands
     {
         private const string ParameterSet_BASICCOMPONENTS = "Basic components";
         private const string ParameterSet_ALLCOMPONENTS = "All components";
+        private const string ParameterSet_ALLLISTS = "All lists";
         private const string ParameterSet_SPECIFICCOMPONENTS = "Specific components";
 
         [Parameter(ParameterSetName = ParameterSet_BASICCOMPONENTS)]
         [Parameter(ParameterSetName = ParameterSet_ALLCOMPONENTS)]
+        [Parameter(ParameterSetName = ParameterSet_ALLLISTS)]
         [Parameter(ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public string Url;
@@ -28,18 +30,26 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALLCOMPONENTS)]
         public SwitchParameter IncludeAll;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALLLISTS)]
+        public SwitchParameter IncludeAllLists;        
+
+        [Parameter(ParameterSetName = ParameterSet_ALLLISTS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         public SwitchParameter IncludeBranding;
-
+        
+        [Parameter(ParameterSetName = ParameterSet_ALLLISTS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         public SwitchParameter IncludeLinksToExportedItems;
-
+        
+        [Parameter(ParameterSetName = ParameterSet_ALLLISTS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         public SwitchParameter IncludeRegionalSettings;
-
+        
+        [Parameter(ParameterSetName = ParameterSet_ALLLISTS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         public SwitchParameter IncludeSiteExternalSharingCapability;
 
+        [Parameter(ParameterSetName = ParameterSet_ALLLISTS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFICCOMPONENTS)]
         public SwitchParameter IncludeTheme;
 
@@ -48,9 +58,17 @@ namespace PnP.PowerShell.Commands
             // If no URL specified, we take the URL of the site that the current context is connected to
             if(!ParameterSpecified(nameof(Url)))
             {
-                Url = PnPConnection.Current.Url;
+                Url = Connection.Url;
             }
 
+            if(IncludeAllLists || IncludeAll)
+            {
+                SiteContext.Load(SiteContext.Web.Lists, lists => lists.Where(list => !list.Hidden && !list.IsCatalog && !list.IsSystemList && !list.IsPrivate && !list.IsApplicationList && !list.IsSiteAssetsLibrary && !list.IsEnterpriseGalleryLibrary).Include(list => list.RootFolder.ServerRelativeUrl));
+                SiteContext.ExecuteQueryRetry();
+
+                Lists = SiteContext.Web.Lists.Select(l => System.Text.RegularExpressions.Regex.Replace(l.RootFolder.ServerRelativeUrl, @"\/(?:sites|teams)\/.*?\/", string.Empty)).ToArray();
+            }
+            
             var tenantSiteScriptSerializationInfo = new TenantSiteScriptSerializationInfo
             {
                 IncludeBranding = IncludeBranding || IncludeAll,

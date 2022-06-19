@@ -20,8 +20,15 @@ Returns all or a specific Planner plan for a Microsoft 365 Group.
 
 ## SYNTAX
 
+### By Group
 ```powershell
-Get-PnPPlannerPlan -Group <PlannerGroupPipeBind> [-Identity <PlannerPlanPipeBind>] [-ResolveUserDisplayNames]
+Get-PnPPlannerPlan -Group <PlannerGroupPipeBind> [-Identity <PlannerPlanPipeBind>] [-ResolveIdentities]
+  [<CommonParameters>]
+```
+
+### By Plan Id
+```powershell
+Get-PnPPlannerPlan -Id <String> [-ResolveIdentities]
   [<CommonParameters>]
 ```
 
@@ -44,6 +51,13 @@ Get-PnPPlannerPlan -Group "Marketing" -Identity "Conference Plan"
 
 Returns the specified plan for the Marketing group.
 
+### Example 3
+```powershell
+Get-PnPPlannerPlan -Id "gndWOTSK60GfPQfiDDj43JgACDCb" -ResolveIdentities
+```
+
+Rerturns the plan with specified ID with resolved identities.
+
 ## PARAMETERS
 
 ### -Group
@@ -51,7 +65,7 @@ Specify the group containing the plans
 
 ```yaml
 Type: PlannerGroupPipeBind
-Parameter Sets: (All)
+Parameter Sets: By Group
 Aliases:
 
 Required: True
@@ -66,7 +80,7 @@ If specified the plan with this ID or Name will be returned.
 
 ```yaml
 Type: PlannerPlanPipeBind
-Parameter Sets: (All)
+Parameter Sets: By Group
 Aliases:
 
 Required: False
@@ -76,8 +90,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ResolveUserDisplayNames
-{{ Fill ResolveUserDisplayNames Description }}
+### -Id
+If specified the plan with this ID will be returned.
+
+```yaml
+Type: String
+Parameter Sets: By Plan Id
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResolveIdentities
+Show user display names instead of user IDs.
 
 ```yaml
 Type: SwitchParameter

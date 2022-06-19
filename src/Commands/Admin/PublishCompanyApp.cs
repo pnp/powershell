@@ -184,7 +184,7 @@ namespace PnP.PowerShell.Commands.Admin
             if (!NoUpload)
             {
                 var bytes = System.IO.File.ReadAllBytes(System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, $"{AppName}.zip"));
-                TeamsUtility.AddAppAsync(HttpClient, GraphAccessToken, bytes).GetAwaiter().GetResult();
+                TeamsUtility.AddAppAsync(Connection, GraphAccessToken, bytes).GetAwaiter().GetResult();
                 WriteObject($"Teams app uploaded to teams app Store.");
             }
         }

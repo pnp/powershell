@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _membership = membership;
         }
 
-        public async Task<string> GetIdAsync(HttpClient httpClient, string accessToken, string groupId, string channelId)
+        public async Task<string> GetIdAsync(PnPConnection Connection, string accessToken, string groupId, string channelId)
         {
             if (!string.IsNullOrEmpty(_id))
             {
@@ -52,7 +52,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 return _membership.Id;
             }
 
-            var memberships = await TeamsUtility.GetChannelMembersAsync(httpClient, accessToken, groupId, channelId);
+            var memberships = await TeamsUtility.GetChannelMembersAsync(Connection, accessToken, groupId, channelId);
             if (!string.IsNullOrEmpty(_userUpn))
             {
                 return memberships.FirstOrDefault(m => _userUpn.Equals(m.Email, StringComparison.OrdinalIgnoreCase))?.Id;
@@ -61,7 +61,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             return memberships.FirstOrDefault(m => !string.IsNullOrEmpty(m.UserId) && _userId.Equals(m.UserId, StringComparison.OrdinalIgnoreCase))?.Id;
         }
 
-        public async Task<TeamChannelMember> GetMembershipAsync(HttpClient httpClient, string accessToken, string groupId, string channelId)
+        public async Task<TeamChannelMember> GetMembershipAsync(PnPConnection Connection, string accessToken, string groupId, string channelId)
         {
             if (_membership != null)
             {
@@ -70,10 +70,10 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
             if (!string.IsNullOrEmpty(_id))
             {
-                return await TeamsUtility.GetChannelMemberAsync(httpClient, accessToken, groupId, channelId, _id);
+                return await TeamsUtility.GetChannelMemberAsync(Connection, accessToken, groupId, channelId, _id);
             }
 
-            var memberships = await TeamsUtility.GetChannelMembersAsync(httpClient, accessToken, groupId, channelId);
+            var memberships = await TeamsUtility.GetChannelMembersAsync(Connection, accessToken, groupId, channelId);
             if (!string.IsNullOrEmpty(_userUpn))
             {
                 return memberships.FirstOrDefault(m => _userUpn.Equals(m.Email, StringComparison.OrdinalIgnoreCase));

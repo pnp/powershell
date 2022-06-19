@@ -28,10 +28,10 @@ namespace PnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(HttpClient, AccessToken);
+            var groupId = Team.GetGroupId(Connection, AccessToken);
             if (groupId != null)
             {
-                var teamChannel = Identity.GetChannel(HttpClient, AccessToken, groupId);
+                var teamChannel = Identity.GetChannel(Connection, AccessToken, groupId);
                 if (teamChannel != null)
                 {
                     if (ParameterSpecified(nameof(DisplayName)) && teamChannel.DisplayName != DisplayName)
@@ -60,7 +60,7 @@ namespace PnP.PowerShell.Commands.Graph
                     teamChannel.MembershipType = null;
                     try 
                     {
-                        var updated = TeamsUtility.UpdateChannelAsync(HttpClient, AccessToken, groupId, teamChannel.Id, teamChannel).GetAwaiter().GetResult();
+                        var updated = TeamsUtility.UpdateChannelAsync(Connection, AccessToken, groupId, teamChannel.Id, teamChannel).GetAwaiter().GetResult();
                         WriteObject(updated);
                     }
                     catch (GraphException ex)

@@ -17,15 +17,15 @@ namespace PnP.PowerShell.Commands.Graph
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                var groupId = Identity.GetGroupId(HttpClient, AccessToken);
+                var groupId = Identity.GetGroupId(Connection, AccessToken);
                 if (groupId != null)
                 {
-                    WriteObject(TeamsUtility.GetTeamAsync(AccessToken, HttpClient, groupId).GetAwaiter().GetResult());
+                    WriteObject(TeamsUtility.GetTeamAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult());
                 }
             }
             else
             {
-                WriteObject(TeamsUtility.GetTeamsAsync(AccessToken, HttpClient).GetAwaiter().GetResult(), true);
+                WriteObject(TeamsUtility.GetTeamsAsync(AccessToken, Connection).GetAwaiter().GetResult(), true);
             }
         }
     }

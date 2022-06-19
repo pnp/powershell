@@ -1,9 +1,9 @@
-﻿using PnP.PowerShell.Commands.Attributes;
+﻿using System.Management.Automation;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
-using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
+namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Get, "PnPPlannerConfiguration")]
     [RequiredMinimalApiPermissions("https://tasks.office.com/.default")]
@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
     {
         protected override void ExecuteCmdlet()
         {
-            var result = PlannerUtility.GetPlannerConfigAsync(HttpClient, AccessToken).GetAwaiter().GetResult();
+            var result = PlannerUtility.GetPlannerConfigAsync(Connection, AccessToken).GetAwaiter().GetResult();
             WriteObject(result);
         }
     }

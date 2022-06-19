@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            Microsoft365GroupsUtility.PermanentlyDeleteDeletedGroupAsync(HttpClient, Identity.GetDeletedGroupId(HttpClient, AccessToken), AccessToken).GetAwaiter().GetResult();
+            Microsoft365GroupsUtility.PermanentlyDeleteDeletedGroupAsync(Connection, Identity.GetDeletedGroupId(Connection, AccessToken), AccessToken).GetAwaiter().GetResult();
         }
     }
 }

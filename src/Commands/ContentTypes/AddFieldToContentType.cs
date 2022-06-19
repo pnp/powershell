@@ -22,6 +22,9 @@ namespace PnP.PowerShell.Commands.ContentTypes
         [Parameter(Mandatory = false)]
         public SwitchParameter Hidden;
 
+        [Parameter(Mandatory = false)]
+        public bool UpdateChildren = true;
+
         protected override void ExecuteCmdlet()
         {
             Field field = Field.Field;
@@ -45,7 +48,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
             var ct = ContentType.GetContentTypeOrWarn(this, CurrentWeb);
             if (ct != null)
             {
-                CurrentWeb.AddFieldToContentType(ct, field, Required, Hidden, true, true, false);
+                CurrentWeb.AddFieldToContentType(ct, field, Required, Hidden, UpdateChildren, true, false);
             }
         }
     }

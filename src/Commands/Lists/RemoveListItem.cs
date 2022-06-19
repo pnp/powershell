@@ -1,36 +1,66 @@
 ﻿using System.Management.Automation;
+
 using Microsoft.SharePoint.Client;
+
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Model.SharePoint;
+
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPListItem", DefaultParameterSetName = ParameterSet_SINGLE)]
+    [Cmdlet(VerbsCommon.Remove, "PnPListItem", DefaultParameterSetName = ParameterSet_ALL_DELETE)]
+    [OutputType(typeof(void))]
+    [OutputType(typeof(RecycleResult), ParameterSetName = new[] {
+        ParameterSet_ALL_RECYCLE,
+        ParameterSet_SINGLE_List_RECYCLE,
+        ParameterSet_SINGLE_ListItem_RECYCLE }
+    )]
     public class RemoveListItem : PnPWebCmdlet
     {
-        const string ParameterSet_BATCHED = "Batched";
-        const string ParameterSet_SINGLE = "Single";
+        const string ParameterSet_ALL_DELETE = "Delete all items in list";
+        const string ParameterSet_ALL_RECYCLE = "Recycle all items in list";
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
-        [Parameter(ValueFromPipeline = true, Position = 0)]
+        const string ParameterSet_BATCHED = "Batched";
+
+        const string ParameterSet_SINGLE_List_DELETE = "Delete single item in list";
+        const string ParameterSet_SINGLE_ListItem_DELETE = "Delete single item";
+        const string ParameterSet_SINGLE_List_RECYCLE = "Recycle single item in list";
+        const string ParameterSet_SINGLE_ListItem_RECYCLE = "Recycle single item";
+
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_ALL_DELETE)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_ALL_RECYCLE)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_BATCHED)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_SINGLE_List_DELETE)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_SINGLE_List_RECYCLE)]
         [ValidateNotNull]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
-        [Parameter(ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_BATCHED)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_SINGLE_List_DELETE)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_SINGLE_ListItem_DELETE)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_SINGLE_List_RECYCLE)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_SINGLE_ListItem_RECYCLE)]
+        [ValidateNotNull]
         public ListItemPipeBind Identity;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ALL_RECYCLE)]
+        [Parameter(ParameterSetName = ParameterSet_BATCHED)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SINGLE_List_RECYCLE)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SINGLE_ListItem_RECYCLE)]
         public SwitchParameter Recycle;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        [Parameter(ParameterSetName = ParameterSet_ALL_DELETE)]
+        [Parameter(ParameterSetName = ParameterSet_ALL_RECYCLE)]
+        [Parameter(ParameterSetName = ParameterSet_SINGLE_List_DELETE)]
+        [Parameter(ParameterSetName = ParameterSet_SINGLE_ListItem_DELETE)]
+        [Parameter(ParameterSetName = ParameterSet_SINGLE_List_RECYCLE)]
+        [Parameter(ParameterSetName = ParameterSet_SINGLE_ListItem_RECYCLE)]
         public SwitchParameter Force;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BATCHED)]
+        [ValidateNotNull]
         public PnPBatch Batch;
 
         protected override void ExecuteCmdlet()
@@ -92,7 +122,7 @@ namespace PnP.PowerShell.Commands.Lists
                                 {
                                     stillItemsToProcess = false;
                                 }
-                            } 
+                            }
                         }
                         return;
                     }
@@ -113,13 +143,15 @@ namespace PnP.PowerShell.Commands.Lists
                 {
                     if (Recycle)
                     {
-                        item.Recycle();
+                        var recycleResult = item.Recycle();
+                        ClientContext.ExecuteQueryRetry();
+                        WriteObject(new RecycleResult { RecycleBinItemId = recycleResult.Value });
                     }
                     else
                     {
                         item.DeleteObject();
+                        ClientContext.ExecuteQueryRetry();
                     }
-                    ClientContext.ExecuteQueryRetry();
                 }
             }
         }

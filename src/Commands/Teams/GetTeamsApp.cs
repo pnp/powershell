@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Graph
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                var app = Identity.GetApp(HttpClient, AccessToken);
+                var app = Identity.GetApp(Connection, AccessToken);
                 if (app != null)
                 {
                     WriteObject(app);
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Graph
             }
             else
             {
-                WriteObject(TeamsUtility.GetAppsAsync(AccessToken, HttpClient).GetAwaiter().GetResult(), true);
+                WriteObject(TeamsUtility.GetAppsAsync(AccessToken, Connection).GetAwaiter().GetResult(), true);
             }
         }
     }

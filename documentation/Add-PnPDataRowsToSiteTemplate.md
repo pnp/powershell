@@ -26,17 +26,17 @@ Add-PnPDataRowsToSiteTemplate [-Path] <String> -List <ListPipeBind> [-Query <Str
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPDataRowsToSiteTemplate -Path template.pnp -List 'PnPTestList' -Query '<View></View>' -Fields 'Title','Choice'
+Add-PnPDataRowsToSiteTemplate -Path template.pnp -List 'PnPTestList' -Fields 'Title','Choice'
 ```
 
 Adds datarows from the provided list to the PnP Provisioning Template at the provided location
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPDataRowsToSiteTemplate -Path template.pnp -List 'PnPTestList' -Query '<View></View>' -Fields 'Title','Choice' -IncludeSecurity
+Add-PnPDataRowsToSiteTemplate -Path template.pnp -List 'PnPTestList' -Query '<Query><Where><Geq><FieldRef Name="Modified"/><Value Type="DateTime"><Today OffsetDays="-7" /></Value></Geq></Where></Query>' -Fields 'Title','Choice' -IncludeSecurity
 ```
 
-Adds datarows from the provided list to the PnP Provisioning Template at the provided location
+Adds datarows from the provided list to the PnP Provisioning Template at the provided location, only the items that have changed since a week ago
 
 ## PARAMETERS
 

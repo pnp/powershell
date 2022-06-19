@@ -272,6 +272,13 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                         return string.Join(";#", multipleChoiceValue);
                     }
                     return Convert.ToString(rawValue);
+                case FieldType.DateTime:
+                    var dateValue = rawValue as DateTime?;
+                    if(dateValue != null)
+                    {
+                        return string.Format("{0:O}", dateValue.Value.ToUniversalTime());
+                    }
+                    throw new Exception("Invalid data in field");
                 default:
                     return Convert.ToString(rawValue);
             }

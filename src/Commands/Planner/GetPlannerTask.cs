@@ -40,13 +40,13 @@ namespace PnP.PowerShell.Commands.Planner
         {
             if (ParameterSetName == ParameterSetName_BYGROUP)
             {
-                var groupId = Group.GetGroupId(HttpClient, AccessToken);
+                var groupId = Group.GetGroupId(Connection, AccessToken);
                 if (groupId != null)
                 {
-                    var planId = Plan.GetIdAsync(HttpClient, AccessToken, groupId).GetAwaiter().GetResult();
+                    var planId = Plan.GetIdAsync(Connection, AccessToken, groupId).GetAwaiter().GetResult();
                     if (planId != null)
                     {
-                        WriteObject(PlannerUtility.GetTasksAsync(HttpClient, AccessToken, planId, ResolveUserDisplayNames).GetAwaiter().GetResult(), true);
+                        WriteObject(PlannerUtility.GetTasksAsync(Connection, AccessToken, planId, ResolveUserDisplayNames).GetAwaiter().GetResult(), true);
                     }
                     else
                     {
@@ -60,15 +60,15 @@ namespace PnP.PowerShell.Commands.Planner
             }
             else if (ParameterSetName == ParameterSetName_BYPLANID)
             {
-                WriteObject(PlannerUtility.GetTasksAsync(HttpClient, AccessToken, PlanId, ResolveUserDisplayNames).GetAwaiter().GetResult(), true);
+                WriteObject(PlannerUtility.GetTasksAsync(Connection, AccessToken, PlanId, ResolveUserDisplayNames).GetAwaiter().GetResult(), true);
             }
             else if (ParameterSetName == ParameterSetName_BYBUCKET)
             {
-                WriteObject(PlannerUtility.GetBucketTasksAsync(HttpClient, AccessToken, Bucket.GetId(), ResolveUserDisplayNames).GetAwaiter().GetResult(), true);
+                WriteObject(PlannerUtility.GetBucketTasksAsync(Connection, AccessToken, Bucket.GetId(), ResolveUserDisplayNames).GetAwaiter().GetResult(), true);
             }
             else if (ParameterSetName == ParameterSetName_BYTASKID)
             {
-                WriteObject(PlannerUtility.GetTaskAsync(HttpClient, AccessToken, TaskId, ResolveUserDisplayNames, IncludeDetails).GetAwaiter().GetResult());
+                WriteObject(PlannerUtility.GetTaskAsync(Connection, AccessToken, TaskId, ResolveUserDisplayNames, IncludeDetails).GetAwaiter().GetResult());
             }
         }
     }

@@ -1,15 +1,16 @@
-﻿using System.Management.Automation;
+﻿using PnP.PowerShell.Commands.Utilities;
 
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Management.Automation;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
-using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.New, "PnPAzureCertificate")]
+    [OutputType(typeof(Model.AzureCertificate))]
     public class NewPnPAdalCertificate : PSCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]
@@ -108,36 +109,7 @@ namespace PnP.PowerShell.Commands.Base
                 Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, "Certificate added to store");
             }
 
-            var rawCert = certificate.GetRawCertData();
-            var base64Cert = Convert.ToBase64String(rawCert);
-            var rawCertHash = certificate.GetCertHash();
-            var base64CertHash = Convert.ToBase64String(rawCertHash);
-            var keyId = Guid.NewGuid();
-
-            var template = @"
-{{
-    ""customKeyIdentifier"": ""{0}"",
-    ""keyId"": ""{1}"",
-    ""type"": ""AsymmetricX509Cert"",
-    ""usage"": ""Verify"",
-    ""value"":  ""{2}""
-}}
-";
-            var manifestEntry = string.Format(template, base64CertHash, keyId, base64Cert);
-
-            var record = new PSObject();
-            record.Properties.Add(new PSVariableProperty(new PSVariable("Subject", certificate.Subject)));
-            record.Properties.Add(new PSVariableProperty(new PSVariable("ValidFrom", certificate.NotBefore)));
-            record.Properties.Add(new PSVariableProperty(new PSVariable("ValidTo", certificate.NotAfter)));
-            record.Properties.Add(new PSVariableProperty(new PSVariable("Thumbprint", certificate.Thumbprint)));
-            var pfxBytes = certificate.Export(X509ContentType.Pfx, CertificatePassword);
-            var base64string = Convert.ToBase64String(pfxBytes);
-            record.Properties.Add(new PSVariableProperty(new PSVariable("PfxBase64", base64string)));
-            record.Properties.Add(new PSVariableProperty(new PSVariable("KeyCredentials", manifestEntry)));
-            record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate", CertificateHelper.CertificateToBase64(certificate))));
-            record.Properties.Add(new PSVariableProperty(new PSVariable("PrivateKey", CertificateHelper.PrivateKeyToBase64(certificate))));
-
-            WriteObject(record);
+            GetPnPAdalCertificate.WriteAzureCertificateOutput(this, certificate, CertificatePassword);
         }
     }
 }

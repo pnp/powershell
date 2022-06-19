@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Lists
     [OutputType(typeof(List))]
     public class SetList : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ListPipeBind Identity;
 
         [Parameter(Mandatory = false)]
@@ -77,13 +77,16 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false)]
         public SwitchParameter NoCrawl;
 
+        [Parameter(Mandatory = false)]
+        public bool ExemptFromBlockDownloadOfNonViewableFiles;
+
         protected override void ExecuteCmdlet()
         {
             var list = Identity.GetList(CurrentWeb);
 
             if (list != null)
             {
-                list.EnsureProperties(l => l.EnableAttachments, l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType, l => l.HasUniqueRoleAssignments, l => l.ContentTypesEnabled);
+                list.EnsureProperties(l => l.EnableAttachments, l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType, l => l.HasUniqueRoleAssignments, l => l.ContentTypesEnabled, l => l.ExemptFromBlockDownloadOfNonViewableFiles);
 
                 var enableVersioning = list.EnableVersioning;
                 var enableMinorVersions = list.EnableMinorVersions;
@@ -184,6 +187,12 @@ namespace PnP.PowerShell.Commands.Lists
                 if (ParameterSpecified(nameof(NoCrawl)))
                 {
                     list.NoCrawl = NoCrawl;
+                    updateRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(ExemptFromBlockDownloadOfNonViewableFiles)))
+                {
+                    list.SetExemptFromBlockDownloadOfNonViewableFiles(ExemptFromBlockDownloadOfNonViewableFiles);
                     updateRequired = true;
                 }
 

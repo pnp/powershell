@@ -4,6 +4,7 @@ using Microsoft.SharePoint.Client;
 using PnP.Framework.Entities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections.Generic;
+using Microsoft.SharePoint.Client.Taxonomy;
 
 namespace PnP.PowerShell.Commands.Fields
 {
@@ -318,6 +319,15 @@ namespace PnP.PowerShell.Commands.Fields
                         {
                             WriteObject(ClientContext.CastTo<FieldNumber>(f));
                             break;
+                        }
+                    case FieldType.Invalid:
+                        {
+                            if (f.TypeAsString.StartsWith("TaxonomyFieldType"))
+                            {
+                                WriteObject(ClientContext.CastTo<TaxonomyField>(f));
+                                break;
+                            }
+                            goto default;
                         }
                     default:
                         {

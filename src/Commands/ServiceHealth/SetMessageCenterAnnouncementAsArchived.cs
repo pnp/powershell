@@ -17,18 +17,18 @@ namespace PnP.PowerShell.Commands.ServiceHealth
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsArchivedByIdAsync(Identity, HttpClient, AccessToken).GetAwaiter().GetResult(), true);
+                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsArchivedByIdAsync(Identity, Connection, AccessToken).GetAwaiter().GetResult(), true);
             }
             else
             {
                 // Retrieve all message center announcements
-                var messageCenterAnnouncements = ServiceHealthUtility.GetServiceUpdateMessagesAsync(HttpClient, AccessToken).GetAwaiter().GetResult();
+                var messageCenterAnnouncements = ServiceHealthUtility.GetServiceUpdateMessagesAsync(Connection, AccessToken).GetAwaiter().GetResult();
 
                 // Create an array of the Ids of all message center announcements
                 var messageCenterAnnouncementIds = messageCenterAnnouncements.Select(item => item.Id).ToArray();
 
                 // Mark all message center announcements as archived
-                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsArchivedByIdAsync(messageCenterAnnouncementIds, HttpClient, AccessToken).GetAwaiter().GetResult(), true);
+                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsArchivedByIdAsync(messageCenterAnnouncementIds, Connection, AccessToken).GetAwaiter().GetResult(), true);
             }
         }        
     }

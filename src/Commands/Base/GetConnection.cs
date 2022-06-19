@@ -1,31 +1,14 @@
 ﻿using System.Management.Automation;
 
-using System;
-using PnP.PowerShell.Commands.Properties;
-
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPConnection")]
-    public class GetPnPConnection : PSCmdlet
+    [OutputType(typeof(PnPConnection))]
+    public class GetPnPConnection : PnPSharePointCmdlet
     {
-
-        protected override void BeginProcessing()
-        {
-            base.BeginProcessing();
-
-            if (PnPConnection.Current == null)
-            {
-                throw new InvalidOperationException(Resources.NoSharePointConnection);
-            }
-            if (PnPConnection.Current.Context == null)
-            {
-                throw new InvalidOperationException(Resources.NoSharePointConnection);
-            }
-        }
-
         protected override void ProcessRecord()
         {
-            WriteObject(PnPConnection.Current);
+            WriteObject(Connection);
         }
     }
 }

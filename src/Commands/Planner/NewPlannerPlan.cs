@@ -17,10 +17,10 @@ namespace PnP.PowerShell.Commands.Planner
         public string Title;
         protected override void ExecuteCmdlet()
         {
-            var groupId = Group.GetGroupId(HttpClient, AccessToken);
+            var groupId = Group.GetGroupId(Connection, AccessToken);
             if (groupId != null)
             {
-                WriteObject(PlannerUtility.CreatePlanAsync(HttpClient, AccessToken, groupId, Title).GetAwaiter().GetResult());
+                WriteObject(PlannerUtility.CreatePlanAsync(Connection, AccessToken, groupId, Title).GetAwaiter().GetResult());
             }
             else
             {

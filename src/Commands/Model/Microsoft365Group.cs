@@ -46,14 +46,15 @@ namespace PnP.PowerShell.Commands.Model
         public DateTimeOffset? RenewedDateTime { get; set; }
         public string[] ResourceBehaviorOptions { get; set; }
         public string[] ResourceProvisioningOptions { get; set; }
-
         public bool SecurityEnabled { get; set; }
         public string SecurityIdentified { get; set; }
         public string Theme { get; set; }
         public string Visibility { get; set; }
         public string SiteUrl { get; set; }
         public string[] GroupTypes { get; set; }
-        public IEnumerable<Microsoft365User> Owners {get;set;}
+        public IEnumerable<Microsoft365User> Owners { get; set; }
+
+        public List<AssignedLabels> AssignedLabels { get; set; }
 
         [JsonIgnore]
         public bool HasTeam
@@ -67,5 +68,12 @@ namespace PnP.PowerShell.Commands.Model
                 return false;
             }
         }
+    }
+
+    public class AssignedLabels
+    {
+        public string labelId { get; set; }
+
+        public string displayName { get; set; }
     }
 }

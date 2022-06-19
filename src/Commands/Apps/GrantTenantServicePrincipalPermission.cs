@@ -1,11 +1,7 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration.Internal;
 using Microsoft.SharePoint.Client;
-using PnP.Framework.ALM;
-using PnP.Framework.Enums;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Enums;
-using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System.Linq;
@@ -30,7 +26,7 @@ namespace PnP.PowerShell.Commands.Apps
             {
                 var spoWebAppServicePrincipal = new SPOWebAppServicePrincipal(tenantContext);
                 var appId = spoWebAppServicePrincipal.EnsureProperty(a => a.AppId);
-                var results = GraphHelper.GetAsync<RestResultCollection<ServicePrincipal>>(this.HttpClient, $"/v1.0/servicePrincipals?$filter=appId eq '{appId}'&$select=id", AccessToken).GetAwaiter().GetResult();
+                var results = GraphHelper.GetAsync<RestResultCollection<ServicePrincipal>>(Connection, $"/v1.0/servicePrincipals?$filter=appId eq '{appId}'&$select=id", AccessToken).GetAwaiter().GetResult();
                 if (results.Items.Any())
                 {
                     var servicePrincipal = results.Items.First();
