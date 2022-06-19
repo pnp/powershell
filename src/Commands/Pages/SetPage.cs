@@ -2,15 +2,12 @@
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-using PnP.PowerShell.Commands.Attributes;
 using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Set, "PnPPage")]
     [Alias("Set-PnPClientSidePage")]
-
     public class SetPage : PnPWebCmdlet, IDynamicParameters
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -76,7 +73,7 @@ namespace PnP.PowerShell.Commands.Pages
 
         protected override void ExecuteCmdlet()
         {
-            var clientSidePage = Identity?.GetPage();
+            var clientSidePage = Identity?.GetPage(Connection);
 
             if (clientSidePage == null)
             {

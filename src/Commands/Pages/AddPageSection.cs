@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Pages
 
         protected override void ExecuteCmdlet()
         {
-            var page = Page?.GetPage();
+            var page = Page?.GetPage(Connection);
 
             if (page != null)
             {
@@ -34,7 +34,6 @@ namespace PnP.PowerShell.Commands.Pages
                 // If the client side page object cannot be found
                 throw new Exception($"Page {Page} cannot be found.");
             }
-
         }
     }
 }

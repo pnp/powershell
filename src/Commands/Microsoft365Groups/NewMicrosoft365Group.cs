@@ -107,7 +107,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 }
 
                 var Labels = new List<string>();
-                var contextSettings = PnPConnection.Current.Context.GetContextSettings();
+                var contextSettings = Connection.Context.GetContextSettings();
                 if (SensitivityLabels != null && SensitivityLabels.Length > 0)
                 {
                     if (contextSettings.Type != Framework.Utilities.Context.ClientContextType.AzureADCertificate)

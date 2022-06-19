@@ -17,9 +17,9 @@ namespace PnP.PowerShell.Commands.Site
 
         protected override void ExecuteCmdlet()
         {
-            if (PnPConnection.Current.ClientId == PnPConnection.PnPManagementShellClientId)
+            if (Connection.ClientId == PnPConnection.PnPManagementShellClientId)
             {
-                PnPConnection.Current.Scopes = new[] { "Directory.ReadWrite.All" };
+                Connection.Scopes = new[] { "Directory.ReadWrite.All" };
             }
 
             try
