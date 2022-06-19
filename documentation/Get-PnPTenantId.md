@@ -19,14 +19,10 @@ Returns the Tenant ID
 Get-PnPTenantId -TenantUrl <String> [<CommonParameters>]
 ```
 
-Allows passing in a tenant url such as https://contoso.sharepoint.com to retrieve the tenant Id of
-
 ### By connection
 ```powershell
 Get-PnPTenantId [-Connection <PnPConnection>] [<CommonParameters>]
 ```
-
-Allows returning the tenantId of the tenant currently connected to in the current context or through the provided connection
 
 ## DESCRIPTION
 
@@ -37,14 +33,14 @@ Allows returning the tenantId of the tenant currently connected to in the curren
 Get-PnPTenantId
 ```
 
-Returns the current Tenant Id. A valid connection with Connect-PnPOnline is required.
+Returns the current Tenant Id. A valid connection with Connect-PnPOnline is required either as a current connection or by providing it using the -Connection parameter.
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPTenantId -TenantUrl "https://contoso.sharepoint.com"
 ```
 
-Returns the Tenant ID for the specified tenant. Can be executed without a connecting first with Connect-PnPOnline
+Returns the Tenant ID for the specified tenant. Can be executed without an active PnP Connection.
 
 ## PARAMETERS
 
