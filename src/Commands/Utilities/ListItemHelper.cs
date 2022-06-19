@@ -135,7 +135,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                         }
                                         else
                                         {
-                                            cmdlet.WriteWarning("Unable to find the specified term. Skipping values for field " + $field.InternalName);
+                                            cmdlet.WriteWarning("Unable to find the specified term. Skipping values for field " + field.InternalName);
                                         }
                                     }
 
@@ -159,7 +159,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                     }
                                     else
                                     {
-                                        cmdlet.WriteWarning("You are trying to set multiple values in a single value field. Skipping values for field " + $field.InternalName);
+                                        cmdlet.WriteWarning("You are trying to set multiple values in a single value field. Skipping values for field " + field.InternalName);
                                     }
                                 }
                                 else
@@ -176,7 +176,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                         if (taxonomyItem == null)
                                         {
                                             updateTaxItemValue = false;
-                                            cmdlet.WriteWarning("Unable to find the specified term. Skipping values for field" + $field.InternalName);
+                                            cmdlet.WriteWarning("Unable to find the specified term. Skipping values for field" + field.InternalName);
                                         }
                                     }
                                     else
