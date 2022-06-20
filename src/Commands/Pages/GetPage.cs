@@ -14,7 +14,7 @@ namespace PnP.PowerShell.Commands.Pages
 
         protected override void ExecuteCmdlet()
         {
-            var clientSidePage = Identity.GetPage();
+            var clientSidePage = Identity.GetPage(Connection);
 
             if (clientSidePage == null)
                 throw new Exception($"Page '{Identity?.Name}' does not exist");

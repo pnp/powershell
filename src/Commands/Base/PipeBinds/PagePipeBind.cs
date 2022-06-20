@@ -1,12 +1,7 @@
-﻿using Microsoft.SharePoint.Client;
-using PnP.Core.Model.SharePoint;
-using PnP.Core.Services;
+﻿using PnP.Core.Model.SharePoint;
 using PnP.PowerShell.Commands.Pages;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -33,9 +28,9 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public override string ToString() => Name;
 
-        internal IPage GetPage()
+        internal IPage GetPage(PnPConnection connection)
         {
-            var ctx = PnPConnection.Current.PnPContext;
+            var ctx = connection.PnPContext;
             if (_page != null)
             {
                 return _page;

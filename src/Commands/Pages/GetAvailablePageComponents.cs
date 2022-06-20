@@ -1,6 +1,5 @@
 ﻿
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System;
 using System.Linq;
 using System.Management.Automation;
 
@@ -17,7 +16,7 @@ namespace PnP.PowerShell.Commands.Pages
 
         protected override void ExecuteCmdlet()
         {
-            var clientSidePage = Page.GetPage();
+            var clientSidePage = Page.GetPage(Connection);
             if (clientSidePage == null)
                 throw new PSArgumentException($"Page '{Page}' does not exist", "List");
 

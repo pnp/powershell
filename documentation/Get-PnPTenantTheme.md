@@ -33,19 +33,26 @@ Returns all or a specific tenant theme.
 Get-PnPTenantTheme
 ```
 
-Returns all themes
+Returns all themes.
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPTenantTheme -Name "MyCompanyTheme"
 ```
 
-Returns the specified theme
+Returns the specified theme.
+
+### EXAMPLE 3
+```powershell
+Get-PnPTenantTheme -Name "MyCompanyTheme" -AsJson
+```
+
+Returns the specified theme as json.
 
 ## PARAMETERS
 
 ### -AsJson
-{{ Fill AsJson Description }}
+The theme is returned in json format.
 
 ```yaml
 Type: SwitchParameter
@@ -73,7 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-The name of the theme to retrieve
+The name of the theme to retrieve.
 
 ```yaml
 Type: String

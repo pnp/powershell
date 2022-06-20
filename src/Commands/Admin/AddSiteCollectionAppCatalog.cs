@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Admin
             }
             else
             {
-                url = PnPConnection.Current.Url;
+                url = Connection.Url;
             }
 
             Tenant.GetSiteByUrl(url).RootWeb.TenantAppCatalog.SiteCollectionAppCatalogsSites.Add(url);

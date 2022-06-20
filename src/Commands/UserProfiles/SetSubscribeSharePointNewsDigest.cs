@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
             WriteVerbose($"Connecting to OneDrive for Business site at {properties.PersonalUrl}");
 
-            var oneDriveContext = PnPConnection.Current.CloneContext(properties.PersonalUrl);
+            var oneDriveContext = Connection.CloneContext(properties.PersonalUrl);
 
             WriteVerbose("Retrieving notificationSubscriptionHiddenList list");
 

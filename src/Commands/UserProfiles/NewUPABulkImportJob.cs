@@ -58,7 +58,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                         throw new InvalidEnumArgumentException(@"Path cannot be empty");
                     }
 
-                    var webCtx = ClientContext.Clone(PnPConnection.Current.Url);
+                    var webCtx = ClientContext.Clone(Connection.Url);
                     var web = webCtx.Web;
                     var webServerRelativeUrl = web.EnsureProperty(w => w.ServerRelativeUrl);
                     if (!Folder.ToLower().StartsWith(webServerRelativeUrl))

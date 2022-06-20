@@ -43,10 +43,17 @@ Hides the quick launch from being shown in the current web
 
 ### EXAMPLE 3
 ```powershell
+Set-PnPWeb -HeaderEmphasis Strong -HeaderLayout Compact
+```
+Sets the header style in the current web.
+
+### EXAMPLE 4
+```powershell
 Set-PnPWeb -NoCrawl:$true
 ```
 
 Prevents the current web from being returned in search results
+
 
 ## PARAMETERS
 
@@ -135,6 +142,7 @@ Accept wildcard characters: False
 ```
 
 ### -HeaderEmphasis
+Defines the tone of color used for the bar shown at the top of the site with the site name and logo
 
 ```yaml
 Type: SPVariantThemeType
@@ -149,6 +157,7 @@ Accept wildcard characters: False
 ```
 
 ### -HeaderLayout
+Defines the layout type of the site header
 
 ```yaml
 Type: HeaderLayoutType
@@ -191,7 +200,7 @@ Accept wildcard characters: False
 ```
 
 ### -MembersCanShare
-Indicates if members of this site can share the site and individual sites with others ($true) or only owners can do this ($false)
+Indicates if members of this site can share the site and its content with others ($true) or only owners can do this ($false)
 
 ```yaml
 Type: SwitchParameter
@@ -275,7 +284,7 @@ Accept wildcard characters: False
 ```
 
 ### -HideTitleInHeader
-Toggle the title visiblity in the header.
+Toggle the title visibility in the header.
 
 Set -HideTitleInHeader:$false to show the header
 

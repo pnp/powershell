@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.Syntex
         protected override void ExecuteCmdlet()
         {
             var serverRelativeUrl = string.Empty;
-            var ctx = PnPConnection.Current.PnPContext;
+            var ctx = Connection.PnPContext;
 
             if (ParameterSpecified(nameof(List)))
             {

@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands.Base
     {
         protected override void ProcessRecord()
         {
-            WriteObject(PnPConnection.Current.ApplicationInsights != null);
+            WriteObject(Connection.ApplicationInsights != null);
         }
     }
 }

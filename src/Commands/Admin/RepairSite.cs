@@ -1,14 +1,9 @@
-﻿using Microsoft.Online.SharePoint.TenantAdministration;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
-using PnP.Framework.Sites;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
-using PnP.PowerShell.Commands.Model;
-using System.Linq;
-using System.Text.Json;
 using System.Text;
 using System.Collections.Generic;
 
@@ -28,7 +23,7 @@ namespace PnP.PowerShell.Commands.Admin
 
         protected override void ExecuteCmdlet()
         {
-            var siteUrl = PnPConnection.Current.Url;
+            var siteUrl = Connection.Url;
             if (ParameterSpecified(nameof(Identity)))
             {
                 siteUrl = Identity.Url;

@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands.Apps
                         }
                 };
 
-                var results = PnP.PowerShell.Commands.Utilities.REST.RestHelper.PostAsync<AzureADAppPermissionInternal>(Connection.HttpClient, $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/sites/{siteId}/permissions", AccessToken, payload).GetAwaiter().GetResult();
+                var results = PnP.PowerShell.Commands.Utilities.REST.RestHelper.PostAsync<AzureADAppPermissionInternal>(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions", AccessToken, payload).GetAwaiter().GetResult();
                 WriteObject(results.Convert());
             }
         }
