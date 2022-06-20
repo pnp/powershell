@@ -81,16 +81,17 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="set-pnpwebpartproperty">Set-PnPWebPartProperty</h1>
+                    <h1 id="set-pnpwebpermission">Set-PnPWebPermission</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Sets a web permissions</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell"> Set-PnPWebPermission -Group &lt;GroupPipeBind&gt; [-Identity &lt;WebPipeBind&gt;] [-AddRole &lt;String[]&gt;] [-RemoveRole &lt;String[]&gt;]
+<pre><code class="lang-powershell">Set-PnPWebPermission -Group &lt;GroupPipeBind&gt; [-Identity &lt;WebPipeBind&gt;] [-AddRole &lt;String[]&gt;] [-RemoveRole &lt;String[]&gt;]
 </code></pre>
 <pre><code class="lang-powershell">Set-PnPWebPermission -User &lt;String&gt; [-Identity &lt;WebPipeBind&gt;]  [-AddRole &lt;String[]&gt;] [-RemoveRole &lt;String[]&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet adds permissions to a user or a group or removes permissions from a user or a group.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPWebPermission -User &quot;user@contoso.com&quot; -AddRole &quot;Contribute&quot;
@@ -110,7 +111,7 @@
 <p>Adds the specified permission roles to the user &quot;user@contoso.com&quot; in the current web</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-user">-User</h3>
-<p>The name of the user to modify</p>
+<p>The name of the user.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Set user permissions
 
@@ -121,7 +122,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-group">-Group</h3>
-<p>The name of the group to modify</p>
+<p>The name of the group.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Set group permissions
 
@@ -132,8 +133,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-addrole">-AddRole</h3>
-<p>The name of the role to add to the specified user or group</p>
-<pre><code class="lang-yaml">Type: String
+<p>The name of the permission level to add to the specified user or group.</p>
+<pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
 Required: False
@@ -143,7 +144,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-removerole">-RemoveRole</h3>
-<pre><code class="lang-yaml">Type: String
+<p>The name of the permission level to remove from the specified user or group.</p>
+<pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
 Required: False

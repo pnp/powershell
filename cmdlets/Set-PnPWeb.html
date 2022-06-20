@@ -104,6 +104,10 @@
 </code></pre>
 <p>Hides the quick launch from being shown in the current web</p>
 <h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Set-PnPWeb -HeaderEmphasis Strong -HeaderLayout Compact
+</code></pre>
+<p>Sets the header style in the current web.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Set-PnPWeb -NoCrawl:$true
 </code></pre>
 <p>Prevents the current web from being returned in search results</p>
@@ -175,6 +179,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-headeremphasis">-HeaderEmphasis</h3>
+<p>Defines the tone of color used for the bar shown at the top of the site with the site name and logo</p>
 <pre><code class="lang-yaml">Type: SPVariantThemeType
 Parameter Sets: (All)
 Accepted values: None, Neutral, Soft, Strong
@@ -186,6 +191,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-headerlayout">-HeaderLayout</h3>
+<p>Defines the layout type of the site header</p>
 <pre><code class="lang-yaml">Type: HeaderLayoutType
 Parameter Sets: (All)
 Accepted values: None, Standard, Compact, Minimal, Extended
@@ -219,7 +225,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-memberscanshare">-MembersCanShare</h3>
-<p>Indicates if members of this site can share the site and individual sites with others ($true) or only owners can do this ($false)</p>
+<p>Indicates if members of this site can share the site and its content with others ($true) or only owners can do this ($false)</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -285,7 +291,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-hidetitleinheader">-HideTitleInHeader</h3>
-<p>Toggle the title visiblity in the header.</p>
+<p>Toggle the title visibility in the header.</p>
 <p>Set -HideTitleInHeader:$false to show the header</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)

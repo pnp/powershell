@@ -3582,7 +3582,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPTenantTheme.html",
-          "hash": "ueP5utOgx7rgi+XwFxwVPg=="
+          "hash": "b63ujxGgICYcFAYhYQ1WLQ=="
         }
       },
       "is_incremental": false,
@@ -7320,7 +7320,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPWeb.html",
-          "hash": "jCH7Fjk/SEhD9s6qJpXnUA=="
+          "hash": "+s17wjy8r4KnnOdjNukNDg=="
         }
       },
       "is_incremental": false,
@@ -7332,7 +7332,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPWebHeader.html",
-          "hash": "irjUykhUBDw/fk1p50ewyA=="
+          "hash": "ltMBok8xp3n80s3XR0GbNg=="
         }
       },
       "is_incremental": false,
@@ -7356,7 +7356,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPWebPermission.html",
-          "hash": "8z0l8svr2p3X/dSFcKJ8oQ=="
+          "hash": "4CHxE/0quIPqTXzwtKFOZw=="
         }
       },
       "is_incremental": false,
@@ -7368,7 +7368,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPWebTheme.html",
-          "hash": "oZqshK4HOY1wgzV4yYWkGw=="
+          "hash": "1aUq4VdBPbQapix17/wdGA=="
         }
       },
       "is_incremental": false,

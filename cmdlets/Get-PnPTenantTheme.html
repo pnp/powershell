@@ -98,14 +98,18 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPTenantTheme
 </code></pre>
-<p>Returns all themes</p>
+<p>Returns all themes.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPTenantTheme -Name &quot;MyCompanyTheme&quot;
 </code></pre>
-<p>Returns the specified theme</p>
+<p>Returns the specified theme.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPTenantTheme -Name &quot;MyCompanyTheme&quot; -AsJson
+</code></pre>
+<p>Returns the specified theme as json.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-asjson">-AsJson</h3>
-<p>{{ Fill AsJson Description }}</p>
+<p>The theme is returned in json format.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -127,7 +131,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-name">-Name</h3>
-<p>The name of the theme to retrieve</p>
+<p>The name of the theme to retrieve.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
