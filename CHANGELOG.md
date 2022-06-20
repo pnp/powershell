@@ -108,6 +108,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Leif Frederiksen [Leif Frederiksen]
 - Emily Mancini [eemancini]
 - Jim Duncan [sparkitect]
 - Arleta Wanat [PowershellScripts]
