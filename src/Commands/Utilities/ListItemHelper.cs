@@ -9,8 +9,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -37,8 +35,6 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static void SetFieldValues(this ListItem item, Hashtable valuesToSet, Cmdlet cmdlet)
         {
-            // xxx: return early if hashtable is empty to save getting fields?
-
             var itemValues = new List<FieldUpdateValue>();
 
             var context = item.Context as ClientContext;
@@ -135,7 +131,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                         }
                                         else
                                         {
-                                            cmdlet.WriteWarning("Unable to find the specified term. Skipping values for field " + field.InternalName);
+                                            cmdlet.WriteWarning("Unable to find the specified term. Skipping values for field '" + field.InternalName + "'.");
                                         }
                                     }
 
@@ -159,7 +155,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                     }
                                     else
                                     {
-                                        cmdlet.WriteWarning("You are trying to set multiple values in a single value field. Skipping values for field " + field.InternalName);
+                                        cmdlet.WriteWarning("You are trying to set multiple values in a single value field. Skipping values for field '" + field.InternalName + "'.");
                                     }
                                 }
                                 else
@@ -176,7 +172,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                         if (taxonomyItem == null)
                                         {
                                             updateTaxItemValue = false;
-                                            cmdlet.WriteWarning("Unable to find the specified term. Skipping values for field" + field.InternalName);
+                                            cmdlet.WriteWarning("Unable to find the specified term. Skipping values for field '" + field.InternalName + "'.");
                                         }
                                     }
                                     else
@@ -304,7 +300,6 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                 }
             }
-
         }
 
         public static Dictionary<string, object> GetFieldValues(PnP.Core.Model.SharePoint.IList list, PnP.Core.Model.SharePoint.IListItem existingItem, Hashtable valuesToSet, ClientContext clientContext, PnPBatch batch)
