@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands.Lists
                 }
 
                 // Define the full URL to the list to copy
-                var hostUri = new Uri(PnPConnection.Current.Url);
+                var hostUri = new Uri(Connection.Url);
                 SourceListUrl = $"{hostUri.Scheme}://{hostUri.Authority}{list.RootFolder.ServerRelativeUrl}";
             }
 
@@ -85,7 +85,7 @@ namespace PnP.PowerShell.Commands.Lists
             // Check if we need to set the destination to the current site
             if(ParameterSetName == ParameterSet_TOCURRENTSITEBYPIPE || ParameterSetName == ParameterSet_TOCURRENTSITEBYURL)
             {
-                DestinationWebUrl = PnPConnection.Current.Url;
+                DestinationWebUrl = Connection.Url;
             }
 
             if(ParameterSpecified(nameof(WhatIf)))

@@ -181,7 +181,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
                     var postData = new Dictionary<string, string>() {
                     {
-                        "@odata.id", $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{idProperty.GetString()}"
+                        "@odata.id", $"https://{connection.GraphEndPoint}/v1.0/users/{idProperty.GetString()}"
                     }
                 };
                     var stringContent = new StringContent(JsonSerializer.Serialize(postData));
@@ -361,7 +361,7 @@ namespace PnP.PowerShell.Commands.Utilities
             var userids = await GetUserIdsBatched(connection, accessToken, users);
             if (userids.Any())
             {
-                return userids.Select(u => $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{u.Value}").ToArray();
+                return userids.Select(u => $"https://{connection.GraphEndPoint}/v1.0/users/{u.Value}").ToArray();
             }
             return null;
         }

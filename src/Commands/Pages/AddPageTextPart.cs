@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Pages
                 throw new Exception("Column value should be at least 1 or higher");
             }
 
-            var clientSidePage = Page.GetPage();
+            var clientSidePage = Page.GetPage(Connection);
 
             if (clientSidePage == null)
                 // If the client side page object cannot be found

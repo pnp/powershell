@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Base
                         accessTokenValue = AccessToken;
                         break;
                     case ResourceTypeName.SharePoint:
-                        accessTokenValue = TokenHandler.GetAccessToken(null, PnPConnection.Current?.Context?.Url?.TrimEnd('/') + "/.default", Connection);
+                        accessTokenValue = TokenHandler.GetAccessToken(null, Connection?.Context?.Url?.TrimEnd('/') + "/.default", Connection);
                         break;
                     case ResourceTypeName.ARM:
                         accessTokenValue = TokenHandler.GetAccessToken(null, "https://management.azure.com/.default", Connection);

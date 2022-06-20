@@ -321,8 +321,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
             using (var provisioningContext = new PnPProvisioningContext(async (resource, scope) =>
             {
-                return await TokenRetrieval.GetAccessTokenAsync(resource, scope);
-            }, azureEnvironment: PnPConnection.Current.AzureEnvironment))
+                return await TokenRetrieval.GetAccessTokenAsync(resource, scope, Connection);
+            }, azureEnvironment: Connection.AzureEnvironment))
             {
                 CurrentWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
             }
