@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Principals
         public string[] PermissionLevelsToRemove;
         protected override void ExecuteCmdlet()
         {
-            var url = PnPConnection.Current.Url;
+            var url = Connection.Url;
             if (ParameterSpecified(nameof(Site)))
             {
                 url = Site.Url;

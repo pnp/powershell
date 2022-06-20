@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Pages
         {
             if (Force || ShouldContinue(Resources.RemoveClientSidePage, Resources.Confirm))
             {
-                var clientSidePage = Identity.GetPage();
+                var clientSidePage = Identity.GetPage(Connection);
                 if (clientSidePage == null)
                     throw new Exception($"Page '{Identity?.Name}' does not exist");
 

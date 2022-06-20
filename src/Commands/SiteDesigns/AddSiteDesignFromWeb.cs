@@ -98,7 +98,7 @@ namespace PnP.PowerShell.Commands
             // If no URL specified, we take the URL of the site that the current context is connected to
             if(!ParameterSpecified(nameof(Url)))
             {
-                Url = PnPConnection.Current.Url;
+                Url = Connection.Url;
             }
 
             // Generate site script

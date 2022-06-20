@@ -16,13 +16,13 @@ namespace PnP.PowerShell.Commands.Syntex
 
         protected override void ExecuteCmdlet()
         {
-            var ctx = PnPConnection.Current.PnPContext;
+            var ctx = Connection.PnPContext;
 
             if (ctx.Web.IsSyntexContentCenter())
             {
                 if (ParameterSpecified(nameof(Identity)) && Identity != null)
                 {
-                    WriteObject(Identity.GetSyntexModel());
+                    WriteObject(Identity.GetSyntexModel(Connection));
                 }
                 else
                 {

@@ -22,9 +22,9 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         protected override void ExecuteCmdlet()
         {
-            if (PnPConnection.Current.ClientId == PnPConnection.PnPManagementShellClientId)
+            if (Connection.ClientId == PnPConnection.PnPManagementShellClientId)
             {
-                PnPConnection.Current.Scopes = new[] { "Group.ReadWrite.All" };
+                Connection.Scopes = new[] { "Group.ReadWrite.All" };
             }
 
             AzureADGroup group = null;

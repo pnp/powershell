@@ -1,5 +1,4 @@
 ﻿using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using System;
 using System.Management.Automation;
@@ -8,19 +7,31 @@ using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTenantId")]
+    [Cmdlet(VerbsCommon.Get, "PnPTenantId", DefaultParameterSetName = ParameterSet_FROMCONNECTION)]
     public class GetTenantId : BasePSCmdlet
     {
-        [Parameter(Mandatory = false)]
+        private const string ParameterSet_BYURL = "By URL";
+        private const string ParameterSet_FROMCONNECTION = "From connection";
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYURL)]
         public string TenantUrl;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FROMCONNECTION, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")]
+        public PnPConnection Connection = null;
 
         protected override void ProcessRecord()
         {
+            // If a specific connection has been provided, use that, otherwise use the current connection
+            if(Connection == null)
+            {
+                Connection = PnPConnection.Current;
+            }
+
             try
             {
-                if (string.IsNullOrEmpty(TenantUrl) && PnPConnection.Current != null)
+                if (string.IsNullOrEmpty(TenantUrl) && Connection != null)
                 {
-                    WriteObject(TenantExtensions.GetTenantIdByUrl(PnPConnection.Current.Url));
+                    WriteObject(TenantExtensions.GetTenantIdByUrl(Connection.Url));
                 }
                 else if (!string.IsNullOrEmpty(TenantUrl))
                 {
@@ -28,7 +39,7 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 else
                 {
-                    throw new InvalidOperationException("Either a connection needs to be made by Connect-PnPOnline or TenantUrl needs to be specified");
+                    throw new InvalidOperationException($"Either a connection needs to be made by Connect-PnPOnline, a connection needs to be provided through -{nameof(Connection)} or -{nameof(TenantUrl)} needs to be specified");
                 }
             }
             catch (Exception ex)

@@ -87,7 +87,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             }
 
             // Create a ClientContext connecting to the site specified through the Connect-PnPOnline cmdlet instead of the current potential Admin ClientContext.
-            var nonAdminClientContext = ClientContext.Clone(PnPConnection.Current.Url);
+            var nonAdminClientContext = ClientContext.Clone(Connection.Url);
 
             // Perform the mapping and execute the sync operation
             WriteVerbose($"Creating mapping file{(WhatIf.ToBool() ? " and" : ",")} uploading it to SharePoint Online to folder '{Folder}'{(WhatIf.ToBool() ? "" : " and executing sync job")}");

@@ -3,7 +3,6 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Management.Automation;
-using System.Net.Http;
 using System.Security;
 using Microsoft.SharePoint.Client;
 
@@ -12,7 +11,6 @@ namespace PnP.PowerShell.Commands.Base
     [Cmdlet(VerbsLifecycle.Request, "PnPAccessToken")]
     public class RequestAccessToken : PnPConnectedCmdlet
     {
-
         [Parameter(Mandatory = false)]
         public string ClientId = PnPConnection.PnPManagementShellClientId; // defaults to PnPManagementShell
 
@@ -36,12 +34,11 @@ namespace PnP.PowerShell.Commands.Base
 
         protected override void ProcessRecord()
         {
-
             Uri tenantUri = null;
-            if (string.IsNullOrEmpty(TenantUrl) && PnPConnection.Current != null)
+            if (string.IsNullOrEmpty(TenantUrl) && Connection != null)
             {
 
-                var uri = new Uri(PnPConnection.Current.Url);
+                var uri = new Uri(Connection.Url);
                 var uriParts = uri.Host.Split('.');
                 if (uriParts[0].ToLower().EndsWith("-admin"))
                 {
@@ -73,9 +70,9 @@ namespace PnP.PowerShell.Commands.Base
                 username = Credentials.UserName;
                 authManager = new AuthenticationManager(ClientId, username, password, azureEnvironment: AzureEnvironment);
             }
-            else if (PnPConnection.Current != null)
+            else if (Connection != null)
             {
-                authManager = PnPConnection.Current.Context.GetContextSettings().AuthenticationManager;
+                authManager = Connection.Context.GetContextSettings().AuthenticationManager;
             }
             else
             {
@@ -92,7 +89,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    token = authManager.GetAccessTokenAsync(PnPConnection.Current.Url).GetAwaiter().GetResult();
+                    token = authManager.GetAccessTokenAsync(Connection.Url).GetAwaiter().GetResult();
                 }
             }
 

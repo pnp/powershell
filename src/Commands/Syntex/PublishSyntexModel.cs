@@ -42,14 +42,14 @@ namespace PnP.PowerShell.Commands.Syntex
 
         protected override void ExecuteCmdlet()
         {
-            var ctx = PnPConnection.Current.PnPContext;
+            var ctx = Connection.PnPContext;
 
             if (ctx.Web.IsSyntexContentCenter())
             {
                 if (ParameterSpecified(nameof(Batch)))
                 {
                     // Get the model we're publishing
-                    ISyntexModel modelToPublish = Model.GetSyntexModel(Batch);
+                    ISyntexModel modelToPublish = Model.GetSyntexModel(Batch, Connection);
 
                     if (modelToPublish == null)
                     {
@@ -67,7 +67,7 @@ namespace PnP.PowerShell.Commands.Syntex
                 else
                 {
                     // Get the model we're publishing
-                    ISyntexModel modelToPublish = Model.GetSyntexModel();
+                    ISyntexModel modelToPublish = Model.GetSyntexModel(Connection);
 
                     if (modelToPublish == null)
                     {
@@ -76,7 +76,7 @@ namespace PnP.PowerShell.Commands.Syntex
 
                     // resolve the list 
                     IList listToPublishModelTo = null;
-                    using (var listContext = PnPConnection.Current.CloneContext(ListWebUrl))
+                    using (var listContext = Connection.CloneContext(ListWebUrl))
                     {
                         var pnpContext = PnPCoreSdk.Instance.GetPnPContext(listContext);
                         listToPublishModelTo = List.GetList(pnpContext);

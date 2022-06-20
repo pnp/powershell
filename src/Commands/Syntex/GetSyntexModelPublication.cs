@@ -15,12 +15,12 @@ namespace PnP.PowerShell.Commands.Syntex
 
         protected override void ExecuteCmdlet()
         {
-            var ctx = PnPConnection.Current.PnPContext;
+            var ctx = Connection.PnPContext;
 
             if (ctx.Web.IsSyntexContentCenter())
             {
                 // Get the model we're publishing
-                ISyntexModel model = Model.GetSyntexModel();
+                ISyntexModel model = Model.GetSyntexModel(Connection);
 
                 if (model == null)
                 {

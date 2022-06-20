@@ -120,7 +120,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 var assignedLabels = new List<AssignedLabels>();
                 if (SensitivityLabels != null && SensitivityLabels.Length > 0)
                 {
-                    var contextSettings = PnPConnection.Current.Context.GetContextSettings();
+                    var contextSettings = Connection.Context.GetContextSettings();
                     if (contextSettings.Type != Framework.Utilities.Context.ClientContextType.AzureADCertificate)
                     {
                         foreach (var label in SensitivityLabels)

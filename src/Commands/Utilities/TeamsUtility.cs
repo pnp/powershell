@@ -202,7 +202,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     foreach (var owner in owners)
                     {
-                        teamOwnersAndMembers.Add(new TeamChannelMember { Roles = new List<string> { "owner" }, UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{owner}')" });
+                        teamOwnersAndMembers.Add(new TeamChannelMember { Roles = new List<string> { "owner" }, UserIdentifier = $"https://{connection.GraphEndPoint}/v1.0/users('{owner}')" });
                     }
                 }
 
@@ -210,7 +210,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     foreach (var member in members)
                     {
-                        teamOwnersAndMembers.Add(new TeamChannelMember { Roles = new List<string>(), UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{member}')" });
+                        teamOwnersAndMembers.Add(new TeamChannelMember { Roles = new List<string>(), UserIdentifier = $"https://{connection.GraphEndPoint}/v1.0/users('{member}')" });
                     }                    
                 }
 
@@ -266,7 +266,7 @@ namespace PnP.PowerShell.Commands.Utilities
             // Check if by now we've identified a user Id to become the owner
             if (!string.IsNullOrEmpty(ownerId))
             {
-                var contextSettings = PnPConnection.Current.Context.GetContextSettings();
+                var contextSettings = connection.Context.GetContextSettings();
 
                 // Still no owner identified, see if we can make the current user executing this cmdlet the owner
                 if (contextSettings.Type != Framework.Utilities.Context.ClientContextType.AzureADCertificate)
@@ -298,8 +298,8 @@ namespace PnP.PowerShell.Commands.Utilities
             // Check if we managed to define an owner for the group. If not, we'll revert to not providing an owner, which will mean that the app principal will become the owner of the Group
             if (!string.IsNullOrEmpty(ownerId))
             {
-                group.Owners = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
-                group.Members = new List<string>() { $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{ownerId}" };
+                group.Owners = new List<string>() { $"https://{connection.GraphEndPoint}/v1.0/users/{ownerId}" };
+                group.Members = new List<string>() { $"https://{connection.GraphEndPoint}/v1.0/users/{ownerId}" };
             }
 
             if (resourceBehaviorOptions != null && resourceBehaviorOptions.Length > 0)
@@ -423,7 +423,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 var postData = new Dictionary<string, string>() {
                     {
-                        "@odata.id", $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{idProperty.GetString()}"
+                        "@odata.id", $"https://{connection.GraphEndPoint}/v1.0/users/{idProperty.GetString()}"
                     }
                 };
                 var stringContent = new StringContent(JsonSerializer.Serialize(postData));
@@ -440,7 +440,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 foreach (var user in upn)
                 {
-                    teamChannelMember.Add(new TeamChannelMember() { Roles = new List<string> { role }, UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{user}')" });
+                    teamChannelMember.Add(new TeamChannelMember() { Roles = new List<string> { role }, UserIdentifier = $"https://{connection.GraphEndPoint}/v1.0/users('{user}')" });
                 }
                 if (teamChannelMember.Count > 0)
                 {
@@ -618,7 +618,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 channel.Type = "#Microsoft.Graph.channel";
                 var user = await GraphHelper.GetAsync<User>(connection, $"v1.0/{GetUserGraphUrlForUPN(ownerUPN)}", accessToken);
                 channel.Members = new List<TeamChannelMember>();
-                channel.Members.Add(new TeamChannelMember() { Roles = new List<string> { "owner" }, UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{user.Id}')" });
+                channel.Members.Add(new TeamChannelMember() { Roles = new List<string> { "owner" }, UserIdentifier = $"https://{connection.GraphEndPoint}/v1.0/users('{user.Id}')" });
                 return await GraphHelper.PostAsync<TeamChannel>(connection, $"v1.0/teams/{groupId}/channels", channel, accessToken);
             }
             else
@@ -719,7 +719,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             var channelMember = new TeamChannelMember
             {
-                UserIdentifier = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users('{upn}')",
+                UserIdentifier = $"https://{connection.GraphEndPoint}/v1.0/users('{upn}')",
             };
 
             // The role for the user. Must be owner or empty.
@@ -896,7 +896,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
             }
             tab.DisplayName = displayName;
-            tab.TeamsAppOdataBind = $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/appCatalogs/teamsApps/{tab.TeamsAppId}";
+            tab.TeamsAppOdataBind = $"https://{connection.GraphEndPoint}/v1.0/appCatalogs/teamsApps/{tab.TeamsAppId}";
             return await GraphHelper.PostAsync<TeamTab>(connection, $"v1.0/teams/{groupId}/channels/{channelId}/tabs", tab, accessToken);
         }
         #endregion
