@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPListItem.html
 
 Updates a list item
 
-[![Supports Batching](../pages/images/batching/Batching.png)](../pages/articles/batching.md)
+![Supports Batching](../images/batching/Batching.png)]
 
 ## SYNTAX
 
