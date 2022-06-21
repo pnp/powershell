@@ -56,8 +56,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPContentType` cmdlet to update the properties of the Content Types in a list or a web. [#1981](https://github.com/pnp/powershell/pull/1981)
 - Added `-SharingCapability` parameter to the `New-PnPTenantSite` cmdlet to update the Sharing capabilties of the newly provisioned classic site collection. [#1994](https://github.com/pnp/powershell/pull/1994)
 - Added optional `-IncludeAllLists` to `Get-PnPSiteScriptFromWeb` which will include the JSON definition of all custom lists of the current site in the output [#1987](https://github.com/pnp/powershell/pull/1987)
-- Added `-UpdateChildren` parameter to `Add-PnPFieldToContentType` cmdlet. This allows users to skip pushing the fields to child content types. [#1092](https://github.com/pnp/powershell/pull/1992)
-- Added optional `-SensitivityLabel` to `Set-PnPSite` which allows for a Microsoft Purview sensitivitylabel to be set
+- Added `-UpdateChildren` parameter to `Add-PnPFieldToContentType` cmdlet. This allows users to skip pushing the fields to child content types. [#1992](https://github.com/pnp/powershell/pull/1992)
+- Added optional `-SensitivityLabel` to `Set-PnPSite` which allows for a Microsoft Purview sensitivitylabel to be set [#2024](https://github.com/pnp/powershell/pull/2024)
 
 ### Changed
 
