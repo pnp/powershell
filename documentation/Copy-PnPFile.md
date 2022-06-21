@@ -100,7 +100,7 @@ Copies a file named company.docx in the library named Documents in SubSite1 to t
 ### EXAMPLE 11
 ```powershell
 $job = Copy-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "SubSite2/Shared Documents" -NoWait
-$jobStatus = Receive-PnPCopyMoveJobStatus -Job $result
+$jobStatus = Receive-PnPCopyMoveJobStatus -Job $job
 if($jobStatus.JobState == 0)
 {
   Write-Host "Job finished"
