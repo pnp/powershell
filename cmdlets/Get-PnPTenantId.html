@@ -86,21 +86,36 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Returns the Tenant ID</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPTenantId [-TenantUrl &lt;String&gt;] [&lt;CommonParameters&gt;]
+<h3 id="by-tenanturl">By TenantUrl</h3>
+<pre><code class="lang-powershell">Get-PnPTenantId -TenantUrl &lt;String&gt; [&lt;CommonParameters&gt;]
+</code></pre>
+<h3 id="by-connection">By connection</h3>
+<pre><code class="lang-powershell">Get-PnPTenantId [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPTenantId
 </code></pre>
-<p>Returns the current Tenant Id. A valid connection with Connect-PnPOnline is required.</p>
+<p>Returns the current Tenant Id. A valid connection with Connect-PnPOnline is required either as a current connection or by providing it using the -Connection parameter.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPTenantId -TenantUrl &quot;https://contoso.sharepoint.com&quot;
 </code></pre>
-<p>Returns the Tenant ID for the specified tenant. Can be executed without a connecting first with Connect-PnPOnline</p>
+<p>Returns the Tenant ID for the specified tenant. Can be executed without an active PnP Connection.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-tenanturl">-TenantUrl</h3>
 <pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
 Required: False

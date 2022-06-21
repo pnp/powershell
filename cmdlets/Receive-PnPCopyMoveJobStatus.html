@@ -93,7 +93,7 @@
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
 <pre><code class="lang-powershell">$job = Copy-PnPFile -SourceUrl &quot;Shared Documents/company.docx&quot; -TargetUrl &quot;SubSite2/Shared Documents&quot; -NoWait
-$jobStatus = Receive-PnPCopyMoveJobStatus -Job $result
+$jobStatus = Receive-PnPCopyMoveJobStatus -Job $job
 if($jobStatus.JobState == 0)
 {
   Write-Host &quot;Job finished&quot;
