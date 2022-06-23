@@ -15,7 +15,7 @@ Publishes a SharePoint Syntex models to a list.
 
 This cmdlet only works when you've connected to a SharePoint Syntex Content Center site.
 
-![Supports Batching](../images/batching/Batching.png)]
+![Supports Batching](../images/batching/Batching.png)
 
 ## SYNTAX
 

@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPBatch.html
 
 Creates a new batch
 
-![Supports Batching](../images/batching/Batching.png)]
+![Supports Batching](../images/batching/Batching.png)
 
 ## SYNTAX
 
