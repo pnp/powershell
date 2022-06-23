@@ -80,8 +80,8 @@ As the UI in <https://portal.azure.com> changes every now and then, but the prin
 #### Create your credentials
 
 1. Navigate to `Configuration` under `Settings` and create a new Application Setting.
-1. Enter `tenant_user` and enter the username you want to authenticate with as the user
-1. Enter `tenant_pwd` and enter the password you want to use for that user
+2. Enter `tenant_user` and enter the username you want to authenticate with as the user
+3. Enter `tenant_pwd` and enter the password you want to use for that user
 
 #### Create the function
 
