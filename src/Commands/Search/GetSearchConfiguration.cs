@@ -155,7 +155,7 @@ namespace PnP.PowerShell.Commands.Search
                         var aliases = GetAliasesFromPid(doc, mp.Pid);
                         mp.Aliases = aliases;
                     }
-                    WriteObject(mps);
+                    WriteObject(mps, true);
                 }
             }
         }

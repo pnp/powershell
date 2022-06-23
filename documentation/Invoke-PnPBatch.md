@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Invoke-PnPBatch.html
 
 Executes the batch
 
-![Supports Batching](../images/batching/Batching.png)]
+![Supports Batching](../images/batching/Batching.png)
 
 ## SYNTAX
 

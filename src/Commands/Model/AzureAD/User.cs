@@ -80,6 +80,8 @@ namespace PnP.PowerShell.Commands.Model.AzureAD
         /// <returns>PnP PowerShell Azure Active Directory User object</returns>
         internal static User CreateFrom(PnP.Framework.Graph.Model.User entity)
         {
+            if(entity == null) return null;
+            
             var user = new User
             {
                 UserPrincipalName = entity.UserPrincipalName,

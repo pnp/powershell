@@ -349,6 +349,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 var errorContent = await response.Content.ReadAsStringAsync();
                 var exception = JsonSerializer.Deserialize<GraphException>(errorContent, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
                 exception.AccessToken = accessToken;
+                exception.HttpResponse = response;
+                
                 throw exception;
             }
         }
