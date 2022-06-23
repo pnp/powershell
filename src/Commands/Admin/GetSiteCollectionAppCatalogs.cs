@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands
             ClientContext.Load(allowedSites);
             ClientContext.ExecuteQueryRetry();
 
-            WriteObject(allowedSites);
+            WriteObject(allowedSites, true);
         }
     }
 }
