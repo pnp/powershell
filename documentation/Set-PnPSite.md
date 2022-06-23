@@ -24,14 +24,13 @@ Set-PnPSite [-Identity <String>] [-Classification <String>] [-DisableFlows] [-Lo
  [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>] [-DisableSharingForNonOwners]
  [-LocaleId <UInt32>] [-RestrictedToGeo <RestrictedToRegion>] [-SocialBarOnSitePagesDisabled]
  [-AnonymousLinkExpirationInDays <Int32>] [-OverrideTenantAnonymousLinkExpirationPolicy]
- [-MediaTranscription <MediaTranscriptionPolicyType>]
+ [-MediaTranscription <MediaTranscriptionPolicyType>] [-SensitivityLabel <Guid>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Set Lock State
 ```powershell
-Set-PnPSite [-Identity <String>] [-Classification <String>] [-DisableFlows] [-LockState <SiteLockState>]
- [-Wait] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPSite [-Identity <String>] [-LockState <SiteLockState>] [-Wait] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,14 +42,14 @@ Set-PnPSite [-Identity <String>] [-Classification <String>] [-DisableFlows] [-Lo
 Set-PnPSite -Classification "HBI"
 ```
 
-Sets the current site classification to HBI
+Sets the current site classification tag to HBI
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPSite -Classification $null
 ```
 
-Unsets the current site classification
+Unsets the current site classification tag
 
 ### EXAMPLE 3
 ```powershell
@@ -111,7 +110,21 @@ Accept wildcard characters: False
 ```
 
 ### -Classification
-The classification to set
+The classification tag to set. This is the old classification/labeling method. Set it to $null to remove the classification entirely.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SensitivityLabel
+The Microsoft Purview sensitivity label to set. This is the new classification/labeling method.
 
 ```yaml
 Type: String
