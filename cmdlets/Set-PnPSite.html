@@ -95,23 +95,22 @@
  [-DisableCompanyWideSharingLinks &lt;CompanyWideSharingLinksPolicy&gt;] [-DisableSharingForNonOwners]
  [-LocaleId &lt;UInt32&gt;] [-RestrictedToGeo &lt;RestrictedToRegion&gt;] [-SocialBarOnSitePagesDisabled]
  [-AnonymousLinkExpirationInDays &lt;Int32&gt;] [-OverrideTenantAnonymousLinkExpirationPolicy]
- [-MediaTranscription &lt;MediaTranscriptionPolicyType&gt;]
+ [-MediaTranscription &lt;MediaTranscriptionPolicyType&gt;] [-SensitivityLabel &lt;Guid&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="set-lock-state">Set Lock State</h3>
-<pre><code class="lang-powershell">Set-PnPSite [-Identity &lt;String&gt;] [-Classification &lt;String&gt;] [-DisableFlows] [-LockState &lt;SiteLockState&gt;]
- [-Wait] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPSite [-Identity &lt;String&gt;] [-LockState &lt;SiteLockState&gt;] [-Wait] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPSite -Classification &quot;HBI&quot;
 </code></pre>
-<p>Sets the current site classification to HBI</p>
+<p>Sets the current site classification tag to HBI</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPSite -Classification $null
 </code></pre>
-<p>Unsets the current site classification</p>
+<p>Unsets the current site classification tag</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPSite -DisableFlows
 </code></pre>
@@ -152,7 +151,18 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-classification">-Classification</h3>
-<p>The classification to set</p>
+<p>The classification tag to set. This is the old classification/labeling method. Set it to $null to remove the classification entirely.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-sensitivitylabel">-SensitivityLabel</h3>
+<p>The Microsoft Purview sensitivity label to set. This is the new classification/labeling method.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 

@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Publish-PnPSyntexModel | PnP PowerShell </title>
+    <title>Get-PnPSensitivityLabel | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Publish-PnPSyntexModel | PnP PowerShell ">
+    <meta name="title" content="Get-PnPSensitivityLabel | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,37 +77,55 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="publish-pnpsyntexmodel">Publish-PnPSyntexModel</h1>
+                    <h1 id="get-pnpsensitivitylabel">Get-PnPSensitivityLabel</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Publishes a SharePoint Syntex models to a list.</p>
-<p>This cmdlet only works when you've connected to a SharePoint Syntex Content Center site.</p>
-<p><img src="../images/batching/Batching.png" alt="Supports Batching"></p>
+<p>Gets the Microsoft Purview sensitivity labels that are available within the tenant</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="single">Single</h3>
-<pre><code class="lang-powershell">Publish-PnPSyntexModel -Model &lt;SyntexModelPipeBind&gt; -ListWebUrl &lt;string&gt; -List &lt;ListPipeBind&gt; [-PublicationViewOption &lt;MachineLearningPublicationViewOption&gt;]  [-Connection &lt;PnPConnection&gt;]
- [&lt;CommonParameters&gt;]
-</code></pre>
-<h3 id="batched">Batched</h3>
-<pre><code class="lang-powershell">Publish-PnPSyntexModel -Model &lt;SyntexModelPipeBind&gt; -TargetSiteUrl &lt;string&gt; -TargetWebServerRelativeUrl &lt;string&gt; -TargetLibraryServerRelativeUrl &lt;string&gt; -Batch &lt;PnPBatch&gt;  [-PublicationViewOption &lt;MachineLearningPublicationViewOption&gt;]  [-Connection &lt;PnPConnection&gt;]
- [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPSensitivityLabel [-Identity &lt;Guid&gt;] [-User &lt;AzureADUserPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This command publishes a SharePoint Syntex content understanding models to a list.</p>
+<p>This cmdlet allows retrieval of the available Microsoft Purview sensitivity labels in the currently connected tenant. You can retrieve all the labels, a specific label or all the labels available to a specific user.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Publish-PnPSyntexModel -Model &quot;Invoice model&quot; -ListWebUrl &quot;https://contoso.sharepoint.com/sites/finance&quot; -List &quot;Documents&quot;
+<pre><code class="lang-powershell">Get-PnPSensitivityLabel
 </code></pre>
-<p>Publishes the content understanding model named &quot;Invoice model&quot; to the list named &quot;Documents&quot; in the /sites/finance web.</p>
+<p>Returns all the Microsoft Purview sensitivitiy labels that exist on the tenant</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Publish-PnPSyntexModel -Model &quot;Invoice model&quot; -TargetSiteUrl &quot;https://contoso.sharepoint.com/sites/finance&quot; -TargetWebServerRelativeUrl &quot;/sites/finance&quot; -TargetLibraryServerRelativeUrl &quot;/sites/finance/shared%20documents&quot; -Batch $batch
+<pre><code class="lang-powershell">Get-PnPSensitivityLabel -User johndoe@tenant.onmicrosoft.com
 </code></pre>
-<p>Adds the publishing of the content understanding model named &quot;Invoice model&quot; to the &quot;Shared Documents&quot; library into the PnPBatch $batch. Use <code>Invoke-PnPBatch -Batch $batch</code> to execute the batch, use <code>$batch = New-PnPBatch</code> to create a batch.</p>
+<p>Returns all Microsoft Purview sensitivitiy labels which are available to the provided user</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPSensitivityLabel -Identity 47e66706-8627-4979-89f1-fa7afeba2884
+</code></pre>
+<p>Returns a specific Microsoft Purview sensitivitiy label by its id</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-identity">-Identity</h3>
+<p>The Id of the Microsoft Purview sensitivity label to retrieve</p>
+<pre><code class="lang-yaml">Type: Guid
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-user">-User</h3>
+<p>The UPN, Id or instance of an Azure AD user for which you would like to retrieve the Microsoft Purview sensitivity labels available to this user</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -119,102 +137,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-model">-Model</h3>
-<p>The name or id of the SharePoint Syntex model.</p>
-<pre><code class="lang-yaml">Type: SyntexModelPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-listweburl">-ListWebUrl</h3>
-<p>Url of the web hosting the list to publish the model to.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: Single
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-list">-List</h3>
-<p>The name or id of the list to publish the model to.</p>
-<pre><code class="lang-yaml">Type: ListPipeBind
-Parameter Sets: Single
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-targetsiteurl">-TargetSiteUrl</h3>
-<p>The fully qualified URL of the site collection hosting the library to publish the model to.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: Batched
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-targetwebserverrelativeurl">-TargetWebServerRelativeUrl</h3>
-<p>The server relative url of the web hosting the library to publish the model to.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: Batched
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-targetlibraryserverrelativeurl">-TargetLibraryServerRelativeUrl</h3>
-<p>The server relative url of the library to publish the model to.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: Batched
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-batch">-Batch</h3>
-<p>The batch to add this publish request to.</p>
-<pre><code class="lang-yaml">Type: PnPBatch
-Parameter Sets: Batched
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-publicationviewoption">-PublicationViewOption</h3>
-<p>The view options to apply when publishing the model to the list.</p>
-<pre><code class="lang-yaml">Type: MachineLearningPublicationViewOption
-Parameter Sets: (All)
-Accepted values: NewView, NewViewAsDefault, NoNewView
-
-Required: False
-Position: Named
-Default value: NewViewAsDefault
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
+<a href="https://docs.microsoft.com/graph/api/informationprotectionpolicy-list-labels">Microsoft Graph documentation</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

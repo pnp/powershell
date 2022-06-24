@@ -94,19 +94,18 @@
 <li><p>Create a new Function App</p>
 </li>
 <li><p>Choose runtime stack <code>PowerShell Core</code> and version <code>7.0</code></p>
-<p><img src="../images/azurefunctions/createfunctionappbasics.png" alt=""></p>
+<p><img src="../images/azurefunctions/createfunctionappbasics.png" alt="Create function app basics"></p>
 </li>
 <li><p>Select <code>Windows</code> as the operating system or else you will not be able to perform the following steps from your browser.</p>
-<p><img src="../images/azurefunctions/createfunctionapphosting.png" alt=""></p>
+<p><img src="../images/azurefunctions/createfunctionapphosting.png" alt="Create function app hosting"></p>
 </li>
 </ol>
 <h2 id="make-pnp-powershell-available-to-all-functions-in-the-app">Make PnP PowerShell available to all functions in the app</h2>
 <ol>
-<li><p>Navigate to <code>App files</code> which is located the left side menu of the function app under the <code>Functions</code> header.</p>
-</li>
-<li><p>In the dropdown presented, select <code>requirements.psd1</code>. You'll notice that the function app wants to provide the Azure cmdlets. If you do not need those, keep the <code>Az</code> entry presented commented out.</p>
-</li>
-<li><p>Add a new entry or replace the whole contents of the file with:</p>
+<li>Navigate to <code>App files</code> which is located the left side menu of the function app under the <code>Functions</code> header.</li>
+<li>In the dropdown presented, select <code>requirements.psd1</code>. You'll notice that the function app wants to provide the Azure cmdlets. If you do not need those, keep the <code>Az</code> entry presented commented out.</li>
+<li>Add a new entry or replace the whole contents of the file with:</li>
+</ol>
 <h3 id="specific-stable-version">Specific stable version</h3>
 <pre><code class="lang-powershell">@{
     'PnP.PowerShell' = '1.9.0'
@@ -115,19 +114,24 @@
 <p>The version that will be installed will be the specified specific build, which is generally recommended. You build and test your Azure Function against this specific PnP PowerShell version. Future releases may work differently and cause issues, therefore it is generally recommended to specify a specific version here.</p>
 <h3 id="latest-stable-version">Latest stable version</h3>
 <p>If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version:</p>
-<pre><code class="lang-powershell">@{
+<pre><code>```powershell
+@{
     'PnP.PowerShell' = '1.*'
  }
+```
 </code></pre>
 <p>This will then automatically download any minor version of the major 1 release when available. Note that wildcards will always take the latest stable version and not the nightly build/prerelease versions.</p>
 <h3 id="specific-prerelease-version">Specific prerelease version</h3>
 <p>If you wish to use a specific prerelease/nightly build version, go to the <a href="https://www.powershellgallery.com/packages/PnP.PowerShell">overview of available versions</a> and literally copy/paste the version in the definition:</p>
-<pre><code class="lang-powershell">@{
-    'PnP.PowerShell' = '1.9.46-nightly'
+<pre><code>```powershell
+@{
+    'PnP.PowerShell' = '1.10.58-nightly'
  }
+```
+
+![Adding PnP PowerShell to the requirements.psd1 file in an Azure Function](./../images/azurefunctions/addpnpposhtoappfilerequirements.png)
 </code></pre>
-<p><img src="../images/azurefunctions/addpnpposhtoappfilerequirements.png" alt="Adding PnP PowerShell to the requirements.psd1 file in an Azure Function"></p>
-</li>
+<ol>
 <li><p>Save the <code>requirements.psd1</code> file</p>
 </li>
 <li><p>If you decide to keep the Az cmdlets commented out, save and edit the <code>profile.psd</code> file. Mark out the following block in the file as follows, if not already done:</p>
@@ -198,13 +202,13 @@ Register-PnPAzureADApp -ApplicationName &quot;MyDemoApp&quot; -Tenant [yourtenan
 <p>Once you have an Azure Active Directory application set up and the public key certificate uploaded to its registration, proceed with configuring the Azure Function to make use of the private key of this certificate pair:</p>
 <ol>
 <li>In your function app, navigate to <code>TLS/SSL Settings</code> and switch to the <code>Private Key Certificates (.pfx)</code> section.</li>
-<li>Click <code>Upload Certificate</code> and select the &quot;MyDemoApp.pfx&quot; file that has been created for you. Enter the password you used in the script above.
-1 After the certificate has been uploaded, copy the thumbprint value shown.
-1 Navigate to <code>Configuration</code> and add a new Application Setting</li>
+<li>Click <code>Upload Certificate</code> and select the &quot;MyDemoApp.pfx&quot; file that has been created for you. Enter the password you used in the script above.</li>
+<li>After the certificate has been uploaded, copy the thumbprint value shown.</li>
+<li>Navigate to <code>Configuration</code> and add a new Application Setting</li>
 <li>Call the setting <code>WEBSITE_LOAD_CERTIFICATES</code> and set the thumbprint as a value. To make all the certificates you uploaded available use <code>*</code> as the value. See <a href="https://docs.microsoft.com/azure/app-service/configure-ssl-certificate-in-code">https://docs.microsoft.com/azure/app-service/configure-ssl-certificate-in-code</a> for more information.</li>
 <li>Save the settings</li>
 </ol>
-<h4 id="create-the-azure-function">Create the Azure Function</h4>
+<h4 id="create-the-azure-function-for-certificate-authentication">Create the Azure Function for certificate authentication</h4>
 <p>Create a new function and replace the function code with the following example:</p>
 <pre><code class="lang-powershell">using namespace System.Net
 
@@ -265,12 +269,17 @@ Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
 </li>
 <li><p>Now assign this permission to the Azure Active Directory app registration that has been created automatically by enabling the managed identity on the Azure Function in the steps above:</p>
 <pre><code class="lang-powershell">$managedIdentityId = &quot;&lt;Object (principal) ID of the Azure Function generated in the previous section&gt;&quot;
-Add-AzADAppPermission -ObjectId $managedIdentityId -ApiId $graphServicePrincipal.AppId -PermissionId $appRole.Id -Type 'Role'
+
+$body = &quot;{'principalId':'$($managedIdentityId)','resourceId':'$($graphServicePrincipal.Id)','appRoleId':'$($appRole.Id)'}&quot;
+
+$accessTokenResource = Get-AzAccessToken -ResourceTypeName MSGraph
+
+Invoke-WebRequest &quot;https://graph.microsoft.com/v1.0/servicePrincipals/$($managedIdentityId)/appRoleAssignments&quot; -Headers @{&quot;Authorization&quot; = &quot;Bearer $($accessTokenResource.Token)&quot;} -ContentType &quot;application/json&quot; -Body $body -Method Post
 
 </code></pre>
 </li>
 </ol>
-<h4 id="create-the-azure-function-1">Create the Azure Function</h4>
+<h4 id="create-the-azure-function-for-managed-identity-authentication">Create the Azure Function for managed identity authentication</h4>
 <p>Create a new function and replace the function code with the following example:</p>
 <pre><code class="lang-powershell">using namespace System.Net
 
