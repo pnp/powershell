@@ -32,6 +32,55 @@ namespace PnP.PowerShell.Commands
         /// </summary>
         public HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient(ClientContext);
 
+        /// <summary>
+        /// The current Bearer access token for SharePoitn Online
+        /// </summary>
+        protected string AccessToken
+        {
+            get
+            {
+                if (Connection != null)
+                {
+                    if (Connection.Context != null)
+                    {
+                        var settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(Connection.Context);
+                        if (settings != null)
+                        {
+                            var authManager = settings.AuthenticationManager;
+                            if (authManager != null)
+                            {
+                                return authManager.GetAccessTokenAsync(Connection.Context.Url).GetAwaiter().GetResult();
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// The current Bearer access token for Microsoft Graph
+        /// </summary>
+        public string GraphAccessToken
+        {
+            get
+            {
+                if (Connection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
+                {
+                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, $"https://{Connection.GraphEndPoint}/").GetAwaiter().GetResult();
+                }
+                else
+                {
+                    if (Connection?.Context != null)
+                    {
+                        return TokenHandler.GetAccessToken(GetType(), $"https://{Connection.GraphEndPoint}/.default", Connection);
+                    }
+                }
+
+                return null;
+            }
+        }
+
         protected override void BeginProcessing()
         {
             // Call the base but instruct it not to check if there's an active connection as we will do that in this method already
@@ -96,49 +145,6 @@ namespace PnP.PowerShell.Commands
         protected override void EndProcessing()
         {
             base.EndProcessing();
-        }
-
-        protected string AccessToken
-        {
-            get
-            {
-                if (Connection != null)
-                {
-                    if (Connection.Context != null)
-                    {
-                        var settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(Connection.Context);
-                        if (settings != null)
-                        {
-                            var authManager = settings.AuthenticationManager;
-                            if (authManager != null)
-                            {
-                                return authManager.GetAccessTokenAsync(Connection.Context.Url).GetAwaiter().GetResult();
-                            }
-                        }
-                    }
-                }
-                return null;
-            }
-        }
-
-        public string GraphAccessToken
-        {
-            get
-            {
-                if (Connection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
-                {
-                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, $"https://{Connection.GraphEndPoint}/").GetAwaiter().GetResult();
-                }
-                else
-                {
-                    if (Connection?.Context != null)
-                    {
-                        return TokenHandler.GetAccessToken(GetType(), $"https://{Connection.GraphEndPoint}/.default", Connection);
-                    }
-                }
-
-                return null;
-            }
         }
 
         protected void PollOperation(SpoOperation spoOperation)
