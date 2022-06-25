@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
+namespace PnP.PowerShell.Commands.Purview
 {
     [Cmdlet(VerbsCommon.Get, "PnPAvailableSensitivityLabel")]
     [RequiredMinimalApiPermissions("InformationProtectionPolicy.Read.All")]
