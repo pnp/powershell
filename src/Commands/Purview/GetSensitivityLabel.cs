@@ -8,11 +8,11 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSensitivityLabel")]
+    [Cmdlet(VerbsCommon.Get, "PnPAvailableSensitivityLabel")]
     [RequiredMinimalApiPermissions("InformationProtectionPolicy.Read.All")]
     [OutputType(typeof(IEnumerable<Model.Graph.Purview.InformationProtectionLabel>))]
     [OutputType(typeof(Model.Graph.Purview.InformationProtectionLabel))]
-    public class GetSensitivityLabel : PnPGraphCmdlet
+    public class GetAvailableSensitivityLabel : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
         public AzureADUserPipeBind User;
