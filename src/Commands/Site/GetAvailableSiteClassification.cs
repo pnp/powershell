@@ -1,4 +1,4 @@
-﻿
+﻿using PnP.Framework.Graph.Model;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using System;
@@ -6,9 +6,11 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteClassification")]
+    [Cmdlet(VerbsCommon.Get, "PnPAvailableSiteClassification")]
     [RequiredMinimalApiPermissions("Directory.Read.All")]
-    public class GetSiteClassification : PnPGraphCmdlet
+    [OutputType(typeof(SiteClassificationsSettings))]
+    [Alias("Get-PnPSiteClassification")]
+    public class GetAvailableSiteClassification : PnPGraphCmdlet
     {
         protected override void ExecuteCmdlet()
         {
