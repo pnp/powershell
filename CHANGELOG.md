@@ -103,8 +103,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Update-PnPSiteClassification`, it was ignoring the `Settings` parameter. It will now be processed. [#1989](https://github.com/pnp/powershell/pull/1989)
 - Fixed `Register-PnPAzureADApp` issue with app creation after the connection related changes. [#1993](https://github.com/pnp/powershell/pull/1993)
 - Fixed `Get-PnPFileVersion` not able to correctly use piping on the returned object. [#1997](https://github.com/pnp/powershell/pull/1997)
-- Fixed `Add-PnPListItem` not showing field name when it has an improper value assigned to it [#2002](https://github.com/pnp/powershell/pull/202)
-- Fixed connecting using `Connect-PnPOnline -Interactive -ClientId` not working well when already having an App-Only connection using the same ClientId
+- Fixed `Add-PnPListItem` not showing field name when it has an improper value assigned to it [#2002](https://github.com/pnp/powershell/pull/2002)
+- Fixed connecting using `Connect-PnPOnline -Interactive -ClientId` not working well when already having an App-Only connection using the same ClientId [#2035](https://github.com/pnp/powershell/pull/2035)
 
 ### Removed
 
