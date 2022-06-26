@@ -5,7 +5,7 @@ using System.Management.Automation.Runspaces;
 namespace PnP.PowerShell.Tests.Graph
 {
     [TestClass]
-    public class AddSiteClassificationTests
+    public class RemoveAvailableSiteClassificationTests
     {
         #region Test Setup/CleanUp
         [ClassInitialize]
@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Tests.Graph
         #region Scaffolded Cmdlet Tests
         //TODO: This is a scaffold of the cmdlet - complete the unit test
         //[TestMethod]
-        public void AddPnPSiteClassificationTest()
+        public void RemovePnPSiteClassificationTest()
         {
             using (var scope = new PSTestScope(true))
             {
@@ -64,9 +64,12 @@ namespace PnP.PowerShell.Tests.Graph
 
 				// This is a mandatory parameter
 				var classifications = "";
+				// From Cmdlet Help: Specifying the Confirm parameter will allow the confirmation question to be skipped
+				var confirm = "";
 
-                var results = scope.ExecuteCommand("Add-PnPSiteClassification",
-					new CommandParameter("Classifications", classifications));
+                var results = scope.ExecuteCommand("Remove-PnPSiteClassification",
+					new CommandParameter("Classifications", classifications),
+					new CommandParameter("Confirm", confirm));
                 
                 Assert.IsNotNull(results);
             }

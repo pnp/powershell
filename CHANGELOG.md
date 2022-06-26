@@ -60,6 +60,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added optional `-SensitivityLabel` to `Set-PnPSite` which allows for a Microsoft Purview sensitivitylabel to be set [#2024](https://github.com/pnp/powershell/pull/2024)
 - Added `-UpdateChildren` parameter to `Add-PnPFieldToContentType` cmdlet. This allows users to skip pushing the fields to child content types. [#1092](https://github.com/pnp/powershell/pull/1992)
 - Added `Get-PnPAvailableSensitivityLabel` cmdlet to retrieve Microsoft Purview sensitivity labels available on the tenant [#2023](https://github.com/pnp/powershell/pull/2023)
+- Added `Get-PnPSiteSensitivityLabel` cmdlet to retrieve the Microsoft Purview sensitivity label set on the current site
+- Added `Set-PnPSiteClassification` cmdlet which allows setting a classic site classification on the current site
+- Added `Set-PnPSiteSensitivityLabel` cmdlet which allows setting a Microsoft Purview sensitivity label on the current site
 
 ### Changed
 
@@ -76,6 +79,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Service Health cmdlets have been improved and are now consistent with other cmdlets to handle pagination [#1938](https://github.com/pnp/powershell/pull/1938)
 - Changed that almost every cmdlet now supports passing in a specific connection using `-Connection`. If omitted, the default connection will be used. [#1949](https://github.com/pnp/powershell/pull/1949), [#2011](https://github.com/pnp/powershell/pull/2011), [#1958](https://github.com/pnp/powershell/pull/1958)
 - Changed connecting with `Connect-PnPOnline -Credentials` now throwing a clear exception when making a typo in the hostname instead of getting stuck [#686](https://github.com/pnp/pnpframework/pull/686)
+- Renamed `Get-PnPSiteClassification` to `Get-PnPAvailableSiteClassification` to fall in line with `Get-PnPAvailableSensitivityLabel`. Old name will stay as an alias for backwards compatibility.
+- Renamed `Add-PnPSiteClassification` to `Add-PnPAvailableSiteClassification` to fall in line with `Get-PnPAvailableSensitivityLabel`. Old name will stay as an alias for backwards compatibility.
+- Renamed `Update-PnPSiteClassification` to `Update-PnPAvailableSiteClassification` to fall in line with `Get-PnPAvailableSensitivityLabel`. Old name will stay as an alias for backwards compatibility.  
+ - Renamed `Remove-PnPSiteClassification` to `Remove-PnPAvailableSiteClassification` to fall in line with `Get-PnPAvailableSensitivityLabel`. Old name will stay as an alias for backwards compatibility.  
 
 ### Fixed
 
@@ -104,6 +111,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Register-PnPAzureADApp` issue with app creation after the connection related changes. [#1993](https://github.com/pnp/powershell/pull/1993)
 - Fixed `Get-PnPFileVersion` not able to correctly use piping on the returned object. [#1997](https://github.com/pnp/powershell/pull/1997)
 - Fixed `Add-PnPListItem` not showing field name when it has an improper value assigned to it [#2002](https://github.com/pnp/powershell/pull/202)
+- Fixed `Update-PnPSiteClassification` not allowing the `-UsageGuidelinesUrl` to be set without also setting `-DefaultClassification`
 
 ### Removed
 

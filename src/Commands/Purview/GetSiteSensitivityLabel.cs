@@ -1,16 +1,22 @@
-using PnP.PowerShell.Commands.Utilities.REST;
+using Microsoft.SharePoint.Client;
+using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Purview
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteSensitivityLabel")]
-    [OutputType(typeof(string))]
+    [OutputType(typeof(PnP.PowerShell.Commands.Model.SharePoint.SensitivityLabel))]
     public class GetSiteSensitivityLabel : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()
         {
-            var label = GraphHelper.GetAsync<Model.Graph.Purview.InformationProtectionLabel>(Connection, $"{Connection.Url}/_api/site/classification", AccessToken).GetAwaiter().GetResult();
-            WriteObject(label, false);
+            ClientContext.Load(ClientContext.Site, s => s.SensitivityLabelInfo);
+            ClientContext.ExecuteQueryRetry();
+
+            WriteObject(new PnP.PowerShell.Commands.Model.SharePoint.SensitivityLabel {
+                Id = Guid.Parse(ClientContext.Site.SensitivityLabelInfo.Id),
+                DisplayName = ClientContext.Site.SensitivityLabelInfo.DisplayName
+            }, false);
         }
     }
 }

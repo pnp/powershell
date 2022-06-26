@@ -7,11 +7,11 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Add, "PnPSiteClassification")]
+    [Cmdlet(VerbsCommon.Add, "PnPAvailableSiteClassification")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [Alias("Add-PnPSiteClassification")]
     public class AddSiteClassification : PnPGraphCmdlet
     {
-
         [Parameter(Mandatory = true)]
         public List<string> Classifications;
 

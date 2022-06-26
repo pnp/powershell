@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Remove-PnPSiteClassification
+title: Remove-PnPAvailableSiteClassification
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPSiteClassification.html
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPAvailableSiteClassification.html
 ---
  
-# Remove-PnPSiteClassification
+# Remove-PnPAvailableSiteClassification
 
 ## SYNOPSIS
 
@@ -15,13 +15,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPSiteClassific
 
   * Microsoft Graph API: Directory.ReadWrite.All
 
-Removes one or more existing site classification values from the list of available values
+Removes one or more existing classic site classification values from the list of available values on the tenant
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]> 
-  [<CommonParameters>]
+Remove-PnPAvailableSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,14 +29,14 @@ Remove-PnPSiteClassification -Classifications <System.Collections.Generic.List`1
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPSiteClassification -Classifications "HBI"
+Remove-PnPAvailableSiteClassification -Classifications "HBI"
 ```
 
 Removes the "HBI" site classification from the list of available values.
 
 ### EXAMPLE 2
 ```powershell
-Remove-PnPSiteClassification -Classifications "HBI", "Top Secret"
+Remove-PnPAvailableSiteClassification -Classifications "HBI","Top Secret"
 ```
 
 Removes the "HBI" and "Top Secret" site classification from the list of available values.
@@ -58,7 +57,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
-Specifying the Confirm parameter will allow the confirmation question to be skipped
+If provided or set to $true, a confirmation will be asked before the actual remove takes place. If omitted or set to $false, it will remove the site classification(s) without asking for confirmation.
 
 ```yaml
 Type: SwitchParameter
@@ -74,4 +73,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
