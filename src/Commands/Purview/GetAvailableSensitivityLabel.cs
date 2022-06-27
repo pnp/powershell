@@ -37,7 +37,14 @@ namespace PnP.PowerShell.Commands.Purview
             }
             else
             {
-                url = "/beta/informationProtection/policy/labels";
+                if(Connection.ConnectionMethod == Model.ConnectionMethod.AzureADAppOnly)
+                {
+                    url = "/beta/informationProtection/policy/labels";
+                }
+                else
+                {
+                    url = "/beta/me/informationProtection/policy/labels";
+                }                
             }
 
             if (ParameterSpecified(nameof(Identity)))

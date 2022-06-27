@@ -38,8 +38,7 @@ namespace PnP.PowerShell.Commands.Purview
                     }
 
                     sensitivityLabelId = label.ElementAt(0).Id;
-                    WriteVerbose($"Microsoft Purview label with name '{Identity}' successfully resolved to Id '{sensitivityLabelId}'");
-                    
+                    WriteVerbose($"Microsoft Purview label with name '{Identity}' successfully resolved to Id '{sensitivityLabelId}'");                    
                 }
                 else
                 {

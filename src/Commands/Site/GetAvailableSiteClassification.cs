@@ -10,6 +10,7 @@ namespace PnP.PowerShell.Commands.Site
     [RequiredMinimalApiPermissions("Directory.Read.All")]
     [OutputType(typeof(SiteClassificationsSettings))]
     [Alias("Get-PnPSiteClassification")]
+    [WriteAliasWarning("Please use 'Get-PnPAvailableSiteClassification'. The alias 'Get-PnPSiteClassification' will be removed in a future release.")]
     public class GetAvailableSiteClassification : PnPGraphCmdlet
     {
         protected override void ExecuteCmdlet()
