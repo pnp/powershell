@@ -63,6 +63,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPSiteSensitivityLabel` cmdlet to retrieve the Microsoft Purview sensitivity label set on the current site [#2036](https://github.com/pnp/powershell/pull/2036)
 - Added `Set-PnPSiteClassification` cmdlet which allows setting a classic site classification on the current site [#2036](https://github.com/pnp/powershell/pull/2036)
 - Added `Set-PnPSiteSensitivityLabel` cmdlet which allows setting a Microsoft Purview sensitivity label on the current site [#2036](https://github.com/pnp/powershell/pull/2036)
+- Added `Remove-PnPSiteSensitivityLabel` cmdlet which allows removing the Microsoft Purview sensitivity label from the current site [#2036](https://github.com/pnp/powershell/pull/2036)
 
 ### Changed
 
