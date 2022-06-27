@@ -61,10 +61,11 @@ namespace PnP.PowerShell.Commands.Purview
             {
                 // Site does not have a Microsoft 365 Group behind it
                 WriteVerbose($"Current site at {Connection.Url} is not backed by a Microsoft 365 Group");
-                WriteVerbose($"Trying to set the current site {Connection.Url} to Microsoft Purview sensitivity label with Id {sensitivityLabelId}");
-                ClientContext.Site.SensitivityLabelId = sensitivityLabelId;
-                ClientContext.ExecuteQueryRetry();
             }
+            
+            WriteVerbose($"Trying to set the current site {Connection.Url} to Microsoft Purview sensitivity label with Id {sensitivityLabelId}");
+            ClientContext.Site.SensitivityLabelId = sensitivityLabelId;
+            ClientContext.ExecuteQueryRetry();
         }
     }
 }

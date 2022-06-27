@@ -14,7 +14,7 @@ namespace PnP.PowerShell.Commands.Purview
             ClientContext.ExecuteQueryRetry();
 
             WriteObject(new PnP.PowerShell.Commands.Model.SharePoint.SensitivityLabel {
-                Id = Guid.Parse(ClientContext.Site.SensitivityLabelInfo.Id),
+                Id = Guid.TryParse(ClientContext.Site.SensitivityLabelInfo.Id, out Guid labelGuid) ? (Guid?) labelGuid : null,
                 DisplayName = ClientContext.Site.SensitivityLabelInfo.DisplayName
             }, false);
         }
