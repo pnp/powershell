@@ -84,6 +84,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Renamed `Add-PnPSiteClassification` to `Add-PnPAvailableSiteClassification` to fall in line with `Get-PnPAvailableSensitivityLabel`. Old name will stay as an alias for backwards compatibility for now, but will be removed in a future version. [#2036](https://github.com/pnp/powershell/pull/2036)
 - Renamed `Update-PnPSiteClassification` to `Update-PnPAvailableSiteClassification` to fall in line with `Get-PnPAvailableSensitivityLabel`. Old name will stay as an alias for backwards compatibility for now, but will be removed in a future version. [#2036](https://github.com/pnp/powershell/pull/2036)
 - Renamed `Remove-PnPSiteClassification` to `Remove-PnPAvailableSiteClassification` to fall in line with `Get-PnPAvailableSensitivityLabel`. Old name will stay as an alias for backwards compatibility for now, but will be removed in a future version. [#2036](https://github.com/pnp/powershell/pull/2036)
+- Changed `Get-PnPHubSiteChild` to have its `-Identity` parameter become optional. If not provided, the currently connected to site will be used. [#2033](https://github.com/pnp/powershell/pull/2033)
 
 ### Fixed
 
@@ -113,6 +114,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPFileVersion` not able to correctly use piping on the returned object. [#1997](https://github.com/pnp/powershell/pull/1997)
 - Fixed `Add-PnPListItem` not showing field name when it has an improper value assigned to it [#2002](https://github.com/pnp/powershell/pull/202)
 - Fixed `Update-PnPSiteClassification` not allowing the `-UsageGuidelinesUrl` to be set without also setting `-DefaultClassification` [#2036](https://github.com/pnp/powershell/pull/2036)
+- Fixed the browser consent dialog throwing an exception when trying to close it [#2037](https://github.com/pnp/powershell/pull/2037)
+- Fixed `Get-PnPHubSiteChild` throwing an exception when passing in a URL that is actually not a hub site [#2033](https://github.com/pnp/powershell/pull/2033)
+- Fixed `Add-PnPListItem` not showing field name when it has an improper value assigned to it [#2002](https://github.com/pnp/powershell/pull/2002)
+- Fixed connecting using `Connect-PnPOnline -Interactive -ClientId` not working well when already having an App-Only connection using the same ClientId [#2035](https://github.com/pnp/powershell/pull/2035)
 
 ### Removed
 
