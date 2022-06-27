@@ -106,6 +106,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPFileVersion` not able to correctly use piping on the returned object. [#1997](https://github.com/pnp/powershell/pull/1997)
 - Fixed `Add-PnPListItem` not showing field name when it has an improper value assigned to it [#2002](https://github.com/pnp/powershell/pull/202)
 - Fixed `Get-PnPHubSiteChild` throwing an exception when passing in a URL that is actually not a hub site [#2033](https://github.com/pnp/powershell/pull/2033)
+- Fixed `Add-PnPListItem` not showing field name when it has an improper value assigned to it [#2002](https://github.com/pnp/powershell/pull/2002)
+- Fixed connecting using `Connect-PnPOnline -Interactive -ClientId` not working well when already having an App-Only connection using the same ClientId [#2035](https://github.com/pnp/powershell/pull/2035)
 
 ### Removed
 
