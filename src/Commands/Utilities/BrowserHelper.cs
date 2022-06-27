@@ -183,11 +183,6 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     var form = new System.Windows.Forms.Form();
 
-                    cancellationTokenSource?.Token.Register(() =>
-                    {
-                        form.Invoke((System.Windows.Forms.MethodInvoker)(() => form.Close()));
-                    });
-
                     var browser = new System.Windows.Forms.WebBrowser
                     {
                         ScriptErrorsSuppressed = scriptErrorsSuppressed,
