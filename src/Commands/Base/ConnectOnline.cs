@@ -573,7 +573,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 ClientId = PnPConnection.PnPManagementShellClientId;
             }
-            if (PnPConnection.Current?.ClientId == ClientId)
+            if (PnPConnection.Current?.ClientId == ClientId && PnPConnection.Current?.ConnectionMethod == ConnectionMethod.Credentials)
             {
                 if (IsSameOrAdminHost(new Uri(Url), new Uri(PnPConnection.Current.Url)))
                 {
