@@ -108,23 +108,23 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             // Check if a connection has been made using DeviceLogin, in this case we cannot clone the context to the admin URL and will throw an exception
-            IsDeviceLogin(Connection.TenantAdminUrl);
+            IsDeviceLogin(tenantAdminUrl);
 
             // Set up a temporary context to the SharePoint Online Admin Center URL to allow this cmdlet to execute
-            WriteVerbose($"Connecting to the SharePoint Online Admin Center at '{Connection.TenantAdminUrl}' to run this cmdlet");
+            WriteVerbose($"Connecting to the SharePoint Online Admin Center at '{tenantAdminUrl}' to run this cmdlet");
             try
             {
-                Connection.Context = Connection.CloneContext(Connection.TenantAdminUrl);
+                Connection.Context = Connection.CloneContext(tenantAdminUrl);
             }
             catch(WebException e) when (e.Status == WebExceptionStatus.NameResolutionFailure)
             {
-                throw new PSInvalidOperationException($"The hostname '{Connection.TenantAdminUrl}' which you have passed in your Connect-PnPOnline -TenantAdminUrl is invalid. Please connect again using the proper hostname.", e);
+                throw new PSInvalidOperationException($"The hostname '{tenantAdminUrl}' which you have passed in your Connect-PnPOnline -TenantAdminUrl is invalid. Please connect again using the proper hostname.", e);
             }
             catch(Exception e)
             {
                 throw new PSInvalidOperationException($"Unable to connect to the SharePoint Online Admin Center at '{Connection.TenantAdminUrl}' to run this cmdlet. Please ensure you pass in the correct Admin Center URL using Connect-PnPOnline -TenantAdminUrl and you have access to it. Error message: {e.Message}.", e);
             }
-            WriteVerbose($"Connected to the SharePoint Online Admin Center at '{Connection.TenantAdminUrl}' to run this cmdlet");
+            WriteVerbose($"Connected to the SharePoint Online Admin Center at '{tenantAdminUrl}' to run this cmdlet");
         }
 
         /// <summary>
