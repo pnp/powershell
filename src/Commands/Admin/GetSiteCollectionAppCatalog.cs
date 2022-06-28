@@ -18,6 +18,9 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false)]
         public SwitchParameter ExcludeDeletedSites;     
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter CurrentSite;  
+
         protected override void ExecuteCmdlet()
         {
             WriteVerbose("Retrieving all site collection App Catalogs from SharePoint Online");
@@ -32,11 +35,29 @@ namespace PnP.PowerShell.Commands
                     ErrorMessage = ac.ErrorMessage,
                     SiteID = ac.SiteID
                 }
-            ).ToArray();
+            ).ToList();
 
-            WriteVerbose($"{appCatalogsLocalModel.Length} site collection App Catalog{(appCatalogsLocalModel.Length != 1 ? "s have" : " has")} been retrieved");
+            WriteVerbose($"{appCatalogsLocalModel.Count} site collection App Catalog{(appCatalogsLocalModel.Count != 1 ? "s have" : " has")} been retrieved");
 
-            var results = new List<SiteCollectionAppCatalog>(appCatalogsLocalModel.Length);
+            if(CurrentSite.ToBool())
+            {
+                SiteContext.Site.EnsureProperties(s => s.Id);
+
+                WriteVerbose($"Filtering down to only the current site at {Connection.Url} with ID {SiteContext.Site.Id}");
+                var currentSite = appCatalogsLocalModel.FirstOrDefault(a => a.SiteID.HasValue && a.SiteID.Value == SiteContext.Site.Id);
+
+                appCatalogsLocalModel.Clear();
+
+                if(currentSite == null)
+                {
+                    WriteVerbose($"Current site at {Connection.Url} with ID {SiteContext.Site.Id} does not have a site collection App Catalog on it");
+                    return;
+                }
+
+                appCatalogsLocalModel.Add(currentSite);
+            }
+
+            var results = new List<SiteCollectionAppCatalog>(appCatalogsLocalModel.Count);
             foreach (var appCatalogLocalModel in appCatalogsLocalModel)
             {
                 if (appCatalogLocalModel.SiteID.HasValue)

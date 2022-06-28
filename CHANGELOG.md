@@ -63,7 +63,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-Microsoft365GroupYammerCommunity` cmdlet to retrieve details on the Yammer Community connected to a Microsoft 365 Group [#2038](https://github.com/pnp/powershell/pull/2038)
 - Added `Get-Microsoft365GroupTeam` cmdlet to retrieve details on the Microsoft Teams team connected to a Microsoft 365 Group [#2038](https://github.com/pnp/powershell/pull/2038)
 - Added `Get-Microsoft365GroupEndpoints` cmdlet to retrieve details on all endpoints connected to a Microsoft 365 Group [#2038](https://github.com/pnp/powershell/pull/2038)
-- Added `-ExcludeDeletedSites` optional parameter to `Get-PnPSiteCollectionAppCatalogs` which allows for site collections with App Catalogs that are in the recycle bin to be exluded from the results
+- Added `-ExcludeDeletedSites` optional parameter to `Get-PnPSiteCollectionAppCatalogs` which allows for site collections with App Catalogs that are in the recycle bin to be exluded from the results [#2044](https://github.com/pnp/powershell/pull/2044)
+- Added `-CurrentSite` optional parameter to `Get-PnPSiteCollectionAppCatalogs` which allows for checking if the currently connected to site has a site collection App Catalogs provisioned on it [#2044](https://github.com/pnp/powershell/pull/2044)
 
 ### Changed
 
@@ -81,7 +82,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Changed that almost every cmdlet now supports passing in a specific connection using `-Connection`. If omitted, the default connection will be used. [#1949](https://github.com/pnp/powershell/pull/1949), [#2011](https://github.com/pnp/powershell/pull/2011), [#1958](https://github.com/pnp/powershell/pull/1958)
 - Changed connecting with `Connect-PnPOnline -Credentials` now throwing a clear exception when making a typo in the hostname instead of getting stuck [#686](https://github.com/pnp/pnpframework/pull/686)
 - Changed `Get-PnPHubSiteChild` to have its `-Identity` parameter become optional. If not provided, the currently connected to site will be used. [#2033](https://github.com/pnp/powershell/pull/2033)
-- Changed `Get-PnPSiteCollectionAppCatalogs` (plural) to `Get-PnPSiteCollectionAppCatalog` (singular) to follow the naming convention
+- Changed `Get-PnPSiteCollectionAppCatalogs` (plural) to `Get-PnPSiteCollectionAppCatalog` (singular) to follow the naming convention [#2044](https://github.com/pnp/powershell/pull/2044)
 
 ### Fixed
 
@@ -114,7 +115,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPHubSiteChild` throwing an exception when passing in a URL that is actually not a hub site [#2033](https://github.com/pnp/powershell/pull/2033)
 - Fixed `Add-PnPListItem` not showing field name when it has an improper value assigned to it [#2002](https://github.com/pnp/powershell/pull/2002)
 - Fixed connecting using `Connect-PnPOnline -Interactive -ClientId` not working well when already having an App-Only connection using the same ClientId [#2035](https://github.com/pnp/powershell/pull/2035)
-- Fixed `Get-PnPSiteCollectionAppCatalog` not returning updated site collection URLs if they had been renamed
+- Fixed `Get-PnPSiteCollectionAppCatalog` not returning updated site collection URLs if they had been renamed [#2044](https://github.com/pnp/powershell/pull/2044)
 
 ### Removed
 

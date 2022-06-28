@@ -15,7 +15,7 @@ Returns all site collection scoped app catalogs that exist on the tenant
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteCollectionAppCatalog [-ExcludeDeletedSites <SwitchParameter>] [-Connection <PnPConnection>] [-Verbose] [<CommonParameters>]
+Get-PnPSiteCollectionAppCatalog [-CurrentSite <SwitchParameter>] [-ExcludeDeletedSites <SwitchParameter>] [-Connection <PnPConnection>] [-Verbose] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,11 +31,31 @@ Will return all the site collection app catalogs that exist on the tenant, inclu
 
 ### EXAMPLE 2
 ```powershell
+Get-PnPSiteCollectionAppCatalog -CurrentSite
+```
+Will return the site collection app catalog for the currently connected to site, if it has one. Otherwise it will yield no result.
+
+### EXAMPLE 2
+```powershell
 Get-PnPSiteCollectionAppCatalog -ExcludeDeletedSites
 ```
 Will return all the site collection app catalogs that exist on the tenant excluding the site collections having App Catalogs that are in the tenant recycle bin
 
 ## PARAMETERS
+
+### -CurrentSite
+When provided, it will check if the currently connected to site has a site collection App Catalog and will return information on it. If the current site holds no site collection App Catalog, an empty response will be returned.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -ExcludeDeletedSites
 When provided, all site collections having site collection App Catalogs but residing in the tenant recycle bin, will be excluded
