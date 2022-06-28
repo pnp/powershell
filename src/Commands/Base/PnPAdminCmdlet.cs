@@ -122,7 +122,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             catch(Exception e)
             {
-                throw new PSInvalidOperationException($"Unable to connect to the SharePoint Online Admin Center at '{Connection.TenantAdminUrl}' to run this cmdlet. Please ensure you pass in the correct Admin Center URL using Connect-PnPOnline -TenantAdminUrl and you have access to it. Error message: {e.Message}.", e);
+                throw new PSInvalidOperationException($"Unable to connect to the SharePoint Online Admin Center at '{tenantAdminUrl}' to run this cmdlet. Please ensure you pass in the correct Admin Center URL using Connect-PnPOnline -TenantAdminUrl and you have access to it. Error message: {e.Message}.", e);
             }
             WriteVerbose($"Connected to the SharePoint Online Admin Center at '{tenantAdminUrl}' to run this cmdlet");
         }
