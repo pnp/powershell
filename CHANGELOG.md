@@ -60,6 +60,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added optional `-SensitivityLabel` to `Set-PnPSite` which allows for a Microsoft Purview sensitivitylabel to be set [#2024](https://github.com/pnp/powershell/pull/2024)
 - Added `-UpdateChildren` parameter to `Add-PnPFieldToContentType` cmdlet. This allows users to skip pushing the fields to child content types. [#1092](https://github.com/pnp/powershell/pull/1992)
 - Added `Get-PnPSensitivityLabel` cmdlet to retrieve Microsoft Purview sensitivity labels available on the tenant [#2023](https://github.com/pnp/powershell/pull/2023)
+- Added `Get-Microsoft365GroupYammerCommunity` cmdlet to retrieve details on the Yammer Community connected to a Microsoft 365 Group [#2038](https://github.com/pnp/powershell/pull/2038)
+- Added `Get-Microsoft365GroupTeam` cmdlet to retrieve details on the Microsoft Teams team connected to a Microsoft 365 Group [#2038](https://github.com/pnp/powershell/pull/2038)
+- Added `Get-Microsoft365GroupEndpoints` cmdlet to retrieve details on all endpoints connected to a Microsoft 365 Group [#2038](https://github.com/pnp/powershell/pull/2038)
 
 ### Changed
 
@@ -76,6 +79,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Service Health cmdlets have been improved and are now consistent with other cmdlets to handle pagination [#1938](https://github.com/pnp/powershell/pull/1938)
 - Changed that almost every cmdlet now supports passing in a specific connection using `-Connection`. If omitted, the default connection will be used. [#1949](https://github.com/pnp/powershell/pull/1949), [#2011](https://github.com/pnp/powershell/pull/2011), [#1958](https://github.com/pnp/powershell/pull/1958)
 - Changed connecting with `Connect-PnPOnline -Credentials` now throwing a clear exception when making a typo in the hostname instead of getting stuck [#686](https://github.com/pnp/pnpframework/pull/686)
+- Changed `Get-PnPHubSiteChild` to have its `-Identity` parameter become optional. If not provided, the currently connected to site will be used. [#2033](https://github.com/pnp/powershell/pull/2033)
 
 ### Fixed
 
@@ -104,6 +108,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Register-PnPAzureADApp` issue with app creation after the connection related changes. [#1993](https://github.com/pnp/powershell/pull/1993)
 - Fixed `Get-PnPFileVersion` not able to correctly use piping on the returned object. [#1997](https://github.com/pnp/powershell/pull/1997)
 - Fixed `Add-PnPListItem` not showing field name when it has an improper value assigned to it [#2002](https://github.com/pnp/powershell/pull/202)
+- Fixed the browser consent dialog throwing an exception when trying to close it [#2037](https://github.com/pnp/powershell/pull/2037)
+- Fixed `Get-PnPHubSiteChild` throwing an exception when passing in a URL that is actually not a hub site [#2033](https://github.com/pnp/powershell/pull/2033)
+- Fixed `Add-PnPListItem` not showing field name when it has an improper value assigned to it [#2002](https://github.com/pnp/powershell/pull/2002)
+- Fixed connecting using `Connect-PnPOnline -Interactive -ClientId` not working well when already having an App-Only connection using the same ClientId [#2035](https://github.com/pnp/powershell/pull/2035)
 
 ### Removed
 
@@ -185,6 +193,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Changed `Get-PnPTenantDeletedSite -Identity` no longer returning an unknown exception when no site collection with the provided Url exists in the tenant recycle bin but instead returning no output to align with other cmdlets [#1596](https://github.com/pnp/powershell/pull/1596)
 - Changed `Connect-PnPOnline -UseWebLogin` to no longer suppress errors which should allow for certificate logins to be used [#1706](https://github.com/pnp/powershell/issues/1706)
 - The cmdlet `New-PnPTeamsTeam` no longer supports adding members or owners through their e-mail addresses, if they differ from their UPNs. The User Principal Names must be used instead [#1241](https://github.com/pnp/powershell/pull/1241)
+- Improved `New-PnPUPABulkImportJob` by optimizing it and also adding support for `WhatIf` paramater. [#2040](https://github.com/pnp/powershell/pull/2040)
 
 ### Fixed
 
