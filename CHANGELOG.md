@@ -112,7 +112,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPHubSiteChild` throwing an exception when passing in a URL that is actually not a hub site [#2033](https://github.com/pnp/powershell/pull/2033)
 - Fixed `Add-PnPListItem` not showing field name when it has an improper value assigned to it [#2002](https://github.com/pnp/powershell/pull/2002)
 - Fixed connecting using `Connect-PnPOnline -Interactive -ClientId` not working well when already having an App-Only connection using the same ClientId [#2035](https://github.com/pnp/powershell/pull/2035)
-- Fixed cmdlets inheriting from PnPAdminCmdlet not working well on vanity domain SharePoint Online tenants
+- Fixed cmdlets inheriting from PnPAdminCmdlet not working well on vanity domain SharePoint Online tenants [#2052](https://github.com/pnp/powershell/pull/2052)
 
 ### Removed
 
