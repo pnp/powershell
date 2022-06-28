@@ -60,6 +60,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added optional `-SensitivityLabel` to `Set-PnPSite` which allows for a Microsoft Purview sensitivitylabel to be set [#2024](https://github.com/pnp/powershell/pull/2024)
 - Added `-UpdateChildren` parameter to `Add-PnPFieldToContentType` cmdlet. This allows users to skip pushing the fields to child content types. [#1092](https://github.com/pnp/powershell/pull/1992)
 - Added `Get-PnPSensitivityLabel` cmdlet to retrieve Microsoft Purview sensitivity labels available on the tenant [#2023](https://github.com/pnp/powershell/pull/2023)
+- Added `Get-Microsoft365GroupYammerCommunity` cmdlet to retrieve details on the Yammer Community connected to a Microsoft 365 Group [#2038](https://github.com/pnp/powershell/pull/2038)
+- Added `Get-Microsoft365GroupTeam` cmdlet to retrieve details on the Microsoft Teams team connected to a Microsoft 365 Group [#2038](https://github.com/pnp/powershell/pull/2038)
+- Added `Get-Microsoft365GroupEndpoints` cmdlet to retrieve details on all endpoints connected to a Microsoft 365 Group [#2038](https://github.com/pnp/powershell/pull/2038)
 
 ### Changed
 
