@@ -1208,7 +1208,7 @@ Accept wildcard characters: False
 ```
 
 ### -InformationBarriersSuspension
-Allows suspension of the information barriers future in a Microsoft 365 tenant. Setting this to $true will disable information barriers, setting this to $falsde will enable information barriers. For more information, see https://docs.microsoft.com/sharepoint/information-barriers.
+Allows suspension of the information barriers future in a Microsoft 365 tenant. Setting this to $true will disable information barriers, setting this to $false will enable information barriers. For more information, see https://docs.microsoft.com/sharepoint/information-barriers.
 
 ```yaml
 Type: Boolean
@@ -1306,7 +1306,7 @@ Accept wildcard characters: False
 ```
 
 ### -EnableModernListTemplateIds
-Guids of out of the box modern liststemplates to show when creating a new list
+Guids of out of the box modern list templates to show when creating a new list
 
 ```yaml
 Type: Guid[]
