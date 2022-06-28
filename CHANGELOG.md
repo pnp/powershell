@@ -190,6 +190,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Changed `Get-PnPTenantDeletedSite -Identity` no longer returning an unknown exception when no site collection with the provided Url exists in the tenant recycle bin but instead returning no output to align with other cmdlets [#1596](https://github.com/pnp/powershell/pull/1596)
 - Changed `Connect-PnPOnline -UseWebLogin` to no longer suppress errors which should allow for certificate logins to be used [#1706](https://github.com/pnp/powershell/issues/1706)
 - The cmdlet `New-PnPTeamsTeam` no longer supports adding members or owners through their e-mail addresses, if they differ from their UPNs. The User Principal Names must be used instead [#1241](https://github.com/pnp/powershell/pull/1241)
+- Improved `New-PnPUPABulkImportJob` by optimizing it and also adding support for `WhatIf` paramater. [#2040](https://github.com/pnp/powershell/pull/2040)
 
 ### Fixed
 
