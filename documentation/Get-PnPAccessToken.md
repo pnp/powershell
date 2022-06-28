@@ -33,28 +33,28 @@ Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API
 
 ### EXAMPLE 2
 ```powershell
+Get-PnPAccessToken -Decoded
+```
+
+Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API and shows the token with its content decoded
+
+### EXAMPLE 3
+```powershell
 Get-PnPAccessToken -ResourceTypeName SharePoint
 ```
 
 Gets the OAuth 2.0 Access Token to consume the SharePoint APIs and perform CSOM operations.
 
-### EXAMPLE 3
+### EXAMPLE 4
 ```powershell
 Get-PnPAccessToken -ResourceTypeName ARM
 ```
 
 Gets the OAuth 2.0 Access Token to consume the Azure Resource Manager APIs and perform related operations. In PnP, you can use them in cmdlets related to Flow and PowerPlatform etc.
 
-### EXAMPLE 4
-```powershell
-Get-PnPAccessToken -ResourceUrl "https://management.azure.com/.default"
-```
-
-Gets the OAuth 2.0 Access Token to consume the SharePoint APIs and perform CSOM operations.
-
 ### EXAMPLE 5
 ```powershell
-Get-PnPAccessToken -Decoded
+Get-PnPAccessToken -ResourceUrl "https://management.azure.com/.default"
 ```
 
 Gets the OAuth 2.0 Access Token to consume the SharePoint APIs and perform CSOM operations.
