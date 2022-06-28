@@ -1,11 +1,7 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
-using PnP.Framework.Sites;
-using PnP.PowerShell.Commands.Base.PipeBinds;
-using System;
 using System.Linq;
 using PnP.PowerShell.Commands.Model;
 using System.Text.Json;
@@ -51,7 +47,6 @@ namespace PnP.PowerShell.Commands.Admin
                     WriteObject(themes.Select(t => new SPOTheme(t.Name, t.Palette, t.IsInverted)), true);
                 }
             }
-
         }
     }
 }
