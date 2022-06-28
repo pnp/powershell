@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
                 if(groupId == Guid.Empty)
                 {
-                    WriteWarning("Current site is not backed by a Microsoft 365 Group");
+                    throw new PSArgumentException("Current site is not backed by a Microsoft 365 Group", nameof(Identity));
                 }
                 else
                 {
