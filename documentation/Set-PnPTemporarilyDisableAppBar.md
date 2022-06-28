@@ -7,7 +7,7 @@ external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTemporarilyDisableAppBar.html
 ---
  
-# Set-PnPHomeSite
+# Set-PnPTemporarilyDisableAppBar
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Allows the SharePoint Online App Bar to be disabled. It may take some time for t
 ## SYNTAX
 
 ```powershell
-Set-PnPTemporarilyDisableAppBar <Boolean> [<CommonParameters>]
+Set-PnPTemporarilyDisableAppBar -Enabled <Boolean> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,7 +44,7 @@ Shows the SharePoint Online App Bar.
 ## PARAMETERS
 
 ### -Enable
-The url of the site to set as the home site
+Specifies whether to show or hide SharePoint Online App Bar.
 
 ```yaml
 Type: Boolean
