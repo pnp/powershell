@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Management.Automation;
+using System.Net;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Enums;
@@ -11,10 +12,11 @@ namespace PnP.PowerShell.Commands.Base
     /// Base cmdlet for cmdlets that require running on against the admin site collection
     /// </summary>
     public abstract class PnPAdminCmdlet : PnPSharePointCmdlet
-    {
+    {        
         private Tenant _tenant;
-        private Uri _baseUri;
-
+        /// <summary>
+        /// Tenant instance
+        /// </summary>
         public Tenant Tenant
         {
             get
@@ -26,7 +28,11 @@ namespace PnP.PowerShell.Commands.Base
                 return _tenant;
             }
         }
-
+        
+        private Uri _baseUri;
+        /// <summary>
+        /// The root sitecollection URL of the SharePoint Online tenant
+        /// </summary>
         public Uri BaseUri => _baseUri;
 
         /// <summary>
@@ -60,9 +66,10 @@ namespace PnP.PowerShell.Commands.Base
             
             Connection.CacheContext();
 
-            if (Connection.TenantAdminUrl != null &&
-               (Connection.ConnectionType == ConnectionType.O365))
+            string tenantAdminUrl;
+            if (Connection.TenantAdminUrl != null && Connection.ConnectionType == ConnectionType.O365)
             {
+                // An explicit SharePoint Online Admin Center URL has been provided in the connect, use it                
                 var uri = new Uri(Connection.Url);
                 var uriParts = uri.Host.Split('.');
                 if (uriParts[0].ToLower().EndsWith("-admin"))
@@ -72,32 +79,52 @@ namespace PnP.PowerShell.Commands.Base
                 else
                 {
                     _baseUri = new Uri($"{uri.Scheme}://{uri.Authority}");
-                }
-                IsDeviceLogin(Connection.TenantAdminUrl);
-                Connection.CloneContext(Connection.TenantAdminUrl);
+                }                            
+
+                tenantAdminUrl = Connection.TenantAdminUrl;
             }
             else
             {
+                // No explicit SharePoint Online Admin Center URL has been provided in the connect, try to guess it using the default <tenant>-admin.sharepoint.<tld> syntax
                 Uri uri = new Uri(ClientContext.Url);
                 var uriParts = uri.Host.Split('.');
-                if (!uriParts[0].EndsWith("-admin") &&
-                    Connection.ConnectionType == ConnectionType.O365)
-                {                    
+
+                if (!uriParts[0].EndsWith("-admin") && Connection.ConnectionType == ConnectionType.O365)
+                {
+                    // The current connection has not been made to the SharePoint Online Admin Center, try to predict the admin center URL        
                     _baseUri = new Uri($"{uri.Scheme}://{uri.Authority}");
 
                     // Remove -my postfix from the tenant name, if present, to allow elevation to the admin context even when being connected to the MySite
                     var tenantName = uriParts[0].EndsWith("-my") ? uriParts[0].Remove(uriParts[0].Length - 3, 3) : uriParts[0];
 
-                    var adminUrl = $"https://{tenantName}-admin.{string.Join(".", uriParts.Skip(1))}";
-                    IsDeviceLogin(adminUrl);
-                    Connection.Context =
-                        Connection.CloneContext(adminUrl);
+                    tenantAdminUrl = $"https://{tenantName}-admin.{string.Join(".", uriParts.Skip(1))}";
                 }
                 else
                 {
+                    // The current connection has been made to the SharePoint Online Admin Center URL already, we can use it as is
                     _baseUri = new Uri($"{uri.Scheme}://{uriParts[0].ToLower().Replace("-admin", "")}{(uriParts.Length > 1 ? $".{string.Join(".", uriParts.Skip(1))}" : string.Empty)}{(!uri.IsDefaultPort ? ":" + uri.Port : "")}");
+                    return;
                 }
             }
+
+            // Check if a connection has been made using DeviceLogin, in this case we cannot clone the context to the admin URL and will throw an exception
+            IsDeviceLogin(Connection.TenantAdminUrl);
+
+            // Set up a temporary context to the SharePoint Online Admin Center URL to allow this cmdlet to execute
+            WriteVerbose($"Connecting to the SharePoint Online Admin Center at '{Connection.TenantAdminUrl}' to run this cmdlet");
+            try
+            {
+                Connection.Context = Connection.CloneContext(Connection.TenantAdminUrl);
+            }
+            catch(WebException e) when (e.Status == WebExceptionStatus.NameResolutionFailure)
+            {
+                throw new PSInvalidOperationException($"The hostname '{Connection.TenantAdminUrl}' which you have passed in your Connect-PnPOnline -TenantAdminUrl is invalid. Please connect again using the proper hostname.", e);
+            }
+            catch(Exception e)
+            {
+                throw new PSInvalidOperationException($"Unable to connect to the SharePoint Online Admin Center at '{Connection.TenantAdminUrl}' to run this cmdlet. Please ensure you pass in the correct Admin Center URL using Connect-PnPOnline -TenantAdminUrl and you have access to it. Error message: {e.Message}.", e);
+            }
+            WriteVerbose($"Connected to the SharePoint Online Admin Center at '{Connection.TenantAdminUrl}' to run this cmdlet");
         }
 
         /// <summary>
