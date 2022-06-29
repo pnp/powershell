@@ -170,6 +170,7 @@ Accept wildcard characters: False
 ```
 
 ### -CommentsOnSitePagesDisabled
+Disables or enables the commenting functionality on all site pages in the tenant.
 
 ```yaml
 Type: Boolean
@@ -183,6 +184,7 @@ Accept wildcard characters: False
 ```
 
 ### -ConditionalAccessPolicy
+Blocks or limits access to SharePoint and OneDrive content from unmanaged devices.
 
 ```yaml
 Type: SPOConditionalAccessPolicyType
@@ -211,6 +213,7 @@ Accept wildcard characters: False
 ```
 
 ### -DefaultLinkPermission
+Sets the default permission of the link in the sharing dialog box in OneDrive for Business and SharePoint Online. This applies to anonymous access, internal and direct links.
 
 ```yaml
 Type: SharingPermissionType
@@ -230,9 +233,8 @@ Lets administrators choose what type of link appears is selected in the "Get a l
 For additional information about how to change the default link type, see Change the default link type when users get links for sharing.
 
 Note:
-Setting this value to "none" will default "get a link" to the most permissive link available (that is, if anonymous links are enabled, the default link will be anonymous access; if they are disabled then the default link will be internal.
+Setting this value to "none" will default "get a link" to the most permissive link available. If anonymous links are enabled, the default link will be anonymous access; if they are disabled, then the default link will be internal.
 
-The values are: None Direct Internal AnonymousAccess
 
 ```yaml
 Type: SharingLinkType
@@ -332,6 +334,7 @@ Accept wildcard characters: False
 ```
 
 ### -EmailAttestationReAuthDays
+Sets the number of days for email attestation re-authentication. Value can be from 1 to 365 days.
 
 ```yaml
 Type: Int32
@@ -408,6 +411,7 @@ Accept wildcard characters: False
 ```
 
 ### -FileAnonymousLinkType
+Sets whether anonymous access links can allow recipients to only view or view and edit. The value can be set separately for folders and separately for files.
 
 ```yaml
 Type: AnonymousLinkType
@@ -422,6 +426,7 @@ Accept wildcard characters: False
 ```
 
 ### -FilePickerExternalImageSearchEnabled
+Sets whether webparts that support inserting images, like for example Image or Hero webpart, the Web search (Powered by Bing) should allow choosing external images. The default is enabled.
 
 ```yaml
 Type: Boolean
@@ -435,6 +440,7 @@ Accept wildcard characters: False
 ```
 
 ### -FolderAnonymousLinkType
+Sets whether anonymous access links can allow recipients to only view or view and edit. The value can be set separately for folders and separately for files.
 
 ```yaml
 Type: AnonymousLinkType
@@ -449,7 +455,7 @@ Accept wildcard characters: False
 ```
 
 ### -HideDefaultThemes
-Defines if the default themes are visible or hidden
+Defines if the default themes are visible or hidden.
 
 ```yaml
 Type: Boolean
@@ -500,6 +506,7 @@ Accept wildcard characters: False
 ```
 
 ### -IPAddressWACTokenLifetime
+Allows to set the session timeout. If you are a tenant administrator and you begin IP address enforcement for OneDrive for Business in Office 365, this enforcement automatically activates a tenant parameter IPAddressWACTokenLifetime. The default value is 15 minutes, when IP Address Enforcement is True.
 
 ```yaml
 Type: Int32
@@ -582,6 +589,7 @@ Accept wildcard characters: False
 ```
 
 ### -NotificationsInOneDriveForBusinessEnabled
+Enables or disables notifications in OneDrive for Business.
 
 ```yaml
 Type: Boolean
@@ -595,6 +603,7 @@ Accept wildcard characters: False
 ```
 
 ### -NotificationsInSharePointEnabled
+Enables or disables notifications in SharePoint.
 
 ```yaml
 Type: Boolean
