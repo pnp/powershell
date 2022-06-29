@@ -204,7 +204,7 @@ Using this method PnP PowerShell will not acquire tokens dynamically and if the 
 Using this parameter you can provide your own access token.
 Notice that it is recommend to use one of the other connection methods as this will limits the offered functionality on PnP PowerShell.
 For instance if the token expires (typically after 1 hour) will not be able to acquire a new valid token, which the other connection methods do allow.
-You are fully responsible for providing your own valid token, for the correct audience, with the correct permissions scopes.
+You are responsible for providing your own valid access token when using this parameter, for the correct audience, with the correct permissions scopes.
 
 ```yaml
 Type: String
@@ -292,7 +292,7 @@ Accept wildcard characters: False
 ```
 
 ### -ClientSecret
-The client secret to use.
+The client secret to use. When using this, technically an Azure Access Control Service (ACS) authentication will take place. This effectively means only cmdlets that are connecting to SharePoint Online will work. Cmdlets using Microsoft Graph or any other API behind the scenes will not work.
 
 ```yaml
 Type: String
@@ -442,7 +442,7 @@ Accept wildcard characters: False
 ```
 
 ### -ReturnConnection
-Returns the connection for use with the -Connection parameter on cmdlets.
+Returns the connection for use with the -Connection parameter on cmdlets. It will not touch the current connection which can be established by omitting this parameter.
 
 ```yaml
 Type: SwitchParameter
@@ -457,8 +457,7 @@ Accept wildcard characters: False
 ```
 
 ### -Tenant
-The Azure AD Tenant name,e.g.
-mycompany.onmicrosoft.com
+The Azure Active Directory tenant name, e.g. mycompany.onmicrosoft.com or mycompany.com if you have added custom domains to your tenant
 
 ```yaml
 Type: String

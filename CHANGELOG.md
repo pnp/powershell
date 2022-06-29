@@ -64,6 +64,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPSiteClassification` cmdlet which allows setting a classic site classification on the current site [#2036](https://github.com/pnp/powershell/pull/2036)
 - Added `Set-PnPSiteSensitivityLabel` cmdlet which allows setting a Microsoft Purview sensitivity label on the current site [#2036](https://github.com/pnp/powershell/pull/2036)
 - Added `Remove-PnPSiteSensitivityLabel` cmdlet which allows removing the Microsoft Purview sensitivity label from the current site [#2036](https://github.com/pnp/powershell/pull/2036)
+- Added `Get-PnPSensitivityLabel` cmdlet to retrieve Microsoft Purview sensitivity labels available on the tenant [#2023](https://github.com/pnp/powershell/pull/2023)
+- Added `Get-Microsoft365GroupYammerCommunity` cmdlet to retrieve details on the Yammer Community connected to a Microsoft 365 Group [#2038](https://github.com/pnp/powershell/pull/2038)
+- Added `Get-Microsoft365GroupTeam` cmdlet to retrieve details on the Microsoft Teams team connected to a Microsoft 365 Group [#2038](https://github.com/pnp/powershell/pull/2038)
+- Added `Get-Microsoft365GroupEndpoints` cmdlet to retrieve details on all endpoints connected to a Microsoft 365 Group [#2038](https://github.com/pnp/powershell/pull/2038)
+- Added `-ExcludeDeletedSites` optional parameter to `Get-PnPSiteCollectionAppCatalogs` which allows for site collections with App Catalogs that are in the recycle bin to be exluded from the results [#2044](https://github.com/pnp/powershell/pull/2044)
+- Added `-CurrentSite` optional parameter to `Get-PnPSiteCollectionAppCatalogs` which allows for checking if the currently connected to site has a site collection App Catalogs provisioned on it [#2044](https://github.com/pnp/powershell/pull/2044)
 
 ### Changed
 
@@ -85,6 +91,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Renamed `Update-PnPSiteClassification` to `Update-PnPAvailableSiteClassification` to fall in line with `Get-PnPAvailableSensitivityLabel`. Old name will stay as an alias for backwards compatibility for now, but will be removed in a future version. [#2036](https://github.com/pnp/powershell/pull/2036)
 - Renamed `Remove-PnPSiteClassification` to `Remove-PnPAvailableSiteClassification` to fall in line with `Get-PnPAvailableSensitivityLabel`. Old name will stay as an alias for backwards compatibility for now, but will be removed in a future version. [#2036](https://github.com/pnp/powershell/pull/2036)
 - Changed `Get-PnPHubSiteChild` to have its `-Identity` parameter become optional. If not provided, the currently connected to site will be used. [#2033](https://github.com/pnp/powershell/pull/2033)
+- Changed `Get-PnPSiteCollectionAppCatalogs` (plural) to `Get-PnPSiteCollectionAppCatalog` (singular) to follow the naming convention [#2044](https://github.com/pnp/powershell/pull/2044)
 
 ### Fixed
 
@@ -98,7 +105,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPTeamsTeam`, the cmdlet now also returns additional properties like `WebUrl, CreatedDateTime, InternalId`. [#1825](https://github.com/pnp/powershell/pull/1825)
 - Fixed `Set-PnPListPermission`, it will now throw error if the list does not exist. [#1891](https://github.com/pnp/powershell/pull/1891)
 - Fixed `Invoke-PnPSPRestMethod` invalid parsing for SharePoint number columns. [#1877](https://github.com/pnp/powershell/pull/1879)
-- Fix issue with `Add/Set-PnPListItem` not throwing correct exception for invalid taxonomy values. [#1870](https://github.com/pnp/powershell/pull/1870)
+- Fixed issue with `Add/Set-PnPListItem` not throwing correct exception for invalid taxonomy values. [#1870](https://github.com/pnp/powershell/pull/1870)
 - Fixed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` throwing an "Object reference not set to an instance of an object" exception when providing an empty users collection or incorrect user mapping [#1896](https://github.com/pnp/powershell/pull/1896)
 - Fixed `Connect-PnPOnline -ReturnConnection` also setting the current connection instead of just the returned connection [#1919](https://github.com/pnp/powershell/pull/1919)
 - Fixed `Disconnect-PnPOnline -Connection` also disconnecting other connections next to the provided connection [#1919](https://github.com/pnp/powershell/pull/1919)
@@ -118,6 +125,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPHubSiteChild` throwing an exception when passing in a URL that is actually not a hub site [#2033](https://github.com/pnp/powershell/pull/2033)
 - Fixed `Add-PnPListItem` not showing field name when it has an improper value assigned to it [#2002](https://github.com/pnp/powershell/pull/2002)
 - Fixed connecting using `Connect-PnPOnline -Interactive -ClientId` not working well when already having an App-Only connection using the same ClientId [#2035](https://github.com/pnp/powershell/pull/2035)
+- Fixed `Get-PnPSiteCollectionAppCatalog` not returning updated site collection URLs if they had been renamed [#2044](https://github.com/pnp/powershell/pull/2044)
+- Fixed cmdlets inheriting from PnPAdminCmdlet not working well on vanity domain SharePoint Online tenants [#2052](https://github.com/pnp/powershell/pull/2052)
+- Fixed `Copy-PnPList` throwing an unauthorized exception when using it with a non SharePoint Online administrator user [#2054](https://github.com/pnp/powershell/pull/2054)
 
 ### Removed
 
@@ -199,6 +209,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Changed `Get-PnPTenantDeletedSite -Identity` no longer returning an unknown exception when no site collection with the provided Url exists in the tenant recycle bin but instead returning no output to align with other cmdlets [#1596](https://github.com/pnp/powershell/pull/1596)
 - Changed `Connect-PnPOnline -UseWebLogin` to no longer suppress errors which should allow for certificate logins to be used [#1706](https://github.com/pnp/powershell/issues/1706)
 - The cmdlet `New-PnPTeamsTeam` no longer supports adding members or owners through their e-mail addresses, if they differ from their UPNs. The User Principal Names must be used instead [#1241](https://github.com/pnp/powershell/pull/1241)
+- Improved `New-PnPUPABulkImportJob` by optimizing it and also adding support for `WhatIf` paramater. [#2040](https://github.com/pnp/powershell/pull/2040)
 
 ### Fixed
 

@@ -44,7 +44,7 @@ Enables the user user@domain.com for receiving the SharePoint News Digest e-mail
 Set-PnPSubscribeSharePointNewsDigest -Account 'user@domain.com' -Enabled:$false
 ```
 
-Stops the user user@domain.com for receiving the SharePoint News Digest e-mails.
+Stops the user user@domain.com from receiving the SharePoint News Digest e-mails.
 
 ## PARAMETERS
 

@@ -1,11 +1,7 @@
-﻿using PnP.Framework.Entities;
-using PnP.Framework.Graph;
-using PnP.PowerShell.Commands.Model;
+﻿using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 using System;
-using System.Linq;
 using System.Management.Automation;
-using System.Net.Http;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -85,7 +81,6 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 }
             }
             throw new PSInvalidOperationException("Group not found");
-            //return Guid.Empty;
         }
 
         public Microsoft365Group GetDeletedGroup(PnPConnection connection, string accessToken)

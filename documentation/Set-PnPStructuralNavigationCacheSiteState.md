@@ -15,7 +15,7 @@ Enable or disable caching for all webs in a site collection.
 ## SYNTAX
 
 ```
-Set-PnPStructuralNavigationCacheSiteState -IsEnabled <Boolean> [-SiteUrl <String>]
+Set-PnPStructuralNavigationCacheSiteState -IsEnabled <Boolean> [-SiteUrl <String>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -35,7 +35,7 @@ This example enables caching for all webs in the site collection https://contoso
 Set-PnPStructuralNavigationCacheSiteState -IsEnabled $false -SiteUrl "https://contoso.sharepoint.com/sites/product/" 
 ```
 
-This example disabled caching for all webs in the site collection https://contoso.sharepoint.com/sites/product/.
+This example disables caching for all webs in the site collection https://contoso.sharepoint.com/sites/product/.
 
 ## PARAMETERS
 
@@ -66,6 +66,21 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 
 ## RELATED LINKS
 
