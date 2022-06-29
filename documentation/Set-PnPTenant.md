@@ -107,6 +107,7 @@ Accept wildcard characters: False
 ```
 
 ### -AllowEditing
+Prevents users from editing Office files in the browser and copying and pasting Office file contents out of the browser window.
 
 ```yaml
 Type: Boolean
@@ -120,6 +121,7 @@ Accept wildcard characters: False
 ```
 
 ### -ApplyAppEnforcedRestrictionsToAdHocRecipients
+When the feature is enabled, all guest users are subject to conditional access policy. By default guest users who are accessing SharePoint Online files with pass code are exempt from the conditional access policy.
 
 ```yaml
 Type: Boolean
@@ -773,6 +775,7 @@ Accept wildcard characters: False
 ```
 
 ### -OwnerAnonymousNotification
+Specifies whether an email notification should be sent to the OneDrive for Business owners when an anonymous links are created or changed.
 
 ```yaml
 Type: Boolean
@@ -786,6 +789,7 @@ Accept wildcard characters: False
 ```
 
 ### -PreventExternalUsersFromResharing
+Prevents external users from resharing files, folders, and sites that they do not own.
 
 ```yaml
 Type: Boolean
@@ -1039,6 +1043,7 @@ Accept wildcard characters: False
 
 ### -ShowPeoplePickerSuggestionsForGuestUsers
 
+
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
@@ -1078,6 +1083,7 @@ Accept wildcard characters: False
 ```
 
 ### -SocialBarOnSitePagesDisabled
+Disables or enables the Social Bar which appears on all modern SharePoint pages with the exception of the home page of a site. It gives users the ability to like a page, see the number of views, likes, and comments on a page, and see the people who have liked a page.
 
 ```yaml
 Type: Boolean
@@ -1091,7 +1097,7 @@ Accept wildcard characters: False
 ```
 
 ### -SpecialCharactersStateInFileFolderNames
-{{ Fill SpecialCharactersStateInFileFolderNames Description }}
+Permits the use of special characters in file and folder names in SharePoint Online and OneDrive for Business document libraries. The only two characters that can be managed at this time are the **#** and **%** characters.
 
 ```yaml
 Type: SpecialCharactersState
@@ -1162,6 +1168,7 @@ Accept wildcard characters: False
 ```
 
 ### -UserVoiceForFeedbackEnabled
+Enables or disables the User Voice Feedback button shown at the bottom of all modern SharePoint Online pages. The "Feedback" link allows the end user to fill out a feedback form inside SharePoint Online which then creates an entry in the public SharePoint UserVoice topic.
 
 ```yaml
 Type: Boolean
