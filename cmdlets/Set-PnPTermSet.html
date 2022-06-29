@@ -84,7 +84,7 @@
                     <h1 id="set-pnptermset">Set-PnPTermSet</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Updates an existing TermSet</p>
+<p>Updates an existing term set.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code>Set-PnPTermSet -Identity &lt;TaxonomyTermSetPipeBind&gt; [-TermGroup] &lt;TaxonomyTermGroupPipeBind&gt;
  [-TermStore &lt;TaxonomyTermStorePipeBind&gt;] [-Name &lt;String&gt;] [-Description &lt;String&gt;] [-Owner &lt;String&gt;]
@@ -95,12 +95,20 @@
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet allows you to update an existing termset.</p>
+<p>This cmdlet allows you to update an existing term set.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
 <pre><code class="lang-powershell">Set-PnPTermSet -Identity &quot;Departments&quot; -TermGroup &quot;Corporate&quot; -Name &quot;Business Units&quot;
 </code></pre>
-<p>This changes the name of a the &quot;Departments&quot; termset to &quot;Business Units&quot;</p>
+<p>This example changes the name of a the &quot;Departments&quot; term set to &quot;Business Units&quot;</p>
+<h3 id="example-2">Example 2</h3>
+<pre><code class="lang-powershell">Set-PnPTermSet -Identity &quot;Departments&quot; -TermGroup &quot;Corporate&quot; -UseForSiteNavigation $true
+</code></pre>
+<p>This example allows the terms in the term set &quot;Departments&quot; to be used for site navigation links</p>
+<h3 id="example-3">Example 3</h3>
+<pre><code class="lang-powershell">Set-PnPTermSet -Identity &quot;Departments&quot; -TermGroup &quot;Corporate&quot; -IsAvailableForTagging $false
+</code></pre>
+<p>This example makes the terms in the term set &quot;Departments&quot; unavailable to end users and content editors</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-contact">-Contact</h3>
 <p>The contact information</p>
@@ -127,7 +135,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-description">-Description</h3>
-<p>The description of the term set</p>
+<p>The description of the term set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases:
@@ -139,7 +147,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The term set to change</p>
+<p>The term set to change.</p>
 <pre><code class="lang-yaml">Type: TaxonomyTermSetPipeBind
 Parameter Sets: (All)
 Aliases:
@@ -175,7 +183,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-name">-Name</h3>
-<p>The new name for the term set</p>
+<p>The new name for the term set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases:
@@ -199,6 +207,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-removecatalogitempageforcategories">-RemoveCatalogItemPageForCategories</h3>
+<p>Removes catalog item page settings for the term set.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
@@ -210,7 +219,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-removetargetpageforterms">-RemoveTargetPageforTerms</h3>
-<p>{{ Fill RemoveTargetPageforTerms Description }}</p>
+<p>Removes target page settings for the term set.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
@@ -222,6 +231,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-setcatalogitempageforcategories">-SetCatalogItemPageForCategories</h3>
+<p>Specifies the page to load when you navigate to a catalog item under a category in this term set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases:
@@ -233,6 +243,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-settargetpageforterms">-SetTargetPageForTerms</h3>
+<p>Specifies page to load when the user navigates to the friendly-URL for a term in this term set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases:
@@ -244,7 +255,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-stakeholdertoadd">-StakeholderToAdd</h3>
-<p>Adds a new stake holder</p>
+<p>Adds a new stake holder.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases:
@@ -256,7 +267,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-stakeholdertodelete">-StakeholderToDelete</h3>
-<p>Removes a stake holder</p>
+<p>Removes a stake holder.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases:
@@ -292,6 +303,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-useforfacetednavigation">-UseForFacetedNavigation</h3>
+<p>Specifies whether users can use refiners based on managed metadata from the search index to quickly browse to specific content.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 Aliases:
@@ -303,6 +315,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-useforsitenavigation">-UseForSiteNavigation</h3>
+<p>Specifies whether the terms in this term set can be used for site navigation links with friendly URLs and dynamic content.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 Aliases:

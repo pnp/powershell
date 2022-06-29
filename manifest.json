@@ -1257,7 +1257,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Connect-PnPOnline.html",
-          "hash": "hxD5NZSBQM0fZkHg9NDTXw=="
+          "hash": "poBBVL3MQdUnLZLtpW31mw=="
         }
       },
       "is_incremental": false,
@@ -2528,6 +2528,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPMicrosoft365GroupEndpoint.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPMicrosoft365GroupEndpoint.html",
+          "hash": "RIMbg5zJ1YHSLEfG4YspgA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPMicrosoft365GroupMember.md",
       "output": {
         ".html": {
@@ -2569,6 +2581,30 @@
         ".html": {
           "relative_path": "cmdlets/Get-PnPMicrosoft365GroupSettings.html",
           "hash": "YK6X2OH0z0v0qKHtxBdvmw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPMicrosoft365GroupTeam.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPMicrosoft365GroupTeam.html",
+          "hash": "2v6W+aeRiNpDnpRujovx7A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPMicrosoft365GroupYammerCommunity.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPMicrosoft365GroupYammerCommunity.html",
+          "hash": "BDokFc2rZE8AMqfh5qzsmQ=="
         }
       },
       "is_incremental": false,
@@ -7008,7 +7044,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPStructuralNavigationCacheSiteState.html",
-          "hash": "uBwwthq9QDfglnQOw7VaPQ=="
+          "hash": "LMei/xHswEsXlzoJvBbrhQ=="
         }
       },
       "is_incremental": false,
@@ -7020,7 +7056,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPStructuralNavigationCacheWebState.html",
-          "hash": "AQ2sFb1G3z8GdgEz0u8jbQ=="
+          "hash": "ZjhLe5jIGUuA/t5cW8OooA=="
         }
       },
       "is_incremental": false,
@@ -7032,7 +7068,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSubscribeSharePointNewsDigest.html",
-          "hash": "2nWpy7rxXKjStx088JV91g=="
+          "hash": "+D3Rwrgrl2Q8KzjZ+wc9IA=="
         }
       },
       "is_incremental": false,
@@ -7092,7 +7128,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTeamsTeam.html",
-          "hash": "WjZc8YBKbL4X9bdjMBwe3g=="
+          "hash": "gCT0/4ow7zbcdthnhiFGiQ=="
         }
       },
       "is_incremental": false,
@@ -7128,7 +7164,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTemporarilyDisableAppBar.html",
-          "hash": "NhwefYq2+5t0tWJZ3ASXbA=="
+          "hash": "ygiyFpdxXnVNLIgwurXY6w=="
         }
       },
       "is_incremental": false,
@@ -7152,7 +7188,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTenantAppCatalogUrl.html",
-          "hash": "CzAZL5Hc9v0bi6R2tIXdLQ=="
+          "hash": "rTjpAzFSbKDmQoPgJ1oubg=="
         }
       },
       "is_incremental": false,
@@ -7236,7 +7272,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTermSet.html",
-          "hash": "wPvJk+5r7voNNk7JxCgOmg=="
+          "hash": "VjwLbwCXllmdbegekJUR6Q=="
         }
       },
       "is_incremental": false,
@@ -7656,7 +7692,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "mZGQJnj5BXrUmPYyiTs1GA=="
+          "hash": "UmKBPcKS42XDCFSI6HpuLQ=="
         }
       },
       "is_incremental": false,
@@ -7878,7 +7914,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 636,
+          "total_file_count": 639,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

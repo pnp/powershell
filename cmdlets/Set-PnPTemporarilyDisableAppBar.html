@@ -81,7 +81,7 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="set-pnphomesite">Set-PnPHomeSite</h1>
+                    <h1 id="set-pnptemporarilydisableappbar">Set-PnPTemporarilyDisableAppBar</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
@@ -90,7 +90,7 @@
 </ul>
 <p>Allows the SharePoint Online App Bar to be disabled. It may take some time for the change to be reflected in SharePoint Online. Support for this may be dropped after October 31st, 2021 after which the SharePoint Online App Bar will become visible anyway. See [https://admin.microsoft.com/#/MessageCenter/:/messages/MC240066] for more information.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPTemporarilyDisableAppBar &lt;Boolean&gt; [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPTemporarilyDisableAppBar -Enabled &lt;Boolean&gt; [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -104,7 +104,7 @@
 <p>Shows the SharePoint Online App Bar.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-enable">-Enable</h3>
-<p>The url of the site to set as the home site</p>
+<p>Specifies whether to show or hide SharePoint Online App Bar.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 

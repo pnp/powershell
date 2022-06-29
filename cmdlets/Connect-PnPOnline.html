@@ -215,7 +215,7 @@ Using this method PnP PowerShell will not acquire tokens dynamically and if the 
 <p>Using this parameter you can provide your own access token.
 Notice that it is recommend to use one of the other connection methods as this will limits the offered functionality on PnP PowerShell.
 For instance if the token expires (typically after 1 hour) will not be able to acquire a new valid token, which the other connection methods do allow.
-You are fully responsible for providing your own valid token, for the correct audience, with the correct permissions scopes.</p>
+You are responsible for providing your own valid access token when using this parameter, for the correct audience, with the correct permissions scopes.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Access Token
 Aliases:
@@ -286,7 +286,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-clientsecret">-ClientSecret</h3>
-<p>The client secret to use.</p>
+<p>The client secret to use. When using this, technically an Azure Access Control Service (ACS) authentication will take place. This effectively means only cmdlets that are connecting to SharePoint Online will work. Cmdlets using Microsoft Graph or any other API behind the scenes will not work.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: SharePoint ACS (Legacy) App Only
 Aliases:
@@ -410,7 +410,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-returnconnection">-ReturnConnection</h3>
-<p>Returns the connection for use with the -Connection parameter on cmdlets.</p>
+<p>Returns the connection for use with the -Connection parameter on cmdlets. It will not touch the current connection which can be established by omitting this parameter.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token
 Aliases:
@@ -422,8 +422,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-tenant">-Tenant</h3>
-<p>The Azure AD Tenant name,e.g.
-mycompany.onmicrosoft.com</p>
+<p>The Azure Active Directory tenant name, e.g. mycompany.onmicrosoft.com or mycompany.com if you have added custom domains to your tenant</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint
 Aliases:

@@ -89,33 +89,35 @@
 <pre><code>Set-PnPStructuralNavigationCacheWebState -IsEnabled &lt;Boolean&gt; [-WebUrl &lt;String&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>The Set-PnPStructuralNavigationCacheWebtate cmdlet can be used to enable or disable caching for a webs in a site collection. If the WebUrl parameter has not been specified the currently connected to site will be used.</p>
+<p>The Set-PnPStructuralNavigationCacheWebState cmdlet can be used to enable or disable caching for a webs in a site collection. If the WebUrl parameter has not been specified the currently connected to site will be used.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
 <pre><code class="lang-powershell">Set-PnPStructuralNavigationCacheWebState -IsEnabled $true -WebUrl &quot;https://contoso.sharepoint.com/sites/product/electronics&quot; 
 </code></pre>
 <p>This example enables caching for the web <a href="https://contoso.sharepoint.com/sites/product/electronics">https://contoso.sharepoint.com/sites/product/electronics</a>.</p>
-<h3 id="example-1-1">Example 1</h3>
-<pre><code class="lang-powershell">Set-PnPStructuralNavigationCacheSiteState -IsEnabled $false -SiteUrl &quot;https://contoso.sharepoint.com/sites/product/electronics&quot; 
+<h3 id="example-2">Example 2</h3>
+<pre><code class="lang-powershell">Set-PnPStructuralNavigationCacheWebState -IsEnabled $false -WebUrl &quot;https://contoso.sharepoint.com/sites/product/electronics&quot; 
 </code></pre>
-<p>This example disabled caching for all webs in the web <a href="https://contoso.sharepoint.com/sites/product/electronics">https://contoso.sharepoint.com/sites/product/electronics</a>.</p>
+<p>This example disables caching for the web <a href="https://contoso.sharepoint.com/sites/product/electronics">https://contoso.sharepoint.com/sites/product/electronics</a>.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-isenabled">-IsEnabled</h3>
-<p>$true to enable caching, $false to disable caching..</p>
+<p>$true to enable caching, $false to disable caching.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 Aliases:
+
 Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-siteurl">-SiteUrl</h3>
+<h3 id="-weburl">-WebUrl</h3>
 <p>Specifies the absolute URL for the web that needs its caching state set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases:
+
 Required: False
 Position: Named
 Default value: None
