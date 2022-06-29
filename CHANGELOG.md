@@ -113,6 +113,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Add-PnPListItem` not showing field name when it has an improper value assigned to it [#2002](https://github.com/pnp/powershell/pull/2002)
 - Fixed connecting using `Connect-PnPOnline -Interactive -ClientId` not working well when already having an App-Only connection using the same ClientId [#2035](https://github.com/pnp/powershell/pull/2035)
 - Fixed cmdlets inheriting from PnPAdminCmdlet not working well on vanity domain SharePoint Online tenants [#2052](https://github.com/pnp/powershell/pull/2052)
+- Fixed `Copy-PnPList` throwing an unauthorized exception when using it with a non SharePoint Online administrator user [#2054](https://github.com/pnp/powershell/pull/2054)
 
 ### Removed
 
