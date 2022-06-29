@@ -19,7 +19,7 @@ Set-PnPStructuralNavigationCacheWebState -IsEnabled <Boolean> [-WebUrl <String>]
 ```
 
 ## DESCRIPTION
-The Set-PnPStructuralNavigationCacheWebtate cmdlet can be used to enable or disable caching for a webs in a site collection. If the WebUrl parameter has not been specified the currently connected to site will be used. 
+The Set-PnPStructuralNavigationCacheWebState cmdlet can be used to enable or disable caching for a webs in a site collection. If the WebUrl parameter has not been specified the currently connected to site will be used. 
 
 ## EXAMPLES
 
@@ -30,22 +30,23 @@ Set-PnPStructuralNavigationCacheWebState -IsEnabled $true -WebUrl "https://conto
 
 This example enables caching for the web https://contoso.sharepoint.com/sites/product/electronics.
 
-### Example 1
+### Example 2
 ```powershell
-Set-PnPStructuralNavigationCacheSiteState -IsEnabled $false -SiteUrl "https://contoso.sharepoint.com/sites/product/electronics" 
+Set-PnPStructuralNavigationCacheWebState -IsEnabled $false -WebUrl "https://contoso.sharepoint.com/sites/product/electronics" 
 ```
 
-This example disabled caching for all webs in the web https://contoso.sharepoint.com/sites/product/electronics.
+This example disables caching for the web https://contoso.sharepoint.com/sites/product/electronics.
 
 ## PARAMETERS
 
 ### -IsEnabled
-$true to enable caching, $false to disable caching.. 
+$true to enable caching, $false to disable caching. 
 
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
 Aliases:
+
 Required: True
 Position: Named
 Default value: None
@@ -53,13 +54,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -SiteUrl
+### -WebUrl
 Specifies the absolute URL for the web that needs its caching state set.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
+
 Required: False
 Position: Named
 Default value: None

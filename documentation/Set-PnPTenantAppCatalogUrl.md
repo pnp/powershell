@@ -25,6 +25,7 @@ Set-PnPTenantAppCatalogUrl -Url <String> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
+This cmdlet sets the tenant scoped app catalog to the specified url.
 
 ## EXAMPLES
 
@@ -36,35 +37,6 @@ Set-PnPTenantAppCatalogUrl -Url "https://yourtenant.sharepoint.com/sites/appcata
 Sets the tenant scoped app catalog to the provided site collection url
 
 ## PARAMETERS
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Url
 The url of the site to set as the tenant scoped app catalog
@@ -80,13 +52,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
-Type: SwitchParameter
+Type: PnPConnection
 Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named

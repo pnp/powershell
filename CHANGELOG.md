@@ -96,7 +96,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPTeamsTeam`, the cmdlet now also returns additional properties like `WebUrl, CreatedDateTime, InternalId`. [#1825](https://github.com/pnp/powershell/pull/1825)
 - Fixed `Set-PnPListPermission`, it will now throw error if the list does not exist. [#1891](https://github.com/pnp/powershell/pull/1891)
 - Fixed `Invoke-PnPSPRestMethod` invalid parsing for SharePoint number columns. [#1877](https://github.com/pnp/powershell/pull/1879)
-- Fix issue with `Add/Set-PnPListItem` not throwing correct exception for invalid taxonomy values. [#1870](https://github.com/pnp/powershell/pull/1870)
+- Fixed issue with `Add/Set-PnPListItem` not throwing correct exception for invalid taxonomy values. [#1870](https://github.com/pnp/powershell/pull/1870)
 - Fixed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` throwing an "Object reference not set to an instance of an object" exception when providing an empty users collection or incorrect user mapping [#1896](https://github.com/pnp/powershell/pull/1896)
 - Fixed `Connect-PnPOnline -ReturnConnection` also setting the current connection instead of just the returned connection [#1919](https://github.com/pnp/powershell/pull/1919)
 - Fixed `Disconnect-PnPOnline -Connection` also disconnecting other connections next to the provided connection [#1919](https://github.com/pnp/powershell/pull/1919)
@@ -116,6 +116,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Add-PnPListItem` not showing field name when it has an improper value assigned to it [#2002](https://github.com/pnp/powershell/pull/2002)
 - Fixed connecting using `Connect-PnPOnline -Interactive -ClientId` not working well when already having an App-Only connection using the same ClientId [#2035](https://github.com/pnp/powershell/pull/2035)
 - Fixed `Get-PnPSiteCollectionAppCatalog` not returning updated site collection URLs if they had been renamed [#2044](https://github.com/pnp/powershell/pull/2044)
+- Fixed cmdlets inheriting from PnPAdminCmdlet not working well on vanity domain SharePoint Online tenants [#2052](https://github.com/pnp/powershell/pull/2052)
+- Fixed `Copy-PnPList` throwing an unauthorized exception when using it with a non SharePoint Online administrator user [#2054](https://github.com/pnp/powershell/pull/2054)
 
 ### Removed
 
