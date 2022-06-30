@@ -1,5 +1,4 @@
-﻿
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
@@ -8,12 +7,13 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPSiteClassification")]
+    [Cmdlet(VerbsCommon.Remove, "PnPAvailableSiteClassification")]
     [RequiredMinimalApiPermissions("Directory.ReadWrite.All")]
+    [Alias("Remove-PnPSiteClassitication")]
+    [WriteAliasWarning("Please use 'Remove-PnPAvailableSiteClassification'. The alias 'Remove-PnPSiteClassification' will be removed in a future release.")]
     [OutputType(typeof(void))]
     public class RemoveSiteClassification : PnPGraphCmdlet
     {
-
         [Parameter(Mandatory = true)]
         public List<string> Classifications;
 

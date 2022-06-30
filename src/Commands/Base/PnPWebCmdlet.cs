@@ -3,7 +3,6 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 
-
 namespace PnP.PowerShell.Commands
 {
     public abstract class PnPWebCmdlet : PnPSharePointCmdlet

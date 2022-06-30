@@ -5,7 +5,7 @@ using System.Management.Automation.Runspaces;
 namespace PnP.PowerShell.Tests.Graph
 {
     [TestClass]
-    public class GetSiteClassificationTests
+    public class AddAvailableSiteClassificationTests
     {
         #region Test Setup/CleanUp
         [ClassInitialize]
@@ -56,14 +56,17 @@ namespace PnP.PowerShell.Tests.Graph
         #region Scaffolded Cmdlet Tests
         //TODO: This is a scaffold of the cmdlet - complete the unit test
         //[TestMethod]
-        public void GetPnPSiteClassificationTest()
+        public void AddPnPSiteClassificationTest()
         {
             using (var scope = new PSTestScope(true))
             {
                 // Complete writing cmd parameters
 
+				// This is a mandatory parameter
+				var classifications = "";
 
-                var results = scope.ExecuteCommand("Get-PnPSiteClassification");
+                var results = scope.ExecuteCommand("Add-PnPSiteClassification",
+					new CommandParameter("Classifications", classifications));
                 
                 Assert.IsNotNull(results);
             }
