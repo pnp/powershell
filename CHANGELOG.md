@@ -70,6 +70,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-Microsoft365GroupEndpoints` cmdlet to retrieve details on all endpoints connected to a Microsoft 365 Group [#2038](https://github.com/pnp/powershell/pull/2038)
 - Added `-ExcludeDeletedSites` optional parameter to `Get-PnPSiteCollectionAppCatalogs` which allows for site collections with App Catalogs that are in the recycle bin to be exluded from the results [#2044](https://github.com/pnp/powershell/pull/2044)
 - Added `-CurrentSite` optional parameter to `Get-PnPSiteCollectionAppCatalogs` which allows for checking if the currently connected to site has a site collection App Catalogs provisioned on it [#2044](https://github.com/pnp/powershell/pull/2044)
+- Added `ExternalUserExpirationRequired` and `ExternalUserExpireInDays` parameters to `Set-PnPTenant` cmdlet to handle expiration policy for External users.
 
 ### Changed
 
