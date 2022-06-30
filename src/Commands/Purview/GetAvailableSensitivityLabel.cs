@@ -6,13 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
+namespace PnP.PowerShell.Commands.Purview
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSensitivityLabel")]
-    [RequiredMinimalApiPermissions("InformationProtectionPolicy.Read.All")]
+    [Cmdlet(VerbsCommon.Get, "PnPAvailableSensitivityLabel")]
     [OutputType(typeof(IEnumerable<Model.Graph.Purview.InformationProtectionLabel>))]
     [OutputType(typeof(Model.Graph.Purview.InformationProtectionLabel))]
-    public class GetSensitivityLabel : PnPGraphCmdlet
+    public class GetAvailableSensitivityLabel : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
         public AzureADUserPipeBind User;
@@ -37,7 +36,14 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             }
             else
             {
-                url = "/beta/informationProtection/policy/labels";
+                if(Connection.ConnectionMethod == Model.ConnectionMethod.AzureADAppOnly)
+                {
+                    url = "/beta/informationProtection/policy/labels";
+                }
+                else
+                {
+                    url = "/beta/me/informationProtection/policy/labels";
+                }                
             }
 
             if (ParameterSpecified(nameof(Identity)))

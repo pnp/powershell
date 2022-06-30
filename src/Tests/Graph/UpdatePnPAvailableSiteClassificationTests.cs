@@ -5,7 +5,7 @@ using System.Management.Automation.Runspaces;
 namespace PnP.PowerShell.Tests.Graph
 {
     [TestClass]
-    public class AddSiteClassificationTests
+    public class UpdateAvailableSiteClassificationTests
     {
         #region Test Setup/CleanUp
         [ClassInitialize]
@@ -56,17 +56,27 @@ namespace PnP.PowerShell.Tests.Graph
         #region Scaffolded Cmdlet Tests
         //TODO: This is a scaffold of the cmdlet - complete the unit test
         //[TestMethod]
-        public void AddPnPSiteClassificationTest()
+        public void UpdatePnPSiteClassificationTest()
         {
             using (var scope = new PSTestScope(true))
             {
                 // Complete writing cmd parameters
 
 				// This is a mandatory parameter
+				// From Cmdlet Help: A settings object retrieved by Get-PnPSiteClassification
+				var settings = "";
+				// From Cmdlet Help: A list of classifications, separated by commas. E.g. "HBI","LBI","Top Secret"
 				var classifications = "";
+				// From Cmdlet Help: The default classification to be used. The value needs to be present in the list of possible classifications
+				var defaultClassification = "";
+				// From Cmdlet Help: The UsageGuidelinesUrl. Set to "" to clear.
+				var usageGuidelinesUrl = "";
 
-                var results = scope.ExecuteCommand("Add-PnPSiteClassification",
-					new CommandParameter("Classifications", classifications));
+                var results = scope.ExecuteCommand("Update-PnPSiteClassification",
+					new CommandParameter("Settings", settings),
+					new CommandParameter("Classifications", classifications),
+					new CommandParameter("DefaultClassification", defaultClassification),
+					new CommandParameter("UsageGuidelinesUrl", usageGuidelinesUrl));
                 
                 Assert.IsNotNull(results);
             }

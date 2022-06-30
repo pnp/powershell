@@ -7,9 +7,11 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsData.Update, "PnPSiteClassification")]
+    [Cmdlet(VerbsData.Update, "PnPAvailableSiteClassification")]
     [RequiredMinimalApiPermissions("Directory.ReadWrite.All")]
-    public class UpdateSiteClassification : PnPGraphCmdlet
+    [Alias("Update-SiteClassification")]
+    [WriteAliasWarning("Please use 'Update-PnPAvailableSiteClassification'. The alias 'Update-PnPSiteClassification' will be removed in a future release.")]
+    public class UpdateAvailableSiteClassification : PnPGraphCmdlet
     {
         const string ParameterSet_SETTINGS = "Settings";
         const string ParameterSet_SPECIFIC = "Specific";
@@ -71,6 +73,10 @@ namespace PnP.PowerShell.Commands.Site
                                 changed = true;
                             }
                         }
+                        else
+                        {
+                            WriteError(new ErrorRecord(new InvalidOperationException("You are trying to set the default classification to a value that is not available in the list of possible values. Use Get-PnPAvailableSiteClassification see which site classifications you can use."), "SITECLASSIFICATION_DEFAULTVALUE_INVALID", ErrorCategory.InvalidArgument, null));
+                        }
                     }
                     if (ParameterSpecified(nameof(UsageGuidelinesUrl)))
                     {
@@ -83,14 +89,7 @@ namespace PnP.PowerShell.Commands.Site
                 }                
                 if (changed)
                 {
-                    if (siteClassificationSettings.Classifications.Contains(siteClassificationSettings.DefaultClassification))
-                    {
-                        PnP.Framework.Graph.SiteClassificationsUtility.UpdateSiteClassificationsSettings(AccessToken, siteClassificationSettings);
-                    }
-                    else
-                    {
-                        WriteError(new ErrorRecord(new InvalidOperationException("You are trying to set the default classification to a value that is not available in the list of possible values."), "SITECLASSIFICATION_DEFAULTVALUE_INVALID", ErrorCategory.InvalidArgument, null));
-                    }
+                    PnP.Framework.Graph.SiteClassificationsUtility.UpdateSiteClassificationsSettings(AccessToken, siteClassificationSettings);
                 }
             }
             catch (ApplicationException ex)

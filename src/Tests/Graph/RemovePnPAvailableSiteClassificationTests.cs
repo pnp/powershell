@@ -5,7 +5,7 @@ using System.Management.Automation.Runspaces;
 namespace PnP.PowerShell.Tests.Graph
 {
     [TestClass]
-    public class RemoveSiteClassificationTests
+    public class RemoveAvailableSiteClassificationTests
     {
         #region Test Setup/CleanUp
         [ClassInitialize]

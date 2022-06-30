@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Update-PnPSiteClassification
+title: Update-PnPAvailableSiteClassification
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Update-PnPSiteClassification.html
+online version: https://pnp.github.io/powershell/cmdlets/Update-PnPAvailableSiteClassification.html
 ---
  
-# Update-PnPSiteClassification
+# Update-PnPAvailableSiteClassification
 
 ## SYNOPSIS
 
@@ -15,43 +15,44 @@ online version: https://pnp.github.io/powershell/cmdlets/Update-PnPSiteClassific
 
   * Microsoft Graph API: Directory.ReadWrite.All
 
-Updates Site Classifications for the tenant
+Updates available classic Site Classifications for the tenant
 
 ## SYNTAX
 
 ### Settings
 ```powershell
-Update-PnPSiteClassification -Settings <SiteClassificationsSettings> 
+Update-PnPAvailableSiteClassification -Settings <SiteClassificationsSettings> 
  [<CommonParameters>]
 ```
 
 ### Specific
 ```powershell
-Update-PnPSiteClassification [-Classifications <System.Collections.Generic.List`1[System.String]>]
+Update-PnPAvailableSiteClassification [-Classifications <System.Collections.Generic.List`1[System.String]>]
  [-DefaultClassification <String>] [-UsageGuidelinesUrl <String>]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+This cmdlet allows for updating the configuration of the classic site classifications configured within the tenant.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Update-PnPSiteClassification -Classifications "HBI","Top Secret"
+Update-PnPAvailableSiteClassification -Classifications "HBI","Top Secret"
 ```
 
 Replaces the existing values of the site classification settings
 
 ### EXAMPLE 2
 ```powershell
-Update-PnPSiteClassification -DefaultClassification "LBI"
+Update-PnPAvailableSiteClassification -DefaultClassification "LBI"
 ```
 
 Sets the default classification value to "LBI". This value needs to be present in the list of classification values.
 
 ### EXAMPLE 3
 ```powershell
-Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/m365pnp
+Update-PnPAvailableSiteClassification -UsageGuidelinesUrl https://aka.ms/m365pnp
 ```
 
 sets the usage guideliness URL to the specified URL
@@ -117,4 +118,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
