@@ -309,14 +309,13 @@ namespace PnP.PowerShell.Commands.Utilities
             string distinguishedNameString = string.Join("; ", x500Values);
 
             X500DistinguishedName distinguishedName = new X500DistinguishedName(distinguishedNameString);
-
-            using (RSA rsa = MakeExportable(new RSACng(2048)))
-            {
+                        
+            using (RSA rsa = Platform.IsWindows ? MakeExportable(new RSACng(2048)) : RSA.Create(2048))
+            {                
                 var request = new CertificateRequest(distinguishedName, rsa, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
 
                 request.CertificateExtensions.Add(
                     new X509KeyUsageExtension(X509KeyUsageFlags.DataEncipherment | X509KeyUsageFlags.KeyEncipherment | X509KeyUsageFlags.DigitalSignature, false));
-
 
                 request.CertificateExtensions.Add(
                    new X509EnhancedKeyUsageExtension(
