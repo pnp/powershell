@@ -246,6 +246,11 @@ namespace PnP.PowerShell.Commands.Admin
         public Guid[] EnableModernListTemplateIds;
 
         [Parameter(Mandatory = false)]
+        public bool? ExternalUserExpirationRequired;
+
+        [Parameter(Mandatory = false)]
+        public int? ExternalUserExpireInDays;
+
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
@@ -898,6 +903,18 @@ namespace PnP.PowerShell.Commands.Admin
             if (DisabledModernListTemplateIds != null && DisabledModernListTemplateIds.Length > 0)
             {
                 Tenant.DisabledModernListTemplateIds = DisabledModernListTemplateIds;
+                modified = true;
+            }
+
+            if (ExternalUserExpirationRequired.HasValue)
+            {
+                Tenant.ExternalUserExpirationRequired = ExternalUserExpirationRequired.Value;
+                modified = true;
+            }
+
+            if (ExternalUserExpireInDays.HasValue)
+            {
+                Tenant.ExternalUserExpireInDays = ExternalUserExpireInDays.Value;
                 modified = true;
             }
 

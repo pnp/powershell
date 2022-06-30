@@ -51,6 +51,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EnableAutoNewsDigest <Boolean>] [-CommentsOnListItemsDisabled <Boolean>] [-CommentsOnFilesDisabled <Boolean>]
  [-DisableBackToClassic <Boolean>] [-InformationBarriersSuspension <Boolean>] 
  [-AllowFilesWithKeepLabelToBeDeletedODB <Boolean>] [-AllowFilesWithKeepLabelToBeDeletedSPO <Boolean>]
+ [-ExternalUserExpirationRequired <Boolean>] [-ExternalUserExpireInDays <Boolean>]
  [-Force] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -1326,6 +1327,34 @@ Guids of out of the box modern list templates to show when creating a new list
 
 ```yaml
 Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExternalUserExpirationRequired
+When set to true, it will set enable expiration date for external users.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExternalUserExpireInDays
+When a value is set, it means that the access of the external user will expire in those many number of days.
+
+```yaml
+Type: Int
 Parameter Sets: (All)
 
 Required: False
