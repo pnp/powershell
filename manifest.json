@@ -1644,7 +1644,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPAccessToken.html",
-          "hash": "aINlqEK45hLOBt8/gplmQg=="
+          "hash": "PAUwmR1zN2VbokHzO/quzg=="
         }
       },
       "is_incremental": false,
@@ -2984,11 +2984,11 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPSiteCollectionAppCatalogs.md",
+      "source_relative_path": "cmdlets/Get-PnPSiteCollectionAppCatalog.md",
       "output": {
         ".html": {
-          "relative_path": "cmdlets/Get-PnPSiteCollectionAppCatalogs.html",
-          "hash": "JyfTpxV1dhAOr2Ibc8r2ng=="
+          "relative_path": "cmdlets/Get-PnPSiteCollectionAppCatalog.html",
+          "hash": "zDIyPWAjb6JC00OrIIwiBw=="
         }
       },
       "is_incremental": false,
@@ -7692,7 +7692,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "UmKBPcKS42XDCFSI6HpuLQ=="
+          "hash": "k1+b4b1ktQYkB0Nw2hffGQ=="
         }
       },
       "is_incremental": false,

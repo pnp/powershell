@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPAccessToken | PnP PowerShell </title>
+    <title>Get-PnPSiteCollectionAppCatalog | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPAccessToken | PnP PowerShell ">
+    <meta name="title" content="Get-PnPSiteCollectionAppCatalog | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,58 +77,37 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="get-pnpaccesstoken">Get-PnPAccessToken</h1>
+                    <h1 id="get-pnpsitecollectionappcatalog">Get-PnPSiteCollectionAppCatalog</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Returns the current Microsoft Graph OAuth Access token.
-If a Resource Type Name or Resource URL is specified, it will fetch the access token of the specified resource.</p>
+<p>Returns all site collection scoped app catalogs that exist on the tenant</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPAccessToken [-ResourceTypeName] [-ResourceUrl] [-Decoded] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPSiteCollectionAppCatalog [-CurrentSite &lt;SwitchParameter&gt;] [-ExcludeDeletedSites &lt;SwitchParameter&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API. Doesn't work with all Connect-PnPOnline options. To retrieve the SharePoint Online access token, instead use <code>Get-PnPAppAuthAccessToken</code>.</p>
+<p>Returns all the site collection scoped app catalogs that exist on the tenant</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPAccessToken
+<pre><code class="lang-powershell">Get-PnPSiteCollectionAppCatalog
 </code></pre>
-<p>Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API</p>
+<p>Will return all the site collection app catalogs that exist on the tenant, including those that may be in the tenant recycle bin</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPAccessToken -Decoded
+<pre><code class="lang-powershell">Get-PnPSiteCollectionAppCatalog -CurrentSite
 </code></pre>
-<p>Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API and shows the token with its content decoded</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPAccessToken -ResourceTypeName SharePoint
+<p>Will return the site collection app catalog for the currently connected to site, if it has one. Otherwise it will yield no result.</p>
+<h3 id="example-2-1">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPSiteCollectionAppCatalog -ExcludeDeletedSites
 </code></pre>
-<p>Gets the OAuth 2.0 Access Token to consume the SharePoint APIs and perform CSOM operations.</p>
-<h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Get-PnPAccessToken -ResourceTypeName ARM
-</code></pre>
-<p>Gets the OAuth 2.0 Access Token to consume the Azure Resource Manager APIs and perform related operations. In PnP, you can use them in cmdlets related to Flow and PowerPlatform etc.</p>
-<h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Get-PnPAccessToken -ResourceUrl &quot;https://management.azure.com/.default&quot;
-</code></pre>
-<p>Gets the OAuth 2.0 Access Token to consume the SharePoint APIs and perform CSOM operations.</p>
+<p>Will return all the site collection app catalogs that exist on the tenant excluding the site collections having App Catalogs that are in the tenant recycle bin</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-resourcetypename">-ResourceTypeName</h3>
-<p>Specify the Resource Type for which you want the access token. If not specified, it will by default return a Microsoft Graph access token.</p>
-<pre><code class="lang-yaml">Type: ResourceTypeName
-Parameter Sets: Resource Type Name, Resource Type Name (decoded)
-Accepted values: Graph, SharePoint, ARM
-
-Required: False
-Position: Named
-Default value: Graph
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-resourceurl">-ResourceUrl</h3>
-<p>Specify the Resource URL for which you want the access token, i.e. <a href="https://graph.microsoft.com/.default">https://graph.microsoft.com/.default</a>. If not specified, it will by default return a Microsoft Graph access token.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: Resource Url, Resource Url (decoded)
+<h3 id="-currentsite">-CurrentSite</h3>
+<p>When provided, it will check if the currently connected to site has a site collection App Catalog and will return information on it. If the current site holds no site collection App Catalog, an empty response will be returned.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -136,10 +115,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-decoded">-Decoded</h3>
-<p>Returns the details from the access token in a decoded manner</p>
+<h3 id="-excludedeletedsites">-ExcludeDeletedSites</h3>
+<p>When provided, all site collections having site collection App Catalogs but residing in the tenant recycle bin, will be excluded</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Default (decoded), Resource Type Name (decoded), Resource Url (decoded)
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -150,6 +129,17 @@ Accept wildcard characters: False
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
