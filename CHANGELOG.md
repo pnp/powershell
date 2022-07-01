@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+## [1.11.0]
+
+### Added
+
 - Added `-Wait` and `-Verbose` optional paramarers to `New-PnPUPABulkImportJob` [#1752](https://github.com/pnp/powershell/pull/1752)
 - Added `Add-PnPTeamsChannelUser` which allows members and owners to be added to private channels in Teams [#1735](https://github.com/pnp/powershell/pull/1735)
 - Added `Channel` parameter to `Add-PnPTeamsUser` cmdlet which if specified will allow owners and members to be added to private channels in a Teams Team. [#1772](https://github.com/pnp/powershell/pull/1772)
