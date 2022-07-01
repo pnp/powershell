@@ -29,19 +29,19 @@ namespace PnP.PowerShell.Commands.Planner
         {
             if (ParameterSetName == ParameterName_BYGROUP)
             {
-                var groupId = Group.GetGroupId(HttpClient, AccessToken);
+                var groupId = Group.GetGroupId(Connection, AccessToken);
                 if (groupId != null)
                 {
-                    var planId = Plan.GetIdAsync(HttpClient, AccessToken, groupId).GetAwaiter().GetResult();
+                    var planId = Plan.GetIdAsync(Connection, AccessToken, groupId).GetAwaiter().GetResult();
                     if (planId != null)
                     {
                         if (!ParameterSpecified(nameof(Identity)))
                         {
-                            WriteObject(PlannerUtility.GetBucketsAsync(HttpClient, AccessToken, planId).GetAwaiter().GetResult(), true);
+                            WriteObject(PlannerUtility.GetBucketsAsync(Connection, AccessToken, planId).GetAwaiter().GetResult(), true);
                         }
                         else
                         {
-                            WriteObject(Identity.GetBucket(HttpClient, AccessToken, planId));
+                            WriteObject(Identity.GetBucket(Connection, AccessToken, planId));
                         }
                     }
                     else
@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands.Planner
             }
             else
             {
-                WriteObject(PlannerUtility.GetBucketsAsync(HttpClient, AccessToken, PlanId).GetAwaiter().GetResult(), true);
+                WriteObject(PlannerUtility.GetBucketsAsync(Connection, AccessToken, PlanId).GetAwaiter().GetResult(), true);
             }
         }
     }

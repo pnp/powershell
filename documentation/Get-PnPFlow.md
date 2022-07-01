@@ -23,7 +23,7 @@ Get-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> [-AsAdmin] [-Identit
 ```
 
 ## DESCRIPTION
-This cmdlets returns the flows for a given enviroment.
+This cmdlet returns the flows for a given enviroment.
 
 ## EXAMPLES
 
@@ -32,14 +32,14 @@ This cmdlets returns the flows for a given enviroment.
 $environment = Get-PnPPowerPlatformEnvironment
 Get-PnPFlow -Environment $environment
 ```
-This returns all the flows for a given power platform environment
+This returns all the flows for a given Power Platform environment
 
 ### Example 2
 ```powershell
 $environment = Get-PnPPowerPlatformEnvironment
 Get-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
-This returns specific flow
+This returns a specific flow
 
 ## PARAMETERS
 

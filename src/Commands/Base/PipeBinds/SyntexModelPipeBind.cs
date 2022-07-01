@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public override string ToString() => Name;
 
-        internal ISyntexModel GetSyntexModel()
+        internal ISyntexModel GetSyntexModel(PnPConnection connection)
         {
             if (syntexModel != null)
             {
@@ -42,14 +42,14 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (syntexModelId > 0)
             {
-                var ctx = PnPConnection.Current.PnPContext;
+                var ctx = connection.PnPContext;
                 var syntexContentCenter = ctx.Web.AsSyntexContentCenter();
                 var models = syntexContentCenter.GetSyntexModels();
                 return models.FirstOrDefault(p => p.Id == syntexModelId);
             }
             else if (!string.IsNullOrEmpty(syntexModelName))
             {
-                var ctx = PnPConnection.Current.PnPContext;
+                var ctx = connection.PnPContext;
                 var syntexContentCenter = ctx.Web.AsSyntexContentCenter();
                 var models = syntexContentCenter.GetSyntexModels();
                 return models.FirstOrDefault(p => p.Name.Equals(syntexModelName, StringComparison.InvariantCultureIgnoreCase));
@@ -60,7 +60,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        internal ISyntexModel GetSyntexModel(PnPBatch batch)
+        internal ISyntexModel GetSyntexModel(PnPBatch batch, PnPConnection connection)
         {
             if (syntexModel != null)
             {
@@ -74,7 +74,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                     return batchedSyntexModel;
                 }
 
-                var ctx = PnPConnection.Current.PnPContext;
+                var ctx = connection.PnPContext;
                 var syntexContentCenter = ctx.Web.AsSyntexContentCenter();
                 var models = syntexContentCenter.GetSyntexModels();
                 var syntexModel = models.FirstOrDefault(p => p.Id == syntexModelId);
@@ -89,7 +89,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                     return batchedSyntexModel;
                 }
 
-                var ctx = PnPConnection.Current.PnPContext;
+                var ctx = connection.PnPContext;
                 var syntexContentCenter = ctx.Web.AsSyntexContentCenter();
                 var models = syntexContentCenter.GetSyntexModels();
                 var syntexModel = models.FirstOrDefault(p => p.Name.Equals(syntexModelName, StringComparison.InvariantCultureIgnoreCase));

@@ -16,18 +16,18 @@ Creates a communication site, Microsoft 365 group-connected team site or Modern 
 
 ### TeamSite
 ```powershell
-New-PnPSite -Type TeamSite -Title <String> -Alias <String> [-Description <String>] [-Classification <String>] [-IsPublic] [-Lcid <UInt>] [-Owners <String[][]>] [-PreferredDataLocation <Office365Geography>] [-SensitivityLabel <String>] [-HubSiteId <Guid>] [-SiteAlias <String>] [-Wait] [-Connection <PnPConnection>]
+New-PnPSite -Type TeamSite -Title <String> -Alias <String> [-Description <String>] [-Classification <String>] [-IsPublic] [-Lcid <UInt>] [-Owners <String[][]>] [-PreferredDataLocation <Office365Geography>] [-SensitivityLabel <String>] [-HubSiteId <Guid>] [-SiteAlias <String>] [-TimeZone <PnP.Framework.Enums.TimeZone>] [-Wait] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### CommunicationSite
 ```powershell
-New-PnPSite -Type CommunicationSite -Title <String> -Url <String> [-HubSiteId <Guid>] [-Classification <String>] [-SiteDesign <SiteDesign>] [-SiteDesignId <Guid>] [-Lcid <UInt>] [-Owner <String>] [-PreferredDataLocation <Office365Geography>] [-SensitivityLabel <String>]
+New-PnPSite -Type CommunicationSite -Title <String> -Url <String> [-HubSiteId <Guid>] [-Classification <String>] [-SiteDesign <SiteDesign>] [-SiteDesignId <Guid>] [-Lcid <UInt>] [-Owner <String>] [-PreferredDataLocation <Office365Geography>] [-SensitivityLabel <String>] [-TimeZone <PnP.Framework.Enums.TimeZone>]
 ```
 
 ### TeamSiteWithoutMicrosoft365Group
 ```powershell
-New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title <String> -Url <String> [-HubSiteId <Guid>] [-Classification <String>] [-SiteDesignId <Guid>] [-Lcid <UInt>] [-Owner <String>] [-PreferredDataLocation <Office365Geography>] [-SensitivityLabel <String>]
+New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title <String> -Url <String> [-HubSiteId <Guid>] [-Classification <String>] [-SiteDesignId <Guid>] [-Lcid <UInt>] [-Owner <String>] [-PreferredDataLocation <Office365Geography>] [-SensitivityLabel <String>] [-TimeZone <PnP.Framework.Enums.TimeZone>]
 ```
 
 ## DESCRIPTION
@@ -140,6 +140,13 @@ New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://t
 
 This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the default language to Italian (LCID 1040).
 
+### EXAMPLE 16
+```powershell
+New-PnPSite -Type TeamSite -TimeZone UTCPLUS0200_HELSINKI_KYIV_RIGA_SOFIA_TALLINN_VILNIUS -Title "Contoso" -Alias "Contoso"
+```
+
+This will create a new Modern team site collection connected to a Microsoft 365 Group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the timezone to UTC + 2 which is the Eastern European time zone.
+
 ## PARAMETERS
 
 ### -Alias
@@ -226,7 +233,7 @@ Accept wildcard characters: False
 ```
 
 ### -IsPublic
-Identifies whether the corresponding Microsoft365 group type is Private or Public. If not specified, group is considered Public.
+Identifies whether the corresponding Microsoft365 group type is Private or Public. If not specified, group is considered Private.
 Content in a Public group can be seen by anybody in the organization, and anybody in the organization is able to join the group. 
 Content in a Private group can only be seen by the members of the group and people who want to join a private group have to be approved by a group owner.
 
@@ -383,6 +390,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -TimeZone
+Specifies the timezone of the site to create.
+To get the full list of timezone that you can select, you can visit [https://docs.microsoft.com/dotnet/api/officedevpnp.core.enums.timezone](https://docs.microsoft.com/dotnet/api/officedevpnp.core.enums.timezone)
+
+```yaml
+Type: Framework.Enums.TimeZone
+Parameter Sets: CommunicationSite, TeamSiteWithoutMicrosoft365Group, TeamSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Type
 Specifies with type of site to create.
 
@@ -415,4 +437,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

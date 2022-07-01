@@ -1,3 +1,4 @@
+#Requires -PSEdition Core
 Param(
 	[Parameter(Mandatory = $false,
 		ValueFromPipeline = $false)]
@@ -119,7 +120,7 @@ if ($LASTEXITCODE -eq 0) {
 		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Debug/netstandard2.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { if (!$assemblyExceptions.Contains($_.Name)) { [void]$commonFiles.Add($_.Name) }; Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
 		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/$configuration" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
 		if (!$IsLinux -and !$IsMacOs) {
-			Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/net461" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }
+			Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/net462" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }
 		}
 	}
 	Catch {
@@ -168,7 +169,7 @@ if ($LASTEXITCODE -eq 0) {
 	CompanyName = 'Microsoft 365 Patterns and Practices'
 	CompatiblePSEditions = @(`"Core`",`"Desktop`")
 	PowerShellVersion = '5.1'
-	DotNetFrameworkVersion = '4.6.1'
+	DotNetFrameworkVersion = '4.6.2'
 	ProcessorArchitecture = 'None'
 	FunctionsToExport = '*'  
 	CmdletsToExport = @($cmdletsString)

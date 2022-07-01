@@ -10,12 +10,12 @@ title: Get-PnPConnection
 # Get-PnPConnection
 
 ## SYNOPSIS
-Returns the current context
+Returns the current connection
 
 ## SYNTAX
 
 ```powershell
-Get-PnPConnection [<CommonParameters>]
+Get-PnPConnection [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -32,8 +32,20 @@ This will put the current connection for use with the -Connection parameter on o
 
 ## PARAMETERS
 
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by specifying -ReturnConnection on Connect-PnPOnline. If not provided, the connection will be retrieved from the current context.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

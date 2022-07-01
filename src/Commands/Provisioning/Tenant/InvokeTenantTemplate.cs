@@ -294,14 +294,14 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                 }
                 catch
                 {
-                    throw new PSInvalidOperationException($"Your template contains artifacts that require an access token for https://{PnPConnection.Current.GraphEndPoint}. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
+                    throw new PSInvalidOperationException($"Your template contains artifacts that require an access token for https://{Connection.GraphEndPoint}. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
                 }
             }
 
             using (var provisioningContext = new PnPProvisioningContext(async (resource, scope) =>
             {
-                return await TokenRetrieval.GetAccessTokenAsync(resource, scope);
-            }, azureEnvironment: PnPConnection.Current.AzureEnvironment))
+                return await TokenRetrieval.GetAccessTokenAsync(resource, scope, Connection);
+            }, azureEnvironment: Connection.AzureEnvironment))
             {
                 if (!string.IsNullOrEmpty(SequenceId))
                 {

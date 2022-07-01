@@ -23,10 +23,10 @@ namespace PnP.PowerShell.Commands.ContentTypes
             ClientContext.Load(sub);
             ClientContext.ExecuteQueryRetry();
 
-            var res = sub.SyncContentTypesFromHubSite2(ClientContext.Url, ContentTypes);
+            var res = sub.SyncContentTypesFromHubSite2(site, ContentTypes);
             ClientContext.ExecuteQueryRetry();
 
-            var result = new PnP.PowerShell.Commands.Model.SharePoint.AddContentTypesFromContentTypeHubResponse
+            var result = new Model.SharePoint.AddContentTypesFromContentTypeHubResponse
             {
                 FailedContentTypeErrors = res.Value.FailedContentTypeErrors,
                 FailedReason = res.Value.FailedReason,
@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
                 IsPassed = res.Value.IsPassed,
                 Value = res.Value
             };
-            WriteObject(result);
+            WriteObject(result, true);
         }
     }
 }

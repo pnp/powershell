@@ -1,6 +1,9 @@
-﻿using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Administration;
+using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base;
+using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
@@ -12,7 +15,9 @@ namespace PnP.PowerShell.Commands.Admin
         {
             var results = Tenant.GetOrgAssets();
             ClientContext.ExecuteQueryRetry();
-            WriteObject(results.Value, true);
+
+            List<OrgAssetsLibrary> orgassetlibs = results.Value?.OrgAssetsLibraries?.ToList();
+            WriteObject(orgassetlibs, true);
         }
     }
 }

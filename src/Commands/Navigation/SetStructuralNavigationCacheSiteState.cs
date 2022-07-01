@@ -5,6 +5,7 @@ using Microsoft.SharePoint.Client;
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Set, "PnPStructuralNavigationCacheSiteState")]
+    [OutputType(typeof(void))]
     public class SetStructuralNavigationCacheSiteState : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
@@ -15,7 +16,7 @@ namespace PnP.PowerShell.Commands.Site
 
         protected override void ExecuteCmdlet()
         {
-            var url = PnPConnection.Current.Url;
+            var url = Connection.Url;
             if (ParameterSpecified(nameof(SiteUrl)))
             {
                 url = SiteUrl;

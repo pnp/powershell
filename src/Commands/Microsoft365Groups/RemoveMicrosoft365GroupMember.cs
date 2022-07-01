@@ -1,6 +1,4 @@
-﻿using PnP.Framework.Entities;
-using PnP.Framework.Graph;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
@@ -20,7 +18,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            Microsoft365GroupsUtility.RemoveMembersAsync(HttpClient, Identity.GetGroupId(HttpClient, AccessToken), Users, AccessToken).GetAwaiter().GetResult();
+            Microsoft365GroupsUtility.RemoveMembersAsync(Connection, Identity.GetGroupId(Connection, AccessToken), Users, AccessToken).GetAwaiter().GetResult();
         }
     }
 }

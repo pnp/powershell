@@ -1,9 +1,12 @@
-﻿using PnP.Framework.Graph;
+﻿using Microsoft.SharePoint.Client;
+using PnP.Framework.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
@@ -46,9 +49,12 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         [Parameter(Mandatory = false)]
         public bool? HideFromOutlookClients;
 
+        [Parameter(Mandatory = false)]
+        public Guid[] SensitivityLabels;
+
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(HttpClient, AccessToken, false, false);
+            var group = Identity.GetGroup(Connection, AccessToken, false, false);
 
 
             if (group != null)
@@ -71,17 +77,17 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 }
                 if (changed)
                 {
-                    group = Microsoft365GroupsUtility.UpdateAsync(HttpClient, AccessToken, group).GetAwaiter().GetResult();
+                    group = Microsoft365GroupsUtility.UpdateAsync(Connection, AccessToken, group).GetAwaiter().GetResult();
                 }
 
                 if (ParameterSpecified(nameof(Owners)))
                 {
-                    Microsoft365GroupsUtility.UpdateOwnersAsync(HttpClient, group.Id.Value, AccessToken, Owners).GetAwaiter().GetResult();
+                    Microsoft365GroupsUtility.UpdateOwnersAsync(Connection, group.Id.Value, AccessToken, Owners).GetAwaiter().GetResult();
                 }
 
                 if (ParameterSpecified(nameof(Members)))
                 {
-                    Microsoft365GroupsUtility.UpdateMembersAsync(HttpClient, group.Id.Value, AccessToken, Members).GetAwaiter().GetResult();
+                    Microsoft365GroupsUtility.UpdateMembersAsync(Connection, group.Id.Value, AccessToken, Members).GetAwaiter().GetResult();
                 }
 
                 if (ParameterSpecified(nameof(LogoPath)))
@@ -90,14 +96,14 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     {
                         LogoPath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogoPath);
                     }
-                    Microsoft365GroupsUtility.UploadLogoAsync(HttpClient, AccessToken, group.Id.Value, LogoPath).GetAwaiter().GetResult();
+                    Microsoft365GroupsUtility.UploadLogoAsync(Connection, AccessToken, group.Id.Value, LogoPath).GetAwaiter().GetResult();
                 }
 
                 if (ParameterSpecified(nameof(CreateTeam)))
                 {
                     if (!group.ResourceProvisioningOptions.Contains("Team"))
                     {
-                        Microsoft365GroupsUtility.CreateTeamAsync(HttpClient, AccessToken, group.Id.Value).GetAwaiter().GetResult();
+                        Microsoft365GroupsUtility.CreateTeamAsync(Connection, AccessToken, group.Id.Value).GetAwaiter().GetResult();
                     }
                     else
                     {
@@ -108,7 +114,31 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                 {
                     // For this scenario a separate call needs to be made
-                    Microsoft365GroupsUtility.SetVisibilityAsync(HttpClient, AccessToken, group.Id.Value, HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
+                    Microsoft365GroupsUtility.SetVisibilityAsync(Connection, AccessToken, group.Id.Value, HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
+                }
+
+                var assignedLabels = new List<AssignedLabels>();
+                if (SensitivityLabels != null && SensitivityLabels.Length > 0)
+                {
+                    var contextSettings = Connection.Context.GetContextSettings();
+                    if (contextSettings.Type != Framework.Utilities.Context.ClientContextType.AzureADCertificate)
+                    {
+                        foreach (var label in SensitivityLabels)
+                        {
+                            if (!Guid.Empty.Equals(label))
+                            {
+                                assignedLabels.Add(new AssignedLabels
+                                {
+                                    labelId = label.ToString()
+                                });
+                            }
+                        }
+                        Microsoft365GroupsUtility.SetSensitivityLabelsAsync(Connection, AccessToken, group.Id.Value, assignedLabels).GetAwaiter().GetResult();
+                    }
+                    else
+                    {
+                        WriteWarning("Adding sensitivity labels in App-only context is not supported by Graph API, so it will be skipped in Group creation");
+                    }
                 }
             }
         }

@@ -7,10 +7,12 @@ using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
 using PnP.Framework.Utilities;
+using System.Threading;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.New, "PnPUPABulkImportJob", DefaultParameterSetName = ParameterSet_UPLOADFILE)]
+    [OutputType(typeof(ImportProfilePropertiesJobInfo))]
     public class NewUPABulkImportJob : PnPAdminCmdlet
     {
         private const string ParameterSet_UPLOADFILE = "Submit up a new user profile bulk import job from local file";
@@ -19,23 +21,31 @@ namespace PnP.PowerShell.Commands.UserProfiles
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_UPLOADFILE)]
         public string Folder;
 
-        [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_UPLOADFILE)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_UPLOADFILE)]
         public string Path = string.Empty;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_URL)]
         public string Url = string.Empty;
 
-        [Parameter(Mandatory = true, Position = 2, ParameterSetName = ParameterSet_UPLOADFILE)]
-        [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_URL)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_UPLOADFILE)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_URL)]
         public Hashtable UserProfilePropertyMapping;
 
-        [Parameter(Mandatory = true, Position = 3, ParameterSetName = ParameterSet_UPLOADFILE)]
-        [Parameter(Mandatory = true, Position = 2, ParameterSetName = ParameterSet_URL)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_UPLOADFILE)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_URL)]
         public string IdProperty;
 
-        [Parameter(Mandatory = false, Position = 4, ParameterSetName = ParameterSet_UPLOADFILE)]
-        [Parameter(Mandatory = false, Position = 3, ParameterSetName = ParameterSet_URL)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_UPLOADFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_URL)]
         public ImportProfilePropertiesUserIdType IdType = ImportProfilePropertiesUserIdType.Email;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_UPLOADFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_URL)]
+        public SwitchParameter Wait; 
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_UPLOADFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_URL)]
+        public SwitchParameter WhatIf;               
 
         protected override void ExecuteCmdlet()
         {
@@ -52,7 +62,9 @@ namespace PnP.PowerShell.Commands.UserProfiles
                         throw new InvalidEnumArgumentException(@"Path cannot be empty");
                     }
 
-                    var webCtx = ClientContext.Clone(PnPConnection.Current.Url);
+                    WriteVerbose($"Going to use mapping file to upload from {Path}");
+
+                    var webCtx = ClientContext.Clone(Connection.Url);
                     var web = webCtx.Web;
                     var webServerRelativeUrl = web.EnsureProperty(w => w.ServerRelativeUrl);
                     if (!Folder.ToLower().StartsWith(webServerRelativeUrl))
@@ -66,25 +78,81 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     var folder = web.GetFolderByServerRelativeUrl(Folder);
 
                     var fileName = System.IO.Path.GetFileName(Path);
-                    File file = folder.UploadFile(fileName, Path, true);
-                    Url = new Uri(webCtx.Url).GetLeftPart(UriPartial.Authority) + file.ServerRelativeUrl;
+
+                    File file = null;
+                    if(!ParameterSpecified(nameof(WhatIf)))
+                    {
+                        WriteVerbose($"Uploading file from {Path} to {fileName}");
+                        file = folder.UploadFile(fileName, Path, true);
+                    }
+                    else
+                    {
+                        WriteVerbose($"Skipping uploading file from {Path} to {fileName} due to {nameof(WhatIf)} parameter being specified");
+                    }
+                    
+                    Url = new Uri(webCtx.Url).GetLeftPart(UriPartial.Authority) + file?.ServerRelativeUrl;
                     break;
                 case ParameterSet_URL:
                     if (string.IsNullOrWhiteSpace(Url))
                     {
                         throw new InvalidEnumArgumentException(@"Url cannot be empty");
                     }
+                    WriteVerbose($"Will instruct SharePoint Online to use mapping file located at {Url}");
                     break;
             }
 
             var o365 = new Office365Tenant(ClientContext);
             var propDictionary = UserProfilePropertyMapping.Cast<DictionaryEntry>().ToDictionary(kvp => (string)kvp.Key, kvp => (string)kvp.Value);
-            var id = o365.QueueImportProfileProperties(IdType, IdProperty, propDictionary, Url);
-            ClientContext.ExecuteQueryRetry();
 
-            var job = o365.GetImportProfilePropertyJob(id.Value);
+            Guid? jobId;
+            if (!ParameterSpecified(nameof(WhatIf)))
+            {
+                WriteVerbose($"Instructing SharePoint Online to queue user profile file located at {Url}");
+                jobId = o365.QueueImportProfileProperties(IdType, IdProperty, propDictionary, Url)?.Value;
+                ClientContext.ExecuteQueryRetry();
+            }
+            else
+            {
+                WriteVerbose($"Skipping instructing SharePoint Online to queue user profile file located at {Url} due to {nameof(WhatIf)} parameter being specified");
+                return;
+            }
+
+            // For some reason it sometimes does not always properly return the JobId while the job did start. Show this in the output.
+            if(jobId == Guid.Empty)
+            {
+                WriteWarning("The execution of the synchronization job did not return a job Id but seems to have started successfully. Use Get-PnPUPABulkImportStatus to check for the current status.");
+                return;
+            }
+
+            var job = o365.GetImportProfilePropertyJob(jobId.Value);
             ClientContext.Load(job);
             ClientContext.ExecuteQueryRetry();
+
+            WriteVerbose($"Job initiated with Id {job.JobId} and status {job.State} for file {job.SourceUri}");
+
+            // Check if we should wait with finalzing this cmdlet execution until the user profile import operation has completed
+            if(Wait.ToBool())
+            {
+                // Go into a loop to wait for the import to be successful or erroneous
+                ImportProfilePropertiesJobInfo jobStatus;
+                do
+                {
+                    // Wait for 30 seconds before requesting its current state again to avoid running into throttling
+                    Thread.Sleep((int)System.TimeSpan.FromSeconds(30).TotalMilliseconds);                    
+
+                    // Request the current status of the import job
+                    jobStatus = o365.GetImportProfilePropertyJob(job.JobId);
+                    ClientContext.Load(jobStatus);
+                    ClientContext.ExecuteQueryRetry();
+
+                    WriteVerbose($"Current status of job {job.JobId}: {jobStatus.State}");
+                }
+                while (jobStatus.State != ImportProfilePropertiesJobState.Succeeded && jobStatus.State != ImportProfilePropertiesJobState.Error);
+
+                // Import job either completed or failed
+                job = jobStatus;
+            }
+
             WriteObject(job);
         }
     }

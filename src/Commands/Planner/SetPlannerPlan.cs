@@ -29,13 +29,13 @@ namespace PnP.PowerShell.Commands.Graph
         {
             if (ParameterSetName == ParameterName_BYGROUP)
             {
-                var groupId = Group.GetGroupId(HttpClient, AccessToken);
+                var groupId = Group.GetGroupId(Connection, AccessToken);
                 if (groupId != null)
                 {
-                    var plan = Plan.GetPlanAsync(HttpClient, AccessToken, groupId, false).GetAwaiter().GetResult();
+                    var plan = Plan.GetPlanAsync(Connection, AccessToken, groupId, false).GetAwaiter().GetResult();
                     if (plan != null)
                     {
-                        WriteObject(PlannerUtility.UpdatePlanAsync(HttpClient, AccessToken, plan, Title).GetAwaiter().GetResult());
+                        WriteObject(PlannerUtility.UpdatePlanAsync(Connection, AccessToken, plan, Title).GetAwaiter().GetResult());
                     }
                     else
                     {
@@ -49,10 +49,10 @@ namespace PnP.PowerShell.Commands.Graph
             }
             else
             {
-                var plan = PlannerUtility.GetPlanAsync(HttpClient, AccessToken, PlanId, false).GetAwaiter().GetResult();
+                var plan = PlannerUtility.GetPlanAsync(Connection, AccessToken, PlanId, false).GetAwaiter().GetResult();
                 if (plan != null)
                 {
-                    WriteObject(PlannerUtility.UpdatePlanAsync(HttpClient, AccessToken, plan, Title).GetAwaiter().GetResult());
+                    WriteObject(PlannerUtility.UpdatePlanAsync(Connection, AccessToken, plan, Title).GetAwaiter().GetResult());
                 }
                 else
                 {

@@ -8,6 +8,7 @@ using System;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPSubWeb")]
+    [OutputType(typeof(Web))]
     public class GetSubWebs : PnPWebRetrievalsCmdlet<Web>
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]

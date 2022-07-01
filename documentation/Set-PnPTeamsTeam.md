@@ -61,7 +61,7 @@ Updates the team 'My Team' to disallow Team @mentions, allow Channel @mentions a
 Set-PnPTeamsTeam -Identity "My Team" -GiphyContentRating Moderate
 ```
 
-Updates the team 'My Team' to make the have a Moderate level of sensitivity for giphy usage.
+Updates the team 'My Team' to have a Moderate level of sensitivity for giphy usage.
 
 ## PARAMETERS
 

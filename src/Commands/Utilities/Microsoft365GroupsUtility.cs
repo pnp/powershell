@@ -12,10 +12,10 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class Microsoft365GroupsUtility
     {
-        internal static async Task<IEnumerable<Microsoft365Group>> GetGroupsAsync(HttpClient httpClient, string accessToken, bool includeSiteUrl, bool includeOwners)
+        internal static async Task<IEnumerable<Microsoft365Group>> GetGroupsAsync(PnPConnection connection, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
             var items = new List<Microsoft365Group>();
-            var result = await GraphHelper.GetResultCollectionAsync<Microsoft365Group>(httpClient, "v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified')", accessToken);
+            var result = await GraphHelper.GetResultCollectionAsync<Microsoft365Group>(connection, "v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified')", accessToken);
             if (result != null && result.Any())
             {
                 items.AddRange(result);
@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     foreach (var chunk in chunks)
                     {
-                        var ownerResults = await BatchUtility.GetObjectCollectionBatchedAsync<Microsoft365User>(httpClient, accessToken, chunk.ToArray(), "/groups/{0}/owners");
+                        var ownerResults = await BatchUtility.GetObjectCollectionBatchedAsync<Microsoft365User>(connection, accessToken, chunk.ToArray(), "/groups/{0}/owners");
                         foreach (var ownerResult in ownerResults)
                         {
                             items.First(i => i.Id.ToString() == ownerResult.Key).Owners = ownerResult.Value;
@@ -39,8 +39,8 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     foreach (var chunk in chunks)
                     {
-                        var results = await BatchUtility.GetPropertyBatchedAsync(httpClient, accessToken, chunk.ToArray(), "/groups/{0}/sites/root", "webUrl");
-                        //var results = await GetSiteUrlBatchedAsync(httpClient, accessToken, chunk.ToArray());
+                        var results = await BatchUtility.GetPropertyBatchedAsync(connection, accessToken, chunk.ToArray(), "/groups/{0}/sites/root", "webUrl");
+                        //var results = await GetSiteUrlBatchedAsync(connection, accessToken, chunk.ToArray());
                         foreach (var batchResult in results)
                         {
                             items.First(i => i.Id.ToString() == batchResult.Key).SiteUrl = batchResult.Value;
@@ -50,9 +50,9 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             return items;
         }
-        internal static async Task<Microsoft365Group> GetGroupAsync(HttpClient httpClient, Guid groupId, string accessToken, bool includeSiteUrl, bool includeOwners)
+        internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, Guid groupId, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
-            var group = await GraphHelper.GetAsync<Microsoft365Group>(httpClient, $"v1.0/groups/{groupId}", accessToken);
+            var group = await GraphHelper.GetAsync<Microsoft365Group>(connection, $"v1.0/groups/{groupId}", accessToken);
             if (includeSiteUrl)
             {
                 bool wait = true;
@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     iterations++;
                     try
                     {
-                        var siteUrlResult = await GraphHelper.GetAsync(httpClient, $"v1.0/groups/{group.Id}/sites/root?$select=webUrl", accessToken);
+                        var siteUrlResult = await GraphHelper.GetAsync(connection, $"v1.0/groups/{group.Id}/sites/root?$select=webUrl", accessToken);
                         if (!string.IsNullOrEmpty(siteUrlResult))
                         {
                             wait = false;
@@ -91,19 +91,19 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             if (includeOwners)
             {
-                group.Owners = await GetGroupMembersAsync("owners", httpClient, group.Id.Value, accessToken);
+                group.Owners = await GetGroupMembersAsync("owners", connection, group.Id.Value, accessToken);
             }
             return group;
         }
-        internal static async Task<Microsoft365Group> GetGroupAsync(HttpClient httpClient, string displayName, string accessToken, bool includeSiteUrl, bool includeOwners)
+        internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, string displayName, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
-            var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(httpClient, $"v1.0/groups?$filter=displayName eq '{displayName}' or mailNickName eq '{displayName}'", accessToken);
+            var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and displayName eq '{displayName}' or mailNickName eq '{displayName}'", accessToken);
             if (results != null && results.Items.Any())
             {
                 var group = results.Items.First();
                 if (includeSiteUrl)
                 {
-                    var siteUrlResult = await GraphHelper.GetAsync(httpClient, $"v1.0/groups/{group.Id}/sites/root?$select=webUrl", accessToken);
+                    var siteUrlResult = await GraphHelper.GetAsync(connection, $"v1.0/groups/{group.Id}/sites/root?$select=webUrl", accessToken);
                     var resultElement = JsonSerializer.Deserialize<JsonElement>(siteUrlResult);
                     if (resultElement.TryGetProperty("webUrl", out JsonElement webUrlElement))
                     {
@@ -112,21 +112,21 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 if (includeOwners)
                 {
-                    group.Owners = await GetGroupMembersAsync("owners", httpClient, group.Id.Value, accessToken);
+                    group.Owners = await GetGroupMembersAsync("owners", connection, group.Id.Value, accessToken);
                 }
                 return group;
             }
             return null;
         }
 
-        internal static async Task<Microsoft365Group> GetDeletedGroupAsync(HttpClient httpClient, Guid groupId, string accessToken)
+        internal static async Task<Microsoft365Group> GetDeletedGroupAsync(PnPConnection connection, Guid groupId, string accessToken)
         {
-            return await GraphHelper.GetAsync<Microsoft365Group>(httpClient, $"v1.0/directory/deleteditems/microsoft.graph.group/{groupId}", accessToken);
+            return await GraphHelper.GetAsync<Microsoft365Group>(connection, $"v1.0/directory/deleteditems/microsoft.graph.group/{groupId}", accessToken);
         }
 
-        internal static async Task<Microsoft365Group> GetDeletedGroupAsync(HttpClient httpClient, string groupName, string accessToken)
+        internal static async Task<Microsoft365Group> GetDeletedGroupAsync(PnPConnection connection, string groupName, string accessToken)
         {
-            var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(httpClient, $"v1.0/directory/deleteditems/microsoft.graph.group?$filter=displayName eq '{groupName}' or mailNickname eq '{groupName}'", accessToken);
+            var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(connection, $"v1.0/directory/deleteditems/microsoft.graph.group?$filter=displayName eq '{groupName}' or mailNickname eq '{groupName}'", accessToken);
             if (results != null && results.Items.Any())
             {
                 return results.Items.First();
@@ -134,35 +134,35 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        internal static async Task<IEnumerable<Microsoft365Group>> GetDeletedGroupsAsync(HttpClient httpClient, string accessToken)
+        internal static async Task<IEnumerable<Microsoft365Group>> GetDeletedGroupsAsync(PnPConnection connection, string accessToken)
         {
-            var result = await GraphHelper.GetResultCollectionAsync<Microsoft365Group>(httpClient, "v1.0/directory/deleteditems/microsoft.graph.group", accessToken);
+            var result = await GraphHelper.GetResultCollectionAsync<Microsoft365Group>(connection, "v1.0/directory/deleteditems/microsoft.graph.group", accessToken);
             return result;
         }
 
-        internal static async Task<Microsoft365Group> RestoreDeletedGroupAsync(HttpClient httpClient, Guid groupId, string accessToken)
+        internal static async Task<Microsoft365Group> RestoreDeletedGroupAsync(PnPConnection connection, Guid groupId, string accessToken)
         {
-            return await GraphHelper.PostAsync<Microsoft365Group>(httpClient, $"v1.0/directory/deleteditems/microsoft.graph.group/{groupId}/restore", accessToken);
+            return await GraphHelper.PostAsync<Microsoft365Group>(connection, $"v1.0/directory/deleteditems/microsoft.graph.group/{groupId}/restore", accessToken);
         }
 
-        internal static async Task PermanentlyDeleteDeletedGroupAsync(HttpClient httpClient, Guid groupId, string accessToken)
+        internal static async Task PermanentlyDeleteDeletedGroupAsync(PnPConnection connection, Guid groupId, string accessToken)
         {
-            await GraphHelper.DeleteAsync(httpClient, $"v1.0/directory/deleteditems/microsoft.graph.group/{groupId}", accessToken);
+            await GraphHelper.DeleteAsync(connection, $"v1.0/directory/deleteditems/microsoft.graph.group/{groupId}", accessToken);
         }
 
-        internal static async Task AddOwnersAsync(HttpClient httpClient, Guid groupId, string[] users, string accessToken, bool removeExisting)
+        internal static async Task AddOwnersAsync(PnPConnection connection, Guid groupId, string[] users, string accessToken, bool removeExisting)
         {
-            await AddUsersToGroupAsync("owners", httpClient, groupId, users, accessToken, removeExisting);
+            await AddUsersToGroupAsync("owners", connection, groupId, users, accessToken, removeExisting);
         }
 
-        internal static async Task AddMembersAsync(HttpClient httpClient, Guid groupId, string[] users, string accessToken, bool removeExisting)
+        internal static async Task AddMembersAsync(PnPConnection connection, Guid groupId, string[] users, string accessToken, bool removeExisting)
         {
-            await AddUsersToGroupAsync("members", httpClient, groupId, users, accessToken, removeExisting);
+            await AddUsersToGroupAsync("members", connection, groupId, users, accessToken, removeExisting);
         }
 
         internal static string GetUserGraphUrlForUPN(string upn)
         {
-            
+
             var escapedUpn = upn.Replace("#", "%23");
 
             if (escapedUpn.StartsWith("$")) return $"users('{escapedUpn}')";
@@ -170,131 +170,131 @@ namespace PnP.PowerShell.Commands.Utilities
             return $"users/{escapedUpn}";
         }
 
-        private static async Task AddUsersToGroupAsync(string groupName, HttpClient httpClient, Guid groupId, string[] users, string accessToken, bool removeExisting)
+        private static async Task AddUsersToGroupAsync(string groupName, PnPConnection connection, Guid groupId, string[] users, string accessToken, bool removeExisting)
         {
             foreach (var user in users)
             {
-                var userIdResult = await GraphHelper.GetAsync(httpClient, $"v1.0/{GetUserGraphUrlForUPN(user)}?$select=Id", accessToken);
+                var userIdResult = await GraphHelper.GetAsync(connection, $"v1.0/{GetUserGraphUrlForUPN(user)}?$select=Id", accessToken);
                 var resultElement = JsonSerializer.Deserialize<JsonElement>(userIdResult);
                 if (resultElement.TryGetProperty("id", out JsonElement idProperty))
                 {
 
                     var postData = new Dictionary<string, string>() {
                     {
-                        "@odata.id", $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{idProperty.GetString()}"
+                        "@odata.id", $"https://{connection.GraphEndPoint}/v1.0/users/{idProperty.GetString()}"
                     }
                 };
                     var stringContent = new StringContent(JsonSerializer.Serialize(postData));
                     stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-                    await GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/{groupName}/$ref", accessToken, stringContent);
+                    await GraphHelper.PostAsync(connection, $"v1.0/groups/{groupId}/{groupName}/$ref", accessToken, stringContent);
                 }
             }
         }
 
-        internal static async Task RemoveOwnersAsync(HttpClient httpClient, Guid groupId, string[] users, string accessToken)
+        internal static async Task RemoveOwnersAsync(PnPConnection connection, Guid groupId, string[] users, string accessToken)
         {
-            await RemoveUserFromGroupAsync("owners", httpClient, groupId, users, accessToken);
+            await RemoveUserFromGroupAsync("owners", connection, groupId, users, accessToken);
         }
 
-        internal static async Task RemoveMembersAsync(HttpClient httpClient, Guid groupId, string[] users, string accessToken)
+        internal static async Task RemoveMembersAsync(PnPConnection connection, Guid groupId, string[] users, string accessToken)
         {
-            await RemoveUserFromGroupAsync("members", httpClient, groupId, users, accessToken);
+            await RemoveUserFromGroupAsync("members", connection, groupId, users, accessToken);
         }
 
-        private static async Task RemoveUserFromGroupAsync(string groupName, HttpClient httpClient, Guid groupId, string[] users, string accessToken)
+        private static async Task RemoveUserFromGroupAsync(string groupName, PnPConnection connection, Guid groupId, string[] users, string accessToken)
         {
             foreach (var user in users)
             {
-                var resultString = await GraphHelper.GetAsync(httpClient, $"v1.0/{GetUserGraphUrlForUPN(user)}?$select=Id", accessToken);
+                var resultString = await GraphHelper.GetAsync(connection, $"v1.0/{GetUserGraphUrlForUPN(user)}?$select=Id", accessToken);
                 var resultElement = JsonSerializer.Deserialize<JsonElement>(resultString);
                 if (resultElement.TryGetProperty("id", out JsonElement idElement))
                 {
-                    await GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}/{groupName}/{idElement.GetString()}/$ref", accessToken);
+                    await GraphHelper.DeleteAsync(connection, $"v1.0/groups/{groupId}/{groupName}/{idElement.GetString()}/$ref", accessToken);
                 }
             }
         }
 
-        internal static async Task RemoveGroupAsync(HttpClient httpClient, Guid groupId, string accessToken)
+        internal static async Task RemoveGroupAsync(PnPConnection connection, Guid groupId, string accessToken)
         {
-            await GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}", accessToken);
+            await GraphHelper.DeleteAsync(connection, $"v1.0/groups/{groupId}", accessToken);
         }
 
-        internal static async Task<IEnumerable<Microsoft365User>> GetOwnersAsync(HttpClient httpClient, Guid groupId, string accessToken)
+        internal static async Task<IEnumerable<Microsoft365User>> GetOwnersAsync(PnPConnection connection, Guid groupId, string accessToken)
         {
-            return await GetGroupMembersAsync("owners", httpClient, groupId, accessToken);
+            return await GetGroupMembersAsync("owners", connection, groupId, accessToken);
         }
 
-        internal static async Task<IEnumerable<Microsoft365User>> GetMembersAsync(HttpClient httpClient, Guid groupId, string accessToken)
+        internal static async Task<IEnumerable<Microsoft365User>> GetMembersAsync(PnPConnection connection, Guid groupId, string accessToken)
         {
-            return await GetGroupMembersAsync("members", httpClient, groupId, accessToken);
+            return await GetGroupMembersAsync("members", connection, groupId, accessToken);
         }
 
-        private static async Task<IEnumerable<Microsoft365User>> GetGroupMembersAsync(string userType, HttpClient httpClient, Guid groupId, string accessToken)
+        private static async Task<IEnumerable<Microsoft365User>> GetGroupMembersAsync(string userType, PnPConnection connection, Guid groupId, string accessToken)
         {
-            var results = await GraphHelper.GetResultCollectionAsync<Microsoft365User>(httpClient, $"v1.0/groups/{groupId}/{userType}?$select=*", accessToken);
+            var results = await GraphHelper.GetResultCollectionAsync<Microsoft365User>(connection, $"v1.0/groups/{groupId}/{userType}?$select=*", accessToken);
             return results;
         }
 
-        internal static async Task ClearMembersAsync(HttpClient httpClient, Guid groupId, string accessToken)
+        internal static async Task ClearMembersAsync(PnPConnection connection, Guid groupId, string accessToken)
         {
-            var members = await GetMembersAsync(httpClient, groupId, accessToken);
+            var members = await GetMembersAsync(connection, groupId, accessToken);
 
             foreach (var member in members)
             {
-                await GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}/members/{member.Id}/$ref", accessToken);
+                await GraphHelper.DeleteAsync(connection, $"v1.0/groups/{groupId}/members/{member.Id}/$ref", accessToken);
             }
         }
 
-        internal static async Task ClearOwnersAsync(HttpClient httpClient, Guid groupId, string accessToken)
+        internal static async Task ClearOwnersAsync(PnPConnection connection, Guid groupId, string accessToken)
         {
-            var members = await GetOwnersAsync(httpClient, groupId, accessToken);
+            var members = await GetOwnersAsync(connection, groupId, accessToken);
 
             foreach (var member in members)
             {
-                await GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}/owners/{member.Id}/$ref", accessToken);
+                await GraphHelper.DeleteAsync(connection, $"v1.0/groups/{groupId}/owners/{member.Id}/$ref", accessToken);
             }
         }
 
-        internal static async Task UpdateOwnersAsync(HttpClient httpClient, Guid groupId, string accessToken, string[] owners)
+        internal static async Task UpdateOwnersAsync(PnPConnection connection, Guid groupId, string accessToken, string[] owners)
         {
-            var existingOwners = await GetOwnersAsync(httpClient, groupId, accessToken);
+            var existingOwners = await GetOwnersAsync(connection, groupId, accessToken);
             foreach (var owner in owners)
             {
                 if (existingOwners.FirstOrDefault(o => o.UserPrincipalName == owner) == null)
                 {
-                    await AddOwnersAsync(httpClient, groupId, new string[] { owner }, accessToken, false);
+                    await AddOwnersAsync(connection, groupId, new string[] { owner }, accessToken, false);
                 }
             }
             foreach (var existingOwner in existingOwners)
             {
                 if (!owners.Contains(existingOwner.UserPrincipalName))
                 {
-                    await GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}/owners/{existingOwner.Id}/$ref", accessToken);
+                    await GraphHelper.DeleteAsync(connection, $"v1.0/groups/{groupId}/owners/{existingOwner.Id}/$ref", accessToken);
                 }
             }
         }
 
-        internal static async Task UpdateMembersAsync(HttpClient httpClient, Guid groupId, string accessToken, string[] members)
+        internal static async Task UpdateMembersAsync(PnPConnection connection, Guid groupId, string accessToken, string[] members)
         {
-            var existingMembers = await GetMembersAsync(httpClient, groupId, accessToken);
+            var existingMembers = await GetMembersAsync(connection, groupId, accessToken);
             foreach (var member in members)
             {
                 if (existingMembers.FirstOrDefault(o => o.UserPrincipalName == member) == null)
                 {
-                    await AddMembersAsync(httpClient, groupId, new string[] { member }, accessToken, false);
+                    await AddMembersAsync(connection, groupId, new string[] { member }, accessToken, false);
                 }
             }
             foreach (var existingMember in existingMembers)
             {
                 if (!members.Contains(existingMember.UserPrincipalName))
                 {
-                    await GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}/members/{existingMember.Id}/$ref", accessToken);
+                    await GraphHelper.DeleteAsync(connection, $"v1.0/groups/{groupId}/members/{existingMember.Id}/$ref", accessToken);
                 }
             }
         }
 
-        internal static async Task<Dictionary<string, string>> GetSiteUrlBatchedAsync(HttpClient httpClient, string accessToken, string[] groupIds)
+        internal static async Task<Dictionary<string, string>> GetSiteUrlBatchedAsync(PnPConnection connection, string accessToken, string[] groupIds)
         {
             Dictionary<string, string> returnValue = new Dictionary<string, string>();
 
@@ -309,7 +309,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             var stringContent = new StringContent(JsonSerializer.Serialize(batch));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var result = await GraphHelper.PostAsync<GraphBatchResponse>(httpClient, "v1.0/$batch", stringContent, accessToken);
+            var result = await GraphHelper.PostAsync<GraphBatchResponse>(connection, "v1.0/$batch", stringContent, accessToken);
             if (result.Responses != null && result.Responses.Any())
             {
                 foreach (var response in result.Responses)
@@ -325,7 +325,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return returnValue;
         }
 
-        internal static async Task<Dictionary<string, string>> GetUserIdsBatched(HttpClient httpClient, string accessToken, string[] userPrincipalNames)
+        internal static async Task<Dictionary<string, string>> GetUserIdsBatched(PnPConnection connection, string accessToken, string[] userPrincipalNames)
         {
             Dictionary<string, string> returnValue = new Dictionary<string, string>();
 
@@ -340,7 +340,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             var stringContent = new StringContent(JsonSerializer.Serialize(batch));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var result = await GraphHelper.PostAsync<GraphBatchResponse>(httpClient, "v1.0/$batch", stringContent, accessToken);
+            var result = await GraphHelper.PostAsync<GraphBatchResponse>(connection, "v1.0/$batch", stringContent, accessToken);
             if (result.Responses != null && result.Responses.Any())
             {
                 foreach (var response in result.Responses)
@@ -356,49 +356,66 @@ namespace PnP.PowerShell.Commands.Utilities
             return returnValue;
         }
 
-        internal static async Task<string[]> GetUsersDataBindValueAsync(HttpClient httpClient, string accessToken, string[] users)
+        internal static async Task<string[]> GetUsersDataBindValueAsync(PnPConnection connection, string accessToken, string[] users)
         {
-            var userids = await GetUserIdsBatched(httpClient, accessToken, users);
+            var userids = await GetUserIdsBatched(connection, accessToken, users);
             if (userids.Any())
             {
-                return userids.Select(u => $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/users/{u.Value}").ToArray();
+                return userids.Select(u => $"https://{connection.GraphEndPoint}/v1.0/users/{u.Value}").ToArray();
             }
             return null;
         }
 
-        internal static async Task<Microsoft365Group> CreateAsync(HttpClient httpClient, string accessToken, Microsoft365Group group, bool createTeam, string logoPath, string[] owners, string[] members, bool? hideFromAddressLists, bool? hideFromOutlookClients)
+        internal static async Task<Microsoft365Group> CreateAsync(PnPConnection connection, string accessToken, Microsoft365Group group, bool createTeam, string logoPath, string[] owners, string[] members, bool? hideFromAddressLists, bool? hideFromOutlookClients, List<string> sensitivityLabels)
         {
             if (owners != null && owners.Length > 0)
             {
-                group.OwnersODataBind = await GetUsersDataBindValueAsync(httpClient, accessToken, owners);
+                group.OwnersODataBind = await GetUsersDataBindValueAsync(connection, accessToken, owners);
             }
 
             if (members != null && members.Length > 0)
             {
-                group.MembersODataBind = await GetUsersDataBindValueAsync(httpClient, accessToken, members);
+                group.MembersODataBind = await GetUsersDataBindValueAsync(connection, accessToken, members);
             }
 
-            var newGroup = await GraphHelper.PostAsync(httpClient, "v1.0/groups", group, accessToken);
+            if (sensitivityLabels.Count > 0)
+            {
+                var assignedLabels = new List<AssignedLabels>();
+                foreach (var label in sensitivityLabels)
+                {
+                    if (!Guid.Empty.Equals(label))
+                    {
+                        assignedLabels.Add(new AssignedLabels
+                        {
+                            labelId = label
+                        });
+                    }
+                }
+
+                group.AssignedLabels = assignedLabels;
+            }
+
+            var newGroup = await GraphHelper.PostAsync(connection, "v1.0/groups", group, accessToken);
 
             if (hideFromAddressLists.HasValue || hideFromOutlookClients.HasValue)
             {
-                await SetVisibilityAsync(httpClient, accessToken, newGroup.Id.Value, hideFromAddressLists, hideFromOutlookClients);
+                await SetVisibilityAsync(connection, accessToken, newGroup.Id.Value, hideFromAddressLists, hideFromOutlookClients);
             }
 
             if (!string.IsNullOrEmpty(logoPath))
             {
-                await UploadLogoAsync(httpClient, accessToken, newGroup.Id.Value, logoPath);
+                await UploadLogoAsync(connection, accessToken, newGroup.Id.Value, logoPath);
             }
 
             if (createTeam)
             {
-                await CreateTeamAsync(httpClient, accessToken, newGroup.Id.Value);
+                await CreateTeamAsync(connection, accessToken, newGroup.Id.Value);
             }
 
             return newGroup;
         }
 
-        internal static async Task UploadLogoAsync(HttpClient httpClient, string accessToken, Guid groupId, string logoPath)
+        internal static async Task UploadLogoAsync(PnPConnection connection, string accessToken, Guid groupId, string logoPath)
         {
             var fileBytes = System.IO.File.ReadAllBytes(logoPath);
 
@@ -431,7 +448,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 var retryCount = 10;
                 while (retryCount > 0)
                 {
-                    var responseMessage = await GraphHelper.PutAsync(httpClient, $"/v1.0/groups/{groupId}/photo/$value", accessToken, content);
+                    var responseMessage = await GraphHelper.PutAsync(connection, $"/v1.0/groups/{groupId}/photo/$value", accessToken, content);
                     if (responseMessage.IsSuccessStatusCode)
                     {
                         updated = true;
@@ -453,7 +470,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        internal static async Task CreateTeamAsync(HttpClient httpClient, string accessToken, Guid groupId)
+        internal static async Task CreateTeamAsync(PnPConnection connection, string accessToken, Guid groupId)
         {
             var createTeamEndPoint = $"v1.0/groups/{groupId}/team";
             bool wait = true;
@@ -464,7 +481,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 iterations++;
                 try
                 {
-                    var teamId = await GraphHelper.PutAsync<object>(httpClient, createTeamEndPoint, new { }, accessToken);
+                    var teamId = await GraphHelper.PutAsync<object>(connection, createTeamEndPoint, new { }, accessToken);
                     if (teamId != null)
                     {
                         wait = false;
@@ -485,17 +502,17 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        internal static async Task RenewAsync(HttpClient httpClient, string accessToken, Guid groupId)
+        internal static async Task RenewAsync(PnPConnection connection, string accessToken, Guid groupId)
         {
-            await GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/renew", new { }, accessToken);
+            await GraphHelper.PostAsync(connection, $"v1.0/groups/{groupId}/renew", new { }, accessToken);
         }
 
-        internal static async Task<Microsoft365Group> UpdateAsync(HttpClient httpClient, string accessToken, Microsoft365Group group)
+        internal static async Task<Microsoft365Group> UpdateAsync(PnPConnection connection, string accessToken, Microsoft365Group group)
         {
-            return await GraphHelper.PatchAsync(httpClient, accessToken, $"v1.0/groups/{group.Id}", group);
+            return await GraphHelper.PatchAsync(connection, accessToken, $"v1.0/groups/{group.Id}", group);
         }
 
-        internal static async Task SetVisibilityAsync(HttpClient httpClient, string accessToken, Guid groupId, bool? hideFromAddressLists, bool? hideFromOutlookClients)
+        internal static async Task SetVisibilityAsync(PnPConnection connection, string accessToken, Guid groupId, bool? hideFromAddressLists, bool? hideFromOutlookClients)
         {
             var patchData = new
             {
@@ -509,7 +526,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 try
                 {
-                    await GraphHelper.PatchAsync<dynamic>(httpClient, accessToken, $"v1.0/groups/{groupId}", patchData);
+                    await GraphHelper.PatchAsync<dynamic>(connection, accessToken, $"v1.0/groups/{groupId}", patchData);
                     retry = false;
                 }
 
@@ -526,68 +543,98 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        internal static async Task<Microsoft365GroupSettingValueCollection> GetGroupSettingsAsync(HttpClient httpClient, string accessToken)
+        internal static async Task<Microsoft365GroupSettingValueCollection> GetGroupSettingsAsync(PnPConnection connection, string accessToken)
         {
-            var result = await GraphHelper.GetAsync<Microsoft365GroupSettingValueCollection>(httpClient, "v1.0/groupSettings", accessToken, propertyNameCaseInsensitive: true);
+            var result = await GraphHelper.GetAsync<Microsoft365GroupSettingValueCollection>(connection, "v1.0/groupSettings", accessToken, propertyNameCaseInsensitive: true);
             return result;
         }
 
-        internal static async Task<Microsoft365GroupSettingValueCollection> GetGroupSettingsAsync(HttpClient httpClient, string accessToken, string groupId)
+        internal static async Task<Microsoft365GroupSettingValueCollection> GetGroupSettingsAsync(PnPConnection connection, string accessToken, string groupId)
         {
-            var result = await GraphHelper.GetAsync<Microsoft365GroupSettingValueCollection>(httpClient, $"v1.0/groups/{groupId}/settings", accessToken, propertyNameCaseInsensitive: true);
+            var result = await GraphHelper.GetAsync<Microsoft365GroupSettingValueCollection>(connection, $"v1.0/groups/{groupId}/settings", accessToken, propertyNameCaseInsensitive: true);
             return result;
         }
 
-        internal static async Task<Microsoft365GroupSetting> CreateGroupSetting(HttpClient httpClient, string accessToken, dynamic groupSettingObject)
+        internal static async Task<Microsoft365GroupSetting> CreateGroupSetting(PnPConnection connection, string accessToken, dynamic groupSettingObject)
         {
             var stringContent = new StringContent(JsonSerializer.Serialize(groupSettingObject));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var result = await GraphHelper.PostAsync<Microsoft365GroupSetting>(httpClient, "v1.0/groupSettings", stringContent, accessToken, propertyNameCaseInsensitive: true);
+            var result = await GraphHelper.PostAsync<Microsoft365GroupSetting>(connection, "v1.0/groupSettings", stringContent, accessToken, propertyNameCaseInsensitive: true);
             return result;
         }
 
-        internal static async Task<Microsoft365GroupSetting> CreateGroupSetting(HttpClient httpClient, string accessToken, string groupId, dynamic groupSettingObject)
+        internal static async Task<Microsoft365GroupSetting> CreateGroupSetting(PnPConnection connection, string accessToken, string groupId, dynamic groupSettingObject)
         {
             var stringContent = new StringContent(JsonSerializer.Serialize(groupSettingObject));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var result = await GraphHelper.PostAsync<Microsoft365GroupSetting>(httpClient, $"v1.0/groups/{groupId}/settings", stringContent, accessToken, propertyNameCaseInsensitive: true);
+            var result = await GraphHelper.PostAsync<Microsoft365GroupSetting>(connection, $"v1.0/groups/{groupId}/settings", stringContent, accessToken, propertyNameCaseInsensitive: true);
             return result;
         }
 
-        internal static async Task UpdateGroupSetting(HttpClient httpClient, string accessToken, string id, dynamic groupSettingObject)
+        internal static async Task UpdateGroupSetting(PnPConnection connection, string accessToken, string id, dynamic groupSettingObject)
         {
             var stringContent = new StringContent(JsonSerializer.Serialize(groupSettingObject));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            await GraphHelper.PatchAsync(httpClient, accessToken, stringContent, $"v1.0/groupSettings/{id}");
+            await GraphHelper.PatchAsync(connection, accessToken, stringContent, $"v1.0/groupSettings/{id}");
         }
 
-        internal static async Task UpdateGroupSetting(HttpClient httpClient, string accessToken, string id, string groupId, dynamic groupSettingObject)
+        internal static async Task UpdateGroupSetting(PnPConnection connection, string accessToken, string id, string groupId, dynamic groupSettingObject)
         {
             var stringContent = new StringContent(JsonSerializer.Serialize(groupSettingObject));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            await GraphHelper.PatchAsync(httpClient, accessToken, stringContent, $"v1.0/groups/{groupId}/settings/{id}");
+            await GraphHelper.PatchAsync(connection, accessToken, stringContent, $"v1.0/groups/{groupId}/settings/{id}");
         }
 
-        internal static async Task RemoveGroupSetting(HttpClient httpClient, string accessToken, string id)
-        {            
-            await GraphHelper.DeleteAsync(httpClient, $"v1.0/groupSettings/{id}", accessToken);
-        }
-
-        internal static async Task RemoveGroupSetting(HttpClient httpClient, string accessToken, string id, string groupId)
-        {            
-            await GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}/settings/{id}", accessToken);
-        }
-
-        internal static async Task<Microsoft365GroupTemplateSettingValueCollection> GetGroupTemplateSettingsAsync(HttpClient httpClient, string accessToken)
+        internal static async Task RemoveGroupSetting(PnPConnection connection, string accessToken, string id)
         {
-            var result = await GraphHelper.GetAsync<Microsoft365GroupTemplateSettingValueCollection>(httpClient, "v1.0/groupSettingTemplates", accessToken, propertyNameCaseInsensitive: true);
+            await GraphHelper.DeleteAsync(connection, $"v1.0/groupSettings/{id}", accessToken);
+        }
+
+        internal static async Task RemoveGroupSetting(PnPConnection connection, string accessToken, string id, string groupId)
+        {
+            await GraphHelper.DeleteAsync(connection, $"v1.0/groups/{groupId}/settings/{id}", accessToken);
+        }
+
+        internal static async Task<Microsoft365GroupTemplateSettingValueCollection> GetGroupTemplateSettingsAsync(PnPConnection connection, string accessToken)
+        {
+            var result = await GraphHelper.GetAsync<Microsoft365GroupTemplateSettingValueCollection>(connection, "v1.0/groupSettingTemplates", accessToken, propertyNameCaseInsensitive: true);
             return result;
         }
 
-        internal static async Task<Microsoft365GroupSettingTemplate> GetGroupTemplateSettingsAsync(HttpClient httpClient, string accessToken, string id)
+        internal static async Task<Microsoft365GroupSettingTemplate> GetGroupTemplateSettingsAsync(PnPConnection connection, string accessToken, string id)
         {
-            var result = await GraphHelper.GetAsync<Microsoft365GroupSettingTemplate>(httpClient, $"v1.0/groupSettingTemplates/{id}", accessToken, propertyNameCaseInsensitive: true);
+            var result = await GraphHelper.GetAsync<Microsoft365GroupSettingTemplate>(connection, $"v1.0/groupSettingTemplates/{id}", accessToken, propertyNameCaseInsensitive: true);
             return result;
+        }
+
+        internal static async Task SetSensitivityLabelsAsync(PnPConnection connection, string accessToken, Guid groupId, List<AssignedLabels> assignedLabels)
+        {
+            var patchData = new
+            {
+                assignedLabels,
+            };
+
+            var retry = true;
+            var iteration = 0;
+            while (retry)
+            {
+                try
+                {
+                    await GraphHelper.PatchAsync<dynamic>(connection, accessToken, $"v1.0/groups/{groupId}", patchData);
+                    retry = false;
+                }
+
+                catch (Exception)
+                {
+                    await Task.Delay(5000);
+                    iteration++;
+                }
+
+                if (iteration > 10) // don't try more than 10 times
+                {
+                    retry = false;
+                }
+            }
         }
     }
 }

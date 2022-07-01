@@ -4,10 +4,12 @@ using Microsoft.SharePoint.Client.UserProfiles;
 using System.Linq;
 
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Get, "PnPSubscribeSharePointNewsDigest")]
+    [OutputType(typeof(SubscribeSharePointNewsDigestStatus))]
     public class GetSubscribeSharePointNewsDigest : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
@@ -29,7 +31,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
             WriteVerbose($"Connecting to OneDrive for Business site at {properties.PersonalUrl}");
 
-            var oneDriveContext = PnPConnection.Current.CloneContext(properties.PersonalUrl);
+            var oneDriveContext = Connection.CloneContext(properties.PersonalUrl);
 
             WriteVerbose("Retrieving notificationSubscriptionHiddenList list");
 
@@ -58,9 +60,8 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
             WriteVerbose($"{listItems.Count} item{(listItems.Count != 1 ? "s" : "")} returned");
 
-            var record = new PSObject();
-            record.Properties.Add(new PSVariableProperty(new PSVariable("Account", Account)));
-            record.Properties.Add(new PSVariableProperty(new PSVariable("Enabled", listItems.Count == 0)));
+            var record = new SubscribeSharePointNewsDigestStatus(Account, enabled: listItems.Count == 0);
+
 
             WriteObject(record);
         }

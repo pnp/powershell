@@ -2,7 +2,6 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Graph;
-using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 
@@ -38,12 +37,12 @@ namespace PnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(HttpClient, AccessToken);
+            var groupId = Team.GetGroupId(Connection, AccessToken);
             if (groupId != null)
             {
                 try
                 {
-                    var channel = TeamsUtility.AddChannelAsync(AccessToken, HttpClient, groupId, DisplayName, Description, Private, OwnerUPN, IsFavoriteByDefault).GetAwaiter().GetResult();
+                    var channel = TeamsUtility.AddChannelAsync(AccessToken, Connection, groupId, DisplayName, Description, Private, OwnerUPN, IsFavoriteByDefault).GetAwaiter().GetResult();
                     WriteObject(channel);
                 }
                 catch (GraphException ex)

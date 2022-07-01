@@ -10,7 +10,7 @@ title: Add-PnPPage
 # Add-PnPPage
 
 ## SYNOPSIS
-Allows creation of a new page
+Creates a new page
 
 ## SYNTAX
 
@@ -23,7 +23,7 @@ Add-PnPPage [-Name] <String> [-LayoutType <PageLayoutType>]
 ```
 
 ## DESCRIPTION
-Allows creation of a new page. The page will be located inside the Site Pages library of the cite currently connected to.
+Creates a new page. The page will be located inside the Site Pages library of the site currently connected to.
 
 ## EXAMPLES
 
@@ -120,20 +120,6 @@ Enables or Disables the comments on the page
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
 Parameter Sets: (All)
 
 Required: False

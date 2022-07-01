@@ -7,6 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Set, "PnPListItemPermission", DefaultParameterSetName = ParameterSet_USER)]
+    [OutputType(typeof(void))]
     public class SetListItemPermission : PnPWebCmdlet
     {
         private const string ParameterSet_GROUP = "Group";

@@ -50,64 +50,80 @@ namespace PnP.PowerShell.Commands.Search
         [Parameter(Mandatory = false, ParameterSetName = "CSV")]
         public BookmarkStatus BookmarkStatus = BookmarkStatus.Suggested;
 
+        [Parameter(Mandatory = false, ParameterSetName = "CSV")]
+        public bool ExcludeVisualPromotedResults = true;
+
         protected override void ExecuteCmdlet()
         {
             string output = string.Empty;
 
-            switch (Scope)
+            if (!PromotedResultsToBookmarkCSV.IsPresent)
             {
-                case SearchConfigurationScope.Web:
-                    {
-                        if (PromotedResultsToBookmarkCSV.IsPresent)
+                switch (Scope)
+                {
+                    case SearchConfigurationScope.Web:
                         {
-                            output = RestHelper.ExecuteGetRequest(ClientContext, "searchsetting/getpromotedresultqueryrules");
-                        }
-                        else
-                        {
-                            output = CurrentWeb.GetSearchConfiguration();
-                        }
-                        break;
-                    }
-                case SearchConfigurationScope.Site:
-                    {
-                        if (PromotedResultsToBookmarkCSV.IsPresent)
-                        {
-                            output = RestHelper.ExecuteGetRequest(ClientContext, "searchsetting/getpromotedresultqueryrules?sitecollectionlevel=true");
-                        }
-                        else
-                        {
-                            output = ClientContext.Site.GetSearchConfiguration();
-                        }
-                        break;
-                    }
-                case SearchConfigurationScope.Subscription:
-                    {
-                        if (!ClientContext.Url.ToLower().Contains("-admin"))
-                        {
-                            throw new InvalidOperationException(Resources.CurrentSiteIsNoTenantAdminSite);
-                        }
 
-                        if (PromotedResultsToBookmarkCSV.IsPresent)
-                        {
-                            output = RestHelper.ExecuteGetRequest(ClientContext, "searchsetting/getpromotedresultqueryrules");
+                            output = CurrentWeb.GetSearchConfiguration();
+
+                            break;
                         }
-                        else
+                    case SearchConfigurationScope.Site:
                         {
+
+                            output = ClientContext.Site.GetSearchConfiguration();
+
+                            break;
+                        }
+                    case SearchConfigurationScope.Subscription:
+                        {
+                            if (!ClientContext.Url.ToLower().Contains("-admin"))
+                            {
+                                throw new InvalidOperationException(Resources.CurrentSiteIsNoTenantAdminSite);
+                            }
+
                             SearchObjectOwner owningScope = new SearchObjectOwner(ClientContext, SearchObjectLevel.SPSiteSubscription);
                             var config = new SearchConfigurationPortability(ClientContext);
                             ClientResult<string> configuration = config.ExportSearchConfiguration(owningScope);
                             ClientContext.ExecuteQueryRetry();
                             output = configuration.Value;
                         }
-                    }
-                    break;
+                        break;
+                }
             }
-
-            if (PromotedResultsToBookmarkCSV.IsPresent)
+            else
             {
-                output = ConvertToCSV(output);
-            }
+                string promotedResultsBaseUrl = "searchsetting/getpromotedresultqueryrules?";
+                if (Scope == SearchConfigurationScope.Site)
+                {
+                    promotedResultsBaseUrl += "sitecollectionlevel=true&";
+                }
 
+                int offset = 0;
+                const int numberOfRules = 50;
+                bool hasData;
+                List<string> queryRuleResponses = new List<string>();
+                do
+                {
+                    string runUrl = string.Format("{0}offset={1}&numberOfRules={2}", promotedResultsBaseUrl, offset, numberOfRules);
+                    string response = RestHelper.ExecuteGetRequest(ClientContext, runUrl);
+                    offset += numberOfRules;
+                    var config = JsonSerializer.Deserialize<Root>(response);
+                    hasData = config.Result != null && config.Result.Count > 0;
+                    if(hasData) queryRuleResponses.Add(response);
+                } while (hasData);
+
+                List<ExpandoObject> bookmarks = new List<ExpandoObject>(200);
+                foreach (var response in queryRuleResponses)
+                {
+                    var result = PromotedResultsToBookmarks(response);
+                    if (result != null && result.Count > 0)
+                    {
+                        bookmarks.AddRange(result);
+                    }
+                }
+                output = BookmarksToString(bookmarks);
+            }
 
             if (Path != null)
             {
@@ -139,12 +155,12 @@ namespace PnP.PowerShell.Commands.Search
                         var aliases = GetAliasesFromPid(doc, mp.Pid);
                         mp.Aliases = aliases;
                     }
-                    WriteObject(mps);
+                    WriteObject(mps, true);
                 }
             }
         }
 
-        private string ConvertToCSV(string json)
+        private List<ExpandoObject> PromotedResultsToBookmarks(string json)
         {
             var bookmarks = new List<ExpandoObject>();
             var config = JsonSerializer.Deserialize<Root>(json);
@@ -152,20 +168,31 @@ namespace PnP.PowerShell.Commands.Search
             {
                 foreach (var rule in config.Result)
                 {
-                    //if (!rule.IsPromotedResultsOnly) continue;
-                    if (rule.QueryConditions == null || rule.PromotedResults == null) continue;
+                    if (rule.QueryConditions == null || rule.PromotedResults == null)
+                    {
+                        continue;
+                    }
                     foreach (var promoResult in rule.PromotedResults)
                     {
-                        if (promoResult.IsVisual) continue;
                         dynamic bookmark = new ExpandoObject();
                         bookmark.Title = promoResult.Title.Contains(" ") ? '"' + promoResult.Title + '"' : promoResult.Title;
                         bookmark.Url = promoResult.Url;
+                        
+                        if (promoResult.IsVisual && ExcludeVisualPromotedResults)
+                        {
+                            WriteWarning($"Skipping visual promoted result {bookmark.Title} ({bookmark.Url})");
+                            continue;
+                        }
+                        
                         List<string> triggerTerms = new List<string>();
                         bool matchSimilar = false;
                         foreach (var condition in rule.QueryConditions)
                         {
-                            if (condition.Terms == null) continue;
-                            if (condition.QueryConditionType != "Keyword") continue;
+                            if (condition.Terms == null || condition.QueryConditionType != "Keyword")
+                            {
+                                WriteWarning($"Skipping {bookmark.Title} due to no trigger conditions");
+                                continue;
+                            }
 
                             if (condition.MatchingOptions.Contains("ProperPrefix") || condition.MatchingOptions.Contains("ProperSuffix"))
                             {
@@ -177,7 +204,11 @@ namespace PnP.PowerShell.Commands.Search
                                 triggerTerms.AddRange(term.Split(';').Select(s => s.Replace("Keywords:", "").Trim()).ToList());
                             }
                         }
-                        if (triggerTerms.Count == 0) continue;
+                        if (triggerTerms.Count == 0)
+                        {
+                            WriteWarning($"Skipping {bookmark.Title} due to no trigger terms");
+                            continue;
+                        }
 
                         var dict = bookmark as IDictionary<string, object>;
 
@@ -201,7 +232,11 @@ namespace PnP.PowerShell.Commands.Search
                     }
                 }
             }
+            return bookmarks;
+        }
 
+        private static string BookmarksToString(List<ExpandoObject> bookmarks)
+        {
             StringBuilder sb = new StringBuilder();
             bool firstLine = true;
             foreach (var bookmark in bookmarks)

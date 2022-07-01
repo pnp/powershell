@@ -6,22 +6,28 @@ namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPAccessToken", DefaultParameterSetName = DefaultParam)]
     [RequiredMinimalApiPermissions("https://graph.microsoft.com/.default")]
+    [OutputType(typeof(System.IdentityModel.Tokens.Jwt.JwtSecurityToken), ParameterSetName = new[] { DefaultParam_Decoded, ResourceTypeParam_Decoded, ResourceUrlParam_Decoded })]
+    [OutputType(typeof(string), ParameterSetName = new[] { DefaultParam, ResourceTypeParam, ResourceUrlParam })]
     public class GetPnPAccessToken : PnPGraphCmdlet
     {
         private const string DefaultParam = "Default";
         private const string ResourceTypeParam = "Resource Type Name";
         private const string ResourceUrlParam = "Resource Url";
+        private const string DefaultParam_Decoded = "Default (decoded)";
+        private const string ResourceTypeParam_Decoded = "Resource Type Name (decoded)";
+        private const string ResourceUrlParam_Decoded = "Resource Url (decoded)";
 
-        [Parameter(Mandatory = false, ParameterSetName = ResourceTypeParam)]
+        [Parameter(Mandatory = true, ParameterSetName = ResourceTypeParam)]
+        [Parameter(Mandatory = true, ParameterSetName = ResourceTypeParam_Decoded)]
         public ResourceTypeName ResourceTypeName = ResourceTypeName.Graph;
 
-        [Parameter(Mandatory = false, ParameterSetName = ResourceUrlParam)]
+        [Parameter(Mandatory = true, ParameterSetName = ResourceUrlParam)]
+        [Parameter(Mandatory = true, ParameterSetName = ResourceUrlParam_Decoded)]
         public string ResourceUrl;
 
-        [Parameter(ParameterSetName = DefaultParam)]
-        [Parameter(ParameterSetName = ResourceTypeParam)]
-        [Parameter(ParameterSetName = ResourceUrlParam)]
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = true, ParameterSetName = DefaultParam_Decoded)]
+        [Parameter(Mandatory = true, ParameterSetName = ResourceTypeParam_Decoded)]
+        [Parameter(Mandatory = true, ParameterSetName = ResourceUrlParam_Decoded)]
         public SwitchParameter Decoded;
         protected override void ExecuteCmdlet()
         {
@@ -37,16 +43,16 @@ namespace PnP.PowerShell.Commands.Base
                         accessTokenValue = AccessToken;
                         break;
                     case ResourceTypeName.SharePoint:
-                        accessTokenValue = TokenHandler.GetAccessToken(null, PnPConnection.Current?.Context?.Url?.TrimEnd('/') + "/.default");
+                        accessTokenValue = TokenHandler.GetAccessToken(null, Connection?.Context?.Url?.TrimEnd('/') + "/.default", Connection);
                         break;
                     case ResourceTypeName.ARM:
-                        accessTokenValue = TokenHandler.GetAccessToken(null, "https://management.azure.com/.default");
+                        accessTokenValue = TokenHandler.GetAccessToken(null, "https://management.azure.com/.default", Connection);
                         break;
                 }
             }
             else if (ParameterSetName == ResourceUrlParam)
             {
-                accessTokenValue = TokenHandler.GetAccessToken(null, ResourceUrl);
+                accessTokenValue = TokenHandler.GetAccessToken(null, ResourceUrl, Connection);
             }
 
             if (Decoded.IsPresent)

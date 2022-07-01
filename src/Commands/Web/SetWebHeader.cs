@@ -8,6 +8,7 @@ using System.Net.Http;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPWebHeader")]
+    [OutputType(typeof(void))]
     public class SetWebHeader : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -45,7 +46,7 @@ namespace PnP.PowerShell.Commands
                 var stringContent = new StringContent("{\"relativeLogoUrl\":\"" + SiteLogoUrl + "\",\"type\":0,\"aspect\":1}");
                 stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                 CurrentWeb.EnsureProperties(p => p.Url);
-                var result = GraphHelper.PostAsync(HttpClient, $"{CurrentWeb.Url.TrimEnd('/')}/_api/siteiconmanager/setsitelogo", AccessToken, stringContent).GetAwaiter().GetResult();
+                var result = GraphHelper.PostAsync(Connection, $"{CurrentWeb.Url.TrimEnd('/')}/_api/siteiconmanager/setsitelogo", AccessToken, stringContent).GetAwaiter().GetResult();
                 WriteVerbose($"Response from setsitelogo request: {result.StatusCode}");
             }  
 
@@ -107,7 +108,7 @@ namespace PnP.PowerShell.Commands
                     var stringContent = new StringContent("{" + string.Join(",", setSiteBackgroundImageInstructions) + ",\"type\":2,\"aspect\":0}");
                     stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                     CurrentWeb.EnsureProperties(p => p.Url);
-                    var result = GraphHelper.PostAsync(HttpClient, $"{CurrentWeb.Url.TrimEnd('/')}/_api/siteiconmanager/setsitelogo", AccessToken, stringContent).GetAwaiter().GetResult();
+                    var result = GraphHelper.PostAsync(Connection, $"{CurrentWeb.Url.TrimEnd('/')}/_api/siteiconmanager/setsitelogo", AccessToken, stringContent).GetAwaiter().GetResult();
                     WriteVerbose($"Response from setsitelogo request: {result.StatusCode}");
                 }
             }

@@ -1,15 +1,16 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using Microsoft.Online.SharePoint.TenantAdministration;
 using System;
 using System.Text.RegularExpressions;
 using System.Linq;
+using PnP.PowerShell.Commands.Utilities.REST;
+using PnP.PowerShell.Commands.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Copy, "PnPList", DefaultParameterSetName = ParameterSet_TOCURRENTSITEBYPIPE)]
+    [OutputType(typeof(List))]
     public class CopyList : PnPWebCmdlet
     {
         private const string ParameterSet_LISTBYPIPE = "By piping in a list";
@@ -55,24 +56,16 @@ namespace PnP.PowerShell.Commands.Lists
                 }
 
                 // Define the full URL to the list to copy
-                var hostUri = new Uri(PnPConnection.Current.Url);
+                var hostUri = new Uri(Connection.Url);
                 SourceListUrl = $"{hostUri.Scheme}://{hostUri.Authority}{list.RootFolder.ServerRelativeUrl}";
             }
 
             // Generate a site script from the list that needs to be copied
             WriteVerbose($"Generating script from list at {SourceListUrl}");
-            var scriptRequest = Tenant.GetSiteScriptFromList(ClientContext, SourceListUrl);
-            try
-            {
-                ClientContext.ExecuteQueryRetry();
-            }
-            catch (Microsoft.SharePoint.Client.ServerException e) when (e.ServerErrorTypeName == "System.IO.FileNotFoundException")
-            {
-                throw new PSArgumentException($"List provided through {nameof(SourceListUrl)} could not be found", nameof(SourceListUrl));
-            }
+            var generatedScript = RestHelper.PostAsync<RestResult<string>>(Connection.HttpClient, $"{Connection.Url}/_api/Microsoft.Sharepoint.Utilities.WebTemplateExtensions.SiteScriptUtility.GetSiteScriptFromList()", ClientContext, new { listUrl = SourceListUrl}).GetAwaiter().GetResult();
 
             // Take the site script of the list to copy
-            var script = scriptRequest.Value;
+            var script = generatedScript.Content;
 
             if (ParameterSpecified(nameof(Title)) && !string.IsNullOrWhiteSpace(Title))
             {
@@ -84,7 +77,7 @@ namespace PnP.PowerShell.Commands.Lists
             // Check if we need to set the destination to the current site
             if(ParameterSetName == ParameterSet_TOCURRENTSITEBYPIPE || ParameterSetName == ParameterSet_TOCURRENTSITEBYURL)
             {
-                DestinationWebUrl = PnPConnection.Current.Url;
+                DestinationWebUrl = Connection.Url;
             }
 
             if(ParameterSpecified(nameof(WhatIf)))
@@ -95,31 +88,34 @@ namespace PnP.PowerShell.Commands.Lists
 
             // Execute site script on destination site so the list will be created
             WriteVerbose($"Executing site script to site at {DestinationWebUrl}");
-            var actionResults = PnP.PowerShell.Commands.Utilities.SiteTemplates.InvokeSiteScript(HttpClient, AccessToken, script, DestinationWebUrl).GetAwaiter().GetResult().Items.ToArray();
+            var actionResults = RestHelper.PostAsync<RestResultCollection<InvokeSiteScriptActionResponse>>(Connection.HttpClient, $"{Connection.Url}/_api/Microsoft.Sharepoint.Utilities.WebTemplateExtensions.SiteScriptUtility.ExecuteTemplateScript()", ClientContext, new { script = script}).GetAwaiter().GetResult();
             
             // Ensure site script actions have been executed
-            if(actionResults.Length == 0)
+            if(actionResults.Items.Count() == 0)
             {
                 throw new PSInvalidOperationException($"List copy failed. No site script actions have been executed.");
             }
 
             // Display the results of each action in verbose
-            foreach(var actionResult in actionResults)
+            foreach(var actionResult in actionResults.Items)
             {
                 WriteVerbose($"Action {actionResult.Title} {(actionResult.ErrorCode != 0 ? $"failed: {actionResult.OutcomeText}" : "succeeded")}");
             }
 
             // Ensure the list creation succeeded
-            if(actionResults[0].ErrorCode != 0)
+            if(actionResults.Items.ElementAt(0).ErrorCode != 0)
             {
-                throw new PSInvalidOperationException($"List copy failed with error {actionResults[0].OutcomeText}");
+                throw new PSInvalidOperationException($"List copy failed with error {actionResults.Items.ElementAt(0).OutcomeText}");
             }
 
-            // Create a ClientContext to the web where the list has been created
+            //Create a ClientContext to the web where the list has been created
             var destinationContext = ClientContext.Clone(DestinationWebUrl);
 
             // Retrieve the newly created list
-            var createdList = destinationContext.Web.Lists.GetById(Guid.Parse(actionResults[0].TargetId));
+            var newListId = actionResults.Items.ElementAt(0).TargetId;
+
+            WriteVerbose($"Retrieving newly created list hosted in {DestinationWebUrl} with ID {newListId}");
+            var createdList = destinationContext.Web.Lists.GetById(Guid.Parse(newListId));
             destinationContext.Load(createdList, l => l.Id, l => l.BaseTemplate, l => l.OnQuickLaunch, l => l.DefaultViewUrl, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder.ServerRelativeUrl);
             destinationContext.ExecuteQuery();
 

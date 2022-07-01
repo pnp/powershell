@@ -18,6 +18,9 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = true, ParameterSetName = ParamSet_ByMultipleUsers)]
         public TeamsTeamPipeBind Team;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParamSet_ByUser)]
+        public TeamsChannelPipeBind Channel;
+
         [Parameter(Mandatory = true, ParameterSetName = ParamSet_ByUser)]
         public string User;
 
@@ -30,20 +33,31 @@ namespace PnP.PowerShell.Commands.Graph
         public string Role;
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(HttpClient, AccessToken);
+            var groupId = Team.GetGroupId(Connection, AccessToken);
             if (groupId != null)
             {
                 try
                 {
-                    if (ParameterSetName == ParamSet_ByUser)
+                    if (ParameterSpecified(nameof(Channel)))
                     {
-                        TeamsUtility.AddUserAsync(HttpClient, AccessToken, groupId, User, Role).GetAwaiter().GetResult();
+                        var channelId = Channel.GetId(Connection, AccessToken, groupId);
+                        if (channelId == null)
+                        {
+                            throw new PSArgumentException("Channel not found");
+                        }
+                        TeamsUtility.AddChannelMemberAsync(Connection, AccessToken, groupId, channelId, User, Role).GetAwaiter().GetResult();
                     }
                     else
                     {
-                        TeamsUtility.AddUsersAsync(HttpClient, AccessToken, groupId, Users, Role).GetAwaiter().GetResult();
+                        if (ParameterSetName == ParamSet_ByUser)
+                        {
+                            TeamsUtility.AddUserAsync(Connection, AccessToken, groupId, User, Role).GetAwaiter().GetResult();
+                        }
+                        else
+                        {
+                            TeamsUtility.AddUsersAsync(Connection, AccessToken, groupId, Users, Role).GetAwaiter().GetResult();
+                        }
                     }
-
                 }
                 catch (GraphException ex)
                 {
@@ -61,7 +75,6 @@ namespace PnP.PowerShell.Commands.Graph
             {
                 throw new PSArgumentException("Group not found");
             }
-
         }
     }
 }

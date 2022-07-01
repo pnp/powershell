@@ -3,6 +3,8 @@ using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Model.Syntex;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
@@ -10,6 +12,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Syntex
 {
     [Cmdlet(VerbsLifecycle.Request, "PnPSyntexClassifyAndExtract")]
+    [OutputType(typeof(SyntexClassifyAndExtractResult))]
     public class RequestSyntexClassifyAndExtract : PnPWebCmdlet
     {
         const string ParameterSet_LIST = "List";
@@ -38,7 +41,7 @@ namespace PnP.PowerShell.Commands.Syntex
         protected override void ExecuteCmdlet()
         {
             var serverRelativeUrl = string.Empty;
-            var ctx = PnPConnection.Current.PnPContext;
+            var ctx = Connection.PnPContext;
 
             if (ParameterSpecified(nameof(List)))
             {
@@ -53,7 +56,7 @@ namespace PnP.PowerShell.Commands.Syntex
                 if (OffPeak)
                 {
                     var classifyAndExtractResult = list.ClassifyAndExtractOffPeak();
-                    WriteObject(new Model.Syntex.SyntexClassifyAndExtractResult()
+                    WriteObject(new SyntexClassifyAndExtractResult()
                     {
                         Created = classifyAndExtractResult.Created,
                         DeliverDate = classifyAndExtractResult.DeliverDate,
@@ -76,7 +79,7 @@ namespace PnP.PowerShell.Commands.Syntex
                     {
                         foreach (var classifyAndExtractResult in classifyAndExtractResults)
                         {
-                            classifyAndExtractResultsOutput.Add(new Model.Syntex.SyntexClassifyAndExtractResult()
+                            classifyAndExtractResultsOutput.Add(new SyntexClassifyAndExtractResult()
                             {
                                 Created = classifyAndExtractResult.Created,
                                 DeliverDate = classifyAndExtractResult.DeliverDate,
@@ -99,7 +102,7 @@ namespace PnP.PowerShell.Commands.Syntex
             {
                 IFolder folder = Folder.GetFolder(ctx);
                 var classifyAndExtractResult = folder.ClassifyAndExtractOffPeak();
-                WriteObject(new Model.Syntex.SyntexClassifyAndExtractResult()
+                WriteObject(new SyntexClassifyAndExtractResult()
                 {
                     Created = classifyAndExtractResult.Created,
                     DeliverDate = classifyAndExtractResult.DeliverDate,
@@ -138,7 +141,7 @@ namespace PnP.PowerShell.Commands.Syntex
 
                     if (classifyAndExtractResult != null)
                     {
-                        WriteObject(new Model.Syntex.SyntexClassifyAndExtractResult()
+                        WriteObject(new SyntexClassifyAndExtractResult()
                         {
                             Created = classifyAndExtractResult.Created,
                             DeliverDate = classifyAndExtractResult.DeliverDate,

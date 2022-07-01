@@ -7,6 +7,7 @@ using PnP.Core.QueryModel;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "PnPListItemComment")]
+    [OutputType(typeof(ListItemComments))]
     public class GetListItemComments : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -53,7 +54,7 @@ namespace PnP.PowerShell.Commands.Lists
                         ListId = comment.ListId,
                         ParentId = comment.ParentId,
                         ReplyCount = comment.ReplyCount,
-                        Text = comment.Text                        
+                        Text = comment.Text
                     };
 
                     commentsList.Add(commentValue);

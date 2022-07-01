@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.SharePoint.Client;
 
@@ -223,7 +223,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             HttpRequestMessage message = null;
             if (payload != null)
             {
-                var content = new StringContent(JsonSerializer.Serialize(payload, new JsonSerializerOptions() { IgnoreNullValues = true }));
+                var content = new StringContent(JsonSerializer.Serialize(payload, new JsonSerializerOptions { IgnoreNullValues = true }));
                 content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                 message = GetMessage(url, HttpMethod.Post, accessToken, accept, content);
             }
@@ -591,7 +591,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             var message = new HttpRequestMessage();
             message.Method = method;
             message.RequestUri = new Uri(url);
-            message.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue(accept));
+            message.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(accept));
             PnP.Framework.Http.PnPHttpClient.AuthenticateRequestAsync(message, clientContext).GetAwaiter().GetResult();
             if (method == HttpMethod.Post || method == HttpMethod.Put || method.Method == "PATCH")
             {

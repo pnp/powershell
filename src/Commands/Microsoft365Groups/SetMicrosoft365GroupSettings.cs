@@ -28,15 +28,15 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Group != null)
             {
-                var groupId = Group.GetGroupId(HttpClient, AccessToken);
+                var groupId = Group.GetGroupId(Connection, AccessToken);
                 var groupSettingObject = GroupSettingsObject();
 
-                Microsoft365GroupsUtility.UpdateGroupSetting(HttpClient, AccessToken, Identity, groupId.ToString(), groupSettingObject).GetAwaiter().GetResult();
+                Microsoft365GroupsUtility.UpdateGroupSetting(Connection, AccessToken, Identity, groupId.ToString(), groupSettingObject).GetAwaiter().GetResult();
             }
             else
             {
                 var groupSettingObject = GroupSettingsObject();
-                Microsoft365GroupsUtility.UpdateGroupSetting(HttpClient, AccessToken, Identity, groupSettingObject).GetAwaiter().GetResult();
+                Microsoft365GroupsUtility.UpdateGroupSetting(Connection, AccessToken, Identity, groupSettingObject).GetAwaiter().GetResult();
             }
         }
 

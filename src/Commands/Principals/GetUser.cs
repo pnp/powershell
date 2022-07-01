@@ -12,6 +12,8 @@ using System.Text;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPUser", DefaultParameterSetName = PARAMETERSET_IDENTITY)]
+    [OutputType(typeof(User), ParameterSetName = new[] { PARAMETERSET_IDENTITY, PARAMETERSET_WITHRIGHTSASSIGNED })]
+    [OutputType(typeof(Model.UserWithRightsAssignedDetailed), ParameterSetName = new[] { PARAMETERSET_WITHRIGHTSASSIGNEDDETAILED })]
     public class GetUser : PnPWebRetrievalsCmdlet<User>
     {
         private const string PARAMETERSET_IDENTITY = "Identity based request";
@@ -122,7 +124,7 @@ namespace PnP.PowerShell.Commands.Principals
 
                 if (WithRightsAssignedDetailed)
                 {
-                    CurrentWeb.Context.Load(CurrentWeb.Lists, l => l.Include(li => li.ItemCount, li => li.IsSystemList, li=>li.IsCatalog, li => li.RootFolder.ServerRelativeUrl, li => li.RoleAssignments, li => li.Title, li => li.HasUniqueRoleAssignments));
+                    CurrentWeb.Context.Load(CurrentWeb.Lists, l => l.Include(li => li.ItemCount, li => li.IsSystemList, li => li.IsCatalog, li => li.RootFolder.ServerRelativeUrl, li => li.RoleAssignments, li => li.Title, li => li.HasUniqueRoleAssignments));
                     CurrentWeb.Context.ExecuteQueryRetry();
 
                     var progress = new ProgressRecord(0, $"Getting lists for {CurrentWeb.ServerRelativeUrl}", "Enumerating through lists");
@@ -237,8 +239,8 @@ namespace PnP.PowerShell.Commands.Principals
                     {
                         // Getting all the assigned permissions per user
                         var userPermissions = (from u in users
-                                           where u.User.LoginName == uniqueUser && u.Permissions != null
-                                           select u).ToList();
+                                               where u.User.LoginName == uniqueUser && u.Permissions != null
+                                               select u).ToList();
 
                         // Making the permissions readable by getting the name of the permission and the URL of the artifact
                         Dictionary<string, string> Permissions = new Dictionary<string, string>();
@@ -254,8 +256,8 @@ namespace PnP.PowerShell.Commands.Principals
 
                         // Getting all the groups where the user is added to
                         var groupsMemberships = (from u in users
-                                      where u.User.LoginName == uniqueUser && u.Groups != null
-                                      select u.Groups).ToList();
+                                                 where u.User.LoginName == uniqueUser && u.Groups != null
+                                                 select u.Groups).ToList();
 
                         // Getting the titles of the all the groups
                         List<string> Groups = new List<string>();
@@ -266,13 +268,20 @@ namespace PnP.PowerShell.Commands.Principals
                                 Groups.Add(group.Title);
                             }
                         }
-                     
+
                         // Getting the User object of the user so we can get to the title, loginname, etc
                         var userInformation = (from u in users
                                                where u.User.LoginName == uniqueUser
                                                select u.User).FirstOrDefault();
 
-                        WriteObject(new { userInformation.Title, userInformation.LoginName, userInformation.Email, Groups, Permissions }, true);
+                        WriteObject(new Model.UserWithRightsAssignedDetailed
+                        {
+                            Title = userInformation.Title,
+                            LoginName = userInformation.LoginName,
+                            Email = userInformation.Email,
+                            Groups = Groups,
+                            Permissions = Permissions
+                        });
                     }
                 }
             }

@@ -7,32 +7,35 @@ In this article we will setup an Azure Function to use PnP PowerShell
 
 ## Create the function app
 
-As the UI in https://portal.azure.com changes every now and then, but the principles stay the same, follow the following steps:
+As the UI in <https://portal.azure.com> changes every now and then, but the principles stay the same, follow the following steps:
 
 1. Create a new Function App
 1. Choose runtime stack `PowerShell Core` and version `7.0`
-   
-   ![](./../images/azurefunctions/createfunctionappbasics.png)
+
+   ![Create function app basics](./../images/azurefunctions/createfunctionappbasics.png)
 
 1. Select `Windows` as the operating system or else you will not be able to perform the following steps from your browser.
 
-   ![](./../images/azurefunctions/createfunctionapphosting.png)
+   ![Create function app hosting](./../images/azurefunctions/createfunctionapphosting.png)
 
 ## Make PnP PowerShell available to all functions in the app
 
 1. Navigate to `App files` which is located the left side menu of the function app under the `Functions` header.
-1. In the dropdown presented, select `requirements.psd1`. You'll notice that the function app wants to provide the Azure cmdlets. If you do not need those, keep the `Az` entry presented commented out.
-1. Add a new entry or replace the whole contents of the file with:
- 
-   ### Specific stable version
+2. In the dropdown presented, select `requirements.psd1`. You'll notice that the function app wants to provide the Azure cmdlets. If you do not need those, keep the `Az` entry presented commented out.
+3. Add a new entry or replace the whole contents of the file with:
+
+### Specific stable version
+
    ```powershell
    @{
        'PnP.PowerShell' = '1.9.0'
    }
    ```
+
    The version that will be installed will be the specified specific build, which is generally recommended. You build and test your Azure Function against this specific PnP PowerShell version. Future releases may work differently and cause issues, therefore it is generally recommended to specify a specific version here.
-   
-   ### Latest stable version
+
+### Latest stable version
+
    If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version:
 
     ```powershell
@@ -40,21 +43,24 @@ As the UI in https://portal.azure.com changes every now and then, but the princi
         'PnP.PowerShell' = '1.*'
      }
     ```
+
    This will then automatically download any minor version of the major 1 release when available. Note that wildcards will always take the latest stable version and not the nightly build/prerelease versions.
-   
-   ### Specific prerelease version
+
+### Specific prerelease version
+
    If you wish to use a specific prerelease/nightly build version, go to the [overview of available versions](https://www.powershellgallery.com/packages/PnP.PowerShell) and literally copy/paste the version in the definition:  
+
     ```powershell
     @{
-        'PnP.PowerShell' = '1.9.46-nightly'
+        'PnP.PowerShell' = '1.10.58-nightly'
      }
     ```
 
     ![Adding PnP PowerShell to the requirements.psd1 file in an Azure Function](./../images/azurefunctions/addpnpposhtoappfilerequirements.png)
 
-1. Save the `requirements.psd1` file 
+1. Save the `requirements.psd1` file
 
-1. If you decide to keep the Az cmdlets commented out, save and edit the `profile.psd` file. Mark out the following block in the file as follows, if not already done:
+2. If you decide to keep the Az cmdlets commented out, save and edit the `profile.psd` file. Mark out the following block in the file as follows, if not already done:
 
    ```powershell
    # if ($env:MSI_SECRET) {
@@ -67,15 +73,15 @@ As the UI in https://portal.azure.com changes every now and then, but the princi
 
    ![Disable the Az commands in profile](../images/azurefunctions/disableazinprofile.png)
 
-
 ## Decide how you want to authenticate in your PowerShell Function
 
 ### By using Credentials
 
 #### Create your credentials
-1. Navigate to `Configuration` under `Settings` and create a new Application Setting. 
-1. Enter `tenant_user` and enter the username you want to authenticate with as the user
-1. Enter `tenant_pwd` and enter the password you want to use for that user
+
+1. Navigate to `Configuration` under `Settings` and create a new Application Setting.
+2. Enter `tenant_user` and enter the username you want to authenticate with as the user
+3. Enter `tenant_pwd` and enter the password you want to use for that user
 
 #### Create the function
 
@@ -139,13 +145,13 @@ Make a note of the clientid shown and proceed with the steps in the following se
 Once you have an Azure Active Directory application set up and the public key certificate uploaded to its registration, proceed with configuring the Azure Function to make use of the private key of this certificate pair:
 
 1. In your function app, navigate to `TLS/SSL Settings` and switch to the `Private Key Certificates (.pfx)` section.
-1. Click `Upload Certificate` and select the "MyDemoApp.pfx" file that has been created for you. Enter the password you used in the script above.
-1 After the certificate has been uploaded, copy the thumbprint value shown.
-1 Navigate to `Configuration` and add a new Application Setting
-1. Call the setting `WEBSITE_LOAD_CERTIFICATES` and set the thumbprint as a value. To make all the certificates you uploaded available use `*` as the value. See https://docs.microsoft.com/azure/app-service/configure-ssl-certificate-in-code for more information.
-1. Save the settings
+2. Click `Upload Certificate` and select the "MyDemoApp.pfx" file that has been created for you. Enter the password you used in the script above.
+3. After the certificate has been uploaded, copy the thumbprint value shown.
+4. Navigate to `Configuration` and add a new Application Setting
+5. Call the setting `WEBSITE_LOAD_CERTIFICATES` and set the thumbprint as a value. To make all the certificates you uploaded available use `*` as the value. See <https://docs.microsoft.com/azure/app-service/configure-ssl-certificate-in-code> for more information.
+6. Save the settings
 
-#### Create the Azure Function
+#### Create the Azure Function for certificate authentication
 
 Create a new function and replace the function code with the following example:
 
@@ -195,42 +201,47 @@ Next step is to assign permissions to this managed identity so it is authorized 
 1. Ensure you're having the Azure PowerShell management module installed on your environment. You can install it using:
 
    ```powershell
-   Install-Module AzureAD
+   Install-Module Az
    ```
-   
+
 1. Connect to the Azure instance where your Azure Function runs and of which you want to use the Microsoft Graph through PnP PowerShell
 
     ```powershell
-    Connect-AzureAD -TenantId <contoso>.onmicrosoft.com
+    Connect-AzAccount -Tenant <contoso>.onmicrosoft.com
     ```
-    
+
 1. Retrieve the Azure AD Service Principal instance for the Microsoft Graph. It should always be AppId 00000003-0000-0000-c000-000000000000.
 
    ```powershell
-   $graphServicePrincipal = Get-AzureADServicePrincipal -SearchString "Microsoft Graph" | Select-Object -First 1
+   $graphServicePrincipal = Get-AzADServicePrincipal -SearchString "Microsoft Graph" | Select-Object -First 1
    ```
-   
+
 1. Using the following PowerShell cmdlet you can list all the possible Microsoft Graph permissions you can give your Azure Function through the Managed Identity. This list will be long. Notice that we are specifically querying for application permissions. Delegate permissions cannot be utilized using a Managed Identity.
 
    ```powershell
-   $graphServicePrincipal.AppRoles | Where-Object { $_.AllowedMemberTypes -eq "Application" }
+   $graphServicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq "Application" }
    ```
-   
+
 1. Pick a permission which you would like to grant your Azure Function to have towards the Microsoft Graph, i.e. `Group.Read.All`.
 
    ```powershell
-   $appRole = $graphServicePrincipal.AppRoles | Where-Object { $_.AllowedMemberTypes -eq "Application" -and $_.Value -eq "Group.Read.All" }
+   $appRole = $graphServicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq "Application" -and $_.Value -eq "Group.Read.All" }
    ```
-   
+
 1. Now assign this permission to the Azure Active Directory app registration that has been created automatically by enabling the managed identity on the Azure Function in the steps above:
 
    ```powershell
    $managedIdentityId = "<Object (principal) ID of the Azure Function generated in the previous section>"
-   New-AzureAdServiceAppRoleAssignment -ObjectId $managedIdentityId -PrincipalId $managedIdentityId -ResourceId $graphServicePrincipal.ObjectId -Id $appRole.Id
-   
+
+   $body = "{'principalId':'$($managedIdentityId)','resourceId':'$($graphServicePrincipal.Id)','appRoleId':'$($appRole.Id)'}"
+
+   $accessTokenResource = Get-AzAccessToken -ResourceTypeName MSGraph
+
+   Invoke-WebRequest "https://graph.microsoft.com/v1.0/servicePrincipals/$($managedIdentityId)/appRoleAssignments" -Headers @{"Authorization" = "Bearer $($accessTokenResource.Token)"} -ContentType "application/json" -Body $body -Method Post
+
    ```
 
-#### Create the Azure Function
+#### Create the Azure Function for managed identity authentication
 
 Create a new function and replace the function code with the following example:
 

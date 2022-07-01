@@ -20,7 +20,7 @@ Set-PnPWebTheme [[-Theme] <ThemePipeBind>] [-WebUrl <String>]
 ```
 
 ## DESCRIPTION
-Sets the theme of the current web. * Requires Tenant Administration Rights *
+Sets the theme of the current web. * Requires SharePoint Online Administrator Rights *
 
 ## EXAMPLES
 
@@ -37,6 +37,13 @@ Get-PnPTenantTheme -Name "MyTheme" | Set-PnPWebTheme
 ```
 
 Sets the theme named "MyTheme" to the current web
+
+### EXAMPLE 3
+```powershell
+Set-PnPWebTheme -Theme "MyCompanyTheme" -WebUrl https://contoso.sharepoint.com/sites/MyWeb
+```
+
+Sets the theme named "MyCompanyTheme" to MyWeb
 
 ## PARAMETERS
 

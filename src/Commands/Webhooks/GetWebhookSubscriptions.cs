@@ -8,6 +8,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 namespace PnP.PowerShell.Commands.Webhooks
 {
     [Cmdlet(VerbsCommon.Get, "PnPWebhookSubscriptions")]
+    [OutputType(typeof(WebhookSubscription))]
     public class GetWebhookSubscriptions : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
@@ -29,7 +30,7 @@ namespace PnP.PowerShell.Commands.Webhooks
                 if (list != null)
                 {
                     // Get all the webhook subscriptions for the specified list
-                    WriteObject(list.GetWebhookSubscriptions());
+                    WriteObject(list.GetWebhookSubscriptions(), true);
                 }
                 else
                 {

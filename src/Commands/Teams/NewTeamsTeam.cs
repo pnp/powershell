@@ -1,4 +1,5 @@
-﻿using PnP.Framework.Provisioning.Model.Teams;
+﻿using Microsoft.SharePoint.Client;
+using PnP.Framework.Provisioning.Model.Teams;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
@@ -108,6 +109,9 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NEWGROUP)]
         public TeamResourceBehaviorOptions?[] ResourceBehaviorOptions;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NEWGROUP)]
+        public Guid[] SensitivityLabels;
+
         protected override void ExecuteCmdlet()
         {
             var teamCI = new TeamCreationInformation()
@@ -137,15 +141,25 @@ namespace PnP.PowerShell.Commands.Graph
                 AllowCreatePrivateChannels = AllowCreatePrivateChannels
             };
 
-            #pragma warning disable 612, 618 // Disables the obsolete warning for the compiler output
+#pragma warning disable 612, 618 // Disables the obsolete warning for the compiler output
             if (!string.IsNullOrWhiteSpace(Owner))
             {
                 // Adding Owner parameter to the Owners array for backwards compatibility
                 Owners = Owners != null ? Owners.Concat(new[] { Owner }).ToArray() : new[] { Owner };
             }
-            #pragma warning restore 612, 618 
+#pragma warning restore 612, 618
 
-            WriteObject(TeamsUtility.NewTeamAsync(AccessToken, HttpClient, GroupId, DisplayName, Description, Classification, MailNickName, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI, Owners, Members, Template, ResourceBehaviorOptions).GetAwaiter().GetResult());
+            var contextSettings = Connection.Context.GetContextSettings();
+            if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
+            {
+                if (SensitivityLabels != null && SensitivityLabels.Length > 0)
+                {
+                    SensitivityLabels = null;
+                    WriteWarning("Adding sensitivity labels in App-only context is not supported by Graph API, so it will be skipped in Team creation");
+                }
+            }
+
+            WriteObject(TeamsUtility.NewTeamAsync(AccessToken, Connection, GroupId, DisplayName, Description, Classification, MailNickName, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI, Owners, Members, SensitivityLabels, Template, ResourceBehaviorOptions).GetAwaiter().GetResult());
         }
     }
 }

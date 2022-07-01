@@ -1,10 +1,7 @@
-using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
@@ -13,11 +10,12 @@ using System.Reflection;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPDiagnostics")]
+    [OutputType(typeof(Diagnostics))]
     public class GetDiagnostics : BasePSCmdlet
     {
         protected override void ExecuteCmdlet()
         {
-            var result = new PSObject();
+            var result = new Diagnostics();
 
             FillVersion(result);
             FillModuleInfo(result);
@@ -30,14 +28,14 @@ namespace PnP.PowerShell.Commands.Base
             WriteObject(result, true);
         }
 
-        void FillVersion(PSObject result)
+        void FillVersion(Diagnostics result)
         {
             var assembly = Assembly.GetExecutingAssembly();
             var version = ((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version;
-            AddProperty(result, "Version", version);
+            result.Version = version;
         }
 
-        void FillModuleInfo(PSObject result)
+        void FillModuleInfo(Diagnostics result)
         {
             var location = Assembly.GetExecutingAssembly().Location;
             var escapedLocation = Uri.UnescapeDataString(location);
@@ -45,34 +43,34 @@ namespace PnP.PowerShell.Commands.Base
             var modulePath = System.IO.Path.GetDirectoryName(escapedLocation);
             DirectoryInfo dirInfo = new DirectoryInfo(modulePath);
 
-            AddProperty(result, "ModulePath", modulePath);
+            result.ModulePath = modulePath;
         }
 
-        void FillOperatingSystem(PSObject result)
+        void FillOperatingSystem(Diagnostics result)
         {
-            AddProperty(result, "OperatingSystem", Environment.OSVersion.VersionString);
+            result.OperatingSystem = Environment.OSVersion.VersionString;
         }
 
-        void FillConnectionMethod(PSObject result)
+        void FillConnectionMethod(Diagnostics result)
         {
-            AddProperty(result, "ConnectionMethod", PnPConnection.Current?.ConnectionMethod);
+            result.ConnectionMethod = PnPConnection.Current?.ConnectionMethod;
         }
 
-        void FillCurrentSite(PSObject result)
+        void FillCurrentSite(Diagnostics result)
         {
-            AddProperty(result, "CurrentSite", PnPConnection.Current?.Url);
+            result.CurrentSite = PnPConnection.Current?.Url;
         }
 
-        void FillNewerVersionAvailable(PSObject result)
+        void FillNewerVersionAvailable(Diagnostics result)
         {
             var versionAvailable = VersionChecker.GetAvailableVersion();
             if (versionAvailable != null && VersionChecker.IsNewer(versionAvailable))
             {
-                AddProperty(result, "NewerVersionAvailable", versionAvailable.ToString());
+                result.NewerVersionAvailable = versionAvailable.ToString();
             }
         }
 
-        void FillLastException(PSObject result)
+        void FillLastException(Diagnostics result)
         {
             // Most of this code has been copied from GetException cmdlet
             PnPException pnpException = null;
@@ -94,16 +92,11 @@ namespace PnP.PowerShell.Commands.Base
 
             }
 
-            AddProperty(result, "LastCorrelationId", pnpException?.CorrelationId);
-            AddProperty(result, "LastExceptionTimeStampUtc", pnpException?.TimeStampUtc);
-            AddProperty(result, "LastExceptionMessage", pnpException?.Message);
-            AddProperty(result, "LastExceptionStacktrace", pnpException?.Stacktrace);
-            AddProperty(result, "LastExceptionScriptLineNumber", pnpException?.ScriptLineNumber);
-        }
-
-        void AddProperty(PSObject pso, string name, object value)
-        {
-            pso.Properties.Add(new PSVariableProperty(new PSVariable(name, value)));
+            result.LastCorrelationId = pnpException?.CorrelationId;
+            result.LastExceptionTimeStampUtc = pnpException?.TimeStampUtc;
+            result.LastExceptionMessage = pnpException?.Message;
+            result.LastExceptionStacktrace = pnpException?.Stacktrace;
+            result.LastExceptionScriptLineNumber = pnpException?.ScriptLineNumber;
         }
     }
 }

@@ -1,8 +1,11 @@
 ﻿using Microsoft.SharePoint.Client;
+
 using PnP.Framework.Http;
 using PnP.Framework.Utilities;
 
 using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Utilities.JSON;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,22 +21,35 @@ using System.Text.RegularExpressions;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "PnPSPRestMethod")]
+    [Cmdlet(VerbsLifecycle.Invoke, "PnPSPRestMethod", DefaultParameterSetName = PARAMETERSET_Parsed)]
+    [OutputType(typeof(PSObject), ParameterSetName = new[] { PARAMETERSET_Parsed })]
+    [OutputType(typeof(string), ParameterSetName = new[] { PARAMETERSET_Raw })]
     public class InvokeSPRestMethod : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0)]
+        public const string PARAMETERSET_Parsed = "Parsed";
+        public const string PARAMETERSET_Raw = "Raw";
+
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = PARAMETERSET_Parsed)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = PARAMETERSET_Raw)]
         public HttpRequestMethod Method = HttpRequestMethod.Get;
 
-        [Parameter(Mandatory = true, Position = 0)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = PARAMETERSET_Parsed)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = PARAMETERSET_Raw)]
         public string Url;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Parsed)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
         public object Content;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Parsed)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
         public string ContentType = "application/json";
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Parsed)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
+        public string Accept = "application/json;odata=nometadata";
+
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
         public SwitchParameter Raw;
 
         protected override void ExecuteCmdlet()
@@ -52,7 +68,12 @@ namespace PnP.PowerShell.Commands.Admin
 
             using (HttpRequestMessage request = new HttpRequestMessage(method, requestUrl))
             {
-                request.Headers.Add("accept", "application/json;odata=nometadata");
+                if (string.IsNullOrEmpty(Accept))
+                {
+                    Accept = "application/json;odata=nometadata";
+                }
+
+                request.Headers.Add("accept", Accept);
 
                 if (Method == HttpRequestMethod.Merge)
                 {
@@ -95,7 +116,7 @@ namespace PnP.PowerShell.Commands.Admin
                             }
                             if (jsonElement.TryGetProperty("value", out JsonElement valueProperty))
                             {
-                                var formattedObject = ConvertToPSObject(valueProperty, "value");
+                                var formattedObject = Utilities.JSON.Convert.ConvertToPSObject(valueProperty, "value");
                                 if (!string.IsNullOrEmpty(nextLink))
                                 {
                                     formattedObject.Properties.Add(new PSNoteProperty("odata.nextLink", nextLink));
@@ -105,7 +126,7 @@ namespace PnP.PowerShell.Commands.Admin
                             }
                             else
                             {
-                                WriteObject(ConvertToPSObject(jsonElement, null), true);
+                                WriteObject(Utilities.JSON.Convert.ConvertToPSObject(jsonElement, null), true);
                             }
                         }
                         else
@@ -151,70 +172,6 @@ namespace PnP.PowerShell.Commands.Admin
             }
             handler.CookieContainer = authCookiesContainer;
             //}
-        }
-
-        private PSObject ConvertToPSObject(JsonElement element, string jsonPropertyName)
-        {
-            var list = new List<PSObject>();
-            var pso = new PSObject();
-
-            if (element.ValueKind == JsonValueKind.Array)
-            {
-                var array = ConvertToPSObjectArray(element);
-                pso.Properties.Add(new PSNoteProperty(jsonPropertyName, array));
-            }            
-            else
-            {
-                foreach (var prop in element.EnumerateObject())
-                {
-                    object value = null;
-                    switch (prop.Value.ValueKind)
-                    {
-
-                        case JsonValueKind.Array:
-                            {
-                                value = ConvertToPSObjectArray(prop.Value);
-                                break;
-                            }
-                        case JsonValueKind.True:
-                        case JsonValueKind.False:
-                            {
-                                value = prop.Value.GetBoolean();
-                                break;
-                            }
-                        case JsonValueKind.String:
-                            {
-                                value = prop.Value.GetString();
-                                break;
-                            }
-                        case JsonValueKind.Object:
-                            {
-                                value = ConvertToPSObject(prop.Value, prop.Name);
-                                break;
-                            }
-                        case JsonValueKind.Number:
-                            {
-                                value = prop.Value.GetInt64();
-                                break;
-                            }
-                    }
-                    pso.Properties.Add(new PSNoteProperty(prop.Name, value));
-                }
-            }
-
-            return pso;
-        }
-
-        private List<PSObject> ConvertToPSObjectArray(JsonElement element)
-        {
-            var list = new List<PSObject>();
-
-            foreach (var subelement in element.EnumerateArray())
-            {
-                var value = ConvertToPSObject(subelement, null);
-                list.Add(value);
-            }
-            return list;
         }
     }
 

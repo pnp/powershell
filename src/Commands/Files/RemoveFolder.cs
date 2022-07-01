@@ -3,6 +3,7 @@ using Microsoft.SharePoint.Client;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Files
 {
@@ -38,14 +39,15 @@ namespace PnP.PowerShell.Commands.Files
             {
                 if (Recycle)
                 {
-                    folder.Recycle();
+                    var recycleResult = folder.Recycle();
+                    ClientContext.ExecuteQueryRetry();
+                    WriteObject(new RecycleResult { RecycleBinItemId = recycleResult.Value });
                 }
                 else
                 {
                     folder.DeleteObject();
+                    ClientContext.ExecuteQueryRetry();
                 }
-
-                ClientContext.ExecuteQueryRetry();
             }
         }
     }

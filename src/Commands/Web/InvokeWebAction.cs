@@ -9,6 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPWebAction", SupportsShouldProcess = true)]
+    [OutputType(typeof(InvokeWebActionResult), typeof(System.Data.DataTable))]
     public class InvokeWebAction : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -114,7 +115,7 @@ namespace PnP.PowerShell.Commands
                 invokeAction = new InvokeAction.InvokeWebAction(this, CurrentWeb, ListName, webActions, listActions, listItemActions, SkipCounting.ToBool());
             }
 
-            InvokeWebActionResult result = invokeAction.StartProcessAction();
+            InvokeWebActionResult result = invokeAction.StartProcessAction(Connection);
 
             if (!DisableStatisticsOutput)
             {

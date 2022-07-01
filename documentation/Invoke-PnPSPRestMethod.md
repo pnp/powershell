@@ -128,6 +128,18 @@ Position: 0
 Accept pipeline input: False
 ```
 
+### -Accept
+The Accept HTTP request header. Defaults to 'application/json;odata=nometadata'.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 

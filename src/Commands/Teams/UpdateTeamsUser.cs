@@ -26,24 +26,24 @@ namespace PnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(HttpClient, AccessToken);
+            var groupId = Team.GetGroupId(Connection, AccessToken);
             if (groupId != null)
             {
                 try
                 {
                     if (Force || ShouldContinue($"Update role for user with UPN {User} ?", Properties.Resources.Confirm))
                     {
-                        var teamsUser = TeamsUtility.GetUsersAsync(HttpClient, AccessToken, groupId, string.Empty).GetAwaiter().GetResult();
+                        var teamsUser = TeamsUtility.GetUsersAsync(Connection, AccessToken, groupId, string.Empty).GetAwaiter().GetResult();
 
                         var specifiedUser = teamsUser.Find(u => u.UserPrincipalName.ToLower() == User.ToLower());
                         if (specifiedUser != null)
                         {
                             // No easy way to get member Id for teams endpoint, need to rely on display name filter to fetch memberId of the specified user and then update
-                            var teamUserWithDisplayName = TeamsUtility.GetTeamUsersWithDisplayNameAsync(HttpClient, AccessToken, groupId, specifiedUser.DisplayName).GetAwaiter().GetResult();
+                            var teamUserWithDisplayName = TeamsUtility.GetTeamUsersWithDisplayNameAsync(Connection, AccessToken, groupId, specifiedUser.DisplayName).GetAwaiter().GetResult();
                             var userToUpdate = teamUserWithDisplayName.Find(u => u.UserId == specifiedUser.Id);
 
                             // Pass the member id of the user whose role we are changing
-                            WriteObject(TeamsUtility.UpdateTeamUserRole(HttpClient, AccessToken, groupId, userToUpdate.Id, Role).GetAwaiter().GetResult());
+                            WriteObject(TeamsUtility.UpdateTeamUserRole(Connection, AccessToken, groupId, userToUpdate.Id, Role).GetAwaiter().GetResult());
                         }
                         else
                         {

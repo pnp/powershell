@@ -6,6 +6,7 @@ using PnP.PowerShell.Commands.Enums;
 namespace PnP.PowerShell.Commands.Features
 {
     [Cmdlet(VerbsLifecycle.Enable, "PnPFeature")]
+    [OutputType(typeof(void))]
     public class EnableFeature : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true)]

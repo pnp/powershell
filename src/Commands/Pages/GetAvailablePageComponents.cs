@@ -1,14 +1,11 @@
 ﻿
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System;
 using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Get, "PnPAvailablePageComponents")]
-    [Alias("Get-PnPAvailableClientSideComponents")]
-    [Obsolete("Use Get-PnPPageComponent -Page -ListAvailable")]
     public class GetAvailablePageComponents : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -19,7 +16,7 @@ namespace PnP.PowerShell.Commands.Pages
 
         protected override void ExecuteCmdlet()
         {
-            var clientSidePage = Page.GetPage();
+            var clientSidePage = Page.GetPage(Connection);
             if (clientSidePage == null)
                 throw new PSArgumentException($"Page '{Page}' does not exist", "List");
 

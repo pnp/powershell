@@ -9,8 +9,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -37,8 +35,6 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static void SetFieldValues(this ListItem item, Hashtable valuesToSet, Cmdlet cmdlet)
         {
-            // xxx: return early if hashtable is empty to save getting fields?
-
             var itemValues = new List<FieldUpdateValue>();
 
             var context = item.Context as ClientContext;
@@ -129,7 +125,14 @@ namespace PnP.PowerShell.Commands.Utilities
                                             clonedContext.Load(taxonomyItem);
                                             clonedContext.ExecuteQueryRetry();
                                         }
-                                        terms.Add(new KeyValuePair<Guid, string>(taxonomyItem.Id, taxonomyItem.Name));
+                                        if(taxonomyItem != null)
+                                        {
+                                            terms.Add(new KeyValuePair<Guid, string>(taxonomyItem.Id, taxonomyItem.Name));
+                                        }
+                                        else
+                                        {
+                                            cmdlet.WriteWarning("Unable to find the specified term. Skipping values for field '" + field.InternalName + "'.");
+                                        }
                                     }
 
                                     TaxonomyField taxField = context.CastTo<TaxonomyField>(field);
@@ -142,14 +145,17 @@ namespace PnP.PowerShell.Commands.Utilities
                                             termValuesString += "-1;#" + term.Value + "|" + term.Key.ToString("D") + ";#";
                                         }
 
-                                        termValuesString = termValuesString.Substring(0, termValuesString.Length - 2);
+                                        if (!string.IsNullOrEmpty(termValuesString))
+                                        {
+                                            termValuesString = termValuesString.Substring(0, termValuesString.Length - 2);
 
-                                        var newTaxFieldValue = new TaxonomyFieldValueCollection(context, termValuesString, taxField);
-                                        itemValues.Add(new FieldUpdateValue(key as string, newTaxFieldValue, field.TypeAsString));
+                                            var newTaxFieldValue = new TaxonomyFieldValueCollection(context, termValuesString, taxField);
+                                            itemValues.Add(new FieldUpdateValue(key as string, newTaxFieldValue, field.TypeAsString));
+                                        }                                        
                                     }
                                     else
                                     {
-                                        cmdlet.WriteWarning(@"You are trying to set multiple values in a single value field. Skipping values for field ""{field.InternalName}""");
+                                        cmdlet.WriteWarning("You are trying to set multiple values in a single value field. Skipping values for field '" + field.InternalName + "'.");
                                     }
                                 }
                                 else
@@ -158,10 +164,16 @@ namespace PnP.PowerShell.Commands.Utilities
 
                                     var taxSession = clonedContext.Site.GetTaxonomySession();
                                     TaxonomyItem taxonomyItem = null;
+                                    bool updateTaxItemValue = true;
                                     if (value != null && !Guid.TryParse(value as string, out termGuid))
                                     {
                                         // Assume it's a TermPath
                                         taxonomyItem = clonedContext.Site.GetTaxonomyItemByPath(value as string);
+                                        if (taxonomyItem == null)
+                                        {
+                                            updateTaxItemValue = false;
+                                            cmdlet.WriteWarning("Unable to find the specified term. Skipping values for field '" + field.InternalName + "'.");
+                                        }
                                     }
                                     else
                                     {
@@ -183,7 +195,10 @@ namespace PnP.PowerShell.Commands.Utilities
                                     }
                                     else
                                     {
-                                        taxField.ValidateSetValue(item, null);
+                                        if(updateTaxItemValue)
+                                        {
+                                            taxField.ValidateSetValue(item, null);
+                                        }                                        
                                     }
                                 }
                                 break;
@@ -285,7 +300,6 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                 }
             }
-
         }
 
         public static Dictionary<string, object> GetFieldValues(PnP.Core.Model.SharePoint.IList list, PnP.Core.Model.SharePoint.IListItem existingItem, Hashtable valuesToSet, ClientContext clientContext, PnPBatch batch)
@@ -372,7 +386,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                 }
                                 if (value != null && value.GetType().IsArray)
                                 {
-                                    var fieldValueCollection = field.NewFieldValueCollection();                                    
+                                    var fieldValueCollection = field.NewFieldValueCollection();
                                     foreach (var arrayItem in value as object[])
                                     {
                                         Term taxonomyItem;
@@ -529,7 +543,8 @@ namespace PnP.PowerShell.Commands.Utilities
                             }
                         default:
                             {
-                                item[key as string] = values[key];
+                                object itemValue = values[key] is PSObject ? ((PSObject)values[key]).BaseObject : values[key];
+                                item[key as string] = itemValue;
                                 break;
                             }
                     }

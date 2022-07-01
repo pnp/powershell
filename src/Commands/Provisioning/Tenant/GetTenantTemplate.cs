@@ -5,14 +5,12 @@ using Microsoft.SharePoint.Client;
 using PnP.Framework.Provisioning.Connectors;
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.ObjectHandlers;
-
 using PnP.Framework.Provisioning.Providers.Xml;
 using File = System.IO.File;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.Framework.Provisioning.Model.Configuration;
 using PnP.PowerShell.Commands.Base;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
@@ -170,12 +168,11 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             };
             using (var provisioningContext = new PnPProvisioningContext(async (resource, scope) =>
             {
-                return await TokenRetrieval.GetAccessTokenAsync(resource, scope);
-            }, azureEnvironment: PnPConnection.Current.AzureEnvironment))
+                return await TokenRetrieval.GetAccessTokenAsync(resource, scope, Connection);
+            }, azureEnvironment: Connection.AzureEnvironment))
             {
                 return Tenant.GetTenantTemplate(configuration);
             }
         }
     }
-
 }

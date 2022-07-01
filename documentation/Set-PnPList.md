@@ -21,10 +21,11 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
  [-EnableAttachments <Boolean>] [-EnableFolderCreation <Boolean>] [-EnableVersioning <Boolean>]
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
  [-EnableModeration <Boolean>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
- [-NoCrawl] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+Allows the configuration of a specific SharePoint Online list to be set.
 
 ## EXAMPLES
 
@@ -73,7 +74,21 @@ Turns on attachments on a list
 ## PARAMETERS
 
 ### -BreakRoleInheritance
-If used the security inheritance is broken for this list
+If used the security inheritance is broken for this list from its parent, the web in which it resides. Permissions can be added using [Set-PnPListPermission](Set-PnPListPermission.html).
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResetRoleInheritance
+If used the security inheritance is reset for this list meaning it will not copy the permissions from its parent, but will start with an empty list of permissions. Permissions can be added using [Set-PnPListPermission](Set-PnPListPermission.html).
 
 ```yaml
 Type: SwitchParameter
@@ -311,21 +326,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ResetRoleInheritance
-If used the security inheritance is reset for this list (inherited from parent)
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-
 ### -ReadSecurity
 Sets the read security for the list
 
@@ -382,9 +382,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ExemptFromBlockDownloadOfNonViewableFiles
+Allows to configure access capabilities for unmanaged devices for the list. If set to $true, the list will be accessible by unmanaged devices as well. For more information, see [SharePoint and OneDrive unmanaged device access controls for administrators](https://docs.microsoft.com/sharepoint/control-access-from-unmanaged-devices).
 
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

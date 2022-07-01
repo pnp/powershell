@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Model;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.New, "PnPSiteGroup")]
-
+    [OutputType(typeof(SiteGroup))]
     public class NewSiteGroup : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            var url = PnPConnection.Current.Url;
+            var url = Connection.Url;
             if (ParameterSpecified(nameof(Site)))
             {
                 url = Site.Url;

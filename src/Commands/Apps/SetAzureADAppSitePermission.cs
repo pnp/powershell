@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Apps
             Guid siteId = Guid.Empty;
             if (ParameterSpecified(nameof(Site)))
             {
-                siteId = Site.GetSiteIdThroughGraph(HttpClient, AccessToken);
+                siteId = Site.GetSiteIdThroughGraph(Connection, AccessToken);
             }
             else
             {
@@ -44,7 +44,7 @@ namespace PnP.PowerShell.Commands.Apps
                     roles = Permissions.Select(p => p.ToLower()).ToArray()
                 };
 
-                var results = PnP.PowerShell.Commands.Utilities.REST.RestHelper.PatchAsync<AzureADAppPermissionInternal>(HttpClient, $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken, payload).GetAwaiter().GetResult();
+                var results = PnP.PowerShell.Commands.Utilities.REST.RestHelper.PatchAsync<AzureADAppPermissionInternal>(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken, payload).GetAwaiter().GetResult();
                 WriteObject(results.Convert());
             }
         }

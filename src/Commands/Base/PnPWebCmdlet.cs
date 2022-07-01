@@ -1,10 +1,7 @@
 ﻿using System;
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using PnP.PowerShell.Commands.Extensions;
-
 
 namespace PnP.PowerShell.Commands
 {
@@ -48,20 +45,20 @@ namespace PnP.PowerShell.Commands
             {
                 var subWeb = Web.GetWeb(ClientContext);
                 subWeb.EnsureProperty(w => w.Url);
-                PnPConnection.Current.CloneContext(subWeb.Url);
-                web = PnPConnection.Current.Context.Web;
+                Connection.CloneContext(subWeb.Url);
+                web = Connection.Context.Web;
             }
 #pragma warning restore CS0618
             else
             {
-                if (PnPConnection.Current.Context.Url != PnPConnection.Current.Url)
+                if (Connection.Context.Url != Connection.Url)
                 {
-                    PnPConnection.Current.RestoreCachedContext(PnPConnection.Current.Url);
+                    Connection.RestoreCachedContext(Connection.Url);
                 }
                 web = ClientContext.Web;
             }
 
-            PnPConnection.Current.Context.ExecuteQueryRetry();
+            Connection.Context.ExecuteQueryRetry();
 
             return web;
         }
@@ -69,16 +66,16 @@ namespace PnP.PowerShell.Commands
         protected override void EndProcessing()
         {
             base.EndProcessing();
-            if (PnPConnection.Current.Context.Url != PnPConnection.Current.Url)
+            if (Connection.Context.Url != Connection.Url)
             {
-                PnPConnection.Current.RestoreCachedContext(PnPConnection.Current.Url);
+                Connection.RestoreCachedContext(Connection.Url);
             }
         }
 
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-            PnPConnection.Current.CacheContext();
+            Connection.CacheContext();
         }
     }
 }

@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Management.Automation;
-using System.Reflection;
 using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Base
@@ -57,6 +52,8 @@ namespace PnP.PowerShell.Commands.Base
             }
             catch (PnP.PowerShell.Commands.Model.Graph.GraphException gex)
             {
+                var errorMessage = gex.Error.Message;
+
                 if (gex.Error.Code == "Authorization_RequestDenied")
                 {
                     if (!string.IsNullOrEmpty(gex.AccessToken))
@@ -64,7 +61,11 @@ namespace PnP.PowerShell.Commands.Base
                         TokenHandler.ValidateTokenForPermissions(GetType(), gex.AccessToken);
                     }
                 }
-                throw new PSInvalidOperationException(gex.Error.Message);
+                if(string.IsNullOrWhiteSpace(errorMessage) && gex.HttpResponse != null && gex.HttpResponse.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                {
+                    errorMessage = "Access denied. Check for the required permissions.";
+                }
+                throw new PSInvalidOperationException(errorMessage);
             }
         }
 

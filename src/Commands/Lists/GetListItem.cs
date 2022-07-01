@@ -10,6 +10,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "PnPListItem", DefaultParameterSetName = ParameterSet_ALLITEMS)]
+    [OutputType(typeof(ListItem))]
     public class GetListItem : PnPWebCmdlet
     {
         private const string ParameterSet_BYID = "By Id";
@@ -38,14 +39,20 @@ namespace PnP.PowerShell.Commands.Lists
         public string[] Fields;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALLITEMS)]
-		[Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYQUERY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYQUERY)]
         public int PageSize = -1;
 
-		[Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALLITEMS)]
-		[Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYQUERY)]
-		public ScriptBlock ScriptBlock;
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALLITEMS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYQUERY)]
+        public ScriptBlock ScriptBlock;
 
-		protected override void ExecuteCmdlet()
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALLITEMS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYID)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYUNIQUEID)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYQUERY)]
+        public SwitchParameter IncludeContentType;
+
+        protected override void ExecuteCmdlet()
         {
             var list = List.GetList(CurrentWeb);
             if (list == null)
@@ -65,6 +72,10 @@ namespace PnP.PowerShell.Commands.Lists
                 {
                     ClientContext.Load(listItem);
                 }
+                if (IncludeContentType)
+                {
+                    ClientContext.Load(listItem, l => l.ContentType, l => l.ContentType.Name, l => l.ContentType.Id, l => l.ContentType.StringId, l => l.ContentType.Description);
+                }
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(listItem);
             }
@@ -82,18 +93,22 @@ namespace PnP.PowerShell.Commands.Lists
                     viewFieldsStringBuilder.Append("</ViewFields>");
                 }
                 query.ViewXml = $"<View Scope='RecursiveAll'><Query><Where><Or><Eq><FieldRef Name='GUID'/><Value Type='Guid'>{UniqueId}</Value></Eq><Eq><FieldRef Name='UniqueId' /><Value Type='Guid'>{UniqueId}</Value></Eq></Or></Where></Query>{viewFieldsStringBuilder}</View>";
-                
+
                 var listItem = list.GetItems(query);
                 ClientContext.Load(listItem);
+                if (IncludeContentType)
+                {
+                    ClientContext.Load(listItem, l => l.Include(a => a.ContentType, a => a.ContentType.Id, a => a.ContentType.Name, a => a.ContentType.Description, a => a.ContentType.StringId));
+                }
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(listItem);
             }
             else
             {
-				CamlQuery query = HasCamlQuery() ? new CamlQuery { ViewXml = Query } : CamlQuery.CreateAllItemsQuery();
+                CamlQuery query = HasCamlQuery() ? new CamlQuery { ViewXml = Query } : CamlQuery.CreateAllItemsQuery();
                 query.FolderServerRelativeUrl = FolderServerRelativeUrl;
 
-				if (Fields != null)
+                if (Fields != null)
                 {
                     var queryElement = XElement.Parse(query.ViewXml);
 
@@ -142,16 +157,20 @@ namespace PnP.PowerShell.Commands.Lists
                 {
                     var listItems = list.GetItems(query);
                     ClientContext.Load(listItems);
+                    if (IncludeContentType)
+                    {
+                        ClientContext.Load(listItems, l => l.Include(a => a.ContentType, a => a.ContentType.Id, a => a.ContentType.Name, a => a.ContentType.Description, a => a.ContentType.StringId));
+                    }
                     ClientContext.ExecuteQueryRetry();
 
                     WriteObject(listItems, true);
 
                     if (ScriptBlock != null)
                     {
-						ScriptBlock.Invoke(listItems);
-					}
+                        ScriptBlock.Invoke(listItems);
+                    }
 
-					query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
+                    query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
                 } while (query.ListItemCollectionPosition != null);
             }
         }

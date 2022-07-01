@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Apps
             Guid siteId = Guid.Empty;
             if (ParameterSpecified(nameof(Site)))
             {
-                siteId = Site.GetSiteIdThroughGraph(HttpClient, AccessToken);
+                siteId = Site.GetSiteIdThroughGraph(Connection, AccessToken);
             }
             else
             {
@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Apps
             {
                 if (Force || ShouldContinue("Are you sure you want to revoke the permissions?", string.Empty))
                 {
-                    var results = PnP.PowerShell.Commands.Utilities.REST.RestHelper.DeleteAsync(HttpClient, $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken).GetAwaiter().GetResult();
+                    var results = PnP.PowerShell.Commands.Utilities.REST.RestHelper.DeleteAsync(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken).GetAwaiter().GetResult();
                 }
             }
         }
