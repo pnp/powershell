@@ -121,6 +121,7 @@
  [-EnableAutoNewsDigest &lt;Boolean&gt;] [-CommentsOnListItemsDisabled &lt;Boolean&gt;] [-CommentsOnFilesDisabled &lt;Boolean&gt;]
  [-DisableBackToClassic &lt;Boolean&gt;] [-InformationBarriersSuspension &lt;Boolean&gt;] 
  [-AllowFilesWithKeepLabelToBeDeletedODB &lt;Boolean&gt;] [-AllowFilesWithKeepLabelToBeDeletedSPO &lt;Boolean&gt;]
+ [-ExternalUserExpirationRequired &lt;Boolean&gt;] [-ExternalUserExpireInDays &lt;Boolean&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -157,6 +158,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-allowediting">-AllowEditing</h3>
+<p>Prevents users from editing Office files in the browser and copying and pasting Office file contents out of the browser window.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -167,6 +169,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-applyappenforcedrestrictionstoadhocrecipients">-ApplyAppEnforcedRestrictionsToAdHocRecipients</h3>
+<p>When the feature is enabled, all guest users are subject to conditional access policy. By default guest users who are accessing SharePoint Online files with pass code are exempt from the conditional access policy.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -206,6 +209,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-commentsonsitepagesdisabled">-CommentsOnSitePagesDisabled</h3>
+<p>Disables or enables the commenting functionality on all site pages in the tenant.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -216,6 +220,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-conditionalaccesspolicy">-ConditionalAccessPolicy</h3>
+<p>Blocks or limits access to SharePoint and OneDrive content from unmanaged devices.</p>
 <pre><code class="lang-yaml">Type: SPOConditionalAccessPolicyType
 Parameter Sets: (All)
 Accepted values: AllowFullAccess, AllowLimitedAccess, BlockAccess, ProtectionLevel
@@ -238,6 +243,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-defaultlinkpermission">-DefaultLinkPermission</h3>
+<p>Sets the default permission of the link in the sharing dialog box in OneDrive for Business and SharePoint Online. This applies to anonymous access, internal and direct links.</p>
 <pre><code class="lang-yaml">Type: SharingPermissionType
 Parameter Sets: (All)
 Accepted values: None, View, Edit
@@ -252,8 +258,7 @@ Accept wildcard characters: False
 <p>Lets administrators choose what type of link appears is selected in the &quot;Get a link&quot; sharing dialog box in OneDrive for Business and SharePoint Online.</p>
 <p>For additional information about how to change the default link type, see Change the default link type when users get links for sharing.</p>
 <p>Note:
-Setting this value to &quot;none&quot; will default &quot;get a link&quot; to the most permissive link available (that is, if anonymous links are enabled, the default link will be anonymous access; if they are disabled then the default link will be internal.</p>
-<p>The values are: None Direct Internal AnonymousAccess</p>
+Setting this value to &quot;none&quot; will default &quot;get a link&quot; to the most permissive link available. If anonymous links are enabled, the default link will be anonymous access; if they are disabled, then the default link will be internal.</p>
 <pre><code class="lang-yaml">Type: SharingLinkType
 Parameter Sets: (All)
 Accepted values: None, Direct, Internal, AnonymousAccess
@@ -331,6 +336,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-emailattestationreauthdays">-EmailAttestationReAuthDays</h3>
+<p>Sets the number of days for email attestation re-authentication. Value can be from 1 to 365 days.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 
@@ -390,6 +396,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-fileanonymouslinktype">-FileAnonymousLinkType</h3>
+<p>Sets whether anonymous access links can allow recipients to only view or view and edit. The value can be set separately for folders and separately for files.</p>
 <pre><code class="lang-yaml">Type: AnonymousLinkType
 Parameter Sets: (All)
 Accepted values: None, View, Edit
@@ -401,6 +408,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-filepickerexternalimagesearchenabled">-FilePickerExternalImageSearchEnabled</h3>
+<p>Sets whether webparts that support inserting images, like for example Image or Hero webpart, the Web search (Powered by Bing) should allow choosing external images. The default is enabled.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -411,6 +419,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-folderanonymouslinktype">-FolderAnonymousLinkType</h3>
+<p>Sets whether anonymous access links can allow recipients to only view or view and edit. The value can be set separately for folders and separately for files.</p>
 <pre><code class="lang-yaml">Type: AnonymousLinkType
 Parameter Sets: (All)
 Accepted values: None, View, Edit
@@ -422,7 +431,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-hidedefaultthemes">-HideDefaultThemes</h3>
-<p>Defines if the default themes are visible or hidden</p>
+<p>Defines if the default themes are visible or hidden.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -460,6 +469,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-ipaddresswactokenlifetime">-IPAddressWACTokenLifetime</h3>
+<p>Allows to set the session timeout. If you are a tenant administrator and you begin IP address enforcement for OneDrive for Business in Office 365, this enforcement automatically activates a tenant parameter IPAddressWACTokenLifetime. The default value is 15 minutes, when IP Address Enforcement is True.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 
@@ -522,6 +532,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-notificationsinonedriveforbusinessenabled">-NotificationsInOneDriveForBusinessEnabled</h3>
+<p>Enables or disables notifications in OneDrive for Business.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -532,6 +543,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-notificationsinsharepointenabled">-NotificationsInSharePointEnabled</h3>
+<p>Enables or disables notifications in SharePoint.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -654,6 +666,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-owneranonymousnotification">-OwnerAnonymousNotification</h3>
+<p>Specifies whether an email notification should be sent to the OneDrive for Business owners when an anonymous links are created or changed.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -664,6 +677,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-preventexternalusersfromresharing">-PreventExternalUsersFromResharing</h3>
+<p>Prevents external users from resharing files, folders, and sites that they do not own.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -883,6 +897,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-socialbaronsitepagesdisabled">-SocialBarOnSitePagesDisabled</h3>
+<p>Disables or enables the Social Bar which appears on all modern SharePoint pages with the exception of the home page of a site. It gives users the ability to like a page, see the number of views, likes, and comments on a page, and see the people who have liked a page.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -893,7 +908,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-specialcharactersstateinfilefoldernames">-SpecialCharactersStateInFileFolderNames</h3>
-<p>{{ Fill SpecialCharactersStateInFileFolderNames Description }}</p>
+<p>Permits the use of special characters in file and folder names in SharePoint Online and OneDrive for Business document libraries. The only two characters that can be managed at this time are the <strong>#</strong> and <strong>%</strong> characters.</p>
 <pre><code class="lang-yaml">Type: SpecialCharactersState
 Parameter Sets: (All)
 Accepted values: NoPreference, Allowed, Disallowed
@@ -948,6 +963,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-uservoiceforfeedbackenabled">-UserVoiceForFeedbackEnabled</h3>
+<p>Enables or disables the User Voice Feedback button shown at the bottom of all modern SharePoint Online pages. The &quot;Feedback&quot; link allows the end user to fill out a feedback form inside SharePoint Online which then creates an entry in the public SharePoint UserVoice topic.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -991,7 +1007,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-informationbarrierssuspension">-InformationBarriersSuspension</h3>
-<p>Allows suspension of the information barriers future in a Microsoft 365 tenant. Setting this to $true will disable information barriers, setting this to $falsde will enable information barriers. For more information, see <a href="https://docs.microsoft.com/sharepoint/information-barriers">https://docs.microsoft.com/sharepoint/information-barriers</a>.</p>
+<p>Allows suspension of the information barriers future in a Microsoft 365 tenant. Setting this to $true will disable information barriers, setting this to $false will enable information barriers. For more information, see <a href="https://docs.microsoft.com/sharepoint/information-barriers">https://docs.microsoft.com/sharepoint/information-barriers</a>.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -1068,8 +1084,30 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-enablemodernlisttemplateids">-EnableModernListTemplateIds</h3>
-<p>Guids of out of the box modern liststemplates to show when creating a new list</p>
+<p>Guids of out of the box modern list templates to show when creating a new list</p>
 <pre><code class="lang-yaml">Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-externaluserexpirationrequired">-ExternalUserExpirationRequired</h3>
+<p>When set to true, it will set enable expiration date for external users.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-externaluserexpireindays">-ExternalUserExpireInDays</h3>
+<p>When a value is set, it means that the access of the external user will expire in those many number of days.</p>
+<pre><code class="lang-yaml">Type: Int
 Parameter Sets: (All)
 
 Required: False

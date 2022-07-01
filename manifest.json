@@ -221,6 +221,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPAvailableSiteClassification.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPAvailableSiteClassification.html",
+          "hash": "mL4p+TTCUWYaYnaiflhieQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPAzureADGroupMember.md",
       "output": {
         ".html": {
@@ -785,18 +797,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Add-PnPSiteClassification.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Add-PnPSiteClassification.html",
-          "hash": "wiEQpKudd1b4rs9cPRz0OQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPSiteCollectionAdmin.md",
       "output": {
         ".html": {
@@ -1341,7 +1341,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Copy-PnPFolder.html",
-          "hash": "SVpfh2pA3tXyugusvIwWHA=="
+          "hash": "gJofQ3rt+VnZdjc6ePehng=="
         }
       },
       "is_incremental": false,
@@ -1753,6 +1753,36 @@
         ".html": {
           "relative_path": "cmdlets/Get-PnPAvailableLanguage.html",
           "hash": "yv8jXbFP5qaa+p9XvzReQw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPAvailableSensitivityLabel.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPAvailableSensitivityLabel.html",
+          "hash": "H1PWeUTRRGO3rwaJ7FQg6g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPAvailableSiteClassification.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPAvailableSiteClassification.html",
+          "hash": "EiSSExbaxq75LRwcApyGkQ=="
         }
       },
       "is_incremental": false,
@@ -2888,18 +2918,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPSensitivityLabel.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Get-PnPSensitivityLabel.html",
-          "hash": "LshiOjTYOjnsWgbsHWva1A=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPServiceCurrentHealth.md",
       "output": {
         ".html": {
@@ -2941,18 +2959,6 @@
         ".html": {
           "relative_path": "cmdlets/Get-PnPSite.html",
           "hash": "SDzX3jE8E4iqfrUq6DFyAQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPSiteClassification.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Get-PnPSiteClassification.html",
-          "hash": "GxuVFugGMcEK24ja+IsijQ=="
         }
       },
       "is_incremental": false,
@@ -3133,6 +3139,18 @@
         ".html": {
           "relative_path": "cmdlets/Get-PnPSiteSearchQueryResults.html",
           "hash": "vu+TS/57A2oLM1ucQiJNqg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPSiteSensitivityLabel.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPSiteSensitivityLabel.html",
+          "hash": "EnAwvundHmPsZGZi8sRHMQ=="
         }
       },
       "is_incremental": false,
@@ -4787,6 +4805,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPAvailableSiteClassification.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPAvailableSiteClassification.html",
+          "hash": "P5ykn3lt5OtP3wHWWdqq8g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPAzureADApp.md",
       "output": {
         ".html": {
@@ -5404,18 +5434,6 @@
         ".html": {
           "relative_path": "cmdlets/Remove-PnPSearchConfiguration.html",
           "hash": "vRVs8HQZtq5r0/b0Bbhs8Q=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "cmdlets/Remove-PnPSiteClassification.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Remove-PnPSiteClassification.html",
-          "hash": "PQ2Jn8IdJdoVMVHME2H8+A=="
         }
       },
       "is_incremental": false,
@@ -6943,6 +6961,21 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPSiteClassification.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPSiteClassification.html",
+          "hash": "cTrpJ2+m9wCvZKuwiaC0Rw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPSiteClosure.md",
       "output": {
@@ -7008,7 +7041,22 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSiteScriptPackage.html",
-          "hash": "hmNQ6YAAYapB39fKBBBjYw=="
+          "hash": "p41/C8n+Mj4vdAhhao92vg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPSiteSensitivityLabel.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPSiteSensitivityLabel.html",
+          "hash": "Z2kOmUDdUWhJv1IAhqPLdw=="
         }
       },
       "is_incremental": false,
@@ -7176,7 +7224,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTenant.html",
-          "hash": "If41i7Q6RPg8H2WxAxCLhA=="
+          "hash": "Flt8tblb8Rula6PVfmdJDw=="
         }
       },
       "is_incremental": false,
@@ -7616,11 +7664,11 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Update-PnPSiteClassification.md",
+      "source_relative_path": "cmdlets/Update-PnPAvailableSiteClassification.md",
       "output": {
         ".html": {
-          "relative_path": "cmdlets/Update-PnPSiteClassification.html",
-          "hash": "xz7Jl3uVG+MTwe60vVOV3w=="
+          "relative_path": "cmdlets/Update-PnPAvailableSiteClassification.html",
+          "hash": "SWKfBrNG50exEyM/8xvjeQ=="
         }
       },
       "is_incremental": false,
@@ -7692,7 +7740,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "k1+b4b1ktQYkB0Nw2hffGQ=="
+          "hash": "OppEzAGSpGl5Ah4WhCe+jQ=="
         }
       },
       "is_incremental": false,
@@ -7914,7 +7962,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 639,
+          "total_file_count": 642,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

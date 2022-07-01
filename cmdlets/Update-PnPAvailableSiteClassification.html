@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Set-PnPSiteScriptPackage | PnP PowerShell </title>
+    <title>Update-PnPAvailableSiteClassification | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Set-PnPSiteScriptPackage | PnP PowerShell ">
+    <meta name="title" content="Update-PnPAvailableSiteClassification | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,33 +77,47 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="set-pnpsitescript">Set-PnPSiteScript</h1>
+                    <h1 id="update-pnpavailablesiteclassification">Update-PnPAvailableSiteClassification</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
+<li>Microsoft Graph API: Directory.ReadWrite.All</li>
 </ul>
-<p>Updates an existing Site Script Package on the current tenant.</p>
+<p>Updates available classic Site Classifications for the tenant</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPSiteScriptPackage -Identity &lt;TenantSiteScriptPipeBind&gt; [-Title &lt;String&gt;] [-Description &lt;String&gt;]
- [-ContentPath &lt;String&gt;] [-Version &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<h3 id="settings">Settings</h3>
+<pre><code class="lang-powershell">Update-PnPAvailableSiteClassification -Settings &lt;SiteClassificationsSettings&gt; 
+ [&lt;CommonParameters&gt;]
+</code></pre>
+<h3 id="specific">Specific</h3>
+<pre><code class="lang-powershell">Update-PnPAvailableSiteClassification [-Classifications &lt;System.Collections.Generic.List`1[System.String]&gt;]
+ [-DefaultClassification &lt;String&gt;] [-UsageGuidelinesUrl &lt;String&gt;]  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet allows for updating the configuration of the classic site classifications configured within the tenant.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPSiteScriptPackage -Identity f1d55d9b-b116-4f54-bc00-164a51e7e47f -Title &quot;My Site Script&quot;
+<pre><code class="lang-powershell">Update-PnPAvailableSiteClassification -Classifications &quot;HBI&quot;,&quot;Top Secret&quot;
 </code></pre>
-<p>Updates an existing Site Script Package and changes the title.</p>
+<p>Replaces the existing values of the site classification settings</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Update-PnPAvailableSiteClassification -DefaultClassification &quot;LBI&quot;
+</code></pre>
+<p>Sets the default classification value to &quot;LBI&quot;. This value needs to be present in the list of classification values.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Update-PnPAvailableSiteClassification -UsageGuidelinesUrl https://aka.ms/m365pnp
+</code></pre>
+<p>sets the usage guideliness URL to the specified URL</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
+<h3 id="-classifications">-Classifications</h3>
+<p>A list of classifications, separated by commas. E.g. &quot;HBI&quot;,&quot;LBI&quot;,&quot;Top Secret&quot;</p>
+<pre><code class="lang-yaml">Type: System.Collections.Generic.List`1[System.String]
+Parameter Sets: Specific
 
 Required: False
 Position: Named
@@ -111,10 +125,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-contentpath">-ContentPath</h3>
-<p>The path to the locally stored Site Script Package to upload to SharePoint Online</p>
+<h3 id="-defaultclassification">-DefaultClassification</h3>
+<p>The default classification to be used. The value needs to be present in the list of possible classifications</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+Parameter Sets: Specific
 
 Required: False
 Position: Named
@@ -122,21 +136,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-description">-Description</h3>
-<p>The description of the site script package</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>The guid or an object representing the site script package</p>
-<pre><code class="lang-yaml">Type: TenantSiteScriptPipeBind
-Parameter Sets: (All)
+<h3 id="-settings">-Settings</h3>
+<p>A settings object retrieved by Get-PnPSiteClassification</p>
+<pre><code class="lang-yaml">Type: SiteClassificationsSettings
+Parameter Sets: Settings
 
 Required: True
 Position: Named
@@ -144,21 +147,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-title">-Title</h3>
-<p>The title of the site script package</p>
+<h3 id="-usageguidelinesurl">-UsageGuidelinesUrl</h3>
+<p>The UsageGuidelinesUrl. Set to &quot;&quot; to clear.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-version">-Version</h3>
-<p>Specifies the version of the site script package</p>
-<pre><code class="lang-yaml">Type: Int32
-Parameter Sets: (All)
+Parameter Sets: Specific
 
 Required: False
 Position: Named
