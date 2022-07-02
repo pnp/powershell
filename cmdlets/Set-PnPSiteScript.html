@@ -88,35 +88,29 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Updates an existing Site Script on the current tenant.</p>
+<p>Updates an existing site script on the current tenant.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPSiteScript -Identity &lt;TenantSiteScriptPipeBind&gt; [-Title &lt;String&gt;] [-Description &lt;String&gt;]
  [-Content &lt;String&gt;] [-Version &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet updates an existing site script.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPSiteScript -Identity f1d55d9b-b116-4f54-bc00-164a51e7e47f -Title &quot;My Site Script&quot;
 </code></pre>
-<p>Updates an existing Site Script and changes the title.</p>
+<p>Updates an existing site script and changes the title.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">$script = Get-PnPSiteScript -Identity f1d55d9b-b116-4f54-bc00-164a51e7e47f 
 Set-PnPSiteScript -Identity $script -Title &quot;My Site Script&quot;
 </code></pre>
-<p>Updates an existing Site Script and changes the title.</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-confirm">-Confirm</h3>
-<p>Prompts you for confirmation before running the cmdlet.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+<p>Updates an existing site script and changes the title.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">$content = Get-PnPSiteScriptFromWeb -Url https://contoso.sharepoint.com/sites/SampleSite -IncludeAll 
+Set-PnPSiteScript -Identity f1d55d9b-b116-4f54-bc00-164a51e7e47f -Content $content
 </code></pre>
+<p>Updates an existing site script and its components.</p>
+<h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -129,7 +123,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-content">-Content</h3>
-<p>A JSON string containing the site script</p>
+<p>A JSON string containing the site script.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -140,7 +134,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-description">-Description</h3>
-<p>The description of the site script</p>
+<p>The description of the site script.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -151,7 +145,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The guid or an object representing the site script</p>
+<p>The guid or an object representing the site script.</p>
 <pre><code class="lang-yaml">Type: TenantSiteScriptPipeBind
 Parameter Sets: (All)
 
@@ -162,7 +156,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-title">-Title</h3>
-<p>The title of the site script</p>
+<p>The title of the site script.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -173,21 +167,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-version">-Version</h3>
-<p>Specifies the version of the site script</p>
+<p>Specifies the version of the site script.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named
