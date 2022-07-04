@@ -97,7 +97,7 @@ Accept wildcard characters: False
 ```
 
 ### -Key
-Key of the property bag to set.
+Key of the property to set.
 
 ```yaml
 Type: String
