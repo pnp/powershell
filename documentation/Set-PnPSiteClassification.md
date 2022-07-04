@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPSiteClassificati
 
   * Microsoft Graph API : One of Directory.Read.All, Directory.ReadWrite.All (see description below)
 
-Allows placing a classic site classification on the current site
+Allows placing a classic site classification on the current site.
 
 ## SYNTAX
 
@@ -33,7 +33,7 @@ This cmdlet allows for setting a classic site classification on the currently co
 Set-PnPSiteClassification -Identity "LBI"
 ```
 
-Sets the "LBI" site classification on the current site
+Sets the "LBI" site classification on the current site.
 
 ## PARAMETERS
 
@@ -50,6 +50,21 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -Identity
+Specifies the name of the site classification.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 
 ## RELATED LINKS
 
