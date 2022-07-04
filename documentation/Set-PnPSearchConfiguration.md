@@ -27,7 +27,7 @@ Set-PnPSearchConfiguration -Path <String> [-Scope <SearchConfigurationScope>]
 ```
 
 ## DESCRIPTION
-This cmdlet sets the search configuration for a single web, site collection or a tenant, using a file or configuration string.
+This cmdlet sets the search configuration for a single web, site collection or a tenant, using a file or a configuration string.
 
 ## EXAMPLES
 
