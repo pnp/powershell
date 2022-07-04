@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Specifies the name of the site classification.
+Specifies the name of the classification tag.
 
 ```yaml
 Type: String
