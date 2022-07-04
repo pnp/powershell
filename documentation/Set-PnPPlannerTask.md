@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPlannerTask.html
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-Updates an existing task
+Updates an existing task.
 
 ## SYNTAX
 
@@ -43,14 +43,14 @@ This updates the task with the specified id and sets the title to "New Title" an
 Set-PnPPlannerTask -TaskId RSNNbc4HM0e7jt-btAKtTZYAFAf0 -Title "New Title" -Bucket "To do"
 ```
 
-This updates the task with the specified id and moves to the bucket "To do"
+This updates the task with the specified id and moves to the bucket "To do".
 
 ### Example 3
 ```powershell
 Set-PnPPlannerTask -TaskId RSNNbc4HM0e7jt-btAKtTZYAFAf0 -AssignedTo "user@contoso.com","manager@contoso.com"
 ```
 
-This updates the task with the specified id replaces the assigned users with the ones specified.
+This updates the task with the specified id and replaces the assigned users with the ones specified.
 
 ## PARAMETERS
 
@@ -145,7 +145,7 @@ Accept wildcard characters: False
 ```
 
 ### -AssignedTo
-Specify the email(s) of the user to assign the task to. Notice that this will replace existing assignments with the onces specified here.
+Specify the email(s) of the user to assign the task to. Notice that this will replace existing assignments with the ones specified here.
 
 ```yaml
 Type: String[]
