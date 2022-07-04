@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPListPermission.h
 # Set-PnPListPermission
 
 ## SYNOPSIS
-Allows permissions on a SharePoint list to be changed
+Allows permissions on a SharePoint list to be changed.
 
 ## SYNTAX
 
@@ -27,7 +27,7 @@ Set-PnPListPermission -Identity <ListPipeBind> -User <String> [-AddRole <String>
 ```
 
 ## DESCRIPTION
-Allows changing of permissions on a SharePoint list. In case you would like to break the permission inheritance on a list from its parent, you can use [Set-PnPList -BreakRoleInheritance](Set-PnPList.html#-breakroleinheritance).
+Allows changing permissions on a SharePoint list. In case you would like to break the permission inheritance on a list from its parent, you can use [Set-PnPList -BreakRoleInheritance](Set-PnPList.html#-breakroleinheritance).
 
 ## EXAMPLES
 
@@ -36,19 +36,19 @@ Allows changing of permissions on a SharePoint list. In case you would like to b
 Set-PnPListPermission -Identity 'Documents' -User 'user@contoso.com' -AddRole 'Contribute'
 ```
 
-Adds the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'
+Adds the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPListPermission -Identity 'Documents' -User 'user@contoso.com' -RemoveRole 'Contribute'
 ```
 
-Removes the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'
+Removes the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'.
 
 ## PARAMETERS
 
 ### -Identity
-The Id, title or an instance of the list
+The Id, title or an instance of the list.
 
 ```yaml
 Type: ListPipeBind
@@ -90,6 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -Group
+A group object, an ID or a name of a group.
 
 ```yaml
 Type: GroupPipeBind
@@ -103,6 +104,7 @@ Accept wildcard characters: False
 ```
 
 ### -User
+A valid login name of a user (e.g. john@doe.com).
 
 ```yaml
 Type: String
