@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPropertyBagValue
 # Set-PnPPropertyBagValue
 
 ## SYNOPSIS
-Adds a new or updates an existing property bag value
+Adds a new or updates an existing property bag value.
 
 ## SYNTAX
 
@@ -36,21 +36,21 @@ Updates an existing property bag value or adds it as a new key\value pair if it 
 Set-PnPPropertyBagValue -Key MyKey -Value MyValue
 ```
 
-This sets or adds a value to the current web property bag
+This sets or adds a value to the current web property bag.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPPropertyBagValue -Key MyKey -Value MyValue -Folder /
 ```
 
-This sets or adds a value to the root folder of the current web
+This sets or adds a value to the root folder of the current web.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPPropertyBagValue -Key MyKey -Value MyValue -Folder /MyFolder
 ```
 
-This sets or adds a value to the folder MyFolder which is located in the root folder of the current web
+This sets or adds a value to the folder MyFolder which is located in the root folder of the current web.
 
 ## PARAMETERS
 
@@ -83,6 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -Indexed
+Sets the key to be indexed, which makes the property bag value searchable.
 
 ```yaml
 Type: SwitchParameter
@@ -96,6 +97,7 @@ Accept wildcard characters: False
 ```
 
 ### -Key
+Key of the property to set.
 
 ```yaml
 Type: String
@@ -109,6 +111,7 @@ Accept wildcard characters: False
 ```
 
 ### -Value
+Value to set.
 
 ```yaml
 Type: String
