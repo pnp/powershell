@@ -10,7 +10,7 @@ title: Set-PnPRoleDefinition
 # Set-PnPRoleDefinition
 
 ## SYNOPSIS
-Sets an existing Role Definition (Permission Level) in the site collection in the current context
+Updates an existing Role Definition (Permission Level) in the site collection in the current context.
 
 ## SYNTAX
 
@@ -19,7 +19,7 @@ Set-PnPRoleDefinition -Identity <RoleDefinitionPipeBind> [-NewRoleName <String>]
 ```
 
 ## DESCRIPTION
-Allows setting an existing Role Definition (Permission Level) in the site collection in the current context.
+Allows updating an existing Role Definition (Permission Level) in the site collection in the current context.
 
 ## EXAMPLES
 
@@ -27,33 +27,33 @@ Allows setting an existing Role Definition (Permission Level) in the site collec
 ```powershell
 Set-PnPRoleDefinition -Identity "CustomPerm" -Clear EditListItems
 ```
-Removes the EditListItems flag from an existing permission level
+Removes the EditListItems flag from an existing permission level.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPRoleDefinition -Identity "NoDelete" -SelectAll -Clear DeleteListItems
 ```
 
-Select all flags for an existing permission level except DeleteListItems
+Selects all flags for an existing permission level except DeleteListItems.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPRoleDefinition -Identity "CustomPerm" -NewRoleName "NoDelete" -Description "Contribute without delete"
 ```
 
-Change the name and description of an existing permission level
+Changes the name and description of an existing permission level.
 
 ### EXAMPLE 4
 ```powershell
 Set-PnPRoleDefinition -Identity "CustomPerm" -Order 500
 ```
 
-Change the order in which the permission level is displayed
+Changes the order in which the permission level is displayed.
 
 ## PARAMETERS
 
 ### -Identity
-The identity of the role definition, either a RoleDefinition object or a the name of roledefinition.
+The identity of the role definition, either a RoleDefinition object or the name of the roledefinition.
 
 ```yaml
 Type: RoleDefinitionPipeBind
@@ -137,7 +137,7 @@ Accept wildcard characters: False
 ```
 
 ### -Select
-Specifies permission flags(s) to enable. Please visit https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum
+Specifies permission flag(s) to enable. Please visit https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum.
 
 ```yaml
 Type: PermissionKind[]
@@ -152,7 +152,7 @@ Accept wildcard characters: False
 ```
 
 ### -Clear
-Specifies permission flags(s) to disable. Please visit https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum
+Specifies permission flag(s) to disable. Please visit https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum.
 
 ```yaml
 Type: PermissionKind[]
