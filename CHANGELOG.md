@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Removed
 
 ### Fixed
+- Fixed issue where passing in `-Connection` to `Disconnect-PnPOnline` woud throw an exception
 
 ### Contributors
 
