@@ -17,6 +17,11 @@ namespace PnP.PowerShell.Commands.Base
 
         protected override void ProcessRecord()
         {
+            // As parameters are passed in by value, there's no use in doing anything with the connection object here, so we'll simply exit.
+            #pragma warning disable CS0618 
+            if(Connection != null) return;
+            #pragma warning restore CS6018
+
             if(PnPConnection.Current == null)
             {
                 throw new InvalidOperationException(Properties.Resources.NoConnectionToDisconnect);
