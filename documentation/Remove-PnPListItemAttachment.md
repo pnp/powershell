@@ -7,10 +7,10 @@ external help file: PnP.PowerShell.dll-Help.xml
 title: Remove-PnPListItemAttachment
 ---
   
-# Add-PnPListItemAttachment
+# Remove-PnPListItemAttachment
 
 ## SYNOPSIS
-Removes attachment from the specified list item in the SharePoint list
+Removes attachment from the specified list item in the SharePoint list.
 
 ## SYNTAX
 
@@ -19,12 +19,13 @@ Removes attachment from the specified list item in the SharePoint list
 Remove-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-FileName <String>] [-Recycle <SwitchParameter>] [-Force <SwitchParameter>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
-### Removes all attachments file from list item
+### Remove all attachment files from list item
 ```powershell
 Remove-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-All <SwitchParameter>] [-Recycle <SwitchParameter>] [-Force <SwitchParameter>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+This cmdlet removes one or all attachments from the specified list item in a SharePoint list.
 
 ## EXAMPLES
 
@@ -136,7 +137,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The ID of the listitem, or actual ListItem object
+The ID of the list item, or actual ListItem object.
 
 ```yaml
 Type: ListItemPipeBind
