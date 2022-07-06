@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPIndexedPropertie
 # Set-PnPIndexedProperties
 
 ## SYNOPSIS
-Marks values of the propertybag to be indexed by search. Notice that this will overwrite the existing flags, i.e. only the properties you define with the cmdlet will be indexed.
+Marks values of the propertybag to be indexed by search.
 
 ## SYNTAX
 
@@ -20,8 +20,16 @@ Set-PnPIndexedProperties -Keys <System.Collections.Generic.List`1[System.String]
 ```
 
 ## DESCRIPTION
+Marks values of the propertybag to be indexed by search. Notice that this will overwrite the existing flags, i.e. only the properties you define with the cmdlet will be indexed.
 
 ## EXAMPLES
+
+### EXAMPLE 1
+```powershell
+Set-PnPIndexedProperties -Keys SiteClosed, PolicyName
+```
+
+Example 1 overwrites the existing properties from the index and sets `SiteClosed` and `PolicyName` properties to be indexed.
 
 ## PARAMETERS
 
@@ -40,6 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -Keys
+Property keys to be indexed.
 
 ```yaml
 Type: System.Collections.Generic.List`1[System.String]
