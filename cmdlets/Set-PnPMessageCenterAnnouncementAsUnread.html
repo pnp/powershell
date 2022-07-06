@@ -88,27 +88,39 @@
 <ul>
 <li>Microsoft Graph API : ServiceMessageViewpoint.Write (delegated)</li>
 </ul>
-<p>Marks one or multiple message center announcements of the Office 365 Services as unread</p>
+<p>Marks one or multiple message center announcements of the Office 365 Services as unread.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPMessageCenterAnnouncementAsUnread [-Identity &lt;Ids&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPMessageCenterAnnouncementAsUnread [-Identity &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet marks one or multiple message center announcements of the Office 365 Services as unread for the current user.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPMessageCenterAnnouncementAsUnread -Identity &quot;MC123456&quot;
 </code></pre>
-<p>Marks message center announcement MC123456 as unread for the current user</p>
+<p>Marks message center announcement MC123456 as unread for the current user.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPMessageCenterAnnouncementAsUnread -Identity &quot;MC123456&quot;, &quot;MC234567&quot;
 </code></pre>
-<p>Marks message center announcements MC123456 and MC234567 as unread for the current user</p>
+<p>Marks message center announcements MC123456 and MC234567 as unread for the current user.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPMessageCenterAnnouncementAsUnread
 </code></pre>
-<p>Marks all message center announcements as unread for the current user</p>
+<p>Marks all message center announcements as unread for the current user.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Marks the message center announcement or announcements with the provided Ids as unread</p>
+<p>Id(s) of the message center announcements to mark as unread.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: None
 

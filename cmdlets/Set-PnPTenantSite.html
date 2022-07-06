@@ -145,7 +145,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-allowselfserviceupgrade">-AllowSelfServiceUpgrade</h3>
-<p>Specifies if the site administrator can upgrade the site collection</p>
+<p>Specifies if the site administrator can upgrade the site collection.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
 
@@ -205,7 +205,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-commentsonsitepagesdisabled">-CommentsOnSitePagesDisabled</h3>
-<p>Specifies if comments on site pages are enabled</p>
+<p>Specifies if comments on site pages are enabled.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
 
@@ -254,6 +254,7 @@ Accept wildcard characters: False
 <p>When set to $true, the DefaultSharingLinkType will be overriden and the default sharing link will be All People with Existing Access link (which does not modify permissions). When set to $false (the default), the default sharing link type is controlled by the DefaultSharingLinkType parameter</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: Set Properties
+
 Required: False
 Position: Named
 Default value: False
@@ -312,6 +313,7 @@ Accept wildcard characters: False
 <p>Specifies number of days the external users remain active on the site.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: Set Properties
+
 Required: False
 Position: Named
 Default value: None
@@ -322,6 +324,7 @@ Accept wildcard characters: False
 <p>Determines whether site can include Project Web App. For more information about Project Web App, see Plan SharePoint groups in Project Server.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: Set Properties
+
 Required: False
 Position: Named
 Default value: None
@@ -335,6 +338,7 @@ Accept wildcard characters: False
 <p>OtherFiles: Allows users to download files that can't be previewed, such as .zip and .exe. This option offers less security.</p>
 <pre><code class="lang-yaml">Type: SPOLimitedAccessFileType
 Parameter Sets: Set Properties
+
 Required: False
 Position: Named
 Default value: None
@@ -459,6 +463,7 @@ Accept wildcard characters: False
 <p>To enable the option to search for existing guest users at Site Collection Level, set this parameter to $true.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: Set Properties
+
 Required: False
 Position: Named
 Default value: None
@@ -470,6 +475,7 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: Int64
 Parameter Sets: Set Properties
 Aliases: StorageMaximumLevel
+
 Required: False
 Position: Named
 Default value: None
@@ -481,6 +487,7 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: Int64
 Parameter Sets: Set Properties
 Aliases: StorageQuotaMaximumLevel
+
 Required: False
 Position: Named
 Default value: None
@@ -491,6 +498,7 @@ Accept wildcard characters: False
 <p>Resets the OneDrive for Business storage quota to the tenant's new default storage space</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
+
 Required: False
 Position: Named
 Default value: None
@@ -501,6 +509,7 @@ Accept wildcard characters: False
 <p>This parameter allows you to remove a segment from a SharePoint site. This parameter is only applicable for tenants who have enabled Microsoft 365 Information barriers capability. Please read <a href="https://docs.microsoft.com/sharepoint/information-barriers">https://docs.microsoft.com/sharepoint/information-barriers</a> documentation to understand Information barriers with SharePoint Online.</p>
 <pre><code class="lang-yaml">Type: Guid[]
 Parameter Sets: Set Properties
+
 Required: False
 Position: Named
 Default value: None
@@ -542,7 +551,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-title">-Title</h3>
-<p>Specifies the title of the site</p>
+<p>Specifies the title of the site.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Set Properties
 
@@ -553,10 +562,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Specifies the URL of the site</p>
+<p>Specifies the URL of the site.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases: Url
+
 Required: True
 Position: 0
 Default value: None
@@ -564,9 +574,11 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-mediatranscription">-MediaTranscription</h3>
-<p>When the feature is enabled, videos can have transcripts generated on demand or generated automatically in certain scenarios. This is the default because the policy is default on. If a video owner decides they don’t want the transcript, they can always hide or delete it from that video. Possible values: <code>Enabled, Disabled</code></p>
+<p>When the feature is enabled, videos can have transcripts generated on demand or generated automatically in certain scenarios. This is the default because the policy is default on. If a video owner decides they don’t want the transcript, they can always hide or delete it from that video.</p>
 <pre><code class="lang-yaml">Type: MediaTranscriptionPolicyType
-Parameter Sets: (All)
+Parameter Sets: Set Properties
+Accepted values: Enabled, Disabled
+
 Required: False
 Position: Named
 Default value: None

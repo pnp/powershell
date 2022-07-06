@@ -84,32 +84,32 @@
                     <h1 id="set-pnproledefinition">Set-PnPRoleDefinition</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets an existing Role Definition (Permission Level) in the site collection in the current context</p>
+<p>Updates an existing Role Definition (Permission Level) in the site collection in the current context.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPRoleDefinition -Identity &lt;RoleDefinitionPipeBind&gt; [-NewRoleName &lt;String&gt;] [-Description &lt;String&gt;] [-Order &lt;Int32&gt;] [-SelectAll] [-ClearAll] [-Select &lt;PermissionKind[]&gt;] [-Clear &lt;PermissionKind[]&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows setting an existing Role Definition (Permission Level) in the site collection in the current context.</p>
+<p>Allows updating an existing Role Definition (Permission Level) in the site collection in the current context.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPRoleDefinition -Identity &quot;CustomPerm&quot; -Clear EditListItems
 </code></pre>
-<p>Removes the EditListItems flag from an existing permission level</p>
+<p>Removes the EditListItems flag from an existing permission level.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPRoleDefinition -Identity &quot;NoDelete&quot; -SelectAll -Clear DeleteListItems
 </code></pre>
-<p>Select all flags for an existing permission level except DeleteListItems</p>
+<p>Selects all flags for an existing permission level except DeleteListItems.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPRoleDefinition -Identity &quot;CustomPerm&quot; -NewRoleName &quot;NoDelete&quot; -Description &quot;Contribute without delete&quot;
 </code></pre>
-<p>Change the name and description of an existing permission level</p>
+<p>Changes the name and description of an existing permission level.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Set-PnPRoleDefinition -Identity &quot;CustomPerm&quot; -Order 500
 </code></pre>
-<p>Change the order in which the permission level is displayed</p>
+<p>Changes the order in which the permission level is displayed.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
-<p>The identity of the role definition, either a RoleDefinition object or a the name of roledefinition.</p>
+<p>The identity of the role definition, either a RoleDefinition object or the name of the roledefinition.</p>
 <pre><code class="lang-yaml">Type: RoleDefinitionPipeBind
 Parameter Sets: (All)
 
@@ -175,7 +175,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-select">-Select</h3>
-<p>Specifies permission flags(s) to enable. Please visit <a href="https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)">https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)</a> for the PermissionKind enum</p>
+<p>Specifies permission flag(s) to enable. Please visit <a href="https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)">https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)</a> for the PermissionKind enum.</p>
 <pre><code class="lang-yaml">Type: PermissionKind[]
 Parameter Sets: (All)
 Accepted values: EmptyMask, ViewListItems, AddListItems, EditListItems, DeleteListItems, ApproveItems, OpenItems, ViewVersions, DeleteVersions, CancelCheckout, ManagePersonalViews, ManageLists, ViewFormPages, AnonymousSearchAccessList, Open, ViewPages, AddAndCustomizePages, ApplyThemeAndBorder, ApplyStyleSheets, ViewUsageData, CreateSSCSite, ManageSubwebs, CreateGroups, ManagePermissions, BrowseDirectories, BrowseUserInfo, AddDelPrivateWebParts, UpdatePersonalWebParts, ManageWeb, AnonymousSearchAccessWebLists, UseClientIntegration, UseRemoteAPIs, ManageAlerts, CreateAlerts, EditMyUserInfo, EnumeratePermissions, FullMask
@@ -187,7 +187,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-clear">-Clear</h3>
-<p>Specifies permission flags(s) to disable. Please visit <a href="https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)">https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)</a> for the PermissionKind enum</p>
+<p>Specifies permission flag(s) to disable. Please visit <a href="https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)">https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)</a> for the PermissionKind enum.</p>
 <pre><code class="lang-yaml">Type: PermissionKind[]
 Parameter Sets: (All)
 Accepted values: EmptyMask, ViewListItems, AddListItems, EditListItems, DeleteListItems, ApproveItems, OpenItems, ViewVersions, DeleteVersions, CancelCheckout, ManagePersonalViews, ManageLists, ViewFormPages, AnonymousSearchAccessList, Open, ViewPages, AddAndCustomizePages, ApplyThemeAndBorder, ApplyStyleSheets, ViewUsageData, CreateSSCSite, ManageSubwebs, CreateGroups, ManagePermissions, BrowseDirectories, BrowseUserInfo, AddDelPrivateWebParts, UpdatePersonalWebParts, ManageWeb, AnonymousSearchAccessWebLists, UseClientIntegration, UseRemoteAPIs, ManageAlerts, CreateAlerts, EditMyUserInfo, EnumeratePermissions, FullMask

@@ -84,7 +84,7 @@
                     <h1 id="set-pnppropertybagvalue">Set-PnPPropertyBagValue</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Adds a new or updates an existing property bag value</p>
+<p>Adds a new or updates an existing property bag value.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="web">Web</h3>
 <pre><code class="lang-powershell">Set-PnPPropertyBagValue -Key &lt;String&gt; -Value &lt;String&gt; [-Indexed] 
@@ -100,15 +100,15 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPPropertyBagValue -Key MyKey -Value MyValue
 </code></pre>
-<p>This sets or adds a value to the current web property bag</p>
+<p>This sets or adds a value to the current web property bag.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPPropertyBagValue -Key MyKey -Value MyValue -Folder /
 </code></pre>
-<p>This sets or adds a value to the root folder of the current web</p>
+<p>This sets or adds a value to the root folder of the current web.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPPropertyBagValue -Key MyKey -Value MyValue -Folder /MyFolder
 </code></pre>
-<p>This sets or adds a value to the folder MyFolder which is located in the root folder of the current web</p>
+<p>This sets or adds a value to the folder MyFolder which is located in the root folder of the current web.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -133,6 +133,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-indexed">-Indexed</h3>
+<p>Sets the key to be indexed, which makes the property bag value searchable.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Web
 
@@ -143,6 +144,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-key">-Key</h3>
+<p>Key of the property to set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -153,6 +155,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-value">-Value</h3>
+<p>Value to set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 

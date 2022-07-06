@@ -84,7 +84,7 @@
                     <h1 id="set-pnplistpermission">Set-PnPListPermission</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Allows permissions on a SharePoint list to be changed</p>
+<p>Allows permissions on a SharePoint list to be changed.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="group">Group</h3>
 <pre><code class="lang-powershell">Set-PnPListPermission -Identity &lt;ListPipeBind&gt; -Group &lt;GroupPipeBind&gt; [-AddRole &lt;String&gt;]
@@ -95,19 +95,19 @@
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows changing of permissions on a SharePoint list. In case you would like to break the permission inheritance on a list from its parent, you can use <a href="Set-PnPList.html#-breakroleinheritance">Set-PnPList -BreakRoleInheritance</a>.</p>
+<p>Allows changing permissions on a SharePoint list. In case you would like to break the permission inheritance on a list from its parent, you can use <a href="Set-PnPList.html#-breakroleinheritance">Set-PnPList -BreakRoleInheritance</a>.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPListPermission -Identity 'Documents' -User 'user@contoso.com' -AddRole 'Contribute'
 </code></pre>
-<p>Adds the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'</p>
+<p>Adds the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPListPermission -Identity 'Documents' -User 'user@contoso.com' -RemoveRole 'Contribute'
 </code></pre>
-<p>Removes the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'</p>
+<p>Removes the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
-<p>The Id, title or an instance of the list</p>
+<p>The Id, title or an instance of the list.</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
 
@@ -140,6 +140,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-group">-Group</h3>
+<p>A group object, an ID or a name of a group.</p>
 <pre><code class="lang-yaml">Type: GroupPipeBind
 Parameter Sets: Group
 
@@ -150,6 +151,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-user">-User</h3>
+<p>A valid login name of a user (e.g. john@doe.com).</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: User
 

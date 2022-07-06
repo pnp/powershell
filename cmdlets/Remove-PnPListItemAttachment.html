@@ -81,18 +81,19 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="add-pnplistitemattachment">Add-PnPListItemAttachment</h1>
+                    <h1 id="remove-pnplistitemattachment">Remove-PnPListItemAttachment</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Removes attachment from the specified list item in the SharePoint list</p>
+<p>Removes attachment from the specified list item in the SharePoint list.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="remove-attachment-from-list-item">Remove attachment from list item</h3>
 <pre><code class="lang-powershell">Remove-PnPListItemAttachment [-List] &lt;ListPipeBind&gt; [-Identity] &lt;ListItemPipeBind&gt; [-FileName &lt;String&gt;] [-Recycle &lt;SwitchParameter&gt;] [-Force &lt;SwitchParameter&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
-<h3 id="removes-all-attachments-file-from-list-item">Removes all attachments file from list item</h3>
+<h3 id="remove-all-attachment-files-from-list-item">Remove all attachment files from list item</h3>
 <pre><code class="lang-powershell">Remove-PnPListItemAttachment [-List] &lt;ListPipeBind&gt; [-Identity] &lt;ListItemPipeBind&gt; [-All &lt;SwitchParameter&gt;] [-Recycle &lt;SwitchParameter&gt;] [-Force &lt;SwitchParameter&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet removes one or all attachments from the specified list item in a SharePoint list.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPListItemAttachment -List &quot;Demo List&quot; -Identity 1 -FileName test.txt
@@ -171,7 +172,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The ID of the listitem, or actual ListItem object</p>
+<p>The ID of the list item, or actual ListItem object.</p>
 <pre><code class="lang-yaml">Type: ListItemPipeBind
 Parameter Sets: (All)
 

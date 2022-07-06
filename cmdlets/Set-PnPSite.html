@@ -84,7 +84,7 @@
                     <h1 id="set-pnpsite">Set-PnPSite</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets Site Collection properties.</p>
+<p>Sets site collection properties.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="set-properties">Set Properties</h3>
 <pre><code class="lang-powershell">Set-PnPSite [-Identity &lt;String&gt;] [-Classification &lt;String&gt;] [-DisableFlows] [-LogoFilePath &lt;String&gt;]
@@ -129,7 +129,7 @@
 <p>Allows custom script on a specific site. See <a href="https://docs.microsoft.com/sharepoint/allow-or-prevent-custom-script">Allow or prevent custom script</a> for more information.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-allowselfserviceupgrade">-AllowSelfServiceUpgrade</h3>
-<p>Specifies if the site administrator can upgrade the site collection</p>
+<p>Specifies if the site administrator can upgrade the site collection.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
 
@@ -140,7 +140,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-anonymouslinkexpirationindays">-AnonymousLinkExpirationInDays</h3>
-<p>{{ Fill AnonymousLinkExpirationInDays Description }}</p>
+<p>Specifies all anonymous/anyone links that have been created (or will be created) will expire after the set number of days. Only applies if OverrideTenantAnonymousLinkExpirationPolicy is set to true.</p>
+<p>To remove the expiration requirement, set the value to zero (0).</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: Set Properties
 
@@ -153,7 +154,7 @@ Accept wildcard characters: False
 <h3 id="-classification">-Classification</h3>
 <p>The classification tag to set. This is the old classification/labeling method. Set it to $null to remove the classification entirely.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+Parameter Sets: Set Properties
 
 Required: False
 Position: Named
@@ -164,7 +165,7 @@ Accept wildcard characters: False
 <h3 id="-sensitivitylabel">-SensitivityLabel</h3>
 <p>The Microsoft Purview sensitivity label to set. This is the new classification/labeling method.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+Parameter Sets: Set Properties
 
 Required: False
 Position: Named
@@ -173,7 +174,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-commentsonsitepagesdisabled">-CommentsOnSitePagesDisabled</h3>
-<p>Specifies if comments on site pages are enabled or disabled</p>
+<p>Specifies if comments on site pages are enabled or disabled.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
 
@@ -229,6 +230,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-disableappviews">-DisableAppViews</h3>
+<p>Determines whether the App Views feature is disabled in the site collection.</p>
 <pre><code class="lang-yaml">Type: AppViewsPolicy
 Parameter Sets: Set Properties
 Accepted values: Unknown, Disabled, NotDisabled
@@ -240,6 +242,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-disablecompanywidesharinglinks">-DisableCompanyWideSharingLinks</h3>
+<p>Determines whether company-wide sharing links are disabled in collection.</p>
 <pre><code class="lang-yaml">Type: CompanyWideSharingLinksPolicy
 Parameter Sets: Set Properties
 Accepted values: Unknown, Disabled, NotDisabled
@@ -251,7 +254,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-disableflows">-DisableFlows</h3>
-<p>Disables Microsoft Flow for this site</p>
+<p>Disables Microsoft Flow for this site.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -262,7 +265,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-disablesharingfornonowners">-DisableSharingForNonOwners</h3>
-<p>Specifies to prevent non-owners from inviting new users to the site</p>
+<p>Specifies whether non-owners should be prevented from inviting new users to the site.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
 
@@ -273,6 +276,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
+<p>The url of the site collection.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases: Url
@@ -295,7 +299,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-lockstate">-LockState</h3>
-<p>Sets the lockstate of a site</p>
+<p>Sets the lockstate of a site collection.</p>
 <pre><code class="lang-yaml">Type: SiteLockState
 Parameter Sets: Set Lock State
 Accepted values: Unlock, NoAccess, ReadOnly
@@ -307,7 +311,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-logofilepath">-LogoFilePath</h3>
-<p>Sets the logo of the site if it concerns a modern team site. Provide a full path to a local image file on your disk which you want to use as the site logo. The logo will be uploaded automatically to SharePoint. If you want to set the logo for a classic site, use Set-PnPWeb -SiteLogoUrl.</p>
+<p>Sets the logo of the site if it is a modern team site. Provide a full path to a local image file on your disk which you want to use as the site logo. The logo will be uploaded automatically to SharePoint. If you want to set the logo for a classic site, use Set-PnPWeb -SiteLogoUrl.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Set Properties
 
@@ -330,7 +334,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-overridetenantanonymouslinkexpirationpolicy">-OverrideTenantAnonymousLinkExpirationPolicy</h3>
-<p>{{ Fill OverrideTenantAnonymousLinkExpirationPolicy Description }}</p>
+<p>Specifies whether to use company-wide or a site collection level anonymous links expiration policy. Set it to true to get advantage of AnonymousLinkExpirationInDays.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
 
@@ -376,7 +380,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-socialbaronsitepagesdisabled">-SocialBarOnSitePagesDisabled</h3>
-<p>Disables or enables the Social Bar for Site Collection.</p>
+<p>Disables or enables the Social Bar for site collection.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
 
@@ -409,9 +413,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-mediatranscription">-MediaTranscription</h3>
-<p>When the feature is enabled, videos can have transcripts generated on demand or generated automatically in certain scenarios. This is the default because the policy is default on. If a video owner decides they don’t want the transcript, they can always hide or delete it from that video. Possible values: <code>Enabled, Disabled</code></p>
+<p>When the feature is enabled, videos can have transcripts generated on demand or generated automatically in certain scenarios. This is the default because the policy is default on. If a video owner decides they don’t want the transcript, they can always hide or delete it from that video.</p>
 <pre><code class="lang-yaml">Type: MediaTranscriptionPolicyType
-Parameter Sets: (All)
+Parameter Sets: Set Properties
+Accepted values: Enabled, Disabled
+
 Required: False
 Position: Named
 Default value: None

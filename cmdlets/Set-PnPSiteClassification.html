@@ -88,7 +88,7 @@
 <ul>
 <li>Microsoft Graph API : One of Directory.Read.All, Directory.ReadWrite.All (see description below)</li>
 </ul>
-<p>Allows placing a classic site classification on the current site</p>
+<p>Allows placing a classic site classification on the current site.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPSiteClassification -Identity &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
@@ -98,7 +98,7 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPSiteClassification -Identity &quot;LBI&quot;
 </code></pre>
-<p>Sets the &quot;LBI&quot; site classification on the current site</p>
+<p>Sets the &quot;LBI&quot; site classification on the current site.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -106,6 +106,17 @@
 Parameter Sets: (All)
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>Specifies the name of the classification tag.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

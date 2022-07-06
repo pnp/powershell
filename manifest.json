@@ -532,12 +532,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPListItem.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPListItem.html",
-          "hash": "cbgs7CKVoNUY3XUnQTgidg=="
+          "hash": "KIjtanos7pfXtIb9kz2GVg=="
         }
       },
       "is_incremental": false,
@@ -4660,12 +4663,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "cmdlets/Publish-PnPSyntexModel.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Publish-PnPSyntexModel.html",
-          "hash": "+BlhBStzSj+vsdlFiN0/8A=="
+          "hash": "IKAsumC+bzpeNvHlh895nA=="
         }
       },
       "is_incremental": false,
@@ -5176,12 +5182,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPListItem.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPListItem.html",
-          "hash": "RKsh5G1UJFQ/l98wrjGAdw=="
+          "hash": "9eqD+G4spb4/DMm7JpdM3Q=="
         }
       },
       "is_incremental": false,
@@ -5193,7 +5202,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPListItemAttachment.html",
-          "hash": "cXZ+i9ltyr5Tpj8ruDBrXg=="
+          "hash": "Ina9DqvQq9xfkjQkFYK+rw=="
         }
       },
       "is_incremental": false,
@@ -5944,12 +5953,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "cmdlets/Request-PnPSyntexClassifyAndExtract.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Request-PnPSyntexClassifyAndExtract.html",
-          "hash": "K8SnWLeyG1Qf8J7JBFm9Rg=="
+          "hash": "afMUFyN9IKYlFoBvzmlGVQ=="
         }
       },
       "is_incremental": false,
@@ -6610,12 +6622,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPListItem.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPListItem.html",
-          "hash": "rJoTaPya9m4K9v06WGXeyw=="
+          "hash": "vLz25eKYwHp5frFGCcBewg=="
         }
       },
       "is_incremental": false,
@@ -6627,7 +6642,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPListItemAsRecord.html",
-          "hash": "bx8ZhGldLy5ieOwcnKVChQ=="
+          "hash": "IHdBffn66GDjAMc796mETg=="
         }
       },
       "is_incremental": false,
@@ -6639,7 +6654,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPListItemPermission.html",
-          "hash": "HlrWRBrDGPuN/T9Vcvdvmw=="
+          "hash": "zYKQR2vM7gDH0Ri2TZLmxQ=="
         }
       },
       "is_incremental": false,
@@ -6654,7 +6669,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPListPermission.html",
-          "hash": "66CoPXbUbE0b0qwblMo5GA=="
+          "hash": "FrbHrNl8z5c/hYmsQKfMow=="
         }
       },
       "is_incremental": false,
@@ -6750,7 +6765,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPMessageCenterAnnouncementAsUnread.html",
-          "hash": "BL0VRcRcbuhT2eakS7mo6g=="
+          "hash": "GjIdCk5PqGR3XQd9mDBBNQ=="
         }
       },
       "is_incremental": false,
@@ -6870,7 +6885,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPPlannerTask.html",
-          "hash": "ASkIrzGJnfNq7XTfuzinLA=="
+          "hash": "VVUQWtThYQr1AB0VFdQzxw=="
         }
       },
       "is_incremental": false,
@@ -6894,7 +6909,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPPropertyBagValue.html",
-          "hash": "vJsIRkUmhl8XEmvC0iecgQ=="
+          "hash": "5xmcnlrcV3LKKsg7ug+oMA=="
         }
       },
       "is_incremental": false,
@@ -6918,7 +6933,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPRoleDefinition.html",
-          "hash": "W1FFAASSW/Ye+mVwgnx+JA=="
+          "hash": "Zqde5f5DXO+9/Yt0kDoMHg=="
         }
       },
       "is_incremental": false,
@@ -6930,7 +6945,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSearchConfiguration.html",
-          "hash": "ayjMRCyhl3mOjt3idbDfUA=="
+          "hash": "p93hBf09AcDNt3cM/mBGMQ=="
         }
       },
       "is_incremental": false,
@@ -6954,7 +6969,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSite.html",
-          "hash": "PCtx2xlODN5V5KFGMqBsEg=="
+          "hash": "tghauooQrk2wWi0LB7pH6Q=="
         }
       },
       "is_incremental": false,
@@ -6969,7 +6984,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSiteClassification.html",
-          "hash": "4+4J3+KU9vw9cTdn0DTzIw=="
+          "hash": "tU1YVU1DWP4m5znwjII7jA=="
         }
       },
       "is_incremental": false,
@@ -6993,7 +7008,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSiteDesign.html",
-          "hash": "V77hzvh6Muz+IH2rVRvRxA=="
+          "hash": "xUyvCJTBadSitIb5SQk6Lg=="
         }
       },
       "is_incremental": false,
@@ -7272,7 +7287,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTenantSite.html",
-          "hash": "exe5sjZWYltx5K911saglQ=="
+          "hash": "7dfm4UY5fFChv9GsUAkeTw=="
         }
       },
       "is_incremental": false,
@@ -7627,12 +7642,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "cmdlets/Unpublish-PnPSyntexModel.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Unpublish-PnPSyntexModel.html",
-          "hash": "h+RNaFTxjFZgDUV4+EgfPQ=="
+          "hash": "/7qI/rmzZAdBz2d42ZVssw=="
         }
       },
       "is_incremental": false,
