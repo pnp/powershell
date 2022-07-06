@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPGroupPermissions
 # Set-PnPGroupPermissions
 
 ## SYNOPSIS
-Adds and/or removes permissions of a specific SharePoint group
+Adds and/or removes permissions of a specific SharePoint group.
 
 ## SYNTAX
 
@@ -20,6 +20,7 @@ Set-PnPGroupPermissions [-Identity] <GroupPipeBind> [-List <ListPipeBind>] [-Add
 ```
 
 ## DESCRIPTION
+This cmdlet adds or removes roles (permissions) of a specified group on a site or list level.
 
 ## EXAMPLES
 
@@ -28,40 +29,40 @@ Set-PnPGroupPermissions [-Identity] <GroupPipeBind> [-List <ListPipeBind>] [-Add
 Set-PnPGroupPermissions -Identity 'My Site Members' -AddRole Contribute
 ```
 
-Adds the 'Contribute' permission to the SharePoint group with the name 'My Site Members'
+Adds the 'Contribute' permission to the SharePoint group with the name 'My Site Members'.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPGroupPermissions -Identity 'My Site Members' -RemoveRole 'Full Control' -AddRole 'Read'
 ```
 
-Removes the 'Full Control' from and adds the 'Contribute' permissions to the SharePoint group with the name 'My Site Members'
+Removes the 'Full Control' from and adds the 'Contribute' permissions to the SharePoint group with the name 'My Site Members'.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPGroupPermissions -Identity 'My Site Members' -AddRole @('Contribute', 'Design')
 ```
 
-Adds the 'Contribute' and 'Design' permissions to the SharePoint group with the name 'My Site Members'
+Adds the 'Contribute' and 'Design' permissions to the SharePoint group with the name 'My Site Members'.
 
 ### EXAMPLE 4
 ```powershell
 Set-PnPGroupPermissions -Identity 'My Site Members' -RemoveRole @('Contribute', 'Design')
 ```
 
-Removes the 'Contribute' and 'Design' permissions from the SharePoint group with the name 'My Site Members'
+Removes the 'Contribute' and 'Design' permissions from the SharePoint group with the name 'My Site Members'.
 
 ### EXAMPLE 5
 ```powershell
 Set-PnPGroupPermissions -Identity 'My Site Members' -List 'MyList' -RemoveRole @('Contribute')
 ```
 
-Removes the 'Contribute' permissions from the list 'MyList' for the group with the name 'My Site Members'
+Removes the 'Contribute' permissions from the list 'MyList' for the group with the name 'My Site Members'.
 
 ## PARAMETERS
 
 ### -AddRole
-Name of the permission set to add to this SharePoint group
+Name of the role (permission level) to add to the SharePoint group.
 
 ```yaml
 Type: String[]
@@ -89,7 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Get the permissions of a specific group by name
+A group object, an ID or a name of a group.
 
 ```yaml
 Type: GroupPipeBind
@@ -104,7 +105,7 @@ Accept wildcard characters: False
 ```
 
 ### -List
-The list to apply the command to.
+Specify the Id, title or an instance of the list where permissions should be updated.
 
 ```yaml
 Type: ListPipeBind
@@ -118,7 +119,7 @@ Accept wildcard characters: False
 ```
 
 ### -RemoveRole
-Name of the permission set to remove from this SharePoint group
+Name of the role (permission level) to remove from the SharePoint group.
 
 ```yaml
 Type: String[]
