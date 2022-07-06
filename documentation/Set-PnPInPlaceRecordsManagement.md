@@ -40,6 +40,19 @@ Deactivates In Place Records Management.
 
 ## PARAMETERS
 
+### -Enabled
+Specifies whether in place records management should be enabled.
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
@@ -54,22 +67,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Enabled
-Specifies whether in place records management is enabled.
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
