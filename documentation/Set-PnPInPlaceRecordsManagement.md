@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPInPlaceRecordsMa
 # Set-PnPInPlaceRecordsManagement
 
 ## SYNOPSIS
-Activates or deactivates in the place records management feature.
+Activates or deactivates in place records management feature.
 
 ## SYNTAX
 
@@ -20,6 +20,7 @@ Set-PnPInPlaceRecordsManagement -Enabled <Boolean> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
+Activates or deactivates in place records management feature in the site collection.
 
 ## EXAMPLES
 
@@ -28,14 +29,14 @@ Set-PnPInPlaceRecordsManagement -Enabled <Boolean> [-Connection <PnPConnection>]
 Set-PnPInPlaceRecordsManagement -Enabled $true
 ```
 
-Activates In Place Records Management
+Activates In Place Records Management.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPInPlaceRecordsManagement -Enabled $false
 ```
 
-Deactivates In Place Records Management
+Deactivates In Place Records Management.
 
 ## PARAMETERS
 
@@ -54,7 +55,7 @@ Accept wildcard characters: False
 ```
 
 ### -Enabled
-
+Specifies whether in place records management is enabled.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
