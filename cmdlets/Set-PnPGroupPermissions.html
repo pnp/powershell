@@ -84,36 +84,37 @@
                     <h1 id="set-pnpgrouppermissions">Set-PnPGroupPermissions</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Adds and/or removes permissions of a specific SharePoint group</p>
+<p>Adds and/or removes permissions of a specific SharePoint group.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPGroupPermissions [-Identity] &lt;GroupPipeBind&gt; [-List &lt;ListPipeBind&gt;] [-AddRole &lt;String[]&gt;]
  [-RemoveRole &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet adds or removes roles (permissions) of a specified group on a site or list level.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPGroupPermissions -Identity 'My Site Members' -AddRole Contribute
 </code></pre>
-<p>Adds the 'Contribute' permission to the SharePoint group with the name 'My Site Members'</p>
+<p>Adds the 'Contribute' permission to the SharePoint group with the name 'My Site Members'.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPGroupPermissions -Identity 'My Site Members' -RemoveRole 'Full Control' -AddRole 'Read'
 </code></pre>
-<p>Removes the 'Full Control' from and adds the 'Contribute' permissions to the SharePoint group with the name 'My Site Members'</p>
+<p>Removes the 'Full Control' from and adds the 'Contribute' permissions to the SharePoint group with the name 'My Site Members'.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPGroupPermissions -Identity 'My Site Members' -AddRole @('Contribute', 'Design')
 </code></pre>
-<p>Adds the 'Contribute' and 'Design' permissions to the SharePoint group with the name 'My Site Members'</p>
+<p>Adds the 'Contribute' and 'Design' permissions to the SharePoint group with the name 'My Site Members'.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Set-PnPGroupPermissions -Identity 'My Site Members' -RemoveRole @('Contribute', 'Design')
 </code></pre>
-<p>Removes the 'Contribute' and 'Design' permissions from the SharePoint group with the name 'My Site Members'</p>
+<p>Removes the 'Contribute' and 'Design' permissions from the SharePoint group with the name 'My Site Members'.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Set-PnPGroupPermissions -Identity 'My Site Members' -List 'MyList' -RemoveRole @('Contribute')
 </code></pre>
-<p>Removes the 'Contribute' permissions from the list 'MyList' for the group with the name 'My Site Members'</p>
+<p>Removes the 'Contribute' permissions from the list 'MyList' for the group with the name 'My Site Members'.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-addrole">-AddRole</h3>
-<p>Name of the permission set to add to this SharePoint group</p>
+<p>Name of the role (permission level) to add to the SharePoint group.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
@@ -135,7 +136,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Get the permissions of a specific group by name</p>
+<p>A group object, an ID or a name of a group.</p>
 <pre><code class="lang-yaml">Type: GroupPipeBind
 Parameter Sets: (All)
 Aliases: Name
@@ -147,7 +148,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-list">-List</h3>
-<p>The list to apply the command to.</p>
+<p>Specify the Id, title or an instance of the list where permissions should be updated.</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
 
@@ -158,7 +159,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-removerole">-RemoveRole</h3>
-<p>Name of the permission set to remove from this SharePoint group</p>
+<p>Name of the role (permission level) to remove from the SharePoint group.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 

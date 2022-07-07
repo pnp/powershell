@@ -6480,7 +6480,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPGroup.html",
-          "hash": "fO7NVRQlJMSeGe+5XrPDwQ=="
+          "hash": "ydjIhVK+vaGLodsLBrP5WQ=="
         }
       },
       "is_incremental": false,
@@ -6492,7 +6492,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPGroupPermissions.html",
-          "hash": "JA28sKEIMLzFVdBJfJyqTQ=="
+          "hash": "+0ySVexPfgzfN1K51GIv+A=="
         }
       },
       "is_incremental": false,
@@ -6540,7 +6540,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPHubSite.html",
-          "hash": "7J73ZnSacGNJGMDtImU78A=="
+          "hash": "/hK7/OLUtaZnxnsGmVm1xw=="
         }
       },
       "is_incremental": false,
@@ -6552,7 +6552,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPInPlaceRecordsManagement.html",
-          "hash": "wV6P8NFA5kW+Iyiv7QubOw=="
+          "hash": "kUEhY/fiuvI2xNhWTRhpRw=="
         }
       },
       "is_incremental": false,
@@ -6564,7 +6564,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPIndexedProperties.html",
-          "hash": "xFSIBJXDK9J/ScYN9GNmJQ=="
+          "hash": "coR3MEkLFGY4bks7xDrS1A=="
         }
       },
       "is_incremental": false,
@@ -6615,7 +6615,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPListInformationRightsManagement.html",
-          "hash": "iDXqwGOihJjYB6cPiUzR8A=="
+          "hash": "E8FWjUdtY/5RpfPjUFgoDA=="
         }
       },
       "is_incremental": false,
@@ -6681,7 +6681,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPListRecordDeclaration.html",
-          "hash": "RCB9ropPrLMsmkz2H1ClOA=="
+          "hash": "9EwGbDs6nNbjLd4hqaCJSg=="
         }
       },
       "is_incremental": false,
@@ -6861,7 +6861,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPPlannerConfiguration.html",
-          "hash": "KacPVXTWM5HlX2bQtFZXqg=="
+          "hash": "JKC/+nk5FrwUa3y1jta+2A=="
         }
       },
       "is_incremental": false,

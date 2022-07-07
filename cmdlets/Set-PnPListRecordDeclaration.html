@@ -84,27 +84,30 @@
                     <h1 id="set-pnplistrecorddeclaration">Set-PnPListRecordDeclaration</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>The RecordDeclaration parameter supports 4 values:</p>
-<p>AlwaysAllowManualDeclaration
-NeverAllowManualDeclaration
-UseSiteCollectionDefaults</p>
+<p>Updates record declaration settings of a list.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPListRecordDeclaration -List &lt;ListPipeBind&gt; [-ManualRecordDeclaration &lt;EcmListManualRecordDeclaration&gt;]
  [-AutoRecordDeclaration &lt;Boolean&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>The RecordDeclaration parameter supports 3 values:</p>
+<ul>
+<li>AlwaysAllowManualDeclaration</li>
+<li>NeverAllowManualDeclaration</li>
+<li>UseSiteCollectionDefaults</li>
+</ul>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPListRecordDeclaration -List &quot;Documents&quot; -ManualRecordDeclaration NeverAllowManualDeclaration
 </code></pre>
-<p>Sets the manual record declaration to never allow</p>
+<p>Sets the manual record declaration to never allow.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPListRecordDeclaration -List &quot;Documents&quot; -AutoRecordDeclaration $true
 </code></pre>
-<p>Turns on auto record declaration for the list</p>
+<p>Turns on auto record declaration for the list.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-autorecorddeclaration">-AutoRecordDeclaration</h3>
-<p>Defines if you want to set auto record declaration on the list</p>
+<p>Turns on or off auto record declaration on the list.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -126,7 +129,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-list">-List</h3>
-<p>The List to set the manual record declaration settings for</p>
+<p>The list to set the manual record declaration settings for. Specify title, list id, or list object.</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
 
@@ -137,10 +140,10 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-manualrecorddeclaration">-ManualRecordDeclaration</h3>
-<p>Defines the manual record declaration setting for the lists</p>
+<p>Defines the manual record declaration setting for the lists.</p>
 <pre><code class="lang-yaml">Type: EcmListManualRecordDeclaration
 Parameter Sets: (All)
-Accepted values: Unknown, UseSiteCollectionDefaults, AlwaysAllowManualDeclaration, NeverAllowManualDeclaration
+Accepted values: UseSiteCollectionDefaults, AlwaysAllowManualDeclaration, NeverAllowManualDeclaration
 
 Required: False
 Position: Named

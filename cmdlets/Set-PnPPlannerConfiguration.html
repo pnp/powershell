@@ -88,20 +88,24 @@
 <ul>
 <li>Azure: tasks.office.com</li>
 </ul>
-<p>Allows the Microsoft Planner configuration of the tenant to be set</p>
+<p>Allows the Microsoft Planner configuration of the tenant to be set.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code>Set-PnPPlannerConfiguration [-IsPlannerAllowed &lt;boolean&gt;] [-AllowRosterCreation &lt;boolean&gt;] [-AllowTenantMoveWithDataLoss &lt;boolean&gt;] [-AllowTenantMoveWithDataMigration &lt;boolean&gt;] [-AllowPlannerMobilePushNotifications &lt;boolean&gt;] [-AllowCalendarSharing &lt;boolean&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet allows the Microsoft Planner tenant configuration to be changed</p>
+<p>This cmdlet allows the Microsoft Planner tenant configuration to be changed.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
 <pre><code class="lang-powershell">Set-PnPPlannerConfiguration -AllowRosterCreation:$false -IsPlannerAllowed:$true
 </code></pre>
-<p>Configures Microsoft Planner to be enabled and disallow roster plans to be created</p>
+<p>This example configures Microsoft Planner to be enabled and disallows roster plans to be created.</p>
+<h3 id="example-2">Example 2</h3>
+<pre><code class="lang-powershell">Set-PnPPlannerConfiguration -AllowPlannerMobilePushNotifications $false
+</code></pre>
+<p>This example disallows direct push notifications.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-isplannerallowed">-IsPlannerAllowed</h3>
-<p>Allows configuring if Microsoft Planner is enabled on the tenant</p>
+<p>Allows configuring if Microsoft Planner is enabled on the tenant.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 Aliases:
@@ -113,7 +117,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-allowrostercreation">-AllowRosterCreation</h3>
-<p>Allows configuring whether the creation of Roster containers (Planner plans without Microsoft 365 Groups) is allowed</p>
+<p>Allows configuring whether the creation of Roster containers (Planner plans without Microsoft 365 Groups) is allowed.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 Aliases:
@@ -125,7 +129,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-allowtenantmovewithdataloss">-AllowTenantMoveWithDataLoss</h3>
-<p>Allows configuring whether a tenant move into a new region is currently authorized</p>
+<p>Allows configuring whether a tenant move into a new region is currently authorized.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 Aliases:
@@ -137,7 +141,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-allowtenantmovewithdatamigration">-AllowTenantMoveWithDataMigration</h3>
-<p>Allows configuring whether a tenant move with data migration is authorized</p>
+<p>Allows configuring whether a tenant move with data migration is authorized.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 Aliases:
@@ -149,7 +153,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-allowplannermobilepushnotifications">-AllowPlannerMobilePushNotifications</h3>
-<p>Allows configuring whether the direct push notifications are enabled where contents of the push notification are being sent directly through Apple's or Google's services to get to the iOS or Android client</p>
+<p>Allows configuring whether the direct push notifications are enabled where contents of the push notification are being sent directly through Apple's or Google's services to get to the iOS or Android client.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 Aliases:
@@ -161,7 +165,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-allowcalendarsharing">-AllowCalendarSharing</h3>
-<p>Allows configuring whether Outlook calendar sync is enabled</p>
+<p>Allows configuring whether Outlook calendar sync is enabled.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 Aliases:

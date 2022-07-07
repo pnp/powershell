@@ -84,7 +84,7 @@
                     <h1 id="set-pnplistinformationrightsmanagement">Set-PnPListInformationRightsManagement</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Get the site closure status of the site which has a site policy applied</p>
+<p>Enables Information Rights Management (IRM) on the list.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPListInformationRightsManagement -List &lt;ListPipeBind&gt; [-Enable &lt;Boolean&gt;] [-EnableExpiration &lt;Boolean&gt;]
  [-EnableRejection &lt;Boolean&gt;] [-AllowPrint &lt;Boolean&gt;] [-AllowScript &lt;Boolean&gt;] [-AllowWriteCopy &lt;Boolean&gt;]
@@ -96,11 +96,16 @@
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet enables Information Rights Management (IRM) on the list and updates the IRM settings.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPListInformationRightsManagement -List &quot;Documents&quot; -Enabled $true
+<pre><code class="lang-powershell">Set-PnPListInformationRightsManagement -List &quot;Documents&quot; -Enable $true
 </code></pre>
 <p>Enables Information Rights Management (IRM) on the list.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Set-PnPListInformationRightsManagement -List &quot;Documents&quot; -Enable $true -EnableDocumentAccessExpire $true -DocumentAccessExpireDays 14
+</code></pre>
+<p>This example enables Information Rights Management (IRM) on the list and sets the document access to expire 14 days after the file has been downloaded.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-allowprint">-AllowPrint</h3>
 <p>Sets a value indicating whether the viewer can print the downloaded document.</p>

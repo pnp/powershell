@@ -84,7 +84,7 @@
                     <h1 id="set-pnpgroup">Set-PnPGroup</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Updates a group</p>
+<p>Updates a group.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPGroup -Identity &lt;GroupPipeBind&gt; [-SetAssociatedGroup &lt;AssociatedGroupType&gt;] [-AddRole &lt;String&gt;]
  [-RemoveRole &lt;String&gt;] [-Title &lt;String&gt;] [-Owner &lt;String&gt;] [-Description &lt;String&gt;]
@@ -93,18 +93,19 @@
  [-RequestToJoinEmail &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet updates the roles and settings of the specified group.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPGroup -Identity 'My Site Members' -SetAssociatedGroup Members
 </code></pre>
-<p>Sets the SharePoint group with the name 'My Site Members' as the associated members group</p>
+<p>Sets the SharePoint group with the name 'My Site Members' as the associated members group.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPGroup -Identity 'My Site Members' -Owner 'site owners'
 </code></pre>
-<p>Sets the SharePoint group with the name 'site owners' as the owner of the SharePoint group with the name 'My Site Members'</p>
+<p>Sets the SharePoint group with the name 'site owners' as the owner of the SharePoint group with the name 'My Site Members'.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-addrole">-AddRole</h3>
-<p>Name of the permission set to add to this SharePoint group</p>
+<p>Name of the role (permission level) to add to the SharePoint group.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -115,7 +116,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-allowmemberseditmembership">-AllowMembersEditMembership</h3>
-<p>A switch parameter that specifies whether group members can modify membership in the group</p>
+<p>Specifies whether group members can modify membership in the group.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -126,7 +127,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-allowrequesttojoinleave">-AllowRequestToJoinLeave</h3>
-<p>A switch parameter that specifies whether to allow users to request membership in the group and to allow users to request to leave the group</p>
+<p>Specifies whether users are allowed to request membership in the group or to request to leave the group.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -137,7 +138,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-autoacceptrequesttojoinleave">-AutoAcceptRequestToJoinLeave</h3>
-<p>A switch parameter that specifies whether users are automatically added or removed when they make a request</p>
+<p>Specifies whether users are automatically added or removed when they make a request.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -159,7 +160,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-description">-Description</h3>
-<p>The description for the group</p>
+<p>The description of the group.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -170,7 +171,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>A group object, an ID or a name of a group</p>
+<p>A group object, an ID or a name of a group.</p>
 <pre><code class="lang-yaml">Type: GroupPipeBind
 Parameter Sets: (All)
 
@@ -181,7 +182,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-onlyallowmembersviewmembership">-OnlyAllowMembersViewMembership</h3>
-<p>A switch parameter that specifies whether only group members are allowed to view the list of members in the group</p>
+<p>Specifies whether only group members are allowed to view the list of members in the group.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -192,7 +193,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-owner">-Owner</h3>
-<p>The owner for the group, which can be a user or another group</p>
+<p>The owner of the group. It can be a user or another group.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -203,7 +204,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-removerole">-RemoveRole</h3>
-<p>Name of the permission set to remove from this SharePoint group</p>
+<p>Name of the role (permission level) to remove from the SharePoint group.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -214,7 +215,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-requesttojoinemail">-RequestToJoinEmail</h3>
-<p>The e-mail address to which membership requests are sent</p>
+<p>The e-mail address to which membership requests are sent.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -225,7 +226,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-setassociatedgroup">-SetAssociatedGroup</h3>
-<p>One of the associated group types (Visitors, Members, Owners)</p>
+<p>One of the associated group types (Visitors, Members, Owners).</p>
 <pre><code class="lang-yaml">Type: AssociatedGroupType
 Parameter Sets: (All)
 Accepted values: None, Visitors, Members, Owners
@@ -237,7 +238,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-title">-Title</h3>
-<p>The title for the group</p>
+<p>The title of the group.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 

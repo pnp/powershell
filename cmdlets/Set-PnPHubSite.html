@@ -88,35 +88,39 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Sets hub site properties</p>
+<p>Sets hub site properties.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPHubSite [-Identity] &lt;HubSitePipeBind&gt; [-Title &lt;String&gt;] [-LogoUrl &lt;String&gt;] [-Description &lt;String&gt;]
  [-SiteDesignId &lt;Guid&gt;] [-HideNameInNavigation] [-RequiresJoinApproval] [-EnablePermissionsSync] [-ParentHubSiteId &lt;Guid&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows configuring a hub site</p>
+<p>Allows configuring a hub site.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPHubSite -Identity &quot;https://tenant.sharepoint.com/sites/myhubsite&quot; -Title &quot;My New Title&quot;
 </code></pre>
-<p>Sets the title of the hub site</p>
+<p>Sets the title of the hub site.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPHubSite -Identity &quot;https://tenant.sharepoint.com/sites/myhubsite&quot; -Description &quot;My updated description&quot;
 </code></pre>
-<p>Sets the description of the hub site</p>
+<p>Sets the description of the hub site.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPHubSite -Identity &quot;https://tenant.sharepoint.com/sites/myhubsite&quot; -SiteDesignId df8a3ef1-9603-44c4-abd9-541aea2fa745
 </code></pre>
-<p>Sets the site design which should be applied to sites joining the the hub site</p>
+<p>Sets the site design which should be applied to sites joining the hub site.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Set-PnPHubSite -Identity &quot;https://tenant.sharepoint.com/sites/myhubsite&quot; -LogoUrl &quot;https://tenant.sharepoint.com/SiteAssets/Logo.png&quot;
 </code></pre>
-<p>Sets the logo of the hub site</p>
+<p>Sets the logo of the hub site.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Set-PnPHubSite -Identity &quot;https://tenant.sharepoint.com/sites/myhubsite&quot; -EnablePermissionsSync
 </code></pre>
-<p>Sync hub permissions to associated sites</p>
+<p>Syncs hub permissions to associated sites.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Set-PnPHubSite -Identity &quot;https://tenant.sharepoint.com/sites/myhubsite&quot; -RequiresJoinApproval:$false
+</code></pre>
+<p>Disables the join approval requirement.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -141,6 +145,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-hidenameinnavigation">-HideNameInNavigation</h3>
+<p>Hides the name of the hub site in the navigation.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -174,6 +179,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-requiresjoinapproval">-RequiresJoinApproval</h3>
+<p>Requires new associated sites to obtain approval to join the hub site. Note that if set to <code>$true</code>, sites will be able to join the hub only if there is an active approval flow available.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -184,7 +190,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-sitedesignid">-SiteDesignId</h3>
-<p>GUID of the SharePoint Site Design which should be applied when a site joins the hub site</p>
+<p>GUID of the SharePoint Site Design which should be applied when a site joins the hub site.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
 
@@ -206,7 +212,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-enablepermissionssync">-EnablePermissionsSync</h3>
-<p>Sync hub permissions to associated sites</p>
+<p>Sync hub permissions to associated sites.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 

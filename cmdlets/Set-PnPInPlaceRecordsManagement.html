@@ -84,38 +84,40 @@
                     <h1 id="set-pnpinplacerecordsmanagement">Set-PnPInPlaceRecordsManagement</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Activates or deactivates in the place records management feature.</p>
+<p>Activates or deactivates in place records management feature.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPInPlaceRecordsManagement -Enabled &lt;Boolean&gt; [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Activates or deactivates in place records management feature in the site collection.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPInPlaceRecordsManagement -Enabled $true
 </code></pre>
-<p>Activates In Place Records Management</p>
+<p>Activates In Place Records Management.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPInPlaceRecordsManagement -Enabled $false
 </code></pre>
-<p>Deactivates In Place Records Management</p>
+<p>Deactivates In Place Records Management.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-enabled">-Enabled</h3>
+<p>Specifies whether in place records management should be enabled.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
 Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-enabled">-Enabled</h3>
-<pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: (All)
-
-Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
