@@ -7,10 +7,10 @@ external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Set-PnPBuiltInDesignPackageVisibility.html
 ---
  
-# Get-PnPBuiltInDesignPackageVisibility
+# Set-PnPBuiltInDesignPackageVisibility
 
 ## SYNOPSIS
-Sets the visibility of the available built-in Design Packages at moment of site creation.
+Sets the visibility of the available built-in Design Packages at the moment of site creation.
 
 ## SYNTAX
 
@@ -59,8 +59,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -IsVisbible
-Name of the design package, available names are
+### -IsVisible
+Sets the visibility of the design package.
 
 ```yaml
 Type: Boolean
