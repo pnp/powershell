@@ -19,7 +19,7 @@ Set-PnPBrowserIdleSignOut [-Enabled] <Boolean> [[-WarnAfter] <TimeSpan>] [[-Sign
 ```
 
 ## DESCRIPTION
-Use this cmdlet to set the current configuration values for Idle session sign-out, the time at which users are warned and subsequently signed out of Microsoft 365 after a period of browser inactivity in SharePoint and OneDrive
+Use this cmdlet to set the current configuration values for Idle session sign-out, the time at which users are warned and subsequently signed out of Microsoft 365 after a period of browser inactivity in SharePoint and OneDrive.
 
 ## EXAMPLES
 
@@ -39,11 +39,12 @@ This example enables the browser idle sign-out policy, sets a warning at 45 minu
 
 ### -Enabled
 
-Enables the browser idle sign-out policy
+Enables the browser idle sign-out policy.
 
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
+
 Required: True
 Position: Named
 Default value: None
@@ -70,6 +71,7 @@ where:
 ```yaml
 Type: TimeSpan
 Parameter Sets: (All)
+
 Required: True
 Position: Named
 Default value: None
@@ -96,6 +98,7 @@ where:
 ```yaml
 Type: TimeSpan
 Parameter Sets: (All)
+
 Required: True
 Position: Named
 Default value: None
