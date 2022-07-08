@@ -22,13 +22,13 @@ Allows configuration of the built-in SharePoint Online site templates.
 ### Configure through the site template identifier
 
 ```powershell
-Set-PnPBuiltInSiteTemplateSettings -Identity <BuiltInSiteTemplateSettingsPipeBind> -IsHidden <Boolean>] [-Connection <PnPConnection>] [-Verbose] [<CommonParameters>]
+Set-PnPBuiltInSiteTemplateSettings -Identity <BuiltInSiteTemplateSettingsPipeBind> -IsHidden <Boolean>] [-Connection <PnPConnection>] [-WhatIf] [<CommonParameters>]
 ```
 
 ### Configure through the site template name
 
 ```powershell
-Set-PnPBuiltInSiteTemplateSettings -Template <BuiltInSiteTemplates> -IsHidden <Boolean>] [-Connection <PnPConnection>] [-Verbose] [<CommonParameters>]
+Set-PnPBuiltInSiteTemplateSettings -Template <BuiltInSiteTemplates> -IsHidden <Boolean>] [-Connection <PnPConnection>] [-WhatIf] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
