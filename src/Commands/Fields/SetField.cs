@@ -79,7 +79,7 @@ namespace PnP.PowerShell.Commands.Fields
                 }
             }
 
-            GetDynamicParameters().SetValuesFromParams(field, this);
+            DynamicParameters.SetValuesFromParams(field, this);
             SetValuesFromHashtable(field);
 
             field.UpdateAndPushChanges(UpdateExistingLists);
