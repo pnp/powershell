@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Save-PnPTenantTemplate.
 # Save-PnPTenantTemplate
 
 ## SYNOPSIS
-Saves a PnP provisioning hierarchy to the file system
+Saves a PnP provisioning hierarchy to the file system.
 
 ## SYNTAX
 
@@ -20,6 +20,7 @@ Save-PnPTenantTemplate -Template <ProvisioningHierarchyPipeBind> [-Out] <String>
 ```
 
 ## DESCRIPTION
+This cmdlet saves the tenant template for provisioning hierarchy to the file system in the latest or specified schema.
 
 ## EXAMPLES
 
@@ -28,7 +29,7 @@ Save-PnPTenantTemplate -Template <ProvisioningHierarchyPipeBind> [-Out] <String>
 Save-PnPTenantTemplate -Template template.xml -Out .\tenanttemplate.pnp
 ```
 
-Saves a PnP tenant template to the file system
+Saves a PnP tenant template to the file system.
 
 ### EXAMPLE 2
 ```powershell
@@ -36,7 +37,7 @@ $template = Read-PnPTenantTemplate -Path template.xml
 Save-PnPTenantTemplate -Template $template -Out .\template.pnp
 ```
 
-Saves a PnP tenant template to the file system as a PnP file. The schema used will the latest released schema when creating the PnP file regardless of the original schema
+Saves a PnP tenant template to the file system as a PnP file. The schema used will be the latest released schema when creating the PnP file regardless of the original schema.
 
 ### EXAMPLE 3
 ```powershell
