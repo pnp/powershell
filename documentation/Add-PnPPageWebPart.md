@@ -7,7 +7,7 @@ external help file: PnP.PowerShell.dll-Help.xml
 title: Add-PnPPageWebPart
 ---
   
-# Add-PnPWebPart
+#Add-PnPPageWebPart
 
 ## SYNOPSIS
 Adds a web part to a page
