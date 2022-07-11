@@ -6249,7 +6249,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPAvailablePageLayouts.html",
-          "hash": "ozLFiojnpPZto0vjPDcVRA=="
+          "hash": "JhgISDvGqnaII68Tn4hKcA=="
         }
       },
       "is_incremental": false,
@@ -6264,7 +6264,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPAzureADAppSitePermission.html",
-          "hash": "MjUxBbl+6ZSVlUsTJVfFBg=="
+          "hash": "xaMi7CkZFCbL9fN61HRbJg=="
         }
       },
       "is_incremental": false,
@@ -6276,7 +6276,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPAzureADGroup.html",
-          "hash": "DTlN0SGn8gFuUfkBqjmFhA=="
+          "hash": "a9h8uaOWRFfy04zBN35lwA=="
         }
       },
       "is_incremental": false,
@@ -6300,7 +6300,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPBuiltInDesignPackageVisibility.html",
-          "hash": "w4H8kh1+Yzf0Xe+cX4giKw=="
+          "hash": "tclJ7S2zyP6i5udm95jxWA=="
         }
       },
       "is_incremental": false,
@@ -6384,7 +6384,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPDisableSpacesActivation.html",
-          "hash": "3vOUWLIZZ+tEVU1MooUIbw=="
+          "hash": "vQwVdXtpyOwaz6ic1+3NDg=="
         }
       },
       "is_incremental": false,
@@ -6420,7 +6420,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPFileCheckedIn.html",
-          "hash": "ALQLToJDQU0rkcqjYW2JJw=="
+          "hash": "i7f3eeBeka51lgbalg1+wg=="
         }
       },
       "is_incremental": false,
@@ -6444,7 +6444,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPFolderPermission.html",
-          "hash": "Tl9UL/apcii4WhD3cXArJw=="
+          "hash": "tRTAATRZmpjb+Vkoj5pA0Q=="
         }
       },
       "is_incremental": false,
@@ -6504,7 +6504,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPHideDefaultThemes.html",
-          "hash": "kp72UiJdW58XkuOgeJsQtA=="
+          "hash": "D1L7uB4sO2QWQS1xTh6HJg=="
         }
       },
       "is_incremental": false,

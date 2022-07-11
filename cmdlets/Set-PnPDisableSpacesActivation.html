@@ -84,23 +84,28 @@
                     <h1 id="set-pnpdisablespacesactivation">Set-PnPDisableSpacesActivation</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets if SharePoint Spaces should be disabled</p>
+<p>Sets if SharePoint Spaces should be disabled.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPDisableSpacesActivation -Disable &lt;SwitchParameter&gt; [-Scope &lt;String&gt;] [-Identity &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet disables or enables SharePoint Spaces for a specific site collection or entire SharePoint tenant.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPDisableSpacesActivation -Disable $true -Scope Tenant
+<pre><code class="lang-powershell">Set-PnPDisableSpacesActivation -Disable:$true -Scope Tenant
 </code></pre>
-<p>Disables SharePoint Spaces on the entire tenant</p>
+<p>Disables SharePoint Spaces on the entire tenant.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPDisableSpacesActivation -Disable $true -Scope Site -Identity &quot;https://contoso.sharepoint.com&quot;
+<pre><code class="lang-powershell">Set-PnPDisableSpacesActivation -Disable -Scope Site -Identity &quot;https://contoso.sharepoint.com&quot;
 </code></pre>
 <p>Disables SharePoint Spaces on <a href="https://contoso.sharepoint.com">https://contoso.sharepoint.com</a></p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Set-PnPDisableSpacesActivation -Disable:$false -Scope Site -Identity &quot;https://contoso.sharepoint.com&quot;
+</code></pre>
+<p>Enables SharePoint Spaces on <a href="https://contoso.sharepoint.com">https://contoso.sharepoint.com</a></p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-disable">-Disable</h3>
-<p>Sets if SharePoint Spaces should be enabled or disabled</p>
+<p>Sets if SharePoint Spaces should be enabled or disabled.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -122,7 +127,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Specifies the URL of the SharePoint Site on which SharePoint Spaces should be disabled. Must be provided if Scope is set to Tenant.</p>
+<p>Specifies the URL of the SharePoint Site on which SharePoint Spaces should be disabled. Must be provided if Scope is set to Site.</p>
 <pre><code class="lang-yaml">Type: SPOSitePipeBind
 Parameter Sets: (All)
 
@@ -133,7 +138,7 @@ Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-scope">-Scope</h3>
-<p>Defines if SharePoint Spaces should be disabled for the entire tenant or for a specific site collection</p>
+<p>Defines if SharePoint Spaces should be disabled for the entire tenant or for a specific site collection.</p>
 <pre><code class="lang-yaml">Type: DisableSpacesScope
 Parameter Sets: (All)
 Accepted values: Tenant, Site

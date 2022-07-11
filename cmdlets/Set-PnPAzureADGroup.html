@@ -88,7 +88,7 @@
 <ul>
 <li>Microsoft Graph API: Group.ReadWrite.All</li>
 </ul>
-<p>Sets the properties of a specicic Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.</p>
+<p>Sets the properties of a specific Azure Active Directory group.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPAzureADGroup -Identity &lt;AzureADGroupPipeBind&gt; [-DisplayName &lt;String&gt;] [-Description &lt;String&gt;]
  [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-SecurityEnabled] [-MailEnabled] 
@@ -96,22 +96,23 @@
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet sets the properties of a specific Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPAzureADGroup -Identity $group -DisplayName &quot;My Displayname&quot;
 </code></pre>
-<p>Sets the display name of the group where $group is a Group entity</p>
+<p>Sets the display name of the group where $group is a Group entity.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPAzureADGroup -Identity $groupId -Descriptions &quot;My Description&quot; -DisplayName &quot;My DisplayName&quot;
 </code></pre>
-<p>Sets the display name and description of a group based upon its ID</p>
+<p>Sets the display name and description of a group based upon its ID.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPAzureADGroup -Identity $group -Owners demo@contoso.com
 </code></pre>
-<p>Sets demo@contoso.com as owner of the group</p>
+<p>Sets demo@contoso.com as the owner of the group.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-securityenabled">-SecurityEnabled</h3>
-<p>Sets the Azure Active Directory group to be allowed to be used for setting permissions</p>
+<p>Sets the Azure Active Directory group to be allowed to be used for setting permissions.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -122,7 +123,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-mailenabled">-MailEnabled</h3>
-<p>Sets the Azure Active Directory group to be allowed to be used for sreceiving e-mail</p>
+<p>Sets the Azure Active Directory group to be allowed to be used for receiving e-mail.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -133,7 +134,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-description">-Description</h3>
-<p>The Description of the group to set</p>
+<p>The description of the group to set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -144,7 +145,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-displayname">-DisplayName</h3>
-<p>The DisplayName of the group to set</p>
+<p>The display name of the group to set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -177,7 +178,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The Identity of the Azure Active Directory group</p>
+<p>The identity of the Azure Active Directory group.</p>
 <pre><code class="lang-yaml">Type: AzureADGroupPipeBind
 Parameter Sets: (All)
 

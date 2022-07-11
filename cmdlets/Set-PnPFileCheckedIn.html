@@ -84,12 +84,13 @@
                     <h1 id="set-pnpfilecheckedin">Set-PnPFileCheckedIn</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Checks in a file</p>
+<p>Checks in a file.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPFileCheckedIn [-Url] &lt;String&gt; [-CheckinType &lt;CheckinType&gt;] [-Comment &lt;String&gt;] [-Approve]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet checks in a single file, optionally with a comment.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPFileCheckedIn -Url &quot;/Documents/Contract.docx&quot;
@@ -101,7 +102,7 @@
 <p>Checks in the file &quot;Contract.docx&quot; in the &quot;Documents&quot; library as a minor version and adds the check in comment &quot;Smaller changes&quot;</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-approve">-Approve</h3>
-<p>Approve file</p>
+<p>Approves the file.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -112,7 +113,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-checkintype">-CheckinType</h3>
-<p>The check in type to use. Defaults to Major</p>
+<p>The check in type to use. Defaults to MajorCheckIn.</p>
 <pre><code class="lang-yaml">Type: CheckinType
 Parameter Sets: (All)
 Accepted values: MinorCheckIn, MajorCheckIn, OverwriteCheckIn
@@ -124,7 +125,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-comment">-Comment</h3>
-<p>The check in comment</p>
+<p>The check in comment.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -146,7 +147,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-url">-Url</h3>
-<p>The server relative url of the file to check in</p>
+<p>The server relative url of the file to check in.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 

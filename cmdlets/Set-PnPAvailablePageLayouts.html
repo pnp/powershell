@@ -84,7 +84,7 @@
                     <h1 id="set-pnpavailablepagelayouts">Set-PnPAvailablePageLayouts</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets the available page layouts for the current site</p>
+<p>Sets the available page layouts for the current site.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="specific">SPECIFIC</h3>
 <pre><code class="lang-powershell">Set-PnPAvailablePageLayouts -PageLayouts &lt;String[]&gt; [-Connection &lt;PnPConnection&gt;]
@@ -99,10 +99,15 @@
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet sets the available page layouts for the current site. It requires NoScript feature to be disabled.</p>
 <h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Set-PnPAvailablePageLayouts -AllowAllPageLayouts
+</code></pre>
+<p>Allows all page layouts for the current site.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-allowallpagelayouts">-AllowAllPageLayouts</h3>
-<p>An array of page layout files to set as available page layouts for the site.</p>
+<p>Allows all page layout files to be available for the site.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: ALL
 
@@ -124,7 +129,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-inheritpagelayouts">-InheritPageLayouts</h3>
-<p>Set the available page layouts to inherit from the parent site.</p>
+<p>Sets the available page layouts to inherit from the parent site.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: INHERIT
 
