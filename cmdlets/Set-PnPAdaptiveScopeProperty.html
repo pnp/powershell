@@ -84,19 +84,19 @@
                     <h1 id="set-pnpadaptivescopeproperty">Set-PnPAdaptiveScopeProperty</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets an indexed value to the current web property bag</p>
+<p>Sets an indexed value to the current web property bag.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="web">Web</h3>
 <pre><code class="lang-powershell">Set-PnPAdaptiveScopeProperty -Key &lt;String&gt; -Value &lt;String&gt;
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet is used to set or create an indexed property bag value for use in <a href="https://docs.microsoft.com/en-us/microsoft-365/compliance/retention-settings?view=o365-worldwide#configuration-information-for-adaptive-scopes">SharePoint site scopes</a> with <a href="https://docs.microsoft.com/en-us/microsoft-365/compliance/retention?view=o365-worldwide#adaptive-or-static-policy-scopes-for-retention">adaptive policy scopes</a>. Executing this cmdlet is similar to setting or adding an indexed value to the current web property bag using <code>Set-PnPPropertyBagValue</code> with the <code>-Indexed</code> parameter with the addition that it will also ensure the noscript is temporarily disabled to allow for this to happen. It will revert its state back to what it was after adding or updating the property bag value. Using this cmdlet does therefore require having the SharePoint Online Admin role or equivallent app permissions.</p>
+<p>This cmdlet is used to set or create an indexed property bag value for use in <a href="https://docs.microsoft.com/microsoft-365/compliance/retention-settings?view=o365-worldwide#configuration-information-for-adaptive-scopes">SharePoint site scopes</a> with <a href="https://docs.microsoft.com/microsoft-365/compliance/retention?view=o365-worldwide#adaptive-or-static-policy-scopes-for-retention">adaptive policy scopes</a>. Executing this cmdlet is similar to setting or adding an indexed value to the current web property bag using <code>Set-PnPPropertyBagValue</code> with the <code>-Indexed</code> parameter with the addition that it will also ensure the noscript is temporarily disabled to allow for this to happen. It will revert its state back to what it was after adding or updating the property bag value. Using this cmdlet does therefore require having the SharePoint Online Admin role or equivalent app permissions.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPAdaptiveScopeProperty -Key MyKey -Value MyValue
 </code></pre>
-<p>This sets or adds an indexed value to the current web property bag</p>
+<p>This sets or adds an indexed value to the current web property bag.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -110,6 +110,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-key">-Key</h3>
+<p>Key of the property to set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -120,6 +121,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-value">-Value</h3>
+<p>Value to set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -131,8 +133,8 @@ Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
-<p><a href="https://docs.microsoft.com/en-us/microsoft-365/compliance/manage-information-governance?view=o365-worldwide">Microsoft 365 Information Governance</a></p>
-<p><a href="https://docs.microsoft.com/en-us/microsoft-365/compliance/retention?view=o365-worldwide#adaptive-or-static-policy-scopes-for-retention">Adaptive policy scopes</a></p>
+<p><a href="https://docs.microsoft.com/microsoft-365/compliance/manage-information-governance?view=o365-worldwide">Microsoft 365 Information Governance</a></p>
+<p><a href="https://docs.microsoft.com/microsoft-365/compliance/retention?view=o365-worldwide#adaptive-or-static-policy-scopes-for-retention">Adaptive policy scopes</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

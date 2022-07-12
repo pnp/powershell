@@ -84,22 +84,23 @@
                     <h1 id="save-pnptenanttemplate">Save-PnPTenantTemplate</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Saves a PnP provisioning hierarchy to the file system</p>
+<p>Saves a PnP provisioning hierarchy to the file system.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Save-PnPTenantTemplate -Template &lt;ProvisioningHierarchyPipeBind&gt; [-Out] &lt;String&gt;
  [-Schema &lt;XMLPnPSchemaVersion&gt;] [-Force] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet saves the tenant template for provisioning hierarchy to the file system in the latest or specified schema.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Save-PnPTenantTemplate -Template template.xml -Out .\tenanttemplate.pnp
 </code></pre>
-<p>Saves a PnP tenant template to the file system</p>
+<p>Saves a PnP tenant template to the file system.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">$template = Read-PnPTenantTemplate -Path template.xml
 Save-PnPTenantTemplate -Template $template -Out .\template.pnp
 </code></pre>
-<p>Saves a PnP tenant template to the file system as a PnP file. The schema used will the latest released schema when creating the PnP file regardless of the original schema</p>
+<p>Saves a PnP tenant template to the file system as a PnP file. The schema used will be the latest released schema when creating the PnP file regardless of the original schema.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">$template = Read-PnPTenantTemplate -Path template.xml
 Save-PnPTenantTemplate -Template $template -Out .\template.pnp -Schema V202002

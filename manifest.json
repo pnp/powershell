@@ -6177,7 +6177,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Save-PnPTenantTemplate.html",
-          "hash": "RMnZQamgQJquRVVXd3a0JA=="
+          "hash": "su6/B44AZA0R6YxddrV8PA=="
         }
       },
       "is_incremental": false,
@@ -6201,7 +6201,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPAdaptiveScopeProperty.html",
-          "hash": "hHBlTNFOmzLXvK1AK3GEGA=="
+          "hash": "u4LzqSpuosRMpJc92hb+wg=="
         }
       },
       "is_incremental": false,
@@ -7287,7 +7287,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTenantSite.html",
-          "hash": "7dfm4UY5fFChv9GsUAkeTw=="
+          "hash": "fq4r5nxGhPKQkkdQqqWbww=="
         }
       },
       "is_incremental": false,
