@@ -22,13 +22,13 @@ Allows configuration of the built-in SharePoint Online site templates.
 ### Configure through the site template identifier
 
 ```powershell
-Set-PnPBuiltInSiteTemplateSettings -Identity <BuiltInSiteTemplateSettingsPipeBind> -IsHidden <Boolean>] [-Connection <PnPConnection>] [-WhatIf] [<CommonParameters>]
+Set-PnPBuiltInSiteTemplateSettings -Identity <BuiltInSiteTemplateSettingsPipeBind> -IsHidden <Boolean> [-Connection <PnPConnection>] [-WhatIf]
 ```
 
 ### Configure through the site template name
 
 ```powershell
-Set-PnPBuiltInSiteTemplateSettings -Template <BuiltInSiteTemplates> -IsHidden <Boolean>] [-Connection <PnPConnection>] [-WhatIf] [<CommonParameters>]
+Set-PnPBuiltInSiteTemplateSettings -Template <BuiltInSiteTemplates> -IsHidden <Boolean> [-Connection <PnPConnection>] [-WhatIf]
 ```
 
 ## DESCRIPTION
@@ -137,6 +137,19 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
 
 ## RELATED LINKS
 
