@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `MailEnabled`, `PreferredDataLocation`, `PreferredLanguage` and `SecurityEnabled` parameters to `New-PnPMicrosoft365Group` cmdlet. [#2268](https://github.com/pnp/powershell/pull/2268)
 
 ### Changed
-- Changed to no longer require https:// to be prefixed when using `Connect-PnPOnline -Url tenant.sharepoint.com`
+- Changed to no longer require https:// to be prefixed when using `Connect-PnPOnline -Url tenant.sharepoint.com` [#2139](https://github.com/pnp/powershell/pull/2139)
 
 - `Get-PnPAvailableSensitivityLabel` cmdlet now uses the non-deprecated Graph API to retrieve sensitivity label. [#2234](https://github.com/pnp/powershell/pull/2234)
 - Improved `Get-PnPMicrosoft365Group` cmdlet to better check the Id, DisplayName and MailNickname of Microsoft 365  Group. [#2258](https://github.com/pnp/powershell/pull/2258)
