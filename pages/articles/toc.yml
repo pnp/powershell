@@ -18,6 +18,8 @@
   href: azurefunctions.md
 - name: Using PnP PowerShell in Azure Cloud Shell
   href: azurecloudshell.md  
+- name: Using PnP PowerShell in Docker containers
+  href: docker.md  
 - name: For Developers
   items:
     - name: Building the project
