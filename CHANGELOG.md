@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
-- Changed to no longer require https:// to be prefixed when using `Connect-PnPOnline -Url tenant.sharepoint.com`
+- Changed to no longer require https:// to be prefixed when using `Connect-PnPOnline -Url tenant.sharepoint.com` [#2139](https://github.com/pnp/powershell/pull/2139)
 
 ### Removed
 
