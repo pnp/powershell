@@ -86,7 +86,7 @@ See https://pnp.github.io/powershell/articles/connecting.html for more informati
 
 ### EXAMPLE 1
 ```
-Connect-PnPOnline -Url "https://contoso.sharepoint.com"
+Connect-PnPOnline -Url "contoso.sharepoint.com"
 ```
 
 Connect to SharePoint prompting for the username and password.
@@ -94,21 +94,21 @@ When a generic credential is added to the Windows Credential Manager with https:
 
 ### EXAMPLE 2
 ```
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -Credentials (Get-Credential)
+Connect-PnPOnline -Url "contoso.sharepoint.com" -Credentials (Get-Credential)
 ```
 
 Connect to SharePoint prompting for the username and password to use to authenticate
 
 ### EXAMPLE 3
 ```
-Connect-PnPOnline -Url "https://contoso.sharepoint.de" -ClientId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -ClientSecret $clientSecret
+Connect-PnPOnline -Url "contoso.sharepoint.de" -ClientId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -ClientSecret $clientSecret
 ```
 
 This will authenticate you to the site using Legacy ACS authentication
 
 ### EXAMPLE 4
 ```
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -DeviceLogin
+Connect-PnPOnline -Url "contoso.sharepoint.com" -DeviceLogin
 ```
 
 This will authenticate you using the PnP Management Shell Multi-Tenant application.
@@ -116,7 +116,7 @@ A browser window will have to be opened where you have to enter a code that is s
 
 ### EXAMPLE 5
 ```
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -DeviceLogin -LaunchBrowser
+Connect-PnPOnline -Url "contoso.sharepoint.com" -DeviceLogin -LaunchBrowser
 ```
 
 This will authenticate you using the PnP Management Shell Multi-Tenant application.
@@ -125,7 +125,7 @@ A browser window will automatically open and the code you need to enter will be 
 ### EXAMPLE 6
 ```
 $password = (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force)
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificatePath 'c:\mycertificate.pfx' -CertificatePassword $password  -Tenant 'contoso.onmicrosoft.com'
+Connect-PnPOnline -Url "contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificatePath 'c:\mycertificate.pfx' -CertificatePassword $password  -Tenant 'contoso.onmicrosoft.com'
 ```
 
 Connects using an Azure Active Directory registered application using a locally available certificate containing a private key.
@@ -133,7 +133,7 @@ See https://docs.microsoft.com/sharepoint/dev/solution-guidance/security-apponly
 
 ### EXAMPLE 7
 ```
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -Thumbprint 34CFAA860E5FB8C44335A38A097C1E41EEA206AA
+Connect-PnPOnline -Url "contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -Thumbprint 34CFAA860E5FB8C44335A38A097C1E41EEA206AA
 ```
 
 Connects to SharePoint using app-only tokens via an app's declared permission scopes.
@@ -142,7 +142,7 @@ Ensure you have imported the private key certificate, typically the .pfx file, i
 
 ### EXAMPLE 8
 ```
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificateBase64Encoded $base64encodedstring -Tenant 'contoso.onmicrosoft.com'
+Connect-PnPOnline -Url "contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificateBase64Encoded $base64encodedstring -Tenant 'contoso.onmicrosoft.com'
 ```
 
 Connects using an Azure Active Directory registered application using a certificate with a private key that has been base64 encoded.
@@ -150,7 +150,7 @@ See https://docs.microsoft.com/sharepoint/dev/solution-guidance/security-apponly
 
 ### EXAMPLE 9
 ```
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -UseWebLogin
+Connect-PnPOnline -Url "contoso.sharepoint.com" -UseWebLogin
 ```
 
 Note: See Example 10 as this is a preferred option over using -UseWebLogin.
@@ -165,7 +165,7 @@ See example 10 for a full support for interactive logins using MFA and the abili
 
 ### EXAMPLE 10
 ```
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -Interactive
+Connect-PnPOnline -Url "contoso.sharepoint.com" -Interactive
 ```
 
 Connects to the Azure AD, acquires an access token and allows PnP PowerShell to access both SharePoint and the Microsoft Graph.
@@ -192,7 +192,7 @@ You cannot access SharePoint artifacts using this connection method: only the cm
 
 ### EXAMPLE 13
 ```
-Connect-PnPOnline -Url https://contoso.sharepoint.com -AccessToken $token
+Connect-PnPOnline -Url contoso.sharepoint.com -AccessToken $token
 ```
 
 This method assumes you have acquired a valid OAuth2 access token from Azure AD with the correct audience and permissions set.
@@ -503,7 +503,7 @@ Accept wildcard characters: False
 ```
 
 ### -Url
-The Url of the site collection to connect to
+The Url of the site collection or subsite to connect to, i.e. tenant.sharepoint.com, https://tenant.sharepoint.com, tenant.sharepoint.com/sites/hr, etc.
 
 ```yaml
 Type: String
