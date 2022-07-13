@@ -23,6 +23,8 @@ namespace PnP.PowerShell.Commands.Search
         protected override void ExecuteCmdlet()
         {
             var queryCmdLet = new SubmitSearchQuery();
+
+            queryCmdLet.Connection = Connection;
             
             queryCmdLet.StartRow = StartRow;
             queryCmdLet.MaxResults = MaxResults;
