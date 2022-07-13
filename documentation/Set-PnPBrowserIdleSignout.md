@@ -14,18 +14,24 @@ Sets the current configuration values for Idle session sign-out policy.
 
 ## SYNTAX
 
+### Enable
 ```powershell
-Set-PnPBrowserIdleSignOut [-Enabled] <Boolean> [[-WarnAfter] <TimeSpan>] [[-SignOutAfter] <TimeSpan>]
+Set-PnPBrowserIdleSignOut -Enabled:$true -WarnAfter <TimeSpan> -SignOutAfter <TimeSpan>
+```
+
+### Disable
+```powershell
+Set-PnPBrowserIdleSignOut -Enabled:$false
 ```
 
 ## DESCRIPTION
-Use this cmdlet to set the current configuration values for Idle session sign-out, the time at which users are warned and subsequently signed out of Microsoft 365 after a period of browser inactivity in SharePoint and OneDrive.
+Use this cmdlet to set the current configuration values for Idle session sign-out, the time at which users are warned and subsequently signed out of Microsoft 365 after a period of browser inactivity in SharePoint Online and OneDrive.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPBrowserIdleSignOut -Enabled:$true -WarnAfter  "0.00:45:00" -SignOutAfter  "0.01:00:00"
+Set-PnPBrowserIdleSignOut -Enabled:$true -WarnAfter "0.00:45:00" -SignOutAfter "0.01:00:00"
 ```
 This example enables the browser idle sign-out policy, sets a warning at 45 minutes and signs out users after a period of 60 minutes of browser inactivity.
 
@@ -35,6 +41,12 @@ Set-PnPBrowserIdleSignOut -Enabled:$true -WarnAfter (New-TimeSpan -Minutes 45) -
 ```
 This example enables the browser idle sign-out policy, sets a warning at 45 minutes and signs out users after a period of 60 minutes of browser inactivity.
 
+### EXAMPLE 3
+```powershell
+Set-PnPBrowserIdleSignOut -Enabled:$false
+```
+This example disables the browser idle sign-out policy.
+
 ## PARAMETERS
 
 ### -Enabled
@@ -43,7 +55,7 @@ Enables the browser idle sign-out policy.
 
 ```yaml
 Type: Boolean
-Parameter Sets: (All)
+Parameter Sets: DisableBrowserIdleSignout, EnableBrowserIdleSignout
 
 Required: True
 Position: Named
@@ -70,7 +82,7 @@ where:
 
 ```yaml
 Type: TimeSpan
-Parameter Sets: (All)
+Parameter Sets: EnableBrowserIdleSignout
 
 Required: True
 Position: Named
@@ -97,7 +109,7 @@ where:
 
 ```yaml
 Type: TimeSpan
-Parameter Sets: (All)
+Parameter Sets: EnableBrowserIdleSignout
 
 Required: True
 Position: Named
@@ -109,4 +121,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
