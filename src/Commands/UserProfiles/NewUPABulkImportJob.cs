@@ -104,7 +104,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             var o365 = new Office365Tenant(ClientContext);
             var propDictionary = UserProfilePropertyMapping.Cast<DictionaryEntry>().ToDictionary(kvp => (string)kvp.Key, kvp => (string)kvp.Value);
 
-            Guid? jobId;
+            Guid? jobId = null;
             if (!ParameterSpecified(nameof(WhatIf)))
             {
                 WriteVerbose($"Instructing SharePoint Online to queue user profile file located at {Url}");
@@ -123,7 +123,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             }
 
             // For some reason it sometimes does not always properly return the JobId while the job did start. Show this in the output.
-            if(jobId == Guid.Empty)
+            if(!jobId.HasValue || jobId.Value == Guid.Empty)
             {
                 WriteWarning("The execution of the synchronization job did not return a job Id but seems to have started successfully. Use Get-PnPUPABulkImportStatus to check for the current status.");
                 return;
@@ -140,10 +140,12 @@ namespace PnP.PowerShell.Commands.UserProfiles
             {
                 // Go into a loop to wait for the import to be successful or erroneous
                 ImportProfilePropertiesJobInfo jobStatus;
+                short waitBetweenChecks = 30; // In seconds
                 do
                 {
-                    // Wait for 30 seconds before requesting its current state again to avoid running into throttling
-                    Thread.Sleep((int)System.TimeSpan.FromSeconds(30).TotalMilliseconds);                    
+                    // Wait before requesting its current state again to avoid running into throttling
+                    WriteVerbose($"Waiting for {waitBetweenChecks} seconds before querying for the status of job Id {job.JobId}");
+                    Thread.Sleep((int)System.TimeSpan.FromSeconds(waitBetweenChecks).TotalMilliseconds);                    
 
                     // Request the current status of the import job
                     jobStatus = o365.GetImportProfilePropertyJob(job.JobId);
