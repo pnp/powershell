@@ -91,29 +91,30 @@
 <p>Allows configuration of the built-in SharePoint Online site templates.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="configure-through-the-site-template-identifier">Configure through the site template identifier</h3>
-<pre><code class="lang-powershell">Set-PnPBuiltInSiteTemplateSettings -Identity &lt;BuiltInSiteTemplateSettingsPipeBind&gt; -IsHidden &lt;Boolean&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPBuiltInSiteTemplateSettings -Identity &lt;BuiltInSiteTemplateSettingsPipeBind&gt; -IsHidden &lt;Boolean&gt; [-Connection &lt;PnPConnection&gt;] [-WhatIf]
 </code></pre>
 <h3 id="configure-through-the-site-template-name">Configure through the site template name</h3>
-<pre><code class="lang-powershell">Set-PnPBuiltInSiteTemplateSettings -Template &lt;BuiltInSiteTemplates&gt; -IsHidden &lt;Boolean&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPBuiltInSiteTemplateSettings -Template &lt;BuiltInSiteTemplates&gt; -IsHidden &lt;Boolean&gt; [-Connection &lt;PnPConnection&gt;] [-WhatIf]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet updates the configuration of the built-in SharePoint Online site templates.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPBuiltInSiteTemplateSettings -Identity 9522236e-6802-4972-a10d-e98dc74b3344 -IsHidden $false
 </code></pre>
-<p>Makes the Event Planning template visible</p>
+<p>Makes the Event Planning template visible.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPBuiltInSiteTemplateSettings -Identity 00000000-0000-0000-0000-000000000000 -IsHidden $true
 </code></pre>
-<p>Hides all the default built-in SharePoint Online site templates, except those specifically configured to be visible again</p>
+<p>Hides all the default built-in SharePoint Online site templates, except those specifically configured to be visible again.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPBuiltInSiteTemplateSettings -Template CrisisManagement -IsHidden $true
 </code></pre>
-<p>Hides the Crisis Management template</p>
+<p>Hides the Crisis Management template.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Set-PnPBuiltInSiteTemplateSettings -Template All -IsHidden $false
 </code></pre>
-<p>Shows by the default all the built-in SharePoint Online site templates, except those specifically configured to be hidden</p>
+<p>Shows by the default all the built-in SharePoint Online site templates, except those specifically configured to be hidden.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
 <p>Id of the built-in site template to configure. See <a href="https://docs.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description">https://docs.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description</a> for the full list of available types.</p>
@@ -127,7 +128,7 @@ Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-template">-Template</h3>
-<p>Internal name of the template</p>
+<p>Internal name of the template.</p>
 <pre><code class="lang-yaml">Type: BuiltInSiteTemplates
 Parameter Sets: ByTemplate
 
@@ -138,7 +139,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-ishidden">-IsHidden</h3>
-<p>Defines if the built in site template should be hidden ($true) or visible ($false)</p>
+<p>Defines if the built in site template should be hidden ($true) or visible ($false).</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 Aliases: cf
@@ -172,8 +173,21 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+
+## RELATED LINKS
+
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+</code></pre>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
