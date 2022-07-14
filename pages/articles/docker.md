@@ -161,3 +161,41 @@ Finally, your scripts might have parametrization so that you can run the same co
     ```
 
 Please see [Docker documentation](https://docs.docker.com/engine/reference/run/) to see arguments for `docker run` command.
+
+## Featured tags
+
+### Latest
+
+* latest: The latest stable image
+
+  * alpine-3.14
+  * `docker pull m365pnp/powershell` or `docker pull m365pnp/powershell:latest`
+
+### Nightly
+
+* nightly: The latest night image
+
+  * alpine-3.14
+  * `docker pull m365pnp/powershell:nightly`
+
+## Tag explanation
+
+Tags names mean the following:
+
+`<version>(-nightly)-<platform>`
+
+Currently supported platforms:
+
+* nanoserver-ltsc2022
+* nanoserver-1809
+* alpine-3.14
+
+Tag name examples:
+
+* 1.8.0-nanoserver-ltsc2022
+* 1.9.0-nanoserver-ltsc2022
+* 1.10.0-nanoserver-1809
+* 1.10.0-alpine-3.14
+* 1.10.26-nightly-nanoserver-ltsc2022
+
+To find the version numbers please visit https://www.powershellgallery.com/packages/PnP.PowerShell
