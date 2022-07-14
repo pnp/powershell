@@ -108,8 +108,13 @@ namespace PnP.PowerShell.Commands.UserProfiles
             if (!ParameterSpecified(nameof(WhatIf)))
             {
                 WriteVerbose($"Instructing SharePoint Online to queue user profile file located at {Url}");
-                jobId = o365.QueueImportProfileProperties(IdType, IdProperty, propDictionary, Url)?.Value;
+                var id = o365.QueueImportProfileProperties(IdType, IdProperty, propDictionary, Url);
                 ClientContext.ExecuteQueryRetry();
+
+                if (id.Value != Guid.Empty)
+                {
+                    jobId = id.Value;
+                }
             }
             else
             {
