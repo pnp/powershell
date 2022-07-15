@@ -62,6 +62,7 @@ namespace PnP.PowerShell.Commands
         {
             if (Type == SiteType.CommunicationSite)
             {
+                EnsureDynamicParameters(_communicationSiteParameters);
                 if (!ParameterSpecified("Lcid"))
                 {
                     ClientContext.Web.EnsureProperty(w => w.Language);
@@ -109,6 +110,7 @@ namespace PnP.PowerShell.Commands
             }
             else if (Type == SiteType.TeamSite)
             {
+                EnsureDynamicParameters(_teamSiteParameters);
                 if (!ParameterSpecified("Lcid"))
                 {
                     ClientContext.Web.EnsureProperty(w => w.Language);
@@ -158,6 +160,7 @@ namespace PnP.PowerShell.Commands
             }
             else
             {
+                EnsureDynamicParameters(_teamSiteWithoutMicrosoft365GroupParameters);
                 if (!ParameterSpecified("Lcid"))
                 {
                     ClientContext.Web.EnsureProperty(w => w.Language);
@@ -196,6 +199,12 @@ namespace PnP.PowerShell.Commands
                     WriteObject(returnedContext.Url);
                 }
             }
+        }
+
+        private void EnsureDynamicParameters(object dynamicParameters)
+        {
+            if (dynamicParameters == null)
+                throw new ArgumentException($"Please specify the parameter -{nameof(Type)} when invoking the command");
         }
 
         public class CommunicationSiteParameters
