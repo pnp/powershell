@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Request-PnPAccessToken.
 # Request-PnPAccessToken
 
 ## SYNOPSIS
-Requests an OAuth Access token
+Requests an OAuth Access token.
 
 ## SYNTAX
 
@@ -28,7 +28,7 @@ Returns an access token using the password grant, using the PnP O365 Management 
 Request-PnPAccessToken
 ```
 
-Returns the access token using the default client id and scope
+Returns the access token using the default client id and scope.
 
 ### EXAMPLE 2
 ```powershell
@@ -42,19 +42,19 @@ Returns the access token using the specified client id and the default scope of 
 Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2 -Scopes Group.ReadWrite.All
 ```
 
-Returns the access token using the specified client id and the specified scope
+Returns the access token using the specified client id and the specified scope.
 
 ### EXAMPLE 4
 ```powershell
 Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2 -Scopes Group.ReadWrite.All, AllSites.FullControl
 ```
 
-Returns the access token using the specified client id and the specified scopes
+Returns the access token using the specified client id and the specified scopes.
 
 ## PARAMETERS
 
 ### -ClientId
-The Azure Application Client Id to use to retrieve the token. Defaults to the PnP Office 365 Management Shell
+The Azure Application Client Id to use to retrieve the token. Defaults to the PnP Office 365 Management Shell.
 
 ```yaml
 Type: String
@@ -82,7 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -Decoded
-Returns the token in a decoded / human readible manner
+Returns the token in a decoded / human-readable manner.
 
 ```yaml
 Type: SwitchParameter
@@ -96,7 +96,7 @@ Accept wildcard characters: False
 ```
 
 ### -Resource
-The scopes to retrieve the token for. Defaults to AllSites.FullControl
+Specify the Resource for which you want the access token. If not specified, it will by default return a Microsoft Graph access token.
 
 ```yaml
 Type: String
