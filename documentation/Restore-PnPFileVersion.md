@@ -20,6 +20,7 @@ Restore-PnPFileVersion -Url <String> [-Identity <FileVersionPipeBind>] [-Force]
 ```
 
 ## DESCRIPTION
+This cmdlet restores a specific file version.
 
 ## EXAMPLES
 
@@ -28,16 +29,65 @@ Restore-PnPFileVersion -Url <String> [-Identity <FileVersionPipeBind>] [-Force]
 Restore-PnPFileVersion -Url Documents/MyDocument.docx -Identity 512
 ```
 
-Restores the file version with Id 512
+Restores the file version with Id 512.
 
 ### EXAMPLE 2
+```powershell
+Restore-PnPFileVersion -Url /sites/HRSite/Documents/MyDocument.docx -Identity 512
+```
+
+Restores the file version with Id 512 for MyDocument.docx.
+
+### EXAMPLE 3
 ```powershell
 Restore-PnPFileVersion -Url Documents/MyDocument.docx -Identity "Version 1.0"
 ```
 
-Restores the file version with label "Version 1.0"
+Restores the file version with label "Version 1.0".
 
 ## PARAMETERS
+
+### -Force
+If provided, no confirmation will be requested and the action will be performed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Identity
+The identity of the version. Use ID or label.
+
+```yaml
+Type: FileVersionPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Url
+Server relative url or site relative url of the file. 
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
@@ -52,48 +102,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
-
-### -Force
-If provided, no confirmation will be requested and the action will be performed
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Identity
-
-```yaml
-Type: FileVersionPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Url
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-
 
 ## RELATED LINKS
 
