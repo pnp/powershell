@@ -11,7 +11,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPWeb.html
 
 ## SYNOPSIS
 
-Removes a subsite
+Removes a subsite.
 
 ## SYNTAX
 
@@ -20,32 +20,33 @@ Remove-PnPWeb -Identity <WebPipeBind> [-Force] [-Connection <PnPConnection>] [<C
 ```
 
 ## DESCRIPTION
+This cmdlet removes the specified subsite.
 
 ## EXAMPLES
 
-### EXAMPLE 2
+### EXAMPLE 1
 
 ```powershell
 Remove-PnPWeb -Identity projectA
 ```
 
-Removes the subsite called projectA and will ask for confirmation before doing so
+Removes the subsite called projectA and will ask for confirmation before doing so.
 
-### EXAMPLE 1
+### EXAMPLE 2
 
 ```powershell
 Remove-PnPWeb -Identity 5fecaf67-6b9e-4691-a0ff-518fc9839aa0
 ```
 
-Remove the subsite with the provided Id and will ask for confirmaton before doing so
+Removes the subsite with the provided Id and will ask for confirmation before doing so.
 
-### EXAMPLE 2
+### EXAMPLE 3
 
 ```powershell
 Get-PnPSubWeb | Remove-PnPWeb -Force
 ```
 
-Removes all subsites while not asking for confirmation to do so
+Removes all subsites while not asking for confirmation to do so.
 
 ## PARAMETERS
 
@@ -66,7 +67,7 @@ Accept wildcard characters: False
 
 ### -Force
 
-Do not ask for confirmation to delete the subweb
+Do not ask for confirmation to delete the subweb.
 
 ```yaml
 Type: SwitchParameter
@@ -81,7 +82,7 @@ Accept wildcard characters: False
 
 ### -Identity
 
-The identifier of a subsite, the subsite instance or name of the subsite
+The identifier of a subsite, the subsite instance or name of the subsite.
 
 ```yaml
 Type: WebPipeBind
