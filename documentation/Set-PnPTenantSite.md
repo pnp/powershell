@@ -99,7 +99,7 @@ Accept wildcard characters: False
 ```
 
 ### -AllowSelfServiceUpgrade
-Specifies if the site administrator can upgrade the site collection
+Specifies if the site administrator can upgrade the site collection.
 
 ```yaml
 Type: SwitchParameter
@@ -178,7 +178,7 @@ Accept wildcard characters: False
 ```
 
 ### -CommentsOnSitePagesDisabled
-Specifies if comments on site pages are enabled
+Specifies if comments on site pages are enabled.
 
 ```yaml
 Type: SwitchParameter
@@ -241,6 +241,7 @@ When set to $true, the DefaultSharingLinkType will be overriden and the default 
 ```yaml
 Type: Boolean
 Parameter Sets: Set Properties
+
 Required: False
 Position: Named
 Default value: False
@@ -315,6 +316,7 @@ Specifies number of days the external users remain active on the site.
 ```yaml
 Type: Int32
 Parameter Sets: Set Properties
+
 Required: False
 Position: Named
 Default value: None
@@ -329,6 +331,7 @@ Determines whether site can include Project Web App. For more information about 
 ```yaml
 Type: Boolean
 Parameter Sets: Set Properties
+
 Required: False
 Position: Named
 Default value: None
@@ -348,6 +351,7 @@ OtherFiles: Allows users to download files that can't be previewed, such as .zip
 ```yaml
 Type: SPOLimitedAccessFileType
 Parameter Sets: Set Properties
+
 Required: False
 Position: Named
 Default value: None
@@ -441,7 +445,7 @@ Accept wildcard characters: False
 ```
 
 ### -SharingAllowedDomainList
-Specifies a list of email domains that is allowed for sharing with the external collaborators. Use the space character as the delimiter for entering multiple values. For example, "contoso.com fabrikam.com". Effective when SharingDomainRestrictionMode is set to AllowList.
+Specifies a list of email domains that is allowed for sharing with the external collaborators. Use the "," (comma) character as the delimiter for entering multiple values. For example, "contoso.com, fabrikam.com". Effective when SharingDomainRestrictionMode is set to AllowList.
 
 ```yaml
 Type: String
@@ -505,6 +509,7 @@ To enable the option to search for existing guest users at Site Collection Level
 ```yaml
 Type: Boolean
 Parameter Sets: Set Properties
+
 Required: False
 Position: Named
 Default value: None
@@ -519,6 +524,7 @@ Specifies the storage quota for this site collection in megabytes. This value mu
 Type: Int64
 Parameter Sets: Set Properties
 Aliases: StorageMaximumLevel
+
 Required: False
 Position: Named
 Default value: None
@@ -533,6 +539,7 @@ Specifies the warning level for the storage quota in megabytes. This value must 
 Type: Int64
 Parameter Sets: Set Properties
 Aliases: StorageQuotaMaximumLevel
+
 Required: False
 Position: Named
 Default value: None
@@ -546,6 +553,7 @@ Resets the OneDrive for Business storage quota to the tenant's new default stora
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Set Properties
+
 Required: False
 Position: Named
 Default value: None
@@ -559,6 +567,7 @@ This parameter allows you to remove a segment from a SharePoint site. This param
 ```yaml
 Type: Guid[]
 Parameter Sets: Set Properties
+
 Required: False
 Position: Named
 Default value: None
@@ -610,7 +619,7 @@ Accept wildcard characters: False
 ```
 
 ### -Title
-Specifies the title of the site
+Specifies the title of the site.
 
 ```yaml
 Type: String
@@ -624,12 +633,13 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Specifies the URL of the site
+Specifies the URL of the site.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases: Url
+
 Required: True
 Position: 0
 Default value: None
@@ -638,11 +648,13 @@ Accept wildcard characters: False
 ```
 
 ### -MediaTranscription
-When the feature is enabled, videos can have transcripts generated on demand or generated automatically in certain scenarios. This is the default because the policy is default on. If a video owner decides they don’t want the transcript, they can always hide or delete it from that video. Possible values: `Enabled, Disabled`
+When the feature is enabled, videos can have transcripts generated on demand or generated automatically in certain scenarios. This is the default because the policy is default on. If a video owner decides they don’t want the transcript, they can always hide or delete it from that video. 
 
 ```yaml
 Type: MediaTranscriptionPolicyType
-Parameter Sets: (All)
+Parameter Sets: Set Properties
+Accepted values: Enabled, Disabled
+
 Required: False
 Position: Named
 Default value: None

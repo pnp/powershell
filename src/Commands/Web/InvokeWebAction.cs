@@ -115,7 +115,7 @@ namespace PnP.PowerShell.Commands
                 invokeAction = new InvokeAction.InvokeWebAction(this, CurrentWeb, ListName, webActions, listActions, listItemActions, SkipCounting.ToBool());
             }
 
-            InvokeWebActionResult result = invokeAction.StartProcessAction();
+            InvokeWebActionResult result = invokeAction.StartProcessAction(Connection);
 
             if (!DisableStatisticsOutput)
             {

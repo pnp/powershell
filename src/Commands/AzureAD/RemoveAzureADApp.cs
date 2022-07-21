@@ -1,11 +1,7 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Model;
-using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.AzureAD
 {
@@ -21,11 +17,11 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         protected override void ExecuteCmdlet()
         {
-            var app = Identity.GetApp(this, HttpClient, AccessToken);
+            var app = Identity.GetApp(this, Connection, AccessToken);
 
             if (Force || ShouldContinue($"Remove app '{app.DisplayName}' with id '{app.Id}'", string.Empty))
             {
-                Utilities.REST.GraphHelper.DeleteAsync(HttpClient, $"/v1.0/applications/{app.Id}", AccessToken).GetAwaiter().GetResult();
+                Utilities.REST.GraphHelper.DeleteAsync(Connection, $"/v1.0/applications/{app.Id}", AccessToken).GetAwaiter().GetResult();
             }
         }
     }

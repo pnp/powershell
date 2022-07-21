@@ -10,23 +10,29 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPage.html
 # Request-PnPSyntexClassifyAndExtract
 
 ## SYNOPSIS
+
 Requests for a file, folder or all files in a library to be classified and extracted via the published SharePoint Syntex models on the libraries hosting the files.
+
+[![Supports Batching](../images/batching/Batching.png)](../articles/batching.html)
 
 ## SYNTAX
 
 ### File
+
 ```powershell
 Request-PnPSyntexClassifyAndExtract -FileUrl <string> [-Batch <PnPBatch>]  [-Connection <PnPConnection>] 
 [<CommonParameters>]
 ```
 
 ### Folder
+
 ```powershell
 Request-PnPSyntexClassifyAndExtract -Folder <FolderPipeBind> [-Connection <PnPConnection>] 
 [<CommonParameters>]
 ```
 
 ### List
+
 ```powershell
 Request-PnPSyntexClassifyAndExtract -List <ListPipeBind> [-OffPeak <SwitchParameter>] [-Force <SwitchParameter>] [-Connection <PnPConnection>] 
 [<CommonParameters>]
@@ -41,6 +47,7 @@ When the list contains more than 5000 files or when using the folder parameter t
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Request-PnPSyntexClassifyAndExtract -FileUrl "/sites/finance/invoices/invoice1.docx" 
 ```
@@ -48,6 +55,7 @@ Request-PnPSyntexClassifyAndExtract -FileUrl "/sites/finance/invoices/invoice1.d
 Requests the classification and extraction of invoice1.docx in library "Invoices".
 
 ### EXAMPLE 2
+
 ```powershell
 Request-PnPSyntexClassifyAndExtract -List "Invoices"
 ```
@@ -55,6 +63,7 @@ Request-PnPSyntexClassifyAndExtract -List "Invoices"
 Requests the classification and extraction of all files in library "Invoices" that never were classified and extracted before.
 
 ### EXAMPLE 3
+
 ```powershell
 Request-PnPSyntexClassifyAndExtract -Folder (Get-PnPFolder -Url "invoices/Q1/jan")
 ```
@@ -64,6 +73,7 @@ Requests the classification and extraction of all files in the folder "jan" in l
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
@@ -78,6 +88,7 @@ Accept wildcard characters: False
 ```
 
 ### -List
+
 The name or list holding the files to classify and extract
 
 ```yaml
@@ -92,6 +103,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
+
 If set, then all files (even if classified and extracted before) are classified and extracted. If the list contains more than 5000 items this option will not apply and off-peak processing is used.
 
 ```yaml
@@ -106,6 +118,7 @@ Accept wildcard characters: False
 ```
 
 ### -OffPeak
+
 If set, then the files to classify are sent to the off peak queue without enumerating them. If the list contains more than 5000 items then off-peak processing is always used.
 
 ```yaml
@@ -120,6 +133,7 @@ Accept wildcard characters: False
 ```
 
 ### -Folder
+
 The folder holding the files to classify and extract. When using this parameter, files will be send to the off peak queue.
 
 ```yaml
@@ -134,6 +148,7 @@ Accept wildcard characters: False
 ```
 
 ### -FileUrl
+
 The server relative URL of the file to be classified and extracted.
 
 ```yaml
@@ -149,6 +164,7 @@ Accept wildcard characters: False
 ```
 
 ### -Batch
+
 The batch to add this file classification and extraction request to.
 
 ```yaml
@@ -162,7 +178,6 @@ Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
-
 
 ## RELATED LINKS
 

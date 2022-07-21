@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPSearchConfigurat
 # Set-PnPSearchConfiguration
 
 ## SYNOPSIS
-Sets the search configuration
+Sets the search configuration.
 
 ## SYNTAX
 
@@ -27,6 +27,7 @@ Set-PnPSearchConfiguration -Path <String> [-Scope <SearchConfigurationScope>]
 ```
 
 ## DESCRIPTION
+This cmdlet sets the search configuration for a single web, site collection or a tenant, using a file or a configuration string.
 
 ## EXAMPLES
 
@@ -35,33 +36,33 @@ Set-PnPSearchConfiguration -Path <String> [-Scope <SearchConfigurationScope>]
 Set-PnPSearchConfiguration -Configuration $config
 ```
 
-Sets the search configuration for the current web
+Sets the search configuration for the current web.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPSearchConfiguration -Configuration $config -Scope Site
 ```
 
-Sets the search configuration for the current site collection
+Sets the search configuration for the current site collection.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPSearchConfiguration -Configuration $config -Scope Subscription
 ```
 
-Sets the search configuration for the current tenant
+Sets the search configuration for the current tenant.
 
 ### EXAMPLE 4
 ```powershell
 Set-PnPSearchConfiguration -Path searchconfig.xml -Scope Subscription
 ```
 
-Reads the search configuration from the specified XML file and sets it for the current tenant
+Reads the search configuration from the specified XML file and sets it for the current tenant.
 
 ## PARAMETERS
 
 ### -Configuration
-Search configuration string
+Search configuration string.
 
 ```yaml
 Type: String
@@ -89,7 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -Path
-Path to a search configuration
+Path to a search configuration.
 
 ```yaml
 Type: String
@@ -103,6 +104,7 @@ Accept wildcard characters: False
 ```
 
 ### -Scope
+Scope to apply the setting to. The default is Web. 
 
 ```yaml
 Type: SearchConfigurationScope

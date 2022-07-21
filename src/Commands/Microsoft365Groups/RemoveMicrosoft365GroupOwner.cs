@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            Microsoft365GroupsUtility.RemoveOwnersAsync(HttpClient, Identity.GetGroupId(HttpClient, AccessToken), Users, AccessToken).GetAwaiter().GetResult();
+            Microsoft365GroupsUtility.RemoveOwnersAsync(Connection, Identity.GetGroupId(Connection, AccessToken), Users, AccessToken).GetAwaiter().GetResult();
         }
     }
 }

@@ -49,7 +49,7 @@ Sets the site title and logo to be displayed in the middle of the screen
 ## PARAMETERS
 
 ### -LogoAlignment
-Allows configuring the site title and logo to be shown on the left (default), in the middle or at the right.
+Allows configuring the site title and logo to be shown on the left (default), in the middle or on the right.
 
 ```yaml
 Type: LogoAlignment
@@ -120,7 +120,7 @@ Accept wildcard characters: False
 ```
 
 ### -HeaderEmphasis
-Allows defining the tone of color used for the bar at shown at the top of the site under the site name and logo
+Defines the tone of color used for the bar at shown at the top of the site under the site name and logo
 
 ```yaml
 Type: SPVariantThemeType
@@ -135,7 +135,7 @@ Accept wildcard characters: False
 ```
 
 ### -HeaderLayout
-Allows defining how the header of the site should be layed out
+Defines how the header of the site should be layed out
 
 ```yaml
 Type: HeaderLayoutType
@@ -164,7 +164,7 @@ Accept wildcard characters: False
 ```
 
 ### -HideTitleInHeader
-Toggle the title visiblity in the header.
+Toggle the title visibility in the header.
 
 Set -HideTitleInHeader:$false to show the header
 

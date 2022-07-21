@@ -10,19 +10,19 @@ title: Disconnect-PnPOnline
 # Disconnect-PnPOnline
 
 ## SYNOPSIS
-Disconnects the context.
+Disconnects the current connection and clears its token cache.
 
 ## SYNTAX
 
 ```powershell
-Disconnect-PnPOnline [-Connection <PnPConnection>] [<CommonParameters>]
+Disconnect-PnPOnline [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
->Note: in general it is not recommended nor needed to use this cmdlet.
+Disconnects the current connection and clears its token cache. It will require you to build up a new connection again using [Connect-PnPOnline](Connect-PnPOnline.html) in order to use any of the PnP PowerShell cmdlets. You will have to reauthenticate. If instead you simply want to connect to another site collection within the same tenant using the same credentials you used previously, do not use this cmdlet but instead use `Connect-PnPOnline -Url https://tenant.sharepoint.com/sites/othersite` instead without disconnecting. It will try to reuse the existing authentication method and cached credentials.
 
-Disconnects the current context and requires you to build up a new connection in order to use the Cmdlets again. Using Connect-PnPOnline to connect to a different site has the same effect and it's rarely needed to use Disconnect-PnPOnline. Notice that if you use Disconnect-PnPOnline the internal access token cache will be cleared too. This means that if you loop through many Connect-PnPOnline and subsequent Disconnect-PnPOnline statements a full request to the Azure AD is being made to acquire a token. This will cause throttling to occur and the script will stop. 
+Note that this cmdlet does not support passing in a specific connection to disconnect. If you wish to dispose a specific connection you have set up in a variable using `$variable = Connect-PnPOnline -ReturnConnection`, just dispose that variable using `$variable = $null` and it will be cleared from memory.
 
 ## EXAMPLES
 
@@ -31,26 +31,10 @@ Disconnects the current context and requires you to build up a new connection in
 Disconnect-PnPOnline
 ```
 
-This will clear out all active tokens
+This will clear out all active tokens from the current connection
 
 ## PARAMETERS
-
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

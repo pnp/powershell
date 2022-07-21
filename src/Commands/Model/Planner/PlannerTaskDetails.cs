@@ -1,13 +1,19 @@
+using PnP.PowerShell.Commands.Model.Graph;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using PnP.PowerShell.Commands.Model.Graph;
 
 namespace PnP.PowerShell.Commands.Model.Planner
 {
     public class PlannerTaskDetails
     {
+        [JsonPropertyName("@odata.etag")]
+        public string ETag { get; set; }
+
+        public string Id { get; set; }
+
         public string Description { get; set; }
+
         public string PreviewType { get; set; }
 
         public Dictionary<string, PlannerTaskExternalReference> References { get; set; }

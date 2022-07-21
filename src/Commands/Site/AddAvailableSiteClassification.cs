@@ -7,19 +7,20 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Add, "PnPSiteClassification")]
+    [Cmdlet(VerbsCommon.Add, "PnPAvailableSiteClassification")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [Alias("Add-PnPSiteClassification")]
+    [WriteAliasWarning("Please use 'Add-PnPAvailableSiteClassification'. The alias 'Add-PnPSiteClassification' will be removed in a future release.")]
     public class AddSiteClassification : PnPGraphCmdlet
     {
-
         [Parameter(Mandatory = true)]
         public List<string> Classifications;
 
         protected override void ExecuteCmdlet()
         {
-            if (PnPConnection.Current.ClientId == PnPConnection.PnPManagementShellClientId)
+            if (Connection.ClientId == PnPConnection.PnPManagementShellClientId)
             {
-                PnPConnection.Current.Scopes = new[] { "Directory.ReadWrite.All" };
+                Connection.Scopes = new[] { "Directory.ReadWrite.All" };
             }
 
             try

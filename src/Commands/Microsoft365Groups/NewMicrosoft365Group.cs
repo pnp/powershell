@@ -1,14 +1,11 @@
 ﻿using Microsoft.SharePoint.Client;
-using PnP.Framework.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
-using PnP.PowerShell.Commands.Properties;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
@@ -67,7 +64,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
             if (!Force)
             {
-                var candidate = Microsoft365GroupsUtility.GetGroupAsync(HttpClient, MailNickname, AccessToken, false, false).GetAwaiter().GetResult();
+                var candidate = Microsoft365GroupsUtility.GetGroupAsync(Connection, MailNickname, AccessToken, false, false).GetAwaiter().GetResult();
                 forceCreation = candidate == null || ShouldContinue($"The Microsoft 365 Group '{MailNickname} already exists. Do you want to create a new one?", Properties.Resources.Confirm);
             }
             else
@@ -110,7 +107,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 }
 
                 var Labels = new List<string>();
-                var contextSettings = PnPConnection.Current.Context.GetContextSettings();
+                var contextSettings = Connection.Context.GetContextSettings();
                 if (SensitivityLabels != null && SensitivityLabels.Length > 0)
                 {
                     if (contextSettings.Type != Framework.Utilities.Context.ClientContextType.AzureADCertificate)
@@ -129,14 +126,14 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     }                    
                 }
 
-                var group = Microsoft365GroupsUtility.CreateAsync(HttpClient, AccessToken, newGroup, CreateTeam, LogoPath, Owners, Members, HideFromAddressLists, HideFromOutlookClients, Labels).GetAwaiter().GetResult();
+                var group = Microsoft365GroupsUtility.CreateAsync(Connection, AccessToken, newGroup, CreateTeam, LogoPath, Owners, Members, HideFromAddressLists, HideFromOutlookClients, Labels).GetAwaiter().GetResult();
 
                 if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                 {
-                    Microsoft365GroupsUtility.SetVisibilityAsync(HttpClient, AccessToken, group.Id.Value, HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
+                    Microsoft365GroupsUtility.SetVisibilityAsync(Connection, AccessToken, group.Id.Value, HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
                 }
 
-                var updatedGroup = Microsoft365GroupsUtility.GetGroupAsync(HttpClient, group.Id.Value, AccessToken, true, false).GetAwaiter().GetResult();
+                var updatedGroup = Microsoft365GroupsUtility.GetGroupAsync(Connection, group.Id.Value, AccessToken, true, false).GetAwaiter().GetResult();
 
                 WriteObject(updatedGroup);
             }

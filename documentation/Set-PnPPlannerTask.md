@@ -15,14 +15,14 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPlannerTask.html
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-Updates an existing task
+Updates an existing task.
 
 ## SYNTAX
 
 ```
 Set-PnPPlannerTask -TaskId <String> [-Title <String>] [-Bucket <PlannerBucketPipeBind>]
  [-PercentComplete <Int32>] [-DueDateTime <DateTime>] [-StartDateTime <DateTime>]
- [-AssignedTo <String[]
+ [-AssignedTo <String[]] [-Priority <Int32>] [-Description <String>]
  [<CommonParameters>]
 ```
 
@@ -43,14 +43,14 @@ This updates the task with the specified id and sets the title to "New Title" an
 Set-PnPPlannerTask -TaskId RSNNbc4HM0e7jt-btAKtTZYAFAf0 -Title "New Title" -Bucket "To do"
 ```
 
-This updates the task with the specified id and moves to the bucket "To do"
+This updates the task with the specified id and moves to the bucket "To do".
 
 ### Example 3
 ```powershell
 Set-PnPPlannerTask -TaskId RSNNbc4HM0e7jt-btAKtTZYAFAf0 -AssignedTo "user@contoso.com","manager@contoso.com"
 ```
 
-This updates the task with the specified id replaces the assigned users with the ones specified.
+This updates the task with the specified id and replaces the assigned users with the ones specified.
 
 ## PARAMETERS
 
@@ -145,14 +145,48 @@ Accept wildcard characters: False
 ```
 
 ### -AssignedTo
-Specify the email(s) of the user to assign the task to. Notice that this will replace existing assignments with the onces specified here.
+Specify the email(s) of the user to assign the task to. Notice that this will replace existing assignments with the ones specified here.
 
 ```yaml
 Type: String[]
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Priority
+Sets the priority of the task. Value should be a number between 0 and 10.
+- values 0 and 1 are interpreted as _Urgent_
+- values 2, 3 and 4 are interpreted as _Important_
+- values 5, 6 and 7 are interpreted as _Medium_
+- values 8, 9 and 10 are interpreted as _Low_
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Description
+Sets the description (notes) of the task.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

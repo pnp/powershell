@@ -39,7 +39,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public Term Item => _item;
 
-        public Term GetTerm(ClientContext clientContext, TermStore termStore, TermSet termSet, bool recursive, Expression<Func<Term, object>>[] expressions = null)
+        public Term GetTerm(ClientContext clientContext, TermStore termStore, TermSet termSet, bool recursive, Expression<Func<Term, object>>[] expressions = null, bool includeDeprecated = false)
         {
             Term term = null;
             if (_id != Guid.Empty)
@@ -55,20 +55,35 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 }
                 else
                 {
-                    var lmi = new LabelMatchInformation(clientContext)
+                    if (includeDeprecated)
                     {
-                        TrimUnavailable = true,
-                        TermLabel = termName
-                    };
+                        var allTerms = termSet.GetAllTermsIncludeDeprecated();
+                        clientContext.Load(allTerms);
+                        clientContext.ExecuteQueryRetry();
 
-                    var termMatches = termSet.GetTerms(lmi);
-                    clientContext.Load(termMatches);
-                    clientContext.ExecuteQueryRetry();
-
-                    if (termMatches.AreItemsAvailable)
-                    {
-                        term = termMatches.FirstOrDefault();
+                        if (allTerms.AreItemsAvailable)
+                        {
+                            term = allTerms.Where(t => t.Name == termName).FirstOrDefault();
+                        }
                     }
+                    else
+                    {
+                        var lmi = new LabelMatchInformation(clientContext)
+                        {
+                            TrimUnavailable = true,
+                            TermLabel = termName
+                        };
+
+                        var termMatches = termSet.GetTerms(lmi);
+                        clientContext.Load(termMatches);
+                        clientContext.ExecuteQueryRetry();
+
+                        if (termMatches.AreItemsAvailable)
+                        {
+                            term = termMatches.FirstOrDefault();
+                        }
+                    }
+
                 }
             }
             else

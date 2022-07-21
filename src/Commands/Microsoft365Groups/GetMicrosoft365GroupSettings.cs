@@ -18,13 +18,13 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Identity != null)
             {
-                var groupId = Identity.GetGroupId(HttpClient, AccessToken);
-                var groupSettings = Microsoft365GroupsUtility.GetGroupSettingsAsync(HttpClient, AccessToken, groupId.ToString()).GetAwaiter().GetResult();
+                var groupId = Identity.GetGroupId(Connection, AccessToken);
+                var groupSettings = Microsoft365GroupsUtility.GetGroupSettingsAsync(Connection, AccessToken, groupId.ToString()).GetAwaiter().GetResult();
                 WriteObject(groupSettings?.Value, true);
             }
             else
             {
-                var groupSettings = Microsoft365GroupsUtility.GetGroupSettingsAsync(HttpClient, AccessToken).GetAwaiter().GetResult();
+                var groupSettings = Microsoft365GroupsUtility.GetGroupSettingsAsync(Connection, AccessToken).GetAwaiter().GetResult();
                 WriteObject(groupSettings?.Value, true);
             }
         }

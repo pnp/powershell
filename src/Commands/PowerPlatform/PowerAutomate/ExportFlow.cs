@@ -77,7 +77,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                     $"/providers/Microsoft.Flow/flows/{flowName}"
                 }
                 };
-                var wrapper = RestHelper.PostAsync<Model.PowerPlatform.PowerAutomate.FlowExportPackageWrapper>(HttpClient, $"https://api.bap.microsoft.com/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/listPackageResources?api-version=2016-11-01", AccessToken, payload: postData).GetAwaiter().GetResult();
+                var wrapper = RestHelper.PostAsync<Model.PowerPlatform.PowerAutomate.FlowExportPackageWrapper>(Connection.HttpClient, $"https://api.bap.microsoft.com/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/listPackageResources?api-version=2016-11-01", AccessToken, payload: postData).GetAwaiter().GetResult();
 
                 if (wrapper.Status == Model.PowerPlatform.PowerAutomate.Enums.FlowExportStatus.Succeeded)
                 {
@@ -110,7 +110,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                         resources = wrapper.Resources
                     };
 
-                    var resultElement = RestHelper.PostAsync<JsonElement>(HttpClient, $"https://api.bap.microsoft.com/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/exportPackage?api-version=2016-11-01", AccessToken, payload: exportPostData).GetAwaiter().GetResult();
+                    var resultElement = RestHelper.PostAsync<JsonElement>(Connection.HttpClient, $"https://api.bap.microsoft.com/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/exportPackage?api-version=2016-11-01", AccessToken, payload: exportPostData).GetAwaiter().GetResult();
                     if (resultElement.TryGetProperty("status", out JsonElement statusElement))
                     {
                         if (statusElement.GetString() == "Succeeded")
@@ -123,7 +123,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                                     using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, packageLink))
                                     {
                                         //requestMessage.Headers.Add("Authorization", $"Bearer {AccessToken}");
-                                        var response = HttpClient.SendAsync(requestMessage).GetAwaiter().GetResult();
+                                        var response = Connection.HttpClient.SendAsync(requestMessage).GetAwaiter().GetResult();
                                         var byteArray = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
                                         var fileName = string.Empty;
                                         if (ParameterSpecified(nameof(OutPath)))
@@ -161,7 +161,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             }
             else
             {
-                var json = RestHelper.PostAsync(HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/exportToARMTemplate?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var json = RestHelper.PostAsync(Connection.HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/exportToARMTemplate?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 WriteObject(json);
             }
         }

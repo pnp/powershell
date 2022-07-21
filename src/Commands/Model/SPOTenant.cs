@@ -38,6 +38,8 @@ namespace PnP.PowerShell.Commands.Model
             this.disabledWebPartIds = tenant.DisabledWebPartIds;
             this.stopNew2013Workflows = tenant.StopNew2013Workflows;
             this.viewInFileExplorerEnabled = tenant.ViewInFileExplorerEnabled;
+            this.externalUserExpirationRequired = tenant.ExternalUserExpirationRequired;
+            this.externalUserExpireInDays = tenant.ExternalUserExpireInDays;
 
             try
             {
@@ -546,6 +548,10 @@ namespace PnP.PowerShell.Commands.Model
         public bool IsFluidEnabled => isFluidEnabled;
         public bool DisablePersonalListCreation => disablePersonalListCreation;
 
+        public bool ExternalUserExpirationRequired => externalUserExpirationRequired;
+
+        public int ExternalUserExpireInDays => externalUserExpireInDays;
+
         public Guid[] DisabledModernListTemplateIds => disabledModernListTemplateIds;
 
         private bool hideDefaultThemes;
@@ -699,6 +705,10 @@ namespace PnP.PowerShell.Commands.Model
         private bool disablePersonalListCreation;
 
         private Guid[] disabledModernListTemplateIds;
+
+        private bool externalUserExpirationRequired;
+
+        private int externalUserExpireInDays;
 
     }
 }

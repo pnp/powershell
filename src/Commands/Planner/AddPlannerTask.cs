@@ -1,10 +1,15 @@
-using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.Planner;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.REST;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Add, "PnPPlannerTask")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
@@ -28,53 +33,119 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Title;
 
+        [Parameter(Mandatory = false)]
+        public int PercentComplete;
+
+        [Parameter(Mandatory = false)]
+        public int Priority;
+
+        [Parameter(Mandatory = false)]
+        public DateTime DueDateTime;
+
+        [Parameter(Mandatory = false)]
+        public DateTime StartDateTime;
+
+        [Parameter(Mandatory = false)]
+        public string Description;
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string[] AssignedTo;
+
         protected override void ExecuteCmdlet()
         {
-
-
-            if (ParameterSetName == ParameterName_BYGROUP)
+            PlannerTask createdTask;
+            var newTask = new PlannerTask
             {
-                var groupId = Group.GetGroupId(HttpClient, AccessToken);
-                if (groupId != null)
+                Title = Title
+            };
+
+            if (ParameterSpecified(nameof(PercentComplete)))
+            {
+                if (PercentComplete < 0 || PercentComplete > 100)
                 {
-                    var planId = Plan.GetIdAsync(HttpClient, AccessToken, groupId).GetAwaiter().GetResult();
+                    throw new PSArgumentException($"{nameof(PercentComplete)} value must be between 0 and 100.", nameof(PercentComplete));
+                }
 
-                    if (planId != null)
-                    {
-                        var bucket = Bucket.GetBucket(HttpClient, AccessToken, planId);
-                        if (bucket != null)
-                        {
-                            PlannerUtility.AddTaskAsync(HttpClient, AccessToken, planId, bucket.Id, Title, AssignedTo).GetAwaiter().GetResult();
-                        }
-                        else
-                        {
-                            throw new PSArgumentException("Bucket not found", nameof(Bucket));
-                        }
+                newTask.PercentComplete = PercentComplete;
+            }
 
-                    }
-                    else
+            if (ParameterSpecified(nameof(Priority)))
+            {
+                if (Priority < 0 || Priority > 10)
+                {
+                    throw new PSArgumentException($"{nameof(Priority)} value must be between 0 and 10.", nameof(Priority));
+                }
+                newTask.Priority = Priority;
+            }
+
+            if (ParameterSpecified(nameof(StartDateTime)))
+            {
+                newTask.StartDateTime = StartDateTime.ToUniversalTime();
+            }
+
+            if (ParameterSpecified(nameof(DueDateTime)))
+            {
+                newTask.DueDateTime = DueDateTime.ToUniversalTime();
+            }
+
+            if (ParameterSpecified(nameof(AssignedTo)))
+            {
+                newTask.Assignments = new Dictionary<string, TaskAssignment>();
+                var chunks = AssignedTo.Chunk(20);
+                foreach (var chunk in chunks)
+                {
+                    var userIds = BatchUtility.GetPropertyBatchedAsync(Connection, AccessToken, chunk.ToArray(), "/users/{0}", "id").GetAwaiter().GetResult();
+                    foreach (var userId in userIds)
                     {
-                        throw new PSArgumentException("Plan not found", nameof(Plan));
+                        newTask.Assignments.Add(userId.Value, new TaskAssignment());
                     }
                 }
-                else
+            }
+
+            // By Group
+            if (ParameterSetName == ParameterName_BYGROUP)
+            {
+                var groupId = Group.GetGroupId(Connection, AccessToken);
+                if (groupId == null)
                 {
                     throw new PSArgumentException("Group not found", nameof(Group));
                 }
-            }
-            else if (ParameterSetName == ParameterName_BYPLANID)
-            {
-                var bucket = Bucket.GetBucket(HttpClient, AccessToken, PlanId);
-                if (bucket != null)
+
+                var planId = Plan.GetIdAsync(Connection, AccessToken, groupId).GetAwaiter().GetResult();
+                if (planId == null)
                 {
-                    PlannerUtility.AddTaskAsync(HttpClient, AccessToken, PlanId, bucket.Id, Title).GetAwaiter().GetResult();
+                    throw new PSArgumentException("Plan not found", nameof(Plan));
                 }
-                else
+                newTask.PlanId = planId;
+
+                var bucket = Bucket.GetBucket(Connection, AccessToken, planId);
+                if (bucket == null)
                 {
                     throw new PSArgumentException("Bucket not found", nameof(Bucket));
                 }
+                newTask.BucketId = bucket.Id;
+
+                createdTask = PlannerUtility.AddTaskAsync(Connection, AccessToken, newTask).GetAwaiter().GetResult();
+            }
+            // By PlanId
+            else
+            {
+                var bucket = Bucket.GetBucket(Connection, AccessToken, PlanId);
+                if (bucket == null)
+                {
+                    throw new PSArgumentException("Bucket not found", nameof(Bucket));
+                }
+
+                newTask.PlanId = PlanId;
+                newTask.BucketId = bucket.Id;
+
+                createdTask = PlannerUtility.AddTaskAsync(Connection, AccessToken, newTask).GetAwaiter().GetResult();
+            }
+
+            if (ParameterSpecified(nameof(Description)))
+            {
+                var existingTaskDetails = PlannerUtility.GetTaskDetailsAsync(Connection, AccessToken, createdTask.Id, false).GetAwaiter().GetResult();
+                PlannerUtility.UpdateTaskDetailsAsync(Connection, AccessToken, existingTaskDetails, Description).GetAwaiter().GetResult();
             }
         }
     }

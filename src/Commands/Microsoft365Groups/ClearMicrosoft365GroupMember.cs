@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-           Microsoft365GroupsUtility.ClearMembersAsync(HttpClient, Identity.GetGroupId(HttpClient, AccessToken), AccessToken).GetAwaiter().GetResult();
+           Microsoft365GroupsUtility.ClearMembersAsync(Connection, Identity.GetGroupId(Connection, AccessToken), AccessToken).GetAwaiter().GetResult();
         }
     }
 }

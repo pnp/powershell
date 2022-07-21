@@ -33,17 +33,17 @@ namespace PnP.PowerShell.Commands.Graph
         {
             if (ParameterSetName == ParameterName_BYGROUP)
             {
-                var groupId = Group.GetGroupId(HttpClient, AccessToken);
+                var groupId = Group.GetGroupId(Connection, AccessToken);
                 if (groupId != null)
                 {
-                    var planId = Plan.GetIdAsync(HttpClient, AccessToken, groupId).GetAwaiter().GetResult();
+                    var planId = Plan.GetIdAsync(Connection, AccessToken, groupId).GetAwaiter().GetResult();
                     if (planId != null)
                     {
 
-                        var bucket = Bucket.GetBucket(HttpClient, AccessToken, planId);
+                        var bucket = Bucket.GetBucket(Connection, AccessToken, planId);
                         if (bucket != null)
                         {
-                            WriteObject(PlannerUtility.UpdateBucketAsync(HttpClient, AccessToken, Name, bucket.Id).GetAwaiter().GetResult());
+                            WriteObject(PlannerUtility.UpdateBucketAsync(Connection, AccessToken, Name, bucket.Id).GetAwaiter().GetResult());
                         }
                         else
                         {
@@ -62,10 +62,10 @@ namespace PnP.PowerShell.Commands.Graph
             }
             else
             {
-                var bucket = Bucket.GetBucket(HttpClient, AccessToken, PlanId);
+                var bucket = Bucket.GetBucket(Connection, AccessToken, PlanId);
                 if (bucket != null)
                 {
-                    WriteObject(PlannerUtility.UpdateBucketAsync(HttpClient, AccessToken, Name, bucket.Id).GetAwaiter().GetResult());
+                    WriteObject(PlannerUtility.UpdateBucketAsync(Connection, AccessToken, Name, bucket.Id).GetAwaiter().GetResult());
                 }
                 else
                 {

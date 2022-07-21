@@ -4,36 +4,43 @@ title: Unpublish-PnPSyntexModel
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPage.html
+online version: https://pnp.github.io/powershell/cmdlets/UnPublish-PnPSyntexModel.html
 ---
  
 # Unpublish-PnPSyntexModel
 
 ## SYNOPSIS
+
 Unpublishes a SharePoint Syntex model from a list.
 
 This cmdlet only works when you've connected to a SharePoint Syntex Content Center site.
 
+[![Supports Batching](../images/batching/Batching.png)](../articles/batching.html)
+
 ## SYNTAX
 
 ### Single
+
 ```powershell
 Unpublish-PnPSyntexModel -Model <SyntexModelPipeBind> -ListWebUrl <string> -List <ListPipeBind> [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ### Batched
+
 ```powershell
 Unpublish-PnPSyntexModel -Model <SyntexModelPipeBind> -TargetSiteUrl <string> -TargetWebServerRelativeUrl <string> -TargetLibraryServerRelativeUrl <string> -Batch <PnPBatch>  [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 This command unpublishes a SharePoint Syntex content understanding models from a list.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Unpublish-PnPSyntexModel -Model "Invoice model" -ListWebUrl "https://contoso.sharepoint.com/sites/finance" -List "Documents"
 ```
@@ -41,6 +48,7 @@ Unpublish-PnPSyntexModel -Model "Invoice model" -ListWebUrl "https://contoso.sha
 Unpublishes the content understanding model named "Invoice model" from the list named "Documents" in the /sites/finance web.
 
 ### EXAMPLE 2
+
 ```powershell
 Unpublish-PnPSyntexModel -Model "Invoice model" -TargetSiteUrl "https://contoso.sharepoint.com/sites/finance" -TargetWebServerRelativeUrl "/sites/finance" -TargetLibraryServerRelativeUrl "/sites/finance/shared%20documents" -Batch $batch
 ```
@@ -50,6 +58,7 @@ Adds the unpublishing of the content understanding model named "Invoice model" f
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
@@ -64,6 +73,7 @@ Accept wildcard characters: False
 ```
 
 ### -Model
+
 The name or id of the SharePoint Syntex model.
 
 ```yaml
@@ -78,6 +88,7 @@ Accept wildcard characters: False
 ```
 
 ### -ListWebUrl
+
 Url of the web hosting the list to unpublish the model from.
 
 ```yaml
@@ -93,6 +104,7 @@ Accept wildcard characters: False
 ```
 
 ### -List
+
 The name or id of the list to unpublish the model from.
 
 ```yaml
@@ -107,6 +119,7 @@ Accept wildcard characters: False
 ```
 
 ### -TargetSiteUrl
+
 The fully qualified URL of the site collection hosting the library to unpublish the model from.
 
 ```yaml
@@ -122,6 +135,7 @@ Accept wildcard characters: False
 ```
 
 ### -TargetWebServerRelativeUrl
+
 The server relative url of the web hosting the library to unpublish the model from.
 
 ```yaml
@@ -137,6 +151,7 @@ Accept wildcard characters: False
 ```
 
 ### -TargetLibraryServerRelativeUrl
+
 The server relative url of the library to unpublish the model from.
 
 ```yaml
@@ -152,6 +167,7 @@ Accept wildcard characters: False
 ```
 
 ### -Batch
+
 The batch to add this unpublish request to.
 
 ```yaml

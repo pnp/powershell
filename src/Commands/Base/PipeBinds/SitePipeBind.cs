@@ -1,6 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
 using System;
-using System.Net.Http;
 using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
@@ -57,7 +56,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public Guid Id => _id;
 
-        public Guid GetSiteIdThroughGraph(HttpClient httpClient, string accesstoken)
+        public Guid GetSiteIdThroughGraph(PnPConnection connection, string accesstoken)
         {
             if (_site != null)
             {
@@ -71,7 +70,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 var uri = new Uri(_url);
 
-                var result = Utilities.REST.RestHelper.GetAsync(httpClient, $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/sites/{uri.Host}:{uri.LocalPath}", accesstoken).GetAwaiter().GetResult();
+                var result = Utilities.REST.RestHelper.GetAsync(connection.HttpClient, $"https://{connection.GraphEndPoint}/v1.0/sites/{uri.Host}:{uri.LocalPath}", accesstoken).GetAwaiter().GetResult();
                 if (!string.IsNullOrEmpty(result))
                 {
                     var resultElement = JsonSerializer.Deserialize<JsonElement>(result);

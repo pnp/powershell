@@ -10,28 +10,33 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPListItem.html
 # Set-PnPListItem
 
 ## SYNOPSIS
+
 Updates a list item
+
+[![Supports Batching](../images/batching/Batching.png)](../articles/batching.html)
 
 ## SYNTAX
 
 ### Single
+
 ```powershell
 Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-ContentType <ContentTypePipeBind>]
  [-Values <Hashtable>] [-UpdateType <UpdateType>] [-Label <String>] [-ClearLabel] [-Connection <PnPConnection>]
 ```
 
 ### Batched
+
 ```powershell
 Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> -Batch <PnPBatch> [-ContentType <ContentTypePipeBind>]
  [-Values <Hashtable>] [-UpdateType <UpdateType> [-UpdateOverwriteVersion] [-Connection <PnPConnection>]
 ```
-
 
 ## DESCRIPTION
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Set-PnPListItem -List "Demo List" -Identity 1 -Values @{"Title" = "Test Title"; "Category"="Test Category"}
 ```
@@ -39,6 +44,7 @@ Set-PnPListItem -List "Demo List" -Identity 1 -Values @{"Title" = "Test Title"; 
 Sets fields value in the list item with ID 1 in the "Demo List". It sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.
 
 ### EXAMPLE 2
+
 ```powershell
 Set-PnPListItem -List "Demo List" -Identity 1 -ContentType "Company" -Values @{"Title" = "Test Title"; "Category"="Test Category"}
 ```
@@ -46,6 +52,7 @@ Set-PnPListItem -List "Demo List" -Identity 1 -ContentType "Company" -Values @{"
 Sets fields value in the list item with ID 1 in the "Demo List". It sets the content type of the item to "Company" and it sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.
 
 ### EXAMPLE 3
+
 ```powershell
 Set-PnPListItem -List "Demo List" -Identity $item -Values @{"Title" = "Test Title"; "Category"="Test Category"}
 ```
@@ -53,6 +60,7 @@ Set-PnPListItem -List "Demo List" -Identity $item -Values @{"Title" = "Test Titl
 Sets fields value in the list item which has been retrieved by for instance Get-PnPListItem. It sets the content type of the item to "Company" and it sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.
 
 ### EXAMPLE 4
+
 ```powershell
 Set-PnPListItem -List "Demo List" -Identity 1 -Label "Public"
 ```
@@ -60,9 +68,10 @@ Set-PnPListItem -List "Demo List" -Identity 1 -Label "Public"
 Sets the retention label in the list item with ID 1 in the "Demo List".
 
 ### EXAMPLE 5
+
 ```powershell
 $batch = New-PnPBatch
-for($i=0;$i -lt 100;$i++)
+for($i=1;$i -lt 100;$i++)
 {
     Set-PnPListItem -List "Demo List" -Identity $i -Values @{"Title"="Updated Title"} -Batch $batch
 }
@@ -72,6 +81,7 @@ Invoke-PnPBatch -Batch $batch
 This example updates the items with ids 0 to 100 with a new title in a batched manner.
 
 ### EXAMPLE 6
+
 ```powershell
 Set-PnPListItem -List "Demo List" -Identity 1 -Values @{"Editor"="testuser@domain.com"} -UpdateType UpdateOverwriteVersion
 ```
@@ -81,6 +91,7 @@ This example updates the modified by value of the list item and does not increas
 ## PARAMETERS
 
 ### -Batch
+
 Optional batch object used to add items in a batched manner. See examples on how to use this.
 
 ```yaml
@@ -94,6 +105,7 @@ Accept wildcard characters: False
 ```
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
@@ -108,6 +120,7 @@ Accept wildcard characters: False
 ```
 
 ### -ContentType
+
 Specify either the name, ID or an actual content type
 
 ```yaml
@@ -122,6 +135,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
+
 The ID of the listitem, or actual ListItem object
 
 ```yaml
@@ -136,6 +150,7 @@ Accept wildcard characters: False
 ```
 
 ### -Label
+
 The name of the retention label.
 
 ```yaml
@@ -150,6 +165,7 @@ Accept wildcard characters: False
 ```
 
 ### -List
+
 The ID, Title or Url of the list.
 
 ```yaml
@@ -164,7 +180,9 @@ Accept wildcard characters: False
 ```
 
 ### -UpdateType
-Specifies the update type to use when updating the listitem. Possible values are "Update", "SystemUpdate", "UpdateOverwriteVersion". 
+
+Specifies the update type to use when updating the listitem. Possible values are "Update", "SystemUpdate", "UpdateOverwriteVersion".
+
 * Update: Sets field values and creates a new version if versioning is enabled for the list
 * SystemUpdate: Sets field values and does not create a new version. Any events on the list will trigger.
 * UpdateOverwriteVersion: Sets field values and does not create a new version. No events on the list will trigger.
@@ -181,6 +199,7 @@ Accept wildcard characters: False
 ```
 
 ### -UpdateOverwriteVersion
+
 Update the item without creating a new version. It will not trigger events registered on the list.
 
 ```yaml
@@ -195,6 +214,7 @@ Accept wildcard characters: False
 ```
 
 ### -ClearLabel
+
 Clears the retention label of the item.
 
 ```yaml
@@ -209,6 +229,7 @@ Accept wildcard characters: False
 ```
 
 ### -Values
+
 Use the internal names of the fields when specifying field names.
 
 Single line of text: -Values @{"TextField" = "Title New"}
@@ -260,9 +281,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

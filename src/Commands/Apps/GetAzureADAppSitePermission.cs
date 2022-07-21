@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Apps
             Guid siteId = Guid.Empty;
             if (ParameterSpecified(nameof(Site)))
             {
-                siteId = Site.GetSiteIdThroughGraph(HttpClient, AccessToken);
+                siteId = Site.GetSiteIdThroughGraph(Connection, AccessToken);
             }
             else
             {
@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Apps
                 if (!ParameterSpecified(nameof(PermissionId)))
                 {
                     // all permissions
-                    var results = GraphHelper.GetResultCollectionAsync<AzureADAppPermissionInternal>(HttpClient, $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/sites/{siteId}/permissions", AccessToken).GetAwaiter().GetResult();
+                    var results = GraphHelper.GetResultCollectionAsync<AzureADAppPermissionInternal>(Connection, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions", AccessToken).GetAwaiter().GetResult();
                     if (results.Any())
                     {
                         var convertedResults = results.Select(i => i.Convert());
@@ -64,7 +64,7 @@ namespace PnP.PowerShell.Commands.Apps
                 }
                 else
                 {
-                    var results = GraphHelper.GetAsync<AzureADAppPermissionInternal>(HttpClient, $"https://{PnPConnection.Current.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken).GetAwaiter().GetResult();
+                    var results = GraphHelper.GetAsync<AzureADAppPermissionInternal>(Connection, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken).GetAwaiter().GetResult();
                     WriteObject(results.Convert());
                 }
             }

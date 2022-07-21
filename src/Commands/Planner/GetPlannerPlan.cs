@@ -1,9 +1,8 @@
-using System.Management.Automation;
-using Microsoft.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Planner
 {
@@ -11,32 +10,45 @@ namespace PnP.PowerShell.Commands.Planner
     [RequiredMinimalApiPermissions("Group.Read.All")]
     public class GetPlannerPlan : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true)]
+        private const string ParameterName_BYGROUP = "By Group";
+        private const string ParameterName_BYPLANID = "By Plan Id";
+
+        [Parameter(Mandatory = true, HelpMessage = "Specify the group id of group owning the plan.", ParameterSetName = ParameterName_BYGROUP)]
         public PlannerGroupPipeBind Group;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Specify the name of the plan.", ParameterSetName = ParameterName_BYGROUP)]
         public PlannerPlanPipeBind Identity;
 
+        [Parameter(Mandatory = true, HelpMessage = "Specify the ID of the plan.", ParameterSetName = ParameterName_BYPLANID)]
+        public string Id;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter ResolveIdentities;
+
         protected override void ExecuteCmdlet()
         {
-            var groupId = Group.GetGroupId(HttpClient, AccessToken);
-            if (groupId != null)
+            if (ParameterSetName == ParameterName_BYGROUP)
             {
-                if (ParameterSpecified(nameof(Identity)))
+                var groupId = Group.GetGroupId(Connection, AccessToken);
+                if (groupId != null)
                 {
-                    WriteObject(Identity.GetPlanAsync(HttpClient, AccessToken, groupId, ResolveIdentities).GetAwaiter().GetResult());
+                    if (ParameterSpecified(nameof(Identity)))
+                    {
+                        WriteObject(Identity.GetPlanAsync(Connection, AccessToken, groupId, ResolveIdentities).GetAwaiter().GetResult());
+                    }
+                    else
+                    {
+                        WriteObject(PlannerUtility.GetPlansAsync(Connection, AccessToken, groupId, ResolveIdentities).GetAwaiter().GetResult(), true);
+                    }
                 }
                 else
                 {
-                    WriteObject(PlannerUtility.GetPlansAsync(HttpClient, AccessToken, groupId, ResolveIdentities).GetAwaiter().GetResult(), true);
+                    throw new PSArgumentException("Group not found");
                 }
             }
             else
             {
-                throw new PSArgumentException("Group not found");
+                WriteObject(PlannerUtility.GetPlanAsync(Connection, AccessToken, Id, ResolveIdentities).GetAwaiter().GetResult());
             }
         }
     }

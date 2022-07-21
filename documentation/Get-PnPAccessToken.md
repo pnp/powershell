@@ -16,7 +16,7 @@ If a Resource Type Name or Resource URL is specified, it will fetch the access t
 ## SYNTAX
 
 ```powershell
-Get-PnPAccessToken [-ResourceTypeName] [-ResourceUrl] [-Decoded] [<CommonParameters>]
+Get-PnPAccessToken [-ResourceTypeName] [-ResourceUrl] [-Decoded] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -33,19 +33,26 @@ Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API
 
 ### EXAMPLE 2
 ```powershell
+Get-PnPAccessToken -Decoded
+```
+
+Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API and shows the token with its content decoded
+
+### EXAMPLE 3
+```powershell
 Get-PnPAccessToken -ResourceTypeName SharePoint
 ```
 
 Gets the OAuth 2.0 Access Token to consume the SharePoint APIs and perform CSOM operations.
 
-### EXAMPLE 3
+### EXAMPLE 4
 ```powershell
 Get-PnPAccessToken -ResourceTypeName ARM
 ```
 
 Gets the OAuth 2.0 Access Token to consume the Azure Resource Manager APIs and perform related operations. In PnP, you can use them in cmdlets related to Flow and PowerPlatform etc.
 
-### EXAMPLE 4
+### EXAMPLE 5
 ```powershell
 Get-PnPAccessToken -ResourceUrl "https://management.azure.com/.default"
 ```
@@ -55,12 +62,11 @@ Gets the OAuth 2.0 Access Token to consume the SharePoint APIs and perform CSOM 
 ## PARAMETERS
 
 ### -ResourceTypeName
-Specify the Resource Type for which you want the access token.
-If not specified, it will by default return Microsoft Graph access token.
+Specify the Resource Type for which you want the access token. If not specified, it will by default return a Microsoft Graph access token.
 
 ```yaml
 Type: ResourceTypeName
-Parameter Sets: Resource Type Name
+Parameter Sets: Resource Type Name, Resource Type Name (decoded)
 Accepted values: Graph, SharePoint, ARM
 
 Required: False
@@ -71,12 +77,11 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceUrl
-Specify the Resource URL for which you want the access token.
-If not specified, it will by default return Microsoft Graph access token.
+Specify the Resource URL for which you want the access token, i.e. https://graph.microsoft.com/.default. If not specified, it will by default return a Microsoft Graph access token.
 
 ```yaml
 Type: String
-Parameter Sets: Resource Url
+Parameter Sets: Resource Url, Resource Url (decoded)
 
 Required: False
 Position: Named
@@ -90,6 +95,20 @@ Returns the details from the access token in a decoded manner
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: Default (decoded), Resource Type Name (decoded), Resource Url (decoded)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
 Parameter Sets: (All)
 
 Required: False

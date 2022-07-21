@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Text;
 
 namespace PnP.PowerShell.Commands.Model.Graph
 {
@@ -10,6 +8,8 @@ namespace PnP.PowerShell.Commands.Model.Graph
         public GraphError Error { get; set; }
 
         public string AccessToken { get; set; }
+
+        public System.Net.Http.HttpResponseMessage HttpResponse { get; set; }
     }
 
     public class GraphError
@@ -23,6 +23,5 @@ namespace PnP.PowerShell.Commands.Model.Graph
         public Dictionary<string, object> AdditionalData { get; set; }
 
         public string ThrowSite { get; set; }
-
     }
 }

@@ -3,7 +3,7 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
+namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Set, "PnPPlannerConfiguration")]
     [RequiredMinimalApiPermissions("https://tasks.office.com/.default")]
@@ -19,6 +19,9 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
         public bool? AllowTenantMoveWithDataLoss;
 
         [Parameter(Mandatory = false)]
+        public bool? AllowTenantMoveWithDataMigration;
+
+        [Parameter(Mandatory = false)]
         public bool? AllowPlannerMobilePushNotifications;
 
         [Parameter(Mandatory = false)]
@@ -26,7 +29,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
         protected override void ExecuteCmdlet()
         {
-            var result = PlannerUtility.SetPlannerConfigAsync(HttpClient, AccessToken, IsPlannerAllowed, AllowCalendarSharing, AllowTenantMoveWithDataLoss, AllowRosterCreation, AllowPlannerMobilePushNotifications).GetAwaiter().GetResult();
+            var result = PlannerUtility.SetPlannerConfigAsync(Connection, AccessToken, IsPlannerAllowed, AllowCalendarSharing, AllowTenantMoveWithDataLoss, AllowTenantMoveWithDataMigration, AllowRosterCreation, AllowPlannerMobilePushNotifications).GetAwaiter().GetResult();
             WriteObject(result);
         }
     }

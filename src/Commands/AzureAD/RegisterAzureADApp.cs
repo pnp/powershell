@@ -551,7 +551,7 @@ namespace PnP.PowerShell.Commands.AzureAD
         private bool AppExists(string appName, HttpClient httpClient, string token)
         {
             Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Checking if application '{appName}' does not exist yet...");
-            var azureApps = GraphHelper.GetAsync<RestResultCollection<AzureADApp>>(httpClient, $@"https://{PnP.Framework.AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token).GetAwaiter().GetResult();
+            var azureApps = RestHelper.GetAsync<RestResultCollection<AzureADApp>>(httpClient, $@"https://{PnP.Framework.AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token).GetAwaiter().GetResult();
             if (azureApps != null && azureApps.Items.Any())
             {
                 Host.UI.WriteLine();
@@ -592,12 +592,9 @@ namespace PnP.PowerShell.Commands.AzureAD
                     }
                 },
                 requiredResourceAccess = scopesPayload
-            };
+            };            
 
-            var requestContent = new StringContent(JsonSerializer.Serialize(payload));
-            requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-
-            var azureApp = GraphHelper.PostAsync<AzureADApp>(httpClient, $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications", requestContent, token).GetAwaiter().GetResult();
+            var azureApp = RestHelper.PostAsync<AzureADApp>(httpClient, $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications", token, payload).GetAwaiter().GetResult();
             if (azureApp != null)
             {
                 Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"App {azureApp.DisplayName} with id {azureApp.AppId} created.");

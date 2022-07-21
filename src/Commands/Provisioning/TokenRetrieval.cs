@@ -2,22 +2,21 @@ using System;
 using PnP.PowerShell.Commands.Base;
 using Microsoft.SharePoint.Client;
 using System.Threading.Tasks;
-using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning
 {
     public static class TokenRetrieval
     {
-        public async static Task<string> GetAccessTokenAsync(string resource, string scope)
+        public async static Task<string> GetAccessTokenAsync(string resource, string scope, PnPConnection connection)
         {
             if (resource.ToLower().StartsWith("https://"))
             {
                 var uri = new Uri(resource);
                 resource = uri.Authority;
             }
-            if (PnPConnection.Current?.Context != null)
+            if (connection?.Context != null)
             {
-                var settings = PnPConnection.Current.Context.GetContextSettings();
+                var settings = connection.Context.GetContextSettings();
                 var authManager = settings.AuthenticationManager;
                 if (authManager != null)
                 {

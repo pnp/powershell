@@ -22,7 +22,7 @@ Creates a new (classic) site collection for the current tenant
 ```powershell
 New-PnPTenantSite -Title <String> -Url <String> -Owner <String> [-Lcid <UInt32>] [-Template <String>]
  -TimeZone <Int32> [-ResourceQuota <Double>] [-ResourceQuotaWarningLevel <Double>] [-StorageQuota <Int64>]
- [-StorageQuotaWarningLevel <Int64>] [-RemoveDeletedSite] [-Wait] [-Connection <PnPConnection>]
+ [-StorageQuotaWarningLevel <Int64>] [-RemoveDeletedSite] [-SharingCapability <SharingCapabilities>] [-Wait] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -216,16 +216,32 @@ Accept wildcard characters: False
 ```
 
 ### -Wait
+Waits for the site collection to be fully provisioned.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: (All), (Wait)
 
 Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
+```
+
+### -SharingCapability
+Specifies what the sharing capabilities are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly. It will only work if Wait parameter is specified.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (Wait)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
 ```
 
 ## RELATED LINKS

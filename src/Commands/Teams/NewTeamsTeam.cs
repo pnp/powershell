@@ -149,7 +149,7 @@ namespace PnP.PowerShell.Commands.Graph
             }
 #pragma warning restore 612, 618
 
-            var contextSettings = PnPConnection.Current.Context.GetContextSettings();
+            var contextSettings = Connection.Context.GetContextSettings();
             if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
             {
                 if (SensitivityLabels != null && SensitivityLabels.Length > 0)
@@ -159,7 +159,7 @@ namespace PnP.PowerShell.Commands.Graph
                 }
             }
 
-            WriteObject(TeamsUtility.NewTeamAsync(AccessToken, HttpClient, GroupId, DisplayName, Description, Classification, MailNickName, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI, Owners, Members, SensitivityLabels, Template, ResourceBehaviorOptions).GetAwaiter().GetResult());
+            WriteObject(TeamsUtility.NewTeamAsync(AccessToken, Connection, GroupId, DisplayName, Description, Classification, MailNickName, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI, Owners, Members, SensitivityLabels, Template, ResourceBehaviorOptions).GetAwaiter().GetResult());
         }
     }
 }

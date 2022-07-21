@@ -4,11 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Provider;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Extensions;
 using PnP.PowerShell.Commands.Provider.Parameters;
 using PnP.PowerShell.Commands.Provider.SPOProxy;
 using File = Microsoft.SharePoint.Client.File;
@@ -61,7 +59,7 @@ namespace PnP.PowerShell.Commands.Provider
             }
             else
             {
-                WriteErrorInternal(PnPResources.NoSharePointConnection, drive.Root, ErrorCategory.ConnectionError);
+                WriteErrorInternal(PnPResources.NoDefaultSharePointConnection, drive.Root, ErrorCategory.ConnectionError);
             }
 
             if (web != null)

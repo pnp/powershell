@@ -22,6 +22,7 @@ namespace PnP.PowerShell.Commands.Site
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public string Classification;
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter? DisableFlows;
 
@@ -93,6 +94,9 @@ namespace PnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public MediaTranscriptionPolicyType? MediaTranscription { get; set; }
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Guid? SensitivityLabel;
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
 
@@ -115,6 +119,12 @@ namespace PnP.PowerShell.Commands.Site
             {
                 site.Classification = Classification;
                 context.ExecuteQueryRetry();
+            }
+
+            if(ParameterSpecified(nameof(SensitivityLabel)) && SensitivityLabel.HasValue)
+            {
+                site.SensitivityLabel = SensitivityLabel.Value;
+                context.ExecuteQueryRetry();                
             }
 
             if (ParameterSpecified(nameof(LogoFilePath)))

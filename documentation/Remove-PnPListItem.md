@@ -10,16 +10,21 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPListItem.html
 # Remove-PnPListItem
 
 ## SYNOPSIS
+
 Deletes an item from a list
+
+[![Supports Batching](../images/batching/Batching.png)](../articles/batching.html)
 
 ## SYNTAX
 
 ### Single
+
 ```powershell
 Remove-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-Recycle] [-Force] 
 ```
 
 ### Batched
+
 ```powershell
 Remove-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> -Batch <PnPBatch> [-Recycle]
 ```
@@ -29,6 +34,7 @@ Remove-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> -Batch <P
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Remove-PnPListItem -List "Demo List" -Identity "1" -Force
 ```
@@ -36,6 +42,7 @@ Remove-PnPListItem -List "Demo List" -Identity "1" -Force
 Removes the listitem with id "1" from the "Demo List" list
 
 ### EXAMPLE 2
+
 ```powershell
 Remove-PnPListItem -List "Demo List" -Identity "1" -Force -Recycle
 ```
@@ -43,6 +50,7 @@ Remove-PnPListItem -List "Demo List" -Identity "1" -Force -Recycle
 Removes the listitem with id "1" from the "Demo List" list and saves it in the Recycle Bin
 
 ### EXAMPLE 3
+
 ```powershell
 $batch = New-PnPBatch
 1..50 | Foreach-Object{Remove-PnPListItem -List "DemoList" -Identity $_ -Batch $batch}
@@ -52,6 +60,7 @@ Invoke-PnPBatch -Batch $batch
 Removes all the items with Id 1 to Id 50 in the "Demo List" list
 
 ### EXAMPLE 4
+
 ```powershell
 Remove-PnPListItem -List "Demo List"
 ```
@@ -61,6 +70,7 @@ Removes all items from the "Demlo List" list after asking for confirmation
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
@@ -75,6 +85,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
+
 Specifying the Force parameter will skip the confirmation question
 
 ```yaml
@@ -89,6 +100,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
+
 The ID of the listitem, or actual ListItem object
 
 ```yaml
@@ -103,6 +115,7 @@ Accept wildcard characters: False
 ```
 
 ### -List
+
 The ID, Title or Url of the list
 
 ```yaml
@@ -117,6 +130,7 @@ Accept wildcard characters: False
 ```
 
 ### -Recycle
+
 When provided, items will be sent to the recycle bin. When omitted, items will permanently be deleted.
 
 ```yaml
@@ -131,6 +145,7 @@ Accept wildcard characters: False
 ```
 
 ### -Batch
+
 Batch object used to add items in a batched manner. See examples on how to use this.
 
 ```yaml
@@ -147,4 +162,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

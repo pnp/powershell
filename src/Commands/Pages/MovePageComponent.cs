@@ -37,10 +37,12 @@ namespace PnP.PowerShell.Commands.Pages
 
         protected override void ExecuteCmdlet()
         {
-            var clientSidePage = Page.GetPage();
+            var clientSidePage = Page.GetPage(Connection);
 
             if (clientSidePage == null)
+            {
                 throw new Exception($"Page '{Page?.Name}' does not exist");
+            }
 
             var control = clientSidePage.Controls.FirstOrDefault(c => c.InstanceId == InstanceId);
             if (control != null)

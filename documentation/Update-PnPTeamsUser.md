@@ -24,6 +24,7 @@ Update-PnPTeamsUser -Team <TeamsTeamPipeBind> -User <String> -Role <String> [<Co
 ```
 
 ## DESCRIPTION
+This cmdlet updates the role of the specified user in the selected Teams instance to Member or Owner.
 
 ## EXAMPLES
 
@@ -32,14 +33,21 @@ Update-PnPTeamsUser -Team <TeamsTeamPipeBind> -User <String> -Role <String> [<Co
 Update-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Owner
 ```
 
-Updates a user as an owner to the team
+Updates a user as an owner of the team.
 
 ### EXAMPLE 2
 ```powershell
 Update-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Member
 ```
 
-Updates a user as a member in the team
+Updates a user as a member of the team.
+
+### EXAMPLE 3
+```powershell
+Update-PnPTeamsUser -Team a0c0a395-4ba6-4fff-958a-000000506d18 -User john@doe.com -Role Member -Force
+```
+
+Updates john@doe.com user as a member of the team and skips the confirmation question.
 
 ## PARAMETERS
 
@@ -77,7 +85,7 @@ Specify the UPN (e.g. john@doe.com)
 
 ```yaml
 Type: String
-Parameter Sets: (User)
+Parameter Sets: (All)
 
 Required: True
 Position: Named

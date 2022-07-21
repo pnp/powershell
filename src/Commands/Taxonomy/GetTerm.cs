@@ -37,6 +37,9 @@ namespace PnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TERMNAME)]
         public TaxonomyTermPipeBind ParentTerm;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TERMNAME)]
+        public SwitchParameter IncludeDeprecated;
+
         protected override void ExecuteCmdlet()
         {
             DefaultRetrievalExpressions = new Expression<Func<Term, object>>[] { g => g.Name, g => g.TermsCount, g => g.Id };
@@ -77,7 +80,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
 
                 if (Identity != null && ParentTerm == null)
                 {
-                    var term = Identity.GetTerm(ClientContext, termStore, termSet, Recursive, RetrievalExpressions);
+                    var term = Identity.GetTerm(ClientContext, termStore, termSet, Recursive, RetrievalExpressions, IncludeDeprecated);
 
                     if (IncludeChildTerms.IsPresent && term.TermsCount > 0)
                     {
@@ -87,7 +90,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 }
                 else if (Identity != null && ParentTerm != null)
                 {
-                    var term = ParentTerm.GetTerm(ClientContext, termStore, termSet, Recursive, RetrievalExpressions);
+                    var term = ParentTerm.GetTerm(ClientContext, termStore, termSet, Recursive, RetrievalExpressions, IncludeDeprecated);
 
                     if (IncludeChildTerms.IsPresent && term.TermsCount > 0)
                     {
