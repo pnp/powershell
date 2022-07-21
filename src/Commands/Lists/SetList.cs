@@ -89,7 +89,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (list != null)
             {
-                list.EnsureProperties(l => l.EnableAttachments, l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType, l => l.HasUniqueRoleAssignments, l => l.ContentTypesEnabled, l => l.ExemptFromBlockDownloadOfNonViewableFiles);
+                list.EnsureProperties(l => l.EnableAttachments, l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType, l => l.HasUniqueRoleAssignments, l => l.ContentTypesEnabled, l => l.ExemptFromBlockDownloadOfNonViewableFiles, l => l.DisableGridEditing);
 
                 var enableVersioning = list.EnableVersioning;
                 var enableMinorVersions = list.EnableMinorVersions;
