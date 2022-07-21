@@ -77,19 +77,22 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false)]
         public SwitchParameter NoCrawl;
 
+        [Parameter(Mandatory = false)]
+        public bool DisableGridEditing;
+
         protected override void ExecuteCmdlet()
         {
             var list = Identity.GetList(CurrentWeb);
 
             if (list != null)
             {
-                list.EnsureProperties(l => l.EnableAttachments, l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType, l => l.HasUniqueRoleAssignments, l => l.ContentTypesEnabled);
+                list.EnsureProperties(l => l.EnableAttachments, l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType, l => l.HasUniqueRoleAssignments, l => l.ContentTypesEnabled, l => l.DisableGridEditing);
 
                 var enableVersioning = list.EnableVersioning;
                 var enableMinorVersions = list.EnableMinorVersions;
                 var hidden = list.Hidden;
                 var enableAttachments = list.EnableAttachments;
-
+                var disableGridEditing = list.DisableGridEditing;
                 var updateRequired = false;
                 if (BreakRoleInheritance)
                 {
@@ -184,6 +187,12 @@ namespace PnP.PowerShell.Commands.Lists
                 if (ParameterSpecified(nameof(NoCrawl)))
                 {
                     list.NoCrawl = NoCrawl;
+                    updateRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(DisableGridEditing)))
+                {
+                    list.DisableGridEditing = DisableGridEditing;
                     updateRequired = true;
                 }
 
