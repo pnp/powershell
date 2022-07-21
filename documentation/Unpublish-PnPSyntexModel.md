@@ -15,7 +15,7 @@ Unpublishes a SharePoint Syntex model from a list.
 
 This cmdlet only works when you've connected to a SharePoint Syntex Content Center site.
 
-[![Supports Batching](../images/batching/Batching.png)](../articles/batching.html)
+[![Supports Batching](https://github.com/pnp/powershell/blob/gh-pages/images/batching/Batching.png)](../articles/batching.html)
 
 ## SYNTAX
 
