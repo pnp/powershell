@@ -13,7 +13,7 @@ title: Add-PnPListItem
 
 Adds an item to the list and sets the creation time to the current date and time. The author is set to the current authenticated user executing the cmdlet. In order to set the author to a different user, please refer to Set-PnPListItem.
 
-[![Supports Batching](../images/batching/Batching.png)](../articles/batching.html)
+[![Supports Batching](https://github.com/pnp/powershell/blob/gh-pages/images/batching/Batching.png)](../articles/batching.html)
 
 ## SYNTAX
 
