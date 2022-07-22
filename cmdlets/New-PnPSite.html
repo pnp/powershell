@@ -87,14 +87,14 @@
 <p>Creates a communication site, Microsoft 365 group-connected team site or Modern team site not connected to M365 group.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="teamsite">TeamSite</h3>
-<pre><code class="lang-powershell">New-PnPSite -Type TeamSite -Title &lt;String&gt; -Alias &lt;String&gt; [-Description &lt;String&gt;] [-Classification &lt;String&gt;] [-IsPublic] [-Lcid &lt;UInt&gt;] [-Owners &lt;String[][]&gt;] [-PreferredDataLocation &lt;Office365Geography&gt;] [-SensitivityLabel &lt;String&gt;] [-HubSiteId &lt;Guid&gt;] [-SiteAlias &lt;String&gt;] [-Wait] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">New-PnPSite -Type TeamSite -Title &lt;String&gt; -Alias &lt;String&gt; [-Description &lt;String&gt;] [-Classification &lt;String&gt;] [-IsPublic] [-Lcid &lt;UInt&gt;] [-Owners &lt;String[][]&gt;] [-PreferredDataLocation &lt;Office365Geography&gt;] [-SensitivityLabel &lt;String&gt;] [-HubSiteId &lt;Guid&gt;] [-SiteAlias &lt;String&gt;] [-TimeZone &lt;PnP.Framework.Enums.TimeZone&gt;] [-Wait] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="communicationsite">CommunicationSite</h3>
-<pre><code class="lang-powershell">New-PnPSite -Type CommunicationSite -Title &lt;String&gt; -Url &lt;String&gt; [-HubSiteId &lt;Guid&gt;] [-Classification &lt;String&gt;] [-SiteDesign &lt;SiteDesign&gt;] [-SiteDesignId &lt;Guid&gt;] [-Lcid &lt;UInt&gt;] [-Owner &lt;String&gt;] [-PreferredDataLocation &lt;Office365Geography&gt;] [-SensitivityLabel &lt;String&gt;]
+<pre><code class="lang-powershell">New-PnPSite -Type CommunicationSite -Title &lt;String&gt; -Url &lt;String&gt; [-HubSiteId &lt;Guid&gt;] [-Classification &lt;String&gt;] [-SiteDesign &lt;SiteDesign&gt;] [-SiteDesignId &lt;Guid&gt;] [-Lcid &lt;UInt&gt;] [-Owner &lt;String&gt;] [-PreferredDataLocation &lt;Office365Geography&gt;] [-SensitivityLabel &lt;String&gt;] [-TimeZone &lt;PnP.Framework.Enums.TimeZone&gt;]
 </code></pre>
 <h3 id="teamsitewithoutmicrosoft365group">TeamSiteWithoutMicrosoft365Group</h3>
-<pre><code class="lang-powershell">New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title &lt;String&gt; -Url &lt;String&gt; [-HubSiteId &lt;Guid&gt;] [-Classification &lt;String&gt;] [-SiteDesignId &lt;Guid&gt;] [-Lcid &lt;UInt&gt;] [-Owner &lt;String&gt;] [-PreferredDataLocation &lt;Office365Geography&gt;] [-SensitivityLabel &lt;String&gt;]
+<pre><code class="lang-powershell">New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title &lt;String&gt; -Url &lt;String&gt; [-HubSiteId &lt;Guid&gt;] [-Classification &lt;String&gt;] [-SiteDesignId &lt;Guid&gt;] [-Lcid &lt;UInt&gt;] [-Owner &lt;String&gt;] [-PreferredDataLocation &lt;Office365Geography&gt;] [-SensitivityLabel &lt;String&gt;] [-TimeZone &lt;PnP.Framework.Enums.TimeZone&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>The New-PnPSite cmdlet creates a new site collection for the current tenant. Currently only 'modern' sites like Communication Site , Modern Microsoft 365 group-connected team sites and Modern Team sites not connected to M365 groups are supported. If you want to create a classic site, use New-PnPTenantSite. Note that the -Type parameter is mandatory to be used to indicate which type of site you would like to create. Based on the type of site you specify, you will be able to provide the additional arguments that are valid for that site type, so it is recommended to provide this as the first argument.</p>
@@ -159,6 +159,10 @@
 <pre><code class="lang-powershell">New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Lcid 1040
 </code></pre>
 <p>This will create a new Modern team site collection not connected to M365 group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the default language to Italian (LCID 1040).</p>
+<h3 id="example-16">EXAMPLE 16</h3>
+<pre><code class="lang-powershell">New-PnPSite -Type TeamSite -TimeZone UTCPLUS0200_HELSINKI_KYIV_RIGA_SOFIA_TALLINN_VILNIUS -Title &quot;Contoso&quot; -Alias &quot;Contoso&quot;
+</code></pre>
+<p>This will create a new Modern team site collection connected to a Microsoft 365 Group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the timezone to UTC + 2 which is the Eastern European time zone.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-alias">-Alias</h3>
 <p>The alias to use for the team site.</p>
@@ -227,7 +231,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-ispublic">-IsPublic</h3>
-<p>Identifies whether the corresponding Microsoft365 group type is Private or Public. If not specified, group is considered Public.
+<p>Identifies whether the corresponding Microsoft365 group type is Private or Public. If not specified, group is considered Private.
 Content in a Public group can be seen by anybody in the organization, and anybody in the organization is able to join the group.
 Content in a Private group can only be seen by the members of the group and people who want to join a private group have to be approved by a group owner.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
@@ -351,6 +355,18 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-timezone">-TimeZone</h3>
+<p>Specifies the timezone of the site to create.
+To get the full list of timezone that you can select, you can visit <a href="https://docs.microsoft.com/dotnet/api/officedevpnp.core.enums.timezone">https://docs.microsoft.com/dotnet/api/officedevpnp.core.enums.timezone</a></p>
+<pre><code class="lang-yaml">Type: Framework.Enums.TimeZone
+Parameter Sets: CommunicationSite, TeamSiteWithoutMicrosoft365Group, TeamSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-type">-Type</h3>
 <p>Specifies with type of site to create.</p>
 <pre><code class="lang-yaml">Type: SiteType
@@ -402,5 +418,12 @@ Accept wildcard characters: False
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
 </html>

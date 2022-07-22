@@ -94,7 +94,7 @@
 <li>We loop through the values you specified to set on the item and depending on the type of field we format the value ready to be added to the item (this -can- introduce additional CSOM requests in the case of taxonomy fields for instance)</li>
 <li>We update the item (this will be a CSOM request to the server)</li>
 </ol>
-<p>All in all you see we make around 6 requests, allthough the exact number depends a bit on what type of fields you are setting. So if you loop through 100 items, you get at least 600 requests.</p>
+<p>All in all you see we make around 6 requests, although the exact number depends a bit on what type of fields you are setting. So if you loop through 100 items, you get at least 600 requests.</p>
 <h2 id="adding-a-item-with-batching-rest">Adding a item with batching (REST)</h2>
 <pre><code class="lang-powershell">$batch = New-PnPBatch
 1..100 | ForEach-Object{ Add-PnPListItem -List &quot;ItemTest&quot; -Values @{&quot;Title&quot;=&quot;Test Item Batched $_&quot;} -Batch $batch }
@@ -113,14 +113,15 @@ Invoke-PnPBatch -Batch $batch
 <p>For instance, removing 520 list items will result in 6 separate requests, the first 5 containing 100 remove requests, the last one containing 20 remove requests.</p>
 <p>If during one of these chunks an exception occurs (for instance you are trying to delete an item that does not exist), by default we will continue processing the remaining batch chunks. If you want to stop processing these remaining batches immediately after an exception occurs, use the <code>-StopOnException</code> switch on <code>Invoke-PnPBatch</code> cmdlet.</p>
 <h2 id="cmdlets-that-support-batching">Cmdlets that support batching</h2>
-<p>As of release 1.7.63-nightly the following cmdlets support batching:</p>
+<p>The following cmdlets support batching. (This support began with the 1.7.63-nightly release.) All cmdlets which support batching display the badge, linking to this article.</p>
+<p><img src="../images/batching/Batching.png" alt="Supports Batching"></p>
 <ul>
-<li><a href="/cmdlets/Add-PnPListItem"><code>Add-PnPListItem</code></a></li>
-<li><a href="/cmdlets/Set-PnPListItem"><code>Set-PnPListItem</code></a></li>
-<li><a href="/cmdlets/Remove-PnPListItem"><code>Remove-PnPListItem</code></a></li>
-<li><a href="/cmdlets/Publish-PnPSyntexModel"><code>Publish-PnPSyntexModel</code></a></li>
-<li><a href="/cmdlets/Unpublish-PnPSyntexModel"><code>Unpublish-PnPSyntexModel</code></a></li>
-<li><a href="/cmdlets/Request-PnPSyntexClassifyAndExtract"><code>Request-PnPSyntexClassifyAndExtract</code></a></li>
+<li><a href="/powershell/cmdlets/Add-PnPListItem.html"><code>Add-PnPListItem</code></a></li>
+<li><a href="/powershell/cmdlets/Set-PnPListItem.html"><code>Set-PnPListItem</code></a></li>
+<li><a href="/powershell/cmdlets/Remove-PnPListItem.html"><code>Remove-PnPListItem</code></a></li>
+<li><a href="/powershell/cmdlets/Publish-PnPSyntexModel.html"><code>Publish-PnPSyntexModel</code></a></li>
+<li><a href="/powershell/cmdlets/Unpublish-PnPSyntexModel.html"><code>Unpublish-PnPSyntexModel</code></a></li>
+<li><a href="/powershell/cmdlets/Request-PnPSyntexClassifyAndExtract.html"><code>Request-PnPSyntexClassifyAndExtract</code></a></li>
 </ul>
 </article>
           </div>
@@ -148,5 +149,12 @@ Invoke-PnPBatch -Batch $batch
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
 </html>

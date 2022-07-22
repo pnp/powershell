@@ -91,7 +91,12 @@
 </ul>
 <p>Returns all or a specific Planner plan for a Microsoft 365 Group.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPPlannerPlan -Group &lt;PlannerGroupPipeBind&gt; [-Identity &lt;PlannerPlanPipeBind&gt;] [-ResolveUserDisplayNames]
+<h3 id="by-group">By Group</h3>
+<pre><code class="lang-powershell">Get-PnPPlannerPlan -Group &lt;PlannerGroupPipeBind&gt; [-Identity &lt;PlannerPlanPipeBind&gt;] [-ResolveIdentities]
+  [&lt;CommonParameters&gt;]
+</code></pre>
+<h3 id="by-plan-id">By Plan Id</h3>
+<pre><code class="lang-powershell">Get-PnPPlannerPlan -Id &lt;String&gt; [-ResolveIdentities]
   [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -105,11 +110,15 @@
 <pre><code class="lang-powershell">Get-PnPPlannerPlan -Group &quot;Marketing&quot; -Identity &quot;Conference Plan&quot;
 </code></pre>
 <p>Returns the specified plan for the Marketing group.</p>
+<h3 id="example-3">Example 3</h3>
+<pre><code class="lang-powershell">Get-PnPPlannerPlan -Id &quot;gndWOTSK60GfPQfiDDj43JgACDCb&quot; -ResolveIdentities
+</code></pre>
+<p>Rerturns the plan with specified ID with resolved identities.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-group">-Group</h3>
 <p>Specify the group containing the plans</p>
 <pre><code class="lang-yaml">Type: PlannerGroupPipeBind
-Parameter Sets: (All)
+Parameter Sets: By Group
 Aliases:
 
 Required: True
@@ -121,7 +130,7 @@ Accept wildcard characters: False
 <h3 id="-identity">-Identity</h3>
 <p>If specified the plan with this ID or Name will be returned.</p>
 <pre><code class="lang-yaml">Type: PlannerPlanPipeBind
-Parameter Sets: (All)
+Parameter Sets: By Group
 Aliases:
 
 Required: False
@@ -130,8 +139,20 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-resolveuserdisplaynames">-ResolveUserDisplayNames</h3>
-<p>{{ Fill ResolveUserDisplayNames Description }}</p>
+<h3 id="-id">-Id</h3>
+<p>If specified the plan with this ID will be returned.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: By Plan Id
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-resolveidentities">-ResolveIdentities</h3>
+<p>Show user display names instead of user IDs.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
@@ -172,5 +193,12 @@ Accept wildcard characters: False
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
 </html>

@@ -90,21 +90,31 @@
 </ul>
 <p>Adds a user to an existing Microsoft Teams instance.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPTeamsUser -Team &lt;TeamsTeamPipeBind&gt; -User &lt;String&gt; -Role &lt;String&gt; [&lt;CommonParameters&gt;]
+<h3 id="user">User</h3>
+<pre><code class="lang-powershell">Add-PnPTeamsUser -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; -User &lt;String&gt; -Role &lt;String&gt; [&lt;CommonParameters&gt;]
+</code></pre>
+<h3 id="users">Users</h3>
+<pre><code class="lang-powershell">Add-PnPTeamsUser -Team &lt;TeamsTeamPipeBind&gt; -Users &lt;String[]&gt; -Role &lt;String&gt; [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet adds one or more users to an existing Team.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Owner
 </code></pre>
-<p>Adds a user as an owner to the team</p>
+<p>Adds a user as an owner to the team.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Add-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Member
 </code></pre>
+<p>Adds a user as a member to the team.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Add-PnPTeamsUser -Team MyTeam -Users &quot;john@doe.com&quot;,&quot;jane@doe.com&quot; -Role Member
 </code></pre>
-<p>Adds users as a member to the team</p>
+<p>Adds multiple users as members to the team.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Add-PnPTeamsUser -Team MyTeam -User &quot;jane@doe.com&quot; -Role Member -Channel Private
+</code></pre>
+<p>Adds user as a member to a private channel named Private in MyTeam team.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-role">-Role</h3>
 <p>Specify the role of the user</p>
@@ -124,6 +134,17 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-channel">-Channel</h3>
+<p>Specify the channel id or name of the team to retrieve.</p>
+<pre><code class="lang-yaml">Type: TeamsChannelPipeBind
+Parameter Sets: (User)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -179,5 +200,12 @@ Accept wildcard characters: False
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
 </html>

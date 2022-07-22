@@ -104,7 +104,7 @@
 </code></pre>
 <p>Updates the custom action representing the client side extension registration with the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2'.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPApplicationCustomizer -ClientSideComponentId aa66f67e-46c0-4474-8a82-42bf467d07f2 -Scope web -ClientSideComponentProperties &quot;{`&quot;sourceTermSet`&quot;:`&quot;PnP-CollabFooter-SharedLinks`&quot;,`&quot;personalItemsStorageProperty`&quot;:`&quot;PnP-CollabFooter-MyLinks`&quot;}
+<pre><code class="lang-powershell">Set-PnPApplicationCustomizer -ClientSideComponentId aa66f67e-46c0-4474-8a82-42bf467d07f2 -Scope web -ClientSideComponentProperties &quot;{`&quot;sourceTermSet`&quot;:`&quot;PnP-CollabFooter-SharedLinks`&quot;,`&quot;personalItemsStorageProperty`&quot;:`&quot;PnP-CollabFooter-MyLinks`&quot;}&quot;
 </code></pre>
 <p>Updates the custom action(s) properties being registered for a SharePoint Framework solution having the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2' in its manifest from the current web.</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -134,18 +134,6 @@ Accept wildcard characters: False
 <p>The Client Side Host Properties of the application customizer to update. Omit to not update this property.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-confirm">-Confirm</h3>
-<p>Prompts you for confirmation before running the cmdlet.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
 
 Required: False
 Position: Named
@@ -260,5 +248,12 @@ Accept wildcard characters: False
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
 </html>

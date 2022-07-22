@@ -90,7 +90,7 @@
 </ul>
 <p>Returns messages from the specified Microsoft Teams Channel.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPTeamsChannelMessage -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; [-IncludeDeleted]
+<pre><code class="lang-powershell">Get-PnPTeamsChannelMessage -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; [-Identity &lt;TeamsChannelMessagePipeBind&gt;] [-IncludeDeleted]
   [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -99,7 +99,22 @@
 <pre><code class="lang-powershell">Get-PnPTeamsChannelMessage -Team MyTestTeam -Channel &quot;My Channel&quot;
 </code></pre>
 <p>Gets all messages of the specified channel</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPTeamsChannelMessage -Team MyTestTeam -Channel &quot;My Channel&quot; -Identity 1653089769293
+</code></pre>
+<p>Gets a specific message of the specified channel</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-team">-Team</h3>
+<p>Specify the group id, mailNickname or display name of the team to use.</p>
+<pre><code class="lang-yaml">Type: TeamsTeamPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-channel">-Channel</h3>
 <p>Specify id or name of the channel to use.</p>
 <pre><code class="lang-yaml">Type: TeamsChannelPipeBind
@@ -111,23 +126,23 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-includedeleted">-IncludeDeleted</h3>
-<p>Specify to include deleted messages</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
+<h3 id="-identity">-Identity</h3>
+<p>Specify the id of the message to use.</p>
+<pre><code class="lang-yaml">Type: TeamsChannelMessagePipeBind
 Parameter Sets: (All)
-
 Required: False
+
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-team">-Team</h3>
-<p>Specify the group id, mailNickname or display name of the team to use.</p>
-<pre><code class="lang-yaml">Type: TeamsTeamPipeBind
+<h3 id="-includedeleted">-IncludeDeleted</h3>
+<p>Specify to include deleted messages.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -161,5 +176,12 @@ Accept wildcard characters: False
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
 </html>

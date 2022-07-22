@@ -96,7 +96,13 @@
  [-Approve] [-ApproveComment &lt;String&gt;] [-Publish] [-PublishComment &lt;String&gt;] [-UseWebDav] [-Values &lt;Hashtable&gt;]
  [-ContentType &lt;ContentTypePipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
+<h3 id="create-or-update-file-from-text">Create or update file from text</h3>
+<pre><code class="lang-powershell">Add-PnPFile -Folder &lt;FolderPipeBind&gt; -FileName &lt;String&gt; -Content &lt;text&gt; [-Checkout] [-CheckInComment &lt;String&gt;]
+ [-Approve] [-ApproveComment &lt;String&gt;] [-Publish] [-PublishComment &lt;String&gt;] [-UseWebDav] [-Values &lt;Hashtable&gt;]
+ [-ContentType &lt;ContentTypePipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+</code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet uploads a local file, file from a stream or plain text to the specified folder.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPFile -Path c:\temp\company.master -Folder &quot;_catalogs/masterpage&quot;
@@ -126,6 +132,10 @@
 <pre><code class="lang-powershell">Add-PnPFile -Path sample.docx -Folder &quot;Documents&quot; -NewFileName &quot;differentname.docx&quot;
 </code></pre>
 <p>This will upload a local file sample.docx to the Documents folder giving it the filename differentname.docx on SharePoint</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Add-PnPFile -FileName sample.txt -Folder &quot;Shared Documents&quot; -Content '{ &quot;Test&quot;: &quot;Value&quot; }'
+</code></pre>
+<p>This will create a file sample.docx in the Documents library inserting the provided plain text into it. If a similarly file already exists at this location, its contents will be overwritten.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-approve">-Approve</h3>
 <p>Will auto approve the uploaded file</p>
@@ -280,6 +290,17 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-content">-Content</h3>
+<p>Content to add to the file to create or overwrite on SharePoint. It will blindly overwrite the contents of the file if it already exists.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: ASTEXT
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-values">-Values</h3>
 <p>Use the internal names of the fields when specifying field names.</p>
 <p>Single line of text: -Values @{&quot;Title&quot; = &quot;Title New&quot;}</p>
@@ -338,5 +359,12 @@ Accept wildcard characters: False
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
 </html>

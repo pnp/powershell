@@ -88,17 +88,21 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Retrieves the current quota set on the OneDrive for Business site for a specific user</p>
+<p>Retrieves the current quota set on the OneDrive for Business site for a specific user in bytes.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Get-PnPUserOneDriveQuota [-Account] &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This command allows you to request the quota set on the OneDrive for Business site of a specific user. You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet.<p>
+<p>This command allows you to request the quota set on the OneDrive for Business site of a specific user.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPUserOneDriveQuota -Account 'user@domain.com'
 </code></pre>
-<p>Returns the quota set on the OneDrive for Business site for the specified user</p>
+<p>Returns the quota set on the OneDrive for Business site for the specified user in bytes</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">(Get-PnPUserOneDriveQuota -Account 'user@domain.com') / 1gb
+</code></pre>
+<p>Returns the quota set on the OneDrive for Business site for the specified user in gigabytes</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-account">-Account</h3>
 <p>The account of the user, formatted either as a login name, or as a claims identity, e.g. i:0#.f|membership|user@domain.com</p>
@@ -124,7 +128,7 @@ Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
-</tenant></article>
+</article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
@@ -150,5 +154,12 @@ Accept wildcard characters: False
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
 </html>

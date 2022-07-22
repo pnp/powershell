@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Using PnP PowerShell in Azure Cloud Shell | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Using PnP PowerShell in Azure Cloud Shell | PnP PowerShell ">
+    <meta name="generator" content="docfx 2.51.0.0">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/azurecloudshell.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+                    <h1 id="using-pnp-powershell-in-azure-cloud-shell">Using PnP PowerShell in Azure Cloud Shell</h1>
+
+<p>In this article we will explain how to use PnP PowerShell inside <a href="https://docs.microsoft.com/en-us/azure/cloud-shell/overview">Azure Cloud Shell</a>. Using Azure Cloud Shell can come in handy in several scenarios. For example if policies on your local machine block you from installing PowerShell modules, you're behind a proxy which causes problems for your requests or you're on a shared machine which you don't want to pollute. With Azure Cloud Shell you open a PowerShell session which runs within Azure and outputs to you through i.e. a normal web browser via <a href="https://shell.azure.com">shell.azure.com</a>, <a href="https://github.com/microsoft/terminal#welcome-to-the-windows-terminal-console-and-command-line-repo">Windows Terminal</a> or using any of the growing numbers of locations throughout the Microsoft products where the Azure Cloud Shell icon is visible (Microsoft 365 Admin Center, Teams Admin Center, Azure Portal, etc.).</p>
+<p><img src="../images/azurecloudshell/launchcloudshellfromteamsadmin.png" alt="Launch Azure Cloud Shell from the Teams Admin center"></p>
+<p><img src="../images/azurecloudshell/launchcloudshellfromm365admin.png" alt="Launch Azure Cloud Shell from the Microsoft 365 Admin center"></p>
+<p><img src="../images/azurecloudshell/launchcloudshellfromazureportal.png" alt="Launch Azure Cloud Shell from the Azure Portal"></p>
+<h2 id="requirements">Requirements</h2>
+<p>You need to have access to an Azure Subscription. The usage of Azure Cloud Shell itself is free, however it requires an Azure File Share with Storage Account behind it to store files, which is billed against normal rates. A Visual Studio subscription with Azure Benefits is ideal to use for this.</p>
+<h2 id="set-up-azure-cloud-shell">Set up Azure Cloud Shell</h2>
+<p>If you haven't used Azure Cloud Shell yet, follow these steps to get it going:</p>
+<ol>
+<li>Open a web browser and go to <a href="https://shell.azure.com">https://shell.azure.com</a></li>
+<li>Follow the steps on the screen. When asked to choose between Bash or PowerShell, choose PowerShell. When asked to create a new storage account, use the default or go for advanced if you wish to specify the names of the components yourself.</li>
+</ol>
+<p>Once done, you should be seeing a blue PowerShell like environment running from your browser.</p>
+<p><img src="../images/azurecloudshell/launchingthroughbrowser.png" alt="Azure Cloud Shell opened from the browser"></p>
+<h2 id="add-pnp-powershell-to-your-azure-cloud-shell">Add PnP PowerShell to your Azure Cloud Shell</h2>
+<p>After completing the steps of the previous paragraph to get Azure Cloud Shell set up for your account, you can now add PnP PowerShell to your environment. You only need to do this once. Every time you return to Azure Cloud Shell, it will still have the module available to be used. You still have to manually update it to a newer version of PnP PowerShell, once one will be released, though, just like locally.</p>
+<ol>
+<li><p>In the Azure Cloud Shell, on the prompt, enter</p>
+<pre><code class="lang-powershell">Install-Module PnP.PowerShell -AllowPrerelease
+</code></pre>
+<p><img src="../images/azurecloudshell/installmodule.png" alt="Installing PnP PowerShell in Azure Cloud Shell"></p>
+</li>
+<li><p>If asked to confirm that you wish to install the module from an untrusted repository, respond with <code>Y</code></p>
+</li>
+</ol>
+<h2 id="connecting-to-your-microsoft-365-environment-from-azure-cloud-shell">Connecting to your Microsoft 365 Environment from Azure Cloud Shell</h2>
+<p>Not every <a href="connecting.html">available option within PnP PowerShell to authenticate</a> will work due to the Azure Cloud Shell not being able to show a visual login screen. Choose below how you will authenticate.</p>
+<h3 id="by-using-device-login">By using Device Login</h3>
+<p>Using the Device Login option will allow you to use any browser session on any device to authenticate your Azure Cloud Shell connection attempt. Follow these steps to do so.</p>
+<ol>
+<li><p>In Azure Cloud Shell, enter:</p>
+<pre><code class="lang-powershell">Connect-PnPOnline https://yourtenant.sharepoint.com -DeviceLogin
+</code></pre>
+<p><img src="../images/azurecloudshell/devicelogin.png" alt="Connecting using the DeviceLogin option"></p>
+</li>
+<li><p>Open a web browser on any device and navigate to <a href="https://microsoft.com/devicelogin">https://microsoft.com/devicelogin</a></p>
+</li>
+<li><p>Type over or copy/paste the code shown in the yellow area of the Azure Cloud Shell</p>
+<p><img src="../images/azurecloudshell/deviceloginentercode.png" alt="Entering the code from Azure Cloud Shell into the Microsoft device login"></p>
+</li>
+<li><p>Log in with the account you wish to connect the Azure Cloud Shell with to your Microsoft 365 environment</p>
+</li>
+<li><p>Click on <code>Continue</code> to confirm you are logging on to the PnP Management Shell</p>
+</li>
+<li><p>You can now safely close the browser you have used to perform the device login</p>
+</li>
+<li><p>Return to the Azure Cloud Shell. If it shows the prompt again, you have successfully been signed in to your Microsoft 365 tenant and can now perform PnP PowerShell cmdlets like you're used to.</p>
+<p><img src="../images/azurecloudshell/deviceloginconnected.png" alt="Prompt showing that you have connected using the device login"></p>
+</li>
+</ol>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>There is one final important remark to make. When connecting using the <code>-DeviceLogin</code> option, PnP PowerShell cannot automatically switch to the <code>yourtenant-admin.sharepoint.com</code> context, meaning any cmdlets you try to run that require being connected to the admin portal, will need you to use <code>Connect-PnPOnline https://yourtenant-admin.sharepoint.com -DeviceLogin</code> yourself first to authenticate specifically to the admin site before you can use them.</p>
+</div>
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://telemetry.sharepointpnp.com/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
+</html>

@@ -98,7 +98,7 @@
 </code></pre>
 <p>Sets the background image of the heading of the site to the provided image</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPWebHeader -HeaderEmphasis String
+<pre><code class="lang-powershell">Set-PnPWebHeader -HeaderEmphasis Strong
 </code></pre>
 <p>Sets the site to use a strong colored bar at the top of the site</p>
 <h3 id="example-3">EXAMPLE 3</h3>
@@ -107,7 +107,7 @@
 <p>Sets the site title and logo to be displayed in the middle of the screen</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-logoalignment">-LogoAlignment</h3>
-<p>Allows configuring the site title and logo to be shown on the left (default), in the middle or at the right.</p>
+<p>Allows configuring the site title and logo to be shown on the left (default), in the middle or on the right.</p>
 <pre><code class="lang-yaml">Type: LogoAlignment
 Parameter Sets: (All)
 Accepted values: Left, Middle, Right
@@ -163,7 +163,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-headeremphasis">-HeaderEmphasis</h3>
-<p>Allows defining the tone of color used for the bar at shown at the top of the site under the site name and logo</p>
+<p>Defines the tone of color used for the bar at shown at the top of the site under the site name and logo</p>
 <pre><code class="lang-yaml">Type: SPVariantThemeType
 Parameter Sets: (All)
 Accepted values: None, Neutral, Soft, Strong
@@ -175,7 +175,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-headerlayout">-HeaderLayout</h3>
-<p>Allows defining how the header of the site should be layed out</p>
+<p>Defines how the header of the site should be layed out</p>
 <pre><code class="lang-yaml">Type: HeaderLayoutType
 Parameter Sets: (All)
 Accepted values: None, Standard, Compact, Minimal, Extended
@@ -198,7 +198,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-hidetitleinheader">-HideTitleInHeader</h3>
-<p>Toggle the title visiblity in the header.</p>
+<p>Toggle the title visibility in the header.</p>
 <p>Set -HideTitleInHeader:$false to show the header</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
@@ -237,5 +237,12 @@ Accept wildcard characters: False
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
 </html>

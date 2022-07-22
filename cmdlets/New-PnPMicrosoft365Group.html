@@ -91,7 +91,7 @@
 <p>Creates a new Microsoft 365 Group</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName &lt;String&gt; -Description &lt;String&gt; -MailNickname &lt;String&gt;
- [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam] [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-Force]
+ [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam] [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-ResourceBehaviorOptions &lt;TeamResourceBehaviorOptions&gt;] [-Force] [-SensitivityLabels &lt;GUID[]&gt;]
   [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -112,6 +112,14 @@
 <pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers -IsPrivate
 </code></pre>
 <p>Creates a private Microsoft 365 Group with all the required properties, and with a custom list of Owners and a custom list of Members</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName &quot;myPnPDemo1&quot; -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers -IsPrivate -ResourceBehaviorOptions WelcomeEmailDisabled, HideGroupInOutlook
+</code></pre>
+<p>This will create a new Microsoft 365 Group called &quot;myPnPDemo1&quot; and sets the privacy to Private. Welcome Email will not be sent when the Group is created. The M365 Group will also not be visible in Outlook.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname -IsPrivate -SensitivityLabels &quot;bc98af29-59eb-4869-baaa-9a8dff631aa4&quot;
+</code></pre>
+<p>Creates a private Microsoft 365 Group with all the required properties and applies the sensitivity label.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-createteam">-CreateTeam</h3>
 <p>Creates a Microsoft Teams team associated with created group</p>
@@ -234,6 +242,28 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-resourcebehavioroptions">-ResourceBehaviorOptions</h3>
+<p>Allows providing ResourceBehaviorOptions which accepts multiple values that specify group behaviors for a Microsoft 365 Group.</p>
+<pre><code class="lang-yaml">Type: TeamResourceBehaviorOptions
+Parameter Sets: (All)
+Accepted values: AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeNewGroupMembers, WelcomeEmailDisabled
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-sensitivitylabels">-SensitivityLabels</h3>
+<p>The Sensitivity label to be set to the Microsoft 365 Group. To retrieve the sensitivity label you need to use the Graph API mentioned <a href="https://docs.microsoft.com/en-us/graph/api/informationprotectionlabel-get?view=graph-rest-beta&amp;tabs=http">here</a>.</p>
+<pre><code class="lang-yaml">Type: GUID[]
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
 <a href="https://docs.microsoft.com/graph/api/group-post-groups">Microsoft Graph documentation</a></p>
@@ -263,5 +293,12 @@ Accept wildcard characters: False
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
 </html>

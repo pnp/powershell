@@ -105,22 +105,23 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADAppSitePermission
 </code></pre>
-<p>Returns the apps that have permissions for the currently connected to site. Notice that if PermissionId is not specified the Roles property is not populated. This is a current API limitation.</p>
+<p>Returns the apps that have permissions for the currently connected to site. Note that if PermissionId is not specified then the Roles property is not populated. This is a current API limitation.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADAppSitePermissions -Site https://contoso.sharepoint.com/sites/projects
 </code></pre>
-<p>Returns the apps that have permissions for the site specified. Notice that you require to have the SharePoint Administrator role in your tenant to be able to use this.</p>
+<p>Returns the apps that have permissions for the site specified. Note that you required to have the SharePoint Administrator role in your tenant to be able to use this command.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADAppSitePermission -PermissionId TowaS50fG1zLnNwLmV4dHwxYxNmI0OTI1
 </code></pre>
-<p>Returns the specific app details given the permission id for the current site.</p>
+<p>Returns the specific app permission details for the given permission id for the current site</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADAppSitePermission -AppIdentity &quot;Test App&quot;
 </code></pre>
+<p>Returns the specific app permission details for the app with the provided name</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADAppSitePermission -AppIdentity &quot;14effc36-dc8b-4f68-8919-f6beb7d847b3&quot;
 </code></pre>
-<p>Returns the specific app details given the id of the app specified</p>
+<p>Returns the specific app permission details for the app with the provided Id</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-permissionid">-PermissionId</h3>
 <p>If specified the permission with that id specified will be retrieved</p>
@@ -183,5 +184,12 @@ Accept wildcard characters: False
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
 </html>

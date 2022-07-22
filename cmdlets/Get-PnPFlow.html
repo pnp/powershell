@@ -94,18 +94,18 @@
 [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlets returns the flows for a given enviroment.</p>
+<p>This cmdlet returns the flows for a given enviroment.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
 <pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
 Get-PnPFlow -Environment $environment
 </code></pre>
-<p>This returns all the flows for a given power platform environment</p>
+<p>This returns all the flows for a given Power Platform environment</p>
 <h3 id="example-2">Example 2</h3>
 <pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
 Get-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 </code></pre>
-<p>This returns specific flow</p>
+<p>This returns a specific flow</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-environment">-Environment</h3>
 <p>The name of the Power Platform environment or an Environment object to retrieve the available flows for.</p>
@@ -184,5 +184,12 @@ Accept wildcard characters: False
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
 </html>

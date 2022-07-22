@@ -88,7 +88,7 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Retrieve site information.</p>
+<p>Retrieves site collection information</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-site">By Site</h3>
 <pre><code class="lang-powershell">Get-PnPTenantSite [-Identity] &lt;string&gt; [-Detailed] [-DisableSharingForNonOwnersStatus] [-Connection &lt;PnPConnection&gt;]
@@ -99,40 +99,44 @@
     &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Use this cmdlet to retrieve site information from your tenant administration.</p>
+<p>This cmdlet allows for retrieval of site collection information through the SharePoint Online tenant site. It requires having SharePoint Online administrator access.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPTenantSite
 </code></pre>
-<p>Returns all site collections</p>
+<p>Returns all site collections except the OneDrive for Business sites with basic information on them</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPTenantSite -Identity &quot;http://tenant.sharepoint.com/sites/projects&quot;
-</code></pre>
-<p>Returns information about the project site</p>
-<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPTenantSite -Detailed
 </code></pre>
-<p>Returns all sites with the full details of these sites</p>
-<h3 id="example-4">EXAMPLE 4</h3>
+<p>Returns all site collections except the OneDrive for Business sites with the full details on them</p>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPTenantSite -IncludeOneDriveSites
 </code></pre>
-<p>Returns all sites including all OneDrive for Business sites</p>
-<h3 id="example-5">EXAMPLE 5</h3>
+<p>Returns all site collections including all OneDrive for Business sites</p>
+<h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPTenantSite -IncludeOneDriveSites -Filter &quot;Url -like '-my.sharepoint.com/personal/'&quot;
 </code></pre>
-<p>Returns all OneDrive for Business sites</p>
+<p>Returns only OneDrive for Business site collections</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Get-PnPTenantSite -Identity &quot;http://tenant.sharepoint.com/sites/projects&quot;
+</code></pre>
+<p>Returns information of the site collection with the provided url</p>
 <h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Get-PnPTenantSite -Identity 7e8a6f56-92fe-4b22-9364-41799e579e8a
+</code></pre>
+<p>Returns information of the site collection with the provided Id</p>
+<h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">Get-PnPTenantSite -Template SITEPAGEPUBLISHING#0
 </code></pre>
-<p>Returns all Communication sites</p>
-<h3 id="example-7">EXAMPLE 7</h3>
+<p>Returns all Communication site collections</p>
+<h3 id="example-8">EXAMPLE 8</h3>
 <pre><code class="lang-powershell">Get-PnPTenantSite -Filter &quot;Url -like 'sales'&quot;
 </code></pre>
-<p>Returns all sites including 'sales' in the url</p>
-<h3 id="example-8">EXAMPLE 8</h3>
+<p>Returns all site collections having 'sales' in their url</p>
+<h3 id="example-9">EXAMPLE 9</h3>
 <pre><code class="lang-powershell">Get-PnPTenantSite -GroupIdDefined $true
 </code></pre>
-<p>Returns all sites which have an underlying Microsoft 365 Group</p>
+<p>Returns all site collections which have an underlying Microsoft 365 Group</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -168,7 +172,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-filter">-Filter</h3>
-<p>Specifies the script block of the server-side filter to apply. See <a href="https://technet.microsoft.com/en-us/library/fp161380.aspx">https://technet.microsoft.com/en-us/library/fp161380.aspx</a></p>
+<p>Specifies the script block of the server-side filter to apply. See <a href="https://docs.microsoft.com/powershell/module/sharepoint-online/get-sposite?view=sharepoint-ps#:%7E:text=SharePoint%20Online-,%2DFilter,-Specifies%20the%20script">https://docs.microsoft.com/powershell/module/sharepoint-online/get-sposite?view=sharepoint-ps#:~:text=SharePoint%20Online-,%2DFilter,-Specifies%20the%20script</a>.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: All sites
 
@@ -212,7 +216,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The URL of the site</p>
+<p>The URL or Id of the site collection. Requesting a site collection by its Id only works for modern SharePoint Online site collections.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: By Site
 Aliases: Url
@@ -251,5 +255,12 @@ Accept wildcard characters: False
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
 </html>
