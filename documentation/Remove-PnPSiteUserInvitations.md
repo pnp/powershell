@@ -21,11 +21,10 @@ Searches against all stored sharing links and removes an email invite.
 
 ```powershell
 Remove-PnPSiteUserInvitations [[-Site] <SitePipeBind>] [-EmailAddress] <string>
-   [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Searches against all stored sharing links on a Site and removes an email invits. If the site parameter is omitted the current site will be searched.
+Searches against all stored sharing links on a Site and removes an email invites. If the site parameter is omitted the current site will be searched.
 
 ## EXAMPLES
 
