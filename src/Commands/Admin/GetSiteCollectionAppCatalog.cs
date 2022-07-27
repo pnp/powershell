@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model.SharePoint;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
@@ -16,10 +16,10 @@ namespace PnP.PowerShell.Commands
     public class GetSiteCollectionAppCatalog : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false)]
-        public SwitchParameter ExcludeDeletedSites;     
+        public SwitchParameter ExcludeDeletedSites;
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter CurrentSite;  
+        public SwitchParameter CurrentSite;
 
         protected override void ExecuteCmdlet()
         {
@@ -27,10 +27,11 @@ namespace PnP.PowerShell.Commands
 
             var appCatalogsCsom = ClientContext.Web.TenantAppCatalog.SiteCollectionAppCatalogsSites;
             ClientContext.Load(appCatalogsCsom);
-            ClientContext.ExecuteQueryRetry();            
+            ClientContext.ExecuteQueryRetry();
 
             var appCatalogsLocalModel = appCatalogsCsom.Select(ac =>
-                new SiteCollectionAppCatalog {
+                new SiteCollectionAppCatalog
+                {
                     AbsoluteUrl = ac.AbsoluteUrl,
                     ErrorMessage = ac.ErrorMessage,
                     SiteID = ac.SiteID
@@ -39,7 +40,7 @@ namespace PnP.PowerShell.Commands
 
             WriteVerbose($"{appCatalogsLocalModel.Count} site collection App Catalog{(appCatalogsLocalModel.Count != 1 ? "s have" : " has")} been retrieved");
 
-            if(CurrentSite.ToBool())
+            if (CurrentSite.ToBool())
             {
                 SiteContext.Site.EnsureProperties(s => s.Id);
 
@@ -48,7 +49,7 @@ namespace PnP.PowerShell.Commands
 
                 appCatalogsLocalModel.Clear();
 
-                if(currentSite == null)
+                if (currentSite == null)
                 {
                     WriteVerbose($"Current site at {Connection.Url} with ID {SiteContext.Site.Id} does not have a site collection App Catalog on it");
                     return;
@@ -66,21 +67,29 @@ namespace PnP.PowerShell.Commands
                     {
                         WriteVerbose($"Validating site collection App Catalog at {appCatalogLocalModel.AbsoluteUrl}");
 
+                        // Deleted sites throw either an exception or return null
                         appCatalogLocalModel.AbsoluteUrl = Tenant.GetSitePropertiesById(appCatalogLocalModel.SiteID.Value, false).Url;
                         results.Add(appCatalogLocalModel);
                     }
-                    catch (Microsoft.SharePoint.Client.ServerException e) when (e.ServerErrorTypeName.Equals("Microsoft.Online.SharePoint.Common.SpoNoSiteException", StringComparison.InvariantCultureIgnoreCase))
-                    {                        
-                        if(!ExcludeDeletedSites.ToBool())
+                    catch (Exception e)
+                    {
+                        if (e is NullReferenceException || (e is ServerException se && se.ServerErrorTypeName.Equals("Microsoft.Online.SharePoint.Common.SpoNoSiteException", StringComparison.InvariantCultureIgnoreCase)))
                         {
-                            WriteVerbose($"Site collection App Catalog at {appCatalogLocalModel.AbsoluteUrl} regards a site that has been deleted");
-                            results.Add(appCatalogLocalModel);
+                            if (!ExcludeDeletedSites.ToBool())
+                            {
+                                WriteVerbose($"Site collection App Catalog at {appCatalogLocalModel.AbsoluteUrl} regards a site that has been deleted");
+                                results.Add(appCatalogLocalModel);
+                            }
+                            else
+                            {
+                                WriteVerbose($"Site collection App Catalog at {appCatalogLocalModel.AbsoluteUrl} regards a site that has been deleted. Since the {nameof(ExcludeDeletedSites)} flag has been provided, it will not be included in the results.");
+                            }
+
+                            continue;
                         }
-                        else
-                        {
-                            WriteVerbose($"Site collection App Catalog at {appCatalogLocalModel.AbsoluteUrl} regards a site that has been deleted. Since the {nameof(ExcludeDeletedSites)} flag has been provided, it will not be included in the results.");
-                        }
-                    }                    
+
+                        throw;
+                    }
                 }
             }
 
