@@ -20,8 +20,7 @@ Revokes the specified principals rights to use the site design.
 ## SYNTAX
 
 ```powershell
-Revoke-PnPSiteDesignRights [-Identity] <TenantSiteDesignPipeBind> -Principals <String[]>
- [-Connection <PnPConnection>] 
+Revoke-PnPSiteDesignRights [-Identity] <TenantSiteDesignPipeBind> -Principals <String[]> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -87,8 +86,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
