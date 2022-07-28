@@ -20,8 +20,7 @@ Removes a site collection from the Tenant recycle bin.
 ## SYNTAX
 
 ```powershell
-Remove-PnPTenantDeletedSite [-Url] <String> [-Force] [-NoWait] [-Connection <PnPConnection>]
- [<CommonParameters>]
+Remove-PnPTenantDeletedSite [-Url] <String> [-Force] [-NoWait] [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ## DESCRIPTION
@@ -45,17 +44,17 @@ This will remove the site collection with the url 'https://tenant.sharepoint.com
 
 ## PARAMETERS
 
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+### -Identity
+Specifies the full URL of the site collection that needs to be deleted.
 
 ```yaml
-Type: PnPConnection
+Type: String
 Parameter Sets: (All)
 
-Required: False
-Position: Named
+Required: True
+Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -87,22 +86,34 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-### -Identity
-Specifies the full URL of the site collection that needs to be deleted.
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
-Type: String
+Type: PnPConnection
 Parameter Sets: (All)
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

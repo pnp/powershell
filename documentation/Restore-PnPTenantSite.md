@@ -20,8 +20,7 @@ Restores a site collection from the Tenant recycle bin.
 ## SYNTAX
 
 ```powershell
-Restore-PnPTenantSite [-Identity] <String> [-Force] [-NoWait] [-Connection <PnPConnection>]
- [<CommonParameters>]
+Restore-PnPTenantSite [-Identity] <String> [-Force] [-NoWait] [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ## DESCRIPTION
@@ -34,28 +33,35 @@ Restores a site collection which is listed in your tenant administration site fr
 Restore-PnPTenantSite -Identity "https://tenant.sharepoint.com/sites/contoso"
 ```
 
-This will restore the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin.
+This will restore the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin asking for confirmation to restore the site collection and will wait with the execution of the script until the site collection is restored.
 
 ### EXAMPLE 2
 ```powershell
 Restore-PnPTenantSite -Identity "https://tenant.sharepoint.com/sites/contoso" -Force
 ```
 
-This will restore the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' with force from the recycle bin.
+This will restore the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin not asking for confirmation to restore the site collection and will wait with the execution of the script until the site collection is restored.
+
+### EXAMPLE 3
+```powershell
+Restore-PnPTenantSite -Identity "https://tenant.sharepoint.com/sites/contoso" -Force -NoWait
+```
+
+This will restore the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin not asking for confirmation to restore the site collection and will immediately continue with the execution of the script
 
 ## PARAMETERS
 
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+### -Identity
+Specifies the full URL of the site collection that needs to be restored.
 
 ```yaml
-Type: PnPConnection
+Type: String
 Parameter Sets: (All)
 
-Required: False
-Position: Named
+Required: True
+Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -87,22 +93,34 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-### -Identity
-Specifies the full URL of the site collection that needs to be restored.
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
-Type: String
+Type: PnPConnection
 Parameter Sets: (All)
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

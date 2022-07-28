@@ -115,8 +115,7 @@ namespace PnP.PowerShell.Commands
             }
             catch (PipelineStoppedException)
             {
-                //don't swallow pipeline stopped exception
-                //it makes select-object work weird
+                // Don't swallow pipeline stopped exception, it makes select-object work weird
                 throw;
             }
             catch (PnP.Core.SharePointRestServiceException ex)
@@ -147,26 +146,36 @@ namespace PnP.PowerShell.Commands
             base.EndProcessing();
         }
 
+        /// <summary>
+        /// Waits for the SpoOperation to complete
+        /// </summary>
+        /// <param name="spoOperation">The operation to wait for to be completed</param>
+        /// <exception cref="TimeoutException">Exception thrown when the waiting operation takes too long and times out</exception>
         protected void PollOperation(SpoOperation spoOperation)
         {
             while (true)
             {
-                if (!spoOperation.IsComplete)
+                if (spoOperation.IsComplete)
                 {
-                    if (spoOperation.HasTimedout)
-                    {
-                        throw new TimeoutException("SharePoint Operation Timeout");
-                    }
-                    Thread.Sleep(spoOperation.PollingInterval);
-                    if (Stopping)
-                    {
-                        break;
-                    }
-                    ClientContext.Load(spoOperation);
-                    ClientContext.ExecuteQueryRetry();
-                    continue;
+                    WriteVerbose("Operation completed");
+                    return;
                 }
-                return;
+                if (spoOperation.HasTimedout)
+                {
+                    WriteVerbose("Operation timed out");
+                    throw new TimeoutException("SharePoint Operation Timeout");
+                }
+
+                Thread.Sleep(spoOperation.PollingInterval);
+                
+                if (Stopping)
+                {
+                    break;
+                }
+                
+                WriteVerbose("Checking for operation status");
+                ClientContext.Load(spoOperation);
+                ClientContext.ExecuteQueryRetry();
             }
             WriteWarning("SharePoint Operation Wait Interrupted");
         }

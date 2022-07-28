@@ -15,12 +15,7 @@ Invokes a job to swap the location of a site with another site while archiving t
 ## SYNTAX
 
 ```powershell
-Invoke-PnPSiteSwap 
-         -SourceUrl <string>
-         -TargetUrl <string>
-         -ArchiveUrl <string>
-         [-DisableRedirection]
-         [-NoWait] 
+Invoke-PnPSiteSwap -SourceUrl <string> -TargetUrl <string> -ArchiveUrl <string> [-DisableRedirection] [-NoWait] [-Verbose] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -132,7 +127,34 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
