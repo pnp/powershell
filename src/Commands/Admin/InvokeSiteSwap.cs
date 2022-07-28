@@ -1,5 +1,4 @@
 ﻿using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
@@ -30,6 +29,8 @@ namespace PnP.PowerShell.Commands.Admin
         protected override void ExecuteCmdlet()
         {
             var includeSmartGestures = !DisableRedirection;
+
+            WriteVerbose($"Invoking site swap with source {SourceUrl}, target {TargetUrl} and archive {ArchiveUrl}");
 
             var operation = this.Tenant.SwapSiteWithSmartGestureOption(SourceUrl, TargetUrl, ArchiveUrl, includeSmartGestures);
             ClientContext.Load(operation);
