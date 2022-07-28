@@ -15,8 +15,7 @@ Restores a specific file version.
 ## SYNTAX
 
 ```powershell
-Restore-PnPFileVersion -Url <String> [-Identity <FileVersionPipeBind>] [-Force] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+Restore-PnPFileVersion -Url <String> -Identity <FileVersionPipeBind> [-Force] [-Verbose] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -47,20 +46,6 @@ Restores the file version with label "Version 1.0".
 
 ## PARAMETERS
 
-### -Force
-If provided, no confirmation will be requested and the action will be performed.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Identity
 The identity of the version. Use ID or label.
 
@@ -89,6 +74,34 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Force
+If provided, no confirmation will be requested and the action will be performed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
@@ -106,4 +119,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
