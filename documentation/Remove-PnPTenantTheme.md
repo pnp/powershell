@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTenantTheme.h
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Removes a theme
+Removes a theme.
 
 ## SYNTAX
 
@@ -24,7 +24,7 @@ Remove-PnPTenantTheme [-Identity] <ThemePipeBind> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
-Removes the specified theme from the tenant configuration
+Removes the specified theme from the tenant configuration.
 
 ## EXAMPLES
 
@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The name of the theme to retrieve
+The name of the theme to remove.
 
 ```yaml
 Type: ThemePipeBind
