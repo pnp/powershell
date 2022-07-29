@@ -108,6 +108,10 @@
 <pre><code class="lang-powershell">Set-PnPView -List &quot;Documents&quot; -Identity &quot;Corporate Documents&quot; -Fields &quot;Title&quot;,&quot;Created&quot; -Aggregations &quot;&lt;FieldRef Name='Title' Type='COUNT'/&gt;&quot;
 </code></pre>
 <p>Updates the Corporate Documents view on the Documents library and sets the totals (aggregations) to Count on the Title field</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Set-PnPView -List &quot;Documents&quot; -Identity &quot;Dept Documents&quot; -Fields &quot;Title,&quot;Created&quot; -Values @{Paged=$true;RowLimit=[UInt32]&quot;100&quot;}
+</code></pre>
+<p>Updates the Dept Documents view on the Documents library to show items paged in batches of 100, note the type casting on the value to prevent warnings.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-aggregations">-Aggregations</h3>
 <p>A valid XML fragment containing one or more Aggregations</p>

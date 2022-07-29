@@ -84,40 +84,28 @@
                     <h1 id="remove-pnptermgroup">Remove-PnPTermGroup</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Removes a taxonomy term group and all its containing termsets</p>
+<p>Removes a taxonomy term group and all its term sets.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code>Remove-PnPTermGroup -Identity &lt;TaxonomyTermGroupPipeBind&gt; [-TermStore &lt;TaxonomyTermStorePipeBind&gt;] [-Force]
- [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet removes a term group and all the containing termsets.</p>
+<p>This cmdlet removes a term group and all the contained term sets.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
 <pre><code class="lang-powershell">Remove-PnPTermGroup -Identity 3d9e60e8-d89c-4cd4-af61-a010cf93b380
 </code></pre>
-<p>Removes the specified termgroup.</p>
+<p>Removes the specified term group.</p>
 <h3 id="example-2">Example 2</h3>
 <pre><code class="lang-powershell">Remove-PnPTermGroup -Identity &quot;Corporate&quot;
 </code></pre>
+<p>Removes the specified term group.</p>
 <h3 id="example-3">Example 3</h3>
 <pre><code class="lang-powershell">Remove-PnPTermGroup -Identity &quot;HR&quot; -Force
 </code></pre>
-<p>Removes the specified termgroup without prompting for confirmation.</p>
+<p>Removes the specified term group without prompting for confirmation.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-confirm">-Confirm</h3>
-<p>Prompts you for confirmation before running the cmdlet.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The name of GUID of the group to remove.</p>
+<p>The name or GUID of the group to remove.</p>
 <pre><code class="lang-yaml">Type: TaxonomyTermGroupPipeBind
 Parameter Sets: (All)
 Aliases: GroupName
@@ -141,21 +129,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-force">-Force</h3>
+<p>Specifying the Force parameter will skip the confirmation question.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs.
-The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named

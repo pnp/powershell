@@ -86,18 +86,18 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Remove Storage Entities / Farm Properties from either the tenant scoped app catalog or the current site collection if the site has a site collection scoped app catalog</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPStorageEntity -Key &lt;String&gt; [-Scope &lt;StorageEntityScope&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPStorageEntity -Key &lt;String&gt; [-Scope &lt;StorageEntityScope&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPStorageEntity -Key MyKey
 </code></pre>
-<p>Removes an existing storage entity / farm property</p>
+<p>Removes an existing storage entity / farm property.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Remove-PnPStorageEntity -Key MyKey -Scope Site
 </code></pre>
-<p>Removes an existing storage entity from the current site collection</p>
+<p>Removes an existing storage entity from the current site collection.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -126,18 +126,6 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: StorageEntityScope
 Parameter Sets: (All)
 Accepted values: Site, Tenant
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named

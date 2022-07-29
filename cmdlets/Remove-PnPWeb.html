@@ -84,24 +84,25 @@
                     <h1 id="remove-pnpweb">Remove-PnPWeb</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Removes a subsite</p>
+<p>Removes a subsite.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Remove-PnPWeb -Identity &lt;WebPipeBind&gt; [-Force] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet removes the specified subsite.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-2">EXAMPLE 2</h3>
+<h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPWeb -Identity projectA
 </code></pre>
-<p>Removes the subsite called projectA and will ask for confirmation before doing so</p>
-<h3 id="example-1">EXAMPLE 1</h3>
+<p>Removes the subsite called projectA and will ask for confirmation before doing so.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Remove-PnPWeb -Identity 5fecaf67-6b9e-4691-a0ff-518fc9839aa0
 </code></pre>
-<p>Remove the subsite with the provided Id and will ask for confirmaton before doing so</p>
-<h3 id="example-2-1">EXAMPLE 2</h3>
+<p>Removes the subsite with the provided Id and will ask for confirmation before doing so.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPSubWeb | Remove-PnPWeb -Force
 </code></pre>
-<p>Removes all subsites while not asking for confirmation to do so</p>
+<p>Removes all subsites while not asking for confirmation to do so.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -115,7 +116,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-force">-Force</h3>
-<p>Do not ask for confirmation to delete the subweb</p>
+<p>Do not ask for confirmation to delete the subweb.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -126,7 +127,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The identifier of a subsite, the subsite instance or name of the subsite</p>
+<p>The identifier of a subsite, the subsite instance or name of the subsite.</p>
 <pre><code class="lang-yaml">Type: WebPipeBind
 Parameter Sets: (All)
 

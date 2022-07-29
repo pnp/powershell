@@ -84,13 +84,14 @@
                     <h1 id="rename-pnptenantsite">Rename-PnPTenantSite</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>This command starts a rename of a site on a SharePoint Online site. You can change the URL, and optionally the site title along with changing the URL.</p>
-<p>This will not work between Multi-geo environments.</p>
+<p>Starts a rename of a site on a SharePoint Online site.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Rename-PnPTenantSite [[-Identity] &lt;SPOSitePipeBind&gt;] [[-NewSiteUrl] &lt;String&gt;] [[-NewSiteTitle] &lt;string&gt;]
-[[-SuppressMarketplaceAppCheck] [&lt;SwitchParameter&gt;]] [[-SuppressWorkflow2013Check] [&lt;SwitchParameter&gt;]] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+[[-SuppressMarketplaceAppCheck] [&lt;SwitchParameter&gt;]] [[-SuppressWorkflow2013Check] [&lt;SwitchParameter&gt;]] [[-SuppressBcsCheck] [&lt;SwitchParameter&gt;]] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet starts a rename of a site on a SharePoint Online site. You can change the URL, and optionally the site title along with changing the URL.</p>
+<p>This will not work between Multi-geo environments.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">$currentSiteUrl = &quot;https://&lt;tenant&gt;.sharepoint.com/site/samplesite&quot;
@@ -133,7 +134,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-newsitetitle">-NewSiteTitle</h3>
-<p>Specifies the new title of of the SharePoint Site.</p>
+<p>Specifies the new title of the SharePoint Site.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 

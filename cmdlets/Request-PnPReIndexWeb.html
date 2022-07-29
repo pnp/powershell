@@ -84,12 +84,17 @@
                     <h1 id="request-pnpreindexweb">Request-PnPReIndexWeb</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Marks the web for full indexing during the next incremental crawl</p>
+<p>Marks the web for full indexing during the next incremental crawl.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Request-PnPReIndexWeb [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet marks the web for full indexing during the next incremental crawl.</p>
 <h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Request-PnPReIndexWeb
+</code></pre>
+<p>This example requests that the site be reindexed during the next crawl.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>

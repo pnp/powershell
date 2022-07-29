@@ -84,7 +84,7 @@
                     <h1 id="remove-pnpwikipage">Remove-PnPWikiPage</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Removes a wiki page</p>
+<p>Removes a wiki page.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="server">SERVER</h3>
 <pre><code class="lang-powershell">Remove-PnPWikiPage [-ServerRelativePageUrl] &lt;String&gt; [-Connection &lt;PnPConnection&gt;]
@@ -95,11 +95,12 @@
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet removes a single wiki page specified by server relative url or site relative url.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPWikiPage -PageUrl '/pages/wikipage.aspx'
 </code></pre>
-<p>Removes the page '/pages/wikipage.aspx'</p>
+<p>Removes the page '/pages/wikipage.aspx'.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -113,6 +114,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-serverrelativepageurl">-ServerRelativePageUrl</h3>
+<p>Specifies the wiki page url based on the server relative url.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: SERVER
 Aliases: PageUrl
@@ -124,6 +126,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-siterelativepageurl">-SiteRelativePageUrl</h3>
+<p>Specifies the wiki page url based on the site relative url.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: SITE
 
