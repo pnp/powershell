@@ -52,13 +52,13 @@ This cmdlet removes a label/translation from a term.
 Remove-PnPTermLabel -Label "Marknadsföring" -Lcid 1053 -Term 2d1f298b-804a-4a05-96dc-29b667adec62
 ```
 
-Removes the Swedish label from the specified term
+Removes the Swedish label from the specified term.
 
 ### Example 2
 ```powershell
 Remove-PnPTermLabel -Label "Marknadsföring" -Lcid 1053 -Term "Marketing" -TermSet "Departments" -TermGroup "Corporate"
 ```
-Removes the Swedish label from the specified term
+Removes the Swedish label from the specified term.
 
 ## PARAMETERS
 
@@ -93,7 +93,7 @@ Accept wildcard characters: False
 ```
 
 ### -Lcid
-{{ Fill Lcid Description }}
+Language code identifier of the term label.
 
 ```yaml
 Type: Int32
@@ -108,7 +108,7 @@ Accept wildcard characters: False
 ```
 
 ### -Term
-{{ Fill Term Description }}
+Identity of term to update. Either a name or a GUID.
 
 ```yaml
 Type: Guid
@@ -135,7 +135,7 @@ Accept wildcard characters: False
 ```
 
 ### -TermGroup
-The Term Group containing the Term Set.
+The term group containing the term set.
 
 ```yaml
 Type: Guid or String
@@ -150,7 +150,7 @@ Accept wildcard characters: False
 ```
 
 ### -TermSet
-The Term Set containing the Term
+The term set containing the term.
 
 ```yaml
 Type: Guid or String
@@ -165,7 +165,7 @@ Accept wildcard characters: False
 ```
 
 ### -TermStore
-The Term Store containing the Term Group.
+The Term store containing the term group.
 
 ```yaml
 Type: Guid
@@ -197,3 +197,4 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
+[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
