@@ -20,11 +20,11 @@ Revokes the specified principals rights to use the site design.
 ## SYNTAX
 
 ```powershell
-Revoke-PnPSiteDesignRights [-Identity] <TenantSiteDesignPipeBind> -Principals <String[]>
- [-Connection <PnPConnection>]   [<CommonParameters>]
+Revoke-PnPSiteDesignRights [-Identity] <TenantSiteDesignPipeBind> -Principals <String[]> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
+Revokes the rights to use the site design for the specified users.
 
 ## EXAMPLES
 
@@ -33,31 +33,16 @@ Revoke-PnPSiteDesignRights [-Identity] <TenantSiteDesignPipeBind> -Principals <S
 Revoke-PnPSiteDesignRights -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd -Principals "myuser@mydomain.com","myotheruser@mydomain.com"
 ```
 
-Revokes rights to the specified principals on the site design specified
+Revokes rights of the specified principals on the specified site design.
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd | Revoke-PnPSiteDesignRights -Principals "myuser@mydomain.com","myotheruser@mydomain.com"
 ```
 
-Revokes rights to the specified principals on the site design specified
+Revokes rights of the specified principals on the specified site design.
 
 ## PARAMETERS
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
@@ -101,22 +86,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

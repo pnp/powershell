@@ -10,35 +10,34 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTaxonomyItem.
 # Remove-PnPTaxonomyItem
 
 ## SYNOPSIS
-Removes a taxonomy item
+Removes a taxonomy item.
 
 ## SYNTAX
 
 ```powershell
 Remove-PnPTaxonomyItem [-TermPath] <String> [-Force] [-Connection <PnPConnection>]  
- [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+This cmdlet removes a taxonomy item.
 
 ## EXAMPLES
 
-## PARAMETERS
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### EXAMPLE 1
+```powershell
+Remove-PnPTaxonomyItem -TermPath "HR|Recruitment|Marketing"
 ```
+
+Removes the term called "Marketing" located in "Recruitment" term set in "HR" term group.
+
+### EXAMPLE 2
+```powershell
+Remove-PnPTaxonomyItem -TermPath "HR|Recruitment|Marketing" -Force
+```
+
+Removes the term called "Marketing" located in "Recruitment" term set in "HR" term group, and skips the confirmation question.
+
+## PARAMETERS
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
@@ -55,6 +54,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
+Specifying the Force parameter will skip the confirmation question.
 
 ```yaml
 Type: SwitchParameter
@@ -79,21 +79,6 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

@@ -18,10 +18,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - Fixed issue where passing in `-Connection` to `Disconnect-PnPOnline` would throw an exception [#2093](https://github.com/pnp/powershell/pull/2093)
 - Fixed `Get-PnPSiteSearchQueryResults` throwing `Value cannot be null` exception [#2138](https://github.com/pnp/powershell/pull/2138)
+- Fixed `New-PnPUPABulkImportJob` not returing the job Id [#2144](https://github.com/pnp/powershell/pull/2144)
 
 ### Contributors
-
 - Reshmee Auckloo [reshmee011]
+- Leon Armston [LeonArmston]
+- Giacomo Pozzoni [jackpoz]
 - James May [fowl2]
 - Jimmy Hang [JimmyHang]
 - Marcus Blennegård [mblennegard]
