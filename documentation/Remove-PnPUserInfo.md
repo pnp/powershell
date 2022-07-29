@@ -25,7 +25,7 @@ Remove-PnPUserInfo -LoginName <String> [-Site <String>]
 
 ## DESCRIPTION
 
-Export user information from the site user information list.
+Removes user information from the site user information list.
 
 
 ## EXAMPLES
