@@ -33,10 +33,10 @@ Adds a view named "Demo view" to the "Demo List" list.
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPView -List "Demo List" -Title "Demo View" -Fields "Title","Address" -Paged
+Add-PnPView -List "Demo List" -Title "Demo View" -Fields "Title","Address" -Paged -RowLimit 100
 ```
 
-Adds a view named "Demo view" to the "Demo List" list and makes sure there's paging on this view.
+Adds a view named "Demo view" to the "Demo List" list and makes sure there's paging on this view, setting a RowLimit different than the default (30 items).
 
 ### EXAMPLE 3
 ```powershell

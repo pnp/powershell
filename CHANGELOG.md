@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `New-PnPUPABulkImportJob` not returing the job Id [#2144](https://github.com/pnp/powershell/pull/2144)
 
 ### Contributors
+- Miguel A. Tena [mikewaretena]
 - Reshmee Auckloo [reshmee011]
 - Leon Armston [LeonArmston]
 - Giacomo Pozzoni [jackpoz]
