@@ -10,12 +10,11 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPUserProfile.h
 # Remove-PnPUserProfile
 
 ## SYNOPSIS
+Removes a SharePoint User Profile from the tenant.
 
 **Required Permissions**
 
 * SharePoint: Access to the SharePoint Tenant Administration site
-
-Export user profile data.
 
 ## SYNTAX
 
@@ -25,10 +24,10 @@ Remove-PnPUserProfile -LoginName <String> [<CommonParameters>]
 
 ## DESCRIPTION
 
-Removes a SharePoint User Profile from the tenant.
+Removes SharePoint User Profile data from the tenant.
 
 > [!NOTE]
-> The User must be first be deleted from AAD before the user profile can be deleted. You can use the Azure AD cmdlet Remove-AzureADUser for this action
+> The User must first be deleted from AAD before the user profile can be deleted. You can use the Azure AD cmdlet Remove-AzureADUser for this action.
 
 ## EXAMPLES
 
@@ -42,13 +41,13 @@ This removes user profile data with the email address user@domain.com.
 ## PARAMETERS
 
 ### -LoginName
-Specifies the login name of the user to export.
+Specifies the login name of the user to remove.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

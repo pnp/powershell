@@ -1,12 +1,9 @@
-﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-
-using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Enums;
-using System;
-using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Attributes;
+﻿using System;
 using System.Linq;
+using System.Management.Automation;
+using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands
 {
@@ -40,20 +37,16 @@ namespace PnP.PowerShell.Commands
             switch (Type)
             {
                 case SiteType.CommunicationSite:
-                    {
-                        _communicationSiteParameters = new CommunicationSiteParameters();
-                        return _communicationSiteParameters;
-                    }
+                    _communicationSiteParameters = new CommunicationSiteParameters();
+                    return _communicationSiteParameters;
+
                 case SiteType.TeamSite:
-                    {
-                        _teamSiteParameters = new TeamSiteParameters();
-                        return _teamSiteParameters;
-                    }
+                    _teamSiteParameters = new TeamSiteParameters();
+                    return _teamSiteParameters;
+
                 case SiteType.TeamSiteWithoutMicrosoft365Group:
-                    {
-                        _teamSiteWithoutMicrosoft365GroupParameters = new TeamSiteWithoutMicrosoft365Group();
-                        return _teamSiteWithoutMicrosoft365GroupParameters;
-                    }
+                    _teamSiteWithoutMicrosoft365GroupParameters = new TeamSiteWithoutMicrosoft365Group();
+                    return _teamSiteWithoutMicrosoft365GroupParameters;
             }
             return null;
         }
@@ -62,6 +55,7 @@ namespace PnP.PowerShell.Commands
         {
             if (Type == SiteType.CommunicationSite)
             {
+                EnsureDynamicParameters(_communicationSiteParameters);
                 if (!ParameterSpecified("Lcid"))
                 {
                     ClientContext.Web.EnsureProperty(w => w.Language);
@@ -109,6 +103,7 @@ namespace PnP.PowerShell.Commands
             }
             else if (Type == SiteType.TeamSite)
             {
+                EnsureDynamicParameters(_teamSiteParameters);
                 if (!ParameterSpecified("Lcid"))
                 {
                     ClientContext.Web.EnsureProperty(w => w.Language);
@@ -158,6 +153,7 @@ namespace PnP.PowerShell.Commands
             }
             else
             {
+                EnsureDynamicParameters(_teamSiteWithoutMicrosoft365GroupParameters);
                 if (!ParameterSpecified("Lcid"))
                 {
                     ClientContext.Web.EnsureProperty(w => w.Language);
@@ -195,6 +191,14 @@ namespace PnP.PowerShell.Commands
                 {
                     WriteObject(returnedContext.Url);
                 }
+            }
+        }
+
+        private void EnsureDynamicParameters(object dynamicParameters)
+        {
+            if (dynamicParameters == null)
+            {
+                throw new PSArgumentException($"Please specify the parameter -{nameof(Type)} when invoking this cmdlet", nameof(Type));
             }
         }
 

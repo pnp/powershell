@@ -20,7 +20,7 @@ Checks and repairs the site collection and its contents.
 ## SYNTAX
 
 ```powershell
-Repair-PnPSite -Identity <SitePipeBind> [-RuleId <Guid>]
+Repair-PnPSite -Identity <SitePipeBind> [-RuleId <Guid>] [-RunAlways <SwitchParameter>]
 ```
 
 ## DESCRIPTION
@@ -84,6 +84,19 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -RunAlways
+Specifies whether the rules will be run as a result of this call or cached results from a previous run can be returned.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 

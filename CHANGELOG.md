@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Contributors
 
 - Leon Armston [LeonArmston]
+- Giacomo Pozzoni [jackpoz]
 - James May [fowl2]
 - Jimmy Hang [JimmyHang]
 - Marcus Blennegård [mblennegard]
