@@ -10,18 +10,19 @@ online version: https://pnp.github.io/powershell/cmdlets/Rename-PnPTenantSite.ht
 # Rename-PnPTenantSite
 
 ## SYNOPSIS
-This command starts a rename of a site on a SharePoint Online site. You can change the URL, and optionally the site title along with changing the URL.
-
-This will not work between Multi-geo environments.
+Starts a rename of a site on a SharePoint Online site.
 
 ## SYNTAX
 
 ```powershell
 Rename-PnPTenantSite [[-Identity] <SPOSitePipeBind>] [[-NewSiteUrl] <String>] [[-NewSiteTitle] <string>]
-[[-SuppressMarketplaceAppCheck] [<SwitchParameter>]] [[-SuppressWorkflow2013Check] [<SwitchParameter>]] [-Connection <PnPConnection>] [<CommonParameters>]
+[[-SuppressMarketplaceAppCheck] [<SwitchParameter>]] [[-SuppressWorkflow2013Check] [<SwitchParameter>]] [[-SuppressBcsCheck] [<SwitchParameter>]] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+This cmdlet starts a rename of a site on a SharePoint Online site. You can change the URL, and optionally the site title along with changing the URL.
+
+This will not work between Multi-geo environments.
 
 ## EXAMPLES
 
@@ -79,7 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -NewSiteTitle
-Specifies the new title of of the SharePoint Site.
+Specifies the new title of the SharePoint Site.
 
 ```yaml
 Type: String
