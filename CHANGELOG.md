@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current Nightly]
 
 ### Added
+- Added `-DisableGridEditing` option to `Set-PnPList` which allows gridview editing to be enabled or disabled on a list [#2188](https://github.com/pnp/powershell/pull/2188)
 
 ### Changed
 
@@ -20,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Reshmee Auckloo [reshmee011]
 - James May [fowl2]
 - Jimmy Hang [JimmyHang]
 - Marcus Blennegård [mblennegard]
