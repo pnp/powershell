@@ -15,7 +15,7 @@ Remove Storage Entities / Farm Properties from either the tenant scoped app cata
 ## SYNTAX
 
 ```powershell
-Remove-PnPStorageEntity -Key <String> [-Scope <StorageEntityScope>] [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPStorageEntity -Key <String> [-Scope <StorageEntityScope>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -27,14 +27,14 @@ Remove-PnPStorageEntity -Key <String> [-Scope <StorageEntityScope>] [-Connection
 Remove-PnPStorageEntity -Key MyKey
 ```
 
-Removes an existing storage entity / farm property
+Removes an existing storage entity / farm property.
 
 ### EXAMPLE 2
 ```powershell
 Remove-PnPStorageEntity -Key MyKey -Scope Site
 ```
 
-Removes an existing storage entity from the current site collection
+Removes an existing storage entity from the current site collection.
 
 ## PARAMETERS
 
@@ -81,20 +81,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

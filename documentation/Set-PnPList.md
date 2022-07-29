@@ -21,7 +21,7 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
  [-EnableAttachments <Boolean>] [-EnableFolderCreation <Boolean>] [-EnableVersioning <Boolean>]
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
  [-EnableModeration <Boolean>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
- [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -384,6 +384,20 @@ Accept wildcard characters: False
 
 ### -ExemptFromBlockDownloadOfNonViewableFiles
 Allows to configure access capabilities for unmanaged devices for the list. If set to $true, the list will be accessible by unmanaged devices as well. For more information, see [SharePoint and OneDrive unmanaged device access controls for administrators](https://docs.microsoft.com/sharepoint/control-access-from-unmanaged-devices).
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisableGridEditing
+Enable or disable whether edit grid editing is enabled for the list. Set to $true to disable, $false to enable.
 
 ```yaml
 Type: Boolean

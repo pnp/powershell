@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPWikiPage.html
 # Remove-PnPWikiPage
 
 ## SYNOPSIS
-Removes a wiki page
+Removes a wiki page.
 
 ## SYNTAX
 
@@ -27,6 +27,7 @@ Remove-PnPWikiPage [-SiteRelativePageUrl] <String> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
+This cmdlet removes a single wiki page specified by server relative url or site relative url.
 
 ## EXAMPLES
 
@@ -35,7 +36,7 @@ Remove-PnPWikiPage [-SiteRelativePageUrl] <String> [-Connection <PnPConnection>]
 Remove-PnPWikiPage -PageUrl '/pages/wikipage.aspx'
 ```
 
-Removes the page '/pages/wikipage.aspx'
+Removes the page '/pages/wikipage.aspx'.
 
 ## PARAMETERS
 
@@ -54,6 +55,7 @@ Accept wildcard characters: False
 ```
 
 ### -ServerRelativePageUrl
+Specifies the wiki page url based on the server relative url.
 
 ```yaml
 Type: String
@@ -68,6 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -SiteRelativePageUrl
+Specifies the wiki page url based on the site relative url.
 
 ```yaml
 Type: String

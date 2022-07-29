@@ -11,17 +11,16 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTermGroup.htm
 # Remove-PnPTermGroup
 
 ## SYNOPSIS
-Removes a taxonomy term group and all its containing termsets
+Removes a taxonomy term group and all its term sets.
 
 ## SYNTAX
 
 ```
 Remove-PnPTermGroup -Identity <TaxonomyTermGroupPipeBind> [-TermStore <TaxonomyTermStorePipeBind>] [-Force]
- [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This cmdlet removes a term group and all the containing termsets.
+This cmdlet removes a term group and all the contained term sets.
 
 ## EXAMPLES
 
@@ -30,39 +29,25 @@ This cmdlet removes a term group and all the containing termsets.
 Remove-PnPTermGroup -Identity 3d9e60e8-d89c-4cd4-af61-a010cf93b380
 ```
 
-Removes the specified termgroup.
+Removes the specified term group.
 
 ### Example 2
 ```powershell
 Remove-PnPTermGroup -Identity "Corporate"
 ```
+Removes the specified term group.
 
 ### Example 3
 ```powershell
 Remove-PnPTermGroup -Identity "HR" -Force
 ```
 
-Removes the specified termgroup without prompting for confirmation.
+Removes the specified term group without prompting for confirmation.
 
 ## PARAMETERS
 
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Identity
-The name of GUID of the group to remove.
+The name or GUID of the group to remove.
 
 ```yaml
 Type: TaxonomyTermGroupPipeBind
@@ -92,6 +77,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
+Specifying the Force parameter will skip the confirmation question.
 
 ```yaml
 Type: SwitchParameter
@@ -104,21 +90,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
