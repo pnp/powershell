@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPSiteCollectionAppCatalog` throwing an exception when the site was deleted [#2201](https://github.com/pnp/powershell/pull/2201)
 
 ### Contributors
+- Nik Charlebois [NikCharlebois]
 - Milan Holemans [milanholemans]
 - Miguel A. Tena [mikewaretena]
 - Reshmee Auckloo [reshmee011]
