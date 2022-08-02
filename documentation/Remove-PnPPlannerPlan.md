@@ -15,23 +15,22 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPPlannerPlan.h
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-Removes a planner plan
+Removes a Planner plan.
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPPlannerPlan -Group <PlannerGroupPipeBind> -Identity <PlannerPlanPipeBind> 
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Remove-PnPPlannerPlan -Group <PlannerGroupPipeBind> -Identity <PlannerPlanPipeBind> [-WhatIf] [-Confirm]
 ```
 
 ## DESCRIPTION
-This cmdlet removes a planner plan
+This cmdlet removes a Planner plan.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-Remove-PnPPlannerPlan -Group "Marketing" -Identity "Conferenc Planning"
+Remove-PnPPlannerPlan -Group "Marketing" -Identity "Conference Planning"
 ```
 
 This removes the plan identified.
@@ -69,7 +68,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Specify the name or id of the plan
+Specify the name or id of the plan.
 
 ```yaml
 Type: PlannerPlanPipeBind
@@ -84,8 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -99,10 +97,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
