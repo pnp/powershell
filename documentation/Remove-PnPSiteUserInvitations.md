@@ -20,7 +20,7 @@ Searches against all stored sharing links and removes an email invite.
 ## SYNTAX
 
 ```powershell
-Remove-PnPSiteUserInvitations [[-Site] <SitePipeBind>] [-EmailAddress] <string>
+Remove-PnPSiteUserInvitations [[-Site] <SitePipeBind>] [-EmailAddress] <string> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
