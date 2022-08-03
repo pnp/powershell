@@ -30,7 +30,7 @@ Searches against all stored sharing links on a Site and removes an email invites
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPiteUserInvitations -Site "https://contoso.sharepoint.com/sites/ContosoWeb1/" -EmailAddress someone@example.com
+Remove-PnPSiteUserInvitations -Site "https://contoso.sharepoint.com/sites/ContosoWeb1/" -EmailAddress someone@example.com
 ```
 
 This example removes the email invite stored in the ContosoWeb1 site for the user with email address someone@example.com.
@@ -59,6 +59,19 @@ Type: String
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
