@@ -1,5 +1,4 @@
-﻿using PnP.PowerShell.Commands.Attributes;
-using PnP.PowerShell.Commands.Base;
+﻿using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
@@ -26,24 +25,24 @@ namespace PnP.PowerShell.Commands.Purview
             {
                 var user = User.GetUser(AccessToken);
 
-                if(user == null)
+                if (user == null)
                 {
                     WriteWarning("Provided user not found");
                     return;
                 }
 
-                url = $"/beta/users/{user.UserPrincipalName}/informationProtection/policy/labels";
+                url = $"/beta/users/{user.UserPrincipalName}/security/informationProtection/sensitivityLabels";
             }
             else
             {
-                if(Connection.ConnectionMethod == Model.ConnectionMethod.AzureADAppOnly)
+                if (Connection.ConnectionMethod == Model.ConnectionMethod.AzureADAppOnly)
                 {
-                    url = "/beta/informationProtection/policy/labels";
+                    url = "/beta/security/informationProtection/sensitivityLabels";
                 }
                 else
                 {
-                    url = "/beta/me/informationProtection/policy/labels";
-                }                
+                    url = "/beta/me/security/informationProtection/sensitivityLabels";
+                }
             }
 
             if (ParameterSpecified(nameof(Identity)))
