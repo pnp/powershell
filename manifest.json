@@ -5322,7 +5322,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPPageComponent.html",
-          "hash": "htIsf2SHvQBi2V8XeJzsBw=="
+          "hash": "vUUHIKPXqTp1UtSKNN3u+g=="
         }
       },
       "is_incremental": false,
@@ -5370,7 +5370,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPPlannerRosterMember.html",
-          "hash": "RQE2haFnlvmY8iwRmGDJaw=="
+          "hash": "UoL4QEN+EBe1WYeG+0z9Ew=="
         }
       },
       "is_incremental": false,
@@ -5394,7 +5394,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPPropertyBagValue.html",
-          "hash": "qhjepnerBrvkyvPfNZ7i3w=="
+          "hash": "3dCkVOX3pTw5flWl54ehoQ=="
         }
       },
       "is_incremental": false,
@@ -5418,7 +5418,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPRoleDefinition.html",
-          "hash": "hrUjOV6j/4AFOqcWRanrJQ=="
+          "hash": "vv7qT9oaPKiLzifRKPC2RQ=="
         }
       },
       "is_incremental": false,
@@ -5442,7 +5442,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPSearchConfiguration.html",
-          "hash": "vRVs8HQZtq5r0/b0Bbhs8Q=="
+          "hash": "1OvW9XBt0m36MZfG964Lzg=="
         }
       },
       "is_incremental": false,
@@ -5466,7 +5466,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPSiteCollectionAppCatalog.html",
-          "hash": "q0qDs6JcSjUeeRvr+O+i2A=="
+          "hash": "5SUp97TkCuPPgxaXAXvDvg=="
         }
       },
       "is_incremental": false,
@@ -5478,7 +5478,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPSiteCollectionTermStore.html",
-          "hash": "X4W23uc9K251246ImHQJUg=="
+          "hash": "sCvn6suwr5lUB4HO66VeVg=="
         }
       },
       "is_incremental": false,
@@ -5490,7 +5490,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPSiteDesign.html",
-          "hash": "hkPlHTiewg40NovKGgXmqw=="
+          "hash": "Cjtybfdi+Y0d6gvFCVdQdw=="
         }
       },
       "is_incremental": false,
@@ -5538,7 +5538,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPSiteUserInvitations.html",
-          "hash": "heM2Mulv2F+VIzsEKC8ETg=="
+          "hash": "KfV5pBmLmNTGCv0ux93Jrg=="
         }
       },
       "is_incremental": false,

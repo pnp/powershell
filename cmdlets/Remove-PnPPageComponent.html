@@ -84,22 +84,22 @@
                     <h1 id="remove-pnppagecomponent">Remove-PnPPageComponent</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Removes a page component from a page</p>
+<p>Removes a page component from a page.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPPageComponent [-Page] &lt;PagePipeBind&gt; -InstanceId &lt;Guid&gt; [-Force]
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPPageComponent [-Page] &lt;PagePipeBind&gt; -InstanceId &lt;Guid&gt; [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet removes specified page component from a page.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPPageComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82
 </code></pre>
-<p>Removes the control specified from the page.</p>
+<p>Removes the specified control from the page.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">$webpart = Get-PnPPageComponent -Page &quot;Home&quot; | Where-Object { $_.Title -eq &quot;Site activity&quot; }
 Remove-PnPPageComponent -Page &quot;Home&quot; -InstanceId $webpart.InstanceId -Force
 </code></pre>
-<p>Finds a web part with the Title &quot;Site activity&quot; on the Home.aspx page, then removes it from the page</p>
+<p>Finds a web part with the title &quot;Site activity&quot; on the Home.aspx page, then removes it from the page.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -113,7 +113,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-force">-Force</h3>
-<p>If specified you will not receive the confirmation question</p>
+<p>If specified you will not receive the confirmation question.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -124,7 +124,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-instanceid">-InstanceId</h3>
-<p>The instance id of the component</p>
+<p>The instance id of the component.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
 
@@ -135,7 +135,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-page">-Page</h3>
-<p>The name of the page</p>
+<p>The name of the page.</p>
 <pre><code class="lang-yaml">Type: PagePipeBind
 Parameter Sets: (All)
 

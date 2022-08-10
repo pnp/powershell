@@ -84,17 +84,17 @@
                     <h1 id="remove-pnproledefinition">Remove-PnPRoleDefinition</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Remove a Role Definition from a site</p>
+<p>Removes a role definition from a site.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Remove-PnPRoleDefinition [-Identity] &lt;RoleDefinitionPipeBind&gt; [-Force] [-Connection &lt;PnPConnection&gt;]
- [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet removes the specified role definition from a site collection.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPRoleDefinition -Identity MyRoleDefinition
 </code></pre>
-<p>Removes the specified Role Definition (Permission Level) from the current site</p>
+<p>Removes the specified role definition (permission level) from the current site.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -108,7 +108,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-force">-Force</h3>
-<p>Do not ask for confirmation to delete the role definition</p>
+<p>Do not ask for confirmation to delete the role definition.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -119,7 +119,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The identity of the role definition, either a RoleDefinition object or a the name of roledefinition</p>
+<p>The identity of the role definition, either a RoleDefinition object or the name of role definition.</p>
 <pre><code class="lang-yaml">Type: RoleDefinitionPipeBind
 Parameter Sets: (All)
 

@@ -84,22 +84,31 @@
                     <h1 id="remove-pnpplannerrostermember">Remove-PnPPlannerRosterMember</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Removes a member from a Microsoft Planner Roster</p>
+<p>Removes a member from a Microsoft Planner Roster.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPPlannerRosterMember -Identity &lt;PlannerRosterPipeBind&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPPlannerRosterMember -Identity &lt;PlannerRosterPipeBind&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Removes a member from a Microsoft Planner Roster</p>
+<p>Removes a member from a Microsoft Planner Roster.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPPlannerRosterMember -Identity &quot;6519868f-868f-6519-8f86-19658f861965&quot; -User &quot;johndoe@contoso.onmicrosoft.com&quot;
 </code></pre>
-<p>Removes the provided user from the Microsoft Planner Roster with the provided identifier</p>
+<p>Removes the provided user from the Microsoft Planner Roster with the provided identifier.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Identity of the Microsoft Planner Roster to remove the member from</p>
+<p>Identity of the Microsoft Planner Roster to remove the member from.</p>
 <pre><code class="lang-yaml">Type: PlannerRosterPipeBind
 Parameter Sets: (All)
 
@@ -110,7 +119,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-user">-User</h3>
-<p>User principal name of the user to remove from being a member</p>
+<p>User principal name of the user to remove from being a member.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 

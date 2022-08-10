@@ -84,10 +84,9 @@
                     <h1 id="remove-pnppropertybagvalue">Remove-PnPPropertyBagValue</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Removes a value from the property bag</p>
+<p>Removes a value from the property bag.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPPropertyBagValue [-Key] &lt;String&gt; [-Folder &lt;String&gt;] [-Force] 
- [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPPropertyBagValue [-Key] &lt;String&gt; [-Folder &lt;String&gt;] [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Removes a value from the property bag. If working with a modern SharePoint Online site or having noscript enabled, you will have to disable this yourself temporarily using <code>Set-PnPTenantSite -Url &lt;url&gt; -NoScriptSite:$false</code> to be able to make the change.</p>
@@ -95,15 +94,15 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPPropertyBagValue -Key MyKey
 </code></pre>
-<p>This will remove the value with key MyKey from the current web property bag</p>
+<p>This will remove the value with key MyKey from the current web property bag.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Remove-PnPPropertyBagValue -Key MyKey -Folder /MyFolder
 </code></pre>
-<p>This will remove the value with key MyKey from the folder MyFolder which is located in the root folder of the current web</p>
+<p>This will remove the value with key MyKey from the folder MyFolder which is located in the root folder of the current web.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Remove-PnPPropertyBagValue -Key MyKey -Folder /
 </code></pre>
-<p>This will remove the value with key MyKey from the root folder of the current web</p>
+<p>This will remove the value with key MyKey from the root folder of the current web.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -128,6 +127,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-force">-Force</h3>
+<p>If provided, no confirmation will be asked to remove the value from the property bag.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -138,7 +138,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-key">-Key</h3>
-<p>Key of the property bag value to be removed</p>
+<p>Key of the property bag value to be removed.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
