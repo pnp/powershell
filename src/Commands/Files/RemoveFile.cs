@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSpecified(SiteRelativeUrl))
+            if (ParameterSpecified(nameof(SiteRelativeUrl)))
             {
                 var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
                 ServerRelativeUrl = UrlUtility.Combine(webUrl, SiteRelativeUrl);
