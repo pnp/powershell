@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `New-PnPUPABulkImportJob` not returing the job Id [#2144](https://github.com/pnp/powershell/pull/2144)
 - Fixed `Get-PnPSiteCollectionAppCatalog` throwing an exception when the site was deleted [#2201](https://github.com/pnp/powershell/pull/2201)
 - Fixed `Set-PnPTermGroup` throwing an exception even when the group existed. [#2232](https://github.com/pnp/powershell/pull/2232)
+- Fixed `Remove-PnPFile` cmdlet parameter set error. [#2230](https://github.com/pnp/powershell/pull/2230)
 
 ### Contributors
 - Nik Charlebois [NikCharlebois]
