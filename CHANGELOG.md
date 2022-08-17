@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Added `-DisableGridEditing` option to `Set-PnPList` which allows gridview editing to be enabled or disabled on a list [#2188](https://github.com/pnp/powershell/pull/2188)
+- Added verbose logging for `Invoke-PnPSiteSwap`, `Restore-PnPTenantSite` and cmdlets which depend on `SpoOperation`. [#2207](https://github.com/pnp/powershell/pull/2207)
 
 ### Changed
 
