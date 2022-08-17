@@ -84,12 +84,12 @@
                     <h1 id="remove-pnpsitecollectiontermstore">Remove-PnPSiteCollectionTermStore</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Removes the site collection term store if it exists or else nothing will happen</p>
+<p>Removes the site collection term store if it exists or else nothing will happen.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPSiteCollectionTermStore [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPSiteCollectionTermStore [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Removes the site collection scoped term store for the currently connected to site collection. If it does not exist yet, it will not do anything.</p>
+<p>Removes the site collection scoped term store for the currently connected site collection. If it does not exist yet, it will not do anything.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPSiteCollectionTermStore
@@ -100,18 +100,6 @@
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named

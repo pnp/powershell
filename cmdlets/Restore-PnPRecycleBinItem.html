@@ -84,21 +84,22 @@
                     <h1 id="restore-pnprecyclebinitem">Restore-PnPRecycleBinItem</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Restores the provided recycle bin item to its original location</p>
+<p>Restores the provided recycle bin item to its original location.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Restore-PnPRecycleBinItem -Identity &lt;RecycleBinItemPipeBind&gt; [-Force] [-RowLimit &lt;Int32&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet restores the specified item from the recycle bin to its original location.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Restore-PnpRecycleBinItem -Identity 72e4d749-d750-4989-b727-523d6726e442
 </code></pre>
-<p>Restores the recycle bin item with Id 72e4d749-d750-4989-b727-523d6726e442 to its original location</p>
+<p>Restores the recycle bin item with Id 72e4d749-d750-4989-b727-523d6726e442 to its original location.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPRecycleBinItem | ? -Property LeafName -like &quot;*.docx&quot; | Restore-PnpRecycleBinItem
 </code></pre>
-<p>Restores all the items in the first and second stage recycle bins to their original location of which the filename ends with the .docx extension</p>
+<p>Restores all the items of which the filename ends with the .docx extension from the first and second stage recycle bins to their original location.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPRecycleBinItem -RowLimit 10000 | Restore-PnPRecycleBinItem -Force
 </code></pre>
@@ -116,7 +117,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-force">-Force</h3>
-<p>If provided, no confirmation will be asked to restore the recycle bin item</p>
+<p>If provided, no confirmation will be asked to restore the recycle bin item.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -127,7 +128,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Id of the recycle bin item or the recycle bin item object itself to restore</p>
+<p>Id of the recycle bin item or the recycle bin item object itself to restore.</p>
 <pre><code class="lang-yaml">Type: RecycleBinItemPipeBind
 Parameter Sets: (All)
 
@@ -138,7 +139,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-rowlimit">-RowLimit</h3>
-<p>Limits restoration to specified number of items</p>
+<p>Limits restoration to specified number of items.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 

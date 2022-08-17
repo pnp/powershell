@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Remove-PnPFileVersion | PnP PowerShell </title>
+    <title>Restore-PnPTenantSite | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Remove-PnPFileVersion | PnP PowerShell ">
+    <meta name="title" content="Restore-PnPTenantSite | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,54 +77,34 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="remove-pnpfileversion">Remove-PnPFileVersion</h1>
+                    <h1 id="restore-pnptenantsite">Restore-PnPTenantSite</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Removes all or a specific file version.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
+</ul>
+<p>Restores a site collection from the Tenant recycle bin.</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="return-as-file-object-default">Return as file object (Default)</h3>
-<pre><code class="lang-powershell">Remove-PnPFileVersion -Url &lt;String&gt; [-Recycle] [-Force] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Restore-PnPTenantSite [-Identity] &lt;String&gt; [-Force] [-NoWait] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
-<h3 id="all">All</h3>
-<pre><code class="lang-powershell">Remove-PnPFileVersion -Url &lt;String&gt; [-All] [-Recycle] [-Force] 
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
-</code></pre>
-<h3 id="by-id">By Id</h3>
-<pre><code class="lang-powershell">Remove-PnPFileVersion -Url &lt;String&gt; [-Identity &lt;FileVersionPipeBind&gt;] [-Recycle] [-Force] 
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
-</code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet removes all versions or one specific version for the specified file.</p>
+<p>Restores a site collection which is listed in your tenant administration site from the tenant's recycle bin.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPFileVersion -Url Documents/MyDocument.docx -Identity 512
+<pre><code class="lang-powershell">Restore-PnPTenantSite -Identity &quot;https://tenant.sharepoint.com/sites/contoso&quot;
 </code></pre>
-<p>Removes the file version with Id 512.</p>
+<p>This will restore the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Remove-PnPFileVersion -Url Documents/MyDocument.docx -Identity &quot;Version 1.0&quot;
+<pre><code class="lang-powershell">Restore-PnPTenantSite -Identity &quot;https://tenant.sharepoint.com/sites/contoso&quot; -Force
 </code></pre>
-<p>Removes the file version with label &quot;Version 1.0&quot;.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Remove-PnPFileVersion -Url Documents/MyDocument.docx -All
-</code></pre>
-<p>Removes all file versions.</p>
+<p>This will restore the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' with force from the recycle bin.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-all">-All</h3>
-<p>Specifies whether all file versions should be removed.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: All
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -137,7 +117,18 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-force">-Force</h3>
-<p>If provided, no confirmation will be requested and the action will be performed.</p>
+<p>Do not ask for confirmation.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-nowait">-NoWait</h3>
+<p>If specified the task will return immediately after creating the restore site job.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -148,36 +139,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The identity of the version. Use ID or label.</p>
-<pre><code class="lang-yaml">Type: FileVersionPipeBind
-Parameter Sets: By Id
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-recycle">-Recycle</h3>
-<p>Specifies whether the version(s) should go to the recycle bin.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-url">-Url</h3>
-<p>Server relative url or site relative url of the file.</p>
+<p>Specifies the full URL of the site collection that needs to be restored.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: True
-Position: Named
+Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>

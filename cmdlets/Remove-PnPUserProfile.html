@@ -84,19 +84,19 @@
                     <h1 id="remove-pnpuserprofile">Remove-PnPUserProfile</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
+<p>Removes a SharePoint User Profile from the tenant.</p>
 <p><strong>Required Permissions</strong></p>
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Export user profile data.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Remove-PnPUserProfile -LoginName &lt;String&gt; [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Removes a SharePoint User Profile from the tenant.</p>
+<p>Removes SharePoint User Profile data from the tenant.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>The User must be first be deleted from AAD before the user profile can be deleted. You can use the Azure AD cmdlet Remove-AzureADUser for this action</p>
+<p>The User must first be deleted from AAD before the user profile can be deleted. You can use the Azure AD cmdlet Remove-AzureADUser for this action.</p>
 </div>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
@@ -105,11 +105,11 @@
 <p>This removes user profile data with the email address user@domain.com.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-loginname">-LoginName</h3>
-<p>Specifies the login name of the user to export.</p>
+<p>Specifies the login name of the user to remove.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

@@ -88,9 +88,9 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Removes a Site Collection scoped App Catalog from a site</p>
+<p>Removes a site collection scoped app catalog from a site.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPSiteCollectionAppCatalog -Site &lt;SitePipeBind&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPSiteCollectionAppCatalog -Site &lt;SitePipeBind&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Notice that this will not remove the App Catalog list and its contents from the site.</p>
@@ -98,7 +98,7 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPSiteCollectionAppCatalog -Site &quot;https://contoso.sharepoint.com/sites/FinanceTeamsite&quot;
 </code></pre>
-<p>This will remove a SiteCollection app catalog from the specified site</p>
+<p>This will remove a site collection app catalog from the specified site.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>

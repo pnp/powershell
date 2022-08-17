@@ -92,7 +92,7 @@
  [-EnableAttachments &lt;Boolean&gt;] [-EnableFolderCreation &lt;Boolean&gt;] [-EnableVersioning &lt;Boolean&gt;]
  [-EnableMinorVersions &lt;Boolean&gt;] [-MajorVersions &lt;UInt32&gt;] [-MinorVersions &lt;UInt32&gt;]
  [-EnableModeration &lt;Boolean&gt;] [-ReadSecurity &lt;ListReadSecurity&gt;] [-WriteSecurity &lt;ListWriteSecurity&gt;]
- [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles &lt;Boolean&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles &lt;Boolean&gt;] [-DisableGridEditing &lt;Boolean&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows the configuration of a specific SharePoint Online list to be set.</p>
@@ -367,6 +367,17 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-exemptfromblockdownloadofnonviewablefiles">-ExemptFromBlockDownloadOfNonViewableFiles</h3>
 <p>Allows to configure access capabilities for unmanaged devices for the list. If set to $true, the list will be accessible by unmanaged devices as well. For more information, see <a href="https://docs.microsoft.com/sharepoint/control-access-from-unmanaged-devices">SharePoint and OneDrive unmanaged device access controls for administrators</a>.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-disablegridediting">-DisableGridEditing</h3>
+<p>Enable or disable whether edit grid editing is enabled for the list. Set to $true to disable, $false to enable.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 

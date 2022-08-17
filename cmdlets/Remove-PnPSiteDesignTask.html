@@ -88,30 +88,18 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Removes a Site Design Task. If the execution of the associated site script has already started the execution will not be terminated.</p>
+<p>Removes a site design task.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Remove-PnPSiteDesignTask [-Identity] &lt;TenantSiteDesignTaskPipeBind&gt; [-Force] [-Connection &lt;PnPConnection&gt;]
-   [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet removes a site design task. If the execution of the associated site script has already started, the execution will not be terminated.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPSiteDesignTask -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd
 </code></pre>
-<p>Removes the specified site design task</p>
+<p>Removes the specified site design task.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-confirm">-Confirm</h3>
-<p>Prompts you for confirmation before running the cmdlet.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -124,7 +112,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-force">-Force</h3>
-<p>If specified you will not be asked to confirm removing the specified Site Design</p>
+<p>If specified you will not be asked to confirm removing the specified site design.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -135,7 +123,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The ID of the site design to remove</p>
+<p>The ID of the site design task to remove.</p>
 <pre><code class="lang-yaml">Type: TenantSiteDesignTaskPipeBind
 Parameter Sets: (All)
 
@@ -143,18 +131,6 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>

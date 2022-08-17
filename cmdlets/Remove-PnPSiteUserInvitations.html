@@ -90,14 +90,13 @@
 </ul>
 <p>Searches against all stored sharing links and removes an email invite.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPSiteUserInvitations [[-Site] &lt;SitePipeBind&gt;] [-EmailAddress] &lt;string&gt;
-   [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPSiteUserInvitations [[-Site] &lt;SitePipeBind&gt;] [-EmailAddress] &lt;string&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Searches against all stored sharing links on a Site and removes an email invits. If the site parameter is omitted the current site will be searched.</p>
+<p>Searches against all stored sharing links on a Site and removes an email invites. If the site parameter is omitted the current site will be searched.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPiteUserInvitations -Site &quot;https://contoso.sharepoint.com/sites/ContosoWeb1/&quot; -EmailAddress someone@example.com
+<pre><code class="lang-powershell">Remove-PnPSiteUserInvitations -Site &quot;https://contoso.sharepoint.com/sites/ContosoWeb1/&quot; -EmailAddress someone@example.com
 </code></pre>
 <p>This example removes the email invite stored in the ContosoWeb1 site for the user with email address someone@example.com.</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -118,6 +117,16 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

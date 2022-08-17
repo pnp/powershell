@@ -116,11 +116,11 @@
 <h3 id="example-1">Example 1</h3>
 <pre><code class="lang-powershell">Remove-PnPTermLabel -Label &quot;Marknadsföring&quot; -Lcid 1053 -Term 2d1f298b-804a-4a05-96dc-29b667adec62
 </code></pre>
-<p>Removes the Swedish label from the specified term</p>
+<p>Removes the Swedish label from the specified term.</p>
 <h3 id="example-2">Example 2</h3>
 <pre><code class="lang-powershell">Remove-PnPTermLabel -Label &quot;Marknadsföring&quot; -Lcid 1053 -Term &quot;Marketing&quot; -TermSet &quot;Departments&quot; -TermGroup &quot;Corporate&quot;
 </code></pre>
-<p>Removes the Swedish label from the specified term</p>
+<p>Removes the Swedish label from the specified term.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-confirm">-Confirm</h3>
 <p>Prompts you for confirmation before running the cmdlet.</p>
@@ -147,7 +147,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-lcid">-Lcid</h3>
-<p>{{ Fill Lcid Description }}</p>
+<p>Language code identifier of the term label.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 Aliases:
@@ -159,7 +159,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-term">-Term</h3>
-<p>{{ Fill Term Description }}</p>
+<p>Identity of term to update. Either a name or a GUID.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: By Term Id
 Aliases:
@@ -181,7 +181,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-termgroup">-TermGroup</h3>
-<p>The Term Group containing the Term Set.</p>
+<p>The term group containing the term set.</p>
 <pre><code class="lang-yaml">Type: Guid or String
 Parameter Sets: By Name
 Aliases:
@@ -193,7 +193,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-termset">-TermSet</h3>
-<p>The Term Set containing the Term</p>
+<p>The term set containing the term.</p>
 <pre><code class="lang-yaml">Type: Guid or String
 Parameter Sets: By Name
 Aliases:
@@ -205,7 +205,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-termstore">-TermStore</h3>
-<p>The Term Store containing the Term Group.</p>
+<p>The Term store containing the term group.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
 Aliases:
@@ -230,6 +230,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

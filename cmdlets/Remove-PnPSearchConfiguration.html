@@ -84,37 +84,38 @@
                     <h1 id="remove-pnpsearchconfiguration">Remove-PnPSearchConfiguration</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Remove the search configuration</p>
+<p>Removes the search configuration.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="config">Config</h3>
 <pre><code class="lang-powershell">Remove-PnPSearchConfiguration -Configuration &lt;String&gt; [-Scope &lt;SearchConfigurationScope&gt;] 
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="path">Path</h3>
 <pre><code class="lang-powershell">Remove-PnPSearchConfiguration -Path &lt;String&gt; [-Scope &lt;SearchConfigurationScope&gt;] 
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet removes the search configuration from a single web, site collection or a tenant, using path or a configuration string.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPSearchConfiguration -Configuration $config
 </code></pre>
-<p>Remove the search configuration for the current web (does not remove managed property mappings)</p>
+<p>Removes the search configuration for the current web (does not remove managed property mappings).</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Remove-PnPSearchConfiguration -Configuration $config -Scope Site
 </code></pre>
-<p>Remove the search configuration for the current site collection (does not remove managed property mappings)</p>
+<p>Removes the search configuration for the current site collection (does not remove managed property mappings).</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Remove-PnPSearchConfiguration -Configuration $config -Scope Subscription
 </code></pre>
-<p>Remove the search configuration for the current tenant (does not remove managed property mappings)</p>
+<p>Removes the search configuration for the current tenant (does not remove managed property mappings).</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Remove-PnPSearchConfiguration -Path searchconfig.xml -Scope Subscription
 </code></pre>
-<p>Reads the search configuration from the specified XML file and remove it for the current tenant (does not remove managed property mappings)</p>
+<p>Reads the search configuration from the specified XML file and removes it for the current tenant (does not remove managed property mappings).</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-configuration">-Configuration</h3>
-<p>Search configuration string</p>
+<p>Search configuration string.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Config
 
@@ -136,7 +137,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-path">-Path</h3>
-<p>Path to a search configuration</p>
+<p>Path to the search configuration.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Path
 
@@ -147,6 +148,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-scope">-Scope</h3>
+<p>Scope to remove the configuration from. The default is Web.</p>
 <pre><code class="lang-yaml">Type: SearchConfigurationScope
 Parameter Sets: (All)
 Accepted values: Web, Site, Subscription

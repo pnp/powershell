@@ -90,7 +90,7 @@
 </ul>
 <p>Checks and repairs the site collection and its contents.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Repair-PnPSite -Identity &lt;SitePipeBind&gt; [-RuleId &lt;Guid&gt;]
+<pre><code class="lang-powershell">Repair-PnPSite -Identity &lt;SitePipeBind&gt; [-RuleId &lt;Guid&gt;] [-RunAlways &lt;SwitchParameter&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>The Repair-PnPSite cmdlet runs one or all site collection health checks on the site collection and its contents. This cmdlet will make changes if issues are found and automatically repairable.</p>
@@ -128,6 +128,17 @@ Accept wildcard characters: False
 <li><code>&quot;6da06aab-c539-4e0d-b111-b1da4408859a&quot;</code> for Unsupported MUI References.</li>
 </ul>
 <pre><code class="lang-yaml">Type: Guid
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-runalways">-RunAlways</h3>
+<p>Specifies whether the rules will be run as a result of this call or cached results from a previous run can be returned.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

@@ -86,33 +86,48 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Restores a specific file version.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Restore-PnPFileVersion -Url &lt;String&gt; [-Identity &lt;FileVersionPipeBind&gt;] [-Force] 
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Restore-PnPFileVersion -Url &lt;String&gt; -Identity &lt;FileVersionPipeBind&gt; [-Force] [-Verbose] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet restores a specific file version.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Restore-PnPFileVersion -Url Documents/MyDocument.docx -Identity 512
 </code></pre>
-<p>Restores the file version with Id 512</p>
+<p>Restores the file version with Id 512.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Restore-PnPFileVersion -Url /sites/HRSite/Documents/MyDocument.docx -Identity 512
+</code></pre>
+<p>Restores the file version with Id 512 for MyDocument.docx.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Restore-PnPFileVersion -Url Documents/MyDocument.docx -Identity &quot;Version 1.0&quot;
 </code></pre>
-<p>Restores the file version with label &quot;Version 1.0&quot;</p>
+<p>Restores the file version with label &quot;Version 1.0&quot;.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
+<h3 id="-identity">-Identity</h3>
+<p>The identity of the version. Use ID or label.</p>
+<pre><code class="lang-yaml">Type: FileVersionPipeBind
 Parameter Sets: (All)
 
-Required: False
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-url">-Url</h3>
+<p>Server relative url or site relative url of the file.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-force">-Force</h3>
-<p>If provided, no confirmation will be requested and the action will be performed</p>
+<p>If provided, no confirmation will be requested and the action will be performed.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -122,8 +137,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-identity">-Identity</h3>
-<pre><code class="lang-yaml">Type: FileVersionPipeBind
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
@@ -132,11 +148,12 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-url">-Url</h3>
-<pre><code class="lang-yaml">Type: String
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

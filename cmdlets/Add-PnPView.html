@@ -97,9 +97,9 @@
 </code></pre>
 <p>Adds a view named &quot;Demo view&quot; to the &quot;Demo List&quot; list.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPView -List &quot;Demo List&quot; -Title &quot;Demo View&quot; -Fields &quot;Title&quot;,&quot;Address&quot; -Paged
+<pre><code class="lang-powershell">Add-PnPView -List &quot;Demo List&quot; -Title &quot;Demo View&quot; -Fields &quot;Title&quot;,&quot;Address&quot; -Paged -RowLimit 100
 </code></pre>
-<p>Adds a view named &quot;Demo view&quot; to the &quot;Demo List&quot; list and makes sure there's paging on this view.</p>
+<p>Adds a view named &quot;Demo view&quot; to the &quot;Demo List&quot; list and makes sure there's paging on this view, setting a RowLimit different than the default (30 items).</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Add-PnPView -List &quot;Demo List&quot; -Title &quot;Demo View&quot; -Fields &quot;Title&quot;,&quot;Address&quot; -Aggregations &quot;&lt;FieldRef Name='Title' Type='COUNT'/&gt;&quot;
 </code></pre>
