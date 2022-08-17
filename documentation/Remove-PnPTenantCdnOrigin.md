@@ -27,7 +27,7 @@ Remove-PnPTenantCdnOrigin -OriginUrl <String> -CdnType <SPOTenantCdnType> [-Conn
 ## DESCRIPTION
 Removes an origin from the Public or Private content delivery network (CDN).
 
-You must be a SharePoint Online global administrator to run the cmdlet.
+You must be a SharePoint Online Administrator to run the cmdlet.
 
 ## EXAMPLES
 
@@ -36,7 +36,7 @@ You must be a SharePoint Online global administrator to run the cmdlet.
 Remove-PnPTenantCdnOrigin -OriginUrl /sites/site/subfolder -CdnType Public
 ```
 
-This example removes the specified origin from the public CDN
+This example removes the specified origin from the public CDN.
 
 ## PARAMETERS
 

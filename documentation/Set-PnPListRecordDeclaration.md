@@ -10,11 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPListRecordDeclar
 # Set-PnPListRecordDeclaration
 
 ## SYNOPSIS
-The RecordDeclaration parameter supports 4 values:
-
-AlwaysAllowManualDeclaration
-NeverAllowManualDeclaration
-UseSiteCollectionDefaults
+Updates record declaration settings of a list.
 
 ## SYNTAX
 
@@ -24,6 +20,12 @@ Set-PnPListRecordDeclaration -List <ListPipeBind> [-ManualRecordDeclaration <Ecm
 ```
 
 ## DESCRIPTION
+The RecordDeclaration parameter supports 3 values:
+
+* AlwaysAllowManualDeclaration
+* NeverAllowManualDeclaration
+* UseSiteCollectionDefaults
+
 
 ## EXAMPLES
 
@@ -32,19 +34,19 @@ Set-PnPListRecordDeclaration -List <ListPipeBind> [-ManualRecordDeclaration <Ecm
 Set-PnPListRecordDeclaration -List "Documents" -ManualRecordDeclaration NeverAllowManualDeclaration
 ```
 
-Sets the manual record declaration to never allow
+Sets the manual record declaration to never allow.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPListRecordDeclaration -List "Documents" -AutoRecordDeclaration $true
 ```
 
-Turns on auto record declaration for the list
+Turns on auto record declaration for the list.
 
 ## PARAMETERS
 
 ### -AutoRecordDeclaration
-Defines if you want to set auto record declaration on the list
+Turns on or off auto record declaration on the list.
 
 ```yaml
 Type: Boolean
@@ -72,7 +74,7 @@ Accept wildcard characters: False
 ```
 
 ### -List
-The List to set the manual record declaration settings for
+The list to set the manual record declaration settings for. Specify title, list id, or list object.
 
 ```yaml
 Type: ListPipeBind
@@ -86,12 +88,12 @@ Accept wildcard characters: False
 ```
 
 ### -ManualRecordDeclaration
-Defines the manual record declaration setting for the lists
+Defines the manual record declaration setting for the lists.
 
 ```yaml
 Type: EcmListManualRecordDeclaration
 Parameter Sets: (All)
-Accepted values: Unknown, UseSiteCollectionDefaults, AlwaysAllowManualDeclaration, NeverAllowManualDeclaration
+Accepted values: UseSiteCollectionDefaults, AlwaysAllowManualDeclaration, NeverAllowManualDeclaration
 
 Required: False
 Position: Named

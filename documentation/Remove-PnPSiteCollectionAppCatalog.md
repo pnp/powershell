@@ -15,12 +15,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPSiteCollectio
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Removes a Site Collection scoped App Catalog from a site
+Removes a site collection scoped app catalog from a site.
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPSiteCollectionAppCatalog -Site <SitePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPSiteCollectionAppCatalog -Site <SitePipeBind> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -33,7 +33,7 @@ Notice that this will not remove the App Catalog list and its contents from the 
 Remove-PnPSiteCollectionAppCatalog -Site "https://contoso.sharepoint.com/sites/FinanceTeamsite"
 ```
 
-This will remove a SiteCollection app catalog from the specified site
+This will remove a site collection app catalog from the specified site.
 
 ## PARAMETERS
 

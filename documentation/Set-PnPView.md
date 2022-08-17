@@ -52,6 +52,14 @@ Set-PnPView -List "Documents" -Identity "Corporate Documents" -Fields "Title","C
 
 Updates the Corporate Documents view on the Documents library and sets the totals (aggregations) to Count on the Title field
 
+
+### EXAMPLE 5
+```powershell
+Set-PnPView -List "Documents" -Identity "Dept Documents" -Fields "Title,"Created" -Values @{Paged=$true;RowLimit=[UInt32]"100"}
+```
+
+Updates the Dept Documents view on the Documents library to show items paged in batches of 100, note the type casting on the value to prevent warnings. 
+
 ## PARAMETERS
 
 ### -Aggregations

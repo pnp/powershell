@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPAvailablePageLay
 # Set-PnPAvailablePageLayouts
 
 ## SYNOPSIS
-Sets the available page layouts for the current site
+Sets the available page layouts for the current site.
 
 ## SYNTAX
 
@@ -33,13 +33,21 @@ Set-PnPAvailablePageLayouts [-InheritPageLayouts] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
+This cmdlet sets the available page layouts for the current site. It requires NoScript feature to be disabled.
 
 ## EXAMPLES
+
+### EXAMPLE 1
+```powershell
+Set-PnPAvailablePageLayouts -AllowAllPageLayouts
+```
+
+Allows all page layouts for the current site.
 
 ## PARAMETERS
 
 ### -AllowAllPageLayouts
-An array of page layout files to set as available page layouts for the site.
+Allows all page layout files to be available for the site.
 
 ```yaml
 Type: SwitchParameter
@@ -67,7 +75,7 @@ Accept wildcard characters: False
 ```
 
 ### -InheritPageLayouts
-Set the available page layouts to inherit from the parent site.
+Sets the available page layouts to inherit from the parent site.
 
 ```yaml
 Type: SwitchParameter

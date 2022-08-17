@@ -75,7 +75,7 @@ Accept wildcard characters: False
 ```
 
 ### -Site
-Optional url to to a site to set the permissions for. Defaults to the current site if not provided.
+Optional url of a site to set the permissions for. Defaults to the current site if not provided.
 
 ```yaml
 Type: SitePipeBind

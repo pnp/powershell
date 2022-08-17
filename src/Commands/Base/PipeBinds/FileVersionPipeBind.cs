@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PnP.PowerShell.Commands.Base.PipeBinds
+﻿namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public class FileVersionPipeBind
     {
-
         private int _id = -1;
         private string _label;
-
 
         public FileVersionPipeBind(string label)
         {

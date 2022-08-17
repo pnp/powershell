@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPListInformationR
 # Set-PnPListInformationRightsManagement
 
 ## SYNOPSIS
-Get the site closure status of the site which has a site policy applied
+Enables Information Rights Management (IRM) on the list.
 
 ## SYNTAX
 
@@ -26,15 +26,23 @@ Set-PnPListInformationRightsManagement -List <ListPipeBind> [-Enable <Boolean>] 
 ```
 
 ## DESCRIPTION
+This cmdlet enables Information Rights Management (IRM) on the list and updates the IRM settings.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPListInformationRightsManagement -List "Documents" -Enabled $true
+Set-PnPListInformationRightsManagement -List "Documents" -Enable $true
 ```
 
 Enables Information Rights Management (IRM) on the list.
+
+### EXAMPLE 2
+```powershell
+Set-PnPListInformationRightsManagement -List "Documents" -Enable $true -EnableDocumentAccessExpire $true -DocumentAccessExpireDays 14
+```
+
+This example enables Information Rights Management (IRM) on the list and sets the document access to expire 14 days after the file has been downloaded.
 
 ## PARAMETERS
 

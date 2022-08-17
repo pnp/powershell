@@ -27,7 +27,7 @@ Add-PnPTenantCdnOrigin -OriginUrl <String> -CdnType <SPOTenantCdnType> [-Connect
 ## DESCRIPTION
 Add a new origin to the public or private CDN, on either Tenant level or on a single Site level. Effectively, a tenant admin points out to a document library, or a folder in the document library and requests that content in that library should be retrievable by using a CDN.
 
-You must be a SharePoint Online global administrator and a site collection administrator to run the cmdlet.
+You must be a SharePoint Online Administrator and a site collection administrator to run the cmdlet.
 
 ## EXAMPLES
 
@@ -72,7 +72,7 @@ Accept wildcard characters: False
 ### -OriginUrl
 Specifies a path to the doc library to be configured. It can be provided in two ways: relative path, or a mask.
 
-Relative-Relative path depends on the OriginScope. If the originScope is Tenant, a path must be a relative path under the tenant root. If the originScope is Site, a path must be a relative path under the given Site. The path must point to the valid Document Library or a folder with a document library.
+Relative path depends on the OriginScope. If the originScope is Tenant, a path must be a relative path under the tenant root. If the originScope is Site, a path must be a relative path under the given Site. The path must point to the valid Document Library or a folder with a document library.
 
 ```yaml
 Type: String

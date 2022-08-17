@@ -22,16 +22,17 @@ Allows configuration of the built-in SharePoint Online site templates.
 ### Configure through the site template identifier
 
 ```powershell
-Set-PnPBuiltInSiteTemplateSettings -Identity <BuiltInSiteTemplateSettingsPipeBind> -IsHidden <Boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPBuiltInSiteTemplateSettings -Identity <BuiltInSiteTemplateSettingsPipeBind> -IsHidden <Boolean> [-Connection <PnPConnection>] [-WhatIf]
 ```
 
 ### Configure through the site template name
 
 ```powershell
-Set-PnPBuiltInSiteTemplateSettings -Template <BuiltInSiteTemplates> -IsHidden <Boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPBuiltInSiteTemplateSettings -Template <BuiltInSiteTemplates> -IsHidden <Boolean> [-Connection <PnPConnection>] [-WhatIf]
 ```
 
 ## DESCRIPTION
+This cmdlet updates the configuration of the built-in SharePoint Online site templates.
 
 ## EXAMPLES
 
@@ -40,28 +41,28 @@ Set-PnPBuiltInSiteTemplateSettings -Template <BuiltInSiteTemplates> -IsHidden <B
 Set-PnPBuiltInSiteTemplateSettings -Identity 9522236e-6802-4972-a10d-e98dc74b3344 -IsHidden $false
 ```
 
-Makes the Event Planning template visible
+Makes the Event Planning template visible.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPBuiltInSiteTemplateSettings -Identity 00000000-0000-0000-0000-000000000000 -IsHidden $true
 ```
 
-Hides all the default built-in SharePoint Online site templates, except those specifically configured to be visible again
+Hides all the default built-in SharePoint Online site templates, except those specifically configured to be visible again.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPBuiltInSiteTemplateSettings -Template CrisisManagement -IsHidden $true
 ```
 
-Hides the Crisis Management template
+Hides the Crisis Management template.
 
 ### EXAMPLE 4
 ```powershell
 Set-PnPBuiltInSiteTemplateSettings -Template All -IsHidden $false
 ```
 
-Shows by the default all the built-in SharePoint Online site templates, except those specifically configured to be hidden
+Shows by the default all the built-in SharePoint Online site templates, except those specifically configured to be hidden.
 
 ## PARAMETERS
 
@@ -80,7 +81,7 @@ Accept wildcard characters: False
 ```
 
 ### -Template
-Internal name of the template
+Internal name of the template.
 
 ```yaml
 Type: BuiltInSiteTemplates
@@ -94,7 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -IsHidden
-Defines if the built in site template should be hidden ($true) or visible ($false)
+Defines if the built in site template should be hidden ($true) or visible ($false).
 
 ```yaml
 Type: Boolean
@@ -136,6 +137,19 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
 
 ## RELATED LINKS
 

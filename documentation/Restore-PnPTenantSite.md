@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Remove-PnPTenantDeletedSite
+title: Restore-PnPTenantSite
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTenantDeletedSite.html
+online version: https://pnp.github.io/powershell/cmdlets/Restore-PnPTenantSite.html
 ---
  
-# Remove-PnPTenantDeletedSite
+# Restore-PnPTenantSite
 
 ## SYNOPSIS
 
@@ -15,37 +15,44 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTenantDeleted
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Removes a site collection from the Tenant recycle bin.
+Restores a site collection from the Tenant recycle bin.
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPTenantDeletedSite [-Url] <String> [-Force] [-NoWait] [-Connection <PnPConnection>] [-Verbose]
+Restore-PnPTenantSite [-Identity] <String> [-Force] [-NoWait] [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ## DESCRIPTION
-Removes a site collection which is listed in your tenant administration site from the tenant's recycle bin.
+Restores a site collection which is listed in your tenant administration site from the tenant's recycle bin.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPTenantDeletedSite -Identity "https://tenant.sharepoint.com/sites/contoso"
+Restore-PnPTenantSite -Identity "https://tenant.sharepoint.com/sites/contoso"
 ```
 
-This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin.
+This will restore the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin asking for confirmation to restore the site collection and will wait with the execution of the script until the site collection is restored.
 
 ### EXAMPLE 2
 ```powershell
-Remove-PnPTenantDeletedSite -Identity "https://tenant.sharepoint.com/sites/contoso" -Force
+Restore-PnPTenantSite -Identity "https://tenant.sharepoint.com/sites/contoso" -Force
 ```
 
-This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' with force from the recycle bin.
+This will restore the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin not asking for confirmation to restore the site collection and will wait with the execution of the script until the site collection is restored.
+
+### EXAMPLE 3
+```powershell
+Restore-PnPTenantSite -Identity "https://tenant.sharepoint.com/sites/contoso" -Force -NoWait
+```
+
+This will restore the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin not asking for confirmation to restore the site collection and will immediately continue with the execution of the script
 
 ## PARAMETERS
 
 ### -Identity
-Specifies the full URL of the site collection that needs to be deleted.
+Specifies the full URL of the site collection that needs to be restored.
 
 ```yaml
 Type: String
@@ -73,7 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -NoWait
-If specified the task will return immediately after creating the delete site job.
+If specified the task will return immediately after creating the restore site job.
 
 ```yaml
 Type: SwitchParameter
