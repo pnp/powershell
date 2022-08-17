@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- `Get-PnPAvailableSensitivityLabel` cmdlet now uses the non-deprecated Graph API to retrieve sensitivity label.
+- `Get-PnPAvailableSensitivityLabel` cmdlet now uses the non-deprecated Graph API to retrieve sensitivity label. [#2234](https://github.com/pnp/powershell/pull/2234)
 
 ### Removed
 
@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPSiteSearchQueryResults` throwing `Value cannot be null` exception [#2138](https://github.com/pnp/powershell/pull/2138)
 - Fixed `New-PnPUPABulkImportJob` not returing the job Id [#2144](https://github.com/pnp/powershell/pull/2144)
 - Fixed `Get-PnPSiteCollectionAppCatalog` throwing an exception when the site was deleted [#2201](https://github.com/pnp/powershell/pull/2201)
+- Fixed `Set-PnPTermGroup` throwing an exception even when the group existed. [#2232](https://github.com/pnp/powershell/pull/2232)
 
 ### Contributors
 - Nik Charlebois [NikCharlebois]
