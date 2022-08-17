@@ -13,6 +13,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- `Get-PnPAvailableSensitivityLabel` cmdlet now uses the non-deprecated Graph API to retrieve sensitivity label.
+
 ### Removed
 
 ### Fixed
