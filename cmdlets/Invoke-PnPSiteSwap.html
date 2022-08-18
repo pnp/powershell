@@ -86,12 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Invokes a job to swap the location of a site with another site while archiving the original site.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Invoke-PnPSiteSwap 
-         -SourceUrl &lt;string&gt;
-         -TargetUrl &lt;string&gt;
-         -ArchiveUrl &lt;string&gt;
-         [-DisableRedirection]
-         [-NoWait] 
+<pre><code class="lang-powershell">Invoke-PnPSiteSwap -SourceUrl &lt;string&gt; -TargetUrl &lt;string&gt; -ArchiveUrl &lt;string&gt; [-DisableRedirection] [-NoWait] [-Verbose] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Swaps the location of a source site with a target site while archiving the original target site.</p>
@@ -168,6 +163,28 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 
 Required: false
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

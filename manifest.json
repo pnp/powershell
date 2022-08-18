@@ -4092,7 +4092,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Invoke-PnPSiteSwap.html",
-          "hash": "kYb/uD4GU3bwRw7lskFQ/w=="
+          "hash": "cSBar5hAW0vmbvZCX5lgsg=="
         }
       },
       "is_incremental": false,
@@ -5670,7 +5670,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPTenantDeletedSite.html",
-          "hash": "X2tOA+/RFUC6XH76+5p4AQ=="
+          "hash": "8KwYrmuhk2Vgiy9z7JBQTA=="
         }
       },
       "is_incremental": false,
@@ -5922,7 +5922,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Request-PnPPersonalSite.html",
-          "hash": "D2XwZ/kHnBWNVjMiC5SvrA=="
+          "hash": "wStY18R8uUxLuGd6kkNiKw=="
         }
       },
       "is_incremental": false,
@@ -6093,7 +6093,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Restore-PnPTenantSite.html",
-          "hash": "ekl4LfHPmS7dXXUsvK+5MQ=="
+          "hash": "AnME5D3oPX6tjgoMjTSEfQ=="
         }
       },
       "is_incremental": false,

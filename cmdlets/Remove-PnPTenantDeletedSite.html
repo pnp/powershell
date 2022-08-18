@@ -90,8 +90,7 @@
 </ul>
 <p>Removes a site collection from the Tenant recycle bin.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPTenantDeletedSite [-Url] &lt;String&gt; [-Force] [-NoWait] [-Connection &lt;PnPConnection&gt;]
- [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPTenantDeletedSite [-Url] &lt;String&gt; [-Force] [-NoWait] [-Connection &lt;PnPConnection&gt;] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Removes a site collection which is listed in your tenant administration site from the tenant's recycle bin.</p>
@@ -105,15 +104,15 @@
 </code></pre>
 <p>This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' with force from the recycle bin.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
+<h3 id="-identity">-Identity</h3>
+<p>Specifies the full URL of the site collection that needs to be deleted.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
-Required: False
-Position: Named
+Required: True
+Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-force">-Force</h3>
@@ -138,15 +137,26 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>Specifies the full URL of the site collection that needs to be deleted.</p>
-<pre><code class="lang-yaml">Type: String
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>

@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Requests that one or more users be enqueued for a OneDrive for Business site to be created for them.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Request-PnPPersonalSite -UserEmails &lt;String[]&gt; [-NoWait]
+<pre><code class="lang-powershell">Request-PnPPersonalSite -UserEmails &lt;String[]&gt; [-NoWait] [-Connection &lt;PnPConnection&gt;] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>The Request-PnPPersonalSite cmdlet requests that the users specified be enqueued so that a Personal Site be created for each. The actual OneDrive for Business site is created by a Timer Job later.</p>
@@ -127,6 +127,28 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 Aliases:
 Applicable: SharePoint Online
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named
