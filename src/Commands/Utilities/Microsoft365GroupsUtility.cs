@@ -53,6 +53,12 @@ namespace PnP.PowerShell.Commands.Utilities
         internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, Guid groupId, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
             var group = await GraphHelper.GetAsync<Microsoft365Group>(connection, $"v1.0/groups/{groupId}", accessToken);
+
+            if (!group.GroupTypes.Contains("Unified"))
+            {
+                throw new Exception($"Group with ID '{groupId}' is not a Microsoft365 group. Please use Get-PnPAzureADGroup instead.");
+            }
+
             if (includeSiteUrl)
             {
                 bool wait = true;
