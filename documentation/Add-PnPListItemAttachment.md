@@ -37,7 +37,7 @@ This cmdlet allows adding a file as an attachment to a list item in a SharePoint
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPListItemAttachement -List "Demo List" -Identity 1 -Path c:\temp\test.mp4
+Add-PnPListItemAttachment -List "Demo List" -Identity 1 -Path c:\temp\test.mp4
 ```
 
 Adds a new attachment to the list item with Id "1" in the "Demo List" SharePoint list with file name as test.mp4 from the specified path.
@@ -45,14 +45,14 @@ Adds a new attachment to the list item with Id "1" in the "Demo List" SharePoint
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPListItemAttachement -List "Demo List" -Identity 1 -FileName "test.txt" -Content '{ "Test": "Value" }'
+Add-PnPListItemAttachment -List "Demo List" -Identity 1 -FileName "test.txt" -Content '{ "Test": "Value" }'
 ```
 
 Adds a new attachment to the list item with Id "1" in the "Demo List" SharePoint list with file name as test.txt and content as specified.
 
 ### EXAMPLE 3
 ```powershell
-Add-PnPListItemAttachement -List "Demo List" -Identity 1 -FileName "test.mp4" -Stream $fileStream
+Add-PnPListItemAttachment -List "Demo List" -Identity 1 -FileName "test.mp4" -Stream $fileStream
 ```
 
 Adds a new attachment to the list item with Id "1" in the "Demo List" SharePoint list with file name as test.mp4 and content coming from a stream.
