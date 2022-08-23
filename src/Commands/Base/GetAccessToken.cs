@@ -1,6 +1,7 @@
-﻿using System.Management.Automation;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Enums;
+using System;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -43,7 +44,13 @@ namespace PnP.PowerShell.Commands.Base
                         accessTokenValue = AccessToken;
                         break;
                     case ResourceTypeName.SharePoint:
-                        accessTokenValue = TokenHandler.GetAccessToken(null, Connection?.Context?.Url?.TrimEnd('/') + "/.default", Connection);
+                        var currentUrl = Connection?.Context?.Url?.TrimEnd('/');
+                        if (string.IsNullOrEmpty(currentUrl))
+                        {
+                            throw new PSArgumentException("No connection found, please login first.");
+                        }
+                        var rootUrl = new Uri(currentUrl).GetLeftPart(UriPartial.Authority);
+                        accessTokenValue = TokenHandler.GetAccessToken(null, rootUrl + "/.default", Connection);
                         break;
                     case ResourceTypeName.ARM:
                         accessTokenValue = TokenHandler.GetAccessToken(null, "https://management.azure.com/.default", Connection);
