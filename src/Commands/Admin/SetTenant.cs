@@ -251,6 +251,12 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public int? ExternalUserExpireInDays;
 
+        [Parameter(Mandatory = false)]
+        public bool? DisplayNamesOfFileViewers;
+
+        [Parameter(Mandatory = false)]
+        public bool? DisplayNamesOfFileViewersInSpo;
+
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
@@ -915,6 +921,18 @@ namespace PnP.PowerShell.Commands.Admin
             if (ExternalUserExpireInDays.HasValue)
             {
                 Tenant.ExternalUserExpireInDays = ExternalUserExpireInDays.Value;
+                modified = true;
+            }
+
+            if(DisplayNamesOfFileViewers.HasValue)
+            {
+                Tenant.DisplayNamesOfFileViewers = DisplayNamesOfFileViewers.Value;
+                modified = true;
+            }
+
+            if (DisplayNamesOfFileViewersInSpo.HasValue)
+            {
+                Tenant.DisplayNamesOfFileViewersInSpo = DisplayNamesOfFileViewersInSpo.Value;
                 modified = true;
             }
 
