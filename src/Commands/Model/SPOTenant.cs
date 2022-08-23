@@ -40,6 +40,8 @@ namespace PnP.PowerShell.Commands.Model
             this.viewInFileExplorerEnabled = tenant.ViewInFileExplorerEnabled;
             this.externalUserExpirationRequired = tenant.ExternalUserExpirationRequired;
             this.externalUserExpireInDays = tenant.ExternalUserExpireInDays;
+            this.displayNamesOfFileViewers = tenant.DisplayNamesOfFileViewers;
+            this.displayNamesOfFileViewersInSpo = tenant.DisplayNamesOfFileViewersInSpo;
 
             try
             {
@@ -551,6 +553,10 @@ namespace PnP.PowerShell.Commands.Model
         public bool ExternalUserExpirationRequired => externalUserExpirationRequired;
 
         public int ExternalUserExpireInDays => externalUserExpireInDays;
+        
+        public bool DisplayNamesOfFileViewers => displayNamesOfFileViewers;
+        
+        public bool DisplayNamesOfFileViewersInSpo => displayNamesOfFileViewersInSpo;
 
         public Guid[] DisabledModernListTemplateIds => disabledModernListTemplateIds;
 
@@ -709,6 +715,10 @@ namespace PnP.PowerShell.Commands.Model
         private bool externalUserExpirationRequired;
 
         private int externalUserExpireInDays;
+
+        private bool displayNamesOfFileViewers;
+
+        private bool displayNamesOfFileViewersInSpo;
 
     }
 }
