@@ -1,12 +1,17 @@
 ﻿using Microsoft.SharePoint.Client;
+
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
+
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
+using System.Management.Automation.Language;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
@@ -24,10 +29,20 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         public String MailNickname;
 
         [Parameter(Mandatory = false)]
+        public bool MailEnabled = true;
+
+        [Parameter(Mandatory = false)]
         public String[] Owners;
 
         [Parameter(Mandatory = false)]
         public String[] Members;
+
+        [Parameter(Mandatory = false)]
+        [ArgumentCompleter(typeof(EnumAsStringArgumentCompleter<Framework.Enums.Office365Geography>))]
+        public string PreferredDataLocation;
+
+        [Parameter(Mandatory = false)]
+        public string PreferredLanguage;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter IsPrivate;
@@ -49,10 +64,14 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         public SwitchParameter Force;
 
         [Parameter(Mandatory = false)]
+        [ArgumentCompleter(typeof(EnumAsStringArgumentCompleter<TeamResourceBehaviorOptions>))]
         public TeamResourceBehaviorOptions?[] ResourceBehaviorOptions;
 
         [Parameter(Mandatory = false)]
         public Guid[] SensitivityLabels;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter SecurityEnabled;
 
         protected override void ExecuteCmdlet()
         {
@@ -91,9 +110,11 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     Description = Description,
                     MailNickname = MailNickname,
                     Visibility = IsPrivate ? "Private" : "Public",
-                    MailEnabled = true,
-                    SecurityEnabled = false,
-                    GroupTypes = new string[] { "Unified" }
+                    MailEnabled = MailEnabled,
+                    SecurityEnabled = SecurityEnabled,
+                    GroupTypes = new string[] { "Unified" },
+                    PreferredDataLocation = PreferredDataLocation,
+                    PreferredLanguage = PreferredLanguage,
                 };
 
                 if (ResourceBehaviorOptions != null && ResourceBehaviorOptions.Length > 0)
@@ -123,7 +144,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     else
                     {
                         WriteWarning("Adding sensitivity labels in App-only context is not supported by Graph API, so it will be skipped in Group creation");
-                    }                    
+                    }
                 }
 
                 var group = Microsoft365GroupsUtility.CreateAsync(Connection, AccessToken, newGroup, CreateTeam, LogoPath, Owners, Members, HideFromAddressLists, HideFromOutlookClients, Labels).GetAwaiter().GetResult();
