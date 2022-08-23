@@ -27,6 +27,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Remove-PnPFile` cmdlet parameter set error. [#2230](https://github.com/pnp/powershell/pull/2230)
 
 ### Contributors
+
+- Alex Grover [groveale]
 - Nik Charlebois [NikCharlebois]
 - Milan Holemans [milanholemans]
 - Miguel A. Tena [mikewaretena]
