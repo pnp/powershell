@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - `Get-PnPAvailableSensitivityLabel` cmdlet now uses the non-deprecated Graph API to retrieve sensitivity label. [#2234](https://github.com/pnp/powershell/pull/2234)
+- Improved `Get-PnPMicrosoft365Group` cmdlet to better check the Id, DisplayName and MailNickname of Microsoft 365  Group. [#2258](https://github.com/pnp/powershell/pull/2258)
 
 ### Removed
 
@@ -31,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- reusto
 - Mikael Svenson [wobba]
 - Josef Benda [SmarterJB]
 - Alex Grover [groveale]
