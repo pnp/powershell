@@ -99,15 +99,15 @@
 <p>This cmdlet allows adding a file as an attachment to a list item in a SharePoint Online list.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPListItemAttachement -List &quot;Demo List&quot; -Identity 1 -Path c:\temp\test.mp4
+<pre><code class="lang-powershell">Add-PnPListItemAttachment -List &quot;Demo List&quot; -Identity 1 -Path c:\temp\test.mp4
 </code></pre>
 <p>Adds a new attachment to the list item with Id &quot;1&quot; in the &quot;Demo List&quot; SharePoint list with file name as test.mp4 from the specified path.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPListItemAttachement -List &quot;Demo List&quot; -Identity 1 -FileName &quot;test.txt&quot; -Content '{ &quot;Test&quot;: &quot;Value&quot; }'
+<pre><code class="lang-powershell">Add-PnPListItemAttachment -List &quot;Demo List&quot; -Identity 1 -FileName &quot;test.txt&quot; -Content '{ &quot;Test&quot;: &quot;Value&quot; }'
 </code></pre>
 <p>Adds a new attachment to the list item with Id &quot;1&quot; in the &quot;Demo List&quot; SharePoint list with file name as test.txt and content as specified.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Add-PnPListItemAttachement -List &quot;Demo List&quot; -Identity 1 -FileName &quot;test.mp4&quot; -Stream $fileStream
+<pre><code class="lang-powershell">Add-PnPListItemAttachment -List &quot;Demo List&quot; -Identity 1 -FileName &quot;test.mp4&quot; -Stream $fileStream
 </code></pre>
 <p>Adds a new attachment to the list item with Id &quot;1&quot; in the &quot;Demo List&quot; SharePoint list with file name as test.mp4 and content coming from a stream.</p>
 <h2 id="parameters">PARAMETERS</h2>

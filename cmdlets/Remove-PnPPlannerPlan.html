@@ -88,16 +88,15 @@
 <ul>
 <li>Microsoft Graph API: Group.ReadWrite.All</li>
 </ul>
-<p>Removes a planner plan</p>
+<p>Removes a Planner plan.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPPlannerPlan -Group &lt;PlannerGroupPipeBind&gt; -Identity &lt;PlannerPlanPipeBind&gt; 
- [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPPlannerPlan -Group &lt;PlannerGroupPipeBind&gt; -Identity &lt;PlannerPlanPipeBind&gt;  [-Connection &lt;PnPConnection&gt;] [-WhatIf] [-Confirm]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet removes a planner plan</p>
+<p>This cmdlet removes a Planner plan.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">Remove-PnPPlannerPlan -Group &quot;Marketing&quot; -Identity &quot;Conferenc Planning&quot;
+<pre><code class="lang-powershell">Remove-PnPPlannerPlan -Group &quot;Marketing&quot; -Identity &quot;Conference Planning&quot;
 </code></pre>
 <p>This removes the plan identified.</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -107,6 +106,16 @@
 Parameter Sets: (All)
 Aliases: cf
 
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
@@ -126,7 +135,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Specify the name or id of the plan</p>
+<p>Specify the name or id of the plan.</p>
 <pre><code class="lang-yaml">Type: PlannerPlanPipeBind
 Parameter Sets: (All)
 Aliases:
@@ -138,8 +147,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs.
-The cmdlet is not run.</p>
+<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: wi
@@ -150,8 +158,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="commonparameters">CommonParameters</h3>
-<p>This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see <a href="http://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
