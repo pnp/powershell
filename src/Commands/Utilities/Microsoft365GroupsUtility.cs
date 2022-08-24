@@ -7,7 +7,6 @@ using PnP.PowerShell.Commands.Utilities.REST;
 using System.Text.Json;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Base;
-using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -110,7 +109,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 return await GetGroupFilteredAsync($"(id eq '{groupId}' or displayName eq '{groupId}' or mailNickName eq '{groupId}')", connection, accessToken, includeSiteUrl, includeOwners);
             } 
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new Exception($"No Microsoft 365 group found with id, display name or mail nickname '{groupId}'");
             }                      
@@ -123,7 +122,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 return await GetGroupFilteredAsync($"(displayName eq '{displayName}' or mailNickName eq '{displayName}')", connection, accessToken, includeSiteUrl, includeOwners);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new Exception($"No Microsoft 365 group found with id, display name or mail nickname '{displayName}'");
             }
