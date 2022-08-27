@@ -1,8 +1,7 @@
-﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-
+﻿using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Lists
 {
@@ -14,20 +13,16 @@ namespace PnP.PowerShell.Commands.Lists
         public ListPipeBind Identity;
 
         [Parameter(Mandatory = false)]
-        public bool
-            EnableContentTypes;
+        public bool EnableContentTypes;
 
         [Parameter(Mandatory = false)]
-        public
-            SwitchParameter BreakRoleInheritance;
+        public SwitchParameter BreakRoleInheritance;
 
         [Parameter(Mandatory = false)]
-        public
-            SwitchParameter ResetRoleInheritance;
+        public SwitchParameter ResetRoleInheritance;
 
         [Parameter(Mandatory = false)]
-        public
-            SwitchParameter CopyRoleAssignments;
+        public SwitchParameter CopyRoleAssignments;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter ClearSubscopes;
@@ -69,6 +64,9 @@ namespace PnP.PowerShell.Commands.Lists
         public bool EnableModeration;
 
         [Parameter(Mandatory = false)]
+        public DraftVisibilityType DraftItemSecurity;
+
+        [Parameter(Mandatory = false)]
         public ListReadSecurity ReadSecurity;
 
         [Parameter(Mandatory = false)]
@@ -93,9 +91,7 @@ namespace PnP.PowerShell.Commands.Lists
 
                 var enableVersioning = list.EnableVersioning;
                 var enableMinorVersions = list.EnableMinorVersions;
-                var hidden = list.Hidden;
                 var enableAttachments = list.EnableAttachments;
-                var disableGridEditing = list.DisableGridEditing;
                 var updateRequired = false;
                 if (BreakRoleInheritance)
                 {
@@ -103,7 +99,7 @@ namespace PnP.PowerShell.Commands.Lists
                     updateRequired = true;
                 }
 
-                if ((list.HasUniqueRoleAssignments) && (ResetRoleInheritance))
+                if (list.HasUniqueRoleAssignments && ResetRoleInheritance)
                 {
                     list.ResetRoleInheritance();
                     updateRequired = true;
@@ -142,6 +138,12 @@ namespace PnP.PowerShell.Commands.Lists
                 if (ParameterSpecified(nameof(EnableModeration)) && list.EnableModeration != EnableModeration)
                 {
                     list.EnableModeration = EnableModeration;
+                    updateRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(DraftItemSecurity)))
+                {
+                    list.DraftVersionVisibility = DraftItemSecurity;
                     updateRequired = true;
                 }
 
