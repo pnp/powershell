@@ -227,7 +227,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DraftItemSecurity
+### -DraftVersionVisibility
 Specify which users should be able to view drafts in this list.
 
 ```yaml

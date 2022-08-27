@@ -64,7 +64,7 @@ namespace PnP.PowerShell.Commands.Lists
         public bool EnableModeration;
 
         [Parameter(Mandatory = false)]
-        public DraftVisibilityType DraftItemSecurity;
+        public DraftVisibilityType DraftVersionVisibility;
 
         [Parameter(Mandatory = false)]
         public ListReadSecurity ReadSecurity;
@@ -141,9 +141,9 @@ namespace PnP.PowerShell.Commands.Lists
                     updateRequired = true;
                 }
 
-                if (ParameterSpecified(nameof(DraftItemSecurity)))
+                if (ParameterSpecified(nameof(DraftVersionVisibility)))
                 {
-                    list.DraftVersionVisibility = DraftItemSecurity;
+                    list.DraftVersionVisibility = DraftVersionVisibility;
                     updateRequired = true;
                 }
 
