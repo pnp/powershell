@@ -1260,7 +1260,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Connect-PnPOnline.html",
-          "hash": "poBBVL3MQdUnLZLtpW31mw=="
+          "hash": "vKUUrbQzslSyD7tjkji65g=="
         }
       },
       "is_incremental": false,
@@ -6603,7 +6603,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPList.html",
-          "hash": "YgYHwqm/wYpaqBSBELgMUg=="
+          "hash": "MXSsyx0kEWKCuwb6yv5K2w=="
         }
       },
       "is_incremental": false,
