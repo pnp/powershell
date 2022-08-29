@@ -102,57 +102,14 @@ namespace PnP.PowerShell.Commands
 
         protected override void ProcessRecord()
         {
-            try
+            var tag = Connection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name;
+            if (tag.Length > 32)
             {
-                var tag = Connection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name;
-                if (tag.Length > 32)
-                {
-                    tag = tag.Substring(0, 32);
-                }
-                ClientContext.ClientTag = tag;
-
-                ExecuteCmdlet();
+                tag = tag.Substring(0, 32);
             }
-            catch (PipelineStoppedException)
-            {
-                // Don't swallow pipeline stopped exception, it makes select-object work weird
-                throw;
-            }
-            catch (Exception ex)
-            {
-                string errorMessage;
-                switch (ex)
-                {
-                    case PnP.PowerShell.Commands.Model.Graph.GraphException gex:
-                        errorMessage = gex.Message;
-                        break;
+            ClientContext.ClientTag = tag;
 
-                    case PnP.Core.SharePointRestServiceException rex:
-                        errorMessage = (rex.Error as PnP.Core.SharePointRestError).Message;
-                        break;
-
-                    default:
-                        errorMessage = ex.Message;
-                        break;
-                }
-
-                // For backwards compatibility we will throw the exception as a PSInvalidOperationException if -ErrorAction:Stop has NOT been specified
-                if (!ParameterSpecified("ErrorAction") || MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant() != "stop")
-                {
-                    throw new PSInvalidOperationException(errorMessage);
-                }
-
-                Connection.RestoreCachedContext(Connection.Url);
-                ex.Data["CorrelationId"] = Connection.Context.TraceCorrelationId;
-                ex.Data["TimeStampUtc"] = DateTime.UtcNow;
-                var errorDetails = new ErrorDetails(errorMessage);
-
-                errorDetails.RecommendedAction = "Use Get-PnPException for more details.";
-                var errorRecord = new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null);
-                errorRecord.ErrorDetails = errorDetails;
-
-                WriteError(errorRecord);
-            }
+            base.ProcessRecord();
         }
 
         protected override void EndProcessing()
