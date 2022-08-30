@@ -13,11 +13,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added verbose logging for `Invoke-PnPSiteSwap`, `Restore-PnPTenantSite` and cmdlets which depend on `SpoOperation`. [#2207](https://github.com/pnp/powershell/pull/2207)
 - Added support for `DisplayNamesOfFileViewers` and `DisplayNamesOfFileViewersInSpo` properties in `Get-PnPTenant` and `Set-PnPTenant` cmdlets to show/hide viewers in property pane for a file. [#2271](https://github.com/pnp/powershell/pull/2271)
 - Added `MailEnabled`, `PreferredDataLocation`, `PreferredLanguage` and `SecurityEnabled` parameters to `New-PnPMicrosoft365Group` cmdlet. [#2268](https://github.com/pnp/powershell/pull/2268)
+- Added `-DraftVersionVisibility` parameter to the `Set-PnPList` cmdlet to specify draft item security for list items. [#2285](https://github.com/pnp/powershell/pull/2285)
+- Added support for `-ErrorAction:Stop` to PnP PowerShell cmdlets. Notice that if you were using this in combination with the specific try/catch [System.Management.Automation.PSInvalidOperationException], it will no longer catch the exception. It will throw an `System.Management.Automation.ErrorRecord` exception instead. Remove the `-ErrorAction:Stop` parameter from your cmdlet or catch this new exception type to avoid this behavior. [#2288](https://github.com/pnp/powershell/pull/2288)
 
 ### Changed
-
+- Changed to no longer require https:// to be prefixed when using `Connect-PnPOnline -Url tenant.sharepoint.com` [#2139](https://github.com/pnp/powershell/pull/2139)
 - `Get-PnPAvailableSensitivityLabel` cmdlet now uses the non-deprecated Graph API to retrieve sensitivity label. [#2234](https://github.com/pnp/powershell/pull/2234)
 - Improved `Get-PnPMicrosoft365Group` cmdlet to better check the Id, DisplayName and MailNickname of Microsoft 365  Group. [#2258](https://github.com/pnp/powershell/pull/2258)
+- Improved `Get-PnPStorageEntity` cmdlet when `Key` parameter is specified. [#2275](https://github.com/pnp/powershell/pull/2275)
 
 ### Removed
 

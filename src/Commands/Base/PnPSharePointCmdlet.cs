@@ -102,43 +102,14 @@ namespace PnP.PowerShell.Commands
 
         protected override void ProcessRecord()
         {
-            try
+            var tag = Connection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name;
+            if (tag.Length > 32)
             {
-                var tag = Connection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name;
-                if (tag.Length > 32)
-                {
-                    tag = tag.Substring(0, 32);
-                }
-                ClientContext.ClientTag = tag;
+                tag = tag.Substring(0, 32);
+            }
+            ClientContext.ClientTag = tag;
 
-                ExecuteCmdlet();
-            }
-            catch (PipelineStoppedException)
-            {
-                // Don't swallow pipeline stopped exception, it makes select-object work weird
-                throw;
-            }
-            catch (PnP.Core.SharePointRestServiceException ex)
-            {
-                throw new PSInvalidOperationException((ex.Error as PnP.Core.SharePointRestError).Message);
-            }
-            catch (PnP.PowerShell.Commands.Model.Graph.GraphException gex)
-            {
-                throw new PSInvalidOperationException((gex.Message));
-            }
-            catch (Exception ex)
-            {
-                Connection.RestoreCachedContext(Connection.Url);
-                ex.Data["CorrelationId"] = Connection.Context.TraceCorrelationId;
-                ex.Data["TimeStampUtc"] = DateTime.UtcNow;
-                var errorDetails = new ErrorDetails(ex.Message);
-
-                errorDetails.RecommendedAction = "Use Get-PnPException for more details.";
-                var errorRecord = new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null);
-                errorRecord.ErrorDetails = errorDetails;
-
-                WriteError(errorRecord);
-            }
+            base.ProcessRecord();
         }
 
         protected override void EndProcessing()
