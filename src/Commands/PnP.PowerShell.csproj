@@ -18,7 +18,7 @@
 		<IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
 		<IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>		
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(IsWindows)'=='true'">
@@ -43,11 +43,11 @@
 
 	<ItemGroup>
 		<PackageReference Include="AngleSharp" Version="0.14.0" />
-		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
+		
 		<PackageReference Include="Microsoft.Graph" Version="3.33.0" />
 		<PackageReference Include="Microsoft.Identity.Client" Version="4.36.1" />
 		<PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
+		
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
 		
 		<PackageReference Include="PnP.Framework" Version="1.10.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
@@ -72,15 +72,12 @@
 		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.7.3-*" />
 		
 		<PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
-		<PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+		
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />
 		<PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
 		<PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
-		<PackageReference Include="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
-		<PackageReference Include="System.Security.Cryptography.OpenSsl" Version="4.7.0" />
-		<PackageReference Include="System.Text.Encodings.Web" Version="4.7.2" />
-		<PackageReference Include="System.Text.Json" Version="4.7.2" />
-		<PackageReference Include="TextCopy" Version="4.3.1" />
+		
+		
 		<ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
 
 	</ItemGroup>
@@ -128,13 +125,31 @@
 		</Reference>
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+		<PackageReference Include="System.Security.Cryptography.ProtectedData" Version="6.0.0" />
+		<PackageReference Include="System.Security.Cryptography.OpenSsl" Version="5.0.0" />
+		<PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
 		<PackageReference Include="System.Management.Automation" Version="7.0.3" />
-		<PackageReference Include="NewtonSoft.Json" Version="12.0.3" />
+		<PackageReference Include="System.Text.Json" Version="6.0.5" />
+		<PackageReference Include="TextCopy" Version="6.1.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+		<PackageReference Include="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
+		<PackageReference Include="System.Security.Cryptography.OpenSsl" Version="4.7.0" />
+		<PackageReference Include="System.Text.Encodings.Web" Version="4.7.2" />		
 		<PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies" Version="1.1.0" />
+		<PackageReference Include="System.Text.Json" Version="4.7.2" />
+		<PackageReference Include="TextCopy" Version="4.0.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">
