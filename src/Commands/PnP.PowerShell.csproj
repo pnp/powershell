@@ -18,7 +18,13 @@
 		<IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
 		<IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-		<EnableNETAnalyzers>true</EnableNETAnalyzers>		
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<RepositoryUrl>https://github.com/pnp/powershell</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/pnp/powershell</PackageProjectUrl>
+		<PackageTags>Microsoft 365; PowerShell; SharePoint; Teams; Graph; Azure AD</PackageTags>
+		<Description>PnP PowerShell is a .NET 6 / .NET Framework 4.6.2 based PowerShell Module providing nearly 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security &amp; Compliance, Azure Active Directory, and more.</Description>
+		<PackageIcon>nugeticon.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>		
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(IsWindows)'=='true'">
@@ -158,6 +164,17 @@
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">
 		<Compile Remove="Base\DependencyAssemblyLoadContext.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\nugeticon.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 	<ItemGroup>
