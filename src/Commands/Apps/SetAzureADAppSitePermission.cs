@@ -1,10 +1,13 @@
 using System;
 using System.Linq;
 using System.Management.Automation;
+
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Apps
 {
@@ -21,7 +24,7 @@ namespace PnP.PowerShell.Commands.Apps
         public SitePipeBind Site;
 
         [Parameter(Mandatory = true)]
-        [ValidateSet("Write", "Read", "Manage", "FullControl")]
+        [ArgumentCompleter(typeof(EnumAsStringArgumentCompleter<AzureADAppSitePermissionRole>))]
         public string[] Permissions;
 
         protected override void ExecuteCmdlet()
@@ -44,7 +47,7 @@ namespace PnP.PowerShell.Commands.Apps
                     roles = Permissions.Select(p => p.ToLower()).ToArray()
                 };
 
-                var results = PnP.PowerShell.Commands.Utilities.REST.RestHelper.PatchAsync<AzureADAppPermissionInternal>(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken, payload).GetAwaiter().GetResult();
+                var results = Utilities.REST.RestHelper.PatchAsync<AzureADAppPermissionInternal>(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken, payload).GetAwaiter().GetResult();
                 WriteObject(results.Convert());
             }
         }

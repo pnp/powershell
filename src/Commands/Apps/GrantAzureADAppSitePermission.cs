@@ -1,10 +1,13 @@
 using System;
 using System.Linq;
 using System.Management.Automation;
+
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Apps
 {
@@ -25,7 +28,7 @@ namespace PnP.PowerShell.Commands.Apps
         public SitePipeBind Site;
 
         [Parameter(Mandatory = true)]
-        [ValidateSet("Write", "Read")]
+        [ArgumentCompleter(typeof(EnumAsStringArgumentCompleter<AzureADAppSitePermissionRole>))]
         public string[] Permissions;
 
         protected override void ExecuteCmdlet()
