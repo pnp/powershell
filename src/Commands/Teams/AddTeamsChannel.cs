@@ -1,8 +1,10 @@
 ﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Utilities;
+using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
@@ -26,8 +28,12 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, ParameterSetName = ParameterSET_PRIVATE)]
         public string Description;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSET_PRIVATE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSET_PRIVATE)]
+        [Obsolete("Use TeamMembershipType")]
         public SwitchParameter Private;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSET_PRIVATE)]
+        public TeamMembershipType TeamMembershipType;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSET_PRIVATE)]
         public string OwnerUPN;
@@ -42,7 +48,12 @@ namespace PnP.PowerShell.Commands.Graph
             {
                 try
                 {
-                    var channel = TeamsUtility.AddChannelAsync(AccessToken, Connection, groupId, DisplayName, Description, Private, OwnerUPN, IsFavoriteByDefault).GetAwaiter().GetResult();
+                    if (ParameterSpecified(nameof(Private)))
+                    {
+                        TeamMembershipType = TeamMembershipType.Private;
+                    }
+
+                    var channel = TeamsUtility.AddChannelAsync(AccessToken, Connection, groupId, DisplayName, Description, TeamMembershipType, OwnerUPN, IsFavoriteByDefault).GetAwaiter().GetResult();
                     WriteObject(channel);
                 }
                 catch (GraphException ex)
