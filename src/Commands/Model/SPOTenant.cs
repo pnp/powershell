@@ -42,7 +42,7 @@ namespace PnP.PowerShell.Commands.Model
             this.externalUserExpireInDays = tenant.ExternalUserExpireInDays;
             this.displayNamesOfFileViewers = tenant.DisplayNamesOfFileViewers;
             this.displayNamesOfFileViewersInSpo = tenant.DisplayNamesOfFileViewersInSpo;
-
+            this.isLoopEnabled = tenant.IsLoopEnabled;
             try
             {
                 this.enableGuestSignInAcceleration = tenant.EnableGuestSignInAcceleration;
@@ -557,7 +557,7 @@ namespace PnP.PowerShell.Commands.Model
         public bool DisplayNamesOfFileViewers => displayNamesOfFileViewers;
         
         public bool DisplayNamesOfFileViewersInSpo => displayNamesOfFileViewersInSpo;
-
+        public bool IsLoopEnabled => isLoopEnabled;
         public Guid[] DisabledModernListTemplateIds => disabledModernListTemplateIds;
 
         private bool hideDefaultThemes;
@@ -719,6 +719,8 @@ namespace PnP.PowerShell.Commands.Model
         private bool displayNamesOfFileViewers;
 
         private bool displayNamesOfFileViewersInSpo;
+
+        private bool isLoopEnabled;
 
     }
 }
