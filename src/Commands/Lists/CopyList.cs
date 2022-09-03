@@ -88,7 +88,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             // Execute site script on destination site so the list will be created
             WriteVerbose($"Executing site script to site at {DestinationWebUrl}");
-            var actionResults = RestHelper.PostAsync<RestResultCollection<InvokeSiteScriptActionResponse>>(Connection.HttpClient, $"{Connection.Url}/_api/Microsoft.Sharepoint.Utilities.WebTemplateExtensions.SiteScriptUtility.ExecuteTemplateScript()", ClientContext, new { script = script}).GetAwaiter().GetResult();
+            var actionResults = RestHelper.PostAsync<RestResultCollection<InvokeSiteScriptActionResponse>>(Connection.HttpClient, $"{DestinationWebUrl}/_api/Microsoft.Sharepoint.Utilities.WebTemplateExtensions.SiteScriptUtility.ExecuteTemplateScript()", ClientContext, new { script = script}).GetAwaiter().GetResult();
             
             // Ensure site script actions have been executed
             if(actionResults.Items.Count() == 0)
