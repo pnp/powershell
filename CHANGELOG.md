@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `MailEnabled`, `PreferredDataLocation`, `PreferredLanguage` and `SecurityEnabled` parameters to `New-PnPMicrosoft365Group` cmdlet. [#2268](https://github.com/pnp/powershell/pull/2268)
 - Added `-DraftVersionVisibility` parameter to the `Set-PnPList` cmdlet to specify draft item security for list items. [#2285](https://github.com/pnp/powershell/pull/2285)
 - Added support for `-ErrorAction:Stop` to PnP PowerShell cmdlets. Notice that if you were using this in combination with the specific try/catch [System.Management.Automation.PSInvalidOperationException], it will no longer catch the exception. It will throw an `System.Management.Automation.ErrorRecord` exception instead. Remove the `-ErrorAction:Stop` parameter from your cmdlet or catch this new exception type to avoid this behavior. [#2288](https://github.com/pnp/powershell/pull/2288)
+- Added support for `IsLoopEnabled` properties in `Get-PnPTenant` and `Set-PnPTenant` cmdlets to to enable/disable loop components in the tenant. [#2307](https://github.com/pnp/powershell/pull/2307)
 
 ### Changed
 - Changed to no longer require https:// to be prefixed when using `Connect-PnPOnline -Url tenant.sharepoint.com` [#2139](https://github.com/pnp/powershell/pull/2139)

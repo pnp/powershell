@@ -257,6 +257,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public bool? DisplayNamesOfFileViewersInSpo;
 
+        [Parameter(Mandatory = false)]
+        public bool? IsLoopEnabled;
+
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
@@ -935,6 +938,12 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.DisplayNamesOfFileViewersInSpo = DisplayNamesOfFileViewersInSpo.Value;
                 modified = true;
             }
+
+            if (IsLoopEnabled.HasValue)
+            {
+                Tenant.IsLoopEnabled = IsLoopEnabled.Value;
+                modified = true;
+            }            
 
             if (modified)
             {
