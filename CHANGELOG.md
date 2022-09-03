@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Set-PnPTermGroup` throwing an exception even when the group existed. [#2232](https://github.com/pnp/powershell/pull/2232)
 - Fixed `Remove-PnPFile` cmdlet parameter set error. [#2230](https://github.com/pnp/powershell/pull/2230)
 - Fixed `Get-PnPAccessToken` cmdlet to be able to work with different site collections as well as require an actual connection first. [#2270](https://github.com/pnp/powershell/pull/2270)
+- Fixed `Copy-PnPList` cmdlet to be able to copy the list structure to the destination web. [#2313](https://github.com/pnp/powershell/pull/2313)
 
 ### Contributors
 
