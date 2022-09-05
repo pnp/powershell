@@ -95,20 +95,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Resource
-Specify the Resource for which you want the access token. If not specified, it will by default return a Microsoft Graph access token.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Scopes
 The scopes to retrieve the token for. Defaults to AllSites.FullControl
 

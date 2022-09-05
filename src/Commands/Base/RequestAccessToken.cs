@@ -15,6 +15,7 @@ namespace PnP.PowerShell.Commands.Base
         public string ClientId = PnPConnection.PnPManagementShellClientId; // defaults to PnPManagementShell
 
         [Parameter(Mandatory = false)]
+        [Obsolete("Resource is deprecated, use Scopes instead.")]
         public string Resource;
 
         [Parameter(Mandatory = false)]
