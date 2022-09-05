@@ -15,7 +15,7 @@ Requests an OAuth Access token.
 ## SYNTAX
 
 ```powershell
-Request-PnPAccessToken [-ClientId <String>] [-Resource <String>] [-Scopes <String[]]>] [-Decoded]  [-Credentials <PSCredential>] [-TenantUrl <String>]
+Request-PnPAccessToken [-ClientId <String>] [-Resource <String>] [-Scopes <String[]]>] [-Decoded] [-Credentials <PSCredential>] [-TenantUrl <String>]
 ```
 
 ## DESCRIPTION
@@ -62,7 +62,7 @@ Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: None
+Default value: 31359c7f-bd7e-475c-86db-fdb8c937548e
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -115,6 +115,22 @@ Optional tenant URL to use when retrieving the access token. The Url should be i
 ```yaml
 Type: String
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AzureEnvironment
+The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.
+
+```yaml
+Type: AzureEnvironment
+Parameter Sets: (All)
+Aliases:
+Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD
 
 Required: False
 Position: Named
