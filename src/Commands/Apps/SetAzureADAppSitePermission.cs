@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Apps
         public SitePipeBind Site;
 
         [Parameter(Mandatory = true)]
-        [ArgumentCompleter(typeof(EnumAsStringArgumentCompleter<AzureADAppSitePermissionRole>))]
+        [ArgumentCompleter(typeof(EnumAsStringArgumentCompleter<AzureADUpdateSitePermissionRole>))]
         public string[] Permissions;
 
         protected override void ExecuteCmdlet()

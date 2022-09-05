@@ -15,7 +15,6 @@ namespace PnP.PowerShell.Commands.Apps
     [RequiredMinimalApiPermissions("Sites.FullControl.All")]
     public class GrantPnPAzureADAppSitePermission : PnPGraphCmdlet
     {
-
         [Parameter(Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public Guid AppId;
@@ -28,7 +27,7 @@ namespace PnP.PowerShell.Commands.Apps
         public SitePipeBind Site;
 
         [Parameter(Mandatory = true)]
-        [ArgumentCompleter(typeof(EnumAsStringArgumentCompleter<AzureADAppSitePermissionRole>))]
+        [ArgumentCompleter(typeof(EnumAsStringArgumentCompleter<AzureADNewSitePermissionRole>))]
         public string[] Permissions;
 
         protected override void ExecuteCmdlet()
