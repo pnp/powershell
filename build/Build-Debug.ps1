@@ -35,7 +35,7 @@ else {
 	$buildVersion = $versionObject.Patch + 1;
 }
 
-$configuration = "netcoreapp3.1"
+$configuration = "net6.0-windows"
 
 $version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
