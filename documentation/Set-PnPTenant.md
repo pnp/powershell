@@ -1364,6 +1364,48 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DisplayNamesOfFileViewers
+Allows configuring whether display name of people who view the file are visible in the property pane of the site in OneDrive for business sites.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisplayNamesOfFileViewersInSpo
+Allows configuring whether display name of people who view the file are visible in the property pane of the site in SharePoint site collection.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsLoopEnabled
+Allows configuring whether loop components are enabled or disabled in the tenant. If set to `$true`, loop components will be allowed to be created in the tenant. If set to `$false`, it will be disabled in the tenant.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Force
 If provided, no confirmation will be requested and the action will be performed
 
