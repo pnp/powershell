@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Get-PnPAuthenticationRealm` cmdlet to use `HTTP Client` instead of `WebRequest`. [#2304](https://github.com/pnp/powershell/pull/2304)
 
 ### Removed
+- Marked `-Resource` parameter from `Get-PnPAccessToken` cmdlet as obsolete as it was not used anymore anyway. It will be removed in a future version. [#2182](https://github.com/pnp/powershell/pull/2182)
 
 ### Fixed
 - Fixed issue where passing in `-Connection` to `Disconnect-PnPOnline` would throw an exception [#2093](https://github.com/pnp/powershell/pull/2093)
