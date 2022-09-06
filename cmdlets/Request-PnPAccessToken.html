@@ -84,9 +84,9 @@
                     <h1 id="request-pnpaccesstoken">Request-PnPAccessToken</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Requests an OAuth Access token</p>
+<p>Requests an OAuth Access token.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Request-PnPAccessToken [-ClientId &lt;String&gt;] [-Resource &lt;String&gt;] [-Scopes &lt;String[]]&gt;] [-Decoded]  [-Credentials &lt;PSCredential&gt;] [-TenantUrl &lt;String&gt;]
+<pre><code class="lang-powershell">Request-PnPAccessToken [-ClientId &lt;String&gt;] [-Resource &lt;String&gt;] [-Scopes &lt;String[]]&gt;] [-Decoded] [-Credentials &lt;PSCredential&gt;] [-TenantUrl &lt;String&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Returns an access token using the password grant, using the PnP O365 Management Shell client id by default and the AllSites.FullControl scope by default.</p>
@@ -94,7 +94,7 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Request-PnPAccessToken
 </code></pre>
-<p>Returns the access token using the default client id and scope</p>
+<p>Returns the access token using the default client id and scope.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2
 </code></pre>
@@ -102,20 +102,20 @@
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2 -Scopes Group.ReadWrite.All
 </code></pre>
-<p>Returns the access token using the specified client id and the specified scope</p>
+<p>Returns the access token using the specified client id and the specified scope.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Request-PnPAccessToken -ClientId 26e29fec-aa10-4f99-8381-d96cddc650c2 -Scopes Group.ReadWrite.All, AllSites.FullControl
 </code></pre>
-<p>Returns the access token using the specified client id and the specified scopes</p>
+<p>Returns the access token using the specified client id and the specified scopes.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-clientid">-ClientId</h3>
-<p>The Azure Application Client Id to use to retrieve the token. Defaults to the PnP Office 365 Management Shell</p>
+<p>The Azure Application Client Id to use to retrieve the token. Defaults to the PnP Office 365 Management Shell.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: None
+Default value: 31359c7f-bd7e-475c-86db-fdb8c937548e
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
@@ -131,19 +131,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-decoded">-Decoded</h3>
-<p>Returns the token in a decoded / human readible manner</p>
+<p>Returns the token in a decoded / human-readable manner.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-resource">-Resource</h3>
-<p>The scopes to retrieve the token for. Defaults to AllSites.FullControl</p>
-<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
@@ -167,6 +156,19 @@ Accept wildcard characters: False
 <p>Optional tenant URL to use when retrieving the access token. The Url should be in the shape of <a href="https://yourtenant.sharepoint.com">https://yourtenant.sharepoint.com</a>. See examples for more info.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-azureenvironment">-AzureEnvironment</h3>
+<p>The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.</p>
+<pre><code class="lang-yaml">Type: AzureEnvironment
+Parameter Sets: (All)
+Aliases:
+Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD
 
 Required: False
 Position: Named

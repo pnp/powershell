@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Remove-PnPListItem | PnP PowerShell </title>
+    <title>Copy-PnPTeamsTeam | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Remove-PnPListItem | PnP PowerShell ">
+    <meta name="title" content="Copy-PnPTeamsTeam | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,42 +77,44 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="remove-pnplistitem">Remove-PnPListItem</h1>
+                    <h1 id="copy-pnplist">Copy-PnPList</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Deletes an item from a list</p>
-<p><a href="https://github.com/pnp/powershell/blob/gh-pages/articles/batching.html" rel="Supports Batching"><img src="https://raw.githubusercontent.com/pnp/powershell/gh-pages/images/batching/Batching.png" alt="Supports Batching"></a></p>
+<p>Creates a copy of a Microsoft Teams team</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="single">Single</h3>
-<pre><code class="lang-powershell">Remove-PnPListItem [-List] &lt;ListPipeBind&gt; -Identity &lt;ListItemPipeBind&gt; [-Recycle] [-Force] 
-</code></pre>
-<h3 id="batched">Batched</h3>
-<pre><code class="lang-powershell">Remove-PnPListItem [-List] &lt;ListPipeBind&gt; -Identity &lt;ListItemPipeBind&gt; -Batch &lt;PnPBatch&gt; [-Recycle]
+<h3 id="clone-a-team">Clone a team</h3>
+<pre><code class="lang-powershell">Copy-PnPTeamsTeam -DisplayName &lt;String&gt; -Identity &lt;TeamsTeamPipeBind&gt; [-PartsToClone &lt;ClonableTeamParts[]&gt;]  [-Description &lt;String&gt;] [-Visibility &lt;TeamVisibility&gt;] [-Classification &lt;String&gt;]  [-Verbose] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Using this command, global admins and Microsoft Teams service admins can access teams that they are not a member of to make a copy of them.</p>
+<p>Creates a copy of a team. This operation also creates a copy of the corresponding group. You can specify which parts of the team to clone:</p>
+<p>apps - Copies Microsoft Teams apps that are installed in the team.
+channels – Copies the channel structure (but not the messages in the channel).
+members – Copies the members and owners of the group.
+settings – Copies all settings within the team, along with key group settings.
+tabs – Copies the tabs within channels.</p>
+<p>When tabs are cloned, they are put into an unconfigured state -- they are displayed on the tab bar in Microsoft Teams, and the first time you open them, you'll go through the configuration screen. If the person opening the tab does not have permission to configure apps, they will see a message explaining that the tab hasn't been configured.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPListItem -List &quot;Demo List&quot; -Identity &quot;1&quot; -Force
+<pre><code class="lang-powershell">Copy-PnPTeamsTeam -Identity ee0f40fc-b2f7-45c7-b62d-11b90dd2ea8e -DisplayName &quot;Library Assist&quot; -PartsToClone apps,tabs,settings,channels,members [-Verbose] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
-<p>Removes the listitem with id &quot;1&quot; from the &quot;Demo List&quot; list</p>
+<p>Creates a clone of a Microsoft Teams team named &quot;Library Assist&quot; from Microsoft Teams team ID ee0f40fc-b2f7-45c7-b62d-11b90dd2ea8e with the apps,tabs,settings,channels and members</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Remove-PnPListItem -List &quot;Demo List&quot; -Identity &quot;1&quot; -Force -Recycle
+<pre><code class="lang-powershell">Copy-PnPTeamsTeam -Identity &quot;Team 12&quot; -DisplayName &quot;Library Assist&quot; [-WhatIf] [-Verbose] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
-<p>Removes the listitem with id &quot;1&quot; from the &quot;Demo List&quot; list and saves it in the Recycle Bin</p>
+<p>Creates a clone of a Microsoft Teams team named &quot;Library Assist&quot; from Microsoft Teams team &quot;Team 12&quot; with the all the available parts</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">$batch = New-PnPBatch
-1..50 | Foreach-Object{Remove-PnPListItem -List &quot;DemoList&quot; -Identity $_ -Batch $batch}
-Invoke-PnPBatch -Batch $batch
+<pre><code class="lang-powershell">Copy-PnPTeamsTeam -Identity &quot;Team 12&quot; -DisplayName &quot;Library Assist&quot; -PartsToClone apps,tabs,settings,channels,members -Description &quot;Self help community for library&quot; -Classification &quot;Library&quot; -Visibility public [-WhatIf] [-Verbose] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
-<p>Removes all the items with Id 1 to Id 50 in the &quot;Demo List&quot; list</p>
+<p>Creates a clone of a Microsoft Teams team named &quot;Library Assist&quot; from Microsoft Teams team  &quot;Team 12&quot; with the apps,tabs,settings,channels and members setting the classication to &quot;Library&quot;, Visibility to public and Description to &quot;Self help community for library&quot;</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Remove-PnPListItem -List &quot;Demo List&quot;
+<pre><code class="lang-powershell">Copy-PnPTeamsTeam -Identity &quot;Team 12&quot; -DisplayName &quot;Library Assist&quot; -PartsToClone settings,channels -Description &quot;Self help community for library&quot; -Classification &quot;Library&quot; -Visibility public [-WhatIf] [-Verbose] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
-<p>Removes all items from the &quot;Demlo List&quot; list after asking for confirmation</p>
+<p>Creates a clone of a Microsoft Teams team named &quot;Library Assist&quot; from Microsoft Teams team  &quot;Team 12&quot; with the settings and channels setting the classication to &quot;Library&quot;, Visibility to public and Description to &quot;Self help community for library&quot;</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -125,20 +127,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-force">-Force</h3>
-<p>Specifying the Force parameter will skip the confirmation question</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The ID of the listitem, or actual ListItem object</p>
-<pre><code class="lang-yaml">Type: ListItemPipeBind
+<p>Specify the group id, mailNickname or display name of the team to use.</p>
+<pre><code class="lang-yaml">Type: TeamsTeamPipeBind
 Parameter Sets: (All)
 
 Required: True
@@ -147,20 +138,31 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-list">-List</h3>
-<p>The ID, Title or Url of the list</p>
-<pre><code class="lang-yaml">Type: ListPipeBind
+<h3 id="-displayname">-DisplayName</h3>
+<p>The display name for the group. This property is required when a group is created and it cannot be cleared during updates. Supports $filter and $orderby.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: True
-Position: 0
+Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-recycle">-Recycle</h3>
-<p>When provided, items will be sent to the recycle bin. When omitted, items will permanently be deleted.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
+<h3 id="-partstoclone">-PartsToClone</h3>
+<p>A comma-separated list of the parts to clone. Allowed values are apps,channels,members,settings,tabs. When not provided, all available parts will be cloned.</p>
+<pre><code class="lang-yaml">Type: ClonableTeamParts
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: apps,channels,members,settings,tabs
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-visibility">-Visibility</h3>
+<p>Specifies the visibility of the group. Possible values are: Private, Public. If visibility is not specified, the visibility will be copied from the original team/group. If the team being cloned is an educationClass team, the visibility parameter is ignored, and the new group's visibility will be set to HiddenMembership.</p>
+<pre><code class="lang-yaml">Type: teamVisibilityType
 Parameter Sets: (All)
 
 Required: False
@@ -169,12 +171,12 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-batch">-Batch</h3>
-<p>Batch object used to add items in a batched manner. See examples on how to use this.</p>
-<pre><code class="lang-yaml">Type: PnPBatch
-Parameter Sets: Batched
+<h3 id="-classification">-Classification</h3>
+<p>Describes a classification for the group (such as low, medium or high business impact). If classification is not specified, the classification will be copied from the original team/group.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
