@@ -13,7 +13,9 @@ title: Add-PnPListItem
 
 Adds an item to the list and sets the creation time to the current date and time. The author is set to the current authenticated user executing the cmdlet. In order to set the author to a different user, please refer to Set-PnPListItem.
 
-<a href="https://pnp.github.io/powershell/articles/batching.html" rel="Supports Batching">![Supports Batching](https://raw.githubusercontent.com/pnp/powershell/gh-pages/images/batching/Batching.png)</a>
+<a href="https://pnp.github.io/powershell/articles/batching.html">
+<img src="https://raw.githubusercontent.com/pnp/powershell/gh-pages/images/batching/Batching.png" alt="Supports Batching">
+</a>
 
 ## SYNTAX
 
