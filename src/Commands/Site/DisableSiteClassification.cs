@@ -1,5 +1,6 @@
 ﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
+
 using System;
 using System.Management.Automation;
 
@@ -7,10 +8,11 @@ namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsLifecycle.Disable, "PnPSiteClassification")]
     [RequiredMinimalApiPermissions("Directory.ReadWrite.All")]
+    [OutputType(typeof(void))]
     public class DisableSiteClassification : PnPGraphCmdlet
     {
         protected override void ExecuteCmdlet()
-        {         
+        {
             try
             {
                 PnP.Framework.Graph.SiteClassificationsUtility.DisableSiteClassifications(AccessToken);

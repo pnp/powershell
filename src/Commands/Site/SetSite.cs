@@ -1,9 +1,11 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
+
 using PnP.Framework;
 using PnP.Framework.Entities;
 using PnP.PowerShell.Commands.Utilities;
+
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -11,6 +13,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Set, "PnPSite")]
+    [OutputType(typeof(void))]
     public class SetSite : PnPSharePointCmdlet
     {
         private const string ParameterSet_LOCKSTATE = "Set Lock State";
@@ -90,7 +93,7 @@ namespace PnP.PowerShell.Commands.Site
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter OverrideTenantAnonymousLinkExpirationPolicy;
-        
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public MediaTranscriptionPolicyType? MediaTranscription { get; set; }
 
@@ -121,14 +124,14 @@ namespace PnP.PowerShell.Commands.Site
                 context.ExecuteQueryRetry();
             }
 
-            if(ParameterSpecified(nameof(SensitivityLabel)) && SensitivityLabel.HasValue)
+            if (ParameterSpecified(nameof(SensitivityLabel)) && SensitivityLabel.HasValue)
             {
                 site.SensitivityLabel = SensitivityLabel.Value;
-                context.ExecuteQueryRetry();                
+                context.ExecuteQueryRetry();
             }
 
             if (ParameterSpecified(nameof(LogoFilePath)))
-            {                
+            {
                 if (!System.IO.Path.IsPathRooted(LogoFilePath))
                 {
                     LogoFilePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogoFilePath);
@@ -172,12 +175,12 @@ namespace PnP.PowerShell.Commands.Site
                     var uploadedFile = createdList.RootFolder.UploadFile(logoFileName, LogoFilePath, true);
                     context.Web.SiteLogoUrl = uploadedFile.ServerRelativeUrl;
                     context.Web.Update();
-                    context.ExecuteQueryRetry();                    
+                    context.ExecuteQueryRetry();
                 }
                 else
                 {
                     throw new Exception("Logo file does not exist");
-                }                
+                }
             }
 
             if (IsTenantProperty())
