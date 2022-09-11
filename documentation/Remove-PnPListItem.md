@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPListItem.html
 
 Deletes an item from a list
 
-[![Supports Batching](https://github.com/pnp/powershell/blob/gh-pages/images/batching/Batching.png)](../articles/batching.html)
+<a href="https://github.com/pnp/powershell/blob/gh-pages/articles/batching.html" rel="Supports Batching">![Supports Batching](https://raw.githubusercontent.com/pnp/powershell/gh-pages/images/batching/Batching.png)</a>
 
 ## SYNTAX
 
