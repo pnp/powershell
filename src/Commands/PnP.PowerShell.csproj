@@ -22,9 +22,9 @@
 		<RepositoryUrl>https://github.com/pnp/powershell</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/pnp/powershell</PackageProjectUrl>
 		<PackageTags>Microsoft 365; PowerShell; SharePoint; Teams; Graph; Azure AD</PackageTags>
-		<Description>PnP PowerShell is a .NET 6 / .NET Framework 4.6.2 based PowerShell Module providing nearly 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security &amp; Compliance, Azure Active Directory, and more.</Description>
+		<Description>PnP PowerShell is a .NET 6/ .NET Core 3.1 / .NET Framework 4.6.2 based PowerShell Module providing nearly 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security &amp; Compliance, Azure Active Directory, and more.</Description>
 		<PackageIcon>nugeticon.png</PackageIcon>
-		<PackageReadmeFile>README.md</PackageReadmeFile>		
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(IsWindows)'=='true'">
@@ -49,21 +49,20 @@
 
 	<ItemGroup>
 		<PackageReference Include="AngleSharp" Version="0.14.0" />
-		
+
 		<PackageReference Include="Microsoft.Graph" Version="3.33.0" />
 		<PackageReference Include="Microsoft.Identity.Client" Version="4.36.1" />
-		<PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />	
-		
-		
+		<PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
+
 		<PackageReference Include="PnP.Framework" Version="1.10.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Framework" Version="1.10.2-*" Condition="'$(IsRelease)' == '1'" />
-		
+
 		<PackageReference Include="PnP.Core" Version="1.7.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Core" Version="1.7.3-*" Condition="'$(IsRelease)' == '1'" />
-		
+
 		<PackageReference Include="PnP.Core.Auth" Version="1.7.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Core.Auth" Version="1.7.3-*" Condition="'$(IsRelease)' == '1'" />
-		
+
 		<PackageReference Include="PnP.Core.Admin" Version="1.7.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Core.Admin" Version="1.7.3-*" Condition="'$(IsRelease)' == '1'" />
 
@@ -71,18 +70,18 @@
 		<!-- <PackageReference Include="PnP.Core.Transformation" Version="1.6.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Core.Transformation" Version="*" Condition="'$(IsRelease)' == '1'" /> -->
 		<PackageReference Include="PnP.Core.Transformation" Version="1.7.3-*" />
-		
+
 		<!-- <PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.6.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="*" Condition="'$(IsRelease)' == '1'" /> -->
 		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.7.3-*" />
-		
+
 		<PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
-		
-		
+
+
 		<PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
 		<PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
-		
-		
+
+
 		<ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
 
 	</ItemGroup>
@@ -146,7 +145,15 @@
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.22.1" />
 	</ItemGroup>
 
+	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+		<PackageReference Include="System.Management.Automation" Version="7.0.3" />
+	</ItemGroup>
+
 	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">
+		<PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies" Version="1.1.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net462' or '$(TargetFramework)' == 'netcoreapp3.1'">
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
@@ -155,11 +162,10 @@
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
 		<PackageReference Include="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
 		<PackageReference Include="System.Security.Cryptography.OpenSsl" Version="4.7.0" />
-		<PackageReference Include="System.Text.Encodings.Web" Version="4.7.2" />		
-		<PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies" Version="1.1.0" />
+		<PackageReference Include="System.Text.Encodings.Web" Version="4.7.2" />
 		<PackageReference Include="System.Text.Json" Version="4.7.2" />
 		<PackageReference Include="TextCopy" Version="4.0.0" />
-	<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">
@@ -167,14 +173,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="..\..\nugeticon.png">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
-	  <None Include="..\..\README.md">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
+		<None Include="..\..\nugeticon.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
 
 	<ItemGroup>

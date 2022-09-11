@@ -6,7 +6,12 @@ $dlls = @("PnP.PowerShell.ALC.dll", "PnP.PowerShell.dll")
 $netversion = "net6.0-windows"
 
 if ($PSEdition -eq 'Core') {
-  $netversion = "net6.0-windows"
+    if($PSVersionTable.PSVersion.Minor -ge 2){
+        $netversion = "net6.0-windows"
+    }
+    else{
+        $netversion = "netcoreapp3.1"
+    }
 }
 else {
   $netversion = "net462"
