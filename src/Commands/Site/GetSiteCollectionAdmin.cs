@@ -1,13 +1,14 @@
-﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 
-using System.Linq.Expressions;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteCollectionAdmin")]
+    [OutputType(typeof(User))]
     public class GetSiteCollectionAdmin : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()
