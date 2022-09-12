@@ -25,6 +25,8 @@ Get-PnPTemporarilyDisableAppBar [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to retrieve disabled state of the SharePoint Online App Bar.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

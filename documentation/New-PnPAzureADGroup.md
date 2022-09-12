@@ -25,6 +25,8 @@ New-PnPAzureADGroup -DisplayName <String> -Description <String> -MailNickname <S
 
 ## DESCRIPTION
 
+Allows to create an Azure Active Directory group. This can be either security or distribution group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

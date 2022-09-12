@@ -35,6 +35,8 @@ Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> -Batch <PnPB
 
 ## DESCRIPTION
 
+Allows to modify a list item.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -27,6 +27,8 @@ Add-PnPListDesign -Title <String> -SiteScriptIds <Guid[]> [-Description <String>
 
 ## DESCRIPTION
 
+Allows to add new List Design to tenant.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

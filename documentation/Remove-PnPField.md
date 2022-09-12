@@ -21,6 +21,8 @@ Remove-PnPField [-Identity] <FieldPipeBind> [[-List] <ListPipeBind>] [-Force]
 
 ## DESCRIPTION
 
+Allows to remove a field from list or site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

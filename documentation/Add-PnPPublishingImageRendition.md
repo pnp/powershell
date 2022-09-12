@@ -21,6 +21,8 @@ Add-PnPPublishingImageRendition -Name <String> -Width <Int32> -Height <Int32>
 
 ## DESCRIPTION
 
+Allowss to add an Image Rendition.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

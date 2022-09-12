@@ -21,6 +21,8 @@ Add-PnPTenantSequence -Template <ProvisioningHierarchy> -Sequence <ProvisioningS
 
 ## DESCRIPTION
 
+Allows to add a a tenant sequence object to a tenant template.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

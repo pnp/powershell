@@ -21,6 +21,8 @@ Add-PnPContentTypeToDocumentSet -ContentType <ContentTypePipeBind[]> -DocumentSe
 
 ## DESCRIPTION
 
+Allows to add content type to document set.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

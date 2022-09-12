@@ -21,6 +21,8 @@ Get-PnPWikiPageContent [-ServerRelativePageUrl] <String> [-Connection <PnPConnec
 
 ## DESCRIPTION
 
+Allows to retrieve contents/source of a wiki page.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

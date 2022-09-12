@@ -22,6 +22,8 @@ Export-PnPTaxonomy [-TermSetId <Guid>] [-IncludeID] [-Path <String>] [-TermStore
 
 ## DESCRIPTION
 
+Allows to export a taxonomy to either the output or to a file.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

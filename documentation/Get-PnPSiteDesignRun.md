@@ -21,6 +21,8 @@ Get-PnPSiteDesignRun [-SiteDesignId <Guid>] [-WebUrl <String>]
 
 ## DESCRIPTION
 
+Allows to retrieve a list of site designs applied to a specified site collection. By default the command will retrieve list of designs applied to the current site but it is also possible to get this information from a different site collection using `WebUrl` option.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

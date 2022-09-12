@@ -21,6 +21,8 @@ Measure-PnPWeb [[-Identity] <WebPipeBind>] [-Recursive] [-IncludeHiddenList] [-C
 
 ## DESCRIPTION
 
+Allows to retrieve statistics on specified web. By specifing `Recursive` it is possible to retrieve statistics on all subwebs as well.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

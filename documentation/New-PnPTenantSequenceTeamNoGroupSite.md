@@ -22,6 +22,8 @@ New-PnPTenantSequenceTeamNoGroupSite -Url <String> -Title <String> -TimeZoneId <
 
 ## DESCRIPTION
 
+Allows to create a new site without a Microsoft 365 group in-memory object.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -21,6 +21,8 @@ Set-PnPGraphSubscription -Identity <GraphSubscriptionPipeBind> -ExpirationDate <
 
 ## DESCRIPTION
 
+Allows to update an existing Microsoft Graph subscription.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

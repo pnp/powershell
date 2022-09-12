@@ -26,6 +26,8 @@ Get-PnPMicrosoft365GroupOwner -Identity <Microsoft365GroupPipeBind> [<CommonPara
 
 ## DESCRIPTION
 
+Allows to retrieve owners of Microsoft 365 Group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

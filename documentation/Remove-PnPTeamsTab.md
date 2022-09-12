@@ -26,6 +26,8 @@ Remove-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -Id
 
 ## DESCRIPTION
 
+Allows to remove a tab from channel.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

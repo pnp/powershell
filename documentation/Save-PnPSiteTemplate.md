@@ -22,6 +22,8 @@ Save-PnPSiteTemplate -Template <SiteTemplatePipeBind> [-Out] <String>
 
 ## DESCRIPTION
 
+Allows to save a PnP site template to the file system.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

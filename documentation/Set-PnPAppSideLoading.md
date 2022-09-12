@@ -26,6 +26,8 @@ Set-PnPAppSideLoading [-Off] [-Connection <PnPConnection>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to enable the App SideLoading Feature on a site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

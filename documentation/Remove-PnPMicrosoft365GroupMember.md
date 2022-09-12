@@ -26,6 +26,8 @@ Remove-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> -Users <
 
 ## DESCRIPTION
 
+Allows to remove members from a specified Microsoft 365 Group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -25,6 +25,8 @@ Set-PnPTeamsChannelUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind
 
 ## DESCRIPTION
 
+Allows to update the role of a user in an existing Microsoft Teams private channel.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

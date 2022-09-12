@@ -21,6 +21,8 @@ Set-PnPListItemAsRecord [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-De
 
 ## DESCRIPTION
 
+Allows to set a list item as a record.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -39,6 +39,8 @@ Set-PnPListItemPermission [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-
 
 ## DESCRIPTION
 
+Allows to modify list item permissions.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

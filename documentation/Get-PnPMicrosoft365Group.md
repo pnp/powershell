@@ -25,6 +25,8 @@ Get-PnPMicrosoft365Group [-Identity <Microsoft365GroupPipeBind>] [-IncludeSiteUr
 
 ## DESCRIPTION
 
+Allows to retrieve Microsoft 365 Groups. By using `Identity` option you may specify the exact group that will be retrieved.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

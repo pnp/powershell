@@ -33,6 +33,8 @@ Remove-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> -Batch <P
 
 ## DESCRIPTION
 
+Allows to remove a list item.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -25,6 +25,8 @@ Remove-PnPKnowledgeHubSite [-Connection <PnPConnection>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to remove Knowledge Hub Site setting for your tenant.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

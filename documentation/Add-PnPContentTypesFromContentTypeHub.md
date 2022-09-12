@@ -25,6 +25,8 @@ Add-PnPContentTypesFromContentTypeHub -ContentTypes List<String> [-Site <SitePip
 
 ## DESCRIPTION
 
+Allows to add content types from content type hub site to current site. In case the same content type is already present on the current site then the latest published version will be used.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

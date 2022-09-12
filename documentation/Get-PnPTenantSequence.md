@@ -21,6 +21,8 @@ Get-PnPTenantSequence -Template <ProvisioningHierarchy> [-Identity <Provisioning
 
 ## DESCRIPTION
 
+Allows to retrieve provisioning sequence objects from a tenant template. By using `Identity` option it is possible to retrieve a specific provisioning sequence object.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

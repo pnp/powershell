@@ -21,6 +21,8 @@ Convert-PnPSiteTemplate [-Path] <String> [-Out <String>] [[-ToSchema] <XMLPnPSch
 
 ## DESCRIPTION
 
+Allows to convert a provisioning template to an other schema version.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

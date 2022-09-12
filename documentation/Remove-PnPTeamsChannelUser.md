@@ -26,6 +26,8 @@ Remove-PnPTeamsChannelUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeB
 
 ## DESCRIPTION
 
+Allows to remove a user from specified private channel.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

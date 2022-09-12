@@ -22,6 +22,8 @@ New-PnPTenantSequenceTeamNoGroupSubSite -Url <String> -Title <String> -TimeZoneI
 
 ## DESCRIPTION
 
+Allows to create a new team site subsite with no Microsoft 365 group object.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
