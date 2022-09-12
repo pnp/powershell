@@ -18,11 +18,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support for `IsLoopEnabled` properties in `Get-PnPTenant` and `Set-PnPTenant` cmdlets to to enable/disable loop components in the tenant. [#2307](https://github.com/pnp/powershell/pull/2307)
 
 ### Changed
-- Changed to no longer require https:// to be prefixed when using `Connect-PnPOnline -Url tenant.sharepoint.com` [#2139](https://github.com/pnp/powershell/pull/2139)
+- Changed to no longer require `https://` to be prefixed when using `Connect-PnPOnline -Url tenant.sharepoint.com` [#2139](https://github.com/pnp/powershell/pull/2139)
 - `Get-PnPAvailableSensitivityLabel` cmdlet now uses the non-deprecated Graph API to retrieve sensitivity label. [#2234](https://github.com/pnp/powershell/pull/2234)
 - Improved `Get-PnPMicrosoft365Group` cmdlet to better check the Id, DisplayName and MailNickname of Microsoft 365  Group. [#2258](https://github.com/pnp/powershell/pull/2258)
 - Improved `Get-PnPStorageEntity` cmdlet when `Key` parameter is specified. [#2275](https://github.com/pnp/powershell/pull/2275)
-- Improved `Get-PnPAuthenticationRealm` cmdlet to use `HTTP Client` instead of `WebRequest`. [#2304](https://github.com/pnp/powershell/pull/2304)
+- Improved `Get-PnPAuthenticationRealm` cmdlet to use `HTTP Client` instead of obsolete `WebRequest` class. [#2304](https://github.com/pnp/powershell/pull/2304)
 
 ### Removed
 - Marked `-Resource` parameter from `Get-PnPAccessToken` cmdlet as obsolete as it was not used anymore anyway. It will be removed in a future version. [#2182](https://github.com/pnp/powershell/pull/2182)
