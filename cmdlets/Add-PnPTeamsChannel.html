@@ -88,28 +88,35 @@
 <ul>
 <li>Microsoft Graph API: Group.ReadWrite.All</li>
 </ul>
-<p>Adds a channel to an existing Microsoft Teams instance.</p>
+<p>Adds a channel to an existing Microsoft Teams team.</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="public-channel">Public channel</h3>
-<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; -DisplayName &lt;String&gt; [-Description &lt;String&gt;] [-IsFavoriteByDefault &lt;Boolean&gt;] [&lt;CommonParameters&gt;]
+<h3 id="standard-channel">Standard channel</h3>
+<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; -DisplayName &lt;String&gt; [-ChannelType Standard] [-Description &lt;String&gt;] [-IsFavoriteByDefault &lt;Boolean&gt;]
 </code></pre>
 <h3 id="private-channel">Private channel</h3>
-<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; -DisplayName &lt;String&gt; -OwnerUPN &lt;String&gt; [-Description &lt;String&gt;] [-Private] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; -DisplayName &lt;String&gt; -ChannelType Private -OwnerUPN &lt;String&gt; [-Description &lt;String&gt;]
+</code></pre>
+<h3 id="shared-channel">Shared channel</h3>
+<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; -DisplayName &lt;String&gt; -ChannelType Shared -OwnerUPN &lt;String&gt; [-Description &lt;String&gt;] [-IsFavoriteByDefault &lt;Boolean&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPTeamsChannel -Team 4efdf392-8225-4763-9e7f-4edeb7f721aa -DisplayName &quot;My Channel&quot; -IsFavoriteByDefault $true
 </code></pre>
-<p>Adds a new channel to the specified Teams instance and marks the channel as by default visible for members.</p>
+<p>Adds a new standard channel to the Team specified by its identifier and marks the channel as by default visible for members.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team MyTeam -DisplayName &quot;My Channel&quot;
+<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team &quot;My Team&quot; -DisplayName &quot;My standard channel&quot;
 </code></pre>
-<p>Adds a new channel to the specified Teams instance</p>
+<p>Adds a new standard channel to the Team specified by its name.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team MyTeam -DisplayName &quot;My Channel&quot; -Private -OwnerUPN user1@domain.com
+<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team &quot;HR&quot; -DisplayName &quot;My private channel&quot; -ChannelType Private -OwnerUPN user1@domain.com
 </code></pre>
-<p>Adds a new private channel to the specified Teams instance</p>
+<p>Adds a new private channel to the Team specified by its name and sets the provided user as the owner of the channel.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Add-PnPTeamsChannel -Team &quot;Logistical Department&quot; -DisplayName &quot;My shared channel&quot; -ChannelType Shared -OwnerUPN user1@domain.com
+</code></pre>
+<p>Adds a new shared channel to the Team specified by its name and sets the provided user as the owner of the channel.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-description">-Description</h3>
 <p>An optional description of the channel.</p>
@@ -123,7 +130,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-displayname">-DisplayName</h3>
-<p>The display name of the new channel. Letters, numbers and spaces are allowed.</p>
+<p>The display name of the new channel. Letters, numbers, and spaces are allowed.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -136,7 +143,7 @@ Accept wildcard characters: False
 <h3 id="-isfavoritebydefault">-IsFavoriteByDefault</h3>
 <p>Allows you to specify if the channel is by default visible for members</p>
 <pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: Public channel
+Parameter Sets: Standard channel, Shared channel
 
 Required: False
 Position: Named
@@ -147,7 +154,7 @@ Accept wildcard characters: False
 <h3 id="-ownerupn">-OwnerUPN</h3>
 <p>The User Principal Name (email) of the owner of the channel.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: Private channel
+Parameter Sets: Private channel, Shared channel
 
 Required: True
 Position: Named
@@ -155,12 +162,12 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-private">-Private</h3>
-<p>Specify to mark the channel as private.</p>
+<h3 id="-channeltype">-ChannelType</h3>
+<p>Allows specifying the type of channel to be created. Possible values are Standard, Private, and Shared.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Private channel
+Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
