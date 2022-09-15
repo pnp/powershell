@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support for `-ErrorAction:Stop` to PnP PowerShell cmdlets. Notice that if you were using this in combination with the specific try/catch [System.Management.Automation.PSInvalidOperationException], it will no longer catch the exception. It will throw an `System.Management.Automation.ErrorRecord` exception instead. Remove the `-ErrorAction:Stop` parameter from your cmdlet or catch this new exception type to avoid this behavior. [#2288](https://github.com/pnp/powershell/pull/2288)
 - Added ability to create shared Teams channels using `Add-PnPTeamsChannel -ChannelType Shared` [#2308](https://github.com/pnp/powershell/pull/2308)
 - Added support for `IsLoopEnabled` properties in `Get-PnPTenant` and `Set-PnPTenant` cmdlets to to enable/disable loop components in the tenant. [#2307](https://github.com/pnp/powershell/pull/2307)
+- Added support for `SubscribeMembersToCalendarEventsDisabled` resource behavior option in `New-PnPMicrosoft365Group` and `New-PnPTeamsTeam` cmdlet.
 
 ### Changed
 - Changed to no longer require `https://` to be prefixed when using `Connect-PnPOnline -Url tenant.sharepoint.com` [#2139](https://github.com/pnp/powershell/pull/2139)
@@ -39,7 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPAccessToken` cmdlet to be able to work with different site collections as well as require an actual connection first. [#2270](https://github.com/pnp/powershell/pull/2270)
 - Fixed `Copy-PnPList` cmdlet to be able to copy the list structure to the destination web. [#2313](https://github.com/pnp/powershell/pull/2313)
 - Fixed `Add-PnPField` cmdlet , it was throwing null reference error when `-Type` was not specified and after the prompt you entered the correct type. [#2338](https://github.com/pnp/powershell/pull/2338)
-
+- Fixed regression issue with `New-Microsoft365Group` cmdlet.
 ### Contributors
 
 - Marc Studer [Studermarc]
