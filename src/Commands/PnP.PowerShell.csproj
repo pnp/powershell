@@ -22,7 +22,7 @@
 		<RepositoryUrl>https://github.com/pnp/powershell</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/pnp/powershell</PackageProjectUrl>
 		<PackageTags>Microsoft 365; PowerShell; SharePoint; Teams; Graph; Azure AD</PackageTags>
-		<Description>PnP PowerShell is a .NET 6/ .NET Core 3.1 / .NET Framework 4.6.2 based PowerShell Module providing nearly 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security &amp; Compliance, Azure Active Directory, and more.</Description>
+		<Description>PnP PowerShell is a .NET 6/ .NET Framework 4.6.2 based PowerShell Module providing nearly 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security &amp; Compliance, Azure Active Directory, and more.</Description>
 		<PackageIcon>nugeticon.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
@@ -76,12 +76,8 @@
 		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.7.3-*" />
 
 		<PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
-
-
 		<PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
 		<PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
-
-
 		<ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
 
 	</ItemGroup>
@@ -132,29 +128,22 @@
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.2" />
 		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
 		<PackageReference Include="System.Security.Cryptography.ProtectedData" Version="6.0.0" />
 		<PackageReference Include="System.Security.Cryptography.OpenSsl" Version="5.0.0" />
 		<PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
 		<PackageReference Include="System.Management.Automation" Version="7.2.0" />
-		<PackageReference Include="System.Text.Json" Version="6.0.5" />
+		<PackageReference Include="System.Text.Json" Version="6.0.6" />
 		<PackageReference Include="TextCopy" Version="6.1.0" />
-		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.22.1" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-		<PackageReference Include="System.Management.Automation" Version="7.0.3" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.23.1" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">
-		<PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies" Version="1.1.0" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'net462' or '$(TargetFramework)' == 'netcoreapp3.1'">
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+		<PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies" Version="1.1.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
@@ -165,7 +154,7 @@
 		<PackageReference Include="System.Text.Encodings.Web" Version="4.7.2" />
 		<PackageReference Include="System.Text.Json" Version="4.7.2" />
 		<PackageReference Include="TextCopy" Version="4.0.0" />
-		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />		
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">
