@@ -145,7 +145,7 @@
 
 	<ItemGroup Condition="'$(PnPFrameworkPath)' != '' and '$(IsRelease)' != '1'">
 		<Reference Include="PnP.Framework" Condition="'$(TargetFramework)' == 'net6.0-windows'">
-			<HintPath>$(PnPFrameworkPath)PnP.Framework\bin\Debug\net2.0\PnP.Framework.dll</HintPath>
+			<HintPath>$(PnPFrameworkPath)PnP.Framework\bin\Debug\net6.0\PnP.Framework.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
