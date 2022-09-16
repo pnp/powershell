@@ -41,7 +41,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Copy-PnPList` cmdlet to be able to copy the list structure to the destination web. [#2313](https://github.com/pnp/powershell/pull/2313)
 - Fixed `Add-PnPField` cmdlet , it was throwing null reference error when `-Type` was not specified and after the prompt you entered the correct type. [#2338](https://github.com/pnp/powershell/pull/2338)
 - Fixed regression issue with `New-Microsoft365Group` cmdlet. [#2349](https://github.com/pnp/powershell/pull/2349)
-- Fixed issue with `Add-PnPTaxonomyField`, it was throwing error when using `-TaxonomyItemId` parameter.
+- Fixed issue with `Add-PnPTaxonomyField`, it was throwing error when using `-TaxonomyItemId` parameter. [#2351](https://github.com/pnp/powershell/pull/2351)
 
 ### Contributors
 
