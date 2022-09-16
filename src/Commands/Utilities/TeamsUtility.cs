@@ -602,18 +602,22 @@ namespace PnP.PowerShell.Commands.Utilities
             return await GraphHelper.DeleteAsync(connection, $"v1.0/teams/{groupId}/channels/{channelId}", accessToken);
         }
 
-        public static async Task<TeamChannel> AddChannelAsync(string accessToken, PnPConnection connection, string groupId, string displayName, string description, bool isPrivate, string ownerUPN, bool isFavoriteByDefault)
+        public static async Task<TeamChannel> AddChannelAsync(string accessToken, PnPConnection connection, string groupId, string displayName, string description, TeamsChannelType channelType, string ownerUPN, bool isFavoriteByDefault)
         {
             var channel = new TeamChannel()
             {
                 Description = description,
                 DisplayName = displayName,
             };
-            if (isPrivate)
+            if (channelType == TeamsChannelType.Private)
             {
                 channel.MembershipType = "private";
             }
-            if (isPrivate)
+            if(channelType == TeamsChannelType.Shared)
+            {
+                channel.MembershipType = "shared";
+            }
+            if (channelType == TeamsChannelType.Private || channelType == TeamsChannelType.Shared)
             {
                 channel.Type = "#Microsoft.Graph.channel";
                 var user = await GraphHelper.GetAsync<User>(connection, $"v1.0/{GetUserGraphUrlForUPN(ownerUPN)}", accessToken);

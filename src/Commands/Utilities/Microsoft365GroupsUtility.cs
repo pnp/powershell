@@ -50,10 +50,10 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             return items;
         }
-
-        private static async Task<Microsoft365Group> GetGroupFilteredAsync(string filter, PnPConnection connection, string accessToken, bool includeSiteUrl, bool includeOwners)
+        internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, Guid groupId, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
-            var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and {filter}", accessToken);
+            var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and id eq '{groupId}'", accessToken);
+
             if (results != null && results.Items.Any())
             {
                 var group = results.Items.First();
@@ -99,33 +99,30 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 return group;
             }
-
-            throw new Exception();
+            return null;
         }
-
-        internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, Guid groupId, string accessToken, bool includeSiteUrl, bool includeOwners)
-        {
-            try
-            {
-                return await GetGroupFilteredAsync($"(id eq '{groupId}' or displayName eq '{groupId}' or mailNickName eq '{groupId}')", connection, accessToken, includeSiteUrl, includeOwners);
-            } 
-            catch (Exception)
-            {
-                throw new Exception($"No Microsoft 365 group found with id, display name or mail nickname '{groupId}'");
-            }                      
-        }
-
         internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, string displayName, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
-
-            try
+            var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and (displayName eq '{displayName}' or mailNickName eq '{displayName}')", accessToken);
+            if (results != null && results.Items.Any())
             {
-                return await GetGroupFilteredAsync($"(displayName eq '{displayName}' or mailNickName eq '{displayName}')", connection, accessToken, includeSiteUrl, includeOwners);
+                var group = results.Items.First();
+                if (includeSiteUrl)
+                {
+                    var siteUrlResult = await GraphHelper.GetAsync(connection, $"v1.0/groups/{group.Id}/sites/root?$select=webUrl", accessToken);
+                    var resultElement = JsonSerializer.Deserialize<JsonElement>(siteUrlResult);
+                    if (resultElement.TryGetProperty("webUrl", out JsonElement webUrlElement))
+                    {
+                        group.SiteUrl = webUrlElement.GetString();
+                    }
+                }
+                if (includeOwners)
+                {
+                    group.Owners = await GetGroupMembersAsync("owners", connection, group.Id.Value, accessToken);
+                }
+                return group;
             }
-            catch (Exception)
-            {
-                throw new Exception($"No Microsoft 365 group found with id, display name or mail nickname '{displayName}'");
-            }
+            return null;
         }
 
         internal static async Task<Microsoft365Group> GetDeletedGroupAsync(PnPConnection connection, Guid groupId, string accessToken)
