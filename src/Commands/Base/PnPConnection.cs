@@ -73,7 +73,7 @@ namespace PnP.PowerShell.Commands.Base
         /// Connection instance which is set by connecting without -ReturnConnection
         /// </summary>
         public static PnPConnection Current { get; internal set; }
-        
+
         public ConnectionType ConnectionType { get; protected set; }
 
         /// <summary>
@@ -343,12 +343,35 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection CreateWithManagedIdentity(Cmdlet cmdlet, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static PnPConnection CreateWithManagedIdentity(Cmdlet cmdlet, string url, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
-            //var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-            //var accesstoken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, $"https://{AzureAuthHelper.GetGraphEndPoint(azureEnvironment)}/").GetAwaiter().GetResult();
-            var connection = new PnPConnection(PnPPSVersionTag, InitializationType.Graph, tenantAdminUrl);
-            return connection;
+            var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+            var resourceUri = new Uri(url);
+            var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
+            var accessToken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, defaultResource).GetAwaiter().GetResult();
+
+            using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
+            {
+                PnPClientContext context = null;
+                ConnectionType connectionType = ConnectionType.O365;
+                if (url != null)
+                {
+                    context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
+                    context.ApplicationName = Resources.ApplicationName;
+                    context.DisableReturnValueCache = true;
+                    context.ExecutingWebRequest += (sender, e) =>
+                    {
+                        e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
+                    };
+                    if (IsTenantAdminSite(context))
+                    {
+                        connectionType = ConnectionType.TenantAdmin;
+                    }
+                }
+
+                var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.ManagedIdentity);
+                return connection;
+            }
         }
 
         internal static PnPConnection CreateWithCredentials(Cmdlet cmdlet, Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials)
@@ -620,8 +643,8 @@ namespace PnP.PowerShell.Commands.Base
 
         internal void CacheContext()
         {
-            if(Context == null) return;
-            
+            if (Context == null) return;
+
             var c = ContextCache.FirstOrDefault(cc => new Uri(cc.Url).AbsoluteUri == new Uri(Context.Url).AbsoluteUri);
             if (c == null)
             {

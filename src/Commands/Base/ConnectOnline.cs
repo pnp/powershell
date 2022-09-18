@@ -556,7 +556,7 @@ namespace PnP.PowerShell.Commands.Base
         private PnPConnection ConnectManagedIdentity()
         {
             WriteVerbose("Connecting to the Graph with the current Managed Identity");
-            return PnPConnection.CreateWithManagedIdentity(this, TenantAdminUrl);
+            return PnPConnection.CreateWithManagedIdentity(this, Url, TenantAdminUrl);
         }
 
         private PnPConnection ConnectWebLogin()

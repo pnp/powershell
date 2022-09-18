@@ -41,15 +41,24 @@ namespace PnP.PowerShell.Commands
             {
                 if (Connection != null)
                 {
-                    if (Connection.Context != null)
+                    if (Connection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
                     {
-                        var settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(Connection.Context);
-                        if (settings != null)
+                        var resourceUri = new Uri(Connection.Url);
+                        var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
+                        return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, defaultResource).GetAwaiter().GetResult();
+                    }
+                    else
+                    {
+                        if (Connection.Context != null)
                         {
-                            var authManager = settings.AuthenticationManager;
-                            if (authManager != null)
+                            var settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(Connection.Context);
+                            if (settings != null)
                             {
-                                return authManager.GetAccessTokenAsync(Connection.Context.Url).GetAwaiter().GetResult();
+                                var authManager = settings.AuthenticationManager;
+                                if (authManager != null)
+                                {
+                                    return authManager.GetAccessTokenAsync(Connection.Context.Url).GetAwaiter().GetResult();
+                                }
                             }
                         }
                     }
@@ -138,12 +147,12 @@ namespace PnP.PowerShell.Commands
                 }
 
                 Thread.Sleep(spoOperation.PollingInterval);
-                
+
                 if (Stopping)
                 {
                     break;
                 }
-                
+
                 WriteVerbose("Checking for operation status");
                 ClientContext.Load(spoOperation);
                 ClientContext.ExecuteQueryRetry();
