@@ -43,6 +43,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Add-PnPField` cmdlet , it was throwing null reference error when `-Type` was not specified and after the prompt you entered the correct type. [#2338](https://github.com/pnp/powershell/pull/2338)
 - Fixed regression issue with `New-Microsoft365Group` cmdlet. [#2349](https://github.com/pnp/powershell/pull/2349)
 - Fixed issue with `Add-PnPTaxonomyField`, it was throwing error when using `-TaxonomyItemId` parameter. [#2351](https://github.com/pnp/powershell/pull/2351)
+- Fixed `Import-PnPTermGroupFromXml` issue where a valid template was not working.
 
 ### Contributors
 
