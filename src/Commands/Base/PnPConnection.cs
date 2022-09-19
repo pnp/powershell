@@ -348,8 +348,9 @@ namespace PnP.PowerShell.Commands.Base
             var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
             var resourceUri = new Uri(url);
             var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
+            cmdlet.WriteVerbose("Acquiring token");
             var accessToken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, defaultResource).GetAwaiter().GetResult();
-
+            cmdlet.WriteVerbose("Token acquired");
             using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
             {
                 PnPClientContext context = null;
