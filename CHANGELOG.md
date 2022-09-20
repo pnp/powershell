@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support for `SubscribeMembersToCalendarEventsDisabled` resource behavior option in `New-PnPMicrosoft365Group` and `New-PnPTeamsTeam` cmdlet. [#2349](https://github.com/pnp/powershell/pull/2349)
 - Added `-OneDriveRequestFilesLinkEnabled` option to `Set-PnPTenant` to allow configuring the request files anonymously feature on the tenant level [#2360](https://github.com/pnp/powershell/pull/2360)
 - Added `-RequestFilesLinkEnabled` option to `Set-PnPSite` to allow configuring the request files anonymously feature on a per site collection level [#2360](https://github.com/pnp/powershell/pull/2360)
+- Added `AlertTemplateName` paramter to `Add-PnPAlert` to allow configuring the Alert Template type name in the email.
 
 ### Changed
 - Changed to no longer require `https://` to be prefixed when using `Connect-PnPOnline -Url tenant.sharepoint.com` [#2139](https://github.com/pnp/powershell/pull/2139)
