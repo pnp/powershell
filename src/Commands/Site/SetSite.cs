@@ -100,6 +100,9 @@ namespace PnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public Guid? SensitivityLabel;
 
+        [Parameter(Mandatory = false)]
+        public bool? RequestFilesLinkEnabled;           
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
 
@@ -306,7 +309,12 @@ namespace PnP.PowerShell.Commands.Site
                     siteProperties.MediaTranscription = MediaTranscription.Value;
                     executeQueryRequired = true;
                 }
-
+                
+                if (RequestFilesLinkEnabled.HasValue)
+                {
+                    siteProperties.RequestFilesLinkEnabled = RequestFilesLinkEnabled.Value;
+                    executeQueryRequired = true;
+                }                
                 if (executeQueryRequired)
                 {
                     siteProperties.Update();
