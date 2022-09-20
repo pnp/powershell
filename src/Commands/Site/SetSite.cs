@@ -100,7 +100,7 @@ namespace PnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public Guid? SensitivityLabel;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public bool? RequestFilesLinkEnabled;           
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
