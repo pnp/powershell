@@ -24,7 +24,7 @@ Set-PnPSite [-Identity <String>] [-Classification <String>] [-DisableFlows] [-Lo
  [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>] [-DisableSharingForNonOwners]
  [-LocaleId <UInt32>] [-RestrictedToGeo <RestrictedToRegion>] [-SocialBarOnSitePagesDisabled]
  [-AnonymousLinkExpirationInDays <Int32>] [-OverrideTenantAnonymousLinkExpirationPolicy]
- [-MediaTranscription <MediaTranscriptionPolicyType>] [-SensitivityLabel <Guid>] [-RequestFilesLinkEnabled <Boolean>]
+ [-MediaTranscription <MediaTranscriptionPolicyType>] [-SensitivityLabel <Guid>] [-RequestFilesLinkEnabled <Boolean>] [-ScriptSafeDomainName <string>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -461,6 +461,20 @@ Allows configuring whether users will be able to create anonymous requests for p
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ScriptSafeDomainName
+Allow contributors to insert iframes only from the specified domains only
+
+```yaml
+Type: String
 Parameter Sets: (All)
 
 Required: False

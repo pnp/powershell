@@ -101,7 +101,10 @@ namespace PnP.PowerShell.Commands.Site
         public Guid? SensitivityLabel;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public bool? RequestFilesLinkEnabled;           
+        public bool? RequestFilesLinkEnabled;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public string ScriptSafeDomainName;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
@@ -130,6 +133,16 @@ namespace PnP.PowerShell.Commands.Site
             if (ParameterSpecified(nameof(SensitivityLabel)) && SensitivityLabel.HasValue)
             {
                 site.SensitivityLabel = SensitivityLabel.Value;
+                context.ExecuteQueryRetry();
+            }
+
+            if (ParameterSpecified(nameof(ScriptSafeDomainName)) && !string.IsNullOrEmpty(ScriptSafeDomainName))
+            {
+                ScriptSafeDomainEntityData scriptSafeDomainEntity = new ScriptSafeDomainEntityData
+                {
+                    DomainName = ScriptSafeDomainName
+                };
+                site.CustomScriptSafeDomains.Create(scriptSafeDomainEntity);
                 context.ExecuteQueryRetry();
             }
 

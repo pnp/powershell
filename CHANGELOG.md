@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support for `SubscribeMembersToCalendarEventsDisabled` resource behavior option in `New-PnPMicrosoft365Group` and `New-PnPTeamsTeam` cmdlet. [#2349](https://github.com/pnp/powershell/pull/2349)
 - Added `-OneDriveRequestFilesLinkEnabled` option to `Set-PnPTenant` to allow configuring the request files anonymously feature on the tenant level [#2360](https://github.com/pnp/powershell/pull/2360)
 - Added `-RequestFilesLinkEnabled` option to `Set-PnPSite` to allow configuring the request files anonymously feature on a per site collection level [#2360](https://github.com/pnp/powershell/pull/2360)
+- Added `ScriptSafeDomainName` option to `Set-PnPSite` to allow contributors to insert iframe from specified domains only. [#2363](https://github.com/pnp/powershell/pull/2363)
 - Added `AlertTemplateName` paramter to `Add-PnPAlert` to allow configuring the Alert Template type name in the email. [#2362](https://github.com/pnp/powershell/pull/2362)
 
 ### Changed
