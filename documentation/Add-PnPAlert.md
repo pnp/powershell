@@ -17,7 +17,7 @@ Adds an alert for a user to a list
 ```powershell
 Add-PnPAlert [-List] <ListPipeBind> [-Title <String>] [-User <UserPipeBind>]
  [-DeliveryMethod <AlertDeliveryChannel>] [-ChangeType <AlertEventType>] [-Frequency <AlertFrequency>]
- [-Filter <AlertFilter>] [-Time <DateTime>] [-Connection <PnPConnection>]
+ [-Filter <AlertFilter>] [-Time <DateTime>] [-AlertTemplateName <string>] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
@@ -179,7 +179,19 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -AlertTemplateName
+To define a particular alert template. Refer this [link](https://learn.microsoft.com/en-us/previous-versions/office/developer/sharepoint-2010/bb802738(v=office.14)) to specify the template value name.
 
+```yaml
+Type: string
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
