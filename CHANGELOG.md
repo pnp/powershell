@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added ability to create shared Teams channels using `Add-PnPTeamsChannel -ChannelType Shared` [#2308](https://github.com/pnp/powershell/pull/2308)
 - Added support for `IsLoopEnabled` properties in `Get-PnPTenant` and `Set-PnPTenant` cmdlets to to enable/disable loop components in the tenant. [#2307](https://github.com/pnp/powershell/pull/2307)
 - Added support for `SubscribeMembersToCalendarEventsDisabled` resource behavior option in `New-PnPMicrosoft365Group` and `New-PnPTeamsTeam` cmdlet. [#2349](https://github.com/pnp/powershell/pull/2349)
+- Added `-OneDriveRequestFilesLinkEnabled` option to `Set-PnPTenant` to allow configuring the request files anonymously feature
 
 ### Changed
 - Changed to no longer require `https://` to be prefixed when using `Connect-PnPOnline -Url tenant.sharepoint.com` [#2139](https://github.com/pnp/powershell/pull/2139)

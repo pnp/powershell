@@ -1,6 +1,5 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 using System;
@@ -259,6 +258,9 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public bool? IsLoopEnabled;
+
+        [Parameter(Mandatory = false)]
+        public bool? OneDriveRequestFilesLinkEnabled;        
 
         public SwitchParameter Force;
 
@@ -943,7 +945,13 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 Tenant.IsLoopEnabled = IsLoopEnabled.Value;
                 modified = true;
-            }            
+            }
+
+            if (OneDriveRequestFilesLinkEnabled.HasValue)
+            {
+                Tenant.OneDriveRequestFilesLinkEnabled = OneDriveRequestFilesLinkEnabled.Value;
+                modified = true;
+            }
 
             if (modified)
             {
