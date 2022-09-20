@@ -460,8 +460,6 @@ Accept wildcard characters: False
 Allows configuring whether users will be able to create anonymous requests for people to upload files regardless of the Share with anyone link configuration setting for this particular site collection.
 
 ```yaml
-
-```yaml
 Type: Boolean
 Parameter Sets: (All)
 
