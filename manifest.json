@@ -189,7 +189,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPAlert.html",
-          "hash": "ZVDooOw+XAqAfDCTmDbsWA=="
+          "hash": "2lnR82bfvqiWJM05SW8sNA=="
         }
       },
       "is_incremental": false,
@@ -3438,7 +3438,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPTemporarilyDisableAppBar.html",
-          "hash": "CMAJrE6/q7xMtQ4gGJNb7Q=="
+          "hash": "EQWjLMXvDiXfsyEXhfGEcw=="
         }
       },
       "is_incremental": false,
@@ -6966,7 +6966,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSite.html",
-          "hash": "tghauooQrk2wWi0LB7pH6Q=="
+          "hash": "mDwc4JdtXKmqCho2XhK4Og=="
         }
       },
       "is_incremental": false,
@@ -7224,7 +7224,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTemporarilyDisableAppBar.html",
-          "hash": "ygiyFpdxXnVNLIgwurXY6w=="
+          "hash": "bDChZ+SXxrBnM7380sgG3A=="
         }
       },
       "is_incremental": false,
@@ -7236,7 +7236,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTenant.html",
-          "hash": "jESUML65kXnMI/kpZJv6RQ=="
+          "hash": "JF54gV8O6cfCBH5MPXmppw=="
         }
       },
       "is_incremental": false,

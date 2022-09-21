@@ -95,7 +95,7 @@
  [-DisableCompanyWideSharingLinks &lt;CompanyWideSharingLinksPolicy&gt;] [-DisableSharingForNonOwners]
  [-LocaleId &lt;UInt32&gt;] [-RestrictedToGeo &lt;RestrictedToRegion&gt;] [-SocialBarOnSitePagesDisabled]
  [-AnonymousLinkExpirationInDays &lt;Int32&gt;] [-OverrideTenantAnonymousLinkExpirationPolicy]
- [-MediaTranscription &lt;MediaTranscriptionPolicyType&gt;] [-SensitivityLabel &lt;Guid&gt;]
+ [-MediaTranscription &lt;MediaTranscriptionPolicyType&gt;] [-SensitivityLabel &lt;Guid&gt;] [-RequestFilesLinkEnabled &lt;Boolean&gt;] [-ScriptSafeDomainName &lt;string&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="set-lock-state">Set Lock State</h3>
@@ -417,6 +417,28 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: MediaTranscriptionPolicyType
 Parameter Sets: Set Properties
 Accepted values: Enabled, Disabled
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-requestfileslinkenabled">-RequestFilesLinkEnabled</h3>
+<p>Allows configuring whether users will be able to create anonymous requests for people to upload files regardless of the Share with anyone link configuration setting for this particular site collection.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-scriptsafedomainname">-ScriptSafeDomainName</h3>
+<p>Allow contributors to insert iframes only from the specified domains only</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
 
 Required: False
 Position: Named

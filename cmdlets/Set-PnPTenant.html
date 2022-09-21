@@ -121,7 +121,7 @@
  [-EnableAutoNewsDigest &lt;Boolean&gt;] [-CommentsOnListItemsDisabled &lt;Boolean&gt;] [-CommentsOnFilesDisabled &lt;Boolean&gt;]
  [-DisableBackToClassic &lt;Boolean&gt;] [-InformationBarriersSuspension &lt;Boolean&gt;] 
  [-AllowFilesWithKeepLabelToBeDeletedODB &lt;Boolean&gt;] [-AllowFilesWithKeepLabelToBeDeletedSPO &lt;Boolean&gt;]
- [-ExternalUserExpirationRequired &lt;Boolean&gt;] [-ExternalUserExpireInDays &lt;Boolean&gt;]
+ [-ExternalUserExpirationRequired &lt;Boolean&gt;] [-ExternalUserExpireInDays &lt;Boolean&gt;] [-OneDriveRequestFilesLinkEnabled &lt;Boolean&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -1140,6 +1140,17 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-isloopenabled">-IsLoopEnabled</h3>
 <p>Allows configuring whether loop components are enabled or disabled in the tenant. If set to <code>$true</code>, loop components will be allowed to be created in the tenant. If set to <code>$false</code>, it will be disabled in the tenant.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-onedriverequestfileslinkenabled">-OneDriveRequestFilesLinkEnabled</h3>
+<p>Allows configuring whether users will be able to create anonymous requests for people to upload files regardless of the Share with anyone link configuration setting.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 

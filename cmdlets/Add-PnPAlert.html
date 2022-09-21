@@ -88,7 +88,7 @@
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Add-PnPAlert [-List] &lt;ListPipeBind&gt; [-Title &lt;String&gt;] [-User &lt;UserPipeBind&gt;]
  [-DeliveryMethod &lt;AlertDeliveryChannel&gt;] [-ChangeType &lt;AlertEventType&gt;] [-Frequency &lt;AlertFrequency&gt;]
- [-Filter &lt;AlertFilter&gt;] [-Time &lt;DateTime&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-Filter &lt;AlertFilter&gt;] [-Time &lt;DateTime&gt;] [-AlertTemplateName &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -202,6 +202,17 @@ Accept wildcard characters: False
 <h3 id="-user">-User</h3>
 <p>User to create the alert for (User ID, login name or actual User object). Skip this parameter to create an alert for the current user. Note: Only site owners can create alerts for other users.</p>
 <pre><code class="lang-yaml">Type: UserPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-alerttemplatename">-AlertTemplateName</h3>
+<p>To define a particular alert template. Refer this <a href="https://learn.microsoft.com/en-us/previous-versions/office/developer/sharepoint-2010/bb802738(v=office.14)">link</a> to specify the template value name.</p>
+<pre><code class="lang-yaml">Type: string
 Parameter Sets: (All)
 
 Required: False
