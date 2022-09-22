@@ -68,6 +68,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_MANAGEDIDENTITY, ValueFromPipeline = true)]
         public string Url;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
@@ -108,7 +109,6 @@ namespace PnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         public SwitchParameter SPOManagementShell;
-
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Alias("PnPManagementShell", "PnPO365ManagementShell")]
@@ -177,7 +177,7 @@ namespace PnP.PowerShell.Commands.Base
         [Obsolete("Set the environment variable 'PNPPOWERSHELL_UPDATECHECK' to 'false' instead of using this switch.")]
         public SwitchParameter NoVersionCheck;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MANAGEDIDENTITY)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_MANAGEDIDENTITY)]
         public SwitchParameter ManagedIdentity;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
@@ -555,7 +555,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private PnPConnection ConnectManagedIdentity()
         {
-            WriteVerbose("Connecting to the Graph with the current Managed Identity");
+            WriteVerbose("Connecting using Managed Identity");
             return PnPConnection.CreateWithManagedIdentity(this, Url, TenantAdminUrl);
         }
 

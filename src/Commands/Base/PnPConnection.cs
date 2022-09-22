@@ -348,9 +348,9 @@ namespace PnP.PowerShell.Commands.Base
             var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
             var resourceUri = new Uri(url);
             var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
-            cmdlet.WriteVerbose("Acquiring token");
+            cmdlet.WriteVerbose("Acquiring token for resource " + defaultResource);
             var accessToken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, defaultResource).GetAwaiter().GetResult();
-            cmdlet.WriteVerbose("Token acquired");
+            cmdlet.WriteVerbose("Access token acquired through managed identity: " + accessToken);
             using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
             {
                 PnPClientContext context = null;
@@ -618,19 +618,8 @@ namespace PnP.PowerShell.Commands.Base
             {
                 Url = (new Uri(url)).AbsoluteUri;
             }
-            ConnectionMethod = ConnectionMethod.Credentials;
+            ConnectionMethod = initializationType == InitializationType.ManagedIdentity ? ConnectionMethod.ManagedIdentity : ConnectionMethod.Credentials;
             ClientId = PnPManagementShellClientId;
-        }
-
-        private PnPConnection(string pnpVersionTag, InitializationType initializationType, string tenantAdminUrl)
-        {
-            InitializeTelemetry(null, initializationType);
-            var coreAssembly = Assembly.GetExecutingAssembly();
-            ConnectionType = ConnectionType.O365;
-            PnPVersionTag = pnpVersionTag;
-            TenantAdminUrl = tenantAdminUrl;
-            ConnectionMethod = ConnectionMethod.ManagedIdentity;
-            ManagedIdentity = true;
         }
 
         #endregion
