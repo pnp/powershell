@@ -48,6 +48,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed regression issue with `New-Microsoft365Group` cmdlet. [#2349](https://github.com/pnp/powershell/pull/2349)
 - Fixed issue with `Add-PnPTaxonomyField`, it was throwing error when using `-TaxonomyItemId` parameter. [#2351](https://github.com/pnp/powershell/pull/2351)
 - Fixed `Import-PnPTermGroupFromXml` issue where a valid template was not working. [#2353](https://github.com/pnp/powershell/pull/2353)
+- Fixed `Set-PnPTenant` cmdlet not working when `-Force` parameter is specified.
 
 ### Contributors
 
