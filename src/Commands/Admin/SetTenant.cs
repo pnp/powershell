@@ -260,8 +260,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? IsLoopEnabled;
 
         [Parameter(Mandatory = false)]
-        public bool? OneDriveRequestFilesLinkEnabled;        
+        public bool? OneDriveRequestFilesLinkEnabled;
 
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
