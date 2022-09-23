@@ -17,7 +17,7 @@ Creates a copy of a Microsoft Teams team
 ### Clone a team
 
 ```powershell
-Copy-PnPTeamsTeam -DisplayName <String> -Identity <TeamsTeamPipeBind> [-PartsToClone <ClonableTeamParts[]>]  [-Description <String>] [-Visibility <TeamVisibility>] [-Classification <String>]  [-Verbose] [-Connection <PnPConnection>]
+Copy-PnPTeamsTeam -DisplayName <String> -Identity <TeamsTeamPipeBind> [-PartsToClone <ClonableTeamParts[]>] [-Description <String>] [-Visibility <TeamVisibility>] [-Classification <String>] [-Verbose] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -38,28 +38,28 @@ When tabs are cloned, they are put into an unconfigured state -- they are displa
 
 ### EXAMPLE 1
 ```powershell
-Copy-PnPTeamsTeam -Identity ee0f40fc-b2f7-45c7-b62d-11b90dd2ea8e -DisplayName "Library Assist" -PartsToClone apps,tabs,settings,channels,members [-Verbose] [-Connection <PnPConnection>]
+Copy-PnPTeamsTeam -Identity ee0f40fc-b2f7-45c7-b62d-11b90dd2ea8e -DisplayName "Library Assist" -PartsToClone apps,tabs,settings,channels,members
 ```
 Creates a clone of a Microsoft Teams team named "Library Assist" from Microsoft Teams team ID ee0f40fc-b2f7-45c7-b62d-11b90dd2ea8e with the apps,tabs,settings,channels and members 
 
 ### EXAMPLE 2
 
 ```powershell
-Copy-PnPTeamsTeam -Identity "Team 12" -DisplayName "Library Assist" [-WhatIf] [-Verbose] [-Connection <PnPConnection>]
+Copy-PnPTeamsTeam -Identity "Team 12" -DisplayName "Library Assist"
 ```
 Creates a clone of a Microsoft Teams team named "Library Assist" from Microsoft Teams team "Team 12" with the all the available parts
 
 ### EXAMPLE 3
 
 ```powershell
-Copy-PnPTeamsTeam -Identity "Team 12" -DisplayName "Library Assist" -PartsToClone apps,tabs,settings,channels,members -Description "Self help community for library" -Classification "Library" -Visibility public [-WhatIf] [-Verbose] [-Connection <PnPConnection>]
+Copy-PnPTeamsTeam -Identity "Team 12" -DisplayName "Library Assist" -PartsToClone apps,tabs,settings,channels,members -Description "Self help community for library" -Classification "Library" -Visibility public
 ```
 Creates a clone of a Microsoft Teams team named "Library Assist" from Microsoft Teams team  "Team 12" with the apps,tabs,settings,channels and members setting the classication to "Library", Visibility to public and Description to "Self help community for library"
 
 ### EXAMPLE 4
 
 ```powershell
-Copy-PnPTeamsTeam -Identity "Team 12" -DisplayName "Library Assist" -PartsToClone settings,channels -Description "Self help community for library" -Classification "Library" -Visibility public [-WhatIf] [-Verbose] [-Connection <PnPConnection>]
+Copy-PnPTeamsTeam -Identity "Team 12" -DisplayName "Library Assist" -PartsToClone settings,channels -Description "Self help community for library" -Classification "Library" -Visibility public
 ```
 Creates a clone of a Microsoft Teams team named "Library Assist" from Microsoft Teams team  "Team 12" with the settings and channels setting the classication to "Library", Visibility to public and Description to "Self help community for library"
 
