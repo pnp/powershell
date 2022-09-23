@@ -1365,7 +1365,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Copy-PnPTeamsTeam.html",
-          "hash": "2+vul1eL9NZkrWcwA4PIzA=="
+          "hash": "QgpSp0+fX/wDOE6uqe7KJw=="
         }
       },
       "is_incremental": false,
@@ -4029,7 +4029,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Invoke-PnPGraphMethod.html",
-          "hash": "3jPFJTtPQCf+dE2Cs9mx8g=="
+          "hash": "RxTkz67TtHzs8RBGUU5slA=="
         }
       },
       "is_incremental": false,

@@ -108,15 +108,15 @@ Invoke-PnPGraphMethod -Url 'groups/{id}?`$select=hideFromOutlookClients'
 <h3 id="example-2">Example 2</h3>
 <pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &quot;groups/{id}&quot; -Method Delete
 </code></pre>
-<p>delete the group with id.</p>
+<p>Delete the group with the specified id.</p>
 <h3 id="example-3">Example 3</h3>
 <pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &quot;groups/{id}&quot; -Method Patch -Content @{ displayName = &quot;NewName&quot; }
 </code></pre>
-<p>set the displayName of the group with a Patch request.</p>
+<p>Set the new displayName of the group with a Patch request.</p>
 <h3 id="example-4">Example 4</h3>
 <pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &quot;v1.0/users?$filter=accountEnabled ne true&amp;$count=true&quot; -Method Get -ConsistencyLevelEventual
 </code></pre>
-<p>get users with advanced query capabilities. use of -ConsistencyLevelEventual.</p>
+<p>Get users with advanced query capabilities. Use of -ConsistencyLevelEventual.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-additionalheaders">-AdditionalHeaders</h3>
 <p>Additional request headers</p>
@@ -131,7 +131,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-all">-All</h3>
-<p>retrieve all pages of results. this will loop through all @odata.nextLink. this flag will only be respected if the request is a GET request.</p>
+<p>Retrieve all pages of results. This will loop through all @odata.nextLink. This flag will only be respected if the request is a GET request.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
@@ -156,7 +156,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-consistencyleveleventual">-ConsistencyLevelEventual</h3>
-<p>set the ConsistencyLevel header to eventual for advanced query capabilities on Azure AD directory objects</p>
+<p>Set the ConsistencyLevel header to eventual for advanced query capabilities on Azure AD directory objects</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
@@ -192,7 +192,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-method">-Method</h3>
-<p>The Http method to execute. Defaults to GET.</p>
+<p>The HTTP method to execute. Defaults to GET.</p>
 <pre><code class="lang-yaml">Type: HttpRequestMethod
 Parameter Sets: (All)
 Aliases:
@@ -217,7 +217,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-url">-Url</h3>
-<p>the graph endpoint to invoke</p>
+<p>The Graph endpoint to invoke.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases:
