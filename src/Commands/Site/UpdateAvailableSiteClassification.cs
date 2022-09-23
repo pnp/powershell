@@ -1,6 +1,7 @@
 ﻿using PnP.Framework.Graph.Model;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
+
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -11,6 +12,7 @@ namespace PnP.PowerShell.Commands.Site
     [RequiredMinimalApiPermissions("Directory.ReadWrite.All")]
     [Alias("Update-SiteClassification")]
     [WriteAliasWarning("Please use 'Update-PnPAvailableSiteClassification'. The alias 'Update-PnPSiteClassification' will be removed in a future release.")]
+    [OutputType(typeof(void))]
     public class UpdateAvailableSiteClassification : PnPGraphCmdlet
     {
         const string ParameterSet_SETTINGS = "Settings";
@@ -37,7 +39,7 @@ namespace PnP.PowerShell.Commands.Site
 
                 if (ParameterSetName == ParameterSet_SETTINGS)
                 {
-                    if(siteClassificationSettings.Classifications != Settings.Classifications)
+                    if (siteClassificationSettings.Classifications != Settings.Classifications)
                     {
                         siteClassificationSettings.Classifications = Settings.Classifications;
                         changed = true;
@@ -86,7 +88,7 @@ namespace PnP.PowerShell.Commands.Site
                             changed = true;
                         }
                     }
-                }                
+                }
                 if (changed)
                 {
                     PnP.Framework.Graph.SiteClassificationsUtility.UpdateSiteClassificationsSettings(AccessToken, siteClassificationSettings);

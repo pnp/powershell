@@ -1,12 +1,14 @@
-﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
+
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
 using System.Collections.Generic;
-using PnP.PowerShell.Commands.Base.PipeBinds;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Remove, "PnPSiteCollectionAdmin")]
+    [OutputType(typeof(void))]
     public class RemoveSiteCollectionAdmin : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

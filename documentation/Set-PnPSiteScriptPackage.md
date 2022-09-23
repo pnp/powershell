@@ -7,7 +7,7 @@ external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Set-PnPSiteScriptPackage.html
 ---
  
-# Set-PnPSiteScript
+# Set-PnPSiteScriptPackage
 
 ## SYNOPSIS
 

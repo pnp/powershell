@@ -54,9 +54,9 @@ As the UI in <https://portal.azure.com> changes every now and then, but the prin
     @{
         'PnP.PowerShell' = '1.10.58-nightly'
      }
-    ```
+    ```   
 
-    ![Adding PnP PowerShell to the requirements.psd1 file in an Azure Function](./../images/azurefunctions/addpnpposhtoappfilerequirements.png)
+![Adding PnP PowerShell to the requirements.psd1 file in an Azure Function](./../images/azurefunctions/addpnpposhtoappfilerequirements.png)
 
 1. Save the `requirements.psd1` file
 

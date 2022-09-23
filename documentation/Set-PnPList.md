@@ -20,7 +20,7 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
  [-Hidden <Boolean>] [-ForceCheckout <Boolean>] [-ListExperience <ListExperience>]
  [-EnableAttachments <Boolean>] [-EnableFolderCreation <Boolean>] [-EnableVersioning <Boolean>]
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
- [-EnableModeration <Boolean>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
+ [-EnableModeration <Boolean>] [-DraftVersionVisibility <DraftVisibilityType>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
  [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -220,6 +220,20 @@ Enable or disable whether content approval is enabled for the list. Set to $true
 Type: Boolean
 Parameter Sets: (All)
 
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DraftVersionVisibility
+Specify which users should be able to view drafts in this list.
+
+```yaml
+Type: DraftVisibilityType
+Parameter Sets: (All)
+Accepted values: Approver, Author, Reader
 Required: False
 Position: Named
 Default value: None

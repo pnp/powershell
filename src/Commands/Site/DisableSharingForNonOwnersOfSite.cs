@@ -2,11 +2,13 @@
 using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
+
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsLifecycle.Disable, "PnPSharingForNonOwnersOfSite")]
+    [OutputType(typeof(void))]
     public class DisableSharingForNonOwnersOfSite : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
@@ -19,7 +21,7 @@ namespace PnP.PowerShell.Commands.Site
             var site = ClientContext.Site;
             var siteUrl = ClientContext.Url;
 
-            if(ParameterSpecified(nameof(Identity)))
+            if (ParameterSpecified(nameof(Identity)))
             {
                 context = ClientContext.Clone(Identity.Url);
                 site = context.Site;

@@ -229,9 +229,14 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         protected void Connect(ref CancellationToken cancellationToken)
         {
-            if (!string.IsNullOrEmpty(Url) && Url.EndsWith("/"))
+            if (!string.IsNullOrEmpty(Url))
             {
                 Url = Url.TrimEnd('/');
+
+                if(!Url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) && !Url.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
+                {
+                    Url = $"https://{Url}";
+                }
             }
 
             PnPConnection connection = null;

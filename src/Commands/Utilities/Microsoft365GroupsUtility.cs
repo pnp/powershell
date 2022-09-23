@@ -52,52 +52,58 @@ namespace PnP.PowerShell.Commands.Utilities
         }
         internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, Guid groupId, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
-            var group = await GraphHelper.GetAsync<Microsoft365Group>(connection, $"v1.0/groups/{groupId}", accessToken);
-            if (includeSiteUrl)
-            {
-                bool wait = true;
-                var iterations = 0;
+            var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and id eq '{groupId}'", accessToken);
 
-                while (wait)
+            if (results != null && results.Items.Any())
+            {
+                var group = results.Items.First();
+                if (includeSiteUrl)
                 {
-                    iterations++;
-                    try
+                    bool wait = true;
+                    var iterations = 0;
+
+                    while (wait)
                     {
-                        var siteUrlResult = await GraphHelper.GetAsync(connection, $"v1.0/groups/{group.Id}/sites/root?$select=webUrl", accessToken);
-                        if (!string.IsNullOrEmpty(siteUrlResult))
+                        iterations++;
+                        try
                         {
-                            wait = false;
-                            var resultElement = JsonSerializer.Deserialize<JsonElement>(siteUrlResult);
-                            if (resultElement.TryGetProperty("webUrl", out JsonElement webUrlElement))
+                            var siteUrlResult = await GraphHelper.GetAsync(connection, $"v1.0/groups/{group.Id}/sites/root?$select=webUrl", accessToken);
+                            if (!string.IsNullOrEmpty(siteUrlResult))
                             {
-                                group.SiteUrl = webUrlElement.GetString();
+                                wait = false;
+                                var resultElement = JsonSerializer.Deserialize<JsonElement>(siteUrlResult);
+                                if (resultElement.TryGetProperty("webUrl", out JsonElement webUrlElement))
+                                {
+                                    group.SiteUrl = webUrlElement.GetString();
+                                }
+                                break;
                             }
-                            break;
                         }
-                    }
-                    catch (Exception)
-                    {
-                        if (iterations * 30 >= 300)
+                        catch (Exception)
                         {
-                            wait = false;
-                            throw;
-                        }
-                        else
-                        {
-                            await Task.Delay(TimeSpan.FromSeconds(30));
+                            if (iterations * 30 >= 300)
+                            {
+                                wait = false;
+                                throw;
+                            }
+                            else
+                            {
+                                await Task.Delay(TimeSpan.FromSeconds(30));
+                            }
                         }
                     }
                 }
+                if (includeOwners)
+                {
+                    group.Owners = await GetGroupMembersAsync("owners", connection, group.Id.Value, accessToken);
+                }
+                return group;
             }
-            if (includeOwners)
-            {
-                group.Owners = await GetGroupMembersAsync("owners", connection, group.Id.Value, accessToken);
-            }
-            return group;
+            return null;
         }
         internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, string displayName, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
-            var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and displayName eq '{displayName}' or mailNickName eq '{displayName}'", accessToken);
+            var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and (displayName eq '{displayName}' or mailNickName eq '{displayName}')", accessToken);
             if (results != null && results.Items.Any())
             {
                 var group = results.Items.First();

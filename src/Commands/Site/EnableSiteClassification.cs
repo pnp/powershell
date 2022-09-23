@@ -1,6 +1,6 @@
-﻿
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
+
 using System.Collections.Generic;
 using System.Management.Automation;
 
@@ -8,6 +8,7 @@ namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsLifecycle.Enable, "PnPSiteClassification")]
     [RequiredMinimalApiPermissions("Directory.ReadWrite.All")]
+    [OutputType(typeof(void))]
     public class EnableSiteClassification : PnPGraphCmdlet
     {
 

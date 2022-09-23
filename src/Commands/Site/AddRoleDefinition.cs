@@ -1,13 +1,13 @@
-﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 
-using System.Collections.Generic;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System;
+
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPRoleDefinition")]
+    [OutputType(typeof(RoleDefinition))]
     public class AddRoleDefinition : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
