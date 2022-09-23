@@ -36,7 +36,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             else
             {
                 var auditResults = GraphHelper.GetResultCollectionAsync<Model.AzureAD.AzureADDirectoryAudit>(Connection, auditLogUrl, AccessToken).GetAwaiter().GetResult();
-                WriteObject(auditResults, false);
+                WriteObject(auditResults, true);
             }
         }
     }
