@@ -1802,6 +1802,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPAzureADActivityReportDirectoryAudit.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPAzureADActivityReportDirectoryAudit.html",
+          "hash": "7nyXZDd7cFycl9HX55tENQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPAzureADApp.md",
       "output": {
         ".html": {
@@ -7752,7 +7764,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "j/jeBNNBawA62Qk9q99hUw=="
+          "hash": "zUmKovcOWR/tSE8ZBfu1pw=="
         }
       },
       "is_incremental": false,
@@ -7974,7 +7986,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 643,
+          "total_file_count": 644,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
