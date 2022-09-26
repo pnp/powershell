@@ -1,7 +1,11 @@
 ﻿using Microsoft.SharePoint.Client;
+
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
+
+using System;
 using System.Management.Automation;
+using System.Runtime;
 
 namespace PnP.PowerShell.Commands.Lists
 {
@@ -81,177 +85,185 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false)]
         public bool DisableGridEditing;
 
+        [Parameter(Mandatory = false)]
+        public string Path;
+
         protected override void ExecuteCmdlet()
         {
             var list = Identity.GetList(CurrentWeb);
 
-            if (list != null)
+            if (list is null)
             {
-                list.EnsureProperties(l => l.EnableAttachments, l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType, l => l.HasUniqueRoleAssignments, l => l.ContentTypesEnabled, l => l.ExemptFromBlockDownloadOfNonViewableFiles, l => l.DisableGridEditing);
-
-                var enableVersioning = list.EnableVersioning;
-                var enableMinorVersions = list.EnableMinorVersions;
-                var enableAttachments = list.EnableAttachments;
-                var updateRequired = false;
-                if (BreakRoleInheritance)
-                {
-                    list.BreakRoleInheritance(CopyRoleAssignments, ClearSubscopes);
-                    updateRequired = true;
-                }
-
-                if (list.HasUniqueRoleAssignments && ResetRoleInheritance)
-                {
-                    list.ResetRoleInheritance();
-                    updateRequired = true;
-                }
-
-                if (!string.IsNullOrEmpty(Title))
-                {
-                    list.Title = Title;
-                    updateRequired = true;
-                }
-
-                if (ParameterSpecified(nameof(Hidden)) && Hidden != list.Hidden)
-                {
-                    list.Hidden = Hidden;
-                    updateRequired = true;
-                }
-
-                if (ParameterSpecified(nameof(EnableContentTypes)) && list.ContentTypesEnabled != EnableContentTypes)
-                {
-                    list.ContentTypesEnabled = EnableContentTypes;
-                    updateRequired = true;
-                }
-
-                if (ParameterSpecified(nameof(EnableVersioning)) && EnableVersioning != enableVersioning)
-                {
-                    list.EnableVersioning = EnableVersioning;
-                    updateRequired = true;
-                }
-
-                if (ParameterSpecified(nameof(EnableMinorVersions)) && EnableMinorVersions != enableMinorVersions)
-                {
-                    list.EnableMinorVersions = EnableMinorVersions;
-                    updateRequired = true;
-                }
-
-                if (ParameterSpecified(nameof(EnableModeration)) && list.EnableModeration != EnableModeration)
-                {
-                    list.EnableModeration = EnableModeration;
-                    updateRequired = true;
-                }
-
-                if (ParameterSpecified(nameof(DraftVersionVisibility)))
-                {
-                    list.DraftVersionVisibility = DraftVersionVisibility;
-                    updateRequired = true;
-                }
-
-                if (ParameterSpecified(nameof(EnableAttachments)) && EnableAttachments != enableAttachments)
-                {
-                    list.EnableAttachments = EnableAttachments;
-                    updateRequired = true;
-                }
-
-                if (ParameterSpecified(nameof(Description)))
-                {
-                    list.Description = Description;
-                    updateRequired = true;
-                }
-
-                if (ParameterSpecified(nameof(EnableFolderCreation)))
-                {
-                    list.EnableFolderCreation = EnableFolderCreation;
-                    updateRequired = true;
-                }
-
-                if (ParameterSpecified(nameof(ForceCheckout)))
-                {
-                    list.ForceCheckout = ForceCheckout;
-                    updateRequired = true;
-                }
-
-                if (ParameterSpecified(nameof(ListExperience)))
-                {
-                    list.ListExperienceOptions = ListExperience;
-                    updateRequired = true;
-                }
-
-                if (ParameterSpecified(nameof(ReadSecurity)))
-                {
-                    list.ReadSecurity = (int)ReadSecurity;
-                    updateRequired = true;
-                }
-
-                if (ParameterSpecified(nameof(WriteSecurity)))
-                {
-                    list.WriteSecurity = (int)WriteSecurity;
-                    updateRequired = true;
-                }
-
-                if (ParameterSpecified(nameof(NoCrawl)))
-                {
-                    list.NoCrawl = NoCrawl;
-                    updateRequired = true;
-                }
-
-                if (ParameterSpecified(nameof(ExemptFromBlockDownloadOfNonViewableFiles)))
-                {
-                    list.SetExemptFromBlockDownloadOfNonViewableFiles(ExemptFromBlockDownloadOfNonViewableFiles);
-                    updateRequired = true;
-                }
-
-                if (ParameterSpecified(nameof(DisableGridEditing)))
-                {
-                    list.DisableGridEditing = DisableGridEditing;
-                    updateRequired = true;
-                }
-
-                if (updateRequired)
-                {
-                    list.Update();
-                    ClientContext.ExecuteQueryRetry();
-                }
-                updateRequired = false;
-
-                if (list.EnableVersioning)
-                {
-                    // list or doclib?
-
-                    if (list.BaseType == BaseType.DocumentLibrary)
-                    {
-
-                        if (ParameterSpecified(nameof(MajorVersions)))
-                        {
-                            list.MajorVersionLimit = (int)MajorVersions;
-                            updateRequired = true;
-                        }
-
-                        if (ParameterSpecified(nameof(MinorVersions)) && list.EnableMinorVersions)
-                        {
-                            list.MajorWithMinorVersionsLimit = (int)MinorVersions;
-                            updateRequired = true;
-                        }
-                    }
-                    else
-                    {
-                        if (ParameterSpecified(nameof(MajorVersions)))
-                        {
-                            list.MajorVersionLimit = (int)MajorVersions;
-                            updateRequired = true;
-                        }
-                    }
-
-
-                }
-                if (updateRequired)
-                {
-                    list.Update();
-                    ClientContext.ExecuteQueryRetry();
-                }
-
-                WriteObject(list);
+                return;
             }
+
+            list.EnsureProperties(l => l.EnableAttachments, l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType, l => l.HasUniqueRoleAssignments, l => l.ContentTypesEnabled, l => l.ExemptFromBlockDownloadOfNonViewableFiles, l => l.DisableGridEditing);
+
+            var enableVersioning = list.EnableVersioning;
+            var enableMinorVersions = list.EnableMinorVersions;
+            var enableAttachments = list.EnableAttachments;
+            var updateRequired = false;
+            if (BreakRoleInheritance)
+            {
+                list.BreakRoleInheritance(CopyRoleAssignments, ClearSubscopes);
+                updateRequired = true;
+            }
+
+            if (list.HasUniqueRoleAssignments && ResetRoleInheritance)
+            {
+                list.ResetRoleInheritance();
+                updateRequired = true;
+            }
+
+            if (!string.IsNullOrEmpty(Title))
+            {
+                list.Title = Title;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(Hidden)) && Hidden != list.Hidden)
+            {
+                list.Hidden = Hidden;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(EnableContentTypes)) && list.ContentTypesEnabled != EnableContentTypes)
+            {
+                list.ContentTypesEnabled = EnableContentTypes;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(EnableVersioning)) && EnableVersioning != enableVersioning)
+            {
+                list.EnableVersioning = EnableVersioning;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(EnableMinorVersions)) && EnableMinorVersions != enableMinorVersions)
+            {
+                list.EnableMinorVersions = EnableMinorVersions;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(EnableModeration)) && list.EnableModeration != EnableModeration)
+            {
+                list.EnableModeration = EnableModeration;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(DraftVersionVisibility)))
+            {
+                list.DraftVersionVisibility = DraftVersionVisibility;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(EnableAttachments)) && EnableAttachments != enableAttachments)
+            {
+                list.EnableAttachments = EnableAttachments;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(Description)))
+            {
+                list.Description = Description;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(EnableFolderCreation)))
+            {
+                list.EnableFolderCreation = EnableFolderCreation;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ForceCheckout)))
+            {
+                list.ForceCheckout = ForceCheckout;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ListExperience)))
+            {
+                list.ListExperienceOptions = ListExperience;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ReadSecurity)))
+            {
+                list.ReadSecurity = (int)ReadSecurity;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(WriteSecurity)))
+            {
+                list.WriteSecurity = (int)WriteSecurity;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(NoCrawl)))
+            {
+                list.NoCrawl = NoCrawl;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ExemptFromBlockDownloadOfNonViewableFiles)))
+            {
+                list.SetExemptFromBlockDownloadOfNonViewableFiles(ExemptFromBlockDownloadOfNonViewableFiles);
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(DisableGridEditing)))
+            {
+                list.DisableGridEditing = DisableGridEditing;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(Path)))
+            {
+                list.RootFolder.MoveTo(Path);
+                updateRequired = true;
+            }
+
+            if (updateRequired)
+            {
+                list.Update();
+                ClientContext.ExecuteQueryRetry();
+            }
+            updateRequired = false;
+
+            if (list.EnableVersioning)
+            {
+                // list or doclib?
+                if (list.BaseType == BaseType.DocumentLibrary)
+                {
+                    if (ParameterSpecified(nameof(MajorVersions)))
+                    {
+                        list.MajorVersionLimit = (int)MajorVersions;
+                        updateRequired = true;
+                    }
+
+                    if (ParameterSpecified(nameof(MinorVersions)) && list.EnableMinorVersions)
+                    {
+                        list.MajorWithMinorVersionsLimit = (int)MinorVersions;
+                        updateRequired = true;
+                    }
+                }
+                else
+                {
+                    if (ParameterSpecified(nameof(MajorVersions)))
+                    {
+                        list.MajorVersionLimit = (int)MajorVersions;
+                        updateRequired = true;
+                    }
+                }
+            }
+
+            if (updateRequired)
+            {
+                list.Update();
+                ClientContext.ExecuteQueryRetry();
+            }
+
+            WriteObject(list);
         }
     }
 }

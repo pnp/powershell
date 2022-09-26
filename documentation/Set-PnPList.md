@@ -21,7 +21,8 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
  [-EnableAttachments <Boolean>] [-EnableFolderCreation <Boolean>] [-EnableVersioning <Boolean>]
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
  [-EnableModeration <Boolean>] [-DraftVersionVisibility <DraftVisibilityType>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
- [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] 
+ [-Path <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -70,6 +71,13 @@ Set-PnPList -Identity "Demo List" -EnableAttachments $true
 ```
 
 Turns on attachments on a list
+
+### EXAMPLE 7
+```powershell
+Set-PnPList -Identity "Demo List" -Title "Demo List 2" -Path "Lists/DemoList2"
+```
+
+Rename a list, including its' URL.
 
 ## PARAMETERS
 
@@ -415,6 +423,20 @@ Enable or disable whether edit grid editing is enabled for the list. Set to $tru
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Path
+The new URL path of the.list. The parent folder must exist and be in the same site/web.
+
+```yaml
+Type: String
 Parameter Sets: (All)
 
 Required: False
