@@ -42,13 +42,13 @@ namespace PnP.PowerShell.Commands.Model.ServiceHealth
         /// The category this service message belongs to
         /// </summary>
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public Enums.ServiceUpdateCategory? Category { get; set; }
+        public Enums.ServiceUpdateCategory Category { get; set; }
 
         /// <summary>
         /// Severity of the change which this service message regards
         /// </summary>
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public Enums.ServiceUpdateSeverity? Severity { get; set; }
+        public Enums.ServiceUpdateSeverity Severity { get; set; }
 
         /// <summary>
         /// Tags assigned to this service message

@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Model.ServiceHealth
         /// </summary>
         [JsonConverter(typeof(JsonStringEnumConverter))]
         [JsonPropertyName("postType")]
-        public Enums.ServiceHealthIssuePostType? PostType { get; set; }
+        public Enums.ServiceHealthIssuePostType PostType { get; set; }
 
         /// <summary>
         /// Contains the informational message of this service health issue
