@@ -1,9 +1,11 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
+
 using PnP.Framework;
 using PnP.Framework.Entities;
 using PnP.PowerShell.Commands.Utilities;
+
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -11,6 +13,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Set, "PnPSite")]
+    [OutputType(typeof(void))]
     public class SetSite : PnPSharePointCmdlet
     {
         private const string ParameterSet_LOCKSTATE = "Set Lock State";
@@ -90,12 +93,18 @@ namespace PnP.PowerShell.Commands.Site
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter OverrideTenantAnonymousLinkExpirationPolicy;
-        
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public MediaTranscriptionPolicyType? MediaTranscription { get; set; }
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public Guid? SensitivityLabel;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? RequestFilesLinkEnabled;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public string ScriptSafeDomainName;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
@@ -121,14 +130,24 @@ namespace PnP.PowerShell.Commands.Site
                 context.ExecuteQueryRetry();
             }
 
-            if(ParameterSpecified(nameof(SensitivityLabel)) && SensitivityLabel.HasValue)
+            if (ParameterSpecified(nameof(SensitivityLabel)) && SensitivityLabel.HasValue)
             {
                 site.SensitivityLabel = SensitivityLabel.Value;
-                context.ExecuteQueryRetry();                
+                context.ExecuteQueryRetry();
+            }
+
+            if (ParameterSpecified(nameof(ScriptSafeDomainName)) && !string.IsNullOrEmpty(ScriptSafeDomainName))
+            {
+                ScriptSafeDomainEntityData scriptSafeDomainEntity = new ScriptSafeDomainEntityData
+                {
+                    DomainName = ScriptSafeDomainName
+                };
+                site.CustomScriptSafeDomains.Create(scriptSafeDomainEntity);
+                context.ExecuteQueryRetry();
             }
 
             if (ParameterSpecified(nameof(LogoFilePath)))
-            {                
+            {
                 if (!System.IO.Path.IsPathRooted(LogoFilePath))
                 {
                     LogoFilePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogoFilePath);
@@ -172,12 +191,12 @@ namespace PnP.PowerShell.Commands.Site
                     var uploadedFile = createdList.RootFolder.UploadFile(logoFileName, LogoFilePath, true);
                     context.Web.SiteLogoUrl = uploadedFile.ServerRelativeUrl;
                     context.Web.Update();
-                    context.ExecuteQueryRetry();                    
+                    context.ExecuteQueryRetry();
                 }
                 else
                 {
                     throw new Exception("Logo file does not exist");
-                }                
+                }
             }
 
             if (IsTenantProperty())
@@ -303,7 +322,12 @@ namespace PnP.PowerShell.Commands.Site
                     siteProperties.MediaTranscription = MediaTranscription.Value;
                     executeQueryRequired = true;
                 }
-
+                
+                if (RequestFilesLinkEnabled.HasValue)
+                {
+                    siteProperties.RequestFilesLinkEnabled = RequestFilesLinkEnabled.Value;
+                    executeQueryRequired = true;
+                }                
                 if (executeQueryRequired)
                 {
                     siteProperties.Update();

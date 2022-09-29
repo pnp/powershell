@@ -1,10 +1,11 @@
 ﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
 
+using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Set, "PnPAuditing")]
+    [OutputType(typeof(void))]
     public class SetAuditing : PnPSharePointCmdlet
     {
         const string ParameterSet_ENABLEALL = "Enable all";

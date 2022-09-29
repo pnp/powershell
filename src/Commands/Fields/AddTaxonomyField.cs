@@ -53,7 +53,7 @@ namespace PnP.PowerShell.Commands.Fields
         {
             TaxonomyItem taxItem;
             Field field;
-            
+
             if (ParameterSetName == "Path")
             {
                 taxItem = ClientContext.Site.GetTaxonomyItemByPath(TermSetPath, TermPathDelimiter);
@@ -65,19 +65,20 @@ namespace PnP.PowerShell.Commands.Fields
                 try
                 {
                     taxItem = termStore.GetTermSet(TaxonomyItemId);
+                    taxItem.EnsureProperty(t => t.Id);
                 }
                 catch
                 {
                     try
                     {
                         taxItem = termStore.GetTerm(TaxonomyItemId);
+                        taxItem.EnsureProperty(t => t.Id);
                     }
                     catch
                     {
                         throw new Exception($"Taxonomy Item with Id {TaxonomyItemId} not found");
                     }
                 }
-                taxItem.EnsureProperty(t => t.Id);
             }
 
             if (Id == Guid.Empty)
@@ -99,8 +100,8 @@ namespace PnP.PowerShell.Commands.Fields
 
             if (ParameterSpecified(nameof(FieldOptions)))
             {
-                fieldCI.FieldOptions = FieldOptions;                
-            }            
+                fieldCI.FieldOptions = FieldOptions;
+            }
 
             if (List != null)
             {

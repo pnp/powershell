@@ -754,44 +754,38 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static string GetRealmFromTargetUrl(Uri targetApplicationUri)
         {
-            WebRequest request = WebRequest.Create(targetApplicationUri + "/_vti_bin/client.svc");
-            request.Headers.Add("Authorization: Bearer ");
+            var client = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "");
 
-            try
+            var response = client.GetAsync(targetApplicationUri + "/_vti_bin/client.svc").GetAwaiter().GetResult();
+            if (response == null)
             {
-                using (request.GetResponse())
-                {
-                }
+                return null;
             }
-            catch (WebException e)
+            var bearerResponseHeaderValues = response.Headers.GetValues("WWW-Authenticate");
+            string bearerResponseHeader = string.Join("", bearerResponseHeaderValues);
+
+            if (string.IsNullOrEmpty(bearerResponseHeader))
             {
-                if (e.Response == null)
-                {
-                    return null;
-                }
+                return null;
+            }
 
-                string bearerResponseHeader = e.Response.Headers["WWW-Authenticate"];
-                if (string.IsNullOrEmpty(bearerResponseHeader))
-                {
-                    return null;
-                }
+            const string bearer = "Bearer realm=\"";
+            int bearerIndex = bearerResponseHeader.IndexOf(bearer, StringComparison.Ordinal);
+            if (bearerIndex < 0)
+            {
+                return null;
+            }
 
-                const string bearer = "Bearer realm=\"";
-                int bearerIndex = bearerResponseHeader.IndexOf(bearer, StringComparison.Ordinal);
-                if (bearerIndex < 0)
+            int realmIndex = bearerIndex + bearer.Length;
+            if (bearerResponseHeader.Length >= realmIndex + 36)
+            {
+                string targetRealm = bearerResponseHeader.Substring(realmIndex, 36);
+                if (Guid.TryParse(targetRealm, out _))
                 {
-                    return null;
-                }
-
-                int realmIndex = bearerIndex + bearer.Length;
-
-                if (bearerResponseHeader.Length >= realmIndex + 36)
-                {
-                    string targetRealm = bearerResponseHeader.Substring(realmIndex, 36);
-                    if (Guid.TryParse(targetRealm, out _))
-                    {
-                        return targetRealm;
-                    }
+                    return targetRealm;
                 }
             }
             return null;

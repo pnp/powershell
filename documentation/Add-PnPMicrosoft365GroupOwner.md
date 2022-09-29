@@ -58,7 +58,7 @@ Accept wildcard characters: False
 ```
 
 ### -RemoveExisting
-If provided, all existing members will be removed and only those provided through Users will become members
+If provided, all existing owners will be removed and only those provided through Users will become owners
 
 ```yaml
 Type: SwitchParameter
@@ -72,7 +72,7 @@ Accept wildcard characters: False
 ```
 
 ### -Users
-The UPN(s) of the user(s) to add to the Microsoft 365 Group as a member
+The UPN(s) of the user(s) to add to the Microsoft 365 Group as an owner
 
 ```yaml
 Type: String[]
