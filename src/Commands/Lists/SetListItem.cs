@@ -41,11 +41,6 @@ namespace PnP.PowerShell.Commands.Lists
         public Hashtable Values;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
-        [Obsolete("Use '-UpdateType SystemUpdate' instead.")]
-        public SwitchParameter SystemUpdate;
-
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
         public string Label;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
@@ -65,13 +60,6 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-#pragma warning disable CS0618
-            if (SystemUpdate)
-            {
-                UpdateType = ListItemUpdateType.SystemUpdate;
-            }
-#pragma warning restore CS0618
-
             if (ParameterSpecified(nameof(Batch)))
             {
                 SetListItemBatched();
