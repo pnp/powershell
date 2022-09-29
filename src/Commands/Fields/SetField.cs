@@ -4,9 +4,6 @@ using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections;
-using System.Linq;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
 using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Fields
@@ -27,11 +24,9 @@ namespace PnP.PowerShell.Commands.Fields
         [Parameter(Mandatory = false)]
         public SwitchParameter UpdateExistingLists;
 
-        object IDynamicParameters.GetDynamicParameters()
-            => DynamicParameters;
+        object IDynamicParameters.GetDynamicParameters() => DynamicParameters;
 
-        static readonly RuntimeDefinedParameterDictionary DynamicParameters
-            = PropertyDynamicParameters.GetDynamicParametersForSettablePropertiesOfType<Field>();
+        static readonly RuntimeDefinedParameterDictionary DynamicParameters = PropertyDynamicParameters.GetDynamicParametersForSettablePropertiesOfType<Field>();
 
         protected override void ExecuteCmdlet()
         {
