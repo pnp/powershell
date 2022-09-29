@@ -433,7 +433,7 @@ Accept wildcard characters: False
 ```
 
 ### -Path
-The new URL path of the.list. The parent folder must exist and be in the same site/web.
+The new URL path of the list. The parent folder must exist and be in the same site/web. I.e. lists\newname.
 
 ```yaml
 Type: String
