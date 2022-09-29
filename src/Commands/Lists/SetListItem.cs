@@ -66,7 +66,7 @@ namespace PnP.PowerShell.Commands.Lists
         protected override void ExecuteCmdlet()
         {
 #pragma warning disable CS0618
-            if (ParameterSpecified(nameof(SystemUpdate)))
+            if (SystemUpdate)
             {
                 UpdateType = ListItemUpdateType.SystemUpdate;
             }
