@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Get-PnPMicrosoft365Group` cmdlet to better check the Id, DisplayName and MailNickname of Microsoft 365  Group. [#2258](https://github.com/pnp/powershell/pull/2258)
 - Improved `Get-PnPStorageEntity` cmdlet when `Key` parameter is specified. [#2275](https://github.com/pnp/powershell/pull/2275)
 - Improved `Get-PnPAuthenticationRealm` cmdlet to use `HTTP Client` instead of `WebRequest`. [#2304](https://github.com/pnp/powershell/pull/2304)
+- Changed `Get-PnPRoleDefinition` so that it now also supports the role definition Id to be used with `-Identity` as well as the role definition name [#2336](https://github.com/pnp/powershell/pull/2336)
 
 ### Removed
 - Marked `-Resource` parameter from `Get-PnPAccessToken` cmdlet as obsolete as it was not used anymore anyway. It will be removed in a future version. [#2182](https://github.com/pnp/powershell/pull/2182)
