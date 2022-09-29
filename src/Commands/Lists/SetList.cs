@@ -3,9 +3,7 @@
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 
-using System;
 using System.Management.Automation;
-using System.Runtime;
 
 namespace PnP.PowerShell.Commands.Lists
 {
@@ -94,7 +92,19 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (list is null)
             {
+                WriteWarning($"List {Identity} not found");
                 return;
+            }
+
+            if (ParameterSpecified(nameof(Path)))
+            {
+                // Move the list to its newly requested location within the same site
+                list.RootFolder.MoveTo(Path);
+                ClientContext.ExecuteQueryRetry();
+
+                // Fetch the list again so it will have its updated location and can be used for property updates
+                var newIdentity = new ListPipeBind(list.Id);
+                list = newIdentity.GetList(CurrentWeb);
             }
 
             list.EnsureProperties(l => l.EnableAttachments, l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType, l => l.HasUniqueRoleAssignments, l => l.ContentTypesEnabled, l => l.ExemptFromBlockDownloadOfNonViewableFiles, l => l.DisableGridEditing);
@@ -217,17 +227,12 @@ namespace PnP.PowerShell.Commands.Lists
                 updateRequired = true;
             }
 
-            if (ParameterSpecified(nameof(Path)))
-            {
-                list.RootFolder.MoveTo(Path);
-                updateRequired = true;
-            }
-
             if (updateRequired)
             {
                 list.Update();
                 ClientContext.ExecuteQueryRetry();
             }
+
             updateRequired = false;
 
             if (list.EnableVersioning)
