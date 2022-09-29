@@ -60,8 +60,10 @@ namespace PnP.PowerShell.Commands.Pages
             var clientSidePage = Page.GetPage(Connection);
 
             if (clientSidePage == null)
+            {
                 // If the client side page object cannot be found
                 throw new Exception($"Page {Page} cannot be found.");
+            }
 
             var textControl = clientSidePage.NewTextPart();
             var textPartText = Text;
