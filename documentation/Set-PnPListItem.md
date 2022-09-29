@@ -23,14 +23,14 @@ Updates a list item
 
 ```powershell
 Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-ContentType <ContentTypePipeBind>]
- [-Values <Hashtable>] [-UpdateType <UpdateType>] [-Label <String>] [-ClearLabel] [-Connection <PnPConnection>]
+ [-Values <Hashtable>] [-UpdateType <UpdateType>] [-Label <String>] [-ClearLabel] [-Connection <PnPConnection>] [-Force]
 ```
 
 ### Batched
 
 ```powershell
 Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> -Batch <PnPBatch> [-ContentType <ContentTypePipeBind>]
- [-Values <Hashtable>] [-UpdateType <UpdateType> [-UpdateOverwriteVersion] [-Connection <PnPConnection>]
+ [-Values <Hashtable>] [-UpdateType <UpdateType> [-UpdateOverwriteVersion] [-Connection <PnPConnection>] [-Force]
 ```
 
 ## DESCRIPTION
@@ -274,6 +274,21 @@ Hyperlink or Picture: -Values @{"HyperlinkField" = "https://pnp.github.com/power
 
 ```yaml
 Type: Hashtable
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+
+Forces update of the list item even if there are no value changes. This can be useful for triggering webhooks, event receivers, Flows, etc.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
