@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Base.PipeBinds;
+﻿using PnP.Core.Model.SharePoint;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
 
@@ -28,6 +29,22 @@ namespace PnP.PowerShell.Commands.Pages
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_POSITIONED)]
         public int Column;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_POSITIONED)]
+        public string ImageUrl;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_POSITIONED)]
+        public PageImageAlignment PageImageAlignment = PageImageAlignment.Center;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_POSITIONED)]
+        public int ImageWidth = 150;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_POSITIONED)]
+        public int ImageHeight = 150;
+
         protected override void ExecuteCmdlet()
         {
             if (ParameterSpecified(nameof(Section)) && Section == 0)
@@ -43,10 +60,27 @@ namespace PnP.PowerShell.Commands.Pages
             var clientSidePage = Page.GetPage(Connection);
 
             if (clientSidePage == null)
+            {
                 // If the client side page object cannot be found
                 throw new Exception($"Page {Page} cannot be found.");
+            }
 
-            var textControl = clientSidePage.NewTextPart(Text);
+            var textControl = clientSidePage.NewTextPart();
+            var textPartText = Text;
+
+            if (ParameterSpecified(nameof(ImageUrl)) && !string.IsNullOrEmpty(ImageUrl))
+            {
+                var inlineImage = clientSidePage.GetInlineImage(textControl, ImageUrl, new PageImageOptions()
+                {
+                    Alignment = PageImageAlignment,
+                    Width = ImageWidth,
+                    Height = ImageHeight
+                });
+
+                textPartText = $"{Text}{inlineImage}";
+            }
+
+            textControl.Text = textPartText;
 
             if (ParameterSpecified(nameof(Section)))
             {
