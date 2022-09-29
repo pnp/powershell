@@ -22,15 +22,15 @@ Updates a list item
 ### Single
 
 ```powershell
-Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-ContentType <ContentTypePipeBind>]
- [-Values <Hashtable>] [-UpdateType <UpdateType>] [-Label <String>] [-ClearLabel] [-Connection <PnPConnection>] [-Force]
+Set-PnPListItem [-List <ListPipeBind>] -Identity <ListItemPipeBind> [-ContentType <ContentTypePipeBind>]
+ [-Values <Hashtable>] [-UpdateType <UpdateType>] [-Label <String>] [-ClearLabel] [-Force] [-Connection <PnPConnection>] 
 ```
 
 ### Batched
 
 ```powershell
-Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> -Batch <PnPBatch> [-ContentType <ContentTypePipeBind>]
- [-Values <Hashtable>] [-UpdateType <UpdateType> [-UpdateOverwriteVersion] [-Connection <PnPConnection>] [-Force]
+Set-PnPListItem [-List <ListPipeBind>] -Identity <ListItemPipeBind> -Batch <PnPBatch> [-ContentType <ContentTypePipeBind>]
+ [-Values <Hashtable>] [-UpdateType <UpdateType>] [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -196,21 +196,6 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -UpdateOverwriteVersion
-
-Update the item without creating a new version. It will not trigger events registered on the list.
-
-```yaml
-Type: UpdateType
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: Update
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
