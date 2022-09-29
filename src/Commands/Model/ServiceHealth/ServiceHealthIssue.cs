@@ -67,7 +67,7 @@ namespace PnP.PowerShell.Commands.Model.ServiceHealth
         /// </summary>
         [JsonConverter(typeof(JsonStringEnumConverter))]
         [JsonPropertyName("status")]
-        public Enums.ServiceHealthIssueStatus Status { get; set; }
+        public Enums.ServiceHealthIssueStatus? Status { get; set; }
 
         /// <summary>
         /// The service impacted
