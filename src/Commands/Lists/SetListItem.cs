@@ -159,76 +159,75 @@ namespace PnP.PowerShell.Commands.Lists
                 list = Identity.Item.ParentList;
             }
 
-            if (list != null)
+            var item = Identity.GetListItem(list)
+                ?? throw new PSArgumentException($"Provided -Identity is not valid.", nameof(Identity)); ;
+
+            bool itemUpdated = false;
+
+            if (ClearLabel)
             {
-                var item = Identity.GetListItem(list);
-                bool itemUpdated = false;
+                item.SetComplianceTag(string.Empty, false, false, false, false, false);
+                ClientContext.ExecuteQueryRetry();
+                itemUpdated = true;
+            }
 
-                if (ClearLabel)
+            if (!string.IsNullOrEmpty(Label))
+            {
+                var tags = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAvailableTagsForSite(ClientContext, ClientContext.Url);
+                ClientContext.ExecuteQueryRetry();
+
+                var tag = tags.Where(t => t.TagName == Label).FirstOrDefault();
+
+                if (tag is null)
                 {
-                    item.SetComplianceTag(string.Empty, false, false, false, false, false);
-                    ClientContext.ExecuteQueryRetry();
-                    itemUpdated = true;
-                }
-
-                if (!string.IsNullOrEmpty(Label))
-                {
-                    var tags = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAvailableTagsForSite(ClientContext, ClientContext.Url);
-                    ClientContext.ExecuteQueryRetry();
-
-                    var tag = tags.Where(t => t.TagName == Label).FirstOrDefault();
-
-                    if (tag != null)
-                    {
-                        try
-                        {
-                            item.SetComplianceTag(tag.TagName, tag.BlockDelete, tag.BlockEdit, tag.IsEventTag, tag.SuperLock, false);
-                            ClientContext.ExecuteQueryRetry();
-                        }
-                        catch (System.Exception error)
-                        {
-                            WriteWarning(error.Message.ToString());
-                        }
-                    }
-                    else
-                    {
-                        WriteWarning("Can not find compliance tag with value: " + Label);
-                    }
-                    itemUpdated = true;
-                }
-
-                if (ContentType != null)
-                {
-                    ContentType ct = ContentType.GetContentType(list);
-                    if (ct != null)
-                    {
-                        item["ContentTypeId"] = ct.EnsureProperty(w => w.StringId); ;
-                        ListItemHelper.UpdateListItem(item, UpdateType);
-                        ClientContext.ExecuteQueryRetry();
-                    }
-                    itemUpdated = true;
-                }
-
-                if (Values?.Count > 0)
-                {
-                    ListItemHelper.SetFieldValues(item, Values, this);
-                    ListItemHelper.UpdateListItem(item, UpdateType);
-                    itemUpdated = true;
-                }
-
-                if (!itemUpdated && !Force)
-                {
-                    WriteWarning("No values provided. Pass -Force to update anyway.");
+                    WriteWarning("Can not find compliance tag with value: " + Label);
                 }
                 else
                 {
-                    ListItemHelper.UpdateListItem(item, UpdateType);
+                    try
+                    {
+                        item.SetComplianceTag(tag.TagName, tag.BlockDelete, tag.BlockEdit, tag.IsEventTag, tag.SuperLock, false);
+                        ClientContext.ExecuteQueryRetry();
+                    }
+                    catch (System.Exception error)
+                    {
+                        WriteWarning(error.Message.ToString());
+                    }
                 }
-
-                ClientContext.ExecuteQueryRetry();
-                ClientContext.Load(item);
-                WriteObject(item);
+                itemUpdated = true;
             }
+
+            if (ContentType != null)
+            {
+                ContentType ct = ContentType.GetContentTypeOrWarn(this, list);
+                if (ct != null)
+                {
+                    item["ContentTypeId"] = ct.EnsureProperty(w => w.StringId); ;
+                    ListItemHelper.UpdateListItem(item, UpdateType);
+                    ClientContext.ExecuteQueryRetry();
+                }
+                itemUpdated = true;
+            }
+
+            if (Values?.Count > 0)
+            {
+                ListItemHelper.SetFieldValues(item, Values, this);
+                ListItemHelper.UpdateListItem(item, UpdateType);
+                itemUpdated = true;
+            }
+
+            if (!itemUpdated && !Force)
+            {
+                WriteWarning("No values provided. Pass -Force to update anyway.");
+            }
+            else
+            {
+                ListItemHelper.UpdateListItem(item, UpdateType);
+            }
+
+            ClientContext.ExecuteQueryRetry();
+            ClientContext.Load(item);
+            WriteObject(item);
         }
     }
 }
