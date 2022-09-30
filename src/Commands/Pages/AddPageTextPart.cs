@@ -31,6 +31,10 @@ namespace PnP.PowerShell.Commands.Pages
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_POSITIONED)]
+        public string TextBeforeImage = string.Empty;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_POSITIONED)]
         public string ImageUrl;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
@@ -44,6 +48,10 @@ namespace PnP.PowerShell.Commands.Pages
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_POSITIONED)]
         public int ImageHeight = 150;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_POSITIONED)]
+        public string TextAfterImage = string.Empty;
 
         protected override void ExecuteCmdlet()
         {
@@ -77,7 +85,7 @@ namespace PnP.PowerShell.Commands.Pages
                     Height = ImageHeight
                 });
 
-                textPartText = $"{Text}{inlineImage}";
+                textPartText = $"{Text}{TextBeforeImage}{inlineImage}{TextAfterImage}";
             }
 
             textControl.Text = textPartText;
