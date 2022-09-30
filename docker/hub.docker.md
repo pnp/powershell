@@ -1,8 +1,14 @@
 # PnP.Powershell
 
-## Featured tags
+![PnP PowerShell](https://repository-images.githubusercontent.com/296298081/933a6d00-072b-11eb-839d-56df16c29588)
 
-### Latest
+**PnP PowerShell** is a .NET Core 3.1 / .NET Framework 4.6.2 based PowerShell Module providing over 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security & Compliance, Azure Active Directory, and more.
+
+Last version | Last nightly version
+-------------|---------------------
+[![PnP.PowerShell](https://img.shields.io/powershellgallery/v/pnp.powershell)](https://www.powershellgallery.com/packages/PnP.PowerShell/) | [![PnP.PowerShell](https://img.shields.io/powershellgallery/v/pnp.powershell?include_prereleases)](https://www.powershellgallery.com/packages/PnP.PowerShell/)
+
+## Latest
 
 * latest: The latest stable image
 
@@ -72,8 +78,8 @@ Tag name examples:
 * 1.11.0-alpine-3.14
 * 1.11.0-nanoserver-ltsc2022
 
-To find the version numbers please visit https://www.powershellgallery.com/packages/PnP.PowerShell
+PnP PowerShell is a [Microsoft 365 Platform Community](https://pnp.github.io) (PnP) project. Microsoft 365 Platform Community is a virtual team consisting of Microsoft employees and community members focused on helping the community make the best use of Microsoft products. PnP PowerShell is an open-source project not affiliated with Microsoft and not covered by Microsoft support. If you experience any issues using PnP PowerShell, please submit an issue in the [issues list](https://github.com/pnp/powershell/issues/new/choose).
 
-## Feedback
+## Disclaimer
 
-* To give feedback for PnP.PowerShell or for how the images are built, file an issue at [PnP/PowerShell](https://github.com/pnp/powershell/issues/new/choose)
+**THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
