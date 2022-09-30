@@ -44,6 +44,14 @@ Add-PnPPageTextPart -Page "MyPage" -Text "Hello World!" -ImageUrl "/sites/contos
 
 Adds the text 'Hello World!' to the Page 'MyPage' with specified image as inline image.
 
+### EXAMPLE 3
+```powershell
+Add-PnPPageTextPart -Page "MyPage" -Text "Hello World!" -ImageUrl "/sites/contoso/SiteAssets/test.png" -TextBeforeImage "Text before" -TextAfterImage "Text after"
+```
+
+Adds the text 'Hello World!' to the Page 'MyPage' with specified image as inline image with text specified before and after the inline image.
+
+
 ## PARAMETERS
 
 ### -Column
@@ -116,6 +124,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -TextBeforeImage
+Specifies the text to display before the inline image.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: 150
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ImageUrl
 Specifies the inline image to be added. Image will be added after the text content.
 
@@ -163,6 +185,20 @@ Specifies the height of the inline image.
 
 ```yaml
 Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: 150
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TextAfterImage
+Specifies the text to display after the inline image.
+
+```yaml
+Type: String
 Parameter Sets: (All)
 
 Required: False

@@ -26,6 +26,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Path` option to `Set-PnPList` which allows the url of a list to be changed within the same site [#2381](https://github.com/pnp/powershell/pull/2381)
 - Added `-Force` option to `Set-PnPListem` to force it to update a list item even without changing something. Can be useful in i.e. triggering a webhook. [#2396](https://github.com/pnp/powershell/pull/2396)
 - Added `ImageUrl`, `PageImageAlignment`, `ImageHeight` and `ImageWidth` parameters to `Add-PnPPageTextPart` cmdlet so that users can add an inline image into a text webpart. [#2401](https://github.com/pnp/powershell/pull/2401)
+- Added `TextBeforeImage` and `TextAfterImage` parameters to `Add-PnPPageTextPart` cmdlet so that users can add before and after text for an inline image into a text webpart. [#2401](https://github.com/pnp/powershell/pull/2401)
+
 
 ### Changed
 - Changed to no longer require `https://` to be prefixed when using `Connect-PnPOnline -Url tenant.sharepoint.com` [#2139](https://github.com/pnp/powershell/pull/2139)
