@@ -210,5 +210,5 @@ if ($runPublish -eq $true) {
 	Set-Content ./version.txt -Value $version -Force -NoNewline
 
 	# Generate predictor commands
-	../build/Generate-PredictorCommands.ps1 -Version $version
+	./build/Generate-PredictorCommands.ps1 -Version $version
 }
