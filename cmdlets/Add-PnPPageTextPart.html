@@ -87,12 +87,11 @@
 <p>Adds a text element to a client-side page.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="default">Default</h3>
-<pre><code class="lang-powershell">Add-PnPPageTextPart [-Page] &lt;PagePipeBind&gt; -Text &lt;String&gt; [-Order &lt;Int32&gt;] 
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPPageTextPart -Page &lt;PagePipeBind&gt; -Text &lt;String&gt; [-Order &lt;Int32&gt;] [-ImageUrl &lt;String&gt;] [-PageImageAlignment &lt;PageImageAlignment&gt;] [-ImageWidth &lt;Int32&gt;] [-ImageHeight &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="positioned">Positioned</h3>
-<pre><code class="lang-powershell">Add-PnPPageTextPart [-Page] &lt;PagePipeBind&gt; -Text &lt;String&gt; [-Order &lt;Int32&gt;] -Section &lt;Int32&gt;
- -Column &lt;Int32&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPPageTextPart -Page &lt;PagePipeBind&gt; -Text &lt;String&gt; -Section &lt;Int32&gt; -Column &lt;Int32&gt; [-Order &lt;Int32&gt;] [-ImageUrl &lt;String&gt;]
+[-PageImageAlignment &lt;PageImageAlignment&gt;] [-ImageWidth &lt;Int32&gt;] [-ImageHeight &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Adds a new text element to a section on a client-side page.</p>
@@ -101,6 +100,10 @@
 <pre><code class="lang-powershell">Add-PnPPageTextPart -Page &quot;MyPage&quot; -Text &quot;Hello World!&quot;
 </code></pre>
 <p>Adds the text 'Hello World!' to the Page 'MyPage'</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Add-PnPPageTextPart -Page &quot;MyPage&quot; -Text &quot;Hello World!&quot; -ImageUrl &quot;/sites/contoso/SiteAssets/test.png&quot;
+</code></pre>
+<p>Adds the text 'Hello World!' to the Page 'MyPage' with specified image as inline image.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-column">-Column</h3>
 <p>Sets the column where to insert the text control.</p>
@@ -108,17 +111,6 @@
 Parameter Sets: Positioned
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -163,6 +155,61 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-imageurl">-ImageUrl</h3>
+<p>Specifies the inline image to be added. Image will be added after the text content.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-pageimagealignment">-PageImageAlignment</h3>
+<p>Specifies the inline image's alignment. Available values are Center, Left and Right.</p>
+<pre><code class="lang-yaml">Type: PageImageAlignment
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: Center
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-imagewidth">-ImageWidth</h3>
+<p>Specifies the width of the inline image.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: 150
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-imageheight">-ImageHeight</h3>
+<p>Specifies the height of the inline image.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: 150
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

@@ -681,7 +681,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPPageTextPart.html",
-          "hash": "A+or1UN2erTayeqEPS4IFA=="
+          "hash": "/fvZCfHF1mnioOQ6++1uyw=="
         }
       },
       "is_incremental": false,
@@ -6225,7 +6225,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPAppSideLoading.html",
-          "hash": "+dY7VWe9/9s7AWKA+7z5XQ=="
+          "hash": "i8mRXLnQxM8rbg35oKzw5Q=="
         }
       },
       "is_incremental": false,
@@ -6615,7 +6615,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPList.html",
-          "hash": "ZmmFSxlohmZjai4Pu/YGUg=="
+          "hash": "QsqJ93HPe+ev5d3pPHwPGw=="
         }
       },
       "is_incremental": false,
@@ -6639,7 +6639,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPListItem.html",
-          "hash": "PIz+LBcqt87dKvdpYONnig=="
+          "hash": "14ibR8LWpSp03BgeAnDmEw=="
         }
       },
       "is_incremental": false,

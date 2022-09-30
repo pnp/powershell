@@ -90,12 +90,12 @@
 </a>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="single">Single</h3>
-<pre><code class="lang-powershell">Set-PnPListItem [-List] &lt;ListPipeBind&gt; -Identity &lt;ListItemPipeBind&gt; [-ContentType &lt;ContentTypePipeBind&gt;]
- [-Values &lt;Hashtable&gt;] [-UpdateType &lt;UpdateType&gt;] [-Label &lt;String&gt;] [-ClearLabel] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Set-PnPListItem [-List &lt;ListPipeBind&gt;] -Identity &lt;ListItemPipeBind&gt; [-ContentType &lt;ContentTypePipeBind&gt;]
+ [-Values &lt;Hashtable&gt;] [-UpdateType &lt;UpdateType&gt;] [-Label &lt;String&gt;] [-ClearLabel] [-Force] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="batched">Batched</h3>
-<pre><code class="lang-powershell">Set-PnPListItem [-List] &lt;ListPipeBind&gt; -Identity &lt;ListItemPipeBind&gt; -Batch &lt;PnPBatch&gt; [-ContentType &lt;ContentTypePipeBind&gt;]
- [-Values &lt;Hashtable&gt;] [-UpdateType &lt;UpdateType&gt; [-UpdateOverwriteVersion] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Set-PnPListItem [-List &lt;ListPipeBind&gt;] -Identity &lt;ListItemPipeBind&gt; -Batch &lt;PnPBatch&gt; [-ContentType &lt;ContentTypePipeBind&gt;]
+ [-Values &lt;Hashtable&gt;] [-UpdateType &lt;UpdateType&gt;] [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -210,17 +210,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-updateoverwriteversion">-UpdateOverwriteVersion</h3>
-<p>Update the item without creating a new version. It will not trigger events registered on the list.</p>
-<pre><code class="lang-yaml">Type: UpdateType
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: Update
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-clearlabel">-ClearLabel</h3>
 <p>Clears the retention label of the item.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
@@ -254,6 +243,17 @@ Accept wildcard characters: False
 <p>Managed Metadata (multiple values with ids of terms): -Values @{&quot;MetadataField&quot; = (&quot;fe40a95b-2144-4fa2-b82a-0b3d0299d818&quot;,&quot;52d88107-c2a8-4bf0-adfa-04bc2305b593&quot;)}</p>
 <p>Hyperlink or Picture: -Values @{&quot;HyperlinkField&quot; = &quot;https://pnp.github.com/powershell, PnP PowerShell Home&quot;}</p>
 <pre><code class="lang-yaml">Type: Hashtable
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-force">-Force</h3>
+<p>Forces update of the list item even if there are no value changes. This can be useful for triggering webhooks, event receivers, Flows, etc.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
