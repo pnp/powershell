@@ -11,7 +11,7 @@ try {
     $json = @();
 
     # get all files in the srcfiles folder
-    $files = Get-ChildItem -Path "..\documentation" -Filter "*.md" -Recurse;
+    $files = Get-ChildItem -Path ".\documentation" -Filter "*.md" -Recurse;
 
     # loop through each file
     $files | ForEach-Object {
@@ -52,13 +52,13 @@ try {
     }
 
     # check if predictor folder exists in ..\resources folder
-    if (!(Test-Path -Path "..\resources\predictor")) {
+    if (!(Test-Path -Path ".\resources\predictor")) {
         # create the folder
-        New-Item -ItemType Directory -Path "..\resources\predictor" -Force;
+        New-Item -ItemType Directory -Path ".\resources\predictor" -Force;
     }
 
     # write the json to a file
-    $json | ConvertTo-Json -Depth 10 | Out-File -FilePath "..\resources\predictor\PnP.PowerShell.Suggestions.$($Version).json" -Encoding UTF8 -Force;   
+    $json | ConvertTo-Json -Depth 10 | Out-File -FilePath ".\resources\predictor\PnP.PowerShell.Suggestions.$($Version).json" -Encoding UTF8 -Force;   
 }
 catch {
     Write-Error $_.Exception.Message;
