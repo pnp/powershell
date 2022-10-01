@@ -26,16 +26,24 @@ namespace PnP.PowerShell.Commands.ContentTypes
             Field field = Field.Field;
             if (field == null)
             {
-                if (Field.Id != Guid.Empty)
+                try
                 {
-                    field = CurrentWeb.Fields.GetById(Field.Id);
+                    if (Field.Id != Guid.Empty)
+                    {
+                        field = CurrentWeb.Fields.GetById(Field.Id);
+                    }
+                    else if (!string.IsNullOrEmpty(Field.Name))
+                    {
+                        field = CurrentWeb.Fields.GetByInternalNameOrTitle(Field.Name);
+                    }
+                    ClientContext.Load(field);
+                    ClientContext.ExecuteQueryRetry();
                 }
-                else if (!string.IsNullOrEmpty(Field.Name))
+                catch
                 {
-                    field = CurrentWeb.Fields.GetByInternalNameOrTitle(Field.Name);
+                    //swallow
+                    field = null;
                 }
-                ClientContext.Load(field);
-                ClientContext.ExecuteQueryRetry();
             }
             if (field is null)
             {
