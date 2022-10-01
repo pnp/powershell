@@ -104,6 +104,10 @@
 <pre><code class="lang-powershell">Add-PnPPageTextPart -Page &quot;MyPage&quot; -Text &quot;Hello World!&quot; -ImageUrl &quot;/sites/contoso/SiteAssets/test.png&quot;
 </code></pre>
 <p>Adds the text 'Hello World!' to the Page 'MyPage' with specified image as inline image.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Add-PnPPageTextPart -Page &quot;MyPage&quot; -Text &quot;Hello World!&quot; -ImageUrl &quot;/sites/contoso/SiteAssets/test.png&quot; -TextBeforeImage &quot;Text before&quot; -TextAfterImage &quot;Text after&quot;
+</code></pre>
+<p>Adds the text 'Hello World!' to the Page 'MyPage' with specified image as inline image with text specified before and after the inline image.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-column">-Column</h3>
 <p>Sets the column where to insert the text control.</p>
@@ -160,6 +164,17 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-textbeforeimage">-TextBeforeImage</h3>
+<p>Specifies the text to display before the inline image.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: 150
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-imageurl">-ImageUrl</h3>
 <p>Specifies the inline image to be added. Image will be added after the text content.</p>
 <pre><code class="lang-yaml">Type: String
@@ -196,6 +211,17 @@ Accept wildcard characters: False
 <h3 id="-imageheight">-ImageHeight</h3>
 <p>Specifies the height of the inline image.</p>
 <pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: 150
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-textafterimage">-TextAfterImage</h3>
+<p>Specifies the text to display after the inline image.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
