@@ -2,60 +2,52 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPPageTextPart.html
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPPageImageWebPart.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Add-PnPPageTextPart
+title: Add-PnPPageImageWebPart
 ---
   
-# Add-PnPPageTextPart
+# Add-PnPPageImageWebPart
 
 ## SYNOPSIS
-Adds a text element to a client-side page.
+Adds an image element to a client-side page.
 
 ## SYNTAX
 
 ### Default
 ```powershell
-Add-PnPPageTextPart -Page <PagePipeBind> -Text <String> [-Order <Int32>] [-ImageUrl <String>] [-PageImageAlignment <PageImageAlignment>] [-ImageWidth <Int32>] [-ImageHeight <Int32>] [-Connection <PnPConnection>]
+Add-PnPPageImageWebPart [-Page <PagePipeBind>] [-ImageUrl <String>] [-Order <Int32>] [-ImageUrl <String>] [-PageImageAlignment <PageImageAlignment>] [-ImageWidth <Int32>] [-ImageHeight <Int32>] [-Caption <String>] [-AlternativeText <String>] [-Link <String>] [-Connection <PnPConnection>]
 ```
 
 ### Positioned
 ```powershell
-Add-PnPPageTextPart -Page <PagePipeBind> -Text <String> -Section <Int32> -Column <Int32> [-Order <Int32>] [-ImageUrl <String>]
-[-PageImageAlignment <PageImageAlignment>] [-ImageWidth <Int32>] [-ImageHeight <Int32>] [-Connection <PnPConnection>]
+Add-PnPPageImageWebPart [-Page <PagePipeBind>] [-ImageUrl <String>] [-Section <Int32>] [-Column <Int32>] [-Order <Int32>] [-PageImageAlignment <PageImageAlignment>] [-ImageWidth <Int32>] [-ImageHeight <Int32>] [-Caption <String>] [-AlternativeText <String>] [-Link <String>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Adds a new text element to a section on a client-side page.
+Adds a new image element to a section on a client-side page.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPPageTextPart -Page "MyPage" -Text "Hello World!"
+Add-PnPPageImageWebPart -Page "MyPage" -ImageUrl "/sites/contoso/siteassets/test.png"
 ```
 
-Adds the text 'Hello World!' to the Page 'MyPage'
+Adds the image with specified URL to the Page 'MyPage'
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPPageTextPart -Page "MyPage" -Text "Hello World!" -ImageUrl "/sites/contoso/SiteAssets/test.png"
+Add-PnPPageImageWebPart -Page "MyPage" -ImageUrl "/sites/contoso/SiteAssets/test.png" -ImageWidth 400 -ImageHeight 200 -Caption "Caption text" -AlternativeText "Alt text" -Link "https://pnp.github.io"
 ```
 
-Adds the text 'Hello World!' to the Page 'MyPage' with specified image as inline image.
-
-### EXAMPLE 3
-```powershell
-Add-PnPPageTextPart -Page "MyPage" -Text "Hello World!" -ImageUrl "/sites/contoso/SiteAssets/test.png" -TextBeforeImage "Text before" -TextAfterImage "Text after"
-```
-
-Adds the text 'Hello World!' to the Page 'MyPage' with specified image as inline image with text specified before and after the inline image.
+Adds the image with specified URL to the Page 'MyPage' with width, height, caption, alt text and link parameters.
 
 
 ## PARAMETERS
 
 ### -Column
-Sets the column where to insert the text control.
+Sets the column where to insert the image control.
 
 ```yaml
 Type: Int32
@@ -69,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -Order
-Sets the order of the text control. (Default = 1)
+Sets the order of the image control. (Default = 1)
 
 ```yaml
 Type: Int32
@@ -97,7 +89,7 @@ Accept wildcard characters: False
 ```
 
 ### -Section
-Sets the section where to insert the text control.
+Sets the section where to insert the image control.
 
 ```yaml
 Type: Int32
@@ -110,36 +102,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Text
-Specifies the text to display in the text area.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -TextBeforeImage
-Specifies the text to display before the inline image.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: 150
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -ImageUrl
-Specifies the inline image to be added. Image will be added after the text content.
+Specifies the image to be added.
 
 ```yaml
 Type: String
@@ -194,8 +158,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TextAfterImage
-Specifies the text to display after the inline image.
+### -Caption
+Specifies the caption text to display for the image.
 
 ```yaml
 Type: String
@@ -203,7 +167,35 @@ Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: 150
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AlternativeText
+Specifies the alt text to display for the image.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Link
+Specifies the clickable link to display for the image.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

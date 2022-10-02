@@ -5,8 +5,8 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Pages
 {
-    [Cmdlet(VerbsCommon.Add, "PnPPageTextPart")]
-    public class AddTextPart : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Add, "PnPPageImageWebPart")]
+    public class AddPageImageWebPart : PnPWebCmdlet
     {
         private const string ParameterSet_DEFAULT = "Default";
         private const string ParameterSet_POSITIONED = "Positioned";
@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.Pages
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEFAULT)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_POSITIONED)]
-        public string Text;
+        public string ImageUrl;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_POSITIONED)]
@@ -28,14 +28,6 @@ namespace PnP.PowerShell.Commands.Pages
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_POSITIONED)]
         public int Column;
-
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_POSITIONED)]
-        public string TextBeforeImage = string.Empty;
-
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_POSITIONED)]
-        public string ImageUrl;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_POSITIONED)]
@@ -51,7 +43,15 @@ namespace PnP.PowerShell.Commands.Pages
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_POSITIONED)]
-        public string TextAfterImage = string.Empty;
+        public string Caption = string.Empty;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_POSITIONED)]
+        public string AlternativeText = string.Empty;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEFAULT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_POSITIONED)]
+        public string Link = string.Empty;
 
         protected override void ExecuteCmdlet()
         {
@@ -73,44 +73,37 @@ namespace PnP.PowerShell.Commands.Pages
                 throw new Exception($"Page {Page} cannot be found.");
             }
 
-            var textControl = clientSidePage.NewTextPart();
-            var textPartText = Text;
-
-            if (ParameterSpecified(nameof(ImageUrl)) && !string.IsNullOrEmpty(ImageUrl))
+            var imageControl = clientSidePage.GetImageWebPart(ImageUrl, new PageImageOptions()
             {
-                var inlineImage = clientSidePage.GetInlineImage(textControl, ImageUrl, new PageImageOptions()
-                {
-                    Alignment = PageImageAlignment,
-                    Width = ImageWidth,
-                    Height = ImageHeight
-                });
-
-                textPartText = $"{Text}{TextBeforeImage}{inlineImage}{TextAfterImage}";
-            }
-
-            textControl.Text = textPartText;
+                Alignment = PageImageAlignment,
+                Height = ImageHeight,
+                Width = ImageWidth,
+                Caption = Caption,
+                AlternativeText = AlternativeText,
+                Link = Link
+            });
 
             if (ParameterSpecified(nameof(Section)))
             {
                 if (ParameterSpecified(nameof(Section)))
                 {
-                    clientSidePage.AddControl(textControl,
+                    clientSidePage.AddControl(imageControl,
                     clientSidePage.Sections[Section - 1].Columns[Column - 1], Order);
                 }
                 else
                 {
-                    clientSidePage.AddControl(textControl, clientSidePage.Sections[Section - 1], Order);
+                    clientSidePage.AddControl(imageControl, clientSidePage.Sections[Section - 1], Order);
                 }
             }
             else
             {
-                clientSidePage.AddControl(textControl, Order);
+                clientSidePage.AddControl(imageControl, Order);
             }
 
             // Save the page
             clientSidePage.Save();
 
-            WriteObject(textControl);
+            WriteObject(imageControl);
         }
     }
 }
