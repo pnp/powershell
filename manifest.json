@@ -665,6 +665,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPPageImageWebPart.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPPageImageWebPart.html",
+          "hash": "IqV5QXhu/DJ3pGSKCp9R8w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPPageSection.md",
       "output": {
         ".html": {
@@ -7764,7 +7776,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "zUmKovcOWR/tSE8ZBfu1pw=="
+          "hash": "fnkOOiQKu7+2g/TwcCZMsg=="
         }
       },
       "is_incremental": false,
@@ -7986,7 +7998,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 644,
+          "total_file_count": 645,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
