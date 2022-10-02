@@ -350,7 +350,7 @@ namespace PnP.PowerShell.Commands.Base
             var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
             cmdlet.WriteVerbose("Acquiring token for resource " + defaultResource);
             var accessToken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, defaultResource).GetAwaiter().GetResult();
-            cmdlet.WriteVerbose("Access token acquired through managed identity: " + accessToken);
+            
             using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
             {
                 PnPClientContext context = null;

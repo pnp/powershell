@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     WriteVerbose("Acquiring token for resource " + Connection.GraphEndPoint + " using Managed Identity");
                     var accessToken = TokenHandler.GetManagedIdentityTokenAsync(this, Connection.HttpClient, $"https://{Connection.GraphEndPoint}/").GetAwaiter().GetResult();
-                    WriteVerbose("Access token acquired through managed identity: " + accessToken);
+                    
                     return accessToken;
                 }
                 else
