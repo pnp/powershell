@@ -100,14 +100,22 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     requiredScope = defaultResource;
                 }
+
+                cmdlet.WriteVerbose($"Using scope {requiredScope} for managed identity token coming from the cmdlet permission attribute");
             }
             else
             {
                 requiredScope = defaultResource;
+
+                cmdlet.WriteVerbose($"Using scope {requiredScope} for managed identity token coming from the passed in default resource");
             }
 
             var endPoint = Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT");
+            cmdlet.WriteVerbose($"Using identity endpoint: {endPoint}");
+
             var identityHeader = Environment.GetEnvironmentVariable("IDENTITY_HEADER");
+            cmdlet.WriteVerbose($"Using identity header: {identityHeader}");
+
             if (string.IsNullOrEmpty(endPoint))
             {
                 endPoint = Environment.GetEnvironmentVariable("MSI_ENDPOINT");
@@ -115,22 +123,28 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (!string.IsNullOrEmpty(endPoint))
             {
-                using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"{endPoint}?resource={requiredScope}&api-version=2019-08-01"))
+                var tokenRequestUrl = $"{endPoint}?resource={requiredScope}&api-version=2019-08-01";
+                using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, tokenRequestUrl))
                 {
                     requestMessage.Headers.Add("Metadata", "true");
                     if (!string.IsNullOrEmpty(identityHeader))
                     {
                         requestMessage.Headers.Add("X-IDENTITY-HEADER", identityHeader);
-
                     }
+                    
+                    cmdlet.WriteVerbose($"Sending token request to {tokenRequestUrl}");
+
                     var response = await httpClient.SendAsync(requestMessage).ConfigureAwait(false);
+
                     if (response.IsSuccessStatusCode)
                     {
                         var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
                         var responseElement = JsonSerializer.Deserialize<JsonElement>(responseContent);
                         if (responseElement.TryGetProperty("access_token", out JsonElement accessTokenElement))
                         {
-                            return accessTokenElement.GetString();
+                            var accessToken = accessTokenElement.GetString();
+                            return accessToken;
                         }
                     }
                     else
