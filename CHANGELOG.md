@@ -28,7 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `ImageUrl`, `PageImageAlignment`, `ImageHeight` and `ImageWidth` parameters to `Add-PnPPageTextPart` cmdlet so that users can add an inline image into a text webpart. [#2401](https://github.com/pnp/powershell/pull/2401)
 - Added `TextBeforeImage` and `TextAfterImage` parameters to `Add-PnPPageTextPart` cmdlet so that users can add before and after text for an inline image into a text webpart. [#2403](https://github.com/pnp/powershell/pull/2403)
 - Added `Add-PnPPageImageWebPart` cmdlet to allow users to easily add Image to a modern page.
-
+- Added Managed Identity support for SharePoint Online cmdlets. [#2354](https://github.com/pnp/powershell/pull/2354)
 
 ### Changed
 - Changed to no longer require `https://` to be prefixed when using `Connect-PnPOnline -Url tenant.sharepoint.com` [#2139](https://github.com/pnp/powershell/pull/2139)
