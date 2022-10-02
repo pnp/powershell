@@ -41,16 +41,19 @@ namespace PnP.PowerShell.Commands.ContentTypes
                 }
                 catch
                 {
-                    //swallow
+                    // Swallow exception in case we fail to retrieve the field. It will be handled by the null-check.
                     field = null;
                 }
             }
+            
             if (field is null)
             {
                 throw new PSArgumentException("Field not found", nameof(Field));
             }
+            
             var ct = ContentType.GetContentTypeOrThrow(nameof(ContentType), CurrentWeb, true);
             ct.EnsureProperty(c => c.FieldLinks);
+            
             var fieldLink = ct.FieldLinks.FirstOrDefault(f => f.Id == field.Id);
             if (fieldLink is null)
             {
@@ -59,9 +62,6 @@ namespace PnP.PowerShell.Commands.ContentTypes
             fieldLink.DeleteObject();
             ct.Update(!DoNotUpdateChildren);
             ClientContext.ExecuteQueryRetry();
-
         }
-
-
     }
 }
