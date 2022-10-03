@@ -933,5 +933,22 @@ namespace PnP.PowerShell.Commands.Utilities
             return await GraphHelper.DeleteAsync(connection, $"v1.0/appCatalogs/teamsApps/{appId}", accessToken);
         }
         #endregion
+
+        #region Tags
+
+        public static async Task<IEnumerable<TeamTag>> GetTagsAsync(string accessToken, PnPConnection connection, string groupId)
+        {
+            var collection = await GraphHelper.GetResultCollectionAsync<TeamTag>(connection, $"beta/teams/{groupId}/tags", accessToken);
+            return collection;
+        }
+
+        public static async Task<TeamTag> GetTagsWithIdAsync(string accessToken, PnPConnection connection, string groupId, string tagId)
+        {
+            var tagInformation = await GraphHelper.GetAsync<TeamTag>(connection, $"beta/teams/{groupId}/tags/{tagId}", accessToken);
+            return tagInformation;
+        }
+
+
+        #endregion
     }
 }
