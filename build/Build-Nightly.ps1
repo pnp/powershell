@@ -195,6 +195,9 @@ if ($runPublish -eq $true) {
 		exit 1
 	}
 
+	# Generate predictor commands
+	./build/Generate-PredictorCommands.ps1 -Version $version
+
 	Write-Host "Generating Documentation" -ForegroundColor Yellow
 	Set-PSRepository PSGallery -InstallationPolicy Trusted
 	Install-Module PlatyPS -ErrorAction Stop
@@ -208,7 +211,4 @@ if ($runPublish -eq $true) {
 
 	# Write version back to version
 	Set-Content ./version.txt -Value $version -Force -NoNewline
-
-	# Generate predictor commands
-	./build/Generate-PredictorCommands.ps1 -Version $version
 }
