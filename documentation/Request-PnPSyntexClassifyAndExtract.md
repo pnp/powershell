@@ -4,7 +4,7 @@ title: Request-PnPSyntexClassifyAndExtract
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPage.html
+online version: https://pnp.github.io/powershell/cmdlets/Request-PnPSyntexClassifyAndExtract.html
 ---
  
 # Request-PnPSyntexClassifyAndExtract
@@ -91,7 +91,7 @@ Accept wildcard characters: False
 
 ### -List
 
-The name or list holding the files to classify and extract
+The name or list holding the files to classify and extract.
 
 ```yaml
 Type: ListPipeBind
