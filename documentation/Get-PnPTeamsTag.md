@@ -50,7 +50,7 @@ Retrieves a tag with the specified Id from the specified team.
 Specify the id of the tag
 
 ```yaml
-Type: String
+Type: TeamsTagPipeBind
 Parameter Sets: (All)
 
 Required: False
