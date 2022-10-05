@@ -22,6 +22,9 @@ namespace PnP.PowerShell.Commands.Viva
         public string PropertiesJSON;
 
         [Parameter(Mandatory = false)]
+        public object Properties;
+
+        [Parameter(Mandatory = false)]
         public string Description;
 
         [Parameter(Mandatory = false)]
@@ -52,6 +55,13 @@ namespace PnP.PowerShell.Commands.Viva
                     if (ParameterSpecified(nameof(PropertiesJSON)))
                     {
                         aceToUpdate.Properties = JsonSerializer.Deserialize<JsonElement>(PropertiesJSON);
+                        updateRequired = true;
+                    }
+
+                    if (ParameterSpecified(nameof(Properties)))
+                    {
+                        var test = JsonSerializer.Serialize(Properties as CardDesignerProps);
+                        aceToUpdate.Properties = test;
                         updateRequired = true;
                     }
 
