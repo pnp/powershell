@@ -3434,6 +3434,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPTeamsTag.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPTeamsTag.html",
+          "hash": "e80Bc08cgPSoU2I18DMkCw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPTeamsTeam.md",
       "output": {
         ".html": {
@@ -5985,7 +5997,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Request-PnPSyntexClassifyAndExtract.html",
-          "hash": "zrn0uxwb5ntW+o05FJ06gQ=="
+          "hash": "4bBXKMSbcbWRIbCCwB3+vQ=="
         }
       },
       "is_incremental": false,
@@ -7776,7 +7788,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "fnkOOiQKu7+2g/TwcCZMsg=="
+          "hash": "Ceju06lbbqtsnC+hFcHN8g=="
         }
       },
       "is_incremental": false,
@@ -7998,7 +8010,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 645,
+          "total_file_count": 646,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
